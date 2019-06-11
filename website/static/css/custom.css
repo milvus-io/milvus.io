@@ -25,3 +25,24 @@
 .productShowcaseSection {
     padding: 0 20px;
 }
+.homeContainer {
+    position: relative;
+}
+
+.splash {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top:0;
+    display: flex;
+    flex-wrap: wrap;
+    z-index: -1;
+    overflow: hidden;
+}
+.s {
+    border: 1px solid #F7F7F7;
+    width: 12px;
+    height: 12px;
+    margin: 5px;
+}

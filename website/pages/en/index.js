@@ -129,23 +129,23 @@ class Index extends React.Component {
             title: 'AI Native',
           },
           {
-            content: 'By employing different type of computing power (X86, GPU, PowerPC and etc.), Milvus achieves great peformance with lower cost',
+            content: 'Milvus achieves great peformance with lower cost by employing different types of computing power',
             image: `${baseUrl}img/undraw_react.svg`,
             imageAlign: 'top',
             title: 'Heterogeneous computing',
           },
           {
-            content: 'The distributed architecture of Milvus provids high availability and scale out capability. Milvus could run in container, so it could be easily deployed on public/private/hybrid cloud',
+            content: 'The distributed architecture of Milvus provids high availability and scale out capability',
             image: `${baseUrl}img/undraw_react.svg`,
             imageAlign: 'top',
-            title: 'Manageability',
+            title: 'Easey to Manage',
           },
           
           {
-            content: 'Besides core data center, you could also deploy Milvus on edge server with selected ASIC',
+            content: 'Milvus runs on public/private/hybrid cloud and on edge server with selected ASIC',
             image: `${baseUrl}img/undraw_react.svg`,
             imageAlign: 'top',
-            title: 'Ready for Edge',
+            title: 'Deployment Freedom',
           },
         ]}
       </Block>

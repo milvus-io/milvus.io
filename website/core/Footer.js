@@ -40,11 +40,8 @@ class Footer extends React.Component {
             <a href={this.docUrl('doc1.html', this.props.language)}>
               Getting Started
             </a>
-            <a href={this.docUrl('doc2.html', this.props.language)}>
+            <a href={this.docUrl('doc2#24-milvus的安装-部署和运行', this.props.language)}>
               Guides
-            </a>
-            <a href={this.docUrl('doc3.html', this.props.language)}>
-              API Reference
             </a>
           </div>
           <div>
@@ -56,10 +53,8 @@ class Footer extends React.Component {
               href="https://stackoverflow.com/questions/tagged/"
               target="_blank"
               rel="noreferrer noopener">
-              Stack Overflow
-            </a>
-            <a href="https://discordapp.com/">Project Chat</a>
-            <a
+              Stack Overflow</a>
+                <a
               href="https://twitter.com/"
               target="_blank"
               rel="noreferrer noopener">
@@ -74,9 +69,8 @@ class Footer extends React.Component {
           <div>
             <h5>Zilliz Product</h5>
             <a href={`#`}>Milvus</a>
-            <a href={`#`}>Megawise</a>
-            <a href={`#`}>Mega-learning</a>
-
+            <a href={`http://www.zilliz.com/`}>Megawise</a>
+            <a href={`http://www.zilliz.com/`}>Mega-learning</a>
           </div>
         </section>
 

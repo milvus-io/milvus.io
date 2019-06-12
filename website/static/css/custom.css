@@ -16,6 +16,7 @@
 }
 
 @media only screen and (min-width: 1500px) {
+    
 }
 .homeContainer {
     position: relative;
@@ -48,7 +49,7 @@
     margin: 5px;
 }
 .customBlock {
-    margin-bottom: 3rem;
+    
 }
 
 .customBlockContent {

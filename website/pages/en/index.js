@@ -51,7 +51,7 @@ class HomeSplash extends React.Component {
     );
 
     const Button = props => (
-      <div className="pluginWrapper buttonWrapper">
+      <div className="pluginWrapper buttonWrapper customButtonWrapper">
         <a className="button" href={props.href} target={props.target}>
           {props.children}
         </a>

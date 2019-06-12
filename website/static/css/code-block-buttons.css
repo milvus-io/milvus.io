@@ -37,3 +37,7 @@ pre {
   .btnClipboard {
     right: 10px;
   }
+
+  .customButtonWrapper{
+    background-color: white;
+  }

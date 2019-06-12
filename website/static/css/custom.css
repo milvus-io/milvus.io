@@ -20,11 +20,11 @@
 }
 .homeContainer {
     position: relative;
+    min-height: 40rem;
 }
 .homeContainer .homeWrapper {
-    padding: 4em 10px;
+    padding: 12em 10px;
 }
-
 .lightBackground {
     background-color: #F7F7F7;
 }
@@ -48,9 +48,6 @@
     height: 12px;
     margin: 5px;
 }
-.customBlock {
-    
-}
 
 .customBlockContent {
     height: 100%;
@@ -59,3 +56,4 @@
 .customGridBlockH2 {
     height: 23%;
 }
+

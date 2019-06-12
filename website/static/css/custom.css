@@ -14,7 +14,9 @@
 
 @media only screen and (min-width: 1500px) {
 }
-
+.homeContainer {
+    position: relative;
+}
 .homeContainer .homeWrapper {
     padding: 4em 10px;
 }
@@ -25,10 +27,6 @@
 .productShowcaseSection {
     padding: 0 20px;
 }
-.homeContainer {
-    position: relative;
-}
-
 .splash {
     position: absolute;
     width: 100%;

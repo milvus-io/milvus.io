@@ -1,8 +1,8 @@
 {
   "docs": {
-    "Getting Started": ["doc1"],
-    "Installation": ["doc2"],
-    "Downloads": ["doc3"]
+    "Introductions": ["doc1","doc2","doc3"],
+    "Installation": [],
+    "Documents":[]
   },
   "docs-other": {
     "First Category": ["doc4", "doc5"]

@@ -1,13 +1,140 @@
 ---
 id: doc3
-title: This is document number 3
+title: Milvus的应用场景
+sidebar_label: 3. Milvus的应用场景
 ---
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac euismod odio, eu consequat dui. Nullam molestie consectetur risus id imperdiet. Proin sodales ornare turpis, non mollis massa ultricies id. Nam at nibh scelerisque, feugiat ante non, dapibus tortor. Vivamus volutpat diam quis tellus elementum bibendum. Praesent semper gravida velit quis aliquam. Etiam in cursus neque. Nam lectus ligula, malesuada et mauris a, bibendum faucibus mi. Phasellus ut interdum felis. Phasellus in odio pulvinar, porttitor urna eget, fringilla lectus. Aliquam sollicitudin est eros. Mauris consectetur quam vitae mauris interdum hendrerit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+## 第三部分 Milvus的应用场景
 
-Duis et egestas libero, imperdiet faucibus ipsum. Sed posuere eget urna vel feugiat. Vivamus a arcu sagittis, fermentum urna dapibus, congue lectus. Fusce vulputate porttitor nisl, ac cursus elit volutpat vitae. Nullam vitae ipsum egestas, convallis quam non, porta nibh. Morbi gravida erat nec neque bibendum, eu pellentesque velit posuere. Fusce aliquam erat eu massa eleifend tristique.
+在目前大部分的AI应用场景下，都可以使用Milvus来搭建智能应用系统：
 
-Sed consequat sollicitudin ipsum eget tempus. Integer a aliquet velit. In justo nibh, pellentesque non suscipit eget, gravida vel lacus. Donec odio ante, malesuada in massa quis, pharetra tristique ligula. Donec eros est, tristique eget finibus quis, semper non nisl. Vivamus et elit nec enim ornare placerat. Sed posuere odio a elit cursus sagittis.
+- 图像识别领域：
 
-Phasellus feugiat purus eu tortor ultrices finibus. Ut libero nibh, lobortis et libero nec, dapibus posuere eros. Sed sagittis euismod justo at consectetur. Nulla finibus libero placerat, cursus sapien at, eleifend ligula. Vivamus elit nisl, hendrerit ac nibh eu, ultrices tempus dui. Nam tellus neque, commodo non rhoncus eu, gravida in risus. Nullam id iaculis tortor.
+各种海量的图片检索图片应用，可应用Milvus系统来大幅度提供系统的性能和可用性，例如人脸检索，人体检索，和车辆检索，以及商品图片检索，人脸支付等。
 
-Nullam at odio in sem varius tempor sit amet vel lorem. Etiam eu hendrerit nisl. Fusce nibh mauris, vulputate sit amet ex vitae, congue rhoncus nisl. Sed eget tellus purus. Nullam tempus commodo erat ut tristique. Cras accumsan massa sit amet justo consequat eleifend. Integer scelerisque vitae tellus id consectetur.
+- 视频处理领域：
+
+视频处理领域的一个特点就是非结构化视频信息的数据量非常大，目前传统的非结构化搜索视频的系统，无法支撑现在海量高清的视频数据量。而应用Milvus系统后，就可以实现针对视频信息的实时人脸检索和轨迹跟踪的能力。
+
+- 自然语言处理领域：
+
+海量的文本信息中，可以使用Milvus通过文本检索近似文本等功能，轻松实现基于语义的文本检索和推荐。
+
+- 其他：
+
+此外还可以将Milvus系统应用在：声纹匹配，通过音频检索音频；文件去重，通过文件指纹去除重复文件等应用中。
+
+Milvus做向量检索的时候，典型的架构如下：
+
+![avatar](/img/docs/MilvusTypicalUsage.png)
+
+非结构化数据(图像/视频/文字/音频等）首先通过特征提取模型产生特征向量，然后存入Milvus数据库系统。查询的时候，待查询的非结构化数据，也需要通过特征提取模型，提取特征向量。然后用该向量到Milvus中已存入的向量集里，查询匹配度最高的向量集合。最后，使用返回的向量ID，找到对应非结构化数据，结合上层应用，实现对应功能。
+
+## 3.1 案例 - 基于Milvus的人脸搜索
+
+需求：
+
+- 敏感人群告警
+
+敏感人群库中保存的是敏感人群的人脸特征，摄像头提取的人脸都要与敏感人群库中的人脸进行对比。一旦通过对于发现了敏感人群库中的在逃人员，系统需要给出告警。
+
+- 一人一档
+
+摄像头提取的人脸都会与证照库中的人脸特征进行对比，通过人脸找到关联的证件ID，进而找到个人的所有信息。
+
+- 人像检索
+
+对于无法在证照库中找到的人脸，则会将其保存在历史人像库中，保存时长为3个月，以备后续案件侦破时查询轨迹使用。
+
+系统实现架构图：
+
+![avatar](/img/docs/FacialSearch.png)
+
+- **人脸获取设备**：摄像头拍到人脸图片后，把图片发到特征向量提取设备。
+
+- **特征提取服务**：收到摄像头发过来的人脸图片后，利用深度学习系统训练的模型，转换为512维人脸特征向量。
+
+- **应用层**：
+
+  - 黑名单告警：收到人脸的特征向量后，会发往特征向量库比对，如果发现匹配度较高，则发出告警。
+  - 以人脸查人员信息：可以通过人脸在人员信息库中，检索人员ID，找到后再去MySQL中把对应人员的所有信息展示出来。
+
+  - 人员轨迹再现：用户可以使用人脸查找人员信息，然后把与他相关的历史轨迹展示出来。
+
+- **数据层**：
+
+  - 敏感人群库
+
+    向量库，百万级，数据基本无更新。对于查询精度要求高，查询速度要求快，查询的QPS要求达到1000每秒，允许批量查询。
+
+  - 人员库
+
+    向量库，保存10亿条人脸特征数据，数据会有少量更新。每个摄像头拍到的人脸都需要与人员库中的人脸进行查询对比，查询率要求达到1000 QPS，允许批量查询。
+
+  - 历史库
+
+    向量库，每天产生2亿人脸数据，需要保存3个月（90天）的人脸向量数据即180亿向量数据。人脸检索时，到历史库中通过人脸特征检索人脸轨迹，允许批量查询。
+
+  - 人员信息库
+
+    结构化数据库，以MySQL存储，存储以个人ID号为主键的个人信息。
+
+- **基础设施**：Milvus实现向量数据的存储，MySQL实现结构化数据存储，Minio实现非结构化数据(人脸图片)存储。
+
+
+
+## 3.2 案例 - 基于Milvus的非标车搜索
+
+需求：
+
+- 非标车轨迹实时查询
+
+摄像头拍到嫌疑非标车后，提取其特征到实时插入的非标车图片库中搜索，对于找到的所有相关车辆在地图上展示其轨迹。
+
+系统实现架构图
+
+![avatar](/img/docs/VehicleSearch.png)
+
+
+
+- **非标车图片获取设备**：摄像头拍到非标车图片后，把图片发到特征向量提取设备。
+
+- **特征提取服务**：收到摄像头发过来的非标车图片后，利用深度学习系统训练的模型，转换为256维车辆特征向量后送入实时非标车特征库存储。
+
+- **应用层**：
+
+  - 非标车轨迹再现：收到人脸的特征向量后，会发往特征向量库比对，如果发现匹配度较高，则发出告警。
+
+- **数据层**：
+
+  - 实时非标车特征库
+
+    向量库，3亿级，每天插入1000W，存储30天。对于查询精度要求高，查询速度要求快，查询的QPS要求达到100每秒，不允许批量查询。
+
+- **基础设施**：Milvus实现向量数据的存储，Minio实现非结构化数据(车辆图片)存储。
+
+
+
+## 3.3 案例 - 基于Milvus的商品推荐系统
+
+需求：
+
+- 基于用户画像推荐广告商品
+
+系统架构图
+
+![avatar](/img/docs/Recommendation.png)
+
+- 用户画像提取：根据过往用户浏览新闻的内容，提取其关键词，然后利用关键词产生用户画像。
+- 商品特征提取：根据商品信息，提取关键词，然后产生商品的特征向量。
+- 应用层：
+  - 商品推荐：收到用户画像对应的特征向量后，会发到商品特征库对比，将匹配度最高的10个商品，返回。
+- 数据层：
+  - 商品特征库： 向量库，1亿级，每天更新100W。对于查询精度要求不高，但是要求查询速度快，且QPS要求达到1000每秒，允许批量查询。
+  - 用户信息库：结构化数据库，10亿级，记录用户画像关键词，用户画像改变就需要更新。
+- 基础设施：
+  - Milvus 实现向量数据的存储和检索。
+  - Minio 实现商品图片的存储。
+  - MySQL 实现用户画像信息存储。
+
+
+

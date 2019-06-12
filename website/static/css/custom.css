@@ -7,6 +7,9 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .customBlock {
+        margin-bottom: 3rem;
+    }
 }
 
 @media only screen and (min-width: 1400px) {
@@ -43,4 +46,15 @@
     width: 12px;
     height: 12px;
     margin: 5px;
+}
+.customBlock {
+    margin-bottom: 3rem;
+}
+
+.customBlockContent {
+    height: 100%;
+}
+
+.customGridBlockH2 {
+    height: 23%;
 }

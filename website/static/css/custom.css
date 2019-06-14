@@ -7,6 +7,9 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .customBlock {
+        margin-bottom: 3rem;
+    }
 }
 
 @media only screen and (min-width: 1400px) {
@@ -17,11 +20,11 @@
 }
 .homeContainer {
     position: relative;
+    min-height: 40rem;
 }
 .homeContainer .homeWrapper {
     padding: 7em 10px;
 }
-
 .lightBackground {
     background-color: #F7F7F7;
 }
@@ -45,3 +48,12 @@
     height: 12px;
     margin: 5px;
 }
+
+.customBlockContent {
+    height: 100%;
+}
+
+.customGridBlockH2 {
+    height: 23%;
+}
+

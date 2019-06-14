@@ -8,6 +8,7 @@ function getOpacity(i) {
 
 document.addEventListener('DOMContentLoaded', ()=>{
     let container = document.querySelector('.homeContainer');
+    if (!container) return;
     let rows = Math.floor(window.screen.height / 42);
     let cols = Math.floor(window.screen.width / 8);
     let fragment = document.createDocumentFragment();

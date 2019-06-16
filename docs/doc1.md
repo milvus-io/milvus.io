@@ -1,7 +1,7 @@
 ---
 id: doc1
 title: Milvus 简介
-sidebar_label: Milvus 简介
+sidebar_label: 1. Milvus 简介
 ---
 
 在典型的 AI 应用场景中（如图像识别，语音识别，自然语言处理等），特征向量是对被研究对象（图像，语音，文字）的基本抽象。AI 应用的模型训练和推理执行离不开对特征向量的提取与检索。

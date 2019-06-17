@@ -1,7 +1,7 @@
 {
   "docs": {
-    "Introductions": ["doc1","doc2","doc3"],
-    "Installation": [],
+    "Introductions": ["introduction","doc2","doc3"],
+    "QuickStart": ["quick_start"],
     "Documents":[]
   },
   "docs-other": {

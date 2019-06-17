@@ -3,8 +3,6 @@ id: doc3
 title: Milvus的应用场景
 sidebar_label: 3. Milvus的应用场景
 ---
-## 第三部分 Milvus的应用场景
-
 在目前大部分的AI应用场景下，都可以使用Milvus来搭建智能应用系统：
 
 - 图像识别领域：

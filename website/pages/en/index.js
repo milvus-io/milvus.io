@@ -131,7 +131,7 @@ class HomeSplash extends React.Component {
         <div className="inner">
           <ProjectTitle siteConfig={siteConfig} />
           <PromoSection>
-            <Button href="/docs/doc1">GET STARTED </Button>
+            <Button href="/docs/introduction">GET STARTED </Button>
             <Button href="https://hub.docker.com/r/milvusdb/milvus">Download</Button>
             {/* <Button href={docUrl('doc1.html')}>Example Link</Button> */}
             {/* <Button href={docUrl('doc2.html')}>Example Link 2</Button> */}
@@ -180,7 +180,7 @@ class Index extends React.Component {
         style={{textAlign: 'center'}}>
         <h2>Milvus Architecture</h2>
         <div style={{lineHeight: '28px'}}>
-          <a href="/doc/doc1.html"><img width="50%" src={`./` + baseUrl + `/img/megasearch_arch.svg`} /></a>
+          <a href="/doc/introduction.html"><img width="50%" src={`./` + baseUrl + `/img/megasearch_arch.svg`} /></a>
         </div>
       </div>
     );

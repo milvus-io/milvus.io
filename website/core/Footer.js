@@ -61,11 +61,11 @@ class Footer extends React.Component {
               Twitter
             </a>
           </div>
-          <div>
+          {/* <div>
             <h5>More</h5>
             <a href={`${this.props.config.baseUrl}blog`}>Blog</a>
             
-          </div>
+          </div> */}
           <div>
             <h5>Zilliz Product</h5>
             <a href={`#`}>Milvus</a>

@@ -47,8 +47,8 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'introduction', label: 'Docs'},
-    {page: 'help', label: 'Help'},
-    {blog: true, label: 'Blog'},
+    {page: 'help', label: 'Help'}
+    // {blog: false, label: 'Blog'},
   ],
 
   // If you have users set above, you add it here:
@@ -115,7 +115,8 @@ const siteConfig = {
   // template. For example, if you need your repo's URL...
   //   repoUrl: 'https://github.com/facebook/test-site',
 
-  blogSidebarCount: '10'
+  blogSidebarCount: '10',
+  editUrl: 'https://github.com/milvus/docs'
 };
 
 module.exports = siteConfig;

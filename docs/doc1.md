@@ -52,7 +52,7 @@ Milvus 是 Zilliz 公司为优化 AI 应用训练和推理效率，而研发的�
 
 系统实现架构图
 
-![VehicleSearch](/img/docs/VehicleSearch.png)
+![VehicleSearch](assets/VehicleSearch.png)
 
 - **非标车图片获取设备**：摄像头捕获非标车图片，并发送到特征向量提取组件。
 

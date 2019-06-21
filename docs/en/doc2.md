@@ -54,7 +54,7 @@ Milvus提供了基于图形化和命令行管理工具。
 
 ## 2.2 Milvus产品架构图
 
-![avatar](/img/docs/MilvusArchitecture.png)
+![avatar](assets/MilvusArchitecture.png)
 
 2.2.1 Milvus Core Cluster
 
@@ -251,7 +251,7 @@ docker logs <Milvus container id>
 
 Milvus的监控系统是基于开源监控框架Prometheus搭建的。目前，Milvus server收集数据后，利用的pull模式把所有数据导入Prometheus。然后，我们就通过Grafana展示所有监控指标了，同时一旦发生告警Prometheus会将告警信息可以推送给AlertManager，后通过E-Mail或者WeChat将通知用户用户。告警系统架构如下：
 
-![avatar](/img/docs/Monitoring.png)
+![avatar](./assets/Monitoring.png)
 
 2.6.2 使用Prometheus和Grafana监控Milvus
 

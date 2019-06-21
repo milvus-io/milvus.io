@@ -35,7 +35,7 @@ $ nvidia-docker run --runtime=nvidia -p 33001:33001 -v /home/$USER/milvus:/tmp m
 
 ### 2.1 Milvus 基本架构图
 
-![avatar](/img/docs/Milvus_Singleton_Architecture.png)
+![avatar](assets/Milvus_Singleton_Architecture.png)
 
 Milvus 系统由：Milvus Server，Storage Cluster，Milvus Monitor和 元数据管理四个模块组成。
 

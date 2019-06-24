@@ -61,7 +61,7 @@ function Help(props) {
       <div className="row justify-content-center">
         <div className="col col-md-8 text-center">
           <h1>Current Technoledge</h1>
-          <p className="lead">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far <a href="https://www.froala.com">World of Grammar</a>.</p>
+          <p className="lead">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@ function Help(props) {
       <div className="row justify-content-center">
         <div className="col col-md-8 text-center">
           <h1>Why vector searching is Difficult</h1>
-          <p className="lead">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far <a href="https://www.froala.com">World of Grammar</a>.</p>
+          <p className="lead">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far.</p>
         </div>
       </div>
     </div>

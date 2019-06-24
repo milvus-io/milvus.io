@@ -18,6 +18,12 @@
 @media only screen and (min-width: 1500px) {
     
 }
+.paddingTop10 {
+    padding-top: 6%;
+}
+.fixedHeaderContainer header {
+    background-color: transparent;
+}
 .homeContainer {
     position: relative;
 }

@@ -46,6 +46,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
+    {page: 'whatIsVecDb', label: 'What is Vector Database'},
     {doc: 'introduction', label: 'Docs'},
     {page: 'help', label: 'Help'}
     // {blog: false, label: 'Blog'},
@@ -92,8 +93,15 @@ const siteConfig = {
     '/js/clipboard.min.js',
     '/js/code-block-buttons.js',
     '/js/splash.js',
+    '/js/loaded.js'
   ],
-  stylesheets: ['/css/code-block-buttons.css'],
+  stylesheets: [
+    'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
+    'https://fonts.googleapis.com/css?family=Lato',
+    'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/froala-design-blocks/2.0.0/css/froala_blocks.min.css',
+    '/css/code-block-buttons.css'
+  ],
   
   // On page navigation for the current documentation page.
   onPageNav: 'separate',

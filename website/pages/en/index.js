@@ -6,259 +6,413 @@
  */
 
 const React = require('react');
-const classNames = require('classnames');
-
-const CompLibrary = require('../../core/CompLibrary.js');
-
-const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
-const Container = CompLibrary.Container;
-const GridBlock = CompLibrary.GridBlock;
-
-class CustomGridBlock extends GridBlock {
-  constructor(props){
-    super(props)
-  }
-  renderBlock(origBlock) {
-    const blockDefaults = {
-      imageAlign: 'left',
-    };
-
-    const block = Object.assign({},blockDefaults,origBlock);
-
-    const blockClasses = classNames('blockElement', this.props.className, {
-      alignCenter: this.props.align === 'center',
-      alignRight: this.props.align === 'right',
-      fourByGridBlock: this.props.layout === 'fourColumn',
-      imageAlignSide:
-        block.image &&
-        (block.imageAlign === 'left' || block.imageAlign === 'right'),
-      imageAlignTop: block.image && block.imageAlign === 'top',
-      imageAlignRight: block.image && block.imageAlign === 'right',
-      imageAlignBottom: block.image && block.imageAlign === 'bottom',
-      imageAlignLeft: block.image && block.imageAlign === 'left',
-      threeByGridBlock: this.props.layout === 'threeColumn',
-      twoByGridBlock: this.props.layout === 'twoColumn',
-      customBlock: typeof('ahhhhh') == 'string'
-    });
-
-    const topLeftImage =
-      (block.imageAlign === 'top' || block.imageAlign === 'left') &&
-      super.renderBlockImage(block.image, block.imageLink, block.imageAlt);
-
-    const bottomRightImage =
-      (block.imageAlign === 'bottom' || block.imageAlign === 'right') &&
-      super.renderBlockImage(block.image, block.imageLink, block.imageAlt);
-
-    return (
-      <div className={blockClasses} key={block.title}>
-        {topLeftImage}
-        <div className="blockContent customBlockContent">
-          {this.renderBlockTitle(block.title)}
-          <MarkdownBlock>{block.content}</MarkdownBlock>
-        </div>
-        {bottomRightImage}
-      </div>
-    );
-  }
-  renderBlockTitle(title) {
-    if (!title) {
-      return null;
-    }
-
-    return (
-      <h2 className='customGridBlockH2'>
-        <MarkdownBlock >{title}</MarkdownBlock>
-      </h2>
-    );
-  }
-  render(){
-    return(
-      <div className="gridBlock">
-        {this.props.contents.map(this.renderBlock, this)}
-      </div>
-    )
-  }
-  
-}
-
-class HomeSplash extends React.Component {
-  render() {
-    const {siteConfig, language = ''} = this.props;
-    const {baseUrl, docsUrl} = siteConfig;
-    const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
-    const langPart = `${language ? `${language}/` : ''}`;
-    const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`;
-
-    const SplashContainer = props => (
-      <div className="homeContainer">
-        <div className="homeSplashFade customHomeSplash">
-          <div className="wrapper homeWrapper customHomeWrapper">{props.children}</div>
-        </div>
-      </div>
-    );
-
-    const Logo = props => (
-      <div className="projectLogo">
-        <img src={props.img_src} alt="Project Logo" />
-      </div>
-    );
-
-    const ProjectTitle = () => (
-      <h1 className="projectTitle">
-        {siteConfig.title}
-        <small>{siteConfig.tagline}</small>
-      </h1>
-    );
-
-    const PromoSection = props => (
-      <div className="section promoSection">
-        <div className="promoRow">
-          <div className="pluginRowBlock">{props.children}</div>
-        </div>
-      </div>
-    );
-
-    const Button = props => (
-      <div className="pluginWrapper buttonWrapper customButtonWrapper">
-        <a className="button" href={props.href} target={props.target}>
-          {props.children}
-        </a>
-      </div>
-    );
-
-    return (
-      <SplashContainer>
-        <div className="inner">
-          <ProjectTitle siteConfig={siteConfig} />
-          <PromoSection>
-            <Button href="/docs/quick_start">GET STARTED </Button>
-            {/* <Button href="https://mailchi.mp/ec7815c115bc/milvus-download">Download</Button> */}
-            {/* <Button href={docUrl('doc1.html')}>Example Link</Button> */}
-            {/* <Button href={docUrl('doc2.html')}>Example Link 2</Button> */}
-          </PromoSection>
-        </div>
-      </SplashContainer>
-    );
-  }
-}
-
 class Index extends React.Component {
   render() {
     const {config: siteConfig, language = ''} = this.props;
     const {baseUrl} = siteConfig;
 
-    const Block = props => (
-      <Container
-        padding={['bottom', 'top']}
-        id={props.id}
-        background={props.background}>
-        <CustomGridBlock
-          align="center"
-          contents={props.children}
-          layout={props.layout}
-        />
-      </Container>
-    );
-
-    const FeatureCallout = () => (
-      <div
-        className="productShowcaseSection paddingTop paddingBottom"
-        style={{textAlign: 'center'}}>
-        <h2>What is Vector Database</h2>
-        <div style={{lineHeight: '28px'}}>
-        Feature vector, the fundamental abstraction of concerned objects in the realm of AI/ML. <br />
-        Milvus vector database is designed to fulfill the management requirements of massive feature vectors generated in the AI/ML process.  <br />
-        By efficiently storing and indexing the feature vectors, Milvus could help to optimize the vector matching performance in a large scale. <br />
-
-        </div>
-      </div>
-    );
-
-    const Architecture = () => (
-      <div
-        className="productShowcaseSection paddingTop paddingBottom"
-        style={{textAlign: 'center'}}>
-        <h2>Milvus Architecture</h2>
-        <div style={{lineHeight: '28px'}}>
-          <a href="/doc/introduction.html"><img width="50%" src={`./` + baseUrl + `/img/megasearch_arch.svg`} /></a>
-        </div>
-      </div>
-    );
-
-
-    const Features = () => (
-      <div className="lightBackground">
-      <Block layout="fourColumn">
-        {[
-          {
-            content: 'Milvus could support the fearture vectors generated by major AI/ML framework',
-            image: `${baseUrl}img/artificial-intelligence.svg`,
-            imageAlign: 'top',
-            title: 'AI Native',
-          },
-          {
-            content: 'Milvus achieves great peformance with lower cost by employing different types of computing power',
-            image: `${baseUrl}img/circled.svg`,
-            imageAlign: 'top',
-            title: 'Heterogeneous computing',
-          },
-          {
-            content: 'The distributed architecture of Milvus provids high availability and scale out capability',
-            image: `${baseUrl}img/accesibility.svg`,
-            imageAlign: 'top',
-            title: 'Easey to Manage',
-          },
-          
-          {
-            content: 'Milvus runs on public/private/hybrid cloud and on edge server with selected ASIC',
-            image: `${baseUrl}img/share.svg`,
-            imageAlign: 'top',
-            title: 'Deployment Freedom',
-          },
-        ]}
-      </Block>
-      </div>
-    );
-
-    const Showcase = () => {
-      if ((siteConfig.users || []).length === 0) {
-        return null;
-      }
-
-      const showcase = siteConfig.users
-        .filter(user => user.pinned)
-        .map(user => (
-          <a href={user.infoLink} key={user.infoLink}>
-            <img src={user.image} alt={user.caption} title={user.caption} />
-          </a>
-        ));
-
-      const pageUrl = page => baseUrl + (language ? `${language}/` : '') + page;
-
+    const CallToAction = () => {
       return (
-        <div className="productShowcaseSection paddingBottom">
-          <h2>Who is Using This?</h2>
-          <p>This project is used by all these people</p>
-          <div className="logos">{showcase}</div>
-          <div className="more-users">
-            <a className="button" href={pageUrl('users.html')}>
-              More {siteConfig.title} Users
-            </a>
+        <section className="fdb-block fdb-viewport bg-dark" style={{backgroundImage: `url(${baseUrl}images/hero/purple.svg)`}}>
+            <div className="container justify-content-center align-items-center d-flex">
+                <div className="row justify-content-center text-center">
+                    <div className="col-12 col-md-8">
+                        <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
+                        <h1>Milvus</h1>
+                        <p className="lead">A Distributed High Performance Vector Database System</p>
+                        <p className="mt-5"><a href="https://www.zilliz.com" className="btn btn-dark">Get Started</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+      )
+    }
+
+    const WhatIsVecDb = () => {
+      return (
+    <section className="fdb-block">
+      <div className="container">
+        <div className="row text-left align-items-center">
+          <div className="col-10 col-sm-6 m-auto m-lg-0 col-lg-4">
+            <img alt="splash" className="img-fluid" src={`${baseUrl}images/draws/opened.svg`} />
+          </div>
+    
+          <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
+            <h1>What is Vector Database</h1>
+            <p className="lead">Feature vector, the fundamental abstraction of concerned objects in the realm of AI/ML.
+    </p>
+    
+            <div className="row mt-5">
+              <div className="col-12 col-sm-6">
+                <h3><strong>Current Technoledge</strong></h3>
+                <p className="lead">Milvus vector database is designed to fulfill the management requirements of massive feature vectors generated in the AI/ML process.</p>
+                <a href="/whatIsVecDb">Read More</a>
+              </div>
+    
+              <div className="col-12 col-sm-6 pt-3 pt-sm-0">
+                <h3><strong>Vector searching is difficult</strong></h3>
+                <p className="lead">By efficiently storing and indexing the feature vectors, Milvus could help to optimize the vector matching performance in a large scale.</p>
+                <a href="/whatIsVecDb">Read More</a>
+              </div>
+            </div>
           </div>
         </div>
-      );
-    };
+      </div>
+    </section>
+      )
+    }
+
+    const Features = () => {
+      return (
+    <section className="fdb-block">
+      <div className="container">
+        <div className="row text-center">
+          <div className="col-12">
+            <h1>Milvus Features</h1>
+          </div>
+        </div>
+        <div className="row text-left mt-5">
+          <div className="col-12 col-md-4">
+            <div className="row">
+              <div className="col-3 paddingTop10">
+                <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/gift.svg`} />
+              </div>
+              <div className="col-9">
+                <h3><strong>AI Native</strong></h3>
+                <p>Milvus could support the fearture vectors generated by major AI/ML framework</p>
+              </div>
+            </div>
+          </div>
+    
+          <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
+            <div className="row">
+              <div className="col-3 paddingTop10">
+                <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
+              </div>
+              <div className="col-9">
+                <h3><strong>Heterogeneous computing</strong></h3>
+                <p>Milvus achieves great peformance with lower cost by employing different types of computing power</p>
+              </div>
+            </div>
+          </div>
+    
+          <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
+            <div className="row">
+              <div className="col-3 paddingTop10">
+                <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map-pin.svg`} />
+              </div>
+              <div className="col-9">
+                <h3><strong>Easey to Manage</strong></h3>
+                <p>The distributed architecture of Milvus provids high availability and scale out capability</p>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div className="row text-left pt-3 pt-sm-4 pt-md-5">
+          <div className="col-12 col-md-4">
+            <div className="row">
+              <div className="col-3 paddingTop10">
+                <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/life-buoy.svg`} />
+              </div>
+              <div className="col-9">
+                <h3><strong>Deployment Freedom</strong></h3>
+                <p>Milvus runs on public/private/hybrid cloud and on edge server with selected ASIC</p>
+              </div>
+            </div>
+          </div>
+    
+          <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
+            <div className="row">
+              <div className="col-3 paddingTop10">
+                <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+              </div>
+              <div className="col-9">
+                <h3><strong>Feature Five</strong></h3>
+                <p>Separated they live in Bookmarksgrove right at the coast</p>
+              </div>
+            </div>
+          </div>
+    
+          <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
+            <div className="row">
+              <div className="col-3 paddingTop10">
+                <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+              </div>
+              <div className="col-9">
+                <h3><strong>Feature Six</strong></h3>
+                <p>On her way she met a copy. The copy warned the Little Blind Text.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+      )
+    }
+
+    const TechAndArch = () => {
+      return (
+    <section className="fdb-block">
+      <div className="container align-items-center justify-content-center d-flex">
+        <div className="row align-items-center text-left">
+          <div className="col-12 col-sm-6">
+            <img alt="splash" width="440" className="img-fluid" src={`${baseUrl}img/megasearch_arch.svg`} />
+          </div>
+    
+          <div className="col-12 col-lg-5 ml-auto pt-5 pt-lg-0">
+            <h1>Milvus Architecture</h1>
+            <p className="lead">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+            <p className="mt-4"><a href="https://www.zilliz.com" className="btn btn-secondary">Learn More about Milvus Architecture</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+      )
+    }
+
+    const Comparison = () => {
+      return (
+        <section className="fdb-block">
+        <div className="container">
+          <div className="row text-center">
+            <div className="col">
+              <h1>Vector Search Database Comparison</h1>
+            </div>
+          </div>
+      
+          <table className="table text-center mt-5 d-none d-lg-table">
+            <tbody>
+              <tr>
+                <th scope="row" className="border-0"></th>
+                <td className="text-center border-0">
+                  <h2 className="font-weight-light">Hobby</h2>
+                </td>
+                <td className="text-center border-0">
+                  <h2 className="font-weight-light">Professional</h2>
+                </td>
+                <td className="text-center border-0">
+                  <h2 className="font-weight-light">Business</h2>
+                </td>
+                <td className="text-center border-0">
+                  <h2 className="font-weight-light">Enterprise</h2>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Support</th>
+                <td>3 months</td>
+                <td>6 months</td>
+                <td>12 months</td>
+                <td>Custom</td>
+              </tr>
+              <tr>
+                <th scope="row">Full source code</th>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">SaaS / Subscription</th>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Intranet</th>
+                <td></td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Downloadable Software</th>
+                <td></td>
+                <td></td>
+                <td>✓</td>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Redistribute</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Custom code</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>✓</td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <table className="table text-center mt-5 d-table d-lg-none">
+            <tbody>
+              <tr>
+                <td className="text-center border-0" colSpan="2">
+                  <h2 className="font-weight-light">Hobby</h2>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Support</th>
+                <td>3 months</td>
+              </tr>
+              <tr>
+                <th scope="row">Full source code</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">SaaS / Subscription</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Intranet</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">Downloadable Software</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">Redistribute</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">Custom code</th>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <table className="table text-center mt-5 d-table d-lg-none">
+            <tbody>
+              <tr>
+                <td className="text-center" colSpan="2">
+                  <h2 className="font-weight-light">Professional</h2>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Support</th>
+                <td>6 months</td>
+              </tr>
+              <tr>
+                <th scope="row">Full source code</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">SaaS / Subscription</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Intranet</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Downloadable Software</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">Redistribute</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">Custom code</th>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <table className="table text-center mt-5 d-table d-lg-none">
+            <tbody>
+              <tr>
+                <td className="text-center" colSpan="2">
+                  <h2 className="font-weight-light">Business</h2>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Support</th>
+                <td>12 months</td>
+              </tr>
+              <tr>
+                <th scope="row">Full source code</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">SaaS / Subscription</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Intranet</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Downloadable Software</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Redistribute</th>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">Custom code</th>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <table className="table text-center mt-5 d-table d-lg-none">
+            <tbody>
+              <tr>
+                <td className="text-center" colSpan="2">
+                  <h2 className="font-weight-light">Enterprise</h2>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Support</th>
+                <td>Custom</td>
+              </tr>
+              <tr>
+                <th scope="row">Full source code</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">SaaS / Subscription</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Intranet</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Downloadable Software</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Redistribute</th>
+                <td>✓</td>
+              </tr>
+              <tr>
+                <th scope="row">Custom code</th>
+                <td>✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      )
+    }
 
     return (
       <div>
-        <HomeSplash siteConfig={siteConfig} language={language} />
-        <div className="mainContainer">
-          <FeatureCallout />
-          <Architecture />
-          <div className="productShowcaseSection">
-            <Features />
-          </div>
-        </div>
+        <CallToAction />
+        <WhatIsVecDb />
+        <Features />
+        <TechAndArch />
+        <Comparison />
       </div>
     );
   }

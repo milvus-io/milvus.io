@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     const lis = nav.querySelectorAll('li');
     const downloadlink = document.createElement('div');
-    downloadlink.innerHTML = '<a class="edit-page-link button" target="_blank" href="/milus.doc.pdf">Download PDF</a>';
+    downloadlink.innerHTML = '<a class="edit-page-link button" target="_blank" href="/milvus.doc.pdf">Download PDF</a>';
     const last = lis[lis.length - 1];
 
     last.parentNode.appendChild(downloadlink)

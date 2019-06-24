@@ -99,8 +99,7 @@ const siteConfig = {
     'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
     'https://fonts.googleapis.com/css?family=Lato',
     'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/froala-design-blocks/2.0.0/css/froala_blocks.min.css',
-    '/css/code-block-buttons.css'
+    'https://cdnjs.cloudflare.com/ajax/libs/froala-design-blocks/2.0.0/css/froala_blocks.min.css'
   ],
   
   // On page navigation for the current documentation page.

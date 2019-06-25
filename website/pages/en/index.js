@@ -6,6 +6,13 @@
  */
 const React = require('react');
 class Index extends React.Component {
+  docUrl(doc, language) {
+    const baseUrl = this.props.config.baseUrl;
+    const docsUrl = this.props.config.docsUrl;
+    const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
+    const langPart = `${language ? `${language}/` : ''}`;
+    return `${baseUrl}${docsPart}${langPart}${doc}`;
+  }
 
   render() {
     const { config: siteConfig, language = '' } = this.props;
@@ -13,17 +20,17 @@ class Index extends React.Component {
 
     const CallToAction = () => {
       return (
-        <section className="fdb-block fdb-viewport bg-dark" style={{ backgroundImage: `url(${baseUrl}images/hero/purple.svg)` }}>
-          <div className="container justify-content-center align-items-center d-flex">
-            <div className="row justify-content-center text-center">
-              <div className="col-12 col-md-8">
-                <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
-                <h1>Milvus</h1>
-                <p className="lead">A Distributed High Performance Vector Database System</p>
-                <p className="mt-5"><a href="https://www.zilliz.com" className="btn btn-dark">Get Started</a></p>
-              </div>
+        <section className="fdb-block fdb-viewport bg-dark" style={{backgroundImage: `url(${baseUrl}images/hero/purple.svg)`}}>
+            <div className="container justify-content-center align-items-center d-flex">
+                <div className="row justify-content-center text-center">
+                    <div className="col-12 col-md-8">
+                        <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
+                        <h1>Milvus</h1>
+                        <p className="lead">A Distributed High Performance Vector Database System</p>
+                        <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-dark">Get Started</a></p>
+                    </div>
+                </div>
             </div>
-          </div>
         </section>
       )
     }

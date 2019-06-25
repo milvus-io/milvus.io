@@ -16,401 +16,448 @@ class Index extends React.Component {
   }
 
   render() {
-    const {config: siteConfig, language = ''} = this.props;
-    const {baseUrl} = siteConfig;
+    const { config: siteConfig, language = '' } = this.props;
+    const { baseUrl } = siteConfig;
 
     const CallToAction = () => {
       return (
-        <section className="fdb-block fdb-viewport bg-dark" style={{backgroundImage: `url(${baseUrl}images/hero/purple.svg)`}}>
-            <div className="container justify-content-center align-items-center d-flex">
-                <div className="row justify-content-center text-center">
-                    <div className="col-12 col-md-8">
-                        <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
-                        <h1>Milvus</h1>
-                        <p className="lead">A Distributed High Performance Vector Database System</p>
-                        <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-dark">Get Started</a></p>
-                    </div>
-                </div>
+        <section className="fdb-block fdb-viewport bg-dark" style={{ backgroundImage: `url(${baseUrl}images/hero/purple.svg)` }}>
+          <div className="container justify-content-center align-items-center d-flex">
+            <div className="row justify-content-center text-center">
+              <div className="col-12 col-md-8">
+                <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
+                <h1>Milvus</h1>
+                <p className="lead">A Distributed High Performance Vector Database System</p>
+                <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-dark">Get Started</a></p>
+              </div>
             </div>
+          </div>
         </section>
       )
     }
 
     const WhatIsVecDb = () => {
       return (
-    <section className="fdb-block">
-      <div className="container">
-        <div className="row text-left align-items-center">
-          <div className="col-10 col-sm-6 m-auto m-lg-0 col-lg-4">
-            <img alt="splash" className="img-fluid" src={`${baseUrl}images/draws/opened.svg`} />
-          </div>
-    
-          <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
-            <h1>What is Vector Database</h1>
-            <p className="lead">Feature vector, the fundamental abstraction of concerned objects in the realm of AI/ML.
-    </p>
-    
-            <div className="row mt-5">
-              <div className="col-12 col-sm-6">
-                <h3><strong>Current Technoledge</strong></h3>
-                <p className="lead">Milvus vector database is designed to fulfill the management requirements of massive feature vectors generated in the AI/ML process.</p>
-                <a href="/whatIsVecDb">Read More</a>
+        <section className="fdb-block">
+          <div className="container">
+            <div className="row text-left align-items-center">
+              <div className="col-10 col-sm-6 m-auto m-lg-0 col-lg-4">
+                <img alt="splash" className="img-fluid" src={`${baseUrl}images/draws/opened.svg`} />
               </div>
-    
-              <div className="col-12 col-sm-6 pt-3 pt-sm-0">
-                <h3><strong>Vector searching is difficult</strong></h3>
-                <p className="lead">By efficiently storing and indexing the feature vectors, Milvus could help to optimize the vector matching performance in a large scale.</p>
-                <a href="/whatIsVecDb">Read More</a>
+
+              <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
+                <h1>What is Vector Database</h1>
+                <p className="lead">Feature vector, the fundamental abstraction of concerned objects in the realm of AI/ML.
+    </p>
+
+                <div className="row mt-5">
+                  <div className="col-12 col-sm-6">
+                    <h3><strong>Current Technoledge</strong></h3>
+                    <p className="lead">Milvus vector database is designed to fulfill the management requirements of massive feature vectors generated in the AI/ML process.</p>
+                    <a href="/whatIsVecDb">Read More</a>
+                  </div>
+
+                  <div className="col-12 col-sm-6 pt-3 pt-sm-0">
+                    <h3><strong>Vector searching is difficult</strong></h3>
+                    <p className="lead">By efficiently storing and indexing the feature vectors, Milvus could help to optimize the vector matching performance in a large scale.</p>
+                    <a href="/whatIsVecDb">Read More</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
       )
     }
 
     const Features = () => {
       return (
-    <section className="fdb-block">
-      <div className="container">
-        <div className="row text-center">
-          <div className="col-12">
-            <h1>Milvus Features</h1>
-          </div>
-        </div>
-        <div className="row text-left mt-5">
-          <div className="col-12 col-md-4">
-            <div className="row">
-              <div className="col-3 paddingTop10">
-                <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/gift.svg`} />
+        <section className="fdb-block">
+          <div className="container">
+            <div className="row text-center">
+              <div className="col-12">
+                <h1>Milvus Features</h1>
               </div>
-              <div className="col-9">
-                <h3><strong>AI Native</strong></h3>
-                <p>Milvus could support the fearture vectors generated by major AI/ML framework</p>
+            </div>
+            <div className="row text-left mt-5">
+              <div className="col-12 col-md-4">
+                <div className="row">
+                  <div className="col-3 paddingTop10">
+                    <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/gift.svg`} />
+                  </div>
+                  <div className="col-9">
+                    <h3><strong>AI Native</strong></h3>
+                    <p>Milvus could support the fearture vectors generated by major AI/ML framework</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
+                <div className="row">
+                  <div className="col-3 paddingTop10">
+                    <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
+                  </div>
+                  <div className="col-9">
+                    <h3><strong>Heterogeneous computing</strong></h3>
+                    <p>Milvus achieves great peformance with lower cost by employing different types of computing power</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
+                <div className="row">
+                  <div className="col-3 paddingTop10">
+                    <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map-pin.svg`} />
+                  </div>
+                  <div className="col-9">
+                    <h3><strong>Easey to Manage</strong></h3>
+                    <p>The distributed architecture of Milvus provids high availability and scale out capability</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row text-left pt-3 pt-sm-4 pt-md-5">
+              <div className="col-12 col-md-4">
+                <div className="row">
+                  <div className="col-3 paddingTop10">
+                    <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/life-buoy.svg`} />
+                  </div>
+                  <div className="col-9">
+                    <h3><strong>Deployment Freedom</strong></h3>
+                    <p>Milvus runs on public/private/hybrid cloud and on edge server with selected ASIC</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
+                <div className="row">
+                  <div className="col-3 paddingTop10">
+                    <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+                  </div>
+                  <div className="col-9">
+                    <h3><strong>Feature Five</strong></h3>
+                    <p>Separated they live in Bookmarksgrove right at the coast</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
+                <div className="row">
+                  <div className="col-3 paddingTop10">
+                    <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+                  </div>
+                  <div className="col-9">
+                    <h3><strong>Feature Six</strong></h3>
+                    <p>On her way she met a copy. The copy warned the Little Blind Text.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-    
-          <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-            <div className="row">
-              <div className="col-3 paddingTop10">
-                <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
-              </div>
-              <div className="col-9">
-                <h3><strong>Heterogeneous computing</strong></h3>
-                <p>Milvus achieves great peformance with lower cost by employing different types of computing power</p>
-              </div>
-            </div>
-          </div>
-    
-          <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-            <div className="row">
-              <div className="col-3 paddingTop10">
-                <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map-pin.svg`} />
-              </div>
-              <div className="col-9">
-                <h3><strong>Easey to Manage</strong></h3>
-                <p>The distributed architecture of Milvus provids high availability and scale out capability</p>
-              </div>
-            </div>
-          </div>
-        </div>
-    
-        <div className="row text-left pt-3 pt-sm-4 pt-md-5">
-          <div className="col-12 col-md-4">
-            <div className="row">
-              <div className="col-3 paddingTop10">
-                <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/life-buoy.svg`} />
-              </div>
-              <div className="col-9">
-                <h3><strong>Deployment Freedom</strong></h3>
-                <p>Milvus runs on public/private/hybrid cloud and on edge server with selected ASIC</p>
-              </div>
-            </div>
-          </div>
-    
-          <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-            <div className="row">
-              <div className="col-3 paddingTop10">
-                <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
-              </div>
-              <div className="col-9">
-                <h3><strong>Feature Five</strong></h3>
-                <p>Separated they live in Bookmarksgrove right at the coast</p>
-              </div>
-            </div>
-          </div>
-    
-          <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-            <div className="row">
-              <div className="col-3 paddingTop10">
-                <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
-              </div>
-              <div className="col-9">
-                <h3><strong>Feature Six</strong></h3>
-                <p>On her way she met a copy. The copy warned the Little Blind Text.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
       )
     }
 
     const TechAndArch = () => {
       return (
-    <section className="fdb-block">
-      <div className="container align-items-center justify-content-center d-flex">
-        <div className="row align-items-center text-left">
-          <div className="col-12 col-sm-6">
-            <img alt="splash" width="440" className="img-fluid" src={`${baseUrl}img/megasearch_arch.svg`} />
+        <section className="fdb-block">
+          <div className="container align-items-center justify-content-center d-flex">
+            <div className="row align-items-center text-left">
+              <div className="col-12 col-sm-6">
+                <img alt="splash" width="440" className="img-fluid" src={`${baseUrl}img/megasearch_arch.svg`} />
+              </div>
+
+              <div className="col-12 col-lg-5 ml-auto pt-5 pt-lg-0">
+                <h1>Milvus Architecture</h1>
+                <p className="lead">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+                <p className="mt-4"><a href="https://www.zilliz.com" className="btn btn-secondary">Learn More about Milvus Architecture</a></p>
+              </div>
+            </div>
           </div>
-    
-          <div className="col-12 col-lg-5 ml-auto pt-5 pt-lg-0">
-            <h1>Milvus Architecture</h1>
-            <p className="lead">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-            <p className="mt-4"><a href="https://www.zilliz.com" className="btn btn-secondary">Learn More about Milvus Architecture</a></p>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
       )
     }
 
     const Comparison = () => {
       return (
         <section className="fdb-block">
-        <div className="container">
-          <div className="row text-center">
-            <div className="col">
-              <h1>Vector Search Database Comparison</h1>
+          <div className="container">
+            <div className="row text-center">
+              <div className="col">
+                <h1>Vector Search Database Comparison</h1>
+              </div>
             </div>
+            <table className="table text-center mt-5 d-none d-lg-table">
+              <tbody>
+                <tr>
+                  <th scope="row" className="border-0"></th>
+                  <td className="text-center border-0">
+                    <h2 className="font-weight-light">Hobby</h2>
+                  </td>
+                  <td className="text-center border-0">
+                    <h2 className="font-weight-light">Professional</h2>
+                  </td>
+                  <td className="text-center border-0">
+                    <h2 className="font-weight-light">Business</h2>
+                  </td>
+                  <td className="text-center border-0">
+                    <h2 className="font-weight-light">Enterprise</h2>
+                  </td>
+                </tr>
+                <tr className='Hobby2'>
+                  <th scope="row" className="border-0">Hobby2</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-half"></div></td>
+                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr className='content' style={{ display: 'table-row' }} >
+                  <td colSpan='5'>
+                    <ul>
+                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
+                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
+                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Support</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-half"></div></td>
+                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr className='content' style={{ display: 'table-row' }} >
+                  <td colSpan='5'>
+                    <ul>
+                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
+                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
+                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" >Full source code</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-half"></div></td>
+                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr className='content' style={{ display: 'table-row' }} >
+                  <td colSpan='5'>
+                    <ul>
+                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
+                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
+                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">SaaS / Subscription</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-half"></div></td>
+                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr className='content' style={{ display: 'table-row' }} >
+                  <td colSpan='5'>
+                    <span>Can you build your site as 'static' files which can be deployed without a server, cached on CDN distributed throughout the globe?
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Intranet</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-half"></div></td>
+                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr className='content' style={{ display: 'table-row' }} >
+                  <td className='content' colSpan='5'>
+                    <ul>
+                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
+                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
+                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Downloadable Software</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-half"></div></td>
+                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Redistribute</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-half"></div></td>
+                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Custom code</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-half"></div></td>
+                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+              </tbody>
+            </table>
+            <table className="table text-center mt-5 d-table d-lg-none">
+              <tbody>
+                <tr>
+                  <td className="text-center border-0" colSpan="2">
+                    <h2 className="font-weight-light">Hobby</h2>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Support</th>
+                  <td>3 months</td>
+                </tr>
+                <tr>
+                  <th scope="row">Full source code</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">SaaS / Subscription</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Intranet</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Downloadable Software</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Redistribute</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Custom code</th>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table className="table text-center mt-5 d-table d-lg-none">
+              <tbody>
+                <tr>
+                  <td className="text-center" colSpan="2">
+                    <h2 className="font-weight-light">Professional</h2>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Support</th>
+                  <td>6 months</td>
+                </tr>
+                <tr>
+                  <th scope="row">Full source code</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">SaaS / Subscription</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Intranet</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Downloadable Software</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Redistribute</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Custom code</th>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table className="table text-center mt-5 d-table d-lg-none">
+              <tbody>
+                <tr>
+                  <td className="text-center" colSpan="2">
+                    <h2 className="font-weight-light">Business</h2>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Support</th>
+                  <td>12 months</td>
+                </tr>
+                <tr>
+                  <th scope="row">Full source code</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">SaaS / Subscription</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Intranet</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Downloadable Software</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Redistribute</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Custom code</th>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table className="table text-center mt-5 d-table d-lg-none">
+              <tbody>
+                <tr>
+                  <td className="text-center" colSpan="2">
+                    <h2 className="font-weight-light">Enterprise</h2>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Support</th>
+                  <td>Custom</td>
+                </tr>
+                <tr>
+                  <th scope="row">Full source code</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">SaaS / Subscription</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Intranet</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Downloadable Software</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Redistribute</th>
+                  <td>✓</td>
+                </tr>
+                <tr>
+                  <th scope="row">Custom code</th>
+                  <td>✓</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-      
-          <table className="table text-center mt-5 d-none d-lg-table">
-            <tbody>
-              <tr>
-                <th scope="row" className="border-0"></th>
-                <td className="text-center border-0">
-                  <h2 className="font-weight-light">Hobby</h2>
-                </td>
-                <td className="text-center border-0">
-                  <h2 className="font-weight-light">Professional</h2>
-                </td>
-                <td className="text-center border-0">
-                  <h2 className="font-weight-light">Business</h2>
-                </td>
-                <td className="text-center border-0">
-                  <h2 className="font-weight-light">Enterprise</h2>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Support</th>
-                <td>3 months</td>
-                <td>6 months</td>
-                <td>12 months</td>
-                <td>Custom</td>
-              </tr>
-              <tr>
-                <th scope="row">Full source code</th>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">SaaS / Subscription</th>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Intranet</th>
-                <td></td>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Downloadable Software</th>
-                <td></td>
-                <td></td>
-                <td>✓</td>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Redistribute</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Custom code</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>✓</td>
-              </tr>
-            </tbody>
-          </table>
-      
-          <table className="table text-center mt-5 d-table d-lg-none">
-            <tbody>
-              <tr>
-                <td className="text-center border-0" colSpan="2">
-                  <h2 className="font-weight-light">Hobby</h2>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Support</th>
-                <td>3 months</td>
-              </tr>
-              <tr>
-                <th scope="row">Full source code</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">SaaS / Subscription</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Intranet</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row">Downloadable Software</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row">Redistribute</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row">Custom code</th>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-      
-          <table className="table text-center mt-5 d-table d-lg-none">
-            <tbody>
-              <tr>
-                <td className="text-center" colSpan="2">
-                  <h2 className="font-weight-light">Professional</h2>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Support</th>
-                <td>6 months</td>
-              </tr>
-              <tr>
-                <th scope="row">Full source code</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">SaaS / Subscription</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Intranet</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Downloadable Software</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row">Redistribute</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row">Custom code</th>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-      
-          <table className="table text-center mt-5 d-table d-lg-none">
-            <tbody>
-              <tr>
-                <td className="text-center" colSpan="2">
-                  <h2 className="font-weight-light">Business</h2>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Support</th>
-                <td>12 months</td>
-              </tr>
-              <tr>
-                <th scope="row">Full source code</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">SaaS / Subscription</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Intranet</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Downloadable Software</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Redistribute</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row">Custom code</th>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-      
-          <table className="table text-center mt-5 d-table d-lg-none">
-            <tbody>
-              <tr>
-                <td className="text-center" colSpan="2">
-                  <h2 className="font-weight-light">Enterprise</h2>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Support</th>
-                <td>Custom</td>
-              </tr>
-              <tr>
-                <th scope="row">Full source code</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">SaaS / Subscription</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Intranet</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Downloadable Software</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Redistribute</th>
-                <td>✓</td>
-              </tr>
-              <tr>
-                <th scope="row">Custom code</th>
-                <td>✓</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        </section>
       )
     }
 

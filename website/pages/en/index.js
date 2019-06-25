@@ -7,6 +7,14 @@
 
 const React = require('react');
 class Index extends React.Component {
+  docUrl(doc, language) {
+    const baseUrl = this.props.config.baseUrl;
+    const docsUrl = this.props.config.docsUrl;
+    const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
+    const langPart = `${language ? `${language}/` : ''}`;
+    return `${baseUrl}${docsPart}${langPart}${doc}`;
+  }
+
   render() {
     const {config: siteConfig, language = ''} = this.props;
     const {baseUrl} = siteConfig;
@@ -20,7 +28,7 @@ class Index extends React.Component {
                         <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
                         <h1>Milvus</h1>
                         <p className="lead">A Distributed High Performance Vector Database System</p>
-                        <p className="mt-5"><a href="https://www.zilliz.com" className="btn btn-dark">Get Started</a></p>
+                        <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-dark">Get Started</a></p>
                     </div>
                 </div>
             </div>

@@ -1,13 +1,13 @@
 function getOpacity(i) {
     let opacity = Math.random();
-    while(opacity > 0.5) {
+    while(opacity > 0.6) {
         opacity = Math.random();
     }
     return opacity;
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
-    let container = document.querySelector('.homeContainer');
+    let container = document.querySelector('.splash-container');
     if (!container) return;
     let rows = Math.floor(window.screen.height / 42);
     let cols = Math.floor(window.screen.width / 8);

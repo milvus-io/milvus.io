@@ -21,14 +21,14 @@ class Index extends React.Component {
 
     const CallToAction = () => {
       return (
-        <section className="fdb-block fdb-viewport bg-dark" style={{ backgroundImage: `url(${baseUrl}images/hero/purple.svg)` }}>
-          <div className="container justify-content-center align-items-center d-flex">
-            <div className="row justify-content-center text-center">
+        <section className="fdb-block fdb-viewport splash-container" style={{ }}>
+          <div className="container justify-content-center align-items-center d-flex splash-container">
+            <div className="row justify-content-center text-center splash-content">
               <div className="col-12 col-md-8">
                 <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
-                <h1>Milvus</h1>
-                <p className="lead">A Distributed High Performance Vector Database System</p>
-                <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-dark">Get Started</a></p>
+                <h1 className="text-primary">Milvus</h1>
+                <p className="lead text-secondary">A Distributed High Performance Vector Database System</p>
+                <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-primary">Get Started</a></p>
               </div>
             </div>
           </div>
@@ -171,7 +171,7 @@ class Index extends React.Component {
               <div className="col-12 col-lg-5 ml-auto pt-5 pt-lg-0">
                 <h1>Milvus Architecture</h1>
                 <p className="lead">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                <p className="mt-4"><a href="https://www.zilliz.com" className="btn btn-secondary">Learn More about Milvus Architecture</a></p>
+                <p className="mt-4"><a href={this.docUrl('UserGuide/#system-architecture', language)} className="btn btn-secondary">Learn More about Milvus Architecture</a></p>
               </div>
             </div>
           </div>

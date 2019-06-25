@@ -212,7 +212,7 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-quater"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'table-row' }} >
+                <tr className='content' style={{ display: 'none' }} >
                   <td colSpan='5'>
                     <ul>
                       <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
@@ -228,7 +228,7 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-quater"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'table-row' }} >
+                <tr className='content' style={{ display: 'none' }} >
                   <td colSpan='5'>
                     <ul>
                       <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
@@ -244,7 +244,7 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-quater"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'table-row' }} >
+                <tr className='content' style={{ display: 'none' }} >
                   <td colSpan='5'>
                     <ul>
                       <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
@@ -260,7 +260,7 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-quater"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'table-row' }} >
+                <tr className='content' style={{ display: 'none' }} >
                   <td colSpan='5'>
                     <span>Can you build your site as 'static' files which can be deployed without a server, cached on CDN distributed throughout the globe?
                     </span>
@@ -273,7 +273,7 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-quater"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'table-row' }} >
+                <tr className='content' style={{ display: 'none' }} >
                   <td className='content' colSpan='5'>
                     <ul>
                       <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>

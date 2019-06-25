@@ -1,4 +1,11 @@
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', () => {
+
+    const trs = document.querySelectorAll('tr');
+    [].forEach.call(trs, tr => tr.addEventListener('click', () => {
+        const content = tr.nextSibling;
+        if(content.className) content.style.display = content.style.display == 'none' ? 'table-row' : 'none';
+    }))
+
     const nav = document.querySelector('.toc');
     if (!nav) return;
 

@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', ()=>{
+    // $('tbody').on('click', 'tr', event => console.log($(event.target).html()))
+
+    const trs = document.querySelectorAll('tr');
+    [].forEach.call(trs, tr => tr.addEventListener('click', ()=>{
+        const classname = event.currentTarget.className;
+        const content = document.getElementById(classname);
+        content.style.display = content.style.display == 'none' ? 'table-row': 'none';
+    }))
+
     const nav = document.querySelector('.toc');
     if (!nav) return;
 

@@ -93,7 +93,8 @@ const siteConfig = {
     '/js/clipboard.min.js',
     '/js/code-block-buttons.js',
     '/js/splash.js',
-    '/js/loaded.js'
+    '/js/loaded.js',
+    "https://code.jquery.com/jquery-3.4.1.min.js"
   ],
   stylesheets: [
     'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',

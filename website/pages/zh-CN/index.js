@@ -47,8 +47,6 @@ class Index extends React.Component {
 
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>什么是向量数据库</h1>
-                
-
                 <div className="row mt-5">
                   <div className="col-12 col-sm-6">
                     <h3><strong>什么是向量</strong></h3>
@@ -202,10 +200,10 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr className='Hobby2'>
-                  <th scope="row" className="border-0">Hobby2</th>
+                  <th scope="row" className="border-0">CPU/GPU异构计算能力</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-half"></div></td>
-                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr className='content' style={{ display: 'none' }} >
                   <td colSpan='5'>
@@ -217,10 +215,10 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Support</th>
+                  <th scope="row">量化索引</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-half"></div></td>
-                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr className='content' style={{ display: 'none' }} >
                   <td colSpan='5'>
@@ -232,10 +230,10 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row" >Full source code</th>
+                  <th scope="row" >哈希索引</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-half"></div></td>
-                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr className='content' style={{ display: 'none' }} >
                   <td colSpan='5'>
@@ -247,10 +245,10 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">SaaS / Subscription</th>
+                  <th scope="row">图索引</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-half"></div></td>
-                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr className='content' style={{ display: 'none' }} >
                   <td colSpan='5'>
@@ -259,10 +257,10 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Intranet</th>
+                  <th scope="row">高可用设计</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-half"></div></td>
-                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr className='content' style={{ display: 'none' }} >
                   <td className='content' colSpan='5'>
@@ -274,22 +272,34 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Downloadable Software</th>
+                  <th scope="row">分布式架构</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-half"></div></td>
-                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Redistribute</th>
+                  <th scope="row">易用标准化用户接口</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-half"></div></td>
-                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
+                  <th scope="row">图形化监控工具</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-half"></div></td>
-                  <td className="css-7sa0gy"><div className="css-quater"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">企业级用户支持</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">灵活的商业模式</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
               </tbody>
             </table>

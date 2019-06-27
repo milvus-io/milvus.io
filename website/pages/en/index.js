@@ -47,18 +47,17 @@ class Index extends React.Component {
 
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>What is Vector Database</h1>
-                <p className="lead">Feature vector, the fundamental abstraction of concerned objects in the realm of AI/ML.
-    </p>
+                <p className="lead">Feature vector, the fundamental abstraction of concerned objects in the realm of AI/ML.</p>
 
                 <div className="row mt-5">
                   <div className="col-12 col-sm-6">
-                    <h3><strong>Current Technoledge</strong></h3>
-                    <p className="lead">Milvus vector database is designed to fulfill the management requirements of massive feature vectors generated in the AI/ML process.</p>
+                    <h3><strong>What is Vector</strong></h3>
+                    <p className="lead">A vector is a series of numbers. It is like a matrix with only one row but multiple columns (or only one column but multiple rows), for example [2,0,1,9,0,6,3,0].</p>
                     <a href="/whatIsVecDb">Read More</a>
                   </div>
 
                   <div className="col-12 col-sm-6 pt-3 pt-sm-0">
-                    <h3><strong>Vector searching is difficult</strong></h3>
+                    <h3><strong>Vector Database</strong></h3>
                     <p className="lead">By efficiently storing and indexing the feature vectors, Milvus could help to optimize the vector matching performance in a large scale.</p>
                     <a href="/whatIsVecDb">Read More</a>
                   </div>

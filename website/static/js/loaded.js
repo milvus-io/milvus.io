@@ -7,20 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }))
 
     // multiple language
-    const headerNavCon = document.querySelector('.nav-site');
-    const languageMenu = document.querySelector('.nav-site>span');
-    languageMenu.style.display = 'none';
-    const languageMap = {
-        'en': 'English',
-        'zh-CN': '简体中文'
-    };
-    Object.keys(languageMap).forEach(l => {
-        const li = document.createElement('li');
-        let href = window.location.href.replace(/en|zh-CN/, l);
+    // const headerNavCon = document.querySelector('.nav-site');
+    // const languageMenu = document.querySelector('.nav-site>span');
+    // languageMenu.style.display = 'none';
+    // const languageMap = {
+    //     'en': 'English',
+    //     'zh-CN': '简体中文'
+    // };
+    // Object.keys(languageMap).forEach(l => {
+    //     const li = document.createElement('li');
+    //     let href = window.location.pathname.replace(/en|zh-CN/, l);
 
-        li.innerHTML = `<a href="${href}" data-v="${l}">${languageMap[l]}</a>`;
-        headerNavCon.appendChild(li);
-    });
+    //     li.innerHTML = `<a href="${href}" target="_self" data-v="${l}">${languageMap[l]}</a>`;
+    //     headerNavCon.appendChild(li);
+    // });
 
     // download pdf 
     const nav = document.querySelector('.toc');

@@ -72,6 +72,9 @@
 .text-primary {
   color: #33b6f2 !important;
 }
+/* .nav-site>span {
+  display: none;
+} */
 
 /* "Copy" code block button */
 pre {

@@ -25,22 +25,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // download pdf 
     const nav = document.querySelector('.toc');
     if (!nav) return;
-
+    
+    // add Download PDF button
     const createDownloadPdfElement = node => {
         const parent = node.parentNode;
         const arr = window.location.href.split('/');
-        const targetName = arr[arr.length-1];
-        const targetLink = `/${targetName}.md.pdf`
+        const len = arr.length;
+        const targetName = arr[len-1] === '' ? arr[len-2] : arr[len-1];
+        const targetLink = `${window.location.origin}/${targetName}.md.pdf`
         
         const downloadlink = document.createElement('div');
         downloadlink.innerHTML = `
             <a class="edit-page-link button" style="margin-left:10px !important;" target="_blank" href= ${targetLink} >
             <i class="fas fa-file-pdf"></i>
-                &nbsp;Download PDF 
+                &nbsp; PDF 
             </a>`;
         parent.insertBefore(downloadlink, node)
         return false;
     }
+    // add Download PDF button
     const editButtonEle = document.querySelector('.edit-page-link');
-    if(editButtonEle) createDownloadPdfElement(editButtonEle);
+    if(editButtonEle) {
+        createDownloadPdfElement(editButtonEle);
+        const span = document.createElement('span');
+        span.innerHTML=`<i class="far fa-edit"></i> &nbsp;`
+        editButtonEle.insertBefore(span, editButtonEle.lastChild)
+    }
+
 });

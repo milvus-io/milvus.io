@@ -46,7 +46,7 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {page: 'whatIsVecDb', label: 'What is Vector Database'},
+    {doc: 'VectorDBIntro', label: 'About Milvus'},
     {doc: 'QuickStart', label: 'Docs'}
     // {page: 'help', label: 'Help'}
     // {blog: false, label: 'Blog'},
@@ -57,7 +57,7 @@ const siteConfig = {
 
   /* path to images for header/footer */
   headerIcon: 'img/logo128.png',
-  footerIcon: 'img/logo128.png',
+  footerIcon: '',
   favicon: 'img/favicon.ico',
 
   /* Colors for website */

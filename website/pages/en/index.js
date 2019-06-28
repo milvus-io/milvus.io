@@ -24,10 +24,10 @@ class Index extends React.Component {
         <section className="fdb-block fdb-viewport splash-container" style={{ }}>
           <div className="container justify-content-center align-items-center d-flex splash-container">
             <div className="row justify-content-center text-center splash-content">
-              <div className="col-12 col-md-8">
+              <div className="col-12 col-md-12">
                 <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
                 <h1 className="text-primary">Milvus</h1>
-                <p className="lead text-secondary">A Distributed High Performance Vector Database System</p>
+                <p className="lead text-secondary">An intelligent feature vector indexing database that allows you to access data at unparalleled speed.</p>
                 <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-primary">Get Started</a></p>
               </div>
             </div>
@@ -46,22 +46,11 @@ class Index extends React.Component {
               </div>
 
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
-                <h1>What is Vector Database</h1>
-                <p className="lead">Feature vector, the fundamental abstraction of concerned objects in the realm of AI/ML.</p>
-
-                <div className="row mt-5">
-                  <div className="col-12 col-sm-6">
-                    <h3><strong>What is Vector</strong></h3>
-                    <p className="lead">A vector is a series of numbers. It is like a matrix with only one row but multiple columns (or only one column but multiple rows), for example [2,0,1,9,0,6,3,0].</p>
-                    <a href="/whatIsVecDb">Read More</a>
-                  </div>
-
-                  <div className="col-12 col-sm-6 pt-3 pt-sm-0">
-                    <h3><strong>Vector Database</strong></h3>
-                    <p className="lead">By efficiently storing and indexing the feature vectors, Milvus could help to optimize the vector matching performance in a large scale.</p>
-                    <a href="/whatIsVecDb">Read More</a>
-                  </div>
-                </div>
+                <h1>What is Milvus</h1>
+                <p className="lead">
+                Designed by ZILLIZ, Milvus is a distributed GPU database for massive feature vector analytics. Built on GPU/CPU heterogeneous computing architecture, multibillion row datasets can now be queried in seconds, at massively reduced cost. 
+              <a href="/whatIsVecDb">Read More</a>
+                </p>
               </div>
             </div>
           </div>
@@ -85,8 +74,8 @@ class Index extends React.Component {
                     <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/gift.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>Smart Index</strong></h3>
-                    <p>Milvus provids different types of indexes, including optimized quantization index, tree and graph index and etc. User could choose proper index for different kinds of vector spaces. </p>
+                    <h3><strong>Wonderful Performance</strong></h3>
+                    <p>Built on CPU/GPU heterogeneous computing architecture, the data processing speed is more than 1000 times faster than traditional database.</p>
                   </div>
                 </div>
               </div>
@@ -97,8 +86,8 @@ class Index extends React.Component {
                     <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>High Availability</strong></h3>
-                    <p>The distributed cluster architecture provides continuous service capability while some of the nodes fail.</p>
+                    <h3><strong>Intelligent Index</strong></h3>
+                    <p>With optimized quantization index, tree and graph index, etc., you can choose the proper index to easily adapt to your businesses.</p>
                   </div>
                 </div>
               </div>
@@ -110,7 +99,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>High Elasticity</strong></h3>
-                    <p>The disaggregated storage and compute architecture provides better flexibility.</p>
+                    <p>Change the computing and storage nodes as your business expands,  The disaggregated storage and compute architecture allow you to flexibility change the computing and storage nodes as the business expands. </p>
                   </div>
                 </div>
               </div>
@@ -123,8 +112,8 @@ class Index extends React.Component {
                     <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/life-buoy.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>High Performance</strong></h3>
-                    <p>Accelerate the indexing speed by the heterogeneous computing architecture.</p>
+                    <h3><strong>High Availability</strong></h3>
+                    <p>The distributed cluster architecture provides continuous service capability while some of the nodes fail.</p>
                   </div>
                 </div>
               </div>
@@ -135,8 +124,8 @@ class Index extends React.Component {
                     <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>Fully Compatibility</strong></h3>
-                    <p>Milvus is compatible with major AI/ML framework and programming language.</p>
+                    <h3><strong>Easy Integration</strong></h3>
+                    <p>Compatible with major AI/ML framework and programming language.</p>
                   </div>
                 </div>
               </div>
@@ -147,8 +136,8 @@ class Index extends React.Component {
                     <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>Lower Cost</strong></h3>
-                    <p>Maximize the computing power of a cluster by employing GPU.</p>
+                    <h3><strong>Easy to use</strong></h3>
+                    <p>With Python/C++ based client SDK as well as visualized GUI monitoring dashboard, Milvus ensures you have outstanding ease of use.</p>
                   </div>
                 </div>
               </div>
@@ -202,19 +191,10 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr className='Hobby2'>
-                  <th scope="row" className="border-0">CPU/GPU heterogeneous computing</th>
+                  <th scope="row" className="border-0">CPU/GPU heterogeneous computing capability</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
-                </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td colSpan='5'>
-                    <ul>
-                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
-                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
-                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
-                    </ul>
-                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Quantization index</th>
@@ -222,29 +202,11 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td colSpan='5'>
-                    <ul>
-                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
-                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
-                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
-                    </ul>
-                  </td>
-                </tr>
                 <tr>
                   <th scope="row" >Hash index</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
-                </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td colSpan='5'>
-                    <ul>
-                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
-                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
-                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
-                    </ul>
-                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Graph index</th>
@@ -252,26 +214,11 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td colSpan='5'>
-                    <span>Can you build your site as 'static' files which can be deployed without a server, cached on CDN distributed throughout the globe?
-                    </span>
-                  </td>
-                </tr>
                 <tr>
                   <th scope="row">High availability</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
-                </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td className='content' colSpan='5'>
-                    <ul>
-                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
-                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
-                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
-                    </ul>
-                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Distributed architecture</th>
@@ -280,25 +227,37 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Easy to use</th>
+                  <th scope="row">Easy-to-use user interface</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">GUI monitoring interface</th>
+                  <th scope="row">GUI monitoring dashboard</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row"> Enterprise support</th>
+                  <th scope="row">Simple deployment</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row"> Flexible business model</th>
+                  <th scope="row">C++/Python SDK</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">RESTful API	</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Enterprise user support</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
@@ -462,11 +421,11 @@ class Index extends React.Component {
     }
 
     return (
-      <div>
+      <div class="page">
         <CallToAction />
         <WhatIsVecDb />
         <Features />
-        <TechAndArch />
+        {/* <TechAndArch /> */}
         <Comparison />
       </div>
     );

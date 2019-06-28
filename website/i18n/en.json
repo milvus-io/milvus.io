@@ -9,6 +9,9 @@
         "title": "Changelog",
         "sidebar_label": "Milvus Changelog"
       },
+      "PythonSDKParam": {
+        "title": "PythonSDKParam"
+      },
       "QuickStart": {
         "title": "Milvus Quick Start",
         "sidebar_label": "Milvus Quick Start"
@@ -16,21 +19,42 @@
       "README": {
         "title": "README"
       },
+      "ReleaseNote": {
+        "title": "Release Note",
+        "sidebar_label": "Milvus Docker版本发布说明"
+      },
       "UserGuide": {
         "title": "Milvus User Guide",
         "sidebar_label": "Milvus User Guide"
       },
+      "VectorDBIntro": {
+        "title": "Vector DB Introducation",
+        "sidebar_label": "Vector Database Introducation"
+      },
+      "WhitePaper": {
+        "title": "Milvus白皮书",
+        "sidebar_label": "Milvus白皮书"
+      },
+      "zh-CN/FAQ": {
+        "title": "zh-CN/FAQ"
+      },
       "zh-CN/QuickStart": {
-        "title": "QuickStart",
+        "title": "Milvus Quick Start",
         "sidebar_label": "Milvus快速入门"
       },
       "zh-CN/ReleaseNote": {
         "title": "Release Note",
         "sidebar_label": "Milvus Docker版本发布说明"
       },
+      "zh-CN/SDKRef": {
+        "title": "zh-CN/SDKRef"
+      },
       "zh-CN/UserGuide": {
-        "title": "Milvus用户指南",
-        "sidebar_label": "Milvus用户指南"
+        "title": "Milvus User Guide",
+        "sidebar_label": "Milvus User Guide"
+      },
+      "zh-CN/VectorDBIntro": {
+        "title": "zh-CN/VectorDBIntro"
       },
       "zh-CN/WhitePaper": {
         "title": "Milvus白皮书",
@@ -38,12 +62,13 @@
       }
     },
     "links": {
-      "What is Vector Database": "What is Vector Database",
+      "About Milvus": "About Milvus",
       "Docs": "Docs"
     },
     "categories": {
-      "Quick Start": "Quick Start",
-      "UserGuide": "UserGuide"
+      "Milvus Intro": "Milvus Intro",
+      "User Guide": "User Guide",
+      "Release Note": "Release Note"
     }
   },
   "pages-strings": {

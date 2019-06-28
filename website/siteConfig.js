@@ -47,9 +47,9 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {page: 'whatIsVecDb', label: 'What is Vector Database'},
-    {doc: 'QuickStart', label: 'Docs'}
+    {doc: 'QuickStart', label: 'Docs'},
     // {page: 'help', label: 'Help'}
-    // {blog: false, label: 'Blog'},
+    // {blog: true, label: 'Blog'},
   ],
 
   // If you have users set above, you add it here:

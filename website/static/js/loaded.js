@@ -4,23 +4,35 @@ document.addEventListener('DOMContentLoaded', () => {
     [].forEach.call(trs, tr => tr.addEventListener('click', () => {
         const content = tr.nextSibling;
         if(content.className) content.style.display = content.style.display == 'none' ? 'table-row' : 'none';
-    }))
+    }));
+
+    // decorate special link to button style
+    // const decorateLinkToButton = texts => {
+    //     const ele_nav = document.querySelector('.nav-site');
+    //     const group_link = ele_nav.getElementsByTagName('a');
+    //     [].forEach.call(group_link, link =>{
+    //         if(link.innerText && texts.some(text => text === link.innerText) ){
+    //             link.classList.add('button')
+    //         }
+    //     })
+    // }
+    // decorateLinkToButton(['Blog']);
 
     // multiple language
-    // const headerNavCon = document.querySelector('.nav-site');
-    // const languageMenu = document.querySelector('.nav-site>span');
-    // languageMenu.style.display = 'none';
-    // const languageMap = {
-    //     'en': 'English',
-    //     'zh-CN': '简体中文'
-    // };
-    // Object.keys(languageMap).forEach(l => {
-    //     const li = document.createElement('li');
-    //     let href = window.location.pathname.replace(/en|zh-CN/, l);
+    const headerNavCon = document.querySelector('.nav-site');
+    const languageMenu = document.querySelector('.nav-site>span');
+    languageMenu.style.display = 'none';
+    const languageMap = {
+        'en': 'English',
+        'zh-CN': '简体中文'
+    };
+    Object.keys(languageMap).forEach(l => {
+        const li = document.createElement('li');
+        let href = window.location.pathname.replace(/en|zh-CN/, l);
 
-    //     li.innerHTML = `<a href="${href}" target="_self" data-v="${l}">${languageMap[l]}</a>`;
-    //     headerNavCon.appendChild(li);
-    // });
+        li.innerHTML = `<a href="${href}" target="_self" data-v="${l}">${languageMap[l]}</a>`;
+        headerNavCon.appendChild(li);
+    });
 
     // download pdf 
     const nav = document.querySelector('.toc');
@@ -43,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         parent.insertBefore(downloadlink, node)
         return false;
     }
-    // add Download PDF button
+    // add Download PDF button && icon for Edit Button
     const editButtonEle = document.querySelector('.edit-page-link');
     if(editButtonEle) {
         createDownloadPdfElement(editButtonEle);

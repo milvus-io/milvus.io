@@ -123,7 +123,7 @@ const siteConfig = {
   //   repoUrl: 'https://github.com/facebook/test-site',
 
   blogSidebarCount: '10',
-  editUrl: 'https://github.com/milvus/docs'
+  editUrl: 'https://github.com/milvus-io/docs/blob/master/'
 };
 
 module.exports = siteConfig;

@@ -41,5 +41,5 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
     const editButtonEle = document.querySelector('.edit-page-link');
-    createDownloadPdfElement(editButtonEle);
+    if(editButtonEle) createDownloadPdfElement(editButtonEle);
 });

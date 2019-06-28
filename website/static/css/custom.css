@@ -19,6 +19,9 @@
     
 }
 
+section {
+  padding: 5rem !important;
+}
 .paddingTop10 {
     padding-top: 6%;
 }

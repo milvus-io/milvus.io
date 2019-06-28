@@ -83,8 +83,8 @@ class Index extends React.Component {
                     <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/gift.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>高速智能向量检索</strong></h3>
-                    <p>使用CPU/GPU异构计算引擎，提供高准确度的百亿向量检索，检索结果的秒级响应。</p>
+                    <h3><strong>智能索引</strong></h3>
+                    <p>提供优化的量化索引，树图结合索引等多种索引技术。针对不同特性的向量空间，可选择有针对性的索引技术。</p>
                   </div>
                 </div>
               </div>
@@ -95,8 +95,8 @@ class Index extends React.Component {
                     <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>水平线性弹性扩展</strong></h3>
-                    <p>可随着业务增长而伸缩，只需要通过增加更多的机器来满足业务增长需要。</p>
+                    <h3><strong>高可用</strong></h3>
+                    <p>分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
                   </div>
                 </div>
               </div>
@@ -107,8 +107,8 @@ class Index extends React.Component {
                     <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map-pin.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>高可用</strong></h3>
-                    <p>内部计算、存储和元数据集群，均允许部分实例失效，而不影响整个集群的可用性。　</p>
+                    <h3><strong>可扩展性强</strong></h3>
+                    <p>通过计算与存储分离的架构，用户可以灵活扩展计算节点和存储节点。</p>
                   </div>
                 </div>
               </div>
@@ -121,8 +121,8 @@ class Index extends React.Component {
                     <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/life-buoy.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>高易用性</strong></h3>
-                    <p>提供了基于C++/Python的客户端SDK。对于其他类型的语言，Milvus支持通过RESTful和RPC的访问方法。</p>
+                    <h3><strong>高性能</strong></h3>
+                    <p>通过异构并行计算框架，大幅度提高向量检索速度。</p>
                   </div>
                 </div>
               </div>
@@ -133,8 +133,8 @@ class Index extends React.Component {
                     <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>AI模型全支持</strong></h3>
-                    <p>支持目前所有AI训练框架所训练的模型所产生的特征向量，涵盖图片、视频、文本、语音等等方面。</p>
+                    <h3><strong>全兼容</strong></h3>
+                    <p>可以兼容目前所有人工智能框架训练出模型，产生的特征向量。</p>
                   </div>
                 </div>
               </div>
@@ -145,8 +145,8 @@ class Index extends React.Component {
                     <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>跨平台</strong></h3>
-                    <p>可以运行在Linux和Windows平台上，支持x86/ARM/PowerPC等架构，为边缘计算应用提供基础支撑。</p>
+                    <h3><strong>低成本</strong></h3>
+                    <p>通过使用GPU，最大化同等规模集群的算力，从而降低成本。</p>
                   </div>
                 </div>
               </div>

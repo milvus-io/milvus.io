@@ -166,3 +166,7 @@ pre {
   .content li{
     list-style: none;
   }
+
+article >div>span> h1 {
+  display: none;
+}

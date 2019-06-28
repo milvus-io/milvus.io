@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const parent = node.parentNode;
         const arr = window.location.href.split('/');
         const targetName = arr[arr.length-1];
-        const targetLink = `https://milvus-www.azurewebsites.net/${targetName}.md.pdf`
+        const targetLink = `/${targetName}.md.pdf`
         
         const downloadlink = document.createElement('div');
         downloadlink.setAttribute('style', 'margin-left=10px !important')

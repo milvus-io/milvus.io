@@ -202,7 +202,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr className='Hobby2'>
-                  <th scope="row" className="border-0">Hobby2</th>
+                  <th scope="row" className="border-0">CPU/GPU heterogeneous computing</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
@@ -217,7 +217,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Support</th>
+                  <th scope="row">Quantization index</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
@@ -232,7 +232,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row" >Full source code</th>
+                  <th scope="row" >Hash index</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
@@ -247,7 +247,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">SaaS / Subscription</th>
+                  <th scope="row">Graph index</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
@@ -259,7 +259,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Intranet</th>
+                  <th scope="row">High availability</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
@@ -274,31 +274,31 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Downloadable Software</th>
+                  <th scope="row">Distributed architecture</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Redistribute</th>
+                  <th scope="row">Easy to use</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
+                  <th scope="row">GUI monitoring interface</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
+                  <th scope="row"> Enterprise support</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
+                  <th scope="row"> Flexible business model</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>

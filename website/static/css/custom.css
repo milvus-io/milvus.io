@@ -39,6 +39,7 @@
 }
 .splash-container {
   position: relative;
+  min-height: auto !important;
 }
 .splash {
     position: absolute;

@@ -159,3 +159,9 @@ pre {
   .lead {
     font-size: 16px;
   }
+  .content {
+    text-align: left;
+  }
+  .content li{
+    list-style: none;
+  }

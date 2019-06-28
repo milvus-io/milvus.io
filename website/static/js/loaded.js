@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadlink.innerHTML = `
             <a class="edit-page-link button" style="margin-left:10px !important;" target="_blank" href= ${targetLink} >
             <i class="fas fa-file-pdf"></i>
-                &nbsp;Download PDF 
+                &nbsp; PDF 
             </a>`;
         parent.insertBefore(downloadlink, node)
         return false;

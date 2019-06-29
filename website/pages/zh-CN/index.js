@@ -25,7 +25,7 @@ class Index extends React.Component {
           <div className="container justify-content-center align-items-center d-flex splash-container">
             <div className="row justify-content-center text-center splash-content">
               <div className="col-12 col-md-12">
-                <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
+                {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
                 <h1 className="text-primary">Milvus</h1>
                 <p className="lead text-secondary">高速智能向量检索数据库</p>
                 <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-primary">快速开始</a></p>
@@ -47,12 +47,10 @@ class Index extends React.Component {
 
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>什么是Milvus</h1>
-                <div className="row mt-5">
-                  <div className="col-12 col-sm-6">
-                    <p className="lead">Milvus是ZILLIZ公司研发的一款分布式智能向量检索分析系统。基于GPU/CPU异构众核框架构建，让您能在毫秒间轻松处理数十亿级数据。</p>
-                    <a href="/whatIsVecDb">点击详情</a>
-                  </div>
-                </div>
+                <p className="lead">
+                Milvus是ZILLIZ公司研发的一款分布式智能向量检索分析系统。基于GPU/CPU异构众核框架构建，让您能在毫秒间轻松处理数十亿级数据。
+                <br /><a href="/whatIsVecDb">点击详情</a>
+                </p>
               </div>
             </div>
           </div>

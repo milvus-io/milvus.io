@@ -4,10 +4,9 @@
       "QuickStart",
       "UserGuide",
       "WhitePaper",
-      "VectorDBIntro",
-      "Changelog"
+      "VectorDBIntro"
     ],
-    "User Guide": ["UserGuide"],
+    "User Guide": ["UserGuide", "FAQ"],
     "Release Note": ["ReleaseNote"]
   }
 }

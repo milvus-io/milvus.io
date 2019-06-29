@@ -25,7 +25,7 @@ class Index extends React.Component {
           <div className="container justify-content-center align-items-center d-flex splash-container">
             <div className="row justify-content-center text-center splash-content">
               <div className="col-12 col-md-12">
-                <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
+                {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
                 <h1 className="text-primary">Milvus</h1>
                 <p className="lead text-secondary">An intelligent feature vector indexing database that allows you to access data at unparalleled speed.</p>
                 <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-primary">Get Started</a></p>
@@ -49,7 +49,7 @@ class Index extends React.Component {
                 <h1>What is Milvus</h1>
                 <p className="lead">
                 Designed by ZILLIZ, Milvus is a distributed GPU database for massive feature vector analytics. Built on GPU/CPU heterogeneous computing architecture, multibillion row datasets can now be queried in seconds, at massively reduced cost. 
-              <a href="/whatIsVecDb">Read More</a>
+                <br /><a href="/whatIsVecDb">Read More</a>
                 </p>
               </div>
             </div>

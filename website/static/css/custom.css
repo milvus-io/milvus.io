@@ -77,10 +77,12 @@
 .text-primary {
   color: #33b6f2 !important;
 }
-/* .nav-site>span {
+.nav-site>span {
   display: none;
-} */
-
+}
+.nav-site .button {
+  background: #329ef7;
+}
 /* "Copy" code block button */
 pre {
     position: relative;

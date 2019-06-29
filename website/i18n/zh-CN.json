@@ -9,43 +9,74 @@
         "title": "Changelog",
         "sidebar_label": "Milvus Changelog"
       },
+      "FAQ": {
+        "title": "FAQ",
+        "sidebar_label": "FAQ"
+      },
+      "PythonSDKParam": {
+        "title": "PythonSDKParam"
+      },
       "QuickStart": {
-        "title": "Milvus Quick Start",
-        "sidebar_label": "Milvus Quick Start"
+        "title": "Milvus快速入门",
+        "sidebar_label": "Milvus快速入门"
       },
       "README": {
         "title": "README"
       },
+      "ReleaseNote": {
+        "title": "Milvus Docker版本发布说明",
+        "sidebar_label": "Milvus Docker版本发布说明"
+      },
       "UserGuide": {
-        "title": "Milvus User Guide",
+        "title": "Milvus 用户手册",
         "sidebar_label": "Milvus 用户手册"
       },
+      "VectorDBIntro": {
+        "title": "特征向量数据库简介",
+        "sidebar_label": "特征向量数据库简介"
+      },
+      "WhitePaper": {
+        "title": "Milvus白皮书",
+        "sidebar_label": "Milvus白皮书"
+      },
+      "zh-CN/FAQ": {
+        "title": "FAQ",
+        "sidebar_label": "FAQ"
+      },
       "zh-CN/QuickStart": {
-        "title": "QuickStart",
+        "title": "Milvus快速入门",
         "sidebar_label": "Milvus快速入门"
       },
       "zh-CN/ReleaseNote": {
         "title": "Release Note",
-        "sidebar_label": "Milvus Docker版本发布说明"
+        "sidebar_label": "Milvus Release Notes"
+      },
+      "zh-CN/SDKRef": {
+        "title": "zh-CN/SDKRef"
       },
       "zh-CN/UserGuide": {
-        "title": "Milvus用户指南",
-        "sidebar_label": "Milvus用户指南"
+        "title": "Milvus 用户手册",
+        "sidebar_label": "Milvus 用户手册"
+      },
+      "zh-CN/VectorDBIntro": {
+        "title": "特征向量数据库简介",
+        "sidebar_label": "特征向量数据库简介"
       },
       "zh-CN/WhitePaper": {
-        "title": "Milvus白皮书",
-        "sidebar_label": "Milvus白皮书"
+        "title": "Milvus 白皮书",
+        "sidebar_label": "Milvus 白皮书"
       }
     },
     "links": {
-      "What is Vector Database": "什么是向量数据库",
+      "About Milvus": "关于 Milvus",
       "Docs": "文档",
-      "Help": "帮助"
+      "Support": "帮助",
+      "Try Milvus": "Try Milvus"
     },
     "categories": {
-      "Introductions": "Introductions",
-      "Quick Start": "Quick Start",
-      "First Category": "First Category"
+      "Milvus Intro": "Milvus 简介",
+      "User Guide": "用户手册",
+      "Release Note": "版本说明"
     }
   },
   "pages-strings": {
@@ -58,7 +89,7 @@
     "Need help?|no description given": "Need help?",
     "This project is maintained by a dedicated group of people.|statement made to reader": "This project is maintained by a dedicated group of people.",
     "Help Translate|recruit community translators for your project": "Help Translate",
-    "Edit this Doc|recruitment message asking to edit the doc source": "Edit",
+    "Edit this Doc|recruitment message asking to edit the doc source": "编辑",
     "Translate this Doc|recruitment message asking to translate the docs": "Translate"
   }
 }

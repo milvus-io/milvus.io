@@ -46,8 +46,10 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'VectorDBIntro', label: 'About Milvus'},
-    {doc: 'QuickStart', label: 'Docs'}
+    {doc: 'WhitePaper', label: 'About Milvus'},
+    {doc: 'QuickStart', label: 'Docs'},
+    {href: '/docs/FAQ', label: 'Support'},
+    {href: '/docs/QuickStart#installing-milvus-docker', label: 'Try Milvus'}
     // {page: 'help', label: 'Help'}
     // {blog: false, label: 'Blog'},
   ],

@@ -421,7 +421,7 @@ class Index extends React.Component {
     }
 
     return (
-      <div class="page">
+      <div className="page">
         <CallToAction />
         <WhatIsVecDb />
         <Features />

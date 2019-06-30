@@ -71,11 +71,11 @@ class Index extends React.Component {
               <div className="col-12 col-md-4">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/gift.svg`} />
+                    <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>高性能</strong></h3>
-                    <p>通过异构处理架构大幅提高索引构建的速度。</p>
+                    <h3><strong>性能卓越</strong></h3>
+                    <p>Milvus通过异构处理架构大幅提高索引构建的速度。</p>
                   </div>
                 </div>
               </div>
@@ -83,7 +83,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
+                    <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/layers.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>智能索引</strong></h3>
@@ -95,7 +95,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map-pin.svg`} />
+                    <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>弹性伸缩</strong></h3>
@@ -109,10 +109,10 @@ class Index extends React.Component {
               <div className="col-12 col-md-4">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/life-buoy.svg`} />
+                    <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>高可用</strong></h3>
+                    <h3><strong>高可用性</strong></h3>
                     <p>Milvus的分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
                   </div>
                 </div>
@@ -121,10 +121,10 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+                    <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/package.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>Easy Integration</strong></h3>
+                    <h3><strong>全面兼容</strong></h3>
                     <p>Milvus 可以兼容各种人工智能训练模型，和主流开发语言。</p>
                   </div>
                 </div>
@@ -133,11 +133,11 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+                    <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/monitor.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>高易用性</strong></h3>
-                    <p>Milvus提供了基于Python/C++的客户端SDK，对于其他编程语言，Milvus支持通过RESTful接口访问。Milvus 提供了基于Prometheus的监控和Grafana的可视化展示，也提供了基于图形化和命令行管理工具。</p>
+                    <p>Milvus提供了基于Python/C++的客户端SDK，并提供了可视化监控面板，以及基于图形化和命令行管理工具。</p>
                   </div>
                 </div>
               </div>

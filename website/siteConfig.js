@@ -48,7 +48,7 @@ const siteConfig = {
   headerLinks: [
     {doc: 'vectordb/milvus-db', label: 'About Milvus'},
     {doc: 'QuickStart', label: 'Docs'},
-    {href: 'userguide/support', label: 'Support'},
+    {doc: 'userguide/support', label: 'Support'},
     {doc: 'userguide/getting-started', label: 'Try Milvus'}
     // {page: 'help', label: 'Help'}
     // {blog: true, label: 'Blog'},

@@ -46,8 +46,10 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {page: 'whatIsVecDb', label: 'What is Vector Database'},
+    {doc: 'WhitePaper', label: 'About Milvus'},
     {doc: 'QuickStart', label: 'Docs'},
+    {href: '/docs/FAQ', label: 'Support'},
+    {href: '/docs/QuickStart#installing-milvus-docker', label: 'Try Milvus'}
     // {page: 'help', label: 'Help'}
     // {blog: true, label: 'Blog'},
   ],
@@ -57,7 +59,7 @@ const siteConfig = {
 
   /* path to images for header/footer */
   headerIcon: 'img/logo128.png',
-  footerIcon: 'img/logo128.png',
+  footerIcon: '',
   favicon: 'img/favicon.ico',
 
   /* Colors for website */
@@ -110,7 +112,7 @@ const siteConfig = {
   // Open Graph and Twitter card images.
   ogImage: 'img/undraw_online.svg',
   twitterImage: 'img/undraw_tweetstorm.svg',
-  
+  gaTrackingId: 'UA-142992812-1',
 
   // Show documentation's last contributor's name.
   // enableUpdateBy: true,

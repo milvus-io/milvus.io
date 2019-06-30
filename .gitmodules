@@ -1,4 +1,4 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/milvus-io/docs.git
-	branch = release
+	branch = dev

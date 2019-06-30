@@ -1,4 +1,16 @@
+function fixHeaderLinks(language) {
+    const headerLinks = document.querySelectorAll('.nav-site li > a');
+    const linksToFix = [...headerLinks].filter(link => !link.href.includes(language) && !link.getAttribute('id'));
+    linksToFix.forEach(l => {
+        l.href = l.href.replace('/docs/', `/docs/${language}/`)
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // get lang
+    const language = document.querySelector('html').getAttribute('lang');
+    fixHeaderLinks(language);
+
     // index comparison table
     const trs = document.querySelectorAll('tr');
     [].forEach.call(trs, tr => tr.addEventListener('click', () => {
@@ -7,29 +19,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
 
     // decorate special link to button style
-    // const decorateLinkToButton = texts => {
-    //     const ele_nav = document.querySelector('.nav-site');
-    //     const group_link = ele_nav.getElementsByTagName('a');
-    //     [].forEach.call(group_link, link =>{
-    //         if(link.innerText && texts.some(text => text === link.innerText) ){
-    //             link.classList.add('button')
-    //         }
-    //     })
-    // }
-    // decorateLinkToButton(['Blog']);
+    const decorateLinkToButton = texts => {
+        const ele_nav = document.querySelector('.nav-site');
+        const group_link = ele_nav.getElementsByTagName('a');
+        [].forEach.call(group_link, link =>{
+            if(link.innerText && texts.some(text => text === link.innerText) ){
+                link.classList.add('button')
+            }
+        })
+    }
+    decorateLinkToButton(['Try Milvus']);
 
     // multiple language
     const headerNavCon = document.querySelector('.nav-site');
     const languageMenu = document.querySelector('.nav-site>span');
     languageMenu.style.display = 'none';
     const languageMap = {
-        'en': 'English',
-        'zh-CN': '简体中文'
+        'en': 'En',
+        'zh-CN': '中文'
     };
     Object.keys(languageMap).forEach(l => {
         const li = document.createElement('li');
         let href = window.location.pathname.replace(/en|zh-CN/, l);
-
+        li.classList.toggle('siteNavItemActive', language === l)
         li.innerHTML = `<a href="${href}" target="_self" data-v="${l}">${languageMap[l]}</a>`;
         headerNavCon.appendChild(li);
     });

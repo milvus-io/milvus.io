@@ -1,9 +1,12 @@
 {
   "docs": {
-    "Quick Start": ["QuickStart"],
-    "UserGuide": ["UserGuide"]
-  },
-
-  "docs-other": {
+    "Milvus Intro": [
+      "QuickStart",
+      "UserGuide",
+      "WhitePaper",
+      "VectorDBIntro"
+    ],
+    "User Guide": ["UserGuide", "FAQ"],
+    "Release Note": ["ReleaseNote"]
   }
 }

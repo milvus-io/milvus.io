@@ -19,7 +19,7 @@
     
 }
 
-section {
+.page section {
   padding: 5rem !important;
 }
 .paddingTop10 {
@@ -77,10 +77,12 @@ section {
 .text-primary {
   color: #33b6f2 !important;
 }
-/* .nav-site>span {
+.nav-site>span {
   display: none;
-} */
-
+}
+.nav-site .button {
+  background: #329ef7;
+}
 /* "Copy" code block button */
 pre {
     position: relative;
@@ -169,3 +171,7 @@ pre {
   .content li{
     list-style: none;
   }
+
+article >div>span> h1 {
+  display: none;
+}

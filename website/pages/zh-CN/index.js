@@ -24,10 +24,10 @@ class Index extends React.Component {
         <section className="fdb-block fdb-viewport splash-container" style={{ }}>
           <div className="container justify-content-center align-items-center d-flex splash-container">
             <div className="row justify-content-center text-center splash-content">
-              <div className="col-12 col-md-8">
-                <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} />
+              <div className="col-12 col-md-12">
+                {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
                 <h1 className="text-primary">Milvus</h1>
-                <p className="lead text-secondary">高性能，可弹性伸缩的特征向量数据库系统</p>
+                <p className="lead text-secondary">高速智能向量检索数据库</p>
                 <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-primary">快速开始</a></p>
               </div>
             </div>
@@ -46,20 +46,11 @@ class Index extends React.Component {
               </div>
 
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
-                <h1>什么是向量数据库</h1>
-                <div className="row mt-5">
-                  <div className="col-12 col-sm-6">
-                    <h3><strong>什么是向量</strong></h3>
-                    <p className="lead">现实世界的事物，复杂而多元，通常是很难使用少数几个简单数能精确描述的。因此，我们会使用特征向量来精确描述一个事物，特征向量就是现实事物的数学抽象。</p>
-                    <a href="/whatIsVecDb">点击详情</a>
-                  </div>
-
-                  <div className="col-12 col-sm-6 pt-3 pt-sm-0">
-                    <h3><strong>特征向量检索数据库</strong></h3>
-                    <p className="lead">随着机器学习和深度学习技术越来越成熟，应用越来越广泛，随之而产生的特征向量数据也会越来越庞大，但目前看来，传统的数据库系统和大数据系统并不能满足海量特征向量检索的要求。</p>
-                    <a href="/whatIsVecDb">点击详情</a>
-                  </div>
-                </div>
+                <h1>什么是Milvus</h1>
+                <p className="lead">
+                Milvus是ZILLIZ公司研发的一款分布式智能向量检索分析系统。基于GPU/CPU异构众核框架构建，让您能在毫秒间轻松处理数十亿级数据。
+                <br /><a href="/whatIsVecDb">点击详情</a>
+                </p>
               </div>
             </div>
           </div>
@@ -83,8 +74,8 @@ class Index extends React.Component {
                     <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/gift.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>智能索引</strong></h3>
-                    <p>提供优化的量化索引，树图结合索引等多种索引技术。针对不同特性的向量空间，可选择有针对性的索引技术。</p>
+                    <h3><strong>高性能</strong></h3>
+                    <p>通过异构处理架构大幅提高索引构建的速度。</p>
                   </div>
                 </div>
               </div>
@@ -95,8 +86,8 @@ class Index extends React.Component {
                     <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>高可用</strong></h3>
-                    <p>分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
+                    <h3><strong>智能索引</strong></h3>
+                    <p>Milvus提供针对向量检索的多种索引技术，可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引。</p>
                   </div>
                 </div>
               </div>
@@ -107,8 +98,8 @@ class Index extends React.Component {
                     <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map-pin.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>可扩展性强</strong></h3>
-                    <p>通过计算与存储分离的架构，用户可以灵活扩展计算节点和存储节点。</p>
+                    <h3><strong>弹性伸缩</strong></h3>
+                    <p>Milvus 实现了计算与存储分离架构，可随着业务扩展，弹性伸缩计算节点和存储节点。</p>
                   </div>
                 </div>
               </div>
@@ -121,8 +112,8 @@ class Index extends React.Component {
                     <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/life-buoy.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>高性能</strong></h3>
-                    <p>通过异构并行计算框架，大幅度提高向量检索速度。</p>
+                    <h3><strong>高可用</strong></h3>
+                    <p>Milvus的分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
                   </div>
                 </div>
               </div>
@@ -133,8 +124,8 @@ class Index extends React.Component {
                     <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>全兼容</strong></h3>
-                    <p>可以兼容目前所有人工智能框架训练出模型，产生的特征向量。</p>
+                    <h3><strong>Easy Integration</strong></h3>
+                    <p>Milvus 可以兼容各种人工智能训练模型，和主流开发语言。</p>
                   </div>
                 </div>
               </div>
@@ -145,8 +136,8 @@ class Index extends React.Component {
                     <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>低成本</strong></h3>
-                    <p>通过使用GPU，最大化同等规模集群的算力，从而降低成本。</p>
+                    <h3><strong>高易用性</strong></h3>
+                    <p>Milvus提供了基于Python/C++的客户端SDK，对于其他编程语言，Milvus支持通过RESTful接口访问。Milvus 提供了基于Prometheus的监控和Grafana的可视化展示，也提供了基于图形化和命令行管理工具。</p>
                   </div>
                 </div>
               </div>
@@ -205,29 +196,11 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td colSpan='5'>
-                    <ul>
-                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
-                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
-                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
-                    </ul>
-                  </td>
-                </tr>
                 <tr>
                   <th scope="row">量化索引</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
-                </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td colSpan='5'>
-                    <ul>
-                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
-                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
-                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
-                    </ul>
-                  </td>
                 </tr>
                 <tr>
                   <th scope="row" >哈希索引</th>
@@ -235,41 +208,17 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td colSpan='5'>
-                    <ul>
-                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
-                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
-                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
-                    </ul>
-                  </td>
-                </tr>
                 <tr>
                   <th scope="row">图索引</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td colSpan='5'>
-                    <span>Can you build your site as 'static' files which can be deployed without a server, cached on CDN distributed throughout the globe?
-                    </span>
-                  </td>
-                </tr>
                 <tr>
                   <th scope="row">高可用设计</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
-                </tr>
-                <tr className='content' style={{ display: 'none' }} >
-                  <td className='content' colSpan='5'>
-                    <ul>
-                      <li>CDN-providing hosts like <a href="https://www.netlify.com" target="_blank">Netlify</a> support sites built on Gatsby and other static frameworks</li>
-                      <li>WordPress allows this through <a href="https://wordpress.org/plugins/cdn-enabler/" target="_blank">plugins</a>.</li>
-                      <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
-                    </ul>
-                  </td>
                 </tr>
                 <tr>
                   <th scope="row">分布式架构</th>
@@ -284,19 +233,31 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">图形化监控工具</th>
+                  <th scope="row">图形仪表盘</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">快速开发</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">C++/Python SDK</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">RESTful API	</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
                   <th scope="row">企业级用户支持</th>
-                  <td className="css-7sa0gy"><div className="css-full"></div></td>
-                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
-                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
-                </tr>
-                <tr>
-                  <th scope="row">灵活的商业模式</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
@@ -464,7 +425,7 @@ class Index extends React.Component {
         <CallToAction />
         <WhatIsVecDb />
         <Features />
-        <TechAndArch />
+        {/* <TechAndArch /> */}
         <Comparison />
       </div>
     );

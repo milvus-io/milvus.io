@@ -69,10 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const createDownloadPdfElement = node => {
         const parent = node.parentNode;
-        const arr = window.location.href.split('/');
-        const len = arr.length;
-        const targetName = arr[len-2];
-        let showpdf = Object.keys(pdfMap).some(n => n === targetName);
+        let targetName = '';
+        let showpdf = Object.keys(pdfMap).some(n => {
+            if(window.location.href.includes(n)) {
+                targetName = n;
+                return true;
+            }
+        });
         if (showpdf) {
             const targetLink = `${window.location.origin}/${pdfMap[targetName]}.${language}.pdf`;
             const downloadlink = document.createElement('div');

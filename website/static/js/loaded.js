@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.keys(languageMap).forEach(l => {
         const li = document.createElement('li');
         let href = window.location.pathname.replace(/en|zh-CN/, l);
+        if (href === '/') href +=l
         li.classList.toggle('siteNavItemActive', language === l)
         li.innerHTML = `<a href="${href}" target="_self" data-v="${l}">${languageMap[l]}</a>`;
         headerNavCon.appendChild(li);

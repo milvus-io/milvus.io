@@ -6,8 +6,8 @@
     "tagline": "A Distributed High Performance Vector Database System",
     "docs": {
       "Changelog": {
-        "title": "Changelog",
-        "sidebar_label": "Milvus Changelog"
+        "title": "更新日志",
+        "sidebar_label": "Milvus更新日志"
       },
       "FAQ": {
         "title": "FAQ",
@@ -24,12 +24,12 @@
         "title": "README"
       },
       "ReleaseNote": {
-        "title": "Milvus Docker版本发布说明",
-        "sidebar_label": "Milvus Docker版本发布说明"
+        "title": "Milvus版本发布说明",
+        "sidebar_label": "Milvus版本发布说明"
       },
       "UserGuide": {
-        "title": "Milvus 用户手册",
-        "sidebar_label": "Milvus 用户手册"
+        "title": "Milvus用户手册",
+        "sidebar_label": "Milvus用户手册"
       },
       "VectorDBIntro": {
         "title": "特征向量数据库简介",
@@ -48,15 +48,15 @@
         "sidebar_label": "Milvus快速入门"
       },
       "zh-CN/ReleaseNote": {
-        "title": "Release Note",
-        "sidebar_label": "Milvus Release Notes"
+        "title": "版本发布说明",
+        "sidebar_label": "Milvus版本发布说明"
       },
       "zh-CN/SDKRef": {
         "title": "zh-CN/SDKRef"
       },
       "zh-CN/UserGuide": {
-        "title": "Milvus 用户手册",
-        "sidebar_label": "Milvus 用户手册"
+        "title": "Milvus用户手册",
+        "sidebar_label": "Milvus用户手册"
       },
       "zh-CN/VectorDBIntro": {
         "title": "特征向量数据库简介",
@@ -71,7 +71,7 @@
       "About Milvus": "关于 Milvus",
       "Docs": "文档",
       "Support": "帮助",
-      "Try Milvus": "Try Milvus"
+      "Try Milvus": "Milvus试用"
     },
     "categories": {
       "Milvus Intro": "Milvus 简介",

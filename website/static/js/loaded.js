@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const arr = window.location.href.split('/');
         const len = arr.length;
         const targetName = arr[len-1] === '' ? arr[len-2] : arr[len-1];
-        const targetLink = `${window.location.origin}/${targetName}.md.pdf`
+        const targetLink = `${window.location.origin}/${targetName}.${language}.pdf`
         
         const downloadlink = document.createElement('div');
         downloadlink.innerHTML = `

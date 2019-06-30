@@ -9,7 +9,7 @@ do
         echo $file;
         pdfFile="$(basename ${file} | sed s:/:__:g).pdf";
         echo "Generating pdf: $pdfFile ..."
-        pandoc $file --toc -V title="Milvus Documentation" -V author="Zilliz" -V date="${_version_tag}" -V CJKmainfont="${MAINFONT}" -f markdown -o $pdfFile --pdf-engine=lualatex;
+        pandoc $file --toc -V title="Milvus Documentation" -V author="Zilliz" -V date="${_version_tag}" -V CJKmainfont="${MAINFONT}" -f markdown -o $pdfFile --pdf-engine=lualatex || true;
     fi
 done
 
@@ -19,6 +19,6 @@ do
         echo $file;
         pdfFile="$(basename ${file} | sed s:/:__:g).cn.pdf";
         echo "Generating cn pdf: $pdfFile ..."
-        pandoc $file --toc -V title="Milvus Documentation" -V author="Zilliz" -V date="${_version_tag}" -V CJKmainfont="${MAINFONT}" -f markdown -o $pdfFile --pdf-engine=lualatex;
+        pandoc $file --toc -V title="Milvus Documentation" -V author="Zilliz" -V date="${_version_tag}" -V CJKmainfont="${MAINFONT}" -f markdown -o $pdfFile --pdf-engine=lualatex || true;
     fi
 done

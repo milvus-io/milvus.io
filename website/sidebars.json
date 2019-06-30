@@ -23,6 +23,12 @@
       "userguide/application-scenario",
       "userguide/trouble-shooting",
       "userguide/support"
+    ],
+    "FAQ": [
+      "FAQ"
+    ],
+    "Release Note": [
+      "ReleaseNote"
     ]
   }
 }

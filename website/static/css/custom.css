@@ -86,8 +86,8 @@
 .nav-site>span {
   display: none;
 }
-.nav-site .button {
-  background: #329ef7;
+.nav-site li a.button {
+  background: #329ef7 !important;
 }
 /* "Copy" code block button */
 pre {

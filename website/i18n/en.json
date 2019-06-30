@@ -27,6 +27,9 @@
         "title": "Release Note",
         "sidebar_label": "Milvus Release Notes"
       },
+      "SDKRef": {
+        "title": "SDKRef"
+      },
       "UserGuide": {
         "title": "Milvus User Guide",
         "sidebar_label": "Milvus User Guide"
@@ -105,7 +108,7 @@
         "title": "Vector indexing methods",
         "sidebar_label": "Vector indexing methods"
       },
-      "VectorDBIntro": {
+      "vectordb": {
         "title": "Vector DB Introducation",
         "sidebar_label": "Vector Database Introducation"
       },
@@ -206,7 +209,7 @@
         "title": "Vector indexing methods",
         "sidebar_label": "Vector indexing methods"
       },
-      "zh-CN/VectorDBIntro": {
+      "zh-CN/vectordb": {
         "title": "Vector DB Introducation",
         "sidebar_label": "Vector Database Introducation"
       },
@@ -224,7 +227,9 @@
     "categories": {
       "Vector DB Intro": "Vector DB Intro",
       "Quick Start": "Quick Start",
-      "User Guide": "User Guide"
+      "User Guide": "User Guide",
+      "FAQ": "FAQ",
+      "Release Note": "Release Note"
     }
   },
   "pages-strings": {

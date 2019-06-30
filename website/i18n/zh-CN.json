@@ -6,8 +6,8 @@
     "tagline": "A Distributed High Performance Vector Database System",
     "docs": {
       "Changelog": {
-        "title": "更新日志",
-        "sidebar_label": "Milvus更新日志"
+        "title": "Changelog",
+        "sidebar_label": "Milvus Changelog"
       },
       "FAQ": {
         "title": "FAQ",
@@ -24,59 +24,207 @@
         "title": "README"
       },
       "ReleaseNote": {
-        "title": "Milvus版本发布说明",
-        "sidebar_label": "Milvus版本发布说明"
+        "title": "Release Note",
+        "sidebar_label": "Milvus Release Notes"
       },
       "UserGuide": {
-        "title": "Milvus用户手册",
-        "sidebar_label": "Milvus用户手册"
+        "title": "Milvus用户指南",
+        "sidebar_label": "Milvus用户指南"
+      },
+      "userguide/application-scenario": {
+        "title": "应用场景",
+        "sidebar_label": "应用场景"
+      },
+      "userguide/configuring-milvus": {
+        "title": "设置Milvus",
+        "sidebar_label": "设置Milvus"
+      },
+      "userguide/creating-table": {
+        "title": "创建表",
+        "sidebar_label": "创建表"
+      },
+      "userguide/deleting-table": {
+        "title": "删除表",
+        "sidebar_label": "删除表"
+      },
+      "userguide/getting-started": {
+        "title": "Milvus新手入门",
+        "sidebar_label": "Milvus新手入门"
+      },
+      "userguide/importing-vectors": {
+        "title": "导入向量",
+        "sidebar_label": "导入向量"
+      },
+      "userguide/monitoring-and-alarm": {
+        "title": "监控与报警",
+        "sidebar_label": "监控与报警"
+      },
+      "userguide/preface": {
+        "title": "前言",
+        "sidebar_label": "前言"
+      },
+      "userguide/README": {
+        "title": "userguide/README"
+      },
+      "userguide/searching-table": {
+        "title": "查询表",
+        "sidebar_label": "查询表"
+      },
+      "userguide/searching-with-milvus": {
+        "title": "使用Milvus进行搜索",
+        "sidebar_label": "使用Milvus进行搜索"
+      },
+      "userguide/support": {
+        "title": "支持与帮助",
+        "sidebar_label": "支持与帮助"
+      },
+      "userguide/trouble-shooting": {
+        "title": "障碍排查",
+        "sidebar_label": "障碍排查"
+      },
+      "vectordb/feature-vector-db": {
+        "title": "特征向量数据库",
+        "sidebar_label": "特征向量数据库"
+      },
+      "vectordb/feature-vector": {
+        "title": "特征向量",
+        "sidebar_label": "特征向量"
+      },
+      "vectordb/milvus-db": {
+        "title": "Milvus数据库",
+        "sidebar_label": "Milvus数据库"
+      },
+      "vectordb/README": {
+        "title": "vectordb/README"
+      },
+      "vectordb/traditional-db": {
+        "title": "传统数据库",
+        "sidebar_label": "传统数据库"
+      },
+      "vectordb/vector-indexing-methods": {
+        "title": "向量检索方法",
+        "sidebar_label": "向量检索方法"
       },
       "VectorDBIntro": {
-        "title": "特征向量数据库简介",
-        "sidebar_label": "特征向量数据库简介"
+        "title": "向量数据库简介",
+        "sidebar_label": "向量数据库简介"
       },
       "WhitePaper": {
-        "title": "Milvus白皮书",
-        "sidebar_label": "Milvus白皮书"
+        "title": "Milvus White Paper",
+        "sidebar_label": "Milvus White Paper"
       },
       "zh-CN/FAQ": {
-        "title": "FAQ",
-        "sidebar_label": "FAQ"
+        "title": "常见问题",
+        "sidebar_label": "常见问题"
       },
       "zh-CN/QuickStart": {
         "title": "Milvus快速入门",
         "sidebar_label": "Milvus快速入门"
       },
       "zh-CN/ReleaseNote": {
-        "title": "版本发布说明",
-        "sidebar_label": "Milvus版本发布说明"
+        "title": "Release Note",
+        "sidebar_label": "Milvus Release Notes"
       },
       "zh-CN/SDKRef": {
         "title": "zh-CN/SDKRef"
       },
       "zh-CN/UserGuide": {
-        "title": "Milvus用户手册",
-        "sidebar_label": "Milvus用户手册"
+        "title": "Milvus用户指南",
+        "sidebar_label": "Milvus用户指南"
+      },
+      "zh-CN/userguide/application-scenario": {
+        "title": "应用场景",
+        "sidebar_label": "应用场景"
+      },
+      "zh-CN/userguide/configuring-milvus": {
+        "title": "设置Milvus",
+        "sidebar_label": "设置Milvus"
+      },
+      "zh-CN/userguide/creating-table": {
+        "title": "创建表",
+        "sidebar_label": "创建表"
+      },
+      "zh-CN/userguide/deleting-table": {
+        "title": "删除表",
+        "sidebar_label": "删除表"
+      },
+      "zh-CN/userguide/getting-started": {
+        "title": "Milvus新手入门",
+        "sidebar_label": "Milvus新手入门"
+      },
+      "zh-CN/userguide/importing-vectors": {
+        "title": "导入向量",
+        "sidebar_label": "导入向量"
+      },
+      "zh-CN/userguide/monitoring-and-alarm": {
+        "title": "监控与报警",
+        "sidebar_label": "监控与报警"
+      },
+      "zh-CN/userguide/preface": {
+        "title": "前言",
+        "sidebar_label": "前言"
+      },
+      "zh-CN/userguide/README": {
+        "title": "zh-CN/userguide/README"
+      },
+      "zh-CN/userguide/searching-table": {
+        "title": "查询表",
+        "sidebar_label": "查询表"
+      },
+      "zh-CN/userguide/searching-with-milvus": {
+        "title": "使用Milvus进行搜索",
+        "sidebar_label": "使用Milvus进行搜索"
+      },
+      "zh-CN/userguide/support": {
+        "title": "支持与帮助",
+        "sidebar_label": "支持与帮助"
+      },
+      "zh-CN/userguide/trouble-shooting": {
+        "title": "Troubleshooting",
+        "sidebar_label": "Troubleshooting"
+      },
+      "zh-CN/vectordb/feature-vector-db": {
+        "title": "Feature vector database",
+        "sidebar_label": "Feature vector database"
+      },
+      "zh-CN/vectordb/feature-vector": {
+        "title": "Feature vector",
+        "sidebar_label": "Feature vector"
+      },
+      "zh-CN/vectordb/milvus-db": {
+        "title": "Milvus database",
+        "sidebar_label": "Milvus database"
+      },
+      "zh-CN/vectordb/README": {
+        "title": "zh-CN/vectordb/README"
+      },
+      "zh-CN/vectordb/traditional-db": {
+        "title": "传统数据库",
+        "sidebar_label": "传统数据库"
+      },
+      "zh-CN/vectordb/vector-indexing-methods": {
+        "title": "向量搜索算法",
+        "sidebar_label": "向量搜索算法"
       },
       "zh-CN/VectorDBIntro": {
-        "title": "特征向量数据库简介",
-        "sidebar_label": "特征向量数据库简介"
+        "title": "向量数据库简介",
+        "sidebar_label": "向量数据库简介"
       },
       "zh-CN/WhitePaper": {
-        "title": "Milvus 白皮书",
-        "sidebar_label": "Milvus 白皮书"
+        "title": "Milvus White Paper",
+        "sidebar_label": "Milvus White Paper"
       }
     },
     "links": {
-      "About Milvus": "关于 Milvus",
+      "About Milvus": "关于Milvus",
       "Docs": "文档",
       "Support": "帮助",
-      "Try Milvus": "Milvus试用"
+      "Try Milvus": "试用Milvus"
     },
     "categories": {
-      "Milvus Intro": "Milvus 简介",
-      "User Guide": "用户手册",
-      "Release Note": "版本说明"
+      "Vector DB Intro": "向量数据库简介",
+      "Quick Start": "快速入门",
+      "User Guide": "用户指南"
     }
   },
   "pages-strings": {
@@ -89,7 +237,7 @@
     "Need help?|no description given": "Need help?",
     "This project is maintained by a dedicated group of people.|statement made to reader": "This project is maintained by a dedicated group of people.",
     "Help Translate|recruit community translators for your project": "Help Translate",
-    "Edit this Doc|recruitment message asking to edit the doc source": "编辑",
+    "Edit this Doc|recruitment message asking to edit the doc source": "Edit",
     "Translate this Doc|recruitment message asking to translate the docs": "Translate"
   }
 }

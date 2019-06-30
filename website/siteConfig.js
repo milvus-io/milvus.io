@@ -46,10 +46,10 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'WhitePaper', label: 'About Milvus'},
+    {doc: 'vectordb/milvus-db', label: 'About Milvus'},
     {doc: 'QuickStart', label: 'Docs'},
-    {href: '/docs/FAQ', label: 'Support'},
-    {href: '/docs/QuickStart#installing-milvus-docker', label: 'Try Milvus'}
+    {href: 'userguide/support', label: 'Support'},
+    {doc: 'userguide/getting-started', label: 'Try Milvus'}
     // {page: 'help', label: 'Help'}
     // {blog: true, label: 'Blog'},
   ],
@@ -123,6 +123,7 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   //   repoUrl: 'https://github.com/facebook/test-site',
+  docsSideNavCollapsible: true,
 
   blogSidebarCount: '10',
   editUrl: 'https://github.com/milvus-io/docs/blob/master/'

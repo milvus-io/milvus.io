@@ -46,6 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
         headerNavCon.appendChild(li);
     });
 
+    // transfer 'check_mark' and 'x' in tables to emoji
+    // todo: there should be better translation method while packaging, not transfer it whilte domContentLoad.
+    const td_eles = document.querySelectorAll('td');
+    if(td_eles) {
+        [].forEach.call(td_eles, td => {
+            if(td.innerText === ':heavy_check_mark:') { td.innerHTML = `<g-emoji class="g-emoji" alias="heavy_check_mark" fallback-src="/images/heavy_check_mark.png">✔️</g-emoji>`; return false;}
+            if(td.innerText === ":x:" ){ td.innerHTML = `<g-emoji class="g-emoji" alias="x" fallback-src="../images/x.png">❌</g-emoji>`; return false;}
+            return false;
+        })
+    }
+
     // download pdf 
     const nav = document.querySelector('.toc');
     if (!nav) return;
@@ -67,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         parent.insertBefore(downloadlink, node)
         return false;
     }
-    // add Download PDF button
+    // add Download PDF button && icon for Edit Button
     const editButtonEle = document.querySelector('.edit-page-link');
     if(editButtonEle) {
         createDownloadPdfElement(editButtonEle);

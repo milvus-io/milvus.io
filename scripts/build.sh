@@ -12,3 +12,13 @@ do
         pandoc $file --toc -V title="Milvus Documentation" -V author="Zilliz" -V date="${_version_tag}" -V CJKmainfont="${MAINFONT}" -f markdown -o $pdfFile --pdf-engine=lualatex;
     fi
 done
+
+for file in ./zh-CN/*
+do
+    if [[ $file =~ \.md$ ]]; then
+        echo $file;
+        pdfFile="$(basename ${file} | sed s:/:__:g).cn.pdf";
+        echo "Generating cn pdf: $pdfFile ..."
+        pandoc $file --toc -V title="Milvus Documentation" -V author="Zilliz" -V date="${_version_tag}" -V CJKmainfont="${MAINFONT}" -f markdown -o $pdfFile --pdf-engine=lualatex;
+    fi
+done

@@ -51,7 +51,7 @@ const siteConfig = {
     {href: '/docs/FAQ', label: 'Support'},
     {href: '/docs/QuickStart#installing-milvus-docker', label: 'Try Milvus'}
     // {page: 'help', label: 'Help'}
-    // {blog: false, label: 'Blog'},
+    // {blog: true, label: 'Blog'},
   ],
 
   // If you have users set above, you add it here:

@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(td_eles) {
         [].forEach.call(td_eles, td => {
             if(td.innerText === ':heavy_check_mark:') { td.innerHTML = `<g-emoji class="g-emoji" alias="heavy_check_mark" fallback-src="/images/heavy_check_mark.png">✔️</g-emoji>`; return false;}
-            if(td.innerText === ":x:" ){ td.innerHTML = `<g-emoji class="g-emoji" alias="x" fallback-src="../images/x.png">❌</g-emoji>`; return false;}
+            if(td.innerText === ":x:" ){ td.innerHTML = `<g-emoji class="g-emoji" alias="x" fallback-src="/images/x.png">❌</g-emoji>`; return false;}
             return false;
         })
     }

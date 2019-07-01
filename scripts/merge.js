@@ -13,9 +13,10 @@ let pdf = `%` + markdown.match(titleReg)[1] + `\n`;
 const linksRegexp = new RegExp(/\((.*\.md)/g);
 
 const links = markdown.match(linksRegexp).map(d => d.replace('(', ''));
+const removeFormatter = /^---(.|\n)*?---\n/;
 links.forEach(link => {
     const file = fs.readFileSync(`${folder}/${link}`).toString();
-    pdf += file
+    pdf += file.replace(removeFormatter, '');
 });
 
 fs.writeFileSync(`./${folder}.all.md`, pdf);

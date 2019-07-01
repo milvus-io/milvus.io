@@ -92,9 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const editButtonEle = document.querySelector('.edit-page-link');
     if(editButtonEle) {
         createDownloadPdfElement(editButtonEle);
-        const span = document.createElement('span');
-        span.innerHTML=`<i class="far fa-edit"></i> &nbsp;`
-        editButtonEle.insertBefore(span, editButtonEle.lastChild)
+        editButtonEle.innerHTML = `<i class="far fa-edit"></i> &nbsp; ${language === 'en' ? 'Edit' : '编辑'}`
     }
 
 });

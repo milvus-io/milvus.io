@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // add Download PDF button
     const pdfMap = {
         'vectordb': 'vectordb',
-        'userguide': 'UserGuide'
+        'userguide': 'userguide'
     };
     const createDownloadPdfElement = node => {
         const parent = node.parentNode;

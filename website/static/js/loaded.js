@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const languageMenu = document.querySelector('.nav-site>span');
     languageMenu.style.display = 'none';
     const languageMap = {
-        'en': 'En',
+        'en': 'English',
         'zh-CN': '中文'
     };
     Object.keys(languageMap).forEach(l => {

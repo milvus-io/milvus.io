@@ -27,7 +27,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-12">
                 {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
                 <h1 className="text-primary">Milvus</h1>
-                <p className="lead text-secondary">An intelligent feature vector indexing database that allows you to access data at unparalleled speed.</p>
+                <p className="lead text-secondary">An intelligent vector database that allows you to access data at unparalleled speed.</p>
                 <p className="mt-5"><a href={this.docUrl('userguide/getting-started', language)} className="btn btn-primary">Why Milvus</a></p>
               </div>
             </div>
@@ -74,7 +74,7 @@ class Index extends React.Component {
                     <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>Wonderful Performance</strong></h3>
+                    <h3><strong>Excellent Performance</strong></h3>
                     <p>Built on CPU/GPU heterogeneous computing architecture, the data processing speed is more than 1000 times faster than traditional database.</p>
                   </div>
                 </div>

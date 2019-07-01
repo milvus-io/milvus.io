@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
     }
-    decorateLinkToButton(['Try Milvus']);
+    decorateLinkToButton(['Try Milvus', '试用Milvus']);
 
     // multiple language
     const headerNavCon = document.querySelector('.nav-site');
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.keys(languageMap).forEach(l => {
         const li = document.createElement('li');
         let href = window.location.pathname.replace(/en|zh-CN/, l);
+        if (href === '/') href +=l
         li.classList.toggle('siteNavItemActive', language === l)
         li.innerHTML = `<a href="${href}" target="_self" data-v="${l}">${languageMap[l]}</a>`;
         headerNavCon.appendChild(li);
@@ -62,20 +63,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!nav) return;
     
     // add Download PDF button
+    const pdfMap = {
+        'vectordb': 'vectordb',
+        'userguide': 'userguide'
+    };
     const createDownloadPdfElement = node => {
         const parent = node.parentNode;
-        const arr = window.location.href.split('/');
-        const len = arr.length;
-        const targetName = arr[len-1] === '' ? arr[len-2] : arr[len-1];
-        const targetLink = `${window.location.origin}/${targetName}.md.pdf`
-        
-        const downloadlink = document.createElement('div');
-        downloadlink.innerHTML = `
-            <a class="edit-page-link button" style="margin-left:10px !important;" target="_blank" href= ${targetLink} >
-            <i class="fas fa-file-pdf"></i>
-                &nbsp; PDF 
-            </a>`;
-        parent.insertBefore(downloadlink, node)
+        let targetName = '';
+        let showpdf = Object.keys(pdfMap).some(n => {
+            if(window.location.href.includes(n)) {
+                targetName = n;
+                return true;
+            }
+        });
+        if (showpdf) {
+            const targetLink = `${window.location.origin}/${pdfMap[targetName]}.all.${language}.pdf`;
+            const downloadlink = document.createElement('div');
+            downloadlink.innerHTML = `
+                <a class="edit-page-link button" style="margin-left:10px !important;" target="_blank" href= ${targetLink} >
+                <i class="fas fa-file-pdf"></i>
+                    &nbsp; PDF 
+                </a>`;
+            parent.insertBefore(downloadlink, node)
+        }
         return false;
     }
     // add Download PDF button && icon for Edit Button

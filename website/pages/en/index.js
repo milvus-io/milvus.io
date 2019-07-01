@@ -28,7 +28,7 @@ class Index extends React.Component {
                 {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
                 <h1 className="text-primary">Milvus</h1>
                 <p className="lead text-secondary">An intelligent feature vector indexing database that allows you to access data at unparalleled speed.</p>
-                <p className="mt-5"><a href={this.docUrl('QuickStart', language)} className="btn btn-primary">Get Started</a></p>
+                <p className="mt-5"><a href={this.docUrl('userguide/getting-started', language)} className="btn btn-primary">Why Milvus</a></p>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@ class Index extends React.Component {
                 <h1>What is Milvus</h1>
                 <p className="lead">
                 Designed by ZILLIZ, Milvus is a distributed GPU database for massive feature vector analytics. Built on GPU/CPU heterogeneous computing architecture, multibillion row datasets can now be queried in seconds, at massively reduced cost. 
-                <br /><a href="/whatIsVecDb">Read More</a>
+                <br /><a href={this.docUrl('WhitePaper', language)}>Read More</a>
                 </p>
               </div>
             </div>
@@ -71,7 +71,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/gift.svg`} />
+                    <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>Wonderful Performance</strong></h3>
@@ -83,7 +83,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
+                    <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/layers.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>Intelligent Index</strong></h3>
@@ -95,7 +95,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map-pin.svg`} />
+                    <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>High Elasticity</strong></h3>
@@ -109,7 +109,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/life-buoy.svg`} />
+                    <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>High Availability</strong></h3>
@@ -121,7 +121,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+                    <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/package.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>Easy Integration</strong></h3>
@@ -133,7 +133,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+                    <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/monitor.svg`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>Easy to use</strong></h3>
@@ -421,7 +421,7 @@ class Index extends React.Component {
     }
 
     return (
-      <div class="page">
+      <div className="page">
         <CallToAction />
         <WhatIsVecDb />
         <Features />

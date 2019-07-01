@@ -1,12 +1,34 @@
 {
   "docs": {
-    "Milvus Intro": [
-      "QuickStart",
-      "UserGuide",
-      "WhitePaper",
-      "VectorDBIntro"
+    "Vector DB Intro": [
+      "vectordb/feature-vector",
+      "vectordb/traditional-db",
+      "vectordb/vector-indexing-methods",
+      "vectordb/feature-vector-db",
+      "vectordb/milvus-db"
     ],
-    "User Guide": ["UserGuide", "FAQ"],
-    "Release Note": ["ReleaseNote"]
+    "Quick Start": [
+      "QuickStart"
+    ],
+    "User Guide": [
+      "userguide/preface",
+      "userguide/getting-started",
+      "userguide/configuring-milvus",
+      "userguide/creating-table",
+      "userguide/importing-vectors",
+      "userguide/searching-table",
+      "userguide/deleting-table",
+      "userguide/searching-with-milvus",
+      "userguide/monitoring-and-alarm",
+      "userguide/application-scenario",
+      "userguide/trouble-shooting",
+      "userguide/support"
+    ],
+    "FAQ": [
+      "FAQ"
+    ],
+    "Release Notes": [
+      "ReleaseNote"
+    ]
   }
 }

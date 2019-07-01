@@ -44,6 +44,12 @@
   position: relative;
   min-height: auto !important;
 }
+.splash-container h1 {
+  font-size: 48px;
+}
+.splash-container .lead {
+  font-size: 24px;
+}
 .splash {
     position: absolute;
     width: 100%;
@@ -80,8 +86,8 @@
 .nav-site>span {
   display: none;
 }
-.nav-site .button {
-  background: #329ef7;
+.nav-site li a.button {
+  background: #329ef7 !important;
 }
 /* "Copy" code block button */
 pre {

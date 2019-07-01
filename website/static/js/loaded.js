@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         if (showpdf) {
-            const targetLink = `${window.location.origin}/${pdfMap[targetName]}.${language}.pdf`;
+            const targetLink = `${window.location.origin}/${pdfMap[targetName]}.all.${language}.pdf`;
             const downloadlink = document.createElement('div');
             downloadlink.innerHTML = `
                 <a class="edit-page-link button" style="margin-left:10px !important;" target="_blank" href= ${targetLink} >

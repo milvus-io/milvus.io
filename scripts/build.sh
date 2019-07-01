@@ -5,7 +5,7 @@ MONOFONT="WenQuanYi Micro Hei Mono"
 
 for file in ./*
 do
-    if [[ $file =~ \.md$ ]]; then
+    if [[ $file =~ \.all.md$ ]]; then
         echo $file;
         pdfFile="$(basename ${file} | sed 's/\.[^.]*$//').en.pdf";
         echo "Generating pdf: $pdfFile ..."
@@ -15,7 +15,7 @@ done
 
 for file in ./zh-CN/*
 do
-    if [[ $file =~ \.md$ ]]; then
+    if [[ $file =~ \.all.md$ ]]; then
         echo $file;
         pdfFile="$(basename ${file} | sed 's/\.[^.]*$//').zh-CN.pdf";
         echo "Generating cn pdf: $pdfFile ..."

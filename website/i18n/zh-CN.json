@@ -24,8 +24,8 @@
         "title": "README"
       },
       "ReleaseNote": {
-        "title": "更新日志",
-        "sidebar_label": "Milvus更新日志"
+        "title": "版本说明",
+        "sidebar_label": "Milvus版本说明"
       },
       "UserGuide": {
         "title": "Milvus用户指南",
@@ -226,7 +226,7 @@
       "Quick Start": "快速入门",
       "User Guide": "用户指南",
       "FAQ": "常见问题",
-      "Release Note": "更新日志"
+      "Release Notes": "版本说明"
     }
   },
   "pages-strings": {

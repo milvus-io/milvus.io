@@ -190,7 +190,7 @@ class Index extends React.Component {
                     <h2 className="font-weight-light">SPTAG</h2>
                   </td>
                 </tr>
-                <tr className='Hobby2'>
+                <tr>
                   <th scope="row" className="border-0">CPU/GPU异构计算能力</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
@@ -268,36 +268,56 @@ class Index extends React.Component {
               <tbody>
                 <tr>
                   <td className="text-center border-0" colSpan="2">
-                    <h2 className="font-weight-light">Hobby</h2>
+                    <h2 className="font-weight-light">Milvus</h2>
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Support</th>
-                  <td>3 months</td>
+                  <th scope="row">CPU/GPU异构计算能力</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Full source code</th>
-                  <td>✓</td>
+                  <th scope="row">量化索引</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">SaaS / Subscription</th>
-                  <td>✓</td>
+                  <th scope="row">哈希索引</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Intranet</th>
-                  <td></td>
+                  <th scope="row">图索引</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Downloadable Software</th>
-                  <td></td>
+                  <th scope="row">高可用设计</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Redistribute</th>
-                  <td></td>
+                  <th scope="row">分布式架构</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
-                  <td></td>
+                  <th scope="row">易用标准化用户接口</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">图形仪表盘</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">快速开发</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">C++/Python SDK</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">RESTful API</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">企业级用户支持</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
               </tbody>
             </table>
@@ -306,115 +326,118 @@ class Index extends React.Component {
               <tbody>
                 <tr>
                   <td className="text-center" colSpan="2">
-                    <h2 className="font-weight-light">Professional</h2>
+                    <h2 className="font-weight-light">FAISS</h2>
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Support</th>
-                  <td>6 months</td>
+                  <th scope="row">CPU/GPU异构计算能力</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Full source code</th>
-                  <td>✓</td>
+                  <th scope="row">量化索引</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">SaaS / Subscription</th>
-                  <td>✓</td>
+                  <th scope="row">哈希索引</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Intranet</th>
-                  <td>✓</td>
+                  <th scope="row">图索引</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Downloadable Software</th>
-                  <td></td>
+                  <th scope="row">高可用设计</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Redistribute</th>
-                  <td></td>
+                  <th scope="row">分布式架构</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
-                  <td></td>
+                  <th scope="row">易用标准化用户接口</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">图形仪表盘</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">快速开发</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">C++/Python SDK</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">RESTful API</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">企业级用户支持</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
               </tbody>
             </table>
 
             <table className="table text-center mt-5 d-table d-lg-none">
-              <tbody>
+            <tbody>
                 <tr>
                   <td className="text-center" colSpan="2">
-                    <h2 className="font-weight-light">Business</h2>
+                    <h2 className="font-weight-light">SPTAG</h2>
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Support</th>
-                  <td>12 months</td>
+                  <th scope="row">CPU/GPU异构计算能力</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Full source code</th>
-                  <td>✓</td>
+                  <th scope="row">量化索引</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">SaaS / Subscription</th>
-                  <td>✓</td>
+                  <th scope="row">哈希索引</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Intranet</th>
-                  <td>✓</td>
+                  <th scope="row">图索引</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Downloadable Software</th>
-                  <td>✓</td>
+                  <th scope="row">高可用设计</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Redistribute</th>
-                  <td></td>
+                  <th scope="row">分布式架构</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
-                  <td></td>
+                  <th scope="row">易用标准化用户接口</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">图形仪表盘</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">快速开发</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">C++/Python SDK</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">RESTful API</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">企业级用户支持</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
               </tbody>
             </table>
-
-            <table className="table text-center mt-5 d-table d-lg-none">
-              <tbody>
-                <tr>
-                  <td className="text-center" colSpan="2">
-                    <h2 className="font-weight-light">Enterprise</h2>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Support</th>
-                  <td>Custom</td>
-                </tr>
-                <tr>
-                  <th scope="row">Full source code</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">SaaS / Subscription</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">Intranet</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">Downloadable Software</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">Redistribute</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">Custom code</th>
-                  <td>✓</td>
-                </tr>
-              </tbody>
-            </table>
+     
           </div>
         </section>
       )

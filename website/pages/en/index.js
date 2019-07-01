@@ -190,7 +190,7 @@ class Index extends React.Component {
                     <h2 className="font-weight-light">SPTAG</h2>
                   </td>
                 </tr>
-                <tr className='Hobby2'>
+                <tr>
                   <th scope="row" className="border-0">CPU/GPU heterogeneous computing capability</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
@@ -264,40 +264,61 @@ class Index extends React.Component {
                 </tr>
               </tbody>
             </table>
+            
             <table className="table text-center mt-5 d-table d-lg-none">
               <tbody>
                 <tr>
                   <td className="text-center border-0" colSpan="2">
-                    <h2 className="font-weight-light">Hobby</h2>
+                    <h2 className="font-weight-light">Milvus</h2>
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Support</th>
-                  <td>3 months</td>
+                  <th scope="row">CPU/GPU heterogeneous computing capability</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Full source code</th>
-                  <td>✓</td>
+                  <th scope="row">Quantization index</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">SaaS / Subscription</th>
-                  <td>✓</td>
+                  <th scope="row">Hash index</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Intranet</th>
-                  <td></td>
+                  <th scope="row">Graph index</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Downloadable Software</th>
-                  <td></td>
+                  <th scope="row">High availability</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Redistribute</th>
-                  <td></td>
+                  <th scope="row">Distributed architecture</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
-                  <td></td>
+                  <th scope="row">Easy-to-use user interface</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">GUI monitoring dashboard</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Simple deployment</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">C++/Python SDK</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">RESTful API</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Enterprise user support</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
               </tbody>
             </table>
@@ -306,115 +327,118 @@ class Index extends React.Component {
               <tbody>
                 <tr>
                   <td className="text-center" colSpan="2">
-                    <h2 className="font-weight-light">Professional</h2>
+                    <h2 className="font-weight-light">FAISS</h2>
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Support</th>
-                  <td>6 months</td>
+                  <th scope="row">CPU/GPU heterogeneous computing capability</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Full source code</th>
-                  <td>✓</td>
+                  <th scope="row">Quantization index</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">SaaS / Subscription</th>
-                  <td>✓</td>
+                  <th scope="row">Hash index</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Intranet</th>
-                  <td>✓</td>
+                  <th scope="row">Graph index</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Downloadable Software</th>
-                  <td></td>
+                  <th scope="row">High availability</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Redistribute</th>
-                  <td></td>
+                  <th scope="row">Distributed architecture</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
-                  <td></td>
+                  <th scope="row">Easy-to-use user interface</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">GUI monitoring dashboard</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Simple deployment</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">C++/Python SDK</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">RESTful API</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Enterprise user support</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
               </tbody>
             </table>
 
             <table className="table text-center mt-5 d-table d-lg-none">
-              <tbody>
+            <tbody>
                 <tr>
                   <td className="text-center" colSpan="2">
-                    <h2 className="font-weight-light">Business</h2>
+                    <h2 className="font-weight-light">SPTAG</h2>
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Support</th>
-                  <td>12 months</td>
+                  <th scope="row">CPU/GPU heterogeneous computing capability</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Full source code</th>
-                  <td>✓</td>
+                  <th scope="row">Quantization index</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">SaaS / Subscription</th>
-                  <td>✓</td>
+                  <th scope="row">Hash index</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Intranet</th>
-                  <td>✓</td>
+                  <th scope="row">Graph index</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Downloadable Software</th>
-                  <td>✓</td>
+                  <th scope="row">High availability</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Redistribute</th>
-                  <td></td>
+                  <th scope="row">Distributed architecture</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
                 <tr>
-                  <th scope="row">Custom code</th>
-                  <td></td>
+                  <th scope="row">Easy-to-use user interface</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">GUI monitoring dashboard</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Simple deployment</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">C++/Python SDK</th>
+                  <td className="css-7sa0gy"><div className="css-full"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">RESTful API</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr>
+                  <th scope="row">Enterprise user support</th>
+                  <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
               </tbody>
             </table>
-
-            <table className="table text-center mt-5 d-table d-lg-none">
-              <tbody>
-                <tr>
-                  <td className="text-center" colSpan="2">
-                    <h2 className="font-weight-light">Enterprise</h2>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Support</th>
-                  <td>Custom</td>
-                </tr>
-                <tr>
-                  <th scope="row">Full source code</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">SaaS / Subscription</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">Intranet</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">Downloadable Software</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">Redistribute</th>
-                  <td>✓</td>
-                </tr>
-                <tr>
-                  <th scope="row">Custom code</th>
-                  <td>✓</td>
-                </tr>
-              </tbody>
-            </table>
+    
           </div>
         </section>
       )

@@ -74,7 +74,7 @@ class Index extends React.Component {
                     <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>Excellent Performance</strong></h3>
+                    <h3><strong>High Performance</strong></h3>
                     <p>Built on CPU/GPU heterogeneous computing architecture, the data processing speed is more than 1000 times faster than traditional database.</p>
                   </div>
                 </div>

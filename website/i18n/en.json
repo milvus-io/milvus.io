@@ -13,6 +13,10 @@
         "title": "FAQ",
         "sidebar_label": "FAQ"
       },
+      "product-benefits": {
+        "title": "Product benefits",
+        "sidebar_label": "Product benefits"
+      },
       "PythonSDKParam": {
         "title": "PythonSDKParam"
       },
@@ -119,6 +123,10 @@
       "zh-CN/FAQ": {
         "title": "FAQ",
         "sidebar_label": "FAQ"
+      },
+      "zh-CN/product-benefits": {
+        "title": "Product benefits",
+        "sidebar_label": "Product benefits"
       },
       "zh-CN/QuickStart": {
         "title": "Milvus Quick Start",

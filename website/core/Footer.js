@@ -40,15 +40,12 @@ class Footer extends React.Component {
             <a href={this.docUrl('QuickStart', this.props.language)}>
               Getting Started
             </a>
-            <a href={this.docUrl('UserGuide', this.props.language)}>
+            <a href={this.docUrl('userguide/preface', this.props.language)}>
               Guides
             </a>
           </div>
           <div>
             <h5>Community</h5>
-            <a href={this.pageUrl('users.html', this.props.language)}>
-              User Showcase
-            </a>
             <a
               href="https://stackoverflow.com/questions/tagged/"
               target="_blank"

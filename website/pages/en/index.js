@@ -60,7 +60,7 @@ class Index extends React.Component {
 
     const Features = () => {
       return (
-        <section className="fdb-block">
+        <section className="fdb-block margin-top-zero">
           <div className="container">
             <div className="row text-center">
               <div className="col-12">
@@ -169,7 +169,7 @@ class Index extends React.Component {
 
     const Comparison = () => {
       return (
-        <section className="fdb-block">
+        <section className="fdb-block margin-top-zero">
           <div className="container">
             <div className="row text-center">
               <div className="col">

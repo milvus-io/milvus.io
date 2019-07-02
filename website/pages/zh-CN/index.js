@@ -49,7 +49,7 @@ class Index extends React.Component {
                 <h1>什么是Milvus</h1>
                 <p className="lead">
                 Milvus是ZILLIZ公司研发的一款分布式智能向量检索分析系统。基于GPU/CPU异构众核框架构建，让您能在毫秒间轻松处理数十亿级数据。
-                <br /><a href={this.docUrl('WhitePaper', language)}>点击详情</a>
+                <br /><a href={this.docUrl('vectordb/milvus-db', language)}>点击详情</a>
                 </p>
               </div>
             </div>
@@ -75,7 +75,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>性能卓越</strong></h3>
-                    <p>Milvus通过异构处理架构大幅提高索引构建的速度。</p>
+                    <p>通过异构处理架构大幅提高索引构建的速度。</p>
                   </div>
                 </div>
               </div>
@@ -87,7 +87,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>智能索引</strong></h3>
-                    <p>Milvus提供针对向量检索的多种索引技术，可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引。</p>
+                    <p>提供针对向量检索的多种索引技术，可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引。</p>
                   </div>
                 </div>
               </div>
@@ -99,7 +99,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>弹性伸缩</strong></h3>
-                    <p>Milvus 实现了计算与存储分离架构，可随着业务扩展，弹性伸缩计算节点和存储节点。</p>
+                    <p>实现了计算与存储分离架构，可随着业务扩展，弹性伸缩计算节点和存储节点。</p>
                   </div>
                 </div>
               </div>
@@ -113,7 +113,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>高可用性</strong></h3>
-                    <p>Milvus的分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
+                    <p>分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
                   </div>
                 </div>
               </div>
@@ -125,7 +125,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>全面兼容</strong></h3>
-                    <p>Milvus 可以兼容各种人工智能训练模型，和主流开发语言。</p>
+                    <p>兼容各种人工智能训练模型，和主流开发语言。</p>
                   </div>
                 </div>
               </div>

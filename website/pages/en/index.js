@@ -196,11 +196,25 @@ class Index extends React.Component {
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
                 </tr>
+                <tr className='content' style={{ display: 'none' }} >
+                  <td colSpan='5'>
+                    <span>
+                      I am CPU/GPU heterogeneous computing capability content
+                    </span>
+                  </td>
+                </tr>
                 <tr>
                   <th scope="row">Quantization index</th>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-full"></div></td>
                   <td className="css-7sa0gy"><div className="css-zero"></div></td>
+                </tr>
+                <tr className='content' style={{ display: 'none' }} >
+                  <td colSpan='5'>
+                    <span>
+                    Quantization index
+                    </span>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row" >Hash index</th>

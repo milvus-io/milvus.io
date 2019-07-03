@@ -7,6 +7,9 @@
       "vectordb/feature-vector-db",
       "vectordb/milvus-db"
     ],
+    "Product Benefits": [
+      "product-benefits"
+    ],
     "Quick Start": [
       "QuickStart"
     ],

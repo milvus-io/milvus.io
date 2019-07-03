@@ -196,3 +196,6 @@ h2{
     margin: 0;
     padding: 0;
 }
+.navSearchWrapper.reactNavSearchWrapper::before,.navSearchWrapper.reactNavSearchWrapper::after  {
+  box-sizing: content-box;
+}

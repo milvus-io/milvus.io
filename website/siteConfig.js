@@ -126,7 +126,13 @@ const siteConfig = {
   docsSideNavCollapsible: true,
 
   blogSidebarCount: '10',
-  editUrl: 'https://github.com/milvus-io/docs/blob/master/'
+  editUrl: 'https://github.com/milvus-io/docs/blob/master/',
+
+  algolia: {
+    apiKey: '674bb92b22068b6dd9fd050faac8c92c',
+    indexName: 'milvus',
+    algoliaOptions: {} // Optional, if provided by Algolia
+  }
 };
 
 module.exports = siteConfig;

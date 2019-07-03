@@ -13,6 +13,10 @@
         "title": "常见问题",
         "sidebar_label": "常见问题"
       },
+      "product-benefits": {
+        "title": "产品优势",
+        "sidebar_label": "产品优势"
+      },
       "PythonSDKParam": {
         "title": "PythonSDKParam"
       },
@@ -223,6 +227,7 @@
     },
     "categories": {
       "Vector DB Intro": "向量数据库简介",
+      "Product Benefits": "产品优势",
       "Quick Start": "快速入门",
       "User Guide": "用户指南",
       "FAQ": "常见问题",

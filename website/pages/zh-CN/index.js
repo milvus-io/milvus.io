@@ -75,7 +75,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>性能卓越</strong></h3>
-                    <p>通过异构处理架构大幅提高索引构建的速度。</p>
+                    <p>通过异构处理架构大幅提高索引构建的速度，数据处理速度比传统数据库快1000倍。</p>
                   </div>
                 </div>
               </div>
@@ -87,7 +87,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>智能索引</strong></h3>
-                    <p>提供针对向量检索的多种索引技术，可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引。</p>
+                    <p>提供丰富而优化的向量索引技术，您可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引方式。</p>
                   </div>
                 </div>
               </div>
@@ -99,7 +99,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>弹性伸缩</strong></h3>
-                    <p>实现了计算与存储分离架构，可随着业务扩展，弹性伸缩计算节点和存储节点。</p>
+                    <p>计算与存储分离的架构，让您根据业务扩展情况，弹性伸缩计算节点和存储节点。</p>
                   </div>
                 </div>
               </div>
@@ -137,7 +137,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>高易用性</strong></h3>
-                    <p>Milvus提供了基于Python/C++的客户端SDK，并提供了可视化监控面板，以及基于图形化和命令行管理工具。</p>
+                    <p>提供基于Python/C++的客户端SDK和图形化监控面板，命令行管理工具简单易用。</p>
                   </div>
                 </div>
               </div>

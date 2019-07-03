@@ -48,7 +48,7 @@ class Index extends React.Component {
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>What is Milvus</h1>
                 <p className="lead">
-                Designed by ZILLIZ, Milvus is a distributed GPU database for massive feature vector analytics. Built on GPU/CPU heterogeneous computing architecture, multibillion row datasets can now be queried in seconds, at massively reduced cost. 
+                Designed by ZILLIZ, Milvus is a distributed GPU database for large scale feature vector analysis. Built on GPU/CPU heterogeneous computing architecture, multibillion row datasets can now be queried in seconds, at massively reduced cost. 
                 <br /><a href={this.docUrl('vectordb/milvus-db', language)}>Read More</a>
                 </p>
               </div>
@@ -74,7 +74,7 @@ class Index extends React.Component {
                     <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>High Performance</strong></h3>
+                    <h3><strong>Outstanding Performance</strong></h3>
                     <p>Built on CPU/GPU heterogeneous computing architecture, the data processing speed is more than 1000 times faster than traditional database.</p>
                   </div>
                 </div>
@@ -87,7 +87,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>Intelligent Index</strong></h3>
-                    <p>With optimized quantization index, tree and graph index, etc., you can choose the proper index to easily adapt to your businesses.</p>
+                    <p>Depending on your business needs, you can choose from our various and optimized data index types, designed based on quantitization, tree-based and graph methods, etc. </p>
                   </div>
                 </div>
               </div>
@@ -98,8 +98,8 @@ class Index extends React.Component {
                     <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>High Elasticity</strong></h3>
-                    <p>Change the computing and storage nodes as your business expands,  The disaggregated storage and compute architecture allow you to flexibility change the computing and storage nodes as the business expands. </p>
+                    <h3><strong>Strong Scalability</strong></h3>
+                    <p>The disaggregated storage and compute architecture allow you to flexibility adpat the computing and storage types as your business expands. </p>
                   </div>
                 </div>
               </div>
@@ -113,7 +113,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>High Availability</strong></h3>
-                    <p>The distributed cluster architecture provides continuous service capability while some of the nodes fail.</p>
+                    <p>The distributed cluster architecture provides continued service capability when some of the system components fail.</p>
                   </div>
                 </div>
               </div>
@@ -124,8 +124,8 @@ class Index extends React.Component {
                     <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/package.svg`} />
                   </div>
                   <div className="col-9">
-                    <h3><strong>Easy Integration</strong></h3>
-                    <p>Compatible with major AI/ML framework and programming language.</p>
+                    <h3><strong>High Compatibility</strong></h3>
+                    <p>Compatible with major AI/ML models and programming languages.</p>
                   </div>
                 </div>
               </div>

@@ -99,7 +99,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>Strong Scalability</strong></h3>
-                    <p>The disaggregated storage and compute architecture allow you to flexibility adpat the computing and storage types as your business expands. </p>
+                    <p>The disaggregated storage and compute architecture allow you to flexibly adapt the computing and storage types as your business expands. </p>
                   </div>
                 </div>
               </div>
@@ -113,7 +113,7 @@ class Index extends React.Component {
                   </div>
                   <div className="col-9">
                     <h3><strong>High Availability</strong></h3>
-                    <p>The distributed cluster architecture provides continued service capability when some of the system components fail.</p>
+                    <p>The distributed cluster architecture provides continued service when some of the system components fail.</p>
                   </div>
                 </div>
               </div>

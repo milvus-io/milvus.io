@@ -93,7 +93,7 @@ const siteConfig = {
   // Add custom scripts here that would be placed in <script> tags.
   scripts: [
     '/js/clipboard.min.js',
-    '/js/code-block-buttons.js',
+    // '/js/code-block-buttons.js',
     '/js/splash.js',
     '/js/loaded.js'
   ],

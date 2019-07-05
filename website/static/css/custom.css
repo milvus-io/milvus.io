@@ -199,3 +199,6 @@ h2{
 .navSearchWrapper.reactNavSearchWrapper::before,.navSearchWrapper.reactNavSearchWrapper::after  {
   box-sizing: content-box;
 }
+pre .btnIcon {
+  color: #999;
+}

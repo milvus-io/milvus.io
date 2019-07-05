@@ -14,8 +14,8 @@
         "sidebar_label": "FAQ"
       },
       "product-benefits": {
-        "title": "Product benefits",
-        "sidebar_label": "Product benefits"
+        "title": "Product Benefits",
+        "sidebar_label": "Product Benefits"
       },
       "PythonSDKParam": {
         "title": "PythonSDKParam"
@@ -51,20 +51,20 @@
         "sidebar_label": "Creating a table"
       },
       "userguide/deleting-table": {
-        "title": "Deleting A Table",
-        "sidebar_label": "Deleting A Table"
+        "title": "Deleting a table",
+        "sidebar_label": "Deleting a table"
       },
       "userguide/getting-started": {
-        "title": "Getting Started with Milvus",
-        "sidebar_label": "Getting Started with Milvus"
+        "title": "Getting started with Milvus",
+        "sidebar_label": "Getting started with Milvus"
       },
       "userguide/importing-vectors": {
-        "title": "Importing Vectors",
-        "sidebar_label": "Importing Vectors"
+        "title": "Importing vectors",
+        "sidebar_label": "Importing vectors"
       },
       "userguide/monitoring-and-alarm": {
-        "title": "Monitoring and Alarm",
-        "sidebar_label": "Monitoring and Alarm"
+        "title": "Monitoring and alarm",
+        "sidebar_label": "Monitoring and alarm"
       },
       "userguide/preface": {
         "title": "Preface",
@@ -74,12 +74,12 @@
         "title": "userguide/README"
       },
       "userguide/searching-table": {
-        "title": "Search A Table",
-        "sidebar_label": "Search A Table"
+        "title": "Search a table",
+        "sidebar_label": "Search a table"
       },
       "userguide/searching-with-milvus": {
-        "title": "Searching With Milvus",
-        "sidebar_label": "Searching With Milvus"
+        "title": "Searching with Milvus",
+        "sidebar_label": "Searching with Milvus"
       },
       "userguide/support": {
         "title": "Support",
@@ -125,8 +125,8 @@
         "sidebar_label": "FAQ"
       },
       "zh-CN/product-benefits": {
-        "title": "Product benefits",
-        "sidebar_label": "Product benefits"
+        "title": "Product Benefits",
+        "sidebar_label": "Product Benefits"
       },
       "zh-CN/QuickStart": {
         "title": "Milvus Quick Start",
@@ -156,20 +156,20 @@
         "sidebar_label": "Creating a table"
       },
       "zh-CN/userguide/deleting-table": {
-        "title": "Deleting A Table",
-        "sidebar_label": "Deleting A Table"
+        "title": "Deleting a table",
+        "sidebar_label": "Deleting a table"
       },
       "zh-CN/userguide/getting-started": {
-        "title": "Getting Started with Milvus",
-        "sidebar_label": "Getting Started with Milvus"
+        "title": "Getting started with Milvus",
+        "sidebar_label": "Getting started with Milvus"
       },
       "zh-CN/userguide/importing-vectors": {
-        "title": "Importing Vectors",
-        "sidebar_label": "Importing Vectors"
+        "title": "Importing vectors",
+        "sidebar_label": "Importing vectors"
       },
       "zh-CN/userguide/monitoring-and-alarm": {
-        "title": "Monitoring and Alarm",
-        "sidebar_label": "Monitoring and Alarm"
+        "title": "Monitoring and alarm",
+        "sidebar_label": "Monitoring and alarm"
       },
       "zh-CN/userguide/preface": {
         "title": "Preface",
@@ -179,12 +179,12 @@
         "title": "zh-CN/userguide/README"
       },
       "zh-CN/userguide/searching-table": {
-        "title": "Search A Table",
-        "sidebar_label": "Search A Table"
+        "title": "Search a table",
+        "sidebar_label": "Search a table"
       },
       "zh-CN/userguide/searching-with-milvus": {
-        "title": "Searching With Milvus",
-        "sidebar_label": "Searching With Milvus"
+        "title": "Searching with Milvus",
+        "sidebar_label": "Searching with Milvus"
       },
       "zh-CN/userguide/support": {
         "title": "Support",

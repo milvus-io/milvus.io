@@ -7,6 +7,38 @@ function fixHeaderLinks(language) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // add GDPR control
+    var gtagId = 'UA-142992812-1';
+    // Allow tracking by default
+    window['ga-disable-' + gtagId] = false;
+    // Initialize gtag
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    window.cookieconsent.initialise({
+        onInitialise: function (status) {
+            if (this.hasConsented('analytics')) {
+                window['ga-disable-' + gtagId] = false;
+                // Track this pageview
+                gtag('config', gtagId);
+            }
+        },
+        onAllow: function (category) {
+            if (category === 'analytics') {
+                // Enable tracking
+                window['ga-disable-' + gtagId] = false;
+                // Track this pageview
+                gtag('config', gtagId);
+            }
+        },
+        onRevoke: function (category) {
+            if (category === 'analytics') {
+                window['ga-disable-' + gtagId] = true;
+            }
+        }
+    })
+
     // get lang
     const language = document.querySelector('html').getAttribute('lang');
     fixHeaderLinks(language);
@@ -15,15 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const trs = document.querySelectorAll('tr');
     [].forEach.call(trs, tr => tr.addEventListener('click', () => {
         const content = tr.nextSibling;
-        if(content.className) content.style.display = content.style.display == 'none' ? 'table-row' : 'none';
+        if (content.className) content.style.display = content.style.display == 'none' ? 'table-row' : 'none';
     }));
 
     // decorate special link to button style
     const decorateLinkToButton = texts => {
         const ele_nav = document.querySelector('.nav-site');
         const group_link = ele_nav.getElementsByTagName('a');
-        [].forEach.call(group_link, link =>{
-            if(link.innerText && texts.some(text => text === link.innerText) ){
+        [].forEach.call(group_link, link => {
+            if (link.innerText && texts.some(text => text === link.innerText)) {
                 link.classList.add('button')
             }
         })
@@ -41,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.keys(languageMap).forEach(l => {
         const li = document.createElement('li');
         let href = window.location.pathname.replace(/en|zh-CN/, l);
-        if (href === '/') href +=l
+        if (href === '/') href += l
         li.classList.toggle('siteNavItemActive', language === l)
         li.innerHTML = `<a href="${href}" target="_self" data-v="${l}">${languageMap[l]}</a>`;
         headerNavCon.appendChild(li);
@@ -50,10 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // transfer 'check_mark' and 'x' in tables to emoji
     // todo: there should be better translation method while packaging, not transfer it whilte domContentLoad.
     const td_eles = document.querySelectorAll('td');
-    if(td_eles) {
+    if (td_eles) {
         [].forEach.call(td_eles, td => {
-            if(td.innerText === ':heavy_check_mark:') { td.innerHTML = `<g-emoji class="g-emoji" alias="heavy_check_mark" fallback-src="/images/heavy_check_mark.png">✔️</g-emoji>`; return false;}
-            if(td.innerText === ":x:" ){ td.innerHTML = `<g-emoji class="g-emoji" alias="x" fallback-src="/images/x.png">❌</g-emoji>`; return false;}
+            if (td.innerText === ':heavy_check_mark:') { td.innerHTML = `<g-emoji class="g-emoji" alias="heavy_check_mark" fallback-src="/images/heavy_check_mark.png">✔️</g-emoji>`; return false; }
+            if (td.innerText === ":x:") { td.innerHTML = `<g-emoji class="g-emoji" alias="x" fallback-src="/images/x.png">❌</g-emoji>`; return false; }
             return false;
         })
     }
@@ -61,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // download pdf 
     const nav = document.querySelector('.toc');
     if (!nav) return;
-    
+
     // add Download PDF button
     const pdfMap = {
         'vectordb': 'vectordb',
@@ -71,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const parent = node.parentNode;
         let targetName = '';
         let showpdf = Object.keys(pdfMap).some(n => {
-            if(window.location.href.includes(n)) {
+            if (window.location.href.includes(n)) {
                 targetName = n;
                 return true;
             }
@@ -90,9 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // add Download PDF button && icon for Edit Button
     const editButtonEle = document.querySelector('.edit-page-link');
-    if(editButtonEle) {
+    if (editButtonEle) {
         createDownloadPdfElement(editButtonEle);
         editButtonEle.innerHTML = `<i class="far fa-edit"></i> &nbsp; ${language === 'en' ? 'Edit' : '编辑'}`
     }
-
 });

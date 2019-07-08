@@ -70,8 +70,9 @@ class Footer extends React.Component {
             <a href={`http://www.zilliz.com/`}>Mega-learning</a>
           </div>
         </section>
-
         <section className="copyright">{this.props.config.copyright}</section>
+        <script src="https://cookiehub.net/cc/99f12643.js"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142992812-1"></script>
       </footer>
     );
   }

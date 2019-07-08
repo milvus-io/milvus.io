@@ -95,7 +95,7 @@ const siteConfig = {
     '/js/clipboard.min.js',
     // '/js/code-block-buttons.js',
     '/js/splash.js',
-    '/js/loaded.js'
+    '/js/loaded.js',
   ],
   stylesheets: [
     'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
@@ -112,7 +112,8 @@ const siteConfig = {
   // Open Graph and Twitter card images.
   ogImage: 'img/undraw_online.svg',
   twitterImage: 'img/undraw_tweetstorm.svg',
-  gaTrackingId: 'UA-142992812-1',
+  // gaTrackingId: 'UA-142992812-1',
+  gaGtag:true,
 
   // Show documentation's last contributor's name.
   // enableUpdateBy: true,

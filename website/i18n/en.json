@@ -74,8 +74,8 @@
         "title": "userguide/README"
       },
       "userguide/searching-table": {
-        "title": "Search a table",
-        "sidebar_label": "Search a table"
+        "title": "Searching a table",
+        "sidebar_label": "Searching a table"
       },
       "userguide/searching-with-milvus": {
         "title": "Searching with Milvus",
@@ -179,8 +179,8 @@
         "title": "zh-CN/userguide/README"
       },
       "zh-CN/userguide/searching-table": {
-        "title": "Search a table",
-        "sidebar_label": "Search a table"
+        "title": "Searching a table",
+        "sidebar_label": "Searching a table"
       },
       "zh-CN/userguide/searching-with-milvus": {
         "title": "Searching with Milvus",

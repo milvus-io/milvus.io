@@ -96,7 +96,6 @@ const siteConfig = {
     // '/js/code-block-buttons.js',
     '/js/splash.js',
     '/js/loaded.js',
-    '/js/99f12643.js'
   ],
   stylesheets: [
     'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',

@@ -8,52 +8,36 @@ function fixHeaderLinks(language) {
 
 document.addEventListener('DOMContentLoaded', () => {
     // add GDPR control
-    window.addEventListener("load", function () {
-        var gtagId = 'UA-142992812-2';
-        window['ga-disable-' + gtagId] = false;
-        var dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    var gtagId = 'UA-142992812-1';
+    // Allow tracking by default
+    window['ga-disable-' + gtagId] = false;
+    // Initialize gtag
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-        window.cookieconsent.initialise({
-            onInitialise: function (status) {
-                if (this.hasConsented('required')) {
-                }
-                if (this.hasConsented('analytics')) {
-                    // Enable tracking
-                    window['ga-disable-' + gtagId] = false;
-                    // Track this pageview
-                    gtag('config', gtagId);
-
-                }
-                if (this.hasConsented('marketing')) {
-                }
-            },
-            onAllow: function (category) {
-                if (category === 'required') {
-                }
-                if (category === 'analytics') {
-                    if (category === 'analytics') {
-                        window['ga-disable-' + gtagId] = false;
-
-                        // Track this pageview
-                        gtag('config', gtagId);
-                    }
-                }
-                if (category === 'marketing') {
-                }
-            },
-            onRevoke: function (category) {
-                if (category === 'required') {
-                }
-                if (category === 'analytics') {
-                    window['ga-disable-' + gtagId] = true;
-                }
-                if (category === 'marketing') {
-                }
+    window.cookieconsent.initialise({
+        onInitialise: function (status) {
+            if (this.hasConsented('analytics')) {
+                window['ga-disable-' + gtagId] = false;
+                // Track this pageview
+                gtag('config', gtagId);
             }
-        })
-    });
+        },
+        onAllow: function (category) {
+            if (category === 'analytics') {
+                // Enable tracking
+                window['ga-disable-' + gtagId] = false;
+                // Track this pageview
+                gtag('config', gtagId);
+            }
+        },
+        onRevoke: function (category) {
+            if (category === 'analytics') {
+                window['ga-disable-' + gtagId] = true;
+            }
+        }
+    })
 
     // get lang
     const language = document.querySelector('html').getAttribute('lang');

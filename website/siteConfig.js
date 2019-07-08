@@ -112,7 +112,8 @@ const siteConfig = {
   // Open Graph and Twitter card images.
   ogImage: 'img/undraw_online.svg',
   twitterImage: 'img/undraw_tweetstorm.svg',
-  gaTrackingId: 'UA-142992812-1',
+  // gaTrackingId: 'UA-142992812-1',
+  gaGtag:true,
 
   // Show documentation's last contributor's name.
   // enableUpdateBy: true,

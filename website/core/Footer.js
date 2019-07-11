@@ -44,30 +44,10 @@ class Footer extends React.Component {
               Guides
             </a>
           </div>
-          {/* <div>
-            <h5>Others</h5>
-            <a
-              href="https://github.com/milvus-io/pymilvus"
-              target="_blank"
-              rel="noreferrer noopener">
-              pymilvus</a>
-                <a
-              href="https://twitter.com/"
-              target="_blank"
-              rel="noreferrer noopener">
-              Twitter
-            </a>
-          </div> */}
-          {/* <div>
-            <h5>More</h5>
-            <a href={`${this.props.config.baseUrl}blog`}>Blog</a>
-            
-          </div> */}
           <div>
             <h5>Zilliz Product</h5>
             <a href={`#`}>Milvus</a>
             <a href={`http://www.zilliz.com/`}>Megawise</a>
-            <a href={`http://www.zilliz.com/`}>Mega-learning</a>
           </div>
         </section>
         <section className="copyright">{this.props.config.copyright}</section>

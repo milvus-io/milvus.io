@@ -18,7 +18,7 @@
       "userguide/getting-started",
       "userguide/configuring-milvus",
       "userguide/creating-table",
-      "userguide/importing-vectors",
+      "userguide/inserting-vectors",
       "userguide/searching-table",
       "userguide/deleting-table",
       "userguide/searching-with-milvus",

@@ -58,9 +58,13 @@
         "title": "Getting started with Milvus",
         "sidebar_label": "Getting started with Milvus"
       },
-      "userguide/importing-vectors": {
-        "title": "Importing vectors",
-        "sidebar_label": "Importing vectors"
+      "userguide/high-availability": {
+        "title": "High Availability",
+        "sidebar_label": "High Availability"
+      },
+      "userguide/inserting-vectors": {
+        "title": "Inserting vectors",
+        "sidebar_label": "Inserting vectors"
       },
       "userguide/monitoring-and-alarm": {
         "title": "Monitoring and alarm",
@@ -139,10 +143,6 @@
       "zh-CN/SDKRef": {
         "title": "zh-CN/SDKRef"
       },
-      "zh-CN/UserGuide": {
-        "title": "Milvus User Guide",
-        "sidebar_label": "Milvus User Guide"
-      },
       "zh-CN/userguide/application-scenario": {
         "title": "Application scenarios",
         "sidebar_label": "Application scenarios"
@@ -163,9 +163,9 @@
         "title": "Getting started with Milvus",
         "sidebar_label": "Getting started with Milvus"
       },
-      "zh-CN/userguide/importing-vectors": {
-        "title": "Importing vectors",
-        "sidebar_label": "Importing vectors"
+      "zh-CN/userguide/inserting-vectors": {
+        "title": "Inserting vectors",
+        "sidebar_label": "Inserting vectors"
       },
       "zh-CN/userguide/monitoring-and-alarm": {
         "title": "Monitoring and alarm",

@@ -25,7 +25,8 @@ class Footer extends React.Component {
     return (
       <footer className="nav-footer" id="footer">
         <section className="sitemap">
-          <a href={this.props.config.baseUrl} className="nav-home">
+          {/* no icon at the moment, hidden it for layout         */}
+          {/* <a href={this.props.config.baseUrl} className="nav-home">
             {this.props.config.footerIcon && (
               <img
                 src={this.props.config.baseUrl + this.props.config.footerIcon}
@@ -34,7 +35,7 @@ class Footer extends React.Component {
                 height="58"
               />
             )}
-          </a>
+          </a> */}
           <div>
             <h5>Docs</h5>
             <a href={this.docUrl('QuickStart', this.props.language)}>

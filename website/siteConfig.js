@@ -49,7 +49,7 @@ const siteConfig = {
     {doc: 'vectordb/milvus-db', label: 'About Milvus'},
     {doc: 'QuickStart', label: 'Docs'},
     {doc: 'userguide/support', label: 'Support'},
-    {doc: 'userguide/getting-started', label: 'Try Milvus'}
+    {doc: 'userguide/get-started', label: 'Try Milvus'}
     // {page: 'help', label: 'Help'}
     // {blog: true, label: 'Blog'},
   ],
@@ -134,6 +134,7 @@ const siteConfig = {
     indexName: 'milvus',
     algoliaOptions: {} // Optional, if provided by Algolia
   }
+
 };
 
 module.exports = siteConfig;

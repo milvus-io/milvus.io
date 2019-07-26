@@ -185,8 +185,19 @@ pre {
     list-style: none;
   }
 
-article >div>span> h1 {
+article {
+  position: relative;
+  top: -46px;
+}
+article>div>span>h1 {
+  pointer-events: none;
+}
+h1.postHeaderTitle {
   display: none;
+}
+.postHeader {
+  position: relative;
+  z-index: 99;
 }
 
 h2{

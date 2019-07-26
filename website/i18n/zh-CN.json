@@ -39,11 +39,11 @@
         "title": "应用场景",
         "sidebar_label": "应用场景"
       },
-      "userguide/configuring-milvus": {
+      "userguide/configure-milvus": {
         "title": "设置Milvus",
         "sidebar_label": "设置Milvus"
       },
-      "userguide/creating-table": {
+      "userguide/create-table": {
         "title": "创建表",
         "sidebar_label": "创建表"
       },
@@ -51,7 +51,7 @@
         "title": "删除表",
         "sidebar_label": "删除表"
       },
-      "userguide/getting-started": {
+      "userguide/get-started": {
         "title": "Milvus新手入门",
         "sidebar_label": "Milvus新手入门"
       },
@@ -59,7 +59,7 @@
         "title": "导入向量",
         "sidebar_label": "导入向量"
       },
-      "userguide/monitoring-and-alarm": {
+      "userguide/monitoring-and-alert": {
         "title": "监控与报警",
         "sidebar_label": "监控与报警"
       },
@@ -70,11 +70,11 @@
       "userguide/README": {
         "title": "userguide/README"
       },
-      "userguide/searching-table": {
+      "userguide/list-tables": {
         "title": "查询表",
         "sidebar_label": "查询表"
       },
-      "userguide/searching-with-milvus": {
+      "userguide/search-vectors-in-milvus": {
         "title": "使用Milvus进行搜索",
         "sidebar_label": "使用Milvus进行搜索"
       },
@@ -86,7 +86,7 @@
         "title": "障碍排查",
         "sidebar_label": "障碍排查"
       },
-      "userguide/inserting-vectors": {
+      "userguide/insert-vectors": {
         "title": "插入向量数据",
         "sidebar_label": "插入向量数据"
       },

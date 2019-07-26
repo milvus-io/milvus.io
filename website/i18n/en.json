@@ -17,9 +17,6 @@
         "title": "Product Benefits",
         "sidebar_label": "Product Benefits"
       },
-      "PythonSDKParam": {
-        "title": "PythonSDKParam"
-      },
       "QuickStart": {
         "title": "Milvus Quick Start",
         "sidebar_label": "Milvus Quick Start"
@@ -34,41 +31,41 @@
       "SDKRef": {
         "title": "SDKRef"
       },
-      "UserGuide": {
-        "title": "Milvus User Guide",
-        "sidebar_label": "Milvus User Guide"
-      },
       "userguide/application-scenario": {
         "title": "Application scenarios",
         "sidebar_label": "Application scenarios"
       },
-      "userguide/configuring-milvus": {
-        "title": "Configuring Milvus",
-        "sidebar_label": "Configuring Milvus"
+      "userguide/configure-milvus": {
+        "title": "Configure Milvus",
+        "sidebar_label": "Configure Milvus"
       },
-      "userguide/creating-table": {
-        "title": "Creating a table",
-        "sidebar_label": "Creating a table"
+      "userguide/create-table": {
+        "title": "Create a table",
+        "sidebar_label": "Create a table"
       },
       "userguide/deleting-table": {
         "title": "Deleting a table",
         "sidebar_label": "Deleting a table"
       },
-      "userguide/getting-started": {
-        "title": "Getting started with Milvus",
-        "sidebar_label": "Getting started with Milvus"
+      "userguide/get-started": {
+        "title": "Get started with Milvus",
+        "sidebar_label": "Get started with Milvus"
       },
       "userguide/high-availability": {
         "title": "High Availability",
         "sidebar_label": "High Availability"
       },
-      "userguide/inserting-vectors": {
-        "title": "Inserting vectors",
-        "sidebar_label": "Inserting vectors"
+      "userguide/insert-vectors": {
+        "title": "Insert vectors",
+        "sidebar_label": "Insert vectors"
       },
-      "userguide/monitoring-and-alarm": {
-        "title": "Monitoring and alarm",
-        "sidebar_label": "Monitoring and alarm"
+      "userguide/list-tables": {
+        "title": "List tables",
+        "sidebar_label": "List tables"
+      },
+      "userguide/monitoring-and-alert": {
+        "title": "Monitoring and alert",
+        "sidebar_label": "Monitoring and alert"
       },
       "userguide/preface": {
         "title": "Preface",
@@ -77,13 +74,9 @@
       "userguide/README": {
         "title": "userguide/README"
       },
-      "userguide/searching-table": {
-        "title": "Searching a table",
-        "sidebar_label": "Searching a table"
-      },
-      "userguide/searching-with-milvus": {
-        "title": "Searching with Milvus",
-        "sidebar_label": "Searching with Milvus"
+      "userguide/search-vectors-in-milvus": {
+        "title": "Search vectors in Milvus",
+        "sidebar_label": "Search vectors in Milvus"
       },
       "userguide/support": {
         "title": "Support",
@@ -116,14 +109,6 @@
         "title": "Vector indexing methods",
         "sidebar_label": "Vector indexing methods"
       },
-      "vectordb": {
-        "title": "Vector DB Introducation",
-        "sidebar_label": "Vector Database Introducation"
-      },
-      "WhitePaper": {
-        "title": "Milvus White Paper",
-        "sidebar_label": "Milvus White Paper"
-      },
       "zh-CN/FAQ": {
         "title": "FAQ",
         "sidebar_label": "FAQ"
@@ -147,29 +132,33 @@
         "title": "Application scenarios",
         "sidebar_label": "Application scenarios"
       },
-      "zh-CN/userguide/configuring-milvus": {
-        "title": "Configuring Milvus",
-        "sidebar_label": "Configuring Milvus"
+      "zh-CN/userguide/configure-milvus": {
+        "title": "Configure Milvus",
+        "sidebar_label": "Configure Milvus"
       },
-      "zh-CN/userguide/creating-table": {
-        "title": "Creating a table",
-        "sidebar_label": "Creating a table"
+      "zh-CN/userguide/create-table": {
+        "title": "Create a table",
+        "sidebar_label": "Create a table"
       },
-      "zh-CN/userguide/deleting-table": {
-        "title": "Deleting a table",
-        "sidebar_label": "Deleting a table"
+      "zh-CN/userguide/drop-table": {
+        "title": "Drop a table",
+        "sidebar_label": "Drop a table"
       },
-      "zh-CN/userguide/getting-started": {
-        "title": "Getting started with Milvus",
-        "sidebar_label": "Getting started with Milvus"
+      "zh-CN/userguide/get-started": {
+        "title": "Getstarted with Milvus",
+        "sidebar_label": "Get started with Milvus"
       },
-      "zh-CN/userguide/inserting-vectors": {
-        "title": "Inserting vectors",
-        "sidebar_label": "Inserting vectors"
+      "zh-CN/userguide/insert-vectors": {
+        "title": "Insert vectors",
+        "sidebar_label": "Insert vectors"
       },
-      "zh-CN/userguide/monitoring-and-alarm": {
-        "title": "Monitoring and alarm",
-        "sidebar_label": "Monitoring and alarm"
+      "zh-CN/userguide/list-table": {
+        "title": "List a table",
+        "sidebar_label": "List a table"
+      },
+      "zh-CN/userguide/monitoring-and-alert": {
+        "title": "Monitoring and alert",
+        "sidebar_label": "Monitoring and alert"
       },
       "zh-CN/userguide/preface": {
         "title": "Preface",
@@ -178,13 +167,9 @@
       "zh-CN/userguide/README": {
         "title": "zh-CN/userguide/README"
       },
-      "zh-CN/userguide/searching-table": {
-        "title": "Searching a table",
-        "sidebar_label": "Searching a table"
-      },
-      "zh-CN/userguide/searching-with-milvus": {
-        "title": "Searching with Milvus",
-        "sidebar_label": "Searching with Milvus"
+      "zh-CN/userguide/search-vectors-in-milvus": {
+        "title": "Search vectors in Milvus",
+        "sidebar_label": "Search vectors in Milvus"
       },
       "zh-CN/userguide/support": {
         "title": "Support",
@@ -216,14 +201,6 @@
       "zh-CN/vectordb/vector-indexing-methods": {
         "title": "Vector indexing methods",
         "sidebar_label": "Vector indexing methods"
-      },
-      "zh-CN/vectordb": {
-        "title": "Vector DB Introducation",
-        "sidebar_label": "Vector Database Introducation"
-      },
-      "zh-CN/WhitePaper": {
-        "title": "Milvus White Paper",
-        "sidebar_label": "Milvus White Paper"
       }
     },
     "links": {

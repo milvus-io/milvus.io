@@ -1,5 +1,3 @@
-## local development
-1. yarn install
-2. git submodule update --init
-3. cd [repofolder]/website
-4. yarn start
+[![Build Status](https://dev.azure.com/zhifengzhang/www/_apis/build/status/milvus-www%20-%20CI?branchName=master)](https://dev.azure.com/zhifengzhang/www/_build/latest?definitionId=2&branchName=master)
+
+www.milvus.io Official website 

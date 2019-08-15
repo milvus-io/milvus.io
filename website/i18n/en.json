@@ -40,12 +40,12 @@
         "sidebar_label": "Configure Milvus"
       },
       "userguide/create-table": {
-        "title": "Create a table",
-        "sidebar_label": "Create a table"
+        "title": "Create table",
+        "sidebar_label": "Create table"
       },
-      "userguide/deleting-table": {
-        "title": "Deleting a table",
-        "sidebar_label": "Deleting a table"
+      "userguide/drop-table": {
+        "title": "Drop table",
+        "sidebar_label": "Drop table"
       },
       "userguide/get-started": {
         "title": "Get started with Milvus",
@@ -152,9 +152,9 @@
         "title": "Insert vectors",
         "sidebar_label": "Insert vectors"
       },
-      "zh-CN/userguide/list-table": {
-        "title": "List a table",
-        "sidebar_label": "List a table"
+      "zh-CN/userguide/list-tables": {
+        "title": "List tables",
+        "sidebar_label": "List tables"
       },
       "zh-CN/userguide/monitoring-and-alert": {
         "title": "Monitoring and alert",

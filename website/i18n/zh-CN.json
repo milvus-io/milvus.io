@@ -47,7 +47,7 @@
         "title": "创建表",
         "sidebar_label": "创建表"
       },
-      "userguide/deleting-table": {
+      "userguide/drop-table": {
         "title": "删除表",
         "sidebar_label": "删除表"
       },
@@ -152,7 +152,7 @@
         "title": "创建表",
         "sidebar_label": "创建表"
       },
-      "zh-CN/userguide/deleting-table": {
+      "zh-CN/userguide/drop-table": {
         "title": "删除表",
         "sidebar_label": "删除表"
       },

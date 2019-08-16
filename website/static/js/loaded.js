@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         [].forEach.call(group_link, link => {
             if (link.innerText && texts.some(text => text === link.innerText)) {
                 link.classList.add('button')
+                link.href ='https://github.com/milvus-io/bootcamp';
             }
-            link.href ='https://github.com/milvus-io/bootcamp';
         })
     }
     decorateLinkToButton(['Try Milvus', '试用Milvus']);

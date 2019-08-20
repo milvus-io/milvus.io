@@ -19,6 +19,7 @@
       "userguide/configure-milvus",
       "userguide/create-table",
       "userguide/insert-vectors",
+      "userguide/build-index",
       "userguide/list-tables",
       "userguide/drop-table",
       "userguide/search-vectors-in-milvus",

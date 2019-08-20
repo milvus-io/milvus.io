@@ -35,6 +35,10 @@
         "title": "Application scenarios",
         "sidebar_label": "Application scenarios"
       },
+      "userguide/build-index": {
+        "title": "Build index",
+        "sidebar_label": "Build index"
+      },
       "userguide/configure-milvus": {
         "title": "Configure Milvus",
         "sidebar_label": "Configure Milvus"
@@ -42,6 +46,10 @@
       "userguide/create-table": {
         "title": "Create table",
         "sidebar_label": "Create table"
+      },
+      "userguide/data-storage": {
+        "title": "Data Storage",
+        "sidebar_label": "Data Storage"
       },
       "userguide/drop-table": {
         "title": "Drop table",
@@ -132,6 +140,10 @@
         "title": "Application scenarios",
         "sidebar_label": "Application scenarios"
       },
+      "zh-CN/userguide/build-index": {
+        "title": "Build index",
+        "sidebar_label": "Build index"
+      },
       "zh-CN/userguide/configure-milvus": {
         "title": "Configure Milvus",
         "sidebar_label": "Configure Milvus"
@@ -139,6 +151,10 @@
       "zh-CN/userguide/create-table": {
         "title": "Create a table",
         "sidebar_label": "Create a table"
+      },
+      "zh-CN/userguide/data-storage": {
+        "title": "Data Storage",
+        "sidebar_label": "Data Storage"
       },
       "zh-CN/userguide/drop-table": {
         "title": "Drop a table",

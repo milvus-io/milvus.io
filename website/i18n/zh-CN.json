@@ -39,6 +39,10 @@
         "title": "应用场景",
         "sidebar_label": "应用场景"
       },
+      "userguide/build-index": {
+        "title": "创建索引",
+        "sidebar_label": "创建索引"
+      },
       "userguide/configure-milvus": {
         "title": "设置Milvus",
         "sidebar_label": "设置Milvus"
@@ -143,6 +147,10 @@
       "zh-CN/userguide/application-scenario": {
         "title": "应用场景",
         "sidebar_label": "应用场景"
+      },
+      "zh-CN/userguide/build-index": {
+        "title": "创建索引",
+        "sidebar_label": "创建索引"
       },
       "zh-CN/userguide/configuring-milvus": {
         "title": "设置Milvus",

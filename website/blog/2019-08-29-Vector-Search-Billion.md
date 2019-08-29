@@ -1,6 +1,6 @@
 ---
 title: 如何玩转十亿向量检索（SIFT1B）
-author: 顾钧
+author: 陈室余
 ---
 
 # 如何玩转十亿向量检索（SIFT1B）

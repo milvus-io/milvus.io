@@ -1,8 +1,8 @@
 ---
-title: Milvus 百万向量搜索测试（SIFT1B）
+title: Milvus 百万向量搜索（SIFT1B）
 author: 顾钧
 ---
-# Milvus百万向量搜索测试
+# Milvus百万向量搜索（SIFT1B）
 
 ## 开始之前
 

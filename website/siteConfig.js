@@ -49,9 +49,9 @@ const siteConfig = {
     {doc: 'vectordb/milvus-db', label: 'About Milvus'},
     {doc: 'QuickStart', label: 'Docs'},
     {doc: 'userguide/support', label: 'Support'},
-    {doc: 'userguide/get-started', label: 'Try Milvus'}
     // {page: 'help', label: 'Help'}
-    // {blog: true, label: 'Blog'},
+    {blog: true, label: 'Blog'},
+    {doc: 'userguide/get-started', label: 'Try Milvus'}
   ],
 
   // If you have users set above, you add it here:

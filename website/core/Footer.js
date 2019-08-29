@@ -58,7 +58,6 @@ class Footer extends React.Component {
             <a href={`https://github.com/milvus-io`}>Github</a>
             <a href={`hhttp://www.milvus.io/blog/`}>Blog</a>
             <a href={`https://me.csdn.net/weixin_44839084`}>CSDN</a>
-            <a href={`#`}>Wechat</a>
             <a href={`mailto:support@zilliz.com`}>Contact Us</a>
           </div>
           <div>
@@ -68,6 +67,9 @@ class Footer extends React.Component {
             </a>
             <a href={`https://zilliz.com/careers/`}>Join Us</a>
             <a href={`https://zilliz.com/about-us/news/`}>News</a>
+          </div>
+          <div>
+            <img style={{maxWidth: 'initial'}} width="150" height="150" src="https://www.zilliz.com/images/qrcode2.jpeg?ver=1.10.16" />
           </div>
         </section>
         <section className="copyright">{this.props.config.copyright}</section>

@@ -56,7 +56,7 @@ class Footer extends React.Component {
           <div>
             <h5>Support</h5>
             <a href={`https://github.com/milvus-io`}>Github</a>
-            <a href={`hhttp://www.milvus.io/blog/`}>Blog</a>
+            <a href={`https://www.milvus.io/blog/`}>Blog</a>
             <a href={`https://me.csdn.net/weixin_44839084`}>CSDN</a>
             <a href={`mailto:support@zilliz.com`}>Contact Us</a>
           </div>

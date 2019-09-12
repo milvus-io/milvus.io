@@ -1,38 +1,38 @@
 {
   "docs": {
-    "Vector DB Intro": [
-      "vectordb/feature-vector",
-      "vectordb/traditional-db",
-      "vectordb/vector-indexing-methods",
-      "vectordb/feature-vector-db",
-      "vectordb/milvus-db"
+    "About Milvus": [
+      "aboutmilvus/overview",
+      "aboutmilvus/vector",
+      "aboutmilvus/traditional_db",
+      "aboutmilvus/index_method",
+      "aboutmilvus/vector_db"
     ],
-    "Product Benefits": [
-      "product-benefits"
-    ],
-    "Quick Start": [
-      "QuickStart"
-    ],
+    "Quick Start": ["QuickStart"],
     "User Guide": [
       "userguide/preface",
-      "userguide/get-started",
-      "userguide/configure-milvus",
-      "userguide/create-table",
-      "userguide/insert-vectors",
-      "userguide/build-index",
-      "userguide/list-tables",
-      "userguide/drop-table",
-      "userguide/search-vectors-in-milvus",
-      "userguide/monitoring-and-alert",
-      "userguide/application-scenario",
-      "userguide/trouble-shooting",
-      "userguide/support"
+      "userguide/install_milvus",
+      "userguide/example_code",
+      "userguide/milvus_operation",
+      "userguide/bootcamp",
+      "userguide/monitor",
+      "userguide/benchmarking",
+      "userguide/import_data",
+      "userguide/troubleshoot"
     ],
-    "FAQ": [
-      "FAQ"
+    "Reference": [
+      "reference/comparison",
+      "reference/milvus_config",
+      "reference/monitoring_metrics",
+      "reference/data_store"
     ],
+    "Milvus Roadmap": ["roadmap"],
+    "FAQ": ["faq/product_faq", "faq/operational_faq"],
     "Release Notes": [
-      "ReleaseNote"
+      "Releases/v0.4.0",
+      "Releases/v0.3.1",
+      "Releases/v0.3.0",
+      "Releases/v0.2.1",
+      "Releases/v0.2.0"
     ]
   }
 }

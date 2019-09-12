@@ -5,17 +5,43 @@
     "previous": "Previous",
     "tagline": "A Distributed High Performance Vector Database System",
     "docs": {
+      "aboutmilvus/index_method": {
+        "title": "Vector Indexing Methods",
+        "sidebar_label": "Vector Indexing Methods"
+      },
+      "aboutmilvus/overview": {
+        "title": "Milvus Overview",
+        "sidebar_label": "Milvus Overview"
+      },
+      "aboutmilvus/README": {
+        "title": "aboutmilvus/README"
+      },
+      "aboutmilvus/traditional_db": {
+        "title": "Traditional Database",
+        "sidebar_label": "Traditional Database"
+      },
+      "aboutmilvus/vector_db": {
+        "title": "Feature Vector Database",
+        "sidebar_label": "Feature Vector Database"
+      },
+      "aboutmilvus/vector": {
+        "title": "Feature Vector",
+        "sidebar_label": "Feature Vector"
+      },
       "Changelog": {
         "title": "Changelog",
         "sidebar_label": "Milvus Changelog"
       },
-      "FAQ": {
-        "title": "FAQ",
-        "sidebar_label": "FAQ"
+      "faq/operational_faq": {
+        "title": "Operational FAQ",
+        "sidebar_label": "Operational FAQ"
       },
-      "product-benefits": {
-        "title": "Product Benefits",
-        "sidebar_label": "Product Benefits"
+      "faq/product_faq": {
+        "title": "Product FAQ",
+        "sidebar_label": "Product FAQ"
+      },
+      "faq/README": {
+        "title": "faq/README"
       },
       "QuickStart": {
         "title": "Milvus Quick Start",
@@ -24,56 +50,86 @@
       "README": {
         "title": "README"
       },
-      "ReleaseNote": {
-        "title": "Release Note",
-        "sidebar_label": "Milvus Release Notes"
+      "reference/application": {
+        "title": "Application Scenarios",
+        "sidebar_label": "Application Scenarios"
+      },
+      "reference/comparison": {
+        "title": "Milvus in Comparison",
+        "sidebar_label": "Milvus in Comparison"
+      },
+      "reference/data_store": {
+        "title": "Data Storage",
+        "sidebar_label": "Data Storage"
+      },
+      "reference/milvus_config": {
+        "title": "Milvus Configuration",
+        "sidebar_label": "Milvus Configuration"
+      },
+      "reference/monitoring_metrics": {
+        "title": "Monitoring Metrics",
+        "sidebar_label": "Monitoring Metrics"
+      },
+      "reference/README": {
+        "title": "reference/README"
+      },
+      "Releases/README": {
+        "title": "Releases/README"
+      },
+      "Releases/v0.2.0": {
+        "title": "v0.2.0",
+        "sidebar_label": "v0.2.0"
+      },
+      "Releases/v0.2.1": {
+        "title": "v0.2.1",
+        "sidebar_label": "v0.2.1"
+      },
+      "Releases/v0.3.0": {
+        "title": "v0.3.0",
+        "sidebar_label": "v0.3.0"
+      },
+      "Releases/v0.3.1": {
+        "title": "v0.3.1",
+        "sidebar_label": "v0.3.1"
+      },
+      "Releases/v0.4.0": {
+        "title": "v0.4.0",
+        "sidebar_label": "v0.4.0"
+      },
+      "roadmap": {
+        "title": "Milvus Roadmap",
+        "sidebar_label": "Milvus Roadmap"
       },
       "SDKRef": {
         "title": "SDKRef"
       },
-      "userguide/application-scenario": {
-        "title": "Application scenarios",
-        "sidebar_label": "Application scenarios"
+      "userguide/benchmarking": {
+        "title": "Performance Benchmarking",
+        "sidebar_label": "Performance Benchmarking"
       },
-      "userguide/build-index": {
-        "title": "Build index",
-        "sidebar_label": "Build index"
+      "userguide/bootcamp": {
+        "title": "Try Bootcamp",
+        "sidebar_label": "Try Bootcamp"
       },
-      "userguide/configure-milvus": {
-        "title": "Configure Milvus",
-        "sidebar_label": "Configure Milvus"
+      "userguide/example_code": {
+        "title": "Try an Example Program",
+        "sidebar_label": "Try an Example Program"
       },
-      "userguide/create-table": {
-        "title": "Create table",
-        "sidebar_label": "Create table"
+      "userguide/import_data": {
+        "title": "Import Data",
+        "sidebar_label": "Import Data"
       },
-      "userguide/data-storage": {
-        "title": "Data Storage",
-        "sidebar_label": "Data Storage"
+      "userguide/install_milvus": {
+        "title": "Install Milvus",
+        "sidebar_label": "Install Milvus"
       },
-      "userguide/drop-table": {
-        "title": "Drop table",
-        "sidebar_label": "Drop table"
+      "userguide/milvus_operation": {
+        "title": "Learn Milvus Operations",
+        "sidebar_label": "Learn Milvus Operations"
       },
-      "userguide/get-started": {
-        "title": "Get started with Milvus",
-        "sidebar_label": "Get started with Milvus"
-      },
-      "userguide/high-availability": {
-        "title": "High Availability",
-        "sidebar_label": "High Availability"
-      },
-      "userguide/insert-vectors": {
-        "title": "Insert vectors",
-        "sidebar_label": "Insert vectors"
-      },
-      "userguide/list-tables": {
-        "title": "List tables",
-        "sidebar_label": "List tables"
-      },
-      "userguide/monitoring-and-alert": {
-        "title": "Monitoring and alert",
-        "sidebar_label": "Monitoring and alert"
+      "userguide/monitor": {
+        "title": "Monitoring and Alerting",
+        "sidebar_label": "Monitoring and Alerting"
       },
       "userguide/preface": {
         "title": "Preface",
@@ -82,99 +138,125 @@
       "userguide/README": {
         "title": "userguide/README"
       },
-      "userguide/search-vectors-in-milvus": {
-        "title": "Search vectors in Milvus",
-        "sidebar_label": "Search vectors in Milvus"
+      "userguide/troubleshoot": {
+        "title": "Troubleshoot",
+        "sidebar_label": "Troubleshoot"
       },
-      "userguide/support": {
-        "title": "Support",
-        "sidebar_label": "Support"
+      "zh-CN/aboutmilvus/index_method": {
+        "title": "Vector Indexing Methods",
+        "sidebar_label": "Vector Indexing Methods"
       },
-      "userguide/trouble-shooting": {
-        "title": "Troubleshooting",
-        "sidebar_label": "Troubleshooting"
+      "zh-CN/aboutmilvus/overview": {
+        "title": "Milvus Overview",
+        "sidebar_label": "Milvus Overview"
       },
-      "vectordb/feature-vector-db": {
-        "title": "Feature vector database",
-        "sidebar_label": "Feature vector database"
+      "zh-CN/aboutmilvus/README": {
+        "title": "zh-CN/aboutmilvus/README"
       },
-      "vectordb/feature-vector": {
-        "title": "Feature vector",
-        "sidebar_label": "Feature vector"
+      "zh-CN/aboutmilvus/traditional_db": {
+        "title": "Traditional Database",
+        "sidebar_label": "Traditional Database"
       },
-      "vectordb/milvus-db": {
-        "title": "Milvus database",
-        "sidebar_label": "Milvus database"
+      "zh-CN/aboutmilvus/vector_db": {
+        "title": "Feature Vector Database",
+        "sidebar_label": "Feature Vector Database"
       },
-      "vectordb/README": {
-        "title": "vectordb/README"
+      "zh-CN/aboutmilvus/vector": {
+        "title": "Feature Vector",
+        "sidebar_label": "Feature Vector"
       },
-      "vectordb/traditional-db": {
-        "title": "Traditional database",
-        "sidebar_label": "Traditional database"
+      "zh-CN/faq/operational_faq": {
+        "title": "Operational FAQ",
+        "sidebar_label": "Operational FAQ"
       },
-      "vectordb/vector-indexing-methods": {
-        "title": "Vector indexing methods",
-        "sidebar_label": "Vector indexing methods"
-      },
-      "zh-CN/FAQ": {
-        "title": "FAQ",
-        "sidebar_label": "FAQ"
-      },
-      "zh-CN/product-benefits": {
-        "title": "Product Benefits",
-        "sidebar_label": "Product Benefits"
+      "zh-CN/faq/product_faq": {
+        "title": "Product FAQ",
+        "sidebar_label": "Product FAQ"
       },
       "zh-CN/QuickStart": {
         "title": "Milvus Quick Start",
         "sidebar_label": "Milvus Quick Start"
       },
-      "zh-CN/ReleaseNote": {
-        "title": "Release Note",
-        "sidebar_label": "Milvus Release Notes"
+      "zh-CN/reference/application": {
+        "title": "Application Scenarios",
+        "sidebar_label": "Application Scenarios"
+      },
+      "zh-CN/reference/comparison": {
+        "title": "Milvus in Comparison",
+        "sidebar_label": "Milvus in Comparison"
+      },
+      "zh-CN/reference/data_store": {
+        "title": "Data Storage",
+        "sidebar_label": "Data Storage"
+      },
+      "zh-CN/reference/milvus_config": {
+        "title": "Milvus Configuration",
+        "sidebar_label": "Milvus Configuration"
+      },
+      "zh-CN/reference/monitoring_metrics": {
+        "title": "Monitoring Metrics",
+        "sidebar_label": "Monitoring Metrics"
+      },
+      "zh-CN/reference/README": {
+        "title": "zh-CN/reference/README"
+      },
+      "zh-CN/Releases/README": {
+        "title": "zh-CN/Releases/README"
+      },
+      "zh-CN/Releases/v0.2.0": {
+        "title": "v0.2.0",
+        "sidebar_label": "v0.2.0"
+      },
+      "zh-CN/Releases/v0.2.1": {
+        "title": "v0.2.1",
+        "sidebar_label": "v0.2.1"
+      },
+      "zh-CN/Releases/v0.3.0": {
+        "title": "v0.3.0",
+        "sidebar_label": "v0.3.0"
+      },
+      "zh-CN/Releases/v0.3.1": {
+        "title": "v0.3.1",
+        "sidebar_label": "v0.3.1"
+      },
+      "zh-CN/Releases/v0.4.0": {
+        "title": "v0.4.0",
+        "sidebar_label": "v0.4.0"
+      },
+      "zh-CN/roadmap": {
+        "title": "Milvus Roadmap",
+        "sidebar_label": "Milvus Roadmap"
       },
       "zh-CN/SDKRef": {
         "title": "zh-CN/SDKRef"
       },
-      "zh-CN/userguide/application-scenario": {
-        "title": "Application scenarios",
-        "sidebar_label": "Application scenarios"
+      "zh-CN/userguide/benchmarking": {
+        "title": "Performance Benchmarking",
+        "sidebar_label": "Performance Benchmarking"
       },
-      "zh-CN/userguide/build-index": {
-        "title": "Build index",
-        "sidebar_label": "Build index"
+      "zh-CN/userguide/bootcamp": {
+        "title": "Try Bootcamp",
+        "sidebar_label": "Try Bootcamp"
       },
-      "zh-CN/userguide/configure-milvus": {
-        "title": "Configure Milvus",
-        "sidebar_label": "Configure Milvus"
+      "zh-CN/userguide/example_code": {
+        "title": "Try an Example Program",
+        "sidebar_label": "Try an Example Program"
       },
-      "zh-CN/userguide/create-table": {
-        "title": "Create a table",
-        "sidebar_label": "Create a table"
+      "zh-CN/userguide/import_data": {
+        "title": "Import Data",
+        "sidebar_label": "Import Data"
       },
-      "zh-CN/userguide/data-storage": {
-        "title": "Data Storage",
-        "sidebar_label": "Data Storage"
+      "zh-CN/userguide/install_milvus": {
+        "title": "Install Milvus",
+        "sidebar_label": "Install Milvus"
       },
-      "zh-CN/userguide/drop-table": {
-        "title": "Drop a table",
-        "sidebar_label": "Drop a table"
+      "zh-CN/userguide/milvus_operation": {
+        "title": "Learn Milvus Operations",
+        "sidebar_label": "Learn Milvus Operations"
       },
-      "zh-CN/userguide/get-started": {
-        "title": "Getstarted with Milvus",
-        "sidebar_label": "Get started with Milvus"
-      },
-      "zh-CN/userguide/insert-vectors": {
-        "title": "Insert vectors",
-        "sidebar_label": "Insert vectors"
-      },
-      "zh-CN/userguide/list-tables": {
-        "title": "List tables",
-        "sidebar_label": "List tables"
-      },
-      "zh-CN/userguide/monitoring-and-alert": {
-        "title": "Monitoring and alert",
-        "sidebar_label": "Monitoring and alert"
+      "zh-CN/userguide/monitor": {
+        "title": "Monitoring and Alerting",
+        "sidebar_label": "Monitoring and Alerting"
       },
       "zh-CN/userguide/preface": {
         "title": "Preface",
@@ -183,54 +265,23 @@
       "zh-CN/userguide/README": {
         "title": "zh-CN/userguide/README"
       },
-      "zh-CN/userguide/search-vectors-in-milvus": {
-        "title": "Search vectors in Milvus",
-        "sidebar_label": "Search vectors in Milvus"
-      },
-      "zh-CN/userguide/support": {
-        "title": "Support",
-        "sidebar_label": "Support"
-      },
-      "zh-CN/userguide/trouble-shooting": {
-        "title": "Troubleshooting",
-        "sidebar_label": "Troubleshooting"
-      },
-      "zh-CN/vectordb/feature-vector-db": {
-        "title": "Feature vector database",
-        "sidebar_label": "Feature vector database"
-      },
-      "zh-CN/vectordb/feature-vector": {
-        "title": "Feature vector",
-        "sidebar_label": "Feature vector"
-      },
-      "zh-CN/vectordb/milvus-db": {
-        "title": "Milvus database",
-        "sidebar_label": "Milvus database"
-      },
-      "zh-CN/vectordb/README": {
-        "title": "zh-CN/vectordb/README"
-      },
-      "zh-CN/vectordb/traditional-db": {
-        "title": "Traditional database",
-        "sidebar_label": "Traditional database"
-      },
-      "zh-CN/vectordb/vector-indexing-methods": {
-        "title": "Vector indexing methods",
-        "sidebar_label": "Vector indexing methods"
+      "zh-CN/userguide/troubleshoot": {
+        "title": "Troubleshoot",
+        "sidebar_label": "Troubleshoot"
       }
     },
     "links": {
       "About Milvus": "About Milvus",
       "Docs": "Docs",
-      "Support": "Support",
       "Blog": "Blog",
       "Try Milvus": "Try Milvus"
     },
     "categories": {
-      "Vector DB Intro": "Vector DB Intro",
-      "Product Benefits": "Product Benefits",
+      "About Milvus": "About Milvus",
       "Quick Start": "Quick Start",
       "User Guide": "User Guide",
+      "Reference": "Reference",
+      "Milvus Roadmap": "Milvus Roadmap",
       "FAQ": "FAQ",
       "Release Notes": "Release Notes"
     }

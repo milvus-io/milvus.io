@@ -46,12 +46,11 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'vectordb/milvus-db', label: 'About Milvus'},
+    {doc: 'aboutmilvus/overview', label: 'About Milvus'},
     {doc: 'QuickStart', label: 'Docs'},
-    {doc: 'userguide/support', label: 'Support'},
     // {page: 'help', label: 'Help'}
     {blog: true, label: 'Blog'},
-    {doc: 'userguide/get-started', label: 'Try Milvus'}
+    {doc: 'QuickStart', label: 'Try Milvus'}
   ],
 
   // If you have users set above, you add it here:

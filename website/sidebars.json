@@ -7,7 +7,6 @@
       "aboutmilvus/index_method",
       "aboutmilvus/vector_db"
     ],
-    "Quick Start": ["QuickStart"],
     "User Guide": [
       "userguide/preface",
       "userguide/install_milvus",

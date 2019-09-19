@@ -45,7 +45,7 @@ class Footer extends React.Component {
           </div>
           <div>
             <h5>Resources</h5>
-            <a href={this.docUrl("QuickStart", this.props.language)}>Docs</a>
+            <a href={this.docUrl("userguide/install_milvus", this.props.language)}>Docs</a>
             <a
               href={`https://github.com/milvus-io/bootcamp/tree/master/solutions/hybrid_search`}
             >

@@ -43,10 +43,6 @@
       "faq/README": {
         "title": "faq/README"
       },
-      "QuickStart": {
-        "title": "Milvus Quick Start",
-        "sidebar_label": "Milvus Quick Start"
-      },
       "README": {
         "title": "README"
       },
@@ -173,10 +169,6 @@
         "title": "Product FAQ",
         "sidebar_label": "Product FAQ"
       },
-      "zh-CN/QuickStart": {
-        "title": "Milvus Quick Start",
-        "sidebar_label": "Milvus Quick Start"
-      },
       "zh-CN/reference/application": {
         "title": "Application Scenarios",
         "sidebar_label": "Application Scenarios"
@@ -278,7 +270,6 @@
     },
     "categories": {
       "About Milvus": "About Milvus",
-      "Quick Start": "Quick Start",
       "User Guide": "User Guide",
       "Reference": "Reference",
       "Milvus Roadmap": "Milvus Roadmap",

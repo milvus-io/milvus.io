@@ -28,7 +28,7 @@ class Index extends React.Component {
                 {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
                 <h1 className="text-primary">Milvus</h1>
                 <p className="lead text-secondary">An intelligent vector database that allows you to access data at unparalleled speed.</p>
-                <p className="mt-5"><a href={this.docUrl('product-benefits', language)} className="btn btn-primary">Why Milvus</a></p>
+                <p className="mt-5"><a href={this.docUrl('aboutmilvus/overview', language)} className="btn btn-primary">Why Milvus</a></p>
               </div>
             </div>
           </div>

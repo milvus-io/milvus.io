@@ -1,30 +1,70 @@
 /* your custom css */
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+ 
 }
 
 @media only screen and (min-width: 1024px) {
+ 
+}
+
+@media screen and (min-width: 1024px) {
+  .navPusher {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: calc(100vh - 100px);
+    padding-top: 100px;
+  }
+
+  /* those make the footer sticky and work even in IE 11 */
+  .navPusher > :first-child {
+    flex-grow: 1;
+  }
 }
 
 @media only screen and (max-width: 1023px) {
-    .customBlock {
-        margin-bottom: 3rem;
-    }
+  .customBlock {
+    margin-bottom: 3rem;
+  }
 }
 
 @media only screen and (min-width: 1400px) {
 }
 
 @media only screen and (min-width: 1500px) {
-    
 }
 
-table td, table th {
+.fdb-block {
+  background: none;
+}
+body {
+  background-image: linear-gradient(180deg, #28292e 3%, #1f232a 100%);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #fff;
+}
+p, ol li,ul li {
+  color: #FFF;
+}
+table td,
+table th {
   white-space: nowrap;
   word-break: keep-all;
 }
 .page h1 {
   margin-top: 0;
+}
+
+.navPusher {
+}
+.onPageNav {
+  top: 120px
 }
 
 .margin-top-zero {
@@ -34,166 +74,247 @@ table td, table th {
   padding: 5rem !important;
 }
 .paddingTop10 {
-    padding-top: 6%;
+  padding-top: 6%;
+}
+.fixedHeaderContainer {
+  background: #28292e;
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
 }
 .fixedHeaderContainer header {
-    background-color: transparent;
+  background: transparent;
+  height: 80px;
+  padding-top: 20px;
 }
 .homeContainer {
-    position: relative;
+  position: relative;
 }
 .homeContainer .homeWrapper {
-    padding: 12em 10px;
+  padding: 12em 10px;
 }
 .lightBackground {
-    background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
 .productShowcaseSection {
-    padding: 0 20px;
+  padding: 0 20px;
+}
+.table {
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+table tr:nth-child(2n) {
+  background-color: transparent;
+}
+table td, table th {
+  color: #FFF;
+}
+.table td, .table th {
+  padding:0.5rem;
+}
+.table .tb-hd {
+  background-color:#FFF;
+  color: #333;
+}
+.table .tb-hd * {
+  color: #333;
+}
+.table tr {
+  border: none;
+  background: none;
+}
+.table .content span {
+  color: #999;
+}
+.table th {
+  border: none;
+  color: #FFF;
+  text-align: left;
+  background: none;
+}
+.table td,
+.table th {
+  background: #3f4048;
+  border: 3px;
+}
+.css-7sa0gy {
+  background: #2c3035;
+  border: none;
 }
 .splash-container {
+  background: url(../images/hero.png) no-repeat top right;
+  background-size: 50vw 50vh;
   position: relative;
+  padding-left: 5px !important;
   min-height: 35vh !important;
 }
+.fixedHeaderContainer header .headerTitleWithLogo {
+  display: none;
+}
+.fixedHeaderContainer header img {
+  height: 100px;
+}
+.main-button {
+  text-align: left;
+}
+.milvus-btn {
+  text-align: left;
+  border: 2px solid #4eb8f0;
+  border-radius: 30px;
+  font-family: CoText-Regular;
+  font-size: 20px;
+  color: #4eb8f0;
+  letter-spacing: 5px;
+  text-align: center;
+  line-height: 56px;
+}
 .splash-container h1 {
-  font-size: 48px;
+  font-size: 68px;
 }
 .splash-container .lead {
-  font-size: 24px;
+  font-size: 38px;
+  color: #fff !important;
+  width: 55%;
+  margin-top: 45px;
+  text-align: left;
 }
 .splash {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top:0;
-    display: flex;
-    flex-wrap: wrap;
-    z-index: 1;
-    overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 1;
+  overflow: hidden;
 }
 .splash-content {
   position: relative;
   z-index: 2;
 }
 .s {
-    border: 1px solid #F7F7F7;
-    width: 12px;
-    height: 12px;
-    margin: 5px;
+  border: 1px solid #f7f7f7;
+  width: 12px;
+  height: 12px;
+  margin: 5px;
 }
 
 .customBlockContent {
-    height: 100%;
+  height: 100%;
 }
 
 .customGridBlockH2 {
-    height: 23%;
+  height: 23%;
 }
 
 .text-primary {
   color: #33b6f2 !important;
 }
-.nav-site>span {
+.nav-site > span {
   display: none;
 }
 .nav-site li a.button {
-  background: #329ef7 !important;
+  background: rgb(78, 184, 240, 25) !important;
 }
 /* "Copy" code block button */
 pre {
-    position: relative;
-  }
-  
-  pre .btnIcon {
-    position: absolute;
-    top: 4px;
-    z-index: 2;
-    cursor: pointer;
-    border: 1px solid transparent;
-    padding: 0;
-    color: #333;
-    background-color: transparent;
-    height: 30px;
-    transition: all .25s ease-out;
-  }
-  
-  pre .btnIcon:hover {
-    text-decoration: none;
-  }
-  
-  .btnIcon__body {
-    align-items: center;
-    display: flex;
-  }
-  
-  .btnIcon svg {
-    fill: currentColor;
-    margin-right: .4em;
-  }
-  
-  .btnIcon__label {
-    font-size: 11px;
-  }
-  
-  .btnClipboard {
-    right: 10px;
-  }
+  position: relative;
+}
 
-  .customButtonWrapper{
-    background-color: white;
-  }
+pre .btnIcon {
+  position: absolute;
+  top: 4px;
+  z-index: 2;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 0;
+  color: #333;
+  background-color: transparent;
+  height: 30px;
+  transition: all 0.25s ease-out;
+}
 
-  .css-full {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: #329ef7;
-    background-image: none;
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-  
-  .css-half {
-      height: 1.25rem;
-      width: 1.25rem;
-      background-color: #329ef7;
-      background-image: linear-gradient(90deg, transparent 50%, rgb(255, 237, 191) 50%);
-      border-radius: 50%;
-      margin: 0px auto;
-  }
-  
-  .css-quater {
-    height: 1.25rem;
-      width: 1.25rem;
-      background-color:#329ef7;
-      background-image: linear-gradient(transparent 50%, rgb(255, 237, 191) 50%), linear-gradient(90deg, transparent 50%, rgb(255, 237, 191) 50%);
-      border-radius: 50%;
-      margin: 0px auto;
-  }
-  
-  .css-zero {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: #c3dcf0;
-    background-image: none;
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-  .lead {
-    font-size: 16px;
-  }
-  .content {
-    text-align: left;
-  }
-  .content li{
-    list-style: none;
-  }
+pre .btnIcon:hover {
+  text-decoration: none;
+}
+
+.btnIcon__body {
+  align-items: center;
+  display: flex;
+}
+
+.btnIcon svg {
+  fill: currentColor;
+  margin-right: 0.4em;
+}
+
+.btnIcon__label {
+  font-size: 11px;
+}
+
+.btnClipboard {
+  right: 10px;
+}
+
+.customButtonWrapper {
+  background-color: white;
+}
+
+.css-full {
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: rgb(78, 184, 240, 25);
+  background-image: none;
+  border-radius: 50%;
+  margin: 0px auto;
+}
+
+.css-half {
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: rgb(78, 184, 240, 25);
+  background-image: linear-gradient(
+    90deg,
+    transparent 50%,
+    rgb(255, 237, 191) 50%
+  );
+  border-radius: 50%;
+  margin: 0px auto;
+}
+
+.css-quater {
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: rgb(78, 184, 240, 25);
+  background-image: linear-gradient(transparent 50%, rgb(255, 237, 191) 50%),
+    linear-gradient(90deg, transparent 50%, rgb(255, 237, 191) 50%);
+  border-radius: 50%;
+  margin: 0px auto;
+}
+
+.css-zero {
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: #c3dcf0;
+  background-image: none;
+  border-radius: 50%;
+  margin: 0px auto;
+}
+.lead {
+  font-size: 16px;
+}
+.content {
+  text-align: left;
+}
+.content li {
+  list-style: none;
+}
 
 article {
   position: relative;
   top: -46px;
 }
-article>div>span>h1 {
+article > div > span > h1 {
   pointer-events: none;
 }
 h1.postHeaderTitle {
@@ -204,14 +325,17 @@ h1.postHeaderTitle {
   z-index: 99;
 }
 
-h2{
-    color: inherit;
-    font-weight: 600;
-    line-height: 1.25;
-    margin: 0;
-    padding: 0;
+.post table
+
+h2 {
+  color: inherit;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+  padding: 0;
 }
-.navSearchWrapper.reactNavSearchWrapper::before,.navSearchWrapper.reactNavSearchWrapper::after  {
+.navSearchWrapper.reactNavSearchWrapper::before,
+.navSearchWrapper.reactNavSearchWrapper::after {
   box-sizing: content-box;
 }
 pre .btnIcon {
@@ -222,8 +346,25 @@ pre .btnIcon {
   justify-content: space-around !important;
 }
 .sitemap > div {
-  white-space:nowrap;
+  white-space: nowrap;
   width: auto !important;
   text-align: left;
   flex: 0 !important;
+}
+
+.toc {
+  padding: 40px 0;
+}
+.toc .toggleNav .navGroup .navGroupCategoryTitle {
+  color: #FFF;
+}
+
+.mainContainer {
+  padding-top: 0;
+}
+.mainContainer .wrapper .post .postHeader {
+  background-color:transparent;
+}
+.blogContainer .postHeader .post-authorName {
+  color: #FFF;
 }

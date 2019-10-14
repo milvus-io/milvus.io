@@ -46,20 +46,20 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'aboutmilvus/overview', label: 'About Milvus'},
+    {doc: 'aboutmilvus/overview', label: 'Milvus'},
     {doc: 'userguide/install_milvus', label: 'Docs'},
     // {page: 'help', label: 'Help'}
     {blog: true, label: 'Blog'},
-    {doc: 'aboutmilvus/overview', label: 'Try Milvus'}
+    {doc: 'aboutmilvus/overview', label: 'Try'}
   ],
 
   // If you have users set above, you add it here:
   users,
 
   /* path to images for header/footer */
-  headerIcon: 'img/logo-banner.png',
+  headerIcon: 'new-images/logo-horizontal-white.svg',
   footerIcon: '',
-  favicon: 'img/logo2.png',
+  favicon: 'new-images/favicon.png',
 
   /* Colors for website */
   colors: {
@@ -93,7 +93,7 @@ const siteConfig = {
   scripts: [
     '/js/clipboard.min.js',
     // '/js/code-block-buttons.js',
-    '/js/splash.js',
+    // '/js/splash.js',
     '/js/loaded.js',
   ],
   stylesheets: [

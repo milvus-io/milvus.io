@@ -21,14 +21,13 @@ class Index extends React.Component {
 
     const CallToAction = () => {
       return (
-        <section className="fdb-block fdb-viewport splash-container" style={{ }}>
-          <div className="container justify-content-center align-items-center d-flex splash-container">
-            <div className="row justify-content-center text-center splash-content">
+        <section className="fdb-block fdb-viewport splash-container">
+          <div className="container justify-content-center align-items-center d-flex ">
+            <div className="row splash-content">
               <div className="col-12 col-md-12">
                 {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
-                <h1 className="text-primary">Milvus</h1>
                 <p className="lead text-secondary">An intelligent vector database that allows you to access data at unparalleled speed.</p>
-                <p className="mt-5"><a href={this.docUrl('aboutmilvus/overview', language)} className="btn btn-primary">Why Milvus</a></p>
+                <p className="main-button"><a href={this.docUrl('aboutmilvus/overview', language)} className="milvus-btn">Why Milvus</a></p>
               </div>
             </div>
           </div>
@@ -42,14 +41,14 @@ class Index extends React.Component {
           <div className="container">
             <div className="row text-left align-items-center">
               <div className="col-10 col-sm-6 m-auto m-lg-0 col-lg-4">
-                <img alt="splash" className="img-fluid" src={`${baseUrl}images/draws/opened.svg`} />
+                <img alt="splash" className="img-fluid" src={`${baseUrl}new-images/what-is-milvus.png`} />
               </div>
 
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>What is Milvus</h1>
                 <p className="lead">
                 Designed by ZILLIZ, Milvus is a distributed GPU database for large scale feature vector analysis. Built on GPU/CPU heterogeneous computing architecture, multibillion row datasets can now be queried in seconds, at massively reduced cost. 
-                <br /><a href={this.docUrl('aboutmilvus/overview', language)}>Read More</a>
+                <br /><a class="milvus-btn" href={this.docUrl('aboutmilvus/overview', language)}>Read More</a>
                 </p>
               </div>
             </div>
@@ -71,7 +70,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f1" className="fdb-icon" src={`${baseUrl}images/icons/layout.svg`} />
+                    <img alt="Outstanding Performance" className="fdb-icon" src={`${baseUrl}new-images/icon-1.png`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>Outstanding Performance</strong></h3>
@@ -83,7 +82,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f2" className="fdb-icon" src={`${baseUrl}images/icons/layers.svg`} />
+                    <img alt="Intelligent Index" className="fdb-icon" src={`${baseUrl}new-images/icon-2.png`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>Intelligent Index</strong></h3>
@@ -95,7 +94,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f3" className="fdb-icon" src={`${baseUrl}images/icons/map.svg`} />
+                    <img alt="Strong Scalability" className="fdb-icon" src={`${baseUrl}new-images/icon-3.png`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>Strong Scalability</strong></h3>
@@ -109,7 +108,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f4" className="fdb-icon" src={`${baseUrl}images/icons/cloud.svg`} />
+                    <img alt="High Availability" className="fdb-icon" src={`${baseUrl}new-images/icon-4.png`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>High Availability</strong></h3>
@@ -121,7 +120,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f5" className="fdb-icon" src={`${baseUrl}images/icons/package.svg`} />
+                    <img alt="High Availability" className="fdb-icon" src={`${baseUrl}new-images/icon-5.png`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>High Compatibility</strong></h3>
@@ -133,7 +132,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
                 <div className="row">
                   <div className="col-3 paddingTop10">
-                    <img alt="f6" className="fdb-icon" src={`${baseUrl}images/icons/monitor.svg`} />
+                    <img alt="Easy to use" className="fdb-icon" src={`${baseUrl}new-images/icon-6.png`} />
                   </div>
                   <div className="col-9">
                     <h3><strong>Easy to use</strong></h3>
@@ -179,14 +178,14 @@ class Index extends React.Component {
             <table className="table text-center mt-5 d-none d-lg-table">
               <tbody>
                 <tr>
-                  <th scope="row" className="border-0"></th>
-                  <td className="text-center border-0">
+                  <th scope="row" className="border-0 tb-hd"></th>
+                  <td className="text-center border-0 tb-hd">
                     <h2 className="font-weight-light">Milvus</h2>
                   </td>
-                  <td className="text-center border-0">
+                  <td className="text-center border-0 tb-hd">
                     <h2 className="font-weight-light">FAISS</h2>
                   </td>
-                  <td className="text-center border-0">
+                  <td className="text-center border-0 tb-hd">
                     <h2 className="font-weight-light">SPTAG</h2>
                   </td>
                 </tr>
@@ -282,7 +281,7 @@ class Index extends React.Component {
             <table className="table text-center mt-5 d-table d-lg-none">
               <tbody>
                 <tr>
-                  <td className="text-center border-0" colSpan="2">
+                  <td className="text-center border-0 tb-hd" colSpan="2">
                     <h2 className="font-weight-light">Milvus</h2>
                   </td>
                 </tr>
@@ -340,7 +339,7 @@ class Index extends React.Component {
             <table className="table text-center mt-5 d-table d-lg-none">
               <tbody>
                 <tr>
-                  <td className="text-center" colSpan="2">
+                  <td className="text-center tb-hd" colSpan="2">
                     <h2 className="font-weight-light">FAISS</h2>
                   </td>
                 </tr>
@@ -398,7 +397,7 @@ class Index extends React.Component {
             <table className="table text-center mt-5 d-table d-lg-none">
             <tbody>
                 <tr>
-                  <td className="text-center" colSpan="2">
+                  <td className="text-center tb-hd" colSpan="2">
                     <h2 className="font-weight-light">SPTAG</h2>
                   </td>
                 </tr>

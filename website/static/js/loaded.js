@@ -61,15 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
     }
-    decorateLinkToButton(['Try Milvus', '试用Milvus']);
+    decorateLinkToButton(['Try', '试用']);
 
     // multiple language
     const headerNavCon = document.querySelector('.nav-site');
     const languageMenu = document.querySelector('.nav-site>span');
     languageMenu.style.display = 'none';
     const languageMap = {
-        'en': 'English',
-        'zh-CN': '中文'
+        'en': 'En',
+        'zh-CN': '中'
     };
     Object.keys(languageMap).forEach(l => {
         const li = document.createElement('li');

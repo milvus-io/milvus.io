@@ -48,18 +48,17 @@ const siteConfig = {
   headerLinks: [
     {doc: 'aboutmilvus/overview', label: 'About Milvus'},
     {doc: 'userguide/install_milvus', label: 'Docs'},
-    // {page: 'help', label: 'Help'}
     {blog: true, label: 'Blog'},
-    {doc: 'aboutmilvus/overview', label: 'Try Milvus'}
+    {doc: 'reference/README', label: 'Try'}
   ],
 
   // If you have users set above, you add it here:
   users,
 
   /* path to images for header/footer */
-  headerIcon: 'img/logo-banner.png',
+  headerIcon: 'new-images/logo-horizontal-white.svg',
   footerIcon: '',
-  favicon: 'img/logo2.png',
+  favicon: 'new-images/favicon.png',
 
   /* Colors for website */
   colors: {
@@ -92,15 +91,15 @@ const siteConfig = {
   // Add custom scripts here that would be placed in <script> tags.
   scripts: [
     '/js/clipboard.min.js',
-    // '/js/code-block-buttons.js',
-    '/js/splash.js',
     '/js/loaded.js',
+    "https://buttons.github.io/buttons.js"
   ],
   stylesheets: [
     'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
     'https://fonts.googleapis.com/css?family=Lato',
-    'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/froala-design-blocks/2.0.0/css/froala_blocks.min.css'
+    'https://cdn.bootcss.com/font-awesome/5.10.2/css/all.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/froala-design-blocks/2.0.0/css/froala_blocks.min.css',
+    'https://use.typekit.net/odf7gmc.css'
   ],
   
   // On page navigation for the current documentation page.

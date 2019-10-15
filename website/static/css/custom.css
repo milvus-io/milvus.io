@@ -7,7 +7,7 @@ body {
     #1f232a 100%
   ) !important;
 }
-* {
+:not(.far) {
   font-family: co-text, sans-serif !important;
 }
 
@@ -832,4 +832,11 @@ body {
   position: relative;
   top: -3px;
   transform: scale(1.2);
+}
+
+.post code {
+  background-color: #454545;
+}
+.post table tr td, .post table tr th {
+  border:1px solid #666;
 }

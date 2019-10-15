@@ -81,6 +81,7 @@ class Index extends React.Component {
                   datasets can now be queried in seconds, at massively reduced
                   cost.
                   <br />
+                  <br />
                   <a
                     class="milvus-btn"
                     href={this.docUrl("aboutmilvus/overview", language)}

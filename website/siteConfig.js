@@ -49,7 +49,7 @@ const siteConfig = {
     {doc: 'aboutmilvus/overview', label: 'About Milvus'},
     {doc: 'userguide/install_milvus', label: 'Docs'},
     {blog: true, label: 'Blog'},
-    {doc: 'aboutmilvus/overview', label: 'Try'}
+    {doc: 'reference/README', label: 'Try'}
   ],
 
   // If you have users set above, you add it here:

@@ -64,8 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const group_link = ele_nav.getElementsByTagName("a");
     [].forEach.call(group_link, link => {
       if (link.innerText && texts.some(text => text === link.innerText)) {
-        link.className = "";
-        link.classList.add("button");
+        link.classList.add("top-button");
         link.href = "https://github.com/milvus-io/bootcamp";
       }
     });

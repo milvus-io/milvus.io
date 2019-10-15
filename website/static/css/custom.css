@@ -7,10 +7,16 @@ body {
     #1f232a 100%
   ) !important;
 }
-:not(.far) {
+.page h1,h3 {
   font-family: co-text, sans-serif !important;
 }
-
+.toc .toggleNav ul li a {
+  color: #aaa;
+}
+.fdb-block img.fdb-icon, .fdb-block img.fdb-icon-round {
+  max-width: fit-content;
+  width: 10rem;
+}
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 
@@ -215,9 +221,10 @@ body {
     display: none;
   }
   .fixedHeaderContainer header img {
-    height: 100px;
+    height: 70px;
   }
   .main-button {
+    font-family: co-text, sans-serif !important;
     text-align: left;
   }
   .milvus-btn {
@@ -229,12 +236,13 @@ body {
     letter-spacing: 5px;
     text-align: center;
     line-height: 56px;
-    padding: 10px 15px;
+    padding: 1rem 2rem;
   }
   .splash-container h1 {
     font-size: 68px;
   }
   .splash-container .lead {
+    font-family: co-text, sans-serif !important;
     font-size: 38px;
     color: #fff !important;
     width: 55%;
@@ -577,9 +585,10 @@ body {
     display: none;
   }
   .fixedHeaderContainer header img {
-    height: 100px;
+    height: 70px;
   }
   .main-button {
+    font-family: co-text, sans-serif !important;
     text-align: left;
   }
   .milvus-btn {
@@ -591,12 +600,13 @@ body {
     letter-spacing: 5px;
     text-align: center;
     line-height: 56px;
-    padding: 10px 15px;
+    padding: 0.4rem 2rem;
   }
   .splash-container h1 {
     font-size: 68px;
   }
   .splash-container .lead {
+    font-family: co-text, sans-serif !important;
     font-size: 38px;
     color: #fff !important;
     width: 55%;
@@ -835,9 +845,12 @@ body {
 }
 
 .nav-item-active > a {
-  background-color: #33b6f2 !important;
+  font-weight: bold !important;
 }
 
+ a.top-button {
+  background-color: #33b6f2;
+}
 .nav-language-active > a {
   font-weight: bold !important;
 }

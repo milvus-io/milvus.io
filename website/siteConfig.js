@@ -46,9 +46,8 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'aboutmilvus/overview', label: 'Milvus'},
+    {doc: 'aboutmilvus/overview', label: 'About Milvus'},
     {doc: 'userguide/install_milvus', label: 'Docs'},
-    // {page: 'help', label: 'Help'}
     {blog: true, label: 'Blog'},
     {doc: 'aboutmilvus/overview', label: 'Try'}
   ],
@@ -92,8 +91,6 @@ const siteConfig = {
   // Add custom scripts here that would be placed in <script> tags.
   scripts: [
     '/js/clipboard.min.js',
-    // '/js/code-block-buttons.js',
-    // '/js/splash.js',
     '/js/loaded.js',
     "https://buttons.github.io/buttons.js"
   ],

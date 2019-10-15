@@ -841,3 +841,9 @@ body {
 .nav-language-active > a {
   font-weight: bold !important;
 }
+.post code {
+  background-color: #454545;
+}
+.post table tr td, .post table tr th {
+  border:1px solid #666;
+}

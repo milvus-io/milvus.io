@@ -7,6 +7,7 @@ body {
     #1f232a 100%
   ) !important;
 }
+
 .page h1,
 h3 {
   font-family: co-text, sans-serif !important;
@@ -42,6 +43,10 @@ h3 {
 }
 
 @media only screen and (max-width: 1023px) {
+  .page {
+    position: relative;
+    top: 20px;
+  }
   .feature {
     width: 100%;
     padding-left: 0;
@@ -51,7 +56,6 @@ h3 {
     margin: 0 auto;
     position: static;
   }
-
   .headerWrapper header a {
     height: 50px;
   }
@@ -471,6 +475,10 @@ h3 {
 }
 
 @media only screen and (min-width: 1024px) {
+  .page {
+    position: relative;
+    top: -20px;
+  }
   .slidingNav {
     align-items: center;
     display: flex;
@@ -522,9 +530,6 @@ h3 {
   }
   .page h1 {
     margin-top: 0;
-  }
-
-  .navPusher {
   }
   .onPageNav {
     top: 120px;

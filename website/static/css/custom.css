@@ -13,14 +13,34 @@ body {
 .toc .toggleNav ul li a {
   color: #aaa;
 }
-.fdb-block img.fdb-icon, .fdb-block img.fdb-icon-round {
-  max-width: fit-content;
-  width: 10rem;
+.feature-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+.feature {
+  clear: both;
+  display: inline-block;
+  width: 30%;
+  margin: 20px 0;
+  position: relative;
+  padding-left: 130px;
+}
+.feature img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 120px;
+}
+.feature p {
+  font-size: 13px;
 }
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+  .feature {width: 100%;}
 }
 
 @media only screen and (max-width: 1023px) {
+  .feature {width: 100%;}
+
   .headerWrapper header a {
     height: 50px;
   }

@@ -105,139 +105,95 @@ class Index extends React.Component {
                 <h1>Milvus Features</h1>
               </div>
             </div>
-            <div className="row text-left mt-5">
-              <div className="col-12 col-md-4">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="Outstanding Performance"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-1.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>Outstanding Performance</strong>
-                    </h3>
-                    <p>
-                      Built on CPU/GPU heterogeneous computing architecture, the
-                      data processing speed is more than 1000 times faster than
-                      traditional database.
-                    </p>
-                  </div>
-                </div>
-              </div>
 
-              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="Intelligent Index"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-2.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>Intelligent Index</strong>
-                    </h3>
-                    <p>
-                      Depending on your business needs, you can choose from our
-                      various and optimized data index types, designed based on
-                      quantitization, tree-based and graph methods, etc.{" "}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="Strong Scalability"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-3.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>Strong Scalability</strong>
-                    </h3>
-                    <p>
-                      The disaggregated storage and compute architecture allow
-                      you to flexibly adapt the computing and storage types as
-                      your business expands.{" "}
-                    </p>
-                  </div>
-                </div>
-              </div>
+          <div className="feature-wrapper">
+            <div className="feature">
+              <img
+                alt="Outstanding Performance"
+                src={`${baseUrl}new-images/icon-1.png`}
+              />
+              <h3>
+                <strong>Outstanding Performance</strong>
+              </h3>
+              <p>
+                Built on CPU/GPU heterogeneous computing architecture, the data
+                processing speed is more than 1000 times faster than traditional
+                database.
+              </p>
             </div>
 
-            <div className="row text-left pt-3 pt-sm-4 pt-md-5">
-              <div className="col-12 col-md-4">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="High Availability"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-4.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>High Availability</strong>
-                    </h3>
-                    <p>
-                      The distributed cluster architecture provides continued
-                      service when some of the system components fail.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="High Availability"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-5.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>High Compatibility</strong>
-                    </h3>
-                    <p>
-                      Compatible with major AI/ML models and programming
-                      languages.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="Easy to use"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-6.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>Easy to use</strong>
-                    </h3>
-                    <p>
-                      With Python/C++ based client SDK as well as visualized GUI
-                      monitoring dashboard, Milvus ensures you have outstanding
-                      ease of use.
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="feature ">
+              <img
+                alt="Intelligent Index"
+                src={`${baseUrl}new-images/icon-2.png`}
+              />
+              <h3>
+                <strong>Intelligent Index</strong>
+              </h3>
+              <p>
+                Depending on your business needs, you can choose from our
+                various and optimized data index types, designed based on
+                quantitization, tree-based and graph methods, etc.{" "}
+              </p>
             </div>
+
+            <div className="feature ">
+              <img
+                alt="Strong Scalability"
+                src={`${baseUrl}new-images/icon-3.png`}
+              />
+              <h3>
+                <strong>Strong Scalability</strong>
+              </h3>
+              <p>
+                The disaggregated storage and compute architecture allow you to
+                flexibly adapt the computing and storage types as your business
+                expands.
+              </p>
+            </div>
+
+            <div className="feature ">
+              <img
+                alt="High Availability"
+                src={`${baseUrl}new-images/icon-4.png`}
+              />
+              <h3>
+                <strong>High Availability</strong>
+              </h3>
+              <p>
+                The distributed cluster architecture provides continued service
+                when some of the system components fail.
+              </p>
+            </div>
+
+            <div className="feature ">
+              <img
+                alt="High Availability"
+                src={`${baseUrl}new-images/icon-5.png`}
+              />
+              <h3>
+                <strong>High Compatibility</strong>
+              </h3>
+              <p>
+                Compatible with major AI/ML models and programming languages.
+              </p>
+            </div>
+
+            <div className="feature ">
+              <img
+                alt="Easy to use"
+                src={`${baseUrl}new-images/icon-6.png`}
+              />
+              <h3>
+                <strong>Easy to use</strong>
+              </h3>
+              <p>
+                With Python/C++ based client SDK as well as visualized GUI
+                monitoring dashboard, Milvus ensures you have outstanding ease
+                of use.
+              </p>
+            </div>
+          </div>
           </div>
         </section>
       );

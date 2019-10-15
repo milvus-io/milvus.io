@@ -98,123 +98,78 @@ class Index extends React.Component {
                 <h1>Milvus 特性</h1>
               </div>
             </div>
-            <div className="row text-left mt-5">
-              <div className="col-12 col-md-4">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="Outstanding Performance"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-1.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>性能卓越</strong>
-                    </h3>
-                    <p>
-                      通过异构处理架构大幅提高索引构建的速度，数据处理速度比传统数据库快1000倍。
-                    </p>
-                  </div>
-                </div>
+
+            <div className="feature-wrapper">
+              <div className="feature">
+                <img
+                  alt="Outstanding Performance"
+                  src={`${baseUrl}new-images/icon-1.png`}
+                />
+                <h3>
+                  <strong>性能卓越</strong>
+                </h3>
+                <p>
+                  通过异构处理架构大幅提高索引构建的速度，数据处理速度比传统数据库快1000倍。
+                </p>
               </div>
 
-              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="Intelligent Index"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-2.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>智能索引</strong>
-                    </h3>
-                    <p>
-                      提供丰富而优化的向量索引技术，您可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引方式。
-                    </p>
-                  </div>
-                </div>
+              <div className="feature ">
+                <img
+                  alt="Intelligent Index"
+                  src={`${baseUrl}new-images/icon-2.png`}
+                />
+                <h3>
+                  <strong>弹性伸缩</strong>
+                </h3>
+                <p>
+                  计算与存储分离的架构，让您根据业务扩展情况，弹性伸缩计算节点和存储节点。
+                </p>
               </div>
 
-              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="Strong Scalability"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-3.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>弹性伸缩</strong>
-                    </h3>
-                    <p>
-                      计算与存储分离的架构，让您根据业务扩展情况，弹性伸缩计算节点和存储节点。
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row text-left pt-3 pt-sm-4 pt-md-5">
-              <div className="col-12 col-md-4">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="High Availability"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-4.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>高可用性</strong>
-                    </h3>
-                    <p>分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
-                  </div>
-                </div>
+              <div className="feature ">
+                <img
+                  alt="Strong Scalability"
+                  src={`${baseUrl}new-images/icon-3.png`}
+                />
+                <h3>
+                  <strong>高可用性</strong>
+                </h3>
+                <p>分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
               </div>
 
-              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="High Availability"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-5.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>全面兼容</strong>
-                    </h3>
-                    <p>兼容各种人工智能训练模型，和主流开发语言。</p>
-                  </div>
-                </div>
+              <div className="feature ">
+                <img
+                  alt="High Availability"
+                  src={`${baseUrl}new-images/icon-4.png`}
+                />
+                <h3>
+                  <strong>全面兼容</strong>
+                </h3>
+                <p>兼容各种人工智能训练模型，和主流开发语言。</p>
               </div>
 
-              <div className="col-12 col-md-4 pt-3 pt-sm-4 pt-md-0">
-                <div className="row">
-                  <div className="col-3 paddingTop10">
-                    <img
-                      alt="f6"
-                      className="fdb-icon"
-                      src={`${baseUrl}new-images/icon-5.png`}
-                    />
-                  </div>
-                  <div className="col-9">
-                    <h3>
-                      <strong>高易用性</strong>
-                    </h3>
-                    <p>
-                      提供基于Python/C++的客户端SDK和图形化监控面板，命令行管理工具简单易用。
-                    </p>
-                  </div>
-                </div>
+              <div className="feature ">
+                <img
+                  alt="High Availability"
+                  src={`${baseUrl}new-images/icon-5.png`}
+                />
+                <h3>
+                  <strong>全面兼容</strong>
+                </h3>
+                <p>兼容各种人工智能训练模型，和主流开发语言。</p>
+              </div>
+
+              <div className="feature ">
+                <img
+                  alt="Easy to use"
+                  src={`${baseUrl}new-images/icon-6.png`}
+                />
+                <h3>
+                  <strong>高易用性</strong>
+                </h3>
+                <p>
+                  提供基于Python/C++的客户端SDK和图形化监控面板，命令行管理工具简单易用。
+                </p>
               </div>
             </div>
           </div>

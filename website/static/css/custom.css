@@ -7,7 +7,8 @@ body {
     #1f232a 100%
   ) !important;
 }
-.page h1,h3 {
+.page h1,
+h3 {
   font-family: co-text, sans-serif !important;
 }
 .toc .toggleNav ul li a {
@@ -35,11 +36,21 @@ body {
   font-size: 13px;
 }
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
-  .feature {width: 100%;}
+  .feature {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 1023px) {
-  .feature {width: 100%;}
+  .feature {
+    width: 100%;
+    padding-left: 0;
+  }
+  .feature img {
+    display: block;
+    margin: 0 auto;
+    position: static;
+  }
 
   .headerWrapper header a {
     height: 50px;
@@ -118,6 +129,7 @@ body {
     position: fixed;
     right: 0;
     top: 5px;
+    z-index: 1000000;
   }
   /* those make the footer sticky and work even in IE 11 */
   .navPusher > :first-child {
@@ -142,6 +154,7 @@ body {
   }
   table td,
   table th {
+    font-size: 12px;
     white-space: nowrap;
     word-break: keep-all;
   }
@@ -157,7 +170,7 @@ body {
     margin-top: 0;
   }
   .fdb-block {
-    padding: 5rem !important;
+    padding: 1rem !important;
   }
   .paddingTop10 {
     padding-top: 6%;
@@ -246,24 +259,24 @@ body {
   .main-button {
     font-family: co-text, sans-serif !important;
     text-align: left;
+    text-transform: uppercase;
   }
   .milvus-btn {
     text-align: left;
     border: 2px solid #4eb8f0;
     border-radius: 30px;
-    font-size: 20px;
+    font-size: 13px;
     color: #4eb8f0;
-    letter-spacing: 5px;
     text-align: center;
     line-height: 56px;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
   }
   .splash-container h1 {
     font-size: 68px;
   }
   .splash-container .lead {
     font-family: co-text, sans-serif !important;
-    font-size: 38px;
+    font-size: 20px;
     color: #fff !important;
     width: 55%;
     margin-top: 45px;
@@ -610,6 +623,7 @@ body {
   .main-button {
     font-family: co-text, sans-serif !important;
     text-align: left;
+    text-transform: uppercase;
   }
   .milvus-btn {
     text-align: left;
@@ -868,7 +882,7 @@ body {
   font-weight: bold !important;
 }
 
- a.top-button {
+a.top-button {
   background-color: #33b6f2;
 }
 .nav-language-active > a {
@@ -877,6 +891,7 @@ body {
 .post code {
   background-color: #454545;
 }
-.post table tr td, .post table tr th {
-  border:1px solid #666;
+.post table tr td,
+.post table tr th {
+  border: 1px solid #666;
 }

@@ -290,7 +290,7 @@ h3 {
     background-size: 50vw 50vh;
     position: relative;
     padding-left: 5px !important;
-    min-height: 35vh !important;
+    min-height: 40vh !important;
   }
   .fixedHeaderContainer header .headerTitleWithLogo {
     display: none;
@@ -616,7 +616,7 @@ h3 {
     background-size: 50vw 50vh;
     position: relative;
     padding-left: 5px !important;
-    min-height: 35vh !important;
+    min-height: 40vh !important;
   }
   .fixedHeaderContainer header .headerTitleWithLogo {
     display: none;

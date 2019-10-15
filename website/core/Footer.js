@@ -36,41 +36,116 @@ class Footer extends React.Component {
               />
             )}
           </a> */}
-          <div>
-            <h5>Product</h5>
-            <a href={this.docUrl("vectordb/milvus-db", this.props.language)}>
-              Milvus
-            </a>
-            <a href="https://github.com/milvus-io/bootcamp">Milvus Bootcamp</a>
-          </div>
-          <div>
-            <h5>Resources</h5>
-            <a href={this.docUrl("userguide/install_milvus", this.props.language)}>Docs</a>
-            <a
-              href={`https://github.com/milvus-io/bootcamp/tree/master/solutions/hybrid_search`}
-            >
-              Solutions
-            </a>
-            <a href={this.docUrl("FAQ", this.props.language)}>FAQ</a>
-          </div>
-          <div>
-            <h5>Support</h5>
-            <a href={`https://github.com/milvus-io`}>Github</a>
-            <a href={`https://www.milvus.io/blog/`}>Blog</a>
-            <a href={`https://me.csdn.net/weixin_44839084`}>CSDN</a>
-            <a href={`mailto:support@zilliz.com`}>Contact Us</a>
-          </div>
-          <div>
-            <h5>Componay</h5>
-            <a href={`https://zilliz.com/about-us/about-zilliz/`}>
-              About Zilliz
-            </a>
-            <a href={`https://zilliz.com/careers/`}>Join Us</a>
-            <a href={`https://zilliz.com/about-us/news/`}>News</a>
-          </div>
-          <div>
-            <img style={{maxWidth: 'initial'}} width="150" height="150" src="https://www.zilliz.com/images/qrcode2.jpeg?ver=1.10.16" />
-          </div>
+          {this.props.language === "en" && (
+            <>
+              <div>
+                <h5>Product</h5>
+                <a
+                  href={this.docUrl("vectordb/milvus-db", this.props.language)}
+                >
+                  Milvus
+                </a>
+                <a href="https://github.com/milvus-io/bootcamp">
+                  Milvus Bootcamp
+                </a>
+              </div>
+              <div>
+                <h5>Resources</h5>
+                <a
+                  href={this.docUrl(
+                    "userguide/install_milvus",
+                    this.props.language
+                  )}
+                >
+                  Docs
+                </a>
+                <a
+                  href={`https://github.com/milvus-io/bootcamp/tree/master/solutions/hybrid_search`}
+                >
+                  Solutions
+                </a>
+                <a href={this.docUrl("FAQ", this.props.language)}>FAQ</a>
+              </div>
+              <div>
+                <h5>Support</h5>
+                <a href={`https://github.com/milvus-io`}>Github</a>
+                <a href={`https://www.milvus.io/blog/`}>Blog</a>
+                <a href={`https://me.csdn.net/weixin_44839084`}>CSDN</a>
+                <a href={`mailto:support@zilliz.com`}>Contact Us</a>
+              </div>
+              <div>
+                <h5>Componay</h5>
+                <a href={`https://zilliz.com/about-us/about-zilliz/`}>
+                  About Zilliz
+                </a>
+                <a href={`https://zilliz.com/careers/`}>Join Us</a>
+                <a href={`https://zilliz.com/about-us/news/`}>News</a>
+              </div>
+              <div>
+                <img
+                  style={{ maxWidth: "initial" }}
+                  width="150"
+                  height="150"
+                  src="https://www.zilliz.com/images/qrcode2.jpeg?ver=1.10.16"
+                />
+              </div>
+            </>
+          )}
+          {this.props.language === "zh-CN" && (
+            <>
+              <div>
+                <h5>产品</h5>
+                <a
+                  href={this.docUrl("vectordb/milvus-db", this.props.language)}
+                >
+                  Milvus
+                </a>
+                <a href="https://github.com/milvus-io/bootcamp">
+                  快速开始Milvus
+                </a>
+              </div>
+              <div>
+                <h5>资源</h5>
+                <a
+                  href={this.docUrl(
+                    "userguide/install_milvus",
+                    this.props.language
+                  )}
+                >
+                  文档
+                </a>
+                <a
+                  href={`https://github.com/milvus-io/bootcamp/tree/master/solutions/hybrid_search`}
+                >
+                  解决方案
+                </a>
+                <a href={this.docUrl("FAQ", this.props.language)}>常问问题</a>
+              </div>
+              <div>
+                <h5>支持</h5>
+                <a href={`https://github.com/milvus-io`}>Github</a>
+                <a href={`https://www.milvus.io/blog/`}>博客</a>
+                <a href={`https://me.csdn.net/weixin_44839084`}>CSDN</a>
+                <a href={`mailto:support@zilliz.com`}> 联系我们</a>
+              </div>
+              <div>
+                <h5>公司</h5>
+                <a href={`https://zilliz.com/about-us/about-zilliz/`}>
+                关于ZILLIZ
+                </a>
+                <a href={`https://zilliz.com/careers/`}>加入我们</a>
+                <a href={`https://zilliz.com/about-us/news/`}>新闻</a>
+              </div>
+              <div>
+                <img
+                  style={{ maxWidth: "initial" }}
+                  width="150"
+                  height="150"
+                  src="https://www.zilliz.com/images/qrcode2.jpeg?ver=1.10.16"
+                />
+              </div>
+            </>
+          )}
         </section>
         <section className="copyright">{this.props.config.copyright}</section>
         <script src="https://cookiehub.net/cc/99f12643.js" />

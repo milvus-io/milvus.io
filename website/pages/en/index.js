@@ -253,13 +253,13 @@ class Index extends React.Component {
                 <tr>
                   <th scope="row" className="border-0 tb-hd"></th>
                   <td className="text-center border-0 tb-hd">
-                    <h2 className="font-weight-light">Milvus</h2>
+                    <h3 className="font-weight-light">Milvus</h3>
                   </td>
                   <td className="text-center border-0 tb-hd">
-                    <h2 className="font-weight-light">FAISS</h2>
+                    <h3 className="font-weight-light">FAISS</h3>
                   </td>
                   <td className="text-center border-0 tb-hd">
-                    <h2 className="font-weight-light">SPTAG</h2>
+                    <h3 className="font-weight-light">SPTAG</h3>
                   </td>
                 </tr>
                 <tr>
@@ -427,7 +427,7 @@ class Index extends React.Component {
               <tbody>
                 <tr>
                   <td className="text-center border-0 tb-hd" colSpan="2">
-                    <h2 className="font-weight-light">Milvus</h2>
+                    <h3 className="font-weight-light">Milvus</h3>
                   </td>
                 </tr>
                 <tr>
@@ -511,7 +511,7 @@ class Index extends React.Component {
               <tbody>
                 <tr>
                   <td className="text-center tb-hd" colSpan="2">
-                    <h2 className="font-weight-light">FAISS</h2>
+                    <h3 className="font-weight-light">FAISS</h3>
                   </td>
                 </tr>
                 <tr>
@@ -595,7 +595,7 @@ class Index extends React.Component {
               <tbody>
                 <tr>
                   <td className="text-center tb-hd" colSpan="2">
-                    <h2 className="font-weight-light">SPTAG</h2>
+                    <h3 className="font-weight-light">SPTAG</h3>
                   </td>
                 </tr>
                 <tr>

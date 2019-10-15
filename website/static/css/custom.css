@@ -22,7 +22,7 @@ h3 {
 .feature {
   clear: both;
   display: inline-block;
-  width: 30%;
+  width: 33%;
   margin: 20px 0;
   position: relative;
   padding-left: 130px;
@@ -35,6 +35,44 @@ h3 {
 }
 .feature p {
   font-size: 13px;
+}
+.tb-hd h3 {
+  margin: 0;
+}
+.css-full {
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: #4EB8F0;
+  background-image: none;
+  border-radius: 50%;
+  margin: 0px auto;
+}
+
+.css-half {
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: #4EB8F0;
+  border-radius: 50%;
+  opacity: 0.5;
+  margin: 0px auto;
+}
+
+.css-quater {
+  height: 1.25rem;
+  width: 1.25rem;
+  opacity: 0.25;
+  background-color: #4EB8F0;
+  border-radius: 50%;
+  margin: 0px auto;
+}
+
+.css-zero {
+  opacity: 0.25;
+  height: 1.25rem;
+  width: 1.25rem;
+  background-color: #4EB8F0;
+  border-radius: 50%;
+  margin: 0px auto;
 }
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
   .feature {
@@ -240,7 +278,7 @@ h3 {
   }
   .table td,
   .table th {
-    background: #3f4048;
+    background: rgb(44,47,51);
     border: 3px;
   }
   .css-7sa0gy {
@@ -366,46 +404,7 @@ h3 {
     background-color: white;
   }
 
-  .css-full {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: rgb(78, 184, 240, 25);
-    background-image: none;
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-
-  .css-half {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: rgb(78, 184, 240, 25);
-    background-image: linear-gradient(
-      90deg,
-      transparent 50%,
-      rgb(255, 237, 191) 50%
-    );
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-
-  .css-quater {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: rgb(78, 184, 240, 25);
-    background-image: linear-gradient(transparent 50%, rgb(255, 237, 191) 50%),
-      linear-gradient(90deg, transparent 50%, rgb(255, 237, 191) 50%);
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-
-  .css-zero {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: #c3dcf0;
-    background-image: none;
-    border-radius: 50%;
-    margin: 0px auto;
-  }
+  
   .lead {
     font-size: 16px;
   }
@@ -539,7 +538,7 @@ h3 {
     margin-top: 0;
   }
   .fdb-block {
-    padding: 5rem !important;
+    padding: 3.5rem !important;
   }
   .paddingTop10 {
     padding-top: 6%;
@@ -605,7 +604,7 @@ h3 {
   }
   .table td,
   .table th {
-    background: #3f4048;
+    background: rgb(44,47,51);
     border: 3px;
   }
   .css-7sa0gy {
@@ -733,46 +732,7 @@ h3 {
     background-color: white;
   }
 
-  .css-full {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: rgb(78, 184, 240, 25);
-    background-image: none;
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-
-  .css-half {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: rgb(78, 184, 240, 25);
-    background-image: linear-gradient(
-      90deg,
-      transparent 50%,
-      rgb(255, 237, 191) 50%
-    );
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-
-  .css-quater {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: rgb(78, 184, 240, 25);
-    background-image: linear-gradient(transparent 50%, rgb(255, 237, 191) 50%),
-      linear-gradient(90deg, transparent 50%, rgb(255, 237, 191) 50%);
-    border-radius: 50%;
-    margin: 0px auto;
-  }
-
-  .css-zero {
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: #c3dcf0;
-    background-image: none;
-    border-radius: 50%;
-    margin: 0px auto;
-  }
+  
   .lead {
     font-size: 16px;
   }

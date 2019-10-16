@@ -8,8 +8,30 @@ body {
 }
 
 .page h1,
-h3 {
+.page h3 {
   font-family: co-text, sans-serif !important;
+}
+.post p {
+  color: #d1d1d1;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #fff;
+}
+p,
+ol li,
+ul li {
+  color: #fff;
+}
+table td,
+table th {
+  font-size: 12px;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 .toc .toggleNav ul li a {
   color: #aaa;
@@ -180,25 +202,6 @@ h3 {
     background: none;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #fff;
-  }
-  p,
-  ol li,
-  ul li {
-    color: #fff;
-  }
-  table td,
-  table th {
-    font-size: 12px;
-    white-space: nowrap;
-    word-break: keep-all;
-  }
   .page h1 {
     margin-top: 0;
   }
@@ -507,24 +510,6 @@ h3 {
     background: none;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #fff;
-  }
-  p,
-  ol li,
-  ul li {
-    color: #fff;
-  }
-  table td,
-  table th {
-    white-space: nowrap;
-    word-break: keep-all;
-  }
   .page h1 {
     margin-top: 0;
   }

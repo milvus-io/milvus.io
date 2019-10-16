@@ -51,8 +51,8 @@
         "title": "README"
       },
       "reference/application": {
-        "title": "Application Scenarios",
-        "sidebar_label": "Application Scenarios"
+        "title": "应用场景",
+        "sidebar_label": "应用场景"
       },
       "reference/comparison": {
         "title": "与FAISS和SPTAG对比",
@@ -280,7 +280,7 @@
       "About Milvus": "关于 Milvus",
       "Docs": "文档",
       "Blog": "博客",
-      "Try Milvus": "试用 Milvus"
+      "Try": "试用 Milvus"
     },
     "categories": {
       "About Milvus": "关于 Milvus",

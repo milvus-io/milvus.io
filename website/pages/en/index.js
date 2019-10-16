@@ -41,7 +41,7 @@ class Index extends React.Component {
                   </p>
                   <div className="githubicon">
                     <a
-                      class="github-button"
+                      className="github-button"
                       href="https://github.com/milvus-io/milvus"
                       data-color-scheme="no-preference: dark; light: light; dark: dark;"
                       data-size="large"
@@ -83,7 +83,7 @@ class Index extends React.Component {
                   <br />
                   <br />
                   <a
-                    class="milvus-btn"
+                    className="milvus-btn"
                     href={this.docUrl("aboutmilvus/overview", language)}
                   >
                     Read More

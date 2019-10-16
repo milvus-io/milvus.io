@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   };
-  decorateLinkToButton(["Try", "试用"]);
+  decorateLinkToButton(["Try", "试用 Milvus"]);
 
   // multiple language
   const headerNavCon = document.querySelector(".nav-site");

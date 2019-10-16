@@ -22,32 +22,30 @@ class Index extends React.Component {
     const CallToAction = () => {
       return (
         <section className="fdb-block fdb-viewport splash-container">
-          <div className="container justify-content-center align-items-center">
-            <div className="row splash-content">
-              <div className="col-12 col-md-12">
-                {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
-                <p className="lead text-secondary">高速智能向量检索数据库</p>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <p className="main-button">
-                    <a
-                      href={this.docUrl("aboutmilvus/overview", language)}
-                      className="milvus-btn"
-                    >
-                      为什么选择Milvus
-                    </a>
-                  </p>
-                  <div className="githubicon">
-                    <a
-                      className="github-button"
-                      href="https://github.com/milvus-io/milvus"
-                      data-color-scheme="no-preference: light; light: light; dark: dark;"
-                      data-size="large"
-                      data-show-count="true"
-                      aria-label="Star milvus-io/milvus on GitHub"
-                    >
-                      Star
-                    </a>
-                  </div>
+          <div className="row splash-content">
+            <div className="col-12 col-md-12">
+              {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
+              <p className="lead text-secondary">高速智能向量<br />检索数据库</p>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <p className="main-button">
+                  <a
+                    href={this.docUrl("aboutmilvus/overview", language)}
+                    className="milvus-btn"
+                  >
+                    为什么选择Milvus
+                  </a>
+                </p>
+                <div className="githubicon">
+                  <a
+                    className="github-button"
+                    href="https://github.com/milvus-io/milvus"
+                    data-color-scheme="no-preference: light; light: light; dark: dark;"
+                    data-size="large"
+                    data-show-count="true"
+                    aria-label="Star milvus-io/milvus on GitHub"
+                  >
+                    Star
+                  </a>
                 </div>
               </div>
             </div>
@@ -72,7 +70,9 @@ class Index extends React.Component {
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>什么是Milvus</h1>
                 <p className="lead">
-                  Milvus 是 ZILLIZ 公司研发的一款分布式智能向量检索分析系统。基于 GPU/CPU 异构众核框架构建，让您能在毫秒间轻松处理数十亿级数据。
+                  Milvus 是 ZILLIZ
+                  公司研发的一款分布式智能向量检索分析系统。基于 GPU/CPU
+                  异构众核框架构建，让您能在毫秒间轻松处理数十亿级数据。
                   <br />
                   <br />
                   <a
@@ -168,7 +168,8 @@ class Index extends React.Component {
                   <strong>高易用性</strong>
                 </h3>
                 <p>
-                  提供基于 Python/C++ 的客户端SDK和图形化监控面板，命令行管理工具简单易用。
+                  提供基于 Python/C++
+                  的客户端SDK和图形化监控面板，命令行管理工具简单易用。
                 </p>
               </div>
             </div>
@@ -637,7 +638,7 @@ class Index extends React.Component {
     };
 
     return (
-      <div className="page">
+      <div className="page wrapper">
         <CallToAction />
         <WhatIsVecDb />
         <Features />

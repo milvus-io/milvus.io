@@ -22,7 +22,7 @@ class Index extends React.Component {
     const CallToAction = () => {
       return (
         <section className="fdb-block fdb-viewport splash-container">
-          <div className="container justify-content-center align-items-center d-flex ">
+          <div className=" ">
             <div className="row splash-content">
               <div className="col-12 col-md-12">
                 {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
@@ -680,7 +680,7 @@ class Index extends React.Component {
     };
 
     return (
-      <div className="page">
+      <div className="page wrapper">
         <CallToAction />
         <WhatIsVecDb />
         <Features />

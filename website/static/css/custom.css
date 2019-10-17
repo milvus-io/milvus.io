@@ -6,6 +6,11 @@ body {
     #1f232a 100%
   ) !important;
 }
+.contains-task {
+  list-style: none;
+  position: relative;
+  left: -30px;
+}
 
 .page h1,
 .page h3 {

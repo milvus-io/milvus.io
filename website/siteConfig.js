@@ -1,11 +1,19 @@
+var HTML_ESCAPE_TEST_RE = /[&<>"]/;
+var HTML_ESCAPE_REPLACE_RE = /[&<>"]/g;
+var HTML_REPLACEMENTS = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;'
+};
+
+function replaceUnsafeChar(ch) {
+  return HTML_REPLACEMENTS[ch];
+}
+
 function escapeHtml(str) {
-  if (/[&<>"]/.test(str)) {
-    return str.replace(/[&<>"]/g, {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;"
-    });
+  if (HTML_ESCAPE_TEST_RE.test(str)) {
+    return str.replace(HTML_ESCAPE_REPLACE_RE, replaceUnsafeChar);
   }
   return str;
 }
@@ -18,6 +26,7 @@ function taskLists(md) {
     if (nextToken) {
       let content = nextToken.content;
       hasTask = content.startsWith("[ ]") || content.startsWith("[x]");
+      nextToken.isTask = hasTask;
     }
     return `<li ${hasTask ? 'class="contains-task"' : ''}>`;
   };

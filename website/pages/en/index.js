@@ -106,94 +106,94 @@ class Index extends React.Component {
               </div>
             </div>
 
-          <div className="feature-wrapper">
-            <div className="feature">
-              <img
-                alt="Outstanding Performance"
-                src={`${baseUrl}new-images/icon-1.png`}
-              />
-              <h3>
-                <strong>Outstanding Performance</strong>
-              </h3>
-              <p>
-                Built on CPU/GPU heterogeneous computing architecture, the data
-                processing speed is more than 1000 times faster than traditional
-                database.
-              </p>
-            </div>
+            <div className="feature-wrapper">
+              <div className="feature">
+                <img
+                  alt="Outstanding Performance"
+                  src={`${baseUrl}new-images/icon-1.png`}
+                />
+                <h3>
+                  <strong>Outstanding Performance</strong>
+                </h3>
+                <p>
+                  Built on CPU/GPU heterogeneous computing architecture, the
+                  data processing speed is more than 1000 times faster than
+                  traditional database.
+                </p>
+              </div>
 
-            <div className="feature ">
-              <img
-                alt="Intelligent Index"
-                src={`${baseUrl}new-images/icon-2.png`}
-              />
-              <h3>
-                <strong>Intelligent Index</strong>
-              </h3>
-              <p>
-                Depending on your business needs, you can choose from our
-                various and optimized data index types, designed based on
-                quantitization, tree-based and graph methods, etc.{" "}
-              </p>
-            </div>
+              <div className="feature ">
+                <img
+                  alt="Intelligent Index"
+                  src={`${baseUrl}new-images/icon-2.png`}
+                />
+                <h3>
+                  <strong>Intelligent Index</strong>
+                </h3>
+                <p>
+                  Depending on your business needs, you can choose from our
+                  various and optimized data index types, designed based on
+                  quantitization, tree-based and graph methods, etc.{" "}
+                </p>
+              </div>
 
-            <div className="feature ">
-              <img
-                alt="Strong Scalability"
-                src={`${baseUrl}new-images/icon-3.png`}
-              />
-              <h3>
-                <strong>Strong Scalability</strong>
-              </h3>
-              <p>
-                The disaggregated storage and compute architecture allow you to
-                flexibly adapt the computing and storage types as your business
-                expands.
-              </p>
-            </div>
+              <div className="feature ">
+                <img
+                  alt="Strong Scalability"
+                  src={`${baseUrl}new-images/icon-3.png`}
+                />
+                <h3>
+                  <strong>Strong Scalability</strong>
+                </h3>
+                <p>
+                  The disaggregated storage and compute architecture allow you
+                  to flexibly adapt the computing and storage types as your
+                  business expands.
+                </p>
+              </div>
 
-            <div className="feature ">
-              <img
-                alt="High Availability"
-                src={`${baseUrl}new-images/icon-4.png`}
-              />
-              <h3>
-                <strong>High Availability</strong>
-              </h3>
-              <p>
-                The distributed cluster architecture provides continued service
-                when some of the system components fail.
-              </p>
-            </div>
+              <div className="feature ">
+                <img
+                  alt="High Availability"
+                  src={`${baseUrl}new-images/icon-4.png`}
+                />
+                <h3>
+                  <strong>High Availability</strong>
+                </h3>
+                <p>
+                  The distributed cluster architecture provides continued
+                  service when some of the system components fail.
+                </p>
+              </div>
 
-            <div className="feature ">
-              <img
-                alt="High Availability"
-                src={`${baseUrl}new-images/icon-5.png`}
-              />
-              <h3>
-                <strong>High Compatibility</strong>
-              </h3>
-              <p>
-                Compatible with major AI/ML models and programming languages.
-              </p>
-            </div>
+              <div className="feature ">
+                <img
+                  alt="High Availability"
+                  src={`${baseUrl}new-images/icon-5.png`}
+                />
+                <h3>
+                  <strong>High Compatibility</strong>
+                </h3>
+                <p>
+                  Compatible with major AI/ML models and programming languages.
+                </p>
+              </div>
 
-            <div className="feature ">
-              <img
-                alt="Easy to use"
-                src={`${baseUrl}new-images/icon-6.png`}
-              />
-              <h3>
-                <strong>Easy to use</strong>
-              </h3>
-              <p>
-                With Python/C++ based client SDK as well as visualized GUI
-                monitoring dashboard, Milvus ensures you have outstanding ease
-                of use.
-              </p>
+              <div className="feature ">
+                <img
+                  alt="Easy to use"
+                  src={`${baseUrl}new-images/icon-6.png`}
+                />
+                <h3>
+                  <strong>Easy to use</strong>
+                </h3>
+                <p>
+                  With Python/C++ based client SDK as well as visualized GUI
+                  monitoring dashboard, Milvus ensures you have outstanding ease
+                  of use.
+                </p>
+              </div>
             </div>
-          </div>
           </div>
         </section>
       );
@@ -276,13 +276,7 @@ class Index extends React.Component {
                     <div className="css-zero"></div>
                   </td>
                 </tr>
-                <tr className="content" style={{ display: "none" }}>
-                  <td colSpan="5">
-                    <span>
-                      I am CPU/GPU heterogeneous computing capability content
-                    </span>
-                  </td>
-                </tr>
+
                 <tr>
                   <th scope="row">Quantization index</th>
                   <td className="css-7sa0gy">
@@ -295,11 +289,7 @@ class Index extends React.Component {
                     <div className="css-zero"></div>
                   </td>
                 </tr>
-                <tr className="content" style={{ display: "none" }}>
-                  <td colSpan="5">
-                    <span>Quantization index</span>
-                  </td>
-                </tr>
+
                 <tr>
                   <th scope="row">Hash index</th>
                   <td className="css-7sa0gy">

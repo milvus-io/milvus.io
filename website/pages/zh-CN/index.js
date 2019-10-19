@@ -25,7 +25,11 @@ class Index extends React.Component {
           <div className="row splash-content">
             <div className="col-12 col-md-12">
               {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
-              <p className="lead text-secondary">高速智能向量<br />检索数据库</p>
+              <p className="lead text-secondary">
+                高速智能向量
+                <br />
+                检索数据库
+              </p>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <p className="main-button">
                   <a
@@ -115,6 +119,17 @@ class Index extends React.Component {
 
               <div className="feature ">
                 <img
+                  alt="High Availability"
+                  src={`${baseUrl}new-images/icon-5.png`}
+                />
+                <h3>
+                  <strong>智能索引</strong>
+                </h3>
+                <p>分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
+              </div>
+
+              <div className="feature ">
+                <img
                   alt="Intelligent Index"
                   src={`${baseUrl}new-images/icon-2.png`}
                 />
@@ -145,18 +160,9 @@ class Index extends React.Component {
                 <h3>
                   <strong>全面兼容</strong>
                 </h3>
-                <p>兼容各种人工智能训练模型，和主流开发语言。</p>
-              </div>
-
-              <div className="feature ">
-                <img
-                  alt="High Availability"
-                  src={`${baseUrl}new-images/icon-5.png`}
-                />
-                <h3>
-                  <strong>全面兼容</strong>
-                </h3>
-                <p>兼容各种人工智能训练模型，和主流开发语言。</p>
+                <p>
+                  提供丰富而优化的向量索引技术，您可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引方式。
+                </p>
               </div>
 
               <div className="feature ">

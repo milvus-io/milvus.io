@@ -74,9 +74,13 @@ class Index extends React.Component {
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>什么是Milvus</h1>
                 <p className="lead">
-                  Milvus 是 ZILLIZ
-                  公司研发的一款分布式智能向量检索分析系统。基于 GPU/CPU
-                  异构众核框架构建，让您能在毫秒间轻松处理数十亿级数据。
+                  Milvus
+                  是一款开源的、针对海量特征向量的相似性搜索引擎。基于异构众核计算框架设计，成本更低，性能更好。
+                  在有限的计算资源下，十亿向量搜索仅毫秒响应。Milvus
+                  能够广泛应用于各种 AI 场景，为 AI 发展提供有效助力。
+                  <br />
+                  <br />
+                  欢迎使用我们的产品并在 GitHub 上 <a href="https://github.com/milvus-io/milvus" title="https://github.com/milvus-io/milvus">关注 Milvus</a>
                   <br />
                   <br />
                   <a

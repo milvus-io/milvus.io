@@ -75,13 +75,18 @@ class Index extends React.Component {
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>What is Milvus</h1>
                 <p className="lead">
-                  Designed by ZILLIZ, Milvus is a distributed GPU database for
-                  large scale feature vector analysis. Built on GPU/CPU
-                  heterogeneous computing architecture, multibillion row
-                  datasets can now be queried in seconds, at massively reduced
-                  cost.
+                  Milvus is an open source similarity search engine for massive
+                  feature vectors. Designed with heterogeneous computing
+                  architecture for the best cost efficiency. Searches over
+                  billion-scale vectors take only milliseconds with minimum
+                  computing resources. Milvus can be used in a wide variety of
+                  scenarios to boost AI development.
                   <br />
                   <br />
+                  Welcome to use our product and follow us on <a href="https://github.com/milvus-io/milvus" title="https://github.com/milvus-io/milvus">GitHub</a>
+                  <br />
+                  <br />
+
                   <a
                     className="milvus-btn"
                     href={this.docUrl("aboutmilvus/overview", language)}

@@ -129,7 +129,7 @@ class Index extends React.Component {
                 <h3>
                   <strong>智能索引</strong>
                 </h3>
-                <p>分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
+                <p>提供丰富而优化的向量索引技术，您可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引方式。</p>
               </div>
 
               <div className="feature ">
@@ -140,9 +140,7 @@ class Index extends React.Component {
                 <h3>
                   <strong>弹性伸缩</strong>
                 </h3>
-                <p>
-                  计算与存储分离的架构，让您根据业务扩展情况，弹性伸缩计算节点和存储节点。
-                </p>
+                <p>计算与存储分离的架构，让您根据业务扩展情况，弹性伸缩计算节点和存储节点。</p>
               </div>
 
               <div className="feature ">
@@ -164,9 +162,8 @@ class Index extends React.Component {
                 <h3>
                   <strong>全面兼容</strong>
                 </h3>
-                <p>
-                  提供丰富而优化的向量索引技术，您可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引方式。
-                </p>
+                <p>兼容各种人工智能训练模型，和主流开发语言。</p>
+
               </div>
 
               <div className="feature ">

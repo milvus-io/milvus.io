@@ -110,73 +110,70 @@ class Index extends React.Component {
             <div className="feature-wrapper">
               <div className="feature">
                 <img
-                  alt="Outstanding Performance"
+                  alt="异构众核"
                   src={`${baseUrl}new-images/icon-1.png`}
                 />
                 <h3>
-                  <strong>性能卓越</strong>
+                  <strong>异构众核</strong>
                 </h3>
                 <p>
-                  通过异构处理架构大幅提高索引构建的速度，数据处理速度比传统数据库快1000倍。
-                </p>
+                Milvus 使用异构众核计算处理特征向量，成本更低，性能更好。</p>
               </div>
 
               <div className="feature ">
                 <img
-                  alt="High Availability"
+                  alt="多元化索引"
                   src={`${baseUrl}new-images/icon-2.png`}
                 />
                 <h3>
-                  <strong>智能索引</strong>
+                  <strong>多元化索引</strong>
                 </h3>
-                <p>提供丰富而优化的向量索引技术，您可以根据查询数据集的规模、数据分布、查询精度以及索引构建速度，智能选择不同的向量索引方式。</p>
+                <p>Milvus 支持多种索引方式，使用量化索引、基于树的索引和图索引等算法。</p>
               </div>
 
               <div className="feature ">
                 <img
-                  alt="Intelligent Index"
+                  alt="资源智能管理"
                   src={`${baseUrl}new-images/icon-3.png`}
                 />
                 <h3>
-                  <strong>弹性伸缩</strong>
+                  <strong>资源智能管理</strong>
                 </h3>
-                <p>计算与存储分离的架构，让您根据业务扩展情况，弹性伸缩计算节点和存储节点。</p>
+                <p>Milvus 根据实际数据规模和可利用资源，智能调节优化查询计算和索引构建过程。</p>
               </div>
 
               <div className="feature ">
                 <img
-                  alt="Strong Scalability"
+                  alt="水平扩容"
                   src={`${baseUrl}new-images/icon-4.png`}
+                />
+                <h3>
+                  <strong>水平扩容</strong>
+                </h3>
+                <p>Milvus 支持在线 / 离线扩容，仅需执行简单命令，便可弹性伸缩计算节点和存储节点。</p>
+              </div>
+
+              <div className="feature ">
+                <img
+                  alt="高可用性"
+                  src={`${baseUrl}new-images/icon-5.png`}
                 />
                 <h3>
                   <strong>高可用性</strong>
                 </h3>
-                <p>分布式集群架构能在少数节点故障时提供持续的服务能力。</p>
+                <p>Milvus 集成了 Kubernetes 框架，能有效避免单点障碍情况的发生。</p>
               </div>
 
               <div className="feature ">
                 <img
-                  alt="High Availability"
-                  src={`${baseUrl}new-images/icon-5.png`}
-                />
-                <h3>
-                  <strong>全面兼容</strong>
-                </h3>
-                <p>兼容各种人工智能训练模型，和主流开发语言。</p>
-
-              </div>
-
-              <div className="feature ">
-                <img
-                  alt="Easy to use"
+                  alt="简单易用"
                   src={`${baseUrl}new-images/icon-6.png`}
                 />
                 <h3>
-                  <strong>高易用性</strong>
+                  <strong>简单易用</strong>
                 </h3>
                 <p>
-                  提供基于 Python/C++
-                  的客户端SDK和图形化监控面板，命令行管理工具简单易用。
+                Milvus 安装简单，使用方便。支持使用基于 Prometheus 的图形化监控，方便您实时跟踪系统性能。
                 </p>
               </div>
             </div>

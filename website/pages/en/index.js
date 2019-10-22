@@ -83,10 +83,15 @@ class Index extends React.Component {
                   scenarios to boost AI development.
                   <br />
                   <br />
-                  Welcome to use our product and follow us on <a href="https://github.com/milvus-io/milvus" title="https://github.com/milvus-io/milvus">GitHub</a>
+                  Welcome to use our product and follow us on{" "}
+                  <a
+                    href="https://github.com/milvus-io/milvus"
+                    title="https://github.com/milvus-io/milvus"
+                  >
+                    GitHub
+                  </a>
                   <br />
                   <br />
-
                   <a
                     className="milvus-btn"
                     href={this.docUrl("aboutmilvus/overview", language)}
@@ -114,60 +119,57 @@ class Index extends React.Component {
             <div className="feature-wrapper">
               <div className="feature">
                 <img
-                  alt="Outstanding Performance"
+                  alt="Heterogeneous computing"
                   src={`${baseUrl}new-images/icon-1.png`}
                 />
                 <h3>
-                  <strong>Outstanding Performance</strong>
+                  <strong>Heterogeneous computing</strong>
                 </h3>
                 <p>
-                  Built on CPU/GPU heterogeneous computing architecture, the
-                  data processing speed is more than 1000 times faster than
-                  traditional database.
+                  Milvus is designed with heterogeneous computing architecture
+                  for the best performance and cost efficiency.
                 </p>
               </div>
 
               <div className="feature ">
                 <img
-                  alt="Intelligent Index"
+                  alt="Multiple indexes"
                   src={`${baseUrl}new-images/icon-2.png`}
                 />
                 <h3>
-                  <strong>Intelligent Index</strong>
+                  <strong>Multiple indexes</strong>
                 </h3>
                 <p>
-                  Depending on your business needs, you can choose from our
-                  various and optimized data index types, designed based on
-                  quantitization, tree-based and graph methods, etc.{" "}
+                  Milvus supports a variety of indexing types that employs
+                  quantization, tree-based, and graph indexing techniques.
                 </p>
               </div>
 
               <div className="feature ">
                 <img
-                  alt="Strong Scalability"
+                  alt="Intelligent resource management"
                   src={`${baseUrl}new-images/icon-3.png`}
                 />
                 <h3>
-                  <strong>Strong Scalability</strong>
+                  <strong>Intelligent resource management</strong>
                 </h3>
                 <p>
-                  The disaggregated storage and compute architecture allow you
-                  to flexibly adapt the computing and storage types as your
-                  business expands.
+                  Milvus automatically adapts search computation and index
+                  building processes based on your datasets and available
+                  resources.
                 </p>
               </div>
 
               <div className="feature ">
                 <img
-                  alt="High Availability"
+                  alt="Horizontal scalability"
                   src={`${baseUrl}new-images/icon-4.png`}
                 />
                 <h3>
-                  <strong>High Availability</strong>
+                  <strong>Horizontal scalability</strong>
                 </h3>
                 <p>
-                  The distributed cluster architecture provides continued
-                  service when some of the system components fail.
+                Milvus supports online / offline expansion to scale both storage and computation resources with simple commands.
                 </p>
               </div>
 
@@ -177,10 +179,10 @@ class Index extends React.Component {
                   src={`${baseUrl}new-images/icon-5.png`}
                 />
                 <h3>
-                  <strong>High Compatibility</strong>
+                  <strong>High availability</strong>
                 </h3>
                 <p>
-                  Compatible with major AI/ML models and programming languages.
+                Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided.
                 </p>
               </div>
 
@@ -190,12 +192,10 @@ class Index extends React.Component {
                   src={`${baseUrl}new-images/icon-6.png`}
                 />
                 <h3>
-                  <strong>Easy to use</strong>
+                  <strong>Ease of use</strong>
                 </h3>
                 <p>
-                  With Python/C++ based client SDK as well as visualized GUI
-                  monitoring dashboard, Milvus ensures you have outstanding ease
-                  of use.
+                Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor. dashboards.
                 </p>
               </div>
             </div>

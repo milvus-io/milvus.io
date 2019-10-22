@@ -32,6 +32,9 @@
         "title": "Changelog",
         "sidebar_label": "Milvus Changelog"
       },
+      "CONTRIBUTING": {
+        "title": "CONTRIBUTING"
+      },
       "faq/operational_faq": {
         "title": "Operational FAQ",
         "sidebar_label": "Operational FAQ"
@@ -69,28 +72,36 @@
       "reference/README": {
         "title": "reference/README"
       },
-      "Releases/README": {
-        "title": "Releases/README"
+      "reference/sdk": {
+        "title": "SDK",
+        "sidebar_label": "SDK"
       },
-      "Releases/v0.2.0": {
+      "release/README": {
+        "title": "release/README"
+      },
+      "release/v0.2.0": {
         "title": "v0.2.0",
         "sidebar_label": "v0.2.0"
       },
-      "Releases/v0.2.1": {
+      "release/v0.2.1": {
         "title": "v0.2.1",
         "sidebar_label": "v0.2.1"
       },
-      "Releases/v0.3.0": {
+      "release/v0.3.0": {
         "title": "v0.3.0",
         "sidebar_label": "v0.3.0"
       },
-      "Releases/v0.3.1": {
+      "release/v0.3.1": {
         "title": "v0.3.1",
         "sidebar_label": "v0.3.1"
       },
-      "Releases/v0.4.0": {
+      "release/v0.4.0": {
         "title": "v0.4.0",
         "sidebar_label": "v0.4.0"
+      },
+      "release/v0.5.0": {
+        "title": "v0.5.0",
+        "sidebar_label": "v0.5.0"
       },
       "roadmap": {
         "title": "Milvus Roadmap",
@@ -192,26 +203,30 @@
       "zh-CN/reference/README": {
         "title": "zh-CN/reference/README"
       },
-      "zh-CN/Releases/README": {
-        "title": "zh-CN/Releases/README"
+      "zh-CN/reference/sdk": {
+        "title": "SDK",
+        "sidebar_label": "SDK"
       },
-      "zh-CN/Releases/v0.2.0": {
+      "zh-CN/release/README": {
+        "title": "zh-CN/release/README"
+      },
+      "zh-CN/release/v0.2.0": {
         "title": "v0.2.0",
         "sidebar_label": "v0.2.0"
       },
-      "zh-CN/Releases/v0.2.1": {
+      "zh-CN/release/v0.2.1": {
         "title": "v0.2.1",
         "sidebar_label": "v0.2.1"
       },
-      "zh-CN/Releases/v0.3.0": {
+      "zh-CN/release/v0.3.0": {
         "title": "v0.3.0",
         "sidebar_label": "v0.3.0"
       },
-      "zh-CN/Releases/v0.3.1": {
+      "zh-CN/release/v0.3.1": {
         "title": "v0.3.1",
         "sidebar_label": "v0.3.1"
       },
-      "zh-CN/Releases/v0.4.0": {
+      "zh-CN/release/v0.4.0": {
         "title": "v0.4.0",
         "sidebar_label": "v0.4.0"
       },

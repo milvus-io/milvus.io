@@ -124,7 +124,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="High Availability"
-                  src={`${baseUrl}new-images/icon-5.png`}
+                  src={`${baseUrl}new-images/icon-2.png`}
                 />
                 <h3>
                   <strong>智能索引</strong>
@@ -135,7 +135,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="Intelligent Index"
-                  src={`${baseUrl}new-images/icon-2.png`}
+                  src={`${baseUrl}new-images/icon-3.png`}
                 />
                 <h3>
                   <strong>弹性伸缩</strong>
@@ -146,7 +146,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="Strong Scalability"
-                  src={`${baseUrl}new-images/icon-3.png`}
+                  src={`${baseUrl}new-images/icon-4.png`}
                 />
                 <h3>
                   <strong>高可用性</strong>
@@ -157,7 +157,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="High Availability"
-                  src={`${baseUrl}new-images/icon-4.png`}
+                  src={`${baseUrl}new-images/icon-5.png`}
                 />
                 <h3>
                   <strong>全面兼容</strong>

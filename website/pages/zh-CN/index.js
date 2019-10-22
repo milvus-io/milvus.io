@@ -134,7 +134,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="资源智能管理"
-                  src={`${baseUrl}new-images/icon-3.png`}
+                  src={`${baseUrl}new-images/icon-5.png`}
                 />
                 <h3>
                   <strong>资源智能管理</strong>
@@ -145,7 +145,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="水平扩容"
-                  src={`${baseUrl}new-images/icon-4.png`}
+                  src={`${baseUrl}new-images/icon-3.png`}
                 />
                 <h3>
                   <strong>水平扩容</strong>
@@ -156,7 +156,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="高可用性"
-                  src={`${baseUrl}new-images/icon-5.png`}
+                  src={`${baseUrl}new-images/icon-4.png`}
                 />
                 <h3>
                   <strong>高可用性</strong>

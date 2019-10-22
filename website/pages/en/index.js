@@ -148,7 +148,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="Intelligent resource management"
-                  src={`${baseUrl}new-images/icon-3.png`}
+                  src={`${baseUrl}new-images/icon-5.png`}
                 />
                 <h3>
                   <strong>Intelligent resource management</strong>
@@ -163,7 +163,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="Horizontal scalability"
-                  src={`${baseUrl}new-images/icon-4.png`}
+                  src={`${baseUrl}new-images/icon-3.png`}
                 />
                 <h3>
                   <strong>Horizontal scalability</strong>
@@ -176,7 +176,7 @@ class Index extends React.Component {
               <div className="feature ">
                 <img
                   alt="High Availability"
-                  src={`${baseUrl}new-images/icon-5.png`}
+                  src={`${baseUrl}new-images/icon-4.png`}
                 />
                 <h3>
                   <strong>High availability</strong>

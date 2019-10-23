@@ -21,8 +21,8 @@
         "sidebar_label": "传统数据库与特征向量检索"
       },
       "aboutmilvus/vector_db": {
-        "title": "特征向量数据库",
-        "sidebar_label": "特征向量数据库"
+        "title": "其他特征向量检索工具",
+        "sidebar_label": "其他特征向量检索工具"
       },
       "aboutmilvus/vector": {
         "title": "特征向量",
@@ -158,8 +158,8 @@
         "sidebar_label": "Traditional Database"
       },
       "zh-CN/aboutmilvus/vector_db": {
-        "title": "Feature Vector Database",
-        "sidebar_label": "Feature Vector Database"
+        "title": "其他特征向量检索工具",
+        "sidebar_label": "其他特征向量检索工具"
       },
       "zh-CN/aboutmilvus/vector": {
         "title": "Feature Vector",

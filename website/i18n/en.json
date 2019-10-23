@@ -6,8 +6,8 @@
     "tagline": "A Distributed High Performance Vector Database System",
     "docs": {
       "aboutmilvus/index_method": {
-        "title": "Vector Indexing Methods",
-        "sidebar_label": "Vector Indexing Methods"
+        "title": "Vector Search Methods",
+        "sidebar_label": "Vector Search Methods"
       },
       "aboutmilvus/overview": {
         "title": "Milvus Overview",
@@ -21,8 +21,8 @@
         "sidebar_label": "Traditional Database"
       },
       "aboutmilvus/vector_db": {
-        "title": "Feature Vector Database",
-        "sidebar_label": "Feature Vector Database"
+        "title": "Other Feature Vector Search Tools",
+        "sidebar_label": "Other Feature Vector Search Tools"
       },
       "aboutmilvus/vector": {
         "title": "Feature Vector",
@@ -165,8 +165,8 @@
         "sidebar_label": "Traditional Database"
       },
       "zh-CN/aboutmilvus/vector_db": {
-        "title": "Feature Vector Database",
-        "sidebar_label": "Feature Vector Database"
+        "title": "Other Feature Vector Search Tools",
+        "sidebar_label": "Other Feature Vector Search Tools"
       },
       "zh-CN/aboutmilvus/vector": {
         "title": "Feature Vector",
@@ -229,6 +229,10 @@
       "zh-CN/release/v0.4.0": {
         "title": "v0.4.0",
         "sidebar_label": "v0.4.0"
+      },
+      "zh-CN/release/v0.5.0": {
+        "title": "v0.5.0",
+        "sidebar_label": "v0.5.0"
       },
       "zh-CN/roadmap": {
         "title": "Milvus Roadmap",

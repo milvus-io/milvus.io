@@ -252,7 +252,7 @@ class Index extends React.Component {
           <div className="container">
             <div className="row text-center">
               <div className="col">
-                <h1>Vector Search Database Comparison</h1>
+                <h1>Vector Search Tool Comparison</h1>
               </div>
             </div>
             <table className="table text-center mt-5 d-none d-lg-table">
@@ -382,7 +382,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">C++/Python SDK</th>
+                  <th scope="row">Python/JAVA/C++ SDK</th>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
                   </td>
@@ -484,7 +484,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">C++/Python SDK</th>
+                  <th scope="row">Python/JAVA/C++ SDK</th>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
                   </td>
@@ -568,7 +568,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">C++/Python SDK</th>
+                  <th scope="row">Python/JAVA/C++ SDK</th>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
                   </td>
@@ -652,7 +652,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">C++/Python SDK</th>
+                  <th scope="row">Python/JAVA/C++ SDK</th>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
                   </td>

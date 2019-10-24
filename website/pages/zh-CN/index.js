@@ -352,7 +352,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">C++/Python SDK</th>
+                  <th scope="row">Python/JAVA/C++ SDK</th>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
                   </td>
@@ -451,7 +451,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">C++/Python SDK</th>
+                  <th scope="row">Python/JAVA/C++ SDK</th>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
                   </td>
@@ -533,7 +533,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">C++/Python SDK</th>
+                  <th scope="row">Python/JAVA/C++ SDK</th>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
                   </td>
@@ -615,7 +615,7 @@ class Index extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">C++/Python SDK</th>
+                  <th scope="row">Python/JAVA/C++ SDK</th>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
                   </td>

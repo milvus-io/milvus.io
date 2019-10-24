@@ -3,7 +3,7 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "A Distributed High Performance Vector Database System",
+    "tagline": "An Open Source Vector Similarity Search Engine ",
     "docs": {
       "aboutmilvus/index_method": {
         "title": "Vector Search Methods",

@@ -26,9 +26,7 @@ class Index extends React.Component {
             <div className="col-12 col-md-12">
               {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
               <p className="lead text-secondary">
-                高速智能向量
-                <br />
-                检索数据库
+              开源向量相似度搜索引擎
               </p>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <p className="main-button">
@@ -72,7 +70,7 @@ class Index extends React.Component {
               </div>
 
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
-                <h1>什么是Milvus</h1>
+                <h1>什么是 Milvus</h1>
                 <p className="lead">
                   Milvus
                   是一款开源的、针对海量特征向量的相似性搜索引擎。基于异构众核计算框架设计，成本更低，性能更好。

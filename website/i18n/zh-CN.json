@@ -3,7 +3,7 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "高速智能向量检索数据库",
+    "tagline": "开源向量相似度搜索引擎",
     "docs": {
       "aboutmilvus/index_method": {
         "title": "向量检索算法",

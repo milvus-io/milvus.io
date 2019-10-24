@@ -27,8 +27,7 @@ class Index extends React.Component {
               <div className="col-12 col-md-12">
                 {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
                 <p className="lead text-secondary">
-                  An intelligent vector database that allows you to access data
-                  at unparalleled speed.
+                  An Open Source Vector Similarity Search Engine
                 </p>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <p className="main-button">
@@ -75,8 +74,8 @@ class Index extends React.Component {
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>What is Milvus</h1>
                 <p className="lead">
-                  Milvus is an open source similarity search engine for massive
-                  feature vectors. Designed with heterogeneous computing
+                  Milvus is an open source similarity search engine for massive-scale
+                  feature vectors. Built with heterogeneous computing
                   architecture for the best cost efficiency. Searches over
                   billion-scale vectors take only milliseconds with minimum
                   computing resources. Milvus can be used in a wide variety of
@@ -169,7 +168,8 @@ class Index extends React.Component {
                   <strong>Horizontal scalability</strong>
                 </h3>
                 <p>
-                Milvus supports online / offline expansion to scale both storage and computation resources with simple commands.
+                  Milvus supports online / offline expansion to scale both
+                  storage and computation resources with simple commands.
                 </p>
               </div>
 
@@ -182,7 +182,8 @@ class Index extends React.Component {
                   <strong>High availability</strong>
                 </h3>
                 <p>
-                Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided.
+                  Milvus is integrated with Kubernetes framework so that all
+                  single point of failures could be avoided.
                 </p>
               </div>
 
@@ -195,7 +196,8 @@ class Index extends React.Component {
                   <strong>Ease of use</strong>
                 </h3>
                 <p>
-                Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor. dashboards.
+                  Milvus can be easily installed in a few steps and supports
+                  Prometheus-based GUI monitor. dashboards.
                 </p>
               </div>
             </div>

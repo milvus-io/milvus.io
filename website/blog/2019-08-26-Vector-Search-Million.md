@@ -75,7 +75,7 @@ $ python3 milvus_bootcamp.py --table=ann_1m_sq8 --index=ivfsq8 -t
 ```
 
 脚本会创建一张名为 `ann_1m_sq8` 的表，它采用的索引类型为 `ivfsq8`  ，并导入数据：
-![local picture](assets/data_insert.png)
+![insert](assets/data_insert.png)
 上述过程完成之后，运行如下脚本以查看 Milvus 中存在的的表，以及表中的向量条数：
 
 ```bash

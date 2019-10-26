@@ -12,6 +12,7 @@ author: 陈室余
 - [小试牛刀：百万向量搜索 ](https://zilliz.blog.csdn.net/article/details/100039062)
 
 这次需要用到的服务器大概长这样子：
+
 | Component           | Minimum Config                |
 | ------------------ | -------------------------- |
 | OS           | CentOS 7.6               |
@@ -111,4 +112,4 @@ $$ 单条向量查询平均时间 = \frac {Milvus 批量查询总时间}{query_r
 
 如果您想尝试自己动手进行海量向量检索，请访问 [Milvus 在线训练营](https://github.com/milvus-io/bootcamp)，手把手教您如何进行海量向量检索。
 
-Milvus 正在建设线上开发者社区，如果对 Milvus 的技术讨论和试用感兴趣，欢迎添加微信 **y18621178893** 进群沟通~
+Milvus 正在建设开发者社区，如果对 Milvus 的技术讨论和试用感兴趣，欢迎加入我们的 [Slack channel](https://milvusio.slack.com/join/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk)，进群讨论。

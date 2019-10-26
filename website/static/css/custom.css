@@ -310,7 +310,7 @@ table th {
     background: #2c3035;
     border: none;
   }
-  
+
   .fixedHeaderContainer header .headerTitleWithLogo {
     display: none;
   }
@@ -480,7 +480,6 @@ table th {
     height: 60px;
     align-items: center;
   }
- 
 
   .navPusher {
     display: flex;
@@ -509,7 +508,7 @@ table th {
   .margin-top-zero {
     margin-top: 0;
   }
-  
+
   .paddingTop10 {
     padding-top: 6%;
   }
@@ -795,4 +794,39 @@ table th {
 .post table tr td,
 .post table tr th {
   border: 1px solid #666;
+}
+
+/* index */
+.connect {
+  border-left: 1px solid #999;
+  padding-left: 30px;
+}
+.connect a svg {
+  margin-right: 10px;
+}
+.connect a.twitter:hover svg {
+  fill: #1da1f2;
+}
+.connect a.facebook:hover svg {
+  fill: #4267b2;
+}
+.connect .wechat:hover svg {
+  fill: #5cc928;
+}
+
+.connect .wechat {
+  cursor: default;
+  display: inline-block;
+  position: relative;
+}
+.connect .wechat img {
+  display: none;
+  position: absolute;
+  top: -154px;
+  left: 0;
+}
+
+.connect .wechat:hover img {
+  display: block;
+  top: -154px;
 }

@@ -12,14 +12,15 @@ author: 陈室余
 - [小试牛刀：百万向量搜索 ](https://zilliz.blog.csdn.net/article/details/100039062)
 
 这次需要用到的服务器大概长这样子：
-| Component           | Minimum Config                |
+
+| 组件           | 最低配置               |
 | ------------------ | -------------------------- |
-| OS           | CentOS 7.6               |
+| 操作系统           | CentOS 7.6               |
 | CPU          | Intel Xeon E5-2678 v3 @ 2.50GHz x 2   |
-| GPU          | Nvidia GeForce GTX 1080, 8GB GDDR5 x 2|
-| GPU Driver   | CUDA 10.1, Driver 418.74 |
-| Memory       | 256 GB    |
-| Storage      | NVMe SSD 2 TB                       |
+| GPU          | NVIDIA GeForce GTX 1080, 8GB GDDR5 x 2|
+| GPU 驱动软件   | CUDA 10.1, Driver 418.74 |
+| 内存       | 256 GB    |
+| 硬盘      | NVMe SSD 2 TB                       |
 （实验中约需消耗 140 GB 内存）
 
 ## 十亿向量检索
@@ -30,7 +31,7 @@ author: 陈室余
 
 ### 数据预处理与数据导入
 
-#### ①数据预处理
+#### Step 1 数据预处理
 
 Milvus 支持的向量数据为浮点型（小数）的二维数组，故而需要将特征向量转为二维数组，如本文十亿向量来自 [ANN_SIFT1B](http://corpus-texmex.irisa.fr/) ，其 Base set 数据格式为 `bvecs` ，需要将该文件转为 Milvus 支持的浮点型二维数组，主要通过 Python 代码实现：
 
@@ -42,7 +43,7 @@ vectors = data.tolist()
 # vectors 可直接用于 Milvus 数据导入
 ```
 
-#### ②数据导入
+#### Step 2 数据导入
 
 首先在 Milvus 中创建表，相关参数 `table_name` （表名）、 `dimension` （维度）、 `index_type` （索引类型）。在创建表时指定索引类型， Milvus 会在向量导入时自动建立索引，本文十亿数据建立索引类型为 `IVF_SQ8` ，可以实现数据文件大小压缩， `ANN_SIFT1B` 十亿数据仅需存储空间 140 GB 。
 
@@ -71,7 +72,7 @@ query_records = data.tolist()
 milvus.search_vectors(table_name='test01', query_records=query_records, top_k=10, query_ranges=None)
 ```
 
-#### ①准确率查询
+#### 准确率查询
 
 本文使用 ANN_SIFT1B 的 Ground truth 来评估查询准确率。其中 `query_records` 为 ANN_SIFT1B 的 Query set 中随机选择的 20 个向量。在 Milvus 中通过修改参数 `nprobe` 可以控制搜索子空间的范围， `nprobe` 参考值 1~16384 ，该值越大准确率越高，但检索时间也越长。下表为改变 `nprobe` 值计算平均准确率的测试结果：
 
@@ -86,7 +87,7 @@ milvus.search_vectors(table_name='test01', query_records=query_records, top_k=10
 
 $$ 平均准确率＝\frac{Milvus 查询结果与 Ground truth 一致的向量个数}{query records 的向量个数 * top_k} $$
 
-#### ②性能查询
+#### 性能查询
 
 根据准确率查询结果，选取 `nprobe` = 32 （确保 `top_k`=1/10/30/50/100/500 时准确率 > 90% ）进行性能评估。
 
@@ -105,10 +106,10 @@ $$ 单条向量查询平均时间 = \frac {Milvus 批量查询总时间}{query_r
 
 ## 总结
 
-在超大数据量下，Milvus仍具备超高性能，十亿向量查询时单条向量查询时间不高于1.5秒，批量查询的平均时间不高于0.08秒，在毫秒级检索十亿向量。
+在超大数据量下，Milvus 仍具备超高性能，十亿向量查询时单条向量查询时间不高于1.5秒，批量查询的平均时间不高于0.08秒，在毫秒级检索十亿向量。
 
 从使用角度来看， Milvus 特征向量数据库不需要考虑复杂数据在不同系统间的转换和迁移，只关心向量数据，它支持不同 AI 模型所训练出的特征向量，同时由于采用了 GPU/CPU 异构带来的超高算力，可以在单机实现十亿向量的高性能检索。
 
 如果您想尝试自己动手进行海量向量检索，请访问 [Milvus 在线训练营](https://github.com/milvus-io/bootcamp)，手把手教您如何进行海量向量检索。
 
-Milvus 正在建设线上开发者社区，如果对 Milvus 的技术讨论和试用感兴趣，欢迎添加微信 **y18621178893** 进群沟通~
+Milvus 正在建设开发者社区，如果对 Milvus 的技术讨论和试用感兴趣，欢迎加入我们的 [Slack channel](https://milvusio.slack.com/join/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk)，进群讨论。

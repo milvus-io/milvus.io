@@ -8,14 +8,14 @@ author: 顾钧
 
 - 准备一台笔记本电脑：
 
-| Component  | Minimum Config                  |
+| 组件  | 最低配置                  |
 | ---------- | ------------------------------- |
-| OS         | Ubuntu LTS 18.04                |
+| 操作系统         | Ubuntu LTS 18.04                |
 | CPU        | Intel Core i5-8250U             |
 | GPU        | Nvidia GeForce MX150, 2GB GDDR5 |
-| GPU Driver | CUDA 10.1, Driver 418.74        |
-| Memory     | 8 GB DDR4                       |
-| Storage    | NVMe SSD 256 GB                 |
+| GPU 驱动软件 | CUDA 10.1, Driver 418.74        |
+| 内存     | 8 GB DDR4                       |
+| 硬盘    | NVMe SSD 256 GB                 |
 
 - 请按说明安装 Milvus：[快速开始](https://github.com/milvus-io/bootcamp/blob/master/docs/milvus101/quickstart.md)
 
@@ -75,7 +75,7 @@ $ python3 milvus_bootcamp.py --table=ann_1m_sq8 --index=ivfsq8 -t
 ```
 
 脚本会创建一张名为 `ann_1m_sq8` 的表，它采用的索引类型为 `ivfsq8`  ，并导入数据：
-![local picture](assets/data_insert.png)
+![insert](assets/data_insert.png)
 上述过程完成之后，运行如下脚本以查看 Milvus 中存在的的表，以及表中的向量条数：
 
 ```bash
@@ -133,7 +133,7 @@ $ python3 milvus_bootcamp.py --table=ann_1m_sq8 -q 10 -k 20 -s
 
 上述脚本运行完成后，将会生成一个名为 `accuracy_results` 的文件夹，在该文件夹下面会有一个名为 `10_20_result.csv` 的文件，文件里的内容如下图所示：
 
-![local picture](assets/accuracy.png)
+![search_accuracy](assets/accuracy.png)
 - `nq`: 第几个查询向量
 - `topk`: 查询该向量的前 k 个相似的向量
 - `total_time`: 整个查询所用的总时间，单位：秒
@@ -154,7 +154,7 @@ $ python3 milvus_bootcamp.py --table=ann_1m_sq8 -s
 
 运行结束后，将会生成一个名为 `performance_results` 的文件夹，在该文件夹下会有一个名为 `xxx_results.csv` 的文件，`xxx` 代表执行命令的时间。文件内容如下图所示（未完全展示）：
 
-![local picture](assets/performance.png)
+![search_performance](assets/performance.png)
 - `nq`: 要查询的向量条数
 - `topk`: 查询某个向量的前 k 个相似的向量
 - `total_time`: 查询 nq个向量的前 k 个相似向量一共花费的时间，单位：秒

@@ -130,7 +130,7 @@ class Footer extends React.Component {
                     style={{ maxWidth: "initial" }}
                     width="150"
                     height="150"
-                    src="https://www.zilliz.com/images/qrcode2.jpeg?ver=1.10.16"
+                    src="/images/qrcode.jpeg"
                   />
                 </a>
               </div>
@@ -239,7 +239,7 @@ class Footer extends React.Component {
                     style={{ maxWidth: "initial" }}
                     width="150"
                     height="150"
-                    src="https://www.zilliz.com/images/qrcode2.jpeg?ver=1.10.16"
+                    src="/images/qrcode.jpeg"
                   />
                 </a>
               </div>

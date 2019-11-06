@@ -82,7 +82,6 @@ class Index extends React.Component {
                   scenarios to boost AI development.
                   <br />
                   <br />
-                  Welcome to use our product and follow us on{" "}
                   <br />
                   <br />
 

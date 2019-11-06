@@ -283,7 +283,7 @@ class Index extends React.Component {
                     <div className="css-full"></div>
                   </td>
                   <td className="css-7sa0gy">
-                    <div className="css-zero"></div>
+                    <div className="css-full"></div>
                   </td>
                   <td className="css-7sa0gy">
                     <div className="css-full"></div>
@@ -497,7 +497,7 @@ class Index extends React.Component {
                 <tr>
                   <th scope="row">图索引</th>
                   <td className="css-7sa0gy">
-                    <div className="css-zero"></div>
+                    <div className="css-full"></div>
                   </td>
                 </tr>
                 <tr>

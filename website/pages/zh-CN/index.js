@@ -78,8 +78,6 @@ class Index extends React.Component {
                   能够广泛应用于各种 AI 场景，为 AI 发展提供有效助力。
                   <br />
                   <br />
-                  欢迎使用我们的产品并在 GitHub 上 <a href="https://github.com/milvus-io/milvus" title="https://github.com/milvus-io/milvus">关注 Milvus</a>
-                  <br />
                   <br />
                   <a
                     className="milvus-btn"

@@ -83,14 +83,9 @@ class Index extends React.Component {
                   <br />
                   <br />
                   Welcome to use our product and follow us on{" "}
-                  <a
-                    href="https://github.com/milvus-io/milvus"
-                    title="https://github.com/milvus-io/milvus"
-                  >
-                    GitHub
-                  </a>
                   <br />
                   <br />
+
                   <a
                     className="milvus-btn"
                     href={this.docUrl("aboutmilvus/overview", language)}

@@ -29,6 +29,7 @@
     "Milvus Roadmap": ["roadmap"],
     "FAQ": ["faq/product_faq", "faq/operational_faq"],
     "Release Notes": [
+      "release/v0.5.2",
       "release/v0.5.1",
       "release/v0.5.0",
       "release/v0.4.0",

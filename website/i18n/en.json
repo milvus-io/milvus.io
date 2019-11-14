@@ -111,6 +111,10 @@
         "title": "v0.5.2",
         "sidebar_label": "v0.5.2"
       },
+      "release/v0.5.3": {
+        "title": "v0.5.3",
+        "sidebar_label": "v0.5.3"
+      },
       "roadmap": {
         "title": "Milvus Roadmap",
         "sidebar_label": "Milvus Roadmap"
@@ -249,6 +253,10 @@
       "zh-CN/release/v0.5.2": {
         "title": "v0.5.2",
         "sidebar_label": "v0.5.2"
+      },
+      "zh-CN/release/v0.5.3": {
+        "title": "v0.5.3",
+        "sidebar_label": "v0.5.3"
       },
       "zh-CN/roadmap": {
         "title": "Milvus Roadmap",

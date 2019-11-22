@@ -1,19 +1,23 @@
 ---
-title: Testing IVF_SQ8 Index 
+title: Milvus 测试报告：IVF_SQ8 索引
 author: 陈子睿
 ---
 
-# IVF_SQ8 索引测试报告
+# Milvus 测试报告：IVF_SQ8 索引
 
 本文描述了 IVF_SQ8 索引在 Milvus 单机部署方式下的测试结果。
 
 ## 测试目标
 
-参数不同情况下的查询时间和召回率。
+参数不同情况下的**查询时间**和**召回率**。
 
-## 测试方法
+## 测试指标
 
-### 软硬件环境
+- **Query Elapsed Time:** 数据库查询所有向量的时间（以秒计）。影响 Query Elapsed Time 的变量：nq - 被查询向量的数量。
+
+- **Recall:** 实际返回的正确结果占总数之比。影响 Recall 的变量：a）nq - 被查询向量的数量; b）topk - 单条查询中最相似的 K 个结果。
+
+## 软硬件环境
 
 - 操作系统：CentOS Linux release 7.6.1810 (Core) 
 
@@ -29,48 +33,31 @@ author: 陈子睿
 
 - NVIDIA Driver 版本：430.34
 
-- Milvus 版本：0.5.3
+- **Milvus 版本：0.5.3**
 
 - SDK 接口：Python 3.6.8
 
-- pymilvus 版本：0.2.5
+- **pymilvus 版本：0.2.5**
 
-### 数据模型
+## 参数设置
 
-本测试中用到的主要数据:
+- 数据集（[SIFT1B](http://corpus-texmex.irisa.fr/)）
 
-- 数据来源：[SIFT1B](http://corpus-texmex.irisa.fr/)
+  - 数据：1,000,000,000向量, 128维
+  
+  - 数据类型：hdf5
 
-- 数据类型：hdf5
-
-## 测试指标
-
-**Query Elapsed Time:** 数据库查询所有向量的时间（以秒计）。影响 Query Elapsed Time 的变量：nq (被查询向量的数量)。
-
-> 注意：在向量查询测试中，我们会测试下面参数不同的取值来观察结果：
->      被查询向量的数量 nq 将按照 [1, 10, 200, 400, 600, 800, 1000]的数量分组。
-
-**Recall:** 实际返回的正确结果占总数之比。影响 Recall 的变量：a）nq (被查询向量的数量); b）topk (单条查询中最相似的 K 个结果)。
-
-> 注意：在向量准确性测试中，我们会测试下面参数不同的取值来观察结果：被查询向量的数量 nq 将按照 [10, 200, 400, 600, 800, 1000]的数量分组，单条查询中最相似的 K 个结果 topk 将按照[1, 10, 100]的数量分组。
-
-## 测试报告
-
-### 测试环境
-
-- 数据集：SIFT1B - 1,000,000,000向量, 128维
-
-- 表格属性：
+- 表格属性
 
   - nlist: 16384
 
   - metric_type: L2
 
-- 查询设置：
+- 查询设置
 
   - nprobe: 32
 
-- Milvus 设置：
+- Milvus 设置
 
   - cpu_cache_capacity: 150
 
@@ -78,27 +65,23 @@ author: 陈子睿
 
   - use_blas_threshold: 1100
 
-（Milvus 设置的详细定义可以参考https://milvus.io/docs/en/reference/milvus_config/ ）
-
-- 测试方法：通过一次仅改变一个参数的值，测试查询向量时间和召回率。
-
 - 查询后是否重启 Milvus：否
 
-### 查询时间测试
+## 查询时间测试
 
-**GPU 模式（search_resources: gpu0, gpu1）**
+### GPU 模式（search_resources: gpu0, gpu1）
 
 ![query_gpu](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/test_report/ivfsq8_query_time_gpu.png)
 
 当 nq 为1000时，在 GPU 模式下查询一条128维向量需要耗时约17毫秒。
 
-**CPU 模式（search_resources: cpu, gpu0）**
+### CPU 模式（search_resources: cpu, gpu0）
 
 ![query_cpu](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/test_report/ivfsq8_query_time_gpu.png)
 
 当 nq 为1000时，在 GPU 模式下查询一条128维向量需要耗时约27毫秒。
 
-**总结**
+### 总结
 
 在 CPU 模式下查询耗时随 nq 的增长快速增大，而在 GPU 模式下查询耗时的增大则缓慢许多。当 nq 较小时，CPU 模式比 GPU 模式耗时更少。但当 nq 足够大时，GPU 模式则更具有优势。
 
@@ -106,17 +89,17 @@ author: 陈子睿
 
 和 CPU 相比，GPU 具有更多的核数和更强的算力。当 nq 较大时，GPU 在计算上的优势能被更好地被体现。
 
-### 召回率测试
+## 召回率测试
 
-**GPU 模式（search_resources: gpu0, gpu1）**
+### GPU 模式（search_resources: gpu0, gpu1）
 
 ![recall_gpu](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/test_report/ivfsq8_recall_gpu.png)
 
-**CPU 模式（search_resources: cpu, gpu0）**
+### CPU 模式（search_resources: cpu, gpu0）
 
 ![recall_cpu](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/test_report/ivfsq8_recall_cpu.png)
 
-**总结**
+### 总结
 
 随着 nq 的增大，召回率逐渐稳定至93%以上。
 

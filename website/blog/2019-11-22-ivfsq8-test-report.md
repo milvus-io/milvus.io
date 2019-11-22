@@ -58,32 +58,31 @@ author: 陈子睿
 
 ### 测试环境
 
-数据集：SIFT1B - 1,000,000,000向量, 128维
+- 数据集：SIFT1B - 1,000,000,000向量, 128维
 
-表格属性：
+- 表格属性：
 
-- nlist: 16384
+  - nlist: 16384
 
-- metric_type: L2
+  - metric_type: L2
 
-查询设置：
+- 查询设置：
 
-- nprobe: 32
+  - nprobe: 32
 
-Milvus 设置：
+- Milvus 设置：
 
-- cpu_cache_capacity: 150
+  - cpu_cache_capacity: 150
 
-- gpu_cache_capacity: 6
+  - gpu_cache_capacity: 6
 
-- use_blas_threshold: 1100
-
+  - use_blas_threshold: 1100
 
 （Milvus 设置的详细定义可以参考https://milvus.io/docs/en/reference/milvus_config/ ）
 
-测试方法：通过一次仅改变一个参数的值，测试查询向量时间和召回率。
+- 测试方法：通过一次仅改变一个参数的值，测试查询向量时间和召回率。
 
-查询后是否重启 Milvus：否
+- 查询后是否重启 Milvus：否
 
 ### 查询时间测试
 

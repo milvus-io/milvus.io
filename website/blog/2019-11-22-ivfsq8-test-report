@@ -3,7 +3,7 @@ title: Testing IVF_SQ8 Index
 author: 陈子睿
 ---
 
-# Milvus 中 IVF_SQ8 索引测试报告
+# IVF_SQ8 索引测试报告
 
 本文描述了 IVF_SQ8 索引在 Milvus 单机部署方式下的测试结果。
 

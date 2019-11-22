@@ -13,9 +13,9 @@ author: 陈子睿
 
 ## 测试指标
 
-- **Query Elapsed Time:** 数据库查询所有向量的时间（以秒计）。影响 Query Elapsed Time 的变量：nq (被查询向量的数量)。
+- **Query Elapsed Time:** 数据库查询所有向量的时间（以秒计）。影响 Query Elapsed Time 的变量：nq - 被查询向量的数量。
 
-- **Recall:** 实际返回的正确结果占总数之比。影响 Recall 的变量：a）nq (被查询向量的数量); b）topk (单条查询中最相似的 K 个结果)。
+- **Recall:** 实际返回的正确结果占总数之比。影响 Recall 的变量：a）nq - 被查询向量的数量; b）topk - 单条查询中最相似的 K 个结果。
 
 ## 软硬件环境
 
@@ -33,11 +33,11 @@ author: 陈子睿
 
 - NVIDIA Driver 版本：430.34
 
-- Milvus 版本：0.5.3
+- **Milvus 版本：0.5.3**
 
 - SDK 接口：Python 3.6.8
 
-- pymilvus 版本：0.2.5
+- **pymilvus 版本：0.2.5**
 
 ## 参数设置
 

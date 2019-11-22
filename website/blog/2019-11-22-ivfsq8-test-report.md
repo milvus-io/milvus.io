@@ -13,9 +13,9 @@ author: 陈子睿
 
 ## 测试指标
 
-**Query Elapsed Time:** 数据库查询所有向量的时间（以秒计）。影响 Query Elapsed Time 的变量：nq (被查询向量的数量)。
+- **Query Elapsed Time:** 数据库查询所有向量的时间（以秒计）。影响 Query Elapsed Time 的变量：nq (被查询向量的数量)。
 
-**Recall:** 实际返回的正确结果占总数之比。影响 Recall 的变量：a）nq (被查询向量的数量); b）topk (单条查询中最相似的 K 个结果)。
+- **Recall:** 实际返回的正确结果占总数之比。影响 Recall 的变量：a）nq (被查询向量的数量); b）topk (单条查询中最相似的 K 个结果)。
 
 ## 软硬件环境
 
@@ -81,7 +81,7 @@ author: 陈子睿
 
 当 nq 为1000时，在 GPU 模式下查询一条128维向量需要耗时约27毫秒。
 
-### 结果分析
+### 总结
 
 在 CPU 模式下查询耗时随 nq 的增长快速增大，而在 GPU 模式下查询耗时的增大则缓慢许多。当 nq 较小时，CPU 模式比 GPU 模式耗时更少。但当 nq 足够大时，GPU 模式则更具有优势。
 
@@ -99,7 +99,7 @@ author: 陈子睿
 
 ![recall_cpu](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/test_report/ivfsq8_recall_cpu.png)
 
-### 结果分析
+### 总结
 
 随着 nq 的增大，召回率逐渐稳定至93%以上。
 

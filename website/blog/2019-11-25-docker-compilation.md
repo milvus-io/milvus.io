@@ -23,9 +23,9 @@ docker pull milvusdb/milvus-gpu-build-env:v0.6.0-ubuntu18.04
 ```
 ![docker_image](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/docker_compile/docker_image.png)
 
-我的 docker 做了免 sudo 运行的设置，有些使用者可能需要加 sudo 才能运行，如果嫌麻烦，可以查阅 “免sudo使用docker” 相关文档。
+我的 docker 做了免 sudo 运行的设置，有些使用者可能需要加 sudo 才能运行。
 
-这里需要注意的是，如果使用 GPU 版本的镜像，必须要安装 nvidia-docker，具体可参考: [nvidia-docker 官方文档](https://github.com/NVIDIA/nvidia-docker/)
+这里需要注意的是，如果使用 GPU 版本的镜像，必须要[安装 nvidia-docker](https://github.com/NVIDIA/nvidia-docker/)。
 
 ## 步骤2 启动容器
 

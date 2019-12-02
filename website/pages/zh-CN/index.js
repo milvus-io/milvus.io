@@ -632,7 +632,7 @@ class Index extends React.Component {
     };
 
     return (
-      <>
+      <div>
         <div className="notification">
           <div className="wrapper">
             👋 立即加入
@@ -658,7 +658,7 @@ class Index extends React.Component {
           {/* <TechAndArch /> */}
           <Comparison />
         </div>
-      </>
+      </div>
     );
   }
 }

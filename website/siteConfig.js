@@ -139,7 +139,7 @@ const siteConfig = {
   ],
   stylesheets: [
     "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css",
-    "https://cdn.bootcss.com/font-awesome/5.10.2/css/all.min.css",
+    "https://cdn.bootcss.com/font-awesome/5.11.1/css/all.min.css",
     "https://use.typekit.net/odf7gmc.css"
   ],
 

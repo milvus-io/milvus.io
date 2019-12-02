@@ -25,9 +25,7 @@ class Index extends React.Component {
           <div className="row splash-content">
             <div className="col-12 col-md-12">
               {/* <img alt="logo" className="fdb-icon" src={`${baseUrl}images/icons/coffee.svg`} /> */}
-              <p className="lead text-secondary">
-              开源向量相似度搜索引擎
-              </p>
+              <p className="lead text-secondary">开源向量相似度搜索引擎</p>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <p className="main-button">
                   <a
@@ -105,26 +103,22 @@ class Index extends React.Component {
 
             <div className="feature-wrapper">
               <div className="feature">
-                <img
-                  alt="异构众核"
-                  src={`${baseUrl}new-images/icon-1.png`}
-                />
+                <img alt="异构众核" src={`${baseUrl}new-images/icon-1.png`} />
                 <h3>
                   <strong>异构众核</strong>
                 </h3>
-                <p>
-                Milvus 使用异构众核计算处理特征向量，成本更低，性能更好。</p>
+                <p>Milvus 使用异构众核计算处理特征向量，成本更低，性能更好。</p>
               </div>
 
               <div className="feature ">
-                <img
-                  alt="多元化索引"
-                  src={`${baseUrl}new-images/icon-2.png`}
-                />
+                <img alt="多元化索引" src={`${baseUrl}new-images/icon-2.png`} />
                 <h3>
                   <strong>多元化索引</strong>
                 </h3>
-                <p>Milvus 支持多种索引方式，使用量化索引、基于树的索引和图索引等算法。</p>
+                <p>
+                  Milvus
+                  支持多种索引方式，使用量化索引、基于树的索引和图索引等算法。
+                </p>
               </div>
 
               <div className="feature ">
@@ -135,41 +129,41 @@ class Index extends React.Component {
                 <h3>
                   <strong>资源智能管理</strong>
                 </h3>
-                <p>Milvus 根据实际数据规模和可利用资源，智能调节优化查询计算和索引构建过程。</p>
+                <p>
+                  Milvus
+                  根据实际数据规模和可利用资源，智能调节优化查询计算和索引构建过程。
+                </p>
               </div>
 
               <div className="feature ">
-                <img
-                  alt="水平扩容"
-                  src={`${baseUrl}new-images/icon-3.png`}
-                />
+                <img alt="水平扩容" src={`${baseUrl}new-images/icon-3.png`} />
                 <h3>
                   <strong>水平扩容</strong>
                 </h3>
-                <p>Milvus 支持在线 / 离线扩容，仅需执行简单命令，便可弹性伸缩计算节点和存储节点。</p>
+                <p>
+                  Milvus 支持在线 /
+                  离线扩容，仅需执行简单命令，便可弹性伸缩计算节点和存储节点。
+                </p>
               </div>
 
               <div className="feature ">
-                <img
-                  alt="高可用性"
-                  src={`${baseUrl}new-images/icon-4.png`}
-                />
+                <img alt="高可用性" src={`${baseUrl}new-images/icon-4.png`} />
                 <h3>
                   <strong>高可用性</strong>
                 </h3>
-                <p>Milvus 集成了 Kubernetes 框架，能有效避免单点障碍情况的发生。</p>
+                <p>
+                  Milvus 集成了 Kubernetes 框架，能有效避免单点障碍情况的发生。
+                </p>
               </div>
 
               <div className="feature ">
-                <img
-                  alt="简单易用"
-                  src={`${baseUrl}new-images/icon-6.png`}
-                />
+                <img alt="简单易用" src={`${baseUrl}new-images/icon-6.png`} />
                 <h3>
                   <strong>简单易用</strong>
                 </h3>
                 <p>
-                Milvus 安装简单，使用方便。支持使用基于 Prometheus 的图形化监控，方便您实时跟踪系统性能。
+                  Milvus 安装简单，使用方便。支持使用基于 Prometheus
+                  的图形化监控，方便您实时跟踪系统性能。
                 </p>
               </div>
             </div>
@@ -638,13 +632,33 @@ class Index extends React.Component {
     };
 
     return (
-      <div className="page wrapper">
-        <CallToAction />
-        <WhatIsVecDb />
-        <Features />
-        {/* <TechAndArch /> */}
-        <Comparison />
-      </div>
+      <>
+        <div className="notification">
+          <div className="wrapper">
+            👋 立即加入
+            <a href="https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk">
+              Milvus Slack 频道
+            </a>
+            和社区进行互动!
+            <svg
+              className="close-notification-btn"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+            </svg>
+          </div>
+        </div>
+        <div className="page wrapper">
+          <CallToAction />
+          <WhatIsVecDb />
+          <Features />
+          {/* <TechAndArch /> */}
+          <Comparison />
+        </div>
+      </>
     );
   }
 }

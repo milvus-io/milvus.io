@@ -120,6 +120,37 @@ table th {
   margin: 0px auto;
 }
 
+.notification {
+  height: 70px;
+  line-height: 70px;
+  background: linear-gradient(90deg, #4fc4f9 0%, #fafafa 100%);
+  position: absolute;
+  top: 60px;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  font-size: 16px;text-align: center;
+  word-spacing: 2px;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+.notification a {
+  color: #000;
+  text-decoration: underline;
+}
+.notification .wrapper {
+  position: relative;
+}
+.notification svg {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  cursor: pointer;
+}
+.notification path {
+  fill:#B0B0B9;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
   .feature {
     width: 100%;
@@ -463,6 +494,9 @@ table th {
   }
   .blogContainer .postHeader .post-authorName {
     color: #fff;
+  }
+  .notification {
+    top: 120px;
   }
 }
 

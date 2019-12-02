@@ -9,6 +9,11 @@ function fixHeaderLinks(language) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // close notification
+  const closeNotificationBtn = document.querySelector('.close-notification-btn');
+  closeNotificationBtn.addEventListener('click', ()=>{
+    document.querySelector('.notification').style.opacity = 0;
+  });
   // add GDPR control
   var gtagId = "UA-142992812-1";
   // Allow tracking by default
@@ -20,28 +25,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   gtag("js", new Date());
 
-  window.cookieconsent.initialise({
-    onInitialise: function(status) {
-      if (this.hasConsented("analytics")) {
-        window["ga-disable-" + gtagId] = false;
-        // Track this pageview
-        gtag("config", gtagId);
-      }
-    },
-    onAllow: function(category) {
-      if (category === "analytics") {
-        // Enable tracking
-        window["ga-disable-" + gtagId] = false;
-        // Track this pageview
-        gtag("config", gtagId);
-      }
-    },
-    onRevoke: function(category) {
-      if (category === "analytics") {
-        window["ga-disable-" + gtagId] = true;
-      }
-    }
-  });
+  // window.cookieconsent.initialise({
+  //   onInitialise: function(status) {
+  //     if (this.hasConsented("analytics")) {
+  //       window["ga-disable-" + gtagId] = false;
+  //       // Track this pageview
+  //       gtag("config", gtagId);
+  //     }
+  //   },
+  //   onAllow: function(category) {
+  //     if (category === "analytics") {
+  //       // Enable tracking
+  //       window["ga-disable-" + gtagId] = false;
+  //       // Track this pageview
+  //       gtag("config", gtagId);
+  //     }
+  //   },
+  //   onRevoke: function(category) {
+  //     if (category === "analytics") {
+  //       window["ga-disable-" + gtagId] = true;
+  //     }
+  //   }
+  // });
 
   // get lang
   const language = document.querySelector("html").getAttribute("lang");

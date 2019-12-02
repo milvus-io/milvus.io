@@ -74,17 +74,16 @@ class Index extends React.Component {
               <div className="col-12 col-lg-7 offset-lg-1 pt-4 pt-lg-0">
                 <h1>What is Milvus</h1>
                 <p className="lead">
-                  Milvus is an open source similarity search engine for massive-scale
-                  feature vectors. Built with heterogeneous computing
-                  architecture for the best cost efficiency. Searches over
-                  billion-scale vectors take only milliseconds with minimum
+                  Milvus is an open source similarity search engine for
+                  massive-scale feature vectors. Built with heterogeneous
+                  computing architecture for the best cost efficiency. Searches
+                  over billion-scale vectors take only milliseconds with minimum
                   computing resources. Milvus can be used in a wide variety of
                   scenarios to boost AI development.
                   <br />
                   <br />
                   <br />
                   <br />
-
                   <a
                     className="milvus-btn"
                     href={this.docUrl("aboutmilvus/overview", language)}
@@ -671,13 +670,33 @@ class Index extends React.Component {
     };
 
     return (
-      <div className="page wrapper">
-        <CallToAction />
-        <WhatIsVecDb />
-        <Features />
-        {/* <TechAndArch /> */}
-        <Comparison />
-      </div>
+      <>
+        <div className="notification">
+          <div className="wrapper">
+            👋 Join the Milvus Slack channel &nbsp; 
+            <a href="https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk">
+             here 
+            </a>
+            &nbsp; to interact with our community!
+            <svg
+              className="close-notification-btn"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+            </svg>
+          </div>
+        </div>
+        <div className="page wrapper">
+          <CallToAction />
+          <WhatIsVecDb />
+          <Features />
+          {/* <TechAndArch /> */}
+          <Comparison />
+        </div>
+      </>
     );
   }
 }

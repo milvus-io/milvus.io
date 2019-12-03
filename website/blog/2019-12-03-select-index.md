@@ -38,7 +38,7 @@ Milvus 可以同时查询 nq 条向量，并一次性返回 nq 条向量的 topk
 
 下图是在2,000,000条128维向量数据集上测得的，分别在 CPU 和 GPU 模式下，FLAT 查询时间随 nq 的变化曲线 。查询时间与 topk 无关，随着 nq 的增大而增大。
 
-![flat_query](https://raw.githubusercontent.com/jielinxu/www.milvus.io/master/website/blog/assets/index_select/flat_query.PNG)
+![flat_query](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/index_select/flat_query.PNG)
 
 用 GPU 能够获得更好的查询性能，但需要考虑额外的从内存到显存的数据拷贝时间。当 nq 小于20时，FLAT 在 CPU 上查询得更快。
 
@@ -55,13 +55,13 @@ IVFFLAT 是最简单的索引类型。在聚类时，向量被直接添加到各
 
 用公开数据集 sift-1b（10亿条128维向量）建立 IVFFLAT 索引，并分别只用 CPU 或 GPU 做查询，在不同 nprobe 参数下测得的查询时间随 nq 变化曲线如下图：
 
-![ivfflat_query](https://raw.githubusercontent.com/jielinxu/www.milvus.io/master/website/blog/assets/index_select/ivfflat_query.PNG)
+![ivfflat_query](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/index_select/ivfflat_query.PNG)
 
 IVFFLAT 在 CPU 上的查询时间与 nq、nprobe 正相关，而 IVFFLAT 在 GPU 上的查询时间对 nq 和 nprobe 的变化并不敏感。这是因为 IVFFLAT 的索引数据较大，将索引数据从 CPU 拷贝到 GPU 所用时间占了总查询时间的大部分。由图所示，除了 nq＝1000且 nprobe＝32的情况，IVFFLAT 在 CPU上的查询效率更高。
 
 用公开数据集 sift-128-euclidean（1,000,000 条128维向量）和 glove-200-angular（1,183,514 条200维向量）分别建立 IVFFLAT 索引（nlist = 16384），并测得召回率（k = 10）随 nprobe 变化曲线如下图：
 
-![ivfflat_recall](https://raw.githubusercontent.com/jielinxu/www.milvus.io/master/website/blog/assets/index_select/ivfflat_recall.PNG)
+![ivfflat_recall](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/index_select/ivfflat_recall.PNG)
 
 当 nprobe = 256时，IVFFLAT 在 sift-128-euclidean 数据集上的查询召回率（k=10）能达到0.99以上。
 
@@ -77,13 +77,13 @@ IVFFLAT 在 CPU 上的查询时间与 nq、nprobe 正相关，而 IVFFLAT 在 GP
 
 用公开数据集sift-1b（10亿条128维向量）建立 IVFSQ8 索引，并分别只用 CPU 或 GPU 做查询，在不同 nprobe 参数下测得的查询时间随 nq 变化曲线如下图：
 
-![ivfsq8_query](https://raw.githubusercontent.com/jielinxu/www.milvus.io/master/website/blog/assets/index_select/ivfsq8_query.PNG)
+![ivfsq8_query](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/index_select/ivfsq8_query.PNG)
 
 IVFSQ8 的查询性能曲线跟 IVFFLAT 非常相似，但索引大小的精减带来了全面的性能提升。同样，在 nq 和 nprobe 较小时，IVFSQ8 在 CPU 上的查询性能更高。
 
 公开数据集 sift-128-euclidean（1,000,000 条128维向量）和 glove-200-angular（1,183,514 条200维向量）分别建立 IVFSQ8 索引（nlist = 16384），并测得召回率（k = 10）随 nprobe 变化曲线如下图：
 
-![ivfsq8_recall](https://raw.githubusercontent.com/jielinxu/www.milvus.io/master/website/blog/assets/index_select/ivfsq8_recall.PNG)
+![ivfsq8_recall](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/index_select/ivfsq8_recall.PNG)
 
 对比IVFSQ 和 IVFSQ8 的召回率，IVFSQ8 对原始数据的压缩并未导致明显的查询召回率下降。对应不同的 nprobe，IVFSQ8 的召回率（k = 10）最多只比 IVFFLAT 低1个百分点。
 
@@ -99,7 +99,7 @@ IVFSQ8H 需要 CPU 和 GPU 协同工作，因此必须安装支持 GPU 的 Milvu
 
 用公开数据集 sift-1b（10亿条128维向量）建立 IVFSQ8H 索引，在 `gpu_search_threshold`=1001 时，在不同 nprobe 参数下测得的查询时间随 nq 变化曲线如下图：
 
-![img](https://raw.githubusercontent.com/jielinxu/www.milvus.io/master/website/blog/assets/index_select/ivfsq8h_query.PNG)
+![img](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/index_select/ivfsq8h_query.PNG)
 
 当 nq <= 1000时，对比 IVFSQ8 在 CPU 上运行的两条曲线（青色、蓝色）可见，在优化了 Coarse Quantizer 之后，IVFSQ8H 的查询时间比 IVFSQ8 几乎缩减了一半。当 nq=2000时，因为 nq > gpu_search_threshold，分桶内的搜索转为在 GPU 上执行，IVFSQ8H 的查询时间与 IVFSQ8 持平。只要选择合理的 gpu_search_threshold 配置，能保证 IVFSQ8H 的查询性能不会差于 IVFSQ8。
 

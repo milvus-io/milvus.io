@@ -497,6 +497,9 @@ table th {
   }
   .notification {
     top: 120px;
+    font-size: 14px;
+    word-spacing: 0;
+    text-align: left;
   }
 }
 

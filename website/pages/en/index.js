@@ -673,11 +673,9 @@ class Index extends React.Component {
       <div>
         <div className="notification">
           <div className="wrapper">
-            👋 Join the Milvus Slack channel &nbsp; 
-            <a href="https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk">
-             here 
-            </a>
-            &nbsp; to interact with our community!
+            👋 Join the Milvus Slack channel <a href="https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk">
+              here
+            </a> to interact with our community!
             <svg
               className="close-notification-btn"
               xmlns="http://www.w3.org/2000/svg"

@@ -28,6 +28,7 @@
     ],
     "Milvus Roadmap": ["roadmap"],
     "FAQ": ["faq/product_faq", "faq/operational_faq"],
+    "Contribute": ["contribute/contribute"],
     "Release Notes": [
       "release/v0.5.3",
       "release/v0.5.2",

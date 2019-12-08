@@ -32,6 +32,10 @@
         "title": "Changelog",
         "sidebar_label": "Milvus Changelog"
       },
+      "contribute/contribute": {
+        "title": "Contribute",
+        "sidebar_label": "Contribute"
+      },
       "CONTRIBUTING": {
         "title": "CONTRIBUTING"
       },
@@ -57,9 +61,13 @@
         "title": "Milvus in Comparison",
         "sidebar_label": "Milvus in Comparison"
       },
-      "reference/data_store": {
-        "title": "Data Storage",
-        "sidebar_label": "Data Storage"
+      "reference/data_manage": {
+        "title": "Data Management",
+        "sidebar_label": "Data Management"
+      },
+      "reference/index": {
+        "title": "Index Types",
+        "sidebar_label": "Index Types"
       },
       "reference/milvus_config": {
         "title": "Milvus Configuration",
@@ -68,6 +76,10 @@
       "reference/monitoring_metrics": {
         "title": "Monitoring Metrics",
         "sidebar_label": "Monitoring Metrics"
+      },
+      "reference/partition": {
+        "title": "Table Partitioning",
+        "sidebar_label": "Table Partitioning"
       },
       "reference/README": {
         "title": "reference/README"
@@ -118,9 +130,6 @@
       "roadmap": {
         "title": "Milvus Roadmap",
         "sidebar_label": "Milvus Roadmap"
-      },
-      "SDKRef": {
-        "title": "SDKRef"
       },
       "userguide/benchmarking": {
         "title": "Performance Benchmarking",
@@ -184,6 +193,10 @@
         "title": "Feature Vector",
         "sidebar_label": "Feature Vector"
       },
+      "zh-CN/contribute/contribute": {
+        "title": "Contribute",
+        "sidebar_label": "Contribute"
+      },
       "zh-CN/faq/operational_faq": {
         "title": "Operational FAQ",
         "sidebar_label": "Operational FAQ"
@@ -200,9 +213,13 @@
         "title": "Milvus in Comparison",
         "sidebar_label": "Milvus in Comparison"
       },
-      "zh-CN/reference/data_store": {
-        "title": "Data Storage",
-        "sidebar_label": "Data Storage"
+      "zh-CN/reference/data_manage": {
+        "title": "Data Management",
+        "sidebar_label": "Data Management"
+      },
+      "zh-CN/reference/index": {
+        "title": "Index Types",
+        "sidebar_label": "Index Types"
       },
       "zh-CN/reference/milvus_config": {
         "title": "Milvus Configuration",
@@ -211,6 +228,10 @@
       "zh-CN/reference/monitoring_metrics": {
         "title": "Monitoring Metrics",
         "sidebar_label": "Monitoring Metrics"
+      },
+      "zh-CN/reference/partition": {
+        "title": "Table Partitioning",
+        "sidebar_label": "Table Partitioning"
       },
       "zh-CN/reference/README": {
         "title": "zh-CN/reference/README"
@@ -261,9 +282,6 @@
       "zh-CN/roadmap": {
         "title": "Milvus Roadmap",
         "sidebar_label": "Milvus Roadmap"
-      },
-      "zh-CN/SDKRef": {
-        "title": "zh-CN/SDKRef"
       },
       "zh-CN/userguide/benchmarking": {
         "title": "Performance Benchmarking",
@@ -317,6 +335,7 @@
       "Reference": "Reference",
       "Milvus Roadmap": "Milvus Roadmap",
       "FAQ": "FAQ",
+      "Contribute": "Contribute",
       "Release Notes": "Release Notes"
     }
   },

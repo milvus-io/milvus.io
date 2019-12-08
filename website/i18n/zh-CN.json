@@ -32,6 +32,10 @@
         "title": "Changelog",
         "sidebar_label": "Milvus Changelog"
       },
+      "contribute/contribute": {
+        "title": "贡献",
+        "sidebar_label": "贡献代码"
+      },
       "faq/operational_faq": {
         "title": "操作 FAQ",
         "sidebar_label": "操作 FAQ"
@@ -288,6 +292,7 @@
       "User Guide": "用户指南",
       "Reference": "参考手册",
       "FAQ": "常见问题",
+      "Contribute": "贡献",
       "Milvus Roadmap": "Milvus 路线图",
       "Release Notes": "版本说明"
     }

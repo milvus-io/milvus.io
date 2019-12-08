@@ -11,7 +11,7 @@ function fixHeaderLinks(language) {
 document.addEventListener("DOMContentLoaded", () => {
   // close notification
   const closeNotificationBtn = document.querySelector('.close-notification-btn');
-  closeNotificationBtn.addEventListener('click', ()=>{
+  closeNotificationBtn &&closeNotificationBtn.addEventListener('click', ()=>{
     document.querySelector('.notification').style.opacity = 0;
   });
   // add GDPR control

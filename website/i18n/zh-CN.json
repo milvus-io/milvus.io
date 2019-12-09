@@ -62,6 +62,18 @@
         "title": "与FAISS和SPTAG对比",
         "sidebar_label": "与FAISS和SPTAG对比"
       },
+      "reference/data_manage": {
+        "title": "数据管理",
+        "sidebar_label": "数据管理"
+      },
+      "reference/index": {
+        "title": "索引类型",
+        "sidebar_label": "索引类型"
+      },
+      "reference/partition": {
+        "title": "分区表",
+        "sidebar_label": "分区表"
+      },
       "reference/data_store": {
         "title": "数据存储",
         "sidebar_label": "数据存储"

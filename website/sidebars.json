@@ -22,9 +22,12 @@
       "reference/comparison",
       "reference/milvus_config",
       "reference/monitoring_metrics",
+      "reference/index",
+      "reference/partition",
+      "reference/sdk",
       "reference/data_store",
-      "reference/application",
-      "reference/sdk"
+      "reference/data_manage",
+      "reference/application"
     ],
     "Milvus Roadmap": ["roadmap"],
     "FAQ": ["faq/product_faq", "faq/operational_faq"],

@@ -25,7 +25,7 @@ author: 莫毅华
 
 在0.6.0中，我们增加了几个关于 partition 的接口，并且给 add_vectors/search_vectors 这两个接口各增加了一个参数。
 
-假设已经存在一张叫‘my_table’的表，以下是为该表创建分区/显示分区信息/删除分区的 Python 示例：
+假设已经存在一张叫 'my_table' 的表，以下是为该表创建分区/显示分区信息/删除分区的 Python 示例：
 
 ```
 create_partition({'table_name':"my_table", 'partition_name': "partition_1", 'tag':"aaa"});
@@ -65,9 +65,9 @@ Milvus 的每一个分区实际上都是一张表，其内部运行逻辑和之�
 
 ![table](https://raw.githubusercontent.com/milvus-io/www.milvus.io/tree/master/website/blog/assets/partition/table.png)
 
-这样可以很容易地兼容0.4.x和0.5.x版本的数据。分区表在内部也是作为一张真实的表而存在的，因此分区表的名称也是要求全局唯一的，它们有自己的数据空间，它们的索引参数则继承自母表，'owner_table'字段记录的就是它们的母表名字，'partition_tag'则记录了每个分区的标签。
+这样可以很容易地兼容0.4.x和0.5.x版本的数据。分区表在内部也是作为一张真实的表而存在的，因此分区表的名称也是要求全局唯一的，它们有自己的数据空间，它们的索引参数则继承自母表，'owner_table' 字段记录的就是它们的母表名字，'partition_tag' 则记录了每个分区的标签。
 
-具体到实现上，create_partition实际上做的事情和create_table是基本一样的，只不过多了'owner_table'和'partition_tag'两个字段的设置。show_partitions用来显示一个表的所有分区信息（如果它有分区的话），实际上内部是执行了一个SQL命令：SELECT table_id, partition_tag FROM Tables WHERE owner_table='table_0'。对于add_vector/search_vectors来说，如果用户指定了分区标签，则先找出标签所对应的分区表，然后把插入/查询转发到对应的分区表上。
+具体到实现上，create_partition 实际上做的事情和 create_table 是基本一样的，只不过多了 'owner_table' 和 'partition_tag' 两个字段的设置。show_partitions 用来显示一个表的所有分区信息（如果它有分区的话），实际上内部是执行了一个SQL命令：SELECT table_id, partition_tag FROM Tables WHERE owner_table='table_0'。对于 add_vector/search_vectors 来说，如果用户指定了分区标签，则先找出标签所对应的分区表，然后把插入/查询转发到对应的分区表上。
 
 
 

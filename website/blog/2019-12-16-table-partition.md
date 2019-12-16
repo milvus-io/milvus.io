@@ -11,11 +11,11 @@ author: 莫毅华
 
 第一种做法是手工分表，比如某条经常使用的查询语句有查询范围的，没必要对该表的每条数据都过滤一遍，那么用户可以根据自己的业务逻辑将这张表的数据分散到若干个新建表里，这样就可以只针对其中一张表做查询，大幅提高查询效率。不过这样做的缺点是用户不得不自己去维护多张表的关系，不同的查询需要访问不同的表，用户必须自己要知道哪条查询应该去查哪张表。
 
-![manual partition](https://raw.githubusercontent.com/milvus-io/www.milvus.io/tree/master/website/blog/assets/partition/manual_partition.png)
+![manual partition](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/partition/manual_partition.png)
 
 另外一种做法是借助数据库的分区（partition）功能，由数据库内部帮你把数据分散到多个“区”，所有查询仍然是针对一张表的，只不过数据库根据解析查询语句获知应该去哪个“区”去做查询。这个分区的意思是，所有的数据仍然从属于这张表，只不过从存储空间上把数据隔离开了。
 
-![partition](https://raw.githubusercontent.com/milvus-io/www.milvus.io/tree/master/website/blog/assets/partition/partition.png)
+![partition](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/partition/partition.png)
 
 当然，如果数据量再大到连单台服务器都无法承受了，那就要考虑分库了，不过这不是这篇文章要说的重点，所以就不赘述。
 
@@ -49,7 +49,7 @@ Milvus 的每一个分区实际上都是一张表，其内部运行逻辑和之�
 
 假设我们有一张表叫 'my_table'，我们用 create_partition 给它创建了两个分区，名字分别是 'partition_1' 和 'partition_2'，标签分别是 'aaa' 和 'bbb'。当我们使用 add_vector 插入向量时，如果标签指定的是 'aaa'，则数据会存储到 'partition_1' 里；如果标签指定了 'bbb'，则数据会存储到 'partition_2' 里；如果没有指定标签，则数据会存在母表 'my_table' 里。当我们使用 search_vectors 指定标签 'aaa' 时，只会对 'partition_1' 进行查询；如果标签指定 'bbb'，只会对 'partition_2' 查询；如果不指定标签，系统会认为你想对 'my_table' 全表做查询，因此会在 'my_table'，'partition_1' 和 'partition_2' 三张表里进行查询。
 
-![tag partition](https://raw.githubusercontent.com/milvus-io/www.milvus.io/tree/master/website/blog/assets/partition/tag_partition.png)
+![tag partition](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/partition/tag_partition.png)
 
 例如用户的向量数据是增量式的，每天都会有新的向量数据录入系统，而热点查询大多数都是针对当天的数据，那么他只需要把日期字符串作为一个 tag，每天的数据都放在一个分区里。比如把'2019-11-11'作为 tag 建立一个分区，查询的时候指定这个 tag 就可以了。
 
@@ -59,11 +59,11 @@ Milvus 的每一个分区实际上都是一张表，其内部运行逻辑和之�
 
 在《Milvus在大规模向量检索场景下的数据管理》这篇文章中我们了解了 Milvus 是怎样管理向量数据的。我们有元数据（meta data）记录了每张表的基础信息以及每个数据文件的信息，当有向量搜索的请求进来时，系统会先去 meta data 里通过 SQL query 得到哪些数据文件要被检索，然后交给查询调度器（Query Scheduler）去执行。
 
-![metadata](https://raw.githubusercontent.com/milvus-io/www.milvus.io/tree/master/website/blog/assets/partition/metadata.png)
+![metadata](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/partition/metadata.png)
 
 为了增加 partition 的功能，我们在 Tables 表里增加了两个字段，分别是 'owner_table' 和 'partition_tag'：
 
-![table](https://raw.githubusercontent.com/milvus-io/www.milvus.io/tree/master/website/blog/assets/partition/table.png)
+![table](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/partition/table.png)
 
 这样可以很容易地兼容0.4.x和0.5.x版本的数据。分区表在内部也是作为一张真实的表而存在的，因此分区表的名称也是要求全局唯一的，它们有自己的数据空间，它们的索引参数则继承自母表，'owner_table' 字段记录的就是它们的母表名字，'partition_tag' 则记录了每个分区的标签。
 

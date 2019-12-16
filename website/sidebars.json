@@ -10,7 +10,9 @@
     "User Guide": [
       "userguide/preface",
       "userguide/install_milvus",
-      "userguide/example_code",
+      "userguide/install_milvus",
+      "userguide/cpu_milvus",
+      "userguide/gpu_milvus",
       "userguide/milvus_operation",
       "userguide/bootcamp",
       "userguide/monitor",

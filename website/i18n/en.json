@@ -127,29 +127,33 @@
         "title": "v0.5.3",
         "sidebar_label": "v0.5.3"
       },
+      "release/v0.6.0": {
+        "title": "v0.6.0",
+        "sidebar_label": "v0.6.0"
+      },
       "roadmap": {
         "title": "Milvus Roadmap",
         "sidebar_label": "Milvus Roadmap"
-      },
-      "userguide/benchmarking": {
-        "title": "Performance Benchmarking",
-        "sidebar_label": "Performance Benchmarking"
       },
       "userguide/bootcamp": {
         "title": "Try Bootcamp",
         "sidebar_label": "Try Bootcamp"
       },
+      "userguide/cpu_milvus": {
+        "title": "Install CPU-only Milvus on Docker",
+        "sidebar_label": "Install CPU-only Milvus on Docker"
+      },
       "userguide/example_code": {
         "title": "Try an Example Program",
         "sidebar_label": "Try an Example Program"
       },
-      "userguide/import_data": {
-        "title": "Import Data",
-        "sidebar_label": "Import Data"
+      "userguide/gpu_milvus": {
+        "title": "Install GPU-enabled Milvus on Docker",
+        "sidebar_label": "Install GPU-enabled Milvus on Docker"
       },
       "userguide/install_milvus": {
-        "title": "Install Milvus",
-        "sidebar_label": "Install Milvus"
+        "title": "Installation Overview",
+        "sidebar_label": "Installation Overview"
       },
       "userguide/milvus_operation": {
         "title": "Learn Milvus Operations",
@@ -279,29 +283,33 @@
         "title": "v0.5.3",
         "sidebar_label": "v0.5.3"
       },
+      "zh-CN/release/v0.6.0": {
+        "title": "v0.6.0",
+        "sidebar_label": "v0.6.0"
+      },
       "zh-CN/roadmap": {
         "title": "Milvus Roadmap",
         "sidebar_label": "Milvus Roadmap"
-      },
-      "zh-CN/userguide/benchmarking": {
-        "title": "Performance Benchmarking",
-        "sidebar_label": "Performance Benchmarking"
       },
       "zh-CN/userguide/bootcamp": {
         "title": "Try Bootcamp",
         "sidebar_label": "Try Bootcamp"
       },
+      "zh-CN/userguide/cpu_milvus": {
+        "title": "Install CPU-only Milvus on Docker",
+        "sidebar_label": "Install CPU-only Milvus on Docker"
+      },
       "zh-CN/userguide/example_code": {
         "title": "Try an Example Program",
         "sidebar_label": "Try an Example Program"
       },
-      "zh-CN/userguide/import_data": {
-        "title": "Import Data",
-        "sidebar_label": "Import Data"
+      "zh-CN/userguide/gpu_milvus": {
+        "title": "Install GPU-enabled Milvus on Docker",
+        "sidebar_label": "Install GPU-enabled Milvus on Docker"
       },
       "zh-CN/userguide/install_milvus": {
-        "title": "Install Milvus",
-        "sidebar_label": "Install Milvus"
+        "title": "Installation Overview",
+        "sidebar_label": "Installation Overview"
       },
       "zh-CN/userguide/milvus_operation": {
         "title": "Learn Milvus Operations",

@@ -128,12 +128,12 @@
         "sidebar_label": "体验 Milvus 在线训练营"
       },
       "userguide/cpu_milvus": {
-        "title": "CPU版Milvus安装",
-        "sidebar_label": "CPU版Milvus安装"
+        "title": "CPU版 Milvus安装",
+        "sidebar_label": "CPU版 Milvus安装"
       },
       "userguide/gpu_milvus": {
-        "title": "GPU版Milvus安装",
-        "sidebar_label": "GPU版Milvus安装"
+        "title": "GPU版 Milvus安装",
+        "sidebar_label": "GPU版 Milvus安装"
       },
       "userguide/example_code": {
         "title": "运行示例程序",

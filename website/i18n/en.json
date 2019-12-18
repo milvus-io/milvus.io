@@ -140,16 +140,16 @@
         "sidebar_label": "Try Bootcamp"
       },
       "userguide/cpu_milvus": {
-        "title": "Install CPU-only Milvus on Docker",
-        "sidebar_label": "Install CPU-only Milvus on Docker"
+        "title": "Install CPU-only Milvus",
+        "sidebar_label": "Install CPU-only Milvus"
       },
       "userguide/example_code": {
         "title": "Try an Example Program",
         "sidebar_label": "Try an Example Program"
       },
       "userguide/gpu_milvus": {
-        "title": "Install GPU-enabled Milvus on Docker",
-        "sidebar_label": "Install GPU-enabled Milvus on Docker"
+        "title": "Install GPU-enabled Milvus",
+        "sidebar_label": "Install GPU-enabled Milvus"
       },
       "userguide/install_milvus": {
         "title": "Installation Overview",

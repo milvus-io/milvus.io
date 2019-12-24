@@ -12,7 +12,7 @@ author: 莫毅华
 
 Milvus 从今年年初开始做原型到现在已近一年，从最初的内部测试，到0.3.0版本开始有用户试用，再到现在的0.6.0版本，已经历了若干次迭代。真正开始有比较多的人注意到这个产品是从0.5.0版本开始的，实际上0.4.0和0.5.0的元数据格式一模一样，因此0.4.0之前的版本我就忽略不说。
 
-#### SQLite
+### SQLite
 
 如果使用的是 SQLite，那么在 Milvus 启动之后就会在数据目录（在配置文件 `server_config.yaml` 的`primary_path` 里定义）下生成一个 `meta.sqlite` 文件。我们仅需安装一个 SQLite 的客户端，就能打开这个文件查看里面的内容。
 
@@ -45,7 +45,7 @@ SELECT \* FROM TableFiles
 ```
 ![sqlite3](https://raw.githubusercontent.com/milvus-io/www.milvus.io/master/website/blog/assets/meta_manage/sqlite3.png)
 
-#### MySQL
+### MySQL
 
 如果使用的是 MySQL，需要在配置文件 `server_config.yaml` 的 `backend_url` 指明 MySQL 服务的地址。比如下面这个设置表示 MySQL 服务部署在本地，端口为3306，用户名为 root，密码为 123456，数据库名称是 milvus：
 

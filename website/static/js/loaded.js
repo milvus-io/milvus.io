@@ -14,16 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   closeNotificationBtn &&closeNotificationBtn.addEventListener('click', ()=>{
     document.querySelector('.notification').style.opacity = 0;
   });
-  // add GDPR control
-  var gtagId = "UA-142992812-1";
-  // Allow tracking by default
-  window["ga-disable-" + gtagId] = false;
-  // Initialize gtag
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag("js", new Date());
 
   // window.cookieconsent.initialise({
   //   onInitialise: function(status) {

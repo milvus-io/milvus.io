@@ -1,36 +1,39 @@
-import React, { useEffect, useState } from "react"
-import { graphql } from "gatsby"
-import Layout from "../components/layout/layout"
-import SEO from "../components/seo"
-import LocalizedLink from "../components/localizedLink/localizedLink"
-import Notification from "../components/notification"
-import "../scss/index.scss"
-import WhatIsMilvus from "../images/what-is-milvus.png"
-import Icon1 from "../images/icon-1.png"
-import Icon2 from "../images/icon-2.png"
-import Icon3 from "../images/icon-3.png"
-import Icon4 from "../images/icon-4.png"
-import Icon5 from "../images/icon-5.png"
-import Icon6 from "../images/icon-6.png"
-import GithubButton from "react-github-button"
-import "react-github-button/assets/style.css"
+import React, { useEffect, useState } from "react";
+import { graphql } from "gatsby";
+import Layout from "../components/layout/layout";
+import SEO from "../components/seo";
+import LocalizedLink from "../components/localizedLink/localizedLink";
+import Notification from "../components/notification";
+import "../scss/index.scss";
+import WhatIsMilvus from "../images/what-is-milvus.png";
+import Icon1 from "../images/icon-1.png";
+import Icon2 from "../images/icon-2.png";
+import Icon3 from "../images/icon-3.png";
+import Icon4 from "../images/icon-4.png";
+import Icon5 from "../images/icon-5.png";
+import Icon6 from "../images/icon-6.png";
+import GithubButton from "react-github-button";
+import "react-github-button/assets/style.css";
 
-const icons = [Icon1, Icon2, Icon3, Icon4, Icon5, Icon6]
+const icons = [Icon1, Icon2, Icon3, Icon4, Icon5, Icon6];
 
 const IndexPage = ({ data, pageContext }) => {
-  const language = data.allFile.edges[0].node.childLayoutJson.layout
-  const { locale } = pageContext
-  const { section1, section2, section3, section4 } = language.home
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const language = data.allFile.edges[0].node.childLayoutJson.layout;
+  const { locale } = pageContext;
+  const { section1, section2, section3, section4 } = language.home;
+
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : ""
+  );
   useEffect(() => {
     const cb = e => {
-      setWindowWidth(e.target.innerWidth)
-    }
-    window.addEventListener("resize", cb)
+      setWindowWidth(e.target.innerWidth);
+    };
+    window.addEventListener("resize", cb);
     return () => {
-      window.removeEventListener("resize", cb)
-    }
-  }, [])
+      window.removeEventListener("resize", cb);
+    };
+  }, []);
   const milvus = [
     true,
     true,
@@ -43,8 +46,8 @@ const IndexPage = ({ data, pageContext }) => {
     true,
     true,
     true,
-    true,
-  ]
+    true
+  ];
   const faiss = [
     true,
     true,
@@ -57,8 +60,8 @@ const IndexPage = ({ data, pageContext }) => {
     false,
     true,
     false,
-    false,
-  ]
+    false
+  ];
   const sptag = [
     false,
     false,
@@ -71,8 +74,8 @@ const IndexPage = ({ data, pageContext }) => {
     false,
     true,
     false,
-    false,
-  ]
+    false
+  ];
 
   const TableMax = () => (
     <div className="content-wrapper">
@@ -109,7 +112,7 @@ const IndexPage = ({ data, pageContext }) => {
         ))}
       </ul>
     </div>
-  )
+  );
 
   const TableMin = () => (
     <div className="content-wrapper">
@@ -143,7 +146,7 @@ const IndexPage = ({ data, pageContext }) => {
         ))}
       </ul>
     </div>
-  )
+  );
 
   return (
     <Layout language={language} locale={locale}>
@@ -205,8 +208,8 @@ const IndexPage = ({ data, pageContext }) => {
         </section>
       </main>
     </Layout>
-  )
-}
+  );
+};
 
 export const Query = graphql`
   query BiQuery($locale: String) {
@@ -275,6 +278,6 @@ export const Query = graphql`
       }
     }
   }
-`
+`;
 
-export default IndexPage
+export default IndexPage;

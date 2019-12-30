@@ -9,11 +9,17 @@ const Notification = props => {
   return state ? (
     <div className="notification">
       <div className="wrapper">
-        <span role="img" aria-label="" aria-labelledby="">👋</span> Join the Milvus Slack channel
+        <span role="img" aria-label="" aria-labelledby="">
+          👋
+        </span>
+        Join the Milvus Slack channel
         <a href="https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk">
           here
         </a>
-        {document.body.clientWidth > 1000 && "to interact with our community!"}
+        {typeof document !== 'undefined' &&
+          document.body &&
+          document.body.clientWidth > 1000 &&
+          "to interact with our community!"}
         <svg
           className="close-notification-btn"
           xmlns="http://www.w3.org/2000/svg"

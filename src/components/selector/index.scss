@@ -1,0 +1,56 @@
+.selector-wrapper {
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+    width: 82px;
+    height: 26px;
+    margin-bottom: 20px;
+    line-height: 26px;
+    border: 1px solid #60606f;
+    border-radius: 4px;
+    text-align: center;
+
+    .options-wrapper {
+        position: relative;
+        margin-top: 4px;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.2s linear;
+        border-radius: 4px;
+        background: #28292e;
+        border: 1px solid #60606f;
+        box-shadow: 0 25px 50px 0 rgba(16, 16, 16, 0.5);
+        z-index: 10;
+
+
+        &.open {
+            max-height: 1600px;
+            opacity: 1;
+        }
+
+        li {
+            .text {
+                display: block;
+                color: #fafafa;
+            }
+
+            &.active {
+              // not working: highlight current version
+                color: #4fc4f9;
+            }
+        }
+    }
+
+    .selected {
+        padding-left: 0.4rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        cursor: pointer;
+
+        .arrow {
+            transform: rotate(0);
+        }
+    }
+
+}

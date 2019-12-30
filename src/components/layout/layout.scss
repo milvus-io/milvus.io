@@ -1,0 +1,20 @@
+@import "../../reset.scss";
+@import "../include_media.scss";
+
+.content-wrapper {
+  width: 90%;
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+
+  @include media("<=1000px") {
+    width: 100%;
+    margin-top: 100px;
+  }
+
+  ul,
+  li {
+    list-style: none;
+  }
+}

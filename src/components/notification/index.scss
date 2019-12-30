@@ -1,0 +1,42 @@
+@import "../include_media";
+
+.notification {
+  height: 60px;
+  line-height: 60px;
+  background: linear-gradient(90deg, #4fc4f9, #fafafa);
+  position: absolute;
+  top: 60px;
+  left: 0;
+  z-index: 90;
+  width: 100%;
+  text-align: center;
+  word-spacing: 2px;
+  transition: opacity 0.3s;
+  opacity: 1;
+  color: #333;
+
+  @include media("<=1000px") {
+    top: 96px;
+  }
+}
+
+.notification a {
+  color: #000;
+  text-decoration: underline;
+}
+
+.notification .wrapper {
+  position: relative;
+}
+
+.notification svg {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  width: 10px;
+  cursor: pointer;
+}
+
+.notification path {
+  fill: #B0B0B9;
+}

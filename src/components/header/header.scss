@@ -1,0 +1,67 @@
+@import "../include_media";
+
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 10px 1rem 10px 2rem;
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, .5);
+  z-index: 100;
+  box-sizing: border-box;
+  background: #28292e;
+
+  @include media("<=1000px") {
+    padding: 10px 20px;
+    box-shadow: none;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 0 10px 0 20px;
+
+    .link {
+      margin: 0;
+    }
+  }
+
+  img {
+    height: 3rem;
+  }
+
+  .right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .link {
+      color: #fafafa;
+      margin: 0 1rem;
+    }
+  }
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  padding: 12px 20px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, .3);
+  background: #28292e;
+  z-index: 50;
+}
+
+.gradient {
+  font-weight: bold;
+  background: -webkit-linear-gradient(30deg, #eee, rgba(79, 196, 249, .9));
+  color: rgba(79, 196, 249, .9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

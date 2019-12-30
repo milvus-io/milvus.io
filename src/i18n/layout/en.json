@@ -1,0 +1,93 @@
+{
+  "layout": {
+    "header": {
+      "about": "About Milvus",
+      "doc": "Docs",
+      "blog": "Blog",
+      "try": "Try",
+      "loading": "Loading...",
+      "noresult": "No Result"
+    },
+    "footer": {
+      "product": {
+        "title": "Product",
+        "txt1": "Milvus",
+        "txt2": "Milvus Roadmap"
+      },
+      "doc": {
+        "title": "Docs",
+        "txt1": "Qucik Start",
+        "txt2": "FAQ",
+        "txt3": "Release Notes"
+      },
+      "resource": {
+        "title": "Resources",
+        "txt1": "Github",
+        "txt2": "Medium",
+        "txt3": "CSDN",
+        "txt4": "Milvus Bootcamp"
+      },
+      "contact": {
+        "title": "Connect"
+      }
+    },
+    "home": {
+      "section1": {
+        "desc1": "An Open Source Vector Similarity",
+        "desc2": "Search Engine",
+        "link": "Why Milvus"
+      },
+      "section2": {
+        "title": "What is Milvus",
+        "content": "Milvus is an open source similarity search engine for massive-scalefeature vectors. Built with heterogeneous computingarchitecture for the best cost efficiency. Searches overbillion-scale vectors take only milliseconds with minimumcomputing resources. Milvus can be used in a wide variety ofscenarios to boost AI development.",
+        "link": "Read More"
+      },
+      "section3": {
+        "title": "Milvus Features",
+        "list": [
+          {
+            "title": "Heterogeneous computing",
+            "content": "Milvus is designed with heterogeneous computing architecture for the best performance and cost efficiency."
+          },
+          {
+            "title": "Multiple indexes",
+            "content": "Milvus supports a variety of indexing types that employs quantization, tree-based, and graph indexing techniques."
+          },
+          {
+            "title": "Intelligent resource management",
+            "content": "Milvus automatically adapts search computation and index building processes based on your datasets and available resources."
+          },
+          {
+            "title": "Horizontal scalability",
+            "content": "Milvus supports online / offline expansion to scale both storage and computation resources with simple commands."
+          },
+          {
+            "title": "High availability",
+            "content": "Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided."
+          },
+          {
+            "title": "Ease of use",
+            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor. dashboards."
+          }
+        ]
+      },
+      "section4": {
+        "title": "Vector Search Tool Comparison",
+        "list": [
+          "CPU/GPU heterogeneous computing capability",
+          "Quantization index",
+          "Hash index",
+          "Graph index",
+          "High availability",
+          "Distributed architecture",
+          "Easy-to-use user interface",
+          "GUI monitoring dashboard",
+          "Simple deployment",
+          "Python/JAVA/C++ SDK",
+          "RESTful API",
+          "Enterprise user support"
+        ]
+      }
+    }
+  }
+}

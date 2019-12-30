@@ -150,7 +150,7 @@ const IndexPage = ({ data, pageContext }) => {
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="Milvus" />
+      <SEO title=" " />
       <Notification></Notification>
       <main className="home-wrapper">
         <section className="section1">

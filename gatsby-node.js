@@ -105,7 +105,7 @@ exports.createPages = ({ actions, graphql }) => {
       ({ node: { fileAbsolutePath, frontmatter } }) =>
         (!!findVersion(fileAbsolutePath) ||
           fileAbsolutePath.includes("/blog/") ||
-          fileAbsolutePath.includes("/master/")) &&
+          fileAbsolutePath.includes("/docs/versions/master/")) &&
         frontmatter.id
     );
     const generatePath = (id, lang, version, isBlog, needLocal = true) => {

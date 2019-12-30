@@ -52,6 +52,7 @@ const Header = ({ language, locale }) => {
               href="https://github.com/milvus-io/bootcamp"
               className="gradient link"
               target="_blank"
+              rel="noopener noreferrer"
             >
               {header.try}
             </a>

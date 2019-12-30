@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "mivlus.io",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "Milvus.io website",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "zizhao.chen@zilliz.com",
   "dependencies": {
     "d3-array": "^2.3.3",
     "dotenv": "^8.2.0",

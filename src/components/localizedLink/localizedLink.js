@@ -11,6 +11,7 @@ export default ({ locale, to, children, className = "link" }) => {
       <a
         href="https://medium.com/@milvusio"
         target="_blank"
+        rel="noopener noreferrer"
         children={children}
         className={className}
       ></a>

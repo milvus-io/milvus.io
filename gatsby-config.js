@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
     siteUrl: `https://www.milvus.io`,
-    title: `Milvus · 开源向量相似度搜索引擎`,
-    description: `An Open Source Vector Similarity Search Engine。 开源向量相似度搜索引擎`,
+    title: `Milvus · An Open Source Vector Similarity Search Engine - 开源向量相似度搜索引擎`,
+    description: `An Open Source Vector Similarity Search Engine, 开源向量相似度搜索引擎`,
     author: `@ZILLIZ.com`,
   },
   plugins: [

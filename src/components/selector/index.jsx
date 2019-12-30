@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react"
-import LocalizeLink from "../localizedLink/localizedLink"
-import "./index.scss"
-
+import React, { useState, useEffect } from "react";
+import LocalizeLink from "../localizedLink/localizedLink";
+import "./index.scss";
+/* eslint-disable */
 const Selector = props => {
-  const { selected, options, locale, activeDoc } = props
-  const [listStatus, setListStatus] = useState(false)
+  const { selected, options, locale } = props;
+  const [listStatus, setListStatus] = useState(false);
   const toggleList = e => {
-    e.stopPropagation()
-    setListStatus(!listStatus)
-  }
+    e.stopPropagation();
+    setListStatus(!listStatus);
+  };
 
   useEffect(() => {
     const cb = () => {
-      setListStatus(false)
-    }
-    window.addEventListener("click", cb)
+      setListStatus(false);
+    };
+    window.addEventListener("click", cb);
     return () => {
-      window.removeEventListener("click", cb)
-    }
-  }, [])
+      window.removeEventListener("click", cb);
+    };
+  }, []);
 
   return (
     <div className="selector-wrapper">
@@ -42,7 +42,7 @@ const Selector = props => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Selector
+export default Selector;

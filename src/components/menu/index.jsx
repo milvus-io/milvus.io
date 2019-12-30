@@ -1,65 +1,65 @@
-import React, { useEffect, useState, useRef } from "react"
-import LocalizeLink from "../localizedLink/localizedLink"
-import VersionSelector from "../selector"
-import "./index.scss"
-
+import React, { useEffect, useState, useRef } from "react";
+import LocalizeLink from "../localizedLink/localizedLink";
+import VersionSelector from "../selector";
+import "./index.scss";
+/* eslint-disable */
 const findItem = (key, value, arr) => {
-  let find = undefined
+  let find = undefined;
   arr.forEach(v => {
-    if (find) return
+    if (find) return;
     if (v[key] === value) {
-      find = v
+      find = v;
     } else if (v.children && v.children.length) {
-      find = findItem(key, value, v.children)
+      find = findItem(key, value, v.children);
     }
-  })
-  return find
-}
+  });
+  return find;
+};
 
 const Menu = props => {
-  const { menuList, activeDoc, version, versions, locale } = props
-  const [menuStatus, setMenuStatus] = useState(false)
-  const { isBlog } = menuList
-  const [realMenuList, setRealMenuList] = useState([])
+  const { menuList, activeDoc, version, versions, locale } = props;
+  const [menuStatus, setMenuStatus] = useState(false);
+  const { isBlog } = menuList;
+  const [realMenuList, setRealMenuList] = useState([]);
   useEffect(() => {
     const generateMenu = list => {
       // get all labels , make sure will generate menu from top to bottom
       const labelKeys = Object.keys(menuList.menuList[0])
         .filter(v => v.includes("label"))
-        .sort((a, b) => a[a.length - 1] - b[b.length - 1])
-      let index = 0
+        .sort((a, b) => a[a.length - 1] - b[b.length - 1]);
+      let index = 0;
       return function innerFn(formatMenu = []) {
-        let copyMenu = JSON.parse(JSON.stringify(formatMenu))
-        const parentLabel = index ? labelKeys[index - 1] : ""
+        let copyMenu = JSON.parse(JSON.stringify(formatMenu));
+        const parentLabel = index ? labelKeys[index - 1] : "";
 
         if (index && !parentLabel) {
-          return copyMenu
+          return copyMenu;
         }
         const generatePath = doc => {
           if (isBlog) {
-            return `/blogs/${doc.id}`
+            return `/blogs/${doc.id}`;
           }
-          const { label1, label2, label3 } = doc || {}
+          const { label1, label2, label3 } = doc || {};
 
-          let parentPath = ""
+          let parentPath = "";
           if (label1) {
-            parentPath += `${label1}/`
+            parentPath += `${label1}/`;
           }
           if (label2) {
-            parentPath += `${label2}/`
+            parentPath += `${label2}/`;
           }
           if (label3) {
-            parentPath += `${label3}/`
+            parentPath += `${label3}/`;
           }
-          return `/docs/${version}/${parentPath}${doc.id}`
-        }
+          return `/docs/${version}/${parentPath}${doc.id}`;
+        };
         // find top menu by current label
         const topMenu = list.filter(v => {
           if (!labelKeys[index] || !v[labelKeys[index]]) {
-            return index > 0 ? (v[parentLabel] ? true : false) : true
+            return index > 0 ? (v[parentLabel] ? true : false) : true;
           }
-          return false
-        })
+          return false;
+        });
 
         topMenu.forEach(v => {
           const item = {
@@ -69,72 +69,74 @@ const Menu = props => {
             isActive: false,
             isLast: !labelKeys[index + 1],
             isBlog,
-            path: generatePath(v),
-          }
+            path: generatePath(v)
+          };
           if (index === 0) {
-            copyMenu.push(item)
+            copyMenu.push(item);
           } else {
-            const parent = findItem("id", v[parentLabel], copyMenu)
-            parent && parent.children.push(item)
+            const parent = findItem("id", v[parentLabel], copyMenu);
+            parent && parent.children.push(item);
           }
-        })
+        });
 
-        index++
-        return innerFn(copyMenu)
-      }
-    }
+        index++;
+        return innerFn(copyMenu);
+      };
+    };
 
     const checkActive = list => {
-      const findDoc = findItem("id", activeDoc, list)
-      const labelKeys = Object.keys(findDoc).filter(v => v.includes("label"))
-      findDoc.isActive = true // here will open the right menu and give the active color
+      const findDoc = findItem("id", activeDoc, list);
+      const labelKeys = Object.keys(findDoc).filter(v => v.includes("label"));
+      findDoc.isActive = true; // here will open the right menu and give the active color
       labelKeys.forEach(label => {
-        const parentDoc = findItem("id", findDoc[label], list)
-        parentDoc && (parentDoc.showChildren = true)
-      })
-    }
+        const parentDoc = findItem("id", findDoc[label], list);
+        parentDoc && (parentDoc.showChildren = true);
+      });
+    };
 
     const sortMenu = list => {
       list.sort((a, b) => {
-        return a.order - b.order
-      })
+        return a.order - b.order;
+      });
       list.forEach(v => {
         if (v.children && v.children.length) {
-          sortMenu(v.children)
+          sortMenu(v.children);
         }
-      })
-    }
-    const arr = generateMenu(menuList.menuList)()
-    checkActive(arr)
-    sortMenu(arr)
-    setRealMenuList(arr)
-  }, [menuList, activeDoc, version])
+      });
+    };
+    const arr = generateMenu(menuList.menuList)();
+    checkActive(arr);
+    sortMenu(arr);
+    setRealMenuList(arr);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [menuList, activeDoc, version]);
 
-  const [screenWidth, setScreenWidth] = useState(null)
+  const [screenWidth, setScreenWidth] = useState(null);
   useEffect(() => {
     const cb = () => {
-      setScreenWidth(document.body.clientWidth)
-      setMenuStatus(document.body.clientWidth > 1000)
-    }
-    cb()
-    window.addEventListener("resize", cb)
+      setScreenWidth(document.body.clientWidth);
+      setMenuStatus(document.body.clientWidth > 1000);
+    };
+    cb();
+    window.addEventListener("resize", cb);
     return () => {
-      window.removeEventListener("resize", cb)
-    }
-  }, [])
+      window.removeEventListener("resize", cb);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const menuRef = useRef(null)
+  const menuRef = useRef(null);
 
   const handleMenuClick = e => {
-    const menuContainer = menuRef.current
-    window.localStorage.setItem("zilliz-height", menuContainer.scrollTop)
-  }
+    const menuContainer = menuRef.current;
+    window.localStorage.setItem("zilliz-height", menuContainer.scrollTop);
+  };
 
   useEffect(() => {
-    const menuContainer = menuRef.current
-    const scrollTop = window.localStorage.getItem("zilliz-height") || 0
-    menuContainer.scrollTop = scrollTop
-  }, [props])
+    const menuContainer = menuRef.current;
+    const scrollTop = window.localStorage.getItem("zilliz-height") || 0;
+    menuContainer.scrollTop = scrollTop;
+  }, [props]);
 
   const generageMenuDom = (list, className = "") => {
     return list.map(doc => (
@@ -149,7 +151,7 @@ const Menu = props => {
           onClick={
             doc.isMenu
               ? () => {
-                  toggleMenuChild(doc)
+                  toggleMenuChild(doc);
                 }
               : handleMenuClick
           }
@@ -187,19 +189,19 @@ const Menu = props => {
             : null}
         </div>
       </div>
-    ))
-  }
+    ));
+  };
 
   const toggleMenuChild = doc => {
-    const copyMenu = JSON.parse(JSON.stringify(realMenuList))
-    const findDoc = findItem("title", doc.title, copyMenu)
-    findDoc.showChildren = !findDoc.showChildren
-    setRealMenuList(copyMenu)
-  }
+    const copyMenu = JSON.parse(JSON.stringify(realMenuList));
+    const findDoc = findItem("title", doc.title, copyMenu);
+    findDoc.showChildren = !findDoc.showChildren;
+    setRealMenuList(copyMenu);
+  };
 
   const toggleMenu = status => {
-    setMenuStatus(status)
-  }
+    setMenuStatus(status);
+  };
 
   return (
     <>
@@ -211,7 +213,7 @@ const Menu = props => {
           <i
             className="fas fa-times close"
             onClick={() => {
-              toggleMenu(false)
+              toggleMenu(false);
             }}
           ></i>
         ) : null}
@@ -234,14 +236,14 @@ const Menu = props => {
         <div
           className="mini-menu-control"
           onClick={() => {
-            toggleMenu(true)
+            toggleMenu(true);
           }}
         >
           <i className="fas fa-bars"></i>
         </div>
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

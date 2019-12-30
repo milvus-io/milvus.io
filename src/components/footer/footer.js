@@ -3,7 +3,8 @@ import PropTypes from "prop-types"
 import LocalizeLink from "../localizedLink/localizedLink"
 import Qcode from "../../images/qrcode.jpeg"
 import "./footer.scss"
-const Footer = ({ language, locale, versions }) => {
+/* eslint-disable */
+const Footer = ({ language, locale }) => {
   const { footer } = language
   return (
     <footer className="footer-wrapper">
@@ -54,6 +55,7 @@ const Footer = ({ language, locale, versions }) => {
           <a
             href="https://github.com/milvus-io/milvus/issues"
             target="_blank"
+            rel="noopener noreferrer"
             className="text"
           >
             {footer.resource.txt1}
@@ -61,6 +63,7 @@ const Footer = ({ language, locale, versions }) => {
           <a
             href="https://medium.com/@milvusio"
             target="_blank"
+            rel="noopener noreferrer"
             className="text"
           >
             {footer.resource.txt2}
@@ -68,6 +71,7 @@ const Footer = ({ language, locale, versions }) => {
           <a
             href="https://me.csdn.net/weixin_44839084"
             target="_blank"
+            rel="noopener noreferrer"
             className="text"
           >
             {footer.resource.txt3}
@@ -75,6 +79,7 @@ const Footer = ({ language, locale, versions }) => {
           <a
             href="https://github.com/milvus-io/bootcamp"
             target="_blank"
+            rel="noopener noreferrer"
             className="text"
           >
             {footer.resource.txt4}
@@ -86,6 +91,7 @@ const Footer = ({ language, locale, versions }) => {
             <a
               className="slack"
               target="_blank"
+              rel="noopener noreferrer"
               href={`https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk`}
             >
               <svg
@@ -117,6 +123,7 @@ const Footer = ({ language, locale, versions }) => {
             <a
               className="twitter"
               target="_blank"
+              rel="noopener noreferrer"
               href={`https://twitter.com/milvusio`}
             >
               <svg
@@ -136,6 +143,7 @@ const Footer = ({ language, locale, versions }) => {
             <a
               className="facebook"
               target="_blank"
+              rel="noopener noreferrer"
               href={`https://www.facebook.com/io.milvus.5`}
             >
               <svg

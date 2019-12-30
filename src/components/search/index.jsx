@@ -1,34 +1,34 @@
-import React, { useState, useRef, useEffect } from "react"
-import LocalizeLink from "../localizedLink/localizedLink"
+import React, { useState, useRef, useEffect } from "react";
+import LocalizeLink from "../localizedLink/localizedLink";
 
-import "./index.scss"
-const DOCS_JSON = require("../../search.json")
-let timer = null
+import "./index.scss";
+const DOCS_JSON = require("../../search.json");
+let timer = null;
 const Search = props => {
-  const { language } = props
-  const [query, setQuery] = useState("")
-  const [focus, setFocus] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [matchData, setMatchData] = useState([])
-  const ref = useRef(null)
-  const containerRef = useRef(null)
+  const { language } = props;
+  const [query, setQuery] = useState("");
+  const [focus, setFocus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [matchData, setMatchData] = useState([]);
+  const ref = useRef(null);
+  const containerRef = useRef(null);
 
   const handleChange = e => {
-    setQuery(ref.current.value)
-    setLoading(true)
+    setQuery(ref.current.value);
+    setLoading(true);
     if (timer) {
-      clearTimeout(timer)
+      clearTimeout(timer);
     }
     timer = setTimeout(() => {
       const matchData = DOCS_JSON.map(v => {
-        const { version, id, fileLang, path } = v
+        const { version, id, fileLang, path } = v;
         const find = v.values.find(text =>
           text.toLowerCase().includes(ref.current.value.toLowerCase())
-        )
-        const regx = new RegExp(ref.current.value, "gi")
+        );
+        const regx = new RegExp(ref.current.value, "gi");
         const highlight = find
           ? find.replace(regx, search => `<em>${search}</em>`)
-          : ""
+          : "";
         return find
           ? {
               title: find,
@@ -37,32 +37,33 @@ const Search = props => {
               lang: fileLang,
               version,
               path,
-              isId: id === find,
+              isId: id === find
             }
-          : ""
-      }).filter(v => v && v.version !== "master")
-      setMatchData(matchData)
-      setLoading(false)
-    }, 400)
-  }
+          : "";
+      }).filter(v => v && v.version !== "master");
+      setMatchData(matchData);
+      setLoading(false);
+    }, 400);
+  };
   const handleFocus = e => {
-    setFocus(true)
-  }
+    setFocus(true);
+  };
   const useClickOutside = (ref, handler, events) => {
-    if (!events) events = [`mousedown`, `touchstart`]
+    if (!events) events = [`mousedown`, `touchstart`];
     const detectClickOutside = event => {
-      !ref.current.contains(event.target) && handler()
-    }
+      !ref.current.contains(event.target) && handler();
+    };
     useEffect(() => {
       for (const event of events)
-        document.addEventListener(event, detectClickOutside)
+        document.addEventListener(event, detectClickOutside);
       return () => {
         for (const event of events)
-          document.removeEventListener(event, detectClickOutside)
-      }
-    }, [])
-  }
-  useClickOutside(containerRef, () => setFocus(false))
+          document.removeEventListener(event, detectClickOutside);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  };
+  useClickOutside(containerRef, () => setFocus(false));
 
   return (
     <div className="search-wrapper" ref={containerRef}>
@@ -77,10 +78,10 @@ const Search = props => {
         <ul className="result-list">
           {matchData.length
             ? matchData.map((v, index) => {
-                const { lang, version, title, isId, highlight, path } = v
+                const { lang, version, title, isId, highlight, path } = v;
                 /* eslint-disable-next-line */
-                const normalVal = title.replace(/[\,\/]/g, "")
-                const anchor = normalVal.split(" ").join("-")
+                const normalVal = title.replace(/[\,\/]/g, "");
+                const anchor = normalVal.split(" ").join("-");
                 return (
                   <li key={index}>
                     <LocalizeLink
@@ -91,12 +92,12 @@ const Search = props => {
                         dangerouslySetInnerHTML={{
                           __html: `${highlight} ${version} ${
                             lang === "cn" ? "中文" : "en"
-                          }`,
+                          }`
                         }}
                       ></span>
                     </LocalizeLink>
                   </li>
-                )
+                );
               })
             : loading
             ? language.loading
@@ -104,7 +105,7 @@ const Search = props => {
         </ul>
       ) : null}
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

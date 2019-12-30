@@ -1,18 +1,18 @@
-import React, { useState } from "react"
-import "./index.scss"
+import React, { useState } from "react";
+import "./index.scss";
 
 const Notification = props => {
-  const [state, setState] = useState(true)
+  const [state, setState] = useState(true);
   const closeState = () => {
-    setState(false)
-  }
+    setState(false);
+  };
   return state ? (
     <div className="notification">
       <div className="wrapper">
-        👋 Join the Milvus Slack channel{" "}
+        <span role="img" aria-label="" aria-labelledby="">👋</span> Join the Milvus Slack channel
         <a href="https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk">
           here
-        </a>{" "}
+        </a>
         {document.body.clientWidth > 1000 && "to interact with our community!"}
         <svg
           className="close-notification-btn"
@@ -26,7 +26,7 @@ const Notification = props => {
         </svg>
       </div>
     </div>
-  ) : null
-}
+  ) : null;
+};
 
-export default Notification
+export default Notification;

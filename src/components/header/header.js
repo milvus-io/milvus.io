@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react"
-import PropTypes from "prop-types"
-import { globalHistory } from "@reach/router"
-import LocalizeLink from "../localizedLink/localizedLink"
-import Logo from "../../images/logo-horizontal-white.svg"
-import Search from "../search"
-import "./header.scss"
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { globalHistory } from "@reach/router";
+import LocalizeLink from "../localizedLink/localizedLink";
+import Logo from "../../images/logo-horizontal-white.svg";
+import Search from "../search";
+import "./header.scss";
 
 const Header = ({ language, locale }) => {
-  const { header } = language
-  const l = locale === "cn" ? "en" : "cn"
+  const { header } = language;
+  const l = locale === "cn" ? "en" : "cn";
   const to = globalHistory.location.pathname
     .replace("/en/", "/")
-    .replace("/cn/", "/")
+    .replace("/cn/", "/");
 
-  const [screenWidth, setScreenWidth] = useState(null)
+  const [screenWidth, setScreenWidth] = useState(null);
   useEffect(() => {
     const cb = () => {
-      setScreenWidth(document.body.clientWidth)
-    }
-    cb()
-    window.addEventListener("resize", cb)
+      setScreenWidth(document.body.clientWidth);
+    };
+    cb();
+    window.addEventListener("resize", cb);
     return () => {
-      window.removeEventListener("resize", cb)
-    }
-  }, [])
+      window.removeEventListener("resize", cb);
+    };
+  }, []);
 
   return (
     <>
@@ -72,17 +72,17 @@ const Header = ({ language, locale }) => {
       </header>
       {screenWidth <= 1000 && (
         <nav className="mobile-nav">
-          <LocalizeLink locale={l} to={"/docs/about_milvus/overview.md"}>
+          <LocalizeLink locale={locale} to={"/docs/about_milvus/overview.md"}>
             {header.about}
           </LocalizeLink>
           <LocalizeLink
-            locale={l}
+            locale={locale}
             to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
           >
             {header.doc}
           </LocalizeLink>
           <LocalizeLink
-            locale={l}
+            locale={locale}
             to={"/blogs/2019-08-26-vector-search-million.md"}
           >
             {header.blog}
@@ -90,12 +90,12 @@ const Header = ({ language, locale }) => {
         </nav>
       )}
     </>
-  )
-}
+  );
+};
 
 Header.propTypes = {
   language: PropTypes.object.isRequired,
-  locale: PropTypes.string.isRequired,
-}
+  locale: PropTypes.string.isRequired
+};
 
-export default Header
+export default Header;

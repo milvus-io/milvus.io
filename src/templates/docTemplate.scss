@@ -684,4 +684,9 @@
     }
 
   }
+
+  .table-wrapper {
+    overflow-x: scroll;
+    @include scroll-bar;
+  }
 }

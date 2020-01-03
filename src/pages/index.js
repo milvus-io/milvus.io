@@ -204,7 +204,11 @@ const IndexPage = ({ data, pageContext }) => {
         </section>
         <section className="section4">
           <h2>{section4.title}</h2>
-          {windowWidth > 1000 ? <TableMax></TableMax> : <TableMin></TableMin>}
+          {windowWidth > 1000 || !windowWidth ? (
+            <TableMax></TableMax>
+          ) : (
+            <TableMin></TableMin>
+          )}
         </section>
       </main>
     </Layout>

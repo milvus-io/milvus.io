@@ -91,7 +91,7 @@ const IndexPage = ({ data, pageContext }) => {
         <li className="table-header">Milvus</li>
         {milvus.map((v, i) => (
           <li key={i} className="table-item">
-            <div className={`circle ${!v && "dark"}`}></div>
+            <span className={`circle ${!v && "dark"}`}></span>
           </li>
         ))}
       </ul>
@@ -99,7 +99,7 @@ const IndexPage = ({ data, pageContext }) => {
         <li className="table-header">Faiss</li>
         {faiss.map((v, i) => (
           <li key={i} className="table-item">
-            <div className={`circle ${!v && "dark"}`}></div>
+            <span className={`circle ${!v && "dark"}`}></span>
           </li>
         ))}
       </ul>
@@ -204,7 +204,11 @@ const IndexPage = ({ data, pageContext }) => {
         </section>
         <section className="section4">
           <h2>{section4.title}</h2>
-          {windowWidth > 1000 ? <TableMax></TableMax> : <TableMin></TableMin>}
+          {windowWidth > 1000 || !windowWidth ? (
+            <TableMax></TableMax>
+          ) : (
+            <TableMin></TableMin>
+          )}
         </section>
       </main>
     </Layout>

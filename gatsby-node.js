@@ -104,7 +104,7 @@ exports.createPages = ({ actions, graphql }) => {
     const legalMd = result.data.allMarkdownRemark.edges.filter(
       ({ node: { fileAbsolutePath, frontmatter } }) =>
         (!!findVersion(fileAbsolutePath) ||
-          fileAbsolutePath.includes("/blog/") ||
+          fileAbsolutePath.includes("/blog/zh-CN") ||
           fileAbsolutePath.includes("/docs/versions/master/")) &&
         frontmatter.id
     );
@@ -152,34 +152,26 @@ exports.createPages = ({ actions, graphql }) => {
 
     // -----  for global search begin -----
     const flatten = arr =>
-      arr.map(
-        ({ node: { frontmatter, fileAbsolutePath, headings } }) => {
-          const fileLang = DOC_LANG_FOLDERS.reduce((pre, cur) => {
-            if (fileAbsolutePath.includes(cur)) {
-              pre = cur === "/en/" ? "en" : "cn";
-            }
-            return pre;
-          }, "");
+      arr.map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
+        const fileLang = DOC_LANG_FOLDERS.reduce((pre, cur) => {
+          if (fileAbsolutePath.includes(cur)) {
+            pre = cur === "/en/" ? "en" : "cn";
+          }
+          return pre;
+        }, "");
 
-          const version = findVersion(fileAbsolutePath) || "master";
-          const headingVals = headings.map(v => v.value);
-          const isBlog = fileAbsolutePath.includes("blog");
-          return {
-            ...frontmatter,
-            fileLang,
-            version,
-            path: generatePath(
-              frontmatter.id,
-              fileLang,
-              version,
-              isBlog,
-              false
-            ),
-            // the value we need compare with search query
-            values: [...headingVals, frontmatter.id]
-          };
-        }
-      );
+        const version = findVersion(fileAbsolutePath) || "master";
+        const headingVals = headings.map(v => v.value);
+        const isBlog = fileAbsolutePath.includes("blog");
+        return {
+          ...frontmatter,
+          fileLang,
+          version,
+          path: generatePath(frontmatter.id, fileLang, version, isBlog, false),
+          // the value we need compare with search query
+          values: [...headingVals, frontmatter.id]
+        };
+      });
     const fileData = flatten(legalMd);
     fs.writeFile(
       `${__dirname}/src/search.json`,

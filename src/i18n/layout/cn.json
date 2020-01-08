@@ -47,27 +47,33 @@
         "list": [
           {
             "title": "异构众核",
-            "content": "Milvus 使用异构众核计算处理特征向量，成本更低，性能更好。"
+            "content": "Milvus 使用异构众核计算处理特征向量，成本更低，性能更好。",
+            "img": "heterogeneous"
           },
           {
             "title": "多元化索引",
-            "content": "Milvus 支持多种索引方式，使用量化索引、基于树的索引和图索引等算法。"
+            "content": "Milvus 支持多种索引方式，使用量化索引、基于树的索引和图索引等算法。",
+            "img": "index"
           },
           {
             "title": "资源智能管理",
-            "content": "Milvus 根据实际数据规模和可利用资源，智能调节优化查询计算和索引构建过程。"
+            "content": "Milvus 根据实际数据规模和可利用资源，智能调节优化查询计算和索引构建过程。",
+            "img": "resource"
           },
           {
             "title": "水平扩容",
-            "content": "Milvus 支持在线 / 离线扩容，仅需执行简单命令，便可弹性伸缩计算节点和存储节点。"
+            "content": "Milvus 支持在线 / 离线扩容，仅需执行简单命令，便可弹性伸缩计算节点和存储节点。",
+            "img": "scalability"
           },
           {
             "title": "高可用性",
-            "content": "Milvus 集成了 Kubernetes 框架，能有效避免单点障碍情况的发生。"
+            "content": "Milvus 集成了 Kubernetes 框架，能有效避免单点障碍情况的发生。",
+            "img": "availability"
           },
           {
             "title": "简单易用",
-            "content": "Milvus 安装简单，使用方便。支持使用基于 Prometheus 的图形化监控，方便您实时跟踪系统性能。"
+            "content": "Milvus 安装简单，使用方便。支持使用基于 Prometheus 的图形化监控，方便您实时跟踪系统性能。",
+            "img": "easy"
           }
         ]
       },

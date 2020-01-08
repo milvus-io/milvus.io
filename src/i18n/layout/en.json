@@ -47,27 +47,33 @@
         "list": [
           {
             "title": "Heterogeneous computing",
-            "content": "Milvus is designed with heterogeneous computing architecture for the best performance and cost efficiency."
+            "content": "Milvus is designed with heterogeneous computing architecture for the best performance and cost efficiency.",
+            "img": "heterogeneous"
           },
           {
             "title": "Multiple indexes",
-            "content": "Milvus supports a variety of indexing types that employs quantization, tree-based, and graph indexing techniques."
+            "content": "Milvus supports a variety of indexing types that employs quantization, tree-based, and graph indexing techniques.",
+            "img": "index"
           },
           {
             "title": "Intelligent resource management",
-            "content": "Milvus automatically adapts search computation and index building processes based on your datasets and available resources."
+            "content": "Milvus automatically adapts search computation and index building processes based on your datasets and available resources.",
+            "img": "resource"
           },
           {
             "title": "Horizontal scalability",
-            "content": "Milvus supports online / offline expansion to scale both storage and computation resources with simple commands."
+            "content": "Milvus supports online / offline expansion to scale both storage and computation resources with simple commands.",
+            "img": "scalability"
           },
           {
             "title": "High availability",
-            "content": "Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided."
+            "content": "Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided.",
+            "img": "availability"
           },
           {
             "title": "Ease of use",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor. dashboards."
+            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor. dashboards.",
+            "img": "easy"
           }
         ]
       },

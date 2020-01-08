@@ -6,16 +6,23 @@ import LocalizedLink from "../components/localizedLink/localizedLink";
 import Notification from "../components/notification";
 import "../scss/index.scss";
 import WhatIsMilvus from "../images/what-is-milvus.png";
-import Icon1 from "../images/icon-1.png";
-import Icon2 from "../images/icon-2.png";
-import Icon3 from "../images/icon-3.png";
-import Icon4 from "../images/icon-4.png";
-import Icon5 from "../images/icon-5.png";
-import Icon6 from "../images/icon-6.png";
+import availabilityIcon from "../images/availability.png";
+import easyIcon from "../images/easy.png";
+import heterogeneousIcon from "../images/heterogeneous.png";
+import indexIcon from "../images/index.png";
+import resourceIcon from "../images/resource.png";
+import scalabilityIcon from "../images/scalability.png";
 import GithubButton from "react-github-button";
 import "react-github-button/assets/style.css";
 
-const icons = [Icon1, Icon2, Icon3, Icon4, Icon5, Icon6];
+const icons = {
+  availability: availabilityIcon,
+  easy: easyIcon,
+  heterogeneous: heterogeneousIcon,
+  index: indexIcon,
+  resource: resourceIcon,
+  scalability: scalabilityIcon
+};
 
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
@@ -193,9 +200,9 @@ const IndexPage = ({ data, pageContext }) => {
         <section className="section3">
           <h2>{section3.title}</h2>
           <ul className="feature-wrapper">
-            {section3.list.map((v, index) => (
+            {section3.list.map(v => (
               <li className="feature-item" key={v.title}>
-                <img src={icons[index]} alt="icon"></img>
+                <img src={icons[v.img]} alt="icon"></img>
                 <div>
                   <p className="title">{v.title}</p>
                   <p className="content">{v.content}</p>
@@ -271,6 +278,7 @@ export const Query = graphql`
                   list {
                     title
                     content
+                    img
                   }
                 }
                 section4 {

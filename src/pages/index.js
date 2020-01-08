@@ -22,18 +22,20 @@ const IndexPage = ({ data, pageContext }) => {
   const { locale } = pageContext;
   const { section1, section2, section3, section4 } = language.home;
 
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : ""
-  );
+  const [windowWidth, setWindowWidth] = useState("");
+
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
     const cb = e => {
       setWindowWidth(e.target.innerWidth);
     };
     window.addEventListener("resize", cb);
+
     return () => {
       window.removeEventListener("resize", cb);
     };
   }, []);
+
   const milvus = [
     true,
     true,

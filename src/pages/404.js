@@ -1,8 +1,8 @@
 import React from "react";
 
-import Layout from "../components/layout/layout";
+import Layout from "../components/layout/404Layout";
 import SEO from "../components/seo";
-
+import "./404.scss";
 const NotFoundPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
@@ -10,8 +10,17 @@ const NotFoundPage = ({ data, pageContext }) => {
   return (
     <Layout language={language} locale={locale}>
       <SEO title="404: Not found" />
-      <h1>NOT FOUND</h1>
-      <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+      <div
+        style={{
+          display: "flex",
+          height: "60vh",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "30px"
+        }}
+      >
+        <p>{language.notFound}</p>
+      </div>
     </Layout>
   );
 };
@@ -23,6 +32,7 @@ export const Query = graphql`
         node {
           childLayoutJson {
             layout {
+              notFound
               header {
                 about
                 doc

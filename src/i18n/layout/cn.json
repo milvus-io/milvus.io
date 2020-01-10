@@ -1,5 +1,6 @@
 {
   "layout": {
+    "notFound": "您访问的页面不存在",
     "header": {
       "about": "关于Milvus",
       "doc": "文档",

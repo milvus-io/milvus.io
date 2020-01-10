@@ -1,5 +1,6 @@
 {
   "layout": {
+    "notFound": "404 Page Not Found",
     "header": {
       "about": "About Milvus",
       "doc": "Docs",
@@ -16,7 +17,7 @@
       },
       "doc": {
         "title": "Docs",
-        "txt1": "Qucik Start",
+        "txt1": "Quick Start",
         "txt2": "FAQ",
         "txt3": "Release Notes"
       },
@@ -39,7 +40,7 @@
       },
       "section2": {
         "title": "What is Milvus",
-        "content": "Milvus is an open source similarity search engine for massive-scalefeature vectors. Built with heterogeneous computingarchitecture for the best cost efficiency. Searches overbillion-scale vectors take only milliseconds with minimumcomputing resources. Milvus can be used in a wide variety ofscenarios to boost AI development.",
+        "content": "Milvus is an open source similarity search engine for massive-scale feature vectors. Built with heterogeneous computing architecture for the best cost efficiency. Searches over billion-scale vectors take only milliseconds with minimum computing resources. Milvus can be used in a wide variety of scenarios to boost AI development.",
         "link": "Read More"
       },
       "section3": {
@@ -72,7 +73,7 @@
           },
           {
             "title": "Ease of use",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor. dashboards.",
+            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
             "img": "easy"
           }
         ]

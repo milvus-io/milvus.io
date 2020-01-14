@@ -2,6 +2,8 @@
   "layout": {
     "notFound": "404 Page Not Found",
     "header": {
+      "why": "Why Milvus",
+      "solution": "Solutions",
       "about": "About Milvus",
       "doc": "Docs",
       "blog": "Blog",
@@ -36,12 +38,12 @@
       "section1": {
         "desc1": "An Open Source Vector Similarity",
         "desc2": "Search Engine",
-        "link": "Why Milvus"
+        "link": "Learn More"
       },
       "section2": {
         "title": "What is Milvus",
         "content": "Milvus is an open source similarity search engine for massive-scale feature vectors. Built with heterogeneous computing architecture for the best cost efficiency. Searches over billion-scale vectors take only milliseconds with minimum computing resources. Milvus can be used in a wide variety of scenarios to boost AI development.",
-        "link": "Read More"
+        "link": "Quick Start"
       },
       "section3": {
         "title": "Milvus Features",
@@ -94,6 +96,28 @@
           "RESTful API",
           "Enterprise user support"
         ]
+      },
+      "section5": {
+        "title": "Solutions for AI",
+        "desc": "Step-by-step instructions to solve AI problems with Milvus.",
+        "img1": {
+          "title": "Reverse image search",
+          "content": "one or two sentences to describe the case. one or two sentences to describe the case. one or two sentences to describe the case…"
+        },
+        "img2": {
+          "title": "Personalized recommender system",
+          "content": "one or two sentences to describe the case."
+        },
+        "img3": {
+          "title": "Molecular Formula",
+          "content": "one or two sentences to describe the case. one or two sentences to describe the case. one or two sentences to describe the case…"
+        },
+        "button": "Try on Cloud",
+        "viewall": "View all cases"
+      },
+      "section6": {
+        "title": "Boost AI development with Milvus",
+        "button": "Get started"
       }
     }
   }

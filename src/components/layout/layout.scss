@@ -2,19 +2,58 @@
 @import "../include_media.scss";
 
 .content-wrapper {
-  width: 90%;
   max-width: 1400px;
   margin: 40px auto;
-  padding: 0 2rem;
   box-sizing: border-box;
 
   @include media("<=1000px") {
-    width: 100%;
+    padding: 0 2rem;
+
     margin-top: 100px;
   }
 
   ul,
   li {
     list-style: none;
+  }
+
+
+}
+
+.section6 {
+  height: 94px;
+  line-height: 94px;
+  margin-top: 140px;
+  opacity: 0.8;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-align: center;
+  background-color: #4FC4F9;
+
+  .get-start {
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    vertical-align: middle;
+    width: 206px;
+    margin-left: 70px;
+    border-radius: 40px;
+    color: #4EB8F0;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-align: center;
+    background: #fff;
+    text-transform: uppercase;
+  }
+
+  @include media("<=1000px") {
+    height: auto;
+    margin-top: 60px;
+    padding: 20px;
+    line-height: 1.5;
+
+    .get-start {
+      margin: 20px 0 0 0;
+    }
   }
 }

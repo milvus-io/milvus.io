@@ -2,6 +2,8 @@
   "layout": {
     "notFound": "您访问的页面不存在",
     "header": {
+      "why": "Why Milvus",
+      "solution": "解决方案",
       "about": "关于Milvus",
       "doc": "文档",
       "blog": "博客",
@@ -36,12 +38,12 @@
       "section1": {
         "desc1": "开源向量相似度搜索引擎",
         "desc2": "",
-        "link": "为什么选择 Milvus"
+        "link": "了解更多"
       },
       "section2": {
         "title": "什么是 Milvus",
         "content": "Milvus 是一款开源的、针对海量特征向量的相似性搜索引擎。基于异构众核计算框架设计，成本更低，性能更好。 在有限的计算资源下，十亿向量搜索仅毫秒响应。Milvus 能够广泛应用于各种 AI 场景，为 AI 发展提供有效助力。",
-        "link": "点击详情"
+        "link": "快速开始"
       },
       "section3": {
         "title": "Milvus 特性",
@@ -94,6 +96,28 @@
           "RESTful API",
           "Enterprise user support"
         ]
+      },
+      "section5": {
+        "title": "AI 解决方案",
+        "desc": "Step-by-step instructions to solve AI problems with Milvus.",
+        "img1": {
+          "title": "Reverse image search",
+          "content": "one or two sentences to describe the case. one or two sentences to describe the case. one or two sentences to describe the case…"
+        },
+        "img2": {
+          "title": "Personalized recommender system",
+          "content": "one or two sentences to describe the case."
+        },
+        "img3": {
+          "title": "Molecular Formula",
+          "content": "one or two sentences to describe the case. one or two sentences to describe the case. one or two sentences to describe the case…"
+        },
+        "button": "Try on Cloud",
+        "viewall": "View all cases"
+      },
+      "section6": {
+        "title": "Boost AI development with Milvus",
+        "button": "快速开始"
       }
     }
   }

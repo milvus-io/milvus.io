@@ -4,8 +4,9 @@ body {
   background-color: #28292E;
   background-image: url("../images/hero-1225.png");
   background-repeat: no-repeat;
-  background-size: 90%;
+  background-size: 70%;
   background-position: right 60px;
+
   @include media("<=1000px") {
     background-size: 100vh;
     background-position: right 60px;
@@ -13,6 +14,7 @@ body {
 }
 
 .home-wrapper {
+
   // typography
   h1,
   h2,
@@ -43,11 +45,21 @@ body {
 
   .content p,
   p.content {
-    font-size: 0.8rem;
-    color: #fafafa;
+    font-size: 15px;
+    color: #fff;
     opacity: 0.75;
-    line-height: 1.6;
+    line-height: 25px
   }
+
+  .anchor {
+    position: relative;
+    top: -80px;
+
+    @include media("<=1000px") {
+      top: -100px;
+    }
+  }
+
   // button styles
   .btn-wrapper {
     width: auto;
@@ -61,7 +73,9 @@ body {
     padding: 1rem 1.5rem;
     margin: 2rem 1rem 2rem 0;
   }
+
   @include media("<=1000px") {
+
     h1,
     h2,
     h3 {
@@ -69,6 +83,7 @@ body {
       line-height: 30px;
       margin: 30px 0 15px;
     }
+
     // section positions
     .section1 {
       height: 50vh;
@@ -95,28 +110,25 @@ body {
     }
 
     .content {
-      flex: 1;
-      margin-left: 5rem;
-      max-width: 50%;
-      min-width: 400px;
+      max-width: 600px;
+      margin: 0 auto;
+
+      text-align: center;
     }
+
     @include media("<=1000px") {
-      flex-direction: column;
 
       .content {
         margin: 0;
         min-width: 300px;
       }
 
-      img {
-        flex: 0;
-        width: 50%;
-      }
+
     }
   }
 
   .section3 {
-    margin-top: 6rem;
+    margin-top: 2rem;
 
     h2 {
       text-align: center;
@@ -146,6 +158,7 @@ body {
         margin: 2rem 0 0.5rem;
       }
     }
+
     @include media("<=1000px") {
       .feature-wrapper {
         flex-direction: column;
@@ -208,6 +221,7 @@ body {
     .table-value {
       flex: 1;
     }
+
     @include media("<=1000px") {
       .content-wrapper {
         display: block;
@@ -228,4 +242,99 @@ body {
       }
     }
   }
+
+  .section5 {
+    margin-top: 6rem;
+
+    h2,
+    .desc {
+      text-align: center;
+    }
+
+    .desc {
+      margin-top: 20px;
+      line-height: 25px;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+
+      @include media("<=1000px") {
+        display: block;
+      }
+    }
+
+    .card {
+      position: relative;
+      height: 321px;
+      width: 340px;
+      border-radius: 10px;
+      background-size: cover;
+      margin: 20px 0;
+
+      @include media("<=1000px") {
+        width: 100%;
+        max-width: 340px;
+      }
+
+      .detail {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        border-radius: 0 0 10px 10px;
+        background-color: #000;
+
+        .title {
+          color: #FAFAFA;
+          font-size: 18px;
+          line-height: 21px;
+        }
+
+        .content {
+          color: #A0A0A0;
+          font-size: 12px;
+          line-height: 15px;
+        }
+
+        .rectangle {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          display: block;
+          height: 28px;
+          line-height: 28px;
+          width: 110px;
+          text-align: center;
+          border-radius: 100px 0 0 100px;
+          background-color: rgba(79, 196, 249, 0.75);
+          font-size: 12px;
+          font-family: Roboto;
+          font-weight: bold;
+        }
+
+        .triangle {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .search {
+      background-image: url('../images/search.jpg');
+    }
+
+    .recommend {
+      background-image: url('../images/recommender.jpg');
+    }
+
+    .molecular {
+      background-image: url("../images/molecular.jpg");
+    }
+  }
+
+
 }

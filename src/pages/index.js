@@ -5,7 +5,7 @@ import SEO from "../components/seo";
 import LocalizedLink from "../components/localizedLink/localizedLink";
 import Notification from "../components/notification";
 import "../scss/index.scss";
-import WhatIsMilvus from "../images/what-is-milvus.png";
+// import WhatIsMilvus from "../images/what-is-milvus.png";
 import availabilityIcon from "../images/availability.png";
 import easyIcon from "../images/easy.png";
 import heterogeneousIcon from "../images/heterogeneous.png";
@@ -27,7 +27,7 @@ const icons = {
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
-  const { section1, section2, section3, section4 } = language.home;
+  const { section1, section2, section3, section4, section5 } = language.home;
 
   const [windowWidth, setWindowWidth] = useState("");
 
@@ -184,21 +184,14 @@ const IndexPage = ({ data, pageContext }) => {
           </div>
         </section>
         <section className="section2">
-          <img src={WhatIsMilvus} alt="what is milvus"></img>
           <div className="content">
+            <div id="whymilvus" className="anchor"></div>
             <h3>{section2.title}</h3>
             <p>{section2.content}</p>
-            <LocalizedLink
-              className="primary primary-color"
-              to="/docs/about_milvus/overview.md"
-              locale={locale}
-            >
-              {section2.link}
-            </LocalizedLink>
           </div>
         </section>
         <section className="section3">
-          <h2>{section3.title}</h2>
+          {/* <h2>{section3.title}</h2> */}
           <ul className="feature-wrapper">
             {section3.list.map(v => (
               <li className="feature-item" key={v.title}>
@@ -210,6 +203,15 @@ const IndexPage = ({ data, pageContext }) => {
               </li>
             ))}
           </ul>
+          <div style={{ textAlign: "center" }}>
+            <LocalizedLink
+              className="primary primary-color"
+              to="/docs/about_milvus/overview.md"
+              locale={locale}
+            >
+              {section2.link}
+            </LocalizedLink>
+          </div>
         </section>
         <section className="section4">
           <h2>{section4.title}</h2>
@@ -218,6 +220,56 @@ const IndexPage = ({ data, pageContext }) => {
           ) : (
             <TableMin></TableMin>
           )}
+        </section>
+        <section className="section5">
+          <div id="solution" className="anchor"></div>
+          <h2>{section5.title}</h2>
+          <p className="desc">{section5.desc}</p>
+          <div className="content">
+            <section className="search card">
+              <div className="detail">
+                <p className="title">{section5.img1.title}</p>
+                <p className="content">{section5.img1.content}</p>
+                <LocalizedLink
+                  className="rectangle"
+                  to="/docs/about_milvus/overview.md"
+                  locale={locale}
+                >
+                  {section5.button}
+                  <i className={`fas fa-chevron-right triangle `}></i>
+                </LocalizedLink>
+              </div>
+            </section>
+            <section className="recommend card">
+              <div className="detail">
+                <p className="title">{section5.img2.title}</p>
+                <p className="content">{section5.img2.content}</p>
+              </div>
+            </section>
+            <section className="molecular card">
+              <div className="detail">
+                <p className="title">{section5.img3.title}</p>
+                <p className="content">{section5.img3.content}</p>
+                <LocalizedLink
+                  className="rectangle"
+                  to="/docs/about_milvus/overview.md"
+                  locale={locale}
+                >
+                  {section5.button}
+                  <i className={`fas fa-chevron-right triangle `}></i>
+                </LocalizedLink>
+              </div>
+            </section>
+          </div>
+          <div style={{ textAlign: "center", marginTop: "50px" }}>
+            <LocalizedLink
+              className="primary primary-color"
+              to="/docs/about_milvus/overview.md"
+              locale={locale}
+            >
+              {section5.viewall}
+            </LocalizedLink>
+          </div>
         </section>
       </main>
     </Layout>
@@ -232,6 +284,8 @@ export const Query = graphql`
           childLayoutJson {
             layout {
               header {
+                why
+                solution
                 about
                 doc
                 blog
@@ -284,6 +338,28 @@ export const Query = graphql`
                 section4 {
                   title
                   list
+                }
+                section5 {
+                  title
+                  desc
+                  button
+                  viewall
+                  img1 {
+                    title
+                    content
+                  }
+                  img2 {
+                    title
+                    content
+                  }
+                  img3 {
+                    title
+                    content
+                  }
+                }
+                section6 {
+                  title
+                  button
                 }
               }
             }

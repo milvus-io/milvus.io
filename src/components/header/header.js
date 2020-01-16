@@ -33,29 +33,31 @@ const Header = ({ language, locale }) => {
         </LocalizeLink>
         {screenWidth > 1000 ? (
           <div className="right">
-            <LocalizeLink locale={locale} to="/#whymilvus">
+            <LocalizeLink locale={locale} to="/#whymilvus" className="link">
               {header.why}
             </LocalizeLink>
             <LocalizeLink
               locale={locale}
-              className="text"
+              className="link"
               to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
             >
               {header.tutorial}
             </LocalizeLink>
 
-            <LocalizeLink locale={locale} to="/#solution">
+            <LocalizeLink locale={locale} className="link" to="/#solution">
               {header.solution}
             </LocalizeLink>
 
             <LocalizeLink
               locale={locale}
+              className="link"
               to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
             >
               {header.doc}
             </LocalizeLink>
             <LocalizeLink
               locale={locale}
+              className="link"
               to={"/blogs/2019-08-26-vector-search-million.md"}
             >
               {header.blog}
@@ -64,13 +66,13 @@ const Header = ({ language, locale }) => {
             <Search language={header}></Search>
             <a
               href="https://github.com/milvus-io/milvus"
-              className=" link"
+              className="link"
               target="_blank"
               rel="noopener noreferrer"
             >
               Github
             </a>
-            <LocalizeLink locale={l} to={to}>
+            <LocalizeLink locale={l} to={to} className="link">
               {locale === "cn" ? "EN" : "中"}
             </LocalizeLink>
           </div>

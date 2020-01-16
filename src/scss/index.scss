@@ -290,6 +290,8 @@ body {
         border-radius: 0 0 10px 10px;
         background-color: #000;
 
+
+
         .title {
           color: #FAFAFA;
           font-size: 18px;
@@ -316,11 +318,21 @@ body {
           background-color: rgba(79, 196, 249, 0.75);
           font-size: 12px;
           font-family: Roboto;
+          z-index: 20;
         }
 
         .triangle {
           margin-left: 10px;
         }
+      }
+
+      .mask {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
       }
     }
 

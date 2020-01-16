@@ -99,7 +99,7 @@
         ]
       },
       "section5": {
-        "title": "Scenarios for AI",
+        "title": "Scenarios",
         "desc": "Step-by-step instructions to solve AI problems with Milvus.",
         "img1": {
           "title": "Reverse Image Search",

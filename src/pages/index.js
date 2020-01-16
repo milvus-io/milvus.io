@@ -230,6 +230,7 @@ const IndexPage = ({ data, pageContext }) => {
               <div className="detail">
                 <p className="title">{section5.img1.title}</p>
                 <p className="content">{section5.img1.content}</p>
+
                 <a
                   className="rectangle"
                   href="http://40.73.4.214"
@@ -240,17 +241,42 @@ const IndexPage = ({ data, pageContext }) => {
                   <i className={`fas fa-chevron-right triangle `}></i>
                 </a>
               </div>
+              <a
+                className="mask"
+                href={
+                  locale === "en"
+                    ? "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/pic_search/README.md"
+                    : "https://github.com/milvus-io/bootcamp/blob/master/solutions/pic_search/README.md"
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ""
+              </a>
             </section>
             <section className="recommend card">
               <div className="detail">
                 <p className="title">{section5.img2.title}</p>
                 <p className="content">{section5.img2.content}</p>
               </div>
+              <a
+                className="mask"
+                href={
+                  locale === "en"
+                    ? "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/recommender_system/README.md"
+                    : "https://github.com/milvus-io/bootcamp/blob/master/solutions/recommender_system/README.md"
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ""
+              </a>
             </section>
             <section className="molecular card">
               <div className="detail">
                 <p className="title">{section5.img3.title}</p>
                 <p className="content">{section5.img3.content}</p>
+
                 <a
                   className="rectangle"
                   href="http://40.73.24.85"
@@ -261,6 +287,18 @@ const IndexPage = ({ data, pageContext }) => {
                   <i className={`fas fa-chevron-right triangle `}></i>
                 </a>
               </div>
+              <a
+                className="mask"
+                href={
+                  locale === "en"
+                    ? "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/mols_search/README.md"
+                    : "https://github.com/milvus-io/bootcamp/blob/master/solutions/mols_search/README.md"
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ""
+              </a>
             </section>
           </div>
           <div style={{ textAlign: "center", marginTop: "50px" }}>

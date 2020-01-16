@@ -9,6 +9,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Header from "../header/header";
 import Footer from "../footer/footer";
+import LocalizeLink from "../localizedLink/localizedLink";
 
 import "./layout.scss";
 import "../../reset.scss";
@@ -23,9 +24,13 @@ const Layout = ({ children, language, locale }) => {
       <section className="section6">
         <div>
           <span>{section6.title}</span>
-          <a href="#" className="get-start">
+          <LocalizeLink
+            locale={locale}
+            className=" get-start"
+            to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
+          >
             {section6.button}
-          </a>
+          </LocalizeLink>
         </div>
       </section>
       <Footer language={language} locale={locale}></Footer>

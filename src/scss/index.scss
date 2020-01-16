@@ -179,6 +179,7 @@ body {
 
     .content-wrapper {
       display: flex;
+      width: 100%;
     }
 
     .table-header {
@@ -296,6 +297,7 @@ body {
         }
 
         .content {
+          margin-top: 6px;
           color: #A0A0A0;
           font-size: 12px;
           line-height: 15px;
@@ -314,7 +316,6 @@ body {
           background-color: rgba(79, 196, 249, 0.75);
           font-size: 12px;
           font-family: Roboto;
-          font-weight: bold;
         }
 
         .triangle {

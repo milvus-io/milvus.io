@@ -2,11 +2,12 @@
   "layout": {
     "notFound": "您访问的页面不存在",
     "header": {
-      "why": "Why Milvus",
-      "solution": "解决方案",
+      "why": "为什么选择Milvus",
+      "solution": "应用场景",
       "about": "关于Milvus",
       "doc": "文档",
       "blog": "博客",
+      "tutorial": "教程",
       "try": "试用",
       "loading": "加载中...",
       "noresult": "未查询到数据"
@@ -98,25 +99,25 @@
         ]
       },
       "section5": {
-        "title": "AI 解决方案",
+        "title": "应用场景",
         "desc": "Step-by-step instructions to solve AI problems with Milvus.",
         "img1": {
-          "title": "Reverse image search",
-          "content": "one or two sentences to describe the case. one or two sentences to describe the case. one or two sentences to describe the case…"
+          "title": "以图搜图",
+          "content": "结合 VGG 神经网络模型的高性能、可自定义的以图搜图系统。"
         },
         "img2": {
-          "title": "Personalized recommender system",
-          "content": "one or two sentences to describe the case."
+          "title": "个性化推荐系统",
+          "content": "结合 PaddlePaddle 深度学习平台的高性能个性化推荐系统。"
         },
         "img3": {
-          "title": "Molecular Formula",
-          "content": "one or two sentences to describe the case. one or two sentences to describe the case. one or two sentences to describe the case…"
+          "title": "化学式相似度检索",
+          "content": "针对海量化学式的高性能相似度检索"
         },
-        "button": "Try on Cloud",
-        "viewall": "View all cases"
+        "button": "试用",
+        "viewall": "浏览更多"
       },
       "section6": {
-        "title": "Boost AI development with Milvus",
+        "title": "助力AI发展",
         "button": "快速开始"
       }
     }

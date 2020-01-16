@@ -206,7 +206,7 @@ const IndexPage = ({ data, pageContext }) => {
           <div style={{ textAlign: "center" }}>
             <LocalizedLink
               className="primary primary-color"
-              to="/docs/about_milvus/overview.md"
+              to="/docs/guides/get_started/install_milvus/install_milvus.md"
               locale={locale}
             >
               {section2.link}
@@ -224,20 +224,21 @@ const IndexPage = ({ data, pageContext }) => {
         <section className="section5">
           <div id="solution" className="anchor"></div>
           <h2>{section5.title}</h2>
-          <p className="desc">{section5.desc}</p>
+          {/* <p className="desc">{section5.desc}</p> */}
           <div className="content">
             <section className="search card">
               <div className="detail">
                 <p className="title">{section5.img1.title}</p>
                 <p className="content">{section5.img1.content}</p>
-                <LocalizedLink
+                <a
                   className="rectangle"
-                  to="/docs/about_milvus/overview.md"
-                  locale={locale}
+                  href="http://40.73.4.214"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {section5.button}
                   <i className={`fas fa-chevron-right triangle `}></i>
-                </LocalizedLink>
+                </a>
               </div>
             </section>
             <section className="recommend card">
@@ -250,25 +251,27 @@ const IndexPage = ({ data, pageContext }) => {
               <div className="detail">
                 <p className="title">{section5.img3.title}</p>
                 <p className="content">{section5.img3.content}</p>
-                <LocalizedLink
+                <a
                   className="rectangle"
-                  to="/docs/about_milvus/overview.md"
-                  locale={locale}
+                  href="http://40.73.24.85"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {section5.button}
                   <i className={`fas fa-chevron-right triangle `}></i>
-                </LocalizedLink>
+                </a>
               </div>
             </section>
           </div>
           <div style={{ textAlign: "center", marginTop: "50px" }}>
-            <LocalizedLink
+            <a
               className="primary primary-color"
-              to="/docs/about_milvus/overview.md"
-              locale={locale}
+              href="https://github.com/milvus-io/bootcamp/tree/master/EN_solutions"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {section5.viewall}
-            </LocalizedLink>
+            </a>
           </div>
         </section>
       </main>
@@ -292,6 +295,7 @@ export const Query = graphql`
                 try
                 loading
                 noresult
+                tutorial
               }
               footer {
                 product {

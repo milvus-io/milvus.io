@@ -36,6 +36,14 @@ const Header = ({ language, locale }) => {
             <LocalizeLink locale={locale} to="/#whymilvus">
               {header.why}
             </LocalizeLink>
+            <LocalizeLink
+              locale={locale}
+              className="text"
+              to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
+            >
+              {header.tutorial}
+            </LocalizeLink>
+
             <LocalizeLink locale={locale} to="/#solution">
               {header.solution}
             </LocalizeLink>
@@ -55,7 +63,7 @@ const Header = ({ language, locale }) => {
 
             <Search language={header}></Search>
             <a
-              href="https://github.com/milvus-io/bootcamp"
+              href="https://github.com/milvus-io/milvus"
               className=" link"
               target="_blank"
               rel="noopener noreferrer"

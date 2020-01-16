@@ -2,6 +2,7 @@
 @import "../include_media.scss";
 
 .content-wrapper {
+  width: 90%;
   max-width: 1400px;
   margin: 40px auto;
   box-sizing: border-box;
@@ -24,7 +25,6 @@
   height: 94px;
   line-height: 94px;
   margin-top: 140px;
-  opacity: 0.8;
   font-size: 20px;
   letter-spacing: 1px;
   text-align: center;

@@ -3,10 +3,11 @@
     "notFound": "404 Page Not Found",
     "header": {
       "why": "Why Milvus",
-      "solution": "Solutions",
+      "solution": "Scenarios",
       "about": "About Milvus",
       "doc": "Docs",
       "blog": "Blog",
+      "tutorial": "Tutorial",
       "try": "Try",
       "loading": "Loading...",
       "noresult": "No Result"
@@ -98,22 +99,22 @@
         ]
       },
       "section5": {
-        "title": "Solutions for AI",
+        "title": "Scenarios for AI",
         "desc": "Step-by-step instructions to solve AI problems with Milvus.",
         "img1": {
-          "title": "Reverse image search",
-          "content": "one or two sentences to describe the case. one or two sentences to describe the case. one or two sentences to describe the case…"
+          "title": "Reverse Image Search",
+          "content": "High-performance, customizable reverse image search system built with the VGG neural network model."
         },
         "img2": {
-          "title": "Personalized recommender system",
-          "content": "one or two sentences to describe the case."
+          "title": "Personalized recommender system ",
+          "content": "High-performance recommender system built with the PaddlePaddle deep learning platform."
         },
         "img3": {
-          "title": "Molecular Formula",
-          "content": "one or two sentences to describe the case. one or two sentences to describe the case. one or two sentences to describe the case…"
+          "title": "Chemical Structure Similarity Search",
+          "content": "High-performance similarity search of massive-scale chemical structures."
         },
         "button": "Try on Cloud",
-        "viewall": "View all cases"
+        "viewall": "View all scenarios"
       },
       "section6": {
         "title": "Boost AI development with Milvus",

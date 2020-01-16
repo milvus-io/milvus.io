@@ -13,14 +13,16 @@ a {
     padding: 10px 14px;
     border: 2px solid $primary;
     border-radius: 2rem;
+    font-weight: bold;
 
     &:lang(en) {
-      letter-spacing: 6px;
+      letter-spacing: 4px;
     }
 
     &:lang(cn) {
       letter-spacing: 2px;
     }
+
     @include media("<=1000px") {
       &:lang(en) {
         letter-spacing: 2px;

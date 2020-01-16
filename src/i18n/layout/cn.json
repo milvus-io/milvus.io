@@ -2,9 +2,12 @@
   "layout": {
     "notFound": "您访问的页面不存在",
     "header": {
+      "why": "为什么选择Milvus",
+      "solution": "应用场景",
       "about": "关于Milvus",
       "doc": "文档",
       "blog": "博客",
+      "tutorial": "教程",
       "try": "试用",
       "loading": "加载中...",
       "noresult": "未查询到数据"
@@ -36,12 +39,12 @@
       "section1": {
         "desc1": "开源向量相似度搜索引擎",
         "desc2": "",
-        "link": "为什么选择 Milvus"
+        "link": "了解更多"
       },
       "section2": {
         "title": "什么是 Milvus",
         "content": "Milvus 是一款开源的、针对海量特征向量的相似性搜索引擎。基于异构众核计算框架设计，成本更低，性能更好。 在有限的计算资源下，十亿向量搜索仅毫秒响应。Milvus 能够广泛应用于各种 AI 场景，为 AI 发展提供有效助力。",
-        "link": "点击详情"
+        "link": "快速开始"
       },
       "section3": {
         "title": "Milvus 特性",
@@ -94,6 +97,28 @@
           "RESTful API",
           "Enterprise user support"
         ]
+      },
+      "section5": {
+        "title": "应用场景",
+        "desc": "Step-by-step instructions to solve AI problems with Milvus.",
+        "img1": {
+          "title": "以图搜图",
+          "content": "结合 VGG 神经网络模型的高性能、可自定义的以图搜图系统。"
+        },
+        "img2": {
+          "title": "个性化推荐系统",
+          "content": "结合 PaddlePaddle 深度学习平台的高性能个性化推荐系统。"
+        },
+        "img3": {
+          "title": "化学式相似度检索",
+          "content": "针对海量化学式的高性能相似度检索"
+        },
+        "button": "试用",
+        "viewall": "浏览更多"
+      },
+      "section6": {
+        "title": "助力AI发展",
+        "button": "快速开始"
       }
     }
   }

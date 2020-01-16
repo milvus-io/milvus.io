@@ -113,12 +113,12 @@
   kbd,
   pre,
   samp {
-    font-family: "Roboto Mono", Courier, monospace;
+    font-family: Courier, monospace;
     font-size: 1em;
 
     code,
     span {
-      font-family: "Roboto Mono", Courier, monospace;
+      font-family: Courier, monospace;
     }
 
   }
@@ -249,7 +249,7 @@
 
   body {
     color: #fafafa;
-    font-family: "Roboto", sans-serif;
+    font-family: sans-serif;
     word-wrap: break-word;
     font-kerning: normal;
     -moz-font-feature-settings: "kern", "liga", "clig", "calt";
@@ -286,7 +286,7 @@
   h4,
   h5,
   h6 {
-    font-family: "Roboto", sans-serif;
+    font-family: sans-serif;
     line-height: 1.1;
     color: #fafafa;
     padding: 0;

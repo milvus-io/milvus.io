@@ -53,7 +53,7 @@ export default function Template({
       versions={versions}
       id={frontmatter.id}
     >
-      <SEO title={ `${headings[0].value}`} lang={locale} />
+      <SEO title={`${headings[0].value}`} lang={locale} />
       <div className="doc-post-container">
         <div className="doc-post">
           {/* <h1>{frontmatter.title}</h1> */}
@@ -104,12 +104,15 @@ export const pageQuery = graphql`
           childLayoutJson {
             layout {
               header {
+                why
+                solution
                 about
                 doc
                 blog
                 try
                 loading
                 noresult
+                tutorial
               }
               footer {
                 product {

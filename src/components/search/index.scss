@@ -19,12 +19,20 @@
     font-size: 14px;
     background: transparent;
     transition: 0.4s all;
-    width: 4rem;
+    width: 168px;
 
     &:focus {
-      width: 8rem;
+      width: 200px;
       cursor: text;
       color: white;
+    }
+
+    @include media("<=1000px") {
+      width: 128px;
+
+      &:focus {
+        width: 148px;
+      }
     }
 
   }

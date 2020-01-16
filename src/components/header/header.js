@@ -33,9 +33,21 @@ const Header = ({ language, locale }) => {
         </LocalizeLink>
         {screenWidth > 1000 ? (
           <div className="right">
-            <LocalizeLink locale={locale} to={"/docs/about_milvus/overview.md"}>
-              {header.about}
+            <LocalizeLink locale={locale} to="/#whymilvus">
+              {header.why}
             </LocalizeLink>
+            <LocalizeLink
+              locale={locale}
+              className="text"
+              to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
+            >
+              {header.tutorial}
+            </LocalizeLink>
+
+            <LocalizeLink locale={locale} to="/#solution">
+              {header.solution}
+            </LocalizeLink>
+
             <LocalizeLink
               locale={locale}
               to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
@@ -48,15 +60,16 @@ const Header = ({ language, locale }) => {
             >
               {header.blog}
             </LocalizeLink>
+
+            <Search language={header}></Search>
             <a
-              href="https://github.com/milvus-io/bootcamp"
-              className="gradient link"
+              href="https://github.com/milvus-io/milvus"
+              className=" link"
               target="_blank"
               rel="noopener noreferrer"
             >
-              {header.try}
+              Github
             </a>
-            <Search language={header}></Search>
             <LocalizeLink locale={l} to={to}>
               {locale === "cn" ? "EN" : "中"}
             </LocalizeLink>
@@ -72,9 +85,13 @@ const Header = ({ language, locale }) => {
       </header>
       {screenWidth <= 1000 && (
         <nav className="mobile-nav">
-          <LocalizeLink locale={locale} to={"/docs/about_milvus/overview.md"}>
-            {header.about}
+          <LocalizeLink locale={locale} to="/#whymilvus">
+            {header.why}
           </LocalizeLink>
+          <LocalizeLink locale={locale} to="/#solution">
+            {header.solution}
+          </LocalizeLink>
+
           <LocalizeLink
             locale={locale}
             to={"/docs/guides/get_started/install_milvus/install_milvus.md"}

@@ -65,6 +65,13 @@ body {
     width: auto;
     display: flex;
     align-items: center;
+
+    @include media("<=1000px") {
+      .primary {
+        font-size: 12px;
+        padding: 10px 8px;
+      }
+    }
   }
 
   .primary {
@@ -148,7 +155,7 @@ body {
       min-width: 200px;
 
       img {
-        width: 4rem;
+        width: 64px;
         margin: 1rem 1rem 0 0;
       }
 
@@ -272,7 +279,7 @@ body {
       width: 340px;
       border-radius: 10px;
       background-size: cover;
-      margin: 20px 0;
+      margin: 20px auto;
 
       @include media("<=1000px") {
         width: 100%;

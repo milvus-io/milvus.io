@@ -103,15 +103,15 @@
         "desc": "Step-by-step instructions to solve AI problems with Milvus.",
         "img1": {
           "title": "Reverse Image Search",
-          "content": "High-performance, customizable reverse image search system built with the VGG neural network model."
+          "content": "High-performance, customizable reverse image search system built with the VGG neural network model"
         },
         "img2": {
-          "title": "Personalized recommender system ",
-          "content": "High-performance recommender system built with the PaddlePaddle deep learning platform."
+          "title": "Personalized Recommender System",
+          "content": "High-performance recommender system built with the PaddlePaddle deep learning platform"
         },
         "img3": {
           "title": "Chemical Structure Similarity Search",
-          "content": "High-performance similarity search of massive-scale chemical structures."
+          "content": "High-performance similarity search of massive-scale chemical structures"
         },
         "button": "Try on Cloud",
         "viewall": "View all scenarios"

@@ -251,7 +251,7 @@ const IndexPage = ({ data, pageContext }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                ""
+                <span></span>
               </a>
             </section>
             <section className="recommend card">
@@ -269,7 +269,7 @@ const IndexPage = ({ data, pageContext }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                ""
+                <span></span>
               </a>
             </section>
             <section className="molecular card">
@@ -297,7 +297,7 @@ const IndexPage = ({ data, pageContext }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                ""
+                <span></span>
               </a>
             </section>
           </div>

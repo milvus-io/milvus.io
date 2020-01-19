@@ -233,7 +233,7 @@ const IndexPage = ({ data, pageContext }) => {
 
                 <a
                   className="rectangle"
-                  href="http://40.73.4.214"
+                  href="http://40.73.38.81"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

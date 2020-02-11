@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyInput from "../components/input"
 import MySelector from "../components/selector"
 import Logo from "../images/logo.svg"
@@ -6,26 +6,38 @@ import SEO from "../components/seo";
 import "../scss/tool.scss";
 
 const DATA_TYPES = ["Float", "Bytes"]
-const INDEX_TYPES = ["FLAT", "IVFFLAT", "IVFSQ8", "IVFSQ8H", "IVFPQ"];
+// const INDEX_TYPES = ["FLAT", "IVFFLAT", "IVFSQ8", "IVFSQ8H", "IVFPQ"];
 
-const NotFoundPage = ({ data, pageContext }) => {
+const ToolSizing = () => {
   const [dataType, setDataType] = useState("Float")
-  const [indexType, setIndexType] = useState("IVFFLAT")
+  // const [indexType, setIndexType] = useState("IVFFLAT")
   const [deployType, setDeployType] = useState(0) // 0 single 1 cluster
-  const [vector, setVector] = useState(null)
-  const [dimensions, setDimensions] = useState(null)
+  const [vector, setVector] = useState(0)
+  const [dimensions, setDimensions] = useState(0)
   const [nodes, setNodes] = useState(0)
   const [errorText, setErrorText] = useState("")
-  const [diskSize, setDiskSize] = useState(null)
-  const [ramSize, setRamSize] = useState(null)
+  const [diskSize, setDiskSize] = useState({})
+  const [ramSize, setRamSize] = useState({})
+  const [sizeStatus, setSizeStatus] = useState("")
+
 
   const handleChange = e => {
     setDeployType(Number(e.currentTarget.value))
+    setNodes(0)
   }
 
-
-  const handleCompute = () => {
+  const generateSize = (size, IVFSQSize) => {
+    return {
+      "IVFSQ8": IVFSQSize || size,
+      "IVFSQ8H": IVFSQSize || size,
+      "FLAT": size,
+      "IVFFLAT": size,
+      "IVFPQ": size
+    }
+  }
+  const compute = () => {
     const numRegx = /^[0-9]*$/
+    console.log(dimensions)
     if (!numRegx.test(vector) || vector < 0) {
       setErrorText("The num of vectors must above 0.")
       return
@@ -43,36 +55,46 @@ const NotFoundPage = ({ data, pageContext }) => {
     let sizeStatus = 1
     let size = vector * dimensions * 4 / 1024
     let status = "KB"
-    let diskSize = 0
-    let ramSize = 0
+    let diskSize = {}
+    let ramSize = {}
 
-    while (sizeStatus < 3 && size > 4096) {
+    while (sizeStatus < 4 && size > 4096) {
       size = size / 1024
       status = "MB"
       sizeStatus++
     }
     if (sizeStatus === 3) {
       status = "GB"
+    } else if (sizeStatus === 4) {
+      status = "TB"
     }
     if (dataType === "Float") {
-      if (indexType === "IVFSQ8" || indexType === "IVFSQ8H") {
-        diskSize = parseInt(size * 1.3) + 1
-        ramSize = parseInt(size * 0.3) + 1
-      } else {
-        diskSize = parseInt(size * 2) + 1
-        ramSize = parseInt(size) + 1
-      }
+      const IVFSQDisk = parseInt(size * 1.3) + 1
+      const IVFSQRam = parseInt(size * 0.3) + 1
+      const disk = parseInt(size * 2) + 1
+      const ram = parseInt(size) + 1
+      diskSize = generateSize(disk, IVFSQDisk)
+      ramSize = generateSize(ram, IVFSQRam)
+
     } else if (dataType === 'Bytes') {
-      diskSize = parseInt(size / 32 * 2) + 1
-      ramSize = parseInt(size / 32) + 1
+      const disk = parseInt(size / 32 * 2) + 1
+      const ram = parseInt(size / 32) + 1
+      diskSize = generateSize(disk)
+      ramSize = generateSize(ram)
     }
 
     if (deployType === 1) {
-      ramSize = parseInt(ramSize + 4 * nodes)
+      for (let key in ramSize) {
+        ramSize[key] = parseInt(Number(ramSize[key]) + 4 * nodes)
+      }
     }
-    setDiskSize(`${diskSize}${status}`)
-    setRamSize(`${ramSize}${status}`)
+    setDiskSize(diskSize)
+    setRamSize(ramSize)
+    setSizeStatus(status)
   }
+  useEffect(() => {
+    compute()
+  }, [vector, dimensions, dataType, nodes])
 
   return (
     <>
@@ -101,14 +123,14 @@ const NotFoundPage = ({ data, pageContext }) => {
                 setSelected={setDataType}
               ></MySelector>
             </div>
-            <div className="form-item">
+            {/* <div className="form-item">
               <p>Index Type</p>
               <MySelector
                 options={INDEX_TYPES}
                 selected={indexType}
                 setSelected={setIndexType}
               ></MySelector>
-            </div>
+            </div> */}
             <div className="form-item">
               <p>Deployment</p>
               <label className={`radio-item ${deployType === 0 && 'active'}`}>
@@ -127,11 +149,7 @@ const NotFoundPage = ({ data, pageContext }) => {
                 )
               }
             </div>
-            <div className="form-item btn-wrapper" >
-              {/* eslint-disable-next-line */}
-              <span className="button" onClick={handleCompute}  >Compute</span>
 
-            </div>
           </form>
         </div>
         <div className="right-container">
@@ -139,21 +157,21 @@ const NotFoundPage = ({ data, pageContext }) => {
             <p className="title">Requirements</p>
             <ul>
               <li>
-                <span>Vevtors</span>
+                <span className="label">Vevtors</span>
                 <span className="value">{vector}</span>
               </li>
               <li>
-                <span>Dimensions</span>
+                <span className="label">Dimensions</span>
                 <span className="value">{dimensions}</span>
               </li>
               <li>
-                <span>Data Type</span>
+                <span className="label">Data Type</span>
                 <span className="value">{dataType}</span>
               </li>
-              <li>
-                <span>Index Type</span>
+              {/* <li>
+                <span className="label">Index Type</span>
                 <span className="value">{indexType}</span>
-              </li>
+              </li> */}
               {
                 deployType === 1 && (
                   <li>
@@ -166,16 +184,39 @@ const NotFoundPage = ({ data, pageContext }) => {
           </section>
           <section style={{ marginTop: "40px" }}>
             <p className="title">Recommandation</p>
-            <ul>
-              <li>
-                <span>Memory</span>
-                <span className="value">{ramSize}</span>
-              </li>
-              <li>
-                <span>Disk</span>
-                <span className="value">{diskSize}</span>
-              </li>
-            </ul>
+            <table style={{ width: "100%" }}>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>FLAT</th>
+                  <th>IVFFLAT</th>
+                  <th>IVFSQ8</th>
+                  <th>IVFSQ8H</th>
+                  <th>IVFPQ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Memory</td>
+                  <td>{ramSize['FLAT'] + sizeStatus}</td>
+                  <td>{ramSize['IVFFLAT'] + sizeStatus}</td>
+                  <td>{ramSize['IVFSQ8'] + sizeStatus}</td>
+                  <td>{ramSize['IVFSQ8H'] + sizeStatus}</td>
+                  <td>{ramSize['IVFPQ'] + sizeStatus}</td>
+
+                </tr>
+                <tr>
+                  <td>Disk</td>
+                  <td>{diskSize['FLAT'] + sizeStatus}</td>
+                  <td>{diskSize['IVFFLAT'] + sizeStatus}</td>
+                  <td>{diskSize['IVFSQ8'] + sizeStatus}</td>
+                  <td>{diskSize['IVFSQ8H'] + sizeStatus}</td>
+                  <td>{diskSize['IVFPQ'] + sizeStatus}</td>
+                </tr>
+              </tbody>
+
+            </table>
+
           </section>
         </div>
       </div>
@@ -254,4 +295,4 @@ export const Query = graphql`
   }
 `;
 
-export default NotFoundPage;
+export default ToolSizing;

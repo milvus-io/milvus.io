@@ -111,6 +111,12 @@
       }
     }
 
+    .label,
+    .value {
+      display: inline-block;
+      width: 100px;
+    }
+
     .value {
       display: inline-block;
       margin-left: 40px;
@@ -124,4 +130,23 @@
     color: #ff4d4f;
     text-align: center;
   }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 16px;
+
+    th {
+      font-weight: 400;
+    }
+
+    td {
+      text-align: center;
+      margin: 6px 0;
+
+      &:first-child {
+        font-weight: 400;
+      }
+    }
+  }
+
 }

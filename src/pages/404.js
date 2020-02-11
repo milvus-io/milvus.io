@@ -53,6 +53,10 @@ export const Query = graphql`
                   txt2
                   txt3
                 }
+                tool{
+                  title
+                  txt1
+                }
                 resource {
                   title
                   txt1

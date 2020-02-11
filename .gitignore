@@ -1,7 +1,3 @@
-# Docs
-src/pages/blogs/**/*
-src/pages/docs/**/*
-
 # Logs
 logs
 *.log

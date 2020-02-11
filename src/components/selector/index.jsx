@@ -3,7 +3,7 @@ import LocalizeLink from "../localizedLink/localizedLink";
 import "./index.scss";
 /* eslint-disable */
 const Selector = props => {
-  const { selected, options, locale, isVersion = false, setSelected } = props;
+  const { selected, options, locale, isVersion = false, setSelected = () => { } } = props;
   const [listStatus, setListStatus] = useState(false);
   const toggleList = e => {
     e.stopPropagation();

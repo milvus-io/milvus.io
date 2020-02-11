@@ -24,6 +24,10 @@
         "txt2": "FAQ",
         "txt3": "Release Notes"
       },
+      "tool":{
+        "title":"Tool",
+        "txt1":"Milvus Sizing Tool"
+      },
       "resource": {
         "title": "Resources",
         "txt1": "Github",

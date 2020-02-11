@@ -1,20 +1,6 @@
 @import '../components/include_media.scss'; // hero image
 
-body {
-  background-color: #28292E;
-  background-image: url("../images/hero-1225.png");
-  background-repeat: no-repeat;
-  background-size: 70%;
-  background-position: right 60px;
-
-  @include media("<=1000px") {
-    background-size: 100vh;
-    background-position: right 60px;
-  }
-}
-
 .home-wrapper {
-
   // typography
   h1,
   h2,

@@ -24,6 +24,10 @@
         "txt2": "常见问题",
         "txt3": "版本说明"
       },
+      "tool":{
+        "title":"工具",
+        "txt1":"资源评估工具"
+      },
       "resource": {
         "title": "资源",
         "txt1": "Github",

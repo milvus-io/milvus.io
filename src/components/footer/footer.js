@@ -51,6 +51,17 @@ const Footer = ({ language, locale }) => {
           </LocalizeLink> */}
         </ul>
         <ul>
+          <li className="title">{footer.tool.title}</li>
+          <a
+            className="text"
+            href="/tool"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {footer.tool.txt1}
+          </a>
+        </ul>
+        <ul>
           <li className="title">{footer.resource.title}</li>
           <a
             href="https://github.com/milvus-io/milvus/issues"

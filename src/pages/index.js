@@ -218,8 +218,8 @@ const IndexPage = ({ data, pageContext }) => {
           {windowWidth > 1000 || !windowWidth ? (
             <TableMax></TableMax>
           ) : (
-            <TableMin></TableMin>
-          )}
+              <TableMin></TableMin>
+            )}
         </section>
         <section className="section5">
           <div id="solution" className="anchor"></div>
@@ -346,6 +346,10 @@ export const Query = graphql`
                   txt1
                   txt2
                   txt3
+                }
+                tool{
+                  title
+                  txt1
                 }
                 resource {
                   title

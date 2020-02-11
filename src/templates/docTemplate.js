@@ -67,7 +67,7 @@ export default function Template({
             className="edit-page-link button"
             href={`https://github.com/milvus-io/docs/tree/${version}/site/${
               locale === "en" ? "en" : "zh-CN"
-            }/${editPath}`}
+              }/${editPath}`}
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -125,6 +125,10 @@ export const pageQuery = graphql`
                   txt1
                   txt2
                   txt3
+                }
+                tool{
+                  title
+                  txt1
                 }
                 resource {
                   title

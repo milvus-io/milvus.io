@@ -18,9 +18,12 @@ const Layout = ({ children, language, locale }) => {
   return (
     <>
       <Header language={language} locale={locale} />
+      <div className="bg-wrapper">
       <div className="content-wrapper">
         <main>{children}</main>
       </div>
+      </div>
+      
       <section className="section6">
         <div>
           <span>{section6.title}</span>

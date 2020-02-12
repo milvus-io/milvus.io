@@ -69,16 +69,16 @@ const ToolSizing = () => {
       status = "TB"
     }
     if (dataType === "Float") {
-      const IVFSQDisk = parseInt(size * 1.3) + 1
-      const IVFSQRam = parseInt(size * 0.3) + 1
-      const disk = parseInt(size * 2) + 1
-      const ram = parseInt(size) + 1
+      const IVFSQDisk = Math.ceil(size * 1.3)
+      const IVFSQRam = Math.ceil(size * 0.3)
+      const disk = Math.ceil(size * 2)
+      const ram = Math.ceil(size)
       diskSize = generateSize(disk, IVFSQDisk)
       ramSize = generateSize(ram, IVFSQRam)
 
     } else if (dataType === 'Bytes') {
-      const disk = parseInt(size / 32 * 2) + 1
-      const ram = parseInt(size / 32) + 1
+      const disk = Math.ceil(size / 32 * 2)
+      const ram = Math.ceil(size / 32)
       diskSize = generateSize(disk)
       ramSize = generateSize(ram)
     }
@@ -190,9 +190,16 @@ const ToolSizing = () => {
                   <th></th>
                   <th>FLAT</th>
                   <th>IVFFLAT</th>
-                  <th>IVFSQ8</th>
-                  <th>IVFSQ8H</th>
-                  <th>IVFPQ</th>
+                  {
+                    dataType === 'Float' && (
+                      <>
+                        <th>IVFSQ8</th>
+                        <th>IVFSQ8H</th>
+                        <th>IVFPQ</th>
+                      </>
+                    )
+                  }
+
                 </tr>
               </thead>
               <tbody>
@@ -200,18 +207,32 @@ const ToolSizing = () => {
                   <td>Memory</td>
                   <td>{ramSize['FLAT'] + sizeStatus}</td>
                   <td>{ramSize['IVFFLAT'] + sizeStatus}</td>
-                  <td>{ramSize['IVFSQ8'] + sizeStatus}</td>
-                  <td>{ramSize['IVFSQ8H'] + sizeStatus}</td>
-                  <td>{ramSize['IVFPQ'] + sizeStatus}</td>
+                  {
+                    dataType === 'Float' && (
+                      <>
+                        <td>{ramSize['IVFSQ8'] + sizeStatus}</td>
+                        <td>{ramSize['IVFSQ8H'] + sizeStatus}</td>
+                        <td>{ramSize['IVFPQ'] + sizeStatus}</td>
+                      </>
+                    )
+                  }
+
 
                 </tr>
                 <tr>
                   <td>Disk</td>
                   <td>{diskSize['FLAT'] + sizeStatus}</td>
                   <td>{diskSize['IVFFLAT'] + sizeStatus}</td>
-                  <td>{diskSize['IVFSQ8'] + sizeStatus}</td>
-                  <td>{diskSize['IVFSQ8H'] + sizeStatus}</td>
-                  <td>{diskSize['IVFPQ'] + sizeStatus}</td>
+                  {
+                    dataType === 'Float' && (
+                      <>
+                        <td>{diskSize['IVFSQ8'] + sizeStatus}</td>
+                        <td>{diskSize['IVFSQ8H'] + sizeStatus}</td>
+                        <td>{diskSize['IVFPQ'] + sizeStatus}</td>
+                      </>
+                    )
+                  }
+
                 </tr>
               </tbody>
 

@@ -157,7 +157,7 @@ const ToolSizing = () => {
             <p className="title">Requirements</p>
             <ul>
               <li>
-                <span className="label">Vevtors</span>
+                <span className="label">Vectors</span>
                 <span className="value">{vector}</span>
               </li>
               <li>

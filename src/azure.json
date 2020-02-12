@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "start": "./node_modules/http-server/bin/http-server -d false"
+    "start": "./node_modules/.bin/serve ./public -p 80"
   },
   "dependencies": {
-    "http-server": "^0.11.1"
+    "serve": "^11.3.0"
   }
 }

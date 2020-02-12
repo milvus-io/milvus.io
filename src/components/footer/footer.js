@@ -50,7 +50,7 @@ const Footer = ({ language, locale }) => {
             {footer.doc.txt3}
           </LocalizeLink> */}
         </ul>
-        {/* <ul>
+        <ul>
           <li className="title">{footer.tool.title}</li>
           <a
             className="text"
@@ -60,7 +60,7 @@ const Footer = ({ language, locale }) => {
           >
             {footer.tool.txt1}
           </a>
-        </ul> */}
+        </ul>
         <ul>
           <li className="title">{footer.resource.title}</li>
           <a

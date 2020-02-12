@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "./node_modules/.bin/serve ./public -p 80"
+    "start": "./node_modules/.bin/serve -p 80"
   },
   "dependencies": {
     "serve": "^11.3.0"

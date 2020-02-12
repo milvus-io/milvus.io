@@ -22,7 +22,6 @@ exports.onCreatePage = ({ page, actions }) => {
         toolName = toolName.substring(0, toolName.length - 1);
         localizedPath = `/tools/${toolName}`
       }
-      console.log(localizedPath)
       return createPage({
         ...page,
         path: localizedPath,

@@ -74,6 +74,9 @@ module.exports = {
         icon: `src/images/favicon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: 'gatsby-plugin-zopfli'
+    },
     // add Google Analytics gtag.js to a site
     // however this doesn't work, switch to add it in /src/html.js
     {

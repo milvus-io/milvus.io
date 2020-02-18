@@ -27,7 +27,6 @@ h6 {
   font-weight: 100;
 }
 
-
 #gatsby-focus-wrapper,
 #___gatsby {
   height: 100%;
@@ -55,7 +54,11 @@ main.doc-wrapper {
   background: #28292e;
 
   .menu-container {
-    background-image: linear-gradient(180deg, #101010 0%, rgba(16, 16, 16, 0.00) 100%);
+    background-image: linear-gradient(
+      180deg,
+      #101010 0%,
+      rgba(16, 16, 16, 0) 100%
+    );
     position: fixed;
     left: 0;
     top: 60px;
@@ -75,7 +78,7 @@ main.doc-wrapper {
       height: 100vh;
       box-sizing: border-box;
       z-index: 1000;
-      background-color: #28292E;
+      background-color: #28292e;
     }
   }
 
@@ -98,7 +101,6 @@ main.doc-wrapper {
     padding-left: 1rem;
     border-left: 1px solid #fff;
     font-size: 14px;
-
 
     @include media("<=1000px") {
       display: none;
@@ -123,9 +125,7 @@ main.doc-wrapper {
       &.active {
         color: #33b6f2;
       }
-
     }
-
   }
 
   .footer-wrapper {
@@ -155,4 +155,19 @@ main.doc-wrapper {
   left: 0;
   right: 0;
   z-index: 1000;
+}
+.doc-post-content {
+  p {
+    position: relative;
+    z-index: 2;
+  }
+  [id]::before {
+    content: "";
+    display: block;
+    height: 75px;
+    margin-top: -75px;
+    visibility: hidden;
+    position: relative;
+    z-index: 0;
+  }
 }

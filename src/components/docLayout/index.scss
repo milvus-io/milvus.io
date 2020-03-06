@@ -116,10 +116,18 @@ main.doc-wrapper {
 
     a {
       display: block;
-      max-width: 120px;
+      max-width: 200px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      @include media("<=1400px") {
+        max-width: 160px;
+      }
+
+      @include media("<=1200px") {
+        max-width: 120px;
+      }
 
       &:hover,
       &.active {

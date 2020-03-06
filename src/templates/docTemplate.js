@@ -31,10 +31,14 @@ export default function Template({
       locale === v.lang
   );
   const { markdownRemark } = data; // data.markdownRemark holds our post data
-  const { frontmatter, html } = markdownRemark;
+  let { frontmatter, html } = markdownRemark;
   const nav = {
     current: "doc"
   };
+  const idRegex = /id=\".*?\"/g;
+  if (locale === 'cn') {
+    html = html.replace(idRegex, match => match.replace('？', ''))
+  }
 
   useEffect(() => {
     document.querySelectorAll("pre code").forEach(block => {

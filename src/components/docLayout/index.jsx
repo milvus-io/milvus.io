@@ -48,7 +48,7 @@ export default props => {
   const generateAnchorMenu = (headings, className) => {
     return headings.map(v => {
       /* eslint-disable-next-line */
-      const normalVal = v.value.replace(/[\,\/\'\?]/g, "")
+      const normalVal = v.value.replace(/[\,\/\'\?\？]/g, "")
       const anchor = normalVal.split(" ").join("-")
       let childDom = null
       if (v.children && v.children.length) {

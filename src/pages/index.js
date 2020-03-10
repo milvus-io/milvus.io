@@ -213,14 +213,14 @@ const IndexPage = ({ data, pageContext }) => {
             </LocalizedLink>
           </div>
         </section>
-        <section className="section4">
+        {/* <section className="section4">
           <h2>{section4.title}</h2>
           {windowWidth > 1000 || !windowWidth ? (
             <TableMax></TableMax>
           ) : (
               <TableMin></TableMin>
             )}
-        </section>
+        </section> */}
         <section className="section5">
           <div id="solution" className="anchor"></div>
           <h2>{section5.title}</h2>

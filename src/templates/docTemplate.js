@@ -35,9 +35,9 @@ export default function Template({
   const nav = {
     current: "doc"
   };
-  const idRegex = /id=\".*?\"/g;
+  const idRegex = /id=".*?"/g;
   if (locale === 'cn') {
-    html = html.replace(idRegex, match => match.replace('？', ''))
+    html = html.replace(idRegex, match => match.replace(/[？|、|，]/g, ''))
   }
 
   useEffect(() => {

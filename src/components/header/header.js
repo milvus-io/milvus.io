@@ -36,6 +36,9 @@ const Header = ({ language, locale }) => {
             <LocalizeLink locale={locale} to="/#whymilvus" className="link">
               {header.why}
             </LocalizeLink>
+            <LocalizeLink locale={locale} to="/gui" className="link">
+              {header.gui}
+            </LocalizeLink>
             <LocalizeLink
               locale={locale}
               className="link"
@@ -77,13 +80,13 @@ const Header = ({ language, locale }) => {
             </LocalizeLink>
           </div>
         ) : (
-          <div className="right">
-            <Search language={header}></Search>
-            <LocalizeLink locale={l} to={to}>
-              {locale === "cn" ? "EN" : "中"}
-            </LocalizeLink>
-          </div>
-        )}
+            <div className="right">
+              <Search language={header}></Search>
+              <LocalizeLink locale={l} to={to}>
+                {locale === "cn" ? "EN" : "中"}
+              </LocalizeLink>
+            </div>
+          )}
       </header>
       {screenWidth <= 1000 && (
         <nav className="mobile-nav">

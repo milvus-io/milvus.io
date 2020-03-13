@@ -3,6 +3,7 @@
     "notFound": "404 Page Not Found",
     "header": {
       "why": "Why Milvus",
+      "gui": "Milvus GUI",
       "solution": "Scenarios",
       "about": "About Milvus",
       "doc": "Docs",
@@ -24,9 +25,9 @@
         "txt2": "FAQ",
         "txt3": "Release Notes"
       },
-      "tool":{
-        "title":"Tool",
-        "txt1":"Milvus Sizing Tool"
+      "tool": {
+        "title": "Tool",
+        "txt1": "Milvus Sizing Tool"
       },
       "resource": {
         "title": "Resources",
@@ -123,6 +124,40 @@
       "section6": {
         "title": "Boost AI development with Milvus",
         "button": "Get started"
+      }
+    },
+    "gui": {
+      "section1": {
+        "title": "Get Milvus Admin",
+        "desc": "an easy-to-use GUI to access your Milvus instance and perform basic operations"
+      },
+      "section2": {
+        "list": [
+          {
+            "content": "View Collections as a tree",
+            "img": "fa-eye"
+          },
+          {
+            "content": "CRUD Collection and vectors",
+            "img": "fa-location-arrow"
+          },
+          {
+            "content": "Full Milvus Configuration from GUI",
+            "img": "fa-cogs"
+          },
+          {
+            "content": "Similarity Search from GUI",
+            "img": "fa-search"
+          }
+        ]
+      },
+      "section3": {
+        "title": "Install and Run",
+        "desc": "Then open your browser and visit",
+        "help": "Need help ?"
+      },
+      "section4": {
+        "title": "Milvus Admin in action"
       }
     }
   }

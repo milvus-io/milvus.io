@@ -94,6 +94,7 @@ const ToolSizing = () => {
   }
   useEffect(() => {
     compute()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vector, dimensions, dataType, nodes])
 
   return (

@@ -1,0 +1,152 @@
+@import '../components/include_media.scss'; // hero image
+
+.gui-wrapper {
+
+  .section1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 255px;
+    width: 100%;
+    background: rgba(79, 196, 249, 0.75);
+
+    h2,
+    p {
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 30px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 20px;
+      margin-top: 10px;
+    }
+  }
+
+  .section2 {
+    width: 100%;
+    margin: 120px 0;
+    text-align: center;
+
+    p {
+      display: flex;
+      align-items: center;
+      width: 400px;
+      margin: 28px auto;
+      text-align: left;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 21px;
+      font-size: 18px;
+    }
+
+    .fas {
+      width: 30px;
+      font-size: 24px;
+      margin-right: 40px;
+      color: rgba(255, 255, 255, 1);
+      background: -webkit-linear-gradient(#4FC4F9, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .section3 {
+    margin-top: 126px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    line-height: 22px;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 30px;
+
+    }
+
+    .docker-code {
+      width: 100%;
+      max-width: 440px;
+      margin: 24px auto;
+      border-radius: 4px;
+      border: 1px solid rgba(151, 151, 151, 1);
+      padding: 24px 16px;
+      box-sizing: border-box;
+      text-align: left;
+
+    }
+
+    .primary-color {
+      margin-top: 30px;
+      border-radius: 0;
+      background-color: #4FC4F9;
+      color: #Fff;
+      font-weight: 400;
+      padding: 10px 40px;
+    }
+  }
+
+  .section4 {
+    margin-top: 120px;
+    text-align: center;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 30px;
+    }
+
+    .img-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 26px;
+
+      img {
+        max-width: 600px;
+      }
+
+      .fas {
+        cursor: pointer;
+      }
+    }
+
+  }
+
+  @include media("<=1000px") {
+
+    .section1,
+    .section2,
+    .section3,
+    .section4 {
+      padding: 0 20px;
+    }
+
+    .section1 {
+      p {
+        text-align: center;
+      }
+    }
+
+    .section2 {
+      p {
+        font-size: 16px;
+      }
+    }
+
+    .section4 {
+      .img-wrapper {
+        img {
+          width: 300px;
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@
     "notFound": "404 Page Not Found",
     "header": {
       "why": "Why Milvus",
-      "gui": "Milvus GUI",
+      "gui": "Milvus Admin",
       "solution": "Scenarios",
       "about": "About Milvus",
       "doc": "Docs",
@@ -157,7 +157,7 @@
         "help": "Need help ?"
       },
       "section4": {
-        "title": "Milvus Admin in action"
+        "title": "Screenshots"
       }
     }
   }

@@ -3,7 +3,7 @@
     "notFound": "您访问的页面不存在",
     "header": {
       "why": "为什么选择Milvus",
-      "gui": "Milvus 图形化界面",
+      "gui": "Milvus Admin",
       "solution": "应用场景",
       "about": "关于Milvus",
       "doc": "文档",
@@ -128,7 +128,7 @@
     },
     "gui": {
       "section1": {
-        "title": "获取 Milvus 图形化界面",
+        "title": "获取 Milvus Admin",
         "desc": "通过图形化界面连接Milvus，进行一些基本操作。"
       },
       "section2": {
@@ -157,7 +157,7 @@
         "help": "需要帮助？"
       },
       "section4": {
-        "title": "Milvus 图形化界面"
+        "title": "界面截图"
       }
     }
   }

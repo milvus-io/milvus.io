@@ -61,7 +61,7 @@ const GuiPage = ({ data, pageContext }) => {
           <p>{section3.desc} http://localhost:3000/</p>
           <LocalizedLink
             className="primary primary-color btn"
-            to="/docs/v0.7.0/faq/product_faq.md"
+            to="/docs/Milvus%20Admin/admin_operations.md"
             locale={locale}
           >
             {section3.help}

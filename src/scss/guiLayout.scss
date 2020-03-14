@@ -1,0 +1,47 @@
+@import "../components/_include_media.scss";
+
+.gui-layout-wrapper {
+  margin: 40px 0;
+  width: 100%;
+
+  @include media("<=1000px") {
+    margin-top: 100px;
+  }
+}
+
+.section6 {
+  height: 94px;
+  line-height: 94px;
+  margin-top: 140px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-align: center;
+  background-color: #4FC4F9;
+
+  .get-start {
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    vertical-align: middle;
+    width: 206px;
+    margin-left: 70px;
+    border-radius: 40px;
+    color: #4EB8F0;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-align: center;
+    background: #fff;
+    text-transform: uppercase;
+  }
+
+  @include media("<=1000px") {
+    height: auto;
+    margin-top: 60px;
+    padding: 20px;
+    line-height: 1.5;
+
+    .get-start {
+      margin: 20px 0 0 0;
+    }
+  }
+}

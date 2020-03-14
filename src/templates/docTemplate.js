@@ -109,6 +109,7 @@ export const pageQuery = graphql`
             layout {
               header {
                 why
+                gui
                 solution
                 about
                 doc

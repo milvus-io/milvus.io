@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { graphql } from "gatsby";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
@@ -27,135 +27,135 @@ const icons = {
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
-  const { section1, section2, section3, section4, section5 } = language.home;
+  const { section1, section2, section3, section5 } = language.home;
 
-  const [windowWidth, setWindowWidth] = useState("");
+  // const [windowWidth, setWindowWidth] = useState("");
 
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    const cb = e => {
-      setWindowWidth(e.target.innerWidth);
-    };
-    window.addEventListener("resize", cb);
+  // useEffect(() => {
+  //   setWindowWidth(window.innerWidth);
+  //   const cb = e => {
+  //     setWindowWidth(e.target.innerWidth);
+  //   };
+  //   window.addEventListener("resize", cb);
 
-    return () => {
-      window.removeEventListener("resize", cb);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", cb);
+  //   };
+  // }, []);
 
-  const milvus = [
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true
-  ];
-  const faiss = [
-    true,
-    true,
-    true,
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-    true,
-    false,
-    false
-  ];
-  const sptag = [
-    false,
-    false,
-    false,
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-    true,
-    false,
-    false
-  ];
+  // const milvus = [
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   true
+  // ];
+  // const faiss = [
+  //   true,
+  //   true,
+  //   true,
+  //   true,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   true,
+  //   false,
+  //   false
+  // ];
+  // const sptag = [
+  //   false,
+  //   false,
+  //   false,
+  //   true,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   true,
+  //   false,
+  //   false
+  // ];
 
-  const TableMax = () => (
-    <div className="content-wrapper">
-      <ul className="table-name">
-        <li className="table-header"></li>
-        {section4.list.map(v => (
-          <li key={v} className="table-item">
-            {v}
-          </li>
-        ))}
-      </ul>
-      <ul className="table-value">
-        <li className="table-header">Milvus</li>
-        {milvus.map((v, i) => (
-          <li key={i} className="table-item">
-            <div className={`circle ${!v && "dark"}`}></div>
-          </li>
-        ))}
-      </ul>
-      <ul className="table-value">
-        <li className="table-header">Faiss</li>
-        {faiss.map((v, i) => (
-          <li key={i} className="table-item">
-            <div className={`circle ${!v && "dark"}`}></div>
-          </li>
-        ))}
-      </ul>
-      <ul className="table-value">
-        <li className="table-header">Sptag</li>
-        {sptag.map((v, i) => (
-          <li key={i} className="table-item">
-            <div className={`circle ${!v && "dark"}`}></div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  // const TableMax = () => (
+  //   <div className="content-wrapper">
+  //     <ul className="table-name">
+  //       <li className="table-header"></li>
+  //       {section4.list.map(v => (
+  //         <li key={v} className="table-item">
+  //           {v}
+  //         </li>
+  //       ))}
+  //     </ul>
+  //     <ul className="table-value">
+  //       <li className="table-header">Milvus</li>
+  //       {milvus.map((v, i) => (
+  //         <li key={i} className="table-item">
+  //           <div className={`circle ${!v && "dark"}`}></div>
+  //         </li>
+  //       ))}
+  //     </ul>
+  //     <ul className="table-value">
+  //       <li className="table-header">Faiss</li>
+  //       {faiss.map((v, i) => (
+  //         <li key={i} className="table-item">
+  //           <div className={`circle ${!v && "dark"}`}></div>
+  //         </li>
+  //       ))}
+  //     </ul>
+  //     <ul className="table-value">
+  //       <li className="table-header">Sptag</li>
+  //       {sptag.map((v, i) => (
+  //         <li key={i} className="table-item">
+  //           <div className={`circle ${!v && "dark"}`}></div>
+  //         </li>
+  //       ))}
+  //     </ul>
+  //   </div>
+  // );
 
-  const TableMin = () => (
-    <div className="content-wrapper">
-      <ul className="table-name">
-        <li className="table-header">Milvus</li>
-        {section4.list.map((v, index) => (
-          <li key={v} className="table-item">
-            <div className="name">{v}</div>
-            <span className={`circle ${!milvus[index] && "dark"}`}></span>
-          </li>
-        ))}
-      </ul>
+  // const TableMin = () => (
+  //   <div className="content-wrapper">
+  //     <ul className="table-name">
+  //       <li className="table-header">Milvus</li>
+  //       {section4.list.map((v, index) => (
+  //         <li key={v} className="table-item">
+  //           <div className="name">{v}</div>
+  //           <span className={`circle ${!milvus[index] && "dark"}`}></span>
+  //         </li>
+  //       ))}
+  //     </ul>
 
-      <ul className="table-name">
-        <li className="table-header">Faiss</li>
-        {section4.list.map((v, index) => (
-          <li key={v} className="table-item">
-            <div className="name">{v}</div>
-            <span className={`circle ${!faiss[index] && "dark"}`}></span>
-          </li>
-        ))}
-      </ul>
+  //     <ul className="table-name">
+  //       <li className="table-header">Faiss</li>
+  //       {section4.list.map((v, index) => (
+  //         <li key={v} className="table-item">
+  //           <div className="name">{v}</div>
+  //           <span className={`circle ${!faiss[index] && "dark"}`}></span>
+  //         </li>
+  //       ))}
+  //     </ul>
 
-      <ul className="table-name">
-        <li className="table-header">Sptag</li>
-        {section4.list.map((v, index) => (
-          <li key={v} className="table-item">
-            <div className="name">{v}</div>
-            <span className={`circle ${!sptag[index] && "dark"}`}></span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  //     <ul className="table-name">
+  //       <li className="table-header">Sptag</li>
+  //       {section4.list.map((v, index) => (
+  //         <li key={v} className="table-item">
+  //           <div className="name">{v}</div>
+  //           <span className={`circle ${!sptag[index] && "dark"}`}></span>
+  //         </li>
+  //       ))}
+  //     </ul>
+  //   </div>
+  // );
 
   return (
     <Layout language={language} locale={locale}>
@@ -326,6 +326,7 @@ export const Query = graphql`
             layout {
               header {
                 why
+                gui
                 solution
                 about
                 doc

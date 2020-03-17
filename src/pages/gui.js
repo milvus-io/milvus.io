@@ -41,7 +41,7 @@ const GuiPage = ({ data, pageContext }) => {
           <h2>{section1.title}</h2>
           <p>{section1.desc}</p>
         </section>
-        <section className="section2">
+        {/* <section className="section2">
           {
             section2.list.map(v => (
               <p>
@@ -51,7 +51,7 @@ const GuiPage = ({ data, pageContext }) => {
             ))
           }
 
-        </section>
+        </section> */}
         <section className="section3">
           <h2>{section3.title}</h2>
           <div className="docker-code">

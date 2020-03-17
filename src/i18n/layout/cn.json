@@ -130,7 +130,7 @@
     "gui": {
       "section1": {
         "title": "获取 Milvus Admin",
-        "desc": "通过图形化界面连接Milvus，进行一些基本操作。"
+        "desc": "Milvus图形化管理界面"
       },
       "section2": {
         "list": [

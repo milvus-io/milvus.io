@@ -130,7 +130,7 @@
     "gui": {
       "section1": {
         "title": "Milvus Admin",
-        "desc": "an easy-to-use GUI to access your Milvus instance and perform basic operations"
+        "desc": "A Graphic User Interface administratrion platform for Milvus."
       },
       "section2": {
         "list": [
@@ -155,7 +155,7 @@
       "section3": {
         "title": "Install and Run",
         "desc": "Then open your browser and visit",
-        "help": "Need help ?"
+        "help": "NEED HELP ?"
       },
       "section4": {
         "title": "Screenshots"

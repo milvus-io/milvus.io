@@ -128,7 +128,7 @@
     },
     "gui": {
       "section1": {
-        "title": "Get Milvus Admin",
+        "title": "Milvus Admin",
         "desc": "an easy-to-use GUI to access your Milvus instance and perform basic operations"
       },
       "section2": {
@@ -142,11 +142,11 @@
             "img": "fa-location-arrow"
           },
           {
-            "content": "Full Milvus Configuration from GUI",
+            "content": "Full Milvus Configuration ",
             "img": "fa-cogs"
           },
           {
-            "content": "Similarity Search from GUI",
+            "content": "Similarity Search ",
             "img": "fa-search"
           }
         ]

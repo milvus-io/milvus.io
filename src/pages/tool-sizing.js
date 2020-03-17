@@ -257,6 +257,7 @@ export const Query = graphql`
               notFound
               header {
                 about
+                gui
                 doc
                 blog
                 try
@@ -284,6 +285,7 @@ export const Query = graphql`
                 }
                 contact {
                   title
+                  wechat
                 }
               }
               home {

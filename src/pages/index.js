@@ -361,6 +361,7 @@ export const Query = graphql`
                 }
                 contact {
                   title
+                  wechat
                 }
               }
               home {

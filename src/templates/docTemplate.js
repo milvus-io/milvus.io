@@ -144,6 +144,7 @@ export const pageQuery = graphql`
                 }
                 contact {
                   title
+                  wechat
                 }
               }
             }

@@ -66,7 +66,7 @@ export default function Template({
         isBenchmark ? (<iframe id="inlineFrameExample"
           title="test"
           width="100%"
-          height="1000px"
+          height="2000px"
           src={iframeUrl}>
         </iframe>) : (
             <div className="doc-post-container">

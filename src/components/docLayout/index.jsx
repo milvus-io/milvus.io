@@ -84,11 +84,11 @@ export default props => {
         ></Menu>
         <div className={`inner-container ${isBenchMark ? 'fullwidth' : ""}`} ref={docContainer}>
           {children}
-          <Footer
+          {!isBenchMark && <Footer
             versions={versions}
             language={language}
             locale={locale}
-          ></Footer>
+          ></Footer>}
         </div>
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">

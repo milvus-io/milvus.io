@@ -3,6 +3,7 @@ const fs = require("fs");
 const ReadVersionJson = require("./walkFile");
 const locales = require("./src/constants/locales");
 const DOC_LANG_FOLDERS = ["/en/", "/zh-CN/"];
+const benchmarksMenuList = require('./benchmark-menu')
 const express = require("express");
 exports.onCreateDevServer = ({ app }) => {
   app.use(express.static("public"));
@@ -103,7 +104,7 @@ exports.createPages = ({ actions, graphql }) => {
           lang,
           version,
           isBlog,
-          menuList: childMenuStructureJson.menuList,
+          menuList: [...childMenuStructureJson.menuList, ...benchmarksMenuList],
           absolutePath
         };
       }

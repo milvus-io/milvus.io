@@ -36,9 +36,13 @@ const Menu = props => {
           return copyMenu;
         }
         const generatePath = doc => {
+          if (doc.id.includes("benchmarks")) {
+            return `/docs/${doc.id}`
+          }
           if (isBlog) {
             return `/blogs/${doc.id}`;
           }
+
           const { label1, label2, label3 } = doc || {};
 
           let parentPath = "";
@@ -86,6 +90,7 @@ const Menu = props => {
 
     const checkActive = list => {
       const findDoc = findItem("id", activeDoc, list);
+      console.log(findDoc, activeDoc, list)
       const labelKeys = Object.keys(findDoc).filter(v => v.includes("label"));
       findDoc.isActive = true; // here will open the right menu and give the active color
       labelKeys.forEach(label => {

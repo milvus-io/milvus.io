@@ -12,7 +12,7 @@ const benchmarksMenuList = [{
 },
 {
   "id": "benchmarks_ali",
-  "title": "Ali Benchmark",
+  "title": "Aliyun Benchmark",
   "label1": "Milvus Benchmark",
   "order": 2
 }, {

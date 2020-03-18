@@ -14,7 +14,6 @@ const versionInfo = ReadVersionJson(DOC_ROOT);
 
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
-  console.log(page);
   return new Promise(resolve => {
     deletePage(page);
     Object.keys(locales).map(lang => {
@@ -116,10 +115,13 @@ exports.createPages = ({ actions, graphql }) => {
         (!!findVersion(fileAbsolutePath) ||
           fileAbsolutePath.includes("/blog/zh-CN") ||
           fileAbsolutePath.includes("/docs/versions/master/") ||
-          fileAbsolutePath.includes("/docs/benchmarks/")) &&
+          fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
         frontmatter.id
     );
-    const generatePath = (id, lang, version, isBlog, needLocal = true) => {
+    const generatePath = (id, lang, version, isBlog, needLocal = true, isBenchmark) => {
+      if (isBenchmark) {
+        return lang === defaultLang ? `/docs/${id}` : `${lang}/docs/${id}`;
+      }
       if (isBlog) {
         if (!needLocal) return `/blogs/${id}`;
         return lang === defaultLang ? `/blogs/${id}` : `${lang}/blogs/${id}`;
@@ -173,15 +175,13 @@ exports.createPages = ({ actions, graphql }) => {
 
         const version = findVersion(fileAbsolutePath) || "master";
         const headingVals = headings.map(v => v.value);
-        const isBlog = fileAbsolutePath.includes("blog");
-        const isBenchmark = fileAbsolutePath.includes("benchmark");
+        const isBlog = checkIsblog(fileAbsolutePath);
+        const isBenchmark = checkIsBenchmark(fileAbsolutePath);
         return {
           ...frontmatter,
           fileLang,
           version,
-          path: isBenchmark
-            ? `/docs/${frontmatter.id}`
-            : generatePath(frontmatter.id, fileLang, version, isBlog, false),
+          path: generatePath(frontmatter.id, fileLang, version, isBlog, false, isBenchmark),
           // the value we need compare with search query
           values: [...headingVals, frontmatter.id]
         };
@@ -219,22 +219,21 @@ exports.createPages = ({ actions, graphql }) => {
           pre = cur === "/en/" ? "en" : "cn";
         }
         return pre;
-      }, "");
-      const isBlog = fileAbsolutePath.includes("blog");
-      const isBenchmark = fileAbsolutePath.includes("benchmark");
-      const localizedPath = isBenchmark
-        ? `/docs/${frontmatter.id}`
-        : generatePath(fileId, fileLang, version, isBlog);
-      // console.log(isBlog, localizedPath)
+      }, "en");
+      const isBlog = checkIsblog(fileAbsolutePath);
+      const isBenchmark = checkIsBenchmark(fileAbsolutePath)
+      const localizedPath = generatePath(fileId, fileLang, version, isBlog, true, isBenchmark);
       // the newest doc version is master so we need to make route without version.
       // for easy link to the newest doc
       if (!version && fileAbsolutePath.includes("master")) {
-        const masterPath = generatePath(
-          fileId,
-          fileLang,
-          isBlog ? false : "master",
-          isBlog
-        );
+        const masterPath = isBenchmark
+          ? `/docs/$${fileId}`
+          : generatePath(
+            fileId,
+            fileLang,
+            isBlog ? false : "master",
+            isBlog
+          );
         return createPage({
           path: masterPath,
           component: docTemplate,
@@ -257,16 +256,21 @@ exports.createPages = ({ actions, graphql }) => {
         component: docTemplate,
         context: {
           locale: fileLang,
-          version,
+          version: isBenchmark ? versionInfo.master.version : version,
           versions: Array.from(versions),
           old: fileId,
           headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
           fileAbsolutePath,
           isBlog,
           editPath: generatePath(fileId, fileLang, version, isBlog, false),
-          allMenus
+          allMenus,
+          isBenchmark,
         } // additional data can be passed via context
       });
     });
   });
 };
+
+
+const checkIsblog = (path) => path.includes("blog")
+const checkIsBenchmark = (path) => path.includes("benchmarks")

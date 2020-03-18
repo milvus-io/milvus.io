@@ -18,9 +18,10 @@ export default function Template({
     locale,
     version,
     versions,
-    headings,
+    headings = [],
     allMenus,
     isBlog,
+    isBenchmark = false,
     editPath
   } = pageContext;
   const layout = data.allFile.edges[0].node.childLayoutJson.layout;
@@ -35,6 +36,7 @@ export default function Template({
   const nav = {
     current: "doc"
   };
+  const iframeUrl = isBenchmark ? `/benchmarks/${frontmatter.id.split('_')[1]}/index.html` : ""
   const idRegex = /id=".*?"/g;
   if (locale === 'cn') {
     html = html.replace(idRegex, match => match.replace(/[？|、|，]/g, ''))
@@ -56,29 +58,40 @@ export default function Template({
       headings={headings}
       versions={versions}
       id={frontmatter.id}
+      isBenchMark={isBenchmark}
+
     >
-      <SEO title={`${headings[0].value}`} lang={locale} />
-      <div className="doc-post-container">
-        <div className="doc-post">
-          {/* <h1>{frontmatter.title}</h1> */}
-          <div
-            className="doc-post-content"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-        </div>
-        {isBlog ? null : (
-          <a
-            className="edit-page-link button"
-            href={`https://github.com/milvus-io/docs/tree/${version}/site/${
-              locale === "en" ? "en" : "zh-CN"
-              }/${editPath}`}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <i className="far fa-edit"></i> &nbsp; Edit
-          </a>
-        )}
-      </div>
+      <SEO title={`${headings[0] && headings[0].value}`} lang={locale} />
+      {
+        isBenchmark ? (<iframe id="inlineFrameExample"
+          title="test"
+          width="100%"
+          height="1000px"
+          src={iframeUrl}>
+        </iframe>) : (
+            <div className="doc-post-container">
+              <div className="doc-post">
+                <div
+                  className="doc-post-content"
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+              </div>
+              {isBlog || isBenchmark ? null : (
+                <a
+                  className="edit-page-link button"
+                  href={`https://github.com/milvus-io/docs/tree/${version}/site/${
+                    locale === "en" ? "en" : "zh-CN"
+                    }/${editPath}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <i className="far fa-edit"></i> &nbsp; Edit
+                </a>
+              )}
+            </div>
+          )
+      }
+
     </Layout>
   );
 }

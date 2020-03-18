@@ -54,11 +54,9 @@ main.doc-wrapper {
   background: #28292e;
 
   .menu-container {
-    background-image: linear-gradient(
-      180deg,
-      #101010 0%,
-      rgba(16, 16, 16, 0) 100%
-    );
+    background-image: linear-gradient(180deg,
+        #101010 0%,
+        rgba(16, 16, 16, 0) 100%);
     position: fixed;
     left: 0;
     top: 60px;
@@ -86,6 +84,10 @@ main.doc-wrapper {
     width: calc(70% - 60px);
 
     margin-left: 260px;
+
+    &.fullwidth {
+      width: calc(88% - 60px);
+    }
 
     @include media("<=1000px") {
       width: 100%;
@@ -164,11 +166,13 @@ main.doc-wrapper {
   right: 0;
   z-index: 1000;
 }
+
 .doc-post-content {
   p {
     position: relative;
     z-index: 2;
   }
+
   [id]::before {
     content: "";
     display: block;

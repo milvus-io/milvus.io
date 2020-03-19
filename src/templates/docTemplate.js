@@ -72,7 +72,7 @@ export default function Template({
             <iframe id="inlineFrameExample"
               title="test"
               width="100%"
-              height="1000px"
+              height="2000px"
               src={iframeUrl}></iframe>
             <i
               class="fas iframe-icon fa-arrow-left"

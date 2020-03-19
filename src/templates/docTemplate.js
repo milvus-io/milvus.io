@@ -75,7 +75,7 @@ export default function Template({
               height="2000px"
               src={iframeUrl}></iframe>
             <i
-              class="fas iframe-icon fa-arrow-left"
+              className="fas iframe-icon fa-arrow-left"
               onClick={handleRefresh}
             ></i>
 

@@ -3,6 +3,7 @@ import Layout from "../components/docLayout";
 import SEO from "../components/seo";
 import { graphql } from "gatsby";
 import hljs from "highlight.js";
+import LocalizeLink from '../components/localizedLink/localizedLink'
 // import sql from "highlight.js/lib/languages/sql"
 // import bash from "highlight.js/lib/languages/bash"
 import "highlight.js/styles/atom-one-dark.css";
@@ -47,6 +48,9 @@ export default function Template({
       hljs.highlightBlock(block);
     });
   }, []);
+  const handleRefresh = () => {
+    window.location.reload()
+  }
   return (
     <Layout
       language={layout}
@@ -63,12 +67,20 @@ export default function Template({
     >
       <SEO title={`${headings[0] && headings[0].value}`} lang={locale} />
       {
-        isBenchmark ? (<iframe id="inlineFrameExample"
-          title="test"
-          width="100%"
-          height="1000px"
-          src={iframeUrl}>
-        </iframe>) : (
+        isBenchmark ? (
+          <div style={{ position: "relative" }}>
+            <iframe id="inlineFrameExample"
+              title="test"
+              width="100%"
+              height="1000px"
+              src={iframeUrl}></iframe>
+            <i
+              class="fas iframe-icon fa-arrow-left"
+              onClick={handleRefresh}
+            ></i>
+
+          </div>
+        ) : (
             <div className="doc-post-container">
               <div className="doc-post">
                 <div
@@ -92,7 +104,7 @@ export default function Template({
           )
       }
 
-    </Layout>
+    </Layout >
   );
 }
 

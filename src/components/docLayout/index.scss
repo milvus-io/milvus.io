@@ -93,6 +93,10 @@ main.doc-wrapper {
       width: 100%;
       margin: 0;
       padding-top: 50px;
+
+      &.fullwidth {
+        width: 100%;
+      }
     }
   }
 

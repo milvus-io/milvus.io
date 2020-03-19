@@ -688,4 +688,18 @@
     overflow-x: auto;
     @include scroll-bar;
   }
+
+
+}
+
+.iframe-icon {
+  position: absolute;
+  top: 30px;
+  left: 70px;
+  color: #333;
+  cursor: pointer;
+
+  @include media("<=1000px") {
+    left: 20px;
+  }
 }

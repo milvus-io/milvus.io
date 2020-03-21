@@ -184,7 +184,7 @@ const ToolSizing = () => {
             </ul>
           </section>
           <section style={{ marginTop: "40px" }}>
-            <p className="title">Recommandation</p>
+            <p className="title">Recommendation</p>
             <table style={{ width: "100%" }}>
               <thead>
                 <tr>

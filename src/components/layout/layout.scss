@@ -6,17 +6,16 @@
   background-repeat: no-repeat;
   background-size: 70%;
   background-position: right 60px;
-  background-image: url("../../images/hero-1225.png");
+  background-image: url("../../images/hero-1225.png") no-repeat;
 
   @include media("<=1000px") {
     background-size: 100vh;
     background-position: right 60px;
   }
 }
+
 .content-wrapper {
-  width: 90%;
-  max-width: 1400px;
-  margin: 40px auto;
+  width: 100%;
   box-sizing: border-box;
 
   @include media("<=1000px") {

@@ -1,6 +1,7 @@
 @import '../components/include_media.scss'; // hero image
 
 .home-wrapper {
+
   // typography
   h1,
   h2,
@@ -11,11 +12,11 @@
     font-family: co-text, sans-serif;
     margin-bottom: 2rem;
     font-weight: 400;
+    color: #Fff;
   }
 
   h1 {
     font-size: 1.75rem;
-    max-width: 30rem;
     line-height: 2.5rem;
     margin-bottom: 0;
   }
@@ -32,7 +33,7 @@
   .content p,
   p.content {
     font-size: 15px;
-    color: #fff;
+    color: #000;
     opacity: 0.75;
     line-height: 25px
   }
@@ -88,7 +89,22 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     height: 35rem;
+    background: url("../images/website/hero-color.svg");
+    background-position-x: center;
+
+    .githubicon {
+      margin-bottom: 2rem;
+    }
+
+    h3 {
+      margin-top: 8px;
+      font-size: 16px;
+      width: 32rem;
+      line-height: 24px;
+      text-align: center;
+    }
   }
 
   .section2 {
@@ -130,26 +146,43 @@
 
     .feature-wrapper {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       flex-wrap: wrap;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .feature-item {
-      display: flex;
-      align-items: flex-start;
-      width: 30%;
+      // display: flex;
+      // align-items: flex-start;
+      flex: 0 0 30%;
       min-width: 200px;
+      max-width: 320px;
+      margin-right: 80px;
+      margin-top: 30px;
 
-      img {
-        width: 64px;
-        margin: 1rem 1rem 0 0;
+      .title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        img {
+          width: 28px;
+          margin-right: 1rem;
+        }
+
+        .title {
+          flex: 1;
+          font-weight: bold;
+          font-size: 20px;
+        }
       }
 
-      .title {
-        font-size: 1rem;
-        font-weight: 400;
-        margin: 2rem 0 0.5rem;
-      }
+      // .title {
+      //   font-size: 1rem;
+      //   font-weight: 400;
+      //   margin: 2rem 0 0.5rem;
+      // }
     }
 
     @include media("<=1000px") {
@@ -164,76 +197,26 @@
   }
 
   .section4 {
+    text-align: center;
     margin-top: 6rem;
 
     h2 {
       text-align: center;
+      color: #000;
+      font-size: 2rem;
+      margin-bottom: 1rem;
     }
 
-    .content-wrapper {
+    p {
+      font-size: 1rem;
+      line-height: 1.6rem;
+      color: #101010;
+      font-weight: 300;
+    }
+
+    .btn-wrapper {
       display: flex;
-      width: 100%;
-    }
-
-    .table-header {
-      list-style: none;
-      height: 30px;
-      line-height: 30px;
-      margin-right: 2px;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .table-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 2px;
-      margin-right: 2px;
-      padding: 0.5rem;
-      height: 2rem;
-      font-size: 0.8rem;
-      box-sizing: border-box;
-      background: rgba(255, 255, 255, 0.05);
-
-      .circle {
-        height: 15px;
-        width: 15px;
-        background-color: #4eb8f0;
-        border-radius: 50%;
-        margin: 0 auto;
-
-        &.dark {
-          opacity: 0.25;
-        }
-      }
-    }
-
-    .table-name {
-      flex: 2;
-    }
-
-    .table-value {
-      flex: 1;
-    }
-
-    @include media("<=1000px") {
-      .content-wrapper {
-        display: block;
-        padding: 0;
-        margin-top: 0;
-      }
-
-      .table-name {
-        margin-top: 2rem;
-      }
-
-      .table-item {
-        font-size: 12px;
-
-        .name {
-          flex: 1;
-        }
-      }
+      justify-content: center;
     }
   }
 

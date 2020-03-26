@@ -1,193 +1,74 @@
 import React from "react";
 import { graphql } from "gatsby";
-import Layout from "../components/layout/layout";
+import Layout from "../components/layout/newLayout";
 import SEO from "../components/seo";
 import LocalizedLink from "../components/localizedLink/localizedLink";
 import Notification from "../components/notification";
 import "../scss/index.scss";
-// import WhatIsMilvus from "../images/what-is-milvus.png";
-import availabilityIcon from "../images/availability.png";
-import easyIcon from "../images/easy.png";
-import heterogeneousIcon from "../images/heterogeneous.png";
-import indexIcon from "../images/index.png";
-import resourceIcon from "../images/resource.png";
-import scalabilityIcon from "../images/scalability.png";
+import availabilityIcon from "../images/features/availability.svg";
+import cloudIcon from "../images/features/cloud.svg";
+import costIcon from "../images/features/cost.svg";
+import crudIcon from "../images/features/crud.svg";
+import hybridIcon from "../images/features/hybrid.svg";
+import performenceIcon from "../images/features/performence.svg";
+import realtimeIcon from "../images/features/realtime.svg";
+import scalableIcon from "../images/features/scalable.svg";
+import supportIcon from "../images/features/support.svg";
+
 import GithubButton from "react-github-button";
 import "react-github-button/assets/style.css";
 
 const icons = {
   availability: availabilityIcon,
-  easy: easyIcon,
-  heterogeneous: heterogeneousIcon,
-  index: indexIcon,
-  resource: resourceIcon,
-  scalability: scalabilityIcon
+  cloud: cloudIcon,
+  support: supportIcon,
+  scalable: scalableIcon,
+  realtime: realtimeIcon,
+  performence: performenceIcon,
+  hybrid: hybridIcon,
+  crud: crudIcon,
+  cost: costIcon,
 };
 
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
-  const { section1, section2, section3, section5 } = language.home;
+  const { section1, section2, section3, section4, section5 } = language.home;
 
-  // const [windowWidth, setWindowWidth] = useState("");
 
-  // useEffect(() => {
-  //   setWindowWidth(window.innerWidth);
-  //   const cb = e => {
-  //     setWindowWidth(e.target.innerWidth);
-  //   };
-  //   window.addEventListener("resize", cb);
-
-  //   return () => {
-  //     window.removeEventListener("resize", cb);
-  //   };
-  // }, []);
-
-  // const milvus = [
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   true
-  // ];
-  // const faiss = [
-  //   true,
-  //   true,
-  //   true,
-  //   true,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   true,
-  //   false,
-  //   false
-  // ];
-  // const sptag = [
-  //   false,
-  //   false,
-  //   false,
-  //   true,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   true,
-  //   false,
-  //   false
-  // ];
-
-  // const TableMax = () => (
-  //   <div className="content-wrapper">
-  //     <ul className="table-name">
-  //       <li className="table-header"></li>
-  //       {section4.list.map(v => (
-  //         <li key={v} className="table-item">
-  //           {v}
-  //         </li>
-  //       ))}
-  //     </ul>
-  //     <ul className="table-value">
-  //       <li className="table-header">Milvus</li>
-  //       {milvus.map((v, i) => (
-  //         <li key={i} className="table-item">
-  //           <div className={`circle ${!v && "dark"}`}></div>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //     <ul className="table-value">
-  //       <li className="table-header">Faiss</li>
-  //       {faiss.map((v, i) => (
-  //         <li key={i} className="table-item">
-  //           <div className={`circle ${!v && "dark"}`}></div>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //     <ul className="table-value">
-  //       <li className="table-header">Sptag</li>
-  //       {sptag.map((v, i) => (
-  //         <li key={i} className="table-item">
-  //           <div className={`circle ${!v && "dark"}`}></div>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   </div>
-  // );
-
-  // const TableMin = () => (
-  //   <div className="content-wrapper">
-  //     <ul className="table-name">
-  //       <li className="table-header">Milvus</li>
-  //       {section4.list.map((v, index) => (
-  //         <li key={v} className="table-item">
-  //           <div className="name">{v}</div>
-  //           <span className={`circle ${!milvus[index] && "dark"}`}></span>
-  //         </li>
-  //       ))}
-  //     </ul>
-
-  //     <ul className="table-name">
-  //       <li className="table-header">Faiss</li>
-  //       {section4.list.map((v, index) => (
-  //         <li key={v} className="table-item">
-  //           <div className="name">{v}</div>
-  //           <span className={`circle ${!faiss[index] && "dark"}`}></span>
-  //         </li>
-  //       ))}
-  //     </ul>
-
-  //     <ul className="table-name">
-  //       <li className="table-header">Sptag</li>
-  //       {section4.list.map((v, index) => (
-  //         <li key={v} className="table-item">
-  //           <div className="name">{v}</div>
-  //           <span className={`circle ${!sptag[index] && "dark"}`}></span>
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   </div>
-  // );
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title=" " />
+      <SEO title="Milvus Home" />
       <Notification></Notification>
       <main className="home-wrapper">
         <section className="section1">
+          <div className="githubicon">
+            <GithubButton
+              type="stargazers"
+              size="large"
+              namespace="milvus-io"
+              repo="milvus"
+            />
+          </div>
           <h1>{section1.desc1}</h1>
-          <h1>{section1.desc2}</h1>
+          <h3>{section1.desc2}</h3>
           <div className="btn-wrapper">
             <LocalizedLink
-              className="primary primary-color"
+              className="primary white-color"
               to="/docs/about_milvus/overview.md"
               locale={locale}
             >
               {section1.link}
             </LocalizedLink>
-            <div className="githubicon">
-              <GithubButton
-                type="stargazers"
-                size="large"
-                namespace="milvus-io"
-                repo="milvus"
-              />
-            </div>
-          </div>
-        </section>
-        <section className="section2">
-          <div className="content">
-            <div id="whymilvus" className="anchor"></div>
-            <h3>{section2.title}</h3>
-            <p>{section2.content}</p>
+            <LocalizedLink
+              className="primary white-color"
+              to="/docs/about_milvus/overview.md"
+              locale={locale}
+            >
+              {section1.community}
+            </LocalizedLink>
+
           </div>
         </section>
         <section className="section3">
@@ -195,36 +76,29 @@ const IndexPage = ({ data, pageContext }) => {
           <ul className="feature-wrapper">
             {section3.list.map(v => (
               <li className="feature-item" key={v.title}>
-                <img src={icons[v.img]} alt="icon"></img>
-                <div>
+                <div className="title-wrapper">
+                  <img src={icons[v.img]} alt="icon"></img>
                   <p className="title">{v.title}</p>
-                  <p className="content">{v.content}</p>
                 </div>
+                <p className="content">{v.content}</p>
+
               </li>
             ))}
           </ul>
-          <div style={{ textAlign: "center" }}>
-            <LocalizedLink
-              className="primary primary-color"
-              to="/docs/guides/get_started/install_milvus/install_milvus.md"
-              locale={locale}
-            >
-              {section2.link}
-            </LocalizedLink>
+        </section>
+        <section className="section4">
+          <h2>{section4.title}</h2>
+          <p>{section4.desc1}</p>
+          <p>{section4.desc2}</p>
+          <div className="btn-wrapper">
+            <a className="primary primary-color">{section4.contribute}</a>
+            <a className="primary white-color">{section4.bootcamp}</a>
+
           </div>
         </section>
-        {/* <section className="section4">
-          <h2>{section4.title}</h2>
-          {windowWidth > 1000 || !windowWidth ? (
-            <TableMax></TableMax>
-          ) : (
-              <TableMin></TableMin>
-            )}
-        </section> */}
-        <section className="section5">
+        {/* <section className="section5">
           <div id="solution" className="anchor"></div>
           <h2>{section5.title}</h2>
-          {/* <p className="desc">{section5.desc}</p> */}
           <div className="content">
             <section className="search card">
               <div className="detail">
@@ -311,20 +185,21 @@ const IndexPage = ({ data, pageContext }) => {
               {section5.viewall}
             </a>
           </div>
-        </section>
+        </section> */}
       </main>
     </Layout>
   );
 };
 
 export const Query = graphql`
-  query BiQuery($locale: String) {
+  query HomeQuery($locale: String) {
     allFile(filter: { name: { eq: $locale } }) {
       edges {
         node {
           childLayoutJson {
             layout {
               header {
+                quick
                 why
                 gui
                 solution
@@ -369,6 +244,7 @@ export const Query = graphql`
                   desc1
                   desc2
                   link
+                  community
                 }
                 section2 {
                   title
@@ -385,7 +261,10 @@ export const Query = graphql`
                 }
                 section4 {
                   title
-                  list
+                  desc1
+                  desc2
+                  contribute
+                  bootcamp
                 }
                 section5 {
                   title

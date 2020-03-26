@@ -46,7 +46,8 @@
       "section1": {
         "desc1": "开源向量相似度搜索引擎",
         "desc2": "",
-        "link": "了解更多"
+        "link": "了解更多",
+        "community": "社区"
       },
       "section2": {
         "title": "什么是 Milvus",
@@ -57,53 +58,58 @@
         "title": "Milvus 特性",
         "list": [
           {
-            "title": "异构众核",
-            "content": "Milvus 使用异构众核计算处理特征向量，成本更低，性能更好。",
-            "img": "heterogeneous"
+            "title": "Multi-model Support",
+            "content": "Milvus is designed with heterogeneous computing architecture for the best performance and cost efficiency.",
+            "img": "support"
           },
           {
-            "title": "多元化索引",
-            "content": "Milvus 支持多种索引方式，使用量化索引、基于树的索引和图索引等算法。",
-            "img": "index"
+            "title": "High Performence",
+            "content": "Milvus supports a variety of indexing types that employs quantization, tree-based, and graph indexing techniques.",
+            "img": "performence"
           },
           {
-            "title": "资源智能管理",
-            "content": "Milvus 根据实际数据规模和可利用资源，智能调节优化查询计算和索引构建过程。",
-            "img": "resource"
+            "title": "Near Real-time Search",
+            "content": "Milvus automatically adapts search computation and index building processes based on your datasets and available resources.",
+            "img": "realtime"
           },
           {
-            "title": "水平扩容",
-            "content": "Milvus 支持在线 / 离线扩容，仅需执行简单命令，便可弹性伸缩计算节点和存储节点。",
-            "img": "scalability"
+            "title": "CRUD",
+            "content": "Milvus supports online / offline expansion to scale both storage and computation resources with simple commands.",
+            "img": "crud"
           },
           {
-            "title": "高可用性",
-            "content": "Milvus 集成了 Kubernetes 框架，能有效避免单点障碍情况的发生。",
+            "title": "Hybrid Search",
+            "content": "Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided.",
+            "img": "hybrid"
+          },
+          {
+            "title": "High Availability",
+            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
             "img": "availability"
           },
           {
-            "title": "简单易用",
-            "content": "Milvus 安装简单，使用方便。支持使用基于 Prometheus 的图形化监控，方便您实时跟踪系统性能。",
-            "img": "easy"
+            "title": "Scalable",
+            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
+            "img": "scalable"
+          },
+          {
+            "title": "Cost Efficient",
+            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
+            "img": "cost"
+          },
+          {
+            "title": "Cloud Native",
+            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
+            "img": "cloud"
           }
         ]
       },
       "section4": {
-        "title": "向量检索工具对比",
-        "list": [
-          "CPU/GPU heterogeneous computing capability",
-          "Quantization index",
-          "Hash index",
-          "Graph index",
-          "High availability",
-          "Distributed architecture",
-          "Easy-to-use user interface",
-          "GUI monitoring dashboard",
-          "Simple deployment",
-          "Python/JAVA/C++ SDK",
-          "RESTful API",
-          "Enterprise user support"
-        ]
+        "title": "Open Source",
+        "desc1": "Milvus is open-sourced on GitHub. ",
+        "desc2": "Contributions and feedback are welcome!",
+        "contribute": "Contribute on Github",
+        "bootcamp": "Try Bootcamp"
       },
       "section5": {
         "title": "应用场景",

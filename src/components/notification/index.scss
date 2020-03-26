@@ -1,19 +1,18 @@
 @import "../include_media";
 
 .notification {
-  height: 60px;
-  line-height: 60px;
-  background: linear-gradient(90deg, #4fc4f9, #fafafa);
+  height: 43px;
+  line-height: 43px;
+  background: rgba(255, 255, 255, 0.75);
   position: absolute;
   top: 60px;
   left: 0;
   z-index: 90;
   width: 100%;
   text-align: center;
-  word-spacing: 2px;
   transition: opacity 0.3s;
   opacity: 1;
-  color: #333;
+  color: #0A6599;
 
   @include media("<=1000px") {
     top: 96px;
@@ -22,8 +21,7 @@
 
 .notification a {
   padding: 0 6px;
-  color: #000;
-  text-decoration: underline;
+  color: #0A6599;
 }
 
 .notification .wrapper {

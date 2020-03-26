@@ -1,93 +1,12 @@
-@import '../include_media.scss';
-
 .footer-wrapper {
-  width: 75%;
-  max-width: 1000px;
-  margin: 10rem auto 2rem;
+  display: flex;
+  justify-content: space-between;
+  background: #FAFAFA;
+  color: #60606F;
+  padding: 22px;
 
-  .content {
-    display: flex;
-    justify-content: space-between;
+  .link {
+    color: #60606F;
 
-    .title {
-      margin-bottom: 1.5rem;
-    }
-
-    .text {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.75rem;
-      opacity: 0.5;
-    }
-  }
-
-  li {
-    display: flex;
-    align-items: center;
-  }
-
-  .contact-items {
-    margin-bottom: 0.5rem;
-
-    a {
-      display: flex;
-      align-items: center;
-
-      & > :hover {
-        opacity: 1;
-      }
-
-      span {
-        opacity: 0.5;
-        margin-left: 0.5rem;
-      }
-    }
-
-    svg {
-      width: 1rem;
-    }
-  }
-
-  .wechatqr {
-    position: absolute;
-    display: none;
-    margin: -100px 0 0;
-  }
-
-  .wechat a:hover+.wechatqr {
-    display: block;
-  }
-
-  .copy-right {
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    margin: 2rem 0 4rem;
-    text-align: center;
-    color: hsla(0, 0%, 100%, .4);
-  }
-  // responsive
-  @include media("<=1000px") {
-    width: 100%;
-    margin: 0;
-    padding: 0 20px;
-
-    .content {
-      display: block;
-      margin-left: 1rem;
-
-      ul {
-        width: 50%;
-        float: left;
-      }
-
-      .title {
-        margin: 2rem 0 1rem;
-      }
-    }
-
-    .copy-right {
-      line-height: 8rem;
-      margin-bottom: 0;
-    }
   }
 }

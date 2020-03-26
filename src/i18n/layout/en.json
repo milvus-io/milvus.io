@@ -2,6 +2,7 @@
   "layout": {
     "notFound": "404 Page Not Found",
     "header": {
+      "quick": "Quick Start",
       "why": "Why Milvus",
       "gui": "Milvus Admin",
       "solution": "Scenarios",

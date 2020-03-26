@@ -2,6 +2,7 @@
   "layout": {
     "notFound": "您访问的页面不存在",
     "header": {
+      "quick": "快速开始",
       "why": "为什么选择Milvus",
       "gui": "Milvus Admin",
       "solution": "应用场景",

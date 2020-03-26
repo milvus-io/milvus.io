@@ -10,15 +10,14 @@
   align-items: center;
   height: 60px;
   padding: 10px 1rem 10px 2rem;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, .5);
   z-index: 100;
   box-sizing: border-box;
-  background: #28292e;
+  background: #fff;
 
   @include media("<=1000px") {
     padding: 10px 20px;
     box-shadow: none;
-    background: rgba(0, 0, 0, 0.9);
+    background: #fff;
     padding: 0 10px 0 20px;
 
     .link {
@@ -36,7 +35,8 @@
     align-items: center;
 
     .link {
-      color: #fafafa;
+      color: #000;
+      font-weight: normal;
       margin: 0 1rem;
     }
   }

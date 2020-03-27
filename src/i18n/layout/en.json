@@ -112,6 +112,9 @@
         "bootcamp": "Try Bootcamp"
       },
       "section5": {
+        "desc": "We are an LF AI Foundation incubation project."
+      },
+      "section8": {
         "title": "Scenarios",
         "desc": "Step-by-step instructions to solve AI problems with Milvus.",
         "img1": {
@@ -130,14 +133,17 @@
         "viewall": "View all scenarios"
       },
       "section6": {
-        "title": "Boost AI development with Milvus",
-        "button": "Get started"
+        "title": "Milvus User Community"
+      },
+      "section7": {
+        "title": "Resources",
+        "desc": "Find us and join the conversation on any of these platforms"
       }
     },
     "gui": {
       "section1": {
         "title": "Milvus Admin",
-        "desc": "A Graphic User Interface administratrion platform for Milvus."
+        "desc": "A Graphic User Interface administratrion platform for Milvus"
       },
       "section2": {
         "list": [

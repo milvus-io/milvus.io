@@ -222,6 +222,12 @@
 
   .section5 {
     margin-top: 6rem;
+    text-align: center;
+
+    img {
+      width: 186px;
+      margin-bottom: 1.2rem;
+    }
 
     h2,
     .desc {
@@ -233,95 +239,60 @@
       line-height: 25px;
     }
 
-    .content {
+
+  }
+
+  .section6 {
+    margin-top: 10rem;
+
+    h2 {
+      font-size: 32px;
+      margin-bottom: 5rem;
+      color: #000000;
+      text-align: center;
+    }
+
+    ul {
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1400px;
+      margin: 0 auto;
 
-      @include media("<=1000px") {
-        display: block;
+      li {
+        margin: 1rem;
       }
     }
+  }
 
-    .card {
-      position: relative;
-      height: 321px;
-      width: 340px;
-      border-radius: 10px;
-      background-size: cover;
-      margin: 20px auto;
+  .section7 {
+    text-align: center;
+    margin-top: 10rem;
 
-      @include media("<=1000px") {
-        width: 100%;
-        max-width: 340px;
-      }
-
-      .detail {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 100px;
-        padding: 10px 20px;
-        box-sizing: border-box;
-        border-radius: 0 0 10px 10px;
-        background-color: #000;
-
-
-
-        .title {
-          color: #FAFAFA;
-          font-size: 18px;
-          line-height: 21px;
-        }
-
-        .content {
-          margin-top: 6px;
-          color: #A0A0A0;
-          font-size: 12px;
-          line-height: 15px;
-        }
-
-        .rectangle {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          display: block;
-          height: 28px;
-          line-height: 28px;
-          width: 110px;
-          text-align: center;
-          border-radius: 100px 0 0 100px;
-          background-color: rgba(79, 196, 249, 0.75);
-          font-size: 12px;
-          font-family: Roboto;
-          z-index: 20;
-        }
-
-        .triangle {
-          margin-left: 10px;
-        }
-      }
-
-      .mask {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 10;
-      }
+    h2 {
+      color: #000;
+      margin-bottom: 1rem;
+      font-size: 2rem;
     }
 
-    .search {
-      background-image: url('../images/search.jpg');
+    p {
+      margin-top: 2rem;
+      margin-bottom: 6rem;
     }
 
-    .recommend {
-      background-image: url('../images/recommender.jpg');
-    }
+    ul {
+      display: flex;
+      justify-content: space-around;
+      max-width: 1400px;
+      margin: 0 auto;
 
-    .molecular {
-      background-image: url("../images/molecular.jpg");
+      li {
+        margin: 1rem;
+
+        p {
+          margin: 1rem 0 10rem 0;
+          text-transform: capitalize
+        }
+      }
     }
   }
 

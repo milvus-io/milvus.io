@@ -105,13 +105,16 @@
         ]
       },
       "section4": {
-        "title": "Open Source",
-        "desc1": "Milvus is open-sourced on GitHub. ",
-        "desc2": "Contributions and feedback are welcome!",
-        "contribute": "Contribute on Github",
-        "bootcamp": "Try Bootcamp"
+        "title": "开源",
+        "desc1": "Milvus 是 Github 上的开源产品 ",
+        "desc2": "欢迎任何贡献和反馈",
+        "contribute": "在 Github 上贡献",
+        "bootcamp": "试用Bootcamp"
       },
       "section5": {
+        "desc": "我们是一个 LF AI 基金会的孵化项目"
+      },
+      "section8": {
         "title": "应用场景",
         "desc": "Step-by-step instructions to solve AI problems with Milvus.",
         "img1": {
@@ -130,8 +133,11 @@
         "viewall": "浏览更多"
       },
       "section6": {
-        "title": "助力AI发展",
-        "button": "快速开始"
+        "title": "Milvus 用户社区"
+      },
+      "section7": {
+        "title": "资源平台",
+        "desc": "欢迎在这些平台上找到并加入我们"
       }
     },
     "gui": {

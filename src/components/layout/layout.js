@@ -9,33 +9,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import Header from "../header/header";
 import Footer from "../footer/footer";
-import LocalizeLink from "../localizedLink/localizedLink";
 
 import "./layout.scss";
 import "../../reset.scss";
 const Layout = ({ children, language, locale }) => {
-  const { section6 } = language.home;
   return (
     <>
       <Header language={language} locale={locale} />
       <div className="bg-wrapper">
-      <div className="content-wrapper">
-        <main>{children}</main>
-      </div>
-      </div>
-      
-      <section className="section6">
-        <div>
-          <span>{section6.title}</span>
-          <LocalizeLink
-            locale={locale}
-            className=" get-start"
-            to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
-          >
-            {section6.button}
-          </LocalizeLink>
+        <div className="content-wrapper">
+          <main>{children}</main>
         </div>
-      </section>
+      </div>
+
       <Footer language={language} locale={locale}></Footer>
     </>
   );

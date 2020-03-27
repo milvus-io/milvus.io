@@ -14,6 +14,7 @@ import performenceIcon from "../images/features/performence.svg";
 import realtimeIcon from "../images/features/realtime.svg";
 import scalableIcon from "../images/features/scalable.svg";
 import supportIcon from "../images/features/support.svg";
+import LfaiLogo from '../images/logo/lfai-color.png';
 
 import GithubButton from "react-github-button";
 import "react-github-button/assets/style.css";
@@ -30,12 +31,50 @@ const icons = {
   cost: costIcon,
 };
 
+const users = []
+const resources = []
+function importAllPics(r, type) {
+  r.keys().forEach((key) => {
+    const m = r(key);
+    const matchs = key.match(/.\/(\S*).svg/)
+    let href = ''
+    if (type === 'resources' && matchs.length) {
+      switch (matchs[1]) {
+        case 'bilibili':
+          href = "bilibli"
+          break
+        case 'medium':
+          href = "https://medium.com/@milvusio"
+          break
+        case 'slack':
+          href = "https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk"
+          break
+        case 'twitter':
+          href = "https://twitter.com/milvusio"
+          break
+        case 'zhihui':
+          href = "zhihui"
+          break
+        case "wechat":
+          href = "wechat"
+          break
+        default:
+          href = ""
+          break
+      }
+    }
+    type === "users"
+      ? users.push(m)
+      : resources.push({ src: m, name: matchs && matchs[1], href })
+  });
+}
+importAllPics(require.context('../images/website/users', false, /\.jpg$/), "users");
+importAllPics(require.context('../images/website/community', false, /\.svg$/), "resources");
+
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
-  const { section1, section2, section3, section4, section5 } = language.home;
-
-
+  const { section1, section2, section3, section4, section5, section6, section7 } = language.home;
 
   return (
     <Layout language={language} locale={locale}>
@@ -96,96 +135,41 @@ const IndexPage = ({ data, pageContext }) => {
 
           </div>
         </section>
-        {/* <section className="section5">
-          <div id="solution" className="anchor"></div>
-          <h2>{section5.title}</h2>
-          <div className="content">
-            <section className="search card">
-              <div className="detail">
-                <p className="title">{section5.img1.title}</p>
-                <p className="content">{section5.img1.content}</p>
-
-                <a
-                  className="rectangle"
-                  href="http://40.73.38.81"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {section5.button}
-                  <i className={`fas fa-chevron-right triangle `}></i>
-                </a>
-              </div>
-              <a
-                className="mask"
-                href={
-                  locale === "en"
-                    ? "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/pic_search/README.md"
-                    : "https://github.com/milvus-io/bootcamp/blob/master/solutions/pic_search/README.md"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span></span>
-              </a>
-            </section>
-            <section className="recommend card">
-              <div className="detail">
-                <p className="title">{section5.img2.title}</p>
-                <p className="content">{section5.img2.content}</p>
-              </div>
-              <a
-                className="mask"
-                href={
-                  locale === "en"
-                    ? "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/recommender_system/README.md"
-                    : "https://github.com/milvus-io/bootcamp/blob/master/solutions/recommender_system/README.md"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span></span>
-              </a>
-            </section>
-            <section className="molecular card">
-              <div className="detail">
-                <p className="title">{section5.img3.title}</p>
-                <p className="content">{section5.img3.content}</p>
-
-                <a
-                  className="rectangle"
-                  href="http://40.73.24.85"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {section5.button}
-                  <i className={`fas fa-chevron-right triangle `}></i>
-                </a>
-              </div>
-              <a
-                className="mask"
-                href={
-                  locale === "en"
-                    ? "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/mols_search/README.md"
-                    : "https://github.com/milvus-io/bootcamp/blob/master/solutions/mols_search/README.md"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span></span>
-              </a>
-            </section>
-          </div>
-          <div style={{ textAlign: "center", marginTop: "50px" }}>
-            <a
-              className="primary primary-color"
-              href="https://github.com/milvus-io/bootcamp/tree/master/EN_solutions"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {section5.viewall}
-            </a>
-          </div>
-        </section> */}
+        <section className="section5">
+          <img src={LfaiLogo} alt="lfai logo"></img>
+          <p>{section5.desc}</p>
+        </section>
+        <section className="section6">
+          <h2>{section6.title}</h2>
+          <ul>
+            {
+              users.map((v, i) => (
+                <li key={i}>
+                  <img src={v} alt="customer"></img>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+        <section className="section7">
+          <h2>{section7.title}</h2>
+          <p>{section7.desc}</p>
+          <ul>
+            {
+              resources.map((v, i) => (
+                <li key={v.name}>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk">
+                    <img src={v.src} alt="resouce"></img>
+                  </a>
+                  <p>{v.name}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
       </main>
     </Layout>
   );
@@ -267,26 +251,14 @@ export const Query = graphql`
                   bootcamp
                 }
                 section5 {
-                  title
                   desc
-                  button
-                  viewall
-                  img1 {
-                    title
-                    content
-                  }
-                  img2 {
-                    title
-                    content
-                  }
-                  img3 {
-                    title
-                    content
-                  }
                 }
                 section6 {
                   title
-                  button
+                }
+                section7{
+                  title
+                  desc
                 }
               }
             }

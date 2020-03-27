@@ -128,12 +128,7 @@ export const Query = graphql`
                   wechat
                 }
               }
-              home{
-                section6 {
-                  title
-                  button
-                }
-              }
+
               gui {
                 section1{
                   title

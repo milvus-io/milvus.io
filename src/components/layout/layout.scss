@@ -1,33 +1,12 @@
 @import "../../reset.scss";
 @import "../include_media.scss";
 
-.bg-wrapper {
-  background-color: #28292E;
-  background-repeat: no-repeat;
-  background-size: 70%;
-  background-position: right 60px;
-  background-image: url("../../images/hero-1225.png") no-repeat;
-
-  @include media("<=1000px") {
-    background-size: 100vh;
-    background-position: right 60px;
-  }
-}
-
 .content-wrapper {
   width: 100%;
   box-sizing: border-box;
-
-  @include media("<=1000px") {
-    padding: 0 2rem;
-
-    margin-top: 100px;
-  }
 
   ul,
   li {
     list-style: none;
   }
-
-
 }

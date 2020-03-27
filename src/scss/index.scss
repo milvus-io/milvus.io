@@ -78,11 +78,7 @@
       margin: 30px 0 15px;
     }
 
-    // section positions
-    .section1 {
-      height: 50vh;
-      margin-bottom: -25vh;
-    }
+
   }
 
   .section1 {
@@ -91,8 +87,9 @@
     justify-content: center;
     align-items: center;
     height: 35rem;
-    background: url("../images/website/hero-color.svg");
+    background: url("../images/website/hero-color.svg") no-repeat;
     background-position-x: center;
+    background-size: cover;
 
     .githubicon {
       margin-bottom: 2rem;
@@ -101,9 +98,19 @@
     h3 {
       margin-top: 8px;
       font-size: 16px;
-      width: 32rem;
+      width: 90%;
+      max-width: 32rem;
       line-height: 24px;
       text-align: center;
+
+    }
+
+    @include media("<=1000px") {
+      h1 {
+        text-align: center;
+        font-size: 20px;
+        line-height: 1.5;
+      }
     }
   }
 
@@ -165,6 +172,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 4px;
 
         img {
           width: 28px;
@@ -192,6 +200,7 @@
 
       .feature-item {
         width: 100%;
+        margin: 0 auto 20px auto;
       }
     }
   }
@@ -217,6 +226,15 @@
     .btn-wrapper {
       display: flex;
       justify-content: center;
+      margin-top: 1rem;
+
+      @include media("<=1000px") {
+        display: block;
+
+        .primary {
+          margin: 8px 0;
+        }
+      }
     }
   }
 
@@ -255,12 +273,37 @@
     ul {
       display: flex;
       flex-wrap: wrap;
+      width: 100%;
       max-width: 1400px;
       margin: 0 auto;
 
       li {
         margin: 1rem;
       }
+    }
+
+    @include media("<=1000px") {
+      h2 {
+        font-size: 24px;
+        margin-bottom: 2rem;
+      }
+
+      ul {
+        justify-content: center;
+
+        li {
+          margin-left: 0;
+
+          &:nth-child(4n + 4) {
+            margin-right: 0;
+          }
+
+          img {
+            width: 64px;
+          }
+        }
+      }
+
     }
   }
 
@@ -276,23 +319,32 @@
 
     p {
       margin-top: 2rem;
-      margin-bottom: 6rem;
+      width: 90%;
+      margin: 0 auto;
+      line-height: 1.5;
     }
 
     ul {
       display: flex;
       justify-content: space-around;
       max-width: 1400px;
-      margin: 0 auto;
+      margin: 2rem auto 6rem 0;
+      flex-wrap: wrap;
 
       li {
         margin: 1rem;
 
         p {
-          margin: 1rem 0 10rem 0;
+          margin: 1rem 0 0 0;
           text-transform: capitalize
         }
       }
+    }
+
+    @include media("<=1000px") {
+      margin-top: 4rem;
+
+
     }
   }
 

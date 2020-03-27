@@ -8,16 +8,26 @@ const Header = ({ language, locale }) => {
   const { header } = language;
 
   const [screenWidth, setScreenWidth] = useState(null);
+  const [mobileNav, setMobileNav] = useState(null);
+
   useEffect(() => {
     const cb = () => {
       setScreenWidth(document.body.clientWidth);
     };
     cb();
     window.addEventListener("resize", cb);
+    window.addEventListener("click", () => {
+      setMobileNav(false)
+    })
     return () => {
       window.removeEventListener("resize", cb);
     };
   }, []);
+
+  const handleClick = (e) => {
+    e.stopPropagation()
+    setMobileNav(v => !v)
+  }
 
   return (
     <>
@@ -55,34 +65,38 @@ const Header = ({ language, locale }) => {
 
           </div>
         ) : (
-            <div className="right">
-
+            <div className="right" onClick={handleClick}>
+              <i className="fas fa-bars"></i>
             </div>
           )}
       </header>
-      {screenWidth <= 1000 && (
-        <nav className="mobile-nav">
-          <LocalizeLink locale={locale} to="/#whymilvus" className="link">
-            {header.quick}
-          </LocalizeLink>
-          <LocalizeLink locale={locale} to="/#solution">
-            {header.solution}
-          </LocalizeLink>
+      <div className={`mobile-nav ${mobileNav && 'open'}`}>
+        <LocalizeLink locale={locale} to="/#whymilvus" className="link">
+          {header.quick}
+        </LocalizeLink>
+        <LocalizeLink locale={locale} to="/gui" className="link">
+          {header.gui}
+        </LocalizeLink>
 
-          <LocalizeLink
-            locale={locale}
-            to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
-          >
-            {header.doc}
-          </LocalizeLink>
-          <LocalizeLink
-            locale={locale}
-            to={"/blogs/2019-08-26-vector-search-million.md"}
-          >
-            {header.blog}
-          </LocalizeLink>
-        </nav>
-      )}
+        <LocalizeLink locale={locale} className="link" to="/#solution">
+          {header.solution}
+        </LocalizeLink>
+
+        <LocalizeLink
+          locale={locale}
+          className="link"
+          to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
+        >
+          {header.doc}
+        </LocalizeLink>
+        <LocalizeLink
+          locale={locale}
+          className="link"
+          to={"/blogs/2019-08-26-vector-search-million.md"}
+        >
+          {header.blog}
+        </LocalizeLink>
+      </div>
     </>
   );
 };

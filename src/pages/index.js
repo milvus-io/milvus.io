@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { graphql } from "gatsby";
-import Layout from "../components/layout/newLayout";
+import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
 import LocalizedLink from "../components/localizedLink/localizedLink";
 import Notification from "../components/notification";
@@ -76,10 +76,21 @@ const IndexPage = ({ data, pageContext }) => {
   const { locale } = pageContext;
   const { section1, section2, section3, section4, section5, section6, section7 } = language.home;
 
+  const [screenWidth, setScreenWidth] = useState(null);
+  useEffect(() => {
+    const cb = () => {
+      setScreenWidth(document.body.clientWidth);
+    };
+    cb();
+    window.addEventListener("resize", cb);
+    return () => {
+      window.removeEventListener("resize", cb);
+    };
+  }, []);
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus Home" />
-      <Notification></Notification>
+      {screenWidth > 1000 && <Notification></Notification>}
       <main className="home-wrapper">
         <section className="section1">
           <div className="githubicon">

@@ -109,7 +109,7 @@
         "desc1": "Milvus is open-sourced on GitHub. ",
         "desc2": "Contributions and feedback are welcome!",
         "contribute": "Contribute on Github",
-        "bootcamp": "Try Bootcamp"
+        "bootcamp": "Try Milvus Bootcamp"
       },
       "section5": {
         "desc": "We are an LF AI Foundation incubation project."
@@ -140,30 +140,25 @@
         "desc": "Find us and join the conversation on any of these platforms"
       }
     },
-    "gui": {
+    "scenarios": {
       "section1": {
-        "title": "Milvus Admin",
-        "desc": "A Graphic User Interface administratrion platform for Milvus"
+        "title": "Boost industry innovate with the tech trends"
       },
       "section2": {
-        "list": [
-          {
-            "content": "View Collections as a tree",
-            "img": "fa-eye"
-          },
-          {
-            "content": "CRUD Collection and vectors",
-            "img": "fa-location-arrow"
-          },
-          {
-            "content": "Full Milvus Configuration ",
-            "img": "fa-cogs"
-          },
-          {
-            "content": "Similarity Search ",
-            "img": "fa-search"
-          }
-        ]
+        "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
+        "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users",
+        "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds"
+      }
+    },
+    "gui": {
+      "section1": {
+        "title": "Get Milvus Admin",
+        "desc": "an easy-to-use GUI to access your Milvus instance and perform basic operations"
+      },
+      "section2": {
+        "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
+        "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users",
+        "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds"
       },
       "section3": {
         "title": "Install and Run",
@@ -171,7 +166,21 @@
         "help": "NEED HELP ?"
       },
       "section4": {
-        "title": "Screenshots"
+        "feature1": {
+          "title": "Similarity Search from GUI",
+          "desc1": "View collection as tree",
+          "desc2": "The fastest way to ……"
+        },
+        "feature2": {
+          "title": "CRUD Collection and vectors",
+          "desc1": "Manipulate your data through an intuitive GUI",
+          "desc2": "Understand performance issues with visual explain plans and manage your indices"
+        },
+        "feature3": {
+          "title": "Full Milvus Configuration from GUI",
+          "desc1": "make working with data remarkably easy for everyone",
+          "desc2": "Understand performance issues with visual explain plans and manage your indices"
+        }
       }
     }
   }

@@ -13,10 +13,6 @@
   transition: opacity 0.3s;
   opacity: 1;
   color: #0A6599;
-
-  @include media("<=1000px") {
-    top: 96px;
-  }
 }
 
 .notification a {

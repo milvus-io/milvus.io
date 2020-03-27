@@ -10,15 +10,15 @@
   align-items: center;
   height: 60px;
   padding: 10px 1rem 10px 2rem;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, .5);
   z-index: 100;
   box-sizing: border-box;
-  background: #28292e;
+  background: #fff;
+  max-width: 100%;
 
   @include media("<=1000px") {
     padding: 10px 20px;
     box-shadow: none;
-    background: rgba(0, 0, 0, 0.9);
+    background: #fff;
     padding: 0 10px 0 20px;
 
     .link {
@@ -36,7 +36,8 @@
     align-items: center;
 
     .link {
-      color: #fafafa;
+      color: #000;
+      font-weight: normal;
       margin: 0 1rem;
     }
   }
@@ -44,17 +45,33 @@
 
 .mobile-nav {
   position: fixed;
-  top: 60px;
+  top: 0px;
   left: 0;
   right: 0;
-  padding: 12px 20px;
   font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, .3);
   background: #28292e;
+  opacity: 0.8;
   z-index: 50;
+  transition: all .3s linear;
+  height: 0;
+  overflow: hidden;
+  padding: 12px 20px;
+  box-sizing: border-box;
+
+  a {
+    display: block;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.open {
+    top: 60px;
+    height: auto;
+  }
 }
 
 .gradient {

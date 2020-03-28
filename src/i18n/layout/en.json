@@ -4,12 +4,13 @@
     "header": {
       "quick": "Quick Start",
       "why": "Why Milvus",
-      "gui": "Milvus Admin",
+      "gui": "Admin",
       "solution": "Scenarios",
       "about": "About Milvus",
       "doc": "Docs",
       "blog": "Blog",
       "tutorial": "Tutorial",
+      "benchmarks": "Benchmarks",
       "try": "Try",
       "loading": "Loading...",
       "noresult": "No Result"
@@ -161,7 +162,8 @@
               "Video deduplication",
               "Product search by product"
             ],
-            "img": "cv"
+            "img": "cv",
+            "href": "http://40.73.38.81/"
           },
           {
             "title": "Natural language processing",
@@ -171,7 +173,8 @@
               "Personalized recommendation",
               "Corpus analysis and recommendation"
             ],
-            "img": "nlp"
+            "img": "nlp",
+            "href": "http://139.217.103.7:8001/"
           },
           {
             "title": "Traditional vector calculations",
@@ -181,7 +184,8 @@
               "Molecular pharmacological analysis",
               "Virtual screening of drug molecules"
             ],
-            "img": "molsearch"
+            "img": "molsearch",
+            "href": "http://40.73.24.85/"
           },
           {
             "title": "Audio data processing",
@@ -194,7 +198,8 @@
               "Intelligent voice assistant",
               "Intelligent translation robot"
             ],
-            "img": "audio"
+            "img": "audio",
+            "href": ""
           }
         ]
       }

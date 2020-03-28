@@ -110,6 +110,7 @@ export const Query = graphql`
               notFound
               header {
                 quick
+                benchmarks
                 why
                 gui
                 solution

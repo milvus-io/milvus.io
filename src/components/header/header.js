@@ -45,20 +45,26 @@ const Header = ({ language, locale }) => {
             <LocalizeLink locale={locale} to="/#whymilvus" className="link">
               {header.quick}
             </LocalizeLink>
-            <LocalizeLink locale={locale} to="/gui" className="link">
-              {header.gui}
-            </LocalizeLink>
-
-            <LocalizeLink locale={locale} className="link" to="/scenarios">
-              {header.solution}
-            </LocalizeLink>
-
             <LocalizeLink
               locale={locale}
               className="link"
               to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
             >
               {header.doc}
+            </LocalizeLink>
+            <LocalizeLink
+              locale={locale}
+              className="link"
+              to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
+            >
+              {header.benchmarks}
+            </LocalizeLink>
+            <LocalizeLink locale={locale} to="/gui" className="link">
+              {header.gui}
+            </LocalizeLink>
+
+            <LocalizeLink locale={locale} className="link" to="/scenarios">
+              {header.solution}
             </LocalizeLink>
             <LocalizeLink
               locale={locale}

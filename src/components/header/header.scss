@@ -15,6 +15,22 @@
   background: #fff;
   max-width: 100%;
 
+
+
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 3rem;
+    }
+
+    .lfai {
+      height: 2rem;
+      margin-left: 1rem;
+    }
+  }
+
   @include media("<=1000px") {
     padding: 10px 20px;
     box-shadow: none;
@@ -24,11 +40,20 @@
     .link {
       margin: 0;
     }
+
+    .logo-wrapper {
+      img {
+        height: 2rem
+      }
+
+      .lfai {
+        height: .7rem;
+        margin-left: 6px;
+      }
+    }
   }
 
-  img {
-    height: 3rem;
-  }
+
 
   .right {
     display: flex;

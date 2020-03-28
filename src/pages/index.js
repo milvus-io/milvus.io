@@ -15,6 +15,8 @@ import realtimeIcon from "../images/features/realtime.svg";
 import scalableIcon from "../images/features/scalable.svg";
 import supportIcon from "../images/features/support.svg";
 import LfaiLogo from '../images/logo/lfai-color.png';
+import GithubLogo from "../images/icon/github-white.svg"
+import LearnLogo from "../images/icon/learn.svg"
 
 import GithubButton from "react-github-button";
 import "react-github-button/assets/style.css";
@@ -141,8 +143,14 @@ const IndexPage = ({ data, pageContext }) => {
           <p>{section4.desc1}</p>
           <p>{section4.desc2}</p>
           <div className="btn-wrapper">
-            <a className="primary primary-color">{section4.contribute}</a>
-            <a className="primary white-color">{section4.bootcamp}</a>
+            <a className="primary primary-color with-icon">
+              <img src={GithubLogo}></img>
+              <span>{section4.contribute}</span>
+            </a>
+            <a className="primary white-color with-icon">
+              <img src={LearnLogo}></img>
+              <span>{section4.bootcamp}</span>
+            </a>
 
           </div>
         </section>

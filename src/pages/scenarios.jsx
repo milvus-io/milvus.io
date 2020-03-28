@@ -23,7 +23,7 @@ const ScenariosPage = ({ data, pageContext }) => {
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus GUI" />
-      <main className="gui-wrapper">
+      <main className="scenarios-wrapper">
         <section className="section1">
           <h2>{section1.title}</h2>
         </section>

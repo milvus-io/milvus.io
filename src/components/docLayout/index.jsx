@@ -85,9 +85,8 @@ export default props => {
         <div className={`inner-container ${isBenchMark ? 'fullwidth' : ""}`} ref={docContainer}>
           {children}
           {!isBenchMark && <Footer
-            versions={versions}
-            language={language}
             locale={locale}
+            style={{ background: "#fff" }}
           ></Footer>}
         </div>
         {formatHeadings && !isBenchMark && (

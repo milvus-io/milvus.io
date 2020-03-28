@@ -225,7 +225,7 @@ const Menu = props => {
         {isBlog ? (
           <div className="title"></div>
         ) : (
-            <div className="border-bottom">
+            <div className="border-bottom select-wrapper">
               <VersionSelector
                 options={versions}
                 selected={version}

@@ -15,6 +15,15 @@ import realtimeIcon from "../images/features/realtime.svg";
 import scalableIcon from "../images/features/scalable.svg";
 import supportIcon from "../images/features/support.svg";
 import LfaiLogo from '../images/logo/lfai-color.png';
+import GithubLogo from "../images/icon/github-white.svg"
+import LearnLogo from "../images/icon/learn.svg"
+import adminIcon from '../images/tools/admin.png'
+import cIcon from '../images/tools/c.png'
+import goIcon from '../images/tools/go.png'
+import javaIcon from '../images/tools/java.png'
+import pythonIcon from '../images/tools/python.png'
+import sizingIcon from '../images/tools/sizing.png'
+
 
 import GithubButton from "react-github-button";
 import "react-github-button/assets/style.css";
@@ -141,14 +150,79 @@ const IndexPage = ({ data, pageContext }) => {
           <p>{section4.desc1}</p>
           <p>{section4.desc2}</p>
           <div className="btn-wrapper">
-            <a className="primary primary-color">{section4.contribute}</a>
-            <a className="primary white-color">{section4.bootcamp}</a>
+            <a className="primary primary-color with-icon">
+              <img src={GithubLogo}></img>
+              <span>{section4.contribute}</span>
+            </a>
+            <a className="primary white-color with-icon">
+              <img src={LearnLogo}></img>
+              <span>{section4.bootcamp}</span>
+            </a>
 
           </div>
         </section>
         <section className="section5">
           <img src={LfaiLogo} alt="lfai logo"></img>
           <p>{section5.desc}</p>
+        </section>
+        <section className="sdk-tools">
+          <h2>SDK & Tools</h2>
+          <ul>
+            <li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.baidu.com">
+                <img src={adminIcon} alt="Milvus Admin"></img>
+              </a>
+              <p>Milvus Admin</p>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.baidu.com">
+                <img src={sizingIcon} alt="Milvus Sizing Tools"></img>
+              </a>
+              <p>Milvus Sizing Tools</p>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.baidu.com">
+                <img src={cIcon} alt="C++ SDK"></img>
+              </a>
+              <p>C++ SDK</p>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.baidu.com">
+                <img src={pythonIcon} alt="Python SDK"></img>
+              </a>
+              <p>Python SDK</p>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.baidu.com">
+                <img src={javaIcon} alt="Java SDK"></img>
+              </a>
+              <p>Java SDK</p>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.baidu.com">
+                <img src={goIcon} alt="Golang SDK"></img>
+              </a>
+              <p>Golang SDK</p>
+            </li>
+          </ul>
         </section>
         <section className="section6">
           <h2>{section6.title}</h2>

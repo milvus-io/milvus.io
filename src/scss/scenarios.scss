@@ -1,6 +1,6 @@
 @import '../components/include_media.scss'; // hero image
 
-.gui-wrapper {
+.scenarios-wrapper {
 
   .section1 {
     display: flex;
@@ -11,6 +11,7 @@
     width: 100%;
     background: url("../images/hero/scenatios.svg") no-repeat;
     background-position-x: center;
+    background-size: cover;
 
     h2,
     p {
@@ -39,28 +40,99 @@
     }
   }
 
+  .section3 {
+    margin-top: 6rem;
 
-  @include media("<=1000px") {
-
-    .section1,
-    .section2,
-    .section3,
-    .section4 {
-      padding: 0 20px;
+    h2 {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 3rem;
     }
 
+    .content-wrapper {
+      width: 90%;
+      max-width: 1400px;
+      margin: 0 auto;
+
+      .item {
+        display: inline-block;
+        vertical-align: top;
+        width: 47%;
+        margin: 3rem 0;
+        margin-right: 5%;
+        text-align: left;
+
+        &:nth-child(even) {
+          margin-right: 0;
+        }
+
+        h3 {
+          font-size: 20px;
+          margin: 1rem 0;
+          font-weight: bold;
+        }
+
+        .desc {
+          color: #101010;
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 300;
+        }
+
+        .feature {
+          margin-top: 1rem;
+
+          &::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4FC4F9;
+            transform: rotate(45deg);
+            margin-right: 1.4rem;
+          }
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  @include media("<=1000px") {
     .section1 {
-      p {
+      h2 {
+        font-size: 20px;
+        width: 80%;
+        margin: 0 auto;
         text-align: center;
       }
     }
 
+
     .section2 {
+      width: 90%;
+      margin: 0 auto;
+
       p {
-        font-size: 16px;
+        font-size: 14px;
       }
     }
 
+    .section3 {
+      h2 {
+        font-size: 24px;
+        margin-bottom: 0;
+      }
 
+      .content-wrapper {
+        .item {
+          width: 100%;
+        }
+      }
+
+    }
   }
 }

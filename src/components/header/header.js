@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import LocalizeLink from "../localizedLink/localizedLink";
 import Logo from "../../images/logo/milvus-horizontal-color.svg";
+import LfaiLogo from '../../images/logo/lfai-color.png';
+import Search from '../../components/search'
 import "./header.scss";
 
 const Header = ({ language, locale }) => {
@@ -32,9 +34,12 @@ const Header = ({ language, locale }) => {
   return (
     <>
       <header className="header-wrapper">
-        <LocalizeLink locale={locale} to={"/"}>
+        <LocalizeLink locale={locale} to={"/"} className="logo-wrapper">
           <img src={Logo} alt="Milvos Logo"></img>
+          <img src={LfaiLogo} alt="Lfai" className="lfai"></img>
+
         </LocalizeLink>
+
         {screenWidth > 1000 ? (
           <div className="right">
             <LocalizeLink locale={locale} to="/#whymilvus" className="link">
@@ -44,7 +49,7 @@ const Header = ({ language, locale }) => {
               {header.gui}
             </LocalizeLink>
 
-            <LocalizeLink locale={locale} className="link" to="/#solution">
+            <LocalizeLink locale={locale} className="link" to="/scenarios">
               {header.solution}
             </LocalizeLink>
 
@@ -62,11 +67,12 @@ const Header = ({ language, locale }) => {
             >
               {header.blog}
             </LocalizeLink>
-
+            <Search language={header}></Search>
           </div>
         ) : (
-            <div className="right" onClick={handleClick}>
-              <i className="fas fa-bars"></i>
+            <div className="right" >
+              <Search language={header}></Search>
+              <i className="fas fa-bars" onClick={handleClick}></i>
             </div>
           )}
       </header>
@@ -78,7 +84,7 @@ const Header = ({ language, locale }) => {
           {header.gui}
         </LocalizeLink>
 
-        <LocalizeLink locale={locale} className="link" to="/#solution">
+        <LocalizeLink locale={locale} className="link" to="/scenarios">
           {header.solution}
         </LocalizeLink>
 

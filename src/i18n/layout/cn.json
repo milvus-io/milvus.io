@@ -148,6 +148,55 @@
         "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
         "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users",
         "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds"
+      },
+      "section3": {
+        "title": "What Milvus Can help",
+        "list": [
+          {
+            "title": "Computer Vision",
+            "desc": "Milvus can support various applications in the field of computer vision with picture and video processing as its core, especially the efficient processing of ultra-large-scale data, making Milvus widely used in the field of computer vision",
+            "list": [
+              "Search by image",
+              "Image deduplication",
+              "Video deduplication",
+              "Product search by product"
+            ],
+            "img": "cv"
+          },
+          {
+            "title": "Natural language processing",
+            "desc": "Vectorization of semantic features for words, sentences, articles, etc. is becoming the mainstream technology for natural language processing. Semantic analysis by comparing the distance of semantic feature vectors is being adopted by a large number of semantic analysis solutions. Usability, has been widely used in related fields",
+            "list": [
+              "Semantic extraction",
+              "Personalized recommendation",
+              "Corpus analysis and recommendation"
+            ],
+            "img": "nlp"
+          },
+          {
+            "title": "Traditional vector calculations",
+            "desc": "There are also a lot of vector calculation scenarios in the traditional data processing field. Using traditional calculation methods requires a lot of computing power. With advanced algorithms, Milvus can increase the vector data processing capacity by at least two orders of magnitude with the same computing power resources",
+            "list": [
+              "Molecular structural similarity analysis",
+              "Molecular pharmacological analysis",
+              "Virtual screening of drug molecules"
+            ],
+            "img": "molsearch"
+          },
+          {
+            "title": "Audio data processing",
+            "desc": "",
+            "list": [
+              "Personalized music recommendation",
+              "Music deduplication",
+              "Voiceprint verification",
+              "Speech recognition",
+              "Intelligent voice assistant",
+              "Intelligent translation robot"
+            ],
+            "img": "audio"
+          }
+        ]
       }
     },
     "gui": {

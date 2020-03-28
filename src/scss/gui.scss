@@ -11,6 +11,7 @@
     width: 100%;
     background: url("../images/hero/admin.svg") no-repeat;
     background-position-x: center;
+    background-size: cover;
 
     h2,
     p {
@@ -28,7 +29,9 @@
   }
 
   .section2 {
-    margin: 120px 0;
+    margin: 120px auto;
+    width: 90%;
+    max-width: 1200px;
 
     p {
       max-width: 800px;

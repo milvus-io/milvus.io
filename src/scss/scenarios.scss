@@ -111,6 +111,7 @@
       }
     }
 
+
     .section2 {
       width: 90%;
       margin: 0 auto;
@@ -121,6 +122,11 @@
     }
 
     .section3 {
+      h2 {
+        font-size: 24px;
+        margin-bottom: 0;
+      }
+
       .content-wrapper {
         .item {
           width: 100%;

@@ -96,27 +96,27 @@ export default function Template({
           ></iframe>
         </div>
       ) : (
-        <div className="doc-post-container">
-          <div className="doc-post">
-            <div
-              className="doc-post-content"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
+          <div className="doc-post-container">
+            <div className="doc-post">
+              <div
+                className="doc-post-content"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+            </div>
+            {isBlog || isBenchmark ? null : (
+              <a
+                className="edit-page-link button"
+                href={`https://github.com/milvus-io/docs/tree/${version}/site/${
+                  locale === "en" ? "en" : "zh-CN"
+                  }/${editPath}`}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <i className="far fa-edit"></i> &nbsp; Edit
+              </a>
+            )}
           </div>
-          {isBlog || isBenchmark ? null : (
-            <a
-              className="edit-page-link button"
-              href={`https://github.com/milvus-io/docs/tree/${version}/site/${
-                locale === "en" ? "en" : "zh-CN"
-              }/${editPath}`}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <i className="far fa-edit"></i> &nbsp; Edit
-            </a>
-          )}
-        </div>
-      )}
+        )}
     </Layout>
   );
 }
@@ -146,6 +146,7 @@ export const pageQuery = graphql`
           childLayoutJson {
             layout {
               header {
+                quick
                 why
                 gui
                 solution

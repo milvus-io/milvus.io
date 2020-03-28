@@ -5,7 +5,7 @@ import LocalizedLink from "../components/localizedLink/localizedLink"
 import "../scss/scenarios.scss";
 import AudioBg from '../images/scenario/audio.png'
 import CvBg from '../images/scenario/cv.png'
-import NlpBg from '../images/scenario/Nlp.png'
+import NlpBg from '../images/scenario/nlp.png'
 import MolsearchBg from '../images/scenario/molsearch.png'
 
 const imgs = {

@@ -4,12 +4,13 @@
     "header": {
       "quick": "快速开始",
       "why": "为什么选择Milvus",
-      "gui": "Milvus Admin",
+      "gui": "Admin",
       "solution": "应用场景",
       "about": "关于Milvus",
       "doc": "文档",
       "blog": "博客",
       "tutorial": "教程",
+      "benchmarks": "Benchmarks",
       "try": "试用",
       "loading": "加载中...",
       "noresult": "未查询到数据"
@@ -145,43 +146,46 @@
         "title": "Boost industry innovate with the tech trends"
       },
       "section2": {
-        "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
-        "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users",
-        "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds"
+        "desc1": "处理图片、视频、语音、文本等非结构化数据的需求正在随着智慧城市，短视频，商品个性化推荐，视觉商品搜索等新兴应用领域的出现而持续的增长。而处理这些非结构化数据最主流的方法就是通过人工智能技术（深度学习算法）提取这些非结构化数据的特征，并用特征向量来表示，然后通过对这些特征向量的计算和检索来实现对非结构化数据的分析与检索",
+        "desc2": "Milvus就是为了方便用户能够方便的对特征向量进行计算和检索而设计，支持丰富的特征向量索引算法和异构计算资源的调度，具有完备的用户接口、数据管理组件和图形化管理工具，云原生的设计理念可以让 Milvus 基于K8S轻松实现水平拓展和高可用。自产品开源以来获得了广大用户的认可和支持，目前全球社区规模超过3000人，企业用户超过50家",
+        "desc3": "Milvus凭借对向量检索算法的优化以及异构计算资源的整合，可以为企业级应用提供稳定、高性能的向量检索支持。在绝大部分场景中，保证Top 1召回率100%，同时Top100召回率不低于95%的情况下，百万级数据规模检索时间0.01秒级，亿级数据规模检索时间0.1秒级， 百亿级数据规模检索时间秒级"
       },
       "section3": {
         "title": "What Milvus Can help",
         "list": [
           {
-            "title": "Computer Vision",
-            "desc": "Milvus can support various applications in the field of computer vision with picture and video processing as its core, especially the efficient processing of ultra-large-scale data, making Milvus widely used in the field of computer vision",
+            "title": "图像视频检索",
+            "desc": "深度学习模型最开始就是用来对图像、视频等进行处理，通过训练可以精准的提取图片、视频中的特征从而对图片、视频进行分类，打标签，以图搜图，以图搜视频等等。Milvus凭借其出色的性能和数据管理能力，可以支持各种深度学习模型，实现对海量图片和视频的高性能分析检索能力",
             "list": [
-              "Search by image",
-              "Image deduplication",
-              "Video deduplication",
-              "Product search by product"
+              "图片搜索",
+              "图片去重",
+              "视频去重",
+              "以图搜图"
             ],
-            "img": "cv"
+            "img": "cv",
+            "href": "http://40.73.38.81/"
           },
           {
-            "title": "Natural language processing",
-            "desc": "Vectorization of semantic features for words, sentences, articles, etc. is becoming the mainstream technology for natural language processing. Semantic analysis by comparing the distance of semantic feature vectors is being adopted by a large number of semantic analysis solutions. Usability, has been widely used in related fields",
+            "title": "智能问答机器人",
+            "desc": "传统的问答机器人大都是基于规则的知识图谱方式实现，这种方式需要对大量的语料进行分类整理。而基于深度学习模型的实现方式可以彻底摆脱对语料的预处理，只需提供问题和答案的对应关系，通过自然语言处理的语义分析模型对问题库提取语义特征向量存入Milvus中，然后对提问的问题也进行语义特征向量提取，通过对向量特征的匹配就可以实现自动回复，轻松实现智能客服等应用",
             "list": [
               "Semantic extraction",
               "Personalized recommendation",
               "Corpus analysis and recommendation"
             ],
-            "img": "nlp"
+            "img": "nlp",
+            "href": "http://40.73.1.9:8001/ "
           },
           {
-            "title": "Traditional vector calculations",
-            "desc": "There are also a lot of vector calculation scenarios in the traditional data processing field. Using traditional calculation methods requires a lot of computing power. With advanced algorithms, Milvus can increase the vector data processing capacity by at least two orders of magnitude with the same computing power resources",
+            "title": "化合物分子检索",
+            "desc": "新药研发过程中的一个关键要素就是先导化合物的发现，而在先导化合物的发现过程中的一个主要步骤就是采用计算机虚拟筛选技术对海量的已知药物化合物分子进行相似性、子结构的分析找到药物之间的相似药理特性，从而相互借鉴加快研发速度。虚拟筛选通常做法是将化合物分子的化学式转换为化学式指纹 (Chemical Fingerprint)就是一组特征向量，然后通过计算指纹之间的距离来分析化合物分子之间的相似性。常规的方法受限于计算能力一般只能对千万级别的化合物分子进行分钟级别的分析。而 Milvus凭借先进的算法和异构计算资源的整合，能够支持10亿级别的化合物分子进行毫秒级别的分析，从而极大的提高新药研发的效率",
             "list": [
               "Molecular structural similarity analysis",
               "Molecular pharmacological analysis",
               "Virtual screening of drug molecules"
             ],
-            "img": "molsearch"
+            "img": "molsearch",
+            "href": "http://40.73.24.85/"
           },
           {
             "title": "Audio data processing",
@@ -194,7 +198,8 @@
               "Intelligent voice assistant",
               "Intelligent translation robot"
             ],
-            "img": "audio"
+            "img": "audio",
+            "href": ""
           }
         ]
       }

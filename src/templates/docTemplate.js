@@ -147,6 +147,7 @@ export const pageQuery = graphql`
             layout {
               header {
                 quick
+                benchmarks
                 why
                 gui
                 solution

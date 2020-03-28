@@ -83,7 +83,7 @@ importAllPics(require.context('../images/website/community', false, /\.svg$/), "
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
-  const { section1, section2, section3, section4, section5, section6, section7 } = language.home;
+  const { section1, section3, section4, section5, section6, section7 } = language.home;
 
   const [screenWidth, setScreenWidth] = useState(null);
   useEffect(() => {
@@ -150,11 +150,21 @@ const IndexPage = ({ data, pageContext }) => {
           <p>{section4.desc1}</p>
           <p>{section4.desc2}</p>
           <div className="btn-wrapper">
-            <a className="primary primary-color with-icon">
+            <a
+              className="primary primary-color with-icon"
+              href="https://github.com/milvus-io"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={GithubLogo}></img>
               <span>{section4.contribute}</span>
             </a>
-            <a className="primary white-color with-icon">
+            <a
+              className="primary white-color with-icon"
+              href="https://github.com/milvus-io/bootcamp"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={LearnLogo}></img>
               <span>{section4.bootcamp}</span>
             </a>
@@ -169,19 +179,20 @@ const IndexPage = ({ data, pageContext }) => {
           <h2>SDK & Tools</h2>
           <ul>
             <li>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.baidu.com">
+              <LocalizedLink
+                to="/gui"
+                locale={locale}
+              >
                 <img src={adminIcon} alt="Milvus Admin"></img>
-              </a>
+              </LocalizedLink>
+
               <p>Milvus Admin</p>
             </li>
             <li>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.baidu.com">
+                href="/tools/sizing">
                 <img src={sizingIcon} alt="Milvus Sizing Tools"></img>
               </a>
               <p>Milvus Sizing Tools</p>
@@ -190,7 +201,7 @@ const IndexPage = ({ data, pageContext }) => {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.baidu.com">
+                href="https://github.com/milvus-io/milvus/tree/master/sdk">
                 <img src={cIcon} alt="C++ SDK"></img>
               </a>
               <p>C++ SDK</p>
@@ -199,7 +210,7 @@ const IndexPage = ({ data, pageContext }) => {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.baidu.com">
+                href="https://github.com/milvus-io/pymilvus">
                 <img src={pythonIcon} alt="Python SDK"></img>
               </a>
               <p>Python SDK</p>
@@ -208,7 +219,7 @@ const IndexPage = ({ data, pageContext }) => {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.baidu.com">
+                href="https://github.com/milvus-io/milvus-sdk-java">
                 <img src={javaIcon} alt="Java SDK"></img>
               </a>
               <p>Java SDK</p>
@@ -217,7 +228,7 @@ const IndexPage = ({ data, pageContext }) => {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.baidu.com">
+                href="https://github.com/milvus-io/milvus-sdk-go">
                 <img src={goIcon} alt="Golang SDK"></img>
               </a>
               <p>Golang SDK</p>
@@ -269,6 +280,7 @@ export const Query = graphql`
             layout {
               header {
                 quick
+                benchmarks
                 why
                 gui
                 solution

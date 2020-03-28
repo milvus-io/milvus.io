@@ -46,6 +46,13 @@ const ScenariosPage = ({ data, pageContext }) => {
                     <p className="feature" key={item}>{item}</p>
                   ))
                 }
+                {v.href && <a
+                  className="rectangle"
+                  href={v.href}
+                  target="_blank"
+                  rel="noopener noreferrer">Live Demo
+                </a>}
+
               </div>
             ))}
           </div>
@@ -66,6 +73,7 @@ export const Query = graphql`
               notFound
               header {
                 quick
+                benchmarks
                 why
                 gui
                 solution
@@ -122,6 +130,7 @@ export const Query = graphql`
                     desc
                     list
                     img
+                    href
                   }
                 }
               }

@@ -46,7 +46,11 @@ const Header = ({ language, locale }) => {
           <LocalizeLink locale={locale} to={"/"}>
             <img src={Logo} alt="Milvos Logo"></img>
           </LocalizeLink>
-          <a href="https://wiki.lfai.foundation/display/MIL/Milvus+Home">
+          <a
+            href="https://wiki.lfai.foundation/display/MIL/Milvus+Home"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src={LfaiLogo} alt="Lfai" className="lfai"></img>
           </a>
         </div>

@@ -578,24 +578,24 @@ $im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;
 }
 
 @mixin scroll-bar {
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-    background-color: rgba(255, 255, 255, 0.05);
-  }
+  // &::-webkit-scrollbar {
+ //   width: 6px;
+ //   height: 6px;
+ //   background-color: rgba(255, 255, 255, 0.05);
+ // }
 
-  /*滑块*/
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-  }
+ // /*滑块*/
+ // &::-webkit-scrollbar-thumb {
+ //   background-color: rgba(255, 255, 255, 0.1);
+ //   border-radius: 10px;
+ // }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
+ // &::-webkit-scrollbar-thumb:hover {
+ //   background-color: rgba(255, 255, 255, 0.3);
+ // }
 
-  /*滑道*/
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
-  }
+ // /*滑道*/
+ // &::-webkit-scrollbar-track {
+ //   border-radius: 10px;
+ // }
 }

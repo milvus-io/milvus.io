@@ -33,7 +33,7 @@ const GuiPage = ({ data, pageContext }) => {
           <div className="btn-wrapper">
             <LocalizedLink
               className="primary white-color"
-              to="/docs/Milvus%20Admin/admin_operations.md"
+              to="/gui#install"
               locale={locale}
             >
               {section1.link}
@@ -78,7 +78,7 @@ const GuiPage = ({ data, pageContext }) => {
           </div>
         </section>
         <section className="section3">
-          <h2>{section3.title}</h2>
+          <h2 id="install">{section3.title}</h2>
           <div className="docker-code">
             <p>docker pull milvusdb/milvus-admin:latest</p>
             <p>docker run -p 3000:80 milvusdb/milvus-admin:latest</p>

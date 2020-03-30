@@ -47,7 +47,7 @@ const Selector = props => {
               <LocalizeLink
                 locale={locale}
                 className="text"
-                to={`/docs/${v}/aboutmilvus/overview.md`}
+                to={`/docs/${v}/about_milvus/overview.md`}
               >
                 {v}
               </LocalizeLink>

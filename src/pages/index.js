@@ -141,7 +141,7 @@ const IndexPage = ({ data, pageContext }) => {
             </LocalizedLink>
             <LocalizedLink
               className="primary white-color"
-              to="/docs/aboutmilvus/overview.md"
+              to="/docs/about_milvus/overview.md"
               locale={locale}
             >
               {section1.link}

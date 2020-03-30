@@ -82,7 +82,7 @@ const Header = ({ language, locale }) => {
             <LocalizeLink
               locale={locale}
               className="link"
-              to={"/docs/aboutmilvus/overview.md"}
+              to={"/docs/about_milvus/overview.md"}
             >
               {header.doc}
             </LocalizeLink>

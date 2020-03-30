@@ -1,38 +1,28 @@
-import React, { useState, useMemo } from "react";
-import Layout from "../components/layout/guiLayout";
+import React, { useState, useEffect } from "react";
+import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
-import LocalizedLink from "../components/localizedLink/localizedLink"
+import LocalizedLink from "../components/localizedLink/localizedLink";
 import "../scss/gui.scss";
-import GUI01 from '../images/gui-1.png'
-import GUI02 from '../images/gui-2.png'
-import GUI03 from '../images/gui-3.png'
-import GUI04 from '../images/gui-4.png'
+import feature1 from "../images/admin/feature1.png";
+import feature2 from "../images/admin/feature2.png";
+import feature3 from "../images/admin/feature3.png";
 
 const GuiPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
   const { section1, section2, section3, section4 } = language.gui;
-  const [current, setCurrent] = useState(0)
-  const handlePrev = () => {
-    setCurrent(v => v === 0 ? 3 : v - 1)
-  }
-  const handleNext = () => {
-    setCurrent(v => v === 3 ? 0 : v + 1)
-  }
-  const currentImg = useMemo(() => {
-    switch (current) {
-      case 0:
-        return GUI01
-      case 1:
-        return GUI02
-      case 2:
-        return GUI03
-      case 3:
-        return GUI04
-      default:
-        return GUI01
-    }
-  }, [current])
+
+  const [screenWidth, setScreenWidth] = useState(null);
+  useEffect(() => {
+    const cb = () => {
+      setScreenWidth(document.body.clientWidth);
+    };
+    cb();
+    window.addEventListener("resize", cb);
+    return () => {
+      window.removeEventListener("resize", cb);
+    };
+  }, []);
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus GUI" />
@@ -40,23 +30,58 @@ const GuiPage = ({ data, pageContext }) => {
         <section className="section1">
           <h2>{section1.title}</h2>
           <p>{section1.desc}</p>
+          <div className="btn-wrapper">
+            <LocalizedLink
+              className="primary white-color"
+              to="/gui#install"
+              locale={locale}
+            >
+              {section1.link}
+            </LocalizedLink>
+          </div>
         </section>
-        {/* <section className="section2">
-          {
-            section2.list.map(v => (
-              <p>
-                <i class={`fas ${v.img}`}></i>
-                {v.content}
-              </p>
-            ))
-          }
+        <section className="section4">
+          <div className="item">
+            <img src={feature1} alt="similarity search in gui"></img>
+            <div className="desc-wrapper">
+              <h2>{section4.feature1.title}</h2>
+              <p>{section4.feature1.desc1}</p>
+            </div>
+          </div>
+          {screenWidth <= 1000 ? (
+            <div className="item">
+              <img src={feature2} alt="similarity search in gui"></img>
 
-        </section> */}
+              <div className="desc-wrapper">
+                <h2>{section4.feature2.title}</h2>
+                <p>{section4.feature2.desc1}</p>
+                <p>{section4.feature2.desc2}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="item">
+              <div className="desc-wrapper right-margin">
+                <h2>{section4.feature2.title}</h2>
+                <p>{section4.feature2.desc1}</p>
+                <p>{section4.feature2.desc2}</p>
+              </div>
+              <img src={feature2} alt="similarity search in gui"></img>
+            </div>
+          )}
+
+          <div className="item">
+            <img src={feature3} alt="similarity search in gui"></img>
+            <div className="desc-wrapper">
+              <h2>{section4.feature3.title}</h2>
+              <p>{section4.feature3.desc1}</p>
+            </div>
+          </div>
+        </section>
         <section className="section3">
-          <h2>{section3.title}</h2>
+          <h2 id="install">{section3.title}</h2>
           <div className="docker-code">
             <p>docker pull milvusdb/milvus-admin:latest</p>
-            <p> docker run -p 3000:80 milvusdb/milvus-admin:latest</p>
+            <p>docker run -p 3000:80 milvusdb/milvus-admin:latest</p>
           </div>
           <p>{section3.desc} http://localhost:3000/</p>
           <LocalizedLink
@@ -66,14 +91,6 @@ const GuiPage = ({ data, pageContext }) => {
           >
             {section3.help}
           </LocalizedLink>
-        </section>
-        <section className="section4">
-          <h2>{section4.title}</h2>
-          <div className="img-wrapper">
-            <i class="fas fa-chevron-left" role="button" onClick={handlePrev}></i>
-            <img src={currentImg} alt="gui desc" className="img"></img>
-            <i class="fas fa-chevron-right" role="button" onClick={handleNext}></i>
-          </div>
         </section>
       </main>
     </Layout>
@@ -89,6 +106,8 @@ export const Query = graphql`
             layout {
               notFound
               header {
+                quick
+                benchmarks
                 why
                 gui
                 solution
@@ -112,7 +131,7 @@ export const Query = graphql`
                   txt2
                   txt3
                 }
-                tool{
+                tool {
                   title
                   txt1
                 }
@@ -128,30 +147,37 @@ export const Query = graphql`
                   wechat
                 }
               }
-              home{
-                section6 {
-                  title
-                  button
-                }
-              }
+
               gui {
-                section1{
+                section1 {
                   title
                   desc
+                  link
                 }
-                section2{
-                  list {
-                    content
-                    img
-                  }
+                section2 {
+                  desc1
+                  desc2
+                  desc3
                 }
-                section3{
+                section3 {
                   title
                   desc
                   help
                 }
-                section4{
-                  title
+                section4 {
+                  feature1 {
+                    title
+                    desc1
+                  }
+                  feature2 {
+                    title
+                    desc1
+                    desc2
+                  }
+                  feature3 {
+                    title
+                    desc1
+                  }
                 }
               }
             }

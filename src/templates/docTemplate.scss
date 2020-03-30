@@ -1,8 +1,8 @@
 @import "../components/include_media";
 
 :root {
-  --color-primary: #4fc4f9;
-  --color-primarydark: #0b72ba;
+  --color-primary: #000;
+  --color-primarydark: #000;
   --color-secondary: #f8b108;
   --color-teriary: #69e0e5;
   --color-darkgray: #28292e;
@@ -14,10 +14,10 @@
 
 .doc-post-container {
   padding: 3rem;
-  background: #28292e;
+  background: #fff;
   min-height: 80vh;
   overflow: hidden;
-  color: #d1d1d1;
+  color: #000;
 
   @include media("<=1000px") {
     padding: 1rem;
@@ -249,7 +249,6 @@
 
   body {
     color: #fafafa;
-    font-family: sans-serif;
     word-wrap: break-word;
     font-kerning: normal;
     -moz-font-feature-settings: "kern", "liga", "clig", "calt";
@@ -286,28 +285,25 @@
   h4,
   h5,
   h6 {
-    font-family: sans-serif;
     line-height: 1.1;
-    color: #fafafa;
+    color: #000;
     padding: 0;
     margin: 0;
+    font-weight: bold;
   }
 
   h1 {
     margin: 0 0 2rem;
     font-size: 1.5rem;
     letter-spacing: 0.1rem;
-    opacity: 0.5;
     text-rendering: optimizeLegibility;
 
   }
 
   h2 {
     color: var(--color-primary);
-    opacity: 0.8;
     border-bottom: 1px solid var(--color-gray);
     font-size: 1.25rem;
-    font-weight: 400;
     letter-spacing: 0.03rem;
     padding-bottom: 0.5rem;
     margin: 4rem 0 1rem;
@@ -436,7 +432,7 @@
     margin-bottom: 1.45rem;
     font-size: 0.85rem;
     line-height: 1.42;
-    background: rgba(255, 255, 255, 0.1);
+    background: #000;
     border-radius: 3px;
     overflow: auto;
     word-wrap: normal;
@@ -469,7 +465,11 @@
     padding: 0 0.8rem;
     font-size: 0.9rem;
     margin: 0.8rem 0;
-    color: #B0B0B9;
+    color: #333;
+
+    a {
+      color: #3F9CD1;
+    }
   }
 
   form {
@@ -659,6 +659,10 @@
     }
   }
 
+  span.hljs-meta {
+    user-select: none
+  }
+
   .edit-page-link {
     position: absolute;
     top: 2.7rem;
@@ -687,5 +691,19 @@
   .table-wrapper {
     overflow-x: auto;
     @include scroll-bar;
+  }
+
+
+}
+
+.iframe-icon {
+  position: absolute;
+  top: 30px;
+  left: 70px;
+  color: #333;
+  cursor: pointer;
+
+  @include media("<=1000px") {
+    left: 20px;
   }
 }

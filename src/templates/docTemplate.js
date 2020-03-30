@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/docLayout";
 import SEO from "../components/seo";
 import { graphql } from "gatsby";
 import hljs from "highlight.js";
+// import LocalizeLink from "../components/localizedLink/localizedLink";
 // import sql from "highlight.js/lib/languages/sql"
 // import bash from "highlight.js/lib/languages/bash"
 import "highlight.js/styles/atom-one-dark.css";
@@ -18,9 +19,10 @@ export default function Template({
     locale,
     version,
     versions,
-    headings,
+    headings = [],
     allMenus,
     isBlog,
+    isBenchmark = false,
     editPath
   } = pageContext;
   const layout = data.allFile.edges[0].node.childLayoutJson.layout;
@@ -35,16 +37,33 @@ export default function Template({
   const nav = {
     current: "doc"
   };
+  const iframeUrl = isBenchmark
+    ? `/benchmarks/${frontmatter.id.split("_")[1]}/index.html`
+    : "";
   const idRegex = /id=".*?"/g;
-  if (locale === 'cn') {
-    html = html.replace(idRegex, match => match.replace(/[？|、|，]/g, ''))
+  if (locale === "cn") {
+    html = html.replace(idRegex, match => match.replace(/[？|、|，]/g, ""));
   }
+
+  const [showBack, setShowBack] = useState(false);
 
   useEffect(() => {
     document.querySelectorAll("pre code").forEach(block => {
       hljs.highlightBlock(block);
     });
   }, []);
+
+  const ifrmLoad = () => {
+    const ifrm = document.querySelector("#inlineFrameExample");
+
+    setShowBack(!/index\.html/.test(ifrm.contentWindow.location.href));
+  };
+  const handleRefresh = () => {
+    const ifrm = document.querySelector("#inlineFrameExample");
+    if (ifrm) {
+      ifrm.contentWindow.location.href = ifrm.src;
+    }
+  };
   return (
     <Layout
       language={layout}
@@ -56,29 +75,48 @@ export default function Template({
       headings={headings}
       versions={versions}
       id={frontmatter.id}
+      isBenchMark={isBenchmark}
     >
-      <SEO title={`${headings[0].value}`} lang={locale} />
-      <div className="doc-post-container">
-        <div className="doc-post">
-          {/* <h1>{frontmatter.title}</h1> */}
-          <div
-            className="doc-post-content"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+      <SEO title={`${headings[0] && headings[0].value}`} lang={locale} />
+      {isBenchmark ? (
+        <div style={{ position: "relative" }}>
+          {showBack && (
+            <i
+              className="fas iframe-icon fa-arrow-left"
+              onClick={handleRefresh}
+            ></i>
+          )}
+          <iframe
+            id="inlineFrameExample"
+            title="test"
+            width="100%"
+            height="2000px"
+            src={iframeUrl}
+            onLoad={ifrmLoad}
+          ></iframe>
         </div>
-        {isBlog ? null : (
-          <a
-            className="edit-page-link button"
-            href={`https://github.com/milvus-io/docs/tree/${version}/site/${
-              locale === "en" ? "en" : "zh-CN"
+      ) : (
+        <div className="doc-post-container">
+          <div className="doc-post">
+            <div
+              className="doc-post-content"
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          </div>
+          {isBlog || isBenchmark ? null : (
+            <a
+              className="edit-page-link button"
+              href={`https://github.com/milvus-io/docs/tree/${version}/site/${
+                locale === "en" ? "en" : "zh-CN"
               }/${editPath}`}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <i className="far fa-edit"></i> &nbsp; Edit
-          </a>
-        )}
-      </div>
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <i className="far fa-edit"></i> &nbsp; Edit
+            </a>
+          )}
+        </div>
+      )}
     </Layout>
   );
 }
@@ -108,6 +146,8 @@ export const pageQuery = graphql`
           childLayoutJson {
             layout {
               header {
+                quick
+                benchmarks
                 why
                 gui
                 solution
@@ -131,7 +171,7 @@ export const pageQuery = graphql`
                   txt2
                   txt3
                 }
-                tool{
+                tool {
                   title
                   txt1
                 }

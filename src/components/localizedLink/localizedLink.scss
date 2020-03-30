@@ -12,16 +12,8 @@ a {
     display: inline-block;
     padding: 10px 14px;
     border: 2px solid $primary;
-    border-radius: 2rem;
     font-weight: bold;
-
-    &:lang(en) {
-      letter-spacing: 4px;
-    }
-
-    &:lang(cn) {
-      letter-spacing: 2px;
-    }
+    letter-spacing: 2px;
 
     @include media("<=1000px") {
       &:lang(en) {
@@ -31,6 +23,13 @@ a {
   }
 
   &.primary-color {
+    color: #fff;
+    background: $primary;
+
+  }
+
+  &.white-color {
     color: $primary;
+    background: #fff;
   }
 }

@@ -15,6 +15,7 @@ export default props => {
     version,
     headings,
     wrapperClass = "doc-wrapper",
+    isBenchMark = false,
   } = props
   const formatHeadings =
     headings &&
@@ -79,16 +80,16 @@ export default props => {
           activeDoc={id}
           version={version}
           locale={locale}
+          isBenchMark={isBenchMark}
         ></Menu>
-        <div className="inner-container" ref={docContainer}>
+        <div className={`inner-container ${isBenchMark ? 'fullwidth' : ""}`} ref={docContainer}>
           {children}
-          <Footer
-            versions={versions}
-            language={language}
+          {!isBenchMark && <Footer
             locale={locale}
-          ></Footer>
+            style={{ background: "#fff" }}
+          ></Footer>}
         </div>
-        {formatHeadings && (
+        {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
             {generateAnchorMenu(formatHeadings, "parent-item")}
           </div>

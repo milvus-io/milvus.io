@@ -306,10 +306,7 @@ export const Query = graphql`
                     content
                   }
                 }
-                section4 {
-                  title
-                  list
-                }
+            
               }
             }
           }

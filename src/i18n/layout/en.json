@@ -2,13 +2,15 @@
   "layout": {
     "notFound": "404 Page Not Found",
     "header": {
+      "quick": "Quick Start",
       "why": "Why Milvus",
-      "gui": "Milvus Admin",
+      "gui": "Admin",
       "solution": "Scenarios",
       "about": "About Milvus",
       "doc": "Docs",
       "blog": "Blog",
       "tutorial": "Tutorial",
+      "benchmarks": "Benchmarks",
       "try": "Try",
       "loading": "Loading...",
       "noresult": "No Result"
@@ -43,9 +45,11 @@
     },
     "home": {
       "section1": {
-        "desc1": "An Open Source Vector Similarity",
-        "desc2": "Search Engine",
-        "link": "Learn More"
+        "desc1": "An Open Source Vector Similarity Search Engine",
+        "desc2": "Built  for massive-scale feature vectors, with heterogeneous computing architecture for the best cost efficiency.",
+        "link": "Learn More",
+        "link2": "Get Started",
+        "community": "Community"
       },
       "section2": {
         "title": "What is Milvus",
@@ -56,55 +60,63 @@
         "title": "Milvus Features",
         "list": [
           {
-            "title": "Heterogeneous computing",
-            "content": "Milvus is designed with heterogeneous computing architecture for the best performance and cost efficiency.",
-            "img": "heterogeneous"
+            "title": "Comprehensive Similarity Metrics",
+            "content": "Milvus offers frequently used similarity metrics, including Euclidean distance, inner product, Hamming distance, Jaccard distance, etc, allowing you to explore vector similarity in the most effective and efficient way possible",
+            "img": "metrics"
           },
           {
-            "title": "Multiple indexes",
-            "content": "Milvus supports a variety of indexing types that employs quantization, tree-based, and graph indexing techniques.",
-            "img": "index"
+            "title": "Leading-Edge Performance",
+            "content": "Milvus is built on top of multiple optimized Approximate Nearest Neighbor Search (ANNS) indexing libraries, including faiss, annoy, and hnswlib, etc., thus ensuring that you always get the best performance across various scenarios",
+            "img": "performence"
           },
           {
-            "title": "Intelligent resource management",
-            "content": "Milvus automatically adapts search computation and index building processes based on your datasets and available resources.",
-            "img": "resource"
+            "title": "Dynamic Data Management",
+            "content": "No longer troubled by static data, you can operate data with insertion, deletion, search and update whenever needed",
+            "img": "crud"
           },
           {
-            "title": "Horizontal scalability",
-            "content": "Milvus supports online / offline expansion to scale both storage and computation resources with simple commands.",
-            "img": "scalability"
+            "title": "Near Real Time Search",
+            "content": "Data is available for search almost immediately after being inserted and updated. Milvus does the heavy lifting in your best interests in terms of both result accuracy and data consistency",
+            "img": "realtime"
           },
           {
-            "title": "High availability",
-            "content": "Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided.",
+            "title": "Cost Efficient",
+            "content": "Milvus harnesses the parallelism of modern processors and enables billion-scale similarity searches in milliseconds on a single off-the-shelf server",
+            "img": "cost"
+          },
+          {
+            "title": "Rich Data Type and Advanced Search (coming soon)",
+            "content": "Milvus supports various data types for fields in a record. You can also use advanced search methods, such as filtering, sorting and aggregation for one or multiple fields",
+            "img": "search"
+          },
+          {
+            "title": "Highly Scalable and Robust",
+            "content": "You can deploy Milvus in a distributed environment. To increase the capacity and reliability of a Milvus cluster, you can simply add more nodes",
+            "img": "scalable"
+          },
+          {
+            "title": "Cloud Native",
+            "content": "We make it easy for you to run Milvus on public cloud, private cloud, or somewhere in between.",
+            "img": "cloud"
+          },
+          {
+            "title": "Ease of Use",
+            "content": "Milvus provides easy-to-use SDKs in Python, Java, Go and C++, as well as a RESTful API",
             "img": "availability"
-          },
-          {
-            "title": "Ease of use",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
-            "img": "easy"
           }
         ]
       },
       "section4": {
-        "title": "Vector Search Tool Comparison",
-        "list": [
-          "CPU/GPU heterogeneous computing capability",
-          "Quantization index",
-          "Hash index",
-          "Graph index",
-          "High availability",
-          "Distributed architecture",
-          "Easy-to-use user interface",
-          "GUI monitoring dashboard",
-          "Simple deployment",
-          "Python/JAVA/C++ SDK",
-          "RESTful API",
-          "Enterprise user support"
-        ]
+        "title": "Open Source",
+        "desc1": "Milvus is open-sourced on GitHub. ",
+        "desc2": "Contributions and feedback are welcome!",
+        "contribute": "Contribute on Github",
+        "bootcamp": "Try Milvus Bootcamp"
       },
       "section5": {
+        "desc": "We are an LF AI Foundation incubation project."
+      },
+      "section8": {
         "title": "Scenarios",
         "desc": "Step-by-step instructions to solve AI problems with Milvus.",
         "img1": {
@@ -123,42 +135,106 @@
         "viewall": "View all scenarios"
       },
       "section6": {
-        "title": "Boost AI development with Milvus",
-        "button": "Get started"
+        "title": "Milvus User Community"
+      },
+      "section7": {
+        "title": "Resources",
+        "desc": "Find us and join the conversation on any of these platforms"
+      }
+    },
+    "scenarios": {
+      "section1": {
+        "title": "Boost industry innovate with the tech trends"
+      },
+      "section2": {
+        "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
+        "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users",
+        "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds"
+      },
+      "section3": {
+        "title": "What Milvus Can help",
+        "list": [
+          {
+            "title": "Computer Vision",
+            "desc": "Milvus can support various applications in the field of computer vision with picture and video processing as its core, especially the efficient processing of ultra-large-scale data, making Milvus widely used in the field of computer vision",
+            "list": [
+              "Search by image",
+              "Image deduplication",
+              "Video deduplication",
+              "Product search by product"
+            ],
+            "img": "cv",
+            "href": "http://40.73.38.81/"
+          },
+          {
+            "title": "Natural language processing",
+            "desc": "Vectorization of semantic features for words, sentences, articles, etc. is becoming the mainstream technology for natural language processing. Semantic analysis by comparing the distance of semantic feature vectors is being adopted by a large number of semantic analysis solutions. Usability, has been widely used in related fields",
+            "list": [
+              "Semantic extraction",
+              "Personalized recommendation",
+              "Corpus analysis and recommendation"
+            ],
+            "img": "nlp",
+            "href": "http://139.217.103.7:8001/"
+          },
+          {
+            "title": "Traditional vector calculations",
+            "desc": "There are also a lot of vector calculation scenarios in the traditional data processing field. Using traditional calculation methods requires a lot of computing power. With advanced algorithms, Milvus can increase the vector data processing capacity by at least two orders of magnitude with the same computing power resources",
+            "list": [
+              "Molecular structural similarity analysis",
+              "Molecular pharmacological analysis",
+              "Virtual screening of drug molecules"
+            ],
+            "img": "molsearch",
+            "href": "http://40.73.24.85/"
+          },
+          {
+            "title": "Audio data processing",
+            "desc": "There are also a large number of vector calculation scenarios in the traditional data processing field. Using traditional calculation methods requires a large amount of computing power. With advanced algorithms, Milvus can increase the vector data processing capacity by at least two orders of magnitude with the same computing power resources",
+            "list": [
+              "Personalized music recommendation",
+              "Music deduplication",
+              "Voiceprint verification",
+              "Speech recognition",
+              "Intelligent voice assistant",
+              "Intelligent translation robot"
+            ],
+            "img": "audio",
+            "href": ""
+          }
+        ]
       }
     },
     "gui": {
       "section1": {
-        "title": "Milvus Admin",
-        "desc": "A Graphic User Interface administratrion platform for Milvus."
+        "title": "Get Milvus Admin",
+        "desc": "an easy-to-use milvus administration platform",
+        "link": "Get started"
       },
       "section2": {
-        "list": [
-          {
-            "content": "View Collections as a tree",
-            "img": "fa-eye"
-          },
-          {
-            "content": "CRUD Collection and vectors",
-            "img": "fa-location-arrow"
-          },
-          {
-            "content": "Full Milvus Configuration ",
-            "img": "fa-cogs"
-          },
-          {
-            "content": "Similarity Search ",
-            "img": "fa-search"
-          }
-        ]
+        "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
+        "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users",
+        "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds"
       },
       "section3": {
         "title": "Install and Run",
         "desc": "Then open your browser and visit",
-        "help": "NEED HELP ?"
+        "help": "NEED HELP?"
       },
       "section4": {
-        "title": "Screenshots"
+        "feature1": {
+          "title": "Similarity Search ",
+          "desc1": "Quick vector similarity verification"
+        },
+        "feature2": {
+          "title": "Manipulate your data through an intuitive GUI",
+          "desc1": "View collection as tree",
+          "desc2": "CRUD data and indexes in just a few clicks"
+        },
+        "feature3": {
+          "title": "Easy Configuration",
+          "desc1": "Set up over 10's milvus pereference via GUI"
+        }
       }
     }
   }

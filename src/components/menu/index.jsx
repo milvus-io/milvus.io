@@ -36,9 +36,13 @@ const Menu = props => {
           return copyMenu;
         }
         const generatePath = doc => {
+          if (doc.id.includes("benchmarks")) {
+            return `/docs/${doc.id}`;
+          }
           if (isBlog) {
             return `/blogs/${doc.id}`;
           }
+
           const { label1, label2, label3 } = doc || {};
 
           let parentPath = "";
@@ -143,7 +147,7 @@ const Menu = props => {
       <div
         className={`${className} ${doc.isBlog ? "blog" : ""} ${
           doc.isLast ? "menu-last-level" : ""
-          } ${doc.isActive ? "active" : ""}`}
+        } ${doc.isActive ? "active" : ""}`}
         key={doc.id}
       >
         <div
@@ -151,8 +155,8 @@ const Menu = props => {
           onClick={
             doc.isMenu
               ? () => {
-                toggleMenuChild(doc);
-              }
+                  toggleMenuChild(doc);
+                }
               : handleMenuClick
           }
           style={doc.isMenu ? { cursor: "pointer" } : null}
@@ -170,16 +174,16 @@ const Menu = props => {
           ) : doc.isMenu === true ? (
             <span className="text">{doc.title}</span>
           ) : (
-                <LocalizeLink locale={locale} className="text" to={doc.path}>
-                  {doc.title}
-                </LocalizeLink>
-              )}
+            <LocalizeLink locale={locale} className="text" to={doc.path}>
+              {doc.title}
+            </LocalizeLink>
+          )}
 
           {doc.children && doc.children.length ? (
             <i
               className={`fas fa-chevron-down arrow ${
                 doc.showChildren ? "" : "top"
-                }`}
+              }`}
             ></i>
           ) : null}
         </div>
@@ -220,16 +224,16 @@ const Menu = props => {
         {isBlog ? (
           <div className="title"></div>
         ) : (
-            <div className="border-bottom">
-              <VersionSelector
-                options={versions}
-                selected={version}
-                locale={locale}
-                activeDoc={activeDoc}
-                isVersion={true}
-              ></VersionSelector>
-            </div>
-          )}
+          <div className="border-bottom select-wrapper">
+            <VersionSelector
+              options={versions}
+              selected={version}
+              locale={locale}
+              activeDoc={activeDoc}
+              isVersion={true}
+            ></VersionSelector>
+          </div>
+        )}
 
         {generageMenuDom(realMenuList, "menu-top-level border-bottom")}
       </section>

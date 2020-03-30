@@ -33,11 +33,6 @@ h6 {
 }
 
 body {
-  background-image: linear-gradient(180deg, #28292e 0%, #52545c 100%);
-  background-attachment: fixed;
-  height: 100%;
-  font-family: sans-serif;
-  font-weight: 100;
   font-size: 15px;
 
   @include media("<=1000px") {
@@ -51,14 +46,9 @@ body {
 }
 
 main.doc-wrapper {
-  background: #28292e;
+  display: flex;
 
   .menu-container {
-    background-image: linear-gradient(
-      180deg,
-      #101010 0%,
-      rgba(16, 16, 16, 0) 100%
-    );
     position: fixed;
     left: 0;
     top: 60px;
@@ -78,32 +68,41 @@ main.doc-wrapper {
       height: 100vh;
       box-sizing: border-box;
       z-index: 1000;
-      background-color: #28292e;
     }
   }
 
   .inner-container {
-    width: calc(70% - 60px);
+    flex: 1;
 
     margin-left: 260px;
+
+    &.fullwidth {
+      width: calc(88% - 60px);
+    }
 
     @include media("<=1000px") {
       width: 100%;
       margin: 0;
       padding-top: 50px;
+
+      &.fullwidth {
+        width: 100%;
+      }
     }
   }
 
   .anchor-wrapper {
-    position: fixed;
-    top: 80px;
-    right: 40px;
-    padding-left: 1rem;
-    border-left: 1px solid #fff;
+    flex: 0 0 200px;
     font-size: 14px;
+    margin-top: 100px;
 
     @include media("<=1000px") {
       display: none;
+    }
+
+    .parent-item {
+      padding-left: 1rem;
+      border-left: 4px solid #eee;
     }
 
     .item {
@@ -120,6 +119,7 @@ main.doc-wrapper {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: #60606F;
 
       @include media("<=1400px") {
         max-width: 160px;
@@ -137,7 +137,6 @@ main.doc-wrapper {
   }
 
   .footer-wrapper {
-    margin-top: 100px;
     margin-bottom: 0;
   }
 }
@@ -164,18 +163,19 @@ main.doc-wrapper {
   right: 0;
   z-index: 1000;
 }
+
 .doc-post-content {
   p {
     position: relative;
     z-index: 2;
   }
-  [id]::before {
-    content: "";
-    display: block;
-    height: 75px;
-    margin-top: -75px;
-    visibility: hidden;
-    position: relative;
-    z-index: 0;
-  }
+// [id]::before {
+//   content: "";
+//   display: block;
+//   height: 75px;
+//   margin-top: -75px;
+//   visibility: hidden;
+//   position: relative;
+//   z-index: 0;
+// }
 }

@@ -1,5 +1,5 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function HTML(props) {
   return (
@@ -23,8 +23,12 @@ export default function HTML(props) {
           rel="stylesheet"
           href="https://use.typekit.net/odf7gmc.css"
         ></link>
-        <link
+        {/* <link
           href="https://fonts.googleapis.com/css?family=Noto+Sans+SC&display=swap"
+          rel="stylesheet"
+        /> */}
+        <link
+          href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,700&display=swap&subset=chinese-simplified"
           rel="stylesheet"
         />
         {props.headComponents}
@@ -47,7 +51,7 @@ export default function HTML(props) {
         ></script>
       </body>
     </html>
-  )
+  );
 }
 
 HTML.propTypes = {
@@ -56,5 +60,5 @@ HTML.propTypes = {
   bodyAttributes: PropTypes.object,
   preBodyComponents: PropTypes.array,
   body: PropTypes.string,
-  postBodyComponents: PropTypes.array,
-}
+  postBodyComponents: PropTypes.array
+};

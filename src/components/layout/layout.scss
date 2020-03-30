@@ -1,71 +1,12 @@
 @import "../../reset.scss";
 @import "../include_media.scss";
 
-.bg-wrapper {
-  background-color: #28292E;
-  background-repeat: no-repeat;
-  background-size: 70%;
-  background-position: right 60px;
-  background-image: url("../../images/hero-1225.png");
-
-  @include media("<=1000px") {
-    background-size: 100vh;
-    background-position: right 60px;
-  }
-}
 .content-wrapper {
-  width: 90%;
-  max-width: 1400px;
-  margin: 40px auto;
+  width: 100%;
   box-sizing: border-box;
-
-  @include media("<=1000px") {
-    padding: 0 2rem;
-
-    margin-top: 100px;
-  }
 
   ul,
   li {
     list-style: none;
-  }
-
-
-}
-
-.section6 {
-  height: 94px;
-  line-height: 94px;
-  margin-top: 140px;
-  font-size: 20px;
-  letter-spacing: 1px;
-  text-align: center;
-  background-color: #4FC4F9;
-
-  .get-start {
-    display: inline-block;
-    height: 38px;
-    line-height: 38px;
-    vertical-align: middle;
-    width: 206px;
-    margin-left: 70px;
-    border-radius: 40px;
-    color: #4EB8F0;
-    font-size: 15px;
-    letter-spacing: 2px;
-    text-align: center;
-    background: #fff;
-    text-transform: uppercase;
-  }
-
-  @include media("<=1000px") {
-    height: auto;
-    margin-top: 60px;
-    padding: 20px;
-    line-height: 1.5;
-
-    .get-start {
-      margin: 20px 0 0 0;
-    }
   }
 }

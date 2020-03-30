@@ -465,7 +465,11 @@
     padding: 0 0.8rem;
     font-size: 0.9rem;
     margin: 0.8rem 0;
-    color: #B0B0B9;
+    color: #333;
+
+    a {
+      color: #3F9CD1;
+    }
   }
 
   form {

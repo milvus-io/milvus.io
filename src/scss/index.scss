@@ -9,7 +9,7 @@
   h4,
   h5,
   h6 {
-    font-family: co-text, sans-serif;
+    font-family: Noto Sans SC, sans-serif;
     margin-bottom: 2rem;
     font-weight: 400;
     color: #Fff;
@@ -88,8 +88,9 @@
     align-items: center;
     height: 35rem;
     background: url("../images/website/hero-color.svg") no-repeat;
-    background-position-x: center;
+    background-position: bottom;
     background-size: cover;
+    margin-top: 60px;
 
     .githubicon {
       margin-bottom: 2rem;
@@ -110,6 +111,8 @@
     }
 
     @include media("<=1000px") {
+      background-size: cover;
+
       h1 {
         text-align: center;
         font-size: 20px;
@@ -142,8 +145,6 @@
         margin: 0;
         min-width: 300px;
       }
-
-
     }
   }
 
@@ -186,7 +187,8 @@
         .title {
           flex: 1;
           font-weight: bold;
-          font-size: 20px;
+          font-size: 16px;
+          line-height: 1.6;
         }
       }
 
@@ -294,8 +296,8 @@
         margin: 1rem;
 
         img {
-          width: 80px;
-          height: 40px;
+          width: 160px;
+          height: 80px;
         }
       }
     }
@@ -316,9 +318,6 @@
             margin-right: 0;
           }
 
-          img {
-            width: 64px;
-          }
         }
       }
 
@@ -362,6 +361,35 @@
     @include media("<=1000px") {
       margin: 4rem 0;
     }
+
+
+
+    .wechat {
+      position: relative;
+
+      .wechatqr {
+        position: absolute;
+        display: none;
+        top: -100%;
+        left: 100%;
+      }
+
+      a {
+        display: inline-block;
+
+
+      }
+
+      &:hover {
+        .wechatqr {
+          display: flex;
+
+          justify-content: space-between;
+        }
+
+      }
+    }
+
   }
 
   .sdk-tools {

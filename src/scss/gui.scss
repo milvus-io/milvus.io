@@ -10,8 +10,12 @@
     height: 35rem;
     width: 100%;
     background: url("../images/hero/admin.svg") no-repeat;
-    background-position-x: center;
+    background-position: bottom;
     background-size: cover;
+
+    .btn-wrapper {
+      margin-top: 20px;
+    }
 
     h2,
     p {
@@ -94,12 +98,12 @@
   }
 
   .section4 {
+    max-width: 1400px;
+    margin: 0 auto;
     margin-top: 7rem;
 
     .item {
       display: flex;
-      max-width: 1400px;
-      margin: 0 auto;
       align-items: center;
       margin-bottom: 3rem;
 
@@ -123,8 +127,9 @@
         }
 
         h2 {
-          font-size: 1.8rem;
+          font-size: 1.4rem;
           font-weight: bold;
+          line-height: 1.6;
           margin-bottom: 2rem;
         }
 

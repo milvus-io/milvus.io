@@ -1,11 +1,11 @@
-import React from "react"
-import { Link } from "gatsby"
-import locales from "../../consts/locales.js"
-import "./localizedLink.scss"
+import React from "react";
+import { Link } from "gatsby";
+import locales from "../../consts/locales.js";
+import "./localizedLink.scss";
 
 export default ({ locale, to, children, className = "link" }) => {
-  const language = locales[locale]
-  const toMedium = locale === "en" && to.includes("blog")
+  const language = locales[locale];
+  const toMedium = locale === "en" && to.includes("blog");
   if (toMedium) {
     return (
       <a
@@ -15,11 +15,11 @@ export default ({ locale, to, children, className = "link" }) => {
         children={children}
         className={className}
       ></a>
-    )
+    );
   }
 
-  let path
+  let path;
 
-  language && !language.default ? (path = `/${locale}${to}`) : (path = to)
-  return <Link className={className} children={children} to={path} />
-}
+  language && !language.default ? (path = `/${locale}${to}`) : (path = to);
+  return <Link className={className} children={children} to={path} />;
+};

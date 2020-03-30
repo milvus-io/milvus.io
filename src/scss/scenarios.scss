@@ -2,6 +2,14 @@
 
 .scenarios-wrapper {
 
+  .section2,
+  .section3 {
+    text-align: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
   .section1 {
     display: flex;
     flex-direction: column;
@@ -10,7 +18,7 @@
     height: 35rem;
     width: 100%;
     background: url("../images/hero/scenatios.svg") no-repeat;
-    background-position-x: center;
+    background-position: bottom;
     background-size: cover;
 
     h2,
@@ -29,14 +37,13 @@
   }
 
   .section2 {
-    margin: 120px 0;
+    margin: 120px auto;
 
     p {
-      max-width: 800px;
-      margin: 0 auto;
       color: #000;
       margin-top: 3rem;
       line-height: 24px;
+      text-align: left;
     }
   }
 
@@ -50,13 +57,9 @@
       margin-bottom: 3rem;
     }
 
-    .content-wrapper {
-      width: 90%;
-      max-width: 1400px;
-      margin: 0 auto;
+    .demo-wrapper {
 
       .item {
-        position: relative;
         display: inline-block;
         vertical-align: top;
         width: 47%;
@@ -64,9 +67,13 @@
         margin-right: 5%;
         text-align: left;
 
+        .img-wrapper {
+          position: relative;
+        }
+
         .rectangle {
           position: absolute;
-          top: 245px;
+          bottom: 20px;
           right: 0;
           display: block;
           height: 32px;
@@ -105,7 +112,7 @@
         .desc {
           color: #101010;
           font-size: 16px;
-          line-height: 20px;
+          line-height: 1.5;
           font-weight: 300;
         }
 
@@ -157,9 +164,10 @@
         margin-bottom: 0;
       }
 
-      .content-wrapper {
+      .demo-wrapper {
         .item {
           width: 100%;
+
         }
       }
 

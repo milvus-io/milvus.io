@@ -657,6 +657,10 @@
     }
   }
 
+  span.hljs-meta {
+    user-select: none
+  }
+
   .edit-page-link {
     position: absolute;
     top: 2.7rem;

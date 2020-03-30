@@ -10,7 +10,7 @@
       "doc": "文档",
       "blog": "博客",
       "tutorial": "教程",
-      "benchmarks": "Benchmarks",
+      "benchmarks": "性能评测",
       "try": "试用",
       "loading": "加载中...",
       "noresult": "未查询到数据"
@@ -45,9 +45,10 @@
     },
     "home": {
       "section1": {
-        "desc1": "开源向量相似度搜索引擎",
-        "desc2": "",
+        "desc1": "Milvus 是一款开源的特征向量相似度搜索引擎",
+        "desc2": "Milvus 具有使用方便、实用可靠、易于扩展、稳定高效和搜索迅速等特点，在全球范围内被上百家组织和机构所采用。Milvus 已经被广泛应用于多个领域，其中包括图像处理、机器视觉、自然语言处理、语音识别、推荐系统以及新药发现等",
         "link": "了解更多",
+        "link2": "快速开始",
         "community": "社区"
       },
       "section2": {
@@ -59,49 +60,49 @@
         "title": "Milvus 特性",
         "list": [
           {
-            "title": "Multi-model Support",
-            "content": "Milvus is designed with heterogeneous computing architecture for the best performance and cost efficiency.",
+            "title": "全面的相似度指标",
+            "content": "Milvus 支持各种常用的相似度计算指标，包括欧氏距离、内积、汉明距离和杰卡德距离等。您可以根据应用需求来选择最有效的向量相似度计算方式",
             "img": "support"
           },
           {
-            "title": "High Performence",
-            "content": "Milvus supports a variety of indexing types that employs quantization, tree-based, and graph indexing techniques.",
+            "title": "业界领先的性能",
+            "content": "您可以随时对数据进行插入、删除、搜索、更新等操作而无需受到静态数据带来的困扰",
             "img": "performence"
           },
           {
-            "title": "Near Real-time Search",
-            "content": "Milvus automatically adapts search computation and index building processes based on your datasets and available resources.",
-            "img": "realtime"
-          },
-          {
-            "title": "CRUD",
-            "content": "Milvus supports online / offline expansion to scale both storage and computation resources with simple commands.",
+            "title": "动态数据管理",
+            "content": "您可以随时对数据进行插入、删除、搜索、更新等操作而无需受到静态数据带来的困扰",
             "img": "crud"
           },
           {
-            "title": "Hybrid Search",
-            "content": "Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided.",
-            "img": "hybrid"
+            "title": "近实时搜索",
+            "content": "在插入或更新数据之后，您可以几乎立刻对插入或更新过的数据进行搜索。Milvus 负责保证搜索结果的准确率和数据一致性",
+            "img": "realtime"
           },
           {
-            "title": "High Availability",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
-            "img": "availability"
-          },
-          {
-            "title": "Scalable",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
-            "img": "scalable"
-          },
-          {
-            "title": "Cost Efficient",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
+            "title": "高成本效益",
+            "content": "Milvus 充分利用现代处理器的并行计算能力，可以在单台通用服务器上完成对十亿级数据的毫秒级搜索",
             "img": "cost"
           },
           {
-            "title": "Cloud Native",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
+            "title": "支持多种数据类型和高级搜索（即将上线）",
+            "content": "Milvus 的数据记录中的字段支持多种数据类型。您还可以对一个或多个字段使用高级搜索，例如过滤、排序和聚合",
+            "img": "availability"
+          },
+          {
+            "title": "高扩展性和可靠性",
+            "content": "您可以在分布式环境中部署 Milvus。如果要对集群扩容或者增加可靠性，您只需增加节点",
+            "img": "scalable"
+          },
+          {
+            "title": "云原生",
+            "content": "您可以轻松在公有云、私有云、或混合云上运行 Milvus",
             "img": "cloud"
+          },
+          {
+            "title": "简单易用",
+            "content": "Milvus 提供了易用的 Python、Java、Go 和 C++ SDK，另外还提供了 RESTful API",
+            "img": "hybrid"
           }
         ]
       },
@@ -143,7 +144,7 @@
     },
     "scenarios": {
       "section1": {
-        "title": "Boost industry innovate with the tech trends"
+        "title": "借助技术趋势推动行业创新"
       },
       "section2": {
         "desc1": "处理图片、视频、语音、文本等非结构化数据的需求正在随着智慧城市，短视频，商品个性化推荐，视觉商品搜索等新兴应用领域的出现而持续的增长。而处理这些非结构化数据最主流的方法就是通过人工智能技术（深度学习算法）提取这些非结构化数据的特征，并用特征向量来表示，然后通过对这些特征向量的计算和检索来实现对非结构化数据的分析与检索",
@@ -151,7 +152,7 @@
         "desc3": "Milvus凭借对向量检索算法的优化以及异构计算资源的整合，可以为企业级应用提供稳定、高性能的向量检索支持。在绝大部分场景中，保证Top 1召回率100%，同时Top100召回率不低于95%的情况下，百万级数据规模检索时间0.01秒级，亿级数据规模检索时间0.1秒级， 百亿级数据规模检索时间秒级"
       },
       "section3": {
-        "title": "What Milvus Can help",
+        "title": "Milvus 能做些什么",
         "list": [
           {
             "title": "图像视频检索",
@@ -160,7 +161,7 @@
               "图片搜索",
               "图片去重",
               "视频去重",
-              "以图搜图"
+              "以商品搜商品"
             ],
             "img": "cv",
             "href": "http://40.73.38.81/"
@@ -169,9 +170,9 @@
             "title": "智能问答机器人",
             "desc": "传统的问答机器人大都是基于规则的知识图谱方式实现，这种方式需要对大量的语料进行分类整理。而基于深度学习模型的实现方式可以彻底摆脱对语料的预处理，只需提供问题和答案的对应关系，通过自然语言处理的语义分析模型对问题库提取语义特征向量存入Milvus中，然后对提问的问题也进行语义特征向量提取，通过对向量特征的匹配就可以实现自动回复，轻松实现智能客服等应用",
             "list": [
-              "Semantic extraction",
-              "Personalized recommendation",
-              "Corpus analysis and recommendation"
+              "语义提取",
+              "个性化推荐",
+              "语料分析和推荐"
             ],
             "img": "nlp",
             "href": "http://40.73.1.9:8001/ "
@@ -180,23 +181,23 @@
             "title": "化合物分子检索",
             "desc": "新药研发过程中的一个关键要素就是先导化合物的发现，而在先导化合物的发现过程中的一个主要步骤就是采用计算机虚拟筛选技术对海量的已知药物化合物分子进行相似性、子结构的分析找到药物之间的相似药理特性，从而相互借鉴加快研发速度。虚拟筛选通常做法是将化合物分子的化学式转换为化学式指纹 (Chemical Fingerprint)就是一组特征向量，然后通过计算指纹之间的距离来分析化合物分子之间的相似性。常规的方法受限于计算能力一般只能对千万级别的化合物分子进行分钟级别的分析。而 Milvus凭借先进的算法和异构计算资源的整合，能够支持10亿级别的化合物分子进行毫秒级别的分析，从而极大的提高新药研发的效率",
             "list": [
-              "Molecular structural similarity analysis",
-              "Molecular pharmacological analysis",
-              "Virtual screening of drug molecules"
+              "分子结构相似性分析",
+              "分子药理分析",
+              "药物分子虚拟筛选"
             ],
             "img": "molsearch",
             "href": "http://40.73.24.85/"
           },
           {
-            "title": "Audio data processing",
-            "desc": "",
+            "title": "赋能传统向量计算",
+            "desc": "在传统的数据处理领域也存在大量向量计算的场景，使用传统的计算方式需要消耗大量的算力而Milvus凭借先进的算法可以在同等算力资源下将向量数据处理能力提高至少两个数量级",
             "list": [
-              "Personalized music recommendation",
-              "Music deduplication",
-              "Voiceprint verification",
-              "Speech recognition",
-              "Intelligent voice assistant",
-              "Intelligent translation robot"
+              "个性化音乐推荐",
+              "音乐去重",
+              "声纹验证",
+              "语音识别",
+              "智能语音小助手",
+              "智能翻译机器人"
             ],
             "img": "audio",
             "href": ""
@@ -207,7 +208,8 @@
     "gui": {
       "section1": {
         "title": "Get Milvus Admin",
-        "desc": "an easy-to-use GUI to access your Milvus instance and perform basic operations"
+        "desc": "简单易用 Milvus 管理平台",
+        "link": "快速开始"
       },
       "section2": {
         "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
@@ -221,19 +223,17 @@
       },
       "section4": {
         "feature1": {
-          "title": "Similarity Search from GUI",
-          "desc1": "View collection as tree",
-          "desc2": "The fastest way to ……"
+          "title": "Similarity Search ",
+          "desc1": "Quick vector similarity verification"
         },
         "feature2": {
-          "title": "CRUD Collection and vectors",
-          "desc1": "Manipulate your data through an intuitive GUI",
-          "desc2": "Understand performance issues with visual explain plans and manage your indices"
+          "title": "Manipulate your data through an intuitive GUI",
+          "desc1": "View collection as tree",
+          "desc2": "CRUD data and indexes in just a few clicks"
         },
         "feature3": {
-          "title": "Full Milvus Configuration from GUI",
-          "desc1": "make working with data remarkably easy for everyone",
-          "desc2": "Understand performance issues with visual explain plans and manage your indices"
+          "title": "Easy Configuration",
+          "desc1": "set up over 10's milvus pereference via GUI"
         }
       }
     }

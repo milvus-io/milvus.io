@@ -48,6 +48,7 @@
         "desc1": "An Open Source Vector Similarity Search Engine",
         "desc2": "Built  for massive-scale feature vectors, with heterogeneous computing architecture for the best cost efficiency.",
         "link": "Learn More",
+        "link2": "Get Started",
         "community": "Community"
       },
       "section2": {
@@ -59,49 +60,49 @@
         "title": "Milvus Features",
         "list": [
           {
-            "title": "Multi-model Support",
-            "content": "Milvus is designed with heterogeneous computing architecture for the best performance and cost efficiency.",
-            "img": "support"
+            "title": "Comprehensive Similarity Metrics",
+            "content": "Milvus offers frequently used similarity metrics, including Euclidean distance, inner product, Hamming distance, Jaccard distance, etc, allowing you to explore vector similarity in the most effective and efficient way possible",
+            "img": "metrics"
           },
           {
-            "title": "High Performence",
-            "content": "Milvus supports a variety of indexing types that employs quantization, tree-based, and graph indexing techniques.",
+            "title": "Leading-Edge Performance",
+            "content": "Milvus is built on top of multiple optimized Approximate Nearest Neighbor Search (ANNS) indexing libraries, including faiss, annoy, and hnswlib, etc., thus ensuring that you always get the best performance across various scenarios",
             "img": "performence"
           },
           {
-            "title": "Near Real-time Search",
-            "content": "Milvus automatically adapts search computation and index building processes based on your datasets and available resources.",
-            "img": "realtime"
-          },
-          {
-            "title": "CRUD",
-            "content": "Milvus supports online / offline expansion to scale both storage and computation resources with simple commands.",
+            "title": "Dynamic Data Management",
+            "content": "No longer troubled by static data, you can operate data with insertion, deletion, search and update whenever needed",
             "img": "crud"
           },
           {
-            "title": "Hybrid Search",
-            "content": "Milvus is integrated with Kubernetes framework so that all single point of failures could be avoided.",
-            "img": "hybrid"
-          },
-          {
-            "title": "High Availability",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
-            "img": "availability"
-          },
-          {
-            "title": "Scalable",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
-            "img": "scalable"
+            "title": "Near Real Time Search",
+            "content": "Data is available for search almost immediately after being inserted and updated. Milvus does the heavy lifting in your best interests in terms of both result accuracy and data consistency",
+            "img": "realtime"
           },
           {
             "title": "Cost Efficient",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
+            "content": "Milvus harnesses the parallelism of modern processors and enables billion-scale similarity searches in milliseconds on a single off-the-shelf server",
             "img": "cost"
           },
           {
+            "title": "Rich Data Type and Advanced Search (coming soon)",
+            "content": "Milvus supports various data types for fields in a record. You can also use advanced search methods, such as filtering, sorting and aggregation for one or multiple fields",
+            "img": "search"
+          },
+          {
+            "title": "Highly Scalable and Robust",
+            "content": "You can deploy Milvus in a distributed environment. To increase the capacity and reliability of a Milvus cluster, you can simply add more nodes",
+            "img": "scalable"
+          },
+          {
             "title": "Cloud Native",
-            "content": "Milvus can be easily installed in a few steps and supports Prometheus-based GUI monitor dashboards.",
+            "content": "We make it easy for you to run Milvus on public cloud, private cloud, or somewhere in between.",
             "img": "cloud"
+          },
+          {
+            "title": "Ease of Use",
+            "content": "Milvus provides easy-to-use SDKs in Python, Java, Go and C++, as well as a RESTful API",
+            "img": "availability"
           }
         ]
       },
@@ -189,7 +190,7 @@
           },
           {
             "title": "Audio data processing",
-            "desc": "",
+            "desc": "There are also a large number of vector calculation scenarios in the traditional data processing field. Using traditional calculation methods requires a large amount of computing power. With advanced algorithms, Milvus can increase the vector data processing capacity by at least two orders of magnitude with the same computing power resources",
             "list": [
               "Personalized music recommendation",
               "Music deduplication",
@@ -207,7 +208,8 @@
     "gui": {
       "section1": {
         "title": "Get Milvus Admin",
-        "desc": "an easy-to-use GUI to access your Milvus instance and perform basic operations"
+        "desc": "an easy-to-use milvus administration platform",
+        "link": "Get started"
       },
       "section2": {
         "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
@@ -221,19 +223,17 @@
       },
       "section4": {
         "feature1": {
-          "title": "Similarity Search from GUI",
-          "desc1": "View collection as tree",
-          "desc2": "The fastest way to ……"
+          "title": "Similarity Search ",
+          "desc1": "Quick vector similarity verification"
         },
         "feature2": {
-          "title": "CRUD Collection and vectors",
-          "desc1": "Manipulate your data through an intuitive GUI",
-          "desc2": "Understand performance issues with visual explain plans and manage your indices"
+          "title": "Manipulate your data through an intuitive GUI",
+          "desc1": "View collection as tree",
+          "desc2": "CRUD data and indexes in just a few clicks"
         },
         "feature3": {
-          "title": "Full Milvus Configuration from GUI",
-          "desc1": "make working with data remarkably easy for everyone",
-          "desc2": "Understand performance issues with visual explain plans and manage your indices"
+          "title": "Easy Configuration",
+          "desc1": "Set up over 10's milvus pereference via GUI"
         }
       }
     }

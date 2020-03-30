@@ -249,7 +249,6 @@
 
   body {
     color: #fafafa;
-    font-family: sans-serif;
     word-wrap: break-word;
     font-kerning: normal;
     -moz-font-feature-settings: "kern", "liga", "clig", "calt";
@@ -286,7 +285,6 @@
   h4,
   h5,
   h6 {
-    font-family: sans-serif;
     line-height: 1.1;
     color: #000;
     padding: 0;
@@ -655,6 +653,10 @@
     html {
       font-size: 100%;
     }
+  }
+
+  span.hljs-meta {
+    user-select: none
   }
 
   .edit-page-link {

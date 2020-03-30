@@ -16,9 +16,7 @@ const Layout = ({ children, language, locale }) => {
   return (
     <>
       <Header language={language} locale={locale} />
-      <div className="content-wrapper">
-        <main>{children}</main>
-      </div>
+      <div className="content-wrapper">{children}</div>
       <Footer language={language} locale={locale}></Footer>
     </>
   );

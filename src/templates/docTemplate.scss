@@ -419,6 +419,13 @@
     }
   }
 
+  // p,
+ // li {
+ //   code {
+ //     color: #3F9CD1
+ //   }
+ // }
+
   figure {
     margin-left: 0;
     margin-right: 0;
@@ -615,6 +622,7 @@
     padding-top: 0.725rem;
     padding-bottom: calc(0.725rem - 1px);
     max-width: 370px;
+    border: 1px solid #b0b0b0;
 
     @include media("<=1000px") {
       font-size: 12px;

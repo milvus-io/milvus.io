@@ -10,7 +10,7 @@ import feature3 from "../images/admin/feature3.png";
 const GuiPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
-  const { section1, section2, section3, section4 } = language.gui;
+  const { section1, section3, section4 } = language.gui;
 
   const [screenWidth, setScreenWidth] = useState(null);
   useEffect(() => {
@@ -59,15 +59,15 @@ const GuiPage = ({ data, pageContext }) => {
               </div>
             </div>
           ) : (
-            <div className="item">
-              <div className="desc-wrapper right-margin">
-                <h2>{section4.feature2.title}</h2>
-                <p>{section4.feature2.desc1}</p>
-                <p>{section4.feature2.desc2}</p>
+              <div className="item">
+                <div className="desc-wrapper right-margin">
+                  <h2>{section4.feature2.title}</h2>
+                  <p>{section4.feature2.desc1}</p>
+                  <p>{section4.feature2.desc2}</p>
+                </div>
+                <img src={feature2} alt="similarity search in gui"></img>
               </div>
-              <img src={feature2} alt="similarity search in gui"></img>
-            </div>
-          )}
+            )}
 
           <div className="item">
             <img src={feature3} alt="similarity search in gui"></img>

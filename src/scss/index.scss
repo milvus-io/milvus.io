@@ -90,7 +90,7 @@
     background: url("../images/website/hero-color.svg") no-repeat;
     background-position: bottom;
     background-size: cover;
-    margin-top: 60px;
+    margin-top: 102px;
 
     .githubicon {
       margin-bottom: 2rem;
@@ -100,7 +100,7 @@
       margin-top: 8px;
       font-size: 16px;
       width: 90%;
-      max-width: 32rem;
+      max-width: 800px;
       line-height: 24px;
       text-align: center;
 
@@ -122,7 +122,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 8rem;
 
     img {
       width: 20rem;
@@ -146,7 +145,7 @@
   }
 
   .section3 {
-    margin-top: 2rem;
+    margin-top: 6rem;
 
     h2 {
       text-align: center;
@@ -189,6 +188,10 @@
         }
       }
 
+      a {
+        color: #4eb8f0;
+      }
+
       // .title {
       //   font-size: 1rem;
       //   font-weight: 400;
@@ -210,7 +213,6 @@
 
   .section4 {
     text-align: center;
-    margin-top: 6rem;
 
     .with-icon {
       display: flex;
@@ -220,6 +222,8 @@
         margin-right: 0.5rem;
       }
     }
+
+
 
     h2 {
       text-align: center;
@@ -251,7 +255,6 @@
   }
 
   .section5 {
-    margin-top: 6rem;
     text-align: center;
 
     img {
@@ -273,11 +276,10 @@
   }
 
   .section6 {
-    margin-top: 10rem;
 
     h2 {
       font-size: 32px;
-      margin-bottom: 5rem;
+      margin-bottom: 2rem;
       color: #000000;
       text-align: center;
     }
@@ -294,7 +296,6 @@
 
         img {
           width: 160px;
-          height: 80px;
         }
       }
     }
@@ -309,10 +310,15 @@
         justify-content: center;
 
         li {
+          margin: 0.5rem;
           margin-left: 0;
 
           &:nth-child(4n + 4) {
             margin-right: 0;
+          }
+
+          img {
+            width: 80px;
           }
 
         }
@@ -323,7 +329,6 @@
 
   .section7 {
     text-align: center;
-    margin-top: 10rem;
 
     h2 {
       color: #000;
@@ -342,7 +347,7 @@
       display: flex;
       justify-content: space-around;
       max-width: 1200px;
-      margin: 2rem auto 6rem auto;
+      margin: 3rem auto 6rem auto;
       flex-wrap: wrap;
 
       li {
@@ -390,12 +395,11 @@
   }
 
   .sdk-tools {
-    margin-top: 10rem;
 
     h2 {
       color: #000;
       text-align: center;
-      margin-bottom: 5rem;
+      margin-bottom: 3rem;
     }
 
     img {
@@ -438,5 +442,14 @@
       }
 
     }
+  }
+
+  .section2,
+  .section4,
+  .section5,
+  .section6,
+  .section7,
+  .sdk-tools {
+    margin-top: 10rem;
   }
 }

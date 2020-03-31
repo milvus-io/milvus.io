@@ -1,14 +1,10 @@
 .footer-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: #FAFAFA;
   color: #60606F;
   padding: 22px;
 
   .copy-right {
-    display: flex;
-    align-items: center;
+    text-align: center;
 
     span {
       font-size: 14px;

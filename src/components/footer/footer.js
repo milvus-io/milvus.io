@@ -13,8 +13,7 @@ const Footer = ({ locale, style }) => {
   return (
     <footer className="footer-wrapper" style={style}>
       <div className="copy-right">
-        <img src={GithubIcon} alt="github"></img>
-        <span>© {new Date().getFullYear()} Milvus. All rights reserved.</span>
+        <span>© 2019 - {new Date().getFullYear()} Milvus. All rights reserved.</span>
       </div>
       {/* <LocalizeLink locale={l} to={to}>
         {locale === "cn" ? "English" : "中"}

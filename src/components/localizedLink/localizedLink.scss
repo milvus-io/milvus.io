@@ -7,13 +7,18 @@ a {
   color: #fff;
 
 
-
   &.primary {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px 14px;
     border: 2px solid $primary;
     font-weight: bold;
     letter-spacing: 2px;
+    height: 48px;
+    box-sizing: border-box;
+    min-width: 160px;
+    text-align: center;
 
     @include media("<=1000px") {
       &:lang(en) {
@@ -29,7 +34,12 @@ a {
   }
 
   &.white-color {
-    color: $primary;
-    background: #fff;
+    color: #FFF;
+    border: 1px solid #fff;
+
+    &:hover {
+      color: $primary;
+      background: #fff;
+    }
   }
 }

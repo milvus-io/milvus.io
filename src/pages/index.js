@@ -3,6 +3,7 @@ import { graphql } from "gatsby";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
 import LocalizedLink from "../components/localizedLink/localizedLink";
+import Notification from "../components/notification"
 import "../scss/index.scss";
 import availabilityIcon from "../images/features/availability.svg";
 import cloudIcon from "../images/features/cloud.svg";
@@ -51,26 +52,33 @@ function importAllPics(r, type) {
     const m = r(key);
     const matchs = key.match(/.\/(\S*).svg/);
     let href = "";
+    let order = 0
     if (type === "resources" && matchs.length) {
       switch (matchs[1]) {
         case "bilibili":
+          order = 4
           href =
             "https://space.bilibili.com/478166626?from=search&seid=1306120686699362786";
           break;
         case "medium":
+          order = 2
           href = "https://medium.com/@milvusio";
           break;
         case "slack":
+          order = 0
           href =
             "https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk";
           break;
         case "twitter":
+          order = 1
           href = "https://twitter.com/milvusio";
           break;
         case "zhihu":
+          order = 5
           href = "https://zhuanlan.zhihu.com/ai-search";
           break;
         case "wechat":
+          order = 3
           href = "#";
           break;
         default:
@@ -80,7 +88,7 @@ function importAllPics(r, type) {
     }
     type === "users"
       ? users.push(m)
-      : resources.push({ src: m, name: matchs && matchs[1], href });
+      : resources[order] = { src: m, name: matchs && matchs[1], href };
   });
 }
 importAllPics(
@@ -107,6 +115,7 @@ const IndexPage = ({ data, pageContext }) => {
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus Home" />
+      <Notification></Notification>
       <main className="home-wrapper">
         <section className="section1">
           <div className="githubicon">
@@ -118,7 +127,7 @@ const IndexPage = ({ data, pageContext }) => {
             />
           </div>
           <h1>{section1.desc1}</h1>
-          <h3>{section1.desc2}</h3>
+          <h3 dangerouslySetInnerHTML={{ __html: section1.desc2 }}></h3>
           <div className="btn-wrapper">
             <LocalizedLink
               className="primary white-color"
@@ -145,7 +154,7 @@ const IndexPage = ({ data, pageContext }) => {
                   <img src={icons[v.img]} alt="icon"></img>
                   <p className="title">{v.title}</p>
                 </div>
-                <p className="content">{v.content}</p>
+                <p className="content" dangerouslySetInnerHTML={{ __html: v.content }}></p>
               </li>
             ))}
           </ul>
@@ -165,10 +174,11 @@ const IndexPage = ({ data, pageContext }) => {
               <span>{section4.contribute}</span>
             </a>
             <a
-              className="primary white-color with-icon"
+              className="primary with-icon"
               href="https://github.com/milvus-io/bootcamp"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ color: "#4eb8f0" }}
             >
               <img src={LearnLogo} alt="learn more"></img>
               <span>{section4.bootcamp}</span>
@@ -176,7 +186,13 @@ const IndexPage = ({ data, pageContext }) => {
           </div>
         </section>
         <section className="section5">
-          <img src={LfaiLogo} alt="lfai logo"></img>
+          <a
+            href="https://wiki.lfai.foundation/display/MIL/Milvus+Home"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={LfaiLogo} alt="lfai logo"></img>
+          </a>
           <p>{section5.desc}</p>
         </section>
         <section className="sdk-tools">

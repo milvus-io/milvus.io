@@ -46,7 +46,7 @@
     "home": {
       "section1": {
         "desc1": "Milvus 是一款开源的特征向量相似度搜索引擎",
-        "desc2": "Milvus 具有使用方便、实用可靠、易于扩展、稳定高效和搜索迅速等特点，在全球范围内被上百家组织和机构所采用。Milvus 已经被广泛应用于多个领域，其中包括图像处理、机器视觉、自然语言处理、语音识别、推荐系统以及新药发现等",
+        "desc2": "Milvus 具有使用方便、实用可靠、易于扩展、稳定高效和搜索迅速等特点，在全球范围内被上百家组织和机构所采用。Milvus 已经被广泛应用于多个领域，其中包括图像处理、机器视觉、自然语言处理、语音识别、推荐系统以及新药发现等。",
         "link": "了解更多",
         "link2": "快速开始",
         "community": "社区"
@@ -223,17 +223,17 @@
       },
       "section4": {
         "feature1": {
-          "title": "Similarity Search ",
-          "desc1": "Quick vector similarity verification"
+          "title": "相似度搜索",
+          "desc1": "快速验证向量相似度，提升开发效率"
         },
         "feature2": {
-          "title": "Manipulate your data through an intuitive GUI",
-          "desc1": "View collection as tree",
-          "desc2": "CRUD data and indexes in just a few clicks"
+          "title": "在图形界面上更直观的操作Milvus",
+          "desc1": "树形结构数据展示，一览无余",
+          "desc2": "只需要点几下鼠标就可以增删改查向量和设置索引"
         },
         "feature3": {
-          "title": "Easy Configuration",
-          "desc1": "set up over 10's milvus pereference via GUI"
+          "title": "全面设置Milvus",
+          "desc1": "通过GUI，您可以设置超过10多项Milvus配置"
         }
       }
     }

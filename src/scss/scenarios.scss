@@ -23,16 +23,25 @@
 
     h2,
     p {
-      font-size: 28px;
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       line-height: 30px;
+    }
+
+    h2 {
+      font-size: 2rem;
     }
 
     p {
       font-size: 18px;
       line-height: 20px;
       margin-top: 10px;
+    }
+
+    .desc {
+      max-width: 800px;
+      line-height: 1.6;
+      text-align: center;
     }
   }
 

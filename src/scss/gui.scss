@@ -14,15 +14,18 @@
     background-size: cover;
 
     .btn-wrapper {
-      margin-top: 20px;
+      margin-top: 3rem;
     }
 
     h2,
     p {
-      font-size: 28px;
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       line-height: 30px;
+    }
+
+    h2 {
+      font-size: 2rem
     }
 
     p {

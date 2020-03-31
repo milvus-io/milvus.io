@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { graphql } from "gatsby";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
 import LocalizedLink from "../components/localizedLink/localizedLink";
-import Notification from "../components/notification";
 import "../scss/index.scss";
 import availabilityIcon from "../images/features/availability.svg";
 import cloudIcon from "../images/features/cloud.svg";
@@ -105,17 +104,6 @@ const IndexPage = ({ data, pageContext }) => {
     section7
   } = language.home;
 
-  const [screenWidth, setScreenWidth] = useState(null);
-  useEffect(() => {
-    const cb = () => {
-      setScreenWidth(document.body.clientWidth);
-    };
-    cb();
-    window.addEventListener("resize", cb);
-    return () => {
-      window.removeEventListener("resize", cb);
-    };
-  }, []);
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus Home" />
@@ -173,7 +161,7 @@ const IndexPage = ({ data, pageContext }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src={GithubLogo}></img>
+              <img src={GithubLogo} alt="github"></img>
               <span>{section4.contribute}</span>
             </a>
             <a
@@ -182,7 +170,7 @@ const IndexPage = ({ data, pageContext }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src={LearnLogo}></img>
+              <img src={LearnLogo} alt="learn more"></img>
               <span>{section4.bootcamp}</span>
             </a>
           </div>

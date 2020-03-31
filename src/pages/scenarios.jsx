@@ -1,7 +1,6 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
-import LocalizedLink from "../components/localizedLink/localizedLink";
 import "../scss/scenarios.scss";
 import AudioBg from "../images/scenario/audio.png";
 import CvBg from "../images/scenario/cv.png";

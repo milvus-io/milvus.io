@@ -21,10 +21,11 @@ const ScenariosPage = ({ data, pageContext }) => {
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="Milvus GUI" />
+      <SEO title="Milvus Scenarios" />
       <div className="scenarios-wrapper">
         <section className="section1">
           <h2>{section1.title}</h2>
+          <p className="desc">{section1.desc}</p>
         </section>
         <section className="section2">
           <p>{section2.desc1}</p>
@@ -119,6 +120,7 @@ export const Query = graphql`
               scenarios {
                 section1 {
                   title
+                  desc
                 }
                 section2 {
                   desc1

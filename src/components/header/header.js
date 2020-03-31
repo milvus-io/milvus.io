@@ -18,7 +18,7 @@ const Header = ({ language, locale }) => {
     .replace("/cn/", "/");
   const blogHref =
     locale === "cn"
-      ? "https://blog.csdn.net/weixin_44839084"
+      ? "http://zilliz.blog.csdn.net"
       : "https://medium.com/@milvusio";
   useEffect(() => {
     const cb = () => {

@@ -68,7 +68,7 @@ function importAllPics(r, type) {
           href = "https://twitter.com/milvusio";
           break;
         case "zhihu":
-          href = "https://zhuanlan.zhihu.com/milvus";
+          href = "https://zhuanlan.zhihu.com/ai-search";
           break;
         case "wechat":
           href = "#";

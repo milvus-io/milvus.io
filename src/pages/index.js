@@ -187,7 +187,7 @@ const IndexPage = ({ data, pageContext }) => {
         </section>
         <section className="section5">
           <a
-            href="https://wiki.lfai.foundation/display/MIL/Milvus+Home"
+            href="https://lfai.foundation"
             target="_blank"
             rel="noopener noreferrer"
           >

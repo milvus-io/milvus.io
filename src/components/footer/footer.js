@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 // import LocalizeLink from "../localizedLink/localizedLink"
 // import { globalHistory } from "@reach/router";
-import GithubIcon from "../../images/icon/github-normal.svg";
+// import GithubIcon from "../../images/icon/github-normal.svg";
 import "./footer.scss";
 
 const Footer = ({ locale, style }) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.scss";
 
 const Notification = props => {
@@ -15,14 +15,13 @@ const Notification = props => {
         <a href="https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk">
           Join the Milvus Slack channel here
         </a>
-        {typeof document !== 'undefined' &&
+        {typeof document !== "undefined" &&
           document.body &&
           document.body.clientWidth > 1000 &&
           "to interact with our community!"}
-
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Notification;

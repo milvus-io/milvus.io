@@ -5,6 +5,25 @@ const locales = require("./src/constants/locales");
 const DOC_LANG_FOLDERS = ["/en/", "/zh-CN/"];
 const benchmarksMenuList = require('./benchmark-menu')
 const express = require("express");
+const getNewestVersion = (versionInfo) => {
+  const keys = Object.keys(versionInfo).filter(v => v !== 'master' && versionInfo[v].released === "yes")
+  return keys.reduce((pre, cur) => {
+    const curVersion = cur.substring(1).split(".").map(v => Number(v))
+    const preVersion = pre.substring(1).split(".").map(v => Number(v))
+
+    if (curVersion[0] !== preVersion[0]) {
+      pre = curVersion[0] < preVersion[0] ? pre : cur
+    } else if (curVersion[1] !== preVersion[1]) {
+      pre = curVersion[1] < preVersion[1] ? pre : cur
+    } else if (curVersion[2] !== preVersion[2]) {
+      pre = curVersion[2] < preVersion[2] ? pre : cur
+    } else {
+      pre = cur
+    }
+
+    return pre
+  }, "v0.0.0")
+}
 exports.onCreateDevServer = ({ app }) => {
   app.use(express.static("public"));
 };
@@ -12,7 +31,8 @@ exports.onCreateDevServer = ({ app }) => {
 // the version is same for different lang, so we only need one
 const DOC_ROOT = "src/pages/docs/versions";
 const versionInfo = ReadVersionJson(DOC_ROOT);
-
+const newestVersion = getNewestVersion(versionInfo)
+console.log(newestVersion)
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
   return new Promise(resolve => {
@@ -115,7 +135,7 @@ exports.createPages = ({ actions, graphql }) => {
       ({ node: { fileAbsolutePath, frontmatter } }) =>
         (!!findVersion(fileAbsolutePath) ||
           fileAbsolutePath.includes("/blog/zh-CN") ||
-          fileAbsolutePath.includes("/docs/versions/master/") ||
+          // fileAbsolutePath.includes("/docs/versions/master/") ||
           fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
         frontmatter.id
     );
@@ -226,7 +246,7 @@ exports.createPages = ({ actions, graphql }) => {
       const localizedPath = generatePath(fileId, fileLang, version, isBlog, true, isBenchmark);
       // the newest doc version is master so we need to make route without version.
       // for easy link to the newest doc
-      if (!version && fileAbsolutePath.includes("master")) {
+      if (version === newestVersion) {
         const masterPath = isBenchmark
           ? `/docs/$${fileId}`
           : generatePath(
@@ -235,12 +255,12 @@ exports.createPages = ({ actions, graphql }) => {
             isBlog ? false : "master",
             isBlog
           );
-        return createPage({
+        createPage({
           path: masterPath,
           component: docTemplate,
           context: {
             locale: fileLang,
-            version: isBlog ? "master" : versionInfo.master.version, // get master version
+            version: newestVersion, // get master version
             versions: Array.from(versions),
             old: fileId,
             headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
@@ -271,7 +291,6 @@ exports.createPages = ({ actions, graphql }) => {
     });
   });
 };
-
 
 const checkIsblog = (path) => path.includes("blog")
 const checkIsBenchmark = (path) => path.includes("benchmarks")

@@ -17,7 +17,7 @@ import supportIcon from "../images/features/support.svg";
 import metricsIcon from "../images/features/metrics.svg";
 import searchIcon from "../images/features/search.svg";
 
-import LfaiLogo from "../images/logo/lfai-color.png";
+import LfaiLogo from "../images/logo/lfai.svg";
 import GithubLogo from "../images/icon/github-white.svg";
 import LearnLogo from "../images/icon/learn.svg";
 import adminIcon from "../images/tools/admin.png";

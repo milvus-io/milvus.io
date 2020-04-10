@@ -1,9 +1,9 @@
-import React from "react";
-import { graphql } from "gatsby";
+import React, { useEffect } from "react";
+import { graphql, navigate } from "gatsby";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
 import LocalizedLink from "../components/localizedLink/localizedLink";
-import Notification from "../components/notification"
+import Notification from "../components/notification";
 import "../scss/index.scss";
 import availabilityIcon from "../images/features/availability.svg";
 import cloudIcon from "../images/features/cloud.svg";
@@ -52,33 +52,33 @@ function importAllPics(r, type) {
     const m = r(key);
     const matchs = key.match(/.\/(\S*).svg/);
     let href = "";
-    let order = 0
+    let order = 0;
     if (type === "resources" && matchs.length) {
       switch (matchs[1]) {
         case "bilibili":
-          order = 4
+          order = 4;
           href =
             "https://space.bilibili.com/478166626?from=search&seid=1306120686699362786";
           break;
         case "medium":
-          order = 2
+          order = 2;
           href = "https://medium.com/@milvusio";
           break;
         case "slack":
-          order = 0
+          order = 0;
           href =
             "https://join.slack.com/t/milvusio/shared_invite/enQtNzY1OTQ0NDI3NjMzLWNmYmM1NmNjOTQ5MGI5NDhhYmRhMGU5M2NhNzhhMDMzY2MzNDdlYjM5ODQ5MmE3ODFlYzU3YjJkNmVlNDQ2ZTk";
           break;
         case "twitter":
-          order = 1
+          order = 1;
           href = "https://twitter.com/milvusio";
           break;
         case "zhihu":
-          order = 5
+          order = 5;
           href = "https://zhuanlan.zhihu.com/ai-search";
           break;
         case "wechat":
-          order = 3
+          order = 3;
           href = "#";
           break;
         default:
@@ -88,7 +88,7 @@ function importAllPics(r, type) {
     }
     type === "users"
       ? users.push(m)
-      : resources[order] = { src: m, name: matchs && matchs[1], href };
+      : (resources[order] = { src: m, name: matchs && matchs[1], href });
   });
 }
 importAllPics(
@@ -99,6 +99,23 @@ importAllPics(
   require.context("../images/website/community", false, /\.svg$/),
   "resources"
 );
+
+const getRedirectLanguage = () => {
+  if (typeof navigator === `undefined`) {
+    return "en";
+  }
+
+  const lang =
+    navigator && navigator.language && navigator.language.split("-")[0];
+  if (!lang) return "en";
+
+  switch (lang) {
+    case "zh":
+      return "cn";
+    default:
+      return "en";
+  }
+};
 
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
@@ -111,6 +128,15 @@ const IndexPage = ({ data, pageContext }) => {
     section6,
     section7
   } = language.home;
+
+  useEffect(() => {
+    const urlLang = getRedirectLanguage();
+    const set = window.localStorage.getItem("milvus.io.setlanguage");
+
+    if (!set && urlLang !== locale) {
+      navigate(`/${urlLang}/`);
+    }
+  }, []);
 
   return (
     <Layout language={language} locale={locale}>
@@ -154,7 +180,10 @@ const IndexPage = ({ data, pageContext }) => {
                   <img src={icons[v.img]} alt="icon"></img>
                   <p className="title">{v.title}</p>
                 </div>
-                <p className="content" dangerouslySetInnerHTML={{ __html: v.content }}></p>
+                <p
+                  className="content"
+                  dangerouslySetInnerHTML={{ __html: v.content }}
+                ></p>
               </li>
             ))}
           </ul>

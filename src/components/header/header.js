@@ -9,7 +9,6 @@ import { globalHistory } from "@reach/router";
 
 const Header = ({ language, locale }) => {
   const { header } = language;
-
   const [screenWidth, setScreenWidth] = useState(null);
   const [mobileNav, setMobileNav] = useState(null);
   const l = locale === "cn" ? "en" : "cn";
@@ -38,6 +37,11 @@ const Header = ({ language, locale }) => {
     e.stopPropagation();
     setMobileNav(v => !v);
   };
+
+  const onChangeLocale = () => {
+    console.log('xxx')
+    window.localStorage.setItem('milvus.io.setlanguage', true);
+  }
 
   return (
     <>
@@ -104,7 +108,7 @@ const Header = ({ language, locale }) => {
           <div className="right">
             <Search language={header}></Search>
             <LocalizeLink locale={l} to={to}>
-              {locale === "cn" ? "En" : "中"}
+              <span onClick={onChangeLocale}>{locale === "cn" ? "En" : "中"}</span>
             </LocalizeLink>
             <i className="fas fa-bars" onClick={handleClick}></i>
           </div>

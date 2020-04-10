@@ -101,7 +101,7 @@ const Header = ({ language, locale }) => {
 
             <Search language={header}></Search>
             <LocalizeLink locale={l} to={to}>
-              {locale === "cn" ? "En" : "中"}
+              <span onClick={onChangeLocale}>{locale === "cn" ? "En" : "中"}</span>
             </LocalizeLink>
           </div>
         ) : (

@@ -30,7 +30,7 @@
     "react-dom": "^16.8.6",
     "react-fullpage": "^0.1.19",
     "react-github-button": "^0.1.11",
-    "react-helmet": "^5.2.1",
+    "react-helmet": "^5.2.1"
   },
   "devDependencies": {
     "prettier": "^1.18.2"

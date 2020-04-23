@@ -50,7 +50,8 @@ exports.onCreatePage = ({ page, actions }) => {
         ...page,
         path: localizedPath,
         context: {
-          locale: lang
+          locale: lang,
+          newestVersion
         }
       });
     });
@@ -262,6 +263,7 @@ exports.createPages = ({ actions, graphql }) => {
             locale: fileLang,
             version: newestVersion, // get master version
             versions: Array.from(versions),
+            newestVersion,
             old: fileId,
             headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
             fileAbsolutePath,
@@ -282,6 +284,7 @@ exports.createPages = ({ actions, graphql }) => {
           old: fileId,
           headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
           fileAbsolutePath,
+          newestVersion,
           isBlog,
           editPath: generatePath(fileId, fileLang, version, isBlog, false),
           allMenus,

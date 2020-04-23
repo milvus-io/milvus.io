@@ -1,7 +1,8 @@
 # => Build container
-FROM node:12-buster as builder
+FROM node:13-buster as builder
 WORKDIR /site
 COPY package.json .
+COPY yarn.lock .
 RUN yarn
 COPY . .
 RUN yarn build

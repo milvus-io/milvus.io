@@ -10,9 +10,9 @@ v0.7.1 // branch name 必须要v开头
   |- en                     //  英文目录 
     |- menuStructure        // 重要！！ 用来生成英文菜单
       |- en.json
-  |- en                     //  英文目录
+  |- zh-CN                     //  中文目录
     |- menuStructure        // 重要！！ 用来生成中文菜单
-      |- en.json
+      |- cn.json
 |- version.json             //  用来控制是否发布
 ```
 

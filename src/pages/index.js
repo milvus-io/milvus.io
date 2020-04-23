@@ -119,7 +119,7 @@ const getRedirectLanguage = () => {
 
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
-  const { locale } = pageContext;
+  const { locale, newestVersion } = pageContext;
   const {
     section1,
     section3,
@@ -141,7 +141,7 @@ const IndexPage = ({ data, pageContext }) => {
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus" />
-      <Notification></Notification>
+      <Notification version={newestVersion}></Notification>
       <main className="home-wrapper">
         <section className="section1">
           <div className="githubicon">

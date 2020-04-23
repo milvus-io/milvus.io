@@ -5,7 +5,7 @@
 ```js
 ## Folder and Files structure
 v0.7.1 // branch name 必须要v开头
-|- assets                   //  md中使用的图片
+|- assets                     md中使用的图片
 |- site                     // 所有md文件
   |- en                     //  英文目录 
     |- menuStructure        // 重要！！ 用来生成英文菜单

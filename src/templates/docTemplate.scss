@@ -8,7 +8,6 @@
   --color-darkgray: #28292e;
   --color-gray: #60606f;
   --color-lightgray: #b0b0b9;
-
   --color-state-hover: rgba(255, 255, 255, 0.15);
 }
 
@@ -30,7 +29,6 @@
   details,
   figcaption,
   figure,
-  footer,
   header,
   main,
   menu,
@@ -263,8 +261,7 @@
 
 
   a {
-    color: var(--color-primary);
-    opacity: 0.9;
+    color: #3F9CD1;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
   }

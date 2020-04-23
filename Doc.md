@@ -5,7 +5,7 @@
 ```js
 ## Folder and Files structure
 v0.7.1 // branch name 必须要v开头
-|- assets                     md中使用的图片
+|- assets                   // md中使用的图片
 |- site                     // 所有md文件
   |- en                     //  英文目录 
     |- menuStructure        // 重要！！ 用来生成英文菜单
@@ -17,7 +17,7 @@ v0.7.1 // branch name 必须要v开头
 ```
 
 1. 每个branch下都需要有version.json, 其中version表示版本号.
-```json
+```js
   {
     "version": "v0.7.1", // 同branch名
     "released": "yes"  // yes | no 表示是否会发布到官网
@@ -33,7 +33,7 @@ id: overview.md // 必须加上.md 这样才可以使网站和github中link同�
 ``` 
 
 3. menuStructure/zh-CN 下的cn.json文件
-```json
+```js
 {
   "menuList": [
     {

@@ -4,7 +4,7 @@ import "./index.scss";
 let timer = null
 const Notification = props => {
   const { version } = props
-  const [showSlack, setShowSlack] = useState(true)
+  const [showSlack, setShowSlack] = useState(false)
   useEffect(() => {
     if (timer) return
     timer = setInterval(() => {

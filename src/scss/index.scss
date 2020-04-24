@@ -290,6 +290,7 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
+      justify-content: space-between;
 
       li {
         display: flex;
@@ -298,7 +299,7 @@
         width: 153px;
 
         img {
-          width: 100px;
+          width: 130px;
           object-fit: scale-down;
         }
       }
@@ -316,6 +317,7 @@
         li {
           margin: 0.5rem;
           margin-left: 0;
+          justify-content: center;
 
           &:nth-child(4n + 4) {
             margin-right: 0;
@@ -416,7 +418,7 @@
       max-width: 1200px;
       margin: 0 auto;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
       flex-wrap: wrap;
 
       li {

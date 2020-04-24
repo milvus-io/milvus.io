@@ -292,10 +292,14 @@
       margin: 0 auto;
 
       li {
+        display: flex;
         margin: 1rem;
+        height: 93px;
+        width: 153px;
 
         img {
-          width: 160px;
+          width: 100px;
+          object-fit: scale-down;
         }
       }
     }

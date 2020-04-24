@@ -86,19 +86,23 @@ function importAllPics(r, type) {
           break;
       }
     }
-    type === "users"
-      ? users.push(m)
-      : (resources[order] = { src: m, name: matchs && matchs[1], href });
+    if (type === "users") {
+      const index = key.replace(/[^0-9]/ig, "");
+      users[index] = m
+    } else {
+      resources[order] = { src: m, name: matchs && matchs[1], href }
+    }
   });
 }
 importAllPics(
-  require.context("../images/website/users", false, /\.jpg$/),
+  require.context("../images/website/users", false, /\.jpg|.png$/),
   "users"
 );
 importAllPics(
   require.context("../images/website/community", false, /\.svg$/),
   "resources"
 );
+console.log(users)
 
 const getRedirectLanguage = () => {
   if (typeof navigator === `undefined`) {

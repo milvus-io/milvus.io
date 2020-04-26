@@ -102,7 +102,6 @@ importAllPics(
   require.context("../images/website/community", false, /\.svg$/),
   "resources"
 );
-console.log(users)
 
 const getRedirectLanguage = () => {
   if (typeof navigator === `undefined`) {

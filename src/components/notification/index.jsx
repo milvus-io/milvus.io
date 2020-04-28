@@ -1,22 +1,13 @@
 import React from "react";
 import "./index.scss";
+import Marquee, { Motion, randomIntFromInterval } from "react-marquee-slider";
 
-// let timer = null;
 const Notification = (props) => {
   const { version } = props;
-  // const [showSlack, setShowSlack] = useState(false);
-  // // useEffect(() => {
-  // //   if (timer) return;
-  // //   timer = setInterval(() => {
-  // //     setShowSlack((v) => !v);
-  // //   }, 3000);
-  // //   return () => {
-  // //     clearInterval(timer);
-  // //   };
-  // // }, []);
+
   return (
     <div className="notification">
-      <marquee text="swetha">
+      <Marquee velocity={80} >
         <span style={{ marginRight: "400px" }}>
           <span role="img" aria-label="" aria-labelledby="">
             👋
@@ -30,7 +21,7 @@ const Notification = (props) => {
           </a>
         </span>
 
-        <span>
+        <span style={{ marginRight: "400px" }}>
           <span role="img" aria-label="" aria-labelledby="">
             👋
           </span>
@@ -46,7 +37,9 @@ const Notification = (props) => {
               "to interact with our community!"}
           </a>
         </span>
-      </marquee>
+      </Marquee>
+
+
     </div>
   );
 };

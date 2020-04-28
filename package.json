@@ -30,7 +30,9 @@
     "react-dom": "^16.8.6",
     "react-fullpage": "^0.1.19",
     "react-github-button": "^0.1.11",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "react-marquee-slider": "^1.0.16",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "prettier": "^1.18.2"

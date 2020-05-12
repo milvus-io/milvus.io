@@ -1,10 +1,13 @@
 # => Build container
 FROM node:13-buster as builder
+ARG IS_PREVIEW 
+ENV IS_PREVIEW $IS_PREVIEW
 WORKDIR /site
 COPY package.json .
 COPY yarn.lock .
 RUN yarn
 COPY . .
+
 RUN yarn build
 
 # => Run container

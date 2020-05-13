@@ -9,7 +9,8 @@ const env = process.env.IS_PREVIEW;
 console.log(env);
 const getNewestVersion = (versionInfo) => {
   const keys = Object.keys(versionInfo).filter(
-    (v) => v !== "master" && versionInfo[v].released === "yes"
+    (v) =>
+      v !== "master" && (versionInfo[v].released === "yes" || env === "preview")
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur

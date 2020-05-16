@@ -310,7 +310,7 @@ exports.createPages = ({ actions, graphql }) => {
         component: docTemplate,
         context: {
           locale: fileLang,
-          version: isBenchmark ? versionInfo.master.version : version,
+          version: isBenchmark ? newestVersion : version,
           versions: Array.from(versions),
           old: fileId,
           headings: node.headings.filter((v) => v.depth < 4 && v.depth >= 1),

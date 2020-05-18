@@ -6,10 +6,11 @@ import LfaiLogo from "../../images/logo/lfai-color.png";
 import Search from "../../components/search";
 import "./header.scss";
 import { globalHistory } from "@reach/router";
+import { useMobileScreen } from "../../hooks";
 
 const Header = ({ language, locale }) => {
   const { header } = language;
-  const [screenWidth, setScreenWidth] = useState(null);
+  const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
   const l = locale === "cn" ? "en" : "cn";
   const to = globalHistory.location.pathname
@@ -20,28 +21,20 @@ const Header = ({ language, locale }) => {
       ? "http://zilliz.blog.csdn.net"
       : "https://medium.com/@milvusio";
   useEffect(() => {
-    const cb = () => {
-      setScreenWidth(document.body.clientWidth);
-    };
-    cb();
-    window.addEventListener("resize", cb);
     window.addEventListener("click", () => {
       setMobileNav(false);
     });
-    return () => {
-      window.removeEventListener("resize", cb);
-    };
   }, []);
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     e.stopPropagation();
-    setMobileNav(v => !v);
+    setMobileNav((v) => !v);
   };
 
   const onChangeLocale = () => {
-    console.log('xxx')
-    window.localStorage.setItem('milvus.io.setlanguage', true);
-  }
+    console.log("xxx");
+    window.localStorage.setItem("milvus.io.setlanguage", true);
+  };
 
   return (
     <>
@@ -101,14 +94,18 @@ const Header = ({ language, locale }) => {
 
             <Search language={header}></Search>
             <LocalizeLink locale={l} to={to}>
-              <span onClick={onChangeLocale}>{locale === "cn" ? "En" : "中"}</span>
+              <span onClick={onChangeLocale}>
+                {locale === "cn" ? "En" : "中"}
+              </span>
             </LocalizeLink>
           </div>
         ) : (
           <div className="right">
             <Search language={header}></Search>
             <LocalizeLink locale={l} to={to}>
-              <span onClick={onChangeLocale}>{locale === "cn" ? "En" : "中"}</span>
+              <span onClick={onChangeLocale}>
+                {locale === "cn" ? "En" : "中"}
+              </span>
             </LocalizeLink>
             <i className="fas fa-bars" onClick={handleClick}></i>
           </div>
@@ -147,7 +144,7 @@ const Header = ({ language, locale }) => {
 
 Header.propTypes = {
   language: PropTypes.object.isRequired,
-  locale: PropTypes.string.isRequired
+  locale: PropTypes.string.isRequired,
 };
 
 export default Header;

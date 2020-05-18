@@ -11,7 +11,7 @@ const imgs = {
   audio: AudioBg,
   cv: CvBg,
   nlp: NlpBg,
-  molsearch: MolsearchBg
+  molsearch: MolsearchBg,
 };
 
 const ScenariosPage = ({ data, pageContext }) => {
@@ -35,7 +35,7 @@ const ScenariosPage = ({ data, pageContext }) => {
         <section className="section3">
           <h2>{section3.title}</h2>
           <div className="demo-wrapper">
-            {section3.list.map(v => (
+            {section3.list.map((v) => (
               <div className="item" key={v.img}>
                 <div className="img-wrapper">
                   <img src={imgs[v.img]} alt={v.title}></img>
@@ -50,9 +50,21 @@ const ScenariosPage = ({ data, pageContext }) => {
                     </a>
                   )}
                 </div>
-                <h3>{v.title}</h3>
+                <h3>
+                  {v.titleHref ? (
+                    <a
+                      href={v.titleHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {v.title}
+                    </a>
+                  ) : (
+                    v.title
+                  )}
+                </h3>
                 <p className="desc">{v.desc}</p>
-                {v.list.map(item => (
+                {v.list.map((item) => (
                   <p className="feature" key={item}>
                     {item}
                   </p>
@@ -135,6 +147,7 @@ export const Query = graphql`
                     list
                     img
                     href
+                    titleHref
                   }
                 }
               }

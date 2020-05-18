@@ -165,6 +165,7 @@
               "Product search by product"
             ],
             "img": "cv",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/pic_search/README.md",
             "href": "http://116.228.99.250:8004/"
           },
           {
@@ -176,6 +177,7 @@
               "Corpus analysis and recommendation"
             ],
             "img": "nlp",
+            "titleHref": "https://github.com/milvus-io/bootcamp/tree/master/solutions/QA_System",
             "href": "http://40.117.75.127:8005/"
           },
           {
@@ -187,6 +189,7 @@
               "Virtual screening of drug molecules"
             ],
             "img": "molsearch",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/mols_search/README.md",
             "href": "http://40.117.75.127:8002/"
           },
           {

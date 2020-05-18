@@ -165,6 +165,7 @@
               "以商品搜商品"
             ],
             "img": "cv",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/pic_search/README.md",
             "href": "http://116.228.99.250:8004/"
           },
           {
@@ -176,6 +177,7 @@
               "语料分析和推荐"
             ],
             "img": "nlp",
+            "titleHref": "https://github.com/milvus-io/bootcamp/tree/master/solutions/QA_System",
             "href": "http://40.117.75.127:8003/"
           },
           {
@@ -187,6 +189,7 @@
               "药物分子虚拟筛选"
             ],
             "img": "molsearch",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/mols_search/README.md",
             "href": "http://40.117.75.127:8002/"
           },
           {

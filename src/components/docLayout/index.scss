@@ -103,6 +103,9 @@ main.doc-wrapper {
     .parent-item {
       padding-left: 1rem;
       border-left: 4px solid #eee;
+      position: fixed;
+      top: 100px;
+      right: 10px;
     }
 
     .item {
@@ -169,13 +172,14 @@ main.doc-wrapper {
     position: relative;
     z-index: 2;
   }
-// [id]::before {
-//   content: "";
-//   display: block;
-//   height: 75px;
-//   margin-top: -75px;
-//   visibility: hidden;
-//   position: relative;
-//   z-index: 0;
-// }
+
+  // [id]::before {
+  //   content: "";
+  //   display: block;
+  //   height: 75px;
+  //   margin-top: -75px;
+  //   visibility: hidden;
+  //   position: relative;
+  //   z-index: 0;
+  // }
 }

@@ -24,6 +24,38 @@
     font-size: 16px;
   }
 
+  .tab-wrapper {
+    margin: 20px 0;
+    font-size: 0;
+
+    a {
+      display: inline-block;
+      padding: 10px;
+      border: 1px solid #666;
+      border-left: 0;
+      color: #333;
+      font-size: 16px;
+
+      &.active {
+        background: #666;
+        color: #fff;
+      }
+
+      &:first-child {
+        border-left: 1px solid #666;
+        border-radius: 4px 0 0 4px;
+      }
+
+      &:last-child {
+        border-radius: 0px 4px 4px 0px;
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
   article,
   aside,
   details,

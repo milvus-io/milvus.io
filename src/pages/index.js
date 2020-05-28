@@ -42,13 +42,13 @@ const icons = {
   crud: crudIcon,
   cost: costIcon,
   search: searchIcon,
-  metrics: metricsIcon
+  metrics: metricsIcon,
 };
 
 const users = [];
 const resources = [];
 function importAllPics(r, type) {
-  r.keys().forEach(key => {
+  r.keys().forEach((key) => {
     const m = r(key);
     const matchs = key.match(/.\/(\S*).svg/);
     let href = "";
@@ -87,10 +87,10 @@ function importAllPics(r, type) {
       }
     }
     if (type === "users") {
-      const index = key.replace(/[^0-9]/ig, "");
-      users[index] = m
+      const index = key.replace(/[^0-9]/gi, "");
+      users[index] = m;
     } else {
-      resources[order] = { src: m, name: matchs && matchs[1], href }
+      resources[order] = { src: m, name: matchs && matchs[1], href };
     }
   });
 }
@@ -129,7 +129,7 @@ const IndexPage = ({ data, pageContext }) => {
     section4,
     section5,
     section6,
-    section7
+    section7,
   } = language.home;
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const IndexPage = ({ data, pageContext }) => {
     if (!set && urlLang !== locale) {
       navigate(`/${urlLang}/`);
     }
-  }, []);
+  }, [locale]);
 
   return (
     <Layout language={language} locale={locale}>
@@ -177,7 +177,7 @@ const IndexPage = ({ data, pageContext }) => {
         <section className="section3">
           {/* <h2>{section3.title}</h2> */}
           <ul className="feature-wrapper">
-            {section3.list.map(v => (
+            {section3.list.map((v) => (
               <li className="feature-item" key={v.title}>
                 <div className="title-wrapper">
                   <img src={icons[v.img]} alt="icon"></img>

@@ -13,7 +13,7 @@ import "./docTemplate.scss";
 
 export default function Template({
   data,
-  pageContext // this prop will be injected by the GraphQL query below.
+  pageContext, // this prop will be injected by the GraphQL query below.
 }) {
   const {
     locale,
@@ -23,11 +23,11 @@ export default function Template({
     allMenus,
     isBlog,
     isBenchmark = false,
-    editPath
+    editPath,
   } = pageContext;
   const layout = data.allFile.edges[0].node.childLayoutJson.layout;
   const menuList = allMenus.find(
-    v =>
+    (v) =>
       v.absolutePath.includes(version) &&
       isBlog === v.isBlog &&
       locale === v.lang
@@ -35,20 +35,20 @@ export default function Template({
   const { markdownRemark } = data; // data.markdownRemark holds our post data
   let { frontmatter, html } = markdownRemark;
   const nav = {
-    current: "doc"
+    current: "doc",
   };
   const iframeUrl = isBenchmark
     ? `/benchmarks/${frontmatter.id.split("_")[1]}/index.html`
     : "";
   const idRegex = /id=".*?"/g;
   if (locale === "cn") {
-    html = html.replace(idRegex, match => match.replace(/[？|、|，]/g, ""));
+    html = html.replace(idRegex, (match) => match.replace(/[？|、|，]/g, ""));
   }
 
   const [showBack, setShowBack] = useState(false);
 
   useEffect(() => {
-    document.querySelectorAll("pre code").forEach(block => {
+    document.querySelectorAll("pre code").forEach((block) => {
       hljs.highlightBlock(block);
     });
   }, []);

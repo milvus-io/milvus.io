@@ -634,15 +634,21 @@
 
   thead {
     text-align: left;
+    background: #F5F5F5;
+    font-weight: bold;
   }
 
-  th {
-    letter-spacing: 0.025rem;
-    background: rgba(255, 255, 255, 0.15);
-  }
+  // th {
+  //   letter-spacing: 0.025rem;
+  //   background: #FAFAFA;
+  // }
 
-  tr:nth-child(odd) {
-    background: rgba(255, 255, 255, 0.05);
+  // tr:nth-child(odd) {
+  //   background: #FAFAFA;
+  // }
+
+  td {
+    background-color: #FAFAFA;
   }
 
   td,
@@ -658,7 +664,7 @@
     padding-top: 0.725rem;
     padding-bottom: calc(0.725rem - 1px);
     max-width: 370px;
-    border: 1px solid #b0b0b0;
+    border: 4px solid #fff;
 
     @include media("<=1000px") {
       font-size: 12px;

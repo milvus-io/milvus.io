@@ -3,11 +3,10 @@ import Layout from "../components/docLayout";
 import SEO from "../components/seo";
 import { graphql } from "gatsby";
 import hljs from "highlight.js";
-// import LocalizeLink from "../components/localizedLink/localizedLink";
-// import sql from "highlight.js/lib/languages/sql"
-// import bash from "highlight.js/lib/languages/bash"
+import ReactTooltip from "react-tooltip";
 import "highlight.js/styles/atom-one-dark.css";
 import "./docTemplate.scss";
+import { useMobileScreen } from "../hooks";
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
@@ -25,6 +24,7 @@ export default function Template({
     isBenchmark = false,
     editPath,
   } = pageContext;
+  const screenWidth = useMobileScreen();
   const layout = data.allFile.edges[0].node.childLayoutJson.layout;
   const menuList = allMenus.find(
     (v) =>
@@ -53,6 +53,19 @@ export default function Template({
     });
   }, []);
 
+  useEffect(() => {
+    if (screenWidth > 1000) return;
+    const cb = (e) => {
+      if (e.target.dataset.tip) {
+        ReactTooltip.show(e.target);
+      }
+    };
+    window.addEventListener("click", cb);
+    return () => {
+      window.removeEventListener("click", cb);
+    };
+  }, []);
+
   const ifrmLoad = () => {
     const ifrm = document.querySelector("#inlineFrameExample");
 
@@ -64,6 +77,7 @@ export default function Template({
       ifrm.contentWindow.location.href = ifrm.src;
     }
   };
+
   return (
     <Layout
       language={layout}
@@ -101,6 +115,12 @@ export default function Template({
             <div
               className="doc-post-content"
               dangerouslySetInnerHTML={{ __html: html }}
+            />
+            <ReactTooltip
+              type="info"
+              // place="right"
+              globalEventOff="click"
+              className="md-tooltip"
             />
           </div>
           {isBlog || isBenchmark ? null : (

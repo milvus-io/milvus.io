@@ -52,15 +52,17 @@ main.doc-wrapper {
   max-width: 1200px;
   margin: 0 auto;
 
+  @include media("<1600px") {
+    margin: 0;
+  }
+
   .menu-container {
     // position: fixed;
     left: 0;
     top: 60px;
     padding-top: 20px;
     bottom: 0;
-    width: 30%;
-    min-width: 200px;
-    max-width: 260px;
+    width: 250px;
 
     @include media("<=1000px") {
       position: fixed;
@@ -76,13 +78,7 @@ main.doc-wrapper {
   }
 
   .inner-container {
-    flex: 0 0 50rem;
-
-    // margin-left: 260px;
-
-    &.fullwidth {
-      width: calc(88% - 60px);
-    }
+    width: calc(100% - 260px);
 
     @include media("<=1000px") {
       flex: 0 0 100%;
@@ -102,20 +98,22 @@ main.doc-wrapper {
     flex: 0 0 200px;
     font-size: 14px;
     margin-top: 100px;
+    width: 200px;
+
     // background-color: #fff;
+    @include media("<=1700px") {
+      right: 2rem;
+    }
+
+    @include media("<1400px") {
+      background-color: #fff;
+    }
 
     @include media("<=1000px") {
       display: none;
     }
 
-    @include media("<=1500px") {
-      right: 3rem;
-    }
 
-    @include media("<=1200px") {
-      right: 3rem;
-      background-color: #fff;
-    }
 
     .parent-item {
       padding-left: 1rem;

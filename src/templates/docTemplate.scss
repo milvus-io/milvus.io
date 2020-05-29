@@ -24,6 +24,38 @@
     font-size: 16px;
   }
 
+  .tab-wrapper {
+    margin: 20px 0;
+    font-size: 0;
+
+    a {
+      display: inline-block;
+      padding: 10px;
+      border: 1px solid #666;
+      border-left: 0;
+      color: #333;
+      font-size: 16px;
+
+      &.active {
+        background: #666;
+        color: #fff;
+      }
+
+      &:first-child {
+        border-left: 1px solid #666;
+        border-radius: 4px 0 0 4px;
+      }
+
+      &:last-child {
+        border-radius: 0px 4px 4px 0px;
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
   article,
   aside,
   details,
@@ -602,15 +634,21 @@
 
   thead {
     text-align: left;
+    background: #F5F5F5;
+    font-weight: bold;
   }
 
-  th {
-    letter-spacing: 0.025rem;
-    background: rgba(255, 255, 255, 0.15);
-  }
+  // th {
+  //   letter-spacing: 0.025rem;
+  //   background: #FAFAFA;
+  // }
 
-  tr:nth-child(odd) {
-    background: rgba(255, 255, 255, 0.05);
+  // tr:nth-child(odd) {
+  //   background: #FAFAFA;
+  // }
+
+  td {
+    background-color: #FAFAFA;
   }
 
   td,
@@ -626,7 +664,7 @@
     padding-top: 0.725rem;
     padding-bottom: calc(0.725rem - 1px);
     max-width: 370px;
-    border: 1px solid #b0b0b0;
+    border: 4px solid #fff;
 
     @include media("<=1000px") {
       font-size: 12px;

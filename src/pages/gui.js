@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
 import LocalizedLink from "../components/localizedLink/localizedLink";
@@ -73,7 +73,7 @@ const GuiPage = ({ data, pageContext }) => {
           <h2 id="install">{section3.title}</h2>
           <div className="docker-code">
             <p>docker pull milvusdb/milvus-admin:latest</p>
-            <p>docker run -p 3000:80 milvusdb/milvus-admin:latest</p>
+            <p>docker run -d -p 3000:80 milvusdb/milvus-admin:latest</p>
           </div>
           <p>{section3.desc} http://localhost:3000/</p>
           <LocalizedLink

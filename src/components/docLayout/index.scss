@@ -34,6 +34,7 @@ h6 {
 
 body {
   font-size: 15px;
+  background-color: #fafafa !important;
 
   @include media("<=1000px") {
     font-size: 14px;
@@ -46,17 +47,22 @@ body {
 }
 
 main.doc-wrapper {
+  position: relative;
   display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @include media("<1600px") {
+    margin: 0;
+  }
 
   .menu-container {
-    position: fixed;
+    // position: fixed;
     left: 0;
     top: 60px;
     padding-top: 20px;
     bottom: 0;
-    width: 30%;
-    min-width: 200px;
-    max-width: 260px;
+    width: 250px;
 
     @include media("<=1000px") {
       position: fixed;
@@ -72,16 +78,10 @@ main.doc-wrapper {
   }
 
   .inner-container {
-    flex: 0 0 70%;
-
-    margin-left: 260px;
-
-    &.fullwidth {
-      width: calc(88% - 60px);
-    }
+    width: calc(100% - 260px);
 
     @include media("<=1000px") {
-      width: 100%;
+      flex: 0 0 100%;
       margin: 0;
       padding-top: 50px;
 
@@ -94,14 +94,26 @@ main.doc-wrapper {
   .anchor-wrapper {
     position: fixed;
     top: 0px;
-    right: 10px;
+    right: 10rem;
     flex: 0 0 200px;
     font-size: 14px;
     margin-top: 100px;
+    width: 200px;
+
+    // background-color: #fff;
+    @include media("<=1700px") {
+      right: 2rem;
+    }
+
+    @include media("<1400px") {
+      background-color: #fff;
+    }
 
     @include media("<=1000px") {
       display: none;
     }
+
+
 
     .parent-item {
       padding-left: 1rem;
@@ -145,15 +157,15 @@ main.doc-wrapper {
   }
 }
 
-.inner-container {
-  width: 1000px;
+// .inner-container {
+//   width: 1000px;
 
-  @include media("<=1000px") {
-    width: auto;
-  }
+//   @include media("<=1000px") {
+//     width: auto;
+//   }
 
-  margin: 0 auto;
-}
+//   margin: 0 auto;
+// }
 
 .not-found {
   background: #fff;

@@ -56,6 +56,29 @@
     }
   }
 
+  .tip {
+    background-color: rgba(79, 196, 249, 0.25);
+    padding: 4px 8px;
+    margin: 0 4px;
+    cursor: default;
+  }
+
+  .md-tooltip {
+    line-height: 1.8;
+    max-width: 800px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, .3);
+    padding: 1.5rem;
+    opacity: 1;
+
+    @include media("<=1000px") {
+      width: 100%;
+      left: 0 !important;
+    }
+  }
+
   article,
   aside,
   details,

@@ -67,6 +67,7 @@
   .menu-top-level {
     margin-bottom: 0.1rem;
     box-sizing: border-box;
+    padding-bottom: 1rem;
 
     .text {
       color: #000000;
@@ -77,7 +78,7 @@
     }
 
     >.menu_name-wrapper {
-      padding: 0 1rem 0.75rem 1rem;
+      padding: 0 1rem 0.25rem 1rem;
     }
 
     .menu_name-wrapper {

@@ -94,7 +94,7 @@ main.doc-wrapper {
   .anchor-wrapper {
     position: fixed;
     top: 0px;
-    right: 10rem;
+    right: calc((100% - 1200px) / 2 - 200px);
     flex: 0 0 200px;
     font-size: 14px;
     margin-top: 100px;
@@ -107,6 +107,7 @@ main.doc-wrapper {
 
     @include media("<1400px") {
       background-color: #fff;
+      right: 0;
     }
 
     @include media("<=1000px") {

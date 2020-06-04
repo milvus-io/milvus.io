@@ -7,6 +7,15 @@ www.milvus.io Official website
 1. yarn install
 2. yarn start
 
+## Preview
+preview site: https://milvus-io.azurewebsites.net/
+
+## how to contribution
+1. fork the repo
+2. checkout the preview branch
+3. create a new feature branch based on the preview branch
+4. pull request to the preview branch
+
 ### This site is built with Gatsbyjs, please check https://www.gatsbyjs.org/docs/ for reference
 
 ## submodule - master branch must be the newest verison

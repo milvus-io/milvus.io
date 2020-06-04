@@ -3,7 +3,7 @@
 www.milvus.io Official website 
 
 ## local development set up
-
+0. git submodule sync
 1. yarn install
 2. yarn start
 

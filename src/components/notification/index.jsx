@@ -1,13 +1,15 @@
 import React from "react";
 import "./index.scss";
-import Marquee, { Motion, randomIntFromInterval } from "react-marquee-slider";
+import Marquee from "react-marquee-slider";
+import { useMobileScreen } from "../../hooks";
 
 const Notification = (props) => {
   const { version } = props;
+  const screenWidth = useMobileScreen();
 
   return (
     <div className="notification">
-      <Marquee velocity={80} >
+      <Marquee velocity={screenWidth > 1000 ? 60 : 20}>
         <span style={{ marginRight: "400px" }}>
           <span role="img" aria-label="" aria-labelledby="">
             👋
@@ -38,8 +40,6 @@ const Notification = (props) => {
           </a>
         </span>
       </Marquee>
-
-
     </div>
   );
 };

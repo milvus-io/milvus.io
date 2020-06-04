@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
 import LocalizedLink from "../components/localizedLink/localizedLink";
@@ -6,23 +6,15 @@ import "../scss/gui.scss";
 import feature1 from "../images/admin/feature1.png";
 import feature2 from "../images/admin/feature2.png";
 import feature3 from "../images/admin/feature3.png";
+import { useMobileScreen } from "../hooks";
 
 const GuiPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
   const { section1, section3, section4 } = language.gui;
 
-  const [screenWidth, setScreenWidth] = useState(null);
-  useEffect(() => {
-    const cb = () => {
-      setScreenWidth(document.body.clientWidth);
-    };
-    cb();
-    window.addEventListener("resize", cb);
-    return () => {
-      window.removeEventListener("resize", cb);
-    };
-  }, []);
+  const screenWidth = useMobileScreen();
+
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus Admin" />
@@ -59,15 +51,15 @@ const GuiPage = ({ data, pageContext }) => {
               </div>
             </div>
           ) : (
-              <div className="item">
-                <div className="desc-wrapper right-margin">
-                  <h2>{section4.feature2.title}</h2>
-                  <p>{section4.feature2.desc1}</p>
-                  <p>{section4.feature2.desc2}</p>
-                </div>
-                <img src={feature2} alt="similarity search in gui"></img>
+            <div className="item">
+              <div className="desc-wrapper right-margin">
+                <h2>{section4.feature2.title}</h2>
+                <p>{section4.feature2.desc1}</p>
+                <p>{section4.feature2.desc2}</p>
               </div>
-            )}
+              <img src={feature2} alt="similarity search in gui"></img>
+            </div>
+          )}
 
           <div className="item">
             <img src={feature3} alt="similarity search in gui"></img>
@@ -81,7 +73,7 @@ const GuiPage = ({ data, pageContext }) => {
           <h2 id="install">{section3.title}</h2>
           <div className="docker-code">
             <p>docker pull milvusdb/milvus-admin:latest</p>
-            <p>docker run -p 3000:80 milvusdb/milvus-admin:latest</p>
+            <p>docker run -d -p 3000:80 milvusdb/milvus-admin:latest</p>
           </div>
           <p>{section3.desc} http://localhost:3000/</p>
           <LocalizedLink

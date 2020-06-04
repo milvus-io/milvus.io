@@ -3,17 +3,16 @@ import Layout from "../components/docLayout";
 import SEO from "../components/seo";
 import { graphql } from "gatsby";
 import hljs from "highlight.js";
-// import LocalizeLink from "../components/localizedLink/localizedLink";
-// import sql from "highlight.js/lib/languages/sql"
-// import bash from "highlight.js/lib/languages/bash"
+import ReactTooltip from "react-tooltip";
 import "highlight.js/styles/atom-one-dark.css";
 import "./docTemplate.scss";
+import { useMobileScreen } from "../hooks";
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
 export default function Template({
   data,
-  pageContext // this prop will be injected by the GraphQL query below.
+  pageContext, // this prop will be injected by the GraphQL query below.
 }) {
   const {
     locale,
@@ -23,11 +22,12 @@ export default function Template({
     allMenus,
     isBlog,
     isBenchmark = false,
-    editPath
+    editPath,
   } = pageContext;
+  const screenWidth = useMobileScreen();
   const layout = data.allFile.edges[0].node.childLayoutJson.layout;
   const menuList = allMenus.find(
-    v =>
+    (v) =>
       v.absolutePath.includes(version) &&
       isBlog === v.isBlog &&
       locale === v.lang
@@ -35,22 +35,35 @@ export default function Template({
   const { markdownRemark } = data; // data.markdownRemark holds our post data
   let { frontmatter, html } = markdownRemark;
   const nav = {
-    current: "doc"
+    current: "doc",
   };
   const iframeUrl = isBenchmark
     ? `/benchmarks/${frontmatter.id.split("_")[1]}/index.html`
     : "";
   const idRegex = /id=".*?"/g;
   if (locale === "cn") {
-    html = html.replace(idRegex, match => match.replace(/[？|、|，]/g, ""));
+    html = html.replace(idRegex, (match) => match.replace(/[？|、|，]/g, ""));
   }
 
   const [showBack, setShowBack] = useState(false);
 
   useEffect(() => {
-    document.querySelectorAll("pre code").forEach(block => {
+    document.querySelectorAll("pre code").forEach((block) => {
       hljs.highlightBlock(block);
     });
+  }, []);
+
+  useEffect(() => {
+    if (screenWidth > 1000) return;
+    const cb = (e) => {
+      if (e.target.dataset.tip) {
+        ReactTooltip.show(e.target);
+      }
+    };
+    window.addEventListener("click", cb);
+    return () => {
+      window.removeEventListener("click", cb);
+    };
   }, []);
 
   const ifrmLoad = () => {
@@ -64,6 +77,7 @@ export default function Template({
       ifrm.contentWindow.location.href = ifrm.src;
     }
   };
+
   return (
     <Layout
       language={layout}
@@ -101,6 +115,12 @@ export default function Template({
             <div
               className="doc-post-content"
               dangerouslySetInnerHTML={{ __html: html }}
+            />
+            <ReactTooltip
+              type="info"
+              // place="right"
+              globalEventOff="click"
+              className="md-tooltip"
             />
           </div>
           {isBlog || isBenchmark ? null : (

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react"
-import Menu from "../menu"
-import Header from "../header/header"
-import Footer from "../footer/footer"
-import "./index.scss"
+import React, { useState, useEffect, useRef } from "react";
+import Menu from "../menu";
+import Header from "../header/header";
+import Footer from "../footer/footer";
+import "./index.scss";
 
-export default props => {
+export default (props) => {
   const {
     language,
     children,
@@ -16,44 +16,44 @@ export default props => {
     headings,
     wrapperClass = "doc-wrapper",
     isBenchMark = false,
-  } = props
+  } = props;
   const formatHeadings =
     headings &&
     headings.reduce((pre, cur) => {
-      const copyCur = JSON.parse(JSON.stringify(cur))
-      const preHead = pre[pre.length - 1]
+      const copyCur = JSON.parse(JSON.stringify(cur));
+      const preHead = pre[pre.length - 1];
       if (preHead && preHead.depth < cur.depth) {
-        pre[pre.length - 1].children.push(cur)
+        pre[pre.length - 1].children.push(cur);
       } else {
-        copyCur.children = []
-        pre = [...pre, copyCur]
+        copyCur.children = [];
+        pre = [...pre, copyCur];
       }
-      return pre
-    }, [])
-  const [hash, setHash] = useState(null)
-  const docContainer = useRef(null)
+      return pre;
+    }, []);
+  const [hash, setHash] = useState(null);
+  const docContainer = useRef(null);
 
   const effectVariable =
-    typeof window !== "undefined" ? [window.location.hash] : []
+    typeof window !== "undefined" ? [window.location.hash] : [];
   useEffect(() => {
     if (window) {
-      const hash = window.location.hash.slice(1)
-      const container = docContainer.current
+      const hash = window.location.hash.slice(1);
+      const container = docContainer.current;
       // fixed header will cover h1 header. fix by translate\
-      container.style.transform = "translate3d(0, 60px, 0)"
-      setHash(window.decodeURI(hash))
+      container.style.transform = "translate3d(0, 60px, 0)";
+      setHash(window.decodeURI(hash));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, effectVariable)
+  }, effectVariable);
 
   const generateAnchorMenu = (headings, className) => {
-    return headings.map(v => {
+    return headings.map((v) => {
       /* eslint-disable-next-line */
-      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, "")
-      const anchor = normalVal.split(" ").join("-")
-      let childDom = null
+      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, "");
+      const anchor = normalVal.split(" ").join("-");
+      let childDom = null;
       if (v.children && v.children.length) {
-        childDom = generateAnchorMenu(v.children, "child-item")
+        childDom = generateAnchorMenu(v.children, "child-item");
       }
       return (
         <div className={`item ${className}`} key={v.value}>
@@ -66,9 +66,9 @@ export default props => {
           </a>
           {childDom}
         </div>
-      )
-    })
-  }
+      );
+    });
+  };
 
   return (
     <div>
@@ -82,12 +82,14 @@ export default props => {
           locale={locale}
           isBenchMark={isBenchMark}
         ></Menu>
-        <div className={`inner-container ${isBenchMark ? 'fullwidth' : ""}`} ref={docContainer}>
+        <div
+          className={`inner-container ${isBenchMark ? "fullwidth" : ""}`}
+          ref={docContainer}
+        >
           {children}
-          {!isBenchMark && <Footer
-            locale={locale}
-            style={{ background: "#fff" }}
-          ></Footer>}
+          {!isBenchMark && (
+            <Footer locale={locale} style={{ background: "#fff" }}></Footer>
+          )}
         </div>
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
@@ -98,5 +100,5 @@ export default props => {
 
       {/* <Contact data={data} locale={locale} /> */}
     </div>
-  )
-}
+  );
+};

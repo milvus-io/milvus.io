@@ -9,7 +9,8 @@ const env = process.env.IS_PREVIEW;
 console.log(env);
 const getNewestVersion = (versionInfo) => {
   const keys = Object.keys(versionInfo).filter(
-    (v) => v !== "master" && versionInfo[v].released === "yes"
+    (v) =>
+      v !== "master" && (versionInfo[v].released === "yes" || env === "preview")
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur
@@ -309,7 +310,7 @@ exports.createPages = ({ actions, graphql }) => {
         component: docTemplate,
         context: {
           locale: fileLang,
-          version: isBenchmark ? versionInfo.master.version : version,
+          version: isBenchmark ? newestVersion : version,
           versions: Array.from(versions),
           old: fileId,
           headings: node.headings.filter((v) => v.depth < 4 && v.depth >= 1),

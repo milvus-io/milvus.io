@@ -194,7 +194,7 @@
           },
           {
             "title": "Audio data processing",
-            "desc": "There are also a large number of vector calculation scenarios in the traditional data processing field. Using traditional calculation methods requires a large amount of computing power. With advanced algorithms, Milvus can increase the vector data processing capacity by at least two orders of magnitude with the same computing power resources.",
+            "desc": "Using deep learning models to analyze and process audio data can greatly improve the accuracy of speech recognition, and its core is to vectorize related audio slices and judge the meaning of its expression through the calculation of vector distance. Therefore, Milvus also have rich applications in speech , Music and other audio data processing fields.",
             "list": [
               "Personalized music recommendation",
               "Music deduplication",

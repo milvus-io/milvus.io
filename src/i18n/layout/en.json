@@ -211,7 +211,7 @@
     },
     "gui": {
       "section1": {
-        "title": "Get Milvus Admin",
+        "title": "Get Milvus EM",
         "desc": "an easy-to-use milvus administration platform",
         "link": "Get started"
       },

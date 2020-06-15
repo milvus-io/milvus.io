@@ -72,8 +72,8 @@ const GuiPage = ({ data, pageContext }) => {
         <section className="section3">
           <h2 id="install">{section3.title}</h2>
           <div className="docker-code">
-            <p>docker pull milvusdb/milvus-admin:latest</p>
-            <p>docker run -d -p 3000:80 milvusdb/milvus-admin:latest</p>
+            <p>docker pull milvusdb/milvus-em:latest</p>
+            <p>docker run -d -p 3000:80 milvusdb/milvus-em:latest</p>
           </div>
           <p>{section3.desc} http://localhost:3000/</p>
           <LocalizedLink

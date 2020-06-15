@@ -132,11 +132,16 @@ exports.createPages = ({ actions, graphql }) => {
         let lang = absolutePath.includes("/en/") ? "en" : "cn";
         const isBlog = absolutePath.includes("blog");
         const version = findVersion(absolutePath) || "master";
+        const menuStructureList = childMenuStructureJson && [...childMenuStructureJson.menuList] || [];
+        const menuList = [
+          ...menuStructureList,
+          ...benchmarksMenuList,
+        ];
         return {
           lang,
           version,
           isBlog,
-          menuList: [...childMenuStructureJson.menuList, ...benchmarksMenuList],
+          menuList,
           absolutePath,
         };
       }

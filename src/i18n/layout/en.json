@@ -145,7 +145,7 @@
     "scenarios": {
       "section1": {
         "title": "Building The Search Engine For The AI Era",
-        "desc": "Adopted by over 100 organizations and institutions worldwide, Milvus empowers applications in a variety of fields, including image processing, computer vision, natural language processing, voice recognition, recommender systems, drug discovery, etc."
+        "desc": "Adopted by hundreds of organizations and institutions worldwide, Milvus empowers applications in a variety of fields, including image processing, computer vision, natural language processing, voice recognition, recommender systems, drug discovery, etc."
       },
       "section2": {
         "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data.",

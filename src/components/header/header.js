@@ -32,7 +32,6 @@ const Header = ({ language, locale }) => {
   };
 
   const onChangeLocale = () => {
-    console.log("xxx");
     window.localStorage.setItem("milvus.io.setlanguage", true);
   };
 
@@ -69,9 +68,14 @@ const Header = ({ language, locale }) => {
             >
               {header.benchmarks}
             </LocalizeLink>
-            {/* <LocalizeLink locale={locale} to="/gui" className="link">
-              {header.gui}
-            </LocalizeLink> */}
+            <a
+              href="https://tutorials.milvus.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link"
+            >
+              {header.tutorials}
+            </a>
 
             <LocalizeLink locale={locale} className="link" to="/scenarios">
               {header.solution}

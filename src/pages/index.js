@@ -232,10 +232,10 @@ const IndexPage = ({ data, pageContext }) => {
           <ul>
             <li>
               <LocalizedLink to="/gui" locale={locale}>
-                <img src={adminIcon} alt="Milvus Admin"></img>
+                <img src={adminIcon} alt="Milvus EM"></img>
               </LocalizedLink>
 
-              <p>Milvus Admin</p>
+              <p>Milvus EM</p>
             </li>
             <li>
               <a target="_blank" rel="noopener noreferrer" href="/tools/sizing">

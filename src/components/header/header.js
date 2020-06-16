@@ -119,9 +119,14 @@ const Header = ({ language, locale }) => {
         <LocalizeLink locale={locale} to="/#whymilvus" className="link">
           {header.quick}
         </LocalizeLink>
-        <LocalizeLink locale={locale} to="/gui" className="link">
-          {header.gui}
-        </LocalizeLink>
+        <a
+          href="https://tutorials.milvus.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link"
+        >
+          {header.tutorials}
+        </a>
 
         <LocalizeLink locale={locale} className="link" to="/scenarios">
           {header.solution}

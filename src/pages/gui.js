@@ -102,6 +102,7 @@ export const Query = graphql`
                 benchmarks
                 why
                 gui
+                tutorials
                 solution
                 about
                 doc

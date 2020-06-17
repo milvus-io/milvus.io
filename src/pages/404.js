@@ -38,6 +38,7 @@ export const Query = graphql`
                 doc
                 blog
                 try
+                tutorials
                 loading
                 noresult
               }

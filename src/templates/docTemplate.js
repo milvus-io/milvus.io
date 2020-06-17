@@ -170,6 +170,7 @@ export const pageQuery = graphql`
                 benchmarks
                 why
                 gui
+                tutorials
                 solution
                 about
                 doc

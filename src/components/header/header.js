@@ -19,7 +19,7 @@ const Header = ({ language, locale }) => {
   const blogHref =
     locale === "cn"
       ? "http://zilliz.blog.csdn.net"
-      : "https://medium.com/@milvusio";
+      : "https://medium.com/tag/milvus-project/latest";
   useEffect(() => {
     window.addEventListener("click", () => {
       setMobileNav(false);
@@ -32,6 +32,7 @@ const Header = ({ language, locale }) => {
   };
 
   const onChangeLocale = () => {
+    console.log("xxx");
     window.localStorage.setItem("milvus.io.setlanguage", true);
   };
 
@@ -68,14 +69,9 @@ const Header = ({ language, locale }) => {
             >
               {header.benchmarks}
             </LocalizeLink>
-            <a
-              href="https://tutorials.milvus.io"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link"
-            >
-              {header.tutorials}
-            </a>
+            {/* <LocalizeLink locale={locale} to="/gui" className="link">
+              {header.gui}
+            </LocalizeLink> */}
 
             <LocalizeLink locale={locale} className="link" to="/scenarios">
               {header.solution}
@@ -119,14 +115,9 @@ const Header = ({ language, locale }) => {
         <LocalizeLink locale={locale} to="/#whymilvus" className="link">
           {header.quick}
         </LocalizeLink>
-        <a
-          href="https://tutorials.milvus.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="link"
-        >
-          {header.tutorials}
-        </a>
+        <LocalizeLink locale={locale} to="/gui" className="link">
+          {header.gui}
+        </LocalizeLink>
 
         <LocalizeLink locale={locale} className="link" to="/scenarios">
           {header.solution}

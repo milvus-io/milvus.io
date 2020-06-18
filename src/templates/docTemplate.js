@@ -126,7 +126,7 @@ export default function Template({
           {isBlog || isBenchmark ? null : (
             <a
               className="edit-page-link button"
-              href={`https://github.com/milvus-io/docs/tree/${version}/site/${
+              href={`https://github.com/milvus-io/docs/edit/${version}/site/${
                 locale === "en" ? "en" : "zh-CN"
               }/${editPath}`}
               target="_blank"

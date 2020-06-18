@@ -62,7 +62,7 @@ function importAllPics(r, type) {
           break;
         case "medium":
           order = 2;
-          href = "https://medium.com/@milvusio";
+          href = "https://medium.com/tag/milvus-project/latest";
           break;
         case "slack":
           order = 0;

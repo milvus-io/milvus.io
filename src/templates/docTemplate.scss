@@ -63,6 +63,36 @@
     cursor: default;
   }
 
+  .alert {
+    padding: 1rem;
+    border-radius: 6px;
+    background-repeat: no-repeat;
+    background-size: 4%;
+    background-position: 10px center;
+    padding-left: 54px;
+    line-height: 1.5;
+    word-break: break-all;
+
+    &.info {
+      background-color: rgb(245, 245, 245);
+
+      // background-color: rgba($color: #eee, $alpha: 0.2);
+      background-image: url('../images/icon/info.svg');
+    }
+
+    &.note {
+      background-color: rgb(232, 245, 253);
+      background-image: url('../images/icon/note.svg');
+
+    }
+
+    &.warning {
+      background-color: rgb(253, 244, 220);
+      background-image: url('../images/icon/warning.svg');
+
+    }
+  }
+
   .md-tooltip {
     line-height: 1.8;
     max-width: 800px;

@@ -17,7 +17,7 @@ const GuiPage = ({ data, pageContext }) => {
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="Milvus Admin" />
+      <SEO title="Milvus EM" />
       <main className="gui-wrapper">
         <section className="section1">
           <h2>{section1.title}</h2>

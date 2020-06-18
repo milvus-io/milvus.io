@@ -9,7 +9,7 @@ export default ({ locale, to, children, className = "link" }) => {
   if (toMedium) {
     return (
       <a
-        href="https://medium.com/@milvusio"
+        href="https://medium.com/tag/milvus-project/latest"
         target="_blank"
         rel="noopener noreferrer"
         children={children}

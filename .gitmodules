@@ -34,3 +34,7 @@
 	path = src/pages/docs/versions/v0.10.0
 	url = https://github.com/milvus-io/docs.git
 	branch = v0.10.0
+[submodule "src/pages/docs/versions/v0.8.1"]
+	path = src/pages/docs/versions/v0.8.1
+	url = https://github.com/milvus-io/docs.git
+	branch = v0.8.1

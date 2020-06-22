@@ -46,23 +46,23 @@ body {
   color: #ffffff;
 }
 
-main.doc-wrapper {
+.doc-wrapper {
   position: relative;
   display: flex;
   max-width: 1200px;
-  margin: 0 auto;
+  // margin: 0 auto;
 
-  @include media("<1600px") {
-    margin: 0;
-  }
+  // @include media("<1600px") {
+  //   margin: 0;
+  // }
 
   .menu-container {
-    // position: fixed;
     left: 0;
     top: 60px;
     padding-top: 20px;
     bottom: 0;
     width: 250px;
+    overflow: auto;
 
     @include media("<=1000px") {
       position: fixed;
@@ -79,6 +79,7 @@ main.doc-wrapper {
 
   .inner-container {
     width: calc(100% - 260px);
+    margin-left: 250px;
 
     @include media("<=1000px") {
       flex: 0 0 100%;
@@ -94,21 +95,21 @@ main.doc-wrapper {
   .anchor-wrapper {
     position: fixed;
     top: 0px;
-    right: calc((100% - 1200px) / 2 - 200px);
+    right: calc(100% - 1200px - 200px);
     flex: 0 0 200px;
     font-size: 14px;
     margin-top: 100px;
     width: 200px;
 
     // background-color: #fff;
-    @include media("<=1700px") {
-      right: 2rem;
-    }
+    // @include media("<=1700px") {
+    //   right: 2rem;
+    // }
 
-    @include media("<1400px") {
-      background-color: #fff;
-      right: 0;
-    }
+    // @include media("<1400px") {
+    //   background-color: #fff;
+    //   right: 0;
+    // }
 
     @include media("<=1000px") {
       display: none;

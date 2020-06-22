@@ -69,7 +69,9 @@ const Header = ({ language, locale }) => {
               {header.benchmarks}
             </LocalizeLink>
             <a
-              href="https://tutorials.milvus.io"
+              href={`https://tutorials.milvus.io${
+                locale === "cn" ? `/cn/` : ""
+              }`}
               target="_blank"
               rel="noopener noreferrer"
               className="link"

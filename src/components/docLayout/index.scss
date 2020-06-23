@@ -115,19 +115,17 @@ body {
       display: none;
     }
 
-
-
     .parent-item {
-      padding-left: 1rem;
+      padding-left: 10px;
+      padding-bottom: 5px;
       border-left: 4px solid #eee;
-
     }
 
     .item {
-      margin: 10px 0;
-
       .child-item {
         margin-left: 8px;
+        padding-top: 3px;
+        padding-bottom: 3px;
       }
     }
 
@@ -135,9 +133,10 @@ body {
       display: block;
       max-width: 200px;
       white-space: nowrap;
-      overflow: hidden;
+      overflow-x: hidden;
+      line-height: 18px;
       text-overflow: ellipsis;
-      color: #60606F;
+      color: #60606f;
 
       @include media("<=1400px") {
         max-width: 160px;

@@ -96,6 +96,10 @@ export default function Template({
     }
   };
 
+  const title = isBenchmark
+    ? `Milvus benchmark`
+    : `${headings[0] && headings[0].value}`;
+
   return (
     <Layout
       language={layout}
@@ -109,9 +113,9 @@ export default function Template({
       id={frontmatter.id}
       isBenchMark={isBenchmark}
     >
-      <SEO title={`${headings[0] && headings[0].value}`} lang={locale} />
+      <SEO title={title} lang={locale} />
       {isBenchmark ? (
-        <div style={{ position: "relative" }}>
+        <div className="iframe-container">
           {showBack && (
             <i
               className="fas iframe-icon fa-arrow-left"
@@ -140,19 +144,20 @@ export default function Template({
               globalEventOff="click"
               className="md-tooltip"
             />
+            {isBlog || isBenchmark ? null : (
+              <a
+                className="edit-page-link btn"
+                href={`https://github.com/milvus-io/docs/edit/${version}/site/${
+                  locale === "en" ? "en" : "zh-CN"
+                }/${editPath}`}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <i className="far fa-edit"></i>
+                {layout.footer.editBtn.label}
+              </a>
+            )}
           </div>
-          {isBlog || isBenchmark ? null : (
-            <a
-              className="edit-page-link button"
-              href={`https://github.com/milvus-io/docs/edit/${version}/site/${
-                locale === "en" ? "en" : "zh-CN"
-              }/${editPath}`}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <i className="far fa-edit"></i> &nbsp; Edit
-            </a>
-          )}
         </div>
       )}
     </Layout>
@@ -199,6 +204,17 @@ export const pageQuery = graphql`
                 tutorial
               }
               footer {
+                editBtn {
+                  label
+                }
+                questionBtn {
+                  label
+                  link
+                }
+                issueBtn {
+                  label
+                  link
+                }
                 product {
                   title
                   txt1

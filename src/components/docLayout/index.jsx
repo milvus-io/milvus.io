@@ -38,13 +38,52 @@ export default (props) => {
   useEffect(() => {
     if (window) {
       const hash = window.location.hash.slice(1);
-      const container = docContainer.current;
-      // fixed header will cover h1 header. fix by translate\
-      container.style.transform = "translate3d(0, 60px, 0)";
       setHash(window.decodeURI(hash));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, effectVariable);
+
+  // star reference
+  const star = useRef(null);
+  useEffect(() => {
+    if (!window) {
+      return;
+    }
+    if (!star.current) {
+      return;
+    }
+    const repoUrl = `https://api.github.com/repos/milvus-io/milvus`;
+    let latest = window.localStorage.getItem("milvus.io.stargazers");
+    const latestFetchTime = window.localStorage.getItem(
+      "milvus.io.stargazers_fetch_time"
+    );
+
+    if (!latestFetchTime || Date.now() - latestFetchTime > 60000 * 60) {
+      // get
+      fetch(repoUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            if (data.stargazers_count >= latest) {
+              console.log(data.stargazers_count);
+              window.localStorage.setItem(
+                "milvus.io.stargazers",
+                data.stargazers_count
+              );
+              window.localStorage.setItem(
+                "milvus.io.stargazers_fetch_time",
+                Date.now()
+              );
+              star.current.innerHTML = `<i class="fa fa-star" aria-hidden="true"></i>
+                  ${data.stargazers_count}`;
+            }
+          }
+        });
+    } else {
+      star.current.innerHTML = `<i class="fa fa-star" aria-hidden="true"></i>
+                  ${latest}`;
+    }
+  }, []);
 
   const generateAnchorMenu = (headings, className) => {
     return headings.map((v) => {
@@ -93,12 +132,30 @@ export default (props) => {
         </div>
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
-            {generateAnchorMenu(formatHeadings, "parent-item")}
+            <section>
+              {generateAnchorMenu(formatHeadings, "parent-item")}
+              <div className="button-container">
+                <a
+                  ref={star}
+                  className="btn"
+                  href="http://github.com/milvus-io/milvus"
+                >
+                  <i className="fa fa-star" aria-hidden="true"></i>
+                  loading...
+                </a>
+                <a className="btn" href={language.footer.questionBtn.link}>
+                  <i className="fa fa-question" aria-hidden="true"></i>
+                  {language.footer.questionBtn.label}
+                </a>
+                <a className="btn" href={language.footer.issueBtn.link}>
+                  <i className="fa fa-bug" aria-hidden="true"></i>
+                  {language.footer.issueBtn.label}
+                </a>
+              </div>
+            </section>
           </div>
         )}
       </main>
-
-      {/* <Contact data={data} locale={locale} /> */}
     </div>
   );
 };

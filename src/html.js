@@ -20,14 +20,6 @@ export default function HTML(props) {
           href="https://cdn.bootcss.com/font-awesome/5.10.2/css/all.min.css"
         />
         <link
-          rel="stylesheet"
-          href="https://use.typekit.net/odf7gmc.css"
-        ></link>
-        {/* <link
-          href="https://fonts.googleapis.com/css?family=Noto+Sans+SC&display=swap"
-          rel="stylesheet"
-        /> */}
-        <link
           href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,700&display=swap&subset=chinese-simplified"
           rel="stylesheet"
         />
@@ -60,5 +52,5 @@ HTML.propTypes = {
   bodyAttributes: PropTypes.object,
   preBodyComponents: PropTypes.array,
   body: PropTypes.string,
-  postBodyComponents: PropTypes.array
+  postBodyComponents: PropTypes.array,
 };

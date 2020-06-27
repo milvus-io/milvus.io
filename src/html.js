@@ -36,11 +36,6 @@ export default function HTML(props) {
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
-        {/* <script src="https://cookiehub.net/cc/73a04d42.js"></script> */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=UA-142992812-2"
-        ></script>
       </body>
     </html>
   );

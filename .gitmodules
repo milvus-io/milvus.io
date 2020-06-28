@@ -41,4 +41,4 @@
 [submodule "static/benchmarks"]
 	path = static/benchmarks
 	url = https://github.com/milvus-io/benchmarks.git
-	branch = master
+	branch = 0.10.0

@@ -30,4 +30,4 @@ add new version doc (branch in repo)
 ```
 
 // add benchmark doc
- git submodule add -b master https://github.com/milvus-io/benchmarks.git static/benchmarks
+ git submodule add -b 0.10.0 https://github.com/milvus-io/benchmarks.git static/benchmarks

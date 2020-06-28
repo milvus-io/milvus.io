@@ -140,14 +140,14 @@ export default (props) => {
                   className="btn"
                   href="http://github.com/milvus-io/milvus"
                 >
-                  <i className="fa fa-star" aria-hidden="true"></i>
+                  <i className="fa fa-star" id="btn-star" aria-hidden="true"></i>
                   loading...
                 </a>
-                <a className="btn" href={language.footer.questionBtn.link}>
+                <a className="btn" id="btn-question" href={language.footer.questionBtn.link}>
                   <i className="fa fa-question" aria-hidden="true"></i>
                   {language.footer.questionBtn.label}
                 </a>
-                <a className="btn" href={language.footer.issueBtn.link}>
+                <a className="btn" id="btn-bug" href={language.footer.issueBtn.link}>
                   <i className="fa fa-bug" aria-hidden="true"></i>
                   {language.footer.issueBtn.label}
                 </a>

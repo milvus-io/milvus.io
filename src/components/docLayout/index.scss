@@ -102,6 +102,14 @@ a.btn {
     max-width: 64.67%;
     min-width: 60%;
     overflow: hidden;
+    &.fullwidth {
+      max-width: 80%;
+      min-width: 80%;
+    }
+    iframe {
+      position: absolute;
+      top: 0;
+    }
     @include media("<=1000px") {
       flex: 0 0 100%;
       margin: 0;

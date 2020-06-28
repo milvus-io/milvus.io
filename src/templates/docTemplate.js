@@ -19,7 +19,7 @@ function sortVersions(a, b) {
   if (aValue > bValue) {
     return -1;
   }
-  if (aValue == bValue) {
+  if (aValue === bValue) {
     return 0;
   }
   if (aValue < bValue) {
@@ -85,12 +85,15 @@ export default function Template({
   }, []);
 
   const ifrmLoad = () => {
-    const ifrm = document.querySelector("#inlineFrameExample");
-
+    const ifrmContainer = document.querySelector(".iframe-container");
+    const ifrm = document.querySelector("#benchmarkIframe");
+    // const size = ifrm.contentWindow.document.body.getBoundingClientRect();
+    ifrm.style.height = "100%";
+    ifrmContainer.style.height = "100%";
     setShowBack(!/index\.html/.test(ifrm.contentWindow.location.href));
   };
   const handleRefresh = () => {
-    const ifrm = document.querySelector("#inlineFrameExample");
+    const ifrm = document.querySelector("#benchmarkIframe");
     if (ifrm) {
       ifrm.contentWindow.location.href = ifrm.src;
     }
@@ -123,10 +126,9 @@ export default function Template({
             ></i>
           )}
           <iframe
-            id="inlineFrameExample"
+            id="benchmarkIframe"
             title="test"
             width="100%"
-            height="2000px"
             src={iframeUrl}
             onLoad={ifrmLoad}
           ></iframe>

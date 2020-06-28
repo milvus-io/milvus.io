@@ -65,7 +65,7 @@ const Header = ({ language, locale }) => {
               <LocalizeLink
                 locale={locale}
                 className="link"
-                to={"/docs/benchmarks_aws"}
+                to={"/docs/benchmarks_azure"}
               >
                 {header.benchmarks}
               </LocalizeLink>

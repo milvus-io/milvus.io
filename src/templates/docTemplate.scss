@@ -793,6 +793,7 @@
   left: 70px;
   color: #333;
   cursor: pointer;
+  z-index: 3;
 
   @include media("<=1000px") {
     left: 20px;

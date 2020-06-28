@@ -19,11 +19,11 @@
     "footer": {
       "questionBtn": {
         "link": "https://milvusio.slack.com/",
-        "label": "Question, Slack Us"
+        "label": "Question. Slack us."
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
-        "label": "Bug, File an issue"
+        "label": "Bug. File an issue."
       },
       "editBtn": {
         "label": "Edit"

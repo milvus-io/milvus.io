@@ -28,3 +28,6 @@ add new version doc (branch in repo)
     git submodule add -b master https://github.com/milvus-io/docs.git src/pages/docs/versions/master
     git submodule add -b master https://github.com/milvus-io/community.git src/pages/blogs/versions/master
 ```
+
+// add benchmark doc
+ git submodule add -b master https://github.com/milvus-io/benchmarks.git static/benchmarks

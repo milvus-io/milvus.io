@@ -20,7 +20,7 @@
   color: #fafafa;
   overflow: auto;
   line-height: 1.2rem;
-  background: #eee;
+  background: #f1f1f1; //#f7f9fa;
 
   * {
     transition: all 0.2s;
@@ -39,7 +39,6 @@
   }
 
   @include media("<=1000px") {
-
     &.hide {
       transform: translate3d(-100%, 0, 0);
     }
@@ -77,7 +76,7 @@
       line-height: 20px;
     }
 
-    >.menu_name-wrapper {
+    > .menu_name-wrapper {
       padding: 0 1rem 0.25rem 1rem;
     }
 
@@ -86,7 +85,6 @@
 
       @include media("<=1000px") {
         margin-bottom: 20px;
-
       }
     }
   }
@@ -141,8 +139,6 @@
       margin-bottom: 0px !important;
       letter-spacing: 0;
       font-size: 14px;
-
-
     }
   }
 
@@ -171,7 +167,6 @@
           font-size: 14px;
         }
       }
-
     }
   }
 
@@ -185,8 +180,6 @@
   .outlink {
     display: flex;
     align-items: center;
-
-
   }
 
   .fas {

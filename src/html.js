@@ -20,14 +20,6 @@ export default function HTML(props) {
           href="https://cdn.bootcss.com/font-awesome/5.10.2/css/all.min.css"
         />
         <link
-          rel="stylesheet"
-          href="https://use.typekit.net/odf7gmc.css"
-        ></link>
-        {/* <link
-          href="https://fonts.googleapis.com/css?family=Noto+Sans+SC&display=swap"
-          rel="stylesheet"
-        /> */}
-        <link
           href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,700&display=swap&subset=chinese-simplified"
           rel="stylesheet"
         />
@@ -44,11 +36,6 @@ export default function HTML(props) {
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
         {props.postBodyComponents}
-        {/* <script src="https://cookiehub.net/cc/73a04d42.js"></script> */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=UA-142992812-2"
-        ></script>
       </body>
     </html>
   );
@@ -60,5 +47,5 @@ HTML.propTypes = {
   bodyAttributes: PropTypes.object,
   preBodyComponents: PropTypes.array,
   body: PropTypes.string,
-  postBodyComponents: PropTypes.array
+  postBodyComponents: PropTypes.array,
 };

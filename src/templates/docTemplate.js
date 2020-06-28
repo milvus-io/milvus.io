@@ -19,7 +19,7 @@ function sortVersions(a, b) {
   if (aValue > bValue) {
     return -1;
   }
-  if (aValue == bValue) {
+  if (aValue === bValue) {
     return 0;
   }
   if (aValue < bValue) {
@@ -85,16 +85,23 @@ export default function Template({
   }, []);
 
   const ifrmLoad = () => {
-    const ifrm = document.querySelector("#inlineFrameExample");
-
+    const ifrmContainer = document.querySelector(".iframe-container");
+    const ifrm = document.querySelector("#benchmarkIframe");
+    // const size = ifrm.contentWindow.document.body.getBoundingClientRect();
+    ifrm.style.height = "100%";
+    ifrmContainer.style.height = "100%";
     setShowBack(!/index\.html/.test(ifrm.contentWindow.location.href));
   };
   const handleRefresh = () => {
-    const ifrm = document.querySelector("#inlineFrameExample");
+    const ifrm = document.querySelector("#benchmarkIframe");
     if (ifrm) {
       ifrm.contentWindow.location.href = ifrm.src;
     }
   };
+
+  const title = isBenchmark
+    ? `Milvus benchmark`
+    : `${headings[0] && headings[0].value}`;
 
   return (
     <Layout
@@ -109,9 +116,9 @@ export default function Template({
       id={frontmatter.id}
       isBenchMark={isBenchmark}
     >
-      <SEO title={`${headings[0] && headings[0].value}`} lang={locale} />
+      <SEO title={title} lang={locale} />
       {isBenchmark ? (
-        <div style={{ position: "relative" }}>
+        <div className="iframe-container">
           {showBack && (
             <i
               className="fas iframe-icon fa-arrow-left"
@@ -119,10 +126,9 @@ export default function Template({
             ></i>
           )}
           <iframe
-            id="inlineFrameExample"
+            id="benchmarkIframe"
             title="test"
             width="100%"
-            height="2000px"
             src={iframeUrl}
             onLoad={ifrmLoad}
           ></iframe>
@@ -140,19 +146,20 @@ export default function Template({
               globalEventOff="click"
               className="md-tooltip"
             />
+            {isBlog || isBenchmark ? null : (
+              <a
+                className="edit-page-link btn"
+                href={`https://github.com/milvus-io/docs/edit/${version}/site/${
+                  locale === "en" ? "en" : "zh-CN"
+                }/${editPath}`}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <i className="far fa-edit"></i>
+                {layout.footer.editBtn.label}
+              </a>
+            )}
           </div>
-          {isBlog || isBenchmark ? null : (
-            <a
-              className="edit-page-link button"
-              href={`https://github.com/milvus-io/docs/edit/${version}/site/${
-                locale === "en" ? "en" : "zh-CN"
-              }/${editPath}`}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <i className="far fa-edit"></i> &nbsp; Edit
-            </a>
-          )}
         </div>
       )}
     </Layout>
@@ -199,6 +206,17 @@ export const pageQuery = graphql`
                 tutorial
               }
               footer {
+                editBtn {
+                  label
+                }
+                questionBtn {
+                  label
+                  link
+                }
+                issueBtn {
+                  label
+                  link
+                }
                 product {
                   title
                   txt1

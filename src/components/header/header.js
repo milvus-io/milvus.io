@@ -37,86 +37,88 @@ const Header = ({ language, locale }) => {
 
   return (
     <>
-      <header className="header-wrapper">
-        <div className="logo-wrapper">
-          <LocalizeLink locale={locale} to={"/"}>
-            <img src={Logo} alt="Milvos Logo"></img>
-          </LocalizeLink>
-          <a
-            href="https://lfai.foundation/projects/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src={LfaiLogo} alt="Lfai" className="lfai"></img>
-          </a>
-        </div>
-
-        {screenWidth > 1000 ? (
-          <div className="right">
-            <LocalizeLink
-              locale={locale}
-              to="/docs/guides/get_started/install_milvus/install_milvus.md"
-              className="link"
-            >
-              {header.quick}
-            </LocalizeLink>
-
-            <LocalizeLink
-              locale={locale}
-              className="link"
-              to={"/docs/benchmarks_aws"}
-            >
-              {header.benchmarks}
+      <div className="full-header-wrapper">
+        <header className="header-wrapper">
+          <div className="logo-wrapper">
+            <LocalizeLink locale={locale} to={"/"}>
+              <img src={Logo} alt="Milvos Logo"></img>
             </LocalizeLink>
             <a
-              href={`https://tutorials.milvus.io${
-                locale === "cn" ? `/cn/` : ""
-              }`}
+              href="https://lfai.foundation/projects/"
               target="_blank"
               rel="noopener noreferrer"
-              className="link"
             >
-              {header.tutorials}
+              <img src={LfaiLogo} alt="Lfai" className="lfai"></img>
             </a>
-
-            <LocalizeLink locale={locale} className="link" to="/scenarios">
-              {header.solution}
-            </LocalizeLink>
-            <LocalizeLink
-              locale={locale}
-              className="link"
-              to={"/docs/about_milvus/overview.md"}
-            >
-              {header.doc}
-            </LocalizeLink>
-            <a
-              href={blogHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link"
-            >
-              {header.blog}
-            </a>
-
-            <Search language={header}></Search>
-            <LocalizeLink locale={l} to={to}>
-              <span onClick={onChangeLocale} role="button">
-                {locale === "cn" ? "En" : "中"}
-              </span>
-            </LocalizeLink>
           </div>
-        ) : (
-          <div className="right">
-            <Search language={header}></Search>
-            <LocalizeLink locale={l} to={to}>
-              <span onClick={onChangeLocale}>
-                {locale === "cn" ? "En" : "中"}
-              </span>
-            </LocalizeLink>
-            <i className="fas fa-bars" onClick={handleClick}></i>
-          </div>
-        )}
-      </header>
+
+          {screenWidth > 1000 ? (
+            <div className="right">
+              <LocalizeLink
+                locale={locale}
+                to="/docs/guides/get_started/install_milvus/install_milvus.md"
+                className="link"
+              >
+                {header.quick}
+              </LocalizeLink>
+
+              <LocalizeLink
+                locale={locale}
+                className="link"
+                to={"/docs/benchmarks_azure"}
+              >
+                {header.benchmarks}
+              </LocalizeLink>
+              <a
+                href={`https://tutorials.milvus.io${
+                  locale === "cn" ? `/cn/` : ""
+                }`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link"
+              >
+                {header.tutorials}
+              </a>
+
+              <LocalizeLink locale={locale} className="link" to="/scenarios">
+                {header.solution}
+              </LocalizeLink>
+              <LocalizeLink
+                locale={locale}
+                className="link"
+                to={"/docs/about_milvus/overview.md"}
+              >
+                {header.doc}
+              </LocalizeLink>
+              <a
+                href={blogHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link"
+              >
+                {header.blog}
+              </a>
+
+              <Search language={header}></Search>
+              <LocalizeLink locale={l} to={to}>
+                <span onClick={onChangeLocale} role="button">
+                  {locale === "cn" ? "En" : "中"}
+                </span>
+              </LocalizeLink>
+            </div>
+          ) : (
+            <div className="right">
+              <Search language={header}></Search>
+              <LocalizeLink locale={l} to={to}>
+                <span onClick={onChangeLocale}>
+                  {locale === "cn" ? "En" : "中"}
+                </span>
+              </LocalizeLink>
+              <i className="fas fa-bars" onClick={handleClick}></i>
+            </div>
+          )}
+        </header>
+      </div>
       <div className={`mobile-nav ${mobileNav && "open"}`}>
         <LocalizeLink locale={locale} to="/#whymilvus" className="link">
           {header.quick}

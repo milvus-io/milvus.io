@@ -1,22 +1,23 @@
 @import "../components/include_media";
 
 :root {
-  --color-primary: #000;
+  --color-primary: #202124;
   --color-primarydark: #000;
+  --color-highlight: #33b6f2;
   --color-secondary: #f8b108;
   --color-teriary: #69e0e5;
   --color-darkgray: #28292e;
-  --color-gray: #60606f;
+  --color-gray: #999;
   --color-lightgray: #b0b0b9;
   --color-state-hover: rgba(255, 255, 255, 0.15);
 }
 
 .doc-post-container {
-  padding: 3rem;
+  padding: 2rem;
   background: #fff;
   min-height: 80vh;
   overflow: hidden;
-  color: #000;
+  color: var(--color-primary);
 
   @include media("<=1000px") {
     padding: 1rem;
@@ -77,19 +78,17 @@
       background-color: rgb(245, 245, 245);
 
       // background-color: rgba($color: #eee, $alpha: 0.2);
-      background-image: url('../images/icon/info.svg');
+      background-image: url("../images/icon/info.svg");
     }
 
     &.note {
       background-color: rgb(232, 245, 253);
-      background-image: url('../images/icon/note.svg');
-
+      background-image: url("../images/icon/note.svg");
     }
 
     &.warning {
       background-color: rgb(253, 244, 220);
-      background-image: url('../images/icon/warning.svg');
-
+      background-image: url("../images/icon/warning.svg");
     }
   }
 
@@ -99,7 +98,7 @@
     background-color: #fff;
     color: #333;
     font-size: 14px;
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, .3);
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3);
     padding: 1.5rem;
     opacity: 1;
 
@@ -207,9 +206,7 @@
     span {
       font-family: Courier, monospace;
     }
-
   }
-
 
   figure {
     margin: 1em 40px;
@@ -344,9 +341,8 @@
     font-feature-settings: "kern", "liga", "clig", "calt";
   }
 
-
   a {
-    color: #3F9CD1;
+    color: #3f9cd1;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
   }
@@ -372,7 +368,7 @@
   h5,
   h6 {
     line-height: 1.1;
-    color: #000;
+    color: var(--color-primary);
     padding: 0;
     margin: 0;
     font-weight: bold;
@@ -383,7 +379,6 @@
     font-size: 1.5rem;
     letter-spacing: 0.1rem;
     text-rendering: optimizeLegibility;
-
   }
 
   h2 {
@@ -532,7 +527,7 @@
     border-radius: 3px;
     overflow: auto;
     word-wrap: normal;
-    padding: 1.45rem;
+    padding: 1rem;
   }
 
   table {
@@ -564,7 +559,7 @@
     color: #333;
 
     a {
-      color: #3F9CD1;
+      color: #3f9cd1;
     }
   }
 
@@ -625,13 +620,13 @@
     padding-left: 0;
   }
 
-  li>ol {
+  li > ol {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
   }
 
-  li>ul {
+  li > ul {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
@@ -649,7 +644,7 @@
     margin-bottom: 0;
   }
 
-  li>p {
+  li > p {
     margin-bottom: calc(1.45rem / 2);
   }
 
@@ -687,7 +682,7 @@
 
   thead {
     text-align: left;
-    background: #F5F5F5;
+    background: #f5f5f5;
     font-weight: bold;
   }
 
@@ -701,7 +696,7 @@
   // }
 
   td {
-    background-color: #FAFAFA;
+    background-color: #fafafa;
   }
 
   td,
@@ -742,7 +737,6 @@
     line-height: 1.42;
   }
 
-
   tt:before,
   tt:after {
     letter-spacing: -0.4rem;
@@ -763,48 +757,43 @@
   }
 
   span.hljs-meta {
-    user-select: none
+    user-select: none;
   }
 
   .edit-page-link {
     position: absolute;
-    top: 2.7rem;
-    right: 3rem;
-    border: 1px solid #3F9CD1;
+    top: 5px;
+    right: 0;
     padding: 0.6rem;
     font-size: 0.8rem;
-    border-radius: 5px;
-    transition: all 0.2s;
 
     &:hover {
-      background-color: var(--color-state-hover);
       text-decoration: none;
     }
 
     @include media("<=1000px") {
-      margin-top: 2rem;
-      padding: 0.4rem;
-      font-size: 0.6rem;
-      right: 1rem;
-      top: 3.2rem;
+      display: none;
     }
-
   }
 
   .table-wrapper {
     overflow-x: auto;
     @include scroll-bar;
   }
-
-
+}
+.iframe-container {
+  position: relative;
+  width: calc(100vw - 30px);
+  max-width: calc(100% - 30px);
 }
 
 .iframe-icon {
   position: absolute;
   top: 30px;
-  left: 70px;
+  left: 40px;
   color: #333;
   cursor: pointer;
+  z-index: 3;
 
   @include media("<=1000px") {
     left: 20px;

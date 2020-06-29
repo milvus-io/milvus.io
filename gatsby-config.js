@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
     siteUrl: `https://www.milvus.io`,
-    title: ` · An Open Source Vector Similarity Search Engine - 开源向量相似度搜索引擎`,
-    description: `An Open Source Vector Similarity Search Engine, 开源向量相似度搜索引擎`,
+    title: ` · An Open Source Vector Similarity Search Engine`,
+    description: `Milvus is an open source vector similarity search engine powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.`,
     author: `@ZILLIZ.com`,
   },
   plugins: [

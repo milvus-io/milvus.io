@@ -1,7 +1,6 @@
-@import '../components/include_media.scss'; // hero image
+@import "../components/include_media.scss"; // hero image
 
 .home-wrapper {
-
   // typography
   h1,
   h2,
@@ -9,10 +8,9 @@
   h4,
   h5,
   h6 {
-    font-family: Noto Sans SC, sans-serif;
     margin-bottom: 2rem;
     font-weight: 400;
-    color: #Fff;
+    color: #fff;
   }
 
   h1 {
@@ -35,7 +33,7 @@
     font-size: 15px;
     color: #000;
     opacity: 0.75;
-    line-height: 25px
+    line-height: 25px;
   }
 
   .anchor {
@@ -69,7 +67,6 @@
   }
 
   @include media("<=1000px") {
-
     h1,
     h2,
     h3 {
@@ -77,8 +74,6 @@
       line-height: 30px;
       margin: 30px 0 15px;
     }
-
-
   }
 
   .section1 {
@@ -103,7 +98,6 @@
       max-width: 800px;
       line-height: 24px;
       text-align: center;
-
     }
 
     @include media("<=1000px") {
@@ -136,7 +130,6 @@
     }
 
     @include media("<=1000px") {
-
       .content {
         margin: 0;
         min-width: 300px;
@@ -223,8 +216,6 @@
       }
     }
 
-
-
     h2 {
       text-align: center;
       color: #000;
@@ -271,12 +262,9 @@
       margin-top: 20px;
       line-height: 25px;
     }
-
-
   }
 
   .section6 {
-
     h2 {
       font-size: 32px;
       margin-bottom: 2rem;
@@ -326,10 +314,8 @@
           img {
             width: 100px;
           }
-
         }
       }
-
     }
   }
 
@@ -361,7 +347,7 @@
 
         p {
           margin: 1rem 0 0 0;
-          text-transform: capitalize
+          text-transform: capitalize;
         }
       }
     }
@@ -369,8 +355,6 @@
     @include media("<=1000px") {
       margin: 4rem 0;
     }
-
-
 
     .wechat {
       position: relative;
@@ -384,8 +368,6 @@
 
       a {
         display: inline-block;
-
-
       }
 
       &:hover {
@@ -394,14 +376,11 @@
 
           justify-content: space-between;
         }
-
       }
     }
-
   }
 
   .sdk-tools {
-
     h2 {
       color: #000;
       text-align: center;
@@ -427,7 +406,6 @@
         p {
           margin-top: 1rem;
         }
-
       }
     }
 
@@ -446,7 +424,6 @@
           }
         }
       }
-
     }
   }
 

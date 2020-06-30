@@ -6,7 +6,11 @@
   border-radius: 4px;
   font-size: 0;
   color: #000;
-  border: 1px solid #333;
+  background-color: #fafbfc;
+  border: 1px solid #e1e4e8;
+  .search-icon {
+    vertical-align: -3px;
+  }
 
   @include media("<=1000px") {
     display: inline-block;
@@ -19,7 +23,7 @@
     font-size: 14px;
     background: transparent;
     transition: 0.4s all;
-    width: 168px;
+    width: 100px;
 
     &:focus {
       width: 200px;

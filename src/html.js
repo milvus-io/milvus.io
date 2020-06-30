@@ -19,10 +19,8 @@ export default function HTML(props) {
           rel="stylesheet"
           href="https://cdn.bootcss.com/font-awesome/5.10.2/css/all.min.css"
         />
-        <link
-          href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,700&display=swap&subset=chinese-simplified"
-          rel="stylesheet"
-        />
+        
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Roboto&family=Source+Code+Pro&display=swap" rel="stylesheet" />
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>

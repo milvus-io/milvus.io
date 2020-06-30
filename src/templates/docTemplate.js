@@ -111,7 +111,7 @@ export default function Template({
       pageContext={pageContext}
       menuList={menuList}
       version={version}
-      headings={headings}
+      headings={headings.filter((h, i) => i > 0)}
       versions={versions}
       id={frontmatter.id}
       isBenchMark={isBenchmark}

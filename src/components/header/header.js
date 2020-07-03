@@ -8,7 +8,7 @@ import "./header.scss";
 import { globalHistory } from "@reach/router";
 import { useMobileScreen } from "../../hooks";
 
-const Header = ({ language, locale }) => {
+const Header = ({ language, locale, current = '' }) => {
   const { header } = language;
   const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
@@ -80,12 +80,16 @@ const Header = ({ language, locale }) => {
                 {header.tutorials}
               </a>
 
-              <LocalizeLink locale={locale} className="link" to="/scenarios">
+              <LocalizeLink
+                locale={locale}
+                className={`link ${current === "scenarios" ? "current" : ""}`}
+                to="/scenarios"
+              >
                 {header.solution}
               </LocalizeLink>
               <LocalizeLink
                 locale={locale}
-                className="link"
+                className={`link ${current === "doc" ? "current" : ""}`}
                 to={"/docs/about_milvus/overview.md"}
               >
                 {header.doc}
@@ -110,7 +114,7 @@ const Header = ({ language, locale }) => {
             <div className="right">
               <Search language={header}></Search>
               <LocalizeLink locale={l} to={to}>
-                <span onClick={onChangeLocale}>
+                <span onClick={onChangeLocale} role="button">
                   {locale === "cn" ? "En" : "中"}
                 </span>
               </LocalizeLink>

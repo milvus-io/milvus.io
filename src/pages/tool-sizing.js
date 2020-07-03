@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { graphql } from "gatsby";
 import MyInput from "../components/input"
 import MySelector from "../components/selector"
 import Logo from "../images/logo.svg"

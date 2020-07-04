@@ -231,9 +231,9 @@ const IndexPage = ({ data, pageContext }) => {
           <h2>SDK & Tools</h2>
           <ul>
             <li>
-              <LocalizedLink to="/gui" locale={locale}>
+              <a href="https://zilliz.com/products/em" target="_blank">
                 <img src={adminIcon} alt="Milvus EM"></img>
-              </LocalizedLink>
+              </a>
 
               <p>Milvus EM</p>
             </li>

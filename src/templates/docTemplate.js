@@ -108,6 +108,7 @@ export default function Template({
       language={layout}
       locale={locale}
       nav={nav}
+      current="doc"
       pageContext={pageContext}
       menuList={menuList}
       version={version}

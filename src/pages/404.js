@@ -1,5 +1,5 @@
 import React from "react";
-
+import { graphql } from "gatsby";
 import Layout from "../components/layout/404Layout";
 import SEO from "../components/seo";
 import "./404.scss";
@@ -16,7 +16,7 @@ const NotFoundPage = ({ data, pageContext }) => {
           height: "60vh",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: "30px"
+          fontSize: "30px",
         }}
       >
         <p>{language.notFound}</p>
@@ -54,7 +54,7 @@ export const Query = graphql`
                   txt2
                   txt3
                 }
-                tool{
+                tool {
                   title
                   txt1
                 }
@@ -88,7 +88,6 @@ export const Query = graphql`
                     content
                   }
                 }
-              
               }
             }
           }

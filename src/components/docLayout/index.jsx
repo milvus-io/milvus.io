@@ -14,6 +14,7 @@ export default (props) => {
     versions,
     version,
     headings,
+    current,
     wrapperClass = "doc-wrapper",
     isBenchMark = false,
   } = props;
@@ -111,7 +112,7 @@ export default (props) => {
 
   return (
     <div>
-      <Header language={language} locale={locale} />
+      <Header language={language} current={current} locale={locale} />
       <main className={wrapperClass}>
         <Menu
           menuList={menuList}

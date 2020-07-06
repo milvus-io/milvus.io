@@ -14,7 +14,7 @@ const Notification = (props) => {
           <span role="img" aria-label="" aria-labelledby="">
             👋
           </span>
-          <a href={`/docs/${version}/releases/release_notes.md`}>
+          <a href={`/docs/${version}/release_notes.md`}>
             Version {version} is now available!{" "}
             {typeof document !== "undefined" &&
               document.body &&

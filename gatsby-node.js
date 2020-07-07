@@ -92,6 +92,7 @@ exports.createPages = ({ actions, graphql }) => {
               id
             }
             fileAbsolutePath
+            html
           }
         }
       }
@@ -124,6 +125,15 @@ exports.createPages = ({ actions, graphql }) => {
       const regx = /versions\/([v\d\.]*)/;
       const match = str.match(regx);
       return match ? match[1] : "";
+    };
+
+    const findLang = (path) => {
+      return DOC_LANG_FOLDERS.reduce((pre, cur) => {
+        if (path.includes(cur)) {
+          pre = cur === "/en/" ? "en" : "cn";
+        }
+        return pre;
+      }, "");
     };
 
     // get all menuStructures
@@ -159,6 +169,7 @@ exports.createPages = ({ actions, graphql }) => {
           fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
         frontmatter.id
     );
+
     const generatePath = (
       id,
       lang,
@@ -214,12 +225,7 @@ exports.createPages = ({ actions, graphql }) => {
     // -----  for global search begin -----
     const flatten = (arr) =>
       arr.map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
-        const fileLang = DOC_LANG_FOLDERS.reduce((pre, cur) => {
-          if (fileAbsolutePath.includes(cur)) {
-            pre = cur === "/en/" ? "en" : "cn";
-          }
-          return pre;
-        }, "");
+        const fileLang = findLang(fileAbsolutePath);
 
         const version = findVersion(fileAbsolutePath) || "master";
         const headingVals = headings.map((v) => v.value);
@@ -273,12 +279,11 @@ exports.createPages = ({ actions, graphql }) => {
       const fileId = node.frontmatter.id;
       let version = findVersion(fileAbsolutePath);
 
-      const fileLang = DOC_LANG_FOLDERS.reduce((pre, cur) => {
-        if (fileAbsolutePath.includes(cur)) {
-          pre = cur === "/en/" ? "en" : "cn";
-        }
-        return pre;
-      }, "en");
+      const fileLang = findLang(fileAbsolutePath);
+
+      const editPath = fileAbsolutePath.split(
+        fileLang === "en" ? "/en/" : "/zh-CN/"
+      )[1];
       const isBlog = checkIsblog(fileAbsolutePath);
       const isBenchmark = checkIsBenchmark(fileAbsolutePath);
       const localizedPath = generatePath(
@@ -289,6 +294,27 @@ exports.createPages = ({ actions, graphql }) => {
         true,
         isBenchmark
       );
+
+      // replace inside link {{}}
+      const regx = /(?=%7B%7B).*(?<=%7D%7D)/gi;
+      const newHtml = node.html.replace(regx, (match) => {
+        const name = decodeURIComponent(match);
+        const targetId = name.match(/(?<={{).*(?=}})/)[0].trim();
+        const target = legalMd.find(
+          (v) =>
+            v.node.frontmatter.id === targetId &&
+            findVersion(v.node.fileAbsolutePath) === version &&
+            fileLang === findLang(v.node.fileAbsolutePath)
+        );
+        const targetPath = generatePath(
+          target.node.frontmatter.id,
+          fileLang,
+          version,
+          isBlog
+        );
+        return fileLang === "en" ? targetPath : `/cn/${targetPath}`;
+      });
+
       // the newest doc version is master so we need to make route without version.
       // for easy link to the newest doc
       if (version === newestVersion) {
@@ -307,8 +333,9 @@ exports.createPages = ({ actions, graphql }) => {
             headings: node.headings.filter((v) => v.depth < 4 && v.depth >= 1),
             fileAbsolutePath,
             isBlog,
-            editPath: generatePath(fileId, fileLang, false, isBlog, false),
+            editPath,
             allMenus,
+            newHtml,
           }, // additional data can be passed via context
         });
       }
@@ -325,9 +352,10 @@ exports.createPages = ({ actions, graphql }) => {
           fileAbsolutePath,
           newestVersion,
           isBlog,
-          editPath: generatePath(fileId, fileLang, version, isBlog, false),
+          editPath,
           allMenus,
           isBenchmark,
+          newHtml,
         }, // additional data can be passed via context
       });
     });

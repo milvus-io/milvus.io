@@ -40,6 +40,7 @@ export default function Template({
     isBlog,
     isBenchmark = false,
     editPath,
+    newHtml,
   } = pageContext;
   versions = versions.sort(sortVersions);
   const screenWidth = useMobileScreen();
@@ -51,7 +52,7 @@ export default function Template({
       locale === v.lang
   );
   const { markdownRemark } = data; // data.markdownRemark holds our post data
-  let { frontmatter, html } = markdownRemark;
+  let { frontmatter } = markdownRemark;
   const nav = {
     current: "doc",
   };
@@ -60,7 +61,9 @@ export default function Template({
     : "";
   const idRegex = /id=".*?"/g;
   if (locale === "cn") {
-    html = html.replace(idRegex, (match) => match.replace(/[？|、|，]/g, ""));
+    newHtml = newHtml.replace(idRegex, (match) =>
+      match.replace(/[？|、|，]/g, "")
+    );
   }
 
   const [showBack, setShowBack] = useState(false);
@@ -139,7 +142,7 @@ export default function Template({
           <div className="doc-post">
             <div
               className="doc-post-content"
-              dangerouslySetInnerHTML={{ __html: html }}
+              dangerouslySetInnerHTML={{ __html: newHtml }}
             />
             <ReactTooltip
               type="info"
@@ -173,7 +176,6 @@ export const pageQuery = graphql`
       fileAbsolutePath: { eq: $fileAbsolutePath }
       frontmatter: { id: { eq: $old } }
     ) {
-      html
       frontmatter {
         id
         title

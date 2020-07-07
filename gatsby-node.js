@@ -3,7 +3,7 @@ const fs = require("fs");
 const ReadVersionJson = require("./walkFile");
 const locales = require("./src/constants/locales");
 const DOC_LANG_FOLDERS = ["/en/", "/zh-CN/"];
-const benchmarksMenuList = require("./benchmark-menu");
+const benchmarksMenu = require("./benchmark-menu");
 const express = require("express");
 const env = process.env.IS_PREVIEW;
 console.log(env);
@@ -132,11 +132,14 @@ exports.createPages = ({ actions, graphql }) => {
         let lang = absolutePath.includes("/en/") ? "en" : "cn";
         const isBlog = absolutePath.includes("blog");
         const version = findVersion(absolutePath) || "master";
-        const menuStructureList = childMenuStructureJson && [...childMenuStructureJson.menuList] || [];
-        const menuList = [
-          ...menuStructureList,
-          ...benchmarksMenuList,
-        ];
+        const menuStructureList =
+          (childMenuStructureJson && [...childMenuStructureJson.menuList]) ||
+          [];
+        const benchmarkMenuList =
+          lang === "en"
+            ? benchmarksMenu.benchmarksMenuListEN
+            : benchmarksMenu.benchmarksMenuListCN;
+        const menuList = [...menuStructureList, ...benchmarkMenuList];
         return {
           lang,
           version,

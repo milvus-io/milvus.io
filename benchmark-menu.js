@@ -1,7 +1,16 @@
-const benchmarksMenuList = [
+const benchmarksMenuListEN = [
   {
     id: "benchmarks_azure",
     title: "Milvus Benchmark",
+    order: 1,
+    isMenu: false,
+  },
+];
+
+const benchmarksMenuListCN = [
+  {
+    id: "benchmarks_azure",
+    title: "性能测试",
     order: 1,
     isMenu: false,
   },
@@ -30,4 +39,7 @@ const benchmarksMenuList = [
 //   "order": 4
 // }]
 
-module.exports = benchmarksMenuList;
+module.exports = {
+  benchmarksMenuListEN,
+  benchmarksMenuListCN,
+};

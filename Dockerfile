@@ -1,5 +1,5 @@
 # => Build container
-FROM node:13-buster as builder
+FROM mhart/alpine-node:14 as builder
 ARG IS_PREVIEW 
 ENV IS_PREVIEW $IS_PREVIEW
 WORKDIR /site

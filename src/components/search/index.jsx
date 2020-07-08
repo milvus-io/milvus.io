@@ -81,7 +81,7 @@ const Search = (props) => {
         ></path>
       </svg>
       <input
-        placeholder="search"
+        placeholder={language.search}
         value={query}
         onChange={handleChange}
         onFocus={handleFocus}

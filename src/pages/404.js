@@ -41,6 +41,7 @@ export const Query = graphql`
                 tutorials
                 loading
                 noresult
+                search
               }
               footer {
                 product {

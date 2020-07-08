@@ -44,27 +44,6 @@ export default function Template({
   } = pageContext;
   versions = versions.sort(sortVersions);
   const screenWidth = useMobileScreen();
-  const layout = data.allFile.edges[0].node.childLayoutJson.layout;
-  const menuList = allMenus.find(
-    (v) =>
-      v.absolutePath.includes(version) &&
-      isBlog === v.isBlog &&
-      locale === v.lang
-  );
-  const { markdownRemark } = data; // data.markdownRemark holds our post data
-  let { frontmatter } = markdownRemark;
-  const nav = {
-    current: "doc",
-  };
-  const iframeUrl = isBenchmark
-    ? `/benchmarks/${frontmatter.id.split("_")[1]}/index.html`
-    : "";
-  const idRegex = /id=".*?"/g;
-  if (locale === "cn") {
-    newHtml = newHtml.replace(idRegex, (match) =>
-      match.replace(/[？|、|，]/g, "")
-    );
-  }
 
   const [showBack, setShowBack] = useState(false);
 
@@ -86,6 +65,34 @@ export default function Template({
       window.removeEventListener("click", cb);
     };
   }, []);
+
+  if (!data.allFile.edges[0]) {
+    return null;
+  }
+
+  const layout = data.allFile.edges[0]
+    ? data.allFile.edges[0].node.childLayoutJson.layout
+    : {};
+  const menuList = allMenus.find(
+    (v) =>
+      v.absolutePath.includes(version) &&
+      isBlog === v.isBlog &&
+      locale === v.lang
+  );
+  const { markdownRemark } = data; // data.markdownRemark holds our post data
+  let { frontmatter } = markdownRemark;
+  const nav = {
+    current: "doc",
+  };
+  const iframeUrl = isBenchmark
+    ? `/benchmarks/${frontmatter.id.split("_")[1]}/index.html`
+    : "";
+  const idRegex = /id=".*?"/g;
+  if (locale === "cn") {
+    newHtml = newHtml.replace(idRegex, (match) =>
+      match.replace(/[？|、|，]/g, "")
+    );
+  }
 
   const ifrmLoad = () => {
     const ifrmContainer = document.querySelector(".iframe-container");
@@ -207,6 +214,7 @@ export const pageQuery = graphql`
                 loading
                 noresult
                 tutorial
+                search
               }
               footer {
                 editBtn {

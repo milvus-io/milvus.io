@@ -124,7 +124,13 @@ exports.createPages = ({ actions, graphql }) => {
     const findVersion = (str) => {
       const regx = /versions\/([v\d\.]*)/;
       const match = str.match(regx);
-      return match ? match[1] : "";
+      return match
+        ? match[1]
+          ? match[1]
+          : env === "preview" && str.includes("preview")
+          ? "preview"
+          : match[1]
+        : "";
     };
 
     const findLang = (path) => {
@@ -165,11 +171,13 @@ exports.createPages = ({ actions, graphql }) => {
       ({ node: { fileAbsolutePath, frontmatter } }) =>
         (!!findVersion(fileAbsolutePath) ||
           fileAbsolutePath.includes("/blog/zh-CN") ||
-          // fileAbsolutePath.includes("/docs/versions/master/") ||
+          (fileAbsolutePath.includes("/docs/versions/preview/") &&
+            env === "preview") ||
           fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
         frontmatter.id
     );
 
+    // we generate path by menu structure
     const generatePath = (
       id,
       lang,
@@ -273,6 +281,7 @@ exports.createPages = ({ actions, graphql }) => {
         versions.add(version);
       }
     });
+    console.log(versions);
 
     return legalMd.forEach(({ node }) => {
       const fileAbsolutePath = node.fileAbsolutePath;

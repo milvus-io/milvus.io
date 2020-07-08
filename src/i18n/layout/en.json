@@ -14,7 +14,8 @@
       "benchmarks": "Benchmarks",
       "try": "Try",
       "loading": "Loading...",
-      "noresult": "No Result"
+      "noresult": "No Result",
+      "search": "Search"
     },
     "footer": {
       "questionBtn": {
@@ -56,6 +57,13 @@
       }
     },
     "home": {
+      "notification": {
+        "version": "Version",
+        "available": "is now available ! ",
+        "more": "Read about the new features and fixes.",
+        "join": "Join the Milvus Slack channel here",
+        "interact": "to interact with our community!"
+      },
       "section1": {
         "desc1": "An Open Source Vector Similarity Search Engine",
         "desc2": "Milvus is easy-to-use, highly reliable, scalable, robust, and blazing fast.",

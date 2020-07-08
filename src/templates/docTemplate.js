@@ -214,6 +214,7 @@ export const pageQuery = graphql`
                 loading
                 noresult
                 tutorial
+                search
               }
               footer {
                 editBtn {

@@ -14,7 +14,8 @@
       "benchmarks": "性能评测",
       "try": "试用",
       "loading": "加载中...",
-      "noresult": "未查询到数据"
+      "noresult": "未查询到数据",
+      "search": "搜索"
     },
     "footer": {
       "questionBtn": {

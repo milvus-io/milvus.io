@@ -14,7 +14,8 @@
       "benchmarks": "Benchmarks",
       "try": "Try",
       "loading": "Loading...",
-      "noresult": "No Result"
+      "noresult": "No Result",
+      "search": "Search"
     },
     "footer": {
       "questionBtn": {

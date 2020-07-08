@@ -44,6 +44,9 @@ export default function Template({
   } = pageContext;
   versions = versions.sort(sortVersions);
   const screenWidth = useMobileScreen();
+  if (!data.allFile.edges[0]) {
+    return null;
+  }
   const layout = data.allFile.edges[0].node.childLayoutJson.layout;
   const menuList = allMenus.find(
     (v) =>

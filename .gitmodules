@@ -42,3 +42,7 @@
 	path = static/benchmarks
 	url = https://github.com/milvus-io/benchmarks.git
 	branch = 0.10.0
+[submodule "src/pages/docs/versions/preview"]
+	path = src/pages/docs/versions/preview
+	url = https://github.com/milvus-io/docs.git
+	branch = preview

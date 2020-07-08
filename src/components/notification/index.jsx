@@ -4,7 +4,7 @@ import Marquee from "react-marquee-slider";
 import { useMobileScreen } from "../../hooks";
 
 const Notification = (props) => {
-  const { version } = props;
+  const { version, language } = props;
   const screenWidth = useMobileScreen();
 
   return (
@@ -15,11 +15,11 @@ const Notification = (props) => {
             👋
           </span>
           <a href={`/docs/${version}/release_notes.md`}>
-            Version {version} is now available!{" "}
+            {language.version} {version} {language.available}{" "}
             {typeof document !== "undefined" &&
               document.body &&
               document.body.clientWidth > 1000 &&
-              "Read about the new features and fixes."}
+              language.more}
           </a>
         </span>
 
@@ -32,11 +32,11 @@ const Notification = (props) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Join the Milvus Slack channel here{" "}
+            {language.join}{" "}
             {typeof document !== "undefined" &&
               document.body &&
               document.body.clientWidth > 1000 &&
-              "to interact with our community!"}
+              language.interact}
           </a>
         </span>
       </Marquee>

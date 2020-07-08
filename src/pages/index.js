@@ -144,7 +144,10 @@ const IndexPage = ({ data, pageContext }) => {
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus" />
-      <Notification version={newestVersion}></Notification>
+      <Notification
+        version={newestVersion}
+        language={language.home.notification}
+      ></Notification>
       <main className="home-wrapper">
         <section className="section1">
           <div className="githubicon">
@@ -383,6 +386,13 @@ export const Query = graphql`
                 }
               }
               home {
+                notification {
+                  version
+                  available
+                  more
+                  join
+                  interact
+                }
                 section1 {
                   desc1
                   desc2

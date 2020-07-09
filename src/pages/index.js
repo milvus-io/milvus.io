@@ -163,14 +163,14 @@ const IndexPage = ({ data, pageContext }) => {
           <div className="btn-wrapper">
             <LocalizedLink
               className="primary white-color"
-              to="/docs/guides/get_started/install_milvus/install_milvus.md"
+              to="/docs/install_milvus.md"
               locale={locale}
             >
               {section1.link2}
             </LocalizedLink>
             <LocalizedLink
               className="primary white-color"
-              to="/docs/about_milvus/overview.md"
+              to="/docs/overview.md"
               locale={locale}
             >
               {section1.link}

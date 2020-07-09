@@ -58,7 +58,7 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
             <div className="right">
               <LocalizeLink
                 locale={locale}
-                to="/docs/guides/get_started/install_milvus/install_milvus.md"
+                to="/docs/install_milvus.md"
                 className="link"
               >
                 {header.quick}
@@ -93,7 +93,7 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
                 <LocalizeLink
                   locale={locale}
                   className={`link ${current === "doc" ? "current" : ""}`}
-                  to={"/docs/about_milvus/overview.md"}
+                  to={"/docs/overview.md"}
                 >
                   {header.doc}
                 </LocalizeLink>
@@ -198,7 +198,7 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
         <LocalizeLink
           locale={locale}
           className="link"
-          to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
+          to={"/docs/install_milvus.md"}
         >
           {header.doc}
         </LocalizeLink>

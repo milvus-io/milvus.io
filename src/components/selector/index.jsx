@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import LocalizeLink from "../localizedLink/localizedLink";
 import "./index.scss";
 /* eslint-disable */
-const Selector = props => {
+const Selector = (props) => {
   const {
     selected,
     options,
     locale,
     isVersion = false,
-    setSelected = () => {}
+    setSelected = () => {},
   } = props;
   const [listStatus, setListStatus] = useState(false);
-  const toggleList = e => {
+  const toggleList = (e) => {
     e.stopPropagation();
     setListStatus(!listStatus);
   };
@@ -26,7 +26,7 @@ const Selector = props => {
     };
   }, []);
 
-  const handleSelected = e => {
+  const handleSelected = (e) => {
     const value = e.target.dataset.value;
     setSelected(value);
   };
@@ -41,13 +41,13 @@ const Selector = props => {
         className={`options-wrapper ${listStatus && "open"}`}
         onClick={handleSelected}
       >
-        {options.map(v => (
+        {options.map((v) => (
           <li className={v === selected ? "active" : ""} key={v} data-value={v}>
             {isVersion ? (
               <LocalizeLink
                 locale={locale}
                 className="text"
-                to={`/docs/${v}/about_milvus/overview.md`}
+                to={`/docs/${v}/overview.md`}
               >
                 {v}
               </LocalizeLink>

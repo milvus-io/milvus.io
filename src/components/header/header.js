@@ -8,7 +8,7 @@ import "./header.scss";
 import { globalHistory } from "@reach/router";
 import { useMobileScreen } from "../../hooks";
 
-const Header = ({ language, locale, current = '' }) => {
+const Header = ({ language, locale, current = "" }) => {
   const { header } = language;
   const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);

@@ -42,6 +42,7 @@ export const Query = graphql`
                 loading
                 noresult
                 search
+                bootcamp
               }
               footer {
                 product {

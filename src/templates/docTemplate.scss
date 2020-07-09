@@ -66,29 +66,31 @@
 
   .alert {
     padding: 1rem;
-    border-radius: 6px;
+    border-radius: 0 6px 6px 0;
     background-repeat: no-repeat;
     background-size: 4%;
     background-position: 10px center;
-    padding-left: 54px;
-    line-height: 1.5;
+    padding-left: 10px;
+    line-height: 2;
     word-break: break-all;
+    font-size: 0.8rem;
 
     &.info {
       background-color: rgb(245, 245, 245);
-
+      border-left: 4px solid gray;
       // background-color: rgba($color: #eee, $alpha: 0.2);
-      background-image: url("../images/icon/info.svg");
     }
 
     &.note {
       background-color: rgb(232, 245, 253);
-      background-image: url("../images/icon/note.svg");
+      border-left: 4px solid #3f9cd1;
+
     }
 
     &.warning {
       background-color: rgb(253, 244, 220);
-      background-image: url("../images/icon/warning.svg");
+      border-left: 4px solid #ff9800;
+
     }
   }
 
@@ -620,13 +622,13 @@
     padding-left: 0;
   }
 
-  li > ol {
+  li>ol {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
   }
 
-  li > ul {
+  li>ul {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
@@ -644,7 +646,7 @@
     margin-bottom: 0;
   }
 
-  li > p {
+  li>p {
     margin-bottom: calc(1.45rem / 2);
   }
 
@@ -781,6 +783,7 @@
     @include scroll-bar;
   }
 }
+
 .iframe-container {
   position: relative;
   width: calc(100vw - 30px);

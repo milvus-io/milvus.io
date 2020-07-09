@@ -8,10 +8,12 @@ import "./header.scss";
 import { globalHistory } from "@reach/router";
 import { useMobileScreen } from "../../hooks";
 
-const Header = ({ language, locale, current = "" }) => {
+const Header = ({ language, locale, current = "", showDoc = true }) => {
   const { header } = language;
   const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
+  const [lanList, setLanList] = useState(false);
+
   const l = locale === "cn" ? "en" : "cn";
   const to = globalHistory.location.pathname
     .replace("/en/", "/")
@@ -87,13 +89,16 @@ const Header = ({ language, locale, current = "" }) => {
               >
                 {header.solution}
               </LocalizeLink>
-              <LocalizeLink
-                locale={locale}
-                className={`link ${current === "doc" ? "current" : ""}`}
-                to={"/docs/about_milvus/overview.md"}
-              >
-                {header.doc}
-              </LocalizeLink>
+              {showDoc && (
+                <LocalizeLink
+                  locale={locale}
+                  className={`link ${current === "doc" ? "current" : ""}`}
+                  to={"/docs/about_milvus/overview.md"}
+                >
+                  {header.doc}
+                </LocalizeLink>
+              )}
+
               <a
                 href={blogHref}
                 target="_blank"
@@ -104,20 +109,70 @@ const Header = ({ language, locale, current = "" }) => {
               </a>
 
               <Search language={header}></Search>
-              <LocalizeLink locale={l} to={to}>
-                <span onClick={onChangeLocale} role="button">
-                  {locale === "cn" ? "En" : "中"}
-                </span>
-              </LocalizeLink>
+              <span
+                className="language"
+                onClick={() => {
+                  setLanList(!lanList);
+                }}
+              >
+                {locale === "cn" ? "中" : "En"}
+                {lanList && (
+                  <div className="language-list">
+                    <LocalizeLink
+                      locale={l}
+                      to={to}
+                      className={locale === "en" ? "active" : ""}
+                    >
+                      <span onClick={onChangeLocale} role="button">
+                        English
+                      </span>
+                    </LocalizeLink>
+                    <LocalizeLink
+                      locale={l}
+                      to={to}
+                      className={locale === "cn" ? "active" : ""}
+                    >
+                      <span onClick={onChangeLocale} role="button">
+                        中文
+                      </span>
+                    </LocalizeLink>
+                  </div>
+                )}
+              </span>
             </div>
           ) : (
             <div className="right">
               <Search language={header}></Search>
-              <LocalizeLink locale={l} to={to}>
-                <span onClick={onChangeLocale} role="button">
-                  {locale === "cn" ? "En" : "中"}
-                </span>
-              </LocalizeLink>
+              <span
+                className="language"
+                onClick={() => {
+                  setLanList(!lanList);
+                }}
+              >
+                {locale === "cn" ? "中" : "En"}
+                {lanList && (
+                  <div className="language-list">
+                    <LocalizeLink
+                      locale={l}
+                      to={to}
+                      className={locale === "en" ? "active" : ""}
+                    >
+                      <span onClick={onChangeLocale} role="button">
+                        English
+                      </span>
+                    </LocalizeLink>
+                    <LocalizeLink
+                      locale={l}
+                      to={to}
+                      className={locale === "cn" ? "active" : ""}
+                    >
+                      <span onClick={onChangeLocale} role="button">
+                        中文
+                      </span>
+                    </LocalizeLink>
+                  </div>
+                )}
+              </span>
               <i className="fas fa-bars" onClick={handleClick}></i>
             </div>
           )}

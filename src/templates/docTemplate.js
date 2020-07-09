@@ -126,6 +126,7 @@ export default function Template({
       versions={versions}
       id={frontmatter.id}
       isBenchMark={isBenchmark}
+      showDoc={false}
     >
       <SEO title={title} lang={locale} />
       {isBenchmark ? (

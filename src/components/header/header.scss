@@ -105,6 +105,11 @@
     }
   }
 
+  .right {
+    padding-right: 30px;
+
+  }
+
   @include media("<=1000px") {
     padding: 10px 20px;
     box-shadow: none;
@@ -134,6 +139,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 8px;
 
     .link {
       color: #000;

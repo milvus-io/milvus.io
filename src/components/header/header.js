@@ -8,7 +8,7 @@ import "./header.scss";
 import { globalHistory } from "@reach/router";
 import { useMobileScreen } from "../../hooks";
 
-const Header = ({ language, locale, current = '' }) => {
+const Header = ({ language, locale, current = "" }) => {
   const { header } = language;
   const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
@@ -78,6 +78,15 @@ const Header = ({ language, locale, current = '' }) => {
                 className="link"
               >
                 {header.tutorials}
+              </a>
+
+              <a
+                href="https://github.com/milvus-io/bootcamp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link"
+              >
+                {header.bootcamp}
               </a>
 
               <LocalizeLink

@@ -215,6 +215,7 @@ export const pageQuery = graphql`
                 noresult
                 tutorial
                 search
+                bootcamp
               }
               footer {
                 editBtn {

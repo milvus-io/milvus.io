@@ -113,6 +113,7 @@ export const Query = graphql`
                 noresult
                 tutorial
                 search
+                bootcamp
               }
               footer {
                 product {

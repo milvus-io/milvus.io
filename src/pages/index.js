@@ -177,6 +177,16 @@ const IndexPage = ({ data, pageContext }) => {
             </LocalizedLink>
           </div>
         </section>
+        <section className="section5">
+          <a
+            href="https://lfai.foundation"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={LfaiLogo} alt="lfai logo"></img>
+          </a>
+          <p>{section5.desc}</p>
+        </section>
         <section className="section3">
           {/* <h2>{section3.title}</h2> */}
           <ul className="feature-wrapper">
@@ -220,16 +230,7 @@ const IndexPage = ({ data, pageContext }) => {
             </a>
           </div>
         </section>
-        <section className="section5">
-          <a
-            href="https://lfai.foundation"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src={LfaiLogo} alt="lfai logo"></img>
-          </a>
-          <p>{section5.desc}</p>
-        </section>
+
         <section className="sdk-tools">
           <h2>SDK & Tools</h2>
           <ul>

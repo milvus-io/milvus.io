@@ -80,15 +80,6 @@ const Header = ({ language, locale, current = "" }) => {
                 {header.tutorials}
               </a>
 
-              <a
-                href="https://github.com/milvus-io/bootcamp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link"
-              >
-                {header.bootcamp}
-              </a>
-
               <LocalizeLink
                 locale={locale}
                 className={`link ${current === "scenarios" ? "current" : ""}`}

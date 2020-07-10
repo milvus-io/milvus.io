@@ -17,6 +17,7 @@ export default (props) => {
     current,
     wrapperClass = "doc-wrapper",
     isBenchMark = false,
+    showDoc = true,
   } = props;
   const formatHeadings =
     headings &&
@@ -59,7 +60,11 @@ export default (props) => {
       "milvus.io.stargazers_fetch_time"
     );
 
-    if (!latestFetchTime || Date.now() - latestFetchTime > 60000 * 60 || !latest) {
+    if (
+      !latestFetchTime ||
+      Date.now() - latestFetchTime > 60000 * 60 ||
+      !latest
+    ) {
       // get
       fetch(repoUrl)
         .then((response) => response.json())
@@ -112,7 +117,12 @@ export default (props) => {
 
   return (
     <div>
-      <Header language={language} current={current} locale={locale} />
+      <Header
+        language={language}
+        current={current}
+        locale={locale}
+        showDoc={showDoc}
+      />
       <main className={wrapperClass}>
         <Menu
           menuList={menuList}

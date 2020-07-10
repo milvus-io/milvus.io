@@ -41,6 +41,89 @@
     }
   }
 
+  .language {
+    position: relative;
+    display: inline-block;
+    margin-left: 16px;
+    cursor: pointer;
+
+    .language-list {
+      background-color: #fff;
+      border-radius: 10px;
+      position: absolute;
+      top: 150%;
+      right: -20px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+      a {
+        display: block;
+        margin: 10px 0;
+        padding: 10px;
+        color: #333;
+
+        &.active {
+          background-color: #3f9cd1;
+          color: #fff;
+        }
+      }
+    }
+
+    &:before {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: -10px;
+      left: 0;
+      content: "";
+    }
+
+    &:after {
+      display: block;
+      content: '';
+      border-width: 6px;
+      border-style: solid;
+      border-color: #333 transparent transparent transparent;
+
+      /* 定位 */
+      position: absolute;
+      left: 26px;
+      top: 4px;
+    }
+
+    @include media("<=1000px") {
+      margin-left: 10px;
+      margin-right: 18px;
+
+      .language-list {
+        display: block;
+      }
+
+      &::after {
+        left: 20px;
+        border-width: 4px;
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30px;
+
+
+    .link {
+      color: #000;
+      font-weight: normal;
+      margin: 0 1rem;
+      // border-bottom: 2px solid #fff;
+      // padding-bottom: 8px;
+      // &.current {
+      //   border-bottom: 2px solid var(--color-highlight);
+      // }
+    }
+  }
+
   @include media("<=1000px") {
     padding: 10px 20px;
     box-shadow: none;
@@ -64,22 +147,9 @@
         margin-left: 6px;
       }
     }
-  }
 
-  .right {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .link {
-      color: #000;
-      font-weight: normal;
-      margin: 0 1rem;
-      // border-bottom: 2px solid #fff;
-      // padding-bottom: 8px;
-      // &.current {
-      //   border-bottom: 2px solid var(--color-highlight);
-      // }
+    .right {
+      padding-right: 8px;
     }
   }
 }

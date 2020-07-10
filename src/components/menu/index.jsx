@@ -44,19 +44,19 @@ const Menu = (props) => {
             return `/blogs/${doc.id}`;
           }
 
-          const { label1, label2, label3 } = doc || {};
+          // const { label1, label2, label3 } = doc || {};
 
-          let parentPath = "";
-          if (label1) {
-            parentPath += `${label1}/`;
-          }
-          if (label2) {
-            parentPath += `${label2}/`;
-          }
-          if (label3) {
-            parentPath += `${label3}/`;
-          }
-          return `/docs/${version}/${parentPath}${doc.id}`;
+          // let parentPath = "";
+          // if (label1) {
+          //   parentPath += `${label1}/`;
+          // }
+          // if (label2) {
+          //   parentPath += `${label2}/`;
+          // }
+          // if (label3) {
+          //   parentPath += `${label3}/`;
+          // }
+          return `/docs/${version}/${doc.id}`;
         };
         // find top menu by current label
         const topMenu = list.filter((v) => {

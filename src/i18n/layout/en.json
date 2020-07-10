@@ -61,7 +61,7 @@
       "notification": {
         "version": "Version",
         "available": "is now available ! ",
-        "more": "Read about the new features and fixes.",
+        "more": "Learn more about the new features and fixes.",
         "join": "Join the Milvus Slack channel here",
         "interact": "to interact with our community!"
       },
@@ -135,7 +135,7 @@
         "bootcamp": "Try Milvus Bootcamp"
       },
       "section5": {
-        "desc": "We are an LF AI Foundation incubation project."
+        "desc": "Milvus is an LF AI Foundation incubation project."
       },
       "section8": {
         "title": "Scenarios",

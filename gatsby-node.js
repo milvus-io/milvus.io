@@ -199,7 +199,6 @@ exports.createPages = ({ actions, graphql }) => {
 
       const menuList = findMenu ? findMenu.menuList : [];
       const doc = menuList.find((v) => v.id === id);
-      const { label1, label2, label3 } = doc || {};
       let localizedPath = "";
       if (version && version !== "master") {
         localizedPath =
@@ -211,19 +210,17 @@ exports.createPages = ({ actions, graphql }) => {
         localizedPath = lang === defaultLang ? `/docs/` : `${lang}/docs/`;
       }
 
-      let parentPath = "";
-      if (label1) {
-        parentPath += `${label1}/`;
-      }
-      if (label2) {
-        parentPath += `${label2}/`;
-      }
-      if (label3) {
-        parentPath += `${label3}/`;
-      }
-      return needLocal
-        ? `${localizedPath}${parentPath}${id}`
-        : `${parentPath}${id}`;
+      // let parentPath = "";
+      // if (label1) {
+      //   parentPath += `${label1}/`;
+      // }
+      // if (label2) {
+      //   parentPath += `${label2}/`;
+      // }
+      // if (label3) {
+      //   parentPath += `${label3}/`;
+      // }
+      return needLocal ? `${localizedPath}${id}` : `${id}`;
     };
 
     const defaultLang = Object.keys(locales).find(
@@ -305,24 +302,25 @@ exports.createPages = ({ actions, graphql }) => {
       );
 
       // replace inside link {{}}
-      const regx = /(?=%7B%7B).*(?<=%7D%7D)/gi;
-      const newHtml = node.html.replace(regx, (match) => {
-        const name = decodeURIComponent(match);
-        const targetId = name.match(/(?<={{).*(?=}})/)[0].trim();
-        const target = legalMd.find(
-          (v) =>
-            v.node.frontmatter.id === targetId &&
-            findVersion(v.node.fileAbsolutePath) === version &&
-            fileLang === findLang(v.node.fileAbsolutePath)
-        );
-        const targetPath = generatePath(
-          target.node.frontmatter.id,
-          fileLang,
-          version,
-          isBlog
-        );
-        return fileLang === "en" ? targetPath : `/cn/${targetPath}`;
-      });
+      // const regx = /(?=%7B%7B).*(?<=%7D%7D)/gi;
+      // const newHtml = node.html.replace(regx, (match) => {
+      //   const name = decodeURIComponent(match);
+      //   const targetId = name.match(/(?<={{).*(?=}})/)[0].trim();
+      //   const target = legalMd.find(
+      //     (v) =>
+      //       v.node.frontmatter.id === targetId &&
+      //       findVersion(v.node.fileAbsolutePath) === version &&
+      //       fileLang === findLang(v.node.fileAbsolutePath)
+      //   );
+      //   const targetPath = generatePath(
+      //     target.node.frontmatter.id,
+      //     fileLang,
+      //     version,
+      //     isBlog
+      //   );
+      //   return fileLang === "en" ? targetPath : `/cn/${targetPath}`;
+      // });
+      const newHtml = node.html;
 
       // the newest doc version is master so we need to make route without version.
       // for easy link to the newest doc

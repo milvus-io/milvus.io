@@ -11,7 +11,7 @@ import Header from "../header/header";
 import Footer from "../footer/footer";
 import LocalizeLink from "../localizedLink/localizedLink";
 
-import '../../scss/guiLayout.scss'
+import "../../scss/guiLayout.scss";
 const Layout = ({ children, language, locale }) => {
   const { section6 } = language.home;
 
@@ -27,7 +27,7 @@ const Layout = ({ children, language, locale }) => {
           <LocalizeLink
             locale={locale}
             className=" get-start"
-            to={"/docs/guides/get_started/install_milvus/install_milvus.md"}
+            to={"/docs/install_milvus.md"}
           >
             {section6.button}
           </LocalizeLink>
@@ -41,7 +41,7 @@ const Layout = ({ children, language, locale }) => {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   language: PropTypes.object.isRequired,
-  locale: PropTypes.string.isRequired
+  locale: PropTypes.string.isRequired,
 };
 
 export default Layout;

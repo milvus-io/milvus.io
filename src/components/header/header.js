@@ -25,6 +25,7 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
   useEffect(() => {
     window.addEventListener("click", () => {
       setMobileNav(false);
+      setLanList(false);
     });
   }, []);
 
@@ -111,7 +112,8 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
               <Search language={header}></Search>
               <span
                 className="language"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setLanList(!lanList);
                 }}
               >
@@ -145,7 +147,8 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
               <Search language={header}></Search>
               <span
                 className="language"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setLanList(!lanList);
                 }}
               >

@@ -1,11 +1,8 @@
 # => Build container
-FROM mhart/alpine-node:14 as builder
+FROM shanghaikid/milvus.io.builder as builder
 ARG IS_PREVIEW 
 ENV IS_PREVIEW $IS_PREVIEW
 WORKDIR /site
-COPY package.json .
-COPY yarn.lock .
-RUN yarn
 COPY . .
 
 RUN yarn build

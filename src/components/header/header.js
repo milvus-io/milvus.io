@@ -182,7 +182,11 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
         </header>
       </div>
       <div className={`mobile-nav ${mobileNav && "open"}`}>
-        <LocalizeLink locale={locale} to="/#whymilvus" className="link">
+        <LocalizeLink
+          locale={locale}
+          to="/docs/install_milvus.md"
+          className="link"
+        >
           {header.quick}
         </LocalizeLink>
         <a

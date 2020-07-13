@@ -44,6 +44,12 @@ const DOC_ROOT = "src/pages/docs/versions";
 const versionInfo = ReadVersionJson(DOC_ROOT);
 const newestVersion = getNewestVersion(versionInfo);
 console.log(newestVersion);
+if (env === 'preview') {
+  versionInfo.preview = {
+    version: 'preview',
+    released: 'no'
+  }
+}
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
   return new Promise((resolve) => {
@@ -128,8 +134,8 @@ exports.createPages = ({ actions, graphql }) => {
         ? match[1]
           ? match[1]
           : env === "preview" && str.includes("preview")
-          ? "preview"
-          : match[1]
+            ? "preview"
+            : match[1]
         : "";
     };
 

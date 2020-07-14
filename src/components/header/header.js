@@ -21,7 +21,7 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
   const blogHref =
     locale === "cn"
       ? "http://zilliz.blog.csdn.net"
-      : "https://medium.com/tag/milvus-project/latest";
+      : "https://medium.com/unstructured-data-service";
   useEffect(() => {
     window.addEventListener("click", () => {
       setMobileNav(false);

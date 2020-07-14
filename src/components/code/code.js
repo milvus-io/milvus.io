@@ -31,9 +31,13 @@ const Code = ({ duration, html, content }) => {
     <>
       <section className="wrapper">
         <div dangerouslySetInnerHTML={{ __html: html }}></div>
-        <button onClick={onButtonClick} className="button-copy">
-          {copied ? `Copied` : `Copy`}
-        </button>
+
+        <div className="button-copy-wrapper">
+          <i class="fa fa-clone" aria-hidden="true"></i>
+          <button onClick={onButtonClick} className="button-copy">
+            {copied ? `Copied` : `Copy`}
+          </button>
+        </div>
       </section>
     </>
   );

@@ -2,8 +2,20 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './code.scss';
 
-const Code = ({ duration, html, content }) => {
+const Code = ({ duration, html, content, locale }) => {
   const [copied, setCopied] = useState(false);
+  console.log('locale', locale);
+
+  const buttonTextMap = {
+    en: {
+      true: 'Copied',
+      false: 'Copy',
+    },
+    cn: {
+      true: '已复制',
+      false: '复制',
+    },
+  };
 
   const formatContent = (content) => {
     const code = content
@@ -50,7 +62,7 @@ const Code = ({ duration, html, content }) => {
         <div dangerouslySetInnerHTML={{ __html: html }}></div>
         <button className="button-copy" onClick={onButtonClick}>
           <i className="fa fa-clone button-copy-icon" aria-hidden="true"></i>
-          {copied ? `Copied` : `Copy`}
+          {buttonTextMap[locale][copied]}
         </button>
       </section>
     </>

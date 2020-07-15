@@ -55,7 +55,7 @@ export default function Template({
 
       const html = block.innerHTML;
       const content = block.textContent;
-      const code = <Code html={html} content={content} />;
+      const code = <Code html={html} content={content} locale={locale} />;
       ReactDOM.render(code, block);
     });
   }, []);

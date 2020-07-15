@@ -1,6 +1,7 @@
 {
   "layout": {
     "notFound": "404 Page Not Found",
+    "backtohome": "Take me back to the home page.",
     "header": {
       "quick": "Quick Start",
       "why": "Why Milvus",

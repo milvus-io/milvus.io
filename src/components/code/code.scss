@@ -1,0 +1,25 @@
+.wrapper {
+  position: relative;
+
+  min-height: 24px;
+}
+
+.button-copy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  border-radius: 4px;
+  color: #b7b5bd;
+  background-color: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:active {
+    outline: none;
+  }
+
+  &-icon {
+    margin-right: 4px;
+  }
+}

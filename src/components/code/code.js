@@ -5,8 +5,26 @@ import './code.scss';
 const Code = ({ duration, html, content }) => {
   const [copied, setCopied] = useState(false);
 
+  const formatContent = (content) => {
+    const code = content
+      .split('\n')
+      .filter((item) => item[0] !== '#')
+      .map((str) => {
+        const invalidItems = ['$', '>>>'];
+        return str
+          .split(' ')
+          .filter((s) => !invalidItems.includes(s))
+          .join(' ');
+      })
+      .join('\n');
+    console.log('code', code, 'content', content);
+
+    return code;
+  };
+
   const onButtonClick = async () => {
-    copyToClipboard(content);
+    const code = formatContent(content);
+    copyToClipboard(code);
     setCopied(true);
     await delay(duration);
     setCopied(false);
@@ -31,13 +49,10 @@ const Code = ({ duration, html, content }) => {
     <>
       <section className="wrapper">
         <div dangerouslySetInnerHTML={{ __html: html }}></div>
-
-        <div className="button-copy-wrapper">
-          <i class="fa fa-clone" aria-hidden="true"></i>
-          <button onClick={onButtonClick} className="button-copy">
-            {copied ? `Copied` : `Copy`}
-          </button>
-        </div>
+        <button className="button-copy" onClick={onButtonClick}>
+          <i className="fa fa-clone button-copy-icon" aria-hidden="true"></i>
+          {copied ? `Copied` : `Copy`}
+        </button>
       </section>
     </>
   );

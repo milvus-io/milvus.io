@@ -17,7 +17,6 @@ const Code = ({ duration, html, content }) => {
           .join(' ');
       })
       .join('\n');
-    console.log('code', code, 'content', content);
 
     return code;
   };

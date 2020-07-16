@@ -1,6 +1,7 @@
 @import "../components/include_media.scss"; // hero image
 
 .home-wrapper {
+
   // typography
   h1,
   h2,
@@ -67,6 +68,7 @@
   }
 
   @include media("<=1000px") {
+
     h1,
     h2,
     h3 {
@@ -260,6 +262,7 @@
       margin-top: 20px;
       line-height: 25px;
     }
+
     p {
       font-size: 1rem;
     }
@@ -283,9 +286,9 @@
 
       li {
         display: flex;
-        margin: 1rem;
+        margin-bottom: 1rem;
         height: 93px;
-        width: 153px;
+        width: 20%;
 
         img {
           width: 130px;
@@ -307,6 +310,7 @@
           margin: 0.5rem;
           margin-left: 0;
           justify-content: center;
+          width: 40%;
 
           &:nth-child(4n + 4) {
             margin-right: 0;

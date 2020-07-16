@@ -50,6 +50,28 @@ export default function Template({
   const [showBack, setShowBack] = useState(false);
 
   useEffect(() => {
+    document.querySelectorAll('.query-button-panel').forEach((panel) => {
+      const codeWrapper = panel.previousElementSibling;
+      codeWrapper.classList.add('query-button-code');
+
+      const querySnippet = codeWrapper.querySelector('code').textContent;
+
+      panel.addEventListener('click', (e) => {
+        if (e.target.classList.contains('copy')) {
+          console.log('query snippet', querySnippet);
+        } else if (e.target.classList.contains('console')) {
+          console.log('console click');
+        } else if (
+          e.target.classList.contains('setting') ||
+          e.target.classList.contains('fa-cog')
+        ) {
+          console.log('setting click');
+        }
+      });
+    });
+  }, []);
+
+  useEffect(() => {
     document.querySelectorAll('pre code').forEach((block) => {
       hljs.highlightBlock(block);
 

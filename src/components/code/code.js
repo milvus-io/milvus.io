@@ -4,7 +4,6 @@ import './code.scss';
 
 const Code = ({ duration, html, content, locale }) => {
   const [copied, setCopied] = useState(false);
-  console.log('locale', locale);
 
   const buttonTextMap = {
     en: {

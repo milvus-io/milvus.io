@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './code.scss';
 
-const Code = ({ duration, html, content, locale }) => {
-  const [copied, setCopied] = useState(false);
-  console.log('locale', locale);
-
+const Code = ({ html, content, locale }) => {
   const buttonTextMap = {
     en: {
       true: 'Copied',
@@ -15,6 +12,20 @@ const Code = ({ duration, html, content, locale }) => {
       true: '已复制',
       false: '复制',
     },
+  };
+
+  const handleButtonsContent = () => {
+    document.querySelectorAll('.button-copy-text').forEach((item) => {
+      const isCurrentElement =
+        item.parentNode.previousSibling.innerHTML === html;
+
+      // change button text
+      item.textContent = buttonTextMap[locale][isCurrentElement];
+      // change button icon
+      item.nextSibling.className = isCurrentElement
+        ? 'button-copy-icon fa fa-check'
+        : 'button-copy-icon fa fa-clone';
+    });
   };
 
   const formatContent = (content) => {
@@ -33,12 +44,10 @@ const Code = ({ duration, html, content, locale }) => {
     return code;
   };
 
-  const onButtonClick = async () => {
+  const onButtonClick = () => {
+    handleButtonsContent();
     const code = formatContent(content);
     copyToClipboard(code);
-    setCopied(true);
-    await delay(duration);
-    setCopied(false);
   };
 
   const copyToClipboard = (content) => {
@@ -53,16 +62,18 @@ const Code = ({ duration, html, content, locale }) => {
     document.body.removeChild(el);
   };
 
-  const delay = (duration) =>
-    new Promise((resolve) => setTimeout(resolve, duration));
-
   return (
     <>
       <section className="wrapper">
-        <div dangerouslySetInnerHTML={{ __html: html }}></div>
+        <div
+          className="content"
+          dangerouslySetInnerHTML={{ __html: html }}
+        ></div>
         <button className="button-copy" onClick={onButtonClick}>
-          <i className="fa fa-clone button-copy-icon" aria-hidden="true"></i>
-          {buttonTextMap[locale][copied]}
+          <span className="button-copy-text">
+            {locale === 'en' ? 'Copy' : '复制'}
+          </span>
+          <i className="button-copy-icon fa fa-clone" aria-hidden="true"></i>
         </button>
       </section>
     </>
@@ -70,13 +81,9 @@ const Code = ({ duration, html, content, locale }) => {
 };
 
 Code.prototypes = {
-  duration: PropTypes.number,
   html: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-};
-
-Code.defaultProps = {
-  duration: 3000,
+  locale: PropTypes.string.isRequired,
 };
 
 export default Code;

@@ -95,7 +95,7 @@ function importAllPics(r, type) {
   });
 }
 importAllPics(
-  require.context("../images/website/users", false, /\.jpg|.png$/),
+  require.context("../images/website/show-users", false, /\.jpg|.png$/),
   "users"
 );
 importAllPics(

@@ -271,9 +271,12 @@
   .section6 {
     h2 {
       font-size: 32px;
-      margin-bottom: 2rem;
+      margin-bottom: 32px;
       color: #000000;
       text-align: center;
+      a {
+        color: #000000;
+      }
     }
 
     ul {
@@ -282,13 +285,13 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      justify-content: space-between;
+      // justify-content: space-between;
 
       li {
         display: flex;
         margin-bottom: 1rem;
         height: 93px;
-        width: 20%;
+        margin: 30px 50px;
 
         img {
           width: 130px;
@@ -367,8 +370,8 @@
       .wechatqr {
         position: absolute;
         display: none;
-        top: -100%;
-        left: 100%;
+        top: -150%;
+        left: -150%;
       }
 
       a {

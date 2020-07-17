@@ -55,10 +55,11 @@ export default function Template({
       codeWrapper.classList.add('query-button-code');
 
       const querySnippet = codeWrapper.querySelector('code').textContent;
+      const formatCode = getRequestAsCURL(querySnippet)
 
       panel.addEventListener('click', (e) => {
         if (e.target.classList.contains('copy')) {
-          console.log('query snippet', querySnippet);
+          copyToClipboard(formatCode)
         } else if (e.target.classList.contains('console')) {
           console.log('console click');
         } else if (
@@ -136,6 +137,26 @@ export default function Template({
     if (ifrm) {
       ifrm.contentWindow.location.href = ifrm.src;
     }
+  };
+
+  const getRequestAsCURL = (code) => {
+    const [header, ...data] = code.split('\n')
+    const [method, url] = header.split(' ')
+    const queryBody = data.join('\n')
+    
+    return `curl -X ${method} "${url}" -H 'Content-Type: application/json' -d'\n${queryBody}'`
+  }
+
+  const copyToClipboard = (content) => {
+    const el = document.createElement(`textarea`);
+    el.value = content;
+    el.setAttribute(`readonly`, ``);
+    el.style.position = `absolute`;
+    el.style.left = `-9999px`;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand(`copy`);
+    document.body.removeChild(el);
   };
 
   const title = isBenchmark

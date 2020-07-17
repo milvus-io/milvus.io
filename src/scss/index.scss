@@ -1,6 +1,7 @@
 @import "../components/include_media.scss"; // hero image
 
 .home-wrapper {
+
   // typography
   h1,
   h2,
@@ -67,6 +68,7 @@
   }
 
   @include media("<=1000px") {
+
     h1,
     h2,
     h3 {
@@ -260,6 +262,7 @@
       margin-top: 20px;
       line-height: 25px;
     }
+
     p {
       font-size: 1rem;
     }
@@ -268,9 +271,12 @@
   .section6 {
     h2 {
       font-size: 32px;
-      margin-bottom: 2rem;
+      margin-bottom: 32px;
       color: #000000;
       text-align: center;
+      a {
+        color: #000000;
+      }
     }
 
     ul {
@@ -279,13 +285,13 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      justify-content: space-between;
+      // justify-content: space-between;
 
       li {
         display: flex;
-        margin: 1rem;
+        margin-bottom: 1rem;
         height: 93px;
-        width: 153px;
+        margin: 30px 50px;
 
         img {
           width: 130px;
@@ -307,6 +313,7 @@
           margin: 0.5rem;
           margin-left: 0;
           justify-content: center;
+          width: 40%;
 
           &:nth-child(4n + 4) {
             margin-right: 0;
@@ -363,8 +370,8 @@
       .wechatqr {
         position: absolute;
         display: none;
-        top: -100%;
-        left: 100%;
+        top: -150%;
+        left: -150%;
       }
 
       a {

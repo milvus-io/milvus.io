@@ -45,9 +45,9 @@ const icons = {
   metrics: metricsIcon,
 };
 
-const users = [];
-const resources = [];
-function importAllPics(r, type) {
+let users = [];
+let resources = [];
+export function importAllPics(r, type, users = [], resources = []) {
   r.keys().forEach((key) => {
     const m = r(key);
     const matchs = key.match(/.\/(\S*).svg/);
@@ -62,7 +62,7 @@ function importAllPics(r, type) {
           break;
         case "medium":
           order = 2;
-          href = "https://medium.com/tag/milvus-project/latest";
+          href = "https://medium.com/unstructured-data-service";
           break;
         case "slack":
           order = 0;
@@ -95,12 +95,15 @@ function importAllPics(r, type) {
   });
 }
 importAllPics(
-  require.context("../images/website/users", false, /\.jpg|.png$/),
-  "users"
+  require.context("../images/website/show-users", false, /\.jpg|.png$/),
+  "users",
+  users
 );
 importAllPics(
   require.context("../images/website/community", false, /\.svg$/),
-  "resources"
+  "resources",
+  users,
+  resources
 );
 
 const getRedirectLanguage = () => {
@@ -131,6 +134,15 @@ const IndexPage = ({ data, pageContext }) => {
     section6,
     section7,
   } = language.home;
+
+  let currentResources = [...resources];
+
+  if (locale === "en") {
+    currentResources = resources.filter(
+      (r) => r.name !== "bilibili" && r.name !== "zhihu"
+    );
+  }
+  console.log("x",locale, resources, currentResources);
 
   useEffect(() => {
     const urlLang = getRedirectLanguage();
@@ -232,7 +244,7 @@ const IndexPage = ({ data, pageContext }) => {
         </section>
 
         <section className="sdk-tools">
-          <h2>SDK & Tools</h2>
+          <h2>Tools & SDK</h2>
           <ul>
             <li>
               <a href="https://zilliz.com/products/em" target="_blank">
@@ -290,7 +302,9 @@ const IndexPage = ({ data, pageContext }) => {
           </ul>
         </section>
         <section className="section6">
-          <h2>{section6.title}</h2>
+          <h2>
+            <LocalizedLink to="/users">{section6.title}</LocalizedLink>
+          </h2>
           <ul>
             {users.map((v, i) => (
               <li key={i}>
@@ -303,7 +317,7 @@ const IndexPage = ({ data, pageContext }) => {
           <h2>{section7.title}</h2>
           <p>{section7.desc}</p>
           <ul>
-            {resources.map((v, i) => (
+            {currentResources.map((v, i) => (
               <li key={v.name} className={v.name}>
                 <a target="_blank" rel="noopener noreferrer" href={v.href}>
                   <img src={v.src} alt="resouce"></img>

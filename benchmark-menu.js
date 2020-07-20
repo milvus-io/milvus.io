@@ -1,17 +1,17 @@
 const benchmarksMenuListEN = [
   {
-    id: 'benchmarks_azure',
-    title: 'Benchmarks',
-    order: 4,
+    id: "benchmarks_azure",
+    title: "Benchmarks",
+    order: 9,
     isMenu: false,
   },
 ];
 
 const benchmarksMenuListCN = [
   {
-    id: 'benchmarks_azure',
-    title: '性能评测',
-    order: 4,
+    id: "benchmarks_azure",
+    title: "性能评测",
+    order: 9,
     isMenu: false,
   },
 ];

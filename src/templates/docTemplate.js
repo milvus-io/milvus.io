@@ -9,6 +9,7 @@ import 'highlight.js/styles/atom-one-dark.css';
 import './docTemplate.scss';
 import { useMobileScreen } from '../hooks';
 import Code from '../components/code/code';
+import QueryModal from '../components/query-modal/query-modal';
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
@@ -48,6 +49,7 @@ export default function Template({
   const screenWidth = useMobileScreen();
 
   const [showBack, setShowBack] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach((panel) => {
@@ -57,19 +59,33 @@ export default function Template({
       const querySnippet = codeWrapper.querySelector('code').textContent;
 
       panel.addEventListener('click', (e) => {
-        if (e.target.classList.contains('copy')) {
-          console.log('query snippet', querySnippet);
-        } else if (e.target.classList.contains('console')) {
-          console.log('console click');
-        } else if (
-          e.target.classList.contains('setting') ||
-          e.target.classList.contains('fa-cog')
-        ) {
-          console.log('setting click');
-        }
+        const funcMap = {
+          copy: handleCopy,
+          console: handleConsole,
+          // setting wrapper
+          setting: handleSetting,
+          // setting icon
+          'fa-cog': handleSetting,
+        };
+
+        const classList = e.target.classList;
+
+        Object.keys(funcMap).forEach((key) => {
+          if (classList.contains(key)) {
+            funcMap[key]();
+          }
+        });
       });
     });
   }, []);
+
+  const handleCopy = () => {
+    console.log('copy');
+  };
+  const handleConsole = () => {
+    console.log('console');
+  };
+  const handleSetting = () => setShowModal(true);
 
   useEffect(() => {
     document.querySelectorAll('pre code').forEach((block) => {
@@ -142,6 +158,8 @@ export default function Template({
     ? `Milvus benchmark`
     : `${headings[0] && headings[0].value}`;
 
+  const onOverlayClick = () => setShowModal(false);
+
   return (
     <Layout
       language={layout}
@@ -203,6 +221,13 @@ export default function Template({
           </div>
         </div>
       )}
+
+      {showModal ? (
+        <div>
+          <div className="overlay" onClick={onOverlayClick}></div>
+          <QueryModal locale={locale} setShowModal={setShowModal} />
+        </div>
+      ) : null}
     </Layout>
   );
 }

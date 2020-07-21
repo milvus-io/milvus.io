@@ -62,7 +62,7 @@ export default function Template({
       panel.addEventListener('click', (e) => {
         const funcMap = {
           copy: handleCopy,
-          console: handleConsole,
+          console: handleOpenConsole,
           // setting wrapper
           setting: handleSetting,
           // setting icon
@@ -73,19 +73,18 @@ export default function Template({
 
         Object.keys(funcMap).forEach((key) => {
           if (classList.contains(key)) {
-            funcMap[key]();
+            funcMap[key](formatCode);
           }
         });
       });
     });
   }, []);
 
-  const handleCopy = () => {
-    console.log('copy');
-    copyToClipboard(formatCode);
+  const handleCopy = (code) => {
+    copyToClipboard(code);
   };
-  const handleConsole = () => {
-    console.log('console');
+  const handleOpenConsole = () => {
+    console.log('open console');
   };
   const handleSetting = () => setShowModal(true);
 

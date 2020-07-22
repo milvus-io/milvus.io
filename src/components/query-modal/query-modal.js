@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import './query-modal.scss';
 
 const QueryModal = ({ locale, setShowModal }) => {
-  const [url, setUrl] = useState('');
-  const [host, setHost] = useState('');
-  const [username, setUsername] = useState('');
+  const [url, setUrl] = useState('http://localhost:8000/app/dev_tools/console');
+  const [host, setHost] = useState('localhost:8000');
 
   const i18nMap = {
     en: {
@@ -28,13 +27,8 @@ const QueryModal = ({ locale, setShowModal }) => {
 
   const onUrlChange = (event) => setUrl(event.target.value);
   const onHostChange = (event) => setHost(event.target.value);
-  const onUsernameChange = (event) => setUsername(event.target.value);
-
   const onCloseClick = () => setShowModal(false);
-  const onResetClick = () => setUsername('');
-  const onSaveClick = () => {
-    console.log('url', url, 'host', host, 'username', username);
-  };
+  const onSaveClick = () => {};
 
   return (
     <>
@@ -62,23 +56,11 @@ const QueryModal = ({ locale, setShowModal }) => {
             id="host"
             onChange={onHostChange}
           />
-          <label className="query-label" htmlFor="username">
-            {i18nMap[locale]['username']}
-          </label>
-          <input
-            className="query-input"
-            value={username}
-            onChange={onUsernameChange}
-            id="username"
-          />
         </form>
 
         <div className="query-button-wrapper">
           <button className="query-button" onClick={onSaveClick}>
             {i18nMap[locale]['save']}
-          </button>
-          <button className="query-button" onClick={onResetClick}>
-            {i18nMap[locale]['reset']}
           </button>
         </div>
       </section>

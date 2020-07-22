@@ -64,7 +64,7 @@ const Code = ({ html, content, locale }) => {
 
   return (
     <>
-      <section className="wrapper">
+      <section id="code-wrapper">
         <div
           className="content"
           dangerouslySetInnerHTML={{ __html: html }}

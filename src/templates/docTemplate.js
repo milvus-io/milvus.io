@@ -160,7 +160,7 @@ export default function Template({
     const [method, url] = header.split(' ');
     const queryBody = data.join('\n');
 
-    return `curl -X ${method} "${url}" -H 'Content-Type: application/json' -d'\n${queryBody}'`;
+    return `curl -X ${method} "http://localhost:8000${url}" -H 'Content-Type: application/json' -d'\n${queryBody}'`;
   };
 
   const copyToClipboard = (content) => {

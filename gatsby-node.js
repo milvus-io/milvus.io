@@ -6,6 +6,7 @@ const DOC_LANG_FOLDERS = ["/en/", "/zh-CN/"];
 const benchmarksMenu = require("./benchmark-menu");
 const express = require("express");
 const env = process.env.IS_PREVIEW;
+// const env = "preview";
 console.log(env);
 const getNewestVersion = (versionInfo) => {
   const keys = Object.keys(versionInfo).filter(
@@ -43,12 +44,12 @@ exports.onCreateDevServer = ({ app }) => {
 const DOC_ROOT = "src/pages/docs/versions";
 const versionInfo = ReadVersionJson(DOC_ROOT);
 const newestVersion = getNewestVersion(versionInfo);
-console.log(newestVersion);
-if (env === 'preview') {
+console.log(versionInfo);
+if (env === "preview") {
   versionInfo.preview = {
-    version: 'preview',
-    released: 'no'
-  }
+    version: "preview",
+    released: "no",
+  };
 }
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
@@ -128,14 +129,14 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors);
     }
     const findVersion = (str) => {
-      const regx = /versions\/([v\d\.]*)/;
+      const regx = /versions\/master\/([v\d\.]*)/;
       const match = str.match(regx);
       return match
         ? match[1]
           ? match[1]
           : env === "preview" && str.includes("preview")
-            ? "preview"
-            : match[1]
+          ? "preview"
+          : match[1]
         : "";
     };
 
@@ -177,7 +178,7 @@ exports.createPages = ({ actions, graphql }) => {
       ({ node: { fileAbsolutePath, frontmatter } }) =>
         (!!findVersion(fileAbsolutePath) ||
           fileAbsolutePath.includes("/blog/zh-CN") ||
-          (fileAbsolutePath.includes("/docs/versions/preview/") &&
+          (fileAbsolutePath.includes("/docs/versions/master/preview/") &&
             env === "preview") ||
           fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
         frontmatter.id

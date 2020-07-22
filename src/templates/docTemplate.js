@@ -97,6 +97,12 @@ export default function Template({
       const code = <Code html={html} content={content} locale={locale} />;
       ReactDOM.render(code, block);
     });
+
+    return () => {
+      document.querySelectorAll('pre code').forEach((block) => {
+        ReactDOM.unmountComponentAtNode(block);
+      });
+    };
   }, []);
 
   useEffect(() => {

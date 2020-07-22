@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import Layout from '../components/docLayout';
-import SEO from '../components/seo';
-import { graphql } from 'gatsby';
-import hljs from 'highlight.js';
-import ReactTooltip from 'react-tooltip';
-import 'highlight.js/styles/atom-one-dark.css';
-import './docTemplate.scss';
-import { useMobileScreen } from '../hooks';
-import Code from '../components/code/code';
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import Layout from "../components/docLayout";
+import SEO from "../components/seo";
+import { graphql } from "gatsby";
+import hljs from "highlight.js";
+import ReactTooltip from "react-tooltip";
+import "highlight.js/styles/atom-one-dark.css";
+import "./docTemplate.scss";
+import { useMobileScreen } from "../hooks";
+import Code from "../components/code/code";
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
 function sortVersions(a, b) {
-  const [v1, s1, m1] = a.split('.');
-  const [v2, s2, m2] = b.split('.');
-  const aValue = v1.split('')[1] * 100 + s1 * 10 + m1 * 1;
-  const bValue = v2.split('')[1] * 100 + s2 * 10 + m2 * 1;
+  const [v1, s1, m1] = a.split(".");
+  const [v2, s2, m2] = b.split(".");
+  const aValue = v1.split("")[1] * 100 + s1 * 10 + m1 * 1;
+  const bValue = v2.split("")[1] * 100 + s2 * 10 + m2 * 1;
 
   if (aValue > bValue) {
     return -1;
@@ -50,7 +50,7 @@ export default function Template({
   const [showBack, setShowBack] = useState(false);
 
   useEffect(() => {
-    document.querySelectorAll('pre code').forEach((block) => {
+    document.querySelectorAll("pre code").forEach((block) => {
       hljs.highlightBlock(block);
 
       const html = block.innerHTML;
@@ -67,9 +67,9 @@ export default function Template({
         ReactTooltip.show(e.target);
       }
     };
-    window.addEventListener('click', cb);
+    window.addEventListener("click", cb);
     return () => {
-      window.removeEventListener('click', cb);
+      window.removeEventListener("click", cb);
     };
   }, []);
 
@@ -89,28 +89,28 @@ export default function Template({
   const { markdownRemark } = data; // data.markdownRemark holds our post data
   let { frontmatter } = markdownRemark;
   const nav = {
-    current: 'doc',
+    current: "doc",
   };
   const iframeUrl = isBenchmark
-    ? `/benchmarks/${frontmatter.id.split('_')[1]}/index.html`
-    : '';
+    ? `/benchmarks/${frontmatter.id.split("_")[1]}/index.html`
+    : "";
   const idRegex = /id=".*?"/g;
-  if (locale === 'cn') {
+  if (locale === "cn") {
     newHtml = newHtml.replace(idRegex, (match) =>
-      match.replace(/[？|、|，]/g, '')
+      match.replace(/[？|、|，]/g, "")
     );
   }
 
   const ifrmLoad = () => {
-    const ifrmContainer = document.querySelector('.iframe-container');
-    const ifrm = document.querySelector('#benchmarkIframe');
+    const ifrmContainer = document.querySelector(".iframe-container");
+    const ifrm = document.querySelector("#benchmarkIframe");
     // const size = ifrm.contentWindow.document.body.getBoundingClientRect();
-    ifrm.style.height = '100%';
-    ifrmContainer.style.height = '100%';
+    ifrm.style.height = "100%";
+    ifrmContainer.style.height = "100%";
     setShowBack(!/index\.html/.test(ifrm.contentWindow.location.href));
   };
   const handleRefresh = () => {
-    const ifrm = document.querySelector('#benchmarkIframe');
+    const ifrm = document.querySelector("#benchmarkIframe");
     if (ifrm) {
       ifrm.contentWindow.location.href = ifrm.src;
     }
@@ -168,8 +168,8 @@ export default function Template({
             {isBlog || isBenchmark ? null : (
               <a
                 className="edit-page-link btn"
-                href={`https://github.com/milvus-io/docs/edit/${version}/site/${
-                  locale === 'en' ? 'en' : 'zh-CN'
+                href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                  locale === "en" ? "en" : "zh-CN"
                 }/${editPath}`}
                 target="_blank"
                 rel="noreferrer noopener"

@@ -6,6 +6,7 @@ module.exports = {
     author: `@ZILLIZ.com`,
   },
   plugins: [
+    `gatsby-plugin-robots-txt`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-sass`,
     `gatsby-plugin-react-helmet`,

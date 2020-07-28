@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import Menu from "../menu";
-import Header from "../header/header";
-import Footer from "../footer/footer";
-import "./index.scss";
+import React, { useState, useEffect, useRef } from 'react';
+import Menu from '../menu';
+import Header from '../header/header';
+import Footer from '../footer/footer';
+import './index.scss';
 
 export default (props) => {
   const {
@@ -15,7 +15,7 @@ export default (props) => {
     version,
     headings,
     current,
-    wrapperClass = "doc-wrapper",
+    wrapperClass = 'doc-wrapper',
     isBenchMark = false,
     showDoc = true,
   } = props;
@@ -34,9 +34,10 @@ export default (props) => {
     }, []);
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
+  const [showToTopButton, setShowToTopButton] = useState(false);
 
   const effectVariable =
-    typeof window !== "undefined" ? [window.location.hash] : [];
+    typeof window !== 'undefined' ? [window.location.hash] : [];
   useEffect(() => {
     if (window) {
       const hash = window.location.hash.slice(1);
@@ -55,9 +56,9 @@ export default (props) => {
       return;
     }
     const repoUrl = `https://api.github.com/repos/milvus-io/milvus`;
-    let latest = window.localStorage.getItem("milvus.io.stargazers");
+    let latest = window.localStorage.getItem('milvus.io.stargazers');
     const latestFetchTime = window.localStorage.getItem(
-      "milvus.io.stargazers_fetch_time"
+      'milvus.io.stargazers_fetch_time'
     );
 
     if (
@@ -73,11 +74,11 @@ export default (props) => {
             if (data.stargazers_count >= latest) {
               console.log(data.stargazers_count);
               window.localStorage.setItem(
-                "milvus.io.stargazers",
+                'milvus.io.stargazers',
                 data.stargazers_count
               );
               window.localStorage.setItem(
-                "milvus.io.stargazers_fetch_time",
+                'milvus.io.stargazers_fetch_time',
                 Date.now()
               );
               star.current.innerHTML = `<i class="fa fa-star" aria-hidden="true"></i>
@@ -91,27 +92,51 @@ export default (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    const cb = () => {
+      const wrapper = document.querySelector('html');
+
+      const showButton = wrapper.scrollTop !== 0;
+      setShowToTopButton(showButton);
+    };
+
+    window.addEventListener('scroll', () => {
+      cb();
+    });
+
+    return window.removeEventListener('scroll', () => {
+      cb();
+    });
+  }, []);
+
   const generateAnchorMenu = (headings, className) => {
     return headings.map((v) => {
       /* eslint-disable-next-line */
-      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, "");
-      const anchor = normalVal.split(" ").join("-");
+      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, '');
+      const anchor = normalVal.split(' ').join('-');
       let childDom = null;
       if (v.children && v.children.length) {
-        childDom = generateAnchorMenu(v.children, "child-item");
+        childDom = generateAnchorMenu(v.children, 'child-item');
       }
       return (
         <div className={`item ${className}`} key={v.value}>
           <a
             href={`#${anchor}`}
             title={v.value}
-            className={anchor === hash ? "active" : ""}
+            className={anchor === hash ? 'active' : ''}
           >
             {v.value}
           </a>
           {childDom}
         </div>
       );
+    });
+  };
+
+  const onToTopClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
     });
   };
 
@@ -133,18 +158,18 @@ export default (props) => {
           isBenchMark={isBenchMark}
         ></Menu>
         <div
-          className={`inner-container ${isBenchMark ? "fullwidth" : ""}`}
+          className={`inner-container ${isBenchMark ? 'fullwidth' : ''}`}
           ref={docContainer}
         >
           {children}
           {!isBenchMark && (
-            <Footer locale={locale} style={{ background: "#fff" }}></Footer>
+            <Footer locale={locale} style={{ background: '#fff' }}></Footer>
           )}
         </div>
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
             <section>
-              {generateAnchorMenu(formatHeadings, "parent-item")}
+              {generateAnchorMenu(formatHeadings, 'parent-item')}
               <div className="button-container">
                 <a
                   ref={star}
@@ -176,6 +201,12 @@ export default (props) => {
                 </a>
               </div>
             </section>
+          </div>
+        )}
+
+        {showToTopButton && (
+          <div className="button-to-top" onClick={onToTopClick}>
+            <i className="fas fa-arrow-up"></i>
           </div>
         )}
       </main>

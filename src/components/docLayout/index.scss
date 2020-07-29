@@ -1,4 +1,4 @@
-@import "../include_media.scss";
+@import '../include_media.scss';
 
 html {
   height: 100%;
@@ -36,7 +36,7 @@ body {
   font-size: 15px;
   background-color: #fafafa !important;
   color: #434548;
-  @include media("<=1000px") {
+  @include media('<=1000px') {
     font-size: 14px;
   }
 }
@@ -55,7 +55,8 @@ a.btn {
   padding: 10px;
   margin-bottom: 10px;
   max-width: 180px;
-  box-shadow: 0 1px 0 rgba(27,31,35,.1), inset 0 1px 0 hsla(0,0%,100%,.03);
+  box-shadow: 0 1px 0 rgba(27, 31, 35, 0.1),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.03);
   i {
     margin-right: 8px;
   }
@@ -85,7 +86,7 @@ a.btn {
     width: 250px;
     overflow: auto;
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       position: fixed;
       top: 0;
       bottom: 0;
@@ -111,7 +112,7 @@ a.btn {
       position: absolute;
       top: 0;
     }
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       flex: 0 0 100%;
       margin: 0;
       max-width: 100%;
@@ -149,7 +150,7 @@ a.btn {
     //   right: 0;
     // }
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       display: none;
     }
 
@@ -228,4 +229,40 @@ a.btn {
 }
 .doc-post {
   position: relative;
+}
+
+.button-to-top {
+  position: fixed;
+  right: 15%;
+  bottom: 80px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+
+  background-color: #fff;
+  cursor: pointer;
+
+  z-index: 1000;
+
+  :hover {
+    color: var(--color-highlight);
+  }
+
+  @include media('>=1600px') {
+    position: fixed;
+    right: 20%;
+    bottom: 80px;
+  }
+
+  @include media('>=2000px') {
+    position: fixed;
+    right: 25%;
+    bottom: 80px;
+  }
 }

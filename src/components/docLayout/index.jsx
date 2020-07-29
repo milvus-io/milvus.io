@@ -34,6 +34,7 @@ export default (props) => {
     }, []);
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
+  const [showToTopButton, setShowToTopButton] = useState(false);
 
   const effectVariable =
     typeof window !== "undefined" ? [window.location.hash] : [];
@@ -91,6 +92,23 @@ export default (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    const cb = () => {
+      const wrapper = document.querySelector("html");
+
+      const showButton = wrapper.scrollTop !== 0;
+      setShowToTopButton(showButton);
+    };
+
+    window.addEventListener("scroll", () => {
+      cb();
+    });
+
+    return window.removeEventListener("scroll", () => {
+      cb();
+    });
+  }, []);
+
   const generateAnchorMenu = (headings, className) => {
     return headings.map((v) => {
       /* eslint-disable-next-line */
@@ -115,6 +133,13 @@ export default (props) => {
     });
   };
 
+  const onToTopClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div>
       <Header
@@ -127,7 +152,7 @@ export default (props) => {
         <Menu
           menuList={menuList}
           versions={versions}
-          activeDoc={id}
+          activeDoc={id.split("-")[0]}
           version={version}
           locale={locale}
           isBenchMark={isBenchMark}
@@ -176,6 +201,12 @@ export default (props) => {
                 </a>
               </div>
             </section>
+          </div>
+        )}
+
+        {showToTopButton && (
+          <div className="button-to-top" onClick={onToTopClick}>
+            <i className="fas fa-arrow-up"></i>
           </div>
         )}
       </main>

@@ -8,7 +8,8 @@ const findItem = (key, value, arr) => {
   let find = undefined;
   arr.forEach((v) => {
     if (find) return;
-    if (v[key] === value) {
+    const target = v[key].split("-")[0]; // because of tab
+    if (target === value) {
       find = v;
     } else if (v.children && v.children.length) {
       find = findItem(key, value, v.children);
@@ -91,6 +92,9 @@ const Menu = (props) => {
 
     const checkActive = (list) => {
       const findDoc = findItem("id", activeDoc, list);
+      if (!findDoc) {
+        return;
+      }
       const labelKeys = Object.keys(findDoc).filter((v) => v.includes("label"));
       findDoc.isActive = true; // here will open the right menu and give the active color
       labelKeys.forEach((label) => {
@@ -222,7 +226,6 @@ const Menu = (props) => {
               options={versions}
               selected={version}
               locale={locale}
-              activeDoc={activeDoc}
               isVersion={true}
             ></VersionSelector>
           </div>

@@ -8,7 +8,10 @@ const findItem = (key, value, arr) => {
   let find = undefined;
   arr.forEach((v) => {
     if (find) return;
-    const target = v[key].split("-")[0]; // because of tab
+    // because of tab id like: xxx-cpu
+    // we only need string before "-" to compare
+    // value already split with "-"
+    const target = v[key].split("-")[0];
     if (target === value) {
       find = v;
     } else if (v.children && v.children.length) {

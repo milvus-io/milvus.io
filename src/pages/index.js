@@ -126,7 +126,6 @@ const getRedirectLanguage = () => {
 
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
-  console.log('data', data);
   const { locale, newestVersion } = pageContext;
   const {
     section1,
@@ -137,8 +136,6 @@ const IndexPage = ({ data, pageContext }) => {
     section7,
   } = language.home;
 
-  console.log('section 7', section7);
-
   let currentResources = [...resources];
 
   if (locale === 'en') {
@@ -146,7 +143,6 @@ const IndexPage = ({ data, pageContext }) => {
       (r) => r.name !== 'bilibili' && r.name !== 'zhihu'
     );
   }
-  console.log('x', locale, resources, currentResources);
 
   useEffect(() => {
     const urlLang = getRedirectLanguage();

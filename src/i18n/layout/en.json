@@ -160,8 +160,56 @@
         "title": "Milvus User Community"
       },
       "section7": {
-        "title": "Resources",
-        "desc": "Find us and join the conversation on any of these platforms"
+        "title": "Get Involved",
+        "list": [
+          {
+            "title": "Use Milvus",
+            "desc": "Open source similarity search engine for massive-scale feature vectors",
+            "type": "milvus",
+            "urlList": [
+              {
+                "title": "Get Started >",
+                "url": "/docs/install_milvus.md"
+              }
+            ]
+          },
+          {
+            "title": "Contribute",
+            "desc": "Milvus is a community project. We encourage you to join the effort and contribute feedback, ideas and code.",
+            "type": "contribute",
+            "urlList": [
+              {
+                "title": "Join Us on Github >",
+                "url": "https://github.com/milvus-io"
+              }
+            ]
+          },
+          {
+            "title": "Follow Us",
+            "desc": "Stay up to date with the latest Milvus news.",
+            "type": "follow",
+            "urlList": []
+          },
+          {
+            "title": "Join Our Mailing List",
+            "desc": "",
+            "type": "conversation",
+            "urlList": [
+              {
+                "title": "Announcement >",
+                "url": "https://lists.lfai.foundation/g/milvus-announce"
+              },
+              {
+                "title": "Technical discussion >",
+                "url": "https://lists.lfai.foundation/g/milvus-technical-discuss"
+              },
+              {
+                "title": "Technical Steering Committee >",
+                "url": "https://lists.lfai.foundation/g/milvus-tsc"
+              }
+            ]
+          }
+        ]
       }
     },
     "scenarios": {

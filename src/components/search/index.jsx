@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
-import LocalizeLink from "../localizedLink/localizedLink";
+import React, { useState, useRef, useEffect } from 'react';
+import LocalizeLink from '../localizedLink/localizedLink';
 
-import "./index.scss";
-const DOCS_JSON = require("../../search.json");
+import './index.scss';
+const DOCS_JSON = require('../../search.json');
 let timer = null;
 const Search = (props) => {
-  const { language } = props;
-  const [query, setQuery] = useState("");
-  const [focus, setFocus] = useState("");
+  const { language, locale } = props;
+  const [query, setQuery] = useState('');
+  const [focus, setFocus] = useState('');
   const [loading, setLoading] = useState(false);
   const [matchData, setMatchData] = useState([]);
   const ref = useRef(null);
@@ -25,10 +25,10 @@ const Search = (props) => {
         const find = v.values.find((text) =>
           text.toLowerCase().includes(ref.current.value.toLowerCase())
         );
-        const regx = new RegExp(ref.current.value, "gi");
+        const regx = new RegExp(ref.current.value, 'gi');
         const highlight = find
           ? find.replace(regx, (search) => `<em>${search}</em>`)
-          : "";
+          : '';
         return find
           ? {
               title: find,
@@ -39,8 +39,8 @@ const Search = (props) => {
               path,
               isId: id === find,
             }
-          : "";
-      }).filter((v) => v && v.version !== "master");
+          : '';
+      }).filter((v) => v && v.version !== 'master' && v.lang === locale);
       setMatchData(matchData);
       setLoading(false);
     }, 400);
@@ -93,18 +93,18 @@ const Search = (props) => {
             ? matchData.map((v, index) => {
                 const { lang, version, title, isId, highlight, path } = v;
                 /* eslint-disable-next-line */
-                const normalVal = title.replace(/[\,\/]/g, "");
-                const anchor = normalVal.split(" ").join("-");
+                const normalVal = title.replace(/[\,\/]/g, '');
+                const anchor = normalVal.split(' ').join('-');
                 return (
                   <li key={index}>
                     <LocalizeLink
                       locale={lang}
-                      to={`/docs/${version}/${path}${isId ? "" : `#${anchor}`}`}
+                      to={`/docs/${version}/${path}${isId ? '' : `#${anchor}`}`}
                     >
                       <span
                         dangerouslySetInnerHTML={{
                           __html: `${highlight} ${version} ${
-                            lang === "cn" ? "中文" : "en"
+                            lang === 'cn' ? '中文' : 'en'
                           }`,
                         }}
                       ></span>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import Menu from "../menu";
-import Header from "../header/header";
-import Footer from "../footer/footer";
-import "./index.scss";
+import React, { useState, useEffect, useRef } from 'react';
+import Menu from '../menu';
+import Header from '../header/header';
+import Footer from '../footer/footer';
+import './index.scss';
 
 export default (props) => {
   const {
@@ -15,7 +15,7 @@ export default (props) => {
     version,
     headings,
     current,
-    wrapperClass = "doc-wrapper",
+    wrapperClass = 'doc-wrapper',
     isBenchMark = false,
     showDoc = true,
   } = props;
@@ -36,15 +36,15 @@ export default (props) => {
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
 
-  const effectVariable =
-    typeof window !== "undefined" ? [window.location.hash] : [];
-  useEffect(() => {
-    if (window) {
-      const hash = window.location.hash.slice(1);
-      setHash(window.decodeURI(hash));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, effectVariable);
+  // const effectVariable =
+  //   typeof window !== 'undefined' ? [window.location.hash] : [];
+  // useEffect(() => {
+  //   if (window) {
+  //     const hash = window.location.hash.slice(1);
+  //     setHash(window.decodeURI(hash));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, effectVariable);
 
   // star reference
   const star = useRef(null);
@@ -56,9 +56,9 @@ export default (props) => {
       return;
     }
     const repoUrl = `https://api.github.com/repos/milvus-io/milvus`;
-    let latest = window.localStorage.getItem("milvus.io.stargazers");
+    let latest = window.localStorage.getItem('milvus.io.stargazers');
     const latestFetchTime = window.localStorage.getItem(
-      "milvus.io.stargazers_fetch_time"
+      'milvus.io.stargazers_fetch_time'
     );
 
     if (
@@ -74,11 +74,11 @@ export default (props) => {
             if (data.stargazers_count >= latest) {
               console.log(data.stargazers_count);
               window.localStorage.setItem(
-                "milvus.io.stargazers",
+                'milvus.io.stargazers',
                 data.stargazers_count
               );
               window.localStorage.setItem(
-                "milvus.io.stargazers_fetch_time",
+                'milvus.io.stargazers_fetch_time',
                 Date.now()
               );
               star.current.innerHTML = `<i class="fa fa-star" aria-hidden="true"></i>
@@ -94,17 +94,17 @@ export default (props) => {
 
   useEffect(() => {
     const cb = () => {
-      const wrapper = document.querySelector("html");
+      const wrapper = document.querySelector('html');
 
       const showButton = wrapper.scrollTop !== 0;
       setShowToTopButton(showButton);
     };
 
-    window.addEventListener("scroll", () => {
+    window.addEventListener('scroll', () => {
       cb();
     });
 
-    return window.removeEventListener("scroll", () => {
+    return window.removeEventListener('scroll', () => {
       cb();
     });
   }, []);
@@ -112,18 +112,19 @@ export default (props) => {
   const generateAnchorMenu = (headings, className) => {
     return headings.map((v) => {
       /* eslint-disable-next-line */
-      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, "");
-      const anchor = normalVal.split(" ").join("-");
+      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, '');
+      const anchor = normalVal.split(' ').join('-');
       let childDom = null;
       if (v.children && v.children.length) {
-        childDom = generateAnchorMenu(v.children, "child-item");
+        childDom = generateAnchorMenu(v.children, 'child-item');
       }
       return (
         <div className={`item ${className}`} key={v.value}>
           <a
             href={`#${anchor}`}
             title={v.value}
-            className={anchor === hash ? "active" : ""}
+            className={anchor === hash ? 'active' : ''}
+            onClick={(e) => onAnchorClick(e, anchor)}
           >
             {v.value}
           </a>
@@ -133,10 +134,29 @@ export default (props) => {
     });
   };
 
+  const onAnchorClick = (event, anchor) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    setHash(anchor);
+
+    const element = document.querySelector(`#${anchor}`);
+    const offset = 62;
+
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = element.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+    });
+  };
+
   const onToTopClick = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -152,24 +172,24 @@ export default (props) => {
         <Menu
           menuList={menuList}
           versions={versions}
-          activeDoc={id.split("-")[0]}
+          activeDoc={id.split('-')[0]}
           version={version}
           locale={locale}
           isBenchMark={isBenchMark}
         ></Menu>
         <div
-          className={`inner-container ${isBenchMark ? "fullwidth" : ""}`}
+          className={`inner-container ${isBenchMark ? 'fullwidth' : ''}`}
           ref={docContainer}
         >
           {children}
           {!isBenchMark && (
-            <Footer locale={locale} style={{ background: "#fff" }}></Footer>
+            <Footer locale={locale} style={{ background: '#fff' }}></Footer>
           )}
         </div>
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
             <section>
-              {generateAnchorMenu(formatHeadings, "parent-item")}
+              {generateAnchorMenu(formatHeadings, 'parent-item')}
               <div className="button-container">
                 <a
                   ref={star}

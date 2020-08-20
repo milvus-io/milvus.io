@@ -193,10 +193,12 @@ export default (props) => {
               {generateAnchorMenu(formatHeadings, "parent-item")}
 
               <a href="https://rpst.page.link/M7tB">
-                <div><img width="180" src={AskMilvus} alt="Ask Milvus"></img></div>
+                <div className="event">
+                  <h4>Upcoming Event</h4>
+                  <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
+                </div>
                 click <strong>here</strong> to register
               </a>
-
               <div className="button-container">
                 <a
                   ref={star}

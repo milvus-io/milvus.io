@@ -1,4 +1,4 @@
-@import '../include_media.scss';
+@import "../include_media.scss";
 
 html {
   height: 100%;
@@ -36,7 +36,7 @@ body {
   font-size: 15px;
   background-color: #fafafa !important;
   color: #434548;
-  @include media('<=1000px') {
+  @include media("<=1000px") {
     font-size: 14px;
   }
 }
@@ -86,7 +86,7 @@ a.btn {
     width: 250px;
     overflow: auto;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       position: fixed;
       top: 0;
       bottom: 0;
@@ -112,7 +112,7 @@ a.btn {
       position: absolute;
       top: 0;
     }
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       flex: 0 0 100%;
       margin: 0;
       max-width: 100%;
@@ -139,6 +139,21 @@ a.btn {
       max-width: 90%;
       overflow: hidden;
     }
+    .event {
+      margin-top: 20px;
+      h4 {
+        color: var(--color-highlight) !important;
+        font-weight: bold;
+      }
+      img {
+        display: block;
+        border: 1px solid #fff;
+
+        &:hover {
+          border: 1px solid var(--color-highlight);
+        }
+      }
+    }
 
     // background-color: #fff;
     // @include media("<=1700px") {
@@ -150,7 +165,7 @@ a.btn {
     //   right: 0;
     // }
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       display: none;
     }
 
@@ -254,13 +269,13 @@ a.btn {
     color: var(--color-highlight);
   }
 
-  @include media('>=1600px') {
+  @include media(">=1600px") {
     position: fixed;
     right: 20%;
     bottom: 80px;
   }
 
-  @include media('>=2000px') {
+  @include media(">=2000px") {
     position: fixed;
     right: 25%;
     bottom: 80px;

@@ -192,7 +192,7 @@ export default (props) => {
             <section>
               {generateAnchorMenu(formatHeadings, "parent-item")}
 
-              <a href="https://rpst.page.link/M7tB">
+              <a href="https://www.linkedin.com/events/6699523192530309120/">
                 <div className="event">
                   <h4>Upcoming Event</h4>
                   <img width="180" src={AskMilvus} alt="Ask Milvus"></img>

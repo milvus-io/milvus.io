@@ -352,6 +352,7 @@
   a:hover {
     text-decoration: underline;
   }
+
   a.anchor {
     fill: #33b6f2;
   }
@@ -573,6 +574,17 @@
     margin-bottom: 1.45rem;
   }
 
+  details {
+    font-size: 12px;
+    margin: 10px 0;
+    line-height: 26px;
+
+    summary {
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+
   noscript {
     margin: 0;
     padding: 0;
@@ -624,13 +636,13 @@
     padding-left: 0;
   }
 
-  li > ol {
+  li>ol {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
   }
 
-  li > ul {
+  li>ul {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
@@ -648,7 +660,7 @@
     margin-bottom: 0;
   }
 
-  li > p {
+  li>p {
     margin-bottom: calc(1.45rem / 2);
   }
 

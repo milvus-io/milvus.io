@@ -192,13 +192,13 @@ export default (props) => {
             <section>
               {generateAnchorMenu(formatHeadings, "parent-item")}
 
-              <a href="https://www.linkedin.com/events/6699523192530309120/">
+              {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
                 <div className="event">
                   <h4>Upcoming Event</h4>
                   <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
                 </div>
                 click <strong>here</strong> to register
-              </a>
+              </a> */}
               <div className="button-container">
                 <a
                   ref={star}
@@ -235,7 +235,24 @@ export default (props) => {
 
         {showToTopButton && (
           <div className="button-to-top" onClick={onToTopClick}>
-            <i className="fas fa-arrow-up"></i>
+            <svg
+              width="16"
+              height="16"
+              ariaHidden="true"
+              focusable="false"
+              dataPrefix="fal"
+              dataIcon="arrow-to-top"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"
+              class="svg-inline--fa fa-arrow-to-top fa-w-12 fa-2x"
+            >
+              <path
+                fill="currentColor"
+                d="M24 32h336c13.3 0 24 10.7 24 24v24c0 13.3-10.7 24-24 24H24C10.7 104 0 93.3 0 80V56c0-13.3 10.7-24 24-24zm66.4 280.5l65.6-65.6V456c0 13.3 10.7 24 24 24h24c13.3 0 24-10.7 24-24V246.9l65.6 65.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L209 126.1c-9.4-9.4-24.6-9.4-33.9 0L39.5 261.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0z"
+                class=""
+              ></path>
+            </svg>
           </div>
         )}
       </main>

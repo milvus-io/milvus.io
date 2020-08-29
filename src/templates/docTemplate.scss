@@ -38,6 +38,7 @@
       font-size: 16px;
       box-shadow: 0 1px 0 rgba(27, 31, 35, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
       @include media("<=1000px") {
         margin-right: 0;
         border-radius: 0;
@@ -80,6 +81,14 @@
     font-size: 0.8rem;
     margin: 2rem 0;
 
+    details {
+      font-size: 0.8rem;
+
+      summary {
+        font-size: 0.8rem;
+      }
+    }
+
     &:before {
       display: block;
       font-size: 1rem;
@@ -90,20 +99,25 @@
     &.info {
       background-color: rgb(245, 245, 245);
       border-left: 4px solid gray;
+
       &:before {
         content: "Info:";
+
         [lang="cn"] & {
           content: "信息";
         }
       }
+
       // background-color: rgba($color: #eee, $alpha: 0.2);
     }
 
     &.note {
       background-color: rgb(232, 245, 253);
       border-left: 4px solid #3f9cd1;
+
       &:before {
         content: "Note:";
+
         [lang="cn"] & {
           content: "注意:";
         }
@@ -113,10 +127,12 @@
     &.warning {
       &:before {
         content: "Warning:";
+
         [lang="cn"] & {
           content: "警告";
         }
       }
+
       background-color: rgb(253, 244, 220);
       border-left: 4px solid #ff9800;
     }
@@ -604,7 +620,7 @@
   }
 
   details {
-    font-size: 12px;
+    font-size: 15px;
     margin: 10px 0;
     line-height: 26px;
 
@@ -665,13 +681,13 @@
     padding-left: 0;
   }
 
-  li > ol {
+  li>ol {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
   }
 
-  li > ul {
+  li>ul {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
@@ -689,7 +705,7 @@
     margin-bottom: 0;
   }
 
-  li > p {
+  li>p {
     margin-bottom: calc(1.45rem / 2);
   }
 

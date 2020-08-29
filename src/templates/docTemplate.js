@@ -5,7 +5,7 @@ import SEO from "../components/seo";
 import { graphql } from "gatsby";
 import hljs from "highlight.js";
 import ReactTooltip from "react-tooltip";
-import "highlight.js/styles/atom-one-dark.css";
+import "highlight.js/styles/github.css";
 import "./docTemplate.scss";
 import { useMobileScreen } from "../hooks";
 import Code from "../components/code/code";

@@ -13,6 +13,7 @@ export default ({ locale, to, children, className = "link" }) => {
         target="_blank"
         rel="noopener noreferrer"
         children={children}
+        aria-label="Milvus Blog"
         className={className}
       ></a>
     );

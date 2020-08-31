@@ -58,6 +58,7 @@ export default function Template({
       const code = <Code html={html} content={content} locale={locale} />;
       ReactDOM.render(code, block);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -71,6 +72,7 @@ export default function Template({
     return () => {
       window.removeEventListener("click", cb);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!data.allFile.edges[0]) {
@@ -97,6 +99,7 @@ export default function Template({
   const idRegex = /id=".*?"/g;
   if (locale === "cn") {
     newHtml = newHtml.replace(idRegex, (match) =>
+      // eslint-disable-next-line
       match.replace(/[？|、|，]/g, "")
     );
   }
@@ -140,6 +143,10 @@ export default function Template({
         <div className="iframe-container">
           {showBack && (
             <i
+              tabIndex={0}
+              onKeyDown={handleRefresh}
+              role="button"
+              aria-label="Back"
               className="fas iframe-icon fa-arrow-left"
               onClick={handleRefresh}
             ></i>

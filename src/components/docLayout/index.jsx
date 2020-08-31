@@ -234,7 +234,13 @@ export default (props) => {
         )}
 
         {showToTopButton && (
-          <div className="button-to-top" onClick={onToTopClick}>
+          <div
+            className="button-to-top"
+            role="button"
+            onClick={onToTopClick}
+            onKeyDown={onToTopClick}
+            tabIndex={0}
+          >
             <svg
               width="16"
               height="16"

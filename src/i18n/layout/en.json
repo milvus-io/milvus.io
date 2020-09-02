@@ -197,15 +197,15 @@
             "urlList": [
               {
                 "title": "Announcement >",
-                "url": "https://lists.lfai.foundation/g/milvus-announce"
+                "url": "mailto:milvus-announce+subscribe@lists.lfai.foundation"
               },
               {
                 "title": "Technical discussion >",
-                "url": "https://lists.lfai.foundation/g/milvus-technical-discuss"
+                "url": "mailto:milvus-technical-discuss+subscribe@lists.lfai.foundation"
               },
               {
                 "title": "Technical Steering Committee >",
-                "url": "https://lists.lfai.foundation/g/milvus-tsc"
+                "url": "mailto:milvus-tsc+subscribe@lists.lfai.foundation"
               }
             ]
           }

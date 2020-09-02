@@ -82,14 +82,13 @@ export default (props) => {
                 "milvus.io.stargazers_fetch_time",
                 Date.now()
               );
-              star.current.innerHTML = `<i class="fa fa-star" aria-hidden="true"></i>
+              star.current.innerHTML = `<i class="fab fa-github" aria-hidden="true"></i>milvus 
                   ${data.stargazers_count}`;
             }
           }
         });
     } else {
-      star.current.innerHTML = `<i class="fa fa-star" aria-hidden="true"></i>
-                  ${latest}`;
+      star.current.innerHTML = `<i class="fab fa-github" aria-hidden="true"></i> Stars: ${latest}`;
     }
   }, []);
 
@@ -206,11 +205,18 @@ export default (props) => {
                   href="http://github.com/milvus-io/milvus"
                 >
                   <i
-                    className="fa fa-star"
+                    className="fab fa-github"
                     id="btn-star"
                     aria-hidden="true"
                   ></i>
                   3628
+                </a>
+                <a
+                  className="btn"
+                  href="https://github.com/milvus-io/milvus/discussions"
+                >
+                  <i className="far fa-comments" aria-hidden="true"></i>
+                  Github Discussions
                 </a>
                 <a
                   className="btn"

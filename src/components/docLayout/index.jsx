@@ -82,13 +82,13 @@ export default (props) => {
                 "milvus.io.stargazers_fetch_time",
                 Date.now()
               );
-              star.current.innerHTML = `<i class="fab fa-github" aria-hidden="true"></i>milvus 
+              star.current.innerHTML = `<i class="fab fa-github" aria-hidden="true"></i> 
                   ${data.stargazers_count}`;
             }
           }
         });
     } else {
-      star.current.innerHTML = `<i class="fab fa-github" aria-hidden="true"></i> Stars: ${latest}`;
+      star.current.innerHTML = `<i class="fab fa-github" aria-hidden="true"></i> ${latest}`;
     }
   }, []);
 
@@ -209,7 +209,7 @@ export default (props) => {
                     id="btn-star"
                     aria-hidden="true"
                   ></i>
-                  3628
+                  4000
                 </a>
                 <a
                   className="btn"

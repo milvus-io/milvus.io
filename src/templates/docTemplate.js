@@ -90,6 +90,42 @@ export default function Template({
   const handleSetting = () => setShowModal(true);
 
   useEffect(() => {
+    const filterWrappers = document.querySelectorAll(".filter");
+    const allFilters = [];
+    filterWrappers.forEach((fw) => {
+      const fs = fw.querySelectorAll("a");
+      fs.forEach((f) => {
+        allFilters.push(f);
+      });
+    });
+    const allContents = document.querySelectorAll(`[class^="filter-"]`);
+
+    const clickEventHandler = (targetHash) => {
+      const hash = targetHash;
+      const currentFilters = allFilters.filter((f) => f.hash === hash);
+      allFilters.forEach((f) => f.classList.toggle("active", false));
+      currentFilters.forEach((cf) => cf.classList.toggle("active", true));
+      allContents.forEach((c) => c.classList.toggle("active", false));
+      const contents = document.querySelectorAll(
+        `.filter-${hash.replace("#", "")}`
+      );
+      contents.forEach((c) => c.classList.toggle("active", true));
+    };
+    filterWrappers.forEach((w) => {
+      w.addEventListener("click", (e) => {
+        if (e.target.tagName === "A") {
+          clickEventHandler(e.target.hash);
+        }
+      });
+    });
+
+    if (window) {
+      const windowHash = window.location.hash;
+      clickEventHandler(windowHash);
+    }
+  }, []);
+
+  useEffect(() => {
     document.querySelectorAll("pre code").forEach((block) => {
       hljs.highlightBlock(block);
 

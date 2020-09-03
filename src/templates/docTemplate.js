@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import Layout from "../components/docLayout";
-import SEO from "../components/seo";
-import { graphql } from "gatsby";
-import hljs from "highlight.js";
-import ReactTooltip from "react-tooltip";
-import "highlight.js/styles/github.css";
-import "./docTemplate.scss";
-import { useMobileScreen } from "../hooks";
-import Code from "../components/code/code";
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import Layout from '../components/docLayout';
+import SEO from '../components/seo';
+import { graphql } from 'gatsby';
+import hljs from 'highlight.js';
+import ReactTooltip from 'react-tooltip';
+import 'highlight.js/styles/atom-one-dark.css';
+import './docTemplate.scss';
+import { useMobileScreen } from '../hooks';
+import Code from '../components/code/code';
+import QueryModal from '../components/query-modal/query-modal';
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
 function sortVersions(a, b) {
-  const [v1, s1, m1] = a.split(".");
-  const [v2, s2, m2] = b.split(".");
-  const aValue = v1.split("")[1] * 100 + s1 * 10 + m1 * 1;
-  const bValue = v2.split("")[1] * 100 + s2 * 10 + m2 * 1;
+  const [v1, s1, m1] = a.split('.');
+  const [v2, s2, m2] = b.split('.');
+  const aValue = v1.split('')[1] * 100 + s1 * 10 + m1 * 1;
+  const bValue = v2.split('')[1] * 100 + s2 * 10 + m2 * 1;
 
   if (aValue > bValue) {
     return -1;
@@ -48,9 +49,47 @@ export default function Template({
   const screenWidth = useMobileScreen();
 
   const [showBack, setShowBack] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    document.querySelectorAll("pre code").forEach((block) => {
+    document.querySelectorAll('.query-button-panel').forEach((panel) => {
+      const codeWrapper = panel.previousElementSibling;
+      codeWrapper.classList.add('query-button-code');
+
+      const querySnippet = codeWrapper.querySelector('code').textContent;
+      const formatCode = getRequestAsCURL(querySnippet);
+
+      panel.addEventListener('click', (e) => {
+        const funcMap = {
+          copy: handleCopy,
+          console: handleOpenConsole,
+          // setting wrapper
+          setting: handleSetting,
+          // setting icon
+          'fa-cog': handleSetting,
+        };
+
+        const classList = e.target.classList;
+
+        Object.keys(funcMap).forEach((key) => {
+          if (classList.contains(key)) {
+            funcMap[key](formatCode);
+          }
+        });
+      });
+    });
+  }, []);
+
+  const handleCopy = (code) => {
+    copyToClipboard(code);
+  };
+  const handleOpenConsole = () => {
+    console.log('open console');
+  };
+  const handleSetting = () => setShowModal(true);
+
+  useEffect(() => {
+    document.querySelectorAll('pre code').forEach((block) => {
       hljs.highlightBlock(block);
 
       const html = block.innerHTML;
@@ -58,6 +97,12 @@ export default function Template({
       const code = <Code html={html} content={content} locale={locale} />;
       ReactDOM.render(code, block);
     });
+
+    return () => {
+      document.querySelectorAll('pre code').forEach((block) => {
+        ReactDOM.unmountComponentAtNode(block);
+      });
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -68,9 +113,9 @@ export default function Template({
         ReactTooltip.show(e.target);
       }
     };
-    window.addEventListener("click", cb);
+    window.addEventListener('click', cb);
     return () => {
-      window.removeEventListener("click", cb);
+      window.removeEventListener('click', cb);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -91,37 +136,59 @@ export default function Template({
   const { markdownRemark } = data; // data.markdownRemark holds our post data
   let { frontmatter } = markdownRemark;
   const nav = {
-    current: "doc",
+    current: 'doc',
   };
   const iframeUrl = isBenchmark
-    ? `/benchmarks/${frontmatter.id.split("_")[1]}/index.html`
-    : "";
+    ? `/benchmarks/${frontmatter.id.split('_')[1]}/index.html`
+    : '';
   const idRegex = /id=".*?"/g;
-  if (locale === "cn") {
+  if (locale === 'cn') {
     newHtml = newHtml.replace(idRegex, (match) =>
       // eslint-disable-next-line
-      match.replace(/[？|、|，]/g, "")
+      match.replace(/[？|、|，]/g, '')
     );
   }
 
   const ifrmLoad = () => {
-    const ifrmContainer = document.querySelector(".iframe-container");
-    const ifrm = document.querySelector("#benchmarkIframe");
+    const ifrmContainer = document.querySelector('.iframe-container');
+    const ifrm = document.querySelector('#benchmarkIframe');
     // const size = ifrm.contentWindow.document.body.getBoundingClientRect();
-    ifrm.style.height = "100%";
-    ifrmContainer.style.height = "100%";
+    ifrm.style.height = '100%';
+    ifrmContainer.style.height = '100%';
     setShowBack(!/index\.html/.test(ifrm.contentWindow.location.href));
   };
   const handleRefresh = () => {
-    const ifrm = document.querySelector("#benchmarkIframe");
+    const ifrm = document.querySelector('#benchmarkIframe');
     if (ifrm) {
       ifrm.contentWindow.location.href = ifrm.src;
     }
   };
 
+  const getRequestAsCURL = (code) => {
+    const [header, ...data] = code.split('\n');
+    const [method, url] = header.split(' ');
+    const queryBody = data.join('\n');
+
+    return `curl -X ${method} "http://localhost:8000${url}" -H 'Content-Type: application/json' -d'\n${queryBody}'`;
+  };
+
+  const copyToClipboard = (content) => {
+    const el = document.createElement(`textarea`);
+    el.value = content;
+    el.setAttribute(`readonly`, ``);
+    el.style.position = `absolute`;
+    el.style.left = `-9999px`;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand(`copy`);
+    document.body.removeChild(el);
+  };
+
   const title = isBenchmark
     ? `Milvus benchmark`
     : `${headings[0] && headings[0].value}`;
+
+  const onOverlayClick = () => setShowModal(false);
 
   return (
     <Layout
@@ -176,7 +243,7 @@ export default function Template({
               <a
                 className="edit-page-link btn"
                 href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                  locale === "en" ? "en" : "zh-CN"
+                  locale === 'en' ? 'en' : 'zh-CN'
                 }/${editPath}`}
                 target="_blank"
                 rel="noreferrer noopener"
@@ -188,6 +255,13 @@ export default function Template({
           </div>
         </div>
       )}
+
+      {showModal ? (
+        <div>
+          <div className="overlay" onClick={onOverlayClick}></div>
+          <QueryModal locale={locale} setShowModal={setShowModal} />
+        </div>
+      ) : null}
     </Layout>
   );
 }

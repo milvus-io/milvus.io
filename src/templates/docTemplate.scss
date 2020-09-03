@@ -63,6 +63,70 @@
     }
   }
 
+  .filter {
+    margin-bottom: 0.75rem;
+    border-bottom: 2px solid #eee;
+    a {
+      display: inline-block;
+      padding: 10px;
+      border-bottom: 0px solid #ccc;
+      color: #666;
+      font-size: 16px;
+      margin-bottom: -2px;
+      position: relative;
+      box-shadow: 0 1px 0 rgba(27, 31, 35, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+      @include media("<=1000px") {
+        margin-right: 0;
+        border-radius: 0;
+      }
+      &:before {
+        background: #e1e2e6;
+        bottom: 0;
+        content: "";
+        height: 3px;
+        position: absolute;
+        transition: none;
+        width: 0px;
+      }
+      &:before {
+        left: 50%;
+        right: 0;
+      }
+
+      &.active {
+        font-weight: 700;
+        color: var(--color-highlight);
+        border-bottom: 2px solid var(--color-highlight);
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:hover:not(.active) {
+        color: var(--color-highlight);
+        text-decoration: none;
+        &:after,
+        &:before {
+          transition: all 0.2s;
+          width: 100%;
+        }
+        &:before {
+          left: 0%;
+        }
+      }
+    }
+  }
+
+  div[class^="filter-"] {
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+
   .tip {
     background-color: rgba(79, 196, 249, 0.25);
     padding: 4px 8px;
@@ -135,6 +199,33 @@
 
       background-color: rgb(253, 244, 220);
       border-left: 4px solid #ff9800;
+    }
+  }
+
+  .query-button {
+    border: none;
+    outline: none;
+    color: #fff;
+    background-color: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:active {
+      outline: none;
+    }
+
+    &-panel {
+      display: flex;
+      justify-content: flex-end;
+      border-top: 1px solid #535966;
+      border-radius: 0 0 3px 3px;
+      padding: 8px 16px 8px 0;
+      background-color: #343741;
+    }
+
+    &-code {
+      margin-bottom: 0;
+      border-radius: 3px 3px 0 0;
     }
   }
 
@@ -679,13 +770,13 @@
     padding-left: 0;
   }
 
-  li>ol {
+  li > ol {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
   }
 
-  li>ul {
+  li > ul {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
@@ -703,7 +794,7 @@
     margin-bottom: 0;
   }
 
-  li>p {
+  li > p {
     margin-bottom: calc(1.45rem / 2);
   }
 
@@ -858,4 +949,14 @@
   @include media("<=1000px") {
     left: 20px;
   }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: hsla(0, 0%, 100%, 0.8);
+  z-index: 5;
 }

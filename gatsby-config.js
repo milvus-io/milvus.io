@@ -1,11 +1,12 @@
 module.exports = {
   siteMetadata: {
     siteUrl: `https://www.milvus.io`,
-    title: ` · An Open Source Vector Similarity Search Engine`,
-    description: `Milvus is an open source vector similarity search engine powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.`,
+    title: ` · An Open Source Similarity Search Engine for Embeddings`,
+    description: `Milvus is an open source similarity search engine for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.`,
     author: `@ZILLIZ.com`,
   },
   plugins: [
+    `gatsby-plugin-robots-txt`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-sass`,
     `gatsby-plugin-react-helmet`,
@@ -57,6 +58,7 @@ module.exports = {
               offsetY: `100`,
               maintainCase: true,
               enableCustomId: true,
+              isIconAfterHeader: true,
             },
           },
         ],

@@ -142,7 +142,6 @@ const IndexPage = ({ data, pageContext }) => {
       (r) => r.name !== "bilibili" && r.name !== "zhihu"
     );
   }
-  console.log("x",locale, resources, currentResources);
 
   useEffect(() => {
     const urlLang = getRedirectLanguage();
@@ -247,7 +246,11 @@ const IndexPage = ({ data, pageContext }) => {
           <h2>Tools & SDK</h2>
           <ul>
             <li>
-              <a href="https://zilliz.com/products/em" target="_blank">
+              <a
+                href="https://zilliz.com/products/em"
+                rel="noreferrer"
+                target="_blank"
+              >
                 <img src={adminIcon} alt="Milvus EM"></img>
               </a>
 
@@ -315,33 +318,62 @@ const IndexPage = ({ data, pageContext }) => {
         </section>
         <section className="section7">
           <h2>{section7.title}</h2>
-          <p>{section7.desc}</p>
-          <ul>
-            {currentResources.map((v, i) => (
-              <li key={v.name} className={v.name}>
-                <a target="_blank" rel="noopener noreferrer" href={v.href}>
-                  <img src={v.src} alt="resouce"></img>
-                </a>
-                <p>{v.name}</p>
-                {v.name === "wechat" && (
-                  <div className="wechatqr">
-                    <img
-                      style={{ maxWidth: "initial" }}
-                      width="150"
-                      height="150"
-                      src={MilvusUserWechat}
-                      alt="二维码"
-                    />
-                    <img
-                      style={{ maxWidth: "initial" }}
-                      width="150"
-                      height="150"
-                      src={Qcode}
-                      alt="二维码"
-                    />
+          <ul className="column-wrapper">
+            {section7.list.map((v) => (
+              <div key={v.type} className="column">
+                <h3>{v.title}</h3>
+                {v.desc && <p className="column-desc">{v.desc}</p>}
+                {v.type === "follow" ? (
+                  <div className="column-img-wrapper">
+                    {currentResources.map((v, i) => (
+                      <div key={v.name} className={v.name}>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={v.href}
+                          className="column-img-container"
+                        >
+                          <img
+                            className="column-img"
+                            src={v.src}
+                            alt="resouce"
+                          ></img>
+                        </a>
+                        {/* <p>{v.name}</p> */}
+                        {v.name === "wechat" && (
+                          <div className="wechatqr">
+                            <img
+                              style={{ maxWidth: "initial" }}
+                              width="150"
+                              height="150"
+                              src={MilvusUserWechat}
+                              alt="二维码"
+                            />
+                            <img
+                              style={{ maxWidth: "initial" }}
+                              width="150"
+                              height="150"
+                              src={Qcode}
+                              alt="二维码"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                )}
-              </li>
+                ) : null}
+
+                {v.urlList.map((link, i) => (
+                  <a
+                    className="column-link"
+                    target={v.type === "milvus" ? "_self" : "_blank"}
+                    rel="noopener noreferrer"
+                    href={link.url}
+                  >
+                    {link.title}
+                  </a>
+                ))}
+              </div>
             ))}
           </ul>
         </section>
@@ -444,7 +476,15 @@ export const Query = graphql`
                 }
                 section7 {
                   title
-                  desc
+                  list {
+                    title
+                    desc
+                    type
+                    urlList {
+                      title
+                      url
+                    }
+                  }
                 }
               }
             }

@@ -109,9 +109,14 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
                 {header.blog}
               </a>
 
-              <Search language={header}></Search>
+              <Search language={header} locale={locale}></Search>
               <span
+                role="button"
+                tabIndex={0}
                 className="language"
+                onKeyDown={() => {
+                  setLanList(!lanList);
+                }}
                 onClick={(e) => {
                   e.stopPropagation();
                   setLanList(!lanList);
@@ -125,7 +130,12 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
                       to={to}
                       className={locale === "en" ? "active" : ""}
                     >
-                      <span onClick={onChangeLocale} role="button">
+                      <span
+                        tabIndex={0}
+                        onKeyDown={onChangeLocale}
+                        onClick={onChangeLocale}
+                        role="button"
+                      >
                         English
                       </span>
                     </LocalizeLink>
@@ -134,7 +144,12 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
                       to={to}
                       className={locale === "cn" ? "active" : ""}
                     >
-                      <span onClick={onChangeLocale} role="button">
+                      <span
+                        tabIndex={0}
+                        onKeyDown={onChangeLocale}
+                        onClick={onChangeLocale}
+                        role="button"
+                      >
                         中文
                       </span>
                     </LocalizeLink>
@@ -146,7 +161,12 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
             <div className="right">
               <Search language={header}></Search>
               <span
+                role="button"
+                tabIndex={0}
                 className="language"
+                onKeyDown={() => {
+                  setLanList(!lanList);
+                }}
                 onClick={(e) => {
                   e.stopPropagation();
                   setLanList(!lanList);
@@ -160,7 +180,12 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
                       to={to}
                       className={locale === "en" ? "active" : ""}
                     >
-                      <span onClick={onChangeLocale} role="button">
+                      <span
+                        tabIndex={0}
+                        onKeyDown={onChangeLocale}
+                        onClick={onChangeLocale}
+                        role="button"
+                      >
                         English
                       </span>
                     </LocalizeLink>
@@ -169,14 +194,26 @@ const Header = ({ language, locale, current = "", showDoc = true }) => {
                       to={to}
                       className={locale === "cn" ? "active" : ""}
                     >
-                      <span onClick={onChangeLocale} role="button">
+                      <span
+                        tabIndex={0}
+                        onKeyDown={onChangeLocale}
+                        onClick={onChangeLocale}
+                        role="button"
+                      >
                         中文
                       </span>
                     </LocalizeLink>
                   </div>
                 )}
               </span>
-              <i className="fas fa-bars" onClick={handleClick}></i>
+              <i
+                className="fas fa-bars"
+                role="button"
+                tabIndex="0"
+                aria-label="Lang controller"
+                onKeyDown={handleClick}
+                onClick={handleClick}
+              ></i>
             </div>
           )}
         </header>

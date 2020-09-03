@@ -13,7 +13,7 @@
 }
 
 .doc-post-container {
-  padding: 2rem;
+  padding: 4rem 2rem;
   background: #fff;
   min-height: 80vh;
   overflow: hidden;
@@ -26,33 +26,39 @@
   }
 
   .tab-wrapper {
-    margin: 20px 0;
     font-size: 0;
 
     a {
       display: inline-block;
       padding: 10px;
-      border: 1px solid #666;
-      border-left: 0;
-      color: #333;
+      border: 1px solid var(--color-highlight);
+      color: var(--color-highlight);
+      margin-right: 0.75rem;
+      border-radius: 4px;
       font-size: 16px;
+      box-shadow: 0 1px 0 rgba(27, 31, 35, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+      @include media('<=1000px') {
+        margin-right: 0;
+        border-radius: 0;
+      }
 
       &.active {
-        background: #666;
+        background: var(--color-highlight);
+        border: 1px solid var(--color-highlight);
         color: #fff;
       }
 
-      &:first-child {
-        border-left: 1px solid #666;
-        border-radius: 4px 0 0 4px;
-      }
-
-      &:last-child {
-        border-radius: 0px 4px 4px 0px;
-      }
+      // &:first-child {
+      //   border: 1px solid var(--color-highlight);
+      // }
 
       &:hover {
         text-decoration: none;
+        color: #fff;
+        background: var(--color-highlight);
+        border: 1px solid var(--color-highlight);
       }
     }
   }
@@ -70,24 +76,63 @@
     background-repeat: no-repeat;
     background-size: 4%;
     background-position: 10px center;
-    padding-left: 10px;
     line-height: 2;
     // word-break: break-all;
     font-size: 0.8rem;
     margin: 2rem 0;
 
+    details {
+      font-size: 0.8rem;
+
+      summary {
+        font-size: 0.8rem;
+      }
+    }
+
+    &:before {
+      display: block;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #3f9cd1;
+    }
+
     &.info {
       background-color: rgb(245, 245, 245);
       border-left: 4px solid gray;
+
+      &:before {
+        content: 'Info:';
+
+        [lang='cn'] & {
+          content: '信息：';
+        }
+      }
+
       // background-color: rgba($color: #eee, $alpha: 0.2);
     }
 
     &.note {
       background-color: rgb(232, 245, 253);
       border-left: 4px solid #3f9cd1;
+
+      &:before {
+        content: 'Note:';
+
+        [lang='cn'] & {
+          content: '注意：';
+        }
+      }
     }
 
     &.warning {
+      &:before {
+        content: 'Warning:';
+
+        [lang='cn'] & {
+          content: '警告：';
+        }
+      }
+
       background-color: rgb(253, 244, 220);
       border-left: 4px solid #ff9800;
     }
@@ -380,6 +425,10 @@
     text-decoration: underline;
   }
 
+  a.anchor {
+    fill: #33b6f2;
+  }
+
   img {
     max-width: 100%;
     margin-left: 0;
@@ -404,17 +453,16 @@
 
   h1 {
     margin: 0 0 2rem;
-    font-size: 1.5rem;
+    font-size: 2rem;
     letter-spacing: 0.1rem;
     text-rendering: optimizeLegibility;
   }
 
   h2 {
     color: var(--color-primary);
-    border-bottom: 1px solid var(--color-gray);
-    font-size: 1.25rem;
+    // border-bottom: 1px solid var(--color-gray);
+    font-size: 1.5rem;
     letter-spacing: 0.03rem;
-    padding-bottom: 0.5rem;
     margin: 4rem 0 1rem;
     text-rendering: optimizeLegibility;
 
@@ -551,11 +599,11 @@
     margin-bottom: 1.45rem;
     font-size: 0.85rem;
     line-height: 1.42;
-    background: #000;
+    background: #f3f3f3;
     border-radius: 3px;
     overflow: auto;
     word-wrap: normal;
-    padding: 1rem;
+    padding: 0.5rem 0.5rem 1.25rem;
   }
 
   table {
@@ -595,6 +643,16 @@
     margin: 0;
     padding: 0;
     margin-bottom: 1.45rem;
+  }
+
+  details {
+    font-size: 15px;
+    margin: 10px 0;
+    line-height: 26px;
+
+    summary {
+      cursor: pointer;
+    }
   }
 
   noscript {

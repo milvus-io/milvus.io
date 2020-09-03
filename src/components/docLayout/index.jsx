@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Menu from "../menu";
 import Header from "../header/header";
 import Footer from "../footer/footer";
+// import AskMilvus from "../../images/ask_milvus.png";
 import "./index.scss";
 
 export default (props) => {
@@ -34,16 +35,17 @@ export default (props) => {
     }, []);
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
+  const [showToTopButton, setShowToTopButton] = useState(false);
 
-  const effectVariable =
-    typeof window !== "undefined" ? [window.location.hash] : [];
-  useEffect(() => {
-    if (window) {
-      const hash = window.location.hash.slice(1);
-      setHash(window.decodeURI(hash));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, effectVariable);
+  // const effectVariable =
+  //   typeof window !== 'undefined' ? [window.location.hash] : [];
+  // useEffect(() => {
+  //   if (window) {
+  //     const hash = window.location.hash.slice(1);
+  //     setHash(window.decodeURI(hash));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, effectVariable);
 
   // star reference
   const star = useRef(null);
@@ -80,15 +82,31 @@ export default (props) => {
                 "milvus.io.stargazers_fetch_time",
                 Date.now()
               );
-              star.current.innerHTML = `<i class="fa fa-star" aria-hidden="true"></i>
+              star.current.innerHTML = `<i class="fab fa-github" aria-hidden="true"></i> 
                   ${data.stargazers_count}`;
             }
           }
         });
     } else {
-      star.current.innerHTML = `<i class="fa fa-star" aria-hidden="true"></i>
-                  ${latest}`;
+      star.current.innerHTML = `<i class="fab fa-github" aria-hidden="true"></i> ${latest}`;
     }
+  }, []);
+
+  useEffect(() => {
+    const cb = () => {
+      const wrapper = document.querySelector("html");
+
+      const showButton = wrapper.scrollTop !== 0;
+      setShowToTopButton(showButton);
+    };
+
+    window.addEventListener("scroll", () => {
+      cb();
+    });
+
+    return window.removeEventListener("scroll", () => {
+      cb();
+    });
   }, []);
 
   const generateAnchorMenu = (headings, className) => {
@@ -106,12 +124,39 @@ export default (props) => {
             href={`#${anchor}`}
             title={v.value}
             className={anchor === hash ? "active" : ""}
+            onClick={(e) => onAnchorClick(e, anchor)}
           >
             {v.value}
           </a>
           {childDom}
         </div>
       );
+    });
+  };
+
+  const onAnchorClick = (event, anchor) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    setHash(anchor);
+
+    const element = document.querySelector(`#${anchor}`);
+    const offset = 62;
+
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = element.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+    });
+  };
+
+  const onToTopClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
   };
 
@@ -127,7 +172,7 @@ export default (props) => {
         <Menu
           menuList={menuList}
           versions={versions}
-          activeDoc={id}
+          activeDoc={id.split("-")[0]}
           version={version}
           locale={locale}
           isBenchMark={isBenchMark}
@@ -145,6 +190,14 @@ export default (props) => {
           <div className="anchor-wrapper">
             <section>
               {generateAnchorMenu(formatHeadings, "parent-item")}
+
+              {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
+                <div className="event">
+                  <h4>Upcoming Event</h4>
+                  <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
+                </div>
+                click <strong>here</strong> to register
+              </a> */}
               <div className="button-container">
                 <a
                   ref={star}
@@ -152,11 +205,18 @@ export default (props) => {
                   href="http://github.com/milvus-io/milvus"
                 >
                   <i
-                    className="fa fa-star"
+                    className="fab fa-github"
                     id="btn-star"
                     aria-hidden="true"
                   ></i>
-                  3628
+                  4000
+                </a>
+                <a
+                  className="btn"
+                  href="https://github.com/milvus-io/milvus/discussions"
+                >
+                  <i className="far fa-comments" aria-hidden="true"></i>
+                  Github Discussions
                 </a>
                 <a
                   className="btn"
@@ -176,6 +236,31 @@ export default (props) => {
                 </a>
               </div>
             </section>
+          </div>
+        )}
+
+        {showToTopButton && (
+          <div
+            className="button-to-top"
+            role="button"
+            onClick={onToTopClick}
+            onKeyDown={onToTopClick}
+            tabIndex={0}
+          >
+            <svg
+              width="16"
+              height="16"
+              focusable="false"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"
+              className="svg-inline--fa fa-arrow-to-top fa-w-12 fa-2x"
+            >
+              <path
+                fill="currentColor"
+                d="M24 32h336c13.3 0 24 10.7 24 24v24c0 13.3-10.7 24-24 24H24C10.7 104 0 93.3 0 80V56c0-13.3 10.7-24 24-24zm66.4 280.5l65.6-65.6V456c0 13.3 10.7 24 24 24h24c13.3 0 24-10.7 24-24V246.9l65.6 65.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L209 126.1c-9.4-9.4-24.6-9.4-33.9 0L39.5 261.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0z"
+              ></path>
+            </svg>
           </div>
         )}
       </main>

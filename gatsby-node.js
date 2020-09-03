@@ -86,7 +86,6 @@ exports.createPages = ({ actions, graphql }) => {
   return graphql(`
     {
       allMarkdownRemark(
-        limit: 1000
         filter: { fileAbsolutePath: { regex: "/(?:site|blog)/" } }
       ) {
         edges {

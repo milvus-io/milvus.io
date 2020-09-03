@@ -1,7 +1,6 @@
 @import "../components/include_media.scss"; // hero image
 
 .home-wrapper {
-
   // typography
   h1,
   h2,
@@ -68,7 +67,6 @@
   }
 
   @include media("<=1000px") {
-
     h1,
     h2,
     h3 {
@@ -142,14 +140,18 @@
   .section3 {
     margin-top: 6rem;
 
+    display: flex;
+    justify-content: center;
+
     h2 {
       text-align: center;
-      margin-bottom: 2rem;
+      // margin-bottom: 2rem;
+      margin-bottom: 62px;
     }
 
     .feature-wrapper {
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       flex-wrap: wrap;
       max-width: 1200px;
       margin: 0 auto;
@@ -158,10 +160,10 @@
     .feature-item {
       // display: flex;
       // align-items: flex-start;
-      flex: 0 0 30%;
+      // flex: 0 0 30%;
       min-width: 200px;
       max-width: 320px;
-      margin-right: 80px;
+      // margin-right: 80px;
       margin-top: 30px;
 
       .title-wrapper {
@@ -271,7 +273,7 @@
   .section6 {
     h2 {
       font-size: 32px;
-      margin-bottom: 32px;
+      margin-bottom: 62px;
       color: #000000;
       text-align: center;
       a {
@@ -282,16 +284,27 @@
     ul {
       display: flex;
       flex-wrap: wrap;
-      width: 100%;
+      // width: 100%;
       max-width: 1200px;
       margin: 0 auto;
+      justify-content: center;
       // justify-content: space-between;
 
       li {
         display: flex;
-        margin-bottom: 1rem;
+        flex-basis: 18%;
+        justify-content: center;
+        margin-bottom: 50px;
         height: 93px;
-        margin: 30px 50px;
+        // margin: 30px 50px;
+
+        @include media("<=1000px") {
+          flex-basis: 46%;
+        }
+
+        @include media("<=480px") {
+          flex-basis: 90%;
+        }
 
         img {
           width: 130px;
@@ -329,11 +342,18 @@
 
   .section7 {
     text-align: center;
+    font-size: 16px;
 
     h2 {
       color: #000;
-      margin-bottom: 1rem;
+      // margin-bottom: 1rem;
+      margin-bottom: 62px;
       font-size: 2rem;
+    }
+
+    h3 {
+      color: #000;
+      font-size: 1.5rem;
     }
 
     p {
@@ -360,6 +380,52 @@
       }
     }
 
+    .column {
+      display: flex;
+      flex-direction: column;
+
+      flex-basis: 20%;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+
+      min-height: 100px;
+
+      text-align: left;
+
+      @include media("<=1000px") {
+        flex-basis: 40%;
+      }
+
+      @include media("<=480px") {
+        flex-basis: 90%;
+      }
+
+      &-desc {
+        flex-grow: 1;
+        margin: 0 0 3rem 0;
+      }
+
+      &-link {
+        display: block;
+        margin-bottom: 16px;
+        color: #4eb8f0;
+      }
+
+      &-img {
+        width: 24px;
+        height: 24px;
+
+        &-wrapper {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        &-container {
+          margin: 0 1rem 1rem 0;
+        }
+      }
+    }
+
     @include media("<=1000px") {
       margin: 4rem 0;
     }
@@ -370,8 +436,8 @@
       .wechatqr {
         position: absolute;
         display: none;
-        top: -150%;
-        left: -150%;
+        top: -400%;
+        left: -350%;
       }
 
       a {
@@ -392,7 +458,8 @@
     h2 {
       color: #000;
       text-align: center;
-      margin-bottom: 3rem;
+      // margin-bottom: 3rem;
+      margin-bottom: 62px;
     }
 
     img {

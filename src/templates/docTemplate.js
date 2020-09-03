@@ -5,7 +5,7 @@ import SEO from "../components/seo";
 import { graphql } from "gatsby";
 import hljs from "highlight.js";
 import ReactTooltip from "react-tooltip";
-import "highlight.js/styles/atom-one-dark.css";
+import "highlight.js/styles/github.css";
 import "./docTemplate.scss";
 import { useMobileScreen } from "../hooks";
 import Code from "../components/code/code";
@@ -92,9 +92,14 @@ export default function Template({
   useEffect(() => {
     const filterWrappers = document.querySelectorAll(".filter");
     const allFilters = [];
+    let firstHash = "";
     filterWrappers.forEach((fw) => {
       const fs = fw.querySelectorAll("a");
+
       fs.forEach((f) => {
+        if (!firstHash) {
+          firstHash = f.hash;
+        }
         allFilters.push(f);
       });
     });
@@ -120,8 +125,19 @@ export default function Template({
     });
 
     if (window) {
-      const windowHash = window.location.hash;
-      clickEventHandler(windowHash);
+      const windowHash = window.location.hash || firstHash;
+      if (windowHash) {
+        clickEventHandler(windowHash);
+      }
+      window.history.pushState(null, null, windowHash);
+
+      window.addEventListener(
+        "hashchange",
+        () => {
+          clickEventHandler(window.location.hash);
+        },
+        false
+      );
     }
   }, []);
 

@@ -1,4 +1,4 @@
-@import '../components/include_media';
+@import "../components/include_media";
 
 :root {
   --color-primary: #202124;
@@ -19,13 +19,13 @@
   overflow: hidden;
   color: var(--color-primary);
 
-  @include media('<=1000px') {
+  @include media("<=1000px") {
     padding: 1rem;
     padding-top: 2rem;
     font-size: 16px;
   }
 
-  .tab-wrapper, .filter {
+  .tab-wrapper {
     font-size: 0;
 
     a {
@@ -39,7 +39,7 @@
       box-shadow: 0 1px 0 rgba(27, 31, 35, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.03);
 
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         margin-right: 0;
         border-radius: 0;
       }
@@ -64,7 +64,60 @@
   }
 
   .filter {
-    margin-bottom: .5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 2px solid #eee;
+    a {
+      display: inline-block;
+      padding: 10px;
+      border-bottom: 0px solid #ccc;
+      color: #666;
+      font-size: 16px;
+      margin-bottom: -2px;
+      position: relative;
+      box-shadow: 0 1px 0 rgba(27, 31, 35, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+      @include media("<=1000px") {
+        margin-right: 0;
+        border-radius: 0;
+      }
+      &:before {
+        background: #e1e2e6;
+        bottom: 0;
+        content: "";
+        height: 3px;
+        position: absolute;
+        transition: none;
+        width: 0px;
+      }
+      &:before {
+        left: 50%;
+        right: 0;
+      }
+
+      &.active {
+        font-weight: 700;
+        color: var(--color-highlight);
+        border-bottom: 2px solid var(--color-highlight);
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:hover:not(.active) {
+        color: var(--color-highlight);
+        text-decoration: none;
+        &:after,
+        &:before {
+          transition: all 0.2s;
+          width: 100%;
+        }
+        &:before {
+          left: 0%;
+        }
+      }
+    }
   }
 
   div[class^="filter-"] {
@@ -73,7 +126,6 @@
       display: block;
     }
   }
-
 
   .tip {
     background-color: rgba(79, 196, 249, 0.25);
@@ -113,10 +165,10 @@
       border-left: 4px solid gray;
 
       &:before {
-        content: 'Info:';
+        content: "Info:";
 
-        [lang='cn'] & {
-          content: '信息：';
+        [lang="cn"] & {
+          content: "信息：";
         }
       }
 
@@ -128,20 +180,20 @@
       border-left: 4px solid #3f9cd1;
 
       &:before {
-        content: 'Note:';
+        content: "Note:";
 
-        [lang='cn'] & {
-          content: '注意：';
+        [lang="cn"] & {
+          content: "注意：";
         }
       }
     }
 
     &.warning {
       &:before {
-        content: 'Warning:';
+        content: "Warning:";
 
-        [lang='cn'] & {
-          content: '警告：';
+        [lang="cn"] & {
+          content: "警告：";
         }
       }
 
@@ -187,7 +239,7 @@
     padding: 1.5rem;
     opacity: 1;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       width: 100%;
       left: 0 !important;
     }
@@ -284,12 +336,12 @@
   kbd,
   pre,
   samp {
-    font-family: 'Source Code Pro', monospace;
+    font-family: "Source Code Pro", monospace;
     font-size: 1em;
 
     code,
     span {
-      font-family: 'Source Code Pro', monospace;
+      font-family: "Source Code Pro", monospace;
     }
   }
 
@@ -326,24 +378,24 @@
     text-transform: none;
   }
 
-  [type='reset'],
-  [type='submit'],
+  [type="reset"],
+  [type="submit"],
   button,
-  html [type='button'] {
+  html [type="button"] {
     -webkit-appearance: button;
   }
 
-  [type='button']::-moz-focus-inner,
-  [type='reset']::-moz-focus-inner,
-  [type='submit']::-moz-focus-inner,
+  [type="button"]::-moz-focus-inner,
+  [type="reset"]::-moz-focus-inner,
+  [type="submit"]::-moz-focus-inner,
   button::-moz-focus-inner {
     border-style: none;
     padding: 0;
   }
 
-  [type='button']:-moz-focusring,
-  [type='reset']:-moz-focusring,
-  [type='submit']:-moz-focusring,
+  [type="button"]:-moz-focusring,
+  [type="reset"]:-moz-focusring,
+  [type="submit"]:-moz-focusring,
   button:-moz-focusring {
     outline: 1px dotted ButtonText;
   }
@@ -367,24 +419,24 @@
     overflow: auto;
   }
 
-  [type='checkbox'],
-  [type='radio'] {
+  [type="checkbox"],
+  [type="radio"] {
     box-sizing: border-box;
     padding: 0;
   }
 
-  [type='number']::-webkit-inner-spin-button,
-  [type='number']::-webkit-outer-spin-button {
+  [type="number"]::-webkit-inner-spin-button,
+  [type="number"]::-webkit-outer-spin-button {
     height: auto;
   }
 
-  [type='search'] {
+  [type="search"] {
     -webkit-appearance: textfield;
     outline-offset: -2px;
   }
 
-  [type='search']::-webkit-search-cancel-button,
-  [type='search']::-webkit-search-decoration {
+  [type="search"]::-webkit-search-cancel-button,
+  [type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
   }
 
@@ -420,10 +472,10 @@
     color: #fafafa;
     word-wrap: break-word;
     font-kerning: normal;
-    -moz-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
-    -ms-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
-    -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
-    font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+    -moz-font-feature-settings: "kern", "liga", "clig", "calt";
+    -ms-font-feature-settings: "kern", "liga", "clig", "calt";
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
+    font-feature-settings: "kern", "liga", "clig", "calt";
   }
 
   a {
@@ -478,7 +530,7 @@
     margin: 4rem 0 1rem;
     text-rendering: optimizeLegibility;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 1rem;
     }
   }
@@ -489,7 +541,7 @@
     margin: 3rem 0 1rem;
     text-rendering: optimizeLegibility;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 1rem;
     }
   }
@@ -627,7 +679,7 @@
     border-collapse: collapse;
     width: 100%;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       display: block;
       overflow: auto;
     }
@@ -801,10 +853,10 @@
   th {
     font-size: 0.8rem;
     text-align: left;
-    font-feature-settings: 'tnum';
-    -moz-font-feature-settings: 'tnum';
-    -ms-font-feature-settings: 'tnum';
-    -webkit-font-feature-settings: 'tnum';
+    font-feature-settings: "tnum";
+    -moz-font-feature-settings: "tnum";
+    -ms-font-feature-settings: "tnum";
+    -webkit-font-feature-settings: "tnum";
     padding-left: 0.96667rem;
     padding-right: 0.96667rem;
     padding-top: 0.725rem;
@@ -812,7 +864,7 @@
     max-width: 370px;
     border: 4px solid #fff;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 12px;
       padding: 0 1.4rem;
     }
@@ -838,14 +890,14 @@
   tt:before,
   tt:after {
     letter-spacing: -0.4rem;
-    content: ' ';
+    content: " ";
   }
 
   pre code:before,
   pre code:after,
   pre tt:before,
   pre tt:after {
-    content: '';
+    content: "";
   }
 
   @media only screen and (max-width: 480px) {
@@ -869,7 +921,7 @@
       text-decoration: none;
     }
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       display: none;
     }
   }
@@ -894,7 +946,7 @@
   cursor: pointer;
   z-index: 3;
 
-  @include media('<=1000px') {
+  @include media("<=1000px") {
     left: 20px;
   }
 }

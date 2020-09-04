@@ -120,7 +120,7 @@
     }
   }
 
-  div[class^="filter-"] {
+  div[class*="filter-"] {
     display: none;
     &.active {
       display: block;

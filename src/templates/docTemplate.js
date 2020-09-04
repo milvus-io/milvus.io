@@ -103,7 +103,7 @@ export default function Template({
         allFilters.push(f);
       });
     });
-    const allContents = document.querySelectorAll(`[class^="filter-"]`);
+    const allContents = document.querySelectorAll(`[class*="filter-"]`);
 
     const clickEventHandler = (targetHash) => {
       const hash = targetHash;

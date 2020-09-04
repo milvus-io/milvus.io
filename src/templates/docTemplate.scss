@@ -196,6 +196,7 @@
 
     &.warning {
       &:before {
+        color: #ff9800;
         content: "Warning:";
 
         [lang="cn"] & {

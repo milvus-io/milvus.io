@@ -68,7 +68,9 @@
     border-bottom: 2px solid #eee;
     display: flex;
     flex-direction: row;
-    overflow-x: scroll;
+    @include media("<=1000px") {
+      overflow-x: auto;
+    }
     height: 38px;
     a {
       display: block;
@@ -196,6 +198,7 @@
 
     &.warning {
       &:before {
+        color: #ff9800;
         content: "Warning:";
 
         [lang="cn"] & {

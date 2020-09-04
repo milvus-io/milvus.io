@@ -68,7 +68,9 @@
     border-bottom: 2px solid #eee;
     display: flex;
     flex-direction: row;
-    overflow-x: auto;
+    @include media("<=1000px") {
+      overflow-x: auto;
+    }
     height: 38px;
     a {
       display: block;

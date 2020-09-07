@@ -112,7 +112,7 @@ export default function Template({
       currentFilters.forEach((cf) => cf.classList.toggle("active", true));
       allContents.forEach((c) => c.classList.toggle("active", false));
       const contents = document.querySelectorAll(
-        `.filter-${hash.replace("#", "")}`
+        `.filter-${hash.replace("#", "").replace(/%/g, '')}`
       );
       contents.forEach((c) => c.classList.toggle("active", true));
     };

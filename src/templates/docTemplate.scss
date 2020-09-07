@@ -173,7 +173,7 @@
       border-left: 4px solid gray;
 
       &:before {
-        content: "Info:";
+        content: "INFO:";
 
         [lang="cn"] & {
           content: "信息：";
@@ -188,7 +188,7 @@
       border-left: 4px solid #3f9cd1;
 
       &:before {
-        content: "Note:";
+        content: "NOTE:";
 
         [lang="cn"] & {
           content: "注意：";
@@ -199,7 +199,7 @@
     &.warning {
       &:before {
         color: #ff9800;
-        content: "Warning:";
+        content: "WARNING:";
 
         [lang="cn"] & {
           content: "警告：";

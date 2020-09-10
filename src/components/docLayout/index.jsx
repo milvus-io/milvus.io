@@ -210,6 +210,7 @@ export default (props) => {
                     aria-hidden="true"
                   ></i>
                   4000
+                  <span> stars</span>
                 </a>
                 <a
                   className="btn"

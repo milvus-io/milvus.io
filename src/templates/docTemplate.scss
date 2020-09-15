@@ -150,7 +150,7 @@
     background-position: 10px center;
     line-height: 2;
     // word-break: break-all;
-    font-size: 0.8rem;
+    font-size: 1rem;
     margin: 2rem 0;
 
     details {
@@ -173,10 +173,10 @@
       border-left: 4px solid gray;
 
       &:before {
-        content: "INFO:";
+        content: "INFO";
 
         [lang="cn"] & {
-          content: "信息：";
+          content: "信息";
         }
       }
 
@@ -188,10 +188,10 @@
       border-left: 4px solid #3f9cd1;
 
       &:before {
-        content: "NOTE:";
+        content: "NOTE";
 
         [lang="cn"] & {
-          content: "注意：";
+          content: "注意";
         }
       }
     }
@@ -199,10 +199,10 @@
     &.warning {
       &:before {
         color: #ff9800;
-        content: "WARNING:";
+        content: "WARNING";
 
         [lang="cn"] & {
-          content: "警告：";
+          content: "警告";
         }
       }
 
@@ -586,7 +586,7 @@
   ul {
     margin-left: 1.45rem;
     margin-right: 0;
-    margin-top: 0;
+    margin-top: 10px;
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;
@@ -669,14 +669,14 @@
 
   pre {
     margin: 0;
-    margin-bottom: 1.45rem;
+    margin-bottom: 2rem;
     font-size: 0.85rem;
     line-height: 1.42;
     background: #f3f3f3;
     border-radius: 3px;
     overflow: auto;
     word-wrap: normal;
-    padding: 0.5rem 0.5rem 1.25rem;
+    padding: 0.5rem;
   }
 
   table {
@@ -760,8 +760,6 @@
   }
 
   li {
-    margin-bottom: calc(1.45rem / 2);
-
     &:lang(en) {
       line-height: 1.5;
     }
@@ -795,9 +793,6 @@
     margin-bottom: 0;
   }
 
-  li *:last-child {
-    margin-bottom: 0;
-  }
 
   p *:last-child {
     margin-bottom: 0;
@@ -860,7 +855,7 @@
 
   td,
   th {
-    font-size: 0.8rem;
+    font-size: 1rem;
     text-align: left;
     font-feature-settings: "tnum";
     -moz-font-feature-settings: "tnum";
@@ -886,7 +881,7 @@
 
   tt,
   code {
-    background-color: #EFEFEF;
+    background-color: #efefef;
     border-radius: 4px;
     padding: 0.1rem 0.4rem;
   }

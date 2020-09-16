@@ -238,7 +238,7 @@ exports.createPages = ({ actions, graphql }) => {
       arr.map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
         const fileLang = findLang(fileAbsolutePath);
 
-        const version = findVersion(fileAbsolutePath) || "master";
+        const version = newestVersion || "master"; //findVersion(fileAbsolutePath) || "master";
         const headingVals = headings.map((v) => v.value);
         const isBlog = checkIsblog(fileAbsolutePath);
         const isBenchmark = checkIsBenchmark(fileAbsolutePath);

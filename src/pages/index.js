@@ -365,6 +365,7 @@ const IndexPage = ({ data, pageContext }) => {
 
                 {v.urlList.map((link, i) => (
                   <a
+                    key={i}
                     className="column-link"
                     target={v.type === "milvus" ? "_self" : "_blank"}
                     rel="noopener noreferrer"

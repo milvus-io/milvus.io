@@ -36,6 +36,7 @@ body {
   font-size: 16px;
   background-color: #fafafa !important;
   color: #434548;
+
   @include media("<=1000px") {
     font-size: 14px;
   }
@@ -55,11 +56,11 @@ a.btn {
   padding: 10px;
   margin-bottom: 10px;
   max-width: 180px;
-  box-shadow: 0 1px 0 rgba(27, 31, 35, 0.1),
-    inset 0 1px 0 hsla(0, 0%, 100%, 0.03);
+
   i {
     margin-right: 8px;
   }
+
   &:hover {
     background-color: var(--color-highlight) !important;
     color: #fff !important;
@@ -104,14 +105,17 @@ a.btn {
     max-width: 63.67%;
     min-width: 60%;
     overflow: hidden;
+
     &.fullwidth {
       max-width: 80%;
       min-width: 80%;
     }
+
     iframe {
       position: absolute;
       top: 0;
     }
+
     @include media("<=1000px") {
       flex: 0 0 100%;
       margin: 0;
@@ -122,6 +126,7 @@ a.btn {
       }
     }
   }
+
   .button-container {
     margin-top: 50px;
   }
@@ -132,6 +137,7 @@ a.btn {
     margin-top: 65px;
     padding-right: 10px;
     width: 33.3%;
+
     section {
       position: sticky;
       top: 160px;
@@ -139,12 +145,15 @@ a.btn {
       max-width: 90%;
       overflow: hidden;
     }
+
     .event {
       margin-top: 20px;
+
       h4 {
         color: var(--color-highlight) !important;
         font-weight: bold;
       }
+
       img {
         display: block;
         border: 1px solid #fff;
@@ -242,6 +251,7 @@ a.btn {
   //   z-index: 0;
   // }
 }
+
 .doc-post {
   position: relative;
 }

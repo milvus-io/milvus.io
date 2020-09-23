@@ -68,10 +68,13 @@
     border-bottom: 2px solid #eee;
     display: flex;
     flex-direction: row;
+
     @include media("<=1000px") {
       overflow-x: auto;
     }
+
     height: 38px;
+
     a {
       display: block;
       padding: 10px;
@@ -89,6 +92,7 @@
         margin-right: 0;
         border-radius: 0;
       }
+
       &:before {
         background: #e1e2e6;
         bottom: 0;
@@ -98,6 +102,7 @@
         transition: none;
         width: 0px;
       }
+
       &:before {
         left: 50%;
         right: 0;
@@ -116,11 +121,13 @@
       &:hover:not(.active) {
         color: var(--color-highlight);
         text-decoration: none;
+
         &:after,
         &:before {
           transition: all 0.2s;
           width: 100%;
         }
+
         &:before {
           left: 0%;
         }
@@ -130,6 +137,7 @@
 
   div[class*="filter-"] {
     display: none;
+
     &.active {
       display: block;
     }
@@ -527,13 +535,14 @@
   h1 {
     margin: 0 0 2rem;
     font-size: 2rem;
-    letter-spacing: 0.1rem;
+    line-height: 40px;
     text-rendering: optimizeLegibility;
   }
 
   h2 {
+    padding-top: 16px;
     color: var(--color-primary);
-    // border-bottom: 1px solid var(--color-gray);
+    border-top: 1px solid var(--color-gray);
     font-size: 1.5rem;
     letter-spacing: 0.03rem;
     margin: 4rem 0 1rem;
@@ -777,13 +786,13 @@
     padding-left: 0;
   }
 
-  li > ol {
+  li>ol {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
   }
 
-  li > ul {
+  li>ul {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
@@ -798,7 +807,7 @@
     margin-bottom: 0;
   }
 
-  li > p {
+  li>p {
     margin-bottom: calc(1.45rem / 2);
   }
 

@@ -203,7 +203,7 @@ const ToolSizing = () => {
             <table style={{ width: "100%" }}>
               <thead>
                 <tr>
-                  <th></th>
+                  <th> </th>
                   <th>FLAT</th>
                   <th>IVFFLAT</th>
                   {dataType === "Float" && (

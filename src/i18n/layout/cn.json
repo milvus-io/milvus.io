@@ -197,15 +197,15 @@
             "urlList": [
               {
                 "title": "公告 >",
-                "url": "https://lists.lfai.foundation/g/milvus-announce"
+                "url": "mailto:milvus-announce+subscribe@lists.lfai.foundation"
               },
               {
                 "title": "技术讨论 >",
-                "url": "https://lists.lfai.foundation/g/milvus-technical-discuss"
+                "url": "mailto:milvus-technical-discuss+subscribe@lists.lfai.foundation"
               },
               {
                 "title": "技术指导委员会 >",
-                "url": "https://lists.lfai.foundation/g/milvus-tsc"
+                "url": "mailto:milvus-tsc+subscribe@lists.lfai.foundation"
               }
             ]
           }

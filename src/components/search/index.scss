@@ -8,8 +8,10 @@
   color: #000;
   background-color: #fafbfc;
   border: 1px solid #e1e4e8;
+
   .search-icon {
     vertical-align: -3px;
+    margin-right: 4px;
   }
 
   @include media("<=1000px") {

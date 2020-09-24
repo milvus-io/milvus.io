@@ -151,7 +151,7 @@ const Menu = (props) => {
         key={doc.id}
       >
         <div
-          className="menu_name-wrapper"
+          className={`menu_name-wrapper ${doc.showChildren ? "active" : ""}`}
           onClick={
             doc.isMenu
               ? () => {

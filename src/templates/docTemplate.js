@@ -282,15 +282,17 @@ export default function Template({
       ) : (
         <div className="doc-post-container">
           <div className="alert event">
-            Sign up for{" "}
+            {locale === "en" ? "Sign up for" : "参与"}
             <a
               href="https://www.slidestalk.com/m/298"
               alt="sign up milvus"
-              style={{ marginRight: "4px", fontWeight: "bold" }}
+              style={{ margin: "0 6px", fontWeight: "bold" }}
             >
               Milvus Community Conf
             </a>
-            2020, Oct 17th, Beijing, China
+            {locale === "en"
+              ? "2020, Oct 17th, Beijing, China"
+              : "中国北京 2020年10月17号"}
           </div>
           <div className="doc-post">
             <div

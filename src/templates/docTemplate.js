@@ -112,7 +112,7 @@ export default function Template({
       currentFilters.forEach((cf) => cf.classList.toggle("active", true));
       allContents.forEach((c) => c.classList.toggle("active", false));
       const contents = document.querySelectorAll(
-        `.filter-${hash.replace("#", "").replace(/%/g, '')}`
+        `.filter-${hash.replace("#", "").replace(/%/g, "")}`
       );
       contents.forEach((c) => c.classList.toggle("active", true));
     };
@@ -281,6 +281,17 @@ export default function Template({
         </div>
       ) : (
         <div className="doc-post-container">
+          <div className="alert event">
+            Sign up for{" "}
+            <a
+              href="https://www.slidestalk.com/m/298"
+              alt="sign up milvus"
+              style={{ marginRight: "4px", fontWeight: "bold" }}
+            >
+              Milvus Community Conf
+            </a>
+            2020, Oct 17th, Beijing, China
+          </div>
           <div className="doc-post">
             <div
               className="doc-post-content"

@@ -151,6 +151,7 @@
   }
 
   .alert {
+    position: relative;
     padding: 1rem;
     border-radius: 0 6px 6px 0;
     background-repeat: no-repeat;
@@ -160,6 +161,7 @@
     // word-break: break-all;
     font-size: 1rem;
     margin: 2rem 0;
+    padding-left: 54px;
 
     details {
       font-size: 0.8rem;
@@ -170,52 +172,64 @@
     }
 
     &:before {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+
       display: block;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #3f9cd1;
+      content: ' ';
+      background-size: 24px 24px;
+      height: 24px;
+      width: 24px;
     }
 
+
     &.info {
-      background-color: rgb(245, 245, 245);
-      border-left: 4px solid gray;
+      background-color: rgb(232, 245, 253);
+      padding-left: 1rem;
+      color: #10ACF3;
 
-      &:before {
-        content: "INFO";
-
-        [lang="cn"] & {
-          content: "信息";
-        }
-      }
-
-      // background-color: rgba($color: #eee, $alpha: 0.2);
+      // &:before {
+      //   background-image: url('../images/icon/note.svg');
+      // }
     }
 
     &.note {
       background-color: rgb(232, 245, 253);
-      border-left: 4px solid #3f9cd1;
+      color: #10ACF3;
 
       &:before {
-        content: "NOTE";
+        background-image: url('../images/icon/note.svg');
+      }
+    }
 
-        [lang="cn"] & {
-          content: "注意";
-        }
+
+
+    &.important {
+      background: rgba(255, 179, 2, 0.1);
+      color: #FF9E02;
+
+      &:before {
+        background-image: url('../images/icon/important.svg');
       }
     }
 
     &.warning {
+      background: rgba(255, 100, 77, 0.15);
+      color: #FF4024;
+
       &:before {
-        color: #ff9800;
-        content: "WARNING";
-
-        [lang="cn"] & {
-          content: "警告";
-        }
+        background-image: url('../images/icon/warning.svg');
       }
+    }
 
-      background-color: rgb(253, 244, 220);
-      border-left: 4px solid #ff9800;
+    &.tip {
+      background: rgba(18, 195, 134, 0.1);
+      color: #02A93D;
+
+      &:before {
+        background-image: url('../images/icon/tip.svg');
+      }
     }
   }
 

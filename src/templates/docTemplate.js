@@ -112,7 +112,7 @@ export default function Template({
       currentFilters.forEach((cf) => cf.classList.toggle("active", true));
       allContents.forEach((c) => c.classList.toggle("active", false));
       const contents = document.querySelectorAll(
-        `.filter-${hash.replace("#", "").replace(/%/g, '')}`
+        `.filter-${hash.replace("#", "").replace(/%/g, "")}`
       );
       contents.forEach((c) => c.classList.toggle("active", true));
     };
@@ -281,6 +281,22 @@ export default function Template({
         </div>
       ) : (
         <div className="doc-post-container">
+          <div className="alert event">
+            {locale === "en"
+              ? "Register now open for the virtual "
+              : "点此报名参加"}
+            <a
+              href="https://www.slidestalk.com/m/298"
+              alt="sign up milvus"
+              target="_blank"
+              style={{ margin: "0 6px", fontWeight: "bold" }}
+            >
+              Milvus Community Conf
+            </a>
+            {locale === "en"
+              ? "2020！Join us on Oct.17th, 2020."
+              : "2020 线上直播！10月17日（六）一整天的干货不容你错过！"}
+          </div>
           <div className="doc-post">
             <div
               className="doc-post-content"

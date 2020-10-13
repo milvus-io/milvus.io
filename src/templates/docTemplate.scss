@@ -533,7 +533,7 @@
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
 
-    &[href^="https"],
+    &[href^="http"],
     &[href*=".md"] {
       color: inherit;
       text-decoration: underline;

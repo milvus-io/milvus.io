@@ -3,10 +3,6 @@ import Menu from '../menu';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 // import AskMilvus from "../../images/ask_milvus.png";
-// import githubIcon from '../../images/icon/github.svg';
-// import discussionIcon from '../../images/icon/discussion.svg';
-// import slackIcon from '../../images/icon/slack.svg';
-// import bugIcon from '../../images/icon/bug.svg';
 import './index.scss';
 
 export default (props) => {
@@ -210,9 +206,9 @@ export default (props) => {
                     <i className="fab fa-github btn-icon"></i>
                   </span>
 
-                  <span ref={star}>4000</span>
+                  <span ref={star}>4200</span>
 
-                  <span> stars</span>
+                  <span>&nbsp;stars</span>
                 </a>
 
                 <a

@@ -287,6 +287,11 @@ export default function Template({
   const onEventInfoCloseClick = () => {
     setShowEvent(false);
     localStorage.setItem('closeEvent', true);
+
+    // remove localstorage after 24 hours
+    setTimeout(() => {
+      localStorage.removeItem('closeEvent');
+    }, 86400000);
   };
 
   return (

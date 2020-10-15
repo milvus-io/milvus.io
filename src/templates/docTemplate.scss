@@ -77,6 +77,8 @@
     flex-direction: row;
     color: var(--color-primary);
 
+    margin-top: 64px;
+
     @include media('<=1000px') {
       overflow-x: auto;
     }

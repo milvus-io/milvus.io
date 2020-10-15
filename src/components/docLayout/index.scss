@@ -78,7 +78,6 @@ a.btn-anchor {
   height: 36px;
 
   background-color: #f5f5f5;
-  font-weight: bold;
   font-size: 12px;
   padding: 0 8px;
   margin-bottom: 8px;
@@ -91,12 +90,13 @@ a.btn-anchor {
   &:hover {
     // background-color: var(--color-highlight) !important;
     color: #808080 !important;
+    font-weight: bold;
   }
 }
 
 .btn-icon {
   font-size: 20px;
-  color: rgba(0, 0, 0, 0.18);
+  color: rgba(0, 0, 0, 0.5);
   margin-left: 8px;
 
   &-wrapper {

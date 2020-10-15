@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import Menu from "../menu";
-import Header from "../header/header";
-import Footer from "../footer/footer";
+import React, { useState, useEffect, useRef } from 'react';
+import Menu from '../menu';
+import Header from '../header/header';
+import Footer from '../footer/footer';
 // import AskMilvus from "../../images/ask_milvus.png";
-import "./index.scss";
+// import githubIcon from '../../images/icon/github.svg';
+// import discussionIcon from '../../images/icon/discussion.svg';
+// import slackIcon from '../../images/icon/slack.svg';
+// import bugIcon from '../../images/icon/bug.svg';
+import './index.scss';
 
 export default (props) => {
   const {
@@ -16,7 +20,7 @@ export default (props) => {
     version,
     headings,
     current,
-    wrapperClass = "doc-wrapper",
+    wrapperClass = 'doc-wrapper',
     isBenchMark = false,
     showDoc = true,
   } = props;
@@ -57,9 +61,9 @@ export default (props) => {
       return;
     }
     const repoUrl = `https://api.github.com/repos/milvus-io/milvus`;
-    let latest = window.localStorage.getItem("milvus.io.stargazers");
+    let latest = window.localStorage.getItem('milvus.io.stargazers');
     const latestFetchTime = window.localStorage.getItem(
-      "milvus.io.stargazers_fetch_time"
+      'milvus.io.stargazers_fetch_time'
     );
 
     if (
@@ -75,11 +79,11 @@ export default (props) => {
             if (data.stargazers_count >= latest) {
               console.log(data.stargazers_count);
               window.localStorage.setItem(
-                "milvus.io.stargazers",
+                'milvus.io.stargazers',
                 data.stargazers_count
               );
               window.localStorage.setItem(
-                "milvus.io.stargazers_fetch_time",
+                'milvus.io.stargazers_fetch_time',
                 Date.now()
               );
               star.current.innerHTML = `${data.stargazers_count}`;
@@ -93,17 +97,17 @@ export default (props) => {
 
   useEffect(() => {
     const cb = () => {
-      const wrapper = document.querySelector("html");
+      const wrapper = document.querySelector('html');
 
       const showButton = wrapper.scrollTop !== 0;
       setShowToTopButton(showButton);
     };
 
-    window.addEventListener("scroll", () => {
+    window.addEventListener('scroll', () => {
       cb();
     });
 
-    return window.removeEventListener("scroll", () => {
+    return window.removeEventListener('scroll', () => {
       cb();
     });
   }, []);
@@ -111,18 +115,18 @@ export default (props) => {
   const generateAnchorMenu = (headings, className) => {
     return headings.map((v) => {
       /* eslint-disable-next-line */
-      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, "");
-      const anchor = normalVal.split(" ").join("-");
+      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, '');
+      const anchor = normalVal.split(' ').join('-');
       let childDom = null;
       if (v.children && v.children.length) {
-        childDom = generateAnchorMenu(v.children, "child-item");
+        childDom = generateAnchorMenu(v.children, 'child-item');
       }
       return (
         <div className={`item ${className}`} key={v.value}>
           <a
             href={`#${anchor}`}
             title={v.value}
-            className={anchor === hash ? "active" : ""}
+            className={anchor === hash ? 'active' : ''}
             onClick={(e) => onAnchorClick(e, anchor)}
           >
             {v.value}
@@ -155,7 +159,7 @@ export default (props) => {
   const onToTopClick = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -171,24 +175,24 @@ export default (props) => {
         <Menu
           menuList={menuList}
           versions={versions}
-          activeDoc={id.split("-")[0]}
+          activeDoc={id.split('-')[0]}
           version={version}
           locale={locale}
           isBenchMark={isBenchMark}
         ></Menu>
         <div
-          className={`inner-container ${isBenchMark ? "fullwidth" : ""}`}
+          className={`inner-container ${isBenchMark ? 'fullwidth' : ''}`}
           ref={docContainer}
         >
           {children}
           {!isBenchMark && (
-            <Footer locale={locale} style={{ background: "#fff" }}></Footer>
+            <Footer locale={locale} style={{ background: '#fff' }}></Footer>
           )}
         </div>
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
             <section>
-              {generateAnchorMenu(formatHeadings, "parent-item")}
+              {generateAnchorMenu(formatHeadings, 'parent-item')}
 
               {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
                 <div className="event">
@@ -198,38 +202,48 @@ export default (props) => {
                 click <strong>here</strong> to register
               </a> */}
               <div className="button-container">
-                <a className="btn" href="http://github.com/milvus-io/milvus">
-                  <i
-                    className="fab fa-github"
-                    id="btn-star"
-                    aria-hidden="true"
-                  ></i>
+                <a
+                  className="btn-anchor"
+                  href="http://github.com/milvus-io/milvus"
+                >
+                  <span className="btn-icon-wrapper">
+                    <i className="fab fa-github btn-icon"></i>
+                  </span>
+
                   <span ref={star}>4000</span>
 
                   <span> stars</span>
                 </a>
 
                 <a
-                  className="btn"
+                  className="btn-anchor"
                   href="https://github.com/milvus-io/milvus/discussions"
                 >
-                  <i className="far fa-comments" aria-hidden="true"></i>
+                  <span className="btn-icon-wrapper">
+                    <i className="fas fa-comments btn-icon"></i>
+                  </span>
                   Github Discussions
                 </a>
                 <a
-                  className="btn"
+                  className="btn-anchor"
                   id="btn-question"
                   href={language.footer.questionBtn.link}
                 >
-                  <i className="fa fa-question" aria-hidden="true"></i>
+                  <span className="btn-icon-wrapper">
+                    <i className="fab fa-slack-hash btn-icon"></i>
+                  </span>
+
                   {language.footer.questionBtn.label}
                 </a>
                 <a
-                  className="btn"
+                  className="btn-anchor"
                   id="btn-bug"
                   href={language.footer.issueBtn.link}
                 >
-                  <i className="fa fa-bug" aria-hidden="true"></i>
+                  <span className="btn-icon-wrapper">
+                    <i className="fas fa-bug btn-icon"></i>
+                  </span>
+
                   {language.footer.issueBtn.label}
                 </a>
               </div>

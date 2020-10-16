@@ -10,7 +10,6 @@ import './docTemplate.scss';
 import { useMobileScreen } from '../hooks';
 import Code from '../components/code/code';
 import QueryModal from '../components/query-modal/query-modal';
-import { element } from 'prop-types';
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
@@ -32,9 +31,12 @@ function sortVersions(a, b) {
 }
 
 const checkEventStatus = () => {
-  const closeEvent = !!localStorage.getItem('closeEvent');
-
-  return !closeEvent;
+  const showEventTime = localStorage.getItem('showEventTime');
+  if (showEventTime === null) {
+    return true;
+  }
+  const currentTime = new Date().getTime();
+  return Number(showEventTime) < currentTime;
 };
 
 export default function Template({
@@ -286,12 +288,13 @@ export default function Template({
 
   const onEventInfoCloseClick = () => {
     setShowEvent(false);
-    localStorage.setItem('closeEvent', true);
 
-    // remove localstorage after 24 hours
-    setTimeout(() => {
-      localStorage.removeItem('closeEvent');
-    }, 86400000);
+    // show event after 24 hours
+    const showEventTime = new Date(
+      new Date().getTime() + 24 * 60 * 60000
+    ).getTime();
+
+    localStorage.setItem('showEventTime', showEventTime);
   };
 
   return (
@@ -341,6 +344,7 @@ export default function Template({
                 <a
                   href="https://www.slidestalk.com/m/298"
                   alt="sign up milvus"
+                  rel="noreferrer noopener"
                   target="_blank"
                   style={{ margin: '0 6px', fontWeight: 'bold' }}
                 >

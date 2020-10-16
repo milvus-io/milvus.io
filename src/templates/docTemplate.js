@@ -30,15 +30,6 @@ function sortVersions(a, b) {
   }
 }
 
-const checkEventStatus = () => {
-  const showEventTime = localStorage.getItem('showEventTime');
-  if (showEventTime === null) {
-    return true;
-  }
-  const currentTime = new Date().getTime();
-  return Number(showEventTime) < currentTime;
-};
-
 export default function Template({
   data,
   pageContext, // this prop will be injected by the GraphQL query below.
@@ -57,9 +48,24 @@ export default function Template({
   versions = versions.sort(sortVersions);
   const screenWidth = useMobileScreen();
 
+  const checkEventStatus = () => {
+    if (window) {
+      const showEventTime = window.localStorage.getItem('showEventTime');
+      if (showEventTime === null) {
+        return true;
+      }
+      const currentTime = new Date().getTime();
+      return Number(showEventTime) < currentTime;
+    }
+  };
+
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showEvent, setShowEvent] = useState(checkEventStatus());
+  const [showEvent, setShowEvent] = useState(false);
+
+  useEffect(() => {
+    setShowEvent(checkEventStatus());
+  }, []);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach((panel) => {
@@ -287,14 +293,16 @@ export default function Template({
   const onOverlayClick = () => setShowModal(false);
 
   const onEventInfoCloseClick = () => {
-    setShowEvent(false);
+    if (!!window) {
+      setShowEvent(false);
 
-    // show event after 24 hours
-    const showEventTime = new Date(
-      new Date().getTime() + 24 * 60 * 60000
-    ).getTime();
+      // show event after 24 hours
+      const showEventTime = new Date(
+        new Date().getTime() + 24 * 60 * 60000
+      ).getTime();
 
-    localStorage.setItem('showEventTime', showEventTime);
+      window.localStorage.setItem('showEventTime', showEventTime);
+    }
   };
 
   return (

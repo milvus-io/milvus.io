@@ -11,7 +11,7 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-plugin-react-helmet`,
     // i18n plugin
-    "gatsby-transformer-json",
+    'gatsby-transformer-json',
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -50,16 +50,23 @@ module.exports = {
             options: {
               maxWidth: 650,
               wrapperStyle:
-                "display:inline-block; min-width: 22px;height: auto;width:100%;margin-top:32px",
+                'display:inline-block; min-width: 22px;height: auto;width:100%;margin-top:32px',
             },
           },
           {
-            resolve: "gatsby-remark-autolink-headers",
+            resolve: 'gatsby-remark-autolink-headers',
             options: {
               offsetY: `100`,
               maintainCase: true,
               enableCustomId: true,
               isIconAfterHeader: true,
+            },
+          },
+          {
+            resolve: `gatsby-remark-copy-linked-files`,
+            options: {
+              destinationDir: `blog`,
+              ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`, `md`],
             },
           },
         ],
@@ -80,21 +87,21 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-zopfli",
+      resolve: 'gatsby-plugin-zopfli',
     },
     {
-      resolve: "gatsby-plugin-google-tagmanager",
+      resolve: 'gatsby-plugin-google-tagmanager',
       options: {
-        id: "GTM-MXCV5ZM",
+        id: 'GTM-MXCV5ZM',
 
         // Include GTM in development.
         // Defaults to false meaning GTM will only be loaded in production.
         includeInDevelopment: true,
 
         // Defaults to null
-        defaultDataLayer: { platform: "gatsby" },
+        defaultDataLayer: { platform: 'gatsby' },
         // Specify optional GTM environment details.
-        dataLayerName: "gatsby",
+        dataLayerName: 'gatsby',
       },
     },
     // // add Google Analytics gtag.js to a site

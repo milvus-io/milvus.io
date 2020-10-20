@@ -123,32 +123,13 @@ export default (props) => {
             href={`#${anchor}`}
             title={v.value}
             className={anchor === hash ? 'active' : ''}
-            onClick={(e) => onAnchorClick(e, anchor)}
+            onClick={() => setHash(anchor)}
           >
             {v.value}
           </a>
           {childDom}
         </div>
       );
-    });
-  };
-
-  const onAnchorClick = (event, anchor) => {
-    event.stopPropagation();
-    event.preventDefault();
-
-    setHash(anchor);
-
-    const element = document.querySelector(`#${anchor}`);
-    const offset = 62;
-
-    const bodyRect = document.body.getBoundingClientRect().top;
-    const elementRect = element.getBoundingClientRect().top;
-    const elementPosition = elementRect - bodyRect;
-    const offsetPosition = elementPosition - offset;
-
-    window.scrollTo({
-      top: offsetPosition,
     });
   };
 

@@ -107,7 +107,7 @@
             "img": "cost"
           },
           {
-            "title": "Rich Data Type and Advanced Search (coming soon)",
+            "title": "Rich Data Type and Advanced Search",
             "content": "Milvus supports various data types for fields in a record. You can also use advanced search methods, such as filtering, sorting and aggregation for one or multiple fields.",
             "img": "search"
           },

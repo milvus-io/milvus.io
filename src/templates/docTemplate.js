@@ -143,6 +143,10 @@ export default function Template({
       return;
     }
 
+    if (target.closest('.filter')) {
+      return
+    }
+
     const href = element.getAttribute('href');
 
     if (href && href.startsWith('#')) {

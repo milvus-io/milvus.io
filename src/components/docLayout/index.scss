@@ -320,6 +320,12 @@ a.btn-anchor {
     color: var(--color-highlight);
   }
 
+  @include media('>=1200px') {
+    position: fixed;
+    right: 30%;
+    bottom: 80px;
+  }
+
   @include media('>=1600px') {
     position: fixed;
     right: 28%;

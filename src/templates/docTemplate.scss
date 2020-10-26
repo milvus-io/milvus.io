@@ -28,11 +28,11 @@
   .tab-wrapper {
     font-size: 0;
     margin-top: 30px;
+    display: flex;
 
     a {
       display: inline-block;
-      // padding: 16px 32px;
-      padding: 8px 32px 16px;
+      padding: 16px 32px;
       border: 1px solid var(--color-highlight);
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -42,6 +42,9 @@
       transition: 0.2s;
 
       &[href*='.md'] {
+        display: flex;
+        align-items: center;
+
         text-decoration: none;
         font-family: Roboto-Bold, Roboto;
         color: var(--color-highlight);
@@ -76,7 +79,7 @@
         width: 25px;
         height: 25px;
         display: inline-block;
-        transform: translateY(7px);
+
         margin-right: 8px;
         background-image: url('../images/icon/cpu.svg');
       }
@@ -95,7 +98,7 @@
         height: 25px;
         margin-right: 8px;
         display: inline-block;
-        transform: translateY(7px);
+
         background-image: url('../images/icon/gpu.svg');
       }
 

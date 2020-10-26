@@ -249,6 +249,8 @@ export default function Template({
         title: element.textContent,
       }));
 
+      window.localStorage.setItem('faqAnchorsMap', JSON.stringify(info));
+
       const anchors = getAnchorsFromInfo(info);
 
       insertAnchors(anchors);

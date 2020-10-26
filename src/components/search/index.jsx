@@ -10,6 +10,7 @@ const Search = (props) => {
   const [focus, setFocus] = useState('');
   const [loading, setLoading] = useState(false);
   const [matchData, setMatchData] = useState([]);
+  const [showMatchData, setShowMatchData] = useState(true);
   const ref = useRef(null);
   const containerRef = useRef(null);
 
@@ -47,6 +48,7 @@ const Search = (props) => {
   };
   const handleFocus = (e) => {
     setFocus(true);
+    setShowMatchData(true);
   };
   const useClickOutside = (ref, handler, events) => {
     if (!events) events = [`mousedown`, `touchstart`];
@@ -64,6 +66,27 @@ const Search = (props) => {
     }, []);
   };
   useClickOutside(containerRef, () => setFocus(false));
+
+  const getAnchor = (value) => {
+    try {
+      const faqAnchorsMap = JSON.parse(
+        window.localStorage.getItem('faqAnchorsMap')
+      );
+      if (faqAnchorsMap !== null) {
+        const info = faqAnchorsMap.find((anchor) => anchor.title === value);
+        if (info) {
+          return info.id.slice(1);
+        }
+      }
+    } catch (err) {
+      throw err;
+    }
+    return value.split(' ').join('-');
+  };
+
+  const onSearchItemClick = () => {
+    setShowMatchData(false);
+  };
 
   return (
     <div className="search-wrapper" ref={containerRef}>
@@ -87,16 +110,17 @@ const Search = (props) => {
         onFocus={handleFocus}
         ref={ref}
       ></input>
-      {query.length && focus ? (
+      {query.length && focus && showMatchData ? (
         <ul className="result-list">
           {matchData.length
             ? matchData.map((v, index) => {
                 const { lang, version, title, isId, highlight, path } = v;
                 /* eslint-disable-next-line */
                 const normalVal = title.replace(/[\,\/]/g, '');
-                const anchor = normalVal.split(' ').join('-');
+                // const anchor = normalVal.split(' ').join('-');
+                const anchor = getAnchor(normalVal);
                 return (
-                  <li key={index}>
+                  <li key={index} onClick={onSearchItemClick}>
                     <LocalizeLink
                       locale={lang}
                       to={`/docs/${version}/${path}${isId ? '' : `#${anchor}`}`}

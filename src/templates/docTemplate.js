@@ -10,6 +10,7 @@ import './docTemplate.scss';
 import { useMobileScreen } from '../hooks';
 import Code from '../components/code/code';
 import QueryModal from '../components/query-modal/query-modal';
+import { getAnchorElement, scrollToElement } from '../utils/docTemplate.util';
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
@@ -133,40 +134,31 @@ export default function Template({
   const bindAnchorEventDelegate = (event) => {
     const target = event.target;
     let element = target;
-
     // handle autolink headers
     if (target.tagName === 'svg' || target.tagName === 'path') {
       element = target.closest('a');
     }
-
     if (!element || element.tagName !== 'A') {
       return;
     }
-
     if (target.closest('.filter')) {
       return;
     }
-
     const href = element.getAttribute('href');
-
     if (href && href.startsWith('#')) {
       event.stopPropagation();
       event.preventDefault();
-
-      const offset = 62;
       // delete #
-      const idSelector = href.slice(1);
+      let idSelector = href.slice(1);
+
+      try {
+        idSelector = decodeURI(idSelector);
+      } catch (e) {
+        console.error(e);
+      }
+
       const element = document.querySelector(`#${CSS.escape(idSelector)}`);
-
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-      });
+      scrollToElement(element);
     }
   };
 
@@ -241,6 +233,28 @@ export default function Template({
   }, []);
 
   useEffect(() => {
+    const { search } = window.location;
+    const anchorText = window.localStorage.getItem('anchorTitle');
+
+    if (!!search && anchorText !== null) {
+      for (let i = 2; i < 7; i++) {
+        const element = getAnchorElement(`h${i}`, anchorText);
+        if (element) {
+          scrollToElement(element);
+          window.localStorage.removeItem('anchorTitle');
+          return;
+        }
+      }
+
+      const e = getAnchorElement('.faq-header', anchorText);
+      if (e) {
+        scrollToElement(e);
+      }
+      window.localStorage.removeItem('anchorTitle');
+    }
+  }, []);
+
+  useEffect(() => {
     // handle faq headers
     const faqHeadersElements = document.querySelectorAll('.faq-header');
     if (faqHeadersElements.length > 0) {
@@ -248,8 +262,6 @@ export default function Template({
         id: `#${element.id}`,
         title: element.textContent,
       }));
-
-      window.localStorage.setItem('faqAnchorsMap', JSON.stringify(info));
 
       const anchors = getAnchorsFromInfo(info);
 
@@ -261,7 +273,6 @@ export default function Template({
     document.addEventListener('click', (event) => {
       bindAnchorEventDelegate(event);
     });
-
     return document.removeEventListener('click', (event) => {
       bindAnchorEventDelegate(event);
     });

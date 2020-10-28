@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import {
+  getAnchorElement,
+  scrollToElement,
+} from '../../utils/docTemplate.util';
 import LocalizeLink from '../localizedLink/localizedLink';
 
 import './index.scss';
@@ -67,25 +71,32 @@ const Search = (props) => {
   };
   useClickOutside(containerRef, () => setFocus(false));
 
-  const getAnchor = (value) => {
-    try {
-      const faqAnchorsMap = JSON.parse(
-        window.localStorage.getItem('faqAnchorsMap')
-      );
-      if (faqAnchorsMap !== null) {
-        const info = faqAnchorsMap.find((anchor) => anchor.title === value);
-        if (info) {
-          return info.id.slice(1);
-        }
-      }
-    } catch (err) {
-      throw err;
-    }
-    return value.split(' ').join('-');
-  };
-
-  const onSearchItemClick = () => {
+  const onSearchItemClick = (isCurrentPage, title) => {
+    window.localStorage.setItem('anchorTitle', title);
     setShowMatchData(false);
+
+    // handle current page anchor direct
+    if (isCurrentPage) {
+      const anchorText = window.localStorage.getItem('anchorTitle');
+
+      if (anchorText !== null) {
+        for (let i = 2; i < 7; i++) {
+          const element = getAnchorElement(`h${i}`, anchorText);
+
+          if (element) {
+            scrollToElement(element);
+            window.localStorage.removeItem('anchorTitle');
+            return;
+          }
+        }
+
+        const e = getAnchorElement('.faq-header', anchorText);
+        if (e) {
+          scrollToElement(e);
+        }
+        window.localStorage.removeItem('anchorTitle');
+      }
+    }
   };
 
   return (
@@ -117,13 +128,25 @@ const Search = (props) => {
                 const { lang, version, title, isId, highlight, path } = v;
                 /* eslint-disable-next-line */
                 const normalVal = title.replace(/[\,\/]/g, '');
-                // const anchor = normalVal.split(' ').join('-');
-                const anchor = getAnchor(normalVal);
+                const anchor = normalVal.split(' ').join('-');
+                // window.localStorage.setItem('anchorTitle', title);
+
+                // handle current page
+                const pathname = window.location.pathname;
+                const pathInfoList = pathname.split('/');
+                const isCurrentPage =
+                  pathInfoList[pathInfoList.length - 1] === path;
+                pathInfoList.splice(pathInfoList.length - 1, 1);
+                // const targetLink = `${pathInfoList.join('/')}/${path}`;
+
                 return (
-                  <li key={index} onClick={onSearchItemClick}>
+                  <li
+                    key={index}
+                    onClick={() => onSearchItemClick(isCurrentPage, title)}
+                  >
                     <LocalizeLink
                       locale={lang}
-                      to={`/docs/${version}/${path}${isId ? '' : `#${anchor}`}`}
+                      to={`/docs/${version}/${path}${isId ? '' : `?${anchor}`}`}
                     >
                       <span
                         dangerouslySetInnerHTML={{
@@ -133,6 +156,18 @@ const Search = (props) => {
                         }}
                       ></span>
                     </LocalizeLink>
+                    {/* <a
+                      href={`${targetLink}${isId ? '' : `?${anchor}`}`}
+                      target="_blank"
+                    >
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: `${highlight} ${version} ${
+                            lang === 'cn' ? '中文' : 'en'
+                          }`,
+                        }}
+                      ></span>
+                    </a> */}
                   </li>
                 );
               })

@@ -233,6 +233,23 @@ export default function Template({
   }, []);
 
   useEffect(() => {
+    // handle faq headers
+    if (editPath.includes('faq')) {
+      const faqHeadersElements = document.querySelectorAll('h2');
+      if (faqHeadersElements.length > 0) {
+        const info = Array.from(faqHeadersElements).map((element) => ({
+          id: `#${element.id}`,
+          title: element.textContent,
+        }));
+
+        const anchors = getAnchorsFromInfo(info);
+
+        insertAnchors(anchors);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     const { search } = window.location;
     const anchorText = window.localStorage.getItem('anchorTitle');
 
@@ -245,27 +262,6 @@ export default function Template({
           return;
         }
       }
-
-      const e = getAnchorElement('.faq-header', anchorText);
-      if (e) {
-        scrollToElement(e);
-      }
-      window.localStorage.removeItem('anchorTitle');
-    }
-  }, []);
-
-  useEffect(() => {
-    // handle faq headers
-    const faqHeadersElements = document.querySelectorAll('.faq-header');
-    if (faqHeadersElements.length > 0) {
-      const info = Array.from(faqHeadersElements).map((element) => ({
-        id: `#${element.id}`,
-        title: element.textContent,
-      }));
-
-      const anchors = getAnchorsFromInfo(info);
-
-      insertAnchors(anchors);
     }
   }, []);
 

@@ -89,12 +89,6 @@ const Search = (props) => {
             return;
           }
         }
-
-        const e = getAnchorElement('.faq-header', anchorText);
-        if (e) {
-          scrollToElement(e);
-        }
-        window.localStorage.removeItem('anchorTitle');
       }
     }
   };

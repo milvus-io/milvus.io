@@ -144,9 +144,7 @@ const Search = (props) => {
                     >
                       <span
                         dangerouslySetInnerHTML={{
-                          __html: `${highlight} ${version} ${
-                            lang === 'cn' ? '中文' : 'en'
-                          }`,
+                          __html: `${highlight} ${version}`,
                         }}
                       ></span>
                     </LocalizeLink>

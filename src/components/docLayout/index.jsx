@@ -169,7 +169,10 @@ export default (props) => {
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
             <section>
-              {generateAnchorMenu(formatHeadings, 'parent-item')}
+              {/* filter faq page */}
+              {!id.includes('faq')
+                ? generateAnchorMenu(formatHeadings, 'parent-item')
+                : null}
 
               {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
                 <div className="event">

@@ -1,26 +1,26 @@
-const path = require("path");
-const fs = require("fs");
-const ReadVersionJson = require("./walkFile");
-const locales = require("./src/constants/locales");
-const DOC_LANG_FOLDERS = ["/en/", "/zh-CN/"];
-const benchmarksMenu = require("./benchmark-menu");
-const express = require("express");
+const path = require('path');
+const fs = require('fs');
+const ReadVersionJson = require('./walkFile');
+const locales = require('./src/constants/locales');
+const DOC_LANG_FOLDERS = ['/en/', '/zh-CN/'];
+const benchmarksMenu = require('./benchmark-menu');
+const express = require('express');
 const env = process.env.IS_PREVIEW;
 // const env = "preview";
 console.log(env);
 const getNewestVersion = (versionInfo) => {
   const keys = Object.keys(versionInfo).filter(
     (v) =>
-      v !== "master" && (versionInfo[v].released === "yes" || env === "preview")
+      v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur
       .substring(1)
-      .split(".")
+      .split('.')
       .map((v) => Number(v));
     const preVersion = pre
       .substring(1)
-      .split(".")
+      .split('.')
       .map((v) => Number(v));
 
     if (curVersion[0] !== preVersion[0]) {
@@ -34,21 +34,21 @@ const getNewestVersion = (versionInfo) => {
     }
 
     return pre;
-  }, "v0.0.0");
+  }, 'v0.0.0');
 };
 exports.onCreateDevServer = ({ app }) => {
-  app.use(express.static("public"));
+  app.use(express.static('public'));
 };
 
 // the version is same for different lang, so we only need one
-const DOC_ROOT = "src/pages/docs/versions";
+const DOC_ROOT = 'src/pages/docs/versions';
 const versionInfo = ReadVersionJson(DOC_ROOT);
 const newestVersion = getNewestVersion(versionInfo);
 console.log(versionInfo);
-if (env === "preview") {
+if (env === 'preview') {
   versionInfo.preview = {
-    version: "preview",
-    released: "no",
+    version: 'preview',
+    released: 'no',
   };
 }
 exports.onCreatePage = ({ page, actions }) => {
@@ -59,8 +59,8 @@ exports.onCreatePage = ({ page, actions }) => {
       let localizedPath = locales[lang].default
         ? page.path
         : locales[lang].path + page.path;
-      if (page.path.includes("tool")) {
-        let toolName = page.path.split("-")[1];
+      if (page.path.includes('tool')) {
+        let toolName = page.path.split('-')[1];
         toolName = toolName.substring(0, toolName.length - 1);
         localizedPath = `/tools/${toolName}`;
       }
@@ -133,32 +133,32 @@ exports.createPages = ({ actions, graphql }) => {
       return match
         ? match[1]
           ? match[1]
-          : env === "preview" && str.includes("preview")
-          ? "preview"
+          : env === 'preview' && str.includes('preview')
+          ? 'preview'
           : match[1]
-        : "";
+        : '';
     };
 
     const findLang = (path) => {
       return DOC_LANG_FOLDERS.reduce((pre, cur) => {
         if (path.includes(cur)) {
-          pre = cur === "/en/" ? "en" : "cn";
+          pre = cur === '/en/' ? 'en' : 'cn';
         }
         return pre;
-      }, "");
+      }, '');
     };
 
     // get all menuStructures
     const allMenus = result.data.allFile.edges.map(
       ({ node: { absolutePath, childMenuStructureJson } }) => {
-        let lang = absolutePath.includes("/en/") ? "en" : "cn";
-        const isBlog = absolutePath.includes("blog");
-        const version = findVersion(absolutePath) || "master";
+        let lang = absolutePath.includes('/en/') ? 'en' : 'cn';
+        const isBlog = absolutePath.includes('blog');
+        const version = findVersion(absolutePath) || 'master';
         const menuStructureList =
           (childMenuStructureJson && [...childMenuStructureJson.menuList]) ||
           [];
         const benchmarkMenuList =
-          lang === "en"
+          lang === 'en'
             ? benchmarksMenu.benchmarksMenuListEN
             : benchmarksMenu.benchmarksMenuListCN;
         const menuList = [...menuStructureList, ...benchmarkMenuList];
@@ -176,10 +176,10 @@ exports.createPages = ({ actions, graphql }) => {
     const legalMd = result.data.allMarkdownRemark.edges.filter(
       ({ node: { fileAbsolutePath, frontmatter } }) =>
         (!!findVersion(fileAbsolutePath) ||
-          fileAbsolutePath.includes("/blog/zh-CN") ||
-          (fileAbsolutePath.includes("/docs/versions/master/preview/") &&
-            env === "preview") ||
-          fileAbsolutePath.includes("/docs/versions/benchmarks/")) &&
+          fileAbsolutePath.includes('/blog/zh-CN') ||
+          (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
+            env === 'preview') ||
+          fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
         frontmatter.id
     );
 
@@ -205,8 +205,8 @@ exports.createPages = ({ actions, graphql }) => {
 
       const menuList = findMenu ? findMenu.menuList : [];
       const doc = menuList.find((v) => v.id === id);
-      let localizedPath = "";
-      if (version && version !== "master") {
+      let localizedPath = '';
+      if (version && version !== 'master') {
         localizedPath =
           lang === defaultLang
             ? `/docs/${version}/`
@@ -235,29 +235,32 @@ exports.createPages = ({ actions, graphql }) => {
 
     // -----  for global search begin -----
     const flatten = (arr) =>
-      arr.map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
-        const fileLang = findLang(fileAbsolutePath);
+      arr
+        .map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
+          const fileLang = findLang(fileAbsolutePath);
 
-        const version = newestVersion || "master"; //findVersion(fileAbsolutePath) || "master";
-        const headingVals = headings.map((v) => v.value);
-        const isBlog = checkIsblog(fileAbsolutePath);
-        const isBenchmark = checkIsBenchmark(fileAbsolutePath);
-        return {
-          ...frontmatter,
-          fileLang,
-          version,
-          path: generatePath(
-            frontmatter.id,
+          // const version = newestVersion || 'master'; //findVersion(fileAbsolutePath) || "master";
+          const version = findVersion(fileAbsolutePath) || 'master';
+          const headingVals = headings.map((v) => v.value);
+          const isBlog = checkIsblog(fileAbsolutePath);
+          const isBenchmark = checkIsBenchmark(fileAbsolutePath);
+          return {
+            ...frontmatter,
             fileLang,
             version,
-            isBlog,
-            false,
-            isBenchmark
-          ),
-          // the value we need compare with search query
-          values: [...headingVals, frontmatter.id],
-        };
-      });
+            path: generatePath(
+              frontmatter.id,
+              fileLang,
+              version,
+              isBlog,
+              false,
+              isBenchmark
+            ),
+            // the value we need compare with search query
+            values: [...headingVals, frontmatter.id],
+          };
+        })
+        .filter((data) => data.version === newestVersion);
     const fileData = flatten(legalMd);
     fs.writeFile(
       `${__dirname}/src/search.json`,
@@ -279,7 +282,7 @@ exports.createPages = ({ actions, graphql }) => {
       // when env is preview ignore released
       if (
         versionInfo[version] &&
-        (versionInfo[version].released === "yes" || env === "preview")
+        (versionInfo[version].released === 'yes' || env === 'preview')
       ) {
         versions.add(version);
       }
@@ -294,7 +297,7 @@ exports.createPages = ({ actions, graphql }) => {
       const fileLang = findLang(fileAbsolutePath);
 
       const editPath = fileAbsolutePath.split(
-        fileLang === "en" ? "/en/" : "/zh-CN/"
+        fileLang === 'en' ? '/en/' : '/zh-CN/'
       )[1];
       const isBlog = checkIsblog(fileAbsolutePath);
       const isBenchmark = checkIsBenchmark(fileAbsolutePath);
@@ -333,7 +336,7 @@ exports.createPages = ({ actions, graphql }) => {
       if (version === newestVersion) {
         const masterPath = isBenchmark
           ? `/docs/$${fileId}`
-          : generatePath(fileId, fileLang, isBlog ? false : "master", isBlog);
+          : generatePath(fileId, fileLang, isBlog ? false : 'master', isBlog);
         createPage({
           path: masterPath,
           component: docTemplate,
@@ -375,5 +378,5 @@ exports.createPages = ({ actions, graphql }) => {
   });
 };
 
-const checkIsblog = (path) => path.includes("blog");
-const checkIsBenchmark = (path) => path.includes("benchmarks");
+const checkIsblog = (path) => path.includes('blog');
+const checkIsBenchmark = (path) => path.includes('benchmarks');

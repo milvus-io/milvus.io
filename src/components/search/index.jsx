@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import {
+  getAnchorElement,
+  scrollToElement,
+} from '../../utils/docTemplate.util';
 import LocalizeLink from '../localizedLink/localizedLink';
 
 import './index.scss';
@@ -10,6 +14,7 @@ const Search = (props) => {
   const [focus, setFocus] = useState('');
   const [loading, setLoading] = useState(false);
   const [matchData, setMatchData] = useState([]);
+  const [showMatchData, setShowMatchData] = useState(true);
   const ref = useRef(null);
   const containerRef = useRef(null);
 
@@ -47,6 +52,7 @@ const Search = (props) => {
   };
   const handleFocus = (e) => {
     setFocus(true);
+    setShowMatchData(true);
   };
   const useClickOutside = (ref, handler, events) => {
     if (!events) events = [`mousedown`, `touchstart`];
@@ -64,6 +70,28 @@ const Search = (props) => {
     }, []);
   };
   useClickOutside(containerRef, () => setFocus(false));
+
+  const onSearchItemClick = (isCurrentPage, title) => {
+    window.localStorage.setItem('anchorTitle', title);
+    setShowMatchData(false);
+
+    // handle current page anchor direct
+    if (isCurrentPage) {
+      const anchorText = window.localStorage.getItem('anchorTitle');
+
+      if (anchorText !== null) {
+        for (let i = 2; i < 7; i++) {
+          const element = getAnchorElement(`h${i}`, anchorText);
+
+          if (element) {
+            scrollToElement(element);
+            window.localStorage.removeItem('anchorTitle');
+            return;
+          }
+        }
+      }
+    }
+  };
 
   return (
     <div className="search-wrapper" ref={containerRef}>
@@ -87,7 +115,7 @@ const Search = (props) => {
         onFocus={handleFocus}
         ref={ref}
       ></input>
-      {query.length && focus ? (
+      {query.length && focus && showMatchData ? (
         <ul className="result-list">
           {matchData.length
             ? matchData.map((v, index) => {
@@ -95,11 +123,34 @@ const Search = (props) => {
                 /* eslint-disable-next-line */
                 const normalVal = title.replace(/[\,\/]/g, '');
                 const anchor = normalVal.split(' ').join('-');
+                // window.localStorage.setItem('anchorTitle', title);
+
+                // handle current page
+                const pathname = window.location.pathname;
+                const pathInfoList = pathname.split('/');
+                const isCurrentPage =
+                  pathInfoList[pathInfoList.length - 1] === path;
+                pathInfoList.splice(pathInfoList.length - 1, 1);
+                // const targetLink = `${pathInfoList.join('/')}/${path}`;
+
                 return (
-                  <li key={index}>
+                  <li
+                    key={index}
+                    onClick={() => onSearchItemClick(isCurrentPage, title)}
+                  >
                     <LocalizeLink
                       locale={lang}
-                      to={`/docs/${version}/${path}${isId ? '' : `#${anchor}`}`}
+                      to={`/docs/${version}/${path}${isId ? '' : `?${anchor}`}`}
+                    >
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: `${highlight} ${version}`,
+                        }}
+                      ></span>
+                    </LocalizeLink>
+                    {/* <a
+                      href={`${targetLink}${isId ? '' : `?${anchor}`}`}
+                      target="_blank"
                     >
                       <span
                         dangerouslySetInnerHTML={{
@@ -108,7 +159,7 @@ const Search = (props) => {
                           }`,
                         }}
                       ></span>
-                    </LocalizeLink>
+                    </a> */}
                   </li>
                 );
               })

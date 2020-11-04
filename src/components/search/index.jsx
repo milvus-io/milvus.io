@@ -25,27 +25,38 @@ const Search = (props) => {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      const matchData = DOCS_JSON.map((v) => {
+      let matchData = [];
+
+      DOCS_JSON.forEach((v) => {
         const { version, id, fileLang, path } = v;
-        const find = v.values.find((text) =>
+        const targets = v.values.filter((text) =>
           text.toLowerCase().includes(ref.current.value.toLowerCase())
         );
+
         const regx = new RegExp(ref.current.value, 'gi');
-        const highlight = find
-          ? find.replace(regx, (search) => `<em>${search}</em>`)
-          : '';
-        return find
-          ? {
-              title: find,
-              highlight: highlight,
+        const highlights = targets.length
+          ? targets.map((v) =>
+              v.replace(regx, (search) => `<em>${search}</em>`)
+            )
+          : [];
+        const results = targets.length
+          ? targets.map((v, i) => ({
+              title: v,
+              highlight: highlights[i],
               id,
               lang: fileLang,
               version,
               path,
-              isId: id === find,
-            }
-          : '';
-      }).filter((v) => v && v.version !== 'master' && v.lang === locale);
+              isId: id === v,
+            }))
+          : [];
+        matchData.push(...results);
+      });
+
+      matchData = matchData.filter(
+        (v) => v && v.version !== 'master' && v.lang === locale
+      );
+
       setMatchData(matchData);
       setLoading(false);
     }, 400);
@@ -94,18 +105,18 @@ const Search = (props) => {
   };
 
   return (
-    <div className="search-wrapper" ref={containerRef}>
+    <div className='search-wrapper' ref={containerRef}>
       <svg
-        className="search-icon"
-        viewBox="0 0 16 16"
-        version="1.1"
-        width="16"
-        height="16"
-        aria-hidden="true"
+        className='search-icon'
+        viewBox='0 0 16 16'
+        version='1.1'
+        width='16'
+        height='16'
+        aria-hidden='true'
       >
         <path
-          fillRule="evenodd"
-          d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"
+          fillRule='evenodd'
+          d='M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z'
         ></path>
       </svg>
       <input
@@ -116,7 +127,7 @@ const Search = (props) => {
         ref={ref}
       ></input>
       {query.length && focus && showMatchData ? (
-        <ul className="result-list">
+        <ul className='result-list'>
           {matchData.length
             ? matchData.map((v, index) => {
                 const { lang, version, title, isId, highlight, path } = v;

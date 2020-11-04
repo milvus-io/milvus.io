@@ -86,7 +86,7 @@ exports.createPages = ({ actions, graphql }) => {
   return graphql(`
     {
       allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/(?:site|blog)/" } }
+        filter: { fileAbsolutePath: { regex: "/(?:site|blog|common)/" } }
       ) {
         edges {
           node {
@@ -96,6 +96,7 @@ exports.createPages = ({ actions, graphql }) => {
             }
             frontmatter {
               id
+              keywords
             }
             fileAbsolutePath
             html
@@ -174,13 +175,17 @@ exports.createPages = ({ actions, graphql }) => {
 
     // filter useless md file blog has't version
     const legalMd = result.data.allMarkdownRemark.edges.filter(
-      ({ node: { fileAbsolutePath, frontmatter } }) =>
-        (!!findVersion(fileAbsolutePath) ||
-          fileAbsolutePath.includes('/blog/zh-CN') ||
-          (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
-            env === 'preview') ||
-          fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
-        frontmatter.id
+      ({ node: { fileAbsolutePath, frontmatter } }) => {
+        return (
+          (!!findVersion(fileAbsolutePath) ||
+            fileAbsolutePath.includes('/docs/versions/master/common') ||
+            fileAbsolutePath.includes('/blog/zh-CN') ||
+            (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
+              env === 'preview') ||
+            fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
+          frontmatter.id
+        );
+      }
     );
 
     // we generate path by menu structure
@@ -244,6 +249,12 @@ exports.createPages = ({ actions, graphql }) => {
           const headingVals = headings.map((v) => v.value);
           const isBlog = checkIsblog(fileAbsolutePath);
           const isBenchmark = checkIsBenchmark(fileAbsolutePath);
+          const keywords = frontmatter.keywords
+            ? frontmatter.keywords.split(',')
+            : [];
+          if (keywords.length) {
+            console.log(keywords);
+          }
           return {
             ...frontmatter,
             fileLang,
@@ -257,10 +268,11 @@ exports.createPages = ({ actions, graphql }) => {
               isBenchmark
             ),
             // the value we need compare with search query
-            values: [...headingVals, frontmatter.id],
+            values: [...headingVals, frontmatter.id, ...keywords],
           };
         })
         .filter((data) => data.version === newestVersion);
+
     const fileData = flatten(legalMd);
     fs.writeFile(
       `${__dirname}/src/search.json`,
@@ -292,7 +304,7 @@ exports.createPages = ({ actions, graphql }) => {
     return legalMd.forEach(({ node }) => {
       const fileAbsolutePath = node.fileAbsolutePath;
       const fileId = node.frontmatter.id;
-      let version = findVersion(fileAbsolutePath);
+      let version = findVersion(fileAbsolutePath) || 'master';
 
       const fileLang = findLang(fileAbsolutePath);
 

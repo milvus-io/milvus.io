@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '../components/docLayout';
 import SEO from '../components/seo';
@@ -10,26 +10,14 @@ import './docTemplate.scss';
 import { useMobileScreen } from '../hooks';
 import Code from '../components/code/code';
 import QueryModal from '../components/query-modal/query-modal';
-import { getAnchorElement, scrollToElement } from '../utils/docTemplate.util';
+import {
+  getAnchorElement,
+  scrollToElement,
+  sortVersions,
+} from '../utils/docTemplate.util';
+import { NOT_SUPPORTED_VERSION } from '../config';
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
-
-function sortVersions(a, b) {
-  const [v1, s1, m1] = a.split('.');
-  const [v2, s2, m2] = b.split('.');
-  const aValue = v1.split('')[1] * 100 + s1 * 10 + m1 * 1;
-  const bValue = v2.split('')[1] * 100 + s2 * 10 + m2 * 1;
-
-  if (aValue > bValue) {
-    return -1;
-  }
-  if (aValue === bValue) {
-    return 0;
-  }
-  if (aValue < bValue) {
-    return 1;
-  }
-}
 
 export default function Template({
   data,
@@ -97,6 +85,11 @@ export default function Template({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const showWarning = useMemo(
+    () => sortVersions(version, NOT_SUPPORTED_VERSION) > -1,
+    [version]
+  );
 
   const handleCopy = (code) => {
     copyToClipboard(code);
@@ -376,7 +369,7 @@ export default function Template({
       language={layout}
       locale={locale}
       nav={nav}
-      current="doc"
+      current='doc'
       pageContext={pageContext}
       menuList={menuList}
       version={version}
@@ -388,27 +381,27 @@ export default function Template({
     >
       <SEO title={title} lang={locale} />
       {isBenchmark ? (
-        <div className="iframe-container">
+        <div className='iframe-container'>
           {showBack && (
             <i
               tabIndex={0}
               onKeyDown={handleRefresh}
-              role="button"
-              aria-label="Back"
-              className="fas iframe-icon fa-arrow-left"
+              role='button'
+              aria-label='Back'
+              className='fas iframe-icon fa-arrow-left'
               onClick={handleRefresh}
             ></i>
           )}
           <iframe
-            id="benchmarkIframe"
-            title="test"
-            width="100%"
+            id='benchmarkIframe'
+            title='test'
+            width='100%'
             src={iframeUrl}
             onLoad={ifrmLoad}
           ></iframe>
         </div>
       ) : (
-        <div className="doc-post-container">
+        <div className='doc-post-container'>
           {/* {showEvent && (
             <div className="alert event">
               <div>
@@ -434,27 +427,49 @@ export default function Template({
               ></i>
             </div>
           )} */}
-          <div className="doc-post">
+          {showWarning && (
+            <div className='alert warning'>
+              {locale === 'en'
+                ? 'This version is no longer supported. For more information about migrating your data, see'
+                : '该版本不再维护。如需进行数据迁移，请先参考'}
+              <a
+                href={
+                  locale === 'en'
+                    ? '/docs/compatibility.md'
+                    : '/cn/docs/compatibility.md'
+                }
+                alt='sign up milvus'
+                rel='noreferrer noopener'
+                target='_blank'
+                style={{ margin: '0 6px', fontWeight: 'bold' }}
+              >
+                {locale === 'en'
+                  ? 'Compatibility Information.'
+                  : '兼容性信息。'}
+              </a>
+            </div>
+          )}
+          <div className='doc-post'>
             <div
-              className="doc-post-content"
+              className='doc-post-content'
               dangerouslySetInnerHTML={{ __html: newHtml }}
             />
             <ReactTooltip
-              type="info"
+              type='info'
               // place="right"
-              globalEventOff="click"
-              className="md-tooltip"
+              globalEventOff='click'
+              className='md-tooltip'
             />
             {isBlog || isBenchmark ? null : (
               <a
-                className="edit-page-link btn"
+                className='edit-page-link btn'
                 href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
                   locale === 'en' ? 'en' : 'zh-CN'
                 }/${editPath}`}
-                target="_blank"
-                rel="noreferrer noopener"
+                target='_blank'
+                rel='noreferrer noopener'
               >
-                <i className="far fa-edit"></i>
+                <i className='far fa-edit'></i>
                 {layout.footer.editBtn.label}
               </a>
             )}
@@ -465,10 +480,10 @@ export default function Template({
       {showModal ? (
         <div>
           <div
-            className="overlay"
-            tabIndex="0"
-            role="button"
-            aria-label="close dialog"
+            className='overlay'
+            tabIndex='0'
+            role='button'
+            aria-label='close dialog'
             onKeyDown={onOverlayClick}
             onClick={onOverlayClick}
           ></div>

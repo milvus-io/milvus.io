@@ -13,7 +13,7 @@ export const scrollToElement = (element, offset = 62) => {
 
 export const getAnchorElement = (selector, anchorText) => {
   return Array.from(document.querySelectorAll(selector)).find(
-    (e) => e.textContent === anchorText
+    e => e.textContent === anchorText
   );
 };
 

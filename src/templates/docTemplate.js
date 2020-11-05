@@ -57,14 +57,14 @@ export default function Template({
   }, []);
 
   useEffect(() => {
-    document.querySelectorAll('.query-button-panel').forEach((panel) => {
+    document.querySelectorAll('.query-button-panel').forEach(panel => {
       const codeWrapper = panel.previousElementSibling;
       codeWrapper.classList.add('query-button-code');
 
       const querySnippet = codeWrapper.querySelector('code').textContent;
       const formatCode = getRequestAsCURL(querySnippet);
 
-      panel.addEventListener('click', (e) => {
+      panel.addEventListener('click', e => {
         const funcMap = {
           copy: handleCopy,
           console: handleOpenConsole,
@@ -76,7 +76,7 @@ export default function Template({
 
         const classList = e.target.classList;
 
-        Object.keys(funcMap).forEach((key) => {
+        Object.keys(funcMap).forEach(key => {
           if (classList.contains(key)) {
             funcMap[key](formatCode);
           }
@@ -91,7 +91,7 @@ export default function Template({
     [version]
   );
 
-  const handleCopy = (code) => {
+  const handleCopy = code => {
     copyToClipboard(code);
   };
   const handleOpenConsole = () => {
@@ -99,16 +99,16 @@ export default function Template({
   };
   const handleSetting = () => setShowModal(true);
 
-  const insertAnchors = (anchors) => {
+  const insertAnchors = anchors => {
     const firstElement = document.querySelector('h1');
 
     firstElement.insertAdjacentHTML('afterend', anchors);
   };
 
-  const getAnchorsFromInfo = (info) => {
+  const getAnchorsFromInfo = info => {
     const items = info
       .map(
-        (item) =>
+        item =>
           `<li>
             <a href=${item.id}>
               ${item.title}
@@ -124,7 +124,7 @@ export default function Template({
     return tpl;
   };
 
-  const bindAnchorEventDelegate = (event) => {
+  const bindAnchorEventDelegate = event => {
     const target = event.target;
     let element = target;
     // handle autolink headers
@@ -159,10 +159,10 @@ export default function Template({
     const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];
     let firstHash = '';
-    filterWrappers.forEach((fw) => {
+    filterWrappers.forEach(fw => {
       const fs = fw.querySelectorAll('a');
 
-      fs.forEach((f) => {
+      fs.forEach(f => {
         if (!firstHash) {
           firstHash = f.hash;
         }
@@ -171,19 +171,19 @@ export default function Template({
     });
     const allContents = document.querySelectorAll(`[class*="filter-"]`);
 
-    const clickEventHandler = (targetHash) => {
+    const clickEventHandler = targetHash => {
       const hash = targetHash;
-      const currentFilters = allFilters.filter((f) => f.hash === hash);
-      allFilters.forEach((f) => f.classList.toggle('active', false));
-      currentFilters.forEach((cf) => cf.classList.toggle('active', true));
-      allContents.forEach((c) => c.classList.toggle('active', false));
+      const currentFilters = allFilters.filter(f => f.hash === hash);
+      allFilters.forEach(f => f.classList.toggle('active', false));
+      currentFilters.forEach(cf => cf.classList.toggle('active', true));
+      allContents.forEach(c => c.classList.toggle('active', false));
       const contents = document.querySelectorAll(
         `.filter-${hash.replace('#', '').replace(/%/g, '')}`
       );
-      contents.forEach((c) => c.classList.toggle('active', true));
+      contents.forEach(c => c.classList.toggle('active', true));
     };
-    filterWrappers.forEach((w) => {
-      w.addEventListener('click', (e) => {
+    filterWrappers.forEach(w => {
+      w.addEventListener('click', e => {
         if (e.target.tagName === 'A') {
           clickEventHandler(e.target.hash);
         }
@@ -208,7 +208,7 @@ export default function Template({
   }, []);
 
   useEffect(() => {
-    document.querySelectorAll('pre code').forEach((block) => {
+    document.querySelectorAll('pre code').forEach(block => {
       hljs.highlightBlock(block);
 
       const html = block.innerHTML;
@@ -218,7 +218,7 @@ export default function Template({
     });
 
     return () => {
-      document.querySelectorAll('pre code').forEach((block) => {
+      document.querySelectorAll('pre code').forEach(block => {
         ReactDOM.unmountComponentAtNode(block);
       });
     };
@@ -230,7 +230,7 @@ export default function Template({
     if (editPath.includes('faq')) {
       const faqHeadersElements = document.querySelectorAll('h2');
       if (faqHeadersElements.length > 0) {
-        const info = Array.from(faqHeadersElements).map((element) => ({
+        const info = Array.from(faqHeadersElements).map(element => ({
           id: `#${element.id}`,
           title: element.textContent,
         }));
@@ -259,17 +259,17 @@ export default function Template({
   }, []);
 
   useEffect(() => {
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
       bindAnchorEventDelegate(event);
     });
-    return document.removeEventListener('click', (event) => {
+    return document.removeEventListener('click', event => {
       bindAnchorEventDelegate(event);
     });
   }, []);
 
   useEffect(() => {
     if (screenWidth > 1000) return;
-    const cb = (e) => {
+    const cb = e => {
       if (e.target.dataset.tip) {
         ReactTooltip.show(e.target);
       }
@@ -289,7 +289,7 @@ export default function Template({
     ? data.allFile.edges[0].node.childLayoutJson.layout
     : {};
   const menuList = allMenus.find(
-    (v) =>
+    v =>
       v.absolutePath.includes(version) &&
       isBlog === v.isBlog &&
       locale === v.lang
@@ -304,7 +304,7 @@ export default function Template({
     : '';
   const idRegex = /id=".*?"/g;
   if (locale === 'cn') {
-    newHtml = newHtml.replace(idRegex, (match) =>
+    newHtml = newHtml.replace(idRegex, match =>
       // eslint-disable-next-line
       match.replace(/[？|、|，]/g, '')
     );
@@ -325,7 +325,7 @@ export default function Template({
     }
   };
 
-  const getRequestAsCURL = (code) => {
+  const getRequestAsCURL = code => {
     const [header, ...data] = code.split('\n');
     const [method, url] = header.split(' ');
     const queryBody = data.join('\n');
@@ -333,7 +333,7 @@ export default function Template({
     return `curl -X ${method} "http://localhost:8000${url}" -H 'Content-Type: application/json' -d'\n${queryBody}'`;
   };
 
-  const copyToClipboard = (content) => {
+  const copyToClipboard = content => {
     const el = document.createElement(`textarea`);
     el.value = content;
     el.setAttribute(`readonly`, ``);
@@ -369,7 +369,7 @@ export default function Template({
       language={layout}
       locale={locale}
       nav={nav}
-      current='doc'
+      current="doc"
       pageContext={pageContext}
       menuList={menuList}
       version={version}
@@ -381,27 +381,27 @@ export default function Template({
     >
       <SEO title={title} lang={locale} />
       {isBenchmark ? (
-        <div className='iframe-container'>
+        <div className="iframe-container">
           {showBack && (
             <i
               tabIndex={0}
               onKeyDown={handleRefresh}
-              role='button'
-              aria-label='Back'
-              className='fas iframe-icon fa-arrow-left'
+              role="button"
+              aria-label="Back"
+              className="fas iframe-icon fa-arrow-left"
               onClick={handleRefresh}
             ></i>
           )}
           <iframe
-            id='benchmarkIframe'
-            title='test'
-            width='100%'
+            id="benchmarkIframe"
+            title="test"
+            width="100%"
             src={iframeUrl}
             onLoad={ifrmLoad}
           ></iframe>
         </div>
       ) : (
-        <div className='doc-post-container'>
+        <div className="doc-post-container">
           {/* {showEvent && (
             <div className="alert event">
               <div>
@@ -428,7 +428,7 @@ export default function Template({
             </div>
           )} */}
           {showWarning && (
-            <div className='alert warning'>
+            <div className="alert warning">
               {locale === 'en'
                 ? 'This version is no longer supported. For more information about migrating your data, see'
                 : '该版本不再维护。如需进行数据迁移，请先参考'}
@@ -438,9 +438,9 @@ export default function Template({
                     ? '/docs/compatibility.md'
                     : '/cn/docs/compatibility.md'
                 }
-                alt='sign up milvus'
-                rel='noreferrer noopener'
-                target='_blank'
+                alt="sign up milvus"
+                rel="noreferrer noopener"
+                target="_blank"
                 style={{ margin: '0 6px', fontWeight: 'bold' }}
               >
                 {locale === 'en'
@@ -449,27 +449,27 @@ export default function Template({
               </a>
             </div>
           )}
-          <div className='doc-post'>
+          <div className="doc-post">
             <div
-              className='doc-post-content'
+              className="doc-post-content"
               dangerouslySetInnerHTML={{ __html: newHtml }}
             />
             <ReactTooltip
-              type='info'
+              type="info"
               // place="right"
-              globalEventOff='click'
-              className='md-tooltip'
+              globalEventOff="click"
+              className="md-tooltip"
             />
             {isBlog || isBenchmark ? null : (
               <a
-                className='edit-page-link btn'
+                className="edit-page-link btn"
                 href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
                   locale === 'en' ? 'en' : 'zh-CN'
                 }/${editPath}`}
-                target='_blank'
-                rel='noreferrer noopener'
+                target="_blank"
+                rel="noreferrer noopener"
               >
-                <i className='far fa-edit'></i>
+                <i className="far fa-edit"></i>
                 {layout.footer.editBtn.label}
               </a>
             )}
@@ -480,10 +480,10 @@ export default function Template({
       {showModal ? (
         <div>
           <div
-            className='overlay'
-            tabIndex='0'
-            role='button'
-            aria-label='close dialog'
+            className="overlay"
+            tabIndex="0"
+            role="button"
+            aria-label="close dialog"
             onKeyDown={onOverlayClick}
             onClick={onOverlayClick}
           ></div>

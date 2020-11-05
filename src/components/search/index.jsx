@@ -8,7 +8,7 @@ import LocalizeLink from '../localizedLink/localizedLink';
 import './index.scss';
 const DOCS_JSON = require('../../search.json');
 let timer = null;
-const Search = (props) => {
+const Search = props => {
   const { language, locale } = props;
   const [query, setQuery] = useState('');
   const [focus, setFocus] = useState('');
@@ -18,7 +18,7 @@ const Search = (props) => {
   const ref = useRef(null);
   const containerRef = useRef(null);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setQuery(ref.current.value);
     setLoading(true);
     if (timer) {
@@ -27,17 +27,15 @@ const Search = (props) => {
     timer = setTimeout(() => {
       let matchData = [];
 
-      DOCS_JSON.forEach((v) => {
+      DOCS_JSON.forEach(v => {
         const { version, id, fileLang, path } = v;
-        const targets = v.values.filter((text) =>
+        const targets = v.values.filter(text =>
           text.toLowerCase().includes(ref.current.value.toLowerCase())
         );
 
         const regx = new RegExp(ref.current.value, 'gi');
         const highlights = targets.length
-          ? targets.map((v) =>
-              v.replace(regx, (search) => `<em>${search}</em>`)
-            )
+          ? targets.map(v => v.replace(regx, search => `<em>${search}</em>`))
           : [];
         const results = targets.length
           ? targets.map((v, i) => ({
@@ -54,20 +52,20 @@ const Search = (props) => {
       });
 
       matchData = matchData.filter(
-        (v) => v && v.version !== 'master' && v.lang === locale
+        v => v && v.version !== 'master' && v.lang === locale
       );
 
       setMatchData(matchData);
       setLoading(false);
     }, 400);
   };
-  const handleFocus = (e) => {
+  const handleFocus = e => {
     setFocus(true);
     setShowMatchData(true);
   };
   const useClickOutside = (ref, handler, events) => {
     if (!events) events = [`mousedown`, `touchstart`];
-    const detectClickOutside = (event) => {
+    const detectClickOutside = event => {
       !ref.current.contains(event.target) && handler();
     };
     useEffect(() => {
@@ -105,18 +103,18 @@ const Search = (props) => {
   };
 
   return (
-    <div className='search-wrapper' ref={containerRef}>
+    <div className="search-wrapper" ref={containerRef}>
       <svg
-        className='search-icon'
-        viewBox='0 0 16 16'
-        version='1.1'
-        width='16'
-        height='16'
-        aria-hidden='true'
+        className="search-icon"
+        viewBox="0 0 16 16"
+        version="1.1"
+        width="16"
+        height="16"
+        aria-hidden="true"
       >
         <path
-          fillRule='evenodd'
-          d='M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z'
+          fillRule="evenodd"
+          d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"
         ></path>
       </svg>
       <input
@@ -127,7 +125,7 @@ const Search = (props) => {
         ref={ref}
       ></input>
       {query.length && focus && showMatchData ? (
-        <ul className='result-list'>
+        <ul className="result-list">
           {matchData.length
             ? matchData.map((v, index) => {
                 const { lang, version, title, isId, highlight, path } = v;

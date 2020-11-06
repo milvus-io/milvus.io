@@ -8,20 +8,20 @@ const express = require('express');
 const env = process.env.IS_PREVIEW;
 // const env = "preview";
 console.log(env);
-const getNewestVersion = (versionInfo) => {
+const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
-    (v) =>
+    v =>
       v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur
       .substring(1)
       .split('.')
-      .map((v) => Number(v));
+      .map(v => Number(v));
     const preVersion = pre
       .substring(1)
       .split('.')
-      .map((v) => Number(v));
+      .map(v => Number(v));
 
     if (curVersion[0] !== preVersion[0]) {
       pre = curVersion[0] < preVersion[0] ? pre : cur;
@@ -53,9 +53,9 @@ if (env === 'preview') {
 }
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     deletePage(page);
-    Object.keys(locales).map((lang) => {
+    Object.keys(locales).map(lang => {
       let localizedPath = locales[lang].default
         ? page.path
         : locales[lang].path + page.path;
@@ -86,7 +86,7 @@ exports.createPages = ({ actions, graphql }) => {
   return graphql(`
     {
       allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/(?:site|blog)/" } }
+        filter: { fileAbsolutePath: { regex: "/(?:site|blog|common)/" } }
       ) {
         edges {
           node {
@@ -96,6 +96,7 @@ exports.createPages = ({ actions, graphql }) => {
             }
             frontmatter {
               id
+              keywords
             }
             fileAbsolutePath
             html
@@ -123,11 +124,11 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then((result) => {
+  `).then(result => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
-    const findVersion = (str) => {
+    const findVersion = str => {
       const regx = /versions\/master\/([v\d\.]*)/;
       const match = str.match(regx);
       return match
@@ -139,7 +140,7 @@ exports.createPages = ({ actions, graphql }) => {
         : '';
     };
 
-    const findLang = (path) => {
+    const findLang = path => {
       return DOC_LANG_FOLDERS.reduce((pre, cur) => {
         if (path.includes(cur)) {
           pre = cur === '/en/' ? 'en' : 'cn';
@@ -174,13 +175,17 @@ exports.createPages = ({ actions, graphql }) => {
 
     // filter useless md file blog has't version
     const legalMd = result.data.allMarkdownRemark.edges.filter(
-      ({ node: { fileAbsolutePath, frontmatter } }) =>
-        (!!findVersion(fileAbsolutePath) ||
-          fileAbsolutePath.includes('/blog/zh-CN') ||
-          (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
-            env === 'preview') ||
-          fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
-        frontmatter.id
+      ({ node: { fileAbsolutePath, frontmatter } }) => {
+        return (
+          (!!findVersion(fileAbsolutePath) ||
+            fileAbsolutePath.includes('/docs/versions/master/common') ||
+            fileAbsolutePath.includes('/blog/zh-CN') ||
+            (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
+              env === 'preview') ||
+            fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
+          frontmatter.id
+        );
+      }
     );
 
     // we generate path by menu structure
@@ -200,11 +205,11 @@ exports.createPages = ({ actions, graphql }) => {
         return lang === defaultLang ? `/blogs/${id}` : `${lang}/blogs/${id}`;
       }
       const findMenu = allMenus.find(
-        (v) => v.lang === lang && v.version === version
+        v => v.lang === lang && v.version === version
       );
 
       const menuList = findMenu ? findMenu.menuList : [];
-      const doc = menuList.find((v) => v.id === id);
+      const doc = menuList.find(v => v.id === id);
       let localizedPath = '';
       if (version && version !== 'master') {
         localizedPath =
@@ -230,20 +235,26 @@ exports.createPages = ({ actions, graphql }) => {
     };
 
     const defaultLang = Object.keys(locales).find(
-      (lang) => locales[lang].default
+      lang => locales[lang].default
     );
 
     // -----  for global search begin -----
-    const flatten = (arr) =>
+    const flatten = arr =>
       arr
         .map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
           const fileLang = findLang(fileAbsolutePath);
 
           // const version = newestVersion || 'master'; //findVersion(fileAbsolutePath) || "master";
           const version = findVersion(fileAbsolutePath) || 'master';
-          const headingVals = headings.map((v) => v.value);
+          const headingVals = headings.map(v => v.value);
           const isBlog = checkIsblog(fileAbsolutePath);
           const isBenchmark = checkIsBenchmark(fileAbsolutePath);
+          const keywords = frontmatter.keywords
+            ? frontmatter.keywords.split(',')
+            : [];
+          if (keywords.length) {
+            console.log(keywords);
+          }
           return {
             ...frontmatter,
             fileLang,
@@ -257,15 +268,16 @@ exports.createPages = ({ actions, graphql }) => {
               isBenchmark
             ),
             // the value we need compare with search query
-            values: [...headingVals, frontmatter.id],
+            values: [...headingVals, frontmatter.id, ...keywords],
           };
         })
-        .filter((data) => data.version === newestVersion);
+        .filter(data => data.version === newestVersion);
+
     const fileData = flatten(legalMd);
     fs.writeFile(
       `${__dirname}/src/search.json`,
       JSON.stringify(fileData),
-      (err) => {
+      err => {
         if (err) throw err;
         console.log("It's saved!");
       }
@@ -292,7 +304,7 @@ exports.createPages = ({ actions, graphql }) => {
     return legalMd.forEach(({ node }) => {
       const fileAbsolutePath = node.fileAbsolutePath;
       const fileId = node.frontmatter.id;
-      let version = findVersion(fileAbsolutePath);
+      let version = findVersion(fileAbsolutePath) || 'master';
 
       const fileLang = findLang(fileAbsolutePath);
 
@@ -346,7 +358,7 @@ exports.createPages = ({ actions, graphql }) => {
             versions: Array.from(versions),
             newestVersion,
             old: fileId,
-            headings: node.headings.filter((v) => v.depth < 4 && v.depth >= 1),
+            headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
             fileAbsolutePath,
             isBlog,
             editPath,
@@ -364,7 +376,7 @@ exports.createPages = ({ actions, graphql }) => {
           version: isBenchmark ? newestVersion : version,
           versions: Array.from(versions),
           old: fileId,
-          headings: node.headings.filter((v) => v.depth < 4 && v.depth >= 1),
+          headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
           fileAbsolutePath,
           newestVersion,
           isBlog,
@@ -378,5 +390,5 @@ exports.createPages = ({ actions, graphql }) => {
   });
 };
 
-const checkIsblog = (path) => path.includes('blog');
-const checkIsBenchmark = (path) => path.includes('benchmarks');
+const checkIsblog = path => path.includes('blog');
+const checkIsBenchmark = path => path.includes('benchmarks');

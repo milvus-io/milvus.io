@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '../components/docLayout';
 import SEO from '../components/seo';
@@ -10,26 +10,14 @@ import './docTemplate.scss';
 import { useMobileScreen } from '../hooks';
 import Code from '../components/code/code';
 import QueryModal from '../components/query-modal/query-modal';
-import { getAnchorElement, scrollToElement } from '../utils/docTemplate.util';
+import {
+  getAnchorElement,
+  scrollToElement,
+  sortVersions,
+} from '../utils/docTemplate.util';
+import { NOT_SUPPORTED_VERSION } from '../config';
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
-
-function sortVersions(a, b) {
-  const [v1, s1, m1] = a.split('.');
-  const [v2, s2, m2] = b.split('.');
-  const aValue = v1.split('')[1] * 100 + s1 * 10 + m1 * 1;
-  const bValue = v2.split('')[1] * 100 + s2 * 10 + m2 * 1;
-
-  if (aValue > bValue) {
-    return -1;
-  }
-  if (aValue === bValue) {
-    return 0;
-  }
-  if (aValue < bValue) {
-    return 1;
-  }
-}
 
 export default function Template({
   data,
@@ -69,14 +57,14 @@ export default function Template({
   }, []);
 
   useEffect(() => {
-    document.querySelectorAll('.query-button-panel').forEach((panel) => {
+    document.querySelectorAll('.query-button-panel').forEach(panel => {
       const codeWrapper = panel.previousElementSibling;
       codeWrapper.classList.add('query-button-code');
 
       const querySnippet = codeWrapper.querySelector('code').textContent;
       const formatCode = getRequestAsCURL(querySnippet);
 
-      panel.addEventListener('click', (e) => {
+      panel.addEventListener('click', e => {
         const funcMap = {
           copy: handleCopy,
           console: handleOpenConsole,
@@ -88,7 +76,7 @@ export default function Template({
 
         const classList = e.target.classList;
 
-        Object.keys(funcMap).forEach((key) => {
+        Object.keys(funcMap).forEach(key => {
           if (classList.contains(key)) {
             funcMap[key](formatCode);
           }
@@ -98,7 +86,12 @@ export default function Template({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCopy = (code) => {
+  const showWarning = useMemo(
+    () => sortVersions(version, NOT_SUPPORTED_VERSION) > -1,
+    [version]
+  );
+
+  const handleCopy = code => {
     copyToClipboard(code);
   };
   const handleOpenConsole = () => {
@@ -106,16 +99,16 @@ export default function Template({
   };
   const handleSetting = () => setShowModal(true);
 
-  const insertAnchors = (anchors) => {
+  const insertAnchors = anchors => {
     const firstElement = document.querySelector('h1');
 
     firstElement.insertAdjacentHTML('afterend', anchors);
   };
 
-  const getAnchorsFromInfo = (info) => {
+  const getAnchorsFromInfo = info => {
     const items = info
       .map(
-        (item) =>
+        item =>
           `<li>
             <a href=${item.id}>
               ${item.title}
@@ -131,7 +124,7 @@ export default function Template({
     return tpl;
   };
 
-  const bindAnchorEventDelegate = (event) => {
+  const bindAnchorEventDelegate = event => {
     const target = event.target;
     let element = target;
     // handle autolink headers
@@ -166,10 +159,10 @@ export default function Template({
     const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];
     let firstHash = '';
-    filterWrappers.forEach((fw) => {
+    filterWrappers.forEach(fw => {
       const fs = fw.querySelectorAll('a');
 
-      fs.forEach((f) => {
+      fs.forEach(f => {
         if (!firstHash) {
           firstHash = f.hash;
         }
@@ -178,19 +171,19 @@ export default function Template({
     });
     const allContents = document.querySelectorAll(`[class*="filter-"]`);
 
-    const clickEventHandler = (targetHash) => {
+    const clickEventHandler = targetHash => {
       const hash = targetHash;
-      const currentFilters = allFilters.filter((f) => f.hash === hash);
-      allFilters.forEach((f) => f.classList.toggle('active', false));
-      currentFilters.forEach((cf) => cf.classList.toggle('active', true));
-      allContents.forEach((c) => c.classList.toggle('active', false));
+      const currentFilters = allFilters.filter(f => f.hash === hash);
+      allFilters.forEach(f => f.classList.toggle('active', false));
+      currentFilters.forEach(cf => cf.classList.toggle('active', true));
+      allContents.forEach(c => c.classList.toggle('active', false));
       const contents = document.querySelectorAll(
         `.filter-${hash.replace('#', '').replace(/%/g, '')}`
       );
-      contents.forEach((c) => c.classList.toggle('active', true));
+      contents.forEach(c => c.classList.toggle('active', true));
     };
-    filterWrappers.forEach((w) => {
-      w.addEventListener('click', (e) => {
+    filterWrappers.forEach(w => {
+      w.addEventListener('click', e => {
         if (e.target.tagName === 'A') {
           clickEventHandler(e.target.hash);
         }
@@ -215,7 +208,7 @@ export default function Template({
   }, []);
 
   useEffect(() => {
-    document.querySelectorAll('pre code').forEach((block) => {
+    document.querySelectorAll('pre code').forEach(block => {
       hljs.highlightBlock(block);
 
       const html = block.innerHTML;
@@ -225,7 +218,7 @@ export default function Template({
     });
 
     return () => {
-      document.querySelectorAll('pre code').forEach((block) => {
+      document.querySelectorAll('pre code').forEach(block => {
         ReactDOM.unmountComponentAtNode(block);
       });
     };
@@ -237,7 +230,7 @@ export default function Template({
     if (editPath.includes('faq')) {
       const faqHeadersElements = document.querySelectorAll('h2');
       if (faqHeadersElements.length > 0) {
-        const info = Array.from(faqHeadersElements).map((element) => ({
+        const info = Array.from(faqHeadersElements).map(element => ({
           id: `#${element.id}`,
           title: element.textContent,
         }));
@@ -266,17 +259,17 @@ export default function Template({
   }, []);
 
   useEffect(() => {
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
       bindAnchorEventDelegate(event);
     });
-    return document.removeEventListener('click', (event) => {
+    return document.removeEventListener('click', event => {
       bindAnchorEventDelegate(event);
     });
   }, []);
 
   useEffect(() => {
     if (screenWidth > 1000) return;
-    const cb = (e) => {
+    const cb = e => {
       if (e.target.dataset.tip) {
         ReactTooltip.show(e.target);
       }
@@ -296,7 +289,7 @@ export default function Template({
     ? data.allFile.edges[0].node.childLayoutJson.layout
     : {};
   const menuList = allMenus.find(
-    (v) =>
+    v =>
       v.absolutePath.includes(version) &&
       isBlog === v.isBlog &&
       locale === v.lang
@@ -311,7 +304,7 @@ export default function Template({
     : '';
   const idRegex = /id=".*?"/g;
   if (locale === 'cn') {
-    newHtml = newHtml.replace(idRegex, (match) =>
+    newHtml = newHtml.replace(idRegex, match =>
       // eslint-disable-next-line
       match.replace(/[？|、|，]/g, '')
     );
@@ -332,7 +325,7 @@ export default function Template({
     }
   };
 
-  const getRequestAsCURL = (code) => {
+  const getRequestAsCURL = code => {
     const [header, ...data] = code.split('\n');
     const [method, url] = header.split(' ');
     const queryBody = data.join('\n');
@@ -340,7 +333,7 @@ export default function Template({
     return `curl -X ${method} "http://localhost:8000${url}" -H 'Content-Type: application/json' -d'\n${queryBody}'`;
   };
 
-  const copyToClipboard = (content) => {
+  const copyToClipboard = content => {
     const el = document.createElement(`textarea`);
     el.value = content;
     el.setAttribute(`readonly`, ``);
@@ -434,6 +427,28 @@ export default function Template({
               ></i>
             </div>
           )} */}
+          {showWarning && (
+            <div className="alert warning">
+              {locale === 'en'
+                ? 'This version is no longer supported. For more information about migrating your data, see'
+                : '该版本不再维护。如需进行数据迁移，请先参考'}
+              <a
+                href={
+                  locale === 'en'
+                    ? '/docs/compatibility.md'
+                    : '/cn/docs/compatibility.md'
+                }
+                alt="sign up milvus"
+                rel="noreferrer noopener"
+                target="_blank"
+                style={{ margin: '0 6px', fontWeight: 'bold' }}
+              >
+                {locale === 'en'
+                  ? 'Compatibility Information.'
+                  : '兼容性信息。'}
+              </a>
+            </div>
+          )}
           <div className="doc-post">
             <div
               className="doc-post-content"

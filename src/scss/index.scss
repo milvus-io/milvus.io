@@ -1,6 +1,7 @@
 @import "../components/include_media.scss"; // hero image
 
 .home-wrapper {
+
   // typography
   h1,
   h2,
@@ -67,6 +68,7 @@
   }
 
   @include media("<=1000px") {
+
     h1,
     h2,
     h3 {
@@ -251,7 +253,7 @@
     text-align: center;
 
     img {
-      width: 186px;
+      width: 310px;
       margin-bottom: 1.2rem;
     }
 
@@ -276,6 +278,7 @@
       margin-bottom: 62px;
       color: #000000;
       text-align: center;
+
       a {
         color: #000000;
       }

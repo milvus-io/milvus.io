@@ -141,12 +141,11 @@
         background: rgba(79, 196, 249, 0.1);
         border: 1px solid var(--color-highlight);
         font-weight: bold;
+
       }
 
       &:hover {
-        color: #fff;
-        background-color: var(--color-highlight);
-        opacity: 0.9;
+        font-weight: bold;
         text-decoration: none;
       }
 
@@ -880,13 +879,13 @@
     padding-left: 0;
   }
 
-  li > ol {
+  li>ol {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
   }
 
-  li > ul {
+  li>ul {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
@@ -900,7 +899,7 @@
     margin-bottom: 0;
   }
 
-  li > p {
+  li>p {
     margin-bottom: calc(1.45rem / 2);
   }
 

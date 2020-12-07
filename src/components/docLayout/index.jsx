@@ -5,7 +5,7 @@ import Footer from '../footer/footer';
 // import AskMilvus from "../../images/ask_milvus.png";
 import './index.scss';
 
-export default (props) => {
+export default props => {
   const {
     language,
     children,
@@ -69,8 +69,8 @@ export default (props) => {
     ) {
       // get
       fetch(repoUrl)
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           if (data) {
             if (data.stargazers_count >= latest) {
               console.log(data.stargazers_count);
@@ -92,24 +92,24 @@ export default (props) => {
   }, []);
 
   useEffect(() => {
-    const cb = () => {
-      const wrapper = document.querySelector('html');
+    let currentPos = 0;
 
-      const showButton = wrapper.scrollTop !== 0;
+    const cb = function() {
+      const wrapper = document.querySelector('html');
+      const direction = wrapper.scrollTop - currentPos > 0 ? 'down' : 'up';
+      currentPos = wrapper.scrollTop;
+      const showButton = direction === 'up' && currentPos;
       setShowToTopButton(showButton);
     };
+    window.addEventListener('scroll', cb);
 
-    window.addEventListener('scroll', () => {
-      cb();
-    });
-
-    return window.removeEventListener('scroll', () => {
-      cb();
-    });
+    return () => {
+      window.removeEventListener('scroll', cb);
+    };
   }, []);
 
   const generateAnchorMenu = (headings, className) => {
-    return headings.map((v) => {
+    return headings.map(v => {
       /* eslint-disable-next-line */
       const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, '');
       const anchor = normalVal.split(' ').join('-');

@@ -175,7 +175,7 @@ const IndexPage = ({ data, pageContext }) => {
                 href="https://gitee.com/milvus-io/milvus/stargazers"
               >
                 <img
-                  src="https://gitee.com/milvus-io/milvus/badge/star.svg?theme=gray"
+                  src="https://gitee.com/milvus-io/milvus/badge/star.svg?theme=dark"
                   alt="star"
                 ></img>
               </a>

@@ -91,15 +91,16 @@
       margin-bottom: 3rem;
 
       display: flex;
-      flex-direction: column;
       align-items: center;
 
       .giteeicon {
+        margin-top: 4px;
+        margin-left: 24px;
+
         img {
-          background-color: #fff;
+          width: auto;
+          height: 30px;
         }
-        margin-top: 24px;
-        transform: scale(1.2);
       }
     }
 

@@ -111,13 +111,11 @@
   }
 
   .filter {
-    margin-bottom: 2rem;
+    margin: 2rem 0;
     // border-bottom: 2px solid #eee;
     display: flex;
     flex-direction: row;
     color: var(--color-primary);
-
-    margin-top: 64px;
 
     @include media('<=1000px') {
       overflow-x: auto;

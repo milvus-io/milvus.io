@@ -181,6 +181,9 @@
               {
                 "title": "在 Github 上加入我们 >",
                 "url": "https://github.com/milvus-io"
+              }, {
+                "title": "在 Gitee 上加入我们 >",
+                "url": "https://gitee.com/milvus-io/milvus"
               }
             ]
           },

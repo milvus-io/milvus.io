@@ -10,16 +10,18 @@
   left: 0;
   z-index: 90;
   width: 100%;
-  text-align: center;
   transition: opacity 0.3s;
   opacity: 1;
   color: #0A6599;
   overflow: hidden;
+  align-items: center;
+  justify-content: center;
 }
 
 .notification a {
   padding: 0 6px;
   color: #0A6599;
+
 }
 
 .notification .wrapper {

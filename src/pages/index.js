@@ -172,10 +172,10 @@ const IndexPage = ({ data, pageContext }) => {
             {locale === 'cn' && (
               <a
                 className="giteeicon"
-                href="https://gitee.com/milvus-io/milvus/stargazers"
+                href="https://gitee.com/openeuler/docs/stargazers"
               >
                 <img
-                  src="https://gitee.com/milvus-io/milvus/badge/star.svg?theme=gray"
+                  src="https://gitee.com/openeuler/docs/badge/star.svg?theme=dark"
                   alt="star"
                 ></img>
               </a>

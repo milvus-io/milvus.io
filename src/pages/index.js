@@ -269,7 +269,12 @@ const IndexPage = ({ data, pageContext }) => {
               <p>Milvus EM</p>
             </li>
             <li>
-              <a target="_blank" rel="noopener noreferrer" href="/tools/sizing">
+              {/* <a target="_blank" rel="noopener noreferrer" href="/tools/sizing"> */}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://zilliz.com/sizing-tool"
+              >
                 <img src={sizingIcon} alt="Milvus Sizing Tools"></img>
               </a>
               <p>Milvus Sizing Tools</p>

@@ -21,7 +21,7 @@ import LfaiLogo from '../images/logo/lfai.svg';
 import GithubLogo from '../images/icon/github-white.svg';
 import LearnLogo from '../images/icon/learn.svg';
 import adminIcon from '../images/tools/admin.png';
-import cIcon from '../images/tools/c.png';
+import cIcon from '../images/tools/c++.png';
 import goIcon from '../images/tools/go.png';
 import javaIcon from '../images/tools/java.png';
 import pythonIcon from '../images/tools/python.png';

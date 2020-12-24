@@ -441,7 +441,9 @@ export default function Template({
                 alt="sign up milvus"
                 rel="noreferrer noopener"
                 target="_blank"
-                style={{ margin: '0 6px', fontWeight: 'bold' }}
+                style={{
+                  margin: '0 6px',
+                }}
               >
                 {locale === 'en'
                   ? 'Compatibility Information.'

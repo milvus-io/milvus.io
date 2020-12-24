@@ -231,7 +231,7 @@ export default props => {
           </div>
         )}
 
-        {showToTopButton && (
+        {showToTopButton ? (
           <div
             className="button-to-top"
             role="button"
@@ -254,7 +254,7 @@ export default props => {
               ></path>
             </svg>
           </div>
-        )}
+        ) : null}
       </main>
     </div>
   );

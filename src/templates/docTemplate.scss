@@ -139,7 +139,6 @@
         background: rgba(79, 196, 249, 0.1);
         border: 1px solid var(--color-highlight);
         font-weight: bold;
-
       }
 
       &:hover {
@@ -182,6 +181,12 @@
     margin: 2rem 0;
     padding-left: 54px;
 
+    ul {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-right: 0.5rem;
+    }
+
     details {
       font-size: 0.8rem;
 
@@ -189,7 +194,6 @@
         font-size: 0.8rem;
       }
     }
-
 
     &:before {
       position: absolute;
@@ -251,8 +255,6 @@
       &:before {
         background-image: url('../images/icon/warning.svg');
       }
-
-
     }
 
     &.tip {
@@ -686,7 +688,7 @@
     padding-top: 0;
     list-style-position: outside;
     list-style-image: none;
-    list-style: disc;
+    // list-style: disc;
   }
 
   ol {
@@ -761,6 +763,7 @@
 
   pre {
     margin: 0;
+    margin-top: 0.5rem;
     margin-bottom: 2rem;
     font-size: 0.85rem;
     line-height: 1.42;
@@ -862,10 +865,12 @@
 
     &:lang(en) {
       line-height: 1.5;
+      margin-bottom: 8px;
     }
 
     &:lang(cn) {
       line-height: 1.8;
+      margin-bottom: 8px;
     }
   }
 
@@ -877,13 +882,13 @@
     padding-left: 0;
   }
 
-  li>ol {
+  li > ol {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
   }
 
-  li>ul {
+  li > ul {
     margin-left: 1.45rem;
     margin-bottom: calc(1.45rem / 2);
     margin-top: calc(1.45rem / 2);
@@ -897,7 +902,7 @@
     margin-bottom: 0;
   }
 
-  li>p {
+  li > p {
     margin-bottom: calc(1.45rem / 2);
   }
 
@@ -996,7 +1001,7 @@
 
     .content {
       // font-family: monospace;
-      font-family: Source Code Pro, monospace;
+      font-family: 'Source Code Pro', monospace;
     }
   }
 

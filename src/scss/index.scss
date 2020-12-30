@@ -2,6 +2,7 @@
 @import './fonts.scss';
 
 .home-wrapper {
+
   // typography
   h1,
   h2,
@@ -68,6 +69,7 @@
   }
 
   @include media('<=1000px') {
+
     h1,
     h2,
     h3 {

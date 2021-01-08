@@ -435,12 +435,11 @@ export default function Template({
               <a
                 href={
                   locale === 'en'
-                    ? '/docs/compatibility.md'
-                    : '/cn/docs/compatibility.md'
+                    ? `/docs/${version}/data_migration.md`
+                    : `/cn/docs/${version}/data_migration.md`
                 }
                 alt="sign up milvus"
                 rel="noreferrer noopener"
-                target="_blank"
                 style={{
                   margin: '0 6px',
                 }}

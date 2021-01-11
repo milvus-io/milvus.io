@@ -87,7 +87,9 @@ export default function Template({
   }, []);
 
   const showWarning = useMemo(
-    () => sortVersions(version, NOT_SUPPORTED_VERSION) > -1,
+    () =>
+      sortVersions(version, NOT_SUPPORTED_VERSION) > -1 &&
+      !window.location.pathname.includes('data_migration'),
     [version]
   );
 

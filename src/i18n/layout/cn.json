@@ -62,7 +62,7 @@
       "notification": {
         "version": "版本",
         "available": "已更新!",
-        "more": "了解更多新的特性",
+        "more": "了解更多新的特性→",
         "join": "加入 Milvus Slack 频道",
         "interact": "与社区互动讨论!"
       },
@@ -181,6 +181,9 @@
               {
                 "title": "在 Github 上加入我们 >",
                 "url": "https://github.com/milvus-io"
+              }, {
+                "title": "在 Gitee 上加入我们 >",
+                "url": "https://gitee.com/milvus-io/milvus"
               }
             ]
           },

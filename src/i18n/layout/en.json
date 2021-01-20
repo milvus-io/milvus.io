@@ -61,8 +61,8 @@
     "home": {
       "notification": {
         "version": "Version",
-        "available": "is now available ! ",
-        "more": "Learn more about the new features and fixes.",
+        "available": "is now available! ",
+        "more": "Learn more about the new features and fixes→",
         "join": "Join the Milvus Slack channel here",
         "interact": "to interact with our community!"
       },

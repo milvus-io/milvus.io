@@ -85,9 +85,7 @@ exports.createPages = ({ actions, graphql }) => {
   // isMenu outLink can be add when need to use
   return graphql(`
     {
-      allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/(?:site|blog)/" } }
-      ) {
+      allMarkdownRemark(filter: { fileAbsolutePath: { regex: "/(?:site)/" } }) {
         edges {
           node {
             headings {

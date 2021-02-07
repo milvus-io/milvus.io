@@ -34,13 +34,13 @@ module.exports = {
         path: `${__dirname}/src/pages/docs/versions`,
       },
     },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `blogs`,
-        path: `${__dirname}/src/pages/blogs/versions`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `blogs`,
+    //     path: `${__dirname}/src/pages/blogs/versions`,
+    //   },
+    // },
     {
       resolve: `gatsby-transformer-remark`,
       options: {

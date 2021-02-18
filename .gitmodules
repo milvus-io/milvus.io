@@ -2,6 +2,10 @@
 	path = src/pages/docs/versions/master
 	url = https://github.com/milvus-io/docs.git
 	branch = master
+[submodule "src/pages/blogs/versions/master"]
+	path = src/pages/blogs/versions/master
+	url = https://github.com/milvus-io/community.git
+	branch = master
 [submodule "static/benchmarks"]
 	path = static/benchmarks
 	url = https://github.com/milvus-io/benchmarks.git

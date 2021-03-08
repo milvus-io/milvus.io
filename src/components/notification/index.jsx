@@ -1,11 +1,11 @@
 import React from 'react';
 import './index.scss';
-import Marquee from 'react-marquee-slider';
-import { useMobileScreen } from '../../hooks';
+// import Marquee from 'react-marquee-slider';
+// import { useMobileScreen } from '../../hooks';
 
 const Notification = props => {
   const { version, language } = props;
-  const screenWidth = useMobileScreen();
+  // const screenWidth = useMobileScreen();
 
   return (
     <div className="notification">

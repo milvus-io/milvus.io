@@ -29,6 +29,7 @@ import sizingIcon from '../images/tools/sizing.png';
 import Qcode from '../images/qrcode.jpeg';
 import MilvusUserWechat from '../images/milvus-user-wechat.png';
 import GithubButton from 'react-github-button';
+import {importAllPics} from '../utils/docTemplate.util'
 import 'react-github-button/assets/style.css';
 
 const icons = {
@@ -47,53 +48,7 @@ const icons = {
 
 let users = [];
 let resources = [];
-export function importAllPics(r, type, users = [], resources = []) {
-  r.keys().forEach(key => {
-    const m = r(key);
-    const matchs = key.match(/.\/(\S*).svg/);
-    let href = '';
-    let order = 0;
-    if (type === 'resources' && matchs.length) {
-      switch (matchs[1]) {
-        case 'bilibili':
-          order = 4;
-          href =
-            'https://space.bilibili.com/478166626?from=search&seid=1306120686699362786';
-          break;
-        case 'medium':
-          order = 2;
-          href = 'https://medium.com/unstructured-data-service';
-          break;
-        case 'slack':
-          order = 0;
-          href =
-            'https://milvusio.slack.com/join/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ';
-          break;
-        case 'twitter':
-          order = 1;
-          href = 'https://twitter.com/milvusio';
-          break;
-        case 'zhihu':
-          order = 5;
-          href = 'https://zhuanlan.zhihu.com/ai-search';
-          break;
-        case 'wechat':
-          order = 3;
-          href = '#';
-          break;
-        default:
-          href = '#';
-          break;
-      }
-    }
-    if (type === 'users') {
-      const index = key.replace(/[^0-9]/gi, '');
-      users[index] = m;
-    } else {
-      resources[order] = { src: m, name: matchs && matchs[1], href };
-    }
-  });
-}
+
 importAllPics(
   require.context('../images/website/show-users', false, /\.jpg|.png$/),
   'users',
@@ -328,7 +283,7 @@ const IndexPage = ({ data, pageContext }) => {
           <ul>
             {users.map((v, i) => (
               <li key={i}>
-                <img src={v} alt="customer"></img>
+                <img src={v.default} alt="customer"></img>
               </li>
             ))}
           </ul>

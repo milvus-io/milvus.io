@@ -37,24 +37,24 @@ export default function Template({
   versions = versions.sort(sortVersions);
   const screenWidth = useMobileScreen();
 
-  const checkEventStatus = () => {
-    if (window) {
-      const showEventTime = window.localStorage.getItem('showEventTime');
-      if (showEventTime === null) {
-        return true;
-      }
-      const currentTime = new Date().getTime();
-      return Number(showEventTime) < currentTime;
-    }
-  };
+  // const checkEventStatus = () => {
+  //   if (window) {
+  //     const showEventTime = window.localStorage.getItem('showEventTime');
+  //     if (showEventTime === null) {
+  //       return true;
+  //     }
+  //     const currentTime = new Date().getTime();
+  //     return Number(showEventTime) < currentTime;
+  //   }
+  // };
 
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showEvent, setShowEvent] = useState(false);
+  // const [showEvent, setShowEvent] = useState(false);
 
-  useEffect(() => {
-    setShowEvent(checkEventStatus());
-  }, []);
+  // useEffect(() => {
+  //   setShowEvent(checkEventStatus());
+  // }, []);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach(panel => {
@@ -243,7 +243,7 @@ export default function Template({
         insertAnchors(anchors);
       }
     }
-  }, []);
+  }, [editPath]);
 
   useEffect(() => {
     const { search } = window.location;
@@ -354,18 +354,18 @@ export default function Template({
 
   const onOverlayClick = () => setShowModal(false);
 
-  const onEventInfoCloseClick = () => {
-    if (!!window) {
-      setShowEvent(false);
+  // const onEventInfoCloseClick = () => {
+  //   if (!!window) {
+  //     setShowEvent(false);
 
-      // show event after 24 hours
-      const showEventTime = new Date(
-        new Date().getTime() + 24 * 60 * 60000
-      ).getTime();
+  //     // show event after 24 hours
+  //     const showEventTime = new Date(
+  //       new Date().getTime() + 24 * 60 * 60000
+  //     ).getTime();
 
-      window.localStorage.setItem('showEventTime', showEventTime);
-    }
-  };
+  //     window.localStorage.setItem('showEventTime', showEventTime);
+  //   }
+  // };
 
   return (
     <Layout

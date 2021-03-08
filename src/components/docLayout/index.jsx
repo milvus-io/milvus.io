@@ -5,7 +5,7 @@ import Footer from '../footer/footer';
 // import AskMilvus from "../../images/ask_milvus.png";
 import './index.scss';
 
-export default props => {
+const DocLayout = props => {
   const {
     language,
     children,
@@ -259,3 +259,6 @@ export default props => {
     </div>
   );
 };
+
+
+export default DocLayout;

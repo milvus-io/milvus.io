@@ -2,7 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import Layout from "../components/layout/404Layout";
 import SEO from "../components/seo";
-import { importAllPics } from "./index";
+import { importAllPics } from "../utils/docTemplate.util";
 import "../scss/index.scss";
 
 let users = [];
@@ -27,7 +27,7 @@ const UsersPage = ({ data, pageContext }) => {
           <ul>
             {users.map((v, i) => (
               <li key={i}>
-                <img src={v} alt="milvus user"></img>
+                <img src={v.default} alt="milvus user"></img>
               </li>
             ))}
           </ul>

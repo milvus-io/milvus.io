@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import locales from "../../consts/locales.js";
 import "./localizedLink.scss";
 
-export default ({ locale, to, children, className = "link" }) => {
+const  LocalizedLink = ({ locale, to, children, className = "link" }) => {
   const language = locales[locale];
   const toMedium = locale === "en" && to.includes("blog");
   if (toMedium) {
@@ -24,3 +24,5 @@ export default ({ locale, to, children, className = "link" }) => {
   language && !language.default ? (path = `/${locale}${to}`) : (path = to);
   return <Link className={className} children={children} to={path} />;
 };
+
+export default LocalizedLink;

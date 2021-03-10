@@ -7,13 +7,18 @@ const Notification = props => {
   const { version, language } = props;
   // const screenWidth = useMobileScreen();
 
+  const notificationLinksMap = {
+    'v1.0.0': '/docs/v1.0.0/announcement.md',
+    undefined: `/docs/${version}/release_notes.md`
+  }
+
   return (
     <div className="notification">
       <span>
         <span role="img" aria-label="" aria-labelledby="">
           👋
         </span>
-        <a href={`/docs/${version}/release_notes.md`}>
+        <a href={`${notificationLinksMap[version]}`}>
           {language.version} {version} {language.available}{' '}
           {typeof document !== 'undefined' &&
             document.body &&

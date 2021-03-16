@@ -22,7 +22,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
   const [isSHowMobileMask, setIsShowMobileMask] = useState(false);
   const [actionType, setActionType] = useState('');
   const popupRef = useRef(null);
-  const containerRef = useRef(null);
+  const mobileContainerRef = useRef(null);
 
   const l = locale === 'cn' ? 'en' : 'cn';
   const to = globalHistory.location.pathname
@@ -38,11 +38,6 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
       setLanList(false);
     });
   }, []);
-
-  const handleClick = e => {
-    e.stopPropagation();
-    setMobileNav(v => !v);
-  };
 
   const onChangeLocale = () => {
     window.localStorage.setItem('milvus.io.setlanguage', true);
@@ -75,13 +70,13 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   };
-  useClickOutside(containerRef, e => {
+  useClickOutside(mobileContainerRef, e => {
     hideMobileMask(e);
   });
 
   return (
     <>
-      <div className="full-header-wrapper" ref={containerRef}>
+      <div className="full-header-wrapper" ref={mobileContainerRef}>
         <header className="header-wrapper">
           <div className="logo-wrapper">
             <LocalizeLink locale={locale} to={'/'}>

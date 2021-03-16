@@ -40,7 +40,7 @@ const MobileMenuContent = ({ locale, header, onChangeLocale, to, l }) => {
         >
           {header.blog}
         </LocalizeLink>
-        <div href="#" className="btn-wrapper link">
+        <div className="btn-wrapper link">
           <LocalizeLink
             locale={l}
             to={to}

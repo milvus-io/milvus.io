@@ -9,7 +9,7 @@ import './index.scss';
 const DOCS_JSON = require('../../../../search.json');
 let timer = null;
 
-const MobileSearchContent = ({ language, locale, hideMobileMask }) => {
+const MobileSearchContent = ({ language, locale }) => {
   const [query, setQuery] = useState('');
   const [focus, setFocus] = useState('');
   const [loading, setLoading] = useState(false);
@@ -63,7 +63,6 @@ const MobileSearchContent = ({ language, locale, hideMobileMask }) => {
     setShowMatchData(true);
   };
   const onSearchItemClick = (e, isCurrentPage, title) => {
-    e.preventDefault();
     window.localStorage.setItem('anchorTitle', title);
     setShowMatchData(false);
 

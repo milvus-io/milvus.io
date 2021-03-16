@@ -1,0 +1,18 @@
+@import "../../include_media.scss";
+
+.search-wrapper-mobile {
+  position: relative;
+  border-radius: 4px;
+  font-size: 0;
+  color: #000;
+
+  img {
+    cursor: pointer;
+  }
+  .search-icon {
+    vertical-align: -3px;
+    margin-right: 4px;
+  }
+
+  
+}

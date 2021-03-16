@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import LocalizeLink from '../localizedLink/localizedLink';
 import Logo from '../../images/logo/milvus-horizontal-color.svg';
+import MobilLogo from '../../images/logo/logo.svg';
 import LfaiLogo from '../../images/logo/lfai.svg';
-import Search from '../../components/search';
 import './header.scss';
 import { globalHistory } from '@reach/router';
 import { useMobileScreen } from '../../hooks';
+import { SearchForWeb, SearchForMobile } from '../search';
+import Menu from '../../images/mobileIcon/menu.svg';
+import Close from '../../images/mobileIcon/close.svg';
+import MobilePopUp from './components/MobilePopUp';
+import MobileSearchContent from './components/MobileSearchContent';
+import MobileMenuContent from './components/MobileMenuContent';
 
 const Header = ({ language, locale, current = '', showDoc = true }) => {
   const { header } = language;
   const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
   const [lanList, setLanList] = useState(false);
+  const [isSHowMobileMask, setIsShowMobileMask] = useState(false);
+  const [actionType, setActionType] = useState('');
+  const popupRef = useRef(null);
 
   const l = locale === 'cn' ? 'en' : 'cn';
   const to = globalHistory.location.pathname
@@ -38,13 +47,29 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
     window.localStorage.setItem('milvus.io.setlanguage', true);
   };
 
+  const showMobileMask = (e, { actionType }) => {
+    e.preventDefault();
+    setIsShowMobileMask(true);
+    setActionType(actionType);
+    popupRef.current.classList.add('activited');
+  };
+  const hideMobileMask = e => {
+    e.preventDefault();
+    setIsShowMobileMask(false);
+    popupRef.current.classList.remove('activited');
+  };
+
   return (
     <>
       <div className="full-header-wrapper">
         <header className="header-wrapper">
           <div className="logo-wrapper">
             <LocalizeLink locale={locale} to={'/'}>
-              <img src={Logo} alt="Milvos Logo"></img>
+              <img
+                style={{ height: screenWidth > 1000 ? '3rem' : '26px' }}
+                src={screenWidth > 1000 ? Logo : MobilLogo}
+                alt="Milvos Logo"
+              ></img>
             </LocalizeLink>
             <a
               href="https://lfai.foundation/projects/"
@@ -109,57 +134,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 {header.blog}
               </a>
 
-              <Search language={header} locale={locale}></Search>
-              <span
-                role="button"
-                tabIndex={0}
-                className="language"
-                onKeyDown={() => {
-                  setLanList(!lanList);
-                }}
-                onClick={e => {
-                  e.stopPropagation();
-                  setLanList(!lanList);
-                }}
-              >
-                {locale === 'cn' ? '中' : 'En'}
-                {lanList && (
-                  <div className="language-list">
-                    <LocalizeLink
-                      locale={l}
-                      to={to}
-                      className={locale === 'en' ? 'active' : ''}
-                    >
-                      <span
-                        tabIndex={0}
-                        onKeyDown={onChangeLocale}
-                        onClick={onChangeLocale}
-                        role="button"
-                      >
-                        English
-                      </span>
-                    </LocalizeLink>
-                    <LocalizeLink
-                      locale={l}
-                      to={to}
-                      className={locale === 'cn' ? 'active' : ''}
-                    >
-                      <span
-                        tabIndex={0}
-                        onKeyDown={onChangeLocale}
-                        onClick={onChangeLocale}
-                        role="button"
-                      >
-                        中文
-                      </span>
-                    </LocalizeLink>
-                  </div>
-                )}
-              </span>
-            </div>
-          ) : (
-            <div className="right">
-              <Search language={header}></Search>
+              <SearchForWeb language={header} locale={locale}></SearchForWeb>
               <span
                 role="button"
                 tabIndex={0}
@@ -215,7 +190,47 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 onClick={handleClick}
               ></i>
             </div>
+          ) : (
+            <div className="right-mobile">
+              {!isSHowMobileMask && (
+                <SearchForMobile
+                  language={header}
+                  locale={locale}
+                  showMobileMask={showMobileMask}
+                ></SearchForMobile>
+              )}
+              {!isSHowMobileMask ? (
+                <a
+                  href="/#"
+                  onClick={e => showMobileMask(e, { actionType: 'menu' })}
+                >
+                  <img src={Menu} alt="menu-logo"></img>
+                </a>
+              ) : (
+                <a href="/#" onClick={e => hideMobileMask(e)}>
+                  <img src={Close} alt="close-logo" />
+                </a>
+              )}
+            </div>
           )}
+          {/* 下滑的框框 */}
+          <MobilePopUp ref={popupRef}>
+            {actionType === 'menu' ? (
+              <MobileMenuContent
+                locale={locale}
+                header={header}
+                to={to}
+                l={l}
+                onChangeLocale={onChangeLocale}
+              />
+            ) : (
+              <MobileSearchContent
+                locale={locale}
+                language={header}
+                hideMobileMask={hideMobileMask}
+              />
+            )}
+          </MobilePopUp>
         </header>
       </div>
       <div className={`mobile-nav ${mobileNav && 'open'}`}>

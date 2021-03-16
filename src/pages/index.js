@@ -80,6 +80,7 @@ const getRedirectLanguage = () => {
 
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
+
   const { locale, newestVersion } = pageContext;
   const {
     section1,
@@ -91,7 +92,6 @@ const IndexPage = ({ data, pageContext }) => {
   } = language.home;
 
   let currentResources = [...resources];
-
   if (locale === 'en') {
     currentResources = resources.filter(
       r => r.name !== 'bilibili' && r.name !== 'zhihu'
@@ -307,7 +307,7 @@ const IndexPage = ({ data, pageContext }) => {
                         >
                           <img
                             className="column-img"
-                            src={v.src}
+                            src={v.src.default}
                             alt="resouce"
                           ></img>
                         </a>

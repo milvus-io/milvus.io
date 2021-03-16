@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   getAnchorElement,
   scrollToElement,
-} from '../../utils/docTemplate.util';
-import LocalizeLink from '../localizedLink/localizedLink';
+} from '../../../utils/docTemplate.util';
+import LocalizeLink from '../../localizedLink/localizedLink';
 
 import './index.scss';
-const DOCS_JSON = require('../../search.json');
+const DOCS_JSON = require('../../../search.json');
 let timer = null;
-const Search = props => {
+const SearchForWeb = props => {
   const { language, locale } = props;
   const [query, setQuery] = useState('');
   const [focus, setFocus] = useState('');
@@ -80,7 +80,8 @@ const Search = props => {
   };
   useClickOutside(containerRef, () => setFocus(false));
 
-  const onSearchItemClick = (isCurrentPage, title) => {
+  const onSearchItemClick = (e, isCurrentPage, title) => {
+    e.preventDefault();
     window.localStorage.setItem('anchorTitle', title);
     setShowMatchData(false);
 
@@ -103,7 +104,7 @@ const Search = props => {
   };
 
   return (
-    <div className="search-wrapper" ref={containerRef}>
+    <div className="search-wrapper-web" ref={containerRef}>
       <svg
         className="search-icon"
         viewBox="0 0 16 16"
@@ -143,20 +144,24 @@ const Search = props => {
                 // const targetLink = `${pathInfoList.join('/')}/${path}`;
 
                 return (
-                  <li
-                    key={index}
-                    onClick={() => onSearchItemClick(isCurrentPage, title)}
-                  >
-                    <LocalizeLink
-                      locale={lang}
-                      to={`/docs/${version}/${path}${isId ? '' : `?${anchor}`}`}
+                  <li key={index}>
+                    <a
+                      href="/#"
+                      onClick={e => onSearchItemClick(e, isCurrentPage, title)}
                     >
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: `${highlight} ${version}`,
-                        }}
-                      ></span>
-                    </LocalizeLink>
+                      <LocalizeLink
+                        locale={lang}
+                        to={`/docs/${version}/${path}${
+                          isId ? '' : `?${anchor}`
+                        }`}
+                      >
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: `${highlight} ${version}`,
+                          }}
+                        ></span>
+                      </LocalizeLink>
+                    </a>
                     {/* <a
                       href={`${targetLink}${isId ? '' : `?${anchor}`}`}
                       target="_blank"
@@ -181,4 +186,4 @@ const Search = props => {
   );
 };
 
-export default Search;
+export default SearchForWeb;

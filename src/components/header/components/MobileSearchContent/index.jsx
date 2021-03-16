@@ -16,7 +16,6 @@ const MobileSearchContent = ({ language, locale, hideMobileMask }) => {
   const [matchData, setMatchData] = useState([]);
   const [showMatchData, setShowMatchData] = useState(true);
   const ref = useRef(null);
-  const containerRef = useRef(null);
 
   const handleChange = e => {
     setQuery(ref.current.value);
@@ -63,25 +62,6 @@ const MobileSearchContent = ({ language, locale, hideMobileMask }) => {
     setFocus(true);
     setShowMatchData(true);
   };
-  const useClickOutside = (ref, handler, events) => {
-    if (!events) events = [`mousedown`, `touchstart`];
-    const detectClickOutside = event => {
-      !ref.current.contains(event.target) && handler(event);
-    };
-    useEffect(() => {
-      for (const event of events)
-        document.addEventListener(event, detectClickOutside);
-      return () => {
-        for (const event of events)
-          document.removeEventListener(event, detectClickOutside);
-      };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-  };
-  useClickOutside(containerRef, e => {
-    setFocus(false);
-    hideMobileMask(e);
-  });
   const onSearchItemClick = (e, isCurrentPage, title) => {
     e.preventDefault();
     window.localStorage.setItem('anchorTitle', title);
@@ -106,7 +86,7 @@ const MobileSearchContent = ({ language, locale, hideMobileMask }) => {
   };
 
   return (
-    <div className="mobile-search-content" ref={containerRef}>
+    <div className="mobile-search-content">
       <div className="input-warpper">
         <input
           placeholder={language.search}

@@ -22,6 +22,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
   const [isSHowMobileMask, setIsShowMobileMask] = useState(false);
   const [actionType, setActionType] = useState('');
   const popupRef = useRef(null);
+  const containerRef = useRef(null);
 
   const l = locale === 'cn' ? 'en' : 'cn';
   const to = globalHistory.location.pathname
@@ -59,9 +60,28 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
     popupRef.current.classList.remove('activited');
   };
 
+  const useClickOutside = (ref, handler, events) => {
+    if (!events) events = [`mousedown`, `touchstart`];
+    const detectClickOutside = event => {
+      !ref.current.contains(event.target) && handler(event);
+    };
+    useEffect(() => {
+      for (const event of events)
+        document.addEventListener(event, detectClickOutside);
+      return () => {
+        for (const event of events)
+          document.removeEventListener(event, detectClickOutside);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  };
+  useClickOutside(containerRef, e => {
+    hideMobileMask(e);
+  });
+
   return (
     <>
-      <div className="full-header-wrapper">
+      <div className="full-header-wrapper" ref={containerRef}>
         <header className="header-wrapper">
           <div className="logo-wrapper">
             <LocalizeLink locale={locale} to={'/'}>
@@ -181,14 +201,6 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                   </div>
                 )}
               </span>
-              <i
-                className="fas fa-bars"
-                role="button"
-                tabIndex="0"
-                aria-label="Lang controller"
-                onKeyDown={handleClick}
-                onClick={handleClick}
-              ></i>
             </div>
           ) : (
             <div className="right-mobile">
@@ -202,12 +214,14 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
               {!isSHowMobileMask ? (
                 <a
                   href="/#"
-                  onClick={e => showMobileMask(e, { actionType: 'menu' })}
+                  onClickCapture={e =>
+                    showMobileMask(e, { actionType: 'menu' })
+                  }
                 >
                   <img src={Menu} alt="menu-logo"></img>
                 </a>
               ) : (
-                <a href="/#" onClick={e => hideMobileMask(e)}>
+                <a href="/#" onClickCapture={e => hideMobileMask(e)}>
                   <img src={Close} alt="close-logo" />
                 </a>
               )}

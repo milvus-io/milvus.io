@@ -16,7 +16,7 @@ const SearchForWeb = props => {
   const [matchData, setMatchData] = useState([]);
   const [showMatchData, setShowMatchData] = useState(true);
   const ref = useRef(null);
-  const containerRef = useRef(null);
+  const mobileContainerRef = useRef(null);
 
   const handleChange = e => {
     setQuery(ref.current.value);
@@ -78,7 +78,7 @@ const SearchForWeb = props => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   };
-  useClickOutside(containerRef, () => setFocus(false));
+  useClickOutside(mobileContainerRef, () => setFocus(false));
 
   const onSearchItemClick = (e, isCurrentPage, title) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ const SearchForWeb = props => {
   };
 
   return (
-    <div className="search-wrapper-web" ref={containerRef}>
+    <div className="search-wrapper-web" ref={mobileContainerRef}>
       <svg
         className="search-icon"
         viewBox="0 0 16 16"

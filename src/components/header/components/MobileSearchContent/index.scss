@@ -1,11 +1,12 @@
 @import '../../../include_media';
 
 .mobile-search-content {
+  padding: 10px 16px;
   
-  .input-warpper {
-    padding: 10px 16px;
-    border-bottom: 1px solid #eee;
 
+  .input-warpper {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
     input {
       display: inline-block;
       width: 100%;
@@ -16,9 +17,9 @@
 
   .result-wrapper {
     max-height: 80vh;
+    min-height: 328px;
     width: 100%;
     overflow: auto;
-    padding: 0 16px;
 
     .result-list {
       @include scroll-bar;

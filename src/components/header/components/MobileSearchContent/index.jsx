@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import LocalizeLink from '../../../localizedLink/localizedLink';
 import {
   getAnchorElement,
@@ -63,6 +63,7 @@ const MobileSearchContent = ({ language, locale }) => {
     setShowMatchData(true);
   };
   const onSearchItemClick = (e, isCurrentPage, title) => {
+    e.preventDefault();
     window.localStorage.setItem('anchorTitle', title);
     setShowMatchData(false);
 

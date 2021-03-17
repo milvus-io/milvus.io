@@ -8,8 +8,6 @@ import './header.scss';
 import { globalHistory } from '@reach/router';
 import { useMobileScreen } from '../../hooks';
 import { SearchForWeb, SearchForMobile } from '../search';
-import Menu from '../../images/mobileIcon/menu.svg';
-import Close from '../../images/mobileIcon/close.svg';
 import MobilePopUp from './components/MobilePopUp';
 import MobileSearchContent from './components/MobileSearchContent';
 import MobileMenuContent from './components/MobileMenuContent';
@@ -43,14 +41,12 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
     window.localStorage.setItem('milvus.io.setlanguage', true);
   };
 
-  const showMobileMask = (e, { actionType }) => {
-    e.preventDefault();
+  const showMobileMask = ({ actionType }) => {
     setIsShowMobileMask(true);
     setActionType(actionType);
     popupRef.current.classList.add('activited');
   };
-  const hideMobileMask = e => {
-    e.preventDefault();
+  const hideMobileMask = () => {
     setIsShowMobileMask(false);
     popupRef.current.classList.remove('activited');
   };
@@ -70,8 +66,8 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   };
-  useClickOutside(mobileContainerRef, e => {
-    hideMobileMask(e);
+  useClickOutside(mobileContainerRef, () => {
+    hideMobileMask();
   });
 
   return (
@@ -207,18 +203,26 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 ></SearchForMobile>
               )}
               {!isSHowMobileMask ? (
-                <a
-                  href="/#"
-                  onClickCapture={e =>
-                    showMobileMask(e, { actionType: 'menu' })
-                  }
-                >
-                  <img src={Menu} alt="menu-logo"></img>
-                </a>
+                <i
+                  className="fas fa-bars font-icon"
+                  aria-label="menu-button"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => showMobileMask({ actionType: 'menu' })}
+                  onKeyDown={() => showMobileMask({ actionType: 'menu' })}
+                ></i>
               ) : (
-                <a href="/#" onClickCapture={e => hideMobileMask(e)}>
-                  <img src={Close} alt="close-logo" />
-                </a>
+                // <a href="/#" onClickCapture={e => hideMobileMask(e)}>
+                //   <img src={Close} alt="close-logo" />
+                // </a>
+                <i
+                  className="fas fa-times font-icon"
+                  aria-label="close-button"
+                  role="button"
+                  tabIndex={0}
+                  onClick={hideMobileMask}
+                  onKeyDown={hideMobileMask}
+                ></i>
               )}
             </div>
           )}

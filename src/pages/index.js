@@ -15,7 +15,6 @@ import realtimeIcon from '../images/features/realtime.svg';
 import scalableIcon from '../images/features/scalable.svg';
 import supportIcon from '../images/features/support.svg';
 import metricsIcon from '../images/features/metrics.svg';
-import searchIcon from '../images/features/search.svg';
 
 import LfaiLogo from '../images/logo/lfai.svg';
 import GithubLogo from '../images/icon/github-white.svg';
@@ -42,7 +41,6 @@ const icons = {
   hybrid: hybridIcon,
   crud: crudIcon,
   cost: costIcon,
-  search: searchIcon,
   metrics: metricsIcon,
 };
 

@@ -129,9 +129,16 @@
     display: flex;
     align-items: center;
 
-    img {
-      padding: 5px 10px;
-      cursor: pointer;
+    .font-icon{
+      color: #06AFF2;
+      font-size: 18px;
+      &:focus {
+        border: none;
+        outline: none;
+      }
+      &::before{
+        padding: 5px 10px;
+      }
     }
   }
 

@@ -6,13 +6,11 @@
   font-size: 0;
   color: #000;
 
-  img {
-    cursor: pointer;
+  .font-icon{
+    color: #06AFF2;
+    font-size: 18px;
+    &::before{
+      padding: 5px 10px;
+    }
   }
-  .search-icon {
-    vertical-align: -3px;
-    margin-right: 4px;
-  }
-
-  
 }

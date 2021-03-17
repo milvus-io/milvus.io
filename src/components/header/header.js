@@ -145,7 +145,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 {header.blog}
               </a>
 
-              <SearchForWeb language={header} locale={locale}></SearchForWeb>
+              <SearchForWeb language={header} locale={locale} hideMobileMask={hideMobileMask}></SearchForWeb>
               <span
                 role="button"
                 tabIndex={0}
@@ -200,6 +200,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                   language={header}
                   locale={locale}
                   showMobileMask={showMobileMask}
+                  hideMobileMask={hideMobileMask}
                 ></SearchForMobile>
               )}
               {!isSHowMobileMask ? (
@@ -212,9 +213,6 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                   onKeyDown={() => showMobileMask({ actionType: 'menu' })}
                 ></i>
               ) : (
-                // <a href="/#" onClickCapture={e => hideMobileMask(e)}>
-                //   <img src={Close} alt="close-logo" />
-                // </a>
                 <i
                   className="fas fa-times font-icon"
                   aria-label="close-button"
@@ -235,6 +233,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 to={to}
                 l={l}
                 onChangeLocale={onChangeLocale}
+                hideMobileMask={hideMobileMask}
               />
             ) : (
               <MobileSearchContent

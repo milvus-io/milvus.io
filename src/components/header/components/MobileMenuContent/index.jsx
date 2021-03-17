@@ -2,10 +2,17 @@ import React, { useMemo } from 'react';
 import LocalizeLink from '../../../localizedLink/localizedLink';
 import './index.scss';
 
-const MobileMenuContent = ({ locale, header, onChangeLocale, to, l }) => {
+const MobileMenuContent = ({ locale, header, onChangeLocale, to, l, hideMobileMask }) => {
+
   return useMemo(() => {
     return (
-      <div className="mobile-menu-content">
+      <i className="mobile-menu-content"
+        role="button"
+        tabIndex={0}
+        aria-label="mobile-menu-content"
+        onClick={hideMobileMask}
+        onKeyDown={hideMobileMask}
+      >
         <LocalizeLink
           locale={locale}
           to="/docs/install_milvus.md"
@@ -70,9 +77,9 @@ const MobileMenuContent = ({ locale, header, onChangeLocale, to, l }) => {
             </span>
           </LocalizeLink>
         </div>
-      </div>
+      </i>
     );
-  }, [locale, header, l, to, onChangeLocale]);
+  }, [locale, header, l, to, onChangeLocale, hideMobileMask]);
 };
 
 export default MobileMenuContent;

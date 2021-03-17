@@ -1,0 +1,60 @@
+@import '../../../include_media';
+
+.mobile-search-content {
+  padding: 10px 16px;
+  
+
+  .input-warpper {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+    input {
+      display: inline-block;
+      width: 100%;
+      border: none;
+      outline: none;
+    }
+  }
+
+  .result-wrapper {
+    max-height: 80vh;
+    min-height: 328px;
+    width: 100%;
+    overflow: auto;
+
+    .result-list {
+      @include scroll-bar;
+
+      z-index: 1000;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+      box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+      padding: 0.7em 1em;
+      background: #28292e;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 16px;
+      list-style: none;
+
+      a {
+        &.link {
+          color: #fff;
+        }
+
+        em {
+          font-weight: bold;
+          color: #4fc4f9;
+        }
+      }
+
+      li + li {
+        margin-top: 0.7em;
+        padding-top: 0.7em;
+        border-top: 1px solid #d1d1d1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #fff;
+      }
+    }
+  }
+}

@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import LocalizeLink from '../localizedLink/localizedLink';
 import Logo from '../../images/logo/milvus-horizontal-color.svg';
+import MobilLogo from '../../images/logo/logo.svg';
 import LfaiLogo from '../../images/logo/lfai.svg';
-import Search from '../../components/search';
 import './header.scss';
 import { globalHistory } from '@reach/router';
 import { useMobileScreen } from '../../hooks';
+import { SearchForWeb, SearchForMobile } from '../search';
+import MobilePopUp from './components/MobilePopUp';
+import MobileSearchContent from './components/MobileSearchContent';
+import MobileMenuContent from './components/MobileMenuContent';
 
 const Header = ({ language, locale, current = '', showDoc = true }) => {
   const { header } = language;
   const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
   const [lanList, setLanList] = useState(false);
+  const [isSHowMobileMask, setIsShowMobileMask] = useState(false);
+  const [actionType, setActionType] = useState('');
+  const popupRef = useRef(null);
+  const mobileContainerRef = useRef(null);
 
   const l = locale === 'cn' ? 'en' : 'cn';
   const to = globalHistory.location.pathname
@@ -29,22 +37,50 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
     });
   }, []);
 
-  const handleClick = e => {
-    e.stopPropagation();
-    setMobileNav(v => !v);
-  };
-
   const onChangeLocale = () => {
     window.localStorage.setItem('milvus.io.setlanguage', true);
   };
 
+  const showMobileMask = ({ actionType }) => {
+    setIsShowMobileMask(true);
+    setActionType(actionType);
+    popupRef.current.classList.add('activited');
+  };
+  const hideMobileMask = () => {
+    setIsShowMobileMask(false);
+    popupRef.current.classList.remove('activited');
+  };
+
+  const useClickOutside = (ref, handler, events) => {
+    if (!events) events = [`mousedown`, `touchstart`];
+    const detectClickOutside = event => {
+      !ref.current.contains(event.target) && handler(event);
+    };
+    useEffect(() => {
+      for (const event of events)
+        document.addEventListener(event, detectClickOutside);
+      return () => {
+        for (const event of events)
+          document.removeEventListener(event, detectClickOutside);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  };
+  useClickOutside(mobileContainerRef, () => {
+    hideMobileMask();
+  });
+
   return (
     <>
-      <div className="full-header-wrapper">
+      <div className="full-header-wrapper" ref={mobileContainerRef}>
         <header className="header-wrapper">
           <div className="logo-wrapper">
             <LocalizeLink locale={locale} to={'/'}>
-              <img src={Logo} alt="Milvos Logo"></img>
+              <img
+                style={{ height: screenWidth > 1000 ? '3rem' : '26px' }}
+                src={screenWidth > 1000 ? Logo : MobilLogo}
+                alt="Milvos Logo"
+              ></img>
             </LocalizeLink>
             <a
               href="https://lfai.foundation/projects/"
@@ -109,7 +145,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 {header.blog}
               </a>
 
-              <Search language={header} locale={locale}></Search>
+              <SearchForWeb language={header} locale={locale}></SearchForWeb>
               <span
                 role="button"
                 tabIndex={0}
@@ -158,64 +194,56 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
               </span>
             </div>
           ) : (
-            <div className="right">
-              <Search language={header}></Search>
-              <span
-                role="button"
-                tabIndex={0}
-                className="language"
-                onKeyDown={() => {
-                  setLanList(!lanList);
-                }}
-                onClick={e => {
-                  e.stopPropagation();
-                  setLanList(!lanList);
-                }}
-              >
-                {locale === 'cn' ? '中' : 'En'}
-                {lanList && (
-                  <div className="language-list">
-                    <LocalizeLink
-                      locale={l}
-                      to={to}
-                      className={locale === 'en' ? 'active' : ''}
-                    >
-                      <span
-                        tabIndex={0}
-                        onKeyDown={onChangeLocale}
-                        onClick={onChangeLocale}
-                        role="button"
-                      >
-                        English
-                      </span>
-                    </LocalizeLink>
-                    <LocalizeLink
-                      locale={l}
-                      to={to}
-                      className={locale === 'cn' ? 'active' : ''}
-                    >
-                      <span
-                        tabIndex={0}
-                        onKeyDown={onChangeLocale}
-                        onClick={onChangeLocale}
-                        role="button"
-                      >
-                        中文
-                      </span>
-                    </LocalizeLink>
-                  </div>
-                )}
-              </span>
-              <i
-                className="fas fa-bars"
-                role="button"
-                tabIndex="0"
-                aria-label="Lang controller"
-                onKeyDown={handleClick}
-                onClick={handleClick}
-              ></i>
+            <div className="right-mobile">
+              {!isSHowMobileMask && (
+                <SearchForMobile
+                  language={header}
+                  locale={locale}
+                  showMobileMask={showMobileMask}
+                ></SearchForMobile>
+              )}
+              {!isSHowMobileMask ? (
+                <i
+                  className="fas fa-bars font-icon"
+                  aria-label="menu-button"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => showMobileMask({ actionType: 'menu' })}
+                  onKeyDown={() => showMobileMask({ actionType: 'menu' })}
+                ></i>
+              ) : (
+                // <a href="/#" onClickCapture={e => hideMobileMask(e)}>
+                //   <img src={Close} alt="close-logo" />
+                // </a>
+                <i
+                  className="fas fa-times font-icon"
+                  aria-label="close-button"
+                  role="button"
+                  tabIndex={0}
+                  onClick={hideMobileMask}
+                  onKeyDown={hideMobileMask}
+                ></i>
+              )}
             </div>
           )}
+          {/* 下滑的框框 */}
+          <MobilePopUp ref={popupRef}>
+            {actionType === 'menu' ? (
+              <MobileMenuContent
+                locale={locale}
+                header={header}
+                to={to}
+                l={l}
+                onChangeLocale={onChangeLocale}
+              />
+            ) : (
+              <MobileSearchContent
+                locale={locale}
+                language={header}
+                hideMobileMask={hideMobileMask}
+              />
+            )}
+          </MobilePopUp>
         </header>
       </div>
       <div className={`mobile-nav ${mobileNav && 'open'}`}>

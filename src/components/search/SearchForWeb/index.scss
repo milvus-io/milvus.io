@@ -1,6 +1,6 @@
-@import "../include_media.scss";
+@import "../../include_media.scss";
 
-.search-wrapper {
+.search-wrapper-web {
   position: relative;
   padding: 5px 10px;
   border-radius: 4px;
@@ -12,10 +12,6 @@
   .search-icon {
     vertical-align: -3px;
     margin-right: 4px;
-  }
-
-  @include media("<=1000px") {
-    display: inline-block;
   }
 
   input {
@@ -30,14 +26,6 @@
     &:focus {
       width: 200px;
       cursor: text;
-    }
-
-    @include media("<=1000px") {
-      width: 50px;
-
-      &:focus {
-        width: 100px;
-      }
     }
 
   }
@@ -61,16 +49,6 @@
     color: #fff;
     font-size: 16px;
     list-style: none;
-
-    @include media("<=1000px") {
-      width: 50vw;
-      font-size: 12px;
-      max-height: 30vh;
-
-      li+li {
-        padding: 4px;
-      }
-    }
 
     a {
       &.link {

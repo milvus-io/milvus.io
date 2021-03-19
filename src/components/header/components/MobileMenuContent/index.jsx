@@ -3,7 +3,6 @@ import LocalizeLink from '../../../localizedLink/localizedLink';
 import './index.scss';
 
 const MobileMenuContent = ({ locale, header, onChangeLocale, to, l, hideMobileMask }) => {
-
   return useMemo(() => {
     return (
       <i className="mobile-menu-content"
@@ -19,6 +18,13 @@ const MobileMenuContent = ({ locale, header, onChangeLocale, to, l, hideMobileMa
           className="link"
         >
           {header.quick}
+        </LocalizeLink>
+        <LocalizeLink
+          locale={locale}
+          to="/docs/benchmarks_azure"
+          className="link"
+        >
+          {header.benchmarks}
         </LocalizeLink>
         <a
           href="https://tutorials.milvus.io"

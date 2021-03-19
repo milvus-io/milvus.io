@@ -83,7 +83,8 @@ const SearchForWeb = props => {
   };
   useClickOutside(containerRef, () => setFocus(false));
 
-  const onSearchItemClick = (isCurrentPage, title) => {
+  const onSearchItemClick = (e, isCurrentPage, title) => {
+    e.preventDefault();
     window.localStorage.setItem('anchorTitle', title);
     setShowMatchData(false);
 

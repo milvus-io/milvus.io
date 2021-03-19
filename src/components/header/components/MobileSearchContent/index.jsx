@@ -9,7 +9,7 @@ import './index.scss';
 const DOCS_JSON = require('../../../../search.json');
 let timer = null;
 
-const MobileSearchContent = ({ language, locale }) => {
+const MobileSearchContent = ({ language, locale, hideMobileMask }) => {
   const [query, setQuery] = useState('');
   const [focus, setFocus] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,14 +38,14 @@ const MobileSearchContent = ({ language, locale }) => {
           : [];
         const results = targets.length
           ? targets.map((v, i) => ({
-              title: v,
-              highlight: highlights[i],
-              id,
-              lang: fileLang,
-              version,
-              path,
-              isId: id === v,
-            }))
+            title: v,
+            highlight: highlights[i],
+            id,
+            lang: fileLang,
+            version,
+            path,
+            isId: id === v,
+          }))
           : [];
         matchData.push(...results);
       });
@@ -62,8 +62,8 @@ const MobileSearchContent = ({ language, locale }) => {
     setFocus(true);
     setShowMatchData(true);
   };
-  const onSearchItemClick = (e, isCurrentPage, title) => {
-    e.preventDefault();
+  const onSearchItemClick = (isCurrentPage, title) => {
+    hideMobileMask()
     window.localStorage.setItem('anchorTitle', title);
     setShowMatchData(false);
 
@@ -101,47 +101,47 @@ const MobileSearchContent = ({ language, locale }) => {
           <ul className="result-list">
             {matchData.length
               ? matchData.map((v, index) => {
-                  const { lang, version, title, isId, highlight, path } = v;
-                  /* eslint-disable-next-line */
-                  const normalVal = title.replace(/[\,\/]/g, '');
-                  const anchor = normalVal.split(' ').join('-');
-                  // window.localStorage.setItem('anchorTitle', title);
+                const { lang, version, title, isId, highlight, path } = v;
+                /* eslint-disable-next-line */
+                const normalVal = title.replace(/[\,\/]/g, '');
+                const anchor = normalVal.split(' ').join('-');
+                // window.localStorage.setItem('anchorTitle', title);
 
-                  // handle current page
-                  const pathname = window.location.pathname;
-                  const pathInfoList = pathname.split('/');
-                  const isCurrentPage =
-                    pathInfoList[pathInfoList.length - 1] === path;
-                  pathInfoList.splice(pathInfoList.length - 1, 1);
-                  // const targetLink = `${pathInfoList.join('/')}/${path}`;
+                // handle current page
+                const pathname = window.location.pathname;
+                const pathInfoList = pathname.split('/');
+                const isCurrentPage =
+                  pathInfoList[pathInfoList.length - 1] === path;
+                pathInfoList.splice(pathInfoList.length - 1, 1);
+                // const targetLink = `${pathInfoList.join('/')}/${path}`;
 
-                  return (
-                    <li key={index}>
-                      <a
-                        href="/#"
-                        onClick={e =>
-                          onSearchItemClick(e, isCurrentPage, title)
-                        }
-                      >
-                        <LocalizeLink
-                          locale={lang}
-                          to={`/docs/${version}/${path}${
-                            isId ? '' : `?${anchor}`
+                return (
+                  <li key={index}>
+                    <i
+                      tabIndex={0}
+                      aria-label="match-data-item"
+                      role='button'
+                      onClick={() => onSearchItemClick(isCurrentPage, title)}
+                      onKeyDown={() => onSearchItemClick(isCurrentPage, title)}
+                    >
+                      <LocalizeLink
+                        locale={lang}
+                        to={`/docs/${version}/${path}${isId ? '' : `?${anchor}`
                           }`}
-                        >
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: `${highlight} ${version}`,
-                            }}
-                          ></span>
-                        </LocalizeLink>
-                      </a>
-                    </li>
-                  );
-                })
+                      >
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: `${highlight} ${version}`,
+                          }}
+                        ></span>
+                      </LocalizeLink>
+                    </i>
+                  </li>
+                );
+              })
               : loading
-              ? language.loading
-              : language.noresult}
+                ? language.loading
+                : language.noresult}
           </ul>
         ) : null}
       </div>

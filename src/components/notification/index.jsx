@@ -4,12 +4,11 @@ import './index.scss';
 // import { useMobileScreen } from '../../hooks';
 
 const Notification = props => {
-  const { version, language } = props;
+  const { version, language, locale } = props;
   // const screenWidth = useMobileScreen();
-
   const notificationLinksMap = {
-    'v1.0.0': '/docs/v1.0.0/announcement.md',
-    undefined: `/docs/${version}/release_notes.md`
+    'v1.0.0': locale === 'en' ? '/docs/v1.0.0/announcement.md' : '/cn/docs/v1.0.0/announcement.md',
+    [version]: locale === 'en' ? `/docs/${version}/release_notes.md` : `/cn/docs/${version}/release_notes.md`
   }
 
   return (

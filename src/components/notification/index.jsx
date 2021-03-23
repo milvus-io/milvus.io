@@ -8,7 +8,8 @@ const Notification = props => {
   console.log(version)
   // const screenWidth = useMobileScreen();
   const notificationLinksMap = {
-    [version]: locale === 'en' ? `/docs/${version}/announcement.md` : `/cn/docs/${version}/announcement.md`,
+    [version]: locale === 'en' ? `/docs/${version}/release_note.md` : `/cn/docs/${version}/release_note.md`,
+    'v1.0.0': locale === 'en' ? '/docs/v1.0.0/announcement.md' : '/cn/docs/v1.0.0/announcement.md',
   }
 
   return (

@@ -5,10 +5,10 @@ import './index.scss';
 
 const Notification = props => {
   const { version, language, locale } = props;
+  console.log(version)
   // const screenWidth = useMobileScreen();
   const notificationLinksMap = {
-    'v1.0.0': locale === 'en' ? '/docs/v1.0.0/announcement.md' : '/cn/docs/v1.0.0/announcement.md',
-    [version]: locale === 'en' ? `/docs/${version}/release_notes.md` : `/cn/docs/${version}/release_notes.md`
+    [version]: locale === 'en' ? `/docs/${version}/announcement.md` : `/cn/docs/${version}/announcement.md`,
   }
 
   return (

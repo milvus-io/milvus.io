@@ -111,6 +111,7 @@ const IndexPage = ({ data, pageContext }) => {
       <Notification
         version={newestVersion}
         language={language.home.notification}
+        locale={locale}
       ></Notification>
       <main className="home-wrapper">
         <section className="section1">

@@ -2,7 +2,6 @@
 @import './fonts.scss';
 
 .home-wrapper {
-
   // typography
   h1,
   h2,
@@ -69,7 +68,6 @@
   }
 
   @include media('<=1000px') {
-
     h1,
     h2,
     h3 {
@@ -88,7 +86,7 @@
     background: url('../images/website/hero-color.svg') no-repeat;
     background-position: bottom;
     background-size: cover;
-    margin-top: 102px;
+    margin-top: 42px;
 
     .githubicon {
       margin-bottom: 3rem;

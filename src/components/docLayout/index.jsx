@@ -94,7 +94,7 @@ const DocLayout = props => {
   useEffect(() => {
     let currentPos = 0;
 
-    const cb = function() {
+    const cb = function () {
       const wrapper = document.querySelector('html');
       const direction = wrapper.scrollTop - currentPos > 0 ? 'down' : 'up';
       currentPos = wrapper.scrollTop;
@@ -141,7 +141,7 @@ const DocLayout = props => {
   };
 
   return (
-    <div>
+    <div className="layout-wrapper">
       <Header
         language={language}
         current={current}
@@ -259,6 +259,5 @@ const DocLayout = props => {
     </div>
   );
 };
-
 
 export default DocLayout;

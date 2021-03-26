@@ -146,12 +146,16 @@ export default function Template({
       event.preventDefault();
       // delete #
       let idSelector = href.slice(1);
+      let path = `${window.location.pathname}${href}`;
 
       try {
         idSelector = decodeURI(idSelector);
       } catch (e) {
         console.error(e);
       }
+
+      // add anchor in url
+      window.location.href = path;
 
       const element = document.querySelector(`#${CSS.escape(idSelector)}`);
       scrollToElement(element);

@@ -15,7 +15,8 @@
 .doc-post-container {
   padding: 2rem;
   background: #fff;
-  min-height: 80vh;
+  // min-height: 80vh;
+  width: calc(100% - 240px);
   overflow: hidden;
   color: var(--color-primary);
 
@@ -23,6 +24,7 @@
     padding: 1rem;
     padding-top: 2rem;
     font-size: 16px;
+    width: 100%;
   }
 
   .tab-wrapper {

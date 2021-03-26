@@ -80,4 +80,4 @@ export const importAllPics = (r, type, users = [], resources = []) => {
       resources[order] = { src: m, name: matchs && matchs[1], href };
     }
   });
-}
+};

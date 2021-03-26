@@ -137,6 +137,20 @@ a.btn-anchor {
     width: 250px;
     overflow: auto;
 
+    // change scrollbar style
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #eee;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: darkgrey;
+    }
+
     @include media('<=1000px') {
       position: fixed;
       top: 0;
@@ -155,6 +169,20 @@ a.btn-anchor {
     width: 100%;
     max-width: 1350px;
     overflow-y: scroll;
+
+    // change scrollbar style
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #eee;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: darkgrey;
+    }
 
     &.fullwidth {
       max-width: 80%;
@@ -178,7 +206,7 @@ a.btn-anchor {
   }
 
   .button-container {
-    margin-top: 50px;
+    margin-top: 24px;
   }
 
   .anchor-wrapper {
@@ -186,8 +214,9 @@ a.btn-anchor {
     position: absolute;
     // header 60px margin top 65px
     top: calc(60px + 65px);
+    bottom: 16px;
     right: 0;
-    min-width: 240px;
+    width: 280px;
     font-size: 14px;
     padding-right: 10px;
 
@@ -196,7 +225,22 @@ a.btn-anchor {
       top: 160px;
       left: 0;
       max-width: 90%;
-      overflow: hidden;
+
+      height: 100%;
+      overflow-y: scroll;
+
+      // change scrollbar style
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: #fff;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #fff;
+      }
     }
 
     .event {

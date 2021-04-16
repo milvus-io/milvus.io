@@ -16,6 +16,8 @@ import {
   sortVersions,
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
+import TextSelectionMenu from '../components/TextSelectionMenu/TextSelectionMenu'
+import {useSelectMenu} from '../hooks'
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
@@ -55,6 +57,15 @@ export default function Template({
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
   // }, []);
+
+  const [options,setOptions] = useState({
+    display: 'none',
+    position: 'basolute',
+    left: 0,
+    top: 0
+  })
+
+  useSelectMenu(setOptions);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach(panel => {
@@ -498,6 +509,7 @@ export default function Template({
           <QueryModal locale={locale} setShowModal={setShowModal} />
         </div>
       ) : null}
+      <TextSelectionMenu options={options} />
     </Layout>
   );
 }

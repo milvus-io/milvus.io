@@ -24,8 +24,6 @@ export const sortVersions = (a, b) => {
   const aValue = v1.split('')[1] * 1000 + s1 * 10 + m1 * 1;
   const bValue = v2.split('')[1] * 1000 + s2 * 10 + m2 * 1;
 
-  console.log(aValue,bValue)
-
   if (aValue > bValue) {
     return -1;
   }

@@ -4,36 +4,36 @@ import comment from '../../images/comment.svg'
 import git from '../../images/git.svg'
 
 const TextSelectionMenu = ({ options }) => {
-
+  const { target, ...styles } = options
   const [style, setStyle] = useState({
     display: 'none'
   });
-  const [container, item1, item2] = [useRef(null), useRef(null), useRef(null)]
+  const [container, commentItem, gitItem] = [useRef(null), useRef(null), useRef(null)]
 
   useEffect(() => {
-    setStyle(options)
+    if ([container.current, commentItem.current, gitItem.current].includes(target)) {
+      return
+    }
+    setStyle(styles)
+
   }, [options]);
 
   const handleClick = e => {
     e.stopPropagation();
-    if (![container, item1, item2].includes(e.target)) {
-      setStyle({
-        display: 'none'
-      })
-    }
+
   }
 
   return (
     <div className='pop-tool-wrapper' style={style} ref={container}>
       <div className="pop-tool-content" onClick={e => handleClick(e)}>
-        <div className="content-item" ref={item1}>
+        <div className="content-item" ref={commentItem}>
           <p className="icon-wrapper">
             <img src={comment} alt="comment-logo" />
           </p>
           <span>Comment</span>
         </div>
         |
-        <div className="content-item" ref={item2}>
+        <div className="content-item" ref={gitItem}>
           <p className="icon-wrapper">
             <img src={git} alt="git-logo" />
           </p>

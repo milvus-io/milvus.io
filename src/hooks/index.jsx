@@ -24,7 +24,8 @@ export const useSelectMenu = (setOptions) => {
   const offsetLeft = -140;
 
   const selectHandler = (e) => {
-    let str = document.getSelection().toString();
+    const str = document.getSelection().toString();
+    const {target} = e;
     if (!!str.length) {
       const { top, left, width } = window.getSelection().getRangeAt(0).getBoundingClientRect();
       setOptions({
@@ -32,6 +33,7 @@ export const useSelectMenu = (setOptions) => {
         position: 'absolute',
         left: left + (width / 2) + offsetLeft,
         top: top - offsetTop,
+        target
       });
     } else {
       setOptions({
@@ -39,6 +41,7 @@ export const useSelectMenu = (setOptions) => {
         position: 'absolute',
         right: 0,
         top: 0,
+        target
       });
     }
   };

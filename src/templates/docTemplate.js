@@ -62,7 +62,8 @@ export default function Template({
     display: 'none',
     position: 'basolute',
     left: 0,
-    top: 0
+    top: 0,
+    target: null
   })
 
   useSelectMenu(setOptions);
@@ -510,6 +511,7 @@ export default function Template({
         </div>
       ) : null}
       <TextSelectionMenu options={options} />
+      
     </Layout>
   );
 }

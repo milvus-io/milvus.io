@@ -67,7 +67,7 @@
         "interact": "与社区互动讨论!"
       },
       "section1": {
-        "desc1": "Milvus 是一款开源的特征向量相似度搜索引擎",
+        "desc1": "全球最受欢迎的开源向量数据库",
         "desc2": "Milvus 使用方便、实用可靠、易于扩展、稳定高效和搜索迅速。",
         "link": "了解更多",
         "link2": "快速开始",
@@ -181,7 +181,8 @@
               {
                 "title": "在 Github 上加入我们 >",
                 "url": "https://github.com/milvus-io"
-              }, {
+              },
+              {
                 "title": "在 Gitee 上加入我们 >",
                 "url": "https://gitee.com/milvus-io/milvus"
               }

@@ -16,8 +16,12 @@ import {
   sortVersions,
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
-import TextSelectionMenu from '../components/TextSelectionMenu/TextSelectionMenu'
-import {useSelectMenu} from '../hooks'
+import TextSelectionMenu from '../components/textSelection/TextSelectionMenu'
+import CommentDialog from '../components/textSelection/CommentDialog'
+import FancyButton from '../components/fancyButton'
+import comment from '../images/comment.svg'
+
+import { useSelectMenu } from '../hooks'
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
@@ -57,7 +61,7 @@ export default function Template({
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
   // }, []);
-
+  const [open,setOpen] = useState(false);
   const [options,setOptions] = useState({
     display: 'none',
     position: 'basolute',
@@ -421,6 +425,7 @@ export default function Template({
         </div>
       ) : (
         <div className="doc-post-container">
+          <FancyButton icon={comment} text='Comment' />
           {/* {showEvent && (
             <div className="alert event">
               <div>
@@ -494,6 +499,7 @@ export default function Template({
               </a>
             )}
           </div>
+          <TextSelectionMenu options={options} showDialog={()=>setOpen(true)} />
         </div>
       )}
 
@@ -510,7 +516,9 @@ export default function Template({
           <QueryModal locale={locale} setShowModal={setShowModal} />
         </div>
       ) : null}
-      <TextSelectionMenu options={options} />
+      <div className='dialog-wrapper'>
+        <CommentDialog open={open} hideDialog={()=>setOpen(false)} />
+      </div>
       
     </Layout>
   );

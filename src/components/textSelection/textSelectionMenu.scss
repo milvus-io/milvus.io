@@ -1,20 +1,37 @@
+.pop-container{
+  width: 100%;
+  position: absolute;
+}
 .pop-tool-wrapper {
   background: #06aff2;
   color: #fff;
   padding: 8px 0;
   // width: 304px;
   // height: 40px;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 20px;
   font-weight: 500;
-  position: absolute;
+  position: relative;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   z-index: 99;
+  font-family: Poppins;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all .2s linear;
 
   .pop-tool-content {
     display: flex;
     align-items: center;
+
+    a{
+      text-decoration: none;
+      &:hover{
+        color: #fff;
+      }
+    }
+
     .content-item {
       cursor: pointer;
       padding: 0 8px;
@@ -22,6 +39,7 @@
       margin: 0 8px;
       position: relative;
       overflow: hodden;
+
       &::after {
         content: "";
         display: block;
@@ -39,6 +57,7 @@
         opacity: 0;
         transition: transform 0.8s, opacity 0.5s;
       }
+
       &:active::after {
         transform: scale(0, 0);
         opacity: 0.5;
@@ -47,17 +66,21 @@
       }
 
       .icon-wrapper {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
         pointer-events: none;
+
         img {
-          width: 24px;
-          height: 24px;
+          background: transparent;
+          width: 20px;
+          height: 20px;
         }
         margin-right: 8px;
       }
+
       span {
         pointer-events: none;
+        user-select: none;
       }
     }
   }

@@ -16,10 +16,8 @@ import {
   sortVersions,
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
-import TextSelectionMenu from '../components/textSelection/TextSelectionMenu'
-import CommentDialog from '../components/textSelection/CommentDialog'
-import FancyButton from '../components/fancyButton'
-import comment from '../images/comment.svg'
+import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
+import CommentDialog from '../components/textSelection/CommentDialog';
 
 import { useSelectMenu } from '../hooks'
 // hljs.registerLanguage("sql", sql)
@@ -425,7 +423,6 @@ export default function Template({
         </div>
       ) : (
         <div className="doc-post-container">
-          <FancyButton icon={comment} text='Comment' />
           {/* {showEvent && (
             <div className="alert event">
               <div>

@@ -25,6 +25,7 @@ export const useSelectMenu = (setOptions) => {
     docWrapWidth = parseInt(window.getComputedStyle(docWrapper).width);
   }
   const { innerWidth } = window;
+  // left blank width plus menu-bar width
   const offsetLeft = (innerWidth - docWrapWidth) / 2 + 250;
 
   // max width of single line
@@ -33,17 +34,6 @@ export const useSelectMenu = (setOptions) => {
   const selectHandler = (e) => {
     const { scrollTop } = document.getElementsByClassName('inner-container')[0];
     const str = document.getSelection().toString();
-    const { top, left, width } = window.getSelection().getRangeAt(0).getBoundingClientRect();
-    console.log(maxLineWidth, left, width)
-    const realWidth = Math.min(maxLineWidth, width);
-    const translateX = left - offsetLeft + (realWidth - 240) / 2;
-    let realTranslateX = 0;
-    realTranslateX = translateX > offsetLeft ? translateX : 32;
-    realTranslateX = translateX < offsetLeft + 32 + maxLineWidth ? translateX : maxLineWidth - 120;
-    if(translateX > offsetLeft){
-      translateX = 32;
-    }
-    
     if (!str.length) {
       setOptions({
         visibility: 'hidden',
@@ -53,10 +43,23 @@ export const useSelectMenu = (setOptions) => {
       return
     };
 
+    // Select the upper left corner of the text
+    const { top, left, width } = window.getSelection().getRangeAt(0).getBoundingClientRect();
+    // if there is multiple lines, calculate it as single lin,to keep the menu stay center
+    const realWidth = Math.min(maxLineWidth, width);
+    let translateX = left - offsetLeft + (realWidth - 240) / 2;
+
+    if (translateX < offsetLeft - 240) {
+      translateX = 32;
+    }
+    if (translateX > maxLineWidth - 240) {
+      translateX = maxLineWidth - 240 + 32
+    }
+
     setOptions({
       visibility: 'visible',
       zIndex: 199,
-      transform: `translate(${realTranslateX}px,${top - offsetTop + scrollTop}px)`,
+      transform: `translate(${translateX}px,${top - offsetTop + scrollTop}px)`,
     });
   };
 

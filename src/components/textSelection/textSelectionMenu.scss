@@ -6,8 +6,8 @@
   background: #06aff2;
   color: #fff;
   padding: 8px 0;
-  // width: 304px;
-  // height: 40px;
+  width: 240px;
+  height: 36px;
   font-size: 16px;
   line-height: 20px;
   font-weight: 500;
@@ -19,7 +19,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  transition: all .2s linear;
 
   .pop-tool-content {
     display: flex;
@@ -38,7 +37,6 @@
       display: flex;
       margin: 0 8px;
       position: relative;
-      overflow: hodden;
 
       &::after {
         content: "";
@@ -46,6 +44,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
+        overflow: hidden;
         top: 0;
         left: 0;
         pointer-events: none;

@@ -19,7 +19,8 @@ const TextSelectionMenu = ({ options, showDialog }) => {
       <div className="pop-tool-content" >
         <div 
           className="content-item" 
-          role='button' tabIndex={-1} 
+          role='button'
+          tabIndex={-1} 
           onClick={showDialog} 
           onKeyDown={showDialog}
         >

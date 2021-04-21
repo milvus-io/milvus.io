@@ -496,7 +496,7 @@ export default function Template({
               </a>
             )}
           </div>
-          <TextSelectionMenu options={options} showDialog={()=>setOpen(true)} />
+          <TextSelectionMenu language={layout} options={options} showDialog={()=>setOpen(true)} />
         </div>
       )}
 
@@ -514,7 +514,7 @@ export default function Template({
         </div>
       ) : null}
       <div className='dialog-wrapper'>
-        <CommentDialog open={open} hideDialog={()=>setOpen(false)} />
+        <CommentDialog language={layout} open={open} hideDialog={()=>setOpen(false)} />
       </div>
       
     </Layout>
@@ -599,6 +599,13 @@ export const pageQuery = graphql`
                   title
                   wechat
                 }
+              }
+              selectMenu {
+                comment
+                github
+                sendBtn
+                cancelBtn,
+                placeholder
               }
             }
           }

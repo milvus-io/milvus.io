@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './commentDialog.scss';
 import close from '../../images/close.svg';
 
-const CommentDialog = ({ open=false, hideDialog }) => {
+const CommentDialog = ({ language, open=false, hideDialog }) => {
+  const {selectMenu} = language;
   const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
@@ -20,7 +21,7 @@ const CommentDialog = ({ open=false, hideDialog }) => {
   return (
     <div className={`${open ? 'show' : ''} comment-wrapper`}>
       <div className="comment-header">
-        <p className="title">Comment</p>
+        <p className="title">{selectMenu.comment}</p>
         <i
           role='button'
           tabIndex={0}
@@ -34,7 +35,7 @@ const CommentDialog = ({ open=false, hideDialog }) => {
       <div className="comment-body">
         <textarea
           className="text-area"
-          placeholder='Leave a message'
+          placeholder={selectMenu.placeholder}
           rows="10"
           value={message}
           onChange={handleChange}
@@ -47,14 +48,14 @@ const CommentDialog = ({ open=false, hideDialog }) => {
           className={`${!message.length ? 'disabled' : ''} button`}
           onClick={handleSendComment}
           onKeyDown={handleSendComment}
-        >Send</span>
+        >{selectMenu.sendBtn}</span>
         <span
           tabIndex={0}
           role='button'
           className='button cancel-btn'
           onClick={handleHideDialog}
           onKeyDown={handleHideDialog}
-        >Cancle</span>
+        >{selectMenu.cancelBtn}</span>
       </div>
     </div>
   )

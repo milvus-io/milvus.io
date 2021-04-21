@@ -3,12 +3,12 @@ import './textSelectionMenu.scss';
 import comment from '../../images/comment.svg'
 import git from '../../images/git.svg'
 
-const TextSelectionMenu = ({ options, showDialog }) => {
+const TextSelectionMenu = ({language, options, showDialog }) => {
+  const {selectMenu} = language
   const [style, setStyle] = useState({
     visibility: 'hidden',
     zIndex: -100,
   });
-
 
   useEffect(() => {
     setStyle(options)
@@ -27,14 +27,14 @@ const TextSelectionMenu = ({ options, showDialog }) => {
           <p className="icon-wrapper">
             <img src={comment} alt="comment-logo" />
           </p>
-          <span>Comment</span>
+          <span>{selectMenu.comment}</span>
         </div>
         |
-        <a href="http://www.baidu.com" className="content-item">
+        <a href="https://github.com/milvus-io/milvus" className="content-item">
           <p className="icon-wrapper">
             <img src={git} alt="git-logo" />
           </p>
-          <span>Github</span>
+          <span>{selectMenu.github}</span>
         </a>
       </div>
       <div className="delta"></div>

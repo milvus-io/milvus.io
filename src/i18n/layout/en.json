@@ -236,7 +236,7 @@
             ],
             "img": "cv",
             "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/pic_search/README.md",
-            "href": "http://116.228.99.250:8004/"
+            "href": "http://40.117.75.127:8004/#/"
           },
           {
             "title": "Natural language processing",
@@ -310,6 +310,13 @@
           "desc1": "Set up over 10's milvus pereference via GUI"
         }
       }
+    },
+    "selectMenu":{
+      "comment": "Comment",
+      "github": "Github",
+      "sendBtn": "Send",
+      "cancelBtn": "Cancel",
+      "placeholder": "Leave a message"
     }
   }
 }

@@ -20,19 +20,24 @@ export const useSelectMenu = (setOptions) => {
   // titlebar height:60; self height: 26; margin 8
   const offsetTop = 60 + 36 + 8;
   const docWrapper = document.getElementsByClassName('doc-wrapper')[0];
-  let docWrapWidth = 0;
+  const menuWrapper = document.getElementsByClassName('pop-tool-wrapper')[0];
+  const innerContainer = document.getElementsByClassName('inner-container')[0];
+  let [docWrapWidth, scrollTop, innerWidth] = [0, 0, window.innerWidth]
   if (docWrapper) {
-    docWrapWidth = parseInt(window.getComputedStyle(docWrapper).width);
+    docWrapWidth = docWrapper.offsetWidth;
   }
-  const { innerWidth } = window;
+
   // left blank width plus menu-bar width
   const offsetLeft = (innerWidth - docWrapWidth) / 2 + 250;
-
   // max width of single line
+  // left menu width: 250; right anchor width: 280; doc padding: 64px 
   const maxLineWidth = docWrapWidth - 280 - 250 - 64 - 8;
 
   const selectHandler = (e) => {
-    const { scrollTop } = document.getElementsByClassName('inner-container')[0];
+    if (innerContainer) {
+      scrollTop = innerContainer.scrollTop;
+    }
+
     const str = document.getSelection().toString();
     if (!str.length) {
       setOptions({
@@ -49,7 +54,7 @@ export const useSelectMenu = (setOptions) => {
     const realWidth = Math.min(maxLineWidth, width);
     let translateX = left - offsetLeft + (realWidth - 240) / 2;
 
-    if (translateX < offsetLeft - 240) {
+    if (translateX < 32) {
       translateX = 32;
     }
     if (translateX > maxLineWidth - 240) {

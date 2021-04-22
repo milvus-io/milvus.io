@@ -74,10 +74,23 @@ export const useSelectMenu = (setOptions) => {
     });
   };
 
+  const mouseDownHandler = ()=>{
+    setOptions({
+      styles: {
+        visibility: 'hidden',
+        zIndex: -1,
+        transform: `translateX(0,0)`,
+      },
+      copy: ''
+    });
+  }
+
   useEffect(() => {
     window.addEventListener("mouseup", (e) => selectHandler(e), false);
+    // window.addEventListener("mousedown", mouseDownHandler, false);
     return () => {
       window.removeEventListener("mouseup", (e) => selectHandler(e), false);
+      // window.removeEventListener("mousedown", mouseDownHandler, false);
     };
   }, [docWrapper]);// eslint-disable-line react-hooks/exhaustive-deps
 }

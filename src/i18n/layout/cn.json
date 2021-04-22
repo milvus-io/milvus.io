@@ -28,6 +28,10 @@
         "link": "https://github.com/milvus-io/milvus/issues/new/choose",
         "label": "我要提交Bug"
       },
+      "docIssueBtn": {
+        "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=",
+        "label": "提交文档错误"
+      },
       "editBtn": {
         "label": "编辑"
       },

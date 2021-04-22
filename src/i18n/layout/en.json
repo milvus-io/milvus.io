@@ -26,7 +26,11 @@
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
-        "label": "Create poeject issue"
+        "label": "Create project issue."
+      },
+      "docIssueBtn": {
+        "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=",
+        "label": "Create doc issue."
       },
       "editBtn": {
         "label": "Edit"

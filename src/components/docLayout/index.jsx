@@ -185,12 +185,12 @@ const DocLayout = props => {
                 </a>)}
                 <a
                   className="btn-anchor"
-                  href="https://github.com/milvus-io/docs/issues/new?assignees=&labels=&template=change-request.md&title="
+                  href={language.footer.docIssueBtn.link}
                 >
                   <span className="btn-icon-wrapper">
                     <i className="fab fa-github btn-icon"></i>
                   </span>
-                  {language.selectMenu.github}
+                  {language.footer.docIssueBtn.label}
                 </a>
                 <a
                   className="btn-anchor"

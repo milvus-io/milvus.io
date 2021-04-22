@@ -16,7 +16,7 @@ import {
   sortVersions,
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
-// import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
+import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 // import { useSelectMenu } from '../hooks';
 
 // hljs.registerLanguage("sql", sql)
@@ -60,14 +60,14 @@ export default function Template({
   // }, []);
 
   // select menu function
-  // const [options,setOptions] = useState({
-  //   styles: {
-  //     visibility: 'hidden',
-  //       zIndex: -100,
-  //       transform: `translateX(0,0)`,
-  //   },
-  //   copy: ''
-  // })
+  const [options,setOptions] = useState({
+    styles: {
+      visibility: 'hidden',
+        zIndex: -100,
+        transform: `translateX(0,0)`,
+    },
+    copy: ''
+  })
 
   // useSelectMenu(setOptions);
 
@@ -486,7 +486,7 @@ export default function Template({
               className="md-tooltip"
             />
           </div>
-          {/* <TextSelectionMenu language={layout} options={options} /> */}
+          <TextSelectionMenu language={layout} options={options} />
         </div>
       )}
 
@@ -556,6 +556,10 @@ export const pageQuery = graphql`
                   link
                 }
                 issueBtn {
+                  label
+                  link
+                }
+                docIssueBtn {
                   label
                   link
                 }

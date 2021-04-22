@@ -10,32 +10,24 @@ const TextSelectionMenu = ({ language, options }) => {
     visibility: 'hidden',
     zIndex: -100,
   });
-  const [body, setBody] = useState('')
+  const [body, setBody] = useState('');
+  const [title, setTitle] = useState('');
 
+  // longest title string length about qual 96
+  // 'I have a issue about ' = 21
+  // rest = 75
   useEffect(() => {
-    unstable_batchedUpdates(() => {
-      setStyle(styles);
-      setBody(copy)
-    })
-  }, [options]);
-
+    const tempStr = copy.length < 75 ? copy : copy.substring(0, 72) + '...';
+    setStyle(styles);
+    setBody(copy);
+    setTitle(`I have a issue about  "${tempStr}"`);
+  }, [copy, styles]);
   return (
     <div className='pop-tool-wrapper' style={style} >
       <div className='bg-wrapper'>
         <div className="pop-tool-content" >
-          {/* <div
-          className="content-item"
-        >
-          <p className="icon-wrapper">
-            <img src={comment} alt="comment-logo" />
-          </p>
-          <span>{selectMenu.comment}</span>
-        </div>
-        | */}
-          <a href={`
-              https://github.com/milvus-io/docs/issues/new?
-              assignees=&labels=&template=change-request.md&title=&body=${body}`
-            } 
+          <a href={`https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=${title}&body=${body}`}
+            target='_blank'
             className="content-item"
           >
             <p className="icon-wrapper">

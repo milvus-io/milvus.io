@@ -17,7 +17,6 @@ import {
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 // import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
-// import CommentDialog from '../components/textSelection/CommentDialog';
 // import { useSelectMenu } from '../hooks';
 
 // hljs.registerLanguage("sql", sql)
@@ -61,13 +60,13 @@ export default function Template({
   // }, []);
 
   // select menu function
-  // const [open,setOpen] = useState(false);
   // const [options,setOptions] = useState({
-  //   display: 'none',
-  //   position: 'basolute',
-  //   left: 0,
-  //   top: 0,
-  //   target: null
+  //   styles: {
+  //     visibility: 'hidden',
+  //       zIndex: -100,
+  //       transform: `translateX(0,0)`,
+  //   },
+  //   copy: ''
   // })
 
   // useSelectMenu(setOptions);
@@ -401,6 +400,8 @@ export default function Template({
       id={frontmatter.id}
       isBenchMark={isBenchmark}
       showDoc={false}
+      isBlog={isBlog}
+      editPath={editPath}
     >
       <SEO title={title} lang={locale} />
       {isBenchmark ? (
@@ -484,21 +485,8 @@ export default function Template({
               globalEventOff="click"
               className="md-tooltip"
             />
-            {isBlog || isBenchmark ? null : (
-              <a
-                className="edit-page-link btn"
-                href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                  locale === 'en' ? 'en' : 'zh-CN'
-                }/${editPath}`}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                <i className="far fa-edit"></i>
-                {layout.footer.editBtn.label}
-              </a>
-            )}
           </div>
-          {/* <TextSelectionMenu language={layout} options={options} showDialog={()=>setOpen(true)} /> */}
+          {/* <TextSelectionMenu language={layout} options={options} /> */}
         </div>
       )}
 
@@ -515,10 +503,6 @@ export default function Template({
           <QueryModal locale={locale} setShowModal={setShowModal} />
         </div>
       ) : null}
-      {/* <div className='dialog-wrapper'>
-        <CommentDialog language={layout} open={open} hideDialog={()=>setOpen(false)} />
-      </div> */}
-      
     </Layout>
   );
 }

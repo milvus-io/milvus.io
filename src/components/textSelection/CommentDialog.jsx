@@ -42,20 +42,20 @@ const CommentDialog = ({ language, open=false, hideDialog }) => {
         ></textarea>
       </div>
       <div className="comment-footer">
-        <span
+        <button
           tabIndex={0}
           role='button'
           className={`${!message.length ? 'disabled' : ''} button`}
           onClick={handleSendComment}
           onKeyDown={handleSendComment}
-        >{selectMenu.sendBtn}</span>
-        <span
+        >{selectMenu.sendBtn}</button>
+        <button
           tabIndex={0}
           role='button'
           className='button cancel-btn'
           onClick={handleHideDialog}
           onKeyDown={handleHideDialog}
-        >{selectMenu.cancelBtn}</span>
+        >{selectMenu.cancelBtn}</button>
       </div>
     </div>
   )

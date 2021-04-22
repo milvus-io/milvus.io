@@ -206,14 +206,14 @@ a.btn-anchor {
   }
 
   .button-container {
-    margin-top: 24px;
+    margin-bottom: 24px;
   }
 
   .anchor-wrapper {
     // position: relative;
     position: absolute;
     // header 60px margin top 65px
-    top: calc(60px + 65px);
+    top: 32px;
     bottom: 16px;
     right: 0;
     width: 280px;
@@ -222,7 +222,7 @@ a.btn-anchor {
 
     section {
       position: sticky;
-      top: 160px;
+      top: 0;
       left: 0;
       max-width: 90%;
 

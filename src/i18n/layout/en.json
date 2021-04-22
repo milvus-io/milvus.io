@@ -26,7 +26,7 @@
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
-        "label": "Bug. File an issue."
+        "label": "Create poeject issue"
       },
       "editBtn": {
         "label": "Edit"
@@ -313,7 +313,7 @@
     },
     "selectMenu":{
       "comment": "Comment",
-      "github": "Github",
+      "github": "Create doc issue",
       "sendBtn": "Send",
       "cancelBtn": "Cancel",
       "placeholder": "Leave a message"

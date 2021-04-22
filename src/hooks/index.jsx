@@ -21,6 +21,7 @@ export const useSelectMenu = (setOptions) => {
   const offsetTop = 60 + 36 + 8;
   const docWrapper = document.getElementsByClassName('doc-wrapper')[0];
   const innerContainer = document.getElementsByClassName('inner-container')[0];
+  const menuWidth = 260;
   let [docWrapWidth, scrollTop, innerWidth] = [0, 0, window.innerWidth]
   if (docWrapper) {
     docWrapWidth = docWrapper.offsetWidth;
@@ -40,9 +41,12 @@ export const useSelectMenu = (setOptions) => {
     const str = document.getSelection().toString();
     if (!str.length) {
       setOptions({
-        visibility: 'hidden',
-        zIndex: -100,
-        transform: `translateX(0,0)`,
+        styles: {
+          visibility: 'hidden',
+          zIndex: -1,
+          transform: `translateX(0,0)`,
+        },
+        copy: ''
       });
       return
     };
@@ -51,19 +55,22 @@ export const useSelectMenu = (setOptions) => {
     const { top, left, width } = window.getSelection().getRangeAt(0).getBoundingClientRect();
     // if there is multiple lines, calculate it as single lin,to keep the menu stay center
     const realWidth = Math.min(maxLineWidth, width);
-    let translateX = left - offsetLeft + (realWidth - 240) / 2;
+    let translateX = left - offsetLeft + (realWidth - menuWidth) / 2;
 
     if (translateX < 32) {
       translateX = 32;
     }
-    if (translateX > maxLineWidth - 240) {
-      translateX = maxLineWidth - 240 + 32
+    if (translateX > maxLineWidth - menuWidth) {
+      translateX = maxLineWidth - menuWidth + 32
     }
 
     setOptions({
-      visibility: 'visible',
-      zIndex: 199,
-      transform: `translate(${translateX}px,${top - offsetTop + scrollTop}px)`,
+      styles: {
+        visibility: 'visible',
+        zIndex: 199,
+        transform: `translate(${translateX}px,${top - offsetTop + scrollTop}px)`,
+      },
+      copy: str
     });
   };
 

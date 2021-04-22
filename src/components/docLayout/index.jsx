@@ -19,6 +19,8 @@ const DocLayout = props => {
     wrapperClass = 'doc-wrapper',
     isBenchMark = false,
     showDoc = true,
+    isBlog,
+    editPath
   } = props;
   const formatHeadings =
     headings &&
@@ -169,51 +171,26 @@ const DocLayout = props => {
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
             <section>
-              {/* filter faq page */}
-              {!id.includes('faq')
-                ? generateAnchorMenu(formatHeadings, 'parent-item')
-                : null}
-
-              {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
-                <div className="event">
-                  <h4>Upcoming Event</h4>
-                  <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
-                </div>
-                click <strong>here</strong> to register
-              </a> */}
               <div className="button-container">
+                {isBlog || isBenchMark ? null : (<a
+                  className="btn-anchor"
+                  href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
+                    }/${editPath}`}
+                >
+                  <span className="btn-icon-wrapper">
+                    <i className="far fa-edit btn-icon"></i>
+                  </span>
+
+                  {language.footer.editBtn.label}
+                </a>)}
                 <a
                   className="btn-anchor"
-                  href="http://github.com/milvus-io/milvus"
+                  href="https://github.com/milvus-io/docs/issues/new?assignees=&labels=&template=change-request.md&title="
                 >
                   <span className="btn-icon-wrapper">
                     <i className="fab fa-github btn-icon"></i>
                   </span>
-
-                  <span ref={star}>4200</span>
-
-                  <span>&nbsp;stars</span>
-                </a>
-
-                <a
-                  className="btn-anchor"
-                  href="https://github.com/milvus-io/milvus/discussions"
-                >
-                  <span className="btn-icon-wrapper">
-                    <i className="fas fa-comments btn-icon"></i>
-                  </span>
-                  Github Discussions
-                </a>
-                <a
-                  className="btn-anchor"
-                  id="btn-question"
-                  href={language.footer.questionBtn.link}
-                >
-                  <span className="btn-icon-wrapper">
-                    <i className="fab fa-slack-hash btn-icon"></i>
-                  </span>
-
-                  {language.footer.questionBtn.label}
+                  {language.selectMenu.github}
                 </a>
                 <a
                   className="btn-anchor"
@@ -226,7 +203,33 @@ const DocLayout = props => {
 
                   {language.footer.issueBtn.label}
                 </a>
+
+                <a
+                  className="btn-anchor"
+                  id="btn-question"
+                  href={language.footer.questionBtn.link}
+                >
+                  <span className="btn-icon-wrapper">
+                    <i className="fab fa-slack-hash btn-icon"></i>
+                  </span>
+
+                  {language.footer.questionBtn.label}
+                </a>
+
               </div>
+
+              {/* filter faq page */}
+              {!id.includes('faq')
+                ? generateAnchorMenu(formatHeadings, 'parent-item')
+                : null}
+
+              {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
+                <div className="event">
+                  <h4>Upcoming Event</h4>
+                  <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
+                </div>
+                click <strong>here</strong> to register
+              </a> */}
             </section>
           </div>
         )}

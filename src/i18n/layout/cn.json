@@ -317,7 +317,7 @@
     },
     "selectMenu":{
       "comment": "评论",
-      "github": "Github",
+      "github": "提交文档错误",
       "sendBtn": "发送",
       "cancelBtn": "取消",
       "placeholder": "留下您的评论"

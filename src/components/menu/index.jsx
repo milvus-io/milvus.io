@@ -146,9 +146,8 @@ const Menu = props => {
   const generageMenuDom = (list, className = '') => {
     return list.map(doc => (
       <div
-        className={`${className} ${doc.isBlog ? 'blog' : ''} ${
-          doc.isLast ? 'menu-last-level' : ''
-        } ${doc.isActive ? 'active' : ''}`}
+        className={`${className} ${doc.isBlog ? 'blog' : ''} ${doc.isLast ? 'menu-last-level' : ''
+          } ${doc.isActive ? 'active' : ''}`}
         key={doc.id}
       >
         <div
@@ -156,8 +155,8 @@ const Menu = props => {
           onClick={
             doc.isMenu
               ? () => {
-                  toggleMenuChild(doc);
-                }
+                toggleMenuChild(doc);
+              }
               : handleMenuClick
           }
           style={doc.isMenu ? { cursor: 'pointer' } : null}
@@ -182,9 +181,8 @@ const Menu = props => {
 
           {doc.children && doc.children.length ? (
             <i
-              className={`fas fa-chevron-down arrow ${
-                doc.showChildren ? '' : 'top'
-              }`}
+              className={`fas fa-chevron-down arrow ${doc.showChildren ? '' : 'top'
+                }`}
             ></i>
           ) : null}
         </div>

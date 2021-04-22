@@ -19,6 +19,7 @@
   width: calc(100% - 280px);
   overflow: hidden;
   color: var(--color-primary);
+  position: relative;
 
   @include media('<=1000px') {
     padding: 1rem;
@@ -1051,6 +1052,7 @@
     overflow-x: auto;
     @include scroll-bar;
   }
+
 }
 
 .iframe-container {

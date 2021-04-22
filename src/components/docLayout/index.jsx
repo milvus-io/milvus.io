@@ -20,7 +20,7 @@ const DocLayout = props => {
     isBenchMark = false,
     showDoc = true,
     isBlog,
-    editPath
+    editPath,
   } = props;
   const formatHeadings =
     headings &&
@@ -95,18 +95,19 @@ const DocLayout = props => {
 
   useEffect(() => {
     let currentPos = 0;
+    const container = docContainer.current;
 
     const cb = function () {
-      const wrapper = document.querySelector('html');
-      const direction = wrapper.scrollTop - currentPos > 0 ? 'down' : 'up';
-      currentPos = wrapper.scrollTop;
+      const direction = container.scrollTop - currentPos > 0 ? 'down' : 'up';
+      currentPos = container.scrollTop;
       const showButton = direction === 'up' && currentPos;
+
       setShowToTopButton(showButton);
     };
-    window.addEventListener('scroll', cb);
+    container.addEventListener('scroll', cb);
 
     return () => {
-      window.removeEventListener('scroll', cb);
+      container.removeEventListener('scroll', cb);
     };
   }, []);
 
@@ -136,7 +137,7 @@ const DocLayout = props => {
   };
 
   const onToTopClick = () => {
-    window.scrollTo({
+    docContainer.current.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
@@ -172,17 +173,20 @@ const DocLayout = props => {
           <div className="anchor-wrapper">
             <section>
               <div className="button-container">
-                {isBlog || isBenchMark ? null : (<a
-                  className="btn-anchor"
-                  href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
+                {isBlog || isBenchMark ? null : (
+                  <a
+                    className="btn-anchor"
+                    href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                      locale === 'en' ? 'en' : 'zh-CN'
                     }/${editPath}`}
-                >
-                  <span className="btn-icon-wrapper">
-                    <i className="far fa-edit btn-icon"></i>
-                  </span>
+                  >
+                    <span className="btn-icon-wrapper">
+                      <i className="far fa-edit btn-icon"></i>
+                    </span>
 
-                  {language.footer.editBtn.label}
-                </a>)}
+                    {language.footer.editBtn.label}
+                  </a>
+                )}
                 <a
                   className="btn-anchor"
                   href={language.footer.docIssueBtn.link}
@@ -215,7 +219,6 @@ const DocLayout = props => {
 
                   {language.footer.questionBtn.label}
                 </a>
-
               </div>
 
               {/* filter faq page */}

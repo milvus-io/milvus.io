@@ -6,17 +6,16 @@ import { unstable_batchedUpdates } from 'react-dom';
 const TextSelectionMenu = ({ language, options }) => {
   const { selectMenu } = language;
   const { styles, copy } = options;
-  console.log(copy)
   const [style, setStyle] = useState({
     visibility: 'hidden',
     zIndex: -100,
   });
-  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
 
   useEffect(() => {
     unstable_batchedUpdates(() => {
       setStyle(styles);
-      setTitle(copy)
+      setBody(copy)
     })
   }, [options]);
 
@@ -35,7 +34,7 @@ const TextSelectionMenu = ({ language, options }) => {
         | */}
           <a href={`
               https://github.com/milvus-io/docs/issues/new?
-              assignees=&labels=&template=change-request.md&title=&body=${title}`
+              assignees=&labels=&template=change-request.md&title=&body=${body}`
             } 
             className="content-item"
           >

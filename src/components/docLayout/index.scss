@@ -1,4 +1,4 @@
-@import '../include_media.scss';
+@import "../include_media.scss";
 
 html {
   height: 100%;
@@ -37,7 +37,7 @@ body {
   background-color: #fafafa !important;
   color: #434548;
 
-  @include media('<=1000px') {
+  @include media("<=1000px") {
     font-size: 14px;
   }
 }
@@ -151,7 +151,7 @@ a.btn-anchor {
       background-color: darkgrey;
     }
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       position: fixed;
       top: 0;
       bottom: 0;
@@ -194,7 +194,7 @@ a.btn-anchor {
       top: 0;
     }
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       flex: 0 0 100%;
       margin: 0;
       max-width: 100%;
@@ -206,14 +206,14 @@ a.btn-anchor {
   }
 
   .button-container {
-    margin-top: 24px;
+    margin-bottom: 24px;
   }
 
   .anchor-wrapper {
     // position: relative;
     position: absolute;
     // header 60px margin top 65px
-    top: calc(60px + 65px);
+    top: 32px;
     bottom: 16px;
     right: 0;
     width: 280px;
@@ -222,12 +222,12 @@ a.btn-anchor {
 
     section {
       position: sticky;
-      top: 160px;
+      top: 0;
       left: 0;
       max-width: 90%;
 
       height: 100%;
-      overflow-y: scroll;
+      overflow-y: auto;
 
       // change scrollbar style
       &::-webkit-scrollbar {
@@ -271,7 +271,7 @@ a.btn-anchor {
     //   right: 0;
     // }
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       display: none;
     }
 
@@ -309,15 +309,21 @@ a.btn-anchor {
   }
 }
 
-// .inner-container {
-//   width: 1000px;
+.inner-container {
+  .dialog-wrapper {
+    position: absolute;
+    right: 9px;
+    top: 0;
+    bottom: 0;
+  }
+  // width: 1000px;
 
-//   @include media("<=1000px") {
-//     width: auto;
-//   }
+  // @include media("<=1000px") {
+  //   width: auto;
+  // }
 
-//   margin: 0 auto;
-// }
+  // margin: 0 auto;
+}
 
 .not-found {
   background: #fff;
@@ -376,19 +382,19 @@ a.btn-anchor {
     color: var(--color-highlight);
   }
 
-  @include media('>=1200px') {
+  @include media(">=1200px") {
     position: fixed;
     right: 30%;
     bottom: 80px;
   }
 
-  @include media('>=1600px') {
+  @include media(">=1600px") {
     position: fixed;
     right: 28%;
     bottom: 80px;
   }
 
-  @include media('>=2000px') {
+  @include media(">=2000px") {
     position: fixed;
     right: 32%;
     bottom: 80px;

@@ -16,6 +16,9 @@ import {
   sortVersions,
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
+// import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
+// import { useSelectMenu } from '../hooks';
+
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
@@ -55,6 +58,18 @@ export default function Template({
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
   // }, []);
+
+  // select menu function
+  // const [options,setOptions] = useState({
+  //   styles: {
+  //     visibility: 'hidden',
+  //       zIndex: -100,
+  //       transform: `translateX(0,0)`,
+  //   },
+  //   copy: ''
+  // })
+
+  // useSelectMenu(setOptions);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach(panel => {
@@ -385,6 +400,8 @@ export default function Template({
       id={frontmatter.id}
       isBenchMark={isBenchmark}
       showDoc={false}
+      isBlog={isBlog}
+      editPath={editPath}
     >
       <SEO title={title} lang={locale} />
       {isBenchmark ? (
@@ -468,20 +485,8 @@ export default function Template({
               globalEventOff="click"
               className="md-tooltip"
             />
-            {isBlog || isBenchmark ? null : (
-              <a
-                className="edit-page-link btn"
-                href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                  locale === 'en' ? 'en' : 'zh-CN'
-                }/${editPath}`}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                <i className="far fa-edit"></i>
-                {layout.footer.editBtn.label}
-              </a>
-            )}
           </div>
+          {/* <TextSelectionMenu language={layout} options={options} /> */}
         </div>
       )}
 
@@ -580,6 +585,13 @@ export const pageQuery = graphql`
                   title
                   wechat
                 }
+              }
+              selectMenu {
+                comment
+                github
+                sendBtn
+                cancelBtn,
+                placeholder
               }
             }
           }

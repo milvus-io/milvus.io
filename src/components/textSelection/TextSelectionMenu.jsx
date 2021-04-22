@@ -12,7 +12,7 @@ const TextSelectionMenu = ({language, options, showDialog }) => {
 
   useEffect(() => {
     setStyle(options)
-  }, [options]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [options]);
 
   return (
     <div className='pop-tool-wrapper' style={style} >

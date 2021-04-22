@@ -20,7 +20,6 @@ export const useSelectMenu = (setOptions) => {
   // titlebar height:60; self height: 26; margin 8
   const offsetTop = 60 + 36 + 8;
   const docWrapper = document.getElementsByClassName('doc-wrapper')[0];
-  const menuWrapper = document.getElementsByClassName('pop-tool-wrapper')[0];
   const innerContainer = document.getElementsByClassName('inner-container')[0];
   let [docWrapWidth, scrollTop, innerWidth] = [0, 0, window.innerWidth]
   if (docWrapper) {

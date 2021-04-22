@@ -16,10 +16,10 @@ import {
   sortVersions,
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
-import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
-import CommentDialog from '../components/textSelection/CommentDialog';
+// import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
+// import CommentDialog from '../components/textSelection/CommentDialog';
+// import { useSelectMenu } from '../hooks';
 
-import { useSelectMenu } from '../hooks'
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
 
@@ -59,16 +59,18 @@ export default function Template({
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
   // }, []);
-  const [open,setOpen] = useState(false);
-  const [options,setOptions] = useState({
-    display: 'none',
-    position: 'basolute',
-    left: 0,
-    top: 0,
-    target: null
-  })
 
-  useSelectMenu(setOptions);
+  // select menu function
+  // const [open,setOpen] = useState(false);
+  // const [options,setOptions] = useState({
+  //   display: 'none',
+  //   position: 'basolute',
+  //   left: 0,
+  //   top: 0,
+  //   target: null
+  // })
+
+  // useSelectMenu(setOptions);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach(panel => {
@@ -496,7 +498,7 @@ export default function Template({
               </a>
             )}
           </div>
-          <TextSelectionMenu language={layout} options={options} showDialog={()=>setOpen(true)} />
+          {/* <TextSelectionMenu language={layout} options={options} showDialog={()=>setOpen(true)} /> */}
         </div>
       )}
 
@@ -513,9 +515,9 @@ export default function Template({
           <QueryModal locale={locale} setShowModal={setShowModal} />
         </div>
       ) : null}
-      <div className='dialog-wrapper'>
+      {/* <div className='dialog-wrapper'>
         <CommentDialog language={layout} open={open} hideDialog={()=>setOpen(false)} />
-      </div>
+      </div> */}
       
     </Layout>
   );

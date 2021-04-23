@@ -326,5 +326,10 @@
       "cancelBtn": "取消",
       "placeholder": "留下您的评论"
     }
+  },
+  "v2":{
+    "section1": {
+      
+    }
   }
 }

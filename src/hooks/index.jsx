@@ -17,7 +17,7 @@ export const useMobileScreen = () => {
 };
 
 export const useSelectMenu = (setOptions) => {
-  // titlebar height:60; self height: 26; margin 8
+  // titlebar height:60; self height: 36; margin 8
   const offsetTop = 60 + 36 + 8;
   const docWrapper = document.getElementsByClassName('doc-wrapper')[0];
   const innerContainer = document.getElementsByClassName('inner-container')[0];
@@ -61,7 +61,7 @@ export const useSelectMenu = (setOptions) => {
       translateX = 32;
     }
     if (translateX > maxLineWidth - menuWidth) {
-      translateX = maxLineWidth - menuWidth + 32
+      translateX = maxLineWidth - menuWidth + 32;
     }
 
     setOptions({
@@ -74,23 +74,27 @@ export const useSelectMenu = (setOptions) => {
     });
   };
 
-  const mouseDownHandler = ()=>{
-    setOptions({
-      styles: {
-        visibility: 'hidden',
-        zIndex: -1,
-        transform: `translateX(0,0)`,
-      },
-      copy: ''
-    });
+  const selectChangeHandler = (e) => {
+    const str = document.getSelection().toString();
+    if (!str.length) {
+      setOptions({
+        styles: {
+          visibility: 'hidden',
+          zIndex: -1,
+          transform: `translateX(0,0)`,
+        },
+        copy: ''
+      });
+      return
+    };
   }
 
   useEffect(() => {
     window.addEventListener("mouseup", (e) => selectHandler(e), false);
-    // window.addEventListener("mousedown", mouseDownHandler, false);
+    document.addEventListener('selectionchange', (e) => selectChangeHandler(e), false);
     return () => {
       window.removeEventListener("mouseup", (e) => selectHandler(e), false);
-      // window.removeEventListener("mousedown", mouseDownHandler, false);
+      window.removeEventListener("selectionchange", (e) => selectChangeHandler(e), false);
     };
   }, [docWrapper]);// eslint-disable-line react-hooks/exhaustive-deps
 }

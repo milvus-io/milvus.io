@@ -17,7 +17,7 @@ import {
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
-// import { useSelectMenu } from '../hooks';
+import { useSelectMenu } from '../hooks';
 
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
@@ -69,7 +69,7 @@ export default function Template({
     copy: ''
   })
 
-  // useSelectMenu(setOptions);
+  useSelectMenu(setOptions);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach(panel => {

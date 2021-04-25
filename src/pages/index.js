@@ -97,6 +97,7 @@ const IndexPage = ({ data, pageContext }) => {
       r => r.name !== 'bilibili' && r.name !== 'zhihu'
     );
   }
+  console.log(currentResources)
 
   useEffect(() => {
     const urlLang = getRedirectLanguage();

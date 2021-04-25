@@ -325,9 +325,9 @@
   },
   "v2":{
     "banner": {
-      "title": "High Scalability.Cloud-Native.High Availability.",
+      "title": "High Scalability. Cloud-Native. High Availability.",
       "startBtn": {
-        "href": "",
+        "href": "#",
         "label": "Get Started"
       }
     },
@@ -359,54 +359,83 @@
           "text": "In application scenarios where users have high data entry requirements, whether streaming or batch, Milvus has enhanced support for streaming and batch data persistence methods, supporting multi-engine adaptation of message streaming systems and storage systems. In the actual application scenarios, users generally have requirements for high database throughput, and there are two typical types of data: streaming and batch. Milvus enhances both of them by supporting two data persistency methods and supporting message systems and storage systems for adapting multiple engines.",
           "img": "storage"
         }
-      ]
+      ],
+      "slogan": {
+        "title": "Join the community",
+        "text1": "Milvus is open-sourced on GitHub.",
+        "text2": "Contributions and feedbacks are welcome!",
+        "gitBtn": {
+          "href": "#",
+          "label": "Go to Github"
+        }
+      }
     },
     "footer": {
       "list": [
         {
           "title": "What is milvus? ",
           "text": "Open-source similarity search engine for massive-scale feature vectors",
-          "href": "",
-          "label": "Get started"
+          "href": "https://milvus.io/docs/install_milvus.md",
+          "label": "Get started",
+          "icons": []
         },
         {
           "title": "Contribute",
           "text": "Milvus is a community project. We encourage you to join the effort and contribute feedback, ideas and code.",
-          "href": "",
-          "label": "Join us on Github"
+          "href": "https://github.com/milvus-io",
+          "label": "Join us on Github",
+          "icons": []
         },
         {
           "title": "Follow us",
           "text": "Stay up to date with the latest Milvus news.",
           "href": "",
-          "label": ""
+          "label": "",
+          "icons": [
+            {
+              "href": "#",
+              "name": "wechat"
+            },
+            {
+              "href": "https://medium.com/unstructured-data-service",
+              "name": "medium"
+            },
+            {
+              "href": "https://twitter.com/milvusio",
+              "name": "twitter"
+            },
+            {
+              "href": "https://milvusio.slack.com/join/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
+              "name": "slack"
+            }
+          ]
         }
       ],
       "licence": {
         "text1": {
           "label": "© Milvus 2021",
-          "link": ""
+          "link": "#"
         },
         "text2":{
           "label": "Milvus, and associated open source project names are trademarks of the LF AI & Data Foundation",
-          "link": ""
+          "link": "#"
         },
         "list": [
           {
             "label": "Terms and conditions",
-            "link": ""
+            "link": "#"
           },
           {
             "label": "Compliance (data protection) ",
-            "link": ""
+            "link": "#"
           },
           {
             "label": "Privacy policy",
-            "link": ""
+            "link": "#"
           },
           {
             "label": "Cookie Policy",
-            "link": ""
+            "link": "#"
           }
         ]
       }

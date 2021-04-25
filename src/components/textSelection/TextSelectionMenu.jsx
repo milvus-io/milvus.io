@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './textSelectionMenu.scss';
 import git from '../../images/git.svg'
-import { unstable_batchedUpdates } from 'react-dom';
 
 const TextSelectionMenu = ({ language, options }) => {
   const { selectMenu } = language;
@@ -29,6 +28,7 @@ const TextSelectionMenu = ({ language, options }) => {
           <a href={`https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=${title}&body=${body}`}
             target='_blank'
             className="content-item"
+            rel="noopener noreferrer"
           >
             <p className="icon-wrapper">
               <img src={git} alt="git-logo" />

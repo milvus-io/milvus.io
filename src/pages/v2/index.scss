@@ -1,0 +1,144 @@
+.home-page-container {
+  width: 1440px;
+  padding: 0 96px 0 108px;
+  margin: 0 auto;
+  background-image: url(../../images//v2//guidebg.png);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: repeat-y;
+  background-origin: content-box;
+
+  .banner {
+    display: flex;
+    border: 1px solid red;
+    padding: 140px 16px 81px 16px;
+    margin-bottom: 80px;
+
+    .banner-left {
+      flex: 1;
+
+      .stars-layout {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+
+        // .git-stars {
+        //   .git-btn {
+        //     background-image: none;
+        //     background-color: #fff;
+        //   }
+
+        //   .gh-count {
+        //     &::before,
+        //     &::after {
+        //       border-color: #12c3f4;
+        //     }
+        //   }
+
+        //   a {
+        //     border: 1px solid #12c3f4;
+        //     border-radius: 4px;
+        //   }
+        // }
+      }
+
+      .title {
+        font-family: Brinnan;
+        font-size: 48px;
+        font-weight: 900;
+        line-height: 58px;
+        text-align: left;
+        margin-bottom: 24px;
+        word-break: break-all;
+      }
+    }
+
+    .banner-right {
+      flex: 1;
+    }
+  }
+
+  .content {
+    margin-bottom: 60px;
+    .title-bar {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+
+      .title {
+        font-family: Brinnan;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 40px;
+        letter-spacing: 0em;
+        text-align: left;
+      }
+
+      .line {
+        display: inline-block;
+        width: 221px;
+        height: 1px;
+        background-color: #12c3f4;
+        margin-left: 24px;
+      }
+    }
+
+    .feature-section {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row-reverse;
+      list-style: none;
+
+      .section-item {
+        width: 33.33%;
+        flex: 0 0 auto;
+        padding: 16px;
+
+        .icon-wrapper {
+          width: 32px;
+          height: 32px;
+          margin-bottom: 8px;
+        }
+
+        .title {
+          font-family: Inter SemiBold;
+          font-size: 24px;
+          line-height: 24px;
+          margin-bottom: 24px;
+          height: 48px;
+        }
+
+        .text {
+          font-family: Inter Regular;
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+
+    .slogan-section {
+      margin-top: 200px;
+      width: 100%;
+      background: rgba(245, 243, 243, 0.4);
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+
+      .title {
+        font-family: Brinnan;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 40px;
+        margin-bottom: 24px;
+      }
+
+      .text {
+        font-family: Inter Regular;
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 32px;
+      }
+    }
+  }
+}

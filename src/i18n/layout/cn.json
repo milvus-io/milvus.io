@@ -329,9 +329,9 @@
   },
   "v2":{
     "banner": {
-      "title": "高可扩展性，云原生，高可用性",
+      "title": "High Scalability. Cloud-Native. High Availability.",
       "startBtn": {
-        "href": "",
+        "href": "#",
         "label": "Get Started"
       }
     },
@@ -364,12 +364,12 @@
           "img": "storage"
         }
       ],
-      "slogen": {
+      "slogan": {
         "title": "Join the community",
-        "desc1": "Milvus is open-sourced on GitHub.",
-        "desc2": "Contributions and feedbacks are welcome!",
-        "goBtn": {
-          "href": "",
+        "text1": "Milvus is open-sourced on GitHub.",
+        "text2": "Contributions and feedbacks are welcome!",
+        "gitBtn": {
+          "href": "#",
           "label": "Go to Github"
         }
       }
@@ -379,14 +379,14 @@
         {
           "title": "What is milvus? ",
           "text": "Open-source similarity search engine for massive-scale feature vectors",
-          "href": "",
+          "href": "https://milvus.io/docs/install_milvus.md",
           "label": "Get started",
           "icons": []
         },
         {
           "title": "Contribute",
           "text": "Milvus is a community project. We encourage you to join the effort and contribute feedback, ideas and code.",
-          "href": "",
+          "href": "https://github.com/milvus-io",
           "label": "Join us on Github",
           "icons": []
         },
@@ -396,38 +396,50 @@
           "href": "",
           "label": "",
           "icons": [
-            "wechat",
-            "medium",
-            "twitter",
-            "slack"
+            {
+              "href": "#",
+              "name": "wechat"
+            },
+            {
+              "href": "https://medium.com/unstructured-data-service",
+              "name": "medium"
+            },
+            {
+              "href": "https://twitter.com/milvusio",
+              "name": "twitter"
+            },
+            {
+              "href": "https://milvusio.slack.com/join/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
+              "name": "slack"
+            }
           ]
         }
       ],
       "licence": {
         "text1": {
           "label": "© Milvus 2021",
-          "link": ""
+          "link": "#"
         },
         "text2":{
           "label": "Milvus, and associated open source project names are trademarks of the LF AI & Data Foundation",
-          "link": ""
+          "link": "#"
         },
         "list": [
           {
             "label": "Terms and conditions",
-            "link": ""
+            "link": "#"
           },
           {
             "label": "Compliance (data protection) ",
-            "link": ""
+            "link": "#"
           },
           {
             "label": "Privacy policy",
-            "link": ""
+            "link": "#"
           },
           {
             "label": "Cookie Policy",
-            "link": ""
+            "link": "#"
           }
         ]
       }

@@ -1,0 +1,36 @@
+.v2_button {
+  border-radius: 4px;
+  display: inline-block;
+
+  &.contained {
+    background: #12c3f4;
+    color: #fff;
+    padding: 16px 32px;
+
+    &:hover {
+      background: #e3f9ff;
+      color: #12c3f4;
+    }
+
+    // &:visited {
+    //   background: #009ade;
+    //   color: #fff;
+    // }
+  }
+
+  &.text {
+    color: #12c3f4;
+  }
+
+  span {
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 16px;
+    display: inline-block;
+  }
+
+  i {
+    width: 24px;
+    height: 24px;
+  }
+}

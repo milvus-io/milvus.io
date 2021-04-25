@@ -1,10 +1,17 @@
+@import '../../include_media';
+ 
 .footer-container {
   padding: 60px 0 170px 0;
+
   .footer-list {
     display: flex;
     list-style: none;
     padding: 0 193px;
     margin-bottom: 120px;
+    @include media('<=1000px') {
+      flex-direction: column;
+      padding: 0px;
+    }
 
     .list-item {
       padding: 8px 8px;
@@ -70,8 +77,8 @@
           position: absolute;
           top: -170px;
           right: 0;
-          // visibility: hidden;
-          // z-index: -1;
+          visibility: hidden;
+          z-index: -1;
           width: 300px;
 
           img {

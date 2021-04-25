@@ -73,7 +73,7 @@ const ImageList = ({ images }) => {
               href={img.href} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className={`column-img ${img.name==='wecgat'? 'hover-btn':''}`} 
+              className={`column-img ${img.name==='wechat'? 'hover-btn':''}`} 
               key={img.name}
             >
               <img src={iconSet[img.name]} alt={img.name} />

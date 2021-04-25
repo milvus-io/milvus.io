@@ -73,6 +73,7 @@ const HomePage = ({ data, pageContext }) => {
               </li>
             );
           })}
+          <div className="bg-container"></div>
         </ul>
         <div className="slogan-section">
           <p className="title">{slogan.title}</p>

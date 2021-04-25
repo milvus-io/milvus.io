@@ -1,5 +1,7 @@
+@import "../../components/include_media";
+
 .home-page-container {
-  width: 1440px;
+  max-width: 1440px;
   padding: 0 96px 0 108px;
   margin: 0 auto;
   background-image: url(../../images//v2//guidebg.png);
@@ -7,11 +9,19 @@
   background-position: center center;
   background-repeat: repeat-y;
   background-origin: content-box;
+  
+  @include media("<=1000px") {
+    padding: 0;
+  }
 
   .banner {
     display: flex;
     padding: 140px 16px 81px 16px;
     margin-bottom: 80px;
+    @include media("<=1000px") {
+      padding: 16px;
+      margin: 80px 0;
+    }
 
     .banner-left {
       flex: 1;
@@ -42,7 +52,7 @@
       }
 
       .title {
-        font-family: Brinnan;
+        font-family: Brinnan Bold;
         font-size: 48px;
         font-weight: 900;
         line-height: 58px;
@@ -64,15 +74,18 @@
 
   .content {
     margin-bottom: 60px;
+
     .title-bar {
       display: flex;
       align-items: center;
       padding: 16px;
+      @include media("<=1000px") {
+        margin-bottom: 32px;
+      }
 
       .title {
-        font-family: Brinnan;
+        font-family: Brinnan Bold;
         font-size: 32px;
-        font-weight: 700;
         line-height: 40px;
         letter-spacing: 0em;
         text-align: left;
@@ -93,6 +106,14 @@
       flex-wrap: wrap;
       flex-direction: row-reverse;
       list-style: none;
+      padding-bottom: 200px;
+
+      @include media("<=1000px") {
+        flex-direction: column;
+        position: relative;
+        overflow-x: hidden;
+        padding-bottom: 40px;
+      }
 
       .spline-wrapper {
         position: absolute;
@@ -109,10 +130,20 @@
 
         z-index: 2;
 
+        @include media("<=1000px") {
+          width: 100%;
+          margin-bottom: 32px;
+        }
+
         .icon-wrapper {
           width: 32px;
           height: 32px;
           margin-bottom: 8px;
+
+          @include media("<=1000px") {
+            margin-bottom: 16px;
+            padding: 0 8px;
+          }
         }
 
         .title {
@@ -121,6 +152,12 @@
           line-height: 24px;
           margin-bottom: 24px;
           height: 48px;
+
+          @include media("<=1000px") {
+            border-left: 2px solid #00ffa3;
+            height: auto;
+            padding: 0 8px;
+          }
         }
 
         .text {
@@ -128,24 +165,53 @@
           font-size: 14px;
           line-height: 24px;
           margin-bottom: 16px;
+
+          @include media("<=1000px") {
+            margin-bottom: 12px;
+          }
+        }
+      }
+
+      .bg-container {
+        display: none;
+        position: absolute;
+        width: 486px;
+        height: 288px;
+        background: url(../../images/v2/bg-img2.png) center center no-repeat;
+        background-size: contain;
+        z-index: -1;
+        left: -130px;
+        bottom: 0;
+        opacity: 0.8;
+
+        @include media("<=1000px") {
+          display: block;
         }
       }
     }
 
     .slogan-section {
-      margin-top: 200px;
       width: 100%;
       background: rgba(245, 243, 243, 0.4);
       border-radius: 24px;
       padding: 48px;
       text-align: center;
 
+      @include media("<=1000px") {
+        padding: 48px 20px;
+      }
+
       .title {
-        font-family: Brinnan;
+        font-family: Brinnan Bold;
         font-size: 32px;
         font-weight: 700;
         line-height: 40px;
         margin-bottom: 24px;
+
+        @include media("<=1000px") {
+          font-size: 24px;
+          line-height: 40px;
+        }
       }
 
       .text {

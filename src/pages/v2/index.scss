@@ -10,7 +10,6 @@
 
   .banner {
     display: flex;
-    border: 1px solid red;
     padding: 140px 16px 81px 16px;
     margin-bottom: 80px;
 
@@ -55,6 +54,11 @@
 
     .banner-right {
       flex: 1;
+
+      &-anime {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 

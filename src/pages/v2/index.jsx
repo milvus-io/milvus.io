@@ -8,9 +8,11 @@ import searchIcon from '../../images/v2/search.svg';
 import storageIcon from '../../images/v2/storage.svg';
 import supportIcon from '../../images/v2/support.svg';
 import GithubButton from 'react-github-button';
-import { MILVUS_INDEX_SCENE } from '../../anime/spline/scene';
-import { Spline } from 'react-spline';
 import './index.scss';
+import { Spline } from 'react-spline';
+import { MILVUS_INDEX_SCENE } from '../../anime/spline/scene';
+import AnimatedSvg from '../../components/animatedSvg/animatedSvg';
+import HomeAnimation from '../../anime/common/home';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -47,7 +49,9 @@ const HomePage = ({ data, pageContext }) => {
             label={banner.startBtn.label}
           />
         </div>
-        <div className="banner-right"></div>
+        <div className="banner-right">
+          <AnimatedSvg data={HomeAnimation} className="banner-right-anime" />
+        </div>
       </div>
       <div className="content">
         <p className="title-bar">
@@ -55,6 +59,7 @@ const HomePage = ({ data, pageContext }) => {
           <span className="line"></span>
         </p>
         <ul className="feature-section">
+          {/* To see more props: https://github.com/utkarshdubey/react-spline */}
           <Spline scene={MILVUS_INDEX_SCENE} className="spline-wrapper" />
           {list.map(i => {
             const { img, text, title } = i;

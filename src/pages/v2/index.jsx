@@ -10,9 +10,9 @@ import supportIcon from '../../images/v2/support.svg';
 import GithubButton from 'react-github-button';
 import './index.scss';
 import { Spline } from 'react-spline';
-import { MILVUS_INDEX_SCENE } from '../../anime/spline/scene';
+import { MILVUS_INDEX_SCENE } from '../../../static/anime/spline/scene';
 import AnimatedSvg from '../../components/animatedSvg/animatedSvg';
-import HomeAnimation from '../../anime/common/home';
+import HomeAnimation from '../../../static/anime/common/home';
 
 const icons = {
   autoscaling: autoscalingIcon,

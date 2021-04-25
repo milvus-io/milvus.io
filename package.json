@@ -35,6 +35,7 @@
     "react-github-button": "^0.1.11",
     "react-helmet": "^6.1.0",
     "react-marquee-slider": "^1.0.16",
+    "react-spline": "^1.1.0",
     "react-tooltip": "^4.2.15",
     "styled-components": "^5.2.1"
   },

@@ -84,15 +84,26 @@
     }
 
     .feature-section {
+      position: relative;
       display: flex;
       flex-wrap: wrap;
       flex-direction: row-reverse;
       list-style: none;
 
+      .spline-wrapper {
+        position: absolute;
+        left: -650px;
+        top: 0;
+        height: 100%;
+        z-index: 1;
+      }
+
       .section-item {
         width: 33.33%;
         flex: 0 0 auto;
         padding: 16px;
+
+        z-index: 2;
 
         .icon-wrapper {
           width: 32px;

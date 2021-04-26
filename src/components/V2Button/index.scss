@@ -1,11 +1,21 @@
-.v2_button {
+@import "../include_media";
+
+.button-wrapper {
   border-radius: 4px;
+  overflow: hidden;
   display: inline-block;
 
-  &.contained {
+  & .contained {
     background: #12c3f4;
     color: #fff;
     padding: 16px 32px;
+    display: inline-block;
+    padding: 16px 32px;
+    cursor: pointer;
+
+    @include media("<=1000px") {
+      padding: 8px 24px;
+    }
 
     &:hover {
       background: #e3f9ff;
@@ -18,26 +28,23 @@
     // }
   }
 
-  &.text {
+  & .text {
     color: #12c3f4;
-  }
-
-  span {
-    font-size: 16px;
-    line-height: 24px;
-    margin-right: 8px;
     display: inline-block;
+    cursor: pointer;
   }
 
-  .icon-wrapper {
-    width: 24px;
-    height: 24px;
+  & .outline {
+    border: 1px solid #06aff2;
+    border-radius: 4px;
+    color: #12c3f4;
+    background-color: #fff;
     display: inline-block;
-    text-align: center;
-    line-height: 24px;
-  }
+    padding: 16px 32px;
+    cursor: pointer;
 
-  i {
-    font-size: 10px;
+    @include media("<=1000px") {
+      padding: 8px 24px;
+    }
   }
 }

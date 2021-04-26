@@ -16,8 +16,7 @@ const iconSet = {
 }
 
 const V2Footer = ({ footer }) => {
-  const { list: links, licence: { text1, text2, list } } = footer;
-  console.log(list);
+  const { list: links, licence: { text1, text2 } } = footer;
 
   return (
     <div className='footer-container'>
@@ -32,11 +31,16 @@ const V2Footer = ({ footer }) => {
                 {
                   href ?
                     (<V2Button
-                      label={label}
                       href={href}
                       type='link'
                       variant='text'
                       className="footer-list-btn"
+                      children={
+                        <>
+                          <span>{label}</span>
+                          <i className="fa fa-chevron-right"></i>
+                        </>
+                      }
                     />) :
                     (<ImageList images={icons} />)
                 }
@@ -51,44 +55,54 @@ const V2Footer = ({ footer }) => {
           <a href={text1.link}>{text1.label}</a>
           <a href={text2.link}>{text2.label}</a>
         </div>
-        <div className="licence-policy">
+        {/* <div className="licence-policy">
           {
             list.map(i => (
               <a href={i.link} target="_blank" rel="noopener noreferrer" key={i.label}>{i.label}</a>
             ))
           }
-        </div>
+        </div> */}
       </div>
     </div>
   )
 }
 
 const ImageList = ({ images }) => {
+
+  const handleClick = (e, label) => {
+    if (label === 'wechat') {
+      e.preventDefault();
+      e.stopPropagation();
+      return
+    }
+  }
+
   return useMemo(() => {
     return (
-      <p className='images-wrapper'>
+      <div className='images-wrapper'>
         {
           images.map(img => (
-            <a 
-              href={img.href} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={`column-img ${img.name==='wechat'? 'hover-btn':''}`} 
+            <a
+              href={img.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`column-img ${img.name === 'wechat' ? 'hover-btn' : ''}`}
               key={img.name}
+              onClick={(e) => handleClick(e, img.name)}
             >
               <img src={iconSet[img.name]} alt={img.name} />
               {
-                img.name==='wechat' && (
+                img.name === 'wechat' && (
                   <p className='qrcode-wrapper'>
-                    <img src={qrcode} alt="qrcode"/>
-                    <img src={milvusUserWechat} alt="qrcode"/>
+                    <img src={qrcode} alt="qrcode" />
+                    <img src={milvusUserWechat} alt="qrcode" />
                   </p>
                 )
               }
             </a>
           ))
         }
-      </p>
+      </div>
     )
   }, [images])
 }

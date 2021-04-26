@@ -13,6 +13,7 @@ import { Spline } from 'react-spline';
 import { MILVUS_INDEX_SCENE } from '../../../static/anime/spline/scene';
 import AnimatedSvg from '../../components/animatedSvg/animatedSvg';
 import HomeAnimation from '../../../static/anime/common/home';
+import pencilBlue from '../../images/v2/pencil-blue.svg'
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -43,15 +44,37 @@ const HomePage = ({ data, pageContext }) => {
             />
           </div>
           <p className="title">{banner.title.toUpperCase()}</p>
-          <V2Button
-            type="link"
-            link={banner.startBtn.href}
-            label={banner.startBtn.label}
-          />
+          <div className='banner-btn-wrapper'>
+            <V2Button
+              className='banner-btn1'
+              type="link"
+              link={banner.startBtn.href}
+              children={
+                <>
+                  <span>{banner.startBtn.label}</span>
+                  <i className="fa fa-chevron-right"></i>
+                </>
+              }
+            />
+            <V2Button
+              className='banner-btn2'
+              variant='outline'
+              type="link"
+              link={banner.contributeBtn.href}
+              children={
+                <>
+                  <span>{banner.contributeBtn.label}</span>
+                  <img src={pencilBlue} alt="pencil-icon" />
+                </>
+              }
+            />
+          </div>
         </div>
         <div className="banner-right">
           <AnimatedSvg data={HomeAnimation} className="banner-right-anime" />
         </div>
+
+        <div className="banner-bg-container"></div>
       </div>
       <div className="content">
         <p className="title-bar">
@@ -76,14 +99,26 @@ const HomePage = ({ data, pageContext }) => {
           <div className="bg-container"></div>
         </ul>
         <div className="slogan-section">
-          <p className="title">{slogan.title}</p>
-          <p className="text">{slogan.text1}</p>
-          <p className="text">{slogan.text2}</p>
-          <V2Button
-            type="link"
-            link={slogan.gitBtn.href}
-            label={slogan.gitBtn.label}
-          />
+          <div className="wrapper">
+            <div className="text-wrapper">
+              <p className="title">{slogan.title}</p>
+              <p className="text">{slogan.text1}</p>
+              <p className="text ">{slogan.text2}</p>
+            </div>
+
+            <V2Button
+              className="sloganBtn"
+              type="link"
+              link={slogan.gitBtn.href}
+              children={
+                <>
+                  <span>{slogan.gitBtn.label}</span>
+                  <i className="fa fa-chevron-right"></i>
+                </>
+              }
+            />
+          </div>
+
         </div>
       </div>
       <Footer footer={footer} />
@@ -101,6 +136,10 @@ export const Query = graphql`
               banner {
                 title
                 startBtn {
+                  href
+                  label
+                }
+                contributeBtn {
                   href
                   label
                 }

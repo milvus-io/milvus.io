@@ -333,6 +333,10 @@
       "startBtn": {
         "href": "#",
         "label": "Get Started"
+      },
+      "contributeBtn": {
+        "href": "https://github.com/milvus-io",
+        "label": "Contribute"
       }
     },
     "content": {

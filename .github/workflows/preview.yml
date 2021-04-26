@@ -34,7 +34,7 @@ jobs:
           context: .
           push: true
           tags: milvusdb/milvus-io-dev:${{ github.sha }}
-          file: Dockerfile.preivew
+          file: ./Preview.Dockerfile
 
   deploy:
     runs-on: ubuntu-latest

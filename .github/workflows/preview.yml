@@ -35,7 +35,8 @@ jobs:
           push: true
           tags: milvusdb/milvus-io:${{ github.sha }}
           file: ./Dockerfile
-          build-args: IS_PREVIEW=preview
+          build-args: |
+            IS_PREVIEW=preview
 
   deploy:
     runs-on: ubuntu-latest

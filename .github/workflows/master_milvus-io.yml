@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.AzureAppService_ContainerUsername_995b5980f1ba470b8e1e2d93fa0d004e }}/appsvc/staticsite:${{ github.sha }}
+          tags: milvus-io/appsvc/staticsite:${{ github.sha }}
           file: ./Dockerfile
 
   deploy:
@@ -53,4 +53,4 @@ jobs:
           app-name: 'milvus-io'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_b3d290102638447fbf17d79cc0b48edf }}
-          images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_995b5980f1ba470b8e1e2d93fa0d004e }}/appsvc/staticsite:${{ github.sha }}'
+          images: 'mcr.microsoft.com/milvus-io/appsvc/staticsite:${{ github.sha }}'

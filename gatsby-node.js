@@ -127,7 +127,7 @@ exports.createPages = ({ actions, graphql }) => {
                 title
                 items {
                   title
-                  imgSrc
+                  key
                   btnLabel
                   link
                 }
@@ -140,6 +140,10 @@ exports.createPages = ({ actions, graphql }) => {
                 title
                 items {
                   label
+                  list {
+                    link
+                    text
+                  }
                 }
               }
               section4 {

@@ -1,5 +1,6 @@
 # => Build container
 FROM zilliz/milvus.io.builder as builder
+ENV IS_PREVIEW preview
 WORKDIR /site
 COPY . .
 

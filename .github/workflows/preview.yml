@@ -5,10 +5,10 @@ name: Build and deploy container app to Azure Web App - milvus-io
 
 on:
   repository_dispatch:
-    types: prod-deploy
+    types: dev-deploy
   push:
     branches:
-      - master
+      - preview
 
 jobs:
   build:
@@ -33,8 +33,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: milvusdb/milvus-io:latest
-          file: ./Dockerfile
+          tags: milvusdb/milvus-io:preview
+          file: ./Preview.Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,6 +49,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'milvus-io'
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_b3d290102638447fbf17d79cc0b48edf }}
-          images: 'milvusdb/milvus-io:latest'
+          slot-name: 'dev'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_ec0b155d3d574382855d6efde5d14352 }}
+          images: 'milvusdb/milvus-io:preview'

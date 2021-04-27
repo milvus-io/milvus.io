@@ -50,5 +50,5 @@ jobs:
         with:
           app-name: 'milvus-io'
           slot-name: 'dev'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_b3d290102638447fbf17d79cc0b48edf }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_ec0b155d3d574382855d6efde5d14352 }}
           images: 'milvusdb/milvus-io:preview'

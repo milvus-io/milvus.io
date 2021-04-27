@@ -103,7 +103,9 @@ exports.createPages = ({ actions, graphql }) => {
           }
         }
       }
-      allFile(filter: { relativeDirectory: { regex: "/(?:menuStructure)/" } }) {
+      allFile(
+        filter: { relativeDirectory: { regex: "/(?:menuStructure|home)/" } }
+      ) {
         edges {
           node {
             absolutePath
@@ -118,6 +120,36 @@ exports.createPages = ({ actions, graphql }) => {
                 order
                 isMenu
                 outLink
+              }
+            }
+            childrenHomeJson {
+              section1 {
+                title
+                items {
+                  title
+                  imgSrc
+                  btnLabel
+                  link
+                }
+              }
+              section2 {
+                title
+                desc
+              }
+              section3 {
+                title
+                items {
+                  label
+                }
+              }
+              section4 {
+                title
+                items {
+                  time
+                  title
+                  abstract
+                  imgSrc
+                }
               }
             }
           }
@@ -150,8 +182,12 @@ exports.createPages = ({ actions, graphql }) => {
     };
 
     // get all menuStructures
-    const allMenus = result.data.allFile.edges.map(
-      ({ node: { absolutePath, childMenuStructureJson } }) => {
+    const allMenus = result.data.allFile.edges
+      .filter(
+        ({ node: { childMenuStructureJson } }) =>
+          childMenuStructureJson !== null
+      )
+      .map(({ node: { absolutePath, childMenuStructureJson } }) => {
         let lang = absolutePath.includes('/en/') ? 'en' : 'cn';
         const isBlog = absolutePath.includes('blog');
         const version = findVersion(absolutePath) || 'master';
@@ -170,8 +206,23 @@ exports.createPages = ({ actions, graphql }) => {
           menuList,
           absolutePath,
         };
-      }
-    );
+      });
+
+    // get new doc index page data
+    const homeData = result.data.allFile.edges
+      .filter(({ node: { childrenHomeJson } }) => childrenHomeJson.length > 0)
+      .map(({ node: { absolutePath, childrenHomeJson } }) => {
+        const language = absolutePath.includes('/en') ? 'en' : 'cn';
+
+        const [data] = childrenHomeJson;
+        return {
+          language,
+          data,
+          path: absolutePath,
+        };
+      });
+
+    console.log('home data', homeData);
 
     // filter useless md file blog has't version
     const legalMd = result.data.allMarkdownRemark.edges.filter(
@@ -301,6 +352,30 @@ exports.createPages = ({ actions, graphql }) => {
     });
     console.log(versions);
 
+    // create doc home page
+    homeData.forEach(({ language, data, path }) => {
+      const isBlog = checkIsblog(path);
+      const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
+
+      createPage({
+        path: language === 'en' ? '/docs/home' : `/${language}/docs/home`,
+        component: docTemplate,
+        context: {
+          homeData: data,
+          locale: language,
+          versions: Array.from(versions),
+          newestVersion,
+          version: newestVersion,
+          old: 'home',
+          fileAbsolutePath: path,
+          isBlog,
+          editPath,
+          allMenus,
+          newHtml: null,
+        },
+      });
+    });
+
     return legalMd.forEach(({ node }) => {
       const fileAbsolutePath = node.fileAbsolutePath;
       const fileId = node.frontmatter.id;
@@ -364,9 +439,11 @@ exports.createPages = ({ actions, graphql }) => {
             editPath,
             allMenus,
             newHtml,
+            homeData: [],
           }, // additional data can be passed via context
         });
       }
+
       //  normal pages
       return createPage({
         path: localizedPath,
@@ -384,6 +461,7 @@ exports.createPages = ({ actions, graphql }) => {
           allMenus,
           isBenchmark,
           newHtml,
+          homeData: [],
         }, // additional data can be passed via context
       });
     });

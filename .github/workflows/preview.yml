@@ -4,11 +4,11 @@
 name: Build and deploy container app to Azure Web App - milvus-io
 
 on:
+  repository_dispatch:
+    types: dev-deploy
   push:
     branches:
       - preview
-      - ci
-  workflow_dispatch:
 
 jobs:
   build:

@@ -17,7 +17,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
   const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
   const [lanList, setLanList] = useState(false);
-  const [isShowMobileMask, setIsShowMobileMask] = useState(false);
+  const [isSHowMobileMask, setIsShowMobileMask] = useState(false);
   const [actionType, setActionType] = useState('');
   const popupRef = useRef(null);
   const mobileContainerRef = useRef(null);
@@ -199,7 +199,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
             </div>
           ) : (
             <div className="right-mobile">
-              {!isShowMobileMask && (
+              {!isSHowMobileMask && (
                 <SearchForMobile
                   language={header}
                   locale={locale}
@@ -207,7 +207,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                   hideMobileMask={hideMobileMask}
                 ></SearchForMobile>
               )}
-              {!isShowMobileMask ? (
+              {!isSHowMobileMask ? (
                 <i
                   className="fas fa-bars font-icon"
                   aria-label="menu-button"
@@ -229,7 +229,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
             </div>
           )}
           {/* 下滑的框框 */}
-          <MobilePopUp open={isShowMobileMask} hideMask={hideMobileMask}>
+          <MobilePopUp ref={popupRef}>
             {actionType === 'menu' ? (
               <MobileMenuContent
                 locale={locale}

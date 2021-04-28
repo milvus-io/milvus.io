@@ -315,7 +315,7 @@
         }
       }
     },
-    "selectMenu":{
+    "selectMenu": {
       "comment": "Comment",
       "github": "Create doc issue",
       "sendBtn": "Send",
@@ -323,7 +323,7 @@
       "placeholder": "Leave a message"
     }
   },
-  "v2":{
+  "v2": {
     "header": {
       "navlist": [
         {
@@ -441,7 +441,11 @@
           "label": "© Milvus 2021",
           "link": "#"
         },
-        "text2":{
+        "text2": {
+          "label": "Milvus",
+          "link": "https://milvus.io/"
+        },
+        "text3": {
           "label": "Milvus, and associated open source project names are trademarks of the LF AI & Data Foundation",
           "link": "#"
         },

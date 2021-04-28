@@ -13,10 +13,10 @@ const iconSet = {
   slack,
   twitter,
   wechat
-}
+};
 
 const V2Footer = ({ footer }) => {
-  const { list: links, licence: { text1, text2 } } = footer;
+  const { list: links, licence: { text1, text2, text3 } } = footer;
 
   return (
     <div className='footer-container'>
@@ -46,14 +46,18 @@ const V2Footer = ({ footer }) => {
                 }
 
               </li>
-            )
+            );
           })
         }
       </ul>
       <div className="footer-licence">
         <div className="licence-milvus">
-          <a href={text1.link}>{text1.label}</a>
-          <a href={text2.link}>{text2.label}</a>
+          <span>{text1.label}</span>
+          <p>
+            <a href={text2.link}>{text2.label}</a>,
+            <span>{text3.label}</span>
+          </p>
+
         </div>
         {/* <div className="licence-policy">
           {
@@ -64,8 +68,8 @@ const V2Footer = ({ footer }) => {
         </div> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const ImageList = ({ images }) => {
 
@@ -73,9 +77,9 @@ const ImageList = ({ images }) => {
     if (label === 'wechat') {
       e.preventDefault();
       e.stopPropagation();
-      return
+      return;
     }
-  }
+  };
 
   return useMemo(() => {
     return (
@@ -103,8 +107,8 @@ const ImageList = ({ images }) => {
           ))
         }
       </div>
-    )
-  }, [images])
-}
+    );
+  }, [images]);
+};
 
-export default V2Footer
+export default V2Footer;

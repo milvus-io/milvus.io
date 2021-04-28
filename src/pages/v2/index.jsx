@@ -191,6 +191,10 @@ export const Query = graphql`
                     label
                     link
                   }
+                  text3 {
+                    label
+                    link
+                  }
                   list {
                     label
                     link

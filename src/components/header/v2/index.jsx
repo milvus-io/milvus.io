@@ -7,7 +7,7 @@ import menu from '../../../images/v2/menu.svg';
 import V2Selector from '../../selector/v2';
 import { useMobileScreen } from '../../../hooks';
 import { sortVersions } from '../../../utils/docTemplate.util';
-import MobilePopup from '../components/MobilePopUp';
+import MobilePopup from '../components/MobilePopUpV2';
 
 import './index.scss';
 

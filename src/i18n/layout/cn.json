@@ -26,7 +26,7 @@
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new/choose",
-        "label": "我要提交Bug"
+        "label": "我要提交 Bug"
       },
       "docIssueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=",
@@ -313,6 +313,153 @@
       "sendBtn": "发送",
       "cancelBtn": "取消",
       "placeholder": "留下您的评论"
+    }
+  },
+  "v2": {
+    "header": {
+      "navlist": [
+        {
+          "label": "What is milvus?",
+          "href": "#"
+        },
+        {
+          "label": "Documentation",
+          "href": "https://milvus.io/docs/install_milvus.md"
+        },
+        {
+          "label": "Blog",
+          "href": "https://blog.milvus.io/"
+        },
+        {
+          "label": "Github",
+          "href": "https://github.com/milvus-io/milvus/"
+        }
+      ]
+    },
+    "banner": {
+      "title": "High Scalability. Cloud-Native. High Availability.",
+      "text": "Milvus2.0: The world's most popular open-source vector database.",
+      "startBtn": {
+        "href": "https://milvus.io/docs/install_milvus.md",
+        "label": "Get Started"
+      },
+      "contributeBtn": {
+        "href": "https://github.com/milvus-io",
+        "label": "Contribute"
+      }
+    },
+    "content": {
+      "title": "Features",
+      "list": [
+        {
+          "title": "Stand-alone/Distributed deployment",
+          "text": "Milvus supports both stand-alone and distributed deployments. According to different deployment forms, the system can adapt to various underlying engines. Therefore, it can take advantage of both deployment methods - the flexibility and low latency of a stand-alone environment and the high availability, high throughput, and high capacity of a distributed environment.",
+          "img": "deployment"
+        },
+        {
+          "title": "Autoscaling",
+          "text": "Data Persistence, Metadata Management, Index Building, Search, and other main components are all equivalent among nodes. Milvus can autoscale at the component level for different load types, providing the foundation for more efficient resource scheduling.",
+          "img": "autoscaling"
+        },
+        {
+          "title": "Supporting multiple indexes on a single column",
+          "text": "Milvus supports creating multiple indexes on a vector column and decouples the two processes of building index and querying. Users can maintain multiple index types and switch flexibly based on their needs.",
+          "img": "supporting"
+        },
+        {
+          "title": "Hybrid search",
+          "text": "In addition to the core data types of vectors, Milvus also introduces basic numeric types such as boolean, integer, floating-point number, etc. In other words, multiple columns of data are now supported in the Milvus collection.In terms of queries, Milvus supports hybrid searches of vector columns and numeric columns. It can filter the dataset by the boolean expression applied on the numeric columns while performing a similarity search on the vector columns.",
+          "img": "search"
+        },
+        {
+          "title": "Streaming-batch-combined data storage",
+          "text": "In application scenarios where users have high data entry requirements, whether streaming or batch, Milvus has enhanced support for streaming and batch data persistence methods, supporting multi-engine adaptation of message streaming systems and storage systems. In the actual application scenarios, users generally have requirements for high database throughput, and there are two typical types of data: streaming and batch. Milvus enhances both of them by supporting two data persistency methods and supporting message systems and storage systems for adapting multiple engines.",
+          "img": "storage"
+        }
+      ],
+      "slogan": {
+        "title": "Join the community",
+        "text1": "Milvus is open-sourced on GitHub.",
+        "text2": "Contributions and feedbacks are welcome!",
+        "gitBtn": {
+          "href": "#",
+          "label": "Go to Github"
+        }
+      }
+    },
+    "footer": {
+      "list": [
+        {
+          "title": "What is milvus? ",
+          "text": "Open-source similarity search engine for massive-scale feature vectors",
+          "href": "https://milvus.io/docs/install_milvus.md",
+          "label": "Get started",
+          "icons": []
+        },
+        {
+          "title": "Contribute",
+          "text": "Milvus is a community project. We encourage you to join the effort and contribute feedback, ideas and code.",
+          "href": "https://github.com/milvus-io",
+          "label": "Join us on Github",
+          "icons": []
+        },
+        {
+          "title": "Follow us",
+          "text": "Stay up to date with the latest Milvus news.",
+          "href": "",
+          "label": "",
+          "icons": [
+            {
+              "href": "#",
+              "name": "wechat"
+            },
+            {
+              "href": "https://medium.com/unstructured-data-service",
+              "name": "medium"
+            },
+            {
+              "href": "https://twitter.com/milvusio",
+              "name": "twitter"
+            },
+            {
+              "href": "https://milvusio.slack.com/join/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
+              "name": "slack"
+            }
+          ]
+        }
+      ],
+      "licence": {
+        "text1": {
+          "label": "© Milvus 2021",
+          "link": "#"
+        },
+        "text2": {
+          "label": "Milvus",
+          "link": "https://milvus.io/"
+        },
+        "text3": {
+          "label": "and associated open source project names are trademarks of the LF AI & Data Foundation",
+          "link": "#"
+        },
+        "list": [
+          {
+            "label": "Terms and conditions",
+            "link": "#"
+          },
+          {
+            "label": "Compliance (data protection) ",
+            "link": "#"
+          },
+          {
+            "label": "Privacy policy",
+            "link": "#"
+          },
+          {
+            "label": "Cookie Policy",
+            "link": "#"
+          }
+        ]
+      }
     }
   }
 }

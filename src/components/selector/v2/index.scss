@@ -1,0 +1,78 @@
+.selector-container {
+  position: relative;
+  background: #fff;
+
+  .choosen-wrapper {
+    display: flex;
+    color: #12c3f4;
+    cursor: pointer;
+
+    .label-wrapper {
+      font-family: Inter Regular;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      margin-right: 8px;
+      width: 60px;
+      text-align: right;
+      pointer-events: none;
+    }
+
+    .icon-wrapper {
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      line-height: 24px;
+      pointer-events: none;
+      transition: transform 0.2s ease-in-out;
+
+      &.show {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .options-wrapper {
+    position: absolute;
+    z-index: 9;
+    transition: all 0.2s ease-in-out;
+    padding: 16px 0;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    background: #fff;
+    transform: scaleY(0);
+    transform-origin: top;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+
+    &.show {
+      transform: translateY(0);
+      visibility: visible;
+      opacity: 1;
+      transform: scaleY(1);
+    }
+
+    .option-item {
+      display: inline-block;
+      padding: 10px;
+      font-family: Inter Regular;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      user-select: none;
+      cursor: pointer;
+      text-align: center;
+
+      &.active {
+        color: #12c3f4;
+      }
+
+      &:hover {
+        background: #e3f9ff;
+      }
+    }
+  }
+}

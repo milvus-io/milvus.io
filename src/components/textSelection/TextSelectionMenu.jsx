@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './textSelectionMenu.scss';
-import git from '../../images/git.svg'
+import git from '../../images/git.svg';
 
 const TextSelectionMenu = ({ language, options }) => {
   const { selectMenu } = language;
@@ -39,7 +39,7 @@ const TextSelectionMenu = ({ language, options }) => {
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default TextSelectionMenu
+export default TextSelectionMenu;

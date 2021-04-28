@@ -7,7 +7,7 @@ const benchmarksMenu = require('./benchmark-menu');
 const express = require('express');
 const env = process.env.IS_PREVIEW;
 // const env = "preview";
-console.log(env);
+console.log('========env========', env);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
     v =>
@@ -44,13 +44,20 @@ exports.onCreateDevServer = ({ app }) => {
 const DOC_ROOT = 'src/pages/docs/versions';
 const versionInfo = ReadVersionJson(DOC_ROOT);
 const newestVersion = getNewestVersion(versionInfo);
+const versions = [];
+
+versionInfo.preview = {
+  version: 'preview',
+  released: 'no',
+};
+
+Object.keys(versionInfo).forEach(v => {
+  if (versionInfo[v].released === 'yes' || env === 'preview') {
+    versions.push(v);
+  }
+});
 console.log(versionInfo);
-if (env === 'preview') {
-  versionInfo.preview = {
-    version: 'preview',
-    released: 'no',
-  };
-}
+
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
   return new Promise(resolve => {
@@ -64,12 +71,14 @@ exports.onCreatePage = ({ page, actions }) => {
         toolName = toolName.substring(0, toolName.length - 1);
         localizedPath = `/tools/${toolName}`;
       }
+
       return createPage({
         ...page,
         path: localizedPath,
         context: {
           locale: lang,
           newestVersion,
+          versions,
         },
       });
     });
@@ -340,20 +349,20 @@ exports.createPages = ({ actions, graphql }) => {
     // -----  for global search end -----
 
     // get all version
-    const versions = new Set();
-    legalMd.forEach(({ node }) => {
-      const fileAbsolutePath = node.fileAbsolutePath;
-      const version = findVersion(fileAbsolutePath);
+    // const versions = new Set();
+    // legalMd.forEach(({ node }) => {
+    //   const fileAbsolutePath = node.fileAbsolutePath;
+    //   const version = findVersion(fileAbsolutePath);
 
-      // released: no -> not show , yes -> show
-      // when env is preview ignore released
-      if (
-        versionInfo[version] &&
-        (versionInfo[version].released === 'yes' || env === 'preview')
-      ) {
-        versions.add(version);
-      }
-    });
+    //   // released: no -> not show , yes -> show
+    //   // when env is preview ignore released
+    //   if (
+    //     versionInfo[version] &&
+    //     (versionInfo[version].released === 'yes' || env === 'preview')
+    //   ) {
+    //     versions.add(version);
+    //   }
+    // });
     console.log(versions);
 
     // create doc home page

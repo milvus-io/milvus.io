@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Menu from '../menu';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import NewHeader from '../header/v2/index';
 // import AskMilvus from "../../images/ask_milvus.png";
 import './index.scss';
 
@@ -22,6 +23,7 @@ const DocLayout = props => {
     isBlog,
     isHome,
     editPath,
+    header,
   } = props;
   const formatHeadings =
     headings &&
@@ -52,6 +54,8 @@ const DocLayout = props => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, effectVariable);
 
+  // check menu type based on whether version is 2.0
+  // here use v1 as test
   const menuType = useMemo(() => (version.startsWith('v1') ? 'new' : 'old'), [
     version,
   ]);
@@ -159,12 +163,17 @@ const DocLayout = props => {
 
   return (
     <div className="layout-wrapper">
-      <Header
-        language={language}
-        current={current}
-        locale={locale}
-        showDoc={showDoc}
-      />
+      {menuType === 'new' ? (
+        <NewHeader header={header.header} locale={locale} versions={versions} />
+      ) : (
+        <Header
+          language={language}
+          current={current}
+          locale={locale}
+          showDoc={showDoc}
+        />
+      )}
+
       <main className={wrapperClass}>
         <Menu
           menuList={menuList}
@@ -187,7 +196,11 @@ const DocLayout = props => {
           )}
         </div>
         {formatHeadings && !isBenchMark && (
-          <div className="anchor-wrapper">
+          <div
+            className={`anchor-wrapper ${
+              menuType === 'new' ? 'anchor-wrapper-new' : ''
+            }`}
+          >
             {menuType === 'old' ? (
               <section>
                 <div className="button-container">
@@ -253,9 +266,9 @@ const DocLayout = props => {
               </a> */}
               </section>
             ) : (
-              <div className="anchor-wrapper-new">
+              <>
                 {!isHome && (
-                  <div>
+                  <>
                     <div className="button-container-new">
                       {isBlog || isBenchMark ? null : (
                         <a
@@ -314,9 +327,9 @@ const DocLayout = props => {
                     {!id.includes('faq')
                       ? generateAnchorMenu(formatHeadings, 'parent-item')
                       : null}
-                  </div>
+                  </>
                 )}
-              </div>
+              </>
             )}
           </div>
         )}

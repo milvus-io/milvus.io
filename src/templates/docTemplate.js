@@ -320,6 +320,9 @@ export default function Template({
       isBlog === v.isBlog &&
       locale === v.lang
   );
+  const v2 = data.allFile.edges[0]
+    ? data.allFile.edges[0].node.childLayoutJson.v2
+    : {};
   const { markdownRemark } = data; // data.markdownRemark holds our post data
 
   let { frontmatter } = markdownRemark || {};
@@ -413,6 +416,7 @@ export default function Template({
       isBlog={isBlog}
       isHome={newHtml === null}
       editPath={editPath}
+      header={v2}
     >
       <SEO title={title} lang={locale} />
       {isBenchmark ? (
@@ -546,6 +550,14 @@ export const pageQuery = graphql`
           relativeDirectory
 
           childLayoutJson {
+            v2 {
+              header {
+                navlist {
+                  label
+                  href
+                }
+              }
+            }
             layout {
               header {
                 quick

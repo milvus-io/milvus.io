@@ -112,15 +112,18 @@ a.btn-anchor {
 .layout-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  // header 90px
+  height: calc(100vh - 90px);
+  margin-top: 90px;
+  // overflow-y: auto;
   background-color: #fff;
 }
 
 .doc-wrapper {
   position: relative;
   display: flex;
-  max-width: 1600px;
+  // max-width: 1600px;
+  max-width: 1400px;
   width: 100%;
   margin: 0 auto;
   background-color: #fff;
@@ -132,7 +135,8 @@ a.btn-anchor {
   // }
 
   .menu-container {
-    top: 60px;
+    // header 90px
+    top: 90px;
     padding-top: 20px;
     bottom: 0;
     width: 250px;
@@ -170,7 +174,7 @@ a.btn-anchor {
     margin-left: 314px;
     width: 100%;
     max-width: 1350px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
 
     // change scrollbar style
     &::-webkit-scrollbar {
@@ -311,6 +315,10 @@ a.btn-anchor {
   }
 
   .anchor-wrapper-new {
+    // position: sticky;
+    // header 90px margin top 32px
+    // top: calc(32px + 90px);
+
     .button-container-new {
       a.btn-anchor {
         background-color: #fff;
@@ -328,7 +336,8 @@ a.btn-anchor {
           margin-right: 8px;
         }
 
-        &:hover {
+        &:target {
+          padding-top: 90px;
         }
       }
     }

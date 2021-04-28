@@ -147,6 +147,13 @@
         letter-spacing: 0.01em;
         color: #191919;
       }
+      .text-link-wrapper {
+        margin-top: 0;
+
+        @include media("<=1000px") {
+          margin-top: 16px;
+        }
+      }
 
       .link {
         font-family: Inter Regular;
@@ -160,10 +167,11 @@
     }
 
     .licence-policy {
-      display: flex;
-      justify-content: space-between;
+      display: none;
 
       @include media("<=1000px") {
+        display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
       }
 

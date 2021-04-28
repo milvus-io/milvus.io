@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Footer from '../../footer/v2';
 import Header from '../../header/v2';
 

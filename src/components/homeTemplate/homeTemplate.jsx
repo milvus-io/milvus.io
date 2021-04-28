@@ -7,7 +7,7 @@ const HomeTemplate = ({ data }) => {
   const { section1, section2, section3, section4 } = data;
 
   return (
-    <section className="home-wrapper">
+    <section className="doc-home-wrapper">
       <div className="section section-1">
         <h1>{section1.title}</h1>
         <div className="section-1-card-wrapper">

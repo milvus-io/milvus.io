@@ -1,73 +1,73 @@
 @import '../../utils/cssVariables.scss';
 
-.home {
-  &-wrapper {
-    padding: 32px 64px;
-  }
-}
+.doc-home-wrapper {
+  padding: 32px 64px;
 
-.section {
-  margin-bottom: 64px;
+  .section {
+    margin-bottom: 64px;
 
-  h1 {
-    margin-bottom: 16px;
-    color: $dark;
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: bold;
-  }
-}
-
-.section-1 {
-  &-card {
-    &-wrapper {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    &-item {
-      flex-basis: 48%;
+    h1 {
+      margin-bottom: 16px;
+      color: $dark;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: bold;
     }
   }
-}
 
-.section-2 {
-  &-desc {
-    color: $dark;
-    font-size: 16px;
-    line-height: 24px;
-  }
-}
+  .section-1 {
+    &-card {
+      &-wrapper {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
 
-.section-3 {
-  &-item-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
-    gap: 20px;
+      &-item {
+        flex-basis: 48%;
+      }
+    }
   }
 
-  h4 {
-    color: $dark;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
+  .section-2 {
+    &-desc {
+      color: $dark;
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 
-  ul {
-    list-style-position: outside;
-    margin-left: 16px;
-  }
+  .section-3 {
+    &-item-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 20px;
+    }
 
-  li {
-    margin-bottom: 8px;
-    color: $primary;
-  }
+    h4 {
+      margin-bottom: 16px;
 
-  a {
-    color: $primary;
+      color: $dark;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+    }
 
-    font-size: 16px;
-    line-height: 24px;
+    ul {
+      list-style-position: outside;
+      margin-left: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      color: $primary;
+    }
+
+    a {
+      color: $primary;
+
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 }

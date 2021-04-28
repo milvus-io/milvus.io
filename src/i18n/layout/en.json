@@ -60,7 +60,8 @@
       "contact": {
         "title": "Connect",
         "wechat": "Wechat"
-      }
+      },
+      "content": "What's on this page"
     },
     "home": {
       "notification": {
@@ -315,7 +316,7 @@
         }
       }
     },
-    "selectMenu":{
+    "selectMenu": {
       "comment": "Comment",
       "github": "Create doc issue",
       "sendBtn": "Send",

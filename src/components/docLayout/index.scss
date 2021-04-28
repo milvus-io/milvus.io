@@ -1,4 +1,4 @@
-@import "../include_media.scss";
+@import '../include_media.scss';
 
 html {
   height: 100%;
@@ -37,7 +37,7 @@ body {
   background-color: #fafafa !important;
   color: #434548;
 
-  @include media("<=1000px") {
+  @include media('<=1000px') {
     font-size: 14px;
   }
 }
@@ -114,6 +114,7 @@ a.btn-anchor {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  background-color: #fff;
 }
 
 .doc-wrapper {
@@ -151,7 +152,7 @@ a.btn-anchor {
       background-color: darkgrey;
     }
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       position: fixed;
       top: 0;
       bottom: 0;
@@ -165,7 +166,8 @@ a.btn-anchor {
   }
 
   .inner-container {
-    margin-left: 250px;
+    // margin 64px menu width 250px
+    margin-left: 314px;
     width: 100%;
     max-width: 1350px;
     overflow-y: scroll;
@@ -194,7 +196,7 @@ a.btn-anchor {
       top: 0;
     }
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       flex: 0 0 100%;
       margin: 0;
       max-width: 100%;
@@ -271,7 +273,7 @@ a.btn-anchor {
     //   right: 0;
     // }
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       display: none;
     }
 
@@ -306,6 +308,46 @@ a.btn-anchor {
 
   .footer-wrapper {
     margin-bottom: 0;
+  }
+
+  .anchor-wrapper-new {
+    .button-container-new {
+      a.btn-anchor {
+        background-color: #fff;
+
+        height: 20px;
+
+        font-size: 14px;
+        padding: 0 8px;
+        margin-bottom: 20px;
+        max-width: 180px;
+
+        overflow-x: inherit;
+
+        i {
+          margin-right: 8px;
+        }
+
+        &:hover {
+        }
+      }
+    }
+
+    .anchor-title {
+      font-size: 16px;
+      color: #191919;
+
+      line-height: 18px;
+      font-weight: 500;
+
+      margin-top: 80px;
+      margin-bottom: 24px;
+    }
+
+    .parent-item {
+      border: none;
+      padding-bottom: 16px;
+    }
   }
 }
 
@@ -382,19 +424,19 @@ a.btn-anchor {
     color: var(--color-highlight);
   }
 
-  @include media(">=1200px") {
+  @include media('>=1200px') {
     position: fixed;
     right: 30%;
     bottom: 80px;
   }
 
-  @include media(">=1600px") {
+  @include media('>=1600px') {
     position: fixed;
     right: 28%;
     bottom: 80px;
   }
 
-  @include media(">=2000px") {
+  @include media('>=2000px') {
     position: fixed;
     right: 32%;
     bottom: 80px;

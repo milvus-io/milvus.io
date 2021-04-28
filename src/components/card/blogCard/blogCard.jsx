@@ -11,7 +11,7 @@ const BlogCard = ({ data, wrapperClass = '' }) => {
         <h2>{title}</h2>
         <p className="blog-content-abstract">{abstract}</p>
       </div>
-      <img src={imgSrc} alt="blog image" />
+      <img src={imgSrc} alt="blog" />
     </div>
   );
 };

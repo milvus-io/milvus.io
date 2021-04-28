@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Menu from '../menu';
 import Header from '../header/header';
 import Footer from '../footer/footer';
@@ -20,6 +20,7 @@ const DocLayout = props => {
     isBenchMark = false,
     showDoc = true,
     isBlog,
+    isHome,
     editPath,
   } = props;
   const formatHeadings =
@@ -39,6 +40,8 @@ const DocLayout = props => {
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
 
+  const [search, setSearch] = useState('');
+
   // const effectVariable =
   //   typeof window !== 'undefined' ? [window.location.hash] : [];
   // useEffect(() => {
@@ -48,6 +51,10 @@ const DocLayout = props => {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, effectVariable);
+
+  const menuType = useMemo(() => (version.startsWith('v1') ? 'new' : 'old'), [
+    version,
+  ]);
 
   // star reference
   const star = useRef(null);
@@ -143,6 +150,13 @@ const DocLayout = props => {
     });
   };
 
+  const handleSearchChange = value => {
+    if (menuType === 'new') {
+      setSearch(value);
+    }
+    console.log('value', value, 'search', search);
+  };
+
   return (
     <div className="layout-wrapper">
       <Header
@@ -159,6 +173,9 @@ const DocLayout = props => {
           version={version}
           locale={locale}
           isBenchMark={isBenchMark}
+          type={menuType}
+          language={language}
+          onSearchChange={handleSearchChange}
         ></Menu>
         <div
           className={`inner-container ${isBenchMark ? 'fullwidth' : ''}`}
@@ -171,69 +188,136 @@ const DocLayout = props => {
         </div>
         {formatHeadings && !isBenchMark && (
           <div className="anchor-wrapper">
-            <section>
-              <div className="button-container">
-                {isBlog || isBenchMark ? null : (
+            {menuType === 'old' ? (
+              <section>
+                <div className="button-container">
+                  {isBlog || isBenchMark ? null : (
+                    <a
+                      className="btn-anchor"
+                      href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                        locale === 'en' ? 'en' : 'zh-CN'
+                      }/${editPath}`}
+                    >
+                      <span className="btn-icon-wrapper">
+                        <i className="far fa-edit btn-icon"></i>
+                      </span>
+
+                      {language.footer.editBtn.label}
+                    </a>
+                  )}
                   <a
                     className="btn-anchor"
-                    href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                      locale === 'en' ? 'en' : 'zh-CN'
-                    }/${editPath}`}
+                    href={language.footer.docIssueBtn.link}
                   >
                     <span className="btn-icon-wrapper">
-                      <i className="far fa-edit btn-icon"></i>
+                      <i className="fab fa-github btn-icon"></i>
+                    </span>
+                    {language.footer.docIssueBtn.label}
+                  </a>
+                  <a
+                    className="btn-anchor"
+                    id="btn-bug"
+                    href={language.footer.issueBtn.link}
+                  >
+                    <span className="btn-icon-wrapper">
+                      <i className="fas fa-bug btn-icon"></i>
                     </span>
 
-                    {language.footer.editBtn.label}
+                    {language.footer.issueBtn.label}
                   </a>
-                )}
-                <a
-                  className="btn-anchor"
-                  href={language.footer.docIssueBtn.link}
-                >
-                  <span className="btn-icon-wrapper">
-                    <i className="fab fa-github btn-icon"></i>
-                  </span>
-                  {language.footer.docIssueBtn.label}
-                </a>
-                <a
-                  className="btn-anchor"
-                  id="btn-bug"
-                  href={language.footer.issueBtn.link}
-                >
-                  <span className="btn-icon-wrapper">
-                    <i className="fas fa-bug btn-icon"></i>
-                  </span>
 
-                  {language.footer.issueBtn.label}
-                </a>
+                  <a
+                    className="btn-anchor"
+                    id="btn-question"
+                    href={language.footer.questionBtn.link}
+                  >
+                    <span className="btn-icon-wrapper">
+                      <i className="fab fa-slack-hash btn-icon"></i>
+                    </span>
 
-                <a
-                  className="btn-anchor"
-                  id="btn-question"
-                  href={language.footer.questionBtn.link}
-                >
-                  <span className="btn-icon-wrapper">
-                    <i className="fab fa-slack-hash btn-icon"></i>
-                  </span>
+                    {language.footer.questionBtn.label}
+                  </a>
+                </div>
 
-                  {language.footer.questionBtn.label}
-                </a>
-              </div>
+                {/* filter faq page */}
+                {!id.includes('faq')
+                  ? generateAnchorMenu(formatHeadings, 'parent-item')
+                  : null}
 
-              {/* filter faq page */}
-              {!id.includes('faq')
-                ? generateAnchorMenu(formatHeadings, 'parent-item')
-                : null}
-
-              {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
+                {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
                 <div className="event">
                   <h4>Upcoming Event</h4>
                   <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
                 </div>
                 click <strong>here</strong> to register
               </a> */}
-            </section>
+              </section>
+            ) : (
+              <div className="anchor-wrapper-new">
+                {!isHome && (
+                  <div>
+                    <div className="button-container-new">
+                      {isBlog || isBenchMark ? null : (
+                        <a
+                          className="btn-anchor"
+                          href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                            locale === 'en' ? 'en' : 'zh-CN'
+                          }/${editPath}`}
+                        >
+                          <span className="btn-icon-wrapper">
+                            <i className="far fa-edit btn-icon"></i>
+                          </span>
+
+                          {language.footer.editBtn.label}
+                        </a>
+                      )}
+                      <a
+                        className="btn-anchor"
+                        href={language.footer.docIssueBtn.link}
+                      >
+                        <span className="btn-icon-wrapper">
+                          <i className="fab fa-github btn-icon"></i>
+                        </span>
+                        {language.footer.docIssueBtn.label}
+                      </a>
+                      <a
+                        className="btn-anchor"
+                        id="btn-bug"
+                        href={language.footer.issueBtn.link}
+                      >
+                        <span className="btn-icon-wrapper">
+                          <i className="fas fa-bug btn-icon"></i>
+                        </span>
+
+                        {language.footer.issueBtn.label}
+                      </a>
+
+                      <a
+                        className="btn-anchor"
+                        id="btn-question"
+                        href={language.footer.questionBtn.link}
+                      >
+                        <span className="btn-icon-wrapper">
+                          <i className="fab fa-slack-hash btn-icon"></i>
+                        </span>
+
+                        {language.footer.questionBtn.label}
+                      </a>
+                    </div>
+
+                    {
+                      <div className="anchor-title">
+                        {language.footer.content}
+                      </div>
+                    }
+                    {/* filter faq page */}
+                    {!id.includes('faq')
+                      ? generateAnchorMenu(formatHeadings, 'parent-item')
+                      : null}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
 

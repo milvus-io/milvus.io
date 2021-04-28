@@ -377,6 +377,8 @@ export default function Template({
 
   const title = isBenchmark
     ? `Milvus benchmark`
+    : newHtml === null
+    ? `Milvus home`
     : `${headings[0] && headings[0].value}`;
 
   const onOverlayClick = () => setShowModal(false);
@@ -409,6 +411,7 @@ export default function Template({
       isBenchMark={isBenchmark}
       showDoc={false}
       isBlog={isBlog}
+      isHome={newHtml === null}
       editPath={editPath}
     >
       <SEO title={title} lang={locale} />
@@ -603,6 +606,7 @@ export const pageQuery = graphql`
                   title
                   wechat
                 }
+                content
               }
               selectMenu {
                 comment

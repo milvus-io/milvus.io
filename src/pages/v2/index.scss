@@ -21,9 +21,9 @@ body {
     background-size: contain;
     width: 40%;
     height: 0;
-    padding-bottom: 40%;
+    padding-bottom: 35%;
     left: 0px;
-    top: 950px;
+    top: 1000px;
 
     @include media("<=450px") {
       display: none;

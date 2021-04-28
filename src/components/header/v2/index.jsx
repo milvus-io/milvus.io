@@ -7,19 +7,35 @@ import menu from '../../../images/v2/menu.svg';
 import V2Selector from '../../selector/v2';
 import { useMobileScreen } from '../../../hooks';
 import { sortVersions } from '../../../utils/docTemplate.util';
-import MobilePopup from '../components/MobilePopUpV2';
-
+import MobilePopup from '../components/MobilePopupV2';
+import { Link } from 'gatsby';
 import './index.scss';
 
 
-const V2Header = ({ header, locale, versions }) => {
+const V2Header = ({ header, locale, versions, version }) => {
   const { navlist } = header;
   const screenWidth = useMobileScreen();
   versions.sort((a, b) => sortVersions(a, b));
 
-
-  const [selected, setSelected] = useState(versions[0]);
   const [open, setOpen] = useState(false);
+
+  const navList = [
+    {
+      label: 'What is milvus?',
+      link: '#',
+      isExternal: false
+    },
+    {
+      label: 'Documentation',
+      link: `/docs`,
+      isExternal: false
+    },
+    {
+      label: 'What is milvus?',
+      link: '#',
+      isExternal: false
+    },
+  ];
 
   const handleOpenMask = () => {
     setOpen(open ? false : true);
@@ -30,7 +46,6 @@ const V2Header = ({ header, locale, versions }) => {
   };
 
   const handleSelected = (val) => {
-    setSelected(val);
     window.location.href = `https://milvus.io/docs/${val}/overview.md`;
   };
 
@@ -41,9 +56,9 @@ const V2Header = ({ header, locale, versions }) => {
           screenWidth > 1000 ? (
             <div className="content-wrapper">
               <div className="logo-section">
-                <a href="https://milvus.io/">
+                <Link to="/v2">
                   <img className="milvus-logo" src={milvusLogo} alt="milvus-logo" />
-                </a>
+                </Link>
                 <a href="https://lfaidata.foundation/projects/" target="_blank" rel="noopener noreferrer">
                   <img className="lfai-logo" src={lfai} alt="lfai-icon" />
                 </a>
@@ -60,7 +75,7 @@ const V2Header = ({ header, locale, versions }) => {
                 }
                 <div className="drop-down">
                   <V2Selector
-                    selected={selected}
+                    selected={version}
                     options={versions}
                     setSelected={handleSelected}
                   />
@@ -70,9 +85,9 @@ const V2Header = ({ header, locale, versions }) => {
           ) : (
             <div className='mobile-header-warapper'>
               <div className="logo-section">
-                <a href="https://milvus.io/">
+                <Link to="/v2">
                   <img className="milvus-logo" src={milvusLogoMobile} alt="milvus-logo" />
-                </a>
+                </Link>
                 <a href="https://lfaidata.foundation/projects/" target="_blank" rel="noopener noreferrer">
                   <img className="lfai-logo" src={lfai} alt="lfai-icon" />
                 </a>
@@ -103,9 +118,9 @@ const V2Header = ({ header, locale, versions }) => {
                   <div className="drop-down">
                     <V2Selector
                       className="mobile-selector"
-                      selected={selected}
+                      selected={version}
                       options={versions}
-                      setSelected={setSelected}
+                      setSelected={handleSelected}
                     />
                   </div>
                 </div>

@@ -21,8 +21,7 @@ const V2Button = ({
             target={isExternal ? '_blank' : '_self'}
             rel="noopener noreferrer"
             href={href}
-            className={`${variant === 'text' ? 'text' : variant === 'outline' ? 'outline' : 'contained'
-              } ${className}`}
+            className={`${variant} ${className}`}
           >
             {
               children

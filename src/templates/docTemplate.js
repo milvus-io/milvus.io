@@ -18,6 +18,7 @@ import {
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import { useSelectMenu } from '../hooks';
+import SearchResult from '../components/search-result';
 
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
@@ -60,14 +61,14 @@ export default function Template({
   // }, []);
 
   // select menu function
-  const [options,setOptions] = useState({
+  const [options, setOptions] = useState({
     styles: {
       visibility: 'hidden',
-        zIndex: -100,
-        transform: `translateX(0,0)`,
+      zIndex: -100,
+      transform: `translateX(0,0)`,
     },
-    copy: ''
-  })
+    copy: '',
+  });
 
   useSelectMenu(setOptions);
 
@@ -451,7 +452,8 @@ export default function Template({
               ></i>
             </div>
           )} */}
-          {showWarning && (
+          <SearchResult />
+          {/* {showWarning && (
             <div className="alert warning">
               {locale === 'en'
                 ? 'This version is no longer supported. For more information about migrating your data, see'
@@ -485,7 +487,7 @@ export default function Template({
               globalEventOff="click"
               className="md-tooltip"
             />
-          </div>
+          </div> */}
           <TextSelectionMenu language={layout} options={options} />
         </div>
       )}
@@ -594,7 +596,7 @@ export const pageQuery = graphql`
                 comment
                 github
                 sendBtn
-                cancelBtn,
+                cancelBtn
                 placeholder
               }
             }

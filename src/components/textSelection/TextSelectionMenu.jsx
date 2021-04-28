@@ -27,6 +27,7 @@ const TextSelectionMenu = ({ language, options }) => {
         <div className="pop-tool-content" >
           <a href={`https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=${title}&body=${body}`}
             target='_blank'
+            rel="noopener noreferrer"
             className="content-item"
             rel="noopener noreferrer"
           >

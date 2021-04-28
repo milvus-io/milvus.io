@@ -11,6 +11,7 @@ import GithubButton from 'react-github-button';
 import './index.scss';
 import AnimatedSvg from '../../components/animatedSvg/animatedSvg';
 import HomeAnimation from '../../../static/anime/common/home';
+import SEO from '../../components/seo';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -33,6 +34,7 @@ const HomePage = ({ data, pageContext }) => {
     <div className="home-page-container">
       <div className="bg3-container"></div>
       <V2Layout header={header} footer={footer} locale={locale} versions={versions} >
+        <SEO title="Milvus 2.0" />
         <div className="banner">
           <div className="banner-left">
             <div className="stars-layout">

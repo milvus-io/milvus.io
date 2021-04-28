@@ -7,11 +7,11 @@ const benchmarksMenu = require('./benchmark-menu');
 const express = require('express');
 const env = process.env.IS_PREVIEW;
 // const env = "preview";
-console.log(env);
+console.log('========env========', env);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
     v =>
-      v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
+    v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur
@@ -36,7 +36,9 @@ const getNewestVersion = versionInfo => {
     return pre;
   }, 'v0.0.0');
 };
-exports.onCreateDevServer = ({ app }) => {
+exports.onCreateDevServer = ({
+  app
+}) => {
   app.use(express.static('public'));
 };
 
@@ -44,32 +46,47 @@ exports.onCreateDevServer = ({ app }) => {
 const DOC_ROOT = 'src/pages/docs/versions';
 const versionInfo = ReadVersionJson(DOC_ROOT);
 const newestVersion = getNewestVersion(versionInfo);
+const versions = [];
+
+versionInfo.preview = {
+  version: 'preview',
+  released: 'no',
+};
+
+Object.keys(versionInfo).forEach(v => {
+  if (versionInfo[v].released === 'yes' || env === 'preview') {
+    versions.push(v);
+  }
+});
 console.log(versionInfo);
-if (env === 'preview') {
-  versionInfo.preview = {
-    version: 'preview',
-    released: 'no',
-  };
-}
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions;
+
+exports.onCreatePage = ({
+  page,
+  actions
+}) => {
+  const {
+    createPage,
+    deletePage
+  } = actions;
   return new Promise(resolve => {
     deletePage(page);
     Object.keys(locales).map(lang => {
-      let localizedPath = locales[lang].default
-        ? page.path
-        : locales[lang].path + page.path;
+      let localizedPath = locales[lang].default ?
+        page.path :
+        locales[lang].path + page.path;
       if (page.path.includes('tool')) {
         let toolName = page.path.split('-')[1];
         toolName = toolName.substring(0, toolName.length - 1);
         localizedPath = `/tools/${toolName}`;
       }
+
       return createPage({
         ...page,
         path: localizedPath,
         context: {
           locale: lang,
           newestVersion,
+          versions,
         },
       });
     });
@@ -77,8 +94,13 @@ exports.onCreatePage = ({ page, actions }) => {
   });
 };
 
-exports.createPages = ({ actions, graphql }) => {
-  const { createPage } = actions;
+exports.createPages = ({
+  actions,
+  graphql
+}) => {
+  const {
+    createPage
+  } = actions;
 
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
 
@@ -131,13 +153,13 @@ exports.createPages = ({ actions, graphql }) => {
     const findVersion = str => {
       const regx = /versions\/master\/([v\d\.]*)/;
       const match = str.match(regx);
-      return match
-        ? match[1]
-          ? match[1]
-          : env === 'preview' && str.includes('preview')
-          ? 'preview'
-          : match[1]
-        : '';
+      return match ?
+        match[1] ?
+        match[1] :
+        env === 'preview' && str.includes('preview') ?
+        'preview' :
+        match[1] :
+        '';
     };
 
     const findLang = path => {
@@ -151,17 +173,21 @@ exports.createPages = ({ actions, graphql }) => {
 
     // get all menuStructures
     const allMenus = result.data.allFile.edges.map(
-      ({ node: { absolutePath, childMenuStructureJson } }) => {
+      ({
+        node: {
+          absolutePath,
+          childMenuStructureJson
+        }
+      }) => {
         let lang = absolutePath.includes('/en/') ? 'en' : 'cn';
         const isBlog = absolutePath.includes('blog');
         const version = findVersion(absolutePath) || 'master';
         const menuStructureList =
-          (childMenuStructureJson && [...childMenuStructureJson.menuList]) ||
-          [];
+          (childMenuStructureJson && [...childMenuStructureJson.menuList]) || [];
         const benchmarkMenuList =
-          lang === 'en'
-            ? benchmarksMenu.benchmarksMenuListEN
-            : benchmarksMenu.benchmarksMenuListCN;
+          lang === 'en' ?
+          benchmarksMenu.benchmarksMenuListEN :
+          benchmarksMenu.benchmarksMenuListCN;
         const menuList = [...menuStructureList, ...benchmarkMenuList];
         return {
           lang,
@@ -175,7 +201,12 @@ exports.createPages = ({ actions, graphql }) => {
 
     // filter useless md file blog has't version
     const legalMd = result.data.allMarkdownRemark.edges.filter(
-      ({ node: { fileAbsolutePath, frontmatter } }) => {
+      ({
+        node: {
+          fileAbsolutePath,
+          frontmatter
+        }
+      }) => {
         return (
           (!!findVersion(fileAbsolutePath) ||
             fileAbsolutePath.includes('/docs/versions/master/common') ||
@@ -213,9 +244,9 @@ exports.createPages = ({ actions, graphql }) => {
       let localizedPath = '';
       if (version && version !== 'master') {
         localizedPath =
-          lang === defaultLang
-            ? `/docs/${version}/`
-            : `${lang}/docs/${version}/`;
+          lang === defaultLang ?
+          `/docs/${version}/` :
+          `${lang}/docs/${version}/`;
       } else {
         // for master branch version -> false
         localizedPath = lang === defaultLang ? `/docs/` : `${lang}/docs/`;
@@ -241,37 +272,42 @@ exports.createPages = ({ actions, graphql }) => {
     // -----  for global search begin -----
     const flatten = arr =>
       arr
-        .map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
-          const fileLang = findLang(fileAbsolutePath);
+      .map(({
+        node: {
+          frontmatter,
+          fileAbsolutePath,
+          headings
+        }
+      }) => {
+        const fileLang = findLang(fileAbsolutePath);
 
-          // const version = newestVersion || 'master'; //findVersion(fileAbsolutePath) || "master";
-          const version = findVersion(fileAbsolutePath) || 'master';
-          const headingVals = headings.map(v => v.value);
-          const isBlog = checkIsblog(fileAbsolutePath);
-          const isBenchmark = checkIsBenchmark(fileAbsolutePath);
-          const keywords = frontmatter.keywords
-            ? frontmatter.keywords.split(',')
-            : [];
-          if (keywords.length) {
-            console.log(keywords);
-          }
-          return {
-            ...frontmatter,
+        // const version = newestVersion || 'master'; //findVersion(fileAbsolutePath) || "master";
+        const version = findVersion(fileAbsolutePath) || 'master';
+        const headingVals = headings.map(v => v.value);
+        const isBlog = checkIsblog(fileAbsolutePath);
+        const isBenchmark = checkIsBenchmark(fileAbsolutePath);
+        const keywords = frontmatter.keywords ?
+          frontmatter.keywords.split(',') : [];
+        if (keywords.length) {
+          console.log(keywords);
+        }
+        return {
+          ...frontmatter,
+          fileLang,
+          version,
+          path: generatePath(
+            frontmatter.id,
             fileLang,
             version,
-            path: generatePath(
-              frontmatter.id,
-              fileLang,
-              version,
-              isBlog,
-              false,
-              isBenchmark
-            ),
-            // the value we need compare with search query
-            values: [...headingVals, frontmatter.id, ...keywords],
-          };
-        })
-        .filter(data => data.version === newestVersion);
+            isBlog,
+            false,
+            isBenchmark
+          ),
+          // the value we need compare with search query
+          values: [...headingVals, frontmatter.id, ...keywords],
+        };
+      })
+      .filter(data => data.version === newestVersion);
 
     const fileData = flatten(legalMd);
     fs.writeFile(
@@ -285,23 +321,25 @@ exports.createPages = ({ actions, graphql }) => {
     // -----  for global search end -----
 
     // get all version
-    const versions = new Set();
-    legalMd.forEach(({ node }) => {
-      const fileAbsolutePath = node.fileAbsolutePath;
-      const version = findVersion(fileAbsolutePath);
+    // const versions = new Set();
+    // legalMd.forEach(({ node }) => {
+    //   const fileAbsolutePath = node.fileAbsolutePath;
+    //   const version = findVersion(fileAbsolutePath);
 
-      // released: no -> not show , yes -> show
-      // when env is preview ignore released
-      if (
-        versionInfo[version] &&
-        (versionInfo[version].released === 'yes' || env === 'preview')
-      ) {
-        versions.add(version);
-      }
-    });
+    //   // released: no -> not show , yes -> show
+    //   // when env is preview ignore released
+    //   if (
+    //     versionInfo[version] &&
+    //     (versionInfo[version].released === 'yes' || env === 'preview')
+    //   ) {
+    //     versions.add(version);
+    //   }
+    // });
     console.log(versions);
 
-    return legalMd.forEach(({ node }) => {
+    return legalMd.forEach(({
+      node
+    }) => {
       const fileAbsolutePath = node.fileAbsolutePath;
       const fileId = node.frontmatter.id;
       let version = findVersion(fileAbsolutePath) || 'master';
@@ -346,9 +384,9 @@ exports.createPages = ({ actions, graphql }) => {
       // the newest doc version is master so we need to make route without version.
       // for easy link to the newest doc
       if (version === newestVersion) {
-        const masterPath = isBenchmark
-          ? `/docs/$${fileId}`
-          : generatePath(fileId, fileLang, isBlog ? false : 'master', isBlog);
+        const masterPath = isBenchmark ?
+          `/docs/$${fileId}` :
+          generatePath(fileId, fileLang, isBlog ? false : 'master', isBlog);
         createPage({
           path: masterPath,
           component: docTemplate,

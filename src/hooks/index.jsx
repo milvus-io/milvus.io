@@ -79,9 +79,8 @@ export const useSelectMenu = setOptions => {
       styles: {
         visibility: 'visible',
         zIndex: 199,
-        transform: `translate(${translateX}px,${
-          top - offsetTop + scrollTop
-        }px)`,
+        transform: `translate(${translateX}px,${top - offsetTop + scrollTop
+          }px)`,
       },
       copy: str,
     });

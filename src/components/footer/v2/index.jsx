@@ -19,7 +19,7 @@ const V2Footer = ({ footer }) => {
   const { list: links, licence: { text1, text2, text3 } } = footer;
 
   return (
-    <div className='footer-container'>
+    <section className='footer-container'>
       <ul className="footer-list">
         {
           links.map(i => {
@@ -67,7 +67,7 @@ const V2Footer = ({ footer }) => {
           }
         </div> */}
       </div>
-    </div>
+    </section>
   );
 };
 

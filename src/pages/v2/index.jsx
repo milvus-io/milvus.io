@@ -45,7 +45,7 @@ const HomePage = ({ data, pageContext }) => {
               />
             </div>
             <p className="title">{banner.title.toUpperCase()}</p>
-            <p className='text'></p>
+            <p className='text'>{banner.text}</p>
             <div className='banner-btn-wrapper'>
               <V2Button
                 className='banner-btn1'

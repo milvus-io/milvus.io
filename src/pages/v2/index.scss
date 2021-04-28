@@ -1,5 +1,9 @@
 @import "../../components/include_media";
 
+body {
+  background: #fff !important;
+}
+
 .home-page-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -30,7 +34,7 @@
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    padding: 140px 16px 81px 16px;
+    padding: 140px 16px 101px 16px;
     background-image: url(../../images//v2//guidebg.png);
     background-size: contain;
     background-position: center center;
@@ -85,6 +89,7 @@
         word-break: break-word;
 
         @include media("<=1000px") {
+          margin-bottom: 24px;
           font-size: 24px;
           line-height: 28px;
           padding-right: 25%;
@@ -200,9 +205,10 @@
       display: flex;
       align-items: center;
       padding: 8px;
+      margin-bottom: 53px;
 
       @include media("<=1000px") {
-        margin-bottom: 16px;
+        margin-bottom: 24px;
       }
 
       .title {
@@ -211,6 +217,7 @@
         line-height: 40px;
         letter-spacing: 0em;
         text-align: left;
+        padding: 0 8px;
 
         @include media("<=1000px") {
           font-size: 20px;

@@ -52,10 +52,10 @@ const V2Footer = ({ footer }) => {
       </ul>
       <div className="footer-licence">
         <div className="licence-milvus">
-          <span>{text1.label}</span>
-          <p>
-            <a href={text2.link}>{text2.label}</a>,
-            <span>{text3.label}</span>
+          <span className='text'>{text1.label}</span>
+          <p className='text-link-wrapper'>
+            <a href={text2.link} className='link'>{text2.label}</a>,
+            <span className='text'>{text3.label}</span>
           </p>
 
         </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './textSelectionMenu.scss';
-import git from '../../images/git.svg'
+import git from '../../images/git.svg';
 
 const TextSelectionMenu = ({ language, options }) => {
   const { selectMenu } = language;
@@ -29,7 +29,6 @@ const TextSelectionMenu = ({ language, options }) => {
             target='_blank'
             rel="noopener noreferrer"
             className="content-item"
-            rel="noopener noreferrer"
           >
             <p className="icon-wrapper">
               <img src={git} alt="git-logo" />
@@ -40,7 +39,7 @@ const TextSelectionMenu = ({ language, options }) => {
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default TextSelectionMenu
+export default TextSelectionMenu;

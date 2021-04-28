@@ -16,9 +16,6 @@ const V2Header = ({ header, locale, versions }) => {
   const { navlist } = header;
   const screenWidth = useMobileScreen();
   versions.sort((a, b) => sortVersions(a, b));
-  if (!versions.includes('v.2.0.0')) {
-    versions.unshift('v.2.0.0');
-  }
 
 
   const [selected, setSelected] = useState(versions[0]);

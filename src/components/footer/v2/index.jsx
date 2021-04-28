@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import V2Button from '../../V2Button';
+import V2Button from '../../button';
 import qrcode from '../../../images/qrcode.jpeg';
 import milvusUserWechat from '../../../images/milvus-user-wechat.png';
 import medium from '../../../images/website/community/medium.svg';

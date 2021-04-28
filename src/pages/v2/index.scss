@@ -342,7 +342,7 @@ body {
       text-align: center;
 
       @include media("<=1000px") {
-        padding: 0 16px;
+        padding: 0 24px;
         box-sizing: border-box;
       }
 

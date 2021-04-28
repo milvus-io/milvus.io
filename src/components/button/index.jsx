@@ -29,8 +29,7 @@ const V2Button = ({
             }
           </a>
         ) : (
-          <button onClick={handleClick} className={`${variant === 'text' ? 'text' : variant === 'outline' ? 'outline' : 'contained'
-            } ${className}`}>
+          <button onClick={handleClick} className={`${variant} ${className}`}>
             {
               children
             }

@@ -26,7 +26,7 @@
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new/choose",
-        "label": "我要提交Bug"
+        "label": "我要提交 Bug"
       },
       "docIssueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=",

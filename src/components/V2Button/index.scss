@@ -1,7 +1,6 @@
 @import "../include_media";
 
 .button-wrapper {
-  border-radius: 4px;
   overflow: hidden;
   display: inline-block;
 
@@ -12,6 +11,8 @@
     display: inline-block;
     padding: 16px 32px;
     cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #12c3f4;
 
     @include media("<=1000px") {
       padding: 8px 24px;
@@ -20,12 +21,14 @@
     &:hover {
       background: #e3f9ff;
       color: #12c3f4;
+      border-color: #e3f9ff;
     }
 
-    // &:visited {
-    //   background: #009ade;
-    //   color: #fff;
-    // }
+    &:active {
+      background: #009ade;
+      border-color: #009ade;
+      color: #fff;
+    }
   }
 
   & .text {
@@ -42,6 +45,22 @@
     display: inline-block;
     padding: 16px 32px;
     cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      background: #e3f9ff;
+    }
+
+    &:active {
+      background: #009ade;
+      color: #fff;
+
+      svg {
+        path {
+          stroke: #fff;
+        }
+      }
+    }
 
     @include media("<=1000px") {
       padding: 8px 24px;

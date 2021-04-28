@@ -324,10 +324,31 @@
     }
   },
   "v2":{
+    "header": {
+      "navlist": [
+        {
+          "label": "What is milvus?",
+          "href": "#"
+        },
+        {
+          "label": "Documentation",
+          "href": "https://milvus.io/docs/install_milvus.md"
+        },
+        {
+          "label": "Blog",
+          "href": "https://blog.milvus.io/"
+        },
+        {
+          "label": "Github",
+          "href": "https://github.com/milvus-io/milvus/"
+        }
+      ]
+    },
     "banner": {
       "title": "High Scalability. Cloud-Native. High Availability.",
+      "text": "Milvus2.0: The world's most popular open-source vector database.",
       "startBtn": {
-        "href": "#",
+        "href": "https://milvus.io/docs/install_milvus.md",
         "label": "Get Started"
       },
       "contributeBtn": {

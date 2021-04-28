@@ -7,6 +7,7 @@ import './index.scss';
 const V2Button = ({
   href,
   type,
+  isExternal = false,
   variant = 'contained',
   className = '',
   handleClick,
@@ -17,7 +18,7 @@ const V2Button = ({
       {
         type === 'link' ? (
           <a
-            target="_blank"
+            target={isExternal ? '_blank' : '_self'}
             rel="noopener noreferrer"
             href={href}
             className={`${variant === 'text' ? 'text' : variant === 'outline' ? 'outline' : 'contained'

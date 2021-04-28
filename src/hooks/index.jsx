@@ -22,7 +22,7 @@ export const useSelectMenu = (setOptions) => {
   const docWrapper = document.getElementsByClassName('doc-wrapper')[0];
   const innerContainer = document.getElementsByClassName('inner-container')[0];
   const menuWidth = 260;
-  let [docWrapWidth, scrollTop, innerWidth] = [0, 0, window.innerWidth]
+  let [docWrapWidth, scrollTop, innerWidth] = [0, 0, window.innerWidth];
   if (docWrapper) {
     docWrapWidth = docWrapper.offsetWidth;
   }
@@ -48,7 +48,7 @@ export const useSelectMenu = (setOptions) => {
         },
         copy: ''
       });
-      return
+      return;
     };
 
     // Select the upper left corner of the text
@@ -85,9 +85,9 @@ export const useSelectMenu = (setOptions) => {
         },
         copy: ''
       });
-      return
+      return;
     };
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("mouseup", (e) => selectHandler(e), false);
@@ -97,4 +97,4 @@ export const useSelectMenu = (setOptions) => {
       window.removeEventListener("selectionchange", (e) => selectChangeHandler(e), false);
     };
   }, [docWrapper]);// eslint-disable-line react-hooks/exhaustive-deps
-}
+};

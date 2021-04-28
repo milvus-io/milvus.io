@@ -17,7 +17,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
   const screenWidth = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
   const [lanList, setLanList] = useState(false);
-  const [isSHowMobileMask, setIsShowMobileMask] = useState(false);
+  const [isShowMobileMask, setIsShowMobileMask] = useState(false);
   const [actionType, setActionType] = useState('');
   const popupRef = useRef(null);
   const mobileContainerRef = useRef(null);
@@ -145,7 +145,11 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 {header.blog}
               </a>
 
-              <SearchForWeb language={header} locale={locale} hideMobileMask={hideMobileMask}></SearchForWeb>
+              <SearchForWeb
+                language={header}
+                locale={locale}
+                hideMobileMask={hideMobileMask}
+              ></SearchForWeb>
               <span
                 role="button"
                 tabIndex={0}
@@ -195,7 +199,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
             </div>
           ) : (
             <div className="right-mobile">
-              {!isSHowMobileMask && (
+              {!isShowMobileMask && (
                 <SearchForMobile
                   language={header}
                   locale={locale}
@@ -203,7 +207,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                   hideMobileMask={hideMobileMask}
                 ></SearchForMobile>
               )}
-              {!isSHowMobileMask ? (
+              {!isShowMobileMask ? (
                 <i
                   className="fas fa-bars font-icon"
                   aria-label="menu-button"
@@ -225,7 +229,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
             </div>
           )}
           {/* 下滑的框框 */}
-          <MobilePopUp ref={popupRef}>
+          <MobilePopUp open={isShowMobileMask} hideMask={hideMobileMask}>
             {actionType === 'menu' ? (
               <MobileMenuContent
                 locale={locale}

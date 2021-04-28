@@ -16,7 +16,7 @@ const iconSet = {
 };
 
 const V2Footer = ({ footer }) => {
-  const { list: links, licence: { text1, text2, text3 } } = footer;
+  const { list: links, licence: { list, text1, text2, text3 } } = footer;
 
   return (
     <section className='footer-container'>
@@ -59,13 +59,13 @@ const V2Footer = ({ footer }) => {
           </p>
 
         </div>
-        {/* <div className="licence-policy">
+        <div className="licence-policy">
           {
             list.map(i => (
               <a href={i.link} target="_blank" rel="noopener noreferrer" key={i.label}>{i.label}</a>
             ))
           }
-        </div> */}
+        </div>
       </div>
     </section>
   );

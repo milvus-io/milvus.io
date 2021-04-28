@@ -348,7 +348,7 @@ body {
 
       .wrapper {
         background: rgba(245, 243, 243, 0.4);
-        padding: 48px;
+        padding: 48px 0 60px;
         @include media("<=1000px") {
           padding: 48px 20px;
         }

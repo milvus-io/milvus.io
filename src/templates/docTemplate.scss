@@ -1053,6 +1053,10 @@
     overflow-x: auto;
     @include scroll-bar;
   }
+
+  &-new {
+    font-family: Inter Regular;
+  }
 }
 
 .iframe-container {

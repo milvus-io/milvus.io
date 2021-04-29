@@ -234,10 +234,12 @@
     padding-top: 32px;
     margin-left: 40px;
 
+    font-family: Inter Regular;
+
     .arrow {
       font-size: 16px;
       transform: rotate(360deg);
-      color: $primary;
+      color: $docPrimary;
 
       &.top {
         transform: rotate(270deg);
@@ -275,7 +277,7 @@
       }
 
       &:focus {
-        border-color: $primary;
+        border-color: $docPrimary;
         outline: none;
       }
     }
@@ -288,6 +290,14 @@
     .menu_name-wrapper {
       padding: 8px 0;
       border-bottom: 1px solid rgba(196, 196, 196, 0.5);
+
+      .text {
+        font-family: Inter Regular;
+        color: #191919;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 600;
+      }
     }
 
     .menu-child-wrapper {
@@ -301,11 +311,15 @@
         justify-content: flex-start;
         border: none;
 
+        .text {
+          font-family: Inter Regular;
+        }
+
         &:hover {
-          color: $primary;
+          color: $docPrimary;
 
           .text {
-            color: $primary;
+            color: $docPrimary;
           }
         }
       }
@@ -319,7 +333,8 @@
           border-bottom: none;
 
           .text {
-            color: $primary;
+            color: $docPrimary;
+            font-family: Inter Regular;
           }
         }
       }
@@ -337,7 +352,7 @@
 
         .menu_name-wrapper {
           .text {
-            color: $primary;
+            color: $docPrimary;
           }
         }
       }

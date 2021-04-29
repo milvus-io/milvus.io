@@ -179,6 +179,10 @@ a.btn-anchor {
     max-width: calc(100% - 600px);
     // overflow-y: scroll;
 
+    &-home {
+      max-width: calc(100% - 320px);
+    }
+
     // change scrollbar style
     &::-webkit-scrollbar {
       width: 8px;
@@ -318,9 +322,18 @@ a.btn-anchor {
 
   .anchor-wrapper-new {
     // max-width: 235px;
+    &-home {
+      display: none;
+    }
+
+    a {
+      font-family: Inter Regular;
+      font-size: 14px;
+    }
 
     .button-container-new {
       a.btn-anchor {
+        font-family: Inter Regular;
         background-color: #fff;
 
         height: 20px;
@@ -347,6 +360,8 @@ a.btn-anchor {
 
       margin-top: 80px;
       margin-bottom: 24px;
+
+      font-family: Inter Regular;
     }
 
     .parent-item {

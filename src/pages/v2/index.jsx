@@ -96,7 +96,11 @@ const HomePage = ({ data, pageContext }) => {
                     <img src={icons[img]} alt={img} />
                   </div>
                   <p className="title">{title}</p>
-                  <p className="text">{text}</p>
+                  <div className="text-wrapper">
+                    {
+                      text.map(item => <p className='text' key={item}>{item}</p>)
+                    }
+                  </div>
                 </li>
               );
             })}

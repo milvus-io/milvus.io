@@ -23,15 +23,17 @@ const V2Selector = ({
   useEffect(() => {
     const hideOptions = e => {
       const container = document.querySelector('.selector-container');
-      const isInclude = container.contains(e.target);
-      if (!isInclude) {
-        setOpen(false);
-      }
-    };
+      if (container) {
+        const isInclude = container.contains(e.target);
+        if (!isInclude) {
+          setOpen(false);
+        }
+      };
 
-    window.addEventListener('click', (e) => hideOptions(e), false);
-    return () => {
-      window.removeEventListener('click', (e) => hideOptions(e), false);
+      window.addEventListener('click', (e) => hideOptions(e), false);
+      return () => {
+        window.removeEventListener('click', (e) => hideOptions(e), false);
+      };
     };
   }, []);
 

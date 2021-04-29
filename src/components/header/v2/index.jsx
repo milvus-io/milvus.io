@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/v2/lfai.svg';
 import close from '../../../images/v2/close.svg';
+import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
 import V2Selector from '../../selector/v2';
 import { useMobileScreen } from '../../../hooks';
@@ -12,11 +13,13 @@ import { Link } from 'gatsby';
 import './index.scss';
 
 
-const V2Header = ({ header, locale, versions, version, setVersion = () => { } }) => {
+const V2Header = ({ header, locale, versions, version, setVersion = () => { }, type = 'home' }) => {
   const screenWidth = useMobileScreen();
   versions.sort((a, b) => sortVersions(a, b));
 
   const [open, setOpen] = useState(false);
+  const [openType, setOpenType] = useState('');
+  const container = useRef(null);
 
   const navList = [
     {
@@ -41,8 +44,10 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { } })
     }
   ];
 
-  const handleOpenMask = () => {
+  const handleOpenMask = (e) => {
+    const { type } = e.target.dataset;
     setOpen(open ? false : true);
+    setOpenType(type);
   };
 
   const hideMask = () => {
@@ -54,9 +59,57 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { } })
     window.location.href = `https://milvus.io/docs/${val}/overview.md`;
   };
 
+  const Menu = () => (
+    <div className="nav-section">
+      {
+        navList.map(i => {
+          const { label, link, isExternal } = i;
+          return (
+            isExternal ?
+              (<a className="nav-item" href={link} key={label} target="_blank" rel="noopener noreferrer" >{label}</a>) :
+              (<Link className="nav-item" to={link} key={label}>{label}</Link>)
+          );
+        })
+      }
+      <div className="drop-down">
+        <V2Selector
+          className="mobile-selector"
+          selected={version}
+          options={versions}
+          setSelected={handleSelected}
+        />
+      </div>
+    </div>
+  );
+
+  const Search = () => (
+    <div>Search</div>
+  );
+
+  const useClickOutside = (ref, handler, events) => {
+    if (!events) events = [`mousedown`, `touchstart`];
+    const detectClickOutside = event => {
+      !ref.current.contains(event.target) && handler(event);
+    };
+    useEffect(() => {
+      for (const event of events)
+        document.addEventListener(event, detectClickOutside);
+      return () => {
+        for (const event of events)
+          document.removeEventListener(event, detectClickOutside);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  };
+
+  useClickOutside(container, () => {
+    hideMask();
+  });
+
+
   return (
     <section className='header'>
-      <div className="header-container">
+      <div className="header-container" ref={container}>
         {
           screenWidth > 1000 ? (
             <div className="content-wrapper">
@@ -99,40 +152,40 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { } })
                   <img className="lfai-logo" src={lfai} alt="lfai-icon" />
                 </a>
               </div>
-              <div
-                className="menu-section"
-                role="button"
-                tabIndex={0}
-                onClick={handleOpenMask}
-                onKeyDown={handleOpenMask}
-              >
+              <div className="menu-section">
                 {
                   open ?
-                    <img className="menu-icon" src={close} alt="close-icon" /> :
-                    <img className="menu-icon" src={menu} alt="menu-icon" />
+                    <div
+                      className="icon-wrapper"
+                      role="button"
+                      tabIndex={0}
+                      onClick={hideMask}
+                      onKeyDown={hideMask}
+                    >
+                      <img className="btn-icon" src={close} alt="close-icon" />
+                    </div>
+                    :
+                    <div className='menus-wrapper'
+                      role="button"
+                      tabIndex={0}
+                      onClick={handleOpenMask}
+                      onKeyDown={handleOpenMask}
+                    >
+                      {type === 'doc' && (
+                        <div className="icon-wrapper" data-type='search'>
+                          <img className="btn-icon" src={search} alt="search-icon" />
+                        </div>
+                      )}
+                      <div className="icon-wrapper" data-type='menu'>
+                        <img className="btn-icon" src={menu} alt="menu-icon" />
+                      </div>
+                    </div>
                 }
               </div>
               <MobilePopup className='v2-popup' open={open} hideMask={hideMask}>
-                <div className="nav-section">
-                  {
-                    navList.map(i => {
-                      const { label, link, isExternal } = i;
-                      return (
-                        isExternal ?
-                          (<a className="nav-item" href={link} key={label}>{label}</a>) :
-                          (<Link className="nav-item" to={link} key={label}>{label}</Link>)
-                      );
-                    })
-                  }
-                  <div className="drop-down">
-                    <V2Selector
-                      className="mobile-selector"
-                      selected={version}
-                      options={versions}
-                      setSelected={handleSelected}
-                    />
-                  </div>
-                </div>
+                {
+                  openType === 'menu' ? <Menu /> : <Search />
+                }
               </MobilePopup>
             </div>
           )

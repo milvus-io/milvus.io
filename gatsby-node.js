@@ -6,7 +6,7 @@ const DOC_LANG_FOLDERS = ['/en/', '/zh-CN/'];
 const benchmarksMenu = require('./benchmark-menu');
 const express = require('express');
 const env = process.env.IS_PREVIEW;
-// const env = "preview";
+// const env = 'preview';
 console.log('========env========', env);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
@@ -450,7 +450,7 @@ exports.createPages = ({ actions, graphql }) => {
             editPath,
             allMenus,
             newHtml,
-            homeData: [],
+            homeData: null,
           }, // additional data can be passed via context
         });
       }
@@ -472,7 +472,7 @@ exports.createPages = ({ actions, graphql }) => {
           allMenus,
           isBenchmark,
           newHtml,
-          homeData: [],
+          homeData: null,
         }, // additional data can be passed via context
       });
     });

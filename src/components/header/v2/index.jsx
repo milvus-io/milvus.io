@@ -83,7 +83,12 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
   );
 
   const Search = () => (
-    <div>Search</div>
+    <div className="search-wrapper">
+      <div className="input-wrapper">
+        <img src={search} alt="search-icon" />
+        <input type="text" />
+      </div>
+    </div>
   );
 
   const useClickOutside = (ref, handler, events) => {
@@ -191,7 +196,7 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
           )
         }
       </div>
-    </section>
+    </section >
   );
 };
 

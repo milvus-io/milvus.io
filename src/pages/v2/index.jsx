@@ -33,7 +33,12 @@ const HomePage = ({ data, pageContext }) => {
   return (
     <div className="home-page-container">
       <div className="bg3-container"></div>
-      <V2Layout header={header} footer={footer} locale={locale} versions={versions} >
+      <V2Layout
+        header={header}
+        footer={footer}
+        locale={locale}
+        versions={versions}
+      >
         <SEO title="Milvus 2.0" />
         <div className="banner">
           <div className="banner-left">
@@ -47,10 +52,10 @@ const HomePage = ({ data, pageContext }) => {
               />
             </div>
             <p className="title">{banner.title.toUpperCase()}</p>
-            <p className='text'>{banner.text}</p>
-            <div className='banner-btn-wrapper'>
+            <p className="text">{banner.text}</p>
+            <div className="banner-btn-wrapper">
               <V2Button
-                className='banner-btn1'
+                className="banner-btn1"
                 type="link"
                 link={banner.startBtn.href}
                 children={
@@ -61,15 +66,27 @@ const HomePage = ({ data, pageContext }) => {
                 }
               />
               <V2Button
-                className='banner-btn2'
-                variant='outline'
+                className="banner-btn2"
+                variant="outline"
                 type="link"
                 link={banner.contributeBtn.href}
                 children={
                   <>
                     <span>{banner.contributeBtn.label}</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16.1038 4.66848C16.3158 4.45654 16.5674 4.28843 16.8443 4.17373C17.1212 4.05903 17.418 4 17.7177 4C18.0174 4 18.3142 4.05903 18.5911 4.17373C18.868 4.28843 19.1196 4.45654 19.3315 4.66848C19.5435 4.88041 19.7116 5.13201 19.8263 5.40891C19.941 5.68582 20 5.9826 20 6.28232C20 6.58204 19.941 6.87882 19.8263 7.15573C19.7116 7.43263 19.5435 7.68423 19.3315 7.89617L8.43807 18.7896L4 20L5.21038 15.5619L16.1038 4.66848Z" stroke="#12C3F4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M16.1038 4.66848C16.3158 4.45654 16.5674 4.28843 16.8443 4.17373C17.1212 4.05903 17.418 4 17.7177 4C18.0174 4 18.3142 4.05903 18.5911 4.17373C18.868 4.28843 19.1196 4.45654 19.3315 4.66848C19.5435 4.88041 19.7116 5.13201 19.8263 5.40891C19.941 5.68582 20 5.9826 20 6.28232C20 6.58204 19.941 6.87882 19.8263 7.15573C19.7116 7.43263 19.5435 7.68423 19.3315 7.89617L8.43807 18.7896L4 20L5.21038 15.5619L16.1038 4.66848Z"
+                        stroke="#12C3F4"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </>
                 }
@@ -126,12 +143,10 @@ const HomePage = ({ data, pageContext }) => {
                 }
               />
             </div>
-
           </div>
         </div>
       </V2Layout>
     </div>
-
   );
 };
 

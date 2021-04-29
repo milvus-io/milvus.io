@@ -60,7 +60,8 @@
       "contact": {
         "title": "联系我们",
         "wechat": "微信群聊"
-      }
+      },
+      "content": "本页目录"
     },
     "home": {
       "notification": {

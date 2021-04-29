@@ -192,5 +192,23 @@
         }
       }
     }
+
+    .search-section {
+      .input-wrapper {
+        border: 1px solid rgba(196, 196, 196, 0.5);
+        border-radius: 8px;
+        display: flex;
+        padding: 10px 16px;
+
+        .search-icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .input {
+          flex: 1;
+        }
+      }
+    }
   }
 }

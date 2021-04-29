@@ -11,7 +11,7 @@ console.log('========env========', env);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
     v =>
-    v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
+      v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur
@@ -36,9 +36,7 @@ const getNewestVersion = versionInfo => {
     return pre;
   }, 'v0.0.0');
 };
-exports.onCreateDevServer = ({
-  app
-}) => {
+exports.onCreateDevServer = ({ app }) => {
   app.use(express.static('public'));
 };
 
@@ -60,20 +58,14 @@ Object.keys(versionInfo).forEach(v => {
 });
 console.log(versionInfo);
 
-exports.onCreatePage = ({
-  page,
-  actions
-}) => {
-  const {
-    createPage,
-    deletePage
-  } = actions;
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions;
   return new Promise(resolve => {
     deletePage(page);
     Object.keys(locales).map(lang => {
-      let localizedPath = locales[lang].default ?
-        page.path :
-        locales[lang].path + page.path;
+      let localizedPath = locales[lang].default
+        ? page.path
+        : locales[lang].path + page.path;
       if (page.path.includes('tool')) {
         let toolName = page.path.split('-')[1];
         toolName = toolName.substring(0, toolName.length - 1);
@@ -94,13 +86,8 @@ exports.onCreatePage = ({
   });
 };
 
-exports.createPages = ({
-  actions,
-  graphql
-}) => {
-  const {
-    createPage
-  } = actions;
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions;
 
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
 
@@ -125,7 +112,9 @@ exports.createPages = ({
           }
         }
       }
-      allFile(filter: { relativeDirectory: { regex: "/(?:menuStructure)/" } }) {
+      allFile(
+        filter: { relativeDirectory: { regex: "/(?:menuStructure|home)/" } }
+      ) {
         edges {
           node {
             absolutePath
@@ -142,6 +131,40 @@ exports.createPages = ({
                 outLink
               }
             }
+            childrenHomeJson {
+              section1 {
+                title
+                items {
+                  title
+                  key
+                  btnLabel
+                  link
+                }
+              }
+              section2 {
+                title
+                desc
+              }
+              section3 {
+                title
+                items {
+                  label
+                  list {
+                    link
+                    text
+                  }
+                }
+              }
+              section4 {
+                title
+                items {
+                  time
+                  title
+                  abstract
+                  imgSrc
+                }
+              }
+            }
           }
         }
       }
@@ -153,13 +176,13 @@ exports.createPages = ({
     const findVersion = str => {
       const regx = /versions\/master\/([v\d\.]*)/;
       const match = str.match(regx);
-      return match ?
-        match[1] ?
-        match[1] :
-        env === 'preview' && str.includes('preview') ?
-        'preview' :
-        match[1] :
-        '';
+      return match
+        ? match[1]
+          ? match[1]
+          : env === 'preview' && str.includes('preview')
+          ? 'preview'
+          : match[1]
+        : '';
     };
 
     const findLang = path => {
@@ -172,22 +195,22 @@ exports.createPages = ({
     };
 
     // get all menuStructures
-    const allMenus = result.data.allFile.edges.map(
-      ({
-        node: {
-          absolutePath,
-          childMenuStructureJson
-        }
-      }) => {
+    const allMenus = result.data.allFile.edges
+      .filter(
+        ({ node: { childMenuStructureJson } }) =>
+          childMenuStructureJson !== null
+      )
+      .map(({ node: { absolutePath, childMenuStructureJson } }) => {
         let lang = absolutePath.includes('/en/') ? 'en' : 'cn';
         const isBlog = absolutePath.includes('blog');
         const version = findVersion(absolutePath) || 'master';
         const menuStructureList =
-          (childMenuStructureJson && [...childMenuStructureJson.menuList]) || [];
+          (childMenuStructureJson && [...childMenuStructureJson.menuList]) ||
+          [];
         const benchmarkMenuList =
-          lang === 'en' ?
-          benchmarksMenu.benchmarksMenuListEN :
-          benchmarksMenu.benchmarksMenuListCN;
+          lang === 'en'
+            ? benchmarksMenu.benchmarksMenuListEN
+            : benchmarksMenu.benchmarksMenuListCN;
         const menuList = [...menuStructureList, ...benchmarkMenuList];
         return {
           lang,
@@ -196,17 +219,25 @@ exports.createPages = ({
           menuList,
           absolutePath,
         };
-      }
-    );
+      });
+
+    // get new doc index page data
+    const homeData = result.data.allFile.edges
+      .filter(({ node: { childrenHomeJson } }) => childrenHomeJson.length > 0)
+      .map(({ node: { absolutePath, childrenHomeJson } }) => {
+        const language = absolutePath.includes('/en') ? 'en' : 'cn';
+
+        const [data] = childrenHomeJson;
+        return {
+          language,
+          data,
+          path: absolutePath,
+        };
+      });
 
     // filter useless md file blog has't version
     const legalMd = result.data.allMarkdownRemark.edges.filter(
-      ({
-        node: {
-          fileAbsolutePath,
-          frontmatter
-        }
-      }) => {
+      ({ node: { fileAbsolutePath, frontmatter } }) => {
         return (
           (!!findVersion(fileAbsolutePath) ||
             fileAbsolutePath.includes('/docs/versions/master/common') ||
@@ -244,9 +275,9 @@ exports.createPages = ({
       let localizedPath = '';
       if (version && version !== 'master') {
         localizedPath =
-          lang === defaultLang ?
-          `/docs/${version}/` :
-          `${lang}/docs/${version}/`;
+          lang === defaultLang
+            ? `/docs/${version}/`
+            : `${lang}/docs/${version}/`;
       } else {
         // for master branch version -> false
         localizedPath = lang === defaultLang ? `/docs/` : `${lang}/docs/`;
@@ -272,42 +303,37 @@ exports.createPages = ({
     // -----  for global search begin -----
     const flatten = arr =>
       arr
-      .map(({
-        node: {
-          frontmatter,
-          fileAbsolutePath,
-          headings
-        }
-      }) => {
-        const fileLang = findLang(fileAbsolutePath);
+        .map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
+          const fileLang = findLang(fileAbsolutePath);
 
-        // const version = newestVersion || 'master'; //findVersion(fileAbsolutePath) || "master";
-        const version = findVersion(fileAbsolutePath) || 'master';
-        const headingVals = headings.map(v => v.value);
-        const isBlog = checkIsblog(fileAbsolutePath);
-        const isBenchmark = checkIsBenchmark(fileAbsolutePath);
-        const keywords = frontmatter.keywords ?
-          frontmatter.keywords.split(',') : [];
-        if (keywords.length) {
-          console.log(keywords);
-        }
-        return {
-          ...frontmatter,
-          fileLang,
-          version,
-          path: generatePath(
-            frontmatter.id,
+          // const version = newestVersion || 'master'; //findVersion(fileAbsolutePath) || "master";
+          const version = findVersion(fileAbsolutePath) || 'master';
+          const headingVals = headings.map(v => v.value);
+          const isBlog = checkIsblog(fileAbsolutePath);
+          const isBenchmark = checkIsBenchmark(fileAbsolutePath);
+          const keywords = frontmatter.keywords
+            ? frontmatter.keywords.split(',')
+            : [];
+          if (keywords.length) {
+            console.log(keywords);
+          }
+          return {
+            ...frontmatter,
             fileLang,
             version,
-            isBlog,
-            false,
-            isBenchmark
-          ),
-          // the value we need compare with search query
-          values: [...headingVals, frontmatter.id, ...keywords],
-        };
-      })
-      .filter(data => data.version === newestVersion);
+            path: generatePath(
+              frontmatter.id,
+              fileLang,
+              version,
+              isBlog,
+              false,
+              isBenchmark
+            ),
+            // the value we need compare with search query
+            values: [...headingVals, frontmatter.id, ...keywords],
+          };
+        })
+        .filter(data => data.version === newestVersion);
 
     const fileData = flatten(legalMd);
     fs.writeFile(
@@ -337,9 +363,31 @@ exports.createPages = ({
     // });
     console.log(versions);
 
-    return legalMd.forEach(({
-      node
-    }) => {
+    // create doc home page
+    homeData.forEach(({ language, data, path }) => {
+      const isBlog = checkIsblog(path);
+      const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
+
+      createPage({
+        path: language === 'en' ? '/docs/home' : `/${language}/docs/home`,
+        component: docTemplate,
+        context: {
+          homeData: data,
+          locale: language,
+          versions: Array.from(versions),
+          newestVersion,
+          version: newestVersion,
+          old: 'home',
+          fileAbsolutePath: path,
+          isBlog,
+          editPath,
+          allMenus,
+          newHtml: null,
+        },
+      });
+    });
+
+    return legalMd.forEach(({ node }) => {
       const fileAbsolutePath = node.fileAbsolutePath;
       const fileId = node.frontmatter.id;
       let version = findVersion(fileAbsolutePath) || 'master';
@@ -384,9 +432,9 @@ exports.createPages = ({
       // the newest doc version is master so we need to make route without version.
       // for easy link to the newest doc
       if (version === newestVersion) {
-        const masterPath = isBenchmark ?
-          `/docs/$${fileId}` :
-          generatePath(fileId, fileLang, isBlog ? false : 'master', isBlog);
+        const masterPath = isBenchmark
+          ? `/docs/$${fileId}`
+          : generatePath(fileId, fileLang, isBlog ? false : 'master', isBlog);
         createPage({
           path: masterPath,
           component: docTemplate,
@@ -402,9 +450,11 @@ exports.createPages = ({
             editPath,
             allMenus,
             newHtml,
+            homeData: [],
           }, // additional data can be passed via context
         });
       }
+
       //  normal pages
       return createPage({
         path: localizedPath,
@@ -422,6 +472,7 @@ exports.createPages = ({
           allMenus,
           isBenchmark,
           newHtml,
+          homeData: [],
         }, // additional data can be passed via context
       });
     });

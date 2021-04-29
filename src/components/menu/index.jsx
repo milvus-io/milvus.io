@@ -22,11 +22,23 @@ const findItem = (key, value, arr) => {
 };
 
 const Menu = props => {
-  const { menuList, activeDoc, version, versions, locale } = props;
+  const {
+    menuList,
+    activeDoc,
+    version,
+    versions,
+    locale,
+    type,
+    onSearchChange,
+    language,
+  } = props;
+
+  const { header } = language;
   const [menuStatus, setMenuStatus] = useState(false);
   const { isBlog } = menuList || {};
   const [realMenuList, setRealMenuList] = useState([]);
   const formatVersion = version === 'master' ? versions[0] : version;
+
   useEffect(() => {
     const generateMenu = list => {
       // get all labels , make sure will generate menu from top to bottom
@@ -117,7 +129,29 @@ const Menu = props => {
         }
       });
     };
-    const arr = generateMenu(menuList.menuList)();
+    let arr = generateMenu(menuList.menuList)();
+    // add home page in menu if version is 2.0
+    if (type === 'new') {
+      const homeMenu = {
+        children: [],
+        id: 'home',
+        isActive: false,
+        isBlog: false,
+        isLast: false,
+        isMenu: null,
+        label1: '',
+        label2: '',
+        label3: '',
+        lang: null,
+        order: -1,
+        outLink: null,
+        path: '/docs/home',
+        showChildren: false,
+        title: 'Home',
+      };
+      arr = [homeMenu, ...arr];
+    }
+
     checkActive(arr);
     sortMenu(arr);
     setRealMenuList(arr);
@@ -146,8 +180,13 @@ const Menu = props => {
   const generageMenuDom = (list, className = '') => {
     return list.map(doc => (
       <div
-        className={`${className} ${doc.isBlog ? 'blog' : ''} ${doc.isLast ? 'menu-last-level' : ''
-          } ${doc.isActive ? 'active' : ''}`}
+        className={`${className} ${
+          type === 'new' && doc.label2 !== undefined && doc.label2 !== ''
+            ? 'menu-child-3'
+            : ''
+        } ${doc.isBlog ? 'blog' : ''} ${doc.isLast ? 'menu-last-level' : ''} ${
+          doc.isActive ? 'active' : ''
+        }`}
         key={doc.id}
       >
         <div
@@ -155,8 +194,8 @@ const Menu = props => {
           onClick={
             doc.isMenu
               ? () => {
-                toggleMenuChild(doc);
-              }
+                  toggleMenuChild(doc);
+                }
               : handleMenuClick
           }
           style={doc.isMenu ? { cursor: 'pointer' } : null}
@@ -180,10 +219,31 @@ const Menu = props => {
           )}
 
           {doc.children && doc.children.length ? (
-            <i
-              className={`fas fa-chevron-down arrow ${doc.showChildren ? '' : 'top'
-                }`}
-            ></i>
+            <>
+              {type === 'new' ? (
+                <>
+                  {doc.isMenu && doc.label1 === '' ? (
+                    <i
+                      className={`fas fa-caret-down arrow ${
+                        doc.showChildren ? '' : 'top'
+                      }`}
+                    ></i>
+                  ) : (
+                    <i
+                      className={`fas expand-icon ${
+                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
+                      }`}
+                    ></i>
+                  )}
+                </>
+              ) : (
+                <i
+                  className={`fas fa-chevron-down arrow ${
+                    doc.showChildren ? '' : 'top'
+                  }`}
+                ></i>
+              )}
+            </>
           ) : null}
         </div>
         <div className={`menu-child-wrapper ${doc.showChildren ? 'open' : ''}`}>
@@ -206,10 +266,19 @@ const Menu = props => {
     setMenuStatus(status);
   };
 
+  const handleSearch = event => {
+    const value = event.target.value;
+    if (event.code === 'Enter') {
+      onSearchChange(value);
+    }
+  };
+
   return (
     <>
       <section
-        className={`menu-container ${menuStatus ? '' : 'hide'}`}
+        className={`menu-container ${menuStatus ? '' : 'hide'} ${
+          type === 'new' ? 'menu-container-new' : ''
+        }`}
         ref={menuRef}
       >
         {screenWidth <= 1000 ? (
@@ -220,8 +289,19 @@ const Menu = props => {
             }}
           ></i>
         ) : null}
-        {isBlog ? (
-          <div className="title"></div>
+        {isBlog || type === 'new' ? (
+          <>
+            {type === 'new' ? (
+              <input
+                className="search"
+                type="text"
+                onKeyPress={handleSearch}
+                placeholder={header.search}
+              />
+            ) : (
+              <div className="title"></div>
+            )}
+          </>
         ) : (
           <div className="border-bottom select-wrapper">
             <VersionSelector

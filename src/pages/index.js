@@ -3,7 +3,7 @@ import { graphql, navigate } from 'gatsby';
 import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 import LocalizedLink from '../components/localizedLink/localizedLink';
-import Notification from '../components/notification';
+import NotificationV2 from '../components/notification/v2';
 import '../scss/index.scss';
 import availabilityIcon from '../images/features/availability.svg';
 import cloudIcon from '../images/features/cloud.svg';
@@ -15,7 +15,7 @@ import realtimeIcon from '../images/features/realtime.svg';
 import scalableIcon from '../images/features/scalable.svg';
 import supportIcon from '../images/features/support.svg';
 import metricsIcon from '../images/features/metrics.svg';
-import searchIcon from '../images/features/search.svg'
+import searchIcon from '../images/features/search.svg';
 
 import LfaiLogo from '../images/logo/lfai.svg';
 import GithubLogo from '../images/icon/github-white.svg';
@@ -29,7 +29,7 @@ import sizingIcon from '../images/tools/sizing.png';
 import Qcode from '../images/qrcode.jpeg';
 import MilvusUserWechat from '../images/milvus-user-wechat.png';
 import GithubButton from 'react-github-button';
-import {importAllPics} from '../utils/docTemplate.util'
+import { importAllPics } from '../utils/docTemplate.util';
 import 'react-github-button/assets/style.css';
 
 const icons = {
@@ -43,7 +43,7 @@ const icons = {
   crud: crudIcon,
   cost: costIcon,
   metrics: metricsIcon,
-  search: searchIcon
+  search: searchIcon,
 };
 
 let users = [];
@@ -97,7 +97,6 @@ const IndexPage = ({ data, pageContext }) => {
       r => r.name !== 'bilibili' && r.name !== 'zhihu'
     );
   }
-  console.log(currentResources)
 
   useEffect(() => {
     const urlLang = getRedirectLanguage();
@@ -111,11 +110,12 @@ const IndexPage = ({ data, pageContext }) => {
   return (
     <Layout language={language} locale={locale}>
       <SEO title="Milvus" />
-      <Notification
+      <NotificationV2 language={language.home.notification} />
+      {/* <Notification
         version={newestVersion}
         language={language.home.notification}
         locale={locale}
-      ></Notification>
+      ></Notification> */}
       <main className="home-wrapper">
         <section className="section1">
           <div className="githubicon">
@@ -416,6 +416,10 @@ export const Query = graphql`
                   more
                   join
                   interact
+                  v2 {
+                    title
+                    here
+                  }
                 }
                 section1 {
                   desc1

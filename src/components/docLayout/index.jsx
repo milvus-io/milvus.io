@@ -44,8 +44,6 @@ const DocLayout = props => {
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
 
-  const [search, setSearch] = useState('');
-
   // const effectVariable =
   //   typeof window !== 'undefined' ? [window.location.hash] : [];
   // useEffect(() => {

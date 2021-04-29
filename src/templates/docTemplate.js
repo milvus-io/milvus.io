@@ -19,10 +19,7 @@ import {
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import { useSelectMenu } from '../hooks';
-<<<<<<< HEAD
-=======
 import SearchResult from '../components/search-result';
->>>>>>> preview
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
 
 // hljs.registerLanguage("sql", sql)

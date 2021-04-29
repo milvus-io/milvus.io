@@ -1,33 +1,45 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { searchByElasic } from '../../http/es';
+import { navigate } from '@reach/router';
 import './style.scss';
 
 const SearchResult = props => {
-  const { lan = 'en', version = 'v1.0.0', text } = props;
+  const { language = 'en', version = 'v1.0.0', text } = props;
   const [results, setResults] = useState([]);
-  const indexName = useMemo(() =>
-    lan === 'en' ? `milvus-docs-${version}` : `milvus-docs-${version}-cn`
+
+  const indexName = useMemo(
+    () =>
+      language === 'en'
+        ? `milvus-docs-${version}`
+        : `milvus-docs-${version}-cn`,
+    [language, version]
   );
   useEffect(() => {
     const fetchData = async () => {
       const result = [];
-      const res = await searchByElasic('Segment', indexName);
+      const res = await searchByElasic(text, indexName);
       for (let i = 0; i < res.length; i++) {
-        // const html = await markdownToHtml(res[i].content[0]);
-        result.push({ name: res[i].name, html: res[i].content[0] });
+        const html = res[i].content[0].replace(/#/g, '');
+        result.push({ name: res[i].name, html });
       }
       setResults(result);
     };
     fetchData();
-  }, []);
+  }, [text, indexName]);
+
+  const handleClick = data => {
+    navigate(`/docs/${version}/${data.name}`);
+  };
 
   return (
     <div className="search-result">
       <h1>Search Result</h1>
-      <p>{results.length} results found for ‘database’</p>
+      <p>
+        {results.length} results found for '{text}'
+      </p>
       <ul>
         {results.map(v => (
-          <li key={v.name}>
+          <li key={v.name} onClick={() => handleClick(v)}>
             <h4 className="title">{v.name}</h4>
             <div
               className="content"

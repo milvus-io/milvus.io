@@ -59,6 +59,7 @@ const updateElastic = async filePath => {
     language === 'en' ? `milvus-docs-${version}` : `milvus-docs-${version}-cn`;
 
   try {
+    // fileid -> name and id. need unique
     const res = await axios.post(CREATE_INDEX_URL, {
       content: contentWithoutVariables,
       fileId: info.id,

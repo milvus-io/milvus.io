@@ -24,6 +24,7 @@ const DocLayout = props => {
     isHome,
     editPath,
     header,
+    setSearch,
   } = props;
   const formatHeadings =
     headings &&
@@ -41,8 +42,6 @@ const DocLayout = props => {
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
-
-  const [search, setSearch] = useState('');
 
   // const effectVariable =
   //   typeof window !== 'undefined' ? [window.location.hash] : [];
@@ -158,7 +157,6 @@ const DocLayout = props => {
     if (menuType === 'new') {
       setSearch(value);
     }
-    console.log('value', value, 'search', search);
   };
 
   return (

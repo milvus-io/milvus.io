@@ -15,6 +15,7 @@ import realtimeIcon from '../images/features/realtime.svg';
 import scalableIcon from '../images/features/scalable.svg';
 import supportIcon from '../images/features/support.svg';
 import metricsIcon from '../images/features/metrics.svg';
+import searchIcon from '../images/features/search.svg'
 
 import LfaiLogo from '../images/logo/lfai.svg';
 import GithubLogo from '../images/icon/github-white.svg';
@@ -42,6 +43,7 @@ const icons = {
   crud: crudIcon,
   cost: costIcon,
   metrics: metricsIcon,
+  search: searchIcon
 };
 
 let users = [];
@@ -95,6 +97,7 @@ const IndexPage = ({ data, pageContext }) => {
       r => r.name !== 'bilibili' && r.name !== 'zhihu'
     );
   }
+  console.log(currentResources)
 
   useEffect(() => {
     const urlLang = getRedirectLanguage();

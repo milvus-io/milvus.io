@@ -145,7 +145,11 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 {header.blog}
               </a>
 
-              <SearchForWeb language={header} locale={locale} hideMobileMask={hideMobileMask}></SearchForWeb>
+              <SearchForWeb
+                language={header}
+                locale={locale}
+                hideMobileMask={hideMobileMask}
+              ></SearchForWeb>
               <span
                 role="button"
                 tabIndex={0}

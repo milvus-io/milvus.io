@@ -1,0 +1,411 @@
+@import "../../components/include_media";
+
+body {
+  background: #fff !important;
+}
+
+.home-page-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 100px;
+  margin-top: 97px;
+  position: relative;
+
+  @include media("<=1000px") {
+    padding: 0;
+  }
+
+  .bg3-container {
+    position: absolute;
+    background: url(../../images/v2/bg-img3.png) left top no-repeat;
+    background-size: contain;
+    width: 30%;
+    height: 0;
+    padding-bottom: 30%;
+    left: 0px;
+    top: 45%;
+
+    @include media("<=1000px") {
+      width: 40%;
+      height: 0;
+      padding-bottom: 40%;
+    }
+
+    @include media("<=450px") {
+      display: none;
+    }
+  }
+
+  .banner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    padding: 140px 16px 101px 16px;
+    background-image: url(../../images//v2//guidebg.png);
+    background-size: contain;
+    background-position: center center;
+    background-origin: content-box;
+    position: relative;
+    overflow: hidden;
+
+    @include media("<=1000px") {
+      padding: 80px 16px 72px;
+      margin-top: 10px;
+    }
+
+    .banner-left {
+      flex: 1;
+
+      .stars-layout {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+
+        @include media("<=1000px") {
+          margin-bottom: 24px;
+        }
+
+        // .git-stars {
+        //   .git-btn {
+        //     background-image: none;
+        //     background-color: #fff;
+        //   }
+
+        //   .gh-count {
+        //     &::before,
+        //     &::after {
+        //       border-color: #12c3f4;
+        //     }
+        //   }
+
+        //   a {
+        //     border: 1px solid #12c3f4;
+        //     border-radius: 4px;
+        //   }
+        // }
+      }
+
+      .title {
+        font-family: Brinnan Bold;
+        font-size: 48px;
+        font-weight: 900;
+        line-height: 58px;
+        text-align: left;
+        margin-bottom: 16px;
+        word-break: break-word;
+
+        @include media("<=1000px") {
+          margin-bottom: 24px;
+          font-size: 24px;
+          line-height: 28px;
+          padding-right: 25%;
+        }
+      }
+
+      .text {
+        margin-bottom: 24px;
+        font-family: Inter Regular;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+
+        @include media("<=1000px") {
+          display: none;
+        }
+      }
+
+      .banner-btn-wrapper {
+        display: flex;
+
+        .banner-btn1 {
+          margin-right: 23px;
+
+          @include media("<=1000px") {
+            margin-right: 19px;
+          }
+
+          span {
+            display: inline-block;
+            font-family: Inter Bold;
+            font-size: 16px;
+            line-height: 24px;
+            margin-right: 16px;
+
+            @include media("<=1000px") {
+              font-size: 14px;
+              margin-right: 8px;
+            }
+          }
+
+          i {
+            line-height: 24px;
+          }
+        }
+
+        .banner-btn2 {
+          display: flex;
+          border: 1px solid #06aff2;
+
+          span {
+            display: inline-block;
+            font-family: Inter Bold;
+            font-size: 16px;
+            line-height: 24px;
+            margin-right: 16px;
+            margin-right: 12px;
+
+            @include media("<=1000px") {
+              font-size: 14px;
+              margin-right: 8px;
+            }
+          }
+          i {
+            line-height: 24px;
+          }
+
+          @include media("<=1000px") {
+            align-items: center;
+          }
+        }
+      }
+    }
+
+    .banner-right {
+      flex: 1;
+
+      @include media("<=1000px") {
+        display: none;
+      }
+
+      &-anime {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .banner-bg-container {
+      display: none;
+      position: absolute;
+      right: -10%;
+      top: 0;
+      width: 60%;
+      height: 60%;
+      background: url(../../images/v2/bg-img1.png) right top no-repeat;
+      background-size: contain;
+      z-index: 0;
+
+      @include media("<=1000px") {
+        display: block;
+      }
+    }
+  }
+
+  .content {
+    margin-bottom: 60px;
+
+    @include media("<=1000px") {
+      margin-bottom: 0;
+    }
+
+    .title-bar {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      margin-bottom: 53px;
+
+      @include media("<=1000px") {
+        margin-bottom: 24px;
+      }
+
+      .title {
+        font-family: Brinnan Bold;
+        font-size: 32px;
+        line-height: 40px;
+        letter-spacing: 0em;
+        text-align: left;
+        padding: 0 8px;
+
+        @include media("<=1000px") {
+          font-size: 20px;
+          line-height: 24px;
+        }
+      }
+
+      .line {
+        display: inline-block;
+        width: 221px;
+        height: 1px;
+        background-color: #12c3f4;
+        margin-left: 24px;
+      }
+    }
+
+    .feature-section {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row-reverse;
+      list-style: none;
+      padding-bottom: 200px;
+
+      @include media("<=450px") {
+        flex-direction: column;
+        position: relative;
+        overflow-x: hidden;
+        padding-bottom: 40px;
+      }
+
+      .spline-wrapper {
+        position: absolute;
+        left: -650px;
+        top: 0;
+        height: 100%;
+        z-index: 1;
+        max-width: 1800px;
+
+        @include media("<=1000px") {
+          display: none;
+        }
+      }
+
+      .section-item {
+        width: 33.33%;
+        flex: 0 0 auto;
+        padding: 16px;
+        z-index: 2;
+
+        @include media("<=1000px") {
+          width: 50%;
+        }
+
+        @include media("<=450px") {
+          width: 100%;
+          margin-bottom: 8px;
+        }
+
+        .icon-wrapper {
+          width: 32px;
+          height: 32px;
+          margin-bottom: 8px;
+
+          @include media("<=1000px") {
+            margin-bottom: 16px;
+            padding: 0 8px;
+          }
+        }
+
+        .title {
+          font-family: Inter SemiBold;
+          font-size: 24px;
+          line-height: 24px;
+          margin-bottom: 24px;
+          height: 48px;
+
+          @include media("<=1000px") {
+            border-left: 2px solid #00ffa3;
+            height: auto;
+            padding: 0 8px;
+            font-size: 14px;
+            line-height: 24px;
+            margin-bottom: 12px;
+          }
+        }
+
+        .text {
+          font-family: Inter Regular;
+          font-size: 14px;
+          line-height: 24px;
+          margin-bottom: 16px;
+
+          @include media("<=1000px") {
+            margin-bottom: 12px;
+            padding: 0 8px;
+          }
+        }
+      }
+
+      .bg-container {
+        display: none;
+        position: absolute;
+        background: url(../../images/v2/bg-img2.png) center bottom no-repeat;
+        width: 486px;
+        height: 288px;
+        background-size: contain;
+        z-index: -1;
+        left: -150px;
+        bottom: 0;
+        opacity: 0.8;
+
+        @include media("<=450px") {
+          display: block;
+        }
+      }
+    }
+
+    .slogan-section {
+      border-radius: 24px;
+      padding: 0;
+      text-align: center;
+
+      @include media("<=1000px") {
+        padding: 0 24px;
+        box-sizing: border-box;
+      }
+
+      .wrapper {
+        background: rgba(245, 243, 243, 0.4);
+        padding: 48px 0 60px;
+        @include media("<=1000px") {
+          padding: 48px 20px;
+        }
+
+        .text-wrapper {
+          margin-bottom: 32px;
+
+          @include media("<=1000px") {
+            margin-bottom: 12px;
+          }
+        }
+
+        .title {
+          font-family: Brinnan Bold;
+          font-size: 32px;
+          font-weight: 700;
+          line-height: 40px;
+          margin-bottom: 24px;
+
+          @include media("<=1000px") {
+            font-size: 24px;
+            line-height: 30px;
+          }
+        }
+
+        .text {
+          font-family: Inter Regular;
+          font-size: 24px;
+          line-height: 32px;
+
+          @include media("<=1000px") {
+            font-size: 14px;
+            line-height: 24px;
+          }
+        }
+
+        .sloganBtn {
+          span {
+            display: inline-block;
+            font-family: Inter Bold;
+            font-size: 16px;
+            line-height: 24px;
+            margin-right: 16px;
+
+            @include media("<=1000px") {
+              font-size: 14px;
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

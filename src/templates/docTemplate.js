@@ -19,6 +19,7 @@ import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import { useSelectMenu } from '../hooks';
 import SearchResult from '../components/search-result';
+import HomeTemplate from '../components/homeTemplate/homeTemplate';
 
 // hljs.registerLanguage("sql", sql)
 // hljs.registerLanguage("bash", bash)
@@ -37,8 +38,11 @@ export default function Template({
     isBenchmark = false,
     editPath,
     newHtml,
+    homeData,
   } = pageContext;
+
   versions = versions.sort(sortVersions);
+
   const screenWidth = useMobileScreen();
 
   // const checkEventStatus = () => {
@@ -317,8 +321,13 @@ export default function Template({
       isBlog === v.isBlog &&
       locale === v.lang
   );
+  const v2 = data.allFile.edges[0]
+    ? data.allFile.edges[0].node.childLayoutJson.v2
+    : {};
   const { markdownRemark } = data; // data.markdownRemark holds our post data
-  let { frontmatter } = markdownRemark;
+
+  let { frontmatter } = markdownRemark || {};
+
   const nav = {
     current: 'doc',
   };
@@ -327,10 +336,12 @@ export default function Template({
     : '';
   const idRegex = /id=".*?"/g;
   if (locale === 'cn') {
-    newHtml = newHtml.replace(idRegex, match =>
-      // eslint-disable-next-line
-      match.replace(/[？|、|，]/g, '')
-    );
+    if (newHtml) {
+      newHtml = newHtml.replace(idRegex, match =>
+        // eslint-disable-next-line
+        match.replace(/[？|、|，]/g, '')
+      );
+    }
   }
 
   const ifrmLoad = () => {
@@ -370,6 +381,8 @@ export default function Template({
 
   const title = isBenchmark
     ? `Milvus benchmark`
+    : newHtml === null
+    ? `Milvus home`
     : `${headings[0] && headings[0].value}`;
 
   const onOverlayClick = () => setShowModal(false);
@@ -398,11 +411,13 @@ export default function Template({
       version={version}
       headings={headings.filter((h, i) => i > 0)}
       versions={versions}
-      id={frontmatter.id}
+      id={frontmatter ? frontmatter.id : 'home'}
       isBenchMark={isBenchmark}
       showDoc={false}
       isBlog={isBlog}
+      isHome={newHtml === null}
       editPath={editPath}
+      header={v2}
     >
       <SEO title={title} lang={locale} />
       {isBenchmark ? (
@@ -426,8 +441,10 @@ export default function Template({
           ></iframe>
         </div>
       ) : (
-        <div className="doc-post-container">
-          {/* {showEvent && (
+        <>
+          {newHtml ? (
+            <div className="doc-post-container">
+              {/* {showEvent && (
             <div className="alert event">
               <div>
                 {locale === 'en'
@@ -452,44 +469,47 @@ export default function Template({
               ></i>
             </div>
           )} */}
-          <SearchResult />
-          {/* {showWarning && (
-            <div className="alert warning">
-              {locale === 'en'
-                ? 'This version is no longer supported. For more information about migrating your data, see'
-                : '该版本不再维护。如需进行数据迁移，请先参考'}
-              <a
-                href={
-                  locale === 'en'
-                    ? `/docs/data_migration.md`
-                    : `/cn/docs/data_migration.md`
-                }
-                alt="sign up milvus"
-                rel="noreferrer noopener"
-                style={{
-                  margin: '0 6px',
-                }}
-              >
-                {locale === 'en'
-                  ? 'Compatibility Information.'
-                  : '兼容性信息。'}
-              </a>
+              {showWarning && (
+                <div className="alert warning">
+                  {locale === 'en'
+                    ? 'This version is no longer supported. For more information about migrating your data, see'
+                    : '该版本不再维护。如需进行数据迁移，请先参考'}
+                  <a
+                    href={
+                      locale === 'en'
+                        ? `/docs/data_migration.md`
+                        : `/cn/docs/data_migration.md`
+                    }
+                    alt="sign up milvus"
+                    rel="noreferrer noopener"
+                    style={{
+                      margin: '0 6px',
+                    }}
+                  >
+                    {locale === 'en'
+                      ? 'Compatibility Information.'
+                      : '兼容性信息。'}
+                  </a>
+                </div>
+              )}
+              <div className="doc-post">
+                <div
+                  className="doc-post-content"
+                  dangerouslySetInnerHTML={{ __html: newHtml }}
+                />
+                <ReactTooltip
+                  type="info"
+                  // place="right"
+                  globalEventOff="click"
+                  className="md-tooltip"
+                />
+              </div>
+              <TextSelectionMenu language={layout} options={options} />
             </div>
+          ) : (
+            <HomeTemplate data={homeData} />
           )}
-          <div className="doc-post">
-            <div
-              className="doc-post-content"
-              dangerouslySetInnerHTML={{ __html: newHtml }}
-            />
-            <ReactTooltip
-              type="info"
-              // place="right"
-              globalEventOff="click"
-              className="md-tooltip"
-            />
-          </div> */}
-          <TextSelectionMenu language={layout} options={options} />
-        </div>
+        </>
       )}
 
       {showModal ? (
@@ -531,6 +551,14 @@ export const pageQuery = graphql`
           relativeDirectory
 
           childLayoutJson {
+            v2 {
+              header {
+                navlist {
+                  label
+                  href
+                }
+              }
+            }
             layout {
               header {
                 quick
@@ -591,6 +619,7 @@ export const pageQuery = graphql`
                   title
                   wechat
                 }
+                content
               }
               selectMenu {
                 comment

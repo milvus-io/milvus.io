@@ -451,6 +451,7 @@ export default function Template({
         </div>
       ) : (
         <>
+          {homeData && <HomeTemplate data={homeData} />}
           {newHtml ? (
             <div className="doc-post-container">
               {/* {showEvent && (
@@ -525,9 +526,7 @@ export default function Template({
                 </>
               )}
             </div>
-          ) : (
-            <HomeTemplate data={homeData} />
-          )}
+          ) : null}
         </>
       )}
 

@@ -5,8 +5,8 @@ const locales = require('./src/constants/locales');
 const DOC_LANG_FOLDERS = ['/en/', '/zh-CN/'];
 const benchmarksMenu = require('./benchmark-menu');
 const express = require('express');
-const env = process.env.IS_PREVIEW;
-// const env = "preview";
+// const env = process.env.IS_PREVIEW;
+const env = 'preview';
 console.log('========env========', env);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
@@ -234,8 +234,6 @@ exports.createPages = ({ actions, graphql }) => {
           path: absolutePath,
         };
       });
-
-    console.log('home data', homeData);
 
     // filter useless md file blog has't version
     const legalMd = result.data.allMarkdownRemark.edges.filter(

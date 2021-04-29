@@ -10,7 +10,7 @@ const StartCard = ({ data, wrapperClass = '' }) => {
     cluster: clusterIcon,
   };
 
-  const imgSrc = imgMap[key];
+  const imgSrc = imgMap[key.toLowerCase()];
 
   return (
     <div className={`card-wrapper ${wrapperClass}`}>

@@ -266,7 +266,7 @@ const DocLayout = props => {
               </a> */}
               </section>
             ) : (
-              <>
+              <section>
                 {!isHome && (
                   <>
                     <div className="button-container-new">
@@ -329,7 +329,7 @@ const DocLayout = props => {
                       : null}
                   </>
                 )}
-              </>
+              </section>
             )}
           </div>
         )}

@@ -2,6 +2,8 @@
 
 html {
   height: 100%;
+  scroll-padding-top: 90px;
+  overflow-y: auto;
 }
 
 body,
@@ -112,8 +114,6 @@ a.btn-anchor {
 .layout-wrapper {
   display: flex;
   flex-direction: column;
-  // header 90px
-  height: calc(100vh - 90px);
   margin-top: 90px;
   // overflow-y: auto;
   background-color: #fff;
@@ -122,8 +122,7 @@ a.btn-anchor {
 .doc-wrapper {
   position: relative;
   display: flex;
-  // max-width: 1600px;
-  max-width: 1400px;
+  max-width: 1600px;
   width: 100%;
   margin: 0 auto;
   background-color: #fff;
@@ -137,8 +136,11 @@ a.btn-anchor {
   .menu-container {
     // header 90px
     top: 90px;
-    padding-top: 20px;
+    // padding-top: 20px;
     bottom: 0;
+    padding-right: 8px;
+    max-height: calc(100vh - 90px);
+    flex-shrink: 0;
     width: 250px;
     overflow: auto;
 
@@ -173,7 +175,8 @@ a.btn-anchor {
     // margin 64px menu width 250px
     margin-left: 314px;
     width: 100%;
-    max-width: 1350px;
+    // menu part 314px and right anchors 280px
+    max-width: calc(100% - 600px);
     // overflow-y: scroll;
 
     // change scrollbar style
@@ -217,23 +220,22 @@ a.btn-anchor {
 
   .anchor-wrapper {
     // position: relative;
-    position: absolute;
+    // position: absolute;
     // header 60px margin top 65px
-    top: 32px;
-    bottom: 16px;
-    right: 0;
+    // bottom: 16px;
+
     width: 280px;
     font-size: 14px;
     padding-right: 10px;
 
     section {
       position: sticky;
-      top: 0;
-      left: 0;
-      max-width: 90%;
+      position: -webkit-sticky;
+      top: 70px;
+      max-height: 100%;
+      overflow: auto;
 
-      height: 100%;
-      overflow-y: auto;
+      padding-top: 32px;
 
       // change scrollbar style
       &::-webkit-scrollbar {
@@ -315,9 +317,7 @@ a.btn-anchor {
   }
 
   .anchor-wrapper-new {
-    // position: sticky;
-    // header 90px margin top 32px
-    // top: calc(32px + 90px);
+    // max-width: 235px;
 
     .button-container-new {
       a.btn-anchor {
@@ -334,10 +334,6 @@ a.btn-anchor {
 
         i {
           margin-right: 8px;
-        }
-
-        &:target {
-          padding-top: 90px;
         }
       }
     }

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-22 17:32:46
+ * @LastEditTime: 2021-04-26 16:14:49
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /www.milvus.io/src/utils/docTemplate.util.js
+ */
 export const scrollToElement = (element, offset = 62) => {
   // const offset = 62;
   const bodyRect = document.body.getBoundingClientRect().top;
@@ -18,20 +26,22 @@ export const getAnchorElement = (selector, anchorText) => {
 };
 
 export const sortVersions = (a, b) => {
-  const [v1, s1, m1] = a.split('.');
-  const [v2, s2, m2] = b.split('.');
-  
-  const aValue = v1.split('')[1] * 10000 + s1 * 100 + m1 * 1;
-  const bValue = v2.split('')[1] * 10000 + s2 * 100 + m2 * 1;
+  if (a && b) {
+    const [v1, s1, m1] = a.split('.');
+    const [v2, s2, m2] = b.split('.');
 
-  if (aValue > bValue) {
-    return -1;
-  }
-  if (aValue === bValue) {
-    return 0;
-  }
-  if (aValue < bValue) {
-    return 1;
+    const aValue = v1.split('')[1] * 10000 + s1 * 100 + m1 * 1;
+    const bValue = v2.split('')[1] * 10000 + s2 * 100 + m2 * 1;
+
+    if (aValue > bValue) {
+      return -1;
+    }
+    if (aValue === bValue) {
+      return 0;
+    }
+    if (aValue < bValue) {
+      return 1;
+    }
   }
 };
 

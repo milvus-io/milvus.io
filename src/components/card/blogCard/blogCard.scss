@@ -1,0 +1,47 @@
+@import '../../../utils/cssVariables.scss';
+
+.blog {
+  &-wrapper {
+    border: 1px solid $cardBorderColor;
+    border-radius: 4px;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: space-between;
+
+    img {
+      width: 25%;
+    }
+  }
+
+  &-content {
+    padding: 18px 40px;
+
+    &-time {
+      max-width: 500px;
+      margin-bottom: 8px;
+
+      color: $primary;
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    h2 {
+      color: $dark;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+      margin: 0;
+      max-width: 500px;
+    }
+
+    &-abstract {
+      max-width: 500px;
+      margin-top: 16px;
+
+      color: $dark;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}

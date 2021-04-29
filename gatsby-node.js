@@ -235,8 +235,6 @@ exports.createPages = ({ actions, graphql }) => {
         };
       });
 
-    console.log('home data', homeData);
-
     // filter useless md file blog has't version
     const legalMd = result.data.allMarkdownRemark.edges.filter(
       ({ node: { fileAbsolutePath, frontmatter } }) => {

@@ -469,7 +469,7 @@ export default function Template({
               ></i>
             </div>
           )} */}
-              {showWarning && (
+              {/* {showWarning && (
                 <div className="alert warning">
                   {locale === 'en'
                     ? 'This version is no longer supported. For more information about migrating your data, see'
@@ -504,7 +504,8 @@ export default function Template({
                   className="md-tooltip"
                 />
               </div>
-              <TextSelectionMenu language={layout} options={options} />
+              <TextSelectionMenu language={layout} options={options} /> */}
+              <SearchResult />
             </div>
           ) : (
             <HomeTemplate data={homeData} />

@@ -131,7 +131,6 @@
     .licence-milvus {
       margin-bottom: 23px;
       display: flex;
-      justify-content: space-between;
 
       @include media("<=1000px") {
         text-align: left;
@@ -149,9 +148,11 @@
       }
       .text-link-wrapper {
         margin-top: 0;
+        margin-left: 40px;
 
         @include media("<=1000px") {
           margin-top: 16px;
+          margin-right: 0;
         }
       }
 

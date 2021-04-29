@@ -12,8 +12,7 @@ import { Link } from 'gatsby';
 import './index.scss';
 
 
-const V2Header = ({ header, locale, versions, version }) => {
-  const { navlist } = header;
+const V2Header = ({ header, locale, versions, version, setVersion = () => { } }) => {
   const screenWidth = useMobileScreen();
   versions.sort((a, b) => sortVersions(a, b));
 
@@ -31,10 +30,15 @@ const V2Header = ({ header, locale, versions, version }) => {
       isExternal: false
     },
     {
-      label: 'What is milvus?',
-      link: '#',
-      isExternal: false
+      label: 'Blog',
+      link: 'https://blog.milvus.io/',
+      isExternal: true
     },
+    {
+      label: 'Github',
+      link: 'https://github.com/milvus-io/milvus/',
+      isExternal: true
+    }
   ];
 
   const handleOpenMask = () => {
@@ -46,6 +50,7 @@ const V2Header = ({ header, locale, versions, version }) => {
   };
 
   const handleSelected = (val) => {
+    setVersion(val);
     window.location.href = `https://milvus.io/docs/${val}/overview.md`;
   };
 
@@ -66,10 +71,12 @@ const V2Header = ({ header, locale, versions, version }) => {
               </div>
               <div className="nav-section">
                 {
-                  navlist.map(i => {
-                    const { label, href } = i;
+                  navList.map(i => {
+                    const { label, link, isExternal } = i;
                     return (
-                      <a className="nav-item" href={href} key={label}>{label}</a>
+                      isExternal ?
+                        (<a className="nav-item" href={link} key={label}>{label}</a>) :
+                        (<Link className="nav-item" to={link} key={label}>{label}</Link>)
                     );
                   })
                 }
@@ -108,10 +115,12 @@ const V2Header = ({ header, locale, versions, version }) => {
               <MobilePopup className='v2-popup' open={open} hideMask={hideMask}>
                 <div className="nav-section">
                   {
-                    navlist.map(i => {
-                      const { label, href } = i;
+                    navList.map(i => {
+                      const { label, link, isExternal } = i;
                       return (
-                        <a className="nav-item" href={href} key={label}>{label}</a>
+                        isExternal ?
+                          (<a className="nav-item" href={link} key={label}>{label}</a>) :
+                          (<Link className="nav-item" to={link} key={label}>{label}</Link>)
                       );
                     })
                   }

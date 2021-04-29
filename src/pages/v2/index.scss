@@ -5,7 +5,7 @@ body {
 }
 
 .home-page-container {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0 100px;
   margin-top: 97px;
@@ -19,11 +19,17 @@ body {
     position: absolute;
     background: url(../../images/v2/bg-img3.png) left top no-repeat;
     background-size: contain;
-    width: 40%;
+    width: 30%;
     height: 0;
-    padding-bottom: 35%;
+    padding-bottom: 30%;
     left: 0px;
-    top: 1000px;
+    top: 45%;
+
+    @include media("<=1000px") {
+      width: 40%;
+      height: 0;
+      padding-bottom: 40%;
+    }
 
     @include media("<=450px") {
       display: none;
@@ -31,7 +37,7 @@ body {
   }
 
   .banner {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     padding: 140px 16px 101px 16px;

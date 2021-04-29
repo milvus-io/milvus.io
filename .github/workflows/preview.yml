@@ -16,11 +16,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: 'preview'
 
       - name: update submodules
+        env:
+          ES_URL: ${{secrets.ES_URL}}
         run: |
+          yarn add axios
           git submodule init
           git submodule update --remote
+          node elastic-search.js
 
       - name: Log in to registry
         uses: docker/login-action@v1

@@ -25,6 +25,7 @@ const DocLayout = props => {
     isHome,
     editPath,
     header,
+    setSearch,
   } = props;
   const formatHeadings =
     headings &&
@@ -157,7 +158,6 @@ const DocLayout = props => {
     if (menuType === 'new') {
       setSearch(value);
     }
-    console.log('value', value, 'search', search);
   };
 
   return (

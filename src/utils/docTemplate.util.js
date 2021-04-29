@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-04-22 17:32:46
- * @LastEditTime: 2021-04-29 17:59:40
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /www.milvus.io/src/utils/docTemplate.util.js
- */
 export const scrollToElement = (element, offset = 62) => {
   // const offset = 62;
   const bodyRect = document.body.getBoundingClientRect().top;

@@ -51,9 +51,6 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-# dotenv environment variable files
-.env*
-
 # gatsby files
 .cache/
 public
@@ -71,5 +68,3 @@ yarn-error.log
 
 # search.json
 search.json
-
-yarn.lock

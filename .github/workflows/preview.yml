@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: update submodules
+        env:
+          ES_URL: ${{secrets.ES_URL}}
         run: |
           yarn add axios
           git submodule init

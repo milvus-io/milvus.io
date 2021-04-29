@@ -5,6 +5,7 @@ import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
 // import AskMilvus from "../../images/ask_milvus.png";
 import './index.scss';
+import { getStyleType } from '../../utils/docTemplate.util';
 
 const DocLayout = props => {
   const {
@@ -55,9 +56,7 @@ const DocLayout = props => {
 
   // check menu type based on whether version is 2.0
   // here use v1 as test
-  const menuType = useMemo(() => (version.startsWith('v1') ? 'new' : 'old'), [
-    version,
-  ]);
+  const menuType = useMemo(() => getStyleType(version), [version]);
 
   // star reference
   const star = useRef(null);
@@ -185,7 +184,9 @@ const DocLayout = props => {
           onSearchChange={handleSearchChange}
         ></Menu>
         <div
-          className={`inner-container ${isBenchMark ? 'fullwidth' : ''}`}
+          className={`inner-container ${isHome ? 'inner-container-home' : ''} ${
+            isBenchMark ? 'fullwidth' : ''
+          }`}
           ref={docContainer}
         >
           {children}
@@ -197,7 +198,7 @@ const DocLayout = props => {
           <div
             className={`anchor-wrapper ${
               menuType === 'new' ? 'anchor-wrapper-new' : ''
-            }`}
+            } ${isHome ? 'anchor-wrapper-new-home' : ''}`}
           >
             {menuType === 'old' ? (
               <section>
@@ -264,7 +265,7 @@ const DocLayout = props => {
               </a> */}
               </section>
             ) : (
-              <>
+              <section>
                 {!isHome && (
                   <>
                     <div className="button-container-new">
@@ -327,7 +328,7 @@ const DocLayout = props => {
                       : null}
                   </>
                 )}
-              </>
+              </section>
             )}
           </div>
         )}

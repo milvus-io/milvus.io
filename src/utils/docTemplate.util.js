@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-04-22 17:32:46
- * @LastEditTime: 2021-04-26 16:14:49
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /www.milvus.io/src/utils/docTemplate.util.js
- */
 export const scrollToElement = (element, offset = 62) => {
   // const offset = 62;
   const bodyRect = document.body.getBoundingClientRect().top;
@@ -91,4 +83,8 @@ export const importAllPics = (r, type, users = [], resources = []) => {
       resources[order] = { src: m, name: matchs && matchs[1], href };
     }
   });
+};
+
+export const getStyleType = version => {
+  return version.startsWith('v1') ? 'new' : 'old';
 };

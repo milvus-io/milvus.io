@@ -18,6 +18,7 @@ import {
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import { useSelectMenu } from '../hooks';
+import SearchResult from '../components/search-result';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
 
 // hljs.registerLanguage("sql", sql)
@@ -57,11 +58,19 @@ export default function Template({
 
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchVal, setSearchVal] = useState('');
+
   // const [showEvent, setShowEvent] = useState(false);
 
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
   // }, []);
+
+  const handleSearch = value => {
+    setSearchVal(value);
+    setIsSearch(true);
+  };
 
   // select menu function
   const [options, setOptions] = useState({
@@ -417,6 +426,7 @@ export default function Template({
       isHome={newHtml === null}
       editPath={editPath}
       header={v2}
+      setSearch={handleSearch}
     >
       <SEO title={title} lang={locale} />
       {isBenchmark ? (
@@ -468,42 +478,52 @@ export default function Template({
               ></i>
             </div>
           )} */}
-              {showWarning && (
-                <div className="alert warning">
-                  {locale === 'en'
-                    ? 'This version is no longer supported. For more information about migrating your data, see'
-                    : '该版本不再维护。如需进行数据迁移，请先参考'}
-                  <a
-                    href={
-                      locale === 'en'
-                        ? `/docs/data_migration.md`
-                        : `/cn/docs/data_migration.md`
-                    }
-                    alt="sign up milvus"
-                    rel="noreferrer noopener"
-                    style={{
-                      margin: '0 6px',
-                    }}
-                  >
-                    {locale === 'en'
-                      ? 'Compatibility Information.'
-                      : '兼容性信息。'}
-                  </a>
-                </div>
+              {isSearch ? (
+                <SearchResult
+                  text={searchVal}
+                  language={locale}
+                  version={version}
+                />
+              ) : (
+                <>
+                  {showWarning && (
+                    <div className="alert warning">
+                      {locale === 'en'
+                        ? 'This version is no longer supported. For more information about migrating your data, see'
+                        : '该版本不再维护。如需进行数据迁移，请先参考'}
+                      <a
+                        href={
+                          locale === 'en'
+                            ? `/docs/data_migration.md`
+                            : `/cn/docs/data_migration.md`
+                        }
+                        alt="sign up milvus"
+                        rel="noreferrer noopener"
+                        style={{
+                          margin: '0 6px',
+                        }}
+                      >
+                        {locale === 'en'
+                          ? 'Compatibility Information.'
+                          : '兼容性信息。'}
+                      </a>
+                    </div>
+                  )}
+                  <div className="doc-post">
+                    <div
+                      className="doc-post-content"
+                      dangerouslySetInnerHTML={{ __html: newHtml }}
+                    />
+                    <ReactTooltip
+                      type="info"
+                      // place="right"
+                      globalEventOff="click"
+                      className="md-tooltip"
+                    />
+                  </div>
+                  <TextSelectionMenu language={layout} options={options} />
+                </>
               )}
-              <div className="doc-post">
-                <div
-                  className="doc-post-content"
-                  dangerouslySetInnerHTML={{ __html: newHtml }}
-                />
-                <ReactTooltip
-                  type="info"
-                  // place="right"
-                  globalEventOff="click"
-                  className="md-tooltip"
-                />
-              </div>
-              <TextSelectionMenu language={layout} options={options} />
             </div>
           ) : (
             <HomeTemplate data={homeData} />

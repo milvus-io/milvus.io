@@ -107,6 +107,7 @@
 
       .menus-wrapper {
         display: flex;
+        outline: none;
       }
 
       .icon-wrapper {
@@ -116,6 +117,7 @@
         border-radius: 16px;
         font-size: 0;
         text-align: center;
+        outline: none;
 
         &:last-child {
           margin-left: 16px;
@@ -169,18 +171,19 @@
         width: 100%;
 
         .mobile-selector {
-          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          outline: none;
           .label-wrapper {
             text-align: left;
             padding: 0 16px;
           }
 
           .options-wrapper {
-            box-shadow: none;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
             left: 0;
             right: 0;
             max-height: 300px;
             overflow-y: auto;
+            z-index: -1;
 
             .active {
               background: #e3f9ff;
@@ -215,6 +218,7 @@
           line-height: 20px;
 
           margin-right: 12px;
+          outline: none;
         }
 
         .input {

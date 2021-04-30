@@ -169,7 +169,10 @@ const Menu = props => {
 
   const handleMenuClick = e => {
     const menuContainer = menuRef.current;
-    window.localStorage.setItem('zilliz-height', menuContainer.scrollTop);
+    if (menuContainer) {
+      window.localStorage.setItem('zilliz-height', menuContainer.scrollTop);
+    }
+
   };
 
   useEffect(() => {
@@ -273,7 +276,7 @@ const Menu = props => {
     <>
       <section
         className={`menu-container can-scroll ${!menuStatus && type !== 'new' ? 'hide' : ''} ${type === 'new' ? 'menu-container-new' : ''
-          }`}
+          } ${type === 'new' ? 'new-hide' : ''}`}
         ref={menuRef}
       >
         {screenWidth <= 1000 && type !== 'new' ? (
@@ -311,7 +314,7 @@ const Menu = props => {
         {generageMenuDom(realMenuList, 'menu-top-level border-bottom')}
       </section>
       {
-        type === 'new' ?
+        type === 'new' && screenWidth <= 1000 ?
           (
             !menuStatus ? (
               <div

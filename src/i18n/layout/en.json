@@ -379,7 +379,7 @@
             "Consistent experience across laptop, local cluster, and cloud.",
             "Easily embed real-time seach & analytic engine into your applications."
           ],
-          "img": "autoscaling"
+          "img": "search"
         },
         {
           "title": "Resilient and predictable by design",
@@ -393,7 +393,7 @@
           "text": [
             "Component level scalability, scale only where it is really needed."
           ],
-          "img": "search"
+          "img": "autoscaling"
         },
         {
           "title": "Community Backed",

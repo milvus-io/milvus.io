@@ -406,6 +406,28 @@ const MenuDialog = ({
 
   useEffect(() => {
     const scrollEls = document.querySelectorAll('.can-scroll');
+    // [].forEach.call(scrollEls, (el) => {
+    //   let initialY = 0;
+    //   el.addEventListener('touchstart', e => {
+    //     if (e.targetTouches.length === 1) {
+    //       initialY = e.targetTouches[0].clientY;
+    //     }
+    //   });
+    //   el.addEventListener('touchmove', e => {
+    //     if (e.targetTouches.length === 1) {
+    //       const clientY = e.targetTouches[0].clientY - initialY;
+    //       if (
+    //         el.scrollTop + el.clientHeight >= el.scrollHeight &&
+    //         clientY < 0
+    //       ) {
+    //         return e.preventDefault();
+    //       }
+    //       if (el.scrollTop <= 0 && clientY > 0) {
+    //         return e.preventDefault();
+    //       }
+    //     }
+    //   });
+    // });
 
     const handleScroll = e => {
       const isInclude = Array.prototype.some.call(scrollEls, el => el.contains(e.target));
@@ -415,10 +437,10 @@ const MenuDialog = ({
       e.preventDefault();
       e.stopPropagation();
     };
-    window.addEventListener('touchmove', e => handleScroll(e), { passive: false });
+    window.addEventListener('touchmove', handleScroll, { passive: false });
 
     return () => {
-      window.removeEventListener('touchmove', e => handleScroll(e));
+      window.removeEventListener('touchmove', handleScroll);
     };
   }, []);
 

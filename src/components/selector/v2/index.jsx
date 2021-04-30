@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'gatsby';
 import './index.scss';
 
 const V2Selector = ({
@@ -58,14 +59,11 @@ const V2Selector = ({
       <div className={`options-wrapper ${open ? 'show' : ''}`}>
         {
           options.map(option => (
-            <i
-              role='button'
-              tabIndex={-1}
+            <Link
+              href={`/docs/${selected}/overview.md`}
               className={`option-item ${option === selected && 'active'}`}
               key={option}
-              onClick={() => handleSelected(option)}
-              onKeyDown={() => handleSelected(option)}
-            >{option}</i>
+            >{option}</Link>
           ))
         }
       </div>

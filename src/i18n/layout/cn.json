@@ -241,12 +241,7 @@
           {
             "title": "图像视频检索",
             "desc": "深度学习模型最开始就是用来对图像、视频等进行处理，通过训练可以精准的提取图片、视频中的特征从而对图片、视频进行分类，打标签，以图搜图，以图搜视频等等。Milvus凭借其出色的性能和数据管理能力，可以支持各种深度学习模型，实现对海量图片和视频的高性能分析检索能力。",
-            "list": [
-              "图片搜索",
-              "图片去重",
-              "视频去重",
-              "以商品搜商品"
-            ],
+            "list": ["图片搜索", "图片去重", "视频去重", "以商品搜商品"],
             "img": "cv",
             "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/pic_search/README.md",
             "href": "http://116.228.99.250:8004/"
@@ -254,11 +249,7 @@
           {
             "title": "智能问答机器人",
             "desc": "传统的问答机器人大都是基于规则的知识图谱方式实现，这种方式需要对大量的语料进行分类整理。而基于深度学习模型的实现方式可以彻底摆脱对语料的预处理，只需提供问题和答案的对应关系，通过自然语言处理的语义分析模型对问题库提取语义特征向量存入Milvus中，然后对提问的问题也进行语义特征向量提取，通过对向量特征的匹配就可以实现自动回复，轻松实现智能客服等应用。",
-            "list": [
-              "语义提取",
-              "个性化推荐",
-              "语料分析和推荐"
-            ],
+            "list": ["语义提取", "个性化推荐", "语料分析和推荐"],
             "img": "nlp",
             "titleHref": "https://github.com/milvus-io/bootcamp/tree/master/solutions/QA_System",
             "href": "http://40.117.75.127:8003/"
@@ -266,11 +257,7 @@
           {
             "title": "赋能传统向量计算",
             "desc": "在传统的数据处理领域也存在大量向量计算的场景，使用传统的计算方式需要消耗大量的算力而Milvus凭借先进的算法可以在同等算力资源下将向量数据处理能力提高至少两个数量级。",
-            "list": [
-              "分子结构相似性分析",
-              "分子药理分析",
-              "药物分子虚拟筛选"
-            ],
+            "list": ["分子结构相似性分析", "分子药理分析", "药物分子虚拟筛选"],
             "img": "molsearch",
             "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/mols_search/README.md",
             "href": "http://40.117.75.127:8002/"
@@ -383,7 +370,7 @@
             "Consistent experience across laptop, local cluster, and cloud.",
             "Easily embed real-time seach & analytic engine into your applications."
           ],
-          "img": "autoscaling"
+          "img": "search"
         },
         {
           "title": "Resilient and predictable by design",
@@ -397,7 +384,7 @@
           "text": [
             "Component level scalability, scale only where it is really needed."
           ],
-          "img": "search"
+          "img": "autoscaling"
         },
         {
           "title": "Community Backed",

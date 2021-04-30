@@ -5,7 +5,6 @@ import './homeTemplate.scss';
 
 const HomeTemplate = ({ data }) => {
   const { section1, section2, section3, section4 } = data;
-  console.log(section1);
 
   return (
     <section className="doc-home-wrapper">

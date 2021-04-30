@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
-import lfai from '../../../images/v2/lfai.svg';
+import lfai from '../../../images/logo/lfai.svg';
 import close from '../../../images/v2/close.svg';
 import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
@@ -156,7 +156,7 @@ const V2Header = ({
                     <div
                       className="icon-wrapper"
                       role="button"
-                      tabIndex={0}
+                      tabIndex={-1}
                       onClick={hideMask}
                       onKeyDown={hideMask}
                     >
@@ -165,7 +165,7 @@ const V2Header = ({
                     :
                     <div className='menus-wrapper'
                       role="button"
-                      tabIndex={0}
+                      tabIndex={-1}
                       onClick={handleOpenMask}
                       onKeyDown={handleOpenMask}
                     >

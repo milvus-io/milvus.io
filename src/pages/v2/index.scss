@@ -199,7 +199,7 @@ body {
       height: 60%;
       background: url(../../images/v2/bg-img1.png) right top no-repeat;
       background-size: contain;
-      z-index: 0;
+      z-index: -1;
 
       @include media("<=1000px") {
         display: block;
@@ -278,7 +278,7 @@ body {
       .section-item {
         width: 33.33%;
         flex: 0 0 auto;
-        padding: 16px;
+        padding: 8px 16px;
         z-index: 2;
 
         @include media("<=1000px") {
@@ -334,7 +334,7 @@ body {
       .bg-container {
         display: none;
         position: absolute;
-        background: url(../../images/v2/bg-img2.png) center bottom no-repeat;
+        background: url(../../images/v2/bg-img3.png) center bottom no-repeat;
         width: 486px;
         height: 288px;
         background-size: contain;

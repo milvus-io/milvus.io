@@ -1,5 +1,5 @@
-@import '../../../utils/cssVariables.scss';
-
+@import "../../../utils/cssVariables.scss";
+@import "../../include_media";
 .blog {
   &-wrapper {
     border: 1px solid $cardBorderColor;
@@ -42,6 +42,14 @@
       color: $dark;
       font-size: 14px;
       line-height: 20px;
+
+      @include media("<=1000px") {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
     }
   }
 }

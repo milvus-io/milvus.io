@@ -10,16 +10,28 @@ import { useMobileScreen } from '../../../hooks';
 import { sortVersions } from '../../../utils/docTemplate.util';
 import MobilePopup from '../components/MobilePopupV2';
 import { Link } from 'gatsby';
+import Search from './Search';
+import Menu from './Menu';
 import './index.scss';
 
 
-const V2Header = ({ header, locale, versions, version, setVersion = () => { }, type = 'home' }) => {
+const V2Header = ({
+  versions,
+  version,
+  setVersion = () => { },
+  type = 'home',
+  onSearchChange,
+  setShowMask = () => { },
+  showMask = false
+}) => {
   const screenWidth = useMobileScreen();
-  versions.sort((a, b) => sortVersions(a, b));
+  const versionList = [...versions];
+  versionList.sort((a, b) => sortVersions(a, b));
 
   const [open, setOpen] = useState(false);
   const [openType, setOpenType] = useState('');
   const container = useRef(null);
+  const headContainer = useRef(null);
 
   const navList = [
     {
@@ -29,7 +41,7 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
     },
     {
       label: 'Documentation',
-      link: `/docs`,
+      link: `/docs/home`,
       isExternal: false
     },
     {
@@ -48,10 +60,16 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
     const { type } = e.target.dataset;
     setOpen(open ? false : true);
     setOpenType(type);
+    setShowMask(true);
+    headContainer.current.style.zIndex = 13;
+    headContainer.current.style.backgroundColor = 'transparent';
   };
 
   const hideMask = () => {
     setOpen(false);
+    setShowMask(false);
+    headContainer.current.style.zIndex = 3;
+    headContainer.current.style.backgroundColor = '#fff';
   };
 
   const handleSelected = (val) => {
@@ -59,37 +77,12 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
     window.location.href = `https://milvus.io/docs/${val}/overview.md`;
   };
 
-  const Menu = () => (
-    <div className="nav-section">
-      {
-        navList.map(i => {
-          const { label, link, isExternal } = i;
-          return (
-            isExternal ?
-              (<a className="nav-item" href={link} key={label} target="_blank" rel="noopener noreferrer" >{label}</a>) :
-              (<Link className="nav-item" to={link} key={label}>{label}</Link>)
-          );
-        })
-      }
-      <div className="drop-down">
-        <V2Selector
-          className="mobile-selector"
-          selected={version}
-          options={versions}
-          setSelected={handleSelected}
-        />
-      </div>
-    </div>
-  );
+  const handleSearch = value => {
+    onSearchChange(value);
+    hideMask();
+  };
 
-  const Search = () => (
-    <div className="search-wrapper">
-      <div className="input-wrapper">
-        <img src={search} alt="search-icon" />
-        <input type="text" />
-      </div>
-    </div>
-  );
+
 
   const useClickOutside = (ref, handler, events) => {
     if (!events) events = [`mousedown`, `touchstart`];
@@ -113,7 +106,7 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
 
 
   return (
-    <section className='header'>
+    <section className='header' ref={headContainer}>
       <div className="header-container" ref={container}>
         {
           screenWidth > 1000 ? (
@@ -141,7 +134,7 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
                 <div className="drop-down">
                   <V2Selector
                     selected={version}
-                    options={versions}
+                    options={versionList}
                     setSelected={handleSelected}
                   />
                 </div>
@@ -189,7 +182,12 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
               </div>
               <MobilePopup className='v2-popup' open={open} hideMask={hideMask}>
                 {
-                  openType === 'menu' ? <Menu /> : <Search />
+                  openType === 'menu' ? <Menu
+                    version={version}
+                    options={versionList}
+                    setSelected={handleSelected}
+                    navList={navList}
+                  /> : <Search handleSearch={handleSearch} />
                 }
               </MobilePopup>
             </div>
@@ -201,3 +199,7 @@ const V2Header = ({ header, locale, versions, version, setVersion = () => { }, t
 };
 
 export default V2Header;
+
+
+
+

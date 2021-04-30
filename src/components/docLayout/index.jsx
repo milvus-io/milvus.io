@@ -42,6 +42,8 @@ const DocLayout = props => {
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
+  const [showMask, setShowMask] = useState(false);
+  const [showMenuMask, setShowMenuMask] = useState(false);
 
   // const effectVariable =
   //   typeof window !== 'undefined' ? [window.location.hash] : [];
@@ -162,7 +164,16 @@ const DocLayout = props => {
   return (
     <div className="layout-wrapper">
       {menuType === 'new' ? (
-        <NewHeader header={header.header} locale={locale} versions={versions} />
+        <NewHeader
+          header={header.header}
+          locale={locale}
+          versions={versions}
+          version={version}
+          type="doc"
+          onSearchChange={handleSearchChange}
+          setShowMask={setShowMask}
+          showMask={showMask}
+        />
       ) : (
         <Header
           language={language}
@@ -183,6 +194,7 @@ const DocLayout = props => {
           type={menuType}
           language={language}
           onSearchChange={handleSearchChange}
+          setShowMask={setShowMenuMask}
         ></Menu>
         <div
           className={`inner-container ${isBenchMark ? 'fullwidth' : ''}`}
@@ -195,9 +207,8 @@ const DocLayout = props => {
         </div>
         {formatHeadings && !isBenchMark && (
           <div
-            className={`anchor-wrapper ${
-              menuType === 'new' ? 'anchor-wrapper-new' : ''
-            }`}
+            className={`anchor-wrapper ${menuType === 'new' ? 'anchor-wrapper-new' : ''
+              }`}
           >
             {menuType === 'old' ? (
               <section>
@@ -205,9 +216,8 @@ const DocLayout = props => {
                   {isBlog || isBenchMark ? null : (
                     <a
                       className="btn-anchor"
-                      href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                        locale === 'en' ? 'en' : 'zh-CN'
-                      }/${editPath}`}
+                      href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
+                        }/${editPath}`}
                     >
                       <span className="btn-icon-wrapper">
                         <i className="far fa-edit btn-icon"></i>
@@ -271,9 +281,8 @@ const DocLayout = props => {
                       {isBlog || isBenchMark ? null : (
                         <a
                           className="btn-anchor"
-                          href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                            locale === 'en' ? 'en' : 'zh-CN'
-                          }/${editPath}`}
+                          href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
+                            }/${editPath}`}
                         >
                           <span className="btn-icon-wrapper">
                             <i className="far fa-edit btn-icon"></i>
@@ -332,6 +341,25 @@ const DocLayout = props => {
           </div>
         )}
 
+        <div className={`mobile-menu-wrapper-new ${showMask ? 'show' : ''}`}></div>
+
+        {
+          showMenuMask ? (
+            <MenuDialog menuList={menuList}
+              versions={versions}
+              activeDoc={id.split('-')[0]}
+              version={version}
+              locale={locale}
+              isBenchMark={isBenchMark}
+              type={menuType}
+              language={language}
+              onSearchChange={handleSearchChange}
+              showMenuMask={showMenuMask}
+            />
+          ) : null
+        }
+
+
         {showToTopButton ? (
           <div
             className="button-to-top"
@@ -362,3 +390,51 @@ const DocLayout = props => {
 };
 
 export default DocLayout;
+
+const MenuDialog = ({
+  menuList,
+  versions,
+  activeDoc,
+  version,
+  locale,
+  isBenchMark,
+  type,
+  language,
+  onSearchChange,
+
+}) => {
+
+  useEffect(() => {
+    const scrollEls = document.querySelectorAll('.can-scroll');
+
+    const handleScroll = e => {
+      const isInclude = Array.prototype.some.call(scrollEls, el => el.contains(e.target));
+      if (isInclude) {
+        return true;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    window.addEventListener('touchmove', e => handleScroll(e), { passive: false });
+
+    return () => {
+      window.removeEventListener('touchmove', e => handleScroll(e));
+    };
+  }, []);
+
+  return (
+    <div className="mobile-menu-wrapper-new show">
+      <Menu
+        menuList={menuList}
+        versions={versions}
+        activeDoc={activeDoc}
+        version={version}
+        locale={locale}
+        isBenchMark={isBenchMark}
+        type={type}
+        language={language}
+        onSearchChange={onSearchChange}
+      ></Menu>
+    </div>
+  );
+};

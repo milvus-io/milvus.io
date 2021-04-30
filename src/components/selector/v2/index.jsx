@@ -10,6 +10,8 @@ const V2Selector = ({
   const choosenWrapper = useRef(null);
   const [open, setOpen] = useState(false);
 
+  console.log(selected);
+
   const handleSelected = (value) => {
     if (selected === value) return;
     setSelected(value);

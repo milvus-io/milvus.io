@@ -7,7 +7,7 @@ const StartCard = ({ data, wrapperClass = '' }) => {
   const { title, link, key, btnLabel } = data;
   const imgMap = {
     'stand-alone': standAloneIcon,
-    cluster: clusterIcon,
+    Cluster: clusterIcon,
   };
 
   const imgSrc = imgMap[key];

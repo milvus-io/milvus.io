@@ -60,7 +60,7 @@ const V2Header = ({
 
   const handleOpenMask = (e) => {
     const { type } = e.target.dataset;
-    setOpen(open ? false : true);
+    setOpen(!open);
     setOpenType(type);
     setShowMask(true);
   };

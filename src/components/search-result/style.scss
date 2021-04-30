@@ -1,4 +1,4 @@
-@import '../include_media';
+@import "../include_media";
 
 .search-result {
   font-family: Inter Regular;
@@ -7,7 +7,7 @@
     margin-bottom: 8px;
     font-family: Inter Regular;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-family: Inter Bold;
       font-size: 16px;
       line-height: 20px;
@@ -16,7 +16,7 @@
   p {
     font-family: Inter Regular;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 14px;
       line-height: 20px;
     }
@@ -38,7 +38,7 @@
     font-size: 16px;
     font-family: Inter Regular;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 14px;
     }
   }

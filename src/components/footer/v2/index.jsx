@@ -59,13 +59,13 @@ const V2Footer = ({ footer }) => {
           </p>
 
         </div>
-        <div className="licence-policy">
+        {/* <div className="licence-policy">
           {
             list.map(i => (
               <a href={i.link} target="_blank" rel="noopener noreferrer" key={i.label}>{i.label}</a>
             ))
           }
-        </div>
+        </div> */}
       </div>
     </section>
   );

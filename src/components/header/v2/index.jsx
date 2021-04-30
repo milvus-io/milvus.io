@@ -60,7 +60,7 @@ const V2Header = ({
 
   const handleOpenMask = (e) => {
     const { type } = e.target.dataset;
-    setOpen(open ? false : true);
+    setOpen(!open);
     setOpenType(type);
     setShowMask(true);
   };
@@ -72,6 +72,7 @@ const V2Header = ({
 
   const handleSelected = val => {
     setVersion(val);
+
     window.location.href = `https://milvus.io/docs/${val}/overview.md`;
   };
 
@@ -83,7 +84,6 @@ const V2Header = ({
   useClickOutside(container, () => {
     hideMask();
   });
-
 
   return (
     <section className={`header ${className}`} ref={headContainer}>
@@ -139,34 +139,37 @@ const V2Header = ({
               </a>
             </div>
             <div className="menu-section">
-              {
-                open ?
-                  <div
-                    className="icon-wrapper"
-                    role="button"
-                    tabIndex={-1}
-                    onClick={hideMask}
-                    onKeyDown={hideMask}
-                  >
-                    <img className="btn-icon" src={close} alt="close-icon" />
-                  </div>
-                  :
-                  <div className='menus-wrapper'
-                    role="button"
-                    tabIndex={-1}
-                    onClick={handleOpenMask}
-                    onKeyDown={handleOpenMask}
-                  >
-                    {type === 'doc' && (
+              <div className='menus-wrapper'
+                role="button"
+                tabIndex={-1}
+                onClick={handleOpenMask}
+                onKeyDown={handleOpenMask}
+              >
+                {
+                  type === 'doc' && (
+                    open && openType === 'search' ? (
+                      <div className="icon-wrapper" data-type='search'>
+                        <img className="btn-icon" src={close} alt="close-icon" />
+                      </div>
+                    ) : (
                       <div className="icon-wrapper" data-type='search'>
                         <img className="btn-icon" src={search} alt="search-icon" />
                       </div>
-                    )}
+                    )
+                  )
+                }
+                {
+                  open && openType === 'menu' ? (
+                    <div className="icon-wrapper" data-type='close'>
+                      <img className="btn-icon" src={close} alt="close-icon" />
+                    </div>
+                  ) : (
                     <div className="icon-wrapper" data-type='menu'>
                       <img className="btn-icon" src={menu} alt="menu-icon" />
                     </div>
-                  </div>
-              }
+                  )
+                }
+              </div>
             </div>
             <MobilePopup className='v2-popup' open={open} hideMask={hideMask}>
               {

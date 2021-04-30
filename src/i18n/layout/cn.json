@@ -341,7 +341,7 @@
       ]
     },
     "banner": {
-      "title": "High Scalability. Cloud-Native. High Availability.",
+      "title": ["High Scalability.", "Cloud-Native.", "High Availability."],
       "text": "Milvus2.0: The world's most popular open-source vector database.",
       "startBtn": {
         "href": "https://milvus.io/docs/install_milvus.md",
@@ -357,40 +357,27 @@
       "list": [
         {
           "title": "Blazing Fast",
-          "text": [
-            "Provides millisecond average latency over 10 million data. ",
-            "CPU SIMD, GPU, FPGA accelerations are supported. Fully utilize your hardware resources and brings you striking cost-efficiency."
-          ],
+          "text": "Provides millisecond average latency over 10 million data.CPU SIMD, GPU, FPGA accelerations are supported. Fully utilize your hardware resources and brings you striking cost-efficiency. ",
           "img": "deployment"
         },
         {
           "title": "Easy to Use",
-          "text": [
-            "Rich API designed for data-science workflow. ",
-            "Consistent experience across laptop, local cluster, and cloud.",
-            "Easily embed real-time seach & analytic engine into your applications."
-          ],
+          "text": "Rich API designed for data-science workflow. Consistent experience across laptop, local cluster, and cloud.Easily embed real-time seach & analytic engine into your applications.",
           "img": "search"
         },
         {
           "title": "Resilient and predictable by design",
-          "text": [
-            "Capitalize on Milvus’s built-in replication and failover/failback features that ensure your data and applications live up to your business continuity requirements."
-          ],
+          "text": "Capitalize on Milvus’s built-in replication and failover/failback features that ensure your data and applications live up to your business continuity requirements.",
           "img": "supporting"
         },
         {
           "title": "Highly Elastic",
-          "text": [
-            "Component level scalability, scale only where it is really needed."
-          ],
+          "text": "Component level scalability, scale only where it is really needed.",
           "img": "autoscaling"
         },
         {
           "title": "Community Backed",
-          "text": [
-            "Open source, Linux foundation hot project. Empower over 1000 enterprise users."
-          ],
+          "text": "Open source, Linux foundation hot project. Empower over 1000 enterprise users.",
           "img": "storage"
         }
       ],

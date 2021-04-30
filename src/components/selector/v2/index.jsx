@@ -15,6 +15,11 @@ const V2Selector = ({
     e.stopPropagation();
     setOpen(open ? false : true);
   };
+  const handleSelect = (e) => {
+    const { option } = e.target.dataset;
+    if (option === selected) return;
+    setSelected(option);
+  };
 
   useEffect(() => {
     const hideOptions = e => {
@@ -49,14 +54,20 @@ const V2Selector = ({
         </div>
       </div>
 
-      <div className={`options-wrapper ${open ? 'show' : ''}`}>
+      <div
+        className={`options-wrapper ${open ? 'show' : ''}`}
+        role='button'
+        tabIndex={-1}
+        onClick={handleSelect}
+        onKeyDown={handleSelect}>
         {
           options.map(option => (
-            <Link
-              to={`/docs/${selected}/overview.md`}
+            <p
+              data-option={option}
               className={`option-item ${option === selected && 'active'}`}
               key={option}
-            >{option}</Link>
+
+            >{option}</p>
           ))
         }
       </div>

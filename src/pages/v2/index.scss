@@ -1,11 +1,12 @@
 @import "../../components/include_media";
+@import "../../utils/cssVariables.scss";
 
 body {
   background: #fff !important;
 }
 
 .home-page-container {
-  max-width: 1600px;
+  max-width: $maxBreakpoint;
   margin: 0 auto;
   padding: 0 100px;
   margin-top: 97px;
@@ -90,6 +91,12 @@ body {
         //   }
         // }
       }
+      .title-wrapper {
+        margin-bottom: 16px;
+        @include media("<=1000px") {
+          margin-bottom: 24px;
+        }
+      }
 
       .title {
         font-family: Brinnan Bold;
@@ -97,11 +104,10 @@ body {
         font-weight: 900;
         line-height: 58px;
         text-align: left;
-        margin-bottom: 16px;
+
         word-break: break-word;
 
         @include media("<=1000px") {
-          margin-bottom: 24px;
           font-size: 24px;
           line-height: 28px;
           padding-right: 25%;

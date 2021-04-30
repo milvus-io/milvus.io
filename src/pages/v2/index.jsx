@@ -51,7 +51,13 @@ const HomePage = ({ data, pageContext }) => {
                 repo="milvus"
               />
             </div>
-            <p className="title">{banner.title.toUpperCase()}</p>
+            <div className="title-wrapper">
+              {
+                banner.title.map(item => (
+                  <p className="title" key={item}>{item.toUpperCase()}</p>
+                ))
+              }
+            </div>
             <p className="text">{banner.text}</p>
             <div className="banner-btn-wrapper">
               <V2Button
@@ -113,11 +119,7 @@ const HomePage = ({ data, pageContext }) => {
                     <img src={icons[img]} alt={img} />
                   </div>
                   <p className="title">{title}</p>
-                  <div className="text-wrapper">
-                    {
-                      text.map(item => <p className='text' key={item}>{item}</p>)
-                    }
-                  </div>
+                  <p className="text">{text}</p>
                 </li>
               );
             })}

@@ -25,6 +25,9 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        @include media('<=1000px') {
+          flex-direction: column;
+        }
       }
 
       &-item {

@@ -314,8 +314,7 @@ export default function Template({
     return () => {
       window.removeEventListener('click', cb);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isMobile]);
 
   if (!data.allFile.edges[0]) {
     return null;

@@ -280,7 +280,7 @@ const Menu = props => {
         }`}
         ref={menuRef}
       >
-        {screenWidth <= 1000 ? (
+        {isMobile ? (
           <i
             className="fas fa-times close"
             onClick={() => {

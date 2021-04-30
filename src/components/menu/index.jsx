@@ -158,11 +158,10 @@ const Menu = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuList, activeDoc, version]);
 
-  const screenWidth = useMobileScreen();
+  const { isMobile } = useMobileScreen();
   useEffect(() => {
-    setMenuStatus(screenWidth > 1000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [screenWidth]);
+    setMenuStatus(!isMobile);
+  }, [isMobile]);
 
   const menuRef = useRef(null);
 
@@ -281,7 +280,7 @@ const Menu = props => {
         }`}
         ref={menuRef}
       >
-        {screenWidth <= 1000 ? (
+        {isMobile ? (
           <i
             className="fas fa-times close"
             onClick={() => {

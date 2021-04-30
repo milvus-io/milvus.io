@@ -1,11 +1,8 @@
 import React from 'react';
 import './index.scss';
-// import Marquee from 'react-marquee-slider';
-// import { useMobileScreen } from '../../hooks';
 
 const Notification = props => {
   const { version, language, locale } = props;
-  // const screenWidth = useMobileScreen();
   const notificationLinksMap = {
     [version]:
       locale === 'en'

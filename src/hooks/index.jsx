@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
@@ -13,7 +13,12 @@ export const useMobileScreen = () => {
       window.removeEventListener('resize', cb);
     };
   }, []);
-  return screenWidth;
+
+  const isMobile = useMemo(() => screenWidth && screenWidth < 1000, [
+    screenWidth,
+  ]);
+
+  return { screenWidth, isMobile };
 };
 
 export const useSelectMenu = setOptions => {
@@ -79,8 +84,9 @@ export const useSelectMenu = setOptions => {
       styles: {
         visibility: 'visible',
         zIndex: 199,
-        transform: `translate(${translateX}px,${top - offsetTop + scrollTop
-          }px)`,
+        transform: `translate(${translateX}px,${
+          top - offsetTop + scrollTop
+        }px)`,
       },
       copy: str,
     });

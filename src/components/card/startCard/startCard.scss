@@ -1,17 +1,44 @@
 @import '../../../utils/cssVariables.scss';
-
+@import '../../include_media';
 .card {
   &-wrapper {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-
     border: 1px solid $cardBorderColor;
     border-radius: 4px;
     padding: 32px 24px;
+    .text-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @include media('<=1550px') {
+      display: block;
+      .btn-wrapper {
+        margin-top: 16px;
+        text-align: right;
+      }
+    }
+    @include media('<=1000px') {
+      display: flex;
+      margin-bottom: 16px;
+      padding: 16px;
+      .text-wrapper {
+        flex: 1;
+        justify-content: space-between;
+        .card-title {
+          text-align: center;
+        }
+      }
+      .btn-wrapper {
+        margin-top: 0;
+      }
+    }
   }
 
   &-img {
-    height: 48px;
+    width: 48px;
   }
 
   &-title {
@@ -21,12 +48,18 @@
     font-weight: 600;
     color: $dark;
 
-    flex-basis: 37.5%;
+    flex: 1;
     margin: 0 24px;
+    @include media('<=1000px') {
+      font-size: 16px;
+    }
   }
 
   &-btn {
     // flex-grow: 1;
+    display: inline-block;
+    width: 170px;
+
     padding: 8px 16px;
     background-color: $primary;
     border: none;
@@ -65,6 +98,9 @@
 
       text-align: center;
       line-height: 24px;
+    }
+    @include media('<=1000px') {
+      width: auto;
     }
   }
 }

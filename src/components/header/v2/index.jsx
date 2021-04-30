@@ -22,9 +22,10 @@ const V2Header = ({
   type = 'home',
   onSearchChange,
   setShowMask = () => { },
-  showMask = false
+  showMask = false,
+  className = ''
 }) => {
-  const screenWidth = useMobileScreen();
+  const { isMobile } = useMobileScreen();
   const versionList = [...versions];
   versionList.sort((a, b) => sortVersions(a, b));
 
@@ -37,7 +38,7 @@ const V2Header = ({
     {
       label: 'What is milvus?',
       link: '#',
-      isExternal: false
+      isExternal: false,
     },
     {
       label: 'Documentation',
@@ -47,13 +48,13 @@ const V2Header = ({
     {
       label: 'Blog',
       link: 'https://blog.milvus.io/',
-      isExternal: true
+      isExternal: true,
     },
     {
       label: 'Github',
       link: 'https://github.com/milvus-io/milvus/',
-      isExternal: true
-    }
+      isExternal: true,
+    },
   ];
 
   const handleOpenMask = (e) => {
@@ -61,18 +62,14 @@ const V2Header = ({
     setOpen(open ? false : true);
     setOpenType(type);
     setShowMask(true);
-    headContainer.current.style.zIndex = 13;
-    headContainer.current.style.backgroundColor = 'transparent';
   };
 
   const hideMask = () => {
     setOpen(false);
     setShowMask(false);
-    headContainer.current.style.zIndex = 3;
-    headContainer.current.style.backgroundColor = '#fff';
   };
 
-  const handleSelected = (val) => {
+  const handleSelected = val => {
     setVersion(val);
     window.location.href = `https://milvus.io/docs/${val}/overview.md`;
   };
@@ -106,93 +103,100 @@ const V2Header = ({
 
 
   return (
-    <section className='header' ref={headContainer}>
+    <section className={`header ${className}`} ref={headContainer}>
       <div className="header-container" ref={container}>
-        {
-          screenWidth > 1000 ? (
-            <div className="content-wrapper">
-              <div className="logo-section">
-                <Link to="/v2">
-                  <img className="milvus-logo" src={milvusLogo} alt="milvus-logo" />
-                </Link>
-                <a href="https://lfaidata.foundation/projects/" target="_blank" rel="noopener noreferrer">
-                  <img className="lfai-logo" src={lfai} alt="lfai-icon" />
-                </a>
-
-              </div>
-              <div className="nav-section">
-                {
-                  navList.map(i => {
-                    const { label, link, isExternal } = i;
-                    return (
-                      isExternal ?
-                        (<a className="nav-item" href={link} key={label}>{label}</a>) :
-                        (<Link className="nav-item" to={link} key={label}>{label}</Link>)
-                    );
-                  })
-                }
-                <div className="drop-down">
-                  <V2Selector
-                    selected={version}
-                    options={versionList}
-                    setSelected={handleSelected}
-                  />
-                </div>
+        {!isMobile ? (
+          <div className="content-wrapper">
+            <div className="logo-section">
+              <Link to="/v2">
+                <img
+                  className="milvus-logo"
+                  src={milvusLogo}
+                  alt="milvus-logo"
+                />
+              </Link>
+              <a
+                href="https://lfaidata.foundation/projects/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img className="lfai-logo" src={lfai} alt="lfai-icon" />
+              </a>
+            </div>
+            <div className="nav-section">
+              {navList.map(i => {
+                const { label, link, isExternal } = i;
+                return isExternal ? (
+                  <a className="nav-item" href={link} key={label}>
+                    {label}
+                  </a>
+                ) : (
+                  <Link className="nav-item" to={link} key={label}>
+                    {label}
+                  </Link>
+                );
+              })}
+              <div className="drop-down">
+                <V2Selector
+                  selected={version}
+                  options={versions}
+                  setSelected={handleSelected}
+                />
               </div>
             </div>
-          ) : (
-            <div className='mobile-header-warapper'>
-              <div className="logo-section">
-                <Link to="/v2">
-                  <img className="milvus-logo" src={milvusLogoMobile} alt="milvus-logo" />
-                </Link>
-                <a href="https://lfaidata.foundation/projects/" target="_blank" rel="noopener noreferrer">
-                  <img className="lfai-logo" src={lfai} alt="lfai-icon" />
-                </a>
-              </div>
-              <div className="menu-section">
-                {
-                  open ?
-                    <div
-                      className="icon-wrapper"
-                      role="button"
-                      tabIndex={-1}
-                      onClick={hideMask}
-                      onKeyDown={hideMask}
-                    >
-                      <img className="btn-icon" src={close} alt="close-icon" />
-                    </div>
-                    :
-                    <div className='menus-wrapper'
-                      role="button"
-                      tabIndex={-1}
-                      onClick={handleOpenMask}
-                      onKeyDown={handleOpenMask}
-                    >
-                      {type === 'doc' && (
-                        <div className="icon-wrapper" data-type='search'>
-                          <img className="btn-icon" src={search} alt="search-icon" />
-                        </div>
-                      )}
-                      <div className="icon-wrapper" data-type='menu'>
-                        <img className="btn-icon" src={menu} alt="menu-icon" />
+          </div>
+        ) : (
+          <div className='mobile-header-warapper'>
+            <div className="logo-section">
+              <Link to="/v2">
+                <img className="milvus-logo" src={milvusLogoMobile} alt="milvus-logo" />
+              </Link>
+              <a href="https://lfaidata.foundation/projects/" target="_blank" rel="noopener noreferrer">
+                <img className="lfai-logo" src={lfai} alt="lfai-icon" />
+              </a>
+            </div>
+            <div className="menu-section">
+              {
+                open ?
+                  <div
+                    className="icon-wrapper"
+                    role="button"
+                    tabIndex={-1}
+                    onClick={hideMask}
+                    onKeyDown={hideMask}
+                  >
+                    <img className="btn-icon" src={close} alt="close-icon" />
+                  </div>
+                  :
+                  <div className='menus-wrapper'
+                    role="button"
+                    tabIndex={-1}
+                    onClick={handleOpenMask}
+                    onKeyDown={handleOpenMask}
+                  >
+                    {type === 'doc' && (
+                      <div className="icon-wrapper" data-type='search'>
+                        <img className="btn-icon" src={search} alt="search-icon" />
                       </div>
+                    )}
+                    <div className="icon-wrapper" data-type='menu'>
+                      <img className="btn-icon" src={menu} alt="menu-icon" />
                     </div>
-                }
-              </div>
-              <MobilePopup className='v2-popup' open={open} hideMask={hideMask}>
-                {
-                  openType === 'menu' ? <Menu
-                    version={version}
-                    options={versionList}
-                    setSelected={handleSelected}
-                    navList={navList}
-                  /> : <Search handleSearch={handleSearch} />
-                }
-              </MobilePopup>
+                  </div>
+              }
             </div>
-          )
-        }
+            <MobilePopup className='v2-popup' open={open} hideMask={hideMask}>
+              {
+                openType === 'menu' ? <Menu
+                  version={version}
+                  options={versionList}
+                  setSelected={handleSelected}
+                  navList={navList}
+                /> : <Search handleSearch={handleSearch} />
+              }
+            </MobilePopup>
+          </div>
+        )}
       </div>
     </section >
   );

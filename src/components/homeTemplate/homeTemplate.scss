@@ -1,29 +1,24 @@
 @import "../../utils/cssVariables.scss";
-@import "../include_media";
+@import "../../components/include_media";
 
 .doc-home-wrapper {
   padding: 32px 64px;
-
   @include media("<=1000px") {
     padding: 20px 16px;
   }
-
   .section {
     margin-bottom: 64px;
-
+    @include media("<=1000px") {
+      margin-bottom: 32px;
+    }
     h1 {
       margin-bottom: 16px;
       color: $dark;
       font-size: 24px;
       line-height: 32px;
       font-weight: bold;
-      font-family: Inter Bold;
-
-      @include media("<=1000px") {
-        font-size: 16px;
-        line-height: 24px;
-        margin-bottom: 8px;
-      }
+      font-family: Inter Regular;
+      text-transform: capitalize;
     }
   }
 
@@ -33,6 +28,9 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        @include media("<=1000px") {
+          flex-direction: column;
+        }
       }
 
       &-item {

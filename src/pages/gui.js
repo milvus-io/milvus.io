@@ -1,20 +1,20 @@
-import React from "react";
-import { graphql } from "gatsby";
-import Layout from "../components/layout/layout";
-import SEO from "../components/seo";
-import LocalizedLink from "../components/localizedLink/localizedLink";
-import "../scss/gui.scss";
-import feature1 from "../images/admin/feature1.png";
-import feature2 from "../images/admin/feature2.png";
-import feature3 from "../images/admin/feature3.png";
-import { useMobileScreen } from "../hooks";
+import React from 'react';
+import { graphql } from 'gatsby';
+import Layout from '../components/layout/layout';
+import SEO from '../components/seo';
+import LocalizedLink from '../components/localizedLink/localizedLink';
+import '../scss/gui.scss';
+import feature1 from '../images/admin/feature1.png';
+import feature2 from '../images/admin/feature2.png';
+import feature3 from '../images/admin/feature3.png';
+import { useMobileScreen } from '../hooks';
 
 const GuiPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
   const { section1, section3, section4 } = language.gui;
 
-  const screenWidth = useMobileScreen();
+  const { isMobile } = useMobileScreen();
 
   return (
     <Layout language={language} locale={locale}>
@@ -41,7 +41,7 @@ const GuiPage = ({ data, pageContext }) => {
               <p>{section4.feature1.desc1}</p>
             </div>
           </div>
-          {screenWidth <= 1000 ? (
+          {isMobile ? (
             <div className="item">
               <img src={feature2} alt="similarity search in gui"></img>
 

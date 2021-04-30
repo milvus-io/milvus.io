@@ -163,16 +163,20 @@ const DocLayout = props => {
   return (
     <div className="layout-wrapper">
       {menuType === 'new' ? (
-        <NewHeader
-          header={header.header}
-          locale={locale}
-          versions={versions}
-          version={version}
-          type="doc"
-          onSearchChange={handleSearchChange}
-          setShowMask={setShowMask}
-          showMask={showMask}
-        />
+        <div className={`mobile-header-wrapper-new ${showMask ? 'showMask' : ''}`}>
+          <NewHeader
+            header={header.header}
+            locale={locale}
+            versions={versions}
+            version={version}
+            type="doc"
+            onSearchChange={handleSearchChange}
+            setShowMask={setShowMask}
+            showMask={showMask}
+            className={showMask ? 'new-header' : ''}
+          />
+        </div>
+
       ) : (
         <Header
           language={language}
@@ -340,8 +344,6 @@ const DocLayout = props => {
             )}
           </div>
         )}
-
-        <div className={`mobile-menu-wrapper-new ${showMask ? 'show' : ''}`}></div>
 
         {
           showMenuMask ? (

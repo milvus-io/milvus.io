@@ -503,3 +503,23 @@ a.btn-anchor {
     }
   }
 }
+
+.mobile-header-wrapper-new {
+  display: inline-block;
+  @include media("<=1000px") {
+    .new-header {
+      background-color: transparent;
+    }
+  }
+
+  &.showMask {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+}

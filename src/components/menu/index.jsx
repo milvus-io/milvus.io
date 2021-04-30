@@ -159,11 +159,10 @@ const Menu = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuList, activeDoc, version]);
 
-  const screenWidth = useMobileScreen();
+  const { isMobile } = useMobileScreen();
   useEffect(() => {
-    setMenuStatus(screenWidth > 1000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [screenWidth]);
+    setMenuStatus(!isMobile);
+  }, [isMobile]);
 
   const menuRef = useRef(null);
 
@@ -279,7 +278,7 @@ const Menu = props => {
           } ${type === 'new' ? 'new-hide' : ''}`}
         ref={menuRef}
       >
-        {screenWidth <= 1000 && type !== 'new' ? (
+        {isMobile && type !== 'new' ? (
           <i
             className="fas fa-times close"
             onClick={() => {
@@ -289,7 +288,7 @@ const Menu = props => {
         ) : null}
         {isBlog || type === 'new' ? (
           <>
-            {type === 'new' && screenWidth > 1000 ? (
+            {type === 'new' && !isMobile ? (
               <input
                 className="search"
                 type="text"
@@ -314,7 +313,7 @@ const Menu = props => {
         {generageMenuDom(realMenuList, 'menu-top-level border-bottom')}
       </section>
       {
-        type === 'new' && screenWidth <= 1000 ?
+        type === 'new' && isMobile ?
           (
             !menuStatus ? (
               <div

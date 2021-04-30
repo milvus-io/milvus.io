@@ -1,11 +1,12 @@
 @import "../../components/include_media";
+@import "../../utils/cssVariables.scss";
 
 body {
   background: #fff !important;
 }
 
 .home-page-container {
-  max-width: 1600px;
+  max-width: $maxBreakpoint;
   margin: 0 auto;
   padding: 0 100px;
   margin-top: 97px;

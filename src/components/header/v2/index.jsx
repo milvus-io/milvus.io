@@ -72,6 +72,7 @@ const V2Header = ({
 
   const handleSelected = val => {
     setVersion(val);
+
     window.location.href = `https://milvus.io/docs/${val}/overview.md`;
   };
 
@@ -83,7 +84,6 @@ const V2Header = ({
   useClickOutside(container, () => {
     hideMask();
   });
-
 
   return (
     <section className={`header ${className}`} ref={headContainer}>

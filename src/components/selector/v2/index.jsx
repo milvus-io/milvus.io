@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Link } from 'gatsby';
 import './index.scss';
 
 const V2Selector = ({
@@ -14,6 +13,11 @@ const V2Selector = ({
   const handleClick = (e) => {
     e.stopPropagation();
     setOpen(open ? false : true);
+  };
+  const handleSelect = (e) => {
+    const { option } = e.target.dataset;
+    if (option === selected) return;
+    setSelected(option);
   };
 
   useEffect(() => {
@@ -49,14 +53,20 @@ const V2Selector = ({
         </div>
       </div>
 
-      <div className={`options-wrapper ${open ? 'show' : ''}`}>
+      <div
+        className={`options-wrapper ${open ? 'show' : ''}`}
+        role='button'
+        tabIndex={-1}
+        onClick={handleSelect}
+        onKeyDown={handleSelect}>
         {
           options.map(option => (
-            <Link
-              to={`/docs/${selected}/overview.md`}
+            <p
+              data-option={option}
               className={`option-item ${option === selected && 'active'}`}
               key={option}
-            >{option}</Link>
+
+            >{option}</p>
           ))
         }
       </div>

@@ -5,7 +5,7 @@ import V2Selector from '../../selector/v2';
 const Menu = ({
   version,
   options,
-  handleSelected,
+  setSelected,
   navList
 }) => (
 
@@ -25,7 +25,7 @@ const Menu = ({
         className="mobile-selector"
         selected={version}
         options={options}
-        setSelected={handleSelected}
+        setSelected={setSelected}
       />
     </div>
   </div>

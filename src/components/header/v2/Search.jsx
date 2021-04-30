@@ -23,7 +23,7 @@ const Search = ({ handleSearch }) => {
           className='input'
           onFocus={handleFocus}
           value={keyWord}
-          onChange={e => handleChange(e)}
+          onChange={handleChange}
         />
         <span className="icon-wrapper" role='button' tabIndex={-1} onClick={search} onKeyDown={search}>
           <i className="fas fa-search"></i>

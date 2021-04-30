@@ -274,8 +274,8 @@ const Menu = props => {
   return (
     <>
       <section
-        className={`menu-container can-scroll ${!menuStatus && type !== 'new' ? 'hide' : ''} ${type === 'new' ? 'menu-container-new' : ''
-          } ${type === 'new' ? 'new-hide' : ''}`}
+        className={`menu-container can-scroll ${!menuStatus && type !== 'new' ? 'hide' : ''} ${type === 'new' ? 'menu-container-new new-hide' : ''
+          }`}
         ref={menuRef}
       >
         {isMobile && type !== 'new' ? (
@@ -315,27 +315,16 @@ const Menu = props => {
       {
         type === 'new' && isMobile ?
           (
-            !menuStatus ? (
-              <div
-                className="mini-menu-control"
-                onClick={() => {
-                  toggleMenu(true);
-                  setShowMask(true);
-                }}
-              >
-                <i className="fas fa-bars"></i>
-              </div>
-            ) : (
-              <div
-                className="mini-menu-control"
-                onClick={() => {
-                  toggleMenu(false);
-                  setShowMask(false);
-                }}
-              >
-                <i className="fas fa-times"></i>
-              </div>
-            )
+            <div
+              className="mini-menu-control"
+              onClick={() => {
+                toggleMenu(!menuStatus);
+                setShowMask(!menuStatus);
+              }}
+            >
+              {menuStatus ? <i className="fas fa-times"></i> : <i className="fas fa-bars"></i>}
+            </div>
+
           ) :
           (
             !menuStatus ? (

@@ -12,6 +12,7 @@ import MobilePopup from '../components/MobilePopupV2';
 import { Link } from 'gatsby';
 import Search from './Search';
 import Menu from './Menu';
+import { useClickOutside } from '../../../hooks';
 import './index.scss';
 
 
@@ -77,24 +78,6 @@ const V2Header = ({
   const handleSearch = value => {
     onSearchChange(value);
     hideMask();
-  };
-
-
-
-  const useClickOutside = (ref, handler, events) => {
-    if (!events) events = [`mousedown`, `touchstart`];
-    const detectClickOutside = event => {
-      !ref.current.contains(event.target) && handler(event);
-    };
-    useEffect(() => {
-      for (const event of events)
-        document.addEventListener(event, detectClickOutside);
-      return () => {
-        for (const event of events)
-          document.removeEventListener(event, detectClickOutside);
-      };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
   };
 
   useClickOutside(container, () => {

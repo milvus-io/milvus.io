@@ -84,9 +84,8 @@ export const useSelectMenu = setOptions => {
       styles: {
         visibility: 'visible',
         zIndex: 199,
-        transform: `translate(${translateX}px,${
-          top - offsetTop + scrollTop
-        }px)`,
+        transform: `translate(${translateX}px,${top - offsetTop + scrollTop
+          }px)`,
       },
       copy: str,
     });
@@ -123,4 +122,19 @@ export const useSelectMenu = setOptions => {
       );
     };
   }, [docWrapper]); // eslint-disable-line react-hooks/exhaustive-deps
+};
+
+export const useClickOutside = (ref, handler, events) => {
+  if (!events) events = [`mousedown`, `touchstart`];
+  const detectClickOutside = event => {
+    !ref.current.contains(event.target) && handler(event);
+  };
+  useEffect(() => {
+    for (const event of events)
+      document.addEventListener(event, detectClickOutside);
+    return () => {
+      for (const event of events)
+        document.removeEventListener(event, detectClickOutside);
+    };
+  }, [detectClickOutside, events]);
 };

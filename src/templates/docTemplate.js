@@ -44,7 +44,7 @@ export default function Template({
 
   versions = versions.sort(sortVersions);
 
-  const screenWidth = useMobileScreen();
+  const { isMobile } = useMobileScreen();
 
   // const checkEventStatus = () => {
   //   if (window) {
@@ -304,7 +304,7 @@ export default function Template({
   }, []);
 
   useEffect(() => {
-    if (screenWidth > 1000) return;
+    if (!isMobile) return;
     const cb = e => {
       if (e.target.dataset.tip) {
         ReactTooltip.show(e.target);

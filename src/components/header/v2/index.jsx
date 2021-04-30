@@ -145,25 +145,6 @@ const V2Header = ({
                 onClick={handleOpenMask}
                 onKeyDown={handleOpenMask}
               >
-                {/* {type === 'doc' && (
-                  
-                  {
-                    openType==='search'?(
-                      <>
-                      <div className="icon-wrapper" data-type='search'>
-                      <img className="btn-icon" src={search} alt="search-icon" />
-                    </div>
-                    <div className="icon-wrapper" data-type='search'>
-                        <img className="btn-icon" src={close} alt="close-icon" />
-                    </div>
-                    </>
-                    ):(
-                      
-                    )
-                  }
-                    
-                  
-                )} */}
                 {
                   type === 'doc' && (
                     open && openType === 'search' ? (
@@ -189,34 +170,6 @@ const V2Header = ({
                   )
                 }
               </div>
-              {/* {
-                open ?
-                  <div
-                    className="icon-wrapper"
-                    role="button"
-                    tabIndex={-1}
-                    onClick={hideMask}
-                    onKeyDown={hideMask}
-                  >
-                    <img className="btn-icon" src={close} alt="close-icon" />
-                  </div>
-                  :
-                  <div className='menus-wrapper'
-                    role="button"
-                    tabIndex={-1}
-                    onClick={handleOpenMask}
-                    onKeyDown={handleOpenMask}
-                  >
-                    {type === 'doc' && (
-                      <div className="icon-wrapper" data-type='search'>
-                        <img className="btn-icon" src={search} alt="search-icon" />
-                      </div>
-                    )}
-                    <div className="icon-wrapper" data-type='menu'>
-                      <img className="btn-icon" src={menu} alt="menu-icon" />
-                    </div>
-                  </div>
-              } */}
             </div>
             <MobilePopup className='v2-popup' open={open} hideMask={hideMask}>
               {

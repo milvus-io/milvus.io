@@ -73,6 +73,12 @@ export default function Template({
     setIsSearch(true);
   };
 
+  const handleBack = () => {
+    setSearchVal('');
+    setIsSearch(false);
+    document.querySelector('.search').value = '';
+  };
+
   // select menu function
   const [options, setOptions] = useState({
     styles: {
@@ -423,7 +429,7 @@ export default function Template({
       isBenchMark={isBenchmark}
       showDoc={false}
       isBlog={isBlog}
-      isHome={newHtml === null}
+      isHome={isSearch || newHtml === null}
       editPath={editPath}
       header={v2}
       setSearch={handleSearch}
@@ -451,86 +457,67 @@ export default function Template({
         </div>
       ) : (
         <>
-          {homeData && <HomeTemplate data={homeData} />}
-          {newHtml ? (
+          {isSearch ? (
             <div
               className={`doc-post-container ${
                 type === 'new' ? 'doc-post-container-new' : ''
               }`}
             >
-              {/* {showEvent && (
-            <div className="alert event">
-              <div>
-                {locale === 'en'
-                  ? 'Register now open for the virtual '
-                  : '点此报名参加'}
-                <a
-                  href="https://www.slidestalk.com/m/298"
-                  alt="sign up milvus"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                  style={{ margin: '0 6px', fontWeight: 'bold' }}
-                >
-                  Milvus Community Conf
-                </a>
-                {locale === 'en'
-                  ? '2020！Join us on Oct.17th, 2020.'
-                  : '2020 线上直播！10月17日（六）一整天的干货不容你错过！'}
-              </div>
-              <i
-                className="fas fa-times alert-close"
-                onClick={onEventInfoCloseClick}
-              ></i>
+              <SearchResult
+                text={searchVal}
+                language={locale}
+                version={version}
+                handleBack={handleBack}
+              />
             </div>
-          )} */}
-              {isSearch ? (
-                <SearchResult
-                  text={searchVal}
-                  language={locale}
-                  version={version}
-                />
-              ) : (
-                <>
-                  {showWarning && (
-                    <div className="alert warning">
+          ) : homeData ? (
+            <HomeTemplate data={homeData} />
+          ) : (
+            <div
+              className={`doc-post-container ${
+                type === 'new' ? 'doc-post-container-new' : ''
+              }`}
+            >
+              <>
+                {showWarning && (
+                  <div className="alert warning">
+                    {locale === 'en'
+                      ? 'This version is no longer supported. For more information about migrating your data, see'
+                      : '该版本不再维护。如需进行数据迁移，请先参考'}
+                    <a
+                      href={
+                        locale === 'en'
+                          ? `/docs/data_migration.md`
+                          : `/cn/docs/data_migration.md`
+                      }
+                      alt="sign up milvus"
+                      rel="noreferrer noopener"
+                      style={{
+                        margin: '0 6px',
+                      }}
+                    >
                       {locale === 'en'
-                        ? 'This version is no longer supported. For more information about migrating your data, see'
-                        : '该版本不再维护。如需进行数据迁移，请先参考'}
-                      <a
-                        href={
-                          locale === 'en'
-                            ? `/docs/data_migration.md`
-                            : `/cn/docs/data_migration.md`
-                        }
-                        alt="sign up milvus"
-                        rel="noreferrer noopener"
-                        style={{
-                          margin: '0 6px',
-                        }}
-                      >
-                        {locale === 'en'
-                          ? 'Compatibility Information.'
-                          : '兼容性信息。'}
-                      </a>
-                    </div>
-                  )}
-                  <div className="doc-post">
-                    <div
-                      className="doc-post-content"
-                      dangerouslySetInnerHTML={{ __html: newHtml }}
-                    />
-                    <ReactTooltip
-                      type="info"
-                      // place="right"
-                      globalEventOff="click"
-                      className="md-tooltip"
-                    />
+                        ? 'Compatibility Information.'
+                        : '兼容性信息。'}
+                    </a>
                   </div>
-                  <TextSelectionMenu language={layout} options={options} />
-                </>
-              )}
+                )}
+                <div className="doc-post">
+                  <div
+                    className="doc-post-content"
+                    dangerouslySetInnerHTML={{ __html: newHtml }}
+                  />
+                  <ReactTooltip
+                    type="info"
+                    // place="right"
+                    globalEventOff="click"
+                    className="md-tooltip"
+                  />
+                </div>
+                <TextSelectionMenu language={layout} options={options} />
+              </>
             </div>
-          ) : null}
+          )}
         </>
       )}
 

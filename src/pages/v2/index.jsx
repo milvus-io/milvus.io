@@ -54,7 +54,7 @@ const HomePage = ({ data, pageContext }) => {
             <div className="title-wrapper">
               {
                 banner.title.map(item => (
-                  <p className="title">{item.toUpperCase()}</p>
+                  <p className="title" key={item}>{item.toUpperCase()}</p>
                 ))
               }
             </div>

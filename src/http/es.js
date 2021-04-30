@@ -22,6 +22,7 @@ export async function searchByElasic(query, index) {
           },
         },
       },
+      size: 20,
     },
   });
   const results = res.data.data.body.hits.hits;

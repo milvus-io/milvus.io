@@ -372,13 +372,13 @@ body {
           padding: 48px 20px;
         }
 
-        // .text-wrapper {
-        //   margin-bottom: 32px;
+        .text-wrapper {
+          margin-bottom: 32px;
 
-        //   @include media("<=1000px") {
-        //     margin-bottom: 12px;
-        //   }
-        // }
+          @include media("<=1000px") {
+            margin-bottom: 12px;
+          }
+        }
 
         .title {
           font-family: Brinnan Bold;

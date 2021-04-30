@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
 const cmdParams = minimist(process.argv.slice(2));
+const getAllActiveVersions = require('./walkFile');
 
 const getMarkdownInfo = path_abs => {
   const res = {};
@@ -25,18 +26,10 @@ const getMarkdownInfo = path_abs => {
   };
 };
 
-const CREATE_INDEX_URL = `${
-  process.env.ES_URL ||
-  'http://127.0.0.1:1337/strapi-plugin-elasticsearch/create-update-index'
-}`;
+const BASE_URL = `${process.env.ES_URL || 'http://127.0.0.1:1337'}`;
 
-// const esClient = new Client({
-//   node: process.env.ES_URL || "http://127.0.0.1:9200",
-//   auth: {
-//     username: process.env.ES_USER,
-//     password: process.env.ES_PASS
-//   },
-// });
+const CREATE_INDEX_URL = `${BASE_URL}/strapi-plugin-elasticsearch/create-update-index`;
+const DELETE_INDEX_URL = `${BASE_URL}/strapi-plugin-elasticsearch/delete-index`;
 
 const updateElastic = async filePath => {
   const remove_variable_regx = /^\-\-\-[\s\S]*\-\-\-/gi;
@@ -86,8 +79,35 @@ async function walkFiles(dirPath, fileObj = {}) {
       await updateElastic(filePath);
     }
   }
-  console.log('---all done---');
   return fileObj;
 }
 
-walkFiles('src/pages/docs/versions/master');
+const versionInfo = getAllActiveVersions('src/pages/docs/versions');
+const versions = Object.keys(versionInfo);
+const AUTH = process.env.ES_DEL_AUTH;
+
+const deleteAllIndexes = async () => {
+  return new Promise(async (res, rej) => {
+    for (let i = 0; i < versions.length; i++) {
+      if (versions[i].includes('.')) {
+        await axios.post(DELETE_INDEX_URL, {
+          index: `milvus-docs-${versions[i]}`,
+          auth: AUTH,
+        });
+        await axios.post(DELETE_INDEX_URL, {
+          index: `milvus-docs-${versions[i]}-cn`,
+          auth: AUTH,
+        });
+      }
+    }
+    res('done');
+  });
+};
+console.log('----------delete start--------');
+
+deleteAllIndexes().then(() => {
+  console.log('----------delete done--------');
+
+  walkFiles('src/pages/docs/versions/master');
+  console.log('----------all done-----------');
+});

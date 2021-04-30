@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'gatsby';
 import './index.scss';
 
 const V2Selector = ({

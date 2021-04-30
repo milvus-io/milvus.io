@@ -1,5 +1,6 @@
 .search-result {
   font-family: Inter;
+  max-width: 800px;
   h1 {
     margin-bottom: 8px;
     font-family: Inter;
@@ -25,5 +26,15 @@
   }
   em {
     font-weight: bold;
+  }
+
+  .back {
+    color: #1493cc;
+    margin-bottom: 32px;
+    cursor: pointer;
+    span {
+      margin-left: 18px;
+      font-size: 16px;
+    }
   }
 }

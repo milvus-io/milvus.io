@@ -4,7 +4,7 @@ import { navigate } from '@reach/router';
 import './style.scss';
 
 const SearchResult = props => {
-  const { language = 'en', version = 'v1.0.0', text } = props;
+  const { language = 'en', version = 'v1.0.0', text, handleBack } = props;
   const [results, setResults] = useState([]);
 
   const indexName = useMemo(
@@ -14,6 +14,7 @@ const SearchResult = props => {
         : `milvus-docs-${version}-cn`,
     [language, version]
   );
+
   useEffect(() => {
     const fetchData = async () => {
       const result = [];
@@ -33,6 +34,10 @@ const SearchResult = props => {
 
   return (
     <div className="search-result">
+      <div className="back" onClick={handleBack}>
+        <i className="fa fa-chevron-left"></i>
+        <span>Back</span>
+      </div>
       <h1>Search Result</h1>
       <p>
         {results.length} results found for '{text}'

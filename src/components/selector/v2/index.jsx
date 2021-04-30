@@ -11,13 +11,6 @@ const V2Selector = ({
   const choosenWrapper = useRef(null);
   const [open, setOpen] = useState(false);
 
-  console.log(selected);
-
-  const handleSelected = (value) => {
-    if (selected === value) return;
-    setSelected(value);
-  };
-
   const handleClick = (e) => {
     e.stopPropagation();
     setOpen(open ? false : true);
@@ -33,9 +26,9 @@ const V2Selector = ({
         }
       };
 
-      window.addEventListener('click', (e) => hideOptions(e), false);
+      window.addEventListener('click', hideOptions, false);
       return () => {
-        window.removeEventListener('click', (e) => hideOptions(e), false);
+        window.removeEventListener('click', hideOptions, false);
       };
     };
   }, []);
@@ -60,7 +53,7 @@ const V2Selector = ({
         {
           options.map(option => (
             <Link
-              href={`/docs/${selected}/overview.md`}
+              to={`/docs/${selected}/overview.md`}
               className={`option-item ${option === selected && 'active'}`}
               key={option}
             >{option}</Link>

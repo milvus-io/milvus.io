@@ -206,7 +206,6 @@
         border-radius: 8px;
         display: flex;
         padding: 10px 16px;
-        color: #aeaebb;
 
         &.focus {
           border: 1px solid #06aaf2;
@@ -217,7 +216,7 @@
           font-size: 20px;
           line-height: 20px;
 
-          margin-right: 12px;
+          margin-left: 12px;
           outline: none;
         }
 
@@ -225,11 +224,15 @@
           flex: 1;
           border: none;
           outline: none;
-          color: #aeaebb;
+          color: #191919;
+
           font-family: Inter Regular;
           font-size: 14px;
           font-weight: 500;
           line-height: 17px;
+          &::placeholder {
+            color: #aeaebb;
+          }
         }
       }
     }

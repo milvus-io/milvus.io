@@ -7,7 +7,9 @@ const Search = ({ handleSearch }) => {
   const handleFocus = () => {
     setFocus(true);
   };
-
+  const search = () => {
+    handleSearch(keyWord);
+  };
   const handleChange = e => {
     setKeyWord(e.target.value);
 
@@ -23,7 +25,7 @@ const Search = ({ handleSearch }) => {
           value={keyWord}
           onChange={e => handleChange(e)}
         />
-        <span className="icon-wrapper" onClick={() => handleSearch(keyWord)}>
+        <span className="icon-wrapper" role='button' tabIndex={-1} onClick={search} onKeyDown={search}>
           <i className="fas fa-search"></i>
         </span>
       </div>

@@ -69,7 +69,11 @@
         "available": "is now available! ",
         "more": "Learn more about the new features and fixes→",
         "join": "Join the Milvus Slack channel here",
-        "interact": "to interact with our community!"
+        "interact": "to interact with our community!",
+        "v2": {
+          "title": "🎯 Check out our site for Milvus v2.0",
+          "here": " Here "
+        }
       },
       "section1": {
         "desc1": "The world's most popular open-source vector database",

@@ -12,6 +12,7 @@ import Code from '../components/code/code';
 import QueryModal from '../components/query-modal/query-modal';
 import {
   getAnchorElement,
+  getStyleType,
   scrollToElement,
   sortVersions,
 } from '../utils/docTemplate.util';
@@ -55,7 +56,7 @@ export default function Template({
   //     return Number(showEventTime) < currentTime;
   //   }
   // };
-
+  const type = useMemo(() => getStyleType(version), [version]);
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
@@ -451,8 +452,13 @@ export default function Template({
         </div>
       ) : (
         <>
+          {homeData && <HomeTemplate data={homeData} />}
           {newHtml ? (
-            <div className="doc-post-container">
+            <div
+              className={`doc-post-container ${
+                type === 'new' ? 'doc-post-container-new' : ''
+              }`}
+            >
               {/* {showEvent && (
             <div className="alert event">
               <div>
@@ -525,9 +531,7 @@ export default function Template({
                 </>
               )}
             </div>
-          ) : (
-            <HomeTemplate data={homeData} />
-          )}
+          ) : null}
         </>
       )}
 

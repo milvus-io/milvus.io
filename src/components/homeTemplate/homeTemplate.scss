@@ -58,6 +58,7 @@
       color: $dark;
       font-size: 16px;
       line-height: 24px;
+      font-family: Inter Regular;
     }
   }
 
@@ -75,6 +76,7 @@
       font-size: 16px;
       font-weight: 600;
       line-height: 24px;
+      font-family: Inter Regular;
     }
 
     ul {
@@ -84,11 +86,13 @@
 
     li {
       margin-bottom: 8px;
-      color: $primary;
+      color: $docPrimary;
+      font-family: Inter Regular;
     }
 
     a {
-      color: $primary;
+      color: $docPrimary;
+      font-family: Inter Regular;
 
       font-size: 16px;
       line-height: 24px;

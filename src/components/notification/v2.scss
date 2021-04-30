@@ -1,0 +1,23 @@
+.notification-v2 {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  z-index: 90;
+  width: 100%;
+  height: 70px;
+  text-align: center;
+  background-image: url('../../images/v2/banner.svg');
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-family: Inter Bold;
+  }
+  .link {
+    color: #000;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}

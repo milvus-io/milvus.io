@@ -1,4 +1,4 @@
-export default {
+export const HOME_ANIMATION = {
   v: '5.7.8',
   fr: 60,
   ip: 0,

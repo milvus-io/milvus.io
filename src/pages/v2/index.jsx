@@ -10,7 +10,7 @@ import supportIcon from '../../images/v2/support.svg';
 import GithubButton from 'react-github-button';
 import './index.scss';
 import AnimatedSvg from '../../components/animatedSvg/animatedSvg';
-import HomeAnimation from '../../../static/anime/common/home';
+import { HOME_ANIMATION as HomeAnimation } from '../../../static/anime/common/home';
 import SEO from '../../components/seo';
 
 const icons = {

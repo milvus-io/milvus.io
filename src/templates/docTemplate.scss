@@ -17,7 +17,7 @@
   padding-left: 64px;
   background: #fff;
   // min-height: 80vh;
-  width: calc(100% - 280px);
+  // max-width: calc(100% - 280px);
   overflow: hidden;
   color: var(--color-primary);
   position: relative;
@@ -1052,6 +1052,10 @@
   .table-wrapper {
     overflow-x: auto;
     @include scroll-bar;
+  }
+
+  &-new {
+    font-family: Inter Regular;
   }
 }
 

@@ -22,6 +22,8 @@ jobs:
       - name: update submodules
         env:
           ES_URL: ${{secrets.ES_URL}}
+          ES_DEL_AUTH: ${{secrets.ES_DEL_AUTH}}
+
         run: |
           yarn add axios
           git submodule init

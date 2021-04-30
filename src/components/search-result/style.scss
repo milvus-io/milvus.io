@@ -1,12 +1,13 @@
-@import "../include_media";
+@import '../include_media';
 
 .search-result {
   font-family: Inter Regular;
+  max-width: 800px;
   h1 {
     margin-bottom: 8px;
     font-family: Inter Regular;
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       font-family: Inter Bold;
       font-size: 16px;
       line-height: 20px;
@@ -15,7 +16,7 @@
   p {
     font-family: Inter Regular;
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       font-size: 14px;
       line-height: 20px;
     }
@@ -27,7 +28,7 @@
     cursor: pointer;
   }
   .title {
-    color: #06aff2;
+    color: #1493cc;
     margin-bottom: 8px;
     font-family: Inter Regular;
     margin-top: 24px;
@@ -37,11 +38,22 @@
     font-size: 16px;
     font-family: Inter Regular;
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       font-size: 14px;
     }
   }
   em {
-    font-weight: bold;
+    // font-weight: bold;
+    font-family: Inter Bold;
+  }
+
+  .back {
+    color: #1493cc;
+    margin-bottom: 32px;
+    cursor: pointer;
+    span {
+      margin-left: 18px;
+      font-size: 16px;
+    }
   }
 }

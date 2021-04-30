@@ -1,5 +1,5 @@
-@import '../include_media';
-@import '../../utils/cssVariables.scss';
+@import "../include_media";
+@import "../../utils/cssVariables.scss";
 
 .mini-menu-control {
   position: fixed;
@@ -40,9 +40,13 @@
     }
   }
 
-  @include media('<=1000px') {
+  @include media("<=1000px") {
+    display: none;
     &.hide {
       transform: translate3d(-100%, 0, 0);
+    }
+    &.new-hide {
+      display: none;
     }
   }
 
@@ -96,7 +100,7 @@
         height: 100%;
       }
 
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         margin-bottom: 20px;
       }
     }
@@ -169,7 +173,7 @@
       padding: 0.2rem 0;
       font-size: 1rem;
 
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         margin-bottom: 0.2rem;
 
         &:lang(en) {
@@ -221,7 +225,7 @@
       opacity: 1;
     }
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 14px;
     }
   }
@@ -249,7 +253,7 @@
         opacity: 1;
       }
 
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         font-size: 14px;
       }
     }

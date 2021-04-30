@@ -10,7 +10,7 @@ const StartCard = ({ data, wrapperClass = '' }) => {
 
   const imgMap = {
     'stand-alone': standAloneIcon,
-    cluster: clusterIcon,
+    Cluster: clusterIcon,
   };
 
   const imgSrc = imgMap[key.toLowerCase()];

@@ -1,4 +1,4 @@
-@import '../components/include_media';
+@import "../components/include_media";
 
 :root {
   --color-primary: #202124;
@@ -22,9 +22,9 @@
   color: var(--color-primary);
   position: relative;
 
-  @include media('<=1000px') {
-    padding: 1rem;
-    padding-top: 2rem;
+  @include media("<=1000px") {
+    padding: 16px 43px;
+    padding-top: 26px;
     font-size: 16px;
     width: 100%;
   }
@@ -45,7 +45,7 @@
       font-size: 16px;
       transition: 0.2s;
 
-      &[href*='.md'] {
+      &[href*=".md"] {
         display: flex;
         align-items: center;
 
@@ -61,7 +61,7 @@
         }
       }
 
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         margin-right: 0;
         border-radius: 0;
       }
@@ -79,36 +79,36 @@
 
     .tab-icon-cpu {
       &::before {
-        content: '';
+        content: "";
         width: 25px;
         height: 25px;
         display: inline-block;
 
         margin-right: 8px;
-        background-image: url('../images/icon/cpu.svg');
+        background-image: url("../images/icon/cpu.svg");
       }
 
       &:hover {
         &::before {
-          background-image: url('../images/icon/cpu-active.svg');
+          background-image: url("../images/icon/cpu-active.svg");
         }
       }
     }
 
     .tab-icon-gpu {
       &::before {
-        content: '';
+        content: "";
         width: 25px;
         height: 25px;
         margin-right: 8px;
         display: inline-block;
 
-        background-image: url('../images/icon/gpu.svg');
+        background-image: url("../images/icon/gpu.svg");
       }
 
       &:hover {
         &::before {
-          background-image: url('../images/icon/gpu-active.svg');
+          background-image: url("../images/icon/gpu-active.svg");
         }
       }
     }
@@ -121,7 +121,7 @@
     flex-direction: row;
     color: var(--color-primary);
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       overflow-x: auto;
     }
 
@@ -150,14 +150,14 @@
         text-decoration: none;
       }
 
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         margin-right: 0;
         border-radius: 0;
       }
     }
   }
 
-  div[class*='filter-'] {
+  div[class*="filter-"] {
     display: none;
 
     &.active {
@@ -205,7 +205,7 @@
       left: 20px;
 
       display: block;
-      content: ' ';
+      content: " ";
       background-size: 18px 18px;
       height: 18px;
       width: 18px;
@@ -230,7 +230,7 @@
       align-items: center;
 
       &:before {
-        background-image: url('../images/icon/event.svg');
+        background-image: url("../images/icon/event.svg");
       }
     }
 
@@ -239,7 +239,7 @@
       // color: #10acf3;
 
       &:before {
-        background-image: url('../images/icon/note.svg');
+        background-image: url("../images/icon/note.svg");
       }
     }
 
@@ -248,7 +248,7 @@
       // color: #ff9e02;
 
       &:before {
-        background-image: url('../images/icon/important.svg');
+        background-image: url("../images/icon/important.svg");
       }
     }
 
@@ -257,7 +257,7 @@
       // color: #ff4024;
 
       &:before {
-        background-image: url('../images/icon/warning.svg');
+        background-image: url("../images/icon/warning.svg");
       }
     }
 
@@ -266,7 +266,7 @@
       color: #02a93d;
 
       &:before {
-        background-image: url('../images/icon/tip.svg');
+        background-image: url("../images/icon/tip.svg");
       }
     }
 
@@ -292,7 +292,7 @@
     margin: 4rem 0 1rem;
     text-rendering: optimizeLegibility;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 1rem;
     }
   }
@@ -334,7 +334,7 @@
     padding: 1.5rem;
     opacity: 1;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       width: 100%;
       left: 0 !important;
     }
@@ -432,12 +432,12 @@
   kbd,
   pre,
   samp {
-    font-family: 'Source Code Pro', monospace;
+    font-family: "Source Code Pro", monospace;
     font-size: 1em;
 
     code,
     span {
-      font-family: 'Source Code Pro', monospace;
+      font-family: "Source Code Pro", monospace;
     }
   }
 
@@ -474,24 +474,24 @@
     text-transform: none;
   }
 
-  [type='reset'],
-  [type='submit'],
+  [type="reset"],
+  [type="submit"],
   button,
-  html [type='button'] {
+  html [type="button"] {
     -webkit-appearance: button;
   }
 
-  [type='button']::-moz-focus-inner,
-  [type='reset']::-moz-focus-inner,
-  [type='submit']::-moz-focus-inner,
+  [type="button"]::-moz-focus-inner,
+  [type="reset"]::-moz-focus-inner,
+  [type="submit"]::-moz-focus-inner,
   button::-moz-focus-inner {
     border-style: none;
     padding: 0;
   }
 
-  [type='button']:-moz-focusring,
-  [type='reset']:-moz-focusring,
-  [type='submit']:-moz-focusring,
+  [type="button"]:-moz-focusring,
+  [type="reset"]:-moz-focusring,
+  [type="submit"]:-moz-focusring,
   button:-moz-focusring {
     outline: 1px dotted ButtonText;
   }
@@ -515,24 +515,24 @@
     overflow: auto;
   }
 
-  [type='checkbox'],
-  [type='radio'] {
+  [type="checkbox"],
+  [type="radio"] {
     box-sizing: border-box;
     padding: 0;
   }
 
-  [type='number']::-webkit-inner-spin-button,
-  [type='number']::-webkit-outer-spin-button {
+  [type="number"]::-webkit-inner-spin-button,
+  [type="number"]::-webkit-outer-spin-button {
     height: auto;
   }
 
-  [type='search'] {
+  [type="search"] {
     -webkit-appearance: textfield;
     outline-offset: -2px;
   }
 
-  [type='search']::-webkit-search-cancel-button,
-  [type='search']::-webkit-search-decoration {
+  [type="search"]::-webkit-search-cancel-button,
+  [type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
   }
 
@@ -568,10 +568,10 @@
     color: #fafafa;
     word-wrap: break-word;
     font-kerning: normal;
-    -moz-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
-    -ms-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
-    -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
-    font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+    -moz-font-feature-settings: "kern", "liga", "clig", "calt";
+    -ms-font-feature-settings: "kern", "liga", "clig", "calt";
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
+    font-feature-settings: "kern", "liga", "clig", "calt";
   }
 
   a {
@@ -579,8 +579,8 @@
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
 
-    &[href^='http'],
-    &[href*='.md'] {
+    &[href^="http"],
+    &[href*=".md"] {
       color: inherit;
       text-decoration: underline;
       text-decoration-color: var(--color-highlight);
@@ -637,7 +637,7 @@
     margin: 4rem 0 1rem;
     text-rendering: optimizeLegibility;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 1rem;
     }
   }
@@ -648,7 +648,7 @@
     margin: 3rem 0 1rem;
     text-rendering: optimizeLegibility;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 1rem;
     }
   }
@@ -787,7 +787,7 @@
     border-collapse: collapse;
     width: 100%;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       display: block;
       overflow: auto;
     }
@@ -970,17 +970,17 @@
     // font-size: 1rem;
     font-size: 14px;
     text-align: left;
-    font-feature-settings: 'tnum';
-    -moz-font-feature-settings: 'tnum';
-    -ms-font-feature-settings: 'tnum';
-    -webkit-font-feature-settings: 'tnum';
+    font-feature-settings: "tnum";
+    -moz-font-feature-settings: "tnum";
+    -ms-font-feature-settings: "tnum";
+    -webkit-font-feature-settings: "tnum";
     padding-left: 0.96667rem;
     padding-right: 0.96667rem;
     padding-top: 0.725rem;
     padding-bottom: calc(0.725rem - 1px);
     max-width: 370px;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 12px;
       padding: 0 1.4rem;
     }
@@ -1005,21 +1005,21 @@
 
     .content {
       // font-family: monospace;
-      font-family: 'Source Code Pro', monospace;
+      font-family: "Source Code Pro", monospace;
     }
   }
 
   tt:before,
   tt:after {
     letter-spacing: -0.4rem;
-    content: ' ';
+    content: " ";
   }
 
   pre code:before,
   pre code:after,
   pre tt:before,
   pre tt:after {
-    content: '';
+    content: "";
   }
 
   @media only screen and (max-width: 480px) {
@@ -1044,7 +1044,7 @@
       text-decoration: none;
     }
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       display: none;
     }
   }
@@ -1073,7 +1073,7 @@
   cursor: pointer;
   z-index: 3;
 
-  @include media('<=1000px') {
+  @include media("<=1000px") {
     left: 20px;
   }
 }

@@ -31,6 +31,7 @@ const Menu = props => {
     type,
     onSearchChange,
     language,
+    setShowMask = () => { }
   } = props;
 
   const { header } = language;
@@ -167,7 +168,10 @@ const Menu = props => {
 
   const handleMenuClick = e => {
     const menuContainer = menuRef.current;
-    window.localStorage.setItem('zilliz-height', menuContainer.scrollTop);
+    if (menuContainer) {
+      window.localStorage.setItem('zilliz-height', menuContainer.scrollTop);
+    }
+
   };
 
   useEffect(() => {
@@ -179,13 +183,11 @@ const Menu = props => {
   const generageMenuDom = (list, className = '') => {
     return list.map(doc => (
       <div
-        className={`${className} ${
-          type === 'new' && doc.label2 !== undefined && doc.label2 !== ''
-            ? 'menu-child-3'
-            : ''
-        } ${doc.isBlog ? 'blog' : ''} ${doc.isLast ? 'menu-last-level' : ''} ${
-          doc.isActive ? 'active' : ''
-        }`}
+        className={`${className} ${type === 'new' && doc.label2 !== undefined && doc.label2 !== ''
+          ? 'menu-child-3'
+          : ''
+          } ${doc.isBlog ? 'blog' : ''} ${doc.isLast ? 'menu-last-level' : ''} ${doc.isActive ? 'active' : ''
+          }`}
         key={doc.id}
       >
         <div
@@ -193,8 +195,8 @@ const Menu = props => {
           onClick={
             doc.isMenu
               ? () => {
-                  toggleMenuChild(doc);
-                }
+                toggleMenuChild(doc);
+              }
               : handleMenuClick
           }
           style={doc.isMenu ? { cursor: 'pointer' } : null}
@@ -223,23 +225,20 @@ const Menu = props => {
                 <>
                   {doc.isMenu && doc.label1 === '' ? (
                     <i
-                      className={`fas fa-caret-down arrow ${
-                        doc.showChildren ? '' : 'top'
-                      }`}
+                      className={`fas fa-caret-down arrow ${doc.showChildren ? '' : 'top'
+                        }`}
                     ></i>
                   ) : (
                     <i
-                      className={`fas expand-icon ${
-                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
-                      }`}
+                      className={`fas expand-icon ${doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
+                        }`}
                     ></i>
                   )}
                 </>
               ) : (
                 <i
-                  className={`fas fa-chevron-down arrow ${
-                    doc.showChildren ? '' : 'top'
-                  }`}
+                  className={`fas fa-chevron-down arrow ${doc.showChildren ? '' : 'top'
+                    }`}
                 ></i>
               )}
             </>
@@ -275,12 +274,11 @@ const Menu = props => {
   return (
     <>
       <section
-        className={`menu-container ${menuStatus ? '' : 'hide'} ${
-          type === 'new' ? 'menu-container-new' : ''
-        }`}
+        className={`menu-container can-scroll ${!menuStatus && type !== 'new' ? 'hide' : ''} ${type === 'new' ? 'menu-container-new new-hide' : ''
+          }`}
         ref={menuRef}
       >
-        {isMobile ? (
+        {isMobile && type !== 'new' ? (
           <i
             className="fas fa-times close"
             onClick={() => {
@@ -290,7 +288,7 @@ const Menu = props => {
         ) : null}
         {isBlog || type === 'new' ? (
           <>
-            {type === 'new' ? (
+            {type === 'new' && !isMobile ? (
               <input
                 className="search"
                 type="text"
@@ -314,16 +312,33 @@ const Menu = props => {
 
         {generageMenuDom(realMenuList, 'menu-top-level border-bottom')}
       </section>
-      {!menuStatus ? (
-        <div
-          className="mini-menu-control"
-          onClick={() => {
-            toggleMenu(true);
-          }}
-        >
-          <i className="fas fa-bars"></i>
-        </div>
-      ) : null}
+      {
+        type === 'new' && isMobile ?
+          (
+            <div
+              className="mini-menu-control"
+              onClick={() => {
+                toggleMenu(!menuStatus);
+                setShowMask(!menuStatus);
+              }}
+            >
+              {menuStatus ? <i className="fas fa-times"></i> : <i className="fas fa-bars"></i>}
+            </div>
+
+          ) :
+          (
+            !menuStatus ? (
+              <div
+                className="mini-menu-control"
+                onClick={() => {
+                  toggleMenu(true);
+                }}
+              >
+                <i className="fas fa-bars"></i>
+              </div>
+            ) : null
+          )
+      }
     </>
   );
 };

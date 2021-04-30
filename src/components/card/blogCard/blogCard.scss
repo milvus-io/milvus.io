@@ -1,5 +1,5 @@
-@import '../../../utils/cssVariables.scss';
-@import '../../include_media';
+@import "../../../utils/cssVariables.scss";
+@import "../../include_media";
 .blog {
   &-wrapper {
     border: 1px solid $cardBorderColor;
@@ -17,7 +17,7 @@
   &-content {
     padding: 18px 40px;
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       padding: 24px;
     }
     &-time {
@@ -36,7 +36,7 @@
       font-weight: 600;
       margin: 0;
       max-width: 500px;
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         font-size: 16px;
       }
     }
@@ -48,7 +48,7 @@
       color: $dark;
       font-size: 14px;
       line-height: 20px;
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         font-size: 12px;
       }
     }

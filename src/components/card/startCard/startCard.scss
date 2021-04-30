@@ -1,5 +1,5 @@
-@import '../../../utils/cssVariables.scss';
-@import '../../include_media';
+@import "../../../utils/cssVariables.scss";
+@import "../../include_media";
 .card {
   &-wrapper {
     display: flex;
@@ -13,14 +13,14 @@
       justify-content: center;
       align-items: center;
     }
-    @include media('<=1550px') {
+    @include media("<=1550px") {
       display: block;
       .btn-wrapper {
         margin-top: 16px;
         text-align: right;
       }
     }
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       display: flex;
       margin-bottom: 16px;
       padding: 16px;
@@ -50,7 +50,7 @@
 
     flex: 1;
     margin: 0 24px;
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 16px;
     }
   }
@@ -99,7 +99,7 @@
       text-align: center;
       line-height: 24px;
     }
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       width: auto;
     }
   }

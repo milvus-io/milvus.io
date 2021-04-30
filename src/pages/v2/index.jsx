@@ -4,7 +4,7 @@ import V2Layout from '../../components/layout/v2Layout';
 import V2Button from '../../components/button';
 import autoscalingIcon from '../../images/v2/autoscaling.svg';
 import deploymentIcon from '../../images/v2/deployment.svg';
-import searchIcon from '../../images/v2/search.svg';
+import searchIcon from '../../images/v2/searchicon.png';
 import storageIcon from '../../images/v2/storage.svg';
 import supportIcon from '../../images/v2/support.svg';
 import GithubButton from 'react-github-button';
@@ -113,7 +113,11 @@ const HomePage = ({ data, pageContext }) => {
                     <img src={icons[img]} alt={img} />
                   </div>
                   <p className="title">{title}</p>
-                  <p className="text">{text}</p>
+                  <div className="text-wrapper">
+                    {
+                      text.map(item => <p className='text' key={item}>{item}</p>)
+                    }
+                  </div>
                 </li>
               );
             })}

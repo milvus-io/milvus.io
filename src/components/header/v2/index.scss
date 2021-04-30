@@ -141,7 +141,7 @@
       box-sizing: border-box;
       top: 16px;
       background: #fff;
-      padding: 100px 0px 24px;
+      padding: 100px 0px 60px;
       box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
       z-index: -1;
       border-radius: 32px;
@@ -211,11 +211,16 @@
         &.focus {
           border: 1px solid #06aaf2;
           color: #06aaf2;
+
+          .icon-wrapper {
+            color: #06aaf2;
+          }
         }
 
         .icon-wrapper {
-          font-size: 20px;
-          line-height: 20px;
+          font-size: 16px;
+          line-height: 16px;
+          color: #aeaebb;
 
           margin-left: 12px;
           outline: none;

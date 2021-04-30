@@ -322,7 +322,7 @@ const Menu = props => {
                 setShowMask(!menuStatus);
               }}
             >
-              {menuStatus ? <i className="fas fa-times"></i> : <i className="fas fa-bars"></i>}
+              {menuStatus ? <i className="fas fa-times new"></i> : <i className="fas fa-bars new"></i>}
             </div>
 
           ) :

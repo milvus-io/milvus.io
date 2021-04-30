@@ -91,6 +91,12 @@ body {
         //   }
         // }
       }
+      .title-wrapper {
+        margin-bottom: 16px;
+        @include media("<=1000px") {
+          margin-bottom: 24px;
+        }
+      }
 
       .title {
         font-family: Brinnan Bold;
@@ -98,11 +104,10 @@ body {
         font-weight: 900;
         line-height: 58px;
         text-align: left;
-        margin-bottom: 16px;
+
         word-break: break-word;
 
         @include media("<=1000px") {
-          margin-bottom: 24px;
           font-size: 24px;
           line-height: 28px;
           padding-right: 25%;
@@ -367,13 +372,13 @@ body {
           padding: 48px 20px;
         }
 
-        .text-wrapper {
-          margin-bottom: 32px;
+        // .text-wrapper {
+        //   margin-bottom: 32px;
 
-          @include media("<=1000px") {
-            margin-bottom: 12px;
-          }
-        }
+        //   @include media("<=1000px") {
+        //     margin-bottom: 12px;
+        //   }
+        // }
 
         .title {
           font-family: Brinnan Bold;

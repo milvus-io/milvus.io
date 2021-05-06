@@ -334,11 +334,11 @@ const DocLayout = props => {
                       </a>
                     </div>
 
-                    {
+                    {formatHeadings.length > 0 && (
                       <div className="anchor-title">
                         {language.footer.content}
                       </div>
-                    }
+                    )}
                     {/* filter faq page */}
                     {!id.includes('faq')
                       ? generateAnchorMenu(formatHeadings, 'parent-item')

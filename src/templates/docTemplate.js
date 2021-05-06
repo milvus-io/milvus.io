@@ -272,7 +272,7 @@ export default function Template({
 
     // check whether version after 1.0
     // only version after 1.0 auto generate TOC
-    const isAutoVersion = version.split('.')[0].slice(1) >= 1;
+    const isAutoVersion = version && version.split('.')[0].slice(1) >= 1;
 
     if (editPath.includes('faq') && isAutoVersion) {
       const faqHeadersElements = document.querySelectorAll('h4');

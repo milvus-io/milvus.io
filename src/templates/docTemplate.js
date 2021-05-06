@@ -193,6 +193,7 @@ export default function Template({
       window.location.href = path;
 
       const element = document.querySelector(`#${CSS.escape(idSelector)}`);
+      console.log('enter 196', element);
       scrollToElement(element);
     }
   };
@@ -292,6 +293,7 @@ export default function Template({
       for (let i = 2; i < 7; i++) {
         const element = getAnchorElement(`h${i}`, anchorText);
         if (element) {
+          console.log('enter 295', element);
           scrollToElement(element);
           window.localStorage.removeItem('anchorTitle');
           return;

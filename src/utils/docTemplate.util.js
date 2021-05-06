@@ -1,5 +1,4 @@
 export const scrollToElement = (element, offset = 62) => {
-  console.log('scroll to element', element, offset);
   // const offset = 62;
   const bodyRect = document.body.getBoundingClientRect().top;
   const elementRect = element.getBoundingClientRect().top;

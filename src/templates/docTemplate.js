@@ -462,7 +462,6 @@ export default function Template({
         </div>
       ) : (
         <>
-          {homeData && <HomeTemplate data={homeData} />}
           {isSearch ? (
             <div
               className={`doc-post-container ${

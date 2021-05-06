@@ -1,4 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  // useEffect
+} from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/logo/lfai.svg';
@@ -15,16 +19,15 @@ import Menu from './Menu';
 import { useClickOutside } from '../../../hooks';
 import './index.scss';
 
-
 const V2Header = ({
   versions,
   version,
-  setVersion = () => { },
+  setVersion = () => {},
   type = 'home',
   onSearchChange,
-  setShowMask = () => { },
+  setShowMask = () => {},
   showMask = false,
-  className = ''
+  className = '',
 }) => {
   const { isMobile } = useMobileScreen();
   const versionList = [...versions];
@@ -44,7 +47,7 @@ const V2Header = ({
     {
       label: 'Documentation',
       link: `/docs/home`,
-      isExternal: false
+      isExternal: false,
     },
     {
       label: 'Blog',
@@ -58,7 +61,7 @@ const V2Header = ({
     },
   ];
 
-  const handleOpenMask = (e) => {
+  const handleOpenMask = e => {
     const { type } = e.target.dataset;
     setOpen(!open);
     setOpenType(type);
@@ -129,67 +132,73 @@ const V2Header = ({
             </div>
           </div>
         ) : (
-          <div className='mobile-header-warapper'>
+          <div className="mobile-header-warapper">
             <div className="logo-section">
               <Link to="/v2">
-                <img className="milvus-logo" src={milvusLogoMobile} alt="milvus-logo" />
+                <img
+                  className="milvus-logo"
+                  src={milvusLogoMobile}
+                  alt="milvus-logo"
+                />
               </Link>
-              <a href="https://lfaidata.foundation/projects/" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://lfaidata.foundation/projects/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img className="lfai-logo" src={lfai} alt="lfai-icon" />
               </a>
             </div>
             <div className="menu-section">
-              <div className='menus-wrapper'
+              <div
+                className="menus-wrapper"
                 role="button"
                 tabIndex={-1}
                 onClick={handleOpenMask}
                 onKeyDown={handleOpenMask}
               >
-                {
-                  type === 'doc' && (
-                    open && openType === 'search' ? (
-                      <div className="icon-wrapper" data-type='search'>
-                        <img className="btn-icon" src={close} alt="close-icon" />
-                      </div>
-                    ) : (
-                      <div className="icon-wrapper" data-type='search'>
-                        <img className="btn-icon" src={search} alt="search-icon" />
-                      </div>
-                    )
-                  )
-                }
-                {
-                  open && openType === 'menu' ? (
-                    <div className="icon-wrapper" data-type='close'>
+                {type === 'doc' &&
+                  (open && openType === 'search' ? (
+                    <div className="icon-wrapper" data-type="search">
                       <img className="btn-icon" src={close} alt="close-icon" />
                     </div>
                   ) : (
-                    <div className="icon-wrapper" data-type='menu'>
-                      <img className="btn-icon" src={menu} alt="menu-icon" />
+                    <div className="icon-wrapper" data-type="search">
+                      <img
+                        className="btn-icon"
+                        src={search}
+                        alt="search-icon"
+                      />
                     </div>
-                  )
-                }
+                  ))}
+                {open && openType === 'menu' ? (
+                  <div className="icon-wrapper" data-type="close">
+                    <img className="btn-icon" src={close} alt="close-icon" />
+                  </div>
+                ) : (
+                  <div className="icon-wrapper" data-type="menu">
+                    <img className="btn-icon" src={menu} alt="menu-icon" />
+                  </div>
+                )}
               </div>
             </div>
-            <MobilePopup className='v2-popup' open={open} hideMask={hideMask}>
-              {
-                openType === 'menu' ? <Menu
+            <MobilePopup className="v2-popup" open={open} hideMask={hideMask}>
+              {openType === 'menu' ? (
+                <Menu
                   version={version}
                   options={versionList}
                   setSelected={handleSelected}
                   navList={navList}
-                /> : <Search handleSearch={handleSearch} />
-              }
+                />
+              ) : (
+                <Search handleSearch={handleSearch} />
+              )}
             </MobilePopup>
           </div>
         )}
       </div>
-    </section >
+    </section>
   );
 };
 
 export default V2Header;
-
-
-
-

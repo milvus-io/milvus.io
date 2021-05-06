@@ -1,5 +1,5 @@
-@import '../../../utils/cssVariables.scss';
-
+@import "../../../utils/cssVariables.scss";
+@import "../../include_media";
 .blog {
   &-wrapper {
     border: 1px solid $cardBorderColor;
@@ -17,6 +17,9 @@
   &-content {
     padding: 18px 40px;
 
+    @include media("<=1000px") {
+      padding: 24px;
+    }
     &-time {
       max-width: 500px;
       margin-bottom: 8px;
@@ -33,6 +36,9 @@
       font-weight: 600;
       margin: 0;
       max-width: 500px;
+      @include media("<=1000px") {
+        font-size: 16px;
+      }
     }
 
     &-abstract {
@@ -42,6 +48,9 @@
       color: $dark;
       font-size: 14px;
       line-height: 20px;
+      @include media("<=1000px") {
+        font-size: 12px;
+      }
     }
   }
 }

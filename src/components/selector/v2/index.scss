@@ -6,6 +6,7 @@
     display: flex;
     color: #12c3f4;
     cursor: pointer;
+    outline: none;
 
     .label-wrapper {
       font-family: Inter Regular;
@@ -36,7 +37,7 @@
     position: absolute;
     z-index: 9;
     transition: all 0.2s ease-in-out;
-    padding: 16px 0;
+    padding: 16px 0 40px;
     right: 0;
     visibility: hidden;
     opacity: 0;
@@ -44,7 +45,7 @@
     transform: scaleY(0);
     transform-origin: top;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
+    border-radius: 4px 4px 32px 32px;
     display: flex;
     flex-direction: column;
 
@@ -65,6 +66,8 @@
       user-select: none;
       cursor: pointer;
       text-align: center;
+      color: #000;
+      cursor: pointer;
 
       &.active {
         color: #12c3f4;

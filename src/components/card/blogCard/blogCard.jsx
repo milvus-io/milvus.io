@@ -1,8 +1,10 @@
 import React from 'react';
 import './blogCard.scss';
+import { useMobileScreen } from '../../../hooks/index';
 
 const BlogCard = ({ data, wrapperClass = '' }) => {
   const { title, abstract, imgSrc, time } = data;
+  const { isMobile } = useMobileScreen();
 
   return (
     <div className={`blog-wrapper ${wrapperClass}`}>
@@ -11,7 +13,7 @@ const BlogCard = ({ data, wrapperClass = '' }) => {
         <h2>{title}</h2>
         <p className="blog-content-abstract">{abstract}</p>
       </div>
-      <img src={imgSrc} alt="blog" />
+      {!isMobile && <img src={imgSrc} alt="blog" />}
     </div>
   );
 };

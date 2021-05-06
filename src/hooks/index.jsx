@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
@@ -13,7 +13,12 @@ export const useMobileScreen = () => {
       window.removeEventListener('resize', cb);
     };
   }, []);
-  return screenWidth;
+
+  const isMobile = useMemo(() => screenWidth && screenWidth < 1000, [
+    screenWidth,
+  ]);
+
+  return { screenWidth, isMobile };
 };
 
 export const useSelectMenu = setOptions => {
@@ -117,4 +122,19 @@ export const useSelectMenu = setOptions => {
       );
     };
   }, [docWrapper]); // eslint-disable-line react-hooks/exhaustive-deps
+};
+
+export const useClickOutside = (ref, handler, events) => {
+  if (!events) events = [`mousedown`, `touchstart`];
+  const detectClickOutside = event => {
+    !ref.current.contains(event.target) && handler(event);
+  };
+  useEffect(() => {
+    for (const event of events)
+      document.addEventListener(event, detectClickOutside);
+    return () => {
+      for (const event of events)
+        document.removeEventListener(event, detectClickOutside);
+    };
+  }, [detectClickOutside, events]);
 };

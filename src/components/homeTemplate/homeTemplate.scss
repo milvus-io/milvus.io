@@ -1,11 +1,16 @@
 @import '../../utils/cssVariables.scss';
+@import '../../components/include_media';
 
 .doc-home-wrapper {
   padding: 32px 64px;
-
+  @include media('<=1000px') {
+    padding: 20px 16px;
+  }
   .section {
     margin-bottom: 64px;
-
+    @include media('<=1000px') {
+      margin-bottom: 32px;
+    }
     h1 {
       margin-bottom: 16px;
       color: $dark;
@@ -13,6 +18,7 @@
       line-height: 32px;
       font-weight: bold;
       font-family: Inter Regular;
+      text-transform: capitalize;
     }
   }
 
@@ -22,16 +28,31 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        @include media('<=1000px') {
+          flex-direction: column;
+        }
       }
 
       &-item {
         flex-basis: 48%;
+
+        @include media('<=1000px') {
+          flex: 1;
+          & + .section-1-card-item {
+            margin-top: 16px;
+          }
+
+          .card-title {
+            font-size: 16px;
+          }
+        }
       }
     }
   }
 
   .section-2 {
     &-desc {
+      font-family: Inter Regular;
       color: $dark;
       font-size: 16px;
       line-height: 24px;

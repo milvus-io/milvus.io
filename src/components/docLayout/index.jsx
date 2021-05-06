@@ -43,6 +43,8 @@ const DocLayout = props => {
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
+  const [showMask, setShowMask] = useState(false);
+  const [showMenuMask, setShowMenuMask] = useState(false);
 
   // const effectVariable =
   //   typeof window !== 'undefined' ? [window.location.hash] : [];
@@ -161,7 +163,21 @@ const DocLayout = props => {
   return (
     <div className="layout-wrapper">
       {menuType === 'new' ? (
-        <NewHeader header={header.header} locale={locale} versions={versions} />
+        <div
+          className={`mobile-header-wrapper-new ${showMask ? 'showMask' : ''}`}
+        >
+          <NewHeader
+            header={header.header}
+            locale={locale}
+            versions={versions}
+            version={version}
+            type="doc"
+            onSearchChange={handleSearchChange}
+            setShowMask={setShowMask}
+            showMask={showMask}
+            className={showMask ? 'new-header' : ''}
+          />
+        </div>
       ) : (
         <Header
           language={language}
@@ -182,6 +198,7 @@ const DocLayout = props => {
           type={menuType}
           language={language}
           onSearchChange={handleSearchChange}
+          setShowMask={setShowMenuMask}
         ></Menu>
         <div
           className={`inner-container ${isHome ? 'inner-container-home' : ''} ${
@@ -333,6 +350,21 @@ const DocLayout = props => {
           </div>
         )}
 
+        {showMenuMask ? (
+          <MenuDialog
+            menuList={menuList}
+            versions={versions}
+            activeDoc={id.split('-')[0]}
+            version={version}
+            locale={locale}
+            isBenchMark={isBenchMark}
+            type={menuType}
+            language={language}
+            onSearchChange={handleSearchChange}
+            showMenuMask={showMenuMask}
+          />
+        ) : null}
+
         {showToTopButton ? (
           <div
             className="button-to-top"
@@ -363,3 +395,73 @@ const DocLayout = props => {
 };
 
 export default DocLayout;
+
+const MenuDialog = ({
+  menuList,
+  versions,
+  activeDoc,
+  version,
+  locale,
+  isBenchMark,
+  type,
+  language,
+  onSearchChange,
+}) => {
+  useEffect(() => {
+    const scrollEls = document.querySelectorAll('.can-scroll');
+    // [].forEach.call(scrollEls, (el) => {
+    //   let initialY = 0;
+    //   el.addEventListener('touchstart', e => {
+    //     if (e.targetTouches.length === 1) {
+    //       initialY = e.targetTouches[0].clientY;
+    //     }
+    //   });
+    //   el.addEventListener('touchmove', e => {
+    //     if (e.targetTouches.length === 1) {
+    //       const clientY = e.targetTouches[0].clientY - initialY;
+    //       if (
+    //         el.scrollTop + el.clientHeight >= el.scrollHeight &&
+    //         clientY < 0
+    //       ) {
+    //         return e.preventDefault();
+    //       }
+    //       if (el.scrollTop <= 0 && clientY > 0) {
+    //         return e.preventDefault();
+    //       }
+    //     }
+    //   });
+    // });
+
+    const handleScroll = e => {
+      const isInclude = Array.prototype.some.call(scrollEls, el =>
+        el.contains(e.target)
+      );
+      if (isInclude) {
+        return true;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    window.addEventListener('touchmove', handleScroll, { passive: false });
+
+    return () => {
+      window.removeEventListener('touchmove', handleScroll);
+    };
+  }, []);
+
+  return (
+    <div className="mobile-menu-wrapper-new show">
+      <Menu
+        menuList={menuList}
+        versions={versions}
+        activeDoc={activeDoc}
+        version={version}
+        locale={locale}
+        isBenchMark={isBenchMark}
+        type={type}
+        language={language}
+        onSearchChange={onSearchChange}
+      ></Menu>
+    </div>
+  );
+};

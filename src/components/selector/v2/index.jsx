@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'gatsby';
 import './index.scss';
 
 const V2Selector = ({
@@ -10,28 +11,30 @@ const V2Selector = ({
   const choosenWrapper = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const handleSelected = (value) => {
-    if (selected === value) return;
-    setSelected(value);
-  };
-
   const handleClick = (e) => {
     e.stopPropagation();
     setOpen(open ? false : true);
+  };
+  const handleSelect = (e) => {
+    const { option } = e.target.dataset;
+    if (option === selected) return;
+    setSelected(option);
   };
 
   useEffect(() => {
     const hideOptions = e => {
       const container = document.querySelector('.selector-container');
-      const isInclude = container.contains(e.target);
-      if (!isInclude) {
-        setOpen(false);
-      }
-    };
+      if (container) {
+        const isInclude = container.contains(e.target);
+        if (!isInclude) {
+          setOpen(false);
+        }
+      };
 
-    window.addEventListener('click', (e) => hideOptions(e), false);
-    return () => {
-      window.removeEventListener('click', (e) => hideOptions(e), false);
+      window.addEventListener('click', hideOptions, false);
+      return () => {
+        window.removeEventListener('click', hideOptions, false);
+      };
     };
   }, []);
 
@@ -51,17 +54,20 @@ const V2Selector = ({
         </div>
       </div>
 
-      <div className={`options-wrapper ${open ? 'show' : ''}`}>
+      <div
+        className={`options-wrapper ${open ? 'show' : ''}`}
+        role='button'
+        tabIndex={-1}
+        onClick={handleSelect}
+        onKeyDown={handleSelect}>
         {
           options.map(option => (
-            <i
-              role='button'
-              tabIndex={-1}
+            <p
+              data-option={option}
               className={`option-item ${option === selected && 'active'}`}
               key={option}
-              onClick={() => handleSelected(option)}
-              onKeyDown={() => handleSelected(option)}
-            >{option}</i>
+
+            >{option}</p>
           ))
         }
       </div>

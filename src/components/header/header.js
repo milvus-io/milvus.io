@@ -14,7 +14,7 @@ import MobileMenuContent from './components/MobileMenuContent';
 
 const Header = ({ language, locale, current = '', showDoc = true }) => {
   const { header } = language;
-  const screenWidth = useMobileScreen();
+  const { isMobile } = useMobileScreen();
   const [mobileNav, setMobileNav] = useState(null);
   const [lanList, setLanList] = useState(false);
   const [isSHowMobileMask, setIsShowMobileMask] = useState(false);
@@ -77,8 +77,8 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
           <div className="logo-wrapper">
             <LocalizeLink locale={locale} to={'/'}>
               <img
-                style={{ height: screenWidth > 1000 ? '3rem' : '26px' }}
-                src={screenWidth > 1000 ? Logo : MobilLogo}
+                style={{ height: isMobile ? '26px' : '3rem' }}
+                src={isMobile ? MobilLogo : Logo}
                 alt="Milvos Logo"
               ></img>
             </LocalizeLink>
@@ -91,7 +91,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
             </a>
           </div>
 
-          {screenWidth > 1000 ? (
+          {!isMobile ? (
             <div className="right">
               <LocalizeLink
                 locale={locale}

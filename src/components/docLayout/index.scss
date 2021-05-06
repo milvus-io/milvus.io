@@ -463,3 +463,63 @@ a.btn-anchor {
     bottom: 80px;
   }
 }
+.mobile-menu-wrapper-new {
+  display: none;
+  @include media('<=1000px') {
+    .menu-container-new {
+      display: block;
+      height: calc(100vh - 200px);
+      width: 264px;
+      overflow: auto;
+      position: fixed;
+      left: 20px;
+      margin: 0;
+      top: 50px;
+      padding: 16px 24px;
+      border-radius: 6px;
+
+      .border-bottom {
+        padding: 0;
+
+        .menu_name-wrapper {
+          margin-bottom: 0;
+
+          .text {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    &.show {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+  }
+}
+
+.mobile-header-wrapper-new {
+  display: inline-block;
+  @include media('<=1000px') {
+    .new-header {
+      background-color: transparent;
+    }
+  }
+
+  &.showMask {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+}

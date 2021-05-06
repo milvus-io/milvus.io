@@ -13,7 +13,6 @@ import QueryModal from '../components/query-modal/query-modal';
 import {
   getAnchorElement,
   getStyleType,
-  scrollToElement,
   sortVersions,
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
@@ -162,41 +161,6 @@ export default function Template({
     return tpl;
   };
 
-  const bindAnchorEventDelegate = event => {
-    const target = event.target;
-    let element = target;
-    // handle autolink headers
-    if (target.tagName === 'svg' || target.tagName === 'path') {
-      element = target.closest('a');
-    }
-    if (!element || element.tagName !== 'A') {
-      return;
-    }
-    if (target.closest('.filter')) {
-      return;
-    }
-    const href = element.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      event.stopPropagation();
-      event.preventDefault();
-      // delete #
-      let idSelector = href.slice(1);
-      let path = `${window.location.pathname}${href}`;
-
-      try {
-        idSelector = decodeURI(idSelector);
-      } catch (e) {
-        console.error(e);
-      }
-
-      // add anchor in url
-      window.location.href = path;
-
-      const element = document.querySelector(`#${CSS.escape(idSelector)}`);
-      scrollToElement(element);
-    }
-  };
-
   useEffect(() => {
     const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];
@@ -304,15 +268,6 @@ export default function Template({
       }
     }
   }, []);
-
-  // useEffect(() => {
-  //   document.addEventListener('click', event => {
-  //     bindAnchorEventDelegate(event);
-  //   });
-  //   return document.removeEventListener('click', event => {
-  //     bindAnchorEventDelegate(event);
-  //   });
-  // }, []);
 
   useEffect(() => {
     if (!isMobile) return;

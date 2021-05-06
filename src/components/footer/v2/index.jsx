@@ -12,52 +12,58 @@ const iconSet = {
   medium,
   slack,
   twitter,
-  wechat
+  wechat,
 };
 
 const V2Footer = ({ footer }) => {
-  const { list: links, licence: { list, text1, text2, text3 } } = footer;
+  const {
+    list: links,
+    licence: {
+      // list,
+      text1,
+      text2,
+      text3,
+    },
+  } = footer;
 
   return (
-    <section className='footer-container'>
+    <section className="footer-container">
       <ul className="footer-list">
-        {
-          links.map(i => {
-            const { title, text, href, label, icons } = i;
-            return (
-              <li className='list-item' key={title}>
-                <p className="footer-list-title">{title}</p>
-                <p className="footer-list-content">{text}</p>
-                {
-                  href ?
-                    (<V2Button
-                      href={href}
-                      type='link'
-                      variant='text'
-                      className="footer-list-btn"
-                      children={
-                        <>
-                          <span>{label}</span>
-                          <i className="fa fa-chevron-right"></i>
-                        </>
-                      }
-                    />) :
-                    (<ImageList images={icons} />)
-                }
-
-              </li>
-            );
-          })
-        }
+        {links.map(i => {
+          const { title, text, href, label, icons } = i;
+          return (
+            <li className="list-item" key={title}>
+              <p className="footer-list-title">{title}</p>
+              <p className="footer-list-content">{text}</p>
+              {href ? (
+                <V2Button
+                  href={href}
+                  type="link"
+                  variant="text"
+                  className="footer-list-btn"
+                  children={
+                    <>
+                      <span>{label}</span>
+                      <i className="fa fa-chevron-right"></i>
+                    </>
+                  }
+                />
+              ) : (
+                <ImageList images={icons} />
+              )}
+            </li>
+          );
+        })}
       </ul>
       <div className="footer-licence">
         <div className="licence-milvus">
-          <span className='text'>{text1.label}</span>
-          <p className='text-link-wrapper'>
-            <a href={text2.link} className='link'>{text2.label}</a>,
-            <span className='text'>{text3.label}</span>
+          <span className="text">{text1.label}</span>
+          <p className="text-link-wrapper">
+            <a href={text2.link} className="link">
+              {text2.label}
+            </a>
+            ,<span className="text">{text3.label}</span>
           </p>
-
         </div>
         {/* <div className="licence-policy">
           {
@@ -72,7 +78,6 @@ const V2Footer = ({ footer }) => {
 };
 
 const ImageList = ({ images }) => {
-
   const handleClick = (e, label) => {
     if (label === 'wechat') {
       e.preventDefault();
@@ -83,29 +88,25 @@ const ImageList = ({ images }) => {
 
   return useMemo(() => {
     return (
-      <div className='images-wrapper'>
-        {
-          images.map(img => (
-            <a
-              href={img.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`column-img ${img.name === 'wechat' ? 'hover-btn' : ''}`}
-              key={img.name}
-              onClick={(e) => handleClick(e, img.name)}
-            >
-              <img src={iconSet[img.name]} alt={img.name} />
-              {
-                img.name === 'wechat' && (
-                  <p className='qrcode-wrapper'>
-                    <img src={qrcode} alt="qrcode" />
-                    <img src={milvusUserWechat} alt="qrcode" />
-                  </p>
-                )
-              }
-            </a>
-          ))
-        }
+      <div className="images-wrapper">
+        {images.map(img => (
+          <a
+            href={img.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`column-img ${img.name === 'wechat' ? 'hover-btn' : ''}`}
+            key={img.name}
+            onClick={e => handleClick(e, img.name)}
+          >
+            <img src={iconSet[img.name]} alt={img.name} />
+            {img.name === 'wechat' && (
+              <p className="qrcode-wrapper">
+                <img src={qrcode} alt="qrcode" />
+                <img src={milvusUserWechat} alt="qrcode" />
+              </p>
+            )}
+          </a>
+        ))}
       </div>
     );
   }, [images]);

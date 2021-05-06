@@ -1,21 +1,21 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Link } from 'gatsby';
+// import { Link } from 'gatsby';
 import './index.scss';
 
 const V2Selector = ({
   selected,
   options,
-  setSelected = () => { },
-  className = ""
+  setSelected = () => {},
+  className = '',
 }) => {
   const choosenWrapper = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const handleClick = (e) => {
+  const handleClick = e => {
     e.stopPropagation();
     setOpen(open ? false : true);
   };
-  const handleSelect = (e) => {
+  const handleSelect = e => {
     const { option } = e.target.dataset;
     if (option === selected) return;
     setSelected(option);
@@ -29,7 +29,7 @@ const V2Selector = ({
         if (!isInclude) {
           setOpen(false);
         }
-      };
+      }
 
       window.addEventListener('click', hideOptions, false);
       return () => {
@@ -41,7 +41,7 @@ const V2Selector = ({
   return (
     <div className={`selector-container ${className}`}>
       <div
-        role='button'
+        role="button"
         tabIndex={0}
         className="choosen-wrapper"
         ref={choosenWrapper}
@@ -56,20 +56,20 @@ const V2Selector = ({
 
       <div
         className={`options-wrapper ${open ? 'show' : ''}`}
-        role='button'
+        role="button"
         tabIndex={-1}
         onClick={handleSelect}
-        onKeyDown={handleSelect}>
-        {
-          options.map(option => (
-            <p
-              data-option={option}
-              className={`option-item ${option === selected && 'active'}`}
-              key={option}
-
-            >{option}</p>
-          ))
-        }
+        onKeyDown={handleSelect}
+      >
+        {options.map(option => (
+          <p
+            data-option={option}
+            className={`option-item ${option === selected && 'active'}`}
+            key={option}
+          >
+            {option}
+          </p>
+        ))}
       </div>
     </div>
   );

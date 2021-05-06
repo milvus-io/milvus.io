@@ -13,7 +13,6 @@ import QueryModal from '../components/query-modal/query-modal';
 import {
   getAnchorElement,
   getStyleType,
-  scrollToElement,
   sortVersions,
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
@@ -162,41 +161,6 @@ export default function Template({
     return tpl;
   };
 
-  const bindAnchorEventDelegate = event => {
-    const target = event.target;
-    let element = target;
-    // handle autolink headers
-    if (target.tagName === 'svg' || target.tagName === 'path') {
-      element = target.closest('a');
-    }
-    if (!element || element.tagName !== 'A') {
-      return;
-    }
-    if (target.closest('.filter')) {
-      return;
-    }
-    const href = element.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      event.stopPropagation();
-      event.preventDefault();
-      // delete #
-      let idSelector = href.slice(1);
-      let path = `${window.location.pathname}${href}`;
-
-      try {
-        idSelector = decodeURI(idSelector);
-      } catch (e) {
-        console.error(e);
-      }
-
-      // add anchor in url
-      window.location.href = path;
-
-      const element = document.querySelector(`#${CSS.escape(idSelector)}`);
-      scrollToElement(element);
-    }
-  };
-
   useEffect(() => {
     const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];
@@ -269,8 +233,13 @@ export default function Template({
 
   useEffect(() => {
     // handle faq headers
-    if (editPath.includes('faq')) {
-      const faqHeadersElements = document.querySelectorAll('h2');
+
+    // check whether version after 1.0
+    // only version after 1.0 auto generate TOC
+    const isAutoVersion = version && version.split('.')[0].slice(1) >= 1;
+
+    if (editPath.includes('faq') && isAutoVersion) {
+      const faqHeadersElements = document.querySelectorAll('h4');
       if (faqHeadersElements.length > 0) {
         const info = Array.from(faqHeadersElements).map(element => ({
           id: `#${element.id}`,
@@ -292,21 +261,12 @@ export default function Template({
       for (let i = 2; i < 7; i++) {
         const element = getAnchorElement(`h${i}`, anchorText);
         if (element) {
-          scrollToElement(element);
+          // scrollToElement(element);
           window.localStorage.removeItem('anchorTitle');
           return;
         }
       }
     }
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener('click', event => {
-      bindAnchorEventDelegate(event);
-    });
-    return document.removeEventListener('click', event => {
-      bindAnchorEventDelegate(event);
-    });
   }, []);
 
   useEffect(() => {

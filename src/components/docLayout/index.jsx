@@ -163,7 +163,9 @@ const DocLayout = props => {
   return (
     <div className="layout-wrapper">
       {menuType === 'new' ? (
-        <div className={`mobile-header-wrapper-new ${showMask ? 'showMask' : ''}`}>
+        <div
+          className={`mobile-header-wrapper-new ${showMask ? 'showMask' : ''}`}
+        >
           <NewHeader
             header={header.header}
             locale={locale}
@@ -176,7 +178,6 @@ const DocLayout = props => {
             className={showMask ? 'new-header' : ''}
           />
         </div>
-
       ) : (
         <Header
           language={language}
@@ -200,8 +201,9 @@ const DocLayout = props => {
           setShowMask={setShowMenuMask}
         ></Menu>
         <div
-          className={`inner-container ${isHome ? 'inner-container-home' : ''} ${isBenchMark ? 'fullwidth' : ''
-            }`}
+          className={`inner-container ${isHome ? 'inner-container-home' : ''} ${
+            isBenchMark ? 'fullwidth' : ''
+          }`}
           ref={docContainer}
         >
           {children}
@@ -211,8 +213,9 @@ const DocLayout = props => {
         </div>
         {formatHeadings && !isBenchMark && (
           <div
-            className={`anchor-wrapper ${menuType === 'new' ? 'anchor-wrapper-new' : ''
-              } ${isHome ? 'anchor-wrapper-new-home' : ''}`}
+            className={`anchor-wrapper ${
+              menuType === 'new' ? 'anchor-wrapper-new' : ''
+            } ${isHome ? 'anchor-wrapper-new-home' : ''}`}
           >
             {menuType === 'old' ? (
               <section>
@@ -220,8 +223,9 @@ const DocLayout = props => {
                   {isBlog || isBenchMark ? null : (
                     <a
                       className="btn-anchor"
-                      href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
-                        }/${editPath}`}
+                      href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                        locale === 'en' ? 'en' : 'zh-CN'
+                      }/${editPath}`}
                     >
                       <span className="btn-icon-wrapper">
                         <i className="far fa-edit btn-icon"></i>
@@ -285,8 +289,9 @@ const DocLayout = props => {
                       {isBlog || isBenchMark ? null : (
                         <a
                           className="btn-anchor"
-                          href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
-                            }/${editPath}`}
+                          href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                            locale === 'en' ? 'en' : 'zh-CN'
+                          }/${editPath}`}
                         >
                           <span className="btn-icon-wrapper">
                             <i className="far fa-edit btn-icon"></i>
@@ -329,11 +334,11 @@ const DocLayout = props => {
                       </a>
                     </div>
 
-                    {
+                    {formatHeadings.length > 0 && (
                       <div className="anchor-title">
                         {language.footer.content}
                       </div>
-                    }
+                    )}
                     {/* filter faq page */}
                     {!id.includes('faq')
                       ? generateAnchorMenu(formatHeadings, 'parent-item')
@@ -345,22 +350,20 @@ const DocLayout = props => {
           </div>
         )}
 
-        {
-          showMenuMask ? (
-            <MenuDialog menuList={menuList}
-              versions={versions}
-              activeDoc={id.split('-')[0]}
-              version={version}
-              locale={locale}
-              isBenchMark={isBenchMark}
-              type={menuType}
-              language={language}
-              onSearchChange={handleSearchChange}
-              showMenuMask={showMenuMask}
-            />
-          ) : null
-        }
-
+        {showMenuMask ? (
+          <MenuDialog
+            menuList={menuList}
+            versions={versions}
+            activeDoc={id.split('-')[0]}
+            version={version}
+            locale={locale}
+            isBenchMark={isBenchMark}
+            type={menuType}
+            language={language}
+            onSearchChange={handleSearchChange}
+            showMenuMask={showMenuMask}
+          />
+        ) : null}
 
         {showToTopButton ? (
           <div
@@ -403,9 +406,7 @@ const MenuDialog = ({
   type,
   language,
   onSearchChange,
-
 }) => {
-
   useEffect(() => {
     const scrollEls = document.querySelectorAll('.can-scroll');
     // [].forEach.call(scrollEls, (el) => {
@@ -432,7 +433,9 @@ const MenuDialog = ({
     // });
 
     const handleScroll = e => {
-      const isInclude = Array.prototype.some.call(scrollEls, el => el.contains(e.target));
+      const isInclude = Array.prototype.some.call(scrollEls, el =>
+        el.contains(e.target)
+      );
       if (isInclude) {
         return true;
       }

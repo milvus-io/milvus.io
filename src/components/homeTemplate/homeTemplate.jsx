@@ -1,38 +1,39 @@
 import React from 'react';
 import BlogCard from '../card/blogCard/blogCard';
 import StartCard from '../card/startCard/startCard';
-import './homeTemplate.scss';
+// import './homeTemplate.scss';
+import * as styles from './homeTemplate.module.css';
 
 const HomeTemplate = ({ data }) => {
   const { section1, section2, section3, section4 } = data;
 
   return (
-    <section className="doc-home-wrapper">
-      <div className="section section-1">
+    <section className={styles.docHomeWrapper}>
+      <div className={`${styles.section} ${styles.section1}`}>
         <h1>{section1.title}</h1>
-        <div className="section-1-card-wrapper">
+        <div className={styles.cardWrapper}>
           {section1.items.map(item => (
             <StartCard
               key={item.title}
               data={item}
-              wrapperClass="section-1-card-item"
+              wrapperClass={styles.cardItem}
             />
           ))}
         </div>
       </div>
 
-      <div className="section section-2">
+      <div className={`${styles.section} ${styles.section2}`}>
         <h1>{section2.title}</h1>
-        <p className="section-2-desc">{section2.desc}</p>
+        <p className={styles.desc}>{section2.desc}</p>
       </div>
 
-      <div className="section section-3">
+      <div className={`${styles.section} ${styles.section3}`}>
         <h1>{section3.title}</h1>
-        <div className="section-3-item-wrapper">
+        <div className={styles.itemWrapper}>
           {section3.items.map(item => (
             <div key={item.label}>
               <h4>{item.label}</h4>
-              <ul className="section-3-link-wrapper">
+              <ul>
                 {item.list.map(link => (
                   <li key={link.text}>
                     <a href={link.link}>{link.text}</a>
@@ -44,7 +45,7 @@ const HomeTemplate = ({ data }) => {
         </div>
       </div>
 
-      <div className="section">
+      <div className={styles.section}>
         <h1>{section4.title}</h1>
         <div>
           {section4.items.map(item => (

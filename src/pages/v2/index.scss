@@ -1,5 +1,5 @@
-@import "../../components/include_media";
-@import "../../utils/cssVariables.scss";
+@import '../../components/include_media';
+@import '../../utils/cssVariables.scss';
 
 body {
   background: #fff !important;
@@ -12,7 +12,7 @@ body {
   margin-top: 97px;
   position: relative;
 
-  @include media("<=1000px") {
+  @include media('<=1000px') {
     padding: 0;
   }
 
@@ -26,14 +26,14 @@ body {
     left: 50px;
     top: 46%;
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       width: 40%;
       height: 0;
       padding-bottom: 30%;
       top: 40%;
     }
 
-    @include media("<=450px") {
+    @include media('<=450px') {
       display: none;
     }
   }
@@ -50,12 +50,12 @@ body {
     position: relative;
     overflow: hidden;
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       padding: 140px 16px 72px;
       margin-top: 10px;
     }
 
-    @include media("<=450px") {
+    @include media('<=450px') {
       padding: 80px 16px 72px;
       margin-top: 10px;
     }
@@ -68,7 +68,7 @@ body {
         align-items: center;
         margin-bottom: 40px;
 
-        @include media("<=1000px") {
+        @include media('<=1000px') {
           margin-bottom: 24px;
         }
 
@@ -93,7 +93,7 @@ body {
       }
       .title-wrapper {
         margin-bottom: 16px;
-        @include media("<=1000px") {
+        @include media('<=1000px') {
           margin-bottom: 24px;
         }
       }
@@ -107,7 +107,7 @@ body {
 
         word-break: break-word;
 
-        @include media("<=1000px") {
+        @include media('<=1000px') {
           font-size: 24px;
           line-height: 28px;
           padding-right: 25%;
@@ -116,12 +116,12 @@ body {
 
       .text {
         margin-bottom: 24px;
-        font-family: Inter Regular;
+        font-family: Inter;
         font-size: 16px;
         font-weight: 400;
         line-height: 20px;
 
-        @include media("<=1000px") {
+        @include media('<=1000px') {
           display: none;
         }
       }
@@ -132,7 +132,7 @@ body {
         .banner-btn1 {
           margin-right: 23px;
 
-          @include media("<=1000px") {
+          @include media('<=1000px') {
             margin-right: 19px;
           }
 
@@ -143,7 +143,7 @@ body {
             line-height: 24px;
             margin-right: 16px;
 
-            @include media("<=1000px") {
+            @include media('<=1000px') {
               font-size: 14px;
               margin-right: 8px;
             }
@@ -166,7 +166,7 @@ body {
             margin-right: 16px;
             margin-right: 12px;
 
-            @include media("<=1000px") {
+            @include media('<=1000px') {
               font-size: 14px;
               margin-right: 8px;
             }
@@ -175,7 +175,7 @@ body {
             line-height: 24px;
           }
 
-          @include media("<=1000px") {
+          @include media('<=1000px') {
             align-items: center;
           }
         }
@@ -185,7 +185,7 @@ body {
     .banner-right {
       flex: 1;
 
-      @include media("<=1000px") {
+      @include media('<=1000px') {
         display: none;
       }
 
@@ -207,7 +207,7 @@ body {
       background-size: contain;
       z-index: -1;
 
-      @include media("<=1000px") {
+      @include media('<=1000px') {
         display: block;
       }
     }
@@ -216,7 +216,7 @@ body {
   .content {
     margin-bottom: 60px;
 
-    @include media("<=1000px") {
+    @include media('<=1000px') {
       margin-bottom: 0;
     }
 
@@ -226,7 +226,7 @@ body {
       padding: 8px;
       margin-bottom: 53px;
 
-      @include media("<=1000px") {
+      @include media('<=1000px') {
         margin-bottom: 24px;
       }
 
@@ -238,7 +238,7 @@ body {
         text-align: left;
         padding: 0 8px;
 
-        @include media("<=1000px") {
+        @include media('<=1000px') {
           font-size: 20px;
           line-height: 24px;
         }
@@ -261,7 +261,7 @@ body {
       list-style: none;
       padding-bottom: 200px;
 
-      @include media("<=450px") {
+      @include media('<=450px') {
         flex-direction: column;
         position: relative;
         overflow-x: hidden;
@@ -276,7 +276,7 @@ body {
         z-index: 1;
         max-width: 1800px;
 
-        @include media("<=1000px") {
+        @include media('<=1000px') {
           display: none;
         }
       }
@@ -287,11 +287,11 @@ body {
         padding: 8px 16px;
         z-index: 2;
 
-        @include media("<=1000px") {
+        @include media('<=1000px') {
           width: 50%;
         }
 
-        @include media("<=450px") {
+        @include media('<=450px') {
           width: 100%;
           margin-bottom: 8px;
         }
@@ -301,7 +301,7 @@ body {
           height: 32px;
           margin-bottom: 8px;
 
-          @include media("<=1000px") {
+          @include media('<=1000px') {
             margin-bottom: 16px;
             padding: 0 8px;
           }
@@ -314,7 +314,7 @@ body {
           margin-bottom: 24px;
           height: 48px;
 
-          @include media("<=1000px") {
+          @include media('<=1000px') {
             border-left: 2px solid #00ffa3;
             height: auto;
             padding: 0 8px;
@@ -325,12 +325,12 @@ body {
         }
 
         .text {
-          font-family: Inter Regular;
+          font-family: Inter;
           font-size: 14px;
           line-height: 24px;
           margin-bottom: 16px;
 
-          @include media("<=1000px") {
+          @include media('<=1000px') {
             margin-bottom: 12px;
             padding: 0 8px;
           }
@@ -349,7 +349,7 @@ body {
         bottom: 0;
         opacity: 0.8;
 
-        @include media("<=450px") {
+        @include media('<=450px') {
           display: block;
         }
       }
@@ -360,7 +360,7 @@ body {
       padding: 0;
       text-align: center;
 
-      @include media("<=1000px") {
+      @include media('<=1000px') {
         padding: 0 24px;
         box-sizing: border-box;
       }
@@ -368,14 +368,14 @@ body {
       .wrapper {
         background: rgba(245, 243, 243, 0.4);
         padding: 48px 0 60px;
-        @include media("<=1000px") {
+        @include media('<=1000px') {
           padding: 48px 20px;
         }
 
         .text-wrapper {
           margin-bottom: 32px;
 
-          @include media("<=1000px") {
+          @include media('<=1000px') {
             margin-bottom: 12px;
           }
         }
@@ -387,18 +387,18 @@ body {
           line-height: 40px;
           margin-bottom: 24px;
 
-          @include media("<=1000px") {
+          @include media('<=1000px') {
             font-size: 24px;
             line-height: 30px;
           }
         }
 
         .text {
-          font-family: Inter Regular;
+          font-family: Inter;
           font-size: 24px;
           line-height: 32px;
 
-          @include media("<=1000px") {
+          @include media('<=1000px') {
             font-size: 14px;
             line-height: 24px;
           }
@@ -412,7 +412,7 @@ body {
             line-height: 24px;
             margin-right: 16px;
 
-            @include media("<=1000px") {
+            @include media('<=1000px') {
               font-size: 14px;
               margin-right: 8px;
             }

@@ -1,25 +1,18 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import ReactDOM from 'react-dom';
 import Layout from '../components/docLayout';
 import SEO from '../components/seo';
 import { graphql } from 'gatsby';
-import hljs from 'highlight.js';
 import ReactTooltip from 'react-tooltip';
 import 'highlight.js/styles/github.css';
 import './docTemplate.scss';
 import { useMobileScreen } from '../hooks';
-import Code from '../components/code/code';
 import QueryModal from '../components/query-modal/query-modal';
-import {
-  getAnchorElement,
-  getStyleType,
-  sortVersions,
-} from '../utils/docTemplate.util';
+import { getStyleType, sortVersions } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import SearchResult from '../components/search-result';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
-import { useEmPanel } from '../hooks/connect-em';
+import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
 import { useSelectMenu } from '../hooks/select-menu';
 import { useGenAnchor } from '../hooks/doc-anchor';
 
@@ -64,6 +57,8 @@ export default function Template({
   const { options } = useSelectMenu();
   useEmPanel(setShowModal);
   useGenAnchor(version, editPath);
+  useFilter();
+  useCodeCopy(locale);
 
   const showWarning = useMemo(
     () =>
@@ -72,92 +67,6 @@ export default function Template({
       !window.location.pathname.includes('data_migration'),
     [version]
   );
-
-  useEffect(() => {
-    const filterWrappers = document.querySelectorAll('.filter');
-    const allFilters = [];
-    let firstHash = '';
-    filterWrappers.forEach(fw => {
-      const fs = fw.querySelectorAll('a');
-
-      fs.forEach(f => {
-        if (!firstHash) {
-          firstHash = f.hash;
-        }
-        allFilters.push(f);
-      });
-    });
-    const allContents = document.querySelectorAll(`[class*="filter-"]`);
-
-    const clickEventHandler = targetHash => {
-      const hash = targetHash;
-      const currentFilters = allFilters.filter(f => f.hash === hash);
-      allFilters.forEach(f => f.classList.toggle('active', false));
-      currentFilters.forEach(cf => cf.classList.toggle('active', true));
-      allContents.forEach(c => c.classList.toggle('active', false));
-      const contents = document.querySelectorAll(
-        `.filter-${hash.replace('#', '').replace(/%/g, '')}`
-      );
-      contents.forEach(c => c.classList.toggle('active', true));
-    };
-    filterWrappers.forEach(w => {
-      w.addEventListener('click', e => {
-        if (e.target.tagName === 'A') {
-          clickEventHandler(e.target.hash);
-        }
-      });
-    });
-
-    if (window) {
-      const windowHash = window.location.hash || firstHash;
-      if (windowHash) {
-        clickEventHandler(windowHash);
-      }
-      window.history.pushState(null, null, windowHash);
-
-      window.addEventListener(
-        'hashchange',
-        () => {
-          clickEventHandler(window.location.hash);
-        },
-        false
-      );
-    }
-  }, []);
-
-  useEffect(() => {
-    document.querySelectorAll('pre code').forEach(block => {
-      hljs.highlightBlock(block);
-
-      const html = block.innerHTML;
-      const content = block.textContent;
-      const code = <Code html={html} content={content} locale={locale} />;
-      ReactDOM.render(code, block);
-    });
-
-    return () => {
-      document.querySelectorAll('pre code').forEach(block => {
-        ReactDOM.unmountComponentAtNode(block);
-      });
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const { search } = window.location;
-    const anchorText = window.localStorage.getItem('anchorTitle');
-
-    if (!!search && anchorText !== null) {
-      for (let i = 2; i < 7; i++) {
-        const element = getAnchorElement(`h${i}`, anchorText);
-        if (element) {
-          // scrollToElement(element);
-          window.localStorage.removeItem('anchorTitle');
-          return;
-        }
-      }
-    }
-  }, []);
 
   useEffect(() => {
     if (!isMobile) return;

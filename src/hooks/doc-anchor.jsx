@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 /**
  * This is for generate anchors in faq page.
  * Version >= 1.0.0 and html tag is h4.
+ * Will generate h4 anchors after the first h1 title.
  * @param {*} version
  * @param {*} editPath
  */
@@ -33,10 +34,6 @@ export const useGenAnchor = (version, editPath) => {
       return tpl;
     };
 
-    // handle faq headers
-
-    // check whether version after 1.0
-    // only version after 1.0 auto generate TOC
     const isAutoGenVersion = version && version.split('.')[0].slice(1) >= 1;
 
     if (editPath.includes('faq') && isAutoGenVersion) {

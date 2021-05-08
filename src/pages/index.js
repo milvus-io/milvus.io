@@ -81,7 +81,7 @@ const getRedirectLanguage = () => {
 const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
 
-  const { locale, newestVersion } = pageContext;
+  const { locale } = pageContext;
   const {
     section1,
     section3,

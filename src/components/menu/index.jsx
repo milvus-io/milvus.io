@@ -31,7 +31,7 @@ const Menu = props => {
     type,
     onSearchChange,
     language,
-    setShowMask = () => { }
+    setShowMask = () => {},
   } = props;
 
   const { header } = language;
@@ -62,18 +62,6 @@ const Menu = props => {
             return `/blogs/${doc.id}`;
           }
 
-          // const { label1, label2, label3 } = doc || {};
-
-          // let parentPath = "";
-          // if (label1) {
-          //   parentPath += `${label1}/`;
-          // }
-          // if (label2) {
-          //   parentPath += `${label2}/`;
-          // }
-          // if (label3) {
-          //   parentPath += `${label3}/`;
-          // }
           return `/docs/${formatVersion}/${doc.id}`;
         };
         // find top menu by current label
@@ -140,9 +128,6 @@ const Menu = props => {
         isBlog: false,
         isLast: false,
         isMenu: null,
-        label1: '',
-        label2: '',
-        label3: '',
         lang: null,
         order: -1,
         outLink: null,
@@ -171,7 +156,6 @@ const Menu = props => {
     if (menuContainer) {
       window.localStorage.setItem('zilliz-height', menuContainer.scrollTop);
     }
-
   };
 
   useEffect(() => {
@@ -183,11 +167,11 @@ const Menu = props => {
   const generageMenuDom = (list, className = '') => {
     return list.map(doc => (
       <div
-        className={`${className} ${type === 'new' && doc.label2 !== undefined && doc.label2 !== ''
-          ? 'menu-child-3'
-          : ''
-          } ${doc.isBlog ? 'blog' : ''} ${doc.isLast ? 'menu-last-level' : ''} ${doc.isActive ? 'active' : ''
-          }`}
+        className={`${className} ${
+          type === 'new' && doc.label2 ? 'menu-child-3' : ''
+        } ${doc.isBlog ? 'blog' : ''} ${doc.isLast ? 'menu-last-level' : ''} ${
+          doc.isActive ? 'active' : ''
+        }`}
         key={doc.id}
       >
         <div
@@ -195,8 +179,8 @@ const Menu = props => {
           onClick={
             doc.isMenu
               ? () => {
-                toggleMenuChild(doc);
-              }
+                  toggleMenuChild(doc);
+                }
               : handleMenuClick
           }
           style={doc.isMenu ? { cursor: 'pointer' } : null}
@@ -225,20 +209,23 @@ const Menu = props => {
                 <>
                   {doc.isMenu && doc.label1 === '' ? (
                     <i
-                      className={`fas fa-caret-down arrow ${doc.showChildren ? '' : 'top'
-                        }`}
+                      className={`fas fa-caret-down arrow ${
+                        doc.showChildren ? '' : 'top'
+                      }`}
                     ></i>
                   ) : (
                     <i
-                      className={`fas expand-icon ${doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
-                        }`}
+                      className={`fas expand-icon ${
+                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
+                      }`}
                     ></i>
                   )}
                 </>
               ) : (
                 <i
-                  className={`fas fa-chevron-down arrow ${doc.showChildren ? '' : 'top'
-                    }`}
+                  className={`fas fa-chevron-down arrow ${
+                    doc.showChildren ? '' : 'top'
+                  }`}
                 ></i>
               )}
             </>
@@ -274,8 +261,9 @@ const Menu = props => {
   return (
     <>
       <section
-        className={`menu-container can-scroll ${!menuStatus && type !== 'new' ? 'hide' : ''} ${type === 'new' ? 'menu-container-new new-hide' : ''
-          }`}
+        className={`menu-container can-scroll ${
+          !menuStatus && type !== 'new' ? 'hide' : ''
+        } ${type === 'new' ? 'menu-container-new new-hide' : ''}`}
         ref={menuRef}
       >
         {isMobile && type !== 'new' ? (
@@ -312,33 +300,30 @@ const Menu = props => {
 
         {generageMenuDom(realMenuList, 'menu-top-level border-bottom')}
       </section>
-      {
-        type === 'new' && isMobile ?
-          (
-            <div
-              className="mini-menu-control"
-              onClick={() => {
-                toggleMenu(!menuStatus);
-                setShowMask(!menuStatus);
-              }}
-            >
-              {menuStatus ? <i className="fas fa-times new"></i> : <i className="fas fa-bars new"></i>}
-            </div>
-
-          ) :
-          (
-            !menuStatus ? (
-              <div
-                className="mini-menu-control"
-                onClick={() => {
-                  toggleMenu(true);
-                }}
-              >
-                <i className="fas fa-bars"></i>
-              </div>
-            ) : null
-          )
-      }
+      {type === 'new' && isMobile ? (
+        <div
+          className="mini-menu-control"
+          onClick={() => {
+            toggleMenu(!menuStatus);
+            setShowMask(!menuStatus);
+          }}
+        >
+          {menuStatus ? (
+            <i className="fas fa-times new"></i>
+          ) : (
+            <i className="fas fa-bars new"></i>
+          )}
+        </div>
+      ) : !menuStatus ? (
+        <div
+          className="mini-menu-control"
+          onClick={() => {
+            toggleMenu(true);
+          }}
+        >
+          <i className="fas fa-bars"></i>
+        </div>
+      ) : null}
     </>
   );
 };

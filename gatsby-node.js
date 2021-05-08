@@ -266,12 +266,7 @@ exports.createPages = ({ actions, graphql }) => {
         if (!needLocal) return `/blogs/${id}`;
         return lang === defaultLang ? `/blogs/${id}` : `${lang}/blogs/${id}`;
       }
-      const findMenu = allMenus.find(
-        v => v.lang === lang && v.version === version
-      );
 
-      const menuList = findMenu ? findMenu.menuList : [];
-      const doc = menuList.find(v => v.id === id);
       let localizedPath = '';
       if (version && version !== 'master') {
         localizedPath =
@@ -283,16 +278,6 @@ exports.createPages = ({ actions, graphql }) => {
         localizedPath = lang === defaultLang ? `/docs/` : `${lang}/docs/`;
       }
 
-      // let parentPath = "";
-      // if (label1) {
-      //   parentPath += `${label1}/`;
-      // }
-      // if (label2) {
-      //   parentPath += `${label2}/`;
-      // }
-      // if (label3) {
-      //   parentPath += `${label3}/`;
-      // }
       return needLocal ? `${localizedPath}${id}` : `${id}`;
     };
 
@@ -346,23 +331,6 @@ exports.createPages = ({ actions, graphql }) => {
     );
     // -----  for global search end -----
 
-    // get all version
-    // const versions = new Set();
-    // legalMd.forEach(({ node }) => {
-    //   const fileAbsolutePath = node.fileAbsolutePath;
-    //   const version = findVersion(fileAbsolutePath);
-
-    //   // released: no -> not show , yes -> show
-    //   // when env is preview ignore released
-    //   if (
-    //     versionInfo[version] &&
-    //     (versionInfo[version].released === 'yes' || env === 'preview')
-    //   ) {
-    //     versions.add(version);
-    //   }
-    // });
-    console.log(versions);
-
     // create doc home page
     homeData.forEach(({ language, data, path }) => {
       const isBlog = checkIsblog(path);
@@ -408,25 +376,6 @@ exports.createPages = ({ actions, graphql }) => {
         isBenchmark
       );
 
-      // replace inside link {{}}
-      // const regx = /(?=%7B%7B).*(?<=%7D%7D)/gi;
-      // const newHtml = node.html.replace(regx, (match) => {
-      //   const name = decodeURIComponent(match);
-      //   const targetId = name.match(/(?<={{).*(?=}})/)[0].trim();
-      //   const target = legalMd.find(
-      //     (v) =>
-      //       v.node.frontmatter.id === targetId &&
-      //       findVersion(v.node.fileAbsolutePath) === version &&
-      //       fileLang === findLang(v.node.fileAbsolutePath)
-      //   );
-      //   const targetPath = generatePath(
-      //     target.node.frontmatter.id,
-      //     fileLang,
-      //     version,
-      //     isBlog
-      //   );
-      //   return fileLang === "en" ? targetPath : `/cn/${targetPath}`;
-      // });
       const newHtml = node.html;
 
       // the newest doc version is master so we need to make route without version.

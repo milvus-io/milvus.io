@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './code.scss';
+import * as styles from './code.module.less';
+// import './code.scss';
 
 const Code = ({ html, content, locale }) => {
   const buttonTextMap = {
@@ -15,7 +16,7 @@ const Code = ({ html, content, locale }) => {
   };
 
   const handleButtonsContent = () => {
-    document.querySelectorAll('.button-copy-text').forEach((item) => {
+    document.querySelectorAll('.btn-copy-text').forEach(item => {
       const isCurrentElement =
         item.parentNode.previousSibling.innerHTML === html;
 
@@ -23,20 +24,20 @@ const Code = ({ html, content, locale }) => {
       item.textContent = buttonTextMap[locale][isCurrentElement];
       // change button icon
       item.nextSibling.className = isCurrentElement
-        ? 'button-copy-icon fa fa-check'
-        : 'button-copy-icon fa fa-clone';
+        ? `${styles.icon} fa fa-check`
+        : `${styles.icon} fa fa-clone`;
     });
   };
 
-  const formatContent = (content) => {
+  const formatContent = content => {
     const code = content
       .split('\n')
-      .filter((item) => item[0] !== '#')
-      .map((str) => {
+      .filter(item => item[0] !== '#')
+      .map(str => {
         const invalidItems = ['$', '>>>'];
         return str
           .split(' ')
-          .filter((s) => !invalidItems.includes(s))
+          .filter(s => !invalidItems.includes(s))
           .join(' ');
       })
       .join('\n');
@@ -50,7 +51,7 @@ const Code = ({ html, content, locale }) => {
     copyToClipboard(code);
   };
 
-  const copyToClipboard = (content) => {
+  const copyToClipboard = content => {
     const el = document.createElement(`textarea`);
     el.value = content;
     el.setAttribute(`readonly`, ``);
@@ -63,20 +64,18 @@ const Code = ({ html, content, locale }) => {
   };
 
   return (
-    <>
-      <section className="code-wrapper">
-        <div
-          className="content"
-          dangerouslySetInnerHTML={{ __html: html }}
-        ></div>
-        <button className="button-copy" onClick={onButtonClick}>
-          <span className="button-copy-text">
-            {locale === 'en' ? 'Copy' : '复制'}
-          </span>
-          <i className="button-copy-icon fa fa-clone" aria-hidden="true"></i>
-        </button>
-      </section>
-    </>
+    <section className={styles.codeWrapper}>
+      <div
+        className={styles.content}
+        dangerouslySetInnerHTML={{ __html: html }}
+      ></div>
+      <button className={styles.btn} onClick={onButtonClick}>
+        <span className="btn-copy-text">
+          {locale === 'en' ? 'Copy' : '复制'}
+        </span>
+        <i className={`${styles.icon} fa fa-clone`} aria-hidden="true"></i>
+      </button>
+    </section>
   );
 };
 

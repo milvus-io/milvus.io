@@ -149,9 +149,4 @@ if (process.env.NODE_ENV == 'development') {
   });
 }
 
-console.log(
-  '=============== gatsby config ================= ',
-  process.env.NODE_ENV
-);
-
 module.exports = gatsbyConfigs;

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import V2Button from '../../button';
+import Button from '../../button';
 import qrcode from '../../../images/qrcode.jpeg';
 import milvusUserWechat from '../../../images/milvus-user-wechat.png';
 import medium from '../../../images/website/community/medium.svg';
@@ -36,7 +36,7 @@ const V2Footer = ({ footer }) => {
               <p className="footer-list-title">{title}</p>
               <p className="footer-list-content">{text}</p>
               {href ? (
-                <V2Button
+                <Button
                   href={href}
                   type="link"
                   variant="text"

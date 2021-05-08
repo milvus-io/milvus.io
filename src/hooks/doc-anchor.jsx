@@ -49,5 +49,5 @@ export const useGenAnchor = (version, editPath) => {
         insertAnchors(anchors);
       }
     }
-  }, [editPath]);
+  }, [editPath, version]);
 };

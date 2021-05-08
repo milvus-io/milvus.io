@@ -1,4 +1,4 @@
-module.exports = {
+let gatsbyConfigs = {
   siteMetadata: {
     siteUrl: `https://www.milvus.io`,
     title: ` · An Open Source Similarity Search Engine for Embeddings`,
@@ -27,30 +27,6 @@ module.exports = {
       },
     },
 
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `docs`,
-        path: `${__dirname}/src/pages/docs/versions`,
-        // ignore: [
-        //   `**/v0.6.0/*`,
-        //   `**/v0.7.0/*`,
-        //   `**/v0.7.1/*`,
-        //   `**/v0.8.0/*`,
-        //   `**/v0.8.1/*`,
-        //   `**/v0.9.0/*`,
-        //   `**/v0.9.1/*`,
-        //   `**/v0.10.0/*`,
-        //   `**/v0.10.1/*`,
-        //   `**/v0.10.2/*`,
-        //   `**/v0.10.3/*`,
-        //   `**/v0.10.4/*`,
-        //   `**/v0.10.5/*`,
-        //   `**/v0.10.6/*`,
-        //   // `**/v0.11.0/*`,
-        // ],
-      },
-    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -136,3 +112,46 @@ module.exports = {
     // }
   ],
 };
+
+// ignore some versions will make building faster in dev.
+if (process.env.NODE_ENV == 'development') {
+  gatsbyConfigs.plugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `docs`,
+      path: `${__dirname}/src/pages/docs/versions`,
+      ignore: [
+        `**/v0.6.0/*`,
+        `**/v0.7.0/*`,
+        `**/v0.7.1/*`,
+        `**/v0.8.0/*`,
+        `**/v0.8.1/*`,
+        `**/v0.9.0/*`,
+        `**/v0.9.1/*`,
+        `**/v0.10.0/*`,
+        `**/v0.10.1/*`,
+        `**/v0.10.2/*`,
+        `**/v0.10.3/*`,
+        `**/v0.10.4/*`,
+        `**/v0.10.5/*`,
+        `**/v0.10.6/*`,
+        // `**/v0.11.0/*`,
+      ],
+    },
+  });
+} else {
+  gatsbyConfigs.plugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `docs`,
+      path: `${__dirname}/src/pages/docs/versions`,
+    },
+  });
+}
+
+console.log(
+  '=============== gatsby config ================= ',
+  process.env.NODE_ENV
+);
+
+module.exports = gatsbyConfigs;

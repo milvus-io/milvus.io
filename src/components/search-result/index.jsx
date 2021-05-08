@@ -34,7 +34,9 @@ const SearchResult = props => {
 
   return (
     <div className="search-result">
-      <div className="back" onClick={handleBack}>
+      {/* eslint-disable jsx-a11y/click-events-have-key-events,
+      jsx-a11y/no-noninteractive-element-interactions */}
+      <div className="back" onClick={handleBack} role="presentation">
         <i className="fa fa-chevron-left"></i>
         <span>Back</span>
       </div>

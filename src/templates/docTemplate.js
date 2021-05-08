@@ -51,7 +51,9 @@ export default function Template({
   const handleBack = () => {
     setSearchVal('');
     setIsSearch(false);
-    document.querySelector('.search').value = '';
+    // In mobile search input will missing
+    document.querySelector('.search') &&
+      (document.querySelector('.search').value = '');
   };
 
   const { options } = useSelectMenu();
@@ -88,15 +90,17 @@ export default function Template({
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childLayoutJson.layout
     : {};
+  const v2 = data.allFile.edges[0]
+    ? data.allFile.edges[0].node.childLayoutJson.v2
+    : {};
+
   const menuList = allMenus.find(
     v =>
       v.absolutePath.includes(version) &&
       isBlog === v.isBlog &&
       locale === v.lang
   );
-  const v2 = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childLayoutJson.v2
-    : {};
+
   const { markdownRemark } = data; // data.markdownRemark holds our post data
 
   let { frontmatter } = markdownRemark || {};

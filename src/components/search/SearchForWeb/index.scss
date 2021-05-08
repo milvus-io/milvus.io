@@ -1,4 +1,4 @@
-@import "../../include_media.scss";
+@import '../../include_media.scss';
 
 .search-wrapper-web {
   position: relative;
@@ -27,12 +27,9 @@
       width: 200px;
       cursor: text;
     }
-
   }
 
   .result-list {
-    @include scroll-bar;
-
     max-height: 80vh;
     overflow: auto;
     z-index: 1000;
@@ -53,7 +50,6 @@
     a {
       &.link {
         color: #fff;
-
       }
 
       em {
@@ -62,7 +58,7 @@
       }
     }
 
-    li+li {
+    li + li {
       margin-top: 0.7em;
       padding-top: 0.7em;
       border-top: 1px solid #d1d1d1;
@@ -71,6 +67,5 @@
       text-overflow: ellipsis;
       color: #fff;
     }
-
   }
 }

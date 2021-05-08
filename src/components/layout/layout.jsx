@@ -10,8 +10,8 @@ import PropTypes from 'prop-types';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 
-import './layout.scss';
-import '../../reset.scss';
+import './layout.less';
+import '../../reset.less';
 const Layout = ({ children, language, locale }) => {
   return (
     <>

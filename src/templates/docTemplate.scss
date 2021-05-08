@@ -921,7 +921,6 @@
     margin: 0 4px;
     // font-family: monospace;
     font-family: Source Code Pro, monospace;
-    @include scroll-bar;
   }
 
   kbd {
@@ -1051,7 +1050,6 @@
 
   .table-wrapper {
     overflow-x: auto;
-    @include scroll-bar;
   }
 
   &-new {

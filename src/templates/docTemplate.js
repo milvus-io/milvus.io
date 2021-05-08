@@ -17,12 +17,11 @@ import {
 } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
-import { useSelectMenu } from '../hooks';
 import SearchResult from '../components/search-result';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
-
-// hljs.registerLanguage("sql", sql)
-// hljs.registerLanguage("bash", bash)
+import { useEmPanel } from '../hooks/connect-em';
+import { useSelectMenu } from '../hooks/select-menu';
+import { useGenAnchor } from '../hooks/doc-anchor';
 
 export default function Template({
   data,
@@ -45,27 +44,11 @@ export default function Template({
 
   const { isMobile } = useMobileScreen();
 
-  // const checkEventStatus = () => {
-  //   if (window) {
-  //     const showEventTime = window.localStorage.getItem('showEventTime');
-  //     if (showEventTime === null) {
-  //       return true;
-  //     }
-  //     const currentTime = new Date().getTime();
-  //     return Number(showEventTime) < currentTime;
-  //   }
-  // };
   const type = useMemo(() => getStyleType(version), [version]);
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [searchVal, setSearchVal] = useState('');
-
-  // const [showEvent, setShowEvent] = useState(false);
-
-  // useEffect(() => {
-  //   setShowEvent(checkEventStatus());
-  // }, []);
 
   const handleSearch = value => {
     setSearchVal(value);
@@ -78,47 +61,9 @@ export default function Template({
     document.querySelector('.search').value = '';
   };
 
-  // select menu function
-  const [options, setOptions] = useState({
-    styles: {
-      visibility: 'hidden',
-      zIndex: -100,
-      transform: `translateX(0,0)`,
-    },
-    copy: '',
-  });
-
-  useSelectMenu(setOptions);
-
-  useEffect(() => {
-    document.querySelectorAll('.query-button-panel').forEach(panel => {
-      const codeWrapper = panel.previousElementSibling;
-      codeWrapper.classList.add('query-button-code');
-
-      const querySnippet = codeWrapper.querySelector('code').textContent;
-      const formatCode = getRequestAsCURL(querySnippet);
-
-      panel.addEventListener('click', e => {
-        const funcMap = {
-          copy: handleCopy,
-          console: handleOpenConsole,
-          // setting wrapper
-          setting: handleSetting,
-          // setting icon
-          'fa-cog': handleSetting,
-        };
-
-        const classList = e.target.classList;
-
-        Object.keys(funcMap).forEach(key => {
-          if (classList.contains(key)) {
-            funcMap[key](formatCode);
-          }
-        });
-      });
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { options } = useSelectMenu();
+  useEmPanel(setShowModal);
+  useGenAnchor(version, editPath);
 
   const showWarning = useMemo(
     () =>
@@ -127,39 +72,6 @@ export default function Template({
       !window.location.pathname.includes('data_migration'),
     [version]
   );
-
-  const handleCopy = code => {
-    copyToClipboard(code);
-  };
-  const handleOpenConsole = () => {
-    console.log('open console');
-  };
-  const handleSetting = () => setShowModal(true);
-
-  const insertAnchors = anchors => {
-    const firstElement = document.querySelector('h1');
-
-    firstElement.insertAdjacentHTML('afterend', anchors);
-  };
-
-  const getAnchorsFromInfo = info => {
-    const items = info
-      .map(
-        item =>
-          `<li>
-            <a href=${item.id}>
-              ${item.title}
-            </a>
-          </li>`
-      )
-      .join('\n');
-    const tpl = `
-      <ul>
-        ${items}
-      </ul>
-    `;
-    return tpl;
-  };
 
   useEffect(() => {
     const filterWrappers = document.querySelectorAll('.filter');
@@ -230,28 +142,6 @@ export default function Template({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    // handle faq headers
-
-    // check whether version after 1.0
-    // only version after 1.0 auto generate TOC
-    const isAutoVersion = version && version.split('.')[0].slice(1) >= 1;
-
-    if (editPath.includes('faq') && isAutoVersion) {
-      const faqHeadersElements = document.querySelectorAll('h4');
-      if (faqHeadersElements.length > 0) {
-        const info = Array.from(faqHeadersElements).map(element => ({
-          id: `#${element.id}`,
-          title: element.textContent,
-        }));
-
-        const anchors = getAnchorsFromInfo(info);
-
-        insertAnchors(anchors);
-      }
-    }
-  }, [editPath]);
 
   useEffect(() => {
     const { search } = window.location;
@@ -333,26 +223,6 @@ export default function Template({
     }
   };
 
-  const getRequestAsCURL = code => {
-    const [header, ...data] = code.split('\n');
-    const [method, url] = header.split(' ');
-    const queryBody = data.join('\n');
-
-    return `curl -X ${method} "http://localhost:8000${url}" -H 'Content-Type: application/json' -d'\n${queryBody}'`;
-  };
-
-  const copyToClipboard = content => {
-    const el = document.createElement(`textarea`);
-    el.value = content;
-    el.setAttribute(`readonly`, ``);
-    el.style.position = `absolute`;
-    el.style.left = `-9999px`;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand(`copy`);
-    document.body.removeChild(el);
-  };
-
   const title = isBenchmark
     ? `Milvus benchmark`
     : newHtml === null
@@ -360,19 +230,6 @@ export default function Template({
     : `${headings[0] && headings[0].value}`;
 
   const onOverlayClick = () => setShowModal(false);
-
-  // const onEventInfoCloseClick = () => {
-  //   if (!!window) {
-  //     setShowEvent(false);
-
-  //     // show event after 24 hours
-  //     const showEventTime = new Date(
-  //       new Date().getTime() + 24 * 60 * 60000
-  //     ).getTime();
-
-  //     window.localStorage.setItem('showEventTime', showEventTime);
-  //   }
-  // };
 
   return (
     <Layout

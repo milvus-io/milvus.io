@@ -26,7 +26,6 @@ const V2Header = ({
   type = 'home',
   onSearchChange,
   setShowMask = () => {},
-  showMask = false,
   className = '',
 }) => {
   const { isMobile } = useMobileScreen();

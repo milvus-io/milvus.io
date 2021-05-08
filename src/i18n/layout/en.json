@@ -337,7 +337,7 @@
         },
         {
           "label": "Documentation",
-          "href": "https://milvus.io/docs/install_milvus.md"
+          "href": "/docs/install_milvus.md"
         },
         {
           "label": "Blog",
@@ -350,10 +350,14 @@
       ]
     },
     "banner": {
-      "title": ["High Scalability.", "Cloud-Native.", "High Availability."],
+      "title": [
+        "High Scalability.",
+        "Cloud-Native.",
+        "High Availability."
+      ],
       "text": "Milvus2.0: The world's most popular open-source vector database.",
       "startBtn": {
-        "href": "https://milvus.io/docs/install_milvus.md",
+        "href": "/docs/install_milvus.md",
         "label": "Get Started"
       },
       "contributeBtn": {
@@ -405,7 +409,7 @@
         {
           "title": "What is milvus? ",
           "text": "Open-source similarity search engine for massive-scale feature vectors",
-          "href": "https://milvus.io/docs/install_milvus.md",
+          "href": "/docs/install_milvus.md",
           "label": "Get started",
           "icons": []
         },
@@ -448,7 +452,7 @@
         },
         "text2": {
           "label": "Milvus",
-          "link": "https://milvus.io/"
+          "link": "/"
         },
         "text3": {
           "label": " and associated open source project names are trademarks of the LF AI & Data Foundation",

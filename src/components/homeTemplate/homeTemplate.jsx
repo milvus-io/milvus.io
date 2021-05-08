@@ -1,8 +1,7 @@
 import React from 'react';
 import BlogCard from '../card/blogCard/blogCard';
 import StartCard from '../card/startCard/startCard';
-// import './homeTemplate.scss';
-import * as styles from './homeTemplate.module.css';
+import * as styles from './homeTemplate.module.less';
 
 const HomeTemplate = ({ data }) => {
   const { section1, section2, section3, section4 } = data;

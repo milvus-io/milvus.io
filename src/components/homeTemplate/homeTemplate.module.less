@@ -1,0 +1,96 @@
+@import '../../css/variables/color.less';
+@import '../../css/variables/responsive.less';
+
+.docHomeWrapper {
+  padding: 32px 64px;
+
+  @media @tablet {
+    padding: 20px 16px;
+  }
+
+  .section {
+    margin-bottom: 64px;
+
+    @media @tablet {
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+      color: @color-dark;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: bold;
+      font-family: Inter;
+      text-transform: capitalize;
+    }
+  }
+
+  .section1 {
+    .card {
+      &Wrapper {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        @media @tablet {
+          flex-direction: column;
+        }
+      }
+
+      &Item {
+        flex-basis: 48%;
+
+        @media @tablet {
+          flex: 1;
+          margin-top: 16px;
+        }
+      }
+    }
+  }
+
+  .section2 {
+    .desc {
+      font-family: Inter;
+      color: @color-dark;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .section3 {
+    .itemWrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 20px;
+    }
+
+    h4 {
+      margin-bottom: 16px;
+
+      color: @color-dark;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      font-family: Inter;
+    }
+
+    ul {
+      list-style-position: outside;
+      margin-left: 16px;
+
+      li {
+        margin-bottom: 8px;
+        color: @color-doc-primary;
+        font-family: Inter;
+      }
+    }
+
+    a {
+      color: @color-doc-primary;
+      font-family: Inter;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}

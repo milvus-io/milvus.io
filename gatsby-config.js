@@ -9,6 +9,7 @@ module.exports = {
     `gatsby-plugin-robots-txt`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-sass`,
+    `gatsby-plugin-less`,
     `gatsby-plugin-react-helmet`,
     // i18n plugin
     'gatsby-transformer-json',

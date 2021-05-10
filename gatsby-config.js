@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: `https://www.milvus.io`,
+    siteUrl: `https://milvus.io`,
     title: ` · An Open Source Similarity Search Engine for Embeddings`,
     description: `Milvus is an open source similarity search engine for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.`,
     author: `@ZILLIZ.com`,

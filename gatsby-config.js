@@ -83,34 +83,6 @@ let gatsbyConfigs = {
     {
       resolve: 'gatsby-plugin-zopfli',
     },
-    {
-      resolve: 'gatsby-plugin-google-tagmanager',
-      options: {
-        id: 'GTM-MXCV5ZM',
-
-        // Include GTM in development.
-        // Defaults to false meaning GTM will only be loaded in production.
-        includeInDevelopment: true,
-
-        // Defaults to null
-        defaultDataLayer: { platform: 'gatsby' },
-        // Specify optional GTM environment details.
-        dataLayerName: 'gatsby',
-      },
-    },
-    // // add Google Analytics gtag.js to a site
-    // // however this doesn't work, switch to add it in /src/html.js
-    // {
-    //   resolve: `gatsby-plugin-gtag`,
-    //   options: {
-    //     // your google analytics tracking id
-    //     trackingId: `UA-142992812-1`,
-    //     // Puts tracking script in the head instead of the body
-    //     head: true,
-    //     // enable ip anonymization
-    //     anonymize: true
-    //   }
-    // }
   ],
 };
 
@@ -141,13 +113,38 @@ if (process.env.NODE_ENV == 'development') {
     },
   });
 } else {
-  gatsbyConfigs.plugins.push({
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `docs`,
-      path: `${__dirname}/src/pages/docs/versions`,
+  gatsbyConfigs.plugins.push(
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `docs`,
+        path: `${__dirname}/src/pages/docs/versions`,
+      },
     },
-  });
+    {
+      resolve: 'gatsby-plugin-google-tagmanager',
+      options: {
+        id: 'GTM-MXCV5ZM',
+
+        // Include GTM in development.
+        // Defaults to false meaning GTM will only be loaded in production.
+        includeInDevelopment: true,
+
+        // Defaults to null
+        defaultDataLayer: { platform: 'gatsby' },
+        // Specify optional GTM environment details.
+        dataLayerName: 'gatsby',
+      },
+    },
+    {
+      resolve: '@sentry/gatsby',
+      options: {
+        dsn:
+          'https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477',
+        sampleRate: 0.7,
+      },
+    }
+  );
 }
 
 module.exports = gatsbyConfigs;

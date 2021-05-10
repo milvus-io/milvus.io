@@ -129,14 +129,14 @@ const DocLayout = props => {
       const anchor = normalVal.split(' ').join('-');
       let childDom = null;
       if (v.children && v.children.length) {
-        childDom = generateAnchorMenu(v.children, 'child-item');
+        childDom = generateAnchorMenu(v.children, styles.childItem);
       }
       return (
         <div className={`item ${className}`} key={v.value}>
           <a
             href={`#${anchor}`}
             title={v.value}
-            className={anchor === hash ? 'active' : ''}
+            className={`${styles.anchor} ${anchor === hash ? 'active' : ''}`}
             onClick={() => setHash(anchor)}
           >
             {v.value}
@@ -197,11 +197,12 @@ const DocLayout = props => {
           language={language}
           onSearchChange={handleSearchChange}
           setShowMask={setShowMenuMask}
+          wrapperClass={styles.menuContainer}
         ></Menu>
         <div
-          className={`inner-container ${isHome ? 'inner-container-home' : ''} ${
-            isBenchMark ? 'fullwidth' : ''
-          }`}
+          className={`${styles.innerContainer} ${
+            isHome ? styles.innerContainerHome : ''
+          } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -211,55 +212,55 @@ const DocLayout = props => {
         </div>
         {formatHeadings && !isBenchMark && (
           <div
-            className={`anchor-wrapper ${
-              menuType === 'new' ? 'anchor-wrapper-new' : ''
-            } ${isHome ? 'anchor-wrapper-new-home' : ''}`}
+            className={`${styles.anchorWrapper} ${
+              menuType === 'new' ? styles.anchorWrapperNew : ''
+            } ${isHome ? styles.home : ''}`}
           >
             {menuType === 'old' ? (
               <section>
-                <div className="button-container">
+                <div className={styles.buttonContainer}>
                   {isBlog || isBenchMark ? null : (
                     <a
-                      className="btn-anchor"
+                      className={styles.btnAnchor}
                       href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
                         locale === 'en' ? 'en' : 'zh-CN'
                       }/${editPath}`}
                     >
-                      <span className="btn-icon-wrapper">
-                        <i className="far fa-edit btn-icon"></i>
+                      <span className={styles.btnIconWrapper}>
+                        <i className={`far fa-edit ${styles.btnIcon}`}></i>
                       </span>
 
                       {language.footer.editBtn.label}
                     </a>
                   )}
                   <a
-                    className="btn-anchor"
+                    className={styles.btnAnchor}
                     href={language.footer.docIssueBtn.link}
                   >
-                    <span className="btn-icon-wrapper">
-                      <i className="fab fa-github btn-icon"></i>
+                    <span className={styles.btnIconWrapper}>
+                      <i className={`fab fa-github ${styles.btnIcon}`}></i>
                     </span>
                     {language.footer.docIssueBtn.label}
                   </a>
                   <a
-                    className="btn-anchor"
+                    className={styles.btnAnchor}
                     id="btn-bug"
                     href={language.footer.issueBtn.link}
                   >
-                    <span className="btn-icon-wrapper">
-                      <i className="fas fa-bug btn-icon"></i>
+                    <span className={styles.btnIconWrapper}>
+                      <i className={`fas fa-bug ${styles.btnIcon}`}></i>
                     </span>
 
                     {language.footer.issueBtn.label}
                   </a>
 
                   <a
-                    className="btn-anchor"
+                    className={styles.btnAnchor}
                     id="btn-question"
                     href={language.footer.questionBtn.link}
                   >
-                    <span className="btn-icon-wrapper">
-                      <i className="fab fa-slack-hash btn-icon"></i>
+                    <span className={styles.btnIconWrapper}>
+                      <i className={`fab fa-slack-hash ${styles.btnIcon}`}></i>
                     </span>
 
                     {language.footer.questionBtn.label}
@@ -268,11 +269,11 @@ const DocLayout = props => {
 
                 {/* filter faq page */}
                 {!id.includes('faq')
-                  ? generateAnchorMenu(formatHeadings, 'parent-item')
+                  ? generateAnchorMenu(formatHeadings, styles.parentItem)
                   : null}
 
                 {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
-                <div className="event">
+                <div className={styles.event}>
                   <h4>Upcoming Event</h4>
                   <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
                 </div>
@@ -283,49 +284,51 @@ const DocLayout = props => {
               <section>
                 {!isHome && (
                   <>
-                    <div className="button-container-new">
+                    <div className={styles.buttonContainerNew}>
                       {isBlog || isBenchMark ? null : (
                         <a
-                          className="btn-anchor"
+                          className={styles.btnAnchor}
                           href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
                             locale === 'en' ? 'en' : 'zh-CN'
                           }/${editPath}`}
                         >
-                          <span className="btn-icon-wrapper">
-                            <i className="far fa-edit btn-icon"></i>
+                          <span className={styles.btnIconWrapper}>
+                            <i className={`far fa-edit ${styles.btnIcon}`}></i>
                           </span>
 
                           {language.footer.editBtn.label}
                         </a>
                       )}
                       <a
-                        className="btn-anchor"
+                        className={styles.btnAnchor}
                         href={language.footer.docIssueBtn.link}
                       >
-                        <span className="btn-icon-wrapper">
-                          <i className="fab fa-github btn-icon"></i>
+                        <span className={styles.btnIconWrapper}>
+                          <i className={`fab fa-github ${styles.btnIcon}`}></i>
                         </span>
                         {language.footer.docIssueBtn.label}
                       </a>
                       <a
-                        className="btn-anchor"
+                        className={styles.btnAnchor}
                         id="btn-bug"
                         href={language.footer.issueBtn.link}
                       >
-                        <span className="btn-icon-wrapper">
-                          <i className="fas fa-bug btn-icon"></i>
+                        <span className={styles.btnIconWrapper}>
+                          <i className={`fas fa-bug ${styles.btnIcon}`}></i>
                         </span>
 
                         {language.footer.issueBtn.label}
                       </a>
 
                       <a
-                        className="btn-anchor"
+                        className={styles.btnAnchor}
                         id="btn-question"
                         href={language.footer.questionBtn.link}
                       >
-                        <span className="btn-icon-wrapper">
-                          <i className="fab fa-slack-hash btn-icon"></i>
+                        <span className={styles.btnIconWrapper}>
+                          <i
+                            className={`fab fa-slack-hash ${styles.btnIcon}`}
+                          ></i>
                         </span>
 
                         {language.footer.questionBtn.label}
@@ -333,13 +336,13 @@ const DocLayout = props => {
                     </div>
 
                     {formatHeadings.length > 0 && (
-                      <div className="anchor-title">
+                      <div className={styles.anchorTitle}>
                         {language.footer.content}
                       </div>
                     )}
                     {/* filter faq page */}
                     {!id.includes('faq')
-                      ? generateAnchorMenu(formatHeadings, 'parent-item')
+                      ? generateAnchorMenu(formatHeadings, styles.parentItem)
                       : null}
                   </>
                 )}

@@ -32,6 +32,7 @@ const Menu = props => {
     onSearchChange,
     language,
     setShowMask = () => {},
+    wrapperClass = '',
   } = props;
 
   const { header } = language;
@@ -261,7 +262,7 @@ const Menu = props => {
   return (
     <>
       <section
-        className={`menu-container can-scroll ${
+        className={`${wrapperClass} menu-container can-scroll ${
           !menuStatus && type !== 'new' ? 'hide' : ''
         } ${type === 'new' ? 'menu-container-new new-hide' : ''}`}
         ref={menuRef}

@@ -21,12 +21,25 @@
 }
 
 .menu-container {
-  position: fixed;
   box-sizing: border-box;
   color: #fafafa;
   overflow: auto;
   line-height: 1.2rem;
-  background: #f1f1f1; //#f7f9fa;
+  background: #f1f1f1;
+
+  // change scrollbar style
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: darkgrey;
+  }
 
   * {
     transition: all 0.2s;

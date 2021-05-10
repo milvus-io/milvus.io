@@ -4,8 +4,8 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
 // import AskMilvus from "../../images/ask_milvus.png";
-import './index.scss';
 import { getStyleType } from '../../utils/docTemplate.util';
+import * as styles from './index.module.less';
 
 const DocLayout = props => {
   const {
@@ -18,7 +18,7 @@ const DocLayout = props => {
     version,
     headings,
     current,
-    wrapperClass = 'doc-wrapper',
+    wrapperClass = styles.docWrapper,
     isBenchMark = false,
     showDoc = true,
     isBlog,
@@ -113,6 +113,8 @@ const DocLayout = props => {
       currentPos = container.scrollTop;
       const showButton = direction === 'up' && currentPos;
 
+      console.log('------ show button -----', showButton);
+
       setShowToTopButton(showButton);
     };
     container.addEventListener('scroll', cb);
@@ -161,11 +163,9 @@ const DocLayout = props => {
   };
 
   return (
-    <div className="layout-wrapper">
+    <div className={styles.layoutWrapper}>
       {menuType === 'new' ? (
-        <div
-          className={`mobile-header-wrapper-new ${showMask ? 'showMask' : ''}`}
-        >
+        <div className={`${showMask ? 'showMask' : ''}`}>
           <NewHeader
             header={header.header}
             locale={locale}
@@ -367,7 +367,7 @@ const DocLayout = props => {
 
         {showToTopButton ? (
           <div
-            className="button-to-top"
+            className={styles.btnToTop}
             role="button"
             onClick={onToTopClick}
             onKeyDown={onToTopClick}

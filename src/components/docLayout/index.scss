@@ -372,6 +372,8 @@ a.btn-anchor {
   }
 }
 
+// TODO: ask where these classes used
+// ----------------- start -------------------
 .inner-container {
   .dialog-wrapper {
     position: absolute;
@@ -401,6 +403,10 @@ a.btn-anchor {
   z-index: 1000;
 }
 
+// ----------------- end -------------------
+
+// TODO: check why write class in docTemplate file
+// ----------------- start -------------------
 .doc-post-content {
   p {
     position: relative;
@@ -421,6 +427,8 @@ a.btn-anchor {
 .doc-post {
   position: relative;
 }
+
+// ----------------- end -------------------
 
 .button-to-top {
   position: fixed;

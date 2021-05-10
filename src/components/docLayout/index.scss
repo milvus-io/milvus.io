@@ -472,6 +472,7 @@ a.btn-anchor {
   }
 }
 
+// ---------- TODO: remove this class to its component ----------
 .mobile-menu-wrapper-new {
   display: none;
   @include media('<=1000px') {

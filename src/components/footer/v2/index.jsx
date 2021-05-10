@@ -6,7 +6,9 @@ import medium from '../../../images/website/community/medium.svg';
 import slack from '../../../images/website/community/slack.svg';
 import twitter from '../../../images/website/community/twitter.svg';
 import wechat from '../../../images/website/community/wechat.svg';
-import './index.scss';
+// import './index.scss';
+
+import * as styles from './index.module.less';
 
 const iconSet = {
   medium,
@@ -27,20 +29,20 @@ const V2Footer = ({ footer }) => {
   } = footer;
 
   return (
-    <section className="footer-container">
-      <ul className="footer-list">
+    <section className={styles.footerContainer}>
+      <ul className={styles.list}>
         {links.map(i => {
           const { title, text, href, label, icons } = i;
           return (
-            <li className="list-item" key={title}>
-              <p className="footer-list-title">{title}</p>
-              <p className="footer-list-content">{text}</p>
+            <li className={styles.item} key={title}>
+              <p className={styles.title}>{title}</p>
+              <p className={styles.content}>{text}</p>
               {href ? (
                 <Button
                   href={href}
                   type="link"
                   variant="text"
-                  className="footer-list-btn"
+                  className={styles.btn}
                   children={
                     <>
                       <span>{label}</span>
@@ -55,14 +57,14 @@ const V2Footer = ({ footer }) => {
           );
         })}
       </ul>
-      <div className="footer-licence">
-        <div className="licence-milvus">
-          <span className="text">{text1.label}</span>
-          <p className="text-link-wrapper">
-            <a href={text2.link} className="link">
+      <div className={styles.licence}>
+        <div className={styles.milvus}>
+          <span className={styles.text}>{text1.label}</span>
+          <p className={styles.textLinkWrapper}>
+            <a href={text2.link} className={styles.link}>
               {text2.label}
             </a>
-            ,<span className="text">{text3.label}</span>
+            ,<span className={styles.text}>{text3.label}</span>
           </p>
         </div>
         {/* <div className="licence-policy">
@@ -88,19 +90,21 @@ const ImageList = ({ images }) => {
 
   return useMemo(() => {
     return (
-      <div className="images-wrapper">
+      <div className={styles.imagesWrapper}>
         {images.map(img => (
           <a
             href={img.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`column-img ${img.name === 'wechat' ? 'hover-btn' : ''}`}
+            className={`${styles.columnImg} ${
+              img.name === 'wechat' ? styles.hoverBtn : ''
+            }`}
             key={img.name}
             onClick={e => handleClick(e, img.name)}
           >
             <img src={iconSet[img.name]} alt={img.name} />
             {img.name === 'wechat' && (
-              <p className="qrcode-wrapper">
+              <p className={styles.qrcodeWrapper}>
                 <img src={qrcode} alt="qrcode" />
                 <img src={milvusUserWechat} alt="qrcode" />
               </p>

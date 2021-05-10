@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  // useEffect
-} from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/logo/lfai.svg';
@@ -26,12 +22,13 @@ const V2Header = ({
   type = 'home',
   onSearchChange,
   setShowMask = () => {},
-  showMask = false,
   className = '',
 }) => {
   const { isMobile } = useMobileScreen();
-  const versionList = [...versions];
-  versionList.sort((a, b) => sortVersions(a, b));
+  const versionList = useMemo(
+    () => versions.slice().sort((a, b) => sortVersions(a, b)),
+    [versions]
+  );
 
   const [open, setOpen] = useState(false);
   const [openType, setOpenType] = useState('');
@@ -76,7 +73,7 @@ const V2Header = ({
   const handleSelected = val => {
     setVersion(val);
 
-    window.location.href = `https://milvus.io/docs/${val}/overview.md`;
+    window.location.href = `/docs/${val}/overview.md`;
   };
 
   const handleSearch = value => {
@@ -157,29 +154,25 @@ const V2Header = ({
                 onClick={handleOpenMask}
                 onKeyDown={handleOpenMask}
               >
-                {type === 'doc' &&
-                  (open && openType === 'search' ? (
-                    <div className="icon-wrapper" data-type="search">
-                      <img className="btn-icon" src={close} alt="close-icon" />
-                    </div>
-                  ) : (
-                    <div className="icon-wrapper" data-type="search">
-                      <img
-                        className="btn-icon"
-                        src={search}
-                        alt="search-icon"
-                      />
-                    </div>
-                  ))}
-                {open && openType === 'menu' ? (
-                  <div className="icon-wrapper" data-type="close">
-                    <img className="btn-icon" src={close} alt="close-icon" />
-                  </div>
-                ) : (
-                  <div className="icon-wrapper" data-type="menu">
-                    <img className="btn-icon" src={menu} alt="menu-icon" />
+                {type === 'doc' && (
+                  <div className="icon-wrapper" data-type="search">
+                    <img
+                      className="btn-icon"
+                      src={open && openType === 'search' ? close : search}
+                      alt="menu-search-icon"
+                    />
                   </div>
                 )}
+                <div
+                  className="icon-wrapper"
+                  data-type={open && openType === 'menu' ? 'close' : 'menu'}
+                >
+                  <img
+                    className="btn-icon"
+                    src={open && openType === 'menu' ? close : menu}
+                    alt="close-icon"
+                  />
+                </div>
               </div>
             </div>
             <MobilePopup className="v2-popup" open={open} hideMask={hideMask}>

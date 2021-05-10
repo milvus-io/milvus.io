@@ -15,6 +15,7 @@ const V2Selector = ({
     e.stopPropagation();
     setOpen(open ? false : true);
   };
+
   const handleSelect = e => {
     const { option } = e.target.dataset;
     if (option === selected) return;
@@ -30,11 +31,11 @@ const V2Selector = ({
           setOpen(false);
         }
       }
+    };
 
-      window.addEventListener('click', hideOptions, false);
-      return () => {
-        window.removeEventListener('click', hideOptions, false);
-      };
+    window.addEventListener('click', hideOptions, false);
+    return () => {
+      window.removeEventListener('click', hideOptions, false);
     };
   }, []);
 

@@ -106,21 +106,19 @@ const DocLayout = props => {
 
   useEffect(() => {
     let currentPos = 0;
-    const container = docContainer.current;
 
     const cb = function () {
+      const container = document.querySelector('html');
       const direction = container.scrollTop - currentPos > 0 ? 'down' : 'up';
       currentPos = container.scrollTop;
       const showButton = direction === 'up' && currentPos;
 
-      console.log('------ show button -----', showButton);
-
       setShowToTopButton(showButton);
     };
-    container.addEventListener('scroll', cb);
+    window.addEventListener('scroll', cb);
 
     return () => {
-      container.removeEventListener('scroll', cb);
+      window.removeEventListener('scroll', cb);
     };
   }, []);
 
@@ -150,7 +148,7 @@ const DocLayout = props => {
   };
 
   const onToTopClick = () => {
-    docContainer.current.scrollTo({
+    window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });

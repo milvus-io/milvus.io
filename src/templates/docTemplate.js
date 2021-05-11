@@ -336,9 +336,9 @@ export default function Template({
   const hrefRegex = /href="[A-Za-z0-9_-]*.md"/g;
   if (!isBlog) {
     newHtml = newHtml.replace(hrefRegex, match => {
-      const hrefArr = localizedPath.split("/");
-      hrefArr.splice(hrefArr.length - 1, 1, match.replace("href=\"", "").replace("\"",""));
-      return hrefArr.join("/");
+      const hrefArr = localizedPath.split('/');
+      hrefArr.splice(hrefArr.length - 1, 1, match.replace('href="', '').replace('"',''));
+      return `href="${hrefArr.join("/")}"`;
     });
   }
   

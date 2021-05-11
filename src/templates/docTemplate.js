@@ -35,6 +35,7 @@ export default function Template({
     isBlog,
     isBenchmark = false,
     editPath,
+    localizedPath,
     newHtml,
   } = pageContext;
   versions = versions.sort(sortVersions);
@@ -332,11 +333,15 @@ export default function Template({
     );
   }
 
-  const hrefregex = /href="[A-Za-z0-9_-]*.md"/g;
-  newHtml = newHtml.replace(hrefregex, match => 
-    // eslint-disable-next-line
-    match.split("=\"").join("=\".\/")
-  );
+  const hrefRegex = /href="[A-Za-z0-9_-]*.md"/g;
+  if (!isBlog) {
+    newHtml = newHtml.replace(hrefRegex, match => {
+      const hrefArr = localizedPath.split("/");
+      hrefArr.splice(hrefArr.length - 1, 1, match.replace("href=\"", "").replace("\"",""));
+      return hrefArr.join("/");
+    });
+  }
+  
 
   const ifrmLoad = () => {
     const ifrmContainer = document.querySelector('.iframe-container');

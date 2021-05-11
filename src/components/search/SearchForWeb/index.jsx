@@ -162,6 +162,7 @@ const SearchForWeb = props => {
                         to={`/docs/${version}/${path}${
                           isId ? '' : `?${anchor}`
                         }`}
+                        className={styles.link}
                       >
                         <span
                           dangerouslySetInnerHTML={{

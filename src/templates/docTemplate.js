@@ -35,7 +35,6 @@ export default function Template({
     isBlog,
     isBenchmark = false,
     editPath,
-    fileAbsolutePath,
     localizedPath,
     newHtml,
   } = pageContext;

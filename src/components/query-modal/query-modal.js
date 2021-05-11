@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './query-modal.scss';
+import * as styles from './query-modal.module.less';
 
 const QueryModal = ({ locale, setShowModal }) => {
   const [url, setUrl] = useState('http://localhost:8000/app/dev_tools/console');
@@ -25,41 +25,41 @@ const QueryModal = ({ locale, setShowModal }) => {
     },
   };
 
-  const onUrlChange = (event) => setUrl(event.target.value);
-  const onHostChange = (event) => setHost(event.target.value);
+  const onUrlChange = event => setUrl(event.target.value);
+  const onHostChange = event => setHost(event.target.value);
   const onCloseClick = () => setShowModal(false);
   const onSaveClick = () => {};
 
   return (
     <>
-      <section className="query-wrapper">
-        <button className="query-button-close" onClick={onCloseClick}>
+      <section className={styles.queryWrapper}>
+        <button className={styles.queryButtonClose} onClick={onCloseClick}>
           ×
         </button>
 
-        <form className="query-form">
-          <label className="query-label" htmlFor="url">
+        <form className={styles.queryForm}>
+          <label className={styles.queryLabel} htmlFor="url">
             {i18nMap[locale]['url']}
           </label>
           <input
-            className="query-input"
+            className={styles.queryInput}
             value={url}
             id="url"
             onChange={onUrlChange}
           />
-          <label className="query-label" htmlFor="host">
+          <label className={styles.queryLabel} htmlFor="host">
             {i18nMap[locale]['host']}
           </label>
           <input
-            className="query-input"
+            className={styles.queryInput}
             value={host}
             id="host"
             onChange={onHostChange}
           />
         </form>
 
-        <div className="query-button-wrapper">
-          <button className="query-button" onClick={onSaveClick}>
+        <div className={styles.queryButtonWrapper}>
+          <button className={styles.queryButton} onClick={onSaveClick}>
             {i18nMap[locale]['save']}
           </button>
         </div>

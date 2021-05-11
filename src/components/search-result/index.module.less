@@ -1,13 +1,13 @@
-@import '../include_media';
+@import '../../css/variables/responsive.less';
 
-.search-result {
+.searchResult {
   font-family: Inter;
   max-width: 800px;
   h1 {
     margin-bottom: 8px;
     font-family: Inter;
 
-    @include media('<=1000px') {
+    @media @tablet {
       font-family: Inter Bold;
       font-size: 16px;
       line-height: 20px;
@@ -16,7 +16,7 @@
   p {
     font-family: Inter;
 
-    @include media('<=1000px') {
+    @media @tablet {
       font-size: 14px;
       line-height: 20px;
     }
@@ -38,7 +38,7 @@
     font-size: 16px;
     font-family: Inter;
 
-    @include media('<=1000px') {
+    @media @tablet {
       font-size: 14px;
     }
   }

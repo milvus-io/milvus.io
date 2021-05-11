@@ -10,10 +10,11 @@ import { useMobileScreen } from '../../../hooks';
 import { sortVersions } from '../../../utils/docTemplate.util';
 import MobilePopup from '../components/MobilePopupV2';
 import { Link } from 'gatsby';
-import Search from './Search';
-import Menu from './Menu';
+import Search from '../components/Search/Search';
+import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
-import './index.scss';
+// import './index.scss';
+import * as styles from './index.module.less';
 
 const V2Header = ({
   versions,
@@ -86,14 +87,14 @@ const V2Header = ({
   });
 
   return (
-    <section className={`header ${className}`} ref={headContainer}>
-      <div className="header-container" ref={container}>
+    <section className={`${styles.header} ${className}`} ref={headContainer}>
+      <div className={styles.headerContainer} ref={container}>
         {!isMobile ? (
-          <div className="content-wrapper">
-            <div className="logo-section">
+          <div className={styles.contentWrapper}>
+            <div className={styles.logoSection}>
               <Link to="/v2">
                 <img
-                  className="milvus-logo"
+                  className={styles.milvus}
                   src={milvusLogo}
                   alt="milvus-logo"
                 />
@@ -103,23 +104,23 @@ const V2Header = ({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img className="lfai-logo" src={lfai} alt="lfai-icon" />
+                <img className={styles.lfai} src={lfai} alt="lfai-icon" />
               </a>
             </div>
-            <div className="nav-section">
+            <div className={styles.navSection}>
               {navList.map(i => {
                 const { label, link, isExternal } = i;
                 return isExternal ? (
-                  <a className="nav-item" href={link} key={label}>
+                  <a className={styles.navItem} href={link} key={label}>
                     {label}
                   </a>
                 ) : (
-                  <Link className="nav-item" to={link} key={label}>
+                  <Link className={styles.navItem} to={link} key={label}>
                     {label}
                   </Link>
                 );
               })}
-              <div className="drop-down">
+              <div className={styles.dropDown}>
                 <V2Selector
                   selected={version}
                   options={versions}
@@ -129,11 +130,11 @@ const V2Header = ({
             </div>
           </div>
         ) : (
-          <div className="mobile-header-warapper">
-            <div className="logo-section">
+          <div className={styles.mobileHeaderWrapper}>
+            <div className={styles.logoSection}>
               <Link to="/v2">
                 <img
-                  className="milvus-logo"
+                  className={styles.milvus}
                   src={milvusLogoMobile}
                   alt="milvus-logo"
                 />
@@ -143,19 +144,19 @@ const V2Header = ({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img className="lfai-logo" src={lfai} alt="lfai-icon" />
+                <img className={styles.lfai} src={lfai} alt="lfai-icon" />
               </a>
             </div>
-            <div className="menu-section">
+            <div className={styles.menuSection}>
               <div
-                className="menus-wrapper"
+                className={styles.menuWrapper}
                 role="button"
                 tabIndex={-1}
                 onClick={handleOpenMask}
                 onKeyDown={handleOpenMask}
               >
                 {type === 'doc' && (
-                  <div className="icon-wrapper" data-type="search">
+                  <div className={styles.iconWrapper} data-type="search">
                     <img
                       className="btn-icon"
                       src={open && openType === 'search' ? close : search}
@@ -164,18 +165,22 @@ const V2Header = ({
                   </div>
                 )}
                 <div
-                  className="icon-wrapper"
+                  className={styles.iconWrapper}
                   data-type={open && openType === 'menu' ? 'close' : 'menu'}
                 >
                   <img
-                    className="btn-icon"
+                    className={styles.btnIcon}
                     src={open && openType === 'menu' ? close : menu}
                     alt="close-icon"
                   />
                 </div>
               </div>
             </div>
-            <MobilePopup className="v2-popup" open={open} hideMask={hideMask}>
+            <MobilePopup
+              className={styles.v2Popup}
+              open={open}
+              hideMask={hideMask}
+            >
               {openType === 'menu' ? (
                 <Menu
                   version={version}

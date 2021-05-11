@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as searchStyles from './search.module.less';
 
 const Search = ({ handleSearch }) => {
   const [focus, setFocus] = useState(false);
@@ -12,26 +13,34 @@ const Search = ({ handleSearch }) => {
   };
   const handleChange = e => {
     setKeyWord(e.target.value);
-
   };
   return (
-    <div className="search-section">
-      <div className={`input-wrapper ${focus ? 'focus' : ''}`}>
+    <div className={searchStyles.searchSection}>
+      <div
+        className={`${searchStyles.inputWrapper} ${
+          focus ? searchStyles.focus : ''
+        }`}
+      >
         <input
           type="text"
-          placeholder='Search'
-          className='input'
+          placeholder="Search"
+          className={searchStyles.input}
           onFocus={handleFocus}
           value={keyWord}
           onChange={handleChange}
         />
-        <span className="icon-wrapper" role='button' tabIndex={-1} onClick={search} onKeyDown={search}>
+        <span
+          className={searchStyles.iconWrapper}
+          role="button"
+          tabIndex={-1}
+          onClick={search}
+          onKeyDown={search}
+        >
           <i className="fas fa-search"></i>
         </span>
       </div>
     </div>
   );
-
 };
 
 export default Search;

@@ -1,15 +1,8 @@
 /* RESPONSIVE */
+@screen-sm-max: 768px;
+@screen-md-max: 1000px;
+@screen-lg-max: 1600px;
 
-@screen-xs-min: 480px;
-@screen-sm-min: 768px;
-@screen-md-min: 1000px;
-@screen-lg-min: 1200px;
-
-@screen-xs-max: (@screen-sm-min - 1);
-@screen-sm-max: (@screen-md-min - 1);
-@screen-md-max: (@screen-lg-min - 1);
-
-@phone: ~'only screen and (max-width: @{screen-xs-min})';
-@tablet: ~'only screen and (max-width: @{screen-md-min})';
-@desktop: ~'only screen and (min-width: @{screen-md-min})';
-@large: ~'only screen and (min-width: @{screen-lg-min})';
+@phone: ~'only screen and (max-width: @{screen-sm-max})';
+@tablet: ~'only screen and (max-width: @{screen-md-max})';
+@desktop: ~'only screen and (max-width: @{screen-lg-max})';

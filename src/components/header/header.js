@@ -4,7 +4,7 @@ import LocalizeLink from '../localizedLink/localizedLink';
 import Logo from '../../images/logo/milvus-horizontal-color.svg';
 import MobilLogo from '../../images/logo/logo.svg';
 import LfaiLogo from '../../images/logo/lfai.svg';
-import './header.scss';
+import * as styles from './header.module.less';
 import { globalHistory } from '@reach/router';
 import { useMobileScreen } from '../../hooks';
 import { SearchForWeb, SearchForMobile } from '../search';
@@ -72,14 +72,14 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
 
   return (
     <>
-      <div className="full-header-wrapper" ref={mobileContainerRef}>
-        <header className="header-wrapper">
-          <div className="logo-wrapper">
+      <div className={styles.fullHeaderWrapper} ref={mobileContainerRef}>
+        <header className={styles.headerWrapper}>
+          <div className={styles.logoWrapper}>
             <LocalizeLink locale={locale} to={'/'}>
               <img
                 style={{ height: isMobile ? '26px' : '3rem' }}
                 src={isMobile ? MobilLogo : Logo}
-                alt="Milvos Logo"
+                alt="Milvus Logo"
               ></img>
             </LocalizeLink>
             <a
@@ -87,23 +87,23 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src={LfaiLogo} alt="Lfai" className="lfai"></img>
+              <img src={LfaiLogo} alt="Lfai" className={styles.lfai}></img>
             </a>
           </div>
 
           {!isMobile ? (
-            <div className="right">
+            <div className={styles.right}>
               <LocalizeLink
                 locale={locale}
                 to="/docs/install_milvus.md"
-                className="link"
+                className={styles.link}
               >
                 {header.quick}
               </LocalizeLink>
 
               <LocalizeLink
                 locale={locale}
-                className="link"
+                className={styles.link}
                 to={'/docs/benchmarks_azure'}
               >
                 {header.benchmarks}
@@ -114,14 +114,16 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 }`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link"
+                className={styles.link}
               >
                 {header.tutorials}
               </a>
 
               <LocalizeLink
                 locale={locale}
-                className={`link ${current === 'scenarios' ? 'current' : ''}`}
+                className={`${styles.link} ${
+                  current === 'scenarios' ? 'current' : ''
+                }`}
                 to="/scenarios"
               >
                 {header.solution}
@@ -129,7 +131,9 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
               {showDoc && (
                 <LocalizeLink
                   locale={locale}
-                  className={`link ${current === 'doc' ? 'current' : ''}`}
+                  className={`${styles.link} ${
+                    current === 'doc' ? 'current' : ''
+                  }`}
                   to={'/docs/overview.md'}
                 >
                   {header.doc}
@@ -140,7 +144,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 href={blogHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link"
+                className={styles.link}
               >
                 {header.blog}
               </a>
@@ -153,7 +157,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
               <span
                 role="button"
                 tabIndex={0}
-                className="language"
+                className={styles.language}
                 onKeyDown={() => {
                   setLanList(!lanList);
                 }}
@@ -164,11 +168,11 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
               >
                 {locale === 'cn' ? '中' : 'En'}
                 {lanList && (
-                  <div className="language-list">
+                  <div className={styles.list}>
                     <LocalizeLink
                       locale={l}
                       to={to}
-                      className={locale === 'en' ? 'active' : ''}
+                      className={locale === 'en' ? styles.active : ''}
                     >
                       <span
                         tabIndex={0}
@@ -182,7 +186,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                     <LocalizeLink
                       locale={l}
                       to={to}
-                      className={locale === 'cn' ? 'active' : ''}
+                      className={locale === 'cn' ? styles.active : ''}
                     >
                       <span
                         tabIndex={0}
@@ -198,7 +202,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
               </span>
             </div>
           ) : (
-            <div className="right-mobile">
+            <div className={styles.rightMobile}>
               {!isSHowMobileMask && (
                 <SearchForMobile
                   language={header}
@@ -209,7 +213,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
               )}
               {!isSHowMobileMask ? (
                 <i
-                  className="fas fa-bars font-icon"
+                  className={`fas fa-bars ${styles.fontIcon}`}
                   aria-label="menu-button"
                   role="button"
                   tabIndex={0}
@@ -218,7 +222,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 ></i>
               ) : (
                 <i
-                  className="fas fa-times font-icon"
+                  className={`fas fa-times ${styles.fontIcon}`}
                   aria-label="close-button"
                   role="button"
                   tabIndex={0}
@@ -249,11 +253,11 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
           </MobilePopUp>
         </header>
       </div>
-      <div className={`mobile-nav ${mobileNav && 'open'}`}>
+      <div className={`${styles.mobileNav} ${mobileNav && styles.open}`}>
         <LocalizeLink
           locale={locale}
           to="/docs/install_milvus.md"
-          className="link"
+          className={styles.link}
         >
           {header.quick}
         </LocalizeLink>
@@ -261,25 +265,25 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
           href="https://tutorials.milvus.io"
           target="_blank"
           rel="noopener noreferrer"
-          className="link"
+          className={styles.link}
         >
           {header.tutorials}
         </a>
 
-        <LocalizeLink locale={locale} className="link" to="/scenarios">
+        <LocalizeLink locale={locale} className={styles.link} to="/scenarios">
           {header.solution}
         </LocalizeLink>
 
         <LocalizeLink
           locale={locale}
-          className="link"
+          className={styles.link}
           to={'/docs/install_milvus.md'}
         >
           {header.doc}
         </LocalizeLink>
         <LocalizeLink
           locale={locale}
-          className="link"
+          className={styles.link}
           to={'/blogs/2019-08-26-vector-search-million.md'}
         >
           {header.blog}

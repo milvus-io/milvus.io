@@ -6,7 +6,6 @@ import medium from '../../../images/website/community/medium.svg';
 import slack from '../../../images/website/community/slack.svg';
 import twitter from '../../../images/website/community/twitter.svg';
 import wechat from '../../../images/website/community/wechat.svg';
-// import './index.scss';
 
 import * as styles from './index.module.less';
 

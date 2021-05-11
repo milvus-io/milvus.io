@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 // import { Link } from 'gatsby';
-import './index.scss';
+import * as styles from './v2.module.less';
 
 const V2Selector = ({
   selected,
@@ -40,23 +40,23 @@ const V2Selector = ({
   }, []);
 
   return (
-    <div className={`selector-container ${className}`}>
+    <div className={`${styles.selectorContainer} ${className}`}>
       <div
         role="button"
         tabIndex={0}
-        className="choosen-wrapper"
+        className={styles.choosenWrapper}
         ref={choosenWrapper}
         onClick={e => handleClick(e)}
         onKeyDown={e => handleClick(e)}
       >
-        <p className="label-wrapper">{selected}</p>
-        <div className={`icon-wrapper ${open ? 'show' : ''}`}>
+        <p className={styles.labelWrapper}>{selected}</p>
+        <div className={`${styles.iconWrapper} ${open ? styles.show : ''}`}>
           <i className="fa fa-chevron-down"></i>
         </div>
       </div>
 
       <div
-        className={`options-wrapper ${open ? 'show' : ''}`}
+        className={`${styles.optionsWrapper} ${open ? styles.show : ''}`}
         role="button"
         tabIndex={-1}
         onClick={handleSelect}
@@ -65,7 +65,9 @@ const V2Selector = ({
         {options.map(option => (
           <p
             data-option={option}
-            className={`option-item ${option === selected && 'active'}`}
+            className={`${styles.optionItem} ${
+              option === selected && styles.active
+            }`}
             key={option}
           >
             {option}

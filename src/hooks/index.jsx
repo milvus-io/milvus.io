@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from 'react';
-
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
   useEffect(() => {

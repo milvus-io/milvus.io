@@ -332,6 +332,12 @@ export default function Template({
     );
   }
 
+  const hrefregex = /href="[A-Za-z0-9_-]*.md"/g;
+  newHtml = newHtml.replace(hrefregex, match => 
+    // eslint-disable-next-line
+    match.split("=\"").join("=\".\/")
+  );
+
   const ifrmLoad = () => {
     const ifrmContainer = document.querySelector('.iframe-container');
     const ifrm = document.querySelector('#benchmarkIframe');

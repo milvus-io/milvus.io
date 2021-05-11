@@ -1,31 +1,33 @@
-@import "../../../include_media";
+@import '../../../../css/variables/color.less';
 
-.mobile-menu-content {
+.mobileMenuContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   font-size: 12px;
+
   .link {
     width: 100%;
     display: block;
     background: #fff;
-    color: var(--color-primary);
+    color: @color-primary;
     height: 48px;
     line-height: 48px;
     text-align: center;
     border-bottom: 1px solid #eee;
-    &:hover{
+    &:hover {
       background-color: #06aff2;
       color: #fff;
     }
   }
-  .btn-wrapper {
+
+  .btnWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    &:hover{
+    &:hover {
       background-color: #fff;
     }
 
@@ -40,10 +42,11 @@
       &:first-child {
         margin-right: 16px;
       }
-      span{
-        color: var(--color-primary);
+      span {
+        color: @color-primary;
       }
     }
+
     .active {
       background-color: #06aff2;
 

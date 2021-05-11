@@ -43,7 +43,6 @@ const DocLayout = props => {
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
-  const [showMask, setShowMask] = useState(false);
   const [showMenuMask, setShowMenuMask] = useState(false);
 
   // const effectVariable =
@@ -163,19 +162,14 @@ const DocLayout = props => {
   return (
     <div className={styles.layoutWrapper}>
       {menuType === 'new' ? (
-        <div className={`${showMask ? 'showMask' : ''}`}>
-          <NewHeader
-            header={header.header}
-            locale={locale}
-            versions={versions}
-            version={version}
-            type="doc"
-            onSearchChange={handleSearchChange}
-            setShowMask={setShowMask}
-            showMask={showMask}
-            className={showMask ? 'new-header' : ''}
-          />
-        </div>
+        <NewHeader
+          header={header.header}
+          locale={locale}
+          versions={versions}
+          version={version}
+          type="doc"
+          onSearchChange={handleSearchChange}
+        />
       ) : (
         <Header
           language={language}

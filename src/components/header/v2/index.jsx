@@ -22,7 +22,6 @@ const V2Header = ({
   setVersion = () => {},
   type = 'home',
   onSearchChange,
-  setShowMask = () => {},
   className = '',
 }) => {
   const { isMobile } = useMobileScreen();
@@ -63,12 +62,10 @@ const V2Header = ({
     const { type } = e.target.dataset;
     setOpen(!open);
     setOpenType(type);
-    setShowMask(true);
   };
 
   const hideMask = () => {
     setOpen(false);
-    setShowMask(false);
   };
 
   const handleSelected = val => {

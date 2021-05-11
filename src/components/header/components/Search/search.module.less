@@ -9,7 +9,8 @@
     display: flex;
     padding: 10px 16px;
 
-    .focus {
+    // trigger if child elements focus
+    &:focus-within {
       border: 1px solid #06aaf2;
 
       .iconWrapper {

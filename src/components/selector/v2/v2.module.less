@@ -1,3 +1,5 @@
+@import '../../../css/variables/color.less';
+
 .selectorContainer {
   position: relative;
   background: #fff;
@@ -76,6 +78,31 @@
       &:hover {
         background: #e3f9ff;
       }
+    }
+  }
+}
+
+.mobileSelector {
+  .labelWrapper {
+    text-align: left;
+    padding: 0 16px;
+  }
+
+  .optionsWrapper {
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    left: 0;
+    right: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: -1;
+
+    .active {
+      background-color: @color-btn-hover;
+    }
+
+    .optionItem {
+      padding: 8px 48px;
+      text-align: left;
     }
   }
 }

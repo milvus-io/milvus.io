@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useMobileScreen } from '../../../hooks';
 // import { Link } from 'gatsby';
 import * as styles from './v2.module.less';
 
@@ -10,6 +11,8 @@ const V2Selector = ({
 }) => {
   const choosenWrapper = useRef(null);
   const [open, setOpen] = useState(false);
+
+  const { isMobile } = useMobileScreen();
 
   const handleClick = e => {
     e.stopPropagation();
@@ -40,7 +43,11 @@ const V2Selector = ({
   }, []);
 
   return (
-    <div className={`${styles.selectorContainer} ${className}`}>
+    <div
+      className={`${styles.selectorContainer} ${className} ${
+        isMobile ? styles.mobileSelector : ''
+      }`}
+    >
       <div
         role="button"
         tabIndex={0}

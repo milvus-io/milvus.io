@@ -10,13 +10,13 @@ import PropTypes from 'prop-types';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 
-import './layout.less';
+import * as styles from './layout.module.less';
 import '../../reset.less';
 const Layout = ({ children, language, locale }) => {
   return (
     <>
       <Header language={language} locale={locale} />
-      <div className="content-wrapper">{children}</div>
+      <div className={styles.contentWrapper}>{children}</div>
       <Footer language={language} locale={locale}></Footer>
     </>
   );

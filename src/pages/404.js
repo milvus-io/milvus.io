@@ -1,10 +1,10 @@
-import React from "react";
-import { graphql } from "gatsby";
-import Layout from "../components/layout/404Layout";
-import SEO from "../components/seo";
-import LocalizeLink from "../components/localizedLink/localizedLink";
+import React from 'react';
+import { graphql } from 'gatsby';
+import SEO from '../components/seo';
+import LocalizeLink from '../components/localizedLink/localizedLink';
 
-import "./404.scss";
+import './404.scss';
+import Layout from '../components/layout/404Layout/404Layout';
 const NotFoundPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
@@ -14,17 +14,17 @@ const NotFoundPage = ({ data, pageContext }) => {
       <SEO title="404: Not found" />
       <div
         style={{
-          display: "flex",
-          height: "60vh",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "30px",
-          flexDirection: "column",
+          display: 'flex',
+          height: '60vh',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '30px',
+          flexDirection: 'column',
         }}
         className="notfound-wrapper"
       >
         <p>{language.notFound}</p>
-        <LocalizeLink locale={locale} to={"/"} className="back">
+        <LocalizeLink locale={locale} to={'/'} className="back">
           {language.backtohome}
         </LocalizeLink>
       </div>

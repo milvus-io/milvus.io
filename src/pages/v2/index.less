@@ -1,20 +1,15 @@
-@import '../../components/include_media';
-@import '../../utils/cssVariables.scss';
 @import '../../css/variables/responsive.less';
 @import '../../css/variables/color.less';
 
-body {
-  background: #fff !important;
-}
-
 .home-page-container {
-  max-width: $maxBreakpoint;
+  max-width: @screen-lg-max;
   margin: 0 auto;
   padding: 0 100px;
-  margin-top: 97px;
+  padding-top: 97px;
   position: relative;
+  background-color: #fff;
 
-  @include media('<=1000px') {
+  @media @tablet {
     padding: 0;
   }
 
@@ -28,14 +23,14 @@ body {
     left: 50px;
     top: 46%;
 
-    @include media('<=1000px') {
+    @media @tablet {
       width: 40%;
       height: 0;
       padding-bottom: 30%;
       top: 40%;
     }
 
-    @include media('<=450px') {
+    @media @phone {
       display: none;
     }
   }
@@ -52,12 +47,12 @@ body {
     position: relative;
     overflow: hidden;
 
-    @include media('<=1000px') {
+    @media @tablet {
       padding: 140px 16px 72px;
       margin-top: 10px;
     }
 
-    @include media('<=450px') {
+    @media @phone {
       padding: 80px 16px 72px;
       margin-top: 10px;
     }
@@ -70,7 +65,7 @@ body {
         align-items: center;
         margin-bottom: 40px;
 
-        @include media('<=1000px') {
+        @media @tablet {
           margin-bottom: 24px;
         }
 
@@ -95,7 +90,7 @@ body {
       }
       .title-wrapper {
         margin-bottom: 16px;
-        @include media('<=1000px') {
+        @media @tablet {
           margin-bottom: 24px;
         }
       }
@@ -109,7 +104,7 @@ body {
 
         word-break: break-word;
 
-        @include media('<=1000px') {
+        @media @tablet {
           font-size: 24px;
           line-height: 28px;
           padding-right: 25%;
@@ -123,7 +118,7 @@ body {
         font-weight: 400;
         line-height: 20px;
 
-        @include media('<=1000px') {
+        @media @tablet {
           display: none;
         }
       }
@@ -134,7 +129,7 @@ body {
         .banner-btn1 {
           margin-right: 23px;
 
-          @include media('<=1000px') {
+          @media @tablet {
             margin-right: 19px;
           }
 
@@ -145,7 +140,7 @@ body {
             line-height: 24px;
             margin-right: 16px;
 
-            @include media('<=1000px') {
+            @media @tablet {
               font-size: 14px;
               margin-right: 8px;
             }
@@ -168,7 +163,7 @@ body {
             margin-right: 16px;
             margin-right: 12px;
 
-            @include media('<=1000px') {
+            @media @tablet {
               font-size: 14px;
               margin-right: 8px;
             }
@@ -177,7 +172,7 @@ body {
             line-height: 24px;
           }
 
-          @include media('<=1000px') {
+          @media @tablet {
             align-items: center;
           }
         }
@@ -187,7 +182,7 @@ body {
     .banner-right {
       flex: 1;
 
-      @include media('<=1000px') {
+      @media @tablet {
         display: none;
       }
 
@@ -209,7 +204,7 @@ body {
       background-size: contain;
       z-index: -1;
 
-      @include media('<=1000px') {
+      @media @tablet {
         display: block;
       }
     }
@@ -218,7 +213,7 @@ body {
   .content {
     margin-bottom: 60px;
 
-    @include media('<=1000px') {
+    @media @tablet {
       margin-bottom: 0;
     }
 
@@ -228,7 +223,7 @@ body {
       padding: 8px;
       margin-bottom: 53px;
 
-      @include media('<=1000px') {
+      @media @tablet {
         margin-bottom: 24px;
       }
 
@@ -240,7 +235,7 @@ body {
         text-align: left;
         padding: 0 8px;
 
-        @include media('<=1000px') {
+        @media @tablet {
           font-size: 20px;
           line-height: 24px;
         }
@@ -263,7 +258,7 @@ body {
       list-style: none;
       padding-bottom: 200px;
 
-      @include media('<=450px') {
+      @media @phone {
         flex-direction: column;
         position: relative;
         overflow-x: hidden;
@@ -278,7 +273,7 @@ body {
         z-index: 1;
         max-width: 1800px;
 
-        @include media('<=1000px') {
+        @media @tablet {
           display: none;
         }
       }
@@ -289,11 +284,11 @@ body {
         padding: 8px 16px;
         z-index: 2;
 
-        @include media('<=1000px') {
+        @media @tablet {
           width: 50%;
         }
 
-        @include media('<=450px') {
+        @media @phone {
           width: 100%;
           margin-bottom: 8px;
         }
@@ -303,7 +298,7 @@ body {
           height: 32px;
           margin-bottom: 8px;
 
-          @include media('<=1000px') {
+          @media @tablet {
             margin-bottom: 16px;
             padding: 0 8px;
           }
@@ -316,7 +311,7 @@ body {
           margin-bottom: 24px;
           height: 48px;
 
-          @include media('<=1000px') {
+          @media @tablet {
             border-left: 2px solid #00ffa3;
             height: auto;
             padding: 0 8px;
@@ -332,7 +327,7 @@ body {
           line-height: 24px;
           margin-bottom: 16px;
 
-          @include media('<=1000px') {
+          @media @tablet {
             margin-bottom: 12px;
             padding: 0 8px;
           }
@@ -351,7 +346,7 @@ body {
         bottom: 0;
         opacity: 0.8;
 
-        @include media('<=450px') {
+        @media @phone {
           display: block;
         }
       }
@@ -362,7 +357,7 @@ body {
       padding: 0;
       text-align: center;
 
-      @include media('<=1000px') {
+      @media @tablet {
         padding: 0 24px;
         box-sizing: border-box;
       }
@@ -370,14 +365,14 @@ body {
       .wrapper {
         background: rgba(245, 243, 243, 0.4);
         padding: 48px 0 60px;
-        @include media('<=1000px') {
+        @media @tablet {
           padding: 48px 20px;
         }
 
         .text-wrapper {
           margin-bottom: 32px;
 
-          @include media('<=1000px') {
+          @media @tablet {
             margin-bottom: 12px;
           }
         }
@@ -389,7 +384,7 @@ body {
           line-height: 40px;
           margin-bottom: 24px;
 
-          @include media('<=1000px') {
+          @media @tablet {
             font-size: 24px;
             line-height: 30px;
           }
@@ -400,7 +395,7 @@ body {
           font-size: 24px;
           line-height: 32px;
 
-          @include media('<=1000px') {
+          @media @tablet {
             font-size: 14px;
             line-height: 24px;
           }
@@ -414,7 +409,7 @@ body {
             line-height: 24px;
             margin-right: 16px;
 
-            @include media('<=1000px') {
+            @media @tablet {
               font-size: 14px;
               margin-right: 8px;
             }

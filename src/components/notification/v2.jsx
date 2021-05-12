@@ -1,14 +1,14 @@
 import React from 'react';
-import './v2.scss';
+import * as styles from './v2.module.less';
 
 const Notification = props => {
   const { language } = props;
 
   return (
-    <div className="notification-v2">
+    <div className={styles.notificationV2}>
       <p>
         {language.v2.title}
-        <a href="/v2" className="link">
+        <a href="/v2" className={styles.link}>
           {language.v2.here}
         </a>
         &gt;

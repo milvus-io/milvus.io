@@ -445,7 +445,7 @@ const MenuDialog = ({
   }, []);
 
   return (
-    <div className="mobile-menu-wrapper-new show">
+    <div className={styles.mobileMenuWrapperNew}>
       <Menu
         menuList={menuList}
         versions={versions}

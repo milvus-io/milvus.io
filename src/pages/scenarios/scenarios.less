@@ -1,7 +1,6 @@
-@import '../components/include_media.scss'; // hero image
+@import '../../css/variables/responsive.less';
 
 .scenarios-wrapper {
-
   .section2,
   .section3 {
     text-align: center;
@@ -17,7 +16,7 @@
     align-items: center;
     height: 35rem;
     width: 100%;
-    background: url("../images/hero/scenatios.svg") no-repeat;
+    background: url('../../images/hero/scenatios.svg') no-repeat;
     background-position: bottom;
     background-size: cover;
 
@@ -67,7 +66,6 @@
     }
 
     .demo-wrapper {
-
       .item {
         display: inline-block;
         vertical-align: top;
@@ -90,7 +88,7 @@
           line-height: 32px;
           text-align: center;
           border-radius: 100px 0 0 100px;
-          background-color: #4FC4F9;
+          background-color: #4fc4f9;
           font-size: 14px;
           z-index: 20;
 
@@ -101,7 +99,6 @@
             border-style: solid;
             border-color: transparent transparent transparent #fff;
 
-            /* 定位 */
             position: absolute;
             right: 0px;
             top: 32%;
@@ -133,11 +130,11 @@
           margin-top: 1rem;
 
           &::before {
-            content: "";
+            content: '';
             display: inline-block;
             width: 8px;
             height: 8px;
-            background: #4FC4F9;
+            background: #4fc4f9;
             transform: rotate(45deg);
             margin-right: 1.4rem;
           }
@@ -148,10 +145,9 @@
         }
       }
     }
-
   }
 
-  @include media("<=1000px") {
+  @media @tablet {
     .section1 {
       h2 {
         font-size: 20px;
@@ -160,7 +156,6 @@
         text-align: center;
       }
     }
-
 
     .section2 {
       width: 90%;
@@ -180,10 +175,8 @@
       .demo-wrapper {
         .item {
           width: 100%;
-
         }
       }
-
     }
   }
 }

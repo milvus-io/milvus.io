@@ -1,12 +1,12 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Layout from '../components/layout/layout';
-import SEO from '../components/seo';
-import '../scss/scenarios.scss';
-import AudioBg from '../images/scenario/audio.png';
-import CvBg from '../images/scenario/cv.png';
-import NlpBg from '../images/scenario/nlp.png';
-import MolsearchBg from '../images/scenario/molsearch.png';
+import Layout from '../../components/layout/layout';
+import SEO from '../../components/seo';
+import './scenarios.less';
+import AudioBg from '../../images/scenario/audio.png';
+import CvBg from '../../images/scenario/cv.png';
+import NlpBg from '../../images/scenario/nlp.png';
+import MolsearchBg from '../../images/scenario/molsearch.png';
 
 const imgs = {
   audio: AudioBg,

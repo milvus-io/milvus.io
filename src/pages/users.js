@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import SEO from '../components/seo';
 import { importAllPics } from '../utils/docTemplate.util';
-// import '../scss/index.scss';
+// import './index.less';
 import Layout from '../components/layout/404Layout/404Layout';
 
 let users = [];

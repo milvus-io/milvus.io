@@ -3,7 +3,7 @@ const fs = require('fs');
 const ReadVersionJson = require('./walkFile');
 const locales = require('./src/constants/locales');
 const DOC_LANG_FOLDERS = ['/en/', '/zh-CN/'];
-const benchmarksMenu = require('./benchmark-menu');
+// const benchmarksMenu = require('./benchmark-menu');
 const express = require('express');
 const env = process.env.IS_PREVIEW;
 // const env = "preview";
@@ -159,11 +159,11 @@ exports.createPages = ({ actions, graphql }) => {
         const menuStructureList =
           (childMenuStructureJson && [...childMenuStructureJson.menuList]) ||
           [];
-        const benchmarkMenuList =
-          lang === 'en'
-            ? benchmarksMenu.benchmarksMenuListEN
-            : benchmarksMenu.benchmarksMenuListCN;
-        const menuList = [...menuStructureList, ...benchmarkMenuList];
+        // const benchmarkMenuList =
+        //   lang === 'en'
+        //     ? benchmarksMenu.benchmarksMenuListEN
+        //     : benchmarksMenu.benchmarksMenuListCN;
+        const menuList = [...menuStructureList];
         return {
           lang,
           version,

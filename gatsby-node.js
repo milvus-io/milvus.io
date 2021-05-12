@@ -129,7 +129,8 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors);
     }
     const findVersion = str => {
-      const regx = /versions\/master\/([v\d\.]*)/;
+      // version: v.1.0.0 | v0.x
+      const regx = /versions\/master\/([v\dx\.]*)/;
       const match = str.match(regx);
       return match
         ? match[1]

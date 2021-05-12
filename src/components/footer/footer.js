@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 // import LocalizeLink from "../localizedLink/localizedLink"
 // import { globalHistory } from "@reach/router";
 // import GithubIcon from "../../images/icon/github-normal.svg";
-// import "./footer.scss";
 import * as styles from './footer.module.less';
 
 const Footer = ({ locale, style }) => {

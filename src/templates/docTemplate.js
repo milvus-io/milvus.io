@@ -4,7 +4,6 @@ import SEO from '../components/seo';
 import { graphql } from 'gatsby';
 import ReactTooltip from 'react-tooltip';
 import 'highlight.js/styles/github.css';
-// import './docTemplate.scss';
 import './docTemplate.less';
 import { useMobileScreen } from '../hooks';
 import QueryModal from '../components/query-modal/query-modal';

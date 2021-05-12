@@ -8,7 +8,6 @@ import searchIcon from '../../images/v2/searchicon.png';
 import storageIcon from '../../images/v2/storage.svg';
 import supportIcon from '../../images/v2/support.svg';
 import GithubButton from 'react-github-button';
-// import './index.scss';
 import './index.less';
 import AnimatedSvg from '../../components/animatedSvg/animatedSvg';
 import { HOME_ANIMATION as HomeAnimation } from '../../../static/anime/common/home';

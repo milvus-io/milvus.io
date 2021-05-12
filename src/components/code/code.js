@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as styles from './code.module.less';
-// import './code.scss';
 
 const Code = ({ html, content, locale }) => {
   const buttonTextMap = {

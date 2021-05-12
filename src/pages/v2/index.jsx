@@ -1,14 +1,14 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import V2Layout from '../../components/layout/v2Layout';
-import V2Button from '../../components/button';
+import Button from '../../components/button';
 import autoscalingIcon from '../../images/v2/autoscaling.svg';
 import deploymentIcon from '../../images/v2/deployment.svg';
 import searchIcon from '../../images/v2/searchicon.png';
 import storageIcon from '../../images/v2/storage.svg';
 import supportIcon from '../../images/v2/support.svg';
 import GithubButton from 'react-github-button';
-import './index.scss';
+import './index.less';
 import AnimatedSvg from '../../components/animatedSvg/animatedSvg';
 import { HOME_ANIMATION as HomeAnimation } from '../../../static/anime/common/home';
 import SEO from '../../components/seo';
@@ -52,15 +52,15 @@ const HomePage = ({ data, pageContext }) => {
               />
             </div>
             <div className="title-wrapper">
-              {
-                banner.title.map(item => (
-                  <p className="title" key={item}>{item.toUpperCase()}</p>
-                ))
-              }
+              {banner.title.map(item => (
+                <p className="title" key={item}>
+                  {item.toUpperCase()}
+                </p>
+              ))}
             </div>
             <p className="text">{banner.text}</p>
             <div className="banner-btn-wrapper">
-              <V2Button
+              <Button
                 className="banner-btn1"
                 type="link"
                 link={banner.startBtn.href}
@@ -71,7 +71,7 @@ const HomePage = ({ data, pageContext }) => {
                   </>
                 }
               />
-              <V2Button
+              <Button
                 className="banner-btn2"
                 variant="outline"
                 type="link"
@@ -133,7 +133,7 @@ const HomePage = ({ data, pageContext }) => {
                 <p className="text ">{slogan.text2}</p>
               </div>
 
-              <V2Button
+              <Button
                 className="sloganBtn"
                 type="link"
                 link={slogan.gitBtn.href}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { searchByElasic } from '../../http/es';
 import { navigate } from '@reach/router';
-import './style.scss';
+import * as styles from './index.module.less';
 
 const SearchResult = props => {
   const { language = 'en', version = 'v1.0.0', text, handleBack } = props;
@@ -33,10 +33,10 @@ const SearchResult = props => {
   };
 
   return (
-    <div className="search-result">
+    <div className={styles.searchResult}>
       {/* eslint-disable jsx-a11y/click-events-have-key-events,
       jsx-a11y/no-noninteractive-element-interactions */}
-      <div className="back" onClick={handleBack} role="presentation">
+      <div className={styles.back} onClick={handleBack} role="presentation">
         <i className="fa fa-chevron-left"></i>
         <span>Back</span>
       </div>
@@ -47,9 +47,9 @@ const SearchResult = props => {
       <ul>
         {results.map(v => (
           <li key={v.name} onClick={() => handleClick(v)}>
-            <h4 className="title">{v.name}</h4>
+            <h4 className={styles.title}>{v.name}</h4>
             <div
-              className="content"
+              className={styles.content}
               dangerouslySetInnerHTML={{ __html: v.html }}
             ></div>
           </li>

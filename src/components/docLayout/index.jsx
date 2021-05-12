@@ -4,8 +4,8 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
 // import AskMilvus from "../../images/ask_milvus.png";
-import './index.scss';
 import { getStyleType } from '../../utils/docTemplate.util';
+import * as styles from './index.module.less';
 
 const DocLayout = props => {
   const {
@@ -18,7 +18,7 @@ const DocLayout = props => {
     version,
     headings,
     current,
-    wrapperClass = 'doc-wrapper',
+    wrapperClass = styles.docWrapper,
     isBenchMark = false,
     showDoc = true,
     isBlog,
@@ -43,7 +43,6 @@ const DocLayout = props => {
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
-  const [showMask, setShowMask] = useState(false);
   const [showMenuMask, setShowMenuMask] = useState(false);
 
   // const effectVariable =
@@ -106,19 +105,19 @@ const DocLayout = props => {
 
   useEffect(() => {
     let currentPos = 0;
-    const container = docContainer.current;
 
     const cb = function () {
+      const container = document.querySelector('html');
       const direction = container.scrollTop - currentPos > 0 ? 'down' : 'up';
       currentPos = container.scrollTop;
       const showButton = direction === 'up' && currentPos;
 
       setShowToTopButton(showButton);
     };
-    container.addEventListener('scroll', cb);
+    window.addEventListener('scroll', cb);
 
     return () => {
-      container.removeEventListener('scroll', cb);
+      window.removeEventListener('scroll', cb);
     };
   }, []);
 
@@ -129,14 +128,14 @@ const DocLayout = props => {
       const anchor = normalVal.split(' ').join('-');
       let childDom = null;
       if (v.children && v.children.length) {
-        childDom = generateAnchorMenu(v.children, 'child-item');
+        childDom = generateAnchorMenu(v.children, styles.childItem);
       }
       return (
         <div className={`item ${className}`} key={v.value}>
           <a
             href={`#${anchor}`}
             title={v.value}
-            className={anchor === hash ? 'active' : ''}
+            className={`${styles.anchor} ${anchor === hash ? 'active' : ''}`}
             onClick={() => setHash(anchor)}
           >
             {v.value}
@@ -148,7 +147,7 @@ const DocLayout = props => {
   };
 
   const onToTopClick = () => {
-    docContainer.current.scrollTo({
+    window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
@@ -161,23 +160,16 @@ const DocLayout = props => {
   };
 
   return (
-    <div className="layout-wrapper">
+    <div className={styles.layoutWrapper}>
       {menuType === 'new' ? (
-        <div
-          className={`mobile-header-wrapper-new ${showMask ? 'showMask' : ''}`}
-        >
-          <NewHeader
-            header={header.header}
-            locale={locale}
-            versions={versions}
-            version={version}
-            type="doc"
-            onSearchChange={handleSearchChange}
-            setShowMask={setShowMask}
-            showMask={showMask}
-            className={showMask ? 'new-header' : ''}
-          />
-        </div>
+        <NewHeader
+          header={header.header}
+          locale={locale}
+          versions={versions}
+          version={version}
+          type="doc"
+          onSearchChange={handleSearchChange}
+        />
       ) : (
         <Header
           language={language}
@@ -199,11 +191,12 @@ const DocLayout = props => {
           language={language}
           onSearchChange={handleSearchChange}
           setShowMask={setShowMenuMask}
+          wrapperClass={styles.menuContainer}
         ></Menu>
         <div
-          className={`inner-container ${isHome ? 'inner-container-home' : ''} ${
-            isBenchMark ? 'fullwidth' : ''
-          }`}
+          className={`${styles.innerContainer} ${
+            isHome ? styles.innerContainerHome : ''
+          } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -213,55 +206,55 @@ const DocLayout = props => {
         </div>
         {formatHeadings && !isBenchMark && (
           <div
-            className={`anchor-wrapper ${
-              menuType === 'new' ? 'anchor-wrapper-new' : ''
-            } ${isHome ? 'anchor-wrapper-new-home' : ''}`}
+            className={`${styles.anchorWrapper} ${
+              menuType === 'new' ? styles.anchorWrapperNew : ''
+            } ${isHome ? styles.home : ''}`}
           >
             {menuType === 'old' ? (
               <section>
-                <div className="button-container">
+                <div className={styles.buttonContainer}>
                   {isBlog || isBenchMark ? null : (
                     <a
-                      className="btn-anchor"
+                      className={styles.btnAnchor}
                       href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
                         locale === 'en' ? 'en' : 'zh-CN'
                       }/${editPath}`}
                     >
-                      <span className="btn-icon-wrapper">
-                        <i className="far fa-edit btn-icon"></i>
+                      <span className={styles.btnIconWrapper}>
+                        <i className={`far fa-edit ${styles.btnIcon}`}></i>
                       </span>
 
                       {language.footer.editBtn.label}
                     </a>
                   )}
                   <a
-                    className="btn-anchor"
+                    className={styles.btnAnchor}
                     href={language.footer.docIssueBtn.link}
                   >
-                    <span className="btn-icon-wrapper">
-                      <i className="fab fa-github btn-icon"></i>
+                    <span className={styles.btnIconWrapper}>
+                      <i className={`fab fa-github ${styles.btnIcon}`}></i>
                     </span>
                     {language.footer.docIssueBtn.label}
                   </a>
                   <a
-                    className="btn-anchor"
+                    className={styles.btnAnchor}
                     id="btn-bug"
                     href={language.footer.issueBtn.link}
                   >
-                    <span className="btn-icon-wrapper">
-                      <i className="fas fa-bug btn-icon"></i>
+                    <span className={styles.btnIconWrapper}>
+                      <i className={`fas fa-bug ${styles.btnIcon}`}></i>
                     </span>
 
                     {language.footer.issueBtn.label}
                   </a>
 
                   <a
-                    className="btn-anchor"
+                    className={styles.btnAnchor}
                     id="btn-question"
                     href={language.footer.questionBtn.link}
                   >
-                    <span className="btn-icon-wrapper">
-                      <i className="fab fa-slack-hash btn-icon"></i>
+                    <span className={styles.btnIconWrapper}>
+                      <i className={`fab fa-slack-hash ${styles.btnIcon}`}></i>
                     </span>
 
                     {language.footer.questionBtn.label}
@@ -270,11 +263,11 @@ const DocLayout = props => {
 
                 {/* filter faq page */}
                 {!id.includes('faq')
-                  ? generateAnchorMenu(formatHeadings, 'parent-item')
+                  ? generateAnchorMenu(formatHeadings, styles.parentItem)
                   : null}
 
                 {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
-                <div className="event">
+                <div className={styles.event}>
                   <h4>Upcoming Event</h4>
                   <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
                 </div>
@@ -285,49 +278,51 @@ const DocLayout = props => {
               <section>
                 {!isHome && (
                   <>
-                    <div className="button-container-new">
+                    <div className={styles.buttonContainerNew}>
                       {isBlog || isBenchMark ? null : (
                         <a
-                          className="btn-anchor"
+                          className={styles.btnAnchor}
                           href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
                             locale === 'en' ? 'en' : 'zh-CN'
                           }/${editPath}`}
                         >
-                          <span className="btn-icon-wrapper">
-                            <i className="far fa-edit btn-icon"></i>
+                          <span className={styles.btnIconWrapper}>
+                            <i className={`far fa-edit ${styles.btnIcon}`}></i>
                           </span>
 
                           {language.footer.editBtn.label}
                         </a>
                       )}
                       <a
-                        className="btn-anchor"
+                        className={styles.btnAnchor}
                         href={language.footer.docIssueBtn.link}
                       >
-                        <span className="btn-icon-wrapper">
-                          <i className="fab fa-github btn-icon"></i>
+                        <span className={styles.btnIconWrapper}>
+                          <i className={`fab fa-github ${styles.btnIcon}`}></i>
                         </span>
                         {language.footer.docIssueBtn.label}
                       </a>
                       <a
-                        className="btn-anchor"
+                        className={styles.btnAnchor}
                         id="btn-bug"
                         href={language.footer.issueBtn.link}
                       >
-                        <span className="btn-icon-wrapper">
-                          <i className="fas fa-bug btn-icon"></i>
+                        <span className={styles.btnIconWrapper}>
+                          <i className={`fas fa-bug ${styles.btnIcon}`}></i>
                         </span>
 
                         {language.footer.issueBtn.label}
                       </a>
 
                       <a
-                        className="btn-anchor"
+                        className={styles.btnAnchor}
                         id="btn-question"
                         href={language.footer.questionBtn.link}
                       >
-                        <span className="btn-icon-wrapper">
-                          <i className="fab fa-slack-hash btn-icon"></i>
+                        <span className={styles.btnIconWrapper}>
+                          <i
+                            className={`fab fa-slack-hash ${styles.btnIcon}`}
+                          ></i>
                         </span>
 
                         {language.footer.questionBtn.label}
@@ -335,13 +330,13 @@ const DocLayout = props => {
                     </div>
 
                     {formatHeadings.length > 0 && (
-                      <div className="anchor-title">
+                      <div className={styles.anchorTitle}>
                         {language.footer.content}
                       </div>
                     )}
                     {/* filter faq page */}
                     {!id.includes('faq')
-                      ? generateAnchorMenu(formatHeadings, 'parent-item')
+                      ? generateAnchorMenu(formatHeadings, styles.parentItem)
                       : null}
                   </>
                 )}
@@ -367,7 +362,7 @@ const DocLayout = props => {
 
         {showToTopButton ? (
           <div
-            className="button-to-top"
+            className={styles.btnToTop}
             role="button"
             onClick={onToTopClick}
             onKeyDown={onToTopClick}
@@ -409,28 +404,28 @@ const MenuDialog = ({
 }) => {
   useEffect(() => {
     const scrollEls = document.querySelectorAll('.can-scroll');
-    // [].forEach.call(scrollEls, (el) => {
-    //   let initialY = 0;
-    //   el.addEventListener('touchstart', e => {
-    //     if (e.targetTouches.length === 1) {
-    //       initialY = e.targetTouches[0].clientY;
-    //     }
-    //   });
-    //   el.addEventListener('touchmove', e => {
-    //     if (e.targetTouches.length === 1) {
-    //       const clientY = e.targetTouches[0].clientY - initialY;
-    //       if (
-    //         el.scrollTop + el.clientHeight >= el.scrollHeight &&
-    //         clientY < 0
-    //       ) {
-    //         return e.preventDefault();
-    //       }
-    //       if (el.scrollTop <= 0 && clientY > 0) {
-    //         return e.preventDefault();
-    //       }
-    //     }
-    //   });
-    // });
+    [].forEach.call(scrollEls, el => {
+      let initialY = 0;
+      el.addEventListener('touchstart', e => {
+        if (e.targetTouches.length === 1) {
+          initialY = e.targetTouches[0].clientY;
+        }
+      });
+      el.addEventListener('touchmove', e => {
+        if (e.targetTouches.length === 1) {
+          const clientY = e.targetTouches[0].clientY - initialY;
+          if (
+            el.scrollTop + el.clientHeight >= el.scrollHeight &&
+            clientY < 0
+          ) {
+            return e.preventDefault();
+          }
+          if (el.scrollTop <= 0 && clientY > 0) {
+            return e.preventDefault();
+          }
+        }
+      });
+    });
 
     const handleScroll = e => {
       const isInclude = Array.prototype.some.call(scrollEls, el =>
@@ -450,7 +445,7 @@ const MenuDialog = ({
   }, []);
 
   return (
-    <div className="mobile-menu-wrapper-new show">
+    <div className={styles.mobileMenuWrapperNew}>
       <Menu
         menuList={menuList}
         versions={versions}

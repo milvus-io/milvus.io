@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import LocalizeLink from '../localizedLink/localizedLink';
 import VersionSelector from '../selector';
 import { useMobileScreen } from '../../hooks';
-import './index.scss';
+import * as styles from './index.module.less';
+
 /* eslint-disable */
 const findItem = (key, value, arr) => {
   let find = undefined;
@@ -32,6 +33,7 @@ const Menu = props => {
     onSearchChange,
     language,
     setShowMask = () => {},
+    wrapperClass = '',
   } = props;
 
   const { header } = language;
@@ -168,14 +170,16 @@ const Menu = props => {
     return list.map(doc => (
       <div
         className={`${className} ${
-          type === 'new' && doc.label2 ? 'menu-child-3' : ''
-        } ${doc.isBlog ? 'blog' : ''} ${doc.isLast ? 'menu-last-level' : ''} ${
-          doc.isActive ? 'active' : ''
+          type === 'new' && doc.label2 ? styles.menuChild3 : ''
+        }  ${doc.isLast ? styles.menuLastLevel : ''} ${
+          doc.isActive ? styles.active : ''
         }`}
         key={doc.id}
       >
         <div
-          className={`menu_name-wrapper ${doc.showChildren ? 'active' : ''}`}
+          className={`${styles.menuNameWrapper} ${
+            doc.showChildren ? styles.active : ''
+          }`}
           onClick={
             doc.isMenu
               ? () => {
@@ -190,15 +194,15 @@ const Menu = props => {
               href={doc.outLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text outlink"
+              className={`${styles.outLink} ${styles.text}`}
             >
               <i className="fas fa-external-link-alt"></i>
               {doc.title}
             </a>
           ) : doc.isMenu === true ? (
-            <span className="text">{doc.title}</span>
+            <span className={styles.text}>{doc.title}</span>
           ) : (
-            <LocalizeLink locale={locale} className="text" to={doc.path}>
+            <LocalizeLink locale={locale} className={styles.text} to={doc.path}>
               {doc.title}
             </LocalizeLink>
           )}
@@ -209,13 +213,13 @@ const Menu = props => {
                 <>
                   {doc.isMenu && doc.label1 === '' ? (
                     <i
-                      className={`fas fa-caret-down arrow ${
-                        doc.showChildren ? '' : 'top'
+                      className={`fas fa-caret-down ${styles.arrow} ${
+                        doc.showChildren ? '' : styles.top
                       }`}
                     ></i>
                   ) : (
                     <i
-                      className={`fas expand-icon ${
+                      className={`fas ${styles.expandIcon} ${
                         doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
                       }`}
                     ></i>
@@ -223,17 +227,21 @@ const Menu = props => {
                 </>
               ) : (
                 <i
-                  className={`fas fa-chevron-down arrow ${
-                    doc.showChildren ? '' : 'top'
+                  className={`fas fa-chevron-down ${styles.arrow} ${
+                    doc.showChildren ? '' : styles.top
                   }`}
                 ></i>
               )}
             </>
           ) : null}
         </div>
-        <div className={`menu-child-wrapper ${doc.showChildren ? 'open' : ''}`}>
+        <div
+          className={`${styles.menuChildWrapper} ${
+            doc.showChildren ? styles.open : ''
+          }`}
+        >
           {doc.children && doc.children.length
-            ? generageMenuDom(doc.children, 'menu-child')
+            ? generageMenuDom(doc.children, styles.menuChild)
             : null}
         </div>
       </div>
@@ -261,14 +269,14 @@ const Menu = props => {
   return (
     <>
       <section
-        className={`menu-container can-scroll ${
-          !menuStatus && type !== 'new' ? 'hide' : ''
-        } ${type === 'new' ? 'menu-container-new new-hide' : ''}`}
+        className={`${wrapperClass} ${styles.menuContainer} can-scroll ${
+          !menuStatus && type !== 'new' ? styles.hide : ''
+        } ${type === 'new' ? `${styles.menuContainerNew} ` : ''}`}
         ref={menuRef}
       >
         {isMobile && type !== 'new' ? (
           <i
-            className="fas fa-times close"
+            className={`fas fa-times ${styles.close}`}
             onClick={() => {
               toggleMenu(false);
             }}
@@ -278,17 +286,17 @@ const Menu = props => {
           <>
             {type === 'new' && !isMobile ? (
               <input
-                className="search"
+                className={styles.search}
                 type="text"
                 onKeyPress={handleSearch}
                 placeholder={header.search}
               />
             ) : (
-              <div className="title"></div>
+              <div></div>
             )}
           </>
         ) : (
-          <div className="border-bottom select-wrapper">
+          <div className={`${styles.borderBottom} ${styles.selectWrapper}`}>
             <VersionSelector
               options={versions}
               selected={formatVersion}
@@ -298,25 +306,28 @@ const Menu = props => {
           </div>
         )}
 
-        {generageMenuDom(realMenuList, 'menu-top-level border-bottom')}
+        {generageMenuDom(
+          realMenuList,
+          `${styles.menuTopLevel} ${styles.borderBottom}`
+        )}
       </section>
       {type === 'new' && isMobile ? (
         <div
-          className="mini-menu-control"
+          className={styles.miniMenuControl}
           onClick={() => {
             toggleMenu(!menuStatus);
             setShowMask(!menuStatus);
           }}
         >
           {menuStatus ? (
-            <i className="fas fa-times new"></i>
+            <i className={`fas fa-times ${styles.v2}`}></i>
           ) : (
-            <i className="fas fa-bars new"></i>
+            <i className={`fas fa-bars ${styles.v2}`}></i>
           )}
         </div>
       ) : !menuStatus ? (
         <div
-          className="mini-menu-control"
+          className={styles.miniMenuControl}
           onClick={() => {
             toggleMenu(true);
           }}

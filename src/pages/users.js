@@ -1,15 +1,15 @@
-import React from "react";
-import { graphql } from "gatsby";
-import Layout from "../components/layout/404Layout";
-import SEO from "../components/seo";
-import { importAllPics } from "../utils/docTemplate.util";
-import "../scss/index.scss";
+import React from 'react';
+import { graphql } from 'gatsby';
+import SEO from '../components/seo';
+import { importAllPics } from '../utils/docTemplate.util';
+// import './index.less';
+import Layout from '../components/layout/404Layout/404Layout';
 
 let users = [];
 let resources = [];
 importAllPics(
-  require.context("../images/website/users", false, /\.jpg|.png$/),
-  "users",
+  require.context('../images/website/users', false, /\.jpg|.png$/),
+  'users',
   users,
   resources
 );

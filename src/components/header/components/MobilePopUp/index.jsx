@@ -1,7 +1,12 @@
-import React, { forwardRef } from 'react';
-import './index.scss';
+import React from 'react';
+import * as styles from './index.module.less';
 
-const MobilePopUp = forwardRef((props, ref) => {
-  return <div className="pop-up-wrapper" ref={ref}>{props.children}</div>;
-});
+const MobilePopUp = props => {
+  const { open } = props;
+  return (
+    <div className={`${styles.popUpWrapper} ${open && styles.activited}`}>
+      {props.children}
+    </div>
+  );
+};
 export default MobilePopUp;

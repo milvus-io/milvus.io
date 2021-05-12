@@ -4,8 +4,8 @@ import {
   scrollToElement,
 } from '../../../utils/docTemplate.util';
 import LocalizeLink from '../../localizedLink/localizedLink';
+import * as styles from './index.module.less';
 
-import './index.scss';
 const DOCS_JSON = require('../../../search.json');
 let timer = null;
 const SearchForWeb = props => {
@@ -59,10 +59,12 @@ const SearchForWeb = props => {
       setLoading(false);
     }, 400);
   };
+
   const handleFocus = e => {
     setFocus(true);
     setShowMatchData(true);
   };
+
   const useClickOutside = (ref, handler, events) => {
     if (!events) events = [`mousedown`, `touchstart`];
     const detectClickOutside = event => {
@@ -107,9 +109,9 @@ const SearchForWeb = props => {
   };
 
   return (
-    <div className="search-wrapper-web" ref={containerRef}>
+    <div className={styles.searchWrapperWeb} ref={containerRef}>
       <svg
-        className="search-icon"
+        className={styles.searchIcon}
         viewBox="0 0 16 16"
         version="1.1"
         width="16"
@@ -129,7 +131,7 @@ const SearchForWeb = props => {
         ref={ref}
       ></input>
       {query.length && focus && showMatchData ? (
-        <ul className="result-list">
+        <ul className={styles.resultList}>
           {matchData.length
             ? matchData.map((v, index) => {
                 const { lang, version, title, isId, highlight, path } = v;
@@ -160,6 +162,7 @@ const SearchForWeb = props => {
                         to={`/docs/${version}/${path}${
                           isId ? '' : `?${anchor}`
                         }`}
+                        className={styles.link}
                       >
                         <span
                           dangerouslySetInnerHTML={{

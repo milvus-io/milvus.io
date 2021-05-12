@@ -1,42 +1,39 @@
 import React from 'react';
-import './index.scss';
+import * as styles from './index.module.less';
 
 // type = 'link' || 'button'
 // variant = 'text' | 'outline' | contained
 
-const V2Button = ({
+const Button = ({
   href,
   type,
   isExternal = false,
   variant = 'contained',
   className = '',
   handleClick,
-  children
+  children,
 }) => {
   return (
-    <div className="button-wrapper">
-      {
-        type === 'link' ? (
-          <a
-            target={isExternal ? '_blank' : '_self'}
-            rel="noopener noreferrer"
-            href={href}
-            className={`${variant} ${className}`}
-          >
-            {
-              children
-            }
-          </a>
-        ) : (
-          <button onClick={handleClick} className={`${variant} ${className}`}>
-            {
-              children
-            }
-          </button>
-        )
-      }
+    <div className={styles.buttonWrapper}>
+      {type === 'link' ? (
+        <a
+          target={isExternal ? '_blank' : '_self'}
+          rel="noopener noreferrer"
+          href={href}
+          className={`${styles[variant]} ${className}`}
+        >
+          {children}
+        </a>
+      ) : (
+        <button
+          onClick={handleClick}
+          className={`${styles[variant]} ${className}`}
+        >
+          {children}
+        </button>
+      )}
     </div>
   );
 };
 
-export default V2Button;
+export default Button;

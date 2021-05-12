@@ -1,0 +1,44 @@
+@import '../../../../css/variables/color.less';
+
+.searchSection {
+  padding: 0 24px;
+
+  .inputWrapper {
+    border: 1px solid rgba(196, 196, 196, 0.5);
+    border-radius: 8px;
+    display: flex;
+    padding: 10px 16px;
+
+    // trigger if child elements focus
+    &:focus-within {
+      border: 1px solid #06aaf2;
+
+      .iconWrapper {
+        color: #06aaf2;
+      }
+    }
+
+    .iconWrapper {
+      font-size: 16px;
+      line-height: 16px;
+      color: #aeaebb;
+
+      margin-left: 12px;
+      outline: none;
+    }
+
+    .input {
+      flex: 1;
+      border: none;
+      outline: none;
+      color: @color-default-link;
+      font-family: Inter;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 17px;
+      &::placeholder {
+        color: #aeaebb;
+      }
+    }
+  }
+}

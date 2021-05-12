@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './textSelectionMenu.scss';
+import * as moduleStyle from './textSelectionMenu.module.less';
 import git from '../../images/git.svg';
 
 const TextSelectionMenu = ({ language, options }) => {
@@ -22,22 +22,22 @@ const TextSelectionMenu = ({ language, options }) => {
     setTitle(`I have a issue about  "${tempStr}"`);
   }, [copy, styles]);
   return (
-    <div className='pop-tool-wrapper' style={style} >
-      <div className='bg-wrapper'>
-        <div className="pop-tool-content" >
-          <a href={`https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=${title}&body=${body}`}
-            target='_blank'
+    <div className={moduleStyle.popToolWrapper} style={style}>
+      <div className={moduleStyle.bgWrapper}>
+        <div className={moduleStyle.popToolContent}>
+          <a
+            href={`https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=${title}&body=${body}`}
+            target="_blank"
             rel="noopener noreferrer"
-            className="content-item"
+            className={moduleStyle.contentItem}
           >
-            <p className="icon-wrapper">
+            <p className={moduleStyle.iconWrapper}>
               <img src={git} alt="git-logo" />
             </p>
             <span>{selectMenu.github}</span>
           </a>
         </div>
       </div>
-
     </div>
   );
 };

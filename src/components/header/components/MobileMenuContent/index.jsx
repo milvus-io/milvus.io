@@ -1,11 +1,19 @@
 import React, { useMemo } from 'react';
 import LocalizeLink from '../../../localizedLink/localizedLink';
-import './index.scss';
+import * as styles from './index.module.less';
 
-const MobileMenuContent = ({ locale, header, onChangeLocale, to, l, hideMobileMask }) => {
+const MobileMenuContent = ({
+  locale,
+  header,
+  onChangeLocale,
+  to,
+  l,
+  hideMobileMask,
+}) => {
   return useMemo(() => {
     return (
-      <i className="mobile-menu-content"
+      <i
+        className={styles.mobileMenuContent}
         role="button"
         tabIndex={0}
         aria-label="mobile-menu-content"
@@ -15,14 +23,14 @@ const MobileMenuContent = ({ locale, header, onChangeLocale, to, l, hideMobileMa
         <LocalizeLink
           locale={locale}
           to="/docs/install_milvus.md"
-          className="link"
+          className={styles.link}
         >
           {header.quick}
         </LocalizeLink>
         <LocalizeLink
           locale={locale}
           to="/docs/benchmarks_azure"
-          className="link"
+          className={styles.link}
         >
           {header.benchmarks}
         </LocalizeLink>
@@ -30,34 +38,36 @@ const MobileMenuContent = ({ locale, header, onChangeLocale, to, l, hideMobileMa
           href="https://tutorials.milvus.io"
           target="_blank"
           rel="noopener noreferrer"
-          className="link"
+          className={styles.link}
         >
           {header.tutorials}
         </a>
 
-        <LocalizeLink locale={locale} className="link" to="/scenarios">
+        <LocalizeLink locale={locale} className={styles.link} to="/scenarios">
           {header.solution}
         </LocalizeLink>
 
         <LocalizeLink
           locale={locale}
-          className="link"
+          className={styles.link}
           to={'/docs/install_milvus.md'}
         >
           {header.doc}
         </LocalizeLink>
         <LocalizeLink
           locale={locale}
-          className="link"
+          className={styles.link}
           to={'/blogs/2019-08-26-vector-search-million.md'}
         >
           {header.blog}
         </LocalizeLink>
-        <div className="btn-wrapper link">
+        <div className={`${styles.btnWrapper} ${styles.link}`}>
           <LocalizeLink
             locale={l}
             to={to}
-            className={`langBtn ${locale === 'en' ? 'active' : ''}`}
+            className={`${styles.langBtn} ${
+              locale === 'en' ? styles.active : ''
+            }`}
           >
             <span
               tabIndex={0}
@@ -71,7 +81,9 @@ const MobileMenuContent = ({ locale, header, onChangeLocale, to, l, hideMobileMa
           <LocalizeLink
             locale={l}
             to={to}
-            className={`langBtn ${locale === 'cn' ? 'active' : ''}`}
+            className={`${styles.langBtn} ${
+              locale === 'cn' ? styles.active : ''
+            }`}
           >
             <span
               tabIndex={0}

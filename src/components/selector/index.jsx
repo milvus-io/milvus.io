@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import LocalizeLink from "../localizedLink/localizedLink";
-import "./index.scss";
-/* eslint-disable */
-const Selector = (props) => {
+import React, { useState, useEffect } from 'react';
+import LocalizeLink from '../localizedLink/localizedLink';
+import * as styles from './index.module.less';
+
+const Selector = props => {
   const {
     selected,
     options,
@@ -11,7 +11,7 @@ const Selector = (props) => {
     setSelected = () => {},
   } = props;
   const [listStatus, setListStatus] = useState(false);
-  const toggleList = (e) => {
+  const toggleList = e => {
     e.stopPropagation();
     setListStatus(!listStatus);
   };
@@ -20,33 +20,41 @@ const Selector = (props) => {
     const cb = () => {
       setListStatus(false);
     };
-    window.addEventListener("click", cb);
+    window.addEventListener('click', cb);
     return () => {
-      window.removeEventListener("click", cb);
+      window.removeEventListener('click', cb);
     };
   }, []);
 
-  const handleSelected = (e) => {
+  const handleSelected = e => {
     const value = e.target.dataset.value;
     setSelected(value);
   };
 
   return (
-    <div className={`selector-wrapper ${isVersion && "version-wrapper"}`}>
-      <div className="selected" onClick={toggleList}>
+    <div
+      className={`${styles.selectorWrapper} ${
+        isVersion && styles.versionWrapper
+      }`}
+    >
+      <div className={styles.selected} onClick={toggleList}>
         {selected}
-        <i className="fas fa-chevron-down arrow"></i>
+        <i className={`fas fa-chevron-down ${styles.arrow}`}></i>
       </div>
       <ul
-        className={`options-wrapper ${listStatus && "open"}`}
+        className={`${styles.optionsWrapper} ${listStatus && styles.open}`}
         onClick={handleSelected}
       >
-        {options.map((v) => (
-          <li className={v === selected ? "active" : ""} key={v} data-value={v}>
+        {options.map(v => (
+          <li
+            className={v === selected ? styles.active : ''}
+            key={v}
+            data-value={v}
+          >
             {isVersion ? (
               <LocalizeLink
                 locale={locale}
-                className="text"
+                className={styles.text}
                 to={`/docs/${v}/overview.md`}
               >
                 {v}

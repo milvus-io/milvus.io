@@ -4,7 +4,6 @@ import {
   getAnchorElement,
   scrollToElement,
 } from '../../../../utils/docTemplate.util';
-// import './index.scss';
 import * as styles from './index.module.less';
 
 const DOCS_JSON = require('../../../../search.json');

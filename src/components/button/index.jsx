@@ -1,6 +1,5 @@
 import React from 'react';
 import * as styles from './index.module.less';
-// import './index.scss';
 
 // type = 'link' || 'button'
 // variant = 'text' | 'outline' | contained

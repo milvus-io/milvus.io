@@ -13,7 +13,6 @@ import { Link } from 'gatsby';
 import Search from '../components/Search/Search';
 import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
-// import './index.scss';
 import * as styles from './index.module.less';
 
 const V2Header = ({

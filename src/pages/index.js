@@ -4,7 +4,6 @@ import Layout from '../components/layout/layout';
 import SEO from '../components/seo';
 import LocalizedLink from '../components/localizedLink/localizedLink';
 import NotificationV2 from '../components/notification/v2';
-import '../scss/index.scss';
 import availabilityIcon from '../images/features/availability.svg';
 import cloudIcon from '../images/features/cloud.svg';
 import costIcon from '../images/features/cost.svg';
@@ -31,6 +30,7 @@ import MilvusUserWechat from '../images/milvus-user-wechat.png';
 import GithubButton from 'react-github-button';
 import { importAllPics } from '../utils/docTemplate.util';
 import 'react-github-button/assets/style.css';
+import './index.less';
 
 const icons = {
   availability: availabilityIcon,
@@ -118,7 +118,7 @@ const IndexPage = ({ data, pageContext }) => {
       ></Notification> */}
       <main className="home-wrapper">
         <section className="section1">
-          <div className="githubicon">
+          <div className="githubIcon">
             <GithubButton
               type="stargazers"
               size="large"
@@ -128,7 +128,7 @@ const IndexPage = ({ data, pageContext }) => {
 
             {locale === 'cn' && (
               <a
-                className="giteeicon"
+                className="giteeIcon"
                 href="https://gitee.com/milvus-io/milvus/stargazers"
               >
                 <img
@@ -142,14 +142,14 @@ const IndexPage = ({ data, pageContext }) => {
           <h3 dangerouslySetInnerHTML={{ __html: section1.desc2 }}></h3>
           <div className="btn-wrapper">
             <LocalizedLink
-              className="primary white-color"
+              className="primary btn-primary btn-white-color"
               to="/docs/install_milvus.md"
               locale={locale}
             >
               {section1.link2}
             </LocalizedLink>
             <LocalizedLink
-              className="primary white-color"
+              className="primary btn-primary btn-white-color"
               to="/docs/overview.md"
               locale={locale}
             >
@@ -168,7 +168,6 @@ const IndexPage = ({ data, pageContext }) => {
           <p>{section5.desc}</p>
         </section>
         <section className="section3">
-          {/* <h2>{section3.title}</h2> */}
           <ul className="feature-wrapper">
             {section3.list.map(v => (
               <li className="feature-item" key={v.title}>
@@ -190,7 +189,7 @@ const IndexPage = ({ data, pageContext }) => {
           <p>{section4.desc2}</p>
           <div className="btn-wrapper">
             <a
-              className="primary primary-color with-icon"
+              className="primary btn-primary btn-primary-color with-icon"
               href="https://github.com/milvus-io"
               target="_blank"
               rel="noopener noreferrer"
@@ -199,7 +198,7 @@ const IndexPage = ({ data, pageContext }) => {
               <span>{section4.contribute}</span>
             </a>
             <a
-              className="primary with-icon"
+              className="primary btn-primary with-icon"
               href="https://github.com/milvus-io/bootcamp"
               target="_blank"
               rel="noopener noreferrer"
@@ -226,7 +225,6 @@ const IndexPage = ({ data, pageContext }) => {
               <p>Milvus EM</p>
             </li>
             <li>
-              {/* <a target="_blank" rel="noopener noreferrer" href="/tools/sizing"> */}
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -313,7 +311,6 @@ const IndexPage = ({ data, pageContext }) => {
                             alt="resouce"
                           ></img>
                         </a>
-                        {/* <p>{v.name}</p> */}
                         {v.name === 'wechat' && (
                           <div className="wechatqr">
                             <img

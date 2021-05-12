@@ -1,7 +1,11 @@
 # => Build container
-FROM zilliz/milvus.io.builder as builder
+# FROM zilliz/milvus.io.builder as builder
+FROM node:14.15.3-alpine3.12 as builder
+WORKDIR /app
+COPY . .
+RUN yarn
 ENV IS_PREVIEW preview
-WORKDIR /site
+# WORKDIR /site
 COPY . .
 
 RUN yarn build

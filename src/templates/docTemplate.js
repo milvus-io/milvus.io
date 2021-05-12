@@ -337,6 +337,9 @@ export default function Template({
   if (!isBlog) {
     newHtml = newHtml.replace(hrefRegex, match => {
       const hrefArr = localizedPath.split('/');
+      if(!localizedPath.startsWith("/")) {
+        hrefArr.unshift("");
+      }
       hrefArr.splice(hrefArr.length - 1, 1, match.replace('href="', '').replace('"',''));
       return `href="${hrefArr.join("/")}"`;
     });

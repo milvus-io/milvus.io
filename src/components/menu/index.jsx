@@ -194,7 +194,7 @@ const Menu = props => {
               href={doc.outLink}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${styles.outLink} ${styles.text}`}
+              className={`${styles.outlink} ${styles.text}`}
             >
               <i className="fas fa-external-link-alt"></i>
               {doc.title}

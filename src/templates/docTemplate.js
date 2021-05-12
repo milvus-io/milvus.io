@@ -7,7 +7,7 @@ import 'highlight.js/styles/github.css';
 import './docTemplate.less';
 import { useMobileScreen } from '../hooks';
 import QueryModal from '../components/query-modal/query-modal';
-import { getStyleType, sortVersions } from '../utils/docTemplate.util';
+import { sortVersions } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import SearchResult from '../components/search-result';
@@ -37,7 +37,6 @@ export default function Template({
 
   const { isMobile } = useMobileScreen();
 
-  const type = useMemo(() => getStyleType(version), [version]);
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
@@ -188,11 +187,7 @@ export default function Template({
       ) : (
         <>
           {isSearch ? (
-            <div
-              className={`doc-post-container ${
-                type === 'new' ? 'doc-post-container-new' : ''
-              }`}
-            >
+            <div className="doc-post-container">
               <SearchResult
                 text={searchVal}
                 language={locale}
@@ -203,11 +198,7 @@ export default function Template({
           ) : homeData ? (
             <HomeTemplate data={homeData} />
           ) : (
-            <div
-              className={`doc-post-container ${
-                type === 'new' ? 'doc-post-container-new' : ''
-              }`}
-            >
+            <div className="doc-post-container">
               <>
                 {showWarning && (
                   <div className="alert warning">

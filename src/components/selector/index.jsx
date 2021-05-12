@@ -37,12 +37,22 @@ const Selector = props => {
         isVersion && styles.versionWrapper
       }`}
     >
-      <div className={styles.selected} onClick={toggleList}>
+      <div
+        className={styles.selected}
+        tabIndex="0"
+        role="button"
+        aria-label="open selector"
+        onClick={toggleList}
+        onKeyDown={toggleList}
+      >
         {selected}
         <i className={`fas fa-chevron-down ${styles.arrow}`}></i>
       </div>
       <ul
         className={`${styles.optionsWrapper} ${listStatus && styles.open}`}
+        tabIndex="0"
+        role="button"
+        onKeyDown={handleSelected}
         onClick={handleSelected}
       >
         {options.map(v => (

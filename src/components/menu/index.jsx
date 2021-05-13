@@ -32,7 +32,6 @@ const Menu = props => {
     type,
     onSearchChange,
     language,
-    setShowMask = () => {},
     wrapperClass = '',
   } = props;
 
@@ -155,6 +154,15 @@ const Menu = props => {
 
   const menuRef = useRef(null);
 
+  useEffect(() => {
+    const html = document.querySelector('html');
+    html.style.overflowY = isMobile && menuStatus ? 'hidden' : 'auto';
+  }, [isMobile, menuStatus]);
+
+  useEffect(() => {
+    menuRef.current.style.top = !isMobile ? headerHeight : null;
+  }, [isMobile, headerHeight]);
+
   const handleMenuClick = e => {
     const menuContainer = menuRef.current;
     if (menuContainer) {
@@ -256,13 +264,16 @@ const Menu = props => {
     }
   };
 
+  const onMaskClick = () => {
+    setMenuStatus(false);
+  };
+
   return (
     <>
       <section
-        className={`${wrapperClass} ${styles.menuContainer} can-scroll ${
-          !menuStatus && type !== 'new' ? styles.hide : ''
-        } ${styles.menuContainerNew}`}
-        style={{ top: `${headerHeight}` }}
+        className={`${wrapperClass} ${styles.menuContainer} ${
+          !menuStatus ? styles.hide : ''
+        }`}
         ref={menuRef}
       >
         {!isMobile && (
@@ -279,12 +290,11 @@ const Menu = props => {
           `${styles.menuTopLevel} ${styles.borderBottom}`
         )}
       </section>
-      {type === 'new' && isMobile ? (
+      {isMobile && (
         <div
           className={styles.miniMenuControl}
           onClick={() => {
             toggleMenu(!menuStatus);
-            setShowMask(!menuStatus);
           }}
         >
           {menuStatus ? (
@@ -293,16 +303,10 @@ const Menu = props => {
             <i className={`fas fa-bars ${styles.v2}`}></i>
           )}
         </div>
-      ) : !menuStatus ? (
-        <div
-          className={styles.miniMenuControl}
-          onClick={() => {
-            toggleMenu(true);
-          }}
-        >
-          <i className="fas fa-bars"></i>
-        </div>
-      ) : null}
+      )}
+      {isMobile && menuStatus && (
+        <div className={styles.mask} onClick={onMaskClick}></div>
+      )}
     </>
   );
 };

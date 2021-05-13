@@ -3,7 +3,6 @@ import Menu from '../menu';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
-// import AskMilvus from "../../images/ask_milvus.png";
 import { getHeaderHeight, getStyleType } from '../../utils/docTemplate.util';
 import * as styles from './index.module.less';
 
@@ -43,7 +42,6 @@ const DocLayout = props => {
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
-  const [showMenuMask, setShowMenuMask] = useState(false);
 
   // check menu type based on whether version is 2.0
   // here use v1 as test
@@ -190,7 +188,6 @@ const DocLayout = props => {
           type={menuType}
           language={language}
           onSearchChange={handleSearchChange}
-          setShowMask={setShowMenuMask}
           wrapperClass={styles.menuContainer}
         ></Menu>
         <div
@@ -277,21 +274,6 @@ const DocLayout = props => {
           </div>
         )}
 
-        {showMenuMask ? (
-          <MenuDialog
-            menuList={menuList}
-            versions={versions}
-            activeDoc={id.split('-')[0]}
-            version={version}
-            locale={locale}
-            isBenchMark={isBenchMark}
-            type={menuType}
-            language={language}
-            onSearchChange={handleSearchChange}
-            showMenuMask={showMenuMask}
-          />
-        ) : null}
-
         {showToTopButton ? (
           <div
             className={styles.btnToTop}
@@ -322,73 +304,3 @@ const DocLayout = props => {
 };
 
 export default DocLayout;
-
-const MenuDialog = ({
-  menuList,
-  versions,
-  activeDoc,
-  version,
-  locale,
-  isBenchMark,
-  type,
-  language,
-  onSearchChange,
-}) => {
-  useEffect(() => {
-    const scrollEls = document.querySelectorAll('.can-scroll');
-    [].forEach.call(scrollEls, el => {
-      let initialY = 0;
-      el.addEventListener('touchstart', e => {
-        if (e.targetTouches.length === 1) {
-          initialY = e.targetTouches[0].clientY;
-        }
-      });
-      el.addEventListener('touchmove', e => {
-        if (e.targetTouches.length === 1) {
-          const clientY = e.targetTouches[0].clientY - initialY;
-          if (
-            el.scrollTop + el.clientHeight >= el.scrollHeight &&
-            clientY < 0
-          ) {
-            return e.preventDefault();
-          }
-          if (el.scrollTop <= 0 && clientY > 0) {
-            return e.preventDefault();
-          }
-        }
-      });
-    });
-
-    const handleScroll = e => {
-      const isInclude = Array.prototype.some.call(scrollEls, el =>
-        el.contains(e.target)
-      );
-      if (isInclude) {
-        return true;
-      }
-      e.preventDefault();
-      e.stopPropagation();
-    };
-    window.addEventListener('touchmove', handleScroll, { passive: false });
-
-    return () => {
-      window.removeEventListener('touchmove', handleScroll);
-    };
-  }, []);
-
-  return (
-    <div className={styles.mobileMenuWrapperNew}>
-      <Menu
-        menuList={menuList}
-        versions={versions}
-        activeDoc={activeDoc}
-        version={version}
-        locale={locale}
-        isBenchMark={isBenchMark}
-        type={type}
-        language={language}
-        onSearchChange={onSearchChange}
-      ></Menu>
-    </div>
-  );
-};

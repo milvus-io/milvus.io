@@ -741,7 +741,7 @@
       line-height: 1.5;
     }
 
-    &:lang(cn) {
+    &:lang(zh-cn) {
       line-height: 1.8;
     }
   }
@@ -871,7 +871,7 @@
       margin-bottom: 8px;
     }
 
-    &:lang(cn) {
+    &:lang(zh-cn) {
       line-height: 1.8;
       margin-bottom: 8px;
     }
@@ -1052,7 +1052,6 @@
     overflow-x: auto;
     @include scroll-bar;
   }
-
 }
 
 .iframe-container {

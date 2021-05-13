@@ -54,7 +54,7 @@ export default function Template({
 
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  // const [showEvent, setShowEvent] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
@@ -295,6 +295,14 @@ export default function Template({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const isLowVersion =
+      sortVersions(version, NOT_SUPPORTED_VERSION) > -1 &&
+      typeof window !== 'undefined' &&
+      !window.location.pathname.includes('data_migration');
+    setShowWarning(isLowVersion);
+  }, [version]);
+
   if (!data.allFile.edges[0]) {
     return null;
   }
@@ -381,19 +389,6 @@ export default function Template({
 
   const onOverlayClick = () => setShowModal(false);
 
-  // const onEventInfoCloseClick = () => {
-  //   if (!!window) {
-  //     setShowEvent(false);
-
-  //     // show event after 24 hours
-  //     const showEventTime = new Date(
-  //       new Date().getTime() + 24 * 60 * 60000
-  //     ).getTime();
-
-  //     window.localStorage.setItem('showEventTime', showEventTime);
-  //   }
-  // };
-
   return (
     <Layout
       language={layout}
@@ -434,6 +429,30 @@ export default function Template({
         </div>
       ) : (
         <div className="doc-post-container">
+          {showWarning ? (
+            <div className="alert warning">
+              {locale === 'en'
+                ? 'This version is no longer supported. For more information about migrating your data, see'
+                : '该版本不再维护。如需进行数据迁移，请先参考'}
+              <a
+                href={
+                  locale === 'en'
+                    ? `/docs/data_migration.md`
+                    : `/cn/docs/data_migration.md`
+                }
+                alt="sign up milvus"
+                rel="noreferrer noopener"
+                style={{
+                  margin: '0 6px',
+                }}
+              >
+                {locale === 'en'
+                  ? 'Compatibility Information.'
+                  : '兼容性信息。'}
+              </a>
+            </div>
+          ) : null}
+
           <div className="doc-post">
             <div
               className="doc-post-content"

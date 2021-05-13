@@ -59,7 +59,6 @@ export default function Template({
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
   // }, []);
-  debugger;
   // select menu function
   const [options, setOptions] = useState({
     styles: {

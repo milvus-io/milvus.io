@@ -62,4 +62,4 @@ jobs:
           app-name: 'milvus-io'
           slot-name: 'dev'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_c1caa39a86e74a8d805b3541e27dd3d9 }}
-          images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_4b001e66d197482b931354888579f94a }}/milvusdb/milvus-io:preview'
+          images: 'index.docker.io/milvusdb/milvus-io:preview'

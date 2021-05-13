@@ -59,16 +59,15 @@ export default function Template({
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
   // }, []);
-
   // select menu function
-  const [options,setOptions] = useState({
+  const [options, setOptions] = useState({
     styles: {
       visibility: 'hidden',
-        zIndex: -100,
-        transform: `translateX(0,0)`,
+      zIndex: -100,
+      transform: `translateX(0,0)`,
     },
-    copy: ''
-  })
+    copy: '',
+  });
 
   useSelectMenu(setOptions);
 
@@ -101,14 +100,6 @@ export default function Template({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const showWarning = useMemo(
-    () =>
-      sortVersions(version, NOT_SUPPORTED_VERSION) > -1 &&
-      typeof window !== 'undefined' &&
-      !window.location.pathname.includes('data_migration'),
-    [version]
-  );
 
   const handleCopy = code => {
     copyToClipboard(code);
@@ -337,14 +328,17 @@ export default function Template({
   if (!isBlog) {
     newHtml = newHtml.replace(hrefRegex, match => {
       const hrefArr = localizedPath.split('/');
-      if(!localizedPath.startsWith("/")) {
-        hrefArr.unshift("");
+      if (!localizedPath.startsWith('/')) {
+        hrefArr.unshift('');
       }
-      hrefArr.splice(hrefArr.length - 1, 1, match.replace('href="', '').replace('"',''));
-      return `href="${hrefArr.join("/")}"`;
+      hrefArr.splice(
+        hrefArr.length - 1,
+        1,
+        match.replace('href="', '').replace('"', '')
+      );
+      return `href="${hrefArr.join('/')}"`;
     });
   }
-  
 
   const ifrmLoad = () => {
     const ifrmContainer = document.querySelector('.iframe-container');
@@ -440,54 +434,6 @@ export default function Template({
         </div>
       ) : (
         <div className="doc-post-container">
-          {/* {showEvent && (
-            <div className="alert event">
-              <div>
-                {locale === 'en'
-                  ? 'Register now open for the virtual '
-                  : '点此报名参加'}
-                <a
-                  href="https://www.slidestalk.com/m/298"
-                  alt="sign up milvus"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                  style={{ margin: '0 6px', fontWeight: 'bold' }}
-                >
-                  Milvus Community Conf
-                </a>
-                {locale === 'en'
-                  ? '2020！Join us on Oct.17th, 2020.'
-                  : '2020 线上直播！10月17日（六）一整天的干货不容你错过！'}
-              </div>
-              <i
-                className="fas fa-times alert-close"
-                onClick={onEventInfoCloseClick}
-              ></i>
-            </div>
-          )} */}
-          {showWarning && (
-            <div className="alert warning">
-              {locale === 'en'
-                ? 'This version is no longer supported. For more information about migrating your data, see'
-                : '该版本不再维护。如需进行数据迁移，请先参考'}
-              <a
-                href={
-                  locale === 'en'
-                    ? `/docs/data_migration.md`
-                    : `/cn/docs/data_migration.md`
-                }
-                alt="sign up milvus"
-                rel="noreferrer noopener"
-                style={{
-                  margin: '0 6px',
-                }}
-              >
-                {locale === 'en'
-                  ? 'Compatibility Information.'
-                  : '兼容性信息。'}
-              </a>
-            </div>
-          )}
           <div className="doc-post">
             <div
               className="doc-post-content"
@@ -608,7 +554,7 @@ export const pageQuery = graphql`
                 comment
                 github
                 sendBtn
-                cancelBtn,
+                cancelBtn
                 placeholder
               }
             }

@@ -159,10 +159,6 @@ const Menu = props => {
     html.style.overflowY = isMobile && menuStatus ? 'hidden' : 'auto';
   }, [isMobile, menuStatus]);
 
-  useEffect(() => {
-    menuRef.current.style.top = !isMobile ? headerHeight : null;
-  }, [isMobile, headerHeight]);
-
   const handleMenuClick = e => {
     const menuContainer = menuRef.current;
     if (menuContainer) {
@@ -274,6 +270,7 @@ const Menu = props => {
         className={`${wrapperClass} ${styles.menuContainer} ${
           !menuStatus ? styles.hide : ''
         }`}
+        style={{ top: `${isMobile ? '50px' : headerHeight}` }}
         ref={menuRef}
       >
         {!isMobile && (
@@ -285,10 +282,7 @@ const Menu = props => {
           />
         )}
 
-        {generageMenuDom(
-          realMenuList,
-          `${styles.menuTopLevel} ${styles.borderBottom}`
-        )}
+        {generageMenuDom(realMenuList, `${styles.menuTopLevel}`)}
       </section>
       {isMobile && (
         <div

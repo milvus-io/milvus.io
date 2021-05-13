@@ -51,7 +51,7 @@ const Selector = props => {
       <ul
         className={`${styles.optionsWrapper} ${listStatus && styles.open}`}
         tabIndex="0"
-        role="button"
+        role="menu"
         onKeyDown={handleSelected}
         onClick={handleSelected}
       >

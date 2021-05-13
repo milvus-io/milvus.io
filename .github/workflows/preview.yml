@@ -35,12 +35,17 @@ jobs:
           username: ${{ secrets.AzureAppService_ContainerUsername_4b001e66d197482b931354888579f94a }}
           password: ${{ secrets.AzureAppService_ContainerPassword_a074ed5e5b9f4ed4b84dbfc369f85774 }}
 
-      - name: Build and push container image to registry
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ${{ secrets.AzureAppService_ContainerUsername_4b001e66d197482b931354888579f94a }}/milvusdb/milvus-io:preview
-          file: ./Preview.Dockerfile
+      - name: Build app
+        run: |
+          docker build -t milvusdb/milvus-io:preview -f ./Preview.Dockerfile .
+          docker push milvusdb/milvus-io:preview
+
+      # - name: Build and push container image to registry
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     push: true
+      #     tags: ${{ secrets.AzureAppService_ContainerUsername_4b001e66d197482b931354888579f94a }}/milvusdb/milvus-io:preview
+      #     file: ./Preview.Dockerfile
 
   deploy:
     runs-on: ubuntu-latest

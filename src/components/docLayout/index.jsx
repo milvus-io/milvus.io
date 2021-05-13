@@ -4,7 +4,7 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
 // import AskMilvus from "../../images/ask_milvus.png";
-import { getStyleType } from '../../utils/docTemplate.util';
+import { getHeaderHeight, getStyleType } from '../../utils/docTemplate.util';
 import * as styles from './index.module.less';
 
 const DocLayout = props => {
@@ -45,19 +45,17 @@ const DocLayout = props => {
   const [showToTopButton, setShowToTopButton] = useState(false);
   const [showMenuMask, setShowMenuMask] = useState(false);
 
-  // const effectVariable =
-  //   typeof window !== 'undefined' ? [window.location.hash] : [];
-  // useEffect(() => {
-  //   if (window) {
-  //     const hash = window.location.hash.slice(1);
-  //     setHash(window.decodeURI(hash));
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, effectVariable);
-
   // check menu type based on whether version is 2.0
   // here use v1 as test
   const menuType = useMemo(() => getStyleType(version), [version]);
+
+  const headerHeight = useMemo(() => getHeaderHeight(menuType), [menuType]);
+
+  // handle different header height
+  useEffect(() => {
+    const html = document.querySelector('html');
+    html.style.scrollPaddingTop = headerHeight;
+  }, [menuType, headerHeight]);
 
   // star reference
   const star = useRef(null);
@@ -154,13 +152,15 @@ const DocLayout = props => {
   };
 
   const handleSearchChange = value => {
-    if (menuType === 'new') {
-      setSearch(value);
-    }
+    setSearch(value);
   };
 
   return (
-    <div className={styles.layoutWrapper}>
+    <div
+      className={styles.layoutWrapper}
+      // handle different header height
+      style={{ marginTop: `${headerHeight}` }}
+    >
       {menuType === 'new' ? (
         <NewHeader
           header={header.header}
@@ -206,142 +206,74 @@ const DocLayout = props => {
         </div>
         {formatHeadings && !isBenchMark && (
           <div
-            className={`${styles.anchorWrapper} ${
-              menuType === 'new' ? styles.anchorWrapperNew : ''
-            } ${isHome ? styles.home : ''}`}
+            className={`${styles.anchorWrapper} ${isHome ? styles.home : ''}`}
           >
-            {menuType === 'old' ? (
-              <section>
-                <div className={styles.buttonContainer}>
-                  {isBlog || isBenchMark ? null : (
+            <section>
+              {!isHome && (
+                <>
+                  <div className={styles.buttonContainer}>
+                    {isBlog || isBenchMark ? null : (
+                      <a
+                        className={styles.btnAnchor}
+                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                          locale === 'en' ? 'en' : 'zh-CN'
+                        }/${editPath}`}
+                      >
+                        <span className={styles.btnIconWrapper}>
+                          <i className={`far fa-edit ${styles.btnIcon}`}></i>
+                        </span>
+
+                        {language.footer.editBtn.label}
+                      </a>
+                    )}
                     <a
                       className={styles.btnAnchor}
-                      href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                        locale === 'en' ? 'en' : 'zh-CN'
-                      }/${editPath}`}
+                      href={language.footer.docIssueBtn.link}
                     >
                       <span className={styles.btnIconWrapper}>
-                        <i className={`far fa-edit ${styles.btnIcon}`}></i>
+                        <i className={`fab fa-github ${styles.btnIcon}`}></i>
+                      </span>
+                      {language.footer.docIssueBtn.label}
+                    </a>
+                    <a
+                      className={styles.btnAnchor}
+                      id="btn-bug"
+                      href={language.footer.issueBtn.link}
+                    >
+                      <span className={styles.btnIconWrapper}>
+                        <i className={`fas fa-bug ${styles.btnIcon}`}></i>
                       </span>
 
-                      {language.footer.editBtn.label}
+                      {language.footer.issueBtn.label}
                     </a>
-                  )}
-                  <a
-                    className={styles.btnAnchor}
-                    href={language.footer.docIssueBtn.link}
-                  >
-                    <span className={styles.btnIconWrapper}>
-                      <i className={`fab fa-github ${styles.btnIcon}`}></i>
-                    </span>
-                    {language.footer.docIssueBtn.label}
-                  </a>
-                  <a
-                    className={styles.btnAnchor}
-                    id="btn-bug"
-                    href={language.footer.issueBtn.link}
-                  >
-                    <span className={styles.btnIconWrapper}>
-                      <i className={`fas fa-bug ${styles.btnIcon}`}></i>
-                    </span>
 
-                    {language.footer.issueBtn.label}
-                  </a>
+                    <a
+                      className={styles.btnAnchor}
+                      id="btn-question"
+                      href={language.footer.questionBtn.link}
+                    >
+                      <span className={styles.btnIconWrapper}>
+                        <i
+                          className={`fab fa-slack-hash ${styles.btnIcon}`}
+                        ></i>
+                      </span>
 
-                  <a
-                    className={styles.btnAnchor}
-                    id="btn-question"
-                    href={language.footer.questionBtn.link}
-                  >
-                    <span className={styles.btnIconWrapper}>
-                      <i className={`fab fa-slack-hash ${styles.btnIcon}`}></i>
-                    </span>
+                      {language.footer.questionBtn.label}
+                    </a>
+                  </div>
 
-                    {language.footer.questionBtn.label}
-                  </a>
-                </div>
-
-                {/* filter faq page */}
-                {!id.includes('faq')
-                  ? generateAnchorMenu(formatHeadings, styles.parentItem)
-                  : null}
-
-                {/* <a href="https://www.linkedin.com/events/6699523192530309120/">
-                <div className={styles.event}>
-                  <h4>Upcoming Event</h4>
-                  <img width="180" src={AskMilvus} alt="Ask Milvus"></img>
-                </div>
-                click <strong>here</strong> to register
-              </a> */}
-              </section>
-            ) : (
-              <section>
-                {!isHome && (
-                  <>
-                    <div className={styles.buttonContainerNew}>
-                      {isBlog || isBenchMark ? null : (
-                        <a
-                          className={styles.btnAnchor}
-                          href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                            locale === 'en' ? 'en' : 'zh-CN'
-                          }/${editPath}`}
-                        >
-                          <span className={styles.btnIconWrapper}>
-                            <i className={`far fa-edit ${styles.btnIcon}`}></i>
-                          </span>
-
-                          {language.footer.editBtn.label}
-                        </a>
-                      )}
-                      <a
-                        className={styles.btnAnchor}
-                        href={language.footer.docIssueBtn.link}
-                      >
-                        <span className={styles.btnIconWrapper}>
-                          <i className={`fab fa-github ${styles.btnIcon}`}></i>
-                        </span>
-                        {language.footer.docIssueBtn.label}
-                      </a>
-                      <a
-                        className={styles.btnAnchor}
-                        id="btn-bug"
-                        href={language.footer.issueBtn.link}
-                      >
-                        <span className={styles.btnIconWrapper}>
-                          <i className={`fas fa-bug ${styles.btnIcon}`}></i>
-                        </span>
-
-                        {language.footer.issueBtn.label}
-                      </a>
-
-                      <a
-                        className={styles.btnAnchor}
-                        id="btn-question"
-                        href={language.footer.questionBtn.link}
-                      >
-                        <span className={styles.btnIconWrapper}>
-                          <i
-                            className={`fab fa-slack-hash ${styles.btnIcon}`}
-                          ></i>
-                        </span>
-
-                        {language.footer.questionBtn.label}
-                      </a>
+                  {formatHeadings.length > 0 && (
+                    <div className={styles.anchorTitle}>
+                      {language.footer.content}
                     </div>
-
-                    {formatHeadings.length > 0 && (
-                      <div className={styles.anchorTitle}>
-                        {language.footer.content}
-                      </div>
-                    )}
-                    {/* filter faq page */}
-                    {!id.includes('faq')
-                      ? generateAnchorMenu(formatHeadings, styles.parentItem)
-                      : null}
-                  </>
-                )}
-              </section>
-            )}
+                  )}
+                  {/* filter faq page */}
+                  {!id.includes('faq')
+                    ? generateAnchorMenu(formatHeadings, styles.parentItem)
+                    : null}
+                </>
+              )}
+            </section>
           </div>
         )}
 

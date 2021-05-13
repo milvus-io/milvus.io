@@ -88,3 +88,7 @@ export const importAllPics = (r, type, users = [], resources = []) => {
 export const getStyleType = version => {
   return version.startsWith('v1') ? 'new' : 'old';
 };
+
+export const getHeaderHeight = type => {
+  return type === 'new' ? '90px' : '60px';
+};

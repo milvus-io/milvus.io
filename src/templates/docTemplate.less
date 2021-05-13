@@ -739,7 +739,9 @@
     margin-right: 0;
     margin-top: 0;
     padding: 0;
-    // margin-bottom: 1.45rem;
+
+    position: relative;
+    z-index: 2;
 
     &:lang(en) {
       line-height: 1.5;
@@ -750,12 +752,6 @@
     }
   }
 
-  // p,
-  // li {
-  //   code {
-  //     color: #3F9CD1
-  //   }
-  // }
   img {
     background-color: #000;
   }
@@ -790,7 +786,7 @@
     border-collapse: collapse;
     width: 100%;
 
-    @include media('<=1000px') {
+    @media @tablet {
       display: block;
       overflow: auto;
     }
@@ -836,6 +832,19 @@
     margin: 0;
     padding: 0;
     margin-bottom: 1.45rem;
+
+    position: absolute;
+    top: 0;
+
+    @media @tablet {
+      flex: 0 0 100%;
+      margin: 0;
+      max-width: 100%;
+
+      .fullwidth {
+        width: 100%;
+      }
+    }
   }
 
   hr {
@@ -1054,6 +1063,10 @@
   .table-wrapper {
     overflow-x: auto;
   }
+}
+
+.doc-post {
+  position: relative;
 }
 
 .iframe-container {

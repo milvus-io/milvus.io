@@ -1,51 +1,7 @@
 @import './docReset.less';
 
-html {
-  scroll-padding-top: 90px;
-}
-
-.buttonContainer {
-  margin-bottom: 24px;
-}
-
-.btnAnchor {
-  display: flex;
-  align-items: center;
-
-  border-radius: 18px;
-  color: #000;
-
-  height: 36px;
-
-  background-color: #f5f5f5;
-  font-size: 12px;
-  padding: 0 8px;
-  margin-bottom: 8px;
-  max-width: 180px;
-
-  i {
-    margin-right: 8px;
-  }
-
-  &:hover {
-    color: #808080;
-    font-weight: bold;
-  }
-}
-
-.btnIcon {
-  font-size: 20px;
-  color: rgba(0, 0, 0, 0.5);
-  margin-left: 8px;
-}
-
-.btnIconWrapper {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 8px;
+.home {
+  display: none;
 }
 
 .anchorWrapper {
@@ -67,28 +23,66 @@ html {
     padding-top: 32px;
   }
 
-  .event {
-    margin-top: 20px;
+  a {
+    font-family: Inter;
+    font-size: 14px;
+  }
 
-    h4 {
-      color: @color-highlight;
-      font-weight: bold;
-    }
+  .buttonContainer {
+    .btnAnchor {
+      display: flex;
+      align-items: center;
+      font-family: Inter;
 
-    img {
-      display: block;
-      border: 1px solid #fff;
+      border-radius: 18px;
+      color: #000;
+
+      height: 20px;
+
+      background-color: #fff;
+      font-size: 14px;
+      margin-bottom: 20px;
+      max-width: 180px;
+
+      overflow-x: inherit;
 
       &:hover {
-        border: 1px solid @color-highlight;
+        color: #808080;
+        font-weight: bold;
+      }
+
+      .btnIconWrapper {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+
+        .btnIcon {
+          font-size: 20px;
+          color: rgba(0, 0, 0, 0.5);
+        }
       }
     }
   }
 
+  .anchorTitle {
+    font-size: 16px;
+    color: @color-default-link;
+
+    line-height: 18px;
+    font-weight: 500;
+
+    margin-top: 80px;
+    margin-bottom: 24px;
+
+    font-family: Inter;
+  }
+
   .parentItem {
-    padding-left: 10px;
-    padding-bottom: 5px;
-    border-left: 4px solid #eee;
+    border: none;
+    padding-bottom: 16px;
   }
 
   .item {
@@ -116,55 +110,6 @@ html {
   }
 }
 
-.anchorWrapperNew {
-  .home {
-    display: none;
-  }
-
-  a {
-    font-family: Inter;
-    font-size: 14px;
-  }
-
-  .buttonContainerNew {
-    .btnAnchor {
-      font-family: Inter;
-      background-color: #fff;
-
-      height: 20px;
-
-      font-size: 14px;
-      padding: 0 8px;
-      margin-bottom: 20px;
-      max-width: 180px;
-
-      overflow-x: inherit;
-
-      i {
-        margin-right: 8px;
-      }
-    }
-  }
-
-  .anchorTitle {
-    font-size: 16px;
-    color: @color-default-link;
-
-    line-height: 18px;
-    font-weight: 500;
-
-    margin-top: 80px;
-    margin-bottom: 24px;
-
-    font-family: Inter;
-  }
-
-  .parentItem {
-    border: none;
-    padding-bottom: 16px;
-  }
-}
-
 .footerWrapper {
   margin-bottom: 0;
 }
@@ -172,7 +117,7 @@ html {
 .layoutWrapper {
   display: flex;
   flex-direction: column;
-  margin-top: 90px;
+  // margin-top: 90px;
   background-color: #fff;
 
   .docWrapper {
@@ -180,35 +125,25 @@ html {
     display: flex;
 
     width: 100%;
-    // TODO: different version different width
-    max-width: 1600px;
+    max-width: @screen-lg-max;
     margin: 0 auto;
     background-color: #fff;
-    // TODO: different version different min heigth
     min-height: calc(100vh - 60px);
   }
 
   .menuContainer {
     position: fixed;
-    // header 90px
-    top: 90px;
-    // padding-top: 20px;
     bottom: 0;
-    padding-right: 8px;
-    max-height: calc(100vh - 90px);
+    // max-height: calc(100vh - 90px);
     flex-shrink: 0;
-    width: 250px;
 
-    // @media @tablet {
-    //   position: fixed;
-    //   top: 0;
-    //   bottom: 0;
-    //   left: 0;
-    //   width: 80vw;
-    //   max-width: 260px;
-    //   height: 100vh;
-    //   z-index: 1000;
-    // }
+    // used for tablet or phone
+    @media @tablet {
+      bottom: 136px;
+      left: 25px;
+      width: 70vw;
+      z-index: 1000;
+    }
   }
 
   .btnToTop {
@@ -279,15 +214,4 @@ html {
       width: 100%;
     }
   }
-}
-
-.mobileMenuWrapperNew {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 10;
 }

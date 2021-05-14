@@ -14,6 +14,9 @@ const MobilePopUp = props => {
         {props.children}
       </div>
       <div
+        tabIndex="0"
+        role="button"
+        aria-label="dialog mask"
         onClick={hideMask}
         onKeyDown={hideMask}
         className={open ? styles.mask : styles.hidden}

@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import LocalizeLink from '../localizedLink/localizedLink';
-import VersionSelector from '../selector';
 import { useMobileScreen } from '../../hooks';
 import * as styles from './index.module.less';
+import { getHeaderHeight } from '../../utils/docTemplate.util';
 
 /* eslint-disable */
 const findItem = (key, value, arr) => {
@@ -32,7 +32,6 @@ const Menu = props => {
     type,
     onSearchChange,
     language,
-    setShowMask = () => {},
     wrapperClass = '',
   } = props;
 
@@ -41,6 +40,8 @@ const Menu = props => {
   const { isBlog } = menuList || {};
   const [realMenuList, setRealMenuList] = useState([]);
   const formatVersion = version === 'master' ? versions[0] : version;
+
+  const headerHeight = useMemo(() => getHeaderHeight(type), [type]);
 
   useEffect(() => {
     const generateMenu = list => {
@@ -153,6 +154,11 @@ const Menu = props => {
 
   const menuRef = useRef(null);
 
+  useEffect(() => {
+    const html = document.querySelector('html');
+    html.style.overflowY = isMobile && menuStatus ? 'hidden' : 'auto';
+  }, [isMobile, menuStatus]);
+
   const handleMenuClick = e => {
     const menuContainer = menuRef.current;
     if (menuContainer) {
@@ -169,11 +175,9 @@ const Menu = props => {
   const generageMenuDom = (list, className = '') => {
     return list.map(doc => (
       <div
-        className={`${className} ${
-          type === 'new' && doc.label2 ? styles.menuChild3 : ''
-        }  ${doc.isLast ? styles.menuLastLevel : ''} ${
-          doc.isActive ? styles.active : ''
-        }`}
+        className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${
+          doc.isLast ? styles.menuLastLevel : ''
+        } ${doc.isActive ? styles.active : ''}`}
         key={doc.id}
       >
         <div
@@ -194,7 +198,7 @@ const Menu = props => {
               href={doc.outLink}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${styles.outLink} ${styles.text}`}
+              className={`${styles.outlink} ${styles.text}`}
             >
               <i className="fas fa-external-link-alt"></i>
               {doc.title}
@@ -209,26 +213,16 @@ const Menu = props => {
 
           {doc.children && doc.children.length ? (
             <>
-              {type === 'new' ? (
-                <>
-                  {doc.isMenu && doc.label1 === '' ? (
-                    <i
-                      className={`fas fa-caret-down ${styles.arrow} ${
-                        doc.showChildren ? '' : styles.top
-                      }`}
-                    ></i>
-                  ) : (
-                    <i
-                      className={`fas ${styles.expandIcon} ${
-                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
-                      }`}
-                    ></i>
-                  )}
-                </>
+              {doc.isMenu && doc.label1 === '' ? (
+                <i
+                  className={`fas fa-caret-down ${styles.arrow} ${
+                    doc.showChildren ? '' : styles.top
+                  }`}
+                ></i>
               ) : (
                 <i
-                  className={`fas fa-chevron-down ${styles.arrow} ${
-                    doc.showChildren ? '' : styles.top
+                  className={`fas ${styles.expandIcon} ${
+                    doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
                   }`}
                 ></i>
               )}
@@ -266,57 +260,35 @@ const Menu = props => {
     }
   };
 
+  const onMaskClick = () => {
+    setMenuStatus(false);
+  };
+
   return (
     <>
       <section
-        className={`${wrapperClass} ${styles.menuContainer} can-scroll ${
-          !menuStatus && type !== 'new' ? styles.hide : ''
-        } ${type === 'new' ? `${styles.menuContainerNew} ` : ''}`}
+        className={`${wrapperClass} ${styles.menuContainer} ${
+          !menuStatus ? styles.hide : ''
+        }`}
+        style={{ top: `${isMobile ? '50px' : headerHeight}` }}
         ref={menuRef}
       >
-        {isMobile && type !== 'new' ? (
-          <i
-            className={`fas fa-times ${styles.close}`}
-            onClick={() => {
-              toggleMenu(false);
-            }}
-          ></i>
-        ) : null}
-        {isBlog || type === 'new' ? (
-          <>
-            {type === 'new' && !isMobile ? (
-              <input
-                className={styles.search}
-                type="text"
-                onKeyPress={handleSearch}
-                placeholder={header.search}
-              />
-            ) : (
-              <div></div>
-            )}
-          </>
-        ) : (
-          <div className={`${styles.borderBottom} ${styles.selectWrapper}`}>
-            <VersionSelector
-              options={versions}
-              selected={formatVersion}
-              locale={locale}
-              isVersion={true}
-            ></VersionSelector>
-          </div>
+        {!isMobile && (
+          <input
+            className={styles.search}
+            type="text"
+            onKeyPress={handleSearch}
+            placeholder={header.search}
+          />
         )}
 
-        {generageMenuDom(
-          realMenuList,
-          `${styles.menuTopLevel} ${styles.borderBottom}`
-        )}
+        {generageMenuDom(realMenuList, `${styles.menuTopLevel}`)}
       </section>
-      {type === 'new' && isMobile ? (
+      {isMobile && (
         <div
           className={styles.miniMenuControl}
           onClick={() => {
             toggleMenu(!menuStatus);
-            setShowMask(!menuStatus);
           }}
         >
           {menuStatus ? (
@@ -325,16 +297,10 @@ const Menu = props => {
             <i className={`fas fa-bars ${styles.v2}`}></i>
           )}
         </div>
-      ) : !menuStatus ? (
-        <div
-          className={styles.miniMenuControl}
-          onClick={() => {
-            toggleMenu(true);
-          }}
-        >
-          <i className="fas fa-bars"></i>
-        </div>
-      ) : null}
+      )}
+      {isMobile && menuStatus && (
+        <div className={styles.mask} onClick={onMaskClick}></div>
+      )}
     </>
   );
 };

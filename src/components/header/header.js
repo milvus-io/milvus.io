@@ -145,7 +145,13 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 {header.blog}
               </a>
 
-              <SearchForWeb language={header} locale={locale} hideMobileMask={hideMobileMask}></SearchForWeb>
+              <SearchForWeb
+                language={header}
+                locale={locale}
+                hideMobileMask={hideMobileMask}
+              ></SearchForWeb>
+              <input id="#algolia-search" style={{ display: 'none' }} />
+
               <span
                 role="button"
                 tabIndex={0}
@@ -278,7 +284,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
           className="link"
           to={'/blogs/2019-08-26-vector-search-million.md'}
         >
-          {header.blog}
+          {header.blog}asd
         </LocalizeLink>
       </div>
     </>

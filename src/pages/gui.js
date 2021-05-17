@@ -1,13 +1,13 @@
-import React from "react";
-import { graphql } from "gatsby";
-import Layout from "../components/layout/layout";
-import SEO from "../components/seo";
-import LocalizedLink from "../components/localizedLink/localizedLink";
-import "../scss/gui.scss";
-import feature1 from "../images/admin/feature1.png";
-import feature2 from "../images/admin/feature2.png";
-import feature3 from "../images/admin/feature3.png";
-import { useMobileScreen } from "../hooks";
+import React from 'react';
+import { graphql } from 'gatsby';
+import Layout from '../components/layout/layout';
+import SEO from '../components/seo';
+import LocalizedLink from '../components/localizedLink/localizedLink';
+import '../scss/gui.scss';
+import feature1 from '../images/admin/feature1.png';
+import feature2 from '../images/admin/feature2.png';
+import feature3 from '../images/admin/feature3.png';
+import { useMobileScreen } from '../hooks';
 
 const GuiPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;

@@ -284,7 +284,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
           className="link"
           to={'/blogs/2019-08-26-vector-search-million.md'}
         >
-          {header.blog}asd
+          {header.blog}
         </LocalizeLink>
       </div>
     </>

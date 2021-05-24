@@ -10,13 +10,14 @@ module.exports = {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
         host: 'https://milvus.io',
-        sitemap: 'https://milvus.io/sitemap/sitemap-index.xml',
+        sitemap: 'https://milvus.io/sitemap-index.xml',
         policy: [{ userAgent: '*', allow: '/', disallow: '/cn/blogs/' }]
       }
     },
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
+        output: "/",
         query:
           `{
           allSitePage {

@@ -6,8 +6,61 @@ module.exports = {
     author: `@ZILLIZ.com`,
   },
   plugins: [
-    `gatsby-plugin-robots-txt`,
-    `gatsby-plugin-sitemap`,
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://milvus.io',
+        sitemap: 'https://milvus.io/sitemap/sitemap-index.xml',
+        policy: [{ userAgent: '*', allow: '/', disallow: '/cn/blogs/' }]
+      }
+    },
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        query:
+          `{
+          allSitePage {
+            nodes {
+              path
+            }
+          }
+          allSite {
+            edges {
+              node {
+                siteMetadata {
+                  siteUrl
+                }
+              }
+            }
+          }
+          allVersionInfoJson(filter: {released: {eq: "no"}}) {
+            nodes {
+              released
+              version
+            }
+          }
+        }`,
+        resolveSiteUrl: ({ allSite }) => {
+          return allSite.edges[0].node.siteMetadata.siteUrl
+        },
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+          allVersionInfoJson: { nodes: versions },
+        }) => {
+          const res = allPages.reduce((acc, cur) => {
+            // filter out docs with version info with released value is no
+            if (versions.every(ver => cur.path.indexOf(ver.version) === -1)) {
+              console.log("path", cur.path);
+              acc.push(cur);
+            }
+            return acc;
+          }, []);
+          console.log("allPages", allPages.length);
+          console.log("res", res.length);
+          return res;
+        },
+      },
+    },
     `gatsby-plugin-sass`,
     `gatsby-plugin-react-helmet`,
     // i18n plugin
@@ -54,7 +107,14 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `blogs`,
+        name: `versions`,
+        path: `${__dirname}/src/pages/docs/versions/versionInfo.json`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `versions`,
         path: `${__dirname}/src/pages/blogs/versions`,
       },
     },

@@ -44,7 +44,13 @@ exports.onCreateDevServer = ({ app }) => {
 const DOC_ROOT = 'src/pages/docs/versions';
 const versionInfo = ReadVersionJson(DOC_ROOT);
 const newestVersion = getNewestVersion(versionInfo);
-console.log(versionInfo);
+
+// add versioninfo file for generate sitemap filter option
+fs.writeFile(`${DOC_ROOT}/versionInfo.json`, JSON.stringify(Object.values(versionInfo), null, 2), (err) => {
+  if (err) throw err;
+  console.log('versionInfo file write to file', versionInfo);
+});
+
 if (env === 'preview') {
   versionInfo.preview = {
     version: 'preview',
@@ -136,8 +142,8 @@ exports.createPages = ({ actions, graphql }) => {
         ? match[1]
           ? match[1]
           : env === 'preview' && str.includes('preview')
-          ? 'preview'
-          : match[1]
+            ? 'preview'
+            : match[1]
         : '';
     };
 

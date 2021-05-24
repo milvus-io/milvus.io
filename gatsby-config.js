@@ -6,8 +6,58 @@ module.exports = {
     author: `@ZILLIZ.com`,
   },
   plugins: [
-    `gatsby-plugin-robots-txt`,
-    `gatsby-plugin-sitemap`,
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://milvus.io',
+        sitemap: 'https://milvus.io/sitemap/sitemap-index.xml',
+        policy: [{ userAgent: '*', allow: '/', disallow: '/cn/blogs/' }]
+      }
+    },
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        query:
+          `{
+          allSitePage {
+            nodes {
+              path
+            }
+          }
+          allSite {
+            edges {
+              node {
+                siteMetadata {
+                  siteUrl
+                }
+              }
+            }
+          }
+          allVersionInfoJson(filter: {released: {eq: "no"}}) {
+            nodes {
+              released
+              version
+            }
+          }
+        }`,
+        resolveSiteUrl: ({ allSite }) => {
+          return allSite.edges[0].node.siteMetadata.siteUrl
+        },
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+          allVersionInfoJson: { nodes: versions },
+        }) => {
+          const res = allPages.reduce((acc, cur) => {
+            // filter out docs with version info with released value is no
+            if (versions.every(ver => cur.path.indexOf(ver.version) === -1)) {
+              acc.push(cur);
+            }
+            return acc;
+          }, []);
+          return res;
+        },
+      },
+    },
     `gatsby-plugin-sass`,
     `gatsby-plugin-react-helmet`,
     // i18n plugin
@@ -49,6 +99,13 @@ module.exports = {
         //   `**/v0.10.6/*`,
         //   // `**/v0.11.0/*`,
         // ],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `versions`,
+        path: `${__dirname}/src/pages/docs/versions/versionInfo.json`,
       },
     },
     {

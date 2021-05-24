@@ -18,7 +18,7 @@
     "gatsby-plugin-robots-txt": "^1.5.5",
     "gatsby-plugin-sass": "^4.0.2",
     "gatsby-plugin-sharp": "^3.0.0",
-    "gatsby-plugin-sitemap": "^3.0.0",
+    "gatsby-plugin-sitemap": "^4.0.0",
     "gatsby-plugin-zopfli": "^2.0.0",
     "gatsby-remark-autolink-headers": "^3.0.0",
     "gatsby-remark-copy-linked-files": "^3.0.0",

@@ -50,13 +50,10 @@ module.exports = {
           const res = allPages.reduce((acc, cur) => {
             // filter out docs with version info with released value is no
             if (versions.every(ver => cur.path.indexOf(ver.version) === -1)) {
-              console.log("path", cur.path);
               acc.push(cur);
             }
             return acc;
           }, []);
-          console.log("allPages", allPages.length);
-          console.log("res", res.length);
           return res;
         },
       },

@@ -77,13 +77,14 @@ const GuiPage = ({ data, pageContext }) => {
             <p>docker run -d -p 3000:80 milvusdb/milvus-em:latest</p>
           </div>
           <p>{section3.desc} http://localhost:3000/</p>
-          <LocalizedLink
+          {/* remove not found page*/}
+          {/* <LocalizedLink
             className="primary primary-color btn"
             to="/docs/admin_operations.md"
             locale={locale}
           >
             {section3.help}
-          </LocalizedLink>
+          </LocalizedLink> */}
         </section>
       </main>
     </Layout>

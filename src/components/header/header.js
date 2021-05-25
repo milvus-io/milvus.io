@@ -150,7 +150,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 locale={locale}
                 hideMobileMask={hideMobileMask}
               ></SearchForWeb>
-              <input id="algolia-search" style={{ display: 'hidden' }} />
+              <input id="algolia-search" style={{ display: 'none' }} />
 
               <span
                 role="button"

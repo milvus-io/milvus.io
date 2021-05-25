@@ -11,26 +11,27 @@ module.exports = {
       options: {
         host: 'https://milvus.io',
         sitemap: 'https://milvus.io/sitemap-index.xml',
-        policy: [{
-          userAgent: '*',
-          allow: '/',
-          disallow: [
-            '/cn/404',
-            '/cn/404.html',
-            '/cn/blogs/',
-            '/docs/Changelog',
-            '/gui',
-            '/tools/sizing'
-          ]
-        }]
-      }
+        policy: [
+          {
+            userAgent: '*',
+            allow: '/',
+            disallow: [
+              '/cn/404',
+              '/cn/404.html',
+              '/cn/blogs/',
+              '/docs/Changelog',
+              '/gui',
+              '/tools/sizing',
+            ],
+          },
+        ],
+      },
     },
     {
-      resolve: "gatsby-plugin-sitemap",
+      resolve: 'gatsby-plugin-sitemap',
       options: {
-        output: "/",
-        query:
-          `{
+        output: '/',
+        query: `{
           allSitePage {
             nodes {
               path
@@ -53,7 +54,7 @@ module.exports = {
           }
         }`,
         resolveSiteUrl: ({ allSite }) => {
-          return allSite.edges[0].node.siteMetadata.siteUrl
+          return allSite.edges[0].node.siteMetadata.siteUrl;
         },
         resolvePages: ({
           allSitePage: { nodes: allPages },
@@ -63,7 +64,7 @@ module.exports = {
             // filter out docs with version info with released value is no
             const path = cur.path;
             if (versions.every(ver => path.indexOf(ver.version) === -1)) {
-              if (path.endsWith("/") && path.length > 1) {
+              if (path.endsWith('/') && path.length > 1) {
                 cur.path = path.slice(0, path.length - 1);
               }
               acc.push(cur);
@@ -194,27 +195,5 @@ module.exports = {
         dataLayerName: 'gatsby',
       },
     },
-    {
-      resolve: `gatsby-plugin-algolia-docsearch`,
-      options: {
-        apiKey: '2dabff78331a44e47bedeb5fbd68ae70', // required
-        indexName: 'milvus', // required
-        inputSelector: '#algolia-search', // required
-        debug: false, // (bool) Optional. Default `false`
-      },
-    },
-    // // add Google Analytics gtag.js to a site
-    // // however this doesn't work, switch to add it in /src/html.js
-    // {
-    //   resolve: `gatsby-plugin-gtag`,
-    //   options: {
-    //     // your google analytics tracking id
-    //     trackingId: `UA-142992812-1`,
-    //     // Puts tracking script in the head instead of the body
-    //     head: true,
-    //     // enable ip anonymization
-    //     anonymize: true
-    //   }
-    // }
   ],
 };

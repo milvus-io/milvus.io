@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout/layout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import LocalizedLink from '../components/localizedLink/localizedLink';
 import '../scss/gui.scss';
 import feature1 from '../images/admin/feature1.png';
@@ -18,7 +18,7 @@ const GuiPage = ({ data, pageContext }) => {
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="Milvus EM" />
+      <Seo title="Milvus EM" />
       <main className="gui-wrapper">
         <section className="section1">
           <h2>{section1.title}</h2>

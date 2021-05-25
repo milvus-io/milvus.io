@@ -11,7 +11,20 @@ module.exports = {
       options: {
         host: 'https://milvus.io',
         sitemap: 'https://milvus.io/sitemap-index.xml',
-        policy: [{ userAgent: '*', allow: '/', disallow: '/cn/blogs/' }],
+        policy: [
+          {
+            userAgent: '*',
+            allow: '/',
+            disallow: [
+              '/cn/404',
+              '/cn/404.html',
+              '/cn/blogs/',
+              '/docs/Changelog',
+              '/gui',
+              '/tools/sizing',
+            ],
+          },
+        ],
       },
     },
     {
@@ -33,7 +46,7 @@ module.exports = {
               }
             }
           }
-          allVersionInfoJson(filter: {released: {eq: "no"}}) {
+          allVersionInfoJson {
             nodes {
               released
               version
@@ -49,7 +62,11 @@ module.exports = {
         }) => {
           const res = allPages.reduce((acc, cur) => {
             // filter out docs with version info with released value is no
-            if (versions.every(ver => cur.path.indexOf(ver.version) === -1)) {
+            const path = cur.path;
+            if (versions.every(ver => path.indexOf(ver.version) === -1)) {
+              if (path.endsWith('/') && path.length > 1) {
+                cur.path = path.slice(0, path.length - 1);
+              }
               acc.push(cur);
             }
             return acc;

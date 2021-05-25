@@ -11,15 +11,14 @@ module.exports = {
       options: {
         host: 'https://milvus.io',
         sitemap: 'https://milvus.io/sitemap-index.xml',
-        policy: [{ userAgent: '*', allow: '/', disallow: '/cn/blogs/' }]
-      }
+        policy: [{ userAgent: '*', allow: '/', disallow: '/cn/blogs/' }],
+      },
     },
     {
-      resolve: "gatsby-plugin-sitemap",
+      resolve: 'gatsby-plugin-sitemap',
       options: {
-        output: "/",
-        query:
-          `{
+        output: '/',
+        query: `{
           allSitePage {
             nodes {
               path
@@ -42,7 +41,7 @@ module.exports = {
           }
         }`,
         resolveSiteUrl: ({ allSite }) => {
-          return allSite.edges[0].node.siteMetadata.siteUrl
+          return allSite.edges[0].node.siteMetadata.siteUrl;
         },
         resolvePages: ({
           allSitePage: { nodes: allPages },
@@ -179,15 +178,15 @@ module.exports = {
         dataLayerName: 'gatsby',
       },
     },
-    {
-      resolve: `gatsby-plugin-algolia-docsearch`,
-      options: {
-        apiKey: '2dabff78331a44e47bedeb5fbd68ae70', // required
-        indexName: 'milvus', // required
-        inputSelector: '#algolia-search', // required
-        debug: false, // (bool) Optional. Default `false`
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-algolia-docsearch`,
+    //   options: {
+    //     apiKey: '2dabff78331a44e47bedeb5fbd68ae70', // required
+    //     indexName: 'milvus', // required
+    //     inputSelector: '#algolia-search', // required
+    //     debug: false, // (bool) Optional. Default `false`
+    //   },
+    // },
     // // add Google Analytics gtag.js to a site
     // // however this doesn't work, switch to add it in /src/html.js
     // {

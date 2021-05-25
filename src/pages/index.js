@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { graphql, navigate } from 'gatsby';
 import Layout from '../components/layout/layout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import LocalizedLink from '../components/localizedLink/localizedLink';
 import Notification from '../components/notification';
 import '../scss/index.scss';
@@ -28,7 +28,7 @@ import sizingIcon from '../images/tools/sizing.png';
 import Qcode from '../images/qrcode.jpeg';
 import MilvusUserWechat from '../images/milvus-user-wechat.png';
 import GithubButton from 'react-github-button';
-import {importAllPics} from '../utils/docTemplate.util'
+import { importAllPics } from '../utils/docTemplate.util';
 import 'react-github-button/assets/style.css';
 
 const icons = {
@@ -80,14 +80,8 @@ const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
 
   const { locale, newestVersion } = pageContext;
-  const {
-    section1,
-    section3,
-    section4,
-    section5,
-    section6,
-    section7,
-  } = language.home;
+  const { section1, section3, section4, section5, section6, section7 } =
+    language.home;
 
   let currentResources = [...resources];
   if (locale === 'en') {
@@ -107,7 +101,7 @@ const IndexPage = ({ data, pageContext }) => {
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="Milvus" />
+      <Seo title="Milvus" />
       <Notification
         version={newestVersion}
         language={language.home.notification}

@@ -1,12 +1,12 @@
-import React from "react";
-import { graphql } from "gatsby";
-import Layout from "../components/layout/layout";
-import SEO from "../components/seo";
-import "../scss/scenarios.scss";
-import AudioBg from "../images/scenario/audio.png";
-import CvBg from "../images/scenario/cv.png";
-import NlpBg from "../images/scenario/nlp.png";
-import MolsearchBg from "../images/scenario/molsearch.png";
+import React from 'react';
+import { graphql } from 'gatsby';
+import Layout from '../components/layout/layout';
+import Seo from '../components/seo';
+import '../scss/scenarios.scss';
+import AudioBg from '../images/scenario/audio.png';
+import CvBg from '../images/scenario/cv.png';
+import NlpBg from '../images/scenario/nlp.png';
+import MolsearchBg from '../images/scenario/molsearch.png';
 
 const imgs = {
   audio: AudioBg,
@@ -22,7 +22,7 @@ const ScenariosPage = ({ data, pageContext }) => {
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="Milvus Scenarios" />
+      <Seo title="Milvus Scenarios" />
       <div className="scenarios-wrapper">
         <section className="section1">
           <h2>{section1.title}</h2>
@@ -36,7 +36,7 @@ const ScenariosPage = ({ data, pageContext }) => {
         <section className="section3">
           <h2>{section3.title}</h2>
           <div className="demo-wrapper">
-            {section3.list.map((v) => (
+            {section3.list.map(v => (
               <div className="item" key={v.img}>
                 <div className="img-wrapper">
                   <img src={imgs[v.img]} alt={v.title}></img>
@@ -65,7 +65,7 @@ const ScenariosPage = ({ data, pageContext }) => {
                   )}
                 </h3>
                 <p className="desc">{v.desc}</p>
-                {v.list.map((item) => (
+                {v.list.map(item => (
                   <p className="feature" key={item}>
                     {item}
                   </p>

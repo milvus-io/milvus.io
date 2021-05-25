@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '../components/docLayout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import { graphql } from 'gatsby';
 import hljs from 'highlight.js';
 import ReactTooltip from 'react-tooltip';
@@ -406,7 +406,7 @@ export default function Template({
       isBlog={isBlog}
       editPath={editPath}
     >
-      <SEO title={title} lang={locale} />
+      <Seo title={title} lang={locale} />
       {isBenchmark ? (
         <div className="iframe-container">
           {showBack && (
@@ -487,7 +487,7 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query($locale: String, $old: String, $fileAbsolutePath: String) {
+  query ($locale: String, $old: String, $fileAbsolutePath: String) {
     markdownRemark(
       fileAbsolutePath: { eq: $fileAbsolutePath }
       frontmatter: { id: { eq: $old } }

@@ -17,9 +17,9 @@ module.exports = {
             allow: '/',
             disallow: [
               '/cn/404',
-              '/cn/404.html',
               '/cn/blogs/',
               '/docs/Changelog',
+              '/docs/v*.md$',
               '/gui',
               '/tools/sizing',
             ],

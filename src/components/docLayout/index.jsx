@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Menu from '../menu';
-import Header from '../header/header';
 import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
 import { getHeaderHeight, getStyleType } from '../../utils/docTemplate.util';
@@ -16,10 +15,8 @@ const DocLayout = props => {
     versions,
     version,
     headings,
-    current,
     wrapperClass = styles.docWrapper,
     isBenchMark = false,
-    showDoc = true,
     isBlog,
     isHome,
     editPath,
@@ -159,7 +156,7 @@ const DocLayout = props => {
       // handle different header height
       style={{ marginTop: `${headerHeight}` }}
     >
-      {menuType === 'new' ? (
+      {/* {menuType === 'new' ? (
         <NewHeader
           header={header.header}
           locale={locale}
@@ -175,8 +172,15 @@ const DocLayout = props => {
           locale={locale}
           showDoc={showDoc}
         />
-      )}
-
+      )} */}
+      <NewHeader
+        header={header.header}
+        locale={locale}
+        versions={versions}
+        version={version}
+        type="doc"
+        onSearchChange={handleSearchChange}
+      />
       <main className={wrapperClass}>
         <Menu
           menuList={menuList}
@@ -191,9 +195,8 @@ const DocLayout = props => {
           wrapperClass={styles.menuContainer}
         ></Menu>
         <div
-          className={`${styles.innerContainer} ${
-            isHome ? styles.innerContainerHome : ''
-          } ${isBenchMark ? styles.fullWidth : ''}`}
+          className={`${styles.innerContainer} ${isHome ? styles.innerContainerHome : ''
+            } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -212,9 +215,8 @@ const DocLayout = props => {
                     {isBlog || isBenchMark ? null : (
                       <a
                         className={styles.btnAnchor}
-                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                          locale === 'en' ? 'en' : 'zh-CN'
-                        }/${editPath}`}
+                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
+                          }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
                           <i className={`far fa-edit ${styles.btnIcon}`}></i>

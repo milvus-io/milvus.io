@@ -82,15 +82,6 @@ const V2Header = ({
     hideMask();
   });
 
-  useEffect(() => {
-    window.addEventListener('popstate', () => {
-      console.log(11111);
-    });
-    window.addEventListener('hashchange', () => {
-      console.log(22222);
-    });
-  }, []);
-
   return (
     <section className={`${styles.header} ${className}`} ref={headContainer}>
       <div className={styles.headerContainer} ref={container}>

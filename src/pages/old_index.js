@@ -30,7 +30,7 @@ import MilvusUserWechat from '../images/milvus-user-wechat.png';
 import GithubButton from 'react-github-button';
 import { importAllPics } from '../utils/docTemplate.util';
 import 'react-github-button/assets/style.css';
-import './index.less';
+import './old_index.less';
 
 const icons = {
   availability: availabilityIcon,

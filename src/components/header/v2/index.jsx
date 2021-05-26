@@ -1,11 +1,10 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/logo/lfai.svg';
 import close from '../../../images/v2/close.svg';
 import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
-import V2Selector from '../../selector/v2';
 import { useMobileScreen } from '../../../hooks';
 import { sortVersions } from '../../../utils/docTemplate.util';
 import MobilePopup from '../components/MobilePopupV2';
@@ -18,11 +17,12 @@ import * as styles from './index.module.less';
 const V2Header = ({
   versions,
   version,
-  setVersion = () => {},
+  setVersion = () => { },
   type = 'home',
   onSearchChange,
   className = '',
 }) => {
+  const { pathname } = window.location;
   const { isMobile } = useMobileScreen();
   const versionList = useMemo(
     () => versions.slice().sort((a, b) => sortVersions(a, b)),
@@ -37,7 +37,7 @@ const V2Header = ({
   const navList = [
     {
       label: 'What is milvus?',
-      link: '#',
+      link: '/docs/overview.md',
       isExternal: false,
     },
     {
@@ -88,7 +88,7 @@ const V2Header = ({
         {!isMobile ? (
           <div className={styles.contentWrapper}>
             <div className={styles.logoSection}>
-              <Link to="/v2">
+              <Link to="/">
                 <img
                   className={styles.milvus}
                   src={milvusLogo}
@@ -107,22 +107,31 @@ const V2Header = ({
               {navList.map(i => {
                 const { label, link, isExternal } = i;
                 return isExternal ? (
-                  <a className={styles.navItem} href={link} key={label}>
+                  <a
+                    className={styles.navItem}
+                    href={link} key={label}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     {label}
                   </a>
                 ) : (
-                  <Link className={styles.navItem} to={link} key={label}>
+                  <Link
+                    className={`${styles.navItem} ${pathname === link ? styles.active : ''}`}
+                    to={link}
+                    key={label}
+                  >
                     {label}
                   </Link>
                 );
               })}
-              <div className={styles.dropDown}>
+              {/* <div className={styles.dropDown}>
                 <V2Selector
                   selected={version}
                   options={versions}
                   setSelected={handleSelected}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         ) : (

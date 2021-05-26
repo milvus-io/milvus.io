@@ -22,7 +22,7 @@ const V2Header = ({
   onSearchChange,
   className = '',
 }) => {
-  const { pathname } = window.location;
+  const pathname = window ? window.location.pathname : '';
   const { isMobile } = useMobileScreen();
   const versionList = useMemo(
     () => versions.slice().sort((a, b) => sortVersions(a, b)),

@@ -80,7 +80,7 @@ const HomePage = ({ data, pageContext }) => {
                   children={
                     <>
                       <span>{banner.contributeBtn.label}</span>
-                      <i class="fas fa-pencil-alt"></i>
+                      <i className="fas fa-pencil-alt"></i>
                     </>
                   }
                 />

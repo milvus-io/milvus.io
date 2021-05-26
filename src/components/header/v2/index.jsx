@@ -23,11 +23,9 @@ const V2Header = ({
   onSearchChange,
   className = '',
 }) => {
-<<<<<<< HEAD
+
   const { pathname } = globalHistory.location;
-=======
-  const { pathname } = window.location;
->>>>>>> preview
+
   const { isMobile } = useMobileScreen();
   const versionList = useMemo(
     () => versions.slice().sort((a, b) => sortVersions(a, b)),

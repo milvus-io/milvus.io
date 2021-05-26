@@ -13,6 +13,7 @@ import Search from '../components/Search/Search';
 import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
+import { globalHistory } from '@reach/router';
 
 const V2Header = ({
   versions,
@@ -22,7 +23,11 @@ const V2Header = ({
   onSearchChange,
   className = '',
 }) => {
+<<<<<<< HEAD
+  const { pathname } = globalHistory.location;
+=======
   const { pathname } = window.location;
+>>>>>>> preview
   const { isMobile } = useMobileScreen();
   const versionList = useMemo(
     () => versions.slice().sort((a, b) => sortVersions(a, b)),

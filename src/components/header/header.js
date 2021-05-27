@@ -151,6 +151,7 @@ const Header = ({ language, locale, current = '', showDoc = true }) => {
                 locale={locale}
                 hideMobileMask={hideMobileMask}
               ></SearchForWeb>
+
               <span
                 role="button"
                 tabIndex={0}

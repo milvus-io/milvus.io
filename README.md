@@ -1,6 +1,6 @@
 [![Build Status](https://dev.azure.com/zhifengzhang/milvus-io-production/_apis/build/status/milvus-io?branchName=master)](https://dev.azure.com/zhifengzhang/milvus-io-production/_build/latest?definitionId=33&branchName=master)
 
-www.milvus.io Official website
+milvus.io Official website
 
 ## local development set up
 

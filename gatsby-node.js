@@ -3,7 +3,7 @@ const fs = require('fs');
 const ReadVersionJson = require('./walkFile');
 const locales = require('./src/constants/locales');
 const DOC_LANG_FOLDERS = ['/en/', '/zh-CN/'];
-const benchmarksMenu = require('./benchmark-menu');
+// const benchmarksMenu = require('./benchmark-menu');
 const express = require('express');
 const env = process.env.IS_PREVIEW;
 // const env = 'preview';
@@ -57,6 +57,16 @@ Object.keys(versionInfo).forEach(v => {
   }
 });
 console.log(versionInfo);
+
+// add versioninfo file for generate sitemap filter option
+fs.writeFile(
+  `${DOC_ROOT}/versionInfo.json`,
+  JSON.stringify(Object.values(versionInfo), null, 2),
+  err => {
+    if (err) throw err;
+    console.log('versionInfo file write to file', versionInfo);
+  }
+);
 
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
@@ -174,7 +184,8 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors);
     }
     const findVersion = str => {
-      const regx = /versions\/master\/([v\d\.]*)/;
+      // version: v.1.0.0 | v0.x
+      const regx = /versions\/master\/([v\dx\.]*)/;
       const match = str.match(regx);
       return match
         ? match[1]
@@ -207,11 +218,11 @@ exports.createPages = ({ actions, graphql }) => {
         const menuStructureList =
           (childMenuStructureJson && [...childMenuStructureJson.menuList]) ||
           [];
-        const benchmarkMenuList =
-          lang === 'en'
-            ? benchmarksMenu.benchmarksMenuListEN
-            : benchmarksMenu.benchmarksMenuListCN;
-        const menuList = [...menuStructureList, ...benchmarkMenuList];
+        // const benchmarkMenuList =
+        //   lang === 'en'
+        //     ? benchmarksMenu.benchmarksMenuListEN
+        //     : benchmarksMenu.benchmarksMenuListCN;
+        const menuList = [...menuStructureList];
         return {
           lang,
           version,
@@ -395,6 +406,7 @@ exports.createPages = ({ actions, graphql }) => {
             old: fileId,
             headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
             fileAbsolutePath,
+            localizedPath,
             isBlog,
             editPath,
             allMenus,
@@ -415,6 +427,7 @@ exports.createPages = ({ actions, graphql }) => {
           old: fileId,
           headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
           fileAbsolutePath,
+          localizedPath,
           newestVersion,
           isBlog,
           editPath,

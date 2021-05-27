@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Menu from '../menu';
 import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
-import { getHeaderHeight, getStyleType } from '../../utils/docTemplate.util';
+import { getStyleType } from '../../utils/docTemplate.util';
 import * as styles from './index.module.less';
 
 const DocLayout = props => {
@@ -20,7 +20,6 @@ const DocLayout = props => {
     isBlog,
     isHome,
     editPath,
-    header,
     setSearch,
   } = props;
   const formatHeadings =
@@ -43,15 +42,6 @@ const DocLayout = props => {
   // check menu type based on whether version is 2.0
   // here use v1 as test
   const menuType = useMemo(() => getStyleType(version), [version]);
-
-  const headerHeight = useMemo(() => getHeaderHeight(menuType), [menuType]);
-
-  // handle different header height
-  useEffect(() => {
-    const html = document.querySelector('html');
-    html.style.scrollPaddingTop = headerHeight;
-  }, [menuType, headerHeight]);
-
   // star reference
   const star = useRef(null);
   useEffect(() => {
@@ -150,37 +140,23 @@ const DocLayout = props => {
     setSearch(value);
   };
 
+  const handleTabChange = id => {
+    console.log(id);
+  };
+
   return (
-    <div
-      className={styles.layoutWrapper}
-      // handle different header height
-      style={{ marginTop: `${headerHeight}` }}
-    >
-      {/* {menuType === 'new' ? (
-        <NewHeader
-          header={header.header}
-          locale={locale}
-          versions={versions}
-          version={version}
-          type="doc"
-          onSearchChange={handleSearchChange}
-        />
-      ) : (
-        <Header
-          language={language}
-          current={current}
-          locale={locale}
-          showDoc={showDoc}
-        />
-      )} */}
+    <div className={styles.layoutWrapper}>
       <NewHeader
-        header={header.header}
+        header={language.header}
         locale={locale}
         versions={versions}
         version={version}
         type="doc"
         onSearchChange={handleSearchChange}
+        isSecondHeader={true}
+        onTabChange={handleTabChange}
       />
+
       <main className={wrapperClass}>
         <Menu
           menuList={menuList}
@@ -195,8 +171,9 @@ const DocLayout = props => {
           wrapperClass={styles.menuContainer}
         ></Menu>
         <div
-          className={`${styles.innerContainer} ${isHome ? styles.innerContainerHome : ''
-            } ${isBenchMark ? styles.fullWidth : ''}`}
+          className={`${styles.innerContainer} ${
+            isHome ? styles.innerContainerHome : ''
+          } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -215,8 +192,9 @@ const DocLayout = props => {
                     {isBlog || isBenchMark ? null : (
                       <a
                         className={styles.btnAnchor}
-                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
-                          }/${editPath}`}
+                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                          locale === 'en' ? 'en' : 'zh-CN'
+                        }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
                           <i className={`far fa-edit ${styles.btnIcon}`}></i>

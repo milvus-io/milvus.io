@@ -1,4 +1,5 @@
 @import '../../../css/variables/color.less';
+@import '../../../css/variables/responsive.less';
 
 .selectorContainer {
   position: relative;
@@ -16,18 +17,21 @@
       font-weight: 500;
       line-height: 24px;
       margin-right: 8px;
-      width: 60px;
       text-align: right;
       pointer-events: none;
     }
 
     .iconWrapper {
-      width: 24px;
-      height: 24px;
+      display: inline-block;
       text-align: center;
-      line-height: 24px;
+
       pointer-events: none;
       transition: transform 0.2s ease-in-out;
+
+      i {
+        line-height: 24px;
+        font-size: 16px;
+      }
 
       &.show {
         transform: rotate(180deg);
@@ -39,17 +43,22 @@
     position: absolute;
     z-index: 9;
     transition: all 0.2s ease-in-out;
-    padding: 16px 0 40px;
-    right: 0;
+    padding: 16px;
+    left: -50%;
     visibility: hidden;
     opacity: 0;
     background: #fff;
     transform: scaleY(0);
     transform-origin: top;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-    border-radius: 4px 4px 32px 32px;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
+
+    @media @tablet {
+      border-radius: 4px 4px 32px 32px;
+      padding: 16px 0 40px;
+    }
 
     &.show {
       transform: translateY(0);
@@ -70,6 +79,8 @@
       text-align: center;
       color: #000;
       cursor: pointer;
+      white-space: nowrap;
+      word-break: break-all;
 
       &.active {
         color: #12c3f4;
@@ -103,6 +114,8 @@
     .optionItem {
       padding: 8px 48px;
       text-align: left;
+      white-space: nowrap;
+      word-break: break-all;
     }
   }
 }

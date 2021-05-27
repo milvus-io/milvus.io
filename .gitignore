@@ -68,3 +68,8 @@ yarn-error.log
 
 # search.json
 search.json
+
+# generated versioninfo
+src/pages/docs/versions/versioninfo.json
+
+yarn.lock

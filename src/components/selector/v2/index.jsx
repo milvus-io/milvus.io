@@ -6,7 +6,7 @@ import * as styles from './v2.module.less';
 const V2Selector = ({
   selected,
   options,
-  setSelected = () => {},
+  setSelected = () => { },
   className = '',
 }) => {
   const choosenWrapper = useRef(null);
@@ -44,9 +44,8 @@ const V2Selector = ({
 
   return (
     <div
-      className={`${styles.selectorContainer} ${className} ${
-        isMobile ? styles.mobileSelector : ''
-      }`}
+      className={`${styles.selectorContainer} ${className} ${isMobile ? styles.mobileSelector : ''
+        }`}
     >
       <div
         role="button"
@@ -57,9 +56,9 @@ const V2Selector = ({
         onKeyDown={e => handleClick(e)}
       >
         <p className={styles.labelWrapper}>{selected}</p>
-        <div className={`${styles.iconWrapper} ${open ? styles.show : ''}`}>
+        <span className={`${styles.iconWrapper} ${open ? styles.show : ''}`}>
           <i className="fa fa-chevron-down"></i>
-        </div>
+        </span>
       </div>
 
       <div
@@ -72,9 +71,8 @@ const V2Selector = ({
         {options.map(option => (
           <p
             data-option={option}
-            className={`${styles.optionItem} ${
-              option === selected && styles.active
-            }`}
+            className={`${styles.optionItem} ${option === selected && styles.active
+              }`}
             key={option}
           >
             {option}

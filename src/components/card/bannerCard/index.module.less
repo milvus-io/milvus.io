@@ -1,0 +1,52 @@
+@import '../../../css/variables/responsive.less';
+@import '../../../css/variables/color.less';
+
+.bannerCard {
+  display: flex;
+  border: 1px solid red;
+  max-width: 1145px;
+
+  .contentWrapper {
+    margin-right: 70px;
+    width: 33.33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .content {
+      width: 100%;
+      overflow: hidden;
+
+      .text {
+        width: 100%;
+        white-space: normal;
+        word-break: break-word;
+        font-family: 'Inter';
+        font-size: 16px;
+        line-height: 26px;
+
+        & + p {
+          margin-top: 16px;
+        }
+      }
+    }
+
+    .title {
+      font-family: 'Inter Bold';
+      font-size: 24px;
+      line-height: 32px;
+      margin-bottom: 16px;
+    }
+  }
+
+  .bannerImg {
+    width: 66.67%;
+
+    .img {
+      max-width: 758px;
+      max-height: 286px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

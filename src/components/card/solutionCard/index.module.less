@@ -1,0 +1,35 @@
+.solutionCard {
+  border: 1px solid #e9e9ed;
+  border-radius: 4px;
+
+  &:hover {
+    box-shadow: 0px 10px 30px rgba(100, 100, 100, 0.1);
+  }
+
+  .titleBar {
+    display: flex;
+    .img {
+      margin-right: 8px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .title {
+      font-family: 'Inter Semibold';
+      font-size: 16px;
+      line-height: 28px;
+    }
+  }
+
+  .content {
+    font-family: 'Inter';
+    font-size: 15px;
+    line-height: 24px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; //行数
+    -webkit-box-orient: vertical;
+  }
+}

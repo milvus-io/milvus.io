@@ -1,15 +1,82 @@
 let gatsbyConfigs = {
   siteMetadata: {
-    siteUrl: `https://www.milvus.io`,
+    siteUrl: `https://milvus.io`,
     title: ` · An Open Source Similarity Search Engine for Embeddings`,
     description: `Milvus is an open source similarity search engine for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.`,
     author: `@ZILLIZ.com`,
   },
   plugins: [
-    `gatsby-plugin-robots-txt`,
-    `gatsby-plugin-sitemap`,
-    `gatsby-plugin-less`,
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://milvus.io',
+        sitemap: 'https://milvus.io/sitemap-index.xml',
+        policy: [
+          {
+            userAgent: '*',
+            allow: '/',
+            disallow: [
+              '/cn/404',
+              '/cn/blogs/',
+              '/docs/Changelog',
+              '/docs/v*.md$',
+              '/gui',
+              '/tools/sizing',
+            ],
+          },
+        ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
+        output: '/',
+        query: `{
+          allSitePage {
+            nodes {
+              path
+            }
+          }
+          allSite {
+            edges {
+              node {
+                siteMetadata {
+                  siteUrl
+                }
+              }
+            }
+          }
+          allVersionInfoJson {
+            nodes {
+              released
+              version
+            }
+          }
+        }`,
+        resolveSiteUrl: ({ allSite }) => {
+          return allSite.edges[0].node.siteMetadata.siteUrl;
+        },
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+          allVersionInfoJson: { nodes: versions },
+        }) => {
+          const res = allPages.reduce((acc, cur) => {
+            // filter out docs with version info with released value is no
+            const path = cur.path;
+            if (versions.every(ver => path.indexOf(ver.version) === -1)) {
+              if (path.endsWith('/') && path.length > 1) {
+                cur.path = path.slice(0, path.length - 1);
+              }
+              acc.push(cur);
+            }
+            return acc;
+          }, []);
+          return res;
+        },
+      },
+    },
     `gatsby-plugin-react-helmet`,
+    'gatsby-plugin-less',
     // i18n plugin
     'gatsby-transformer-json',
     {
@@ -138,8 +205,7 @@ if (process.env.NODE_ENV == 'development') {
     {
       resolve: '@sentry/gatsby',
       options: {
-        dsn:
-          'https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477',
+        dsn: 'https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477',
         sampleRate: 0.7,
       },
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import { importAllPics } from '../utils/docTemplate.util';
 // import './index.less';
 import Layout from '../components/layout/404Layout/404Layout';
@@ -20,7 +20,7 @@ const UsersPage = ({ data, pageContext }) => {
   const { section6 } = language.home;
   return (
     <Layout language={language} locale={locale}>
-      <SEO title={section6.title} />
+      <Seo title={section6.title} />
       <main className="home-wrapper">
         <section className="section6">
           <h2>{section6.title}</h2>

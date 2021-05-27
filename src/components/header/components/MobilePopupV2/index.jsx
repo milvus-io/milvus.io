@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as styles from './index.module.less';
-import { useMobileScreen } from '../../../../hooks';
 
 const MobilePopUp = props => {
   const { className = '', open, hideMask } = props;
@@ -8,8 +7,9 @@ const MobilePopUp = props => {
   return (
     <>
       <div
-        className={`${styles.popUpWrapper} ${className} ${open ? styles.activited : ''
-          }`}
+        className={`${styles.popUpWrapper} ${className} ${
+          open ? styles.activited : ''
+        }`}
       >
         {props.children}
       </div>

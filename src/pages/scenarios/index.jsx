@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../../components/layout/layout';
-import SEO from '../../components/seo';
+import Seo from '../../components/seo';
 import './scenarios.less';
 import AudioBg from '../../images/scenario/audio.png';
 import CvBg from '../../images/scenario/cv.png';
@@ -22,7 +22,7 @@ const ScenariosPage = ({ data, pageContext }) => {
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="Milvus Scenarios" />
+      <Seo title="Milvus Scenarios" />
       <div className="scenarios-wrapper">
         <section className="section1">
           <h2>{section1.title}</h2>

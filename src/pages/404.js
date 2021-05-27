@@ -1,17 +1,18 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import LocalizeLink from '../components/localizedLink/localizedLink';
 
 import './404.less';
 import Layout from '../components/layout/404Layout/404Layout';
+
 const NotFoundPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
   const { locale } = pageContext;
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="404: Not found" />
+      <Seo title="404: Not found" />
       <div
         style={{
           display: 'flex',

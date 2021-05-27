@@ -43,13 +43,6 @@ const DocLayout = props => {
   // check menu type based on whether version is 2.0
   // here use v1 as test
   const menuType = useMemo(() => getStyleType(version), [version]);
-
-  // handle different header height
-  useEffect(() => {
-    const html = document.querySelector('html');
-    html.style.scrollPaddingTop = '147px';
-  }, [menuType]);
-
   // star reference
   const star = useRef(null);
   useEffect(() => {
@@ -161,7 +154,6 @@ const DocLayout = props => {
         version={version}
         type="doc"
         onSearchChange={handleSearchChange}
-        bgColor="#fafafa"
         isSecondHeader={true}
         onTabChange={handleTabChange}
       />

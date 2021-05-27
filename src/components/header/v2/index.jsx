@@ -64,7 +64,6 @@ const V2Header = ({
   type = 'home',
   onSearchChange,
   className = '',
-  bgColor = '#fff',
   header,
   isSecondHeader,
   onTabChange
@@ -72,7 +71,6 @@ const V2Header = ({
   const { pathname } = globalHistory.location;
 
   const { isMobile } = useMobileScreen();
-  const backgroundColor = isMobile ? '#fff' : bgColor;
   const versionList = useMemo(
     () => versions.slice().sort((a, b) => sortVersions(a, b)),
     [versions]
@@ -117,10 +115,9 @@ const V2Header = ({
 
 
   return (
-    <section
+    <header
       className={`${styles.header} ${className}`}
       ref={headContainer}
-      style={{ background: backgroundColor }}
     >
       <div className={styles.firstHeader}>
         <div className={styles.headerContainer} ref={container}>
@@ -253,7 +250,7 @@ const V2Header = ({
           />
         ) : null
       }
-    </section>
+    </header>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/logo/lfai.svg';
@@ -18,12 +18,11 @@ import { globalHistory } from '@reach/router';
 const V2Header = ({
   versions,
   version,
-  setVersion = () => { },
+  setVersion = () => {},
   type = 'home',
   onSearchChange,
   className = '',
 }) => {
-
   const { pathname } = globalHistory.location;
 
   const { isMobile } = useMobileScreen();
@@ -112,7 +111,8 @@ const V2Header = ({
                 return isExternal ? (
                   <a
                     className={styles.navItem}
-                    href={link} key={label}
+                    href={link}
+                    key={label}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -120,7 +120,9 @@ const V2Header = ({
                   </a>
                 ) : (
                   <Link
-                    className={`${styles.navItem} ${pathname === link ? styles.active : ''}`}
+                    className={`${styles.navItem} ${
+                      pathname === link ? styles.active : ''
+                    }`}
                     to={link}
                     key={label}
                   >

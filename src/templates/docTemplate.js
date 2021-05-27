@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/docLayout';
 import SEO from '../components/seo';
 import { graphql } from 'gatsby';
@@ -41,7 +41,7 @@ export default function Template({
   const [showModal, setShowModal] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [searchVal, setSearchVal] = useState('');
-
+  const [showWarning, setShowWarning] = useState(false);
   const handleSearch = value => {
     setSearchVal(value);
     setIsSearch(true);
@@ -61,13 +61,13 @@ export default function Template({
   useFilter();
   useCodeCopy(locale);
 
-  const showWarning = useMemo(
-    () =>
+  useEffect(() => {
+    const isLowVersion =
       sortVersions(version, NOT_SUPPORTED_VERSION) > -1 &&
       typeof window !== 'undefined' &&
-      !window.location.pathname.includes('data_migration'),
-    [version]
-  );
+      !window.location.pathname.includes('data_migration');
+    setShowWarning(isLowVersion);
+  }, [version]);
 
   useEffect(() => {
     if (!isMobile) return;
@@ -260,7 +260,7 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query($locale: String, $old: String, $fileAbsolutePath: String) {
+  query ($locale: String, $old: String, $fileAbsolutePath: String) {
     markdownRemark(
       fileAbsolutePath: { eq: $fileAbsolutePath }
       frontmatter: { id: { eq: $old } }

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/logo/lfai.svg';
@@ -6,7 +6,6 @@ import close from '../../../images/v2/close.svg';
 import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
 import { useMobileScreen } from '../../../hooks';
-import { sortVersions } from '../../../utils/docTemplate.util';
 import MobilePopup from '../components/MobilePopupV2';
 import { Link } from 'gatsby';
 import Search from '../components/Search/Search';
@@ -43,38 +42,32 @@ const navList = [
 const tabList = [
   {
     label: 'Developer Docs',
-    id: 1
+    id: 1,
   },
   {
     label: 'Bootcamp',
-    id: 2
+    id: 2,
   },
   {
     label: 'Community',
-    id: 3
+    id: 3,
   },
 ];
 
 const languageList = ['中文', 'En'];
 
 const V2Header = ({
-  versions,
-  version,
-  setVersion = () => { },
+  setVersion = () => {},
   type = 'home',
   onSearchChange,
   className = '',
   header,
   isSecondHeader,
-  onTabChange
+  onTabChange,
 }) => {
   const { pathname } = globalHistory.location;
 
   const { isMobile } = useMobileScreen();
-  const versionList = useMemo(
-    () => versions.slice().sort((a, b) => sortVersions(a, b)),
-    [versions]
-  );
 
   const [open, setOpen] = useState(false);
   const [openType, setOpenType] = useState('');
@@ -113,12 +106,8 @@ const V2Header = ({
     hideMask();
   });
 
-
   return (
-    <header
-      className={`${styles.header} ${className}`}
-      ref={headContainer}
-    >
+    <header className={`${styles.header} ${className}`} ref={headContainer}>
       <div className={styles.firstHeader}>
         <div className={styles.headerContainer} ref={container}>
           {!isMobile ? (
@@ -145,7 +134,8 @@ const V2Header = ({
                   return isExternal ? (
                     <a
                       className={styles.navItem}
-                      href={link} key={label}
+                      href={link}
+                      key={label}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -153,7 +143,9 @@ const V2Header = ({
                     </a>
                   ) : (
                     <Link
-                      className={`${styles.navItem} ${pathname === link ? styles.active : ''}`}
+                      className={`${styles.navItem} ${
+                        pathname === link ? styles.active : ''
+                      }`}
                       to={link}
                       key={label}
                     >
@@ -230,26 +222,23 @@ const V2Header = ({
                     navList={navList}
                   />
                 ) : (
-                  < Search handleSearch={handleSearchInMobile} />
+                  <Search handleSearch={handleSearchInMobile} />
                 )}
               </MobilePopup>
             </div>
           )}
-
         </div>
       </div>
-      {
-        isSecondHeader && !open ? (
-          <SecondHeader
-            tabList={tabList}
-            isMobile={isMobile}
-            onTabChange={onTabChange}
-            handleSearch={handleSearch}
-            header={header}
-            styles={styles}
-          />
-        ) : null
-      }
+      {isSecondHeader && !open ? (
+        <SecondHeader
+          tabList={tabList}
+          isMobile={isMobile}
+          onTabChange={onTabChange}
+          handleSearch={handleSearch}
+          header={header}
+          styles={styles}
+        />
+      ) : null}
     </header>
   );
 };

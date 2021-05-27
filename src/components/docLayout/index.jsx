@@ -20,7 +20,6 @@ const DocLayout = props => {
     isBlog,
     isHome,
     editPath,
-    header,
     setSearch,
   } = props;
   const formatHeadings =
@@ -172,8 +171,9 @@ const DocLayout = props => {
           wrapperClass={styles.menuContainer}
         ></Menu>
         <div
-          className={`${styles.innerContainer} ${isHome ? styles.innerContainerHome : ''
-            } ${isBenchMark ? styles.fullWidth : ''}`}
+          className={`${styles.innerContainer} ${
+            isHome ? styles.innerContainerHome : ''
+          } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -192,8 +192,9 @@ const DocLayout = props => {
                     {isBlog || isBenchMark ? null : (
                       <a
                         className={styles.btnAnchor}
-                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
-                          }/${editPath}`}
+                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                          locale === 'en' ? 'en' : 'zh-CN'
+                        }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
                           <i className={`far fa-edit ${styles.btnIcon}`}></i>

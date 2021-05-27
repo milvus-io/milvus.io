@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { graphql, navigate } from 'gatsby';
 import Layout from '../components/layout/layout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import LocalizedLink from '../components/localizedLink/localizedLink';
-import NotificationV2 from '../components/notification/v2';
 import availabilityIcon from '../images/features/availability.svg';
 import cloudIcon from '../images/features/cloud.svg';
 import costIcon from '../images/features/cost.svg';
@@ -82,14 +81,8 @@ const IndexPage = ({ data, pageContext }) => {
   const language = data.allFile.edges[0].node.childLayoutJson.layout;
 
   const { locale } = pageContext;
-  const {
-    section1,
-    section3,
-    section4,
-    section5,
-    section6,
-    section7,
-  } = language.home;
+  const { section1, section3, section4, section5, section6, section7 } =
+    language.home;
 
   let currentResources = [...resources];
   if (locale === 'en') {
@@ -109,13 +102,12 @@ const IndexPage = ({ data, pageContext }) => {
 
   return (
     <Layout language={language} locale={locale}>
-      <SEO title="Milvus" />
-      <NotificationV2 language={language.home.notification} />
+      <Seo title="Milvus" />
       {/* <Notification
         version={newestVersion}
         language={language.home.notification}
         locale={locale}
-      ></Notification> */}
+      ></Notification>  */}
       <main className="home-wrapper">
         <section className="section1">
           <div className="githubIcon">

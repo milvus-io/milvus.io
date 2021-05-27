@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import LocalizeLink from '../localizedLink/localizedLink';
 import { useMobileScreen } from '../../hooks';
 import * as styles from './index.module.less';
-import { getHeaderHeight } from '../../utils/docTemplate.util';
 
 /* eslint-disable */
 const findItem = (key, value, arr) => {
@@ -40,8 +39,6 @@ const Menu = props => {
   const { isBlog } = menuList || {};
   const [realMenuList, setRealMenuList] = useState([]);
   const formatVersion = version === 'master' ? versions[0] : version;
-
-  const headerHeight = useMemo(() => getHeaderHeight(type), [type]);
 
   useEffect(() => {
     const generateMenu = list => {
@@ -175,20 +172,18 @@ const Menu = props => {
   const generageMenuDom = (list, className = '') => {
     return list.map(doc => (
       <div
-        className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${
-          doc.isLast ? styles.menuLastLevel : ''
-        } ${doc.isActive ? styles.active : ''}`}
+        className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${doc.isLast ? styles.menuLastLevel : ''
+          } ${doc.isActive ? styles.active : ''}`}
         key={doc.id}
       >
         <div
-          className={`${styles.menuNameWrapper} ${
-            doc.showChildren ? styles.active : ''
-          }`}
+          className={`${styles.menuNameWrapper} ${doc.showChildren ? styles.active : ''
+            }`}
           onClick={
             doc.isMenu
               ? () => {
-                  toggleMenuChild(doc);
-                }
+                toggleMenuChild(doc);
+              }
               : handleMenuClick
           }
           style={doc.isMenu ? { cursor: 'pointer' } : null}
@@ -215,24 +210,21 @@ const Menu = props => {
             <>
               {doc.isMenu && doc.label1 === '' ? (
                 <i
-                  className={`fas fa-caret-down ${styles.arrow} ${
-                    doc.showChildren ? '' : styles.top
-                  }`}
+                  className={`fas fa-caret-down ${styles.arrow} ${doc.showChildren ? '' : styles.top
+                    }`}
                 ></i>
               ) : (
                 <i
-                  className={`fas ${styles.expandIcon} ${
-                    doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
-                  }`}
+                  className={`fas ${styles.expandIcon} ${doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
+                    }`}
                 ></i>
               )}
             </>
           ) : null}
         </div>
         <div
-          className={`${styles.menuChildWrapper} ${
-            doc.showChildren ? styles.open : ''
-          }`}
+          className={`${styles.menuChildWrapper} ${doc.showChildren ? styles.open : ''
+            }`}
         >
           {doc.children && doc.children.length
             ? generageMenuDom(doc.children, styles.menuChild)
@@ -267,10 +259,9 @@ const Menu = props => {
   return (
     <>
       <section
-        className={`${wrapperClass} ${styles.menuContainer} ${
-          !menuStatus ? styles.hide : ''
-        }`}
-        style={{ top: `${isMobile ? '50px' : headerHeight}` }}
+        className={`${wrapperClass} ${styles.menuContainer} ${!menuStatus ? styles.hide : ''
+          }`}
+        style={{ top: `${isMobile ? '50px' : '147px'}` }}
         ref={menuRef}
       >
         {!isMobile && (

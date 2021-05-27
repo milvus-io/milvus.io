@@ -11,7 +11,7 @@ import GithubButton from 'react-github-button';
 import './index.less';
 import AnimatedSvg from '../components/animatedSvg/animatedSvg';
 import { HOME_ANIMATION as HomeAnimation } from '../../static/anime/common/home';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -40,7 +40,7 @@ const HomePage = ({ data, pageContext }) => {
           locale={locale}
           versions={versions}
         >
-          <SEO title="Milvus 2.0" />
+          <Seo title="Milvus 2.0" />
           <div className="banner">
             <div className="banner-left">
               <div className="stars-layout">
@@ -87,7 +87,10 @@ const HomePage = ({ data, pageContext }) => {
               </div>
             </div>
             <div className="banner-right">
-              <AnimatedSvg data={HomeAnimation} className="banner-right-anime" />
+              <AnimatedSvg
+                data={HomeAnimation}
+                className="banner-right-anime"
+              />
             </div>
 
             <div className="banner-bg-container"></div>

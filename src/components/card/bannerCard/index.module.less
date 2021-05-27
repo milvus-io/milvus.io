@@ -4,7 +4,7 @@
 .bannerCard {
   display: flex;
   border: 1px solid red;
-  max-width: 1145px;
+  width: 100%;
 
   .contentWrapper {
     margin-right: 70px;
@@ -13,21 +13,16 @@
     flex-direction: column;
     justify-content: center;
 
-    .content {
+    .text {
       width: 100%;
-      overflow: hidden;
+      white-space: normal;
+      word-break: break-word;
+      font-family: 'Inter';
+      font-size: 16px;
+      line-height: 26px;
 
-      .text {
-        width: 100%;
-        white-space: normal;
-        word-break: break-word;
-        font-family: 'Inter';
-        font-size: 16px;
-        line-height: 26px;
-
-        & + p {
-          margin-top: 16px;
-        }
+      & + p {
+        margin-top: 16px;
       }
     }
 

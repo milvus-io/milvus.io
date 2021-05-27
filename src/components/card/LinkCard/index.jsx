@@ -10,7 +10,12 @@ const LinkCard = ({
 
 
   return (
-    <a className={`${styles.linkCard} ${className}`} href={href} target='_blank'>
+    <a
+      className={`${styles.linkCard} ${className}`}
+      href={href}
+      target='_blank'
+      rel="noreferrer"
+    >
       <span className={styles.label}>{label}</span>
       <img src={LinkIcon} alt="link-icon" className={styles.icon} />
     </a>

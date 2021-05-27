@@ -57,13 +57,13 @@ const tabList = [
 const languageList = ['中文', 'En'];
 
 const V2Header = ({
-  setVersion = () => {},
+  setVersion = () => { },
   type = 'home',
   onSearchChange,
-  className = '',
   header,
   isSecondHeader,
   onTabChange,
+  className = ''
 }) => {
   const { pathname } = globalHistory.location;
 
@@ -143,9 +143,8 @@ const V2Header = ({
                     </a>
                   ) : (
                     <Link
-                      className={`${styles.navItem} ${
-                        pathname === link ? styles.active : ''
-                      }`}
+                      className={`${styles.navItem} ${pathname === link ? styles.active : ''
+                        }`}
                       to={link}
                       key={label}
                     >

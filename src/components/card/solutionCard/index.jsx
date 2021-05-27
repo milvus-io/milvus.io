@@ -5,11 +5,12 @@ const SolutionCard = ({
   img,
   title,
   content,
+  href,
   className = '',
 }) => {
 
   return (
-    <div className={`${styles.solutionCard} ${className}`}>
+    <a className={`${styles.solutionCard} ${className}`} href={href} target="_blank" rel="noreferrer">
       <div className={styles.titleBar}>
         {
           img ? (
@@ -20,7 +21,7 @@ const SolutionCard = ({
       </div>
 
       <p className={styles.content}>{content}</p>
-    </div>
+    </a>
   );
 };
 

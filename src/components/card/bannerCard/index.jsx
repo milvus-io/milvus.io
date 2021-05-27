@@ -3,7 +3,7 @@ import * as styles from './index.module.less';
 
 const BannerCard = ({
   title,
-  contentList = [],
+  content = '',
   children,
   className = '',
   img
@@ -14,12 +14,8 @@ const BannerCard = ({
       <div className={styles.contentWrapper}>
         <h1 className={styles.title}>{title}</h1>
         {
-          !!contentList.length ? (
-            <div className={styles.content}>
-              {
-                contentList.map(item => <p className={styles.text} key={item}>{item}</p>)
-              }
-            </div>
+          !!content.length ? (
+            <p className={styles.text}>{content}</p>
           ) : children
         }
       </div>

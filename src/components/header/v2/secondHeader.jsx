@@ -7,7 +7,7 @@ const SecondHeader = ({
   handleSearch,
   onTabChange,
   header,
-  styles
+  styles,
 }) => {
   const [activeId, setActiveId] = useState(1);
   const [open, setOpen] = useState(false);
@@ -32,63 +32,62 @@ const SecondHeader = ({
 
   return (
     <div className={styles.secondHeader}>
-      {
-        isMobile ? (
-          <div className={styles.mobileTabWrapper}>
-            <span className={styles.location}>Home</span>
-            <div
-              className={styles.selector}
-              onClick={() => setOpen(true)}
-              onKeyDown={() => setOpen(true)}
-              role='button'
-              tabIndex={-1}
-            >
-              <span>{tabList[activeId - 1]['label']}</span>
-              <i className="fas fa-chevron-down"></i>
-            </div>
+      {isMobile ? (
+        <div className={styles.mobileTabWrapper}>
+          <span className={styles.location}>Home</span>
+          <div
+            className={styles.selector}
+            onClick={() => setOpen(true)}
+            onKeyDown={() => setOpen(true)}
+            role="button"
+            tabIndex={-1}
+          >
+            <span>{tabList[activeId - 1]['label']}</span>
+            <i className="fas fa-chevron-down"></i>
           </div>
-        ) : (
-          <>
-            <div
-              className={styles.tabsWrapper}
-              onClick={handleTabClick}
-              onKeyDown={handleTabClick}
-              role='button'
-              tabIndex={-1}
-            >
-              {
-                tabList.map(item => {
-                  const { id, label } = item;
-                  return (
-                    <p
-                      key={id}
-                      className={`${styles.tabItem} ${activeId === id ? styles.active : ''}`}
-                      data-id={id}
-                    >
-                      {label}
-                    </p>
-                  );
-                })
-              }
-            </div>
-            <div className={styles.searchWrapper}>
-              {!isMobile && (
-                <input
-                  className={styles.search}
-                  type="text"
-                  onKeyPress={handleSearch}
-                  placeholder={header.search}
-                />
-              )}
-            </div>
-          </>
-        )
-      }
+        </div>
+      ) : (
+        <>
+          <div
+            className={styles.tabsWrapper}
+            onClick={handleTabClick}
+            onKeyDown={handleTabClick}
+            role="button"
+            tabIndex={-1}
+          >
+            {tabList.map(item => {
+              const { id, label } = item;
+              return (
+                <p
+                  key={id}
+                  className={`${styles.tabItem} ${
+                    activeId === id ? styles.active : ''
+                  }`}
+                  data-id={id}
+                >
+                  {label}
+                </p>
+              );
+            })}
+          </div>
+          <div className={styles.searchWrapper}>
+            {!isMobile && (
+              <input
+                className={styles.search}
+                type="text"
+                onKeyPress={handleSearch}
+                placeholder={header.search}
+                id="algolia-search"
+              />
+            )}
+          </div>
+        </>
+      )}
       <div
         className={`${styles.maskContainer} ${open ? styles.show : ''}`}
         onClick={() => setOpen(false)}
         onKeyDown={() => setOpen(false)}
-        role='button'
+        role="button"
         tabIndex={-1}
       >
         <div className={styles.selectorWrapper}>
@@ -96,7 +95,7 @@ const SecondHeader = ({
             className={styles.iconWrapper}
             onClick={() => setOpen(false)}
             onKeyDown={() => setOpen(false)}
-            role='button'
+            role="button"
             tabIndex={-1}
           >
             <i className="fas fa-times"></i>
@@ -105,29 +104,28 @@ const SecondHeader = ({
             className={styles.selectList}
             onClick={handleTabClick}
             onKeyDown={handleTabClick}
-            role='button'
+            role="button"
             tabIndex={-1}
           >
-            {
-              tabList.map(item => {
-                const { id, label } = item;
-                return (
-                  <p
-                    key={id}
-                    className={`${styles.tabItem} ${activeId === id ? styles.active : ''}`}
-                    data-id={id}
-                  >
-                    {label}
-                  </p>
-                );
-              })
-            }
+            {tabList.map(item => {
+              const { id, label } = item;
+              return (
+                <p
+                  key={id}
+                  className={`${styles.tabItem} ${
+                    activeId === id ? styles.active : ''
+                  }`}
+                  data-id={id}
+                >
+                  {label}
+                </p>
+              );
+            })}
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 
 export default SecondHeader;

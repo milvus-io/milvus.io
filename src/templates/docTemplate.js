@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/docLayout';
-import Seo from '../components/seo';
+import SEO from '../components/seo';
 import { graphql } from 'gatsby';
 import ReactTooltip from 'react-tooltip';
 import 'highlight.js/styles/github.css';
@@ -29,7 +29,6 @@ export default function Template({
     isBlog,
     isBenchmark = false,
     editPath,
-    localizedPath,
     newHtml,
     homeData,
   } = pageContext;
@@ -63,6 +62,14 @@ export default function Template({
   useCodeCopy(locale);
 
   useEffect(() => {
+    const isLowVersion =
+      sortVersions(version, NOT_SUPPORTED_VERSION) > -1 &&
+      typeof window !== 'undefined' &&
+      !window.location.pathname.includes('data_migration');
+    setShowWarning(isLowVersion);
+  }, [version]);
+
+  useEffect(() => {
     if (!isMobile) return;
     const cb = e => {
       if (e.target.dataset.tip) {
@@ -74,35 +81,6 @@ export default function Template({
       window.removeEventListener('click', cb);
     };
   }, [isMobile]);
-
-  useEffect(() => {
-    const isLowVersion =
-      sortVersions(version, NOT_SUPPORTED_VERSION) > -1 &&
-      typeof window !== 'undefined' &&
-      !window.location.pathname.includes('data_migration');
-    setShowWarning(isLowVersion);
-  }, [version]);
-
-  useEffect(() => {
-    // if not setTimeout, will throw render error
-    setTimeout(() => {
-      window.docsearch({
-        // Your apiKey and indexName will be given to you once
-        // we create your config
-        apiKey: '2dabff78331a44e47bedeb5fbd68ae70',
-        indexName: 'milvus',
-        //appId: '<APP_ID>', // Should be only included if you are running DocSearch on your own.
-        // Replace inputSelector with a CSS selector
-        // matching your search input
-        inputSelector: '#algolia-search',
-        // Set debug to true to inspect the dropdown
-        debug: false,
-        algoliaOptions: {
-          facetFilters: [`language:${locale}`, `version:${version}`],
-        },
-      });
-    }, 100);
-  }, [locale, version]);
 
   if (!data.allFile.edges[0]) {
     return null;
@@ -140,22 +118,6 @@ export default function Template({
         match.replace(/[？|、|，]/g, '')
       );
     }
-  }
-
-  const hrefRegex = /href="[A-Za-z0-9_-]*.md"/g;
-  if (!isBlog) {
-    newHtml = newHtml.replace(hrefRegex, match => {
-      const hrefArr = localizedPath.split('/');
-      if (!localizedPath.startsWith('/')) {
-        hrefArr.unshift('');
-      }
-      hrefArr.splice(
-        hrefArr.length - 1,
-        1,
-        match.replace('href="', '').replace('"', '')
-      );
-      return `href="${hrefArr.join('/')}"`;
-    });
   }
 
   const ifrmLoad = () => {
@@ -201,7 +163,7 @@ export default function Template({
       header={v2}
       setSearch={handleSearch}
     >
-      <Seo title={title} lang={locale} version={version} />
+      <SEO title={title} lang={locale} />
       {isBenchmark ? (
         <div className="iframe-container">
           {showBack && (

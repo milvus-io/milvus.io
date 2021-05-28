@@ -96,6 +96,64 @@ exports.onCreatePage = ({ page, actions }) => {
   });
 };
 
+// APIReference page: generate source for api reference html
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+  const dirPath = `src/pages/APIReference/pymilvus/v1.0.0`;
+  const apiFiles = [];
+
+  try {
+    let filesList = fs.readdirSync(dirPath);
+    for (let i = 0; i < filesList.length; i++) {
+      let filePath = path.join(dirPath, filesList[i]);
+      if (filePath.endsWith(".html")) {
+        let doc = HTMLParser.parse(fs.readFileSync(filePath));
+        // remove useless link
+        Array.from(doc.querySelectorAll(".reference.internal")).forEach(node => {
+          node.parentNode.removeChild(node);
+        });
+        // get body node
+        doc = doc.querySelector("[itemprop=articleBody] > div").innerHTML;
+        const linkRegex = /id="[A-Za-z0-9_-]*"/g;
+        const linkId = Array.from(doc.matchAll(linkRegex)).map(link => link[0].slice(4, link[0].length - 1));
+        apiFiles.push({ doc, linkId, name: filesList[i], abspath: filePath });
+      }
+    }
+  } catch (e) {
+    console.log("Read api files failed");
+    throw e;
+  }
+
+  apiFiles.forEach(file => {
+    const node = {
+      name: file.name,
+      abspath: file.abspath,
+      doc: file.doc,
+      linkId: file.linkId,
+      id: createNodeId(`APIfile-${file.name}`),
+      internal: {
+        type: "APIfile",
+        contentDigest: createContentDigest(file),
+      },
+    }
+    actions.createNode(node)
+  })
+}
+
+// exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+//   if (stage === "build-html") {
+//     actions.setWebpackConfig({
+//       module: {
+//         rules: [
+//           {
+//             test: /APIReference/,
+//             use: loaders.null(),
+//           },
+//         ],
+//       },
+//     })
+//   }
+// }
+
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
 
@@ -362,6 +420,20 @@ exports.createPages = ({ actions, graphql }) => {
           editPath,
           allMenus,
           newHtml: null,
+        },
+      });
+    });
+
+    // APIReference page: create api reference page
+    result.data.allApIfile.nodes.forEach(({ abspath, doc, linkId, name }) => {
+      createPage({
+        path: `/api/${name}`,
+        component: apiDocTemplate,
+        context: {
+          abspath,
+          doc,
+          linkId,
+          name,
         },
       });
     });

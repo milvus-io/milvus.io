@@ -1,31 +1,77 @@
+@import '../../css//variables/color.less';
+@import '../../css/variables/responsive.less';
+
+body {
+  background-color: #fff !important;
+}
 .bootcampContainer {
   width: 100%;
-  max-width: 1145px;
-  padding: 40px 0;
+  max-width: 1600px;
   margin: 0 auto;
 
-  .title {
-    font-family: 'inter Bold';
-    font-size: 24px;
-    line-height: 32px;
-    margin-top: 64px;
+  .header {
+    background-color: #fafafa;
   }
-  .benchmarkContainer {
-    .benchmarksWrapper {
-      display: flex;
 
-      .linkCardItem {
-        flex-basis: 33.33%;
-        & + a {
-          margin-left: 20px;
+  .mainContainer {
+    margin-top: 147px;
+    padding: 40px 140px 358px;
+    background-color: #fff;
+
+    @media @tablet {
+      padding: 16px 16px 82px;
+      margin-top: 144px;
+    }
+
+    .title {
+      font-family: 'inter Bold';
+      font-size: 24px;
+      line-height: 32px;
+      margin: 64px 0 20px;
+
+      @media @tablet {
+        margin: 32px 0 8px;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+    .benchmarkContainer {
+      .benchmarksWrapper {
+        display: flex;
+
+        @media @tablet {
+          flex-direction: column;
+        }
+
+        .linkCardItem {
+          flex-basis: 33.33%;
+          & + a {
+            margin-left: 20px;
+          }
+
+          @media @tablet {
+            flex-basis: 100%;
+
+            & + a {
+              margin-left: 0px;
+              margin-top: 16px;
+            }
+          }
         }
       }
     }
-  }
-  .benchmarkContainer {
-  }
-  .solutionContainer {
-  }
-  .deploymentContainer {
+
+    .solutionsWrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-row-gap: 20px;
+      grid-column-gap: 20px;
+
+      @media @tablet {
+        grid-template-columns: repeat(1, 1fr);
+        grid-row-gap: 16px;
+        grid-column-gap: 0px;
+      }
+    }
   }
 }

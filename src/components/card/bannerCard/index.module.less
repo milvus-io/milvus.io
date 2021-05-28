@@ -3,7 +3,6 @@
 
 .bannerCard {
   display: flex;
-  border: 1px solid red;
   width: 100%;
 
   .contentWrapper {
@@ -21,6 +20,12 @@
       font-size: 16px;
       line-height: 26px;
 
+      @media @tablet {
+        & + p {
+          margin-top: 8px;
+        }
+      }
+
       & + p {
         margin-top: 16px;
       }
@@ -31,6 +36,12 @@
       font-size: 24px;
       line-height: 32px;
       margin-bottom: 16px;
+
+      @media @tablet {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 8px;
+      }
     }
   }
 
@@ -38,8 +49,40 @@
     width: 66.67%;
 
     .img {
-      max-width: 758px;
-      max-height: 286px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.mobileBannerCard {
+  display: flex;
+  flex-direction: column;
+
+  .text {
+    width: 100%;
+    white-space: normal;
+    word-break: break-word;
+    font-family: 'Inter';
+    font-size: 16px;
+    line-height: 26px;
+
+    & + p {
+      margin-top: 16px;
+    }
+  }
+
+  .title {
+    font-family: 'Inter Bold';
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 16px;
+  }
+
+  .bannerImg {
+    width: 100%;
+
+    .img {
       width: 100%;
       height: 100%;
     }

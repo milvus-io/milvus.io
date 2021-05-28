@@ -1,28 +1,26 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useMobileScreen } from '../../../hooks';
-// import { Link } from 'gatsby';
+import LocallizeLink from '../../../components/localizedLink/localizedLink';
+import { globalHistory } from '@reach/router';
 import * as styles from './v2.module.less';
 
 const V2Selector = ({
-  selected,
   options,
-  setSelected = () => { },
   className = '',
+  locale
 }) => {
   const choosenWrapper = useRef(null);
   const [open, setOpen] = useState(false);
-
+  const label = locale === 'cn' ? '中文' : 'English';
+  console.log(label);
+  const to = globalHistory.location.pathname
+    .replace('/en/', '/')
+    .replace('/cn/', '/');
   const { isMobile } = useMobileScreen();
 
   const handleClick = e => {
     e.stopPropagation();
     setOpen(open ? false : true);
-  };
-
-  const handleSelect = e => {
-    const { option } = e.target.dataset;
-    if (option === selected) return;
-    setSelected(option);
   };
 
   useEffect(() => {
@@ -55,7 +53,7 @@ const V2Selector = ({
         onClick={e => handleClick(e)}
         onKeyDown={e => handleClick(e)}
       >
-        <p className={styles.labelWrapper}>{selected}</p>
+        <p className={styles.labelWrapper}>{label}</p>
         <span className={`${styles.iconWrapper} ${open ? styles.show : ''}`}>
           <i className="fa fa-chevron-down"></i>
         </span>
@@ -63,20 +61,18 @@ const V2Selector = ({
 
       <div
         className={`${styles.optionsWrapper} ${open ? styles.show : ''}`}
-        role="button"
-        tabIndex={-1}
-        onClick={handleSelect}
-        onKeyDown={handleSelect}
       >
         {options.map(option => (
-          <p
+          <LocallizeLink
+            locale={option.value}
+            to={to}
             data-option={option}
-            className={`${styles.optionItem} ${option === selected && styles.active
+            className={`${styles.optionItem} ${option.label === label && styles.active
               }`}
-            key={option}
+            key={option.value}
           >
-            {option}
-          </p>
+            {option.label}
+          </LocallizeLink>
         ))}
       </div>
     </div>

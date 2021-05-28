@@ -176,18 +176,19 @@
       line-height: 17px;
       font-weight: 500;
       cursor: pointer;
+      color: #82838e;
 
       &:hover {
-        color: #1493cc;
+        color: @color-doc-primary;
       }
 
-      & + p {
+      & + .tabItem {
         margin-left: 40px;
       }
     }
 
     .active {
-      color: #1493cc;
+      color: @color-doc-primary;
       font-weight: 600;
     }
   }
@@ -273,9 +274,6 @@
       right: 0;
       padding: 8px;
 
-      &.active {
-      }
-
       .iconWrapper {
         width: 40px;
         height: 40px;
@@ -296,14 +294,16 @@
           font-size: 16px;
           font-weight: 500;
           line-height: 24px;
+          color: #82838e;
+          display: block;
 
-          & + p {
+          & + .tabItem {
             margin-top: 38px;
           }
         }
 
         .active {
-          color: #1493cc;
+          color: @color-doc-primary;
           font-weight: 600;
         }
       }

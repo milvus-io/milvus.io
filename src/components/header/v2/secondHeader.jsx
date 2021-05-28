@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MobilePopup from '../components/MobilePopupV2';
+import { Link } from 'gatsby';
 
 const SecondHeader = ({
   tabList,
@@ -19,10 +19,6 @@ const SecondHeader = ({
       setActiveId(Number(id));
       open && setOpen(false);
     }
-  };
-
-  const hideMask = () => {
-    setOpen(false);
   };
 
   useEffect(() => {
@@ -56,17 +52,17 @@ const SecondHeader = ({
             tabIndex={-1}
           >
             {tabList.map(item => {
-              const { id, label } = item;
+              const { id, label, href } = item;
               return (
-                <p
+                <Link
+                  to={href}
                   key={id}
-                  className={`${styles.tabItem} ${
-                    activeId === id ? styles.active : ''
-                  }`}
+                  className={styles.tabItem}
+                  activeClassName={styles.active}
                   data-id={id}
                 >
                   {label}
-                </p>
+                </Link>
               );
             })}
           </div>
@@ -108,17 +104,17 @@ const SecondHeader = ({
             tabIndex={-1}
           >
             {tabList.map(item => {
-              const { id, label } = item;
+              const { id, label, href } = item;
               return (
-                <p
+                <Link
+                  to={href}
                   key={id}
-                  className={`${styles.tabItem} ${
-                    activeId === id ? styles.active : ''
-                  }`}
+                  className={styles.tabItem}
+                  activeClassName={styles.active}
                   data-id={id}
                 >
                   {label}
-                </p>
+                </Link>
               );
             })}
           </div>

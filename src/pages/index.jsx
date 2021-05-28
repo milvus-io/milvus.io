@@ -32,7 +32,7 @@ const HomePage = ({ data, pageContext }) => {
 
   return (
     <div className="home-page-container">
-      <div className="content">
+      <div className="page-content">
         <div className="bg3-container"></div>
         <V2Layout
           header={header}

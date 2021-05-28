@@ -2,6 +2,10 @@
 
 html {
   scroll-padding-top: 147px;
+
+  @media @tablet {
+    scroll-padding-top: 144px;
+  }
 }
 body {
   background-color: #fafafa;
@@ -26,8 +30,11 @@ body {
     top: 147px;
     max-height: 100%;
     overflow: auto;
-
     padding-top: 32px;
+
+    @media @tablet {
+      top: 144px;
+    }
   }
 
   a {
@@ -127,6 +134,10 @@ body {
   // header height:90px second header height: 57px
   margin-top: 147px;
   background-color: #fff;
+
+  @media @tablet {
+    margin-top: 144px;
+  }
 
   .header {
     background-color: #fafafa;

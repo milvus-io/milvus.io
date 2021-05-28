@@ -3,28 +3,54 @@ import * as styles from './index.module.less';
 
 const BannerCard = ({
   title,
-  content = '',
+  content = [],
   children,
   className = '',
-  img
+  img,
+  isMobile = false
 }) => {
 
   return (
-    <div className={`${styles.bannerCard} ${className}`}>
-      <div className={styles.contentWrapper}>
-        <h1 className={styles.title}>{title}</h1>
-        {
-          !!content.length ? (
-            <p className={styles.text}>{content}</p>
-          ) : children
-        }
-      </div>
-      <div className={styles.bannerImg}>
-        <img src={img} alt="banner image" className={styles.img} />
-      </div>
-    </div>
+    <>
+      {
+        isMobile ? (
+          <div className={`${styles.mobileBannerCard} ${className}`}>
+            <h1 className={styles.title}>{title}</h1>
+            <div className={styles.bannerImg}>
+              <img src={img} alt="banner" className={styles.img} />
+            </div>
+            {
+              !!content.length ? (
+                <div>
+                  {
+                    content.map(item => <p className={styles.text} key={item}>{item}</p>)
+                  }
+                </div>
+              ) : children
+            }
+          </div>
+        ) : (
+          <div className={`${styles.bannerCard} ${className}`}>
+            <div className={styles.contentWrapper}>
+              <h1 className={styles.title}>{title}</h1>
+              {
+                !!content.length ? (
+                  <div>
+                    {
+                      content.map(item => <p className={styles.text} key={item}>{item}</p>)
+                    }
+                  </div>
+                ) : children
+              }
+            </div>
+            <div className={styles.bannerImg}>
+              <img src={img} alt="banner" className={styles.img} />
+            </div>
+          </div>
+        )
+      }
+    </>
   );
-
 };
 
 export default BannerCard;

@@ -5,6 +5,8 @@
   border-radius: 4px;
   text-decoration: none;
   color: @color-doc-primary;
+  padding: 16px 19px;
+  display: inline-block;
 
   &:hover {
     box-shadow: 0px 10px 30px rgba(100, 100, 100, 0.1);
@@ -12,10 +14,11 @@
 
   .titleBar {
     display: flex;
+    align-items: center;
     .img {
       margin-right: 8px;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
     }
 
     .title {
@@ -35,5 +38,6 @@
     display: -webkit-box;
     -webkit-line-clamp: 2; //行数
     -webkit-box-orient: vertical;
+    color: @color-dark;
   }
 }

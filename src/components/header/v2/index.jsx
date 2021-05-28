@@ -14,7 +14,7 @@ import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
 import SecondHeader from './secondHeader';
-import V2Selector from '../../selector/v2';
+import LangSelector from '../../selector/v2';
 
 const navList = [
   {
@@ -42,31 +42,43 @@ const navList = [
 const tabList = [
   {
     label: 'Developer Docs',
+    href: '/docs/home',
     id: 1,
   },
   {
     label: 'Bootcamp',
+    href: '/bootcamp',
     id: 2,
   },
   {
     label: 'Community',
+    href: '/community',
     id: 3,
   },
 ];
 
-const languageList = ['中文', 'En'];
+const languageList = [
+  {
+    label: '中文',
+    value: 'cn'
+  },
+  {
+    label: 'English',
+    value: 'en'
+  }
+];
 
 const V2Header = ({
   setVersion = () => { },
   type = 'home',
-  onSearchChange,
+  onSearchChange = () => { },
   header,
   isSecondHeader,
-  onTabChange,
-  className = ''
+  onTabChange = () => { },
+  className = '',
+  locale
 }) => {
   const { pathname } = globalHistory.location;
-
   const { isMobile } = useMobileScreen();
 
   const [open, setOpen] = useState(false);
@@ -82,12 +94,6 @@ const V2Header = ({
 
   const hideMask = () => {
     setOpen(false);
-  };
-
-  const handleSelected = val => {
-    setVersion(val);
-
-    window.location.href = `/docs/${val}/overview.md`;
   };
 
   const handleSearchInMobile = value => {
@@ -153,10 +159,9 @@ const V2Header = ({
                   );
                 })}
                 <div className={styles.dropDown}>
-                  <V2Selector
-                    selected={'En'}
+                  <LangSelector
                     options={languageList}
-                    setSelected={handleSelected}
+                    locale={locale}
                   />
                 </div>
               </div>
@@ -215,10 +220,9 @@ const V2Header = ({
               >
                 {openType === 'menu' ? (
                   <Menu
-                    version={'En'}
                     options={languageList}
-                    setSelected={handleSelected}
                     navList={navList}
+                    locale={locale}
                   />
                 ) : (
                   <Search handleSearch={handleSearchInMobile} />

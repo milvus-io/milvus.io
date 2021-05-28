@@ -6,8 +6,7 @@ const SolutionCard = ({
   title,
   content,
   href,
-  className = '',
-  locale
+  className = ''
 }) => {
   return (
     <a
@@ -22,10 +21,10 @@ const SolutionCard = ({
             <img src={img} alt="icon" className={styles.img} />
           ) : null
         }
-        <h3 className={styles.title} lang={locale}>{title}</h3>
+        <h3 className={styles.title}>{title}</h3>
       </div>
 
-      <p className={styles.content} lang={locale}>{content}</p>
+      <p className={styles.content}>{content}</p>
     </a>
   );
 };

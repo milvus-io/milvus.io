@@ -12,7 +12,6 @@ const V2Selector = ({
   const choosenWrapper = useRef(null);
   const [open, setOpen] = useState(false);
   const label = locale === 'cn' ? '中文' : 'English';
-  console.log(label);
   const to = globalHistory.location.pathname
     .replace('/en/', '/')
     .replace('/cn/', '/');

@@ -31,16 +31,14 @@ const BootcampTemplat = ({ data, pageContext }) => {
   const { locale } = pageContext;
   const {
     title,
-    solutions,
-    id,
-    solutionTitle,
     description,
-    deployments,
-    deploymentTitle,
-    benchmarks,
-    benchmarkTitle,
+    section1,
+    section2,
+    section3
   } = locale === 'en' ? data.allBootcampJson.nodes[0].data.en : data.allBootcampJson.nodes[0].data.cn;
-
+  const [title1, content1] = [section1.title, section1.content];
+  const [title2, content2] = [section2.title, section2.content];
+  const [title3, content3] = [section3.title, section3.content];
   return (
     <div className={styles.bootcampContainer}>
       <Header
@@ -50,79 +48,80 @@ const BootcampTemplat = ({ data, pageContext }) => {
         className={styles.header}
         locale={locale}
       />
-      <Seo title={title} />
+      <Seo title={title} lang={locale} />
       <main className={styles.mainContainer}>
         <BannerCard
           title={title}
           content={description}
           img={banner}
           isMobile={isMobile}
-          locale={locale}
         />
-        <div className={styles.benchmarkContainer}>
-          <p className={styles.title} lang={locale}>{benchmarkTitle}</p>
-          <div className={styles.benchmarksWrapper}>
+        <div>
+          <h1 className={styles.title}>{title1}</h1>
+          <ul className={styles.solutionsWrapper}>
             {
-              benchmarks.map(item => {
-                const { id, title, link } = item;
+              content1.map(item => {
+                const { title, link } = item;
                 return (
-                  <LinkCard
-                    key={id}
-                    label={title}
-                    href={link}
-                    className={styles.linkCardItem}
-                    locale={locale}
-                  />
+                  <li>
+                    <LinkCard
+                      key={title}
+                      label={title}
+                      href={link}
+                    />
+                  </li>
+
                 );
               })
             }
-          </div>
+          </ul>
 
         </div>
 
         <div>
-          <p className={styles.title} lang={locale} >{solutionTitle}</p>
-          <div className={styles.solutionsWrapper}>
+          <h1 className={styles.title} >{title2}</h1>
+          <ul className={styles.solutionsWrapper}>
             {
-              solutions.map(item => {
-                const { id, title, link, desc, iconType } = item;
+              content2.map(item => {
+                const { title, link, desc, iconType } = item;
                 return (
-                  <SolutionCard
-                    key={id}
-                    title={title}
-                    content={desc}
-                    img={Icons[iconType]}
-                    href={link}
-                    locale={locale}
-                  />
+                  <li>
+                    <SolutionCard
+                      key={title}
+                      title={title}
+                      content={desc}
+                      img={Icons[iconType]}
+                      href={link}
+                    />
+                  </li>
                 );
               })
             }
-          </div>
+          </ul>
         </div>
 
         <div>
-          <p className={styles.title} lang={locale} >{deploymentTitle}</p>
-          <div className={styles.solutionsWrapper}>
+          <h1 className={styles.title} >{title3}</h1>
+          <ul className={styles.solutionsWrapper}>
             {
-              deployments.map(item => {
-                const { id, title, link, iconType, desc } = item;
+              content3.map(item => {
+                const { title, link, iconType, desc } = item;
                 return (
-                  <SolutionCard
-                    key={id}
-                    title={title}
-                    content={desc}
-                    img={Icons[iconType]}
-                    href={link}
-                    locale={locale}
-                  />
+                  <li>
+                    <SolutionCard
+                      key={title}
+                      title={title}
+                      content={desc}
+                      img={Icons[iconType]}
+                      href={link}
+                    />
+                  </li>
                 );
               })
             }
-          </div>
+          </ul>
         </div>
       </main>
-
     </div>
   );
 };
@@ -131,67 +130,64 @@ export default BootcampTemplat;
 
 export const pageQuery = graphql`
   query bootcampQuery {
-    allFile(filter: {absolutePath: {regex: "/(?:bootcamp)/"}}) {
-      edges {
-        node {
-          id
-        }
-      }
-    }
     allBootcampJson {
       nodes {
         data {
           en {
-            benchmarkTitle
-            benchmarks {
-              id
-              link
-              title
-            }
-            deploymentTitle
-            deployments {
-              desc
-              id
-              link
-              title
-            }
-            description
-            id
-            solutionTitle
-            solutions {
-              desc
-              iconType
-              id
-              link
-              title
-            }
             title
+            description
+            section1 {
+              title
+              content {
+                link
+                title
+              }
+            }
+            section2 {
+              title
+              content {
+                link
+                title
+                desc
+              }
+            }
+            section3 {
+              title
+              content {
+                link
+                title
+                desc
+                iconType
+              }
+            }
           }
           cn {
-            benchmarkTitle
-            benchmarks {
-              id
-              link
-              title
-            }
-            deploymentTitle
-            deployments {
-              desc
-              id
-              link
-              title
-            }
-            description
-            id
-            solutionTitle
-            solutions {
-              desc
-              iconType
-              id
-              link
-              title
-            }
             title
+            description
+            section1 {
+              title
+              content {
+                link
+                title
+              }
+            }
+            section2 {
+              title
+              content {
+                link
+                title
+                desc
+              }
+            }
+            section3 {
+              title
+              content {
+                link
+                title
+                desc
+                iconType
+              }
+            }
           }
         }
       }

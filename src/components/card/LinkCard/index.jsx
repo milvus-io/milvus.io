@@ -5,8 +5,7 @@ import LinkIcon from '../../../images/doc-home/link.svg';
 const LinkCard = ({
   label,
   href,
-  className = '',
-  locale
+  className = ''
 }) => {
   return (
     <a
@@ -15,7 +14,7 @@ const LinkCard = ({
       target='_blank'
       rel="noreferrer"
     >
-      <span className={styles.label} lang={locale}>{label}</span>
+      <span className={styles.label}>{label}</span>
       <img src={LinkIcon} alt="link-icon" className={styles.icon} />
     </a>
   );

@@ -29,7 +29,7 @@ body {
       line-height: 32px;
       margin: 64px 0 20px;
 
-      &:lang(cn) {
+      &:lang(zh-cn) {
         font-family: '思源黑体';
         font-weight: 700;
       }
@@ -40,37 +40,13 @@ body {
         line-height: 24px;
       }
     }
-    .benchmarkContainer {
-      .benchmarksWrapper {
-        display: flex;
-
-        @media @tablet {
-          flex-direction: column;
-        }
-
-        .linkCardItem {
-          flex-basis: 33.33%;
-          & + a {
-            margin-left: 20px;
-          }
-
-          @media @tablet {
-            flex-basis: 100%;
-
-            & + a {
-              margin-left: 0px;
-              margin-top: 16px;
-            }
-          }
-        }
-      }
-    }
 
     .solutionsWrapper {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-row-gap: 20px;
       grid-column-gap: 20px;
+      list-style: none;
 
       @media @tablet {
         grid-template-columns: repeat(1, 1fr);

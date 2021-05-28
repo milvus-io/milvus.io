@@ -430,6 +430,7 @@ exports.createPages = ({ actions, graphql }) => {
         path: `/api/${name}`,
         component: apiDocTemplate,
         context: {
+          locale: 'en',
           abspath,
           doc,
           linkId,

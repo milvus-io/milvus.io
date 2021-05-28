@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/docLayout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import { graphql } from 'gatsby';
 import ReactTooltip from 'react-tooltip';
 import 'highlight.js/styles/github.css';
@@ -184,7 +184,7 @@ export default function Template({
       header={v2}
       setSearch={handleSearch}
     >
-      <SEO title={title} lang={locale} />
+      <Seo title={title} lang={locale} version={version} />
       {isBenchmark ? (
         <div className="iframe-container">
           {showBack && (

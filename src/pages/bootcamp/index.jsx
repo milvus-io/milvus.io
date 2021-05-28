@@ -27,13 +27,8 @@ const Icons = {
 };
 
 const BootcampTemplat = ({ data, pageContext }) => {
-  console.log('data', data);
-  console.log('pageContext:', pageContext);
-
   const { isMobile } = useMobileScreen();
-
   const { locale } = pageContext;
-
   const {
     title,
     solutions,
@@ -62,9 +57,10 @@ const BootcampTemplat = ({ data, pageContext }) => {
           content={description}
           img={banner}
           isMobile={isMobile}
+          locale={locale}
         />
         <div className={styles.benchmarkContainer}>
-          <p className={styles.title}>{benchmarkTitle}</p>
+          <p className={styles.title} lang={locale}>{benchmarkTitle}</p>
           <div className={styles.benchmarksWrapper}>
             {
               benchmarks.map(item => {
@@ -75,6 +71,7 @@ const BootcampTemplat = ({ data, pageContext }) => {
                     label={title}
                     href={link}
                     className={styles.linkCardItem}
+                    locale={locale}
                   />
                 );
               })
@@ -84,7 +81,7 @@ const BootcampTemplat = ({ data, pageContext }) => {
         </div>
 
         <div>
-          <p className={styles.title}>{solutionTitle}</p>
+          <p className={styles.title} lang={locale} >{solutionTitle}</p>
           <div className={styles.solutionsWrapper}>
             {
               solutions.map(item => {
@@ -96,6 +93,7 @@ const BootcampTemplat = ({ data, pageContext }) => {
                     content={desc}
                     img={Icons[iconType]}
                     href={link}
+                    locale={locale}
                   />
                 );
               })
@@ -104,7 +102,7 @@ const BootcampTemplat = ({ data, pageContext }) => {
         </div>
 
         <div>
-          <p className={styles.title}>{deploymentTitle}</p>
+          <p className={styles.title} lang={locale} >{deploymentTitle}</p>
           <div className={styles.solutionsWrapper}>
             {
               deployments.map(item => {
@@ -116,6 +114,7 @@ const BootcampTemplat = ({ data, pageContext }) => {
                     content={desc}
                     img={Icons[iconType]}
                     href={link}
+                    locale={locale}
                   />
                 );
               })

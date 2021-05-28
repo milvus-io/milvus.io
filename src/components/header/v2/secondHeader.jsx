@@ -8,6 +8,7 @@ const SecondHeader = ({
   onTabChange,
   header,
   styles,
+  locale
 }) => {
   const [activeId, setActiveId] = useState(1);
   const [open, setOpen] = useState(false);
@@ -52,7 +53,8 @@ const SecondHeader = ({
             tabIndex={-1}
           >
             {tabList.map(item => {
-              const { id, label, href } = item;
+              let { id, label, href } = item;
+              href = locale === 'en' ? href : `/cn${href}`;
               return (
                 <Link
                   to={href}
@@ -104,7 +106,8 @@ const SecondHeader = ({
             tabIndex={-1}
           >
             {tabList.map(item => {
-              const { id, label, href } = item;
+              let { id, label, href } = item;
+              href = locale === 'en' ? href : `/cn${href}`;
               return (
                 <Link
                   to={href}

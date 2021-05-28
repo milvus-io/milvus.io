@@ -240,6 +240,7 @@ const V2Header = ({
           handleSearch={handleSearch}
           header={header}
           styles={styles}
+          locale={locale}
         />
       ) : null}
     </header>

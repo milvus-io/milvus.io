@@ -27,7 +27,7 @@ const HomePage = ({ data, pageContext }) => {
     banner,
     content: { title, list, slogan },
     footer,
-  } = data.allFile.edges[0].node.childLayoutJson.v2;
+  } = data.allFile.edges[0].node.childI18N.v2;
   const { locale, versions } = pageContext;
 
   return (
@@ -148,7 +148,7 @@ export const Query = graphql`
     allFile(filter: { name: { eq: $locale } }) {
       edges {
         node {
-          childLayoutJson {
+          childI18N {
             v2 {
               header {
                 navlist {

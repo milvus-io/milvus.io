@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import MobilePopup from '../components/MobilePopupV2';
 
 const SecondHeader = ({
   tabList,
@@ -19,10 +18,6 @@ const SecondHeader = ({
       setActiveId(Number(id));
       open && setOpen(false);
     }
-  };
-
-  const hideMask = () => {
-    setOpen(false);
   };
 
   useEffect(() => {

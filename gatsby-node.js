@@ -68,6 +68,7 @@ fs.writeFile(
   }
 );
 
+/* create static pages from page folder */
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
   return new Promise(resolve => {
@@ -96,10 +97,132 @@ exports.onCreatePage = ({ page, actions }) => {
   });
 };
 
-exports.createPages = ({ actions, graphql }) => {
+/*
+ * utils to support generate html page from markdown or json dynamically
+ */
+const findVersion = str => {
+  // version: v.1.0.0 | v0.x
+  const regx = /versions\/master\/([v\dx\.]*)/;
+  const match = str.match(regx);
+  return match
+    ? match[1]
+      ? match[1]
+      : env === 'preview' && str.includes('preview')
+      ? 'preview'
+      : match[1]
+    : '';
+};
+
+const findLang = path => {
+  return DOC_LANG_FOLDERS.reduce((pre, cur) => {
+    if (path.includes(cur)) {
+      pre = cur === '/en/' ? 'en' : 'cn';
+    }
+    return pre;
+  }, '');
+};
+
+/* create pages dynamically from submodule data */
+exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
+  // templates
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
+  const communityTemplate = path.resolve(`src/templates/community.js`);
+
+  // const markdownQueryResult = await graphql(`
+  //   {
+  //     allMarkdownRemark(
+  //       filter: { fileAbsolutePath: { regex: "/(?:site|blog)/" } }
+  //     ) {
+  //       edges {
+  //         node {
+  //           headings {
+  //             value
+  //             depth
+  //           }
+  //           frontmatter {
+  //             id
+  //             keywords
+  //           }
+  //           fileAbsolutePath
+  //           html
+  //         }
+  //       }
+  //     }
+  //   }
+  // `);
+  // if (markdownQueryResult.errors) {
+  //   console.error(markdownQueryResult.errors);
+  //   throw markdownQueryResult.errors;
+  // }
+
+  // const jsonQueryResult = await graphql(`
+  //   {
+  //     allFile(
+  //       filter: { relativeDirectory: { regex: "/(?:menuStructure|home)/" } }
+  //     ) {
+  //       edges {
+  //         node {
+  //           absolutePath
+  //           childMenuStructureJson {
+  //             menuList {
+  //               id
+  //               title
+  //               lang
+  //               label1
+  //               label2
+  //               label3
+  //               order
+  //               isMenu
+  //               outLink
+  //             }
+  //           }
+  //           childrenHomeJson {
+  //             section1 {
+  //               title
+  //               items {
+  //                 title
+  //                 key
+  //                 btnLabel
+  //                 link
+  //               }
+  //             }
+  //             section2 {
+  //               title
+  //               desc
+  //             }
+  //             section3 {
+  //               title
+  //               items {
+  //                 label
+  //                 list {
+  //                   link
+  //                   text
+  //                 }
+  //               }
+  //             }
+  //             section4 {
+  //               title
+  //               items {
+  //                 time
+  //                 title
+  //                 abstract
+  //                 imgSrc
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // `);
+  // if (jsonQueryResult.errors) {
+  //   console.error(jsonQueryResult.errors);
+  //   throw jsonQueryResult.errors;
+  // }
+
+  // get all menuStructures
 
   // isMenu outLink can be add when need to use
   return graphql(`
@@ -123,32 +246,35 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
       allFile(
-        filter: { relativeDirectory: { regex: "/(?:menuStructure|home)/" } }
+        filter: {
+          absolutePath: { regex: "/(?:menuStructure|home)/" }
+          extension: { eq: "json" }
+        }
       ) {
         edges {
           node {
             absolutePath
-            childMenuStructureJson {
+            childMenu {
               menuList {
                 id
-                title
-                lang
+                isMenu
                 label1
                 label2
                 label3
+                lang
                 order
-                isMenu
                 outLink
+                title
               }
             }
-            childrenHomeJson {
+            childDocHome {
               section1 {
                 title
                 items {
-                  title
-                  key
                   btnLabel
+                  key
                   link
+                  title
                 }
               }
               section2 {
@@ -166,13 +292,13 @@ exports.createPages = ({ actions, graphql }) => {
                 }
               }
               section4 {
-                title
                 items {
-                  time
-                  title
                   abstract
                   imgSrc
+                  time
+                  title
                 }
+                title
               }
             }
           }
@@ -207,17 +333,12 @@ exports.createPages = ({ actions, graphql }) => {
 
     // get all menuStructures
     const allMenus = result.data.allFile.edges
-      .filter(
-        ({ node: { childMenuStructureJson } }) =>
-          childMenuStructureJson !== null
-      )
-      .map(({ node: { absolutePath, childMenuStructureJson } }) => {
+      .filter(({ node: { childMenu } }) => childMenu !== null)
+      .map(({ node: { absolutePath, childMenu } }) => {
         let lang = absolutePath.includes('/en/') ? 'en' : 'cn';
         const isBlog = absolutePath.includes('blog');
         const version = findVersion(absolutePath) || 'master';
-        const menuStructureList =
-          (childMenuStructureJson && [...childMenuStructureJson.menuList]) ||
-          [];
+        const menuStructureList = (childMenu && [...childMenu.menuList]) || [];
         // const benchmarkMenuList =
         //   lang === 'en'
         //     ? benchmarksMenu.benchmarksMenuListEN
@@ -234,11 +355,11 @@ exports.createPages = ({ actions, graphql }) => {
 
     // get new doc index page data
     const homeData = result.data.allFile.edges
-      .filter(({ node: { childrenHomeJson } }) => childrenHomeJson.length > 0)
-      .map(({ node: { absolutePath, childrenHomeJson } }) => {
+      .filter(({ node: { childDocHome } }) => childDocHome !== null)
+      .map(({ node: { absolutePath, childDocHome } }) => {
         const language = absolutePath.includes('/en') ? 'en' : 'cn';
 
-        const [data] = childrenHomeJson;
+        const data = childDocHome;
         return {
           language,
           data,
@@ -255,6 +376,7 @@ exports.createPages = ({ actions, graphql }) => {
             fileAbsolutePath.includes('/blog/zh-CN') ||
             (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
               env === 'preview') ||
+            fileAbsolutePath.includes('communityArticles') ||
             fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
           frontmatter.id
         );
@@ -290,6 +412,12 @@ exports.createPages = ({ actions, graphql }) => {
       }
 
       return needLocal ? `${localizedPath}${id}` : `${id}`;
+    };
+
+    const getCommunityPath = (fileId, fileLang) => {
+      return fileLang === defaultLang
+        ? `/community/${fileId}`
+        : `${fileLang}/community/${fileId}`;
     };
 
     const defaultLang = Object.keys(locales).find(
@@ -366,32 +494,39 @@ exports.createPages = ({ actions, graphql }) => {
       });
     });
 
+    console.log('====== after doc home create page');
+
     return legalMd.forEach(({ node }) => {
       const fileAbsolutePath = node.fileAbsolutePath;
       const fileId = node.frontmatter.id;
       let version = findVersion(fileAbsolutePath) || 'master';
 
       const fileLang = findLang(fileAbsolutePath);
+      const isCommunityPage = fileAbsolutePath.includes('communityArticles');
 
       const editPath = fileAbsolutePath.split(
         fileLang === 'en' ? '/en/' : '/zh-CN/'
       )[1];
       const isBlog = checkIsblog(fileAbsolutePath);
       const isBenchmark = checkIsBenchmark(fileAbsolutePath);
-      const localizedPath = generatePath(
-        fileId,
-        fileLang,
-        version,
-        isBlog,
-        true,
-        isBenchmark
-      );
+      const localizedPath = !isCommunityPage
+        ? generatePath(fileId, fileLang, version, isBlog, true, isBenchmark)
+        : getCommunityPath(fileId, fileLang);
 
       const newHtml = node.html;
 
+      // if (isCommunityPage) {
+      //   console.log(
+      //     '===== community page info',
+      //     localizedPath,
+      //     `language: ${fileLang}\n`,
+      //     newHtml
+      //   );
+      // }
+
       // the newest doc version is master so we need to make route without version.
       // for easy link to the newest doc
-      if (version === newestVersion) {
+      if (version === newestVersion && !isCommunityPage) {
         const masterPath = isBenchmark
           ? `/docs/$${fileId}`
           : generatePath(fileId, fileLang, isBlog ? false : 'master', isBlog);
@@ -417,26 +552,37 @@ exports.createPages = ({ actions, graphql }) => {
       }
 
       //  normal pages
-      return createPage({
-        path: localizedPath,
-        component: docTemplate,
-        context: {
-          locale: fileLang,
-          version: isBenchmark ? newestVersion : version,
-          versions: Array.from(versions),
-          old: fileId,
-          headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
-          fileAbsolutePath,
-          localizedPath,
-          newestVersion,
-          isBlog,
-          editPath,
-          allMenus,
-          isBenchmark,
-          newHtml,
-          homeData: null,
-        }, // additional data can be passed via context
-      });
+      return !isCommunityPage
+        ? createPage({
+            path: localizedPath,
+            component: docTemplate,
+            context: {
+              locale: fileLang,
+              version: isBenchmark ? newestVersion : version,
+              versions: Array.from(versions),
+              old: fileId,
+              headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
+              fileAbsolutePath,
+              localizedPath,
+              newestVersion,
+              isBlog,
+              editPath,
+              allMenus,
+              isBenchmark,
+              newHtml,
+              homeData: null,
+            }, // additional data can be passed via context
+          })
+        : null;
+      // createPage({
+      //     path: localizedPath,
+      //     component: communityTemplate,
+      //     context: {
+      //       // locale: fileLang,
+      //       fileAbsolutePath: path,
+      //       // newHtml,
+      //     },
+      //   });
     });
   });
 };

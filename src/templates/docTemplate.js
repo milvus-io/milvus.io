@@ -33,6 +33,8 @@ export default function Template({
     homeData,
   } = pageContext;
 
+  console.log('====== doc template all menus', allMenus);
+
   versions = versions.sort(sortVersions);
 
   const { isMobile } = useMobileScreen();
@@ -108,10 +110,10 @@ export default function Template({
   }
 
   const layout = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childLayoutJson.layout
+    ? data.allFile.edges[0].node.childI18N.layout
     : {};
   const v2 = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childLayoutJson.v2
+    ? data.allFile.edges[0].node.childI18N.v2
     : {};
 
   const menuList = allMenus.find(
@@ -281,7 +283,7 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query ($locale: String, $old: String, $fileAbsolutePath: String) {
+  query($locale: String, $old: String, $fileAbsolutePath: String) {
     markdownRemark(
       fileAbsolutePath: { eq: $fileAbsolutePath }
       frontmatter: { id: { eq: $old } }
@@ -301,7 +303,7 @@ export const pageQuery = graphql`
         node {
           relativeDirectory
 
-          childLayoutJson {
+          childI18N {
             v2 {
               header {
                 navlist {

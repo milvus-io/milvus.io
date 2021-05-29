@@ -221,7 +221,9 @@ exports.createPages = async ({ actions, graphql }) => {
   return graphql(`
     {
       allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/(?:site|blog)/" } }
+        filter: {
+          fileAbsolutePath: { regex: "/(?:site|blog|communityArticles)/" }
+        }
       ) {
         edges {
           node {
@@ -240,13 +242,58 @@ exports.createPages = async ({ actions, graphql }) => {
       }
       allFile(
         filter: {
-          absolutePath: { regex: "/(?:menuStructure|home)/" }
+          relativeDirectory: { regex: "/(?:menuStructure|home|community)/" }
           extension: { eq: "json" }
         }
       ) {
         edges {
           node {
             absolutePath
+            childCommunity {
+              menuList {
+                id
+                isMenu
+                label1
+                label2
+                label3
+                order
+                title
+              }
+              contributeSection {
+                desc
+                title
+              }
+              contributorSection {
+                list {
+                  avatarSrc
+                  link
+                  login
+                }
+              }
+              heroSection {
+                list {
+                  desc
+                  link
+                  title
+                  type
+                }
+                title
+              }
+              mallingSection {
+                list {
+                  link
+                  title
+                }
+              }
+              repoSection {
+                list {
+                  desc
+                  link
+                  title
+                }
+                title
+              }
+            }
             childMenu {
               menuList {
                 id
@@ -262,20 +309,19 @@ exports.createPages = async ({ actions, graphql }) => {
             }
             childDocHome {
               section1 {
-                title
                 items {
                   btnLabel
                   key
                   link
                   title
                 }
+                title
               }
               section2 {
-                title
                 desc
+                title
               }
               section3 {
-                title
                 items {
                   label
                   list {
@@ -283,6 +329,7 @@ exports.createPages = async ({ actions, graphql }) => {
                     text
                   }
                 }
+                title
               }
               section4 {
                 items {
@@ -351,9 +398,82 @@ exports.createPages = async ({ actions, graphql }) => {
       }
     );
 
-    // get community data: articles md, menu and home json
+    // get community page data: articles md, menu and home json
+    const communityMd = result.data.allMarkdownRemark.edges.filter(
+      ({ node: { fileAbsolutePath, frontmatter } }) =>
+        fileAbsolutePath.includes('communityArticles') && frontmatter.id
+    );
+
+    const communityMenu = result.data.allFile.edges
+      .filter(
+        ({ node: { childCommunity } }) =>
+          childCommunity !== null && childCommunity.menuList !== null
+      )
+      .map(({ node: { absolutePath, childCommunity } }) => {
+        const lang = absolutePath.includes('/en/') ? 'en' : 'cn';
+        const menuList = childCommunity.menuList || [];
+        return {
+          lang,
+          menuList,
+        };
+      });
+
+    const communityHome = result.data.allFile.edges
+      .filter(
+        ({ node: { childCommunity, absolutePath } }) =>
+          childCommunity !== null && absolutePath.includes('communityHome')
+      )
+      .map(({ node: { absolutePath, childCommunity } }) => {
+        const language = absolutePath.includes('/en') ? 'en' : 'cn';
+
+        const data = childCommunity;
+        return {
+          language,
+          data,
+          path: absolutePath,
+        };
+      });
 
     initGlobalSearch(legalMd);
+
+    // create community articles
+    communityMd.forEach(({ node }) => {
+      const {
+        fileAbsolutePath,
+        html,
+        frontmatter: { id: fileId },
+      } = node;
+
+      const fileLang = findLang(fileAbsolutePath);
+      const path = getCommunityPath(fileId, fileLang);
+
+      createPage({
+        path,
+        component: communityTemplate,
+        context: {
+          locale: fileLang,
+          fileAbsolutePath,
+          html,
+          menuList: communityMenu,
+          homeData: null,
+        },
+      });
+    });
+
+    // create community home
+    communityHome.forEach(({ language, data, path }) => {
+      createPage({
+        path: language === 'en' ? '/community' : `/${language}/community`,
+        component: communityTemplate,
+        context: {
+          locales: language,
+          fileAbsolutePath: path,
+          homeData: data,
+          html: null,
+          menuList: communityMenu,
+        },
+      });
+    });
 
     // create doc home page
     homeData.forEach(({ language, data, path }) => {

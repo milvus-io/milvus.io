@@ -77,5 +77,4 @@ const V2Selector = ({
     </div>
   );
 };
-
 export default V2Selector;

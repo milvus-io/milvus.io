@@ -1,9 +1,11 @@
 @import './docReset.less';
 
 html {
+  // padding 16px + first header 74px + second header 57px
   scroll-padding-top: 147px;
 
   @media @tablet {
+    // padding 16 + first header 71 + second header 57
     scroll-padding-top: 144px;
   }
 }
@@ -27,6 +29,7 @@ body {
   section {
     position: sticky;
     position: -webkit-sticky;
+    // padding 16px + first header 74px + second header 57px
     top: 147px;
     max-height: 100%;
     overflow: auto;
@@ -131,7 +134,7 @@ body {
 .layoutWrapper {
   display: flex;
   flex-direction: column;
-  // header height:90px second header height: 57px
+  // padding 16px + first header 74px + second header 57px
   margin-top: 147px;
   background-color: #fff;
 

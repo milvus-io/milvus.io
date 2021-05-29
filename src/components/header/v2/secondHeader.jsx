@@ -53,11 +53,11 @@ const SecondHeader = ({
             tabIndex={-1}
           >
             {tabList.map(item => {
-              let { id, label, href } = item;
-              href = locale === 'en' ? href : `/cn${href}`;
+              const { id, label, href } = item;
+              const link = locale === 'en' ? href : `/cn${href}`;
               return (
                 <Link
-                  to={href}
+                  to={link}
                   key={id}
                   className={styles.tabItem}
                   activeClassName={styles.active}
@@ -106,11 +106,11 @@ const SecondHeader = ({
             tabIndex={-1}
           >
             {tabList.map(item => {
-              let { id, label, href } = item;
-              href = locale === 'en' ? href : `/cn${href}`;
+              const { id, label, href } = item;
+              const link = locale === 'en' ? href : `/cn${href}`;
               return (
                 <Link
-                  to={href}
+                  to={link}
                   key={id}
                   className={styles.tabItem}
                   activeClassName={styles.active}

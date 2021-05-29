@@ -50,11 +50,10 @@ const BootcampTemplat = ({ data, pageContext }) => {
       />
       <Seo title={title} lang={locale} />
       <main className={styles.mainContainer}>
+        <h1 className={styles.title} >{title}</h1>
         <BannerCard
-          title={title}
           content={description}
           img={banner}
-          isMobile={isMobile}
         />
         <div>
           <h1 className={styles.title}>{title1}</h1>
@@ -63,9 +62,8 @@ const BootcampTemplat = ({ data, pageContext }) => {
               content1.map(item => {
                 const { title, link } = item;
                 return (
-                  <li>
+                  <li key={title}>
                     <LinkCard
-                      key={title}
                       label={title}
                       href={link}
                     />
@@ -85,9 +83,8 @@ const BootcampTemplat = ({ data, pageContext }) => {
               content2.map(item => {
                 const { title, link, desc, iconType } = item;
                 return (
-                  <li>
+                  <li key={title}>
                     <SolutionCard
-                      key={title}
                       title={title}
                       content={desc}
                       img={Icons[iconType]}
@@ -107,9 +104,8 @@ const BootcampTemplat = ({ data, pageContext }) => {
               content3.map(item => {
                 const { title, link, iconType, desc } = item;
                 return (
-                  <li>
+                  <li key={title}>
                     <SolutionCard
-                      key={title}
                       title={title}
                       content={desc}
                       img={Icons[iconType]}

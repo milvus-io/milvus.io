@@ -5,6 +5,9 @@
   display: flex;
   width: 100%;
   height: 100%;
+  @media @tablet {
+    flex-direction: column-reverse;
+  }
 
   .contentWrapper {
     margin-right: 70px;
@@ -12,6 +15,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    @media @tablet {
+      width: 100%;
+      margin-right: 0;
+    }
 
     .text {
       width: 100%;
@@ -22,7 +30,7 @@
       line-height: 26px;
 
       &:lang(zh-cn) {
-        font-family: '思源黑体';
+        font-family: 'Source Sans';
       }
 
       @media @tablet {
@@ -43,8 +51,7 @@
       margin-bottom: 16px;
 
       &:lang(zh-cn) {
-        font-family: '思源黑体';
-        font-weight: 700;
+        font-family: 'Source Sans Bold';
       }
 
       @media @tablet {
@@ -58,48 +65,10 @@
   .bannerImg {
     width: 66.67%;
 
-    .img {
+    @media @tablet {
       width: 100%;
-      height: 100%;
+      margin-bottom: 8px;
     }
-  }
-}
-
-.mobileBannerCard {
-  display: flex;
-  flex-direction: column;
-
-  .text {
-    width: 100%;
-    white-space: normal;
-    word-break: break-word;
-    font-family: 'Inter';
-    font-size: 16px;
-    line-height: 26px;
-
-    &:lang(zh-cn) {
-      font-family: '思源黑体';
-    }
-
-    & + p {
-      margin-top: 16px;
-    }
-  }
-
-  .title {
-    font-family: 'Inter Bold';
-    font-size: 24px;
-    line-height: 32px;
-    margin-bottom: 16px;
-
-    &:lang(zh-cn) {
-      font-family: '思源黑体';
-      font-weight: 700;
-    }
-  }
-
-  .bannerImg {
-    width: 100%;
 
     .img {
       width: 100%;

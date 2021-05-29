@@ -1,12 +1,13 @@
 @import '../../css//variables/color.less';
 @import '../../css/variables/responsive.less';
+@import '../../css/fonts/fonts.less';
 
 body {
   background-color: #fff !important;
 }
 .bootcampContainer {
   width: 100%;
-  max-width: 1600px;
+  max-width: @screen-lg-max;
   margin: 0 auto;
 
   .header {
@@ -24,15 +25,10 @@ body {
     }
 
     .title {
-      font-family: 'inter Bold';
+      font-family: 'Inter Bold';
       font-size: 24px;
       line-height: 32px;
       margin: 64px 0 20px;
-
-      &:lang(zh-cn) {
-        font-family: '思源黑体';
-        font-weight: 700;
-      }
 
       @media @tablet {
         margin: 32px 0 8px;

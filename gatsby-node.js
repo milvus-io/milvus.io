@@ -216,7 +216,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
   // templates
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
-  const communityTemplate = path.resolve(`src/templates/community.js`);
+  const communityTemplate = path.resolve(`src/templates/community.jsx`);
 
   return graphql(`
     {
@@ -264,6 +264,7 @@ exports.createPages = async ({ actions, graphql }) => {
                 title
               }
               contributorSection {
+                title
                 list {
                   avatarSrc
                   link
@@ -279,7 +280,8 @@ exports.createPages = async ({ actions, graphql }) => {
                 }
                 title
               }
-              mallingSection {
+              mailingSection {
+                title
                 list {
                   link
                   title
@@ -425,7 +427,6 @@ exports.createPages = async ({ actions, graphql }) => {
       )
       .map(({ node: { absolutePath, childCommunity } }) => {
         const language = absolutePath.includes('/en') ? 'en' : 'cn';
-
         const data = childCommunity;
         return {
           language,
@@ -466,7 +467,7 @@ exports.createPages = async ({ actions, graphql }) => {
         path: language === 'en' ? '/community' : `/${language}/community`,
         component: communityTemplate,
         context: {
-          locales: language,
+          locale: language,
           fileAbsolutePath: path,
           homeData: data,
           html: null,

@@ -1,4 +1,5 @@
 @import '../../../css/variables/color.less';
+@import '../../../css/variables/fontStyle.less';
 
 .solutionCard {
   border: 1px solid #e9e9ed;
@@ -26,18 +27,13 @@
     }
 
     .title {
-      font-family: 'Inter Semibold';
       font-size: 16px;
       line-height: 28px;
-
-      &:lang(zh-cn) {
-        font-family: 'Source Sans SemiBold';
-      }
+      .fontMid();
     }
   }
 
   .content {
-    font-family: 'Inter';
     font-size: 15px;
     line-height: 24px;
     width: 100%;
@@ -47,9 +43,6 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     color: @color-dark;
-
-    &:lang(zh-cn) {
-      font-family: 'Source Sans';
-    }
+    .fontReg();
   }
 }

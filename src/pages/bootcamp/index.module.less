@@ -1,6 +1,6 @@
-@import '../../css//variables/color.less';
 @import '../../css/variables/responsive.less';
-@import '../../css/fonts/fonts.less';
+@import '../../css/variables/color.less';
+@import '../../css/variables/fontStyle.less';
 
 body {
   background-color: #fff !important;
@@ -10,28 +10,46 @@ body {
   max-width: @screen-lg-max;
   margin: 0 auto;
 
-  .header {
-    background-color: #fafafa;
-  }
-
   .mainContainer {
     margin-top: 147px;
     padding: 40px 140px 358px;
     background-color: #fff;
 
     @media @tablet {
+      padding: 32px 32px 82px;
+      margin-top: 144px;
+    }
+    @media @phone {
       padding: 16px 16px 82px;
       margin-top: 144px;
     }
 
-    .title {
-      font-family: 'Inter Bold';
-      font-size: 24px;
-      line-height: 32px;
-      margin: 64px 0 20px;
+    .container {
+      margin-bottom: 44px;
 
       @media @tablet {
-        margin: 32px 0 8px;
+        margin-bottom: 34px;
+      }
+
+      @media @phone {
+        margin-bottom: 24px;
+      }
+    }
+
+    .title {
+      font-size: 24px;
+      line-height: 32px;
+      padding: 20px 0;
+      .fontBold();
+
+      @media @tablet {
+        padding: 14px 0;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      @media @phone {
+        padding: 8px 0;
         font-size: 16px;
         line-height: 24px;
       }
@@ -45,6 +63,12 @@ body {
       list-style: none;
 
       @media @tablet {
+        grid-template-columns: repeat(2, 1fr);
+        grid-row-gap: 16px;
+        grid-column-gap: 16px;
+      }
+
+      @media @phone {
         grid-template-columns: repeat(1, 1fr);
         grid-row-gap: 16px;
         grid-column-gap: 0px;

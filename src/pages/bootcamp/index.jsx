@@ -13,7 +13,6 @@ import questionAnswering from '../../images/doc-home/question_answering.svg';
 import recommend from '../../images/doc-home/recommend.svg';
 import videoSearch from '../../images/doc-home/video-search.svg';
 import Header from '../../components/header/v2';
-import { useMobileScreen } from '../../hooks';
 import * as styles from './index.module.less';
 
 const Icons = {
@@ -27,7 +26,6 @@ const Icons = {
 };
 
 const BootcampTemplat = ({ data, pageContext }) => {
-  const { isMobile } = useMobileScreen();
   const { locale } = pageContext;
   const {
     title,
@@ -43,19 +41,20 @@ const BootcampTemplat = ({ data, pageContext }) => {
     <div className={styles.bootcampContainer}>
       <Header
         type="doc"
-        header={{ search: 'search' }}
         isSecondHeader={true}
-        className={styles.header}
         locale={locale}
       />
       <Seo title={title} lang={locale} />
       <main className={styles.mainContainer}>
-        <h1 className={styles.title} >{title}</h1>
-        <BannerCard
-          content={description}
-          img={banner}
-        />
-        <div>
+        <div className={styles.container}>
+          <h1 className={styles.title} >{title}</h1>
+          <BannerCard
+            content={description}
+            img={banner}
+          />
+        </div>
+
+        <div className={styles.container}>
           <h1 className={styles.title}>{title1}</h1>
           <ul className={styles.solutionsWrapper}>
             {
@@ -76,7 +75,7 @@ const BootcampTemplat = ({ data, pageContext }) => {
 
         </div>
 
-        <div>
+        <div className={styles.container}>
           <h1 className={styles.title} >{title2}</h1>
           <ul className={styles.solutionsWrapper}>
             {
@@ -97,7 +96,7 @@ const BootcampTemplat = ({ data, pageContext }) => {
           </ul>
         </div>
 
-        <div>
+        <div className={styles.container}>
           <h1 className={styles.title} >{title3}</h1>
           <ul className={styles.solutionsWrapper}>
             {

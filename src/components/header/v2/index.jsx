@@ -6,9 +6,10 @@ import close from '../../../images/v2/close.svg';
 import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
 import { useMobileScreen } from '../../../hooks';
+
 import MobilePopup from '../components/MobilePopupV2';
+import Search from '../components/Search';
 import { Link } from 'gatsby';
-import Search from '../components/Search/Search';
 import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';

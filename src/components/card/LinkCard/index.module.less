@@ -1,5 +1,6 @@
-@import '../../../css/variables/color.less';
 @import '../../../css/variables/responsive.less';
+@import '../../../css/variables/color.less';
+@import '../../../css/variables/fontStyle.less';
 
 .linkCard {
   text-decoration: none;
@@ -15,13 +16,9 @@
 
   .label {
     display: inline-block;
-    font-family: 'Inter Bold';
     font-size: 20px;
     line-height: 28px;
-
-    &:lang(zh-cn) {
-      font-family: 'Source Sans Bold';
-    }
+    .fontBold();
 
     @media @tablet {
       font-size: 16px;

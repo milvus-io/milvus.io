@@ -6,7 +6,6 @@ const SecondHeader = ({
   isMobile,
   handleSearch,
   onTabChange,
-  header,
   styles,
   locale
 }) => {
@@ -45,7 +44,7 @@ const SecondHeader = ({
         </div>
       ) : (
         <>
-          <div
+          <ul
             className={styles.tabsWrapper}
             onClick={handleTabClick}
             onKeyDown={handleTabClick}
@@ -62,19 +61,20 @@ const SecondHeader = ({
                   className={styles.tabItem}
                   activeClassName={styles.active}
                   data-id={id}
-                >
-                  {label}
-                </Link>
+                  children={
+                    <span>{label}</span>
+                  }
+                />
               );
             })}
-          </div>
+          </ul>
           <div className={styles.searchWrapper}>
             {!isMobile && (
               <input
                 className={styles.search}
                 type="text"
                 onKeyPress={handleSearch}
-                placeholder={header.search}
+                placeholder={locale === 'cn' ? '搜索' : 'Search'}
                 id="algolia-search"
               />
             )}

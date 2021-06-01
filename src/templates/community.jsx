@@ -27,6 +27,7 @@ export default function CommunityTemplate({ data, pageContext }) {
     headings,
   } = pageContext;
   const isHomePage = homeData !== null;
+
   const title = 'Milvus Community';
   const desc = 'Milvus Community';
 
@@ -128,12 +129,8 @@ export default function CommunityTemplate({ data, pageContext }) {
                 {mailingSection.list.map(mail => (
                   <li className="card" key={mail.title}>
                     <a href={mail.link} target="_blank" rel="noreferrer">
-                      <img
-                        className="mail-img"
-                        src={mailIcon}
-                        alt="mail icon"
-                      />
-                      {mail.title}
+                      <img src={mailIcon} alt="mail icon" />
+                      <p>{mail.title}</p>
                     </a>
                   </li>
                 ))}
@@ -175,7 +172,7 @@ export default function CommunityTemplate({ data, pageContext }) {
         )}
       </main>
       <footer>
-        {footerTrans.text1.label}
+        <span>{footerTrans.text1.label}</span>
         <a className="link" href={footerTrans.text2.link}>
           {footerTrans.text2.label}
         </a>

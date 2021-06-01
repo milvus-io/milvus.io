@@ -8,6 +8,10 @@
   padding: 40px 48px;
   height: 100%;
 
+  @media @tablet {
+    padding: 16px;
+  }
+
   .titleWrapper {
     display: flex;
     align-items: center;
@@ -18,6 +22,10 @@
       font-size: 20px;
       line-height: 28px;
       color: @color-dark;
+
+      @media @tablet {
+        font-size: 16px;
+      }
     }
   }
 
@@ -28,6 +36,10 @@
     color: @color-default-link;
     font-size: 18px;
     line-height: 28px;
+
+    @media @tablet {
+      font-size: 14px;
+    }
   }
 
   .btnWrapper {
@@ -35,6 +47,10 @@
     justify-content: flex-end;
 
     margin-top: 20px;
+
+    @media @tablet {
+      margin-top: 16px;
+    }
 
     .btn {
       display: inline-block;

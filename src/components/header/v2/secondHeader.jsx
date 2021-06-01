@@ -5,7 +5,6 @@ const SecondHeader = ({
   tabList,
   isMobile,
   handleSearch,
-  onTabChange,
   styles,
   locale
 }) => {
@@ -15,7 +14,6 @@ const SecondHeader = ({
   const handleTabClick = event => {
     const { id } = event.target.dataset;
     if (id && id !== activeId) {
-      onTabChange(id);
       setActiveId(Number(id));
       open && setOpen(false);
     }

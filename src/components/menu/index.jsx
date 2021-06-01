@@ -21,6 +21,19 @@ const findItem = (key, value, arr) => {
   return find;
 };
 
+const isChildItem = (arr, id) => {
+  let res = false;
+
+  arr.forEach(item => {
+    if (item.id === id) {
+      res = true;
+    } else if (item.children && item.children.length) {
+      res = isChildItem(item.children, id);
+    }
+  });
+  return res;
+};
+
 const Menu = props => {
   const {
     menuList,
@@ -39,7 +52,6 @@ const Menu = props => {
   const { isBlog } = menuList || {};
   const [realMenuList, setRealMenuList] = useState([]);
   const formatVersion = version === 'master' ? versions[0] : version;
-
   useEffect(() => {
     const generateMenu = list => {
       // get all labels , make sure will generate menu from top to bottom
@@ -234,11 +246,44 @@ const Menu = props => {
     ));
   };
 
-  const toggleMenuChild = doc => {
-    const copyMenu = JSON.parse(JSON.stringify(realMenuList));
+  const toggleMenuChild11 = (menu, doc) => {
+    let copyMenu = JSON.parse(JSON.stringify(realMenuList));
     const findDoc = findItem('title', doc.title, copyMenu);
-    findDoc.showChildren = !findDoc.showChildren;
+    copyMenu = copyMenu.map(item => {
+      const { showChildren, id, children } = item;
+      if (isChildItem(children, findDoc.id)) {
+        return { ...item, showChildren: true };
+      }
+      if (id === findDoc.id) {
+        return { ...item, showChildren: !showChildren };
+      }
+      return { ...item, showChildren: false };
+    });
+    console.log(copyMenu);
     setRealMenuList(copyMenu);
+  };
+
+  const toggleMenuChild = doc => {
+    let menu = JSON.parse(JSON.stringify(realMenuList));
+
+    const toggleIsShowChildren = (menu, doc) => {
+      const findDoc = findItem('title', doc.title, menu);
+      console.log(findDoc);
+      const copyMenu = menu.map(item => {
+        const { showChildren, id, children } = item;
+        if (isChildItem(children, findDoc.id)) {
+          toggleIsShowChildren(children, findDoc);
+          return { ...item, showChildren: true };
+        }
+        if (id === findDoc.id) {
+          return { ...item, showChildren: !showChildren };
+        }
+        return { ...item, showChildren: false };
+      });
+      return copyMenu;
+    };
+
+    setRealMenuList(toggleIsShowChildren(menu, doc));
   };
 
   const toggleMenu = status => {
@@ -261,7 +306,6 @@ const Menu = props => {
       <section
         className={`${wrapperClass} ${styles.menuContainer} ${!menuStatus ? styles.hide : ''
           }`}
-        style={{ top: `${isMobile ? '50px' : '147px'}` }}
         ref={menuRef}
       >
         {!isMobile && (

@@ -1,28 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import Layout from '../components/docLayout';
+import React from 'react';
 import Seo from '../components/seo';
-import Header from '../components/header/header.js';
+import Layout from '../components/docLayout';
 import { graphql } from 'gatsby';
+import './apiDocTemplate.less';
 
 export default function Template({ data, pageContext }) {
-  let { abspath, doc, linkId, name } = pageContext;
+  let {
+    doc,
+    name,
+    allApiMenus,
+    allMenus,
+    version,
+    locale,
+    docVersions,
+    docVersion,
+    category,
+  } = pageContext;
 
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childLayoutJson.layout
     : {};
-  const nav = {
-    current: 'api',
-  };
-  const menuList = {};
+
+  const v2 = data.allFile.edges[0]
+    ? data.allFile.edges[0].node.childLayoutJson.v2
+    : {};
+
+  const menuList = allMenus.find(
+    v => v.absolutePath.includes(docVersion) && v.lang === locale
+  );
 
   return (
     <>
-      <Header language={layout} current="api" locale="en" showDoc={false} />
-      <aside className="left-nav"></aside>
-      <main className="api-reference-wrapper">
-        <div dangerouslySetInnerHTML={{ __html: doc }} />
-      </main>
-      {/* {linkId.map(element => <a href={`#${element}`}>element</a>)} */}
+      <Layout
+        language={layout}
+        locale={locale}
+        menuList={menuList}
+        version={docVersion}
+        headings={[]}
+        versions={docVersions}
+        id={name}
+        isBenchMark={false}
+        showDoc={false}
+        isBlog={false}
+        isHome={false}
+        editPath=""
+        header={v2}
+        setSearch={() => {}}
+        isApiReference
+        allApiMenus={allApiMenus}
+      >
+        <Seo
+          title={`API Reference: ${category}`}
+          lang={locale}
+          version={version}
+        />
+        <div
+          className="api-reference-wrapper"
+          dangerouslySetInnerHTML={{ __html: doc }}
+        ></div>
+      </Layout>
     </>
   );
 }
@@ -33,6 +69,14 @@ export const Query = graphql`
       edges {
         node {
           childLayoutJson {
+            v2 {
+              header {
+                navlist {
+                  label
+                  href
+                }
+              }
+            }
             layout {
               notFound
               header {
@@ -49,8 +93,25 @@ export const Query = graphql`
                 loading
                 noresult
                 tutorial
+                search
+                bootcamp
               }
               footer {
+                editBtn {
+                  label
+                }
+                questionBtn {
+                  label
+                  link
+                }
+                issueBtn {
+                  label
+                  link
+                }
+                docIssueBtn {
+                  label
+                  link
+                }
                 product {
                   title
                   txt1
@@ -77,6 +138,7 @@ export const Query = graphql`
                   title
                   wechat
                 }
+                content
               }
             }
           }

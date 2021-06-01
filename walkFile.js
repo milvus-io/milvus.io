@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 /**
  * @param dirPath the root dir
@@ -16,12 +16,24 @@ function walkFiles(dirPath, fileObj = {}) {
       //递归调用
       walkFiles(filePath, fileObj);
     } else {
-      if (filesList[i] === "version.json") {
-        const paths = dirPath.split("/");
+      if (filesList[i] === 'version.json') {
+        const paths = dirPath.split('/');
         const parent = paths[paths.length - 1];
         const doc = fs.readFileSync(filePath);
         const content = JSON.parse(doc.toString());
-        fileObj[parent] = content;
+        fileObj[parent] = fileObj[parent]
+          ? { ...fileObj[parent], ...content }
+          : content;
+      }
+      if (filesList[i] === 'Variables.json') {
+        const paths = dirPath.split('/');
+        const parent = paths[paths.length - 3];
+        const doc = fs.readFileSync(filePath);
+        const content = JSON.parse(doc.toString());
+        const pymilvus = content?.milvus_python_sdk_version && `v${content?.milvus_python_sdk_version}`;
+        fileObj[parent] = fileObj[parent]
+          ? { ...fileObj[parent], pymilvus }
+          : { pymilvus };
       }
     }
   }

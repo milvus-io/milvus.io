@@ -31,6 +31,7 @@ export default function Template({
     editPath,
     newHtml,
     homeData,
+    allApiMenus,
   } = pageContext;
 
   versions = versions.sort(sortVersions);
@@ -183,6 +184,7 @@ export default function Template({
       editPath={editPath}
       header={v2}
       setSearch={handleSearch}
+      allApiMenus={allApiMenus}
     >
       <Seo title={title} lang={locale} version={version} />
       {isBenchmark ? (

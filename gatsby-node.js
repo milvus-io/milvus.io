@@ -5,6 +5,7 @@ const locales = require('./src/constants/locales');
 const DOC_LANG_FOLDERS = ['/en/', '/zh-CN/'];
 // const benchmarksMenu = require('./benchmark-menu');
 const express = require('express');
+const HTMLParser = require('node-html-parser');
 const env = process.env.IS_PREVIEW;
 // const env = 'preview';
 console.log('========env========', env);
@@ -98,46 +99,125 @@ exports.onCreatePage = ({ page, actions }) => {
 
 // APIReference page: generate source for api reference html
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
-  const dirPath = `src/pages/APIReference/pymilvus/v1.0.0`;
-  const apiFiles = [];
+  /**
+   * use api version to find target doc version
+   * @param {object} info version info from walkFile output
+   * @param {string} category category name, such as pymilvus, java-sdk
+   * @param {string} apiVersion current api version
+   * @returns {string} target doc version, will return empty string if no match
+   */
+  const findDocVersion = (info, category, apiVersion) =>
+    Object.keys(info)
+      .reverse()
+      .find(i => info[i] && info[i][category] === apiVersion) || '';
+  /**
+   * generate gatsby node
+   * @param {array} files files from handlePyFiles output
+   */
+  const createNode = (files = []) => {
+    files.forEach(file => {
+      const { name, abspath, doc, linkId, hrefs, category, version } = file;
+      const docVersion = findDocVersion(versionInfo, category, version);
+      const node = {
+        name,
+        abspath,
+        doc,
+        linkId,
+        hrefs,
+        id: createNodeId(`APIfile-${category}-${version}-${name}`),
+        internal: {
+          type: 'APIfile',
+          contentDigest: createContentDigest(file),
+        },
+        version,
+        category,
+        docVersion,
+      };
+      actions.createNode(node);
+    });
+  };
+  /**
+   * handle html pages under `${parentPath}/${version}` and fromat them
+   * @param {string} parentPath api category dir path, such as "src/pages/APIReference/pymilvus"
+   * @param {string} version api version, such as "v1.0.1"
+   * @param {array} apiFiles pages under `${parentPath}/${version}` will be formatted and pushed to apiFiles
+   */
+  const handlePyFiles = (parentPath, version, apiFiles) => {
+    const dirPath = `${parentPath}/${version}`;
+    try {
+      let filesList = fs.readdirSync(dirPath);
+      for (let i = 0; i < filesList.length; i++) {
+        let filePath = path.join(dirPath, filesList[i]);
+        if (filePath.endsWith('.html')) {
+          let doc = HTMLParser.parse(fs.readFileSync(filePath));
+          // get articleBody node
+          const bodyHTML = doc.querySelector(
+            '[itemprop=articleBody] > div'
+          ).innerHTML;
+          // filter out linked element ids
+          const linkRegex = /id="[A-Za-z0-9_-]*"/g;
+          const linkId = Array.from(bodyHTML.matchAll(linkRegex)).map(link =>
+            link[0].slice(4, link[0].length - 1)
+          );
+          // match href with ids
+          const hrefs = [];
+          doc.querySelectorAll('a').forEach(node => {
+            linkId.forEach(link => {
+              if (
+                node.outerHTML.indexOf(`#${link}`) > 1 &&
+                node.outerHTML.indexOf('headerlink') === -1
+              ) {
+                hrefs.push(node.outerHTML);
+              }
+            });
+          });
+          // remove useless link
+          doc.querySelectorAll('.reference.internal').forEach(node => {
+            node.parentNode.removeChild(node);
+          });
+          // generate toc from hrefs and insert it behind of h1 title
+          const title = doc.querySelector('[itemprop=articleBody] > div > h1');
+          const tocElement = `<ul className="api-reference-toc">${hrefs.reduce(
+            (prev, item) => prev + `<li>${item}</li>`,
+            ''
+          )}</ul>`;
+          title.insertAdjacentHTML('afterend', tocElement);
+          // only need article body html
+          doc = doc.querySelector('[itemprop=articleBody] > div').innerHTML;
+          // const version = dirPath.split('/').pop();
+          apiFiles.push({
+            doc,
+            hrefs,
+            linkId,
+            name: filesList[i],
+            abspath: filePath,
+            version,
+            category: 'pymilvus',
+          });
+        }
+      }
+    } catch (e) {
+      console.log('Read api files failed');
+      throw e;
+    }
+  };
+  // const dirPath = `src/pages/APIReference/pymilvus/v1.0.1`;
+  const dirPath = `src/pages/APIReference`;
+  // read categories, such as pymilvus and java-sdk
+  const categories = fs.readdirSync(dirPath);
+  const nodes = [];
+  for (let category of categories) {
+    if (category === 'pymilvus') {
+      const path = `${dirPath}/${category}`;
+      const versions = fs.readdirSync(path);
 
-  try {
-    let filesList = fs.readdirSync(dirPath);
-    for (let i = 0; i < filesList.length; i++) {
-      let filePath = path.join(dirPath, filesList[i]);
-      if (filePath.endsWith(".html")) {
-        let doc = HTMLParser.parse(fs.readFileSync(filePath));
-        // remove useless link
-        Array.from(doc.querySelectorAll(".reference.internal")).forEach(node => {
-          node.parentNode.removeChild(node);
-        });
-        // get body node
-        doc = doc.querySelector("[itemprop=articleBody] > div").innerHTML;
-        const linkRegex = /id="[A-Za-z0-9_-]*"/g;
-        const linkId = Array.from(doc.matchAll(linkRegex)).map(link => link[0].slice(4, link[0].length - 1));
-        apiFiles.push({ doc, linkId, name: filesList[i], abspath: filePath });
+      for (let version of versions) {
+        handlePyFiles(path, version, nodes);
       }
     }
-  } catch (e) {
-    console.log("Read api files failed");
-    throw e;
   }
-
-  apiFiles.forEach(file => {
-    const node = {
-      name: file.name,
-      abspath: file.abspath,
-      doc: file.doc,
-      linkId: file.linkId,
-      id: createNodeId(`APIfile-${file.name}`),
-      internal: {
-        type: "APIfile",
-        contentDigest: createContentDigest(file),
-      },
-    }
-    actions.createNode(node)
-  })
-}
+  createNode(nodes);
+};
 
 // exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
 //   if (stage === "build-html") {
@@ -178,6 +258,18 @@ exports.createPages = ({ actions, graphql }) => {
             fileAbsolutePath
             html
           }
+        }
+      }
+      allApIfile {
+        nodes {
+          linkId
+          abspath
+          name
+          doc
+          hrefs
+          version
+          category
+          docVersion
         }
       }
       allFile(
@@ -400,6 +492,62 @@ exports.createPages = ({ actions, graphql }) => {
     );
     // -----  for global search end -----
 
+    // APIReference page: create api reference page
+    // generate full api menus for doc template and api doc template
+    const allApiMenus = result.data.allApIfile.nodes.reduce((prev, item) => {
+      // docVersion may be empty string
+      const { name, category, version, docVersion } = item;
+      const menuItem = {
+        id: name,
+        title: category,
+        lang: null,
+        label1: 'api_reference',
+        label2: '',
+        label3: '',
+        order: 0,
+        isMenu: null,
+        outLink: null,
+        isApiReference: true,
+        url: `/api-reference/${category}/${version}/${name}`,
+        category,
+        apiVersion: version,
+        docVersion,
+      };
+      return [...prev, menuItem];
+    }, []);
+    const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
+    result.data.allApIfile.nodes.forEach(
+      ({
+        abspath,
+        doc,
+        linkId,
+        name,
+        hrefs,
+        version,
+        category,
+        docVersion,
+      }) => {
+        createPage({
+          path: `/api-reference/${category}/${version}/${name}`,
+          component: apiDocTemplate,
+          context: {
+            locale: 'en',
+            abspath,
+            doc,
+            linkId,
+            hrefs,
+            name,
+            allApiMenus,
+            allMenus,
+            version,
+            docVersion,
+            docVersions: Array.from(versions),
+            category,
+          },
+        });
+      }
+    );
+
     // create doc home page
     homeData.forEach(({ language, data, path }) => {
       const isBlog = checkIsblog(path);
@@ -420,21 +568,7 @@ exports.createPages = ({ actions, graphql }) => {
           editPath,
           allMenus,
           newHtml: null,
-        },
-      });
-    });
-
-    // APIReference page: create api reference page
-    result.data.allApIfile.nodes.forEach(({ abspath, doc, linkId, name }) => {
-      createPage({
-        path: `/api/${name}`,
-        component: apiDocTemplate,
-        context: {
-          locale: 'en',
-          abspath,
-          doc,
-          linkId,
-          name,
+          allApiMenus,
         },
       });
     });
@@ -485,6 +619,7 @@ exports.createPages = ({ actions, graphql }) => {
             allMenus,
             newHtml,
             homeData: null,
+            allApiMenus,
           }, // additional data can be passed via context
         });
       }
@@ -508,6 +643,7 @@ exports.createPages = ({ actions, graphql }) => {
           isBenchmark,
           newHtml,
           homeData: null,
+          allApiMenus,
         }, // additional data can be passed via context
       });
     });

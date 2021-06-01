@@ -21,6 +21,8 @@ const DocLayout = props => {
     isHome,
     editPath,
     setSearch,
+    allApiMenus,
+    isApiReference = false,
   } = props;
   const formatHeadings =
     headings &&
@@ -169,6 +171,8 @@ const DocLayout = props => {
           language={language}
           onSearchChange={handleSearchChange}
           wrapperClass={styles.menuContainer}
+          allApiMenus={allApiMenus}
+          isApiReference={isApiReference}
         ></Menu>
         <div
           className={`${styles.innerContainer} ${
@@ -189,7 +193,7 @@ const DocLayout = props => {
               {!isHome && (
                 <>
                   <div className={styles.buttonContainer}>
-                    {isBlog || isBenchMark ? null : (
+                    {isBlog || isBenchMark || isApiReference ? null : (
                       <a
                         className={styles.btnAnchor}
                         href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${

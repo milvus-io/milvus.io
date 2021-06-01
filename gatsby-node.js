@@ -266,7 +266,9 @@ exports.createPages = async ({ actions, graphql }) => {
               contributorSection {
                 title
                 list {
-                  avatarSrc
+                  avatar {
+                    publicURL
+                  }
                   link
                   login
                 }
@@ -455,8 +457,10 @@ exports.createPages = async ({ actions, graphql }) => {
           locale: fileLang,
           fileAbsolutePath,
           html,
+          headings: node.headings.filter(v => v.depth < 4 && v.depth > 1),
           menuList: communityMenu,
           homeData: null,
+          activePost: fileId,
         },
       });
     });
@@ -471,7 +475,9 @@ exports.createPages = async ({ actions, graphql }) => {
           fileAbsolutePath: path,
           homeData: data,
           html: null,
+          headings: [],
           menuList: communityMenu,
+          activePost: 'community',
         },
       });
     });
@@ -573,4 +579,15 @@ exports.createPages = async ({ actions, graphql }) => {
       });
     });
   });
+};
+
+exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
+  const config = getConfig();
+  const miniCssExtractPlugin = config.plugins.find(
+    plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
+  );
+  if (miniCssExtractPlugin) {
+    miniCssExtractPlugin.options.ignoreOrder = true;
+  }
+  actions.replaceWebpackConfig(config);
 };

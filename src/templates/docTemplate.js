@@ -33,8 +33,6 @@ export default function Template({
     homeData,
   } = pageContext;
 
-  console.log('====== doc template all menus', allMenus);
-
   versions = versions.sort(sortVersions);
 
   const { isMobile } = useMobileScreen();

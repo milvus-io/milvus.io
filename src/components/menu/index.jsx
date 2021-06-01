@@ -34,8 +34,6 @@ const Menu = props => {
     wrapperClass = '',
   } = props;
 
-  console.log('menu list', menuList);
-
   const { header } = language;
   const [menuStatus, setMenuStatus] = useState(false);
   const { isBlog } = menuList || {};

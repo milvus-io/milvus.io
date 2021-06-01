@@ -100,6 +100,9 @@ let gatsbyConfigs = {
               if (node.relativePath.includes('community')) {
                 return `community`;
               }
+              if (node.relativePath.includes('bootcamp')) {
+                return `bootcamp`;
+              }
               return `json`;
             default:
               return `json`;

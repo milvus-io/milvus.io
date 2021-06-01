@@ -271,6 +271,48 @@
         }
       }
     }
+
+    .btn-to-top {
+      position: fixed;
+      right: 20%;
+      bottom: 80px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+
+      background-color: #fff;
+      cursor: pointer;
+
+      z-index: 1000;
+
+      &:hover {
+        color: @color-highlight;
+      }
+
+      @media @tablet {
+        position: fixed;
+        right: 30%;
+        bottom: 80px;
+      }
+
+      @media @desktop {
+        position: fixed;
+        right: 28%;
+        bottom: 80px;
+      }
+
+      @media (min-width: 2000px) {
+        position: fixed;
+        right: 32%;
+        bottom: 80px;
+      }
+    }
   }
 
   footer {

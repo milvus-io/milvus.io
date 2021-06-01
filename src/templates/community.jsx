@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { graphql } from 'gatsby';
 import SEO from '../components/seo';
 import Header from '../components/header/v2';
 import './community.less';
 import CommunityHeroCard from '../components/card/communityHeroCard/communityHeroCard';
 import Menu from '../components/community/menu/treeMenu';
-import { useState } from 'react';
 import mailIcon from '../images/community/mail.png';
+import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
+import { useEffect } from 'react';
 
 export default function CommunityTemplate({ data, pageContext }) {
   // i18n
@@ -29,7 +30,7 @@ export default function CommunityTemplate({ data, pageContext }) {
   const isHomePage = homeData !== null;
 
   const title = 'Milvus Community';
-  const desc = 'Milvus Community';
+  const desc = 'Join Milvus Community';
 
   const {
     heroSection,
@@ -39,7 +40,30 @@ export default function CommunityTemplate({ data, pageContext }) {
     contributorSection,
   } = homeData || {};
 
+  // add hooks used by doc template
+  useFilter();
+  useCodeCopy(locale);
+
   const [hash, setHash] = useState(null);
+  const [showToTopButton, setShowToTopButton] = useState(false);
+
+  useEffect(() => {
+    let currentPos = 0;
+
+    const cb = function () {
+      const container = document.querySelector('html');
+      const direction = container.scrollTop - currentPos > 0 ? 'down' : 'up';
+      currentPos = container.scrollTop;
+      const showButton = direction === 'up' && currentPos;
+
+      setShowToTopButton(showButton);
+    };
+    window.addEventListener('scroll', cb);
+
+    return () => {
+      window.removeEventListener('scroll', cb);
+    };
+  }, []);
 
   const formatHeadings =
     headings &&
@@ -76,6 +100,13 @@ export default function CommunityTemplate({ data, pageContext }) {
           {childDom}
         </div>
       );
+    });
+  };
+
+  const onToTopClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
     });
   };
 
@@ -168,6 +199,30 @@ export default function CommunityTemplate({ data, pageContext }) {
                 </div>
               </div>
             )}
+            {showToTopButton ? (
+              <div
+                className="btn-to-top"
+                role="button"
+                onClick={onToTopClick}
+                onKeyDown={onToTopClick}
+                tabIndex={0}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  focusable="false"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  className="svg-inline--fa fa-arrow-to-top fa-w-12 fa-2x"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M24 32h336c13.3 0 24 10.7 24 24v24c0 13.3-10.7 24-24 24H24C10.7 104 0 93.3 0 80V56c0-13.3 10.7-24 24-24zm66.4 280.5l65.6-65.6V456c0 13.3 10.7 24 24 24h24c13.3 0 24-10.7 24-24V246.9l65.6 65.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L209 126.1c-9.4-9.4-24.6-9.4-33.9 0L39.5 261.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0z"
+                  ></path>
+                </svg>
+              </div>
+            ) : null}
           </>
         )}
       </main>

@@ -1,6 +1,6 @@
 @import '../css/variables/responsive.less';
 @import '../css/variables/color.less';
-
+@import '../../static/iconFonts/css/all.min.css';
 body {
   background-color: #fff;
 }
@@ -9,11 +9,10 @@ body {
   width: 100%;
   background-color: #fff;
 
-  .content {
-    max-width: @screen-lg-max;
+  .page-content {
+    max-width: @screen-hp-max;
     margin: 0 auto;
-    padding: 0 100px;
-    padding-top: 97px;
+    padding: 97px 60px 0;
     position: relative;
 
     @media @tablet {
@@ -25,18 +24,19 @@ body {
   .bg3-container {
     position: absolute;
     background: url(../images/v2/bg-img3.png) left top no-repeat;
-    background-size: contain;
-    width: 30%;
+    background-size: 100% 100%;
+    width: 26%;
     height: 0;
-    padding-bottom: 20%;
+    padding-bottom: 25%;
     left: 50px;
-    top: 46%;
+    top: 49%;
 
     @media @tablet {
-      width: 40%;
+      width: 43%;
       height: 0;
-      padding-bottom: 30%;
-      top: 40%;
+      padding-bottom: 41%;
+      top: 46%;
+      left: 0;
     }
 
     @media @phone {
@@ -45,7 +45,7 @@ body {
   }
 
   .banner {
-    max-width: 1400px;
+    max-width: @screen-hp-max;
     margin: 0 auto;
     display: flex;
     padding: 140px 16px 101px 16px;
@@ -223,9 +223,11 @@ body {
 
   .content {
     margin-bottom: 60px;
+    padding: 0;
 
     @media @tablet {
       margin-bottom: 0;
+      padding: 0;
     }
 
     .title-bar {
@@ -254,7 +256,7 @@ body {
 
       .line {
         display: inline-block;
-        width: 221px;
+        width: 133px;
         height: 1px;
         background-color: #12c3f4;
         margin-left: 24px;
@@ -376,6 +378,7 @@ body {
       .wrapper {
         background: rgba(245, 243, 243, 0.4);
         padding: 48px 0 60px;
+        border-radius: 32px;
         @media @tablet {
           padding: 48px 20px;
         }

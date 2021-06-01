@@ -157,6 +157,7 @@ const DocLayout = props => {
         onSearchChange={handleSearchChange}
         isSecondHeader={true}
         onTabChange={handleTabChange}
+        className={styles.header}
       />
 
       <main className={wrapperClass}>
@@ -175,9 +176,8 @@ const DocLayout = props => {
           isApiReference={isApiReference}
         ></Menu>
         <div
-          className={`${styles.innerContainer} ${
-            isHome ? styles.innerContainerHome : ''
-          } ${isBenchMark ? styles.fullWidth : ''}`}
+          className={`${styles.innerContainer} ${isHome ? styles.innerContainerHome : ''
+            } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -196,9 +196,8 @@ const DocLayout = props => {
                     {isBlog || isBenchMark || isApiReference ? null : (
                       <a
                         className={styles.btnAnchor}
-                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                          locale === 'en' ? 'en' : 'zh-CN'
-                        }/${editPath}`}
+                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
+                          }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
                           <i className={`far fa-edit ${styles.btnIcon}`}></i>

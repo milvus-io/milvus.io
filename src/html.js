@@ -17,16 +17,17 @@ export default function HTML(props) {
         />
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-        />
-        <link
-          rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
         />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
         />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        ></link>
         {/* <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Roboto&family=Source+Code+Pro&display=swap" rel="stylesheet" /> */}
         {props.headComponents}
       </head>

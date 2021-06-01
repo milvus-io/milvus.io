@@ -6,15 +6,16 @@ import close from '../../../images/v2/close.svg';
 import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
 import { useMobileScreen } from '../../../hooks';
+
 import MobilePopup from '../components/MobilePopupV2';
+import Search from '../components/Search';
 import { Link } from 'gatsby';
-import Search from '../components/Search/Search';
 import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
 import SecondHeader from './secondHeader';
-import V2Selector from '../../selector/v2';
+import LangSelector from '../../selector/v2';
 
 const navList = [
   {
@@ -42,31 +43,43 @@ const navList = [
 const tabList = [
   {
     label: 'Developer Docs',
+    href: '/docs/home',
     id: 1,
   },
   {
     label: 'Bootcamp',
+    href: '/bootcamp',
     id: 2,
   },
   {
     label: 'Community',
+    href: '/community',
     id: 3,
   },
 ];
 
-const languageList = ['中文', 'En'];
+const languageList = [
+  {
+    label: '中文',
+    value: 'cn'
+  },
+  {
+    label: 'English',
+    value: 'en'
+  }
+];
 
 const V2Header = ({
-  setVersion = () => {},
+  setVersion = () => { },
   type = 'home',
-  onSearchChange,
-  className = '',
+  onSearchChange = () => { },
   header,
   isSecondHeader,
-  onTabChange,
+  onTabChange = () => { },
+  className = '',
+  locale
 }) => {
   const { pathname } = globalHistory.location;
-
   const { isMobile } = useMobileScreen();
 
   const [open, setOpen] = useState(false);
@@ -82,12 +95,6 @@ const V2Header = ({
 
   const hideMask = () => {
     setOpen(false);
-  };
-
-  const handleSelected = val => {
-    setVersion(val);
-
-    window.location.href = `/docs/${val}/overview.md`;
   };
 
   const handleSearchInMobile = value => {
@@ -143,9 +150,8 @@ const V2Header = ({
                     </a>
                   ) : (
                     <Link
-                      className={`${styles.navItem} ${
-                        pathname === link ? styles.active : ''
-                      }`}
+                      className={`${styles.navItem} ${pathname === link ? styles.active : ''
+                        }`}
                       to={link}
                       key={label}
                     >
@@ -154,10 +160,9 @@ const V2Header = ({
                   );
                 })}
                 <div className={styles.dropDown}>
-                  <V2Selector
-                    selected={'En'}
+                  <LangSelector
                     options={languageList}
-                    setSelected={handleSelected}
+                    locale={locale}
                   />
                 </div>
               </div>
@@ -216,10 +221,9 @@ const V2Header = ({
               >
                 {openType === 'menu' ? (
                   <Menu
-                    version={'En'}
                     options={languageList}
-                    setSelected={handleSelected}
                     navList={navList}
+                    locale={locale}
                   />
                 ) : (
                   <Search handleSearch={handleSearchInMobile} />
@@ -237,6 +241,7 @@ const V2Header = ({
           handleSearch={handleSearch}
           header={header}
           styles={styles}
+          locale={locale}
         />
       ) : null}
     </header>

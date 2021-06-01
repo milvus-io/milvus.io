@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'gatsby';
 
 const SecondHeader = ({
   tabList,
   isMobile,
   handleSearch,
   onTabChange,
-  header,
   styles,
+  locale,
 }) => {
   const [activeId, setActiveId] = useState(1);
   const [open, setOpen] = useState(false);
@@ -43,7 +44,7 @@ const SecondHeader = ({
         </div>
       ) : (
         <>
-          <div
+          <ul
             className={styles.tabsWrapper}
             onClick={handleTabClick}
             onKeyDown={handleTabClick}
@@ -51,27 +52,27 @@ const SecondHeader = ({
             tabIndex={-1}
           >
             {tabList.map(item => {
-              const { id, label } = item;
+              const { id, label, href } = item;
+              const link = locale === 'en' ? href : `/cn${href}`;
               return (
-                <p
+                <Link
+                  to={link}
                   key={id}
-                  className={`${styles.tabItem} ${
-                    activeId === id ? styles.active : ''
-                  }`}
+                  className={styles.tabItem}
+                  activeClassName={styles.active}
                   data-id={id}
-                >
-                  {label}
-                </p>
+                  children={<span>{label}</span>}
+                />
               );
             })}
-          </div>
+          </ul>
           <div className={styles.searchWrapper}>
             {!isMobile && (
               <input
                 className={styles.search}
                 type="text"
                 onKeyPress={handleSearch}
-                placeholder={header.search}
+                placeholder={locale === 'cn' ? '搜索' : 'Search'}
                 id="algolia-search"
               />
             )}
@@ -103,17 +104,18 @@ const SecondHeader = ({
             tabIndex={-1}
           >
             {tabList.map(item => {
-              const { id, label } = item;
+              const { id, label, href } = item;
+              const link = locale === 'en' ? href : `/cn${href}`;
               return (
-                <p
+                <Link
+                  to={link}
                   key={id}
-                  className={`${styles.tabItem} ${
-                    activeId === id ? styles.active : ''
-                  }`}
+                  className={styles.tabItem}
+                  activeClassName={styles.active}
                   data-id={id}
                 >
                   {label}
-                </p>
+                </Link>
               );
             })}
           </div>

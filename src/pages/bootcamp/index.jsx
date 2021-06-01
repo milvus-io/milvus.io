@@ -22,98 +22,77 @@ const Icons = {
   VIDEO_SEARCH: videoSearch,
   AUDIO_SEARCH: audioSearch,
   MOLECULAR: molecular,
-  HYBRID: hybrid
+  HYBRID: hybrid,
 };
 
 const BootcampTemplat = ({ data, pageContext }) => {
   const { locale } = pageContext;
-  const {
-    title,
-    description,
-    section1,
-    section2,
-    section3
-  } = locale === 'en' ? data.allBootcampJson.nodes[0].data.en : data.allBootcampJson.nodes[0].data.cn;
+  const { title, description, section1, section2, section3 } =
+    locale === 'en'
+      ? data.allBootcamp.nodes[0].data.en
+      : data.allBootcamp.nodes[0].data.cn;
   const [title1, content1] = [section1.title, section1.content];
   const [title2, content2] = [section2.title, section2.content];
   const [title3, content3] = [section3.title, section3.content];
   return (
     <div className={styles.bootcampContainer}>
-      <Header
-        type="doc"
-        isSecondHeader={true}
-        locale={locale}
-      />
+      <Header type="doc" isSecondHeader={true} locale={locale} />
       <Seo title={title} lang={locale} />
       <main className={styles.mainContainer}>
         <div className={styles.container}>
-          <h1 className={styles.title} >{title}</h1>
-          <BannerCard
-            content={description}
-            img={banner}
-          />
+          <h1 className={styles.title}>{title}</h1>
+          <BannerCard content={description} img={banner} />
         </div>
 
         <div className={styles.container}>
           <h1 className={styles.title}>{title1}</h1>
           <ul className={styles.solutionsWrapper}>
-            {
-              content1.map(item => {
-                const { title, link } = item;
-                return (
-                  <li key={title}>
-                    <LinkCard
-                      label={title}
-                      href={link}
-                    />
-                  </li>
-
-                );
-              })
-            }
-          </ul>
-
-        </div>
-
-        <div className={styles.container}>
-          <h1 className={styles.title} >{title2}</h1>
-          <ul className={styles.solutionsWrapper}>
-            {
-              content2.map(item => {
-                const { title, link, desc, iconType } = item;
-                return (
-                  <li key={title}>
-                    <SolutionCard
-                      title={title}
-                      content={desc}
-                      img={Icons[iconType]}
-                      href={link}
-                    />
-                  </li>
-                );
-              })
-            }
+            {content1.map(item => {
+              const { title, link } = item;
+              return (
+                <li key={title}>
+                  <LinkCard label={title} href={link} />
+                </li>
+              );
+            })}
           </ul>
         </div>
 
         <div className={styles.container}>
-          <h1 className={styles.title} >{title3}</h1>
+          <h1 className={styles.title}>{title2}</h1>
           <ul className={styles.solutionsWrapper}>
-            {
-              content3.map(item => {
-                const { title, link, iconType, desc } = item;
-                return (
-                  <li key={title}>
-                    <SolutionCard
-                      title={title}
-                      content={desc}
-                      img={Icons[iconType]}
-                      href={link}
-                    />
-                  </li>
-                );
-              })
-            }
+            {content2.map(item => {
+              const { title, link, desc, iconType } = item;
+              return (
+                <li key={title}>
+                  <SolutionCard
+                    title={title}
+                    content={desc}
+                    img={Icons[iconType]}
+                    href={link}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <div className={styles.container}>
+          <h1 className={styles.title}>{title3}</h1>
+          <ul className={styles.solutionsWrapper}>
+            {content3.map(item => {
+              const { title, link, iconType, desc } = item;
+              return (
+                <li key={title}>
+                  <SolutionCard
+                    title={title}
+                    content={desc}
+                    img={Icons[iconType]}
+                    href={link}
+                  />
+                </li>
+              );
+            })}
           </ul>
         </div>
       </main>
@@ -125,7 +104,7 @@ export default BootcampTemplat;
 
 export const pageQuery = graphql`
   query bootcampQuery {
-    allBootcampJson {
+    allBootcamp {
       nodes {
         data {
           en {

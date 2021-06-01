@@ -1,0 +1,78 @@
+@import '../../css/variables/responsive.less';
+@import '../../css/variables/color.less';
+@import '../../css/variables/fontStyle.less';
+
+body {
+  background-color: #fff !important;
+}
+.bootcampContainer {
+  width: 100%;
+  max-width: @screen-lg-max;
+  margin: 0 auto;
+
+  .mainContainer {
+    margin-top: 147px;
+    padding: 40px 140px 358px;
+    background-color: #fff;
+
+    @media @tablet {
+      padding: 32px 32px 82px;
+      margin-top: 144px;
+    }
+    @media @phone {
+      padding: 16px 16px 82px;
+      margin-top: 144px;
+    }
+
+    .container {
+      margin-bottom: 44px;
+
+      @media @tablet {
+        margin-bottom: 34px;
+      }
+
+      @media @phone {
+        margin-bottom: 24px;
+      }
+    }
+
+    .title {
+      font-size: 24px;
+      line-height: 32px;
+      padding: 20px 0;
+      .fontBold();
+
+      @media @tablet {
+        padding: 14px 0;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      @media @phone {
+        padding: 8px 0;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    .solutionsWrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-row-gap: 20px;
+      grid-column-gap: 20px;
+      list-style: none;
+
+      @media @tablet {
+        grid-template-columns: repeat(2, 1fr);
+        grid-row-gap: 16px;
+        grid-column-gap: 16px;
+      }
+
+      @media @phone {
+        grid-template-columns: repeat(1, 1fr);
+        grid-row-gap: 16px;
+        grid-column-gap: 0px;
+      }
+    }
+  }
+}

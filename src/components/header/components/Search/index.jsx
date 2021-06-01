@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as searchStyles from './search.module.less';
+import * as searchStyles from './index.module.less';
 
 const Search = ({ handleSearch }) => {
   const [keyWord, setKeyWord] = useState('');

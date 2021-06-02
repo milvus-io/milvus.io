@@ -5,9 +5,8 @@ const SecondHeader = ({
   tabList,
   isMobile,
   handleSearch,
-  onTabChange,
   styles,
-  locale
+  locale,
 }) => {
   const [activeId, setActiveId] = useState(1);
   const [open, setOpen] = useState(false);
@@ -15,7 +14,6 @@ const SecondHeader = ({
   const handleTabClick = event => {
     const { id } = event.target.dataset;
     if (id && id !== activeId) {
-      onTabChange(id);
       setActiveId(Number(id));
       open && setOpen(false);
     }
@@ -61,9 +59,7 @@ const SecondHeader = ({
                   className={styles.tabItem}
                   activeClassName={styles.active}
                   data-id={id}
-                  children={
-                    <span>{label}</span>
-                  }
+                  children={<span>{label}</span>}
                 />
               );
             })}

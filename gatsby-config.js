@@ -46,7 +46,7 @@ let gatsbyConfigs = {
               }
             }
           }
-          allVersionInfoJson {
+          allVersion {
             nodes {
               released
               version
@@ -58,7 +58,7 @@ let gatsbyConfigs = {
         },
         resolvePages: ({
           allSitePage: { nodes: allPages },
-          allVersionInfoJson: { nodes: versions },
+          allVersion: { nodes: versions },
         }) => {
           const res = allPages.reduce((acc, cur) => {
             // filter out docs with version info with released value is no
@@ -77,12 +77,44 @@ let gatsbyConfigs = {
     },
     `gatsby-plugin-react-helmet`,
     'gatsby-plugin-less',
-    // i18n plugin
-    'gatsby-transformer-json',
+    {
+      resolve: `gatsby-transformer-json`,
+      options: {
+        typeName: ({ node }) => {
+          switch (node.sourceInstanceName) {
+            case 'i18n':
+              return `i18n`;
+            case 'docs':
+              if (
+                node.relativePath.includes('versionInfo') ||
+                node.relativePath.includes('version')
+              ) {
+                return `version`;
+              }
+              if (node.relativePath.includes('home')) {
+                return `docHome`;
+              }
+              if (node.relativePath.includes('menuStructure')) {
+                return `menu`;
+              }
+              if (node.relativePath.includes('community')) {
+                return `community`;
+              }
+              if (node.relativePath.includes('bootcamp')) {
+                return `bootcamp`;
+              }
+              return `json`;
+            default:
+              return `json`;
+          }
+        },
+      },
+    },
+    // i18n json data
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `data`,
+        name: `i18n`,
         path: `${__dirname}/src/i18n/`,
       },
     },
@@ -205,7 +237,8 @@ if (process.env.NODE_ENV == 'development') {
     {
       resolve: '@sentry/gatsby',
       options: {
-        dsn: 'https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477',
+        dsn:
+          'https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477',
         sampleRate: 0.7,
       },
     }

@@ -78,11 +78,17 @@ const getRedirectLanguage = () => {
 };
 
 const IndexPage = ({ data, pageContext }) => {
-  const language = data.allFile.edges[0].node.childLayoutJson.layout;
+  const language = data.allFile.edges[0].node.childI18N.layout;
 
   const { locale } = pageContext;
-  const { section1, section3, section4, section5, section6, section7 } =
-    language.home;
+  const {
+    section1,
+    section3,
+    section4,
+    section5,
+    section6,
+    section7,
+  } = language.home;
 
   let currentResources = [...resources];
   if (locale === 'en') {
@@ -351,7 +357,7 @@ export const Query = graphql`
     allFile(filter: { name: { eq: $locale } }) {
       edges {
         node {
-          childLayoutJson {
+          childI18N {
             layout {
               header {
                 quick

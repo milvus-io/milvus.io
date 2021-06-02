@@ -75,7 +75,6 @@ const V2Header = ({
   onSearchChange = () => { },
   header,
   isSecondHeader,
-  onTabChange = () => { },
   className = '',
   locale
 }) => {
@@ -237,7 +236,6 @@ const V2Header = ({
         <SecondHeader
           tabList={tabList}
           isMobile={isMobile}
-          onTabChange={onTabChange}
           handleSearch={handleSearch}
           header={header}
           styles={styles}

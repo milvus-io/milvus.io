@@ -26,11 +26,11 @@ function SEO({ description, lang, meta, title, version }) {
   );
 
   const metaDescription = description || site.siteMetadata.description;
-
+  const language = lang === 'cn' ? 'zh-cn' : lang;
   return (
     <Helmet
       htmlAttributes={{
-        lang: lang === 'cn' ? 'zh-cn' : lang,
+        lang: language,
       }}
       title={title}
       titleTemplate={`%s ${site.siteMetadata.title}`}
@@ -69,7 +69,7 @@ function SEO({ description, lang, meta, title, version }) {
         },
         {
           name: 'docsearch:language',
-          content: lang,
+          content: language,
         },
         {
           name: 'docsearch:version',

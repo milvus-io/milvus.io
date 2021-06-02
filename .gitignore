@@ -70,6 +70,6 @@ yarn-error.log
 search.json
 
 # generated versioninfo
-src/pages/docs/versions/versioninfo.json
+src/pages/docs/versions/versionInfo.json
 
 yarn.lock

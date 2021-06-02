@@ -3,7 +3,6 @@ import LocalizeLink from '../localizedLink/localizedLink';
 import { useMobileScreen } from '../../hooks';
 import * as styles from './index.module.less';
 
-/* eslint-disable */
 const findItem = (key, value, arr) => {
   let find = undefined;
   arr.forEach(v => {
@@ -40,6 +39,8 @@ const Menu = props => {
   const [realMenuList, setRealMenuList] = useState([]);
   const formatVersion = version === 'master' ? versions[0] : version;
 
+  console.log('------- menu list', menuList);
+
   useEffect(() => {
     const generateMenu = list => {
       // get all labels , make sure will generate menu from top to bottom
@@ -61,7 +62,6 @@ const Menu = props => {
           if (isBlog) {
             return `/blogs/${doc.id}`;
           }
-
           return `/docs/${formatVersion}/${doc.id}`;
         };
         // find top menu by current label

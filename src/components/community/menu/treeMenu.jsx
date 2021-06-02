@@ -32,7 +32,7 @@ const TreeMenu = ({ wrapperClass, menuList, locale, activePost }) => {
 
   useEffect(() => {
     const generateMenu = list => {
-      // get all labels , make sure will generate menu from top to bottom
+      // get all labels, make sure will generate menu from top to bottom
       const labelKeys = Object.keys(menus[0])
         .filter(v => v.includes('label'))
         .sort((a, b) => a[a.length - 1] - b[b.length - 1]);

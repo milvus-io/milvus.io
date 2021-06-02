@@ -4,7 +4,8 @@ import SEO from '../components/seo';
 import Header from '../components/header/v2';
 import './community.less';
 import CommunityHeroCard from '../components/card/communityHeroCard/communityHeroCard';
-import Menu from '../components/community/menu/treeMenu';
+// import Menu from '../components/community/menu/treeMenu';
+import Menu from '../components/menu';
 import mailIcon from '../images/community/mail.png';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
 import { useEffect } from 'react';
@@ -115,11 +116,17 @@ export default function CommunityTemplate({ data, pageContext }) {
       <Header isSecondHeader={true} header={{ search: 'Search' }} />
       <SEO title={title} lang={locale} description={desc} />
       <main>
-        <Menu
+        {/* <Menu
           wrapperClass="menu"
           menuList={menuList}
           locale={locale}
           activePost={activePost}
+        /> */}
+        <Menu
+          locale={locale}
+          menuList={menuList}
+          activeDoc={activePost}
+          wrapperClass="menu"
         />
         {isHomePage ? (
           <section className="content home">

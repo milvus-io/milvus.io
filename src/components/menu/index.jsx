@@ -177,13 +177,6 @@ const Menu = props => {
     }
   };
 
-  // useEffect(() => {
-  //   const menuContainer = menuRef.current;
-  //   const scrollTop = window.localStorage.getItem('zilliz-height') || 0;
-  //   menuContainer.scrollTop = scrollTop;
-  // }, [props]);
-
-
   const generageMenuDom = (list, className = '') => {
     return list.map(doc => (
       <div
@@ -252,10 +245,6 @@ const Menu = props => {
 
   const toggleMenuChild = doc => {
     let menu = JSON.parse(JSON.stringify(realMenuList));
-    // hide scroll bar temporarily
-    // const menuContainer = menuRef.current;
-    // menuContainer.classList.add(styles.hideScrollBar);
-
     const toggleIsShowChildren = (menu, doc) => {
       const findDoc = findItem('title', doc.title, menu);
       const copyMenu = menu.map(item => {
@@ -276,9 +265,6 @@ const Menu = props => {
       return copyMenu;
     };
     setRealMenuList(toggleIsShowChildren(menu, doc));
-    // setTimeout(() => {
-    //   menuContainer.classList.remove(styles.hideScrollBar);
-    // }, 300);
   };
 
   const toggleMenu = status => {

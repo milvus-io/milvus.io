@@ -13,7 +13,7 @@ import * as styles from '../components/docLayout/index.module.less';
     copy: '',
   }
  */
-export const useSelectMenu = () => {
+export const useSelectMenu = (locale, ref) => {
   const [options, setOptions] = useState({
     styles: {
       visibility: 'hidden',
@@ -39,17 +39,20 @@ export const useSelectMenu = () => {
   };
 
   useEffect(() => {
+    const ele = ref.current;
     const selectHandler = e => {
+      const { nodeName } = e.target;
+      if (nodeName === 'H1') return;
       const innerContainer =
         typeof document !== 'undefined' &&
-        document.getElementsByClassName(styles.innerContainer)[0];
-      // titlebar height:60; self height: 36; margin 8
-      const offsetTop = 60 + 36 + 8;
+        document.querySelector('html');
+      // header: 147px padding: 32px margin: 16
+      const offsetTop = 147 + 32 + 16;
       const docWrapper =
         typeof document !== 'undefined' &&
         document.getElementsByClassName(styles.docWrapper)[0];
 
-      const menuWidth = 260;
+      const menuWidth = locale === 'cn' ? 156 : 179;
       let [docWrapWidth, innerWidth] = [
         0,
         typeof window !== 'undefined' ? window.innerWidth : 0,
@@ -58,11 +61,11 @@ export const useSelectMenu = () => {
         docWrapWidth = docWrapper.offsetWidth;
       }
 
-      // left blank width plus menu-bar width
-      const offsetLeft = (innerWidth - docWrapWidth) / 2 + 250;
+      // left blank width plus menu-bar width： 250 ， margin-left:40
+      const offsetLeft = (innerWidth - docWrapWidth) / 2 + 250 + 40;
       // max width of single line
-      // left menu width: 250; right anchor width: 280; doc padding: 64px
-      const maxLineWidth = docWrapWidth - 280 - 250 - 64 - 8;
+      // left menu width: 250; margin-left: 40px right anchor width: 280; doc padding: 64px 32px
+      const maxLineWidth = docWrapWidth - 280 - 250 - 40 - 64 - 32;
 
       let scrollTop = 0;
       if (innerContainer) {
@@ -89,11 +92,13 @@ export const useSelectMenu = () => {
         .getBoundingClientRect();
       // if there is multiple lines, calculate it as single lin,to keep the menu stay center
       const realWidth = Math.min(maxLineWidth, width);
-      let translateX = left - offsetLeft + (realWidth - menuWidth) / 2;
+      let translateX = left - offsetLeft + (realWidth - menuWidth) / 2 - 16;
 
-      if (translateX < 32) {
-        translateX = 32;
+      //doc's paddng-left: 64
+      if (translateX < 64) {
+        translateX = 64;
       }
+      //doc's paddng-right: 32
       if (translateX > maxLineWidth - menuWidth) {
         translateX = maxLineWidth - menuWidth + 32;
       }
@@ -101,19 +106,18 @@ export const useSelectMenu = () => {
       setOptions({
         styles: {
           visibility: 'visible',
-          zIndex: 199,
-          transform: `translate(${translateX}px,${
-            top - offsetTop + scrollTop
-          }px)`,
+          zIndex: 2,
+          transform: `translate(${translateX}px,${top - offsetTop + scrollTop
+            }px)`,
         },
         copy: str,
       });
     };
-    document.addEventListener('mouseup', selectHandler, false);
-    document.addEventListener('selectionchange', selectChangeHandler, false);
+    ele.addEventListener('mouseup', selectHandler, false);
+    ele.addEventListener('selectionchange', selectChangeHandler, false);
     return () => {
-      document.removeEventListener('mouseup', selectHandler, false);
-      document.removeEventListener(
+      ele.removeEventListener('mouseup', selectHandler, false);
+      ele.removeEventListener(
         'selectionchange',
         selectChangeHandler,
         false

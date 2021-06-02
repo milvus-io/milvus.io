@@ -1,4 +1,4 @@
-@import '../include_media';
+@import "../include_media";
 
 .mini-menu-control {
   position: fixed;
@@ -39,7 +39,7 @@
     }
   }
 
-  @include media('<=1000px') {
+  @include media("<=1000px") {
     &.hide {
       transform: translate3d(-100%, 0, 0);
     }
@@ -95,7 +95,7 @@
         height: 100%;
       }
 
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         margin-bottom: 20px;
       }
     }
@@ -159,7 +159,7 @@
     transition: max-height 0.6s;
 
     &.open {
-      max-height: 1000px;
+      max-height: 500px;
       transition: max-height 0.6s;
       background-color: #f5f5f5;
     }
@@ -168,7 +168,7 @@
       padding: 0.2rem 0;
       font-size: 1rem;
 
-      @include media('<=1000px') {
+      @include media("<=1000px") {
         margin-bottom: 0.2rem;
 
         &:lang(en) {
@@ -220,7 +220,7 @@
       opacity: 1;
     }
 
-    @include media('<=1000px') {
+    @include media("<=1000px") {
       font-size: 14px;
     }
   }

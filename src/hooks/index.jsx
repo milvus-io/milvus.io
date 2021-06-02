@@ -16,7 +16,7 @@ export const useMobileScreen = () => {
   return screenWidth;
 };
 
-export const useSelectMenu = setOptions => {
+export const useSelectMenu = (setOptions, ref, locale) => {
   // titlebar height:60; self height: 36; margin 8
   const offsetTop = 60 + 36 + 8;
   const docWrapper =
@@ -25,7 +25,7 @@ export const useSelectMenu = setOptions => {
   const innerContainer =
     typeof document !== 'undefined' &&
     document.getElementsByClassName('inner-container')[0];
-  const menuWidth = 260;
+  const menuWidth = locale === 'cn' ? 156 : 179;
   let [docWrapWidth, scrollTop, innerWidth] = [
     0,
     0,
@@ -42,11 +42,15 @@ export const useSelectMenu = setOptions => {
   const maxLineWidth = docWrapWidth - 280 - 250 - 64 - 8;
 
   const selectHandler = e => {
+    const { nodeName } = e.target;
+    if (nodeName === 'H1') return;
     if (innerContainer) {
       scrollTop = innerContainer.scrollTop;
     }
 
     const str = document.getSelection().toString();
+    const reg = /\r|\n/g;
+    const isMultipleLines = reg.test(document.getSelection());
     if (!str.length) {
       setOptions({
         styles: {
@@ -66,22 +70,29 @@ export const useSelectMenu = setOptions => {
       .getBoundingClientRect();
     // if there is multiple lines, calculate it as single lin,to keep the menu stay center
     const realWidth = Math.min(maxLineWidth, width);
-    let translateX = left - offsetLeft + (realWidth - menuWidth) / 2;
+    let translateX = 0;
+    if (!isMultipleLines) {
+      translateX = left - offsetLeft + (realWidth - menuWidth) / 2;
 
+    } else {
+      console.log(left);
+      translateX = left;
+    }
     if (translateX < 32) {
       translateX = 32;
     }
+
     if (translateX > maxLineWidth - menuWidth) {
       translateX = maxLineWidth - menuWidth + 32;
     }
+
 
     setOptions({
       styles: {
         visibility: 'visible',
         zIndex: 199,
-        transform: `translate(${translateX}px,${
-          top - offsetTop + scrollTop
-        }px)`,
+        transform: `translate(${translateX}px,${top - offsetTop + scrollTop
+          }px)`,
       },
       copy: str,
     });
@@ -103,19 +114,20 @@ export const useSelectMenu = setOptions => {
   };
 
   useEffect(() => {
-    document.addEventListener('mouseup', e => selectHandler(e), false);
-    document.addEventListener(
+    const ele = ref.current;
+    ele.addEventListener('mouseup', selectHandler, false);
+    ele.addEventListener(
       'selectionchange',
-      e => selectChangeHandler(e),
+      selectChangeHandler,
       false
     );
     return () => {
-      document.removeEventListener('mouseup', e => selectHandler(e), false);
-      document.removeEventListener(
+      ele.removeEventListener('mouseup', selectHandler, false);
+      ele.removeEventListener(
         'selectionchange',
-        e => selectChangeHandler(e),
+        selectChangeHandler,
         false
       );
     };
-  }, [docWrapper]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [docWrapper, ref]); // eslint-disable-line react-hooks/exhaustive-deps
 };

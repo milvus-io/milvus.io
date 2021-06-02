@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './textSelectionMenu.scss';
-import git from '../../images/git.svg'
+import git from '../../images/git.svg';
 
-const TextSelectionMenu = ({ language, options }) => {
+const TextSelectionMenu = ({ language, options, locale }) => {
   const { selectMenu } = language;
   const { styles, copy } = options;
   const [style, setStyle] = useState({
     visibility: 'hidden',
     zIndex: -100,
+    width: `${locale === 'cn' ? '156px' : '179px'}`
   });
   const [body, setBody] = useState('');
   const [title, setTitle] = useState('');
@@ -39,7 +40,7 @@ const TextSelectionMenu = ({ language, options }) => {
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default TextSelectionMenu
+export default TextSelectionMenu;

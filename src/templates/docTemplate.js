@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '../components/docLayout';
 import SEO from '../components/seo';
@@ -55,6 +55,7 @@ export default function Template({
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const docRef = useRef(null);
 
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
@@ -69,7 +70,7 @@ export default function Template({
     copy: '',
   });
 
-  useSelectMenu(setOptions);
+  useSelectMenu(setOptions, docRef, locale);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach(panel => {
@@ -428,7 +429,7 @@ export default function Template({
           ></iframe>
         </div>
       ) : (
-        <div className="doc-post-container">
+        <div className="doc-post-container" ref={docRef}>
           {showWarning ? (
             <div className="alert warning">
               {locale === 'en'
@@ -465,7 +466,11 @@ export default function Template({
               className="md-tooltip"
             />
           </div>
-          <TextSelectionMenu language={layout} options={options} />
+          <TextSelectionMenu
+            language={layout}
+            options={options}
+            locale={locale}
+          />
         </div>
       )}
 

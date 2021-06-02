@@ -21,6 +21,21 @@ const findItem = (key, value, arr) => {
   return find;
 };
 
+const isChildItem = (id, arr) => {
+  return !!findItem('id', id, arr);
+};
+
+const closeAllChildren = arr => {
+  if (!arr.length) return [];
+  return arr.map(item => {
+    let { children } = item;
+    if (children && children.length) {
+      children = closeAllChildren(children);
+    }
+    return { ...item, children, showChildren: false };
+  });
+};
+
 const Menu = props => {
   const { menuList, activeDoc, version, versions, locale } = props;
   const [menuStatus, setMenuStatus] = useState(false);
@@ -49,18 +64,6 @@ const Menu = props => {
             return `/blogs/${doc.id}`;
           }
 
-          // const { label1, label2, label3 } = doc || {};
-
-          // let parentPath = "";
-          // if (label1) {
-          //   parentPath += `${label1}/`;
-          // }
-          // if (label2) {
-          //   parentPath += `${label2}/`;
-          // }
-          // if (label3) {
-          //   parentPath += `${label3}/`;
-          // }
           return `/docs/${formatVersion}/${doc.id}`;
         };
         // find top menu by current label
@@ -196,10 +199,28 @@ const Menu = props => {
   };
 
   const toggleMenuChild = doc => {
-    const copyMenu = JSON.parse(JSON.stringify(realMenuList));
-    const findDoc = findItem('title', doc.title, copyMenu);
-    findDoc.showChildren = !findDoc.showChildren;
-    setRealMenuList(copyMenu);
+    let menu = JSON.parse(JSON.stringify(realMenuList));
+    const toggleIsShowChildren = (menu, doc) => {
+      const findDoc = findItem('title', doc.title, menu);
+      const copyMenu = menu.map(item => {
+        const { showChildren, id, children } = item;
+        let childrenList = children;
+
+        if (children && children.length && isChildItem(findDoc.id, children)) {
+          childrenList = toggleIsShowChildren(children, findDoc);
+          return { ...item, children: childrenList, showChildren: true };
+        }
+        if (id === findDoc.id) {
+          childrenList = closeAllChildren(children);
+          return { ...item, children: childrenList, showChildren: !showChildren };
+        }
+        childrenList = closeAllChildren(children);
+        return { ...item, children: childrenList, showChildren: false };
+      });
+      return copyMenu;
+    };
+    setRealMenuList(toggleIsShowChildren(menu, doc));
+
   };
 
   const toggleMenu = status => {

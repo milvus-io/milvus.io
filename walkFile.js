@@ -27,7 +27,7 @@ function walkFiles(dirPath, fileObj = {}) {
       }
       if (filesList[i] === 'Variables.json') {
         const paths = dirPath.split('/');
-        const parent = paths[paths.length - 3];
+        const parent = paths[paths.length - 1];
         const doc = fs.readFileSync(filePath);
         const content = JSON.parse(doc.toString());
         const pymilvus = content?.milvus_python_sdk_version && `v${content?.milvus_python_sdk_version}`;

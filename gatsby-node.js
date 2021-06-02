@@ -114,7 +114,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
    * generate gatsby node
    * @param {array} files files from handlePyFiles output
    */
-  const createNode = (files = []) => {
+  const generateNodes = (files = []) => {
     files.forEach(file => {
       const { name, abspath, doc, linkId, hrefs, category, version } = file;
       const docVersion = findDocVersion(versionInfo, category, version);
@@ -202,7 +202,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     }
   };
   // const dirPath = `src/pages/APIReference/pymilvus/v1.0.1`;
-  const dirPath = `src/pages/APIReference`;
+  const dirPath = `src/pages/docs/versions/master/APIReference`;
   // read categories, such as pymilvus and java-sdk
   const categories = fs.readdirSync(dirPath);
   const nodes = [];
@@ -216,7 +216,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
       }
     }
   }
-  createNode(nodes);
+  generateNodes(nodes);
 };
 
 // exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {

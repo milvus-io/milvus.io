@@ -687,6 +687,24 @@ exports.createPages = async ({ actions, graphql }) => {
             category,
           },
         });
+        createPage({
+          path: `/cn/api-reference/${category}/${version}/${name}`,
+          component: apiDocTemplate,
+          context: {
+            locale: 'cn',
+            abspath,
+            doc,
+            linkId,
+            hrefs,
+            name,
+            allApiMenus,
+            allMenus,
+            version,
+            docVersion,
+            docVersions: Array.from(versions),
+            category,
+          },
+        });
       }
     );
 

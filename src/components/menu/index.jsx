@@ -238,7 +238,7 @@ const Menu = props => {
           ) : null}
         </div>
         <div
-          className={`${styles.menuChildWrapper} ${doc.showChildren ? styles.open : styles.hide
+          className={`${styles.menuChildWrapper} ${doc.showChildren ? styles.open : ''
             }`}
         >
           {doc.children && doc.children.length

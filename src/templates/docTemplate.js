@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '../components/docLayout';
 import Seo from '../components/seo';
@@ -55,6 +55,7 @@ export default function Template({
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const docRef = useRef(null);
 
   // useEffect(() => {
   //   setShowEvent(checkEventStatus());
@@ -69,7 +70,7 @@ export default function Template({
     copy: '',
   });
 
-  useSelectMenu(setOptions);
+  useSelectMenu(setOptions, docRef, locale);
 
   useEffect(() => {
     document.querySelectorAll('.query-button-panel').forEach(panel => {
@@ -449,7 +450,7 @@ export default function Template({
           ></iframe>
         </div>
       ) : (
-        <div className="doc-post-container">
+        <div className="doc-post-container" ref={docRef}>
           {showWarning ? (
             <div className="alert warning">
               {locale === 'en'
@@ -486,7 +487,11 @@ export default function Template({
               className="md-tooltip"
             />
           </div>
-          <TextSelectionMenu language={layout} options={options} />
+          <TextSelectionMenu
+            language={layout}
+            options={options}
+            locale={locale}
+          />
         </div>
       )}
 
@@ -508,7 +513,7 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query ($locale: String, $old: String, $fileAbsolutePath: String) {
+  query($locale: String, $old: String, $fileAbsolutePath: String) {
     markdownRemark(
       fileAbsolutePath: { eq: $fileAbsolutePath }
       frontmatter: { id: { eq: $old } }

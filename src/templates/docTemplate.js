@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/docLayout';
 import Seo from '../components/seo';
 import { graphql } from 'gatsby';
@@ -43,6 +43,7 @@ export default function Template({
   const [isSearch, setIsSearch] = useState(false);
   const [searchVal, setSearchVal] = useState('');
   const [showWarning, setShowWarning] = useState(false);
+  const docRef = useRef(null);
   const handleSearch = value => {
     setSearchVal(value);
     setIsSearch(true);
@@ -56,7 +57,7 @@ export default function Template({
       (document.querySelector('.search').value = '');
   };
 
-  const { options } = useSelectMenu();
+  const { options } = useSelectMenu(locale, docRef);
   useEmPanel(setShowModal);
   useGenAnchor(version, editPath);
   useFilter();
@@ -249,6 +250,7 @@ export default function Template({
                 <div className="doc-post">
                   <div
                     className="doc-post-content"
+                    ref={docRef}
                     dangerouslySetInnerHTML={{ __html: newHtml }}
                   />
                   <ReactTooltip

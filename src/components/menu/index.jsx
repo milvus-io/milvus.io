@@ -21,17 +21,19 @@ const findItem = (key, value, arr) => {
   return find;
 };
 
-const isChildItem = (arr, id) => {
-  let res = false;
+const isChildItem = (id, arr) => {
+  return !!findItem('id', id, arr);
+};
 
-  arr.forEach(item => {
-    if (item.id === id) {
-      res = true;
-    } else if (item.children && item.children.length) {
-      res = isChildItem(item.children, id);
+const closeAllChildren = arr => {
+  if (!arr.length) return [];
+  return arr.map(item => {
+    let { children } = item;
+    if (children && children.length) {
+      children = closeAllChildren(children);
     }
+    return { ...item, children, showChildren: false };
   });
-  return res;
 };
 
 const Menu = props => {
@@ -175,11 +177,12 @@ const Menu = props => {
     }
   };
 
-  useEffect(() => {
-    const menuContainer = menuRef.current;
-    const scrollTop = window.localStorage.getItem('zilliz-height') || 0;
-    menuContainer.scrollTop = scrollTop;
-  }, [props]);
+  // useEffect(() => {
+  //   const menuContainer = menuRef.current;
+  //   const scrollTop = window.localStorage.getItem('zilliz-height') || 0;
+  //   menuContainer.scrollTop = scrollTop;
+  // }, [props]);
+
 
   const generageMenuDom = (list, className = '') => {
     return list.map(doc => (
@@ -235,7 +238,7 @@ const Menu = props => {
           ) : null}
         </div>
         <div
-          className={`${styles.menuChildWrapper} ${doc.showChildren ? styles.open : ''
+          className={`${styles.menuChildWrapper} ${doc.showChildren ? styles.open : styles.hide
             }`}
         >
           {doc.children && doc.children.length
@@ -246,44 +249,36 @@ const Menu = props => {
     ));
   };
 
-  const toggleMenuChild11 = (menu, doc) => {
-    let copyMenu = JSON.parse(JSON.stringify(realMenuList));
-    const findDoc = findItem('title', doc.title, copyMenu);
-    copyMenu = copyMenu.map(item => {
-      const { showChildren, id, children } = item;
-      if (isChildItem(children, findDoc.id)) {
-        return { ...item, showChildren: true };
-      }
-      if (id === findDoc.id) {
-        return { ...item, showChildren: !showChildren };
-      }
-      return { ...item, showChildren: false };
-    });
-    console.log(copyMenu);
-    setRealMenuList(copyMenu);
-  };
 
   const toggleMenuChild = doc => {
     let menu = JSON.parse(JSON.stringify(realMenuList));
+    // hide scroll bar temporarily
+    // const menuContainer = menuRef.current;
+    // menuContainer.classList.add(styles.hideScrollBar);
 
     const toggleIsShowChildren = (menu, doc) => {
       const findDoc = findItem('title', doc.title, menu);
-      console.log(findDoc);
       const copyMenu = menu.map(item => {
         const { showChildren, id, children } = item;
-        if (isChildItem(children, findDoc.id)) {
-          toggleIsShowChildren(children, findDoc);
-          return { ...item, showChildren: true };
+        let childrenList = children;
+
+        if (children && children.length && isChildItem(findDoc.id, children)) {
+          childrenList = toggleIsShowChildren(children, findDoc);
+          return { ...item, children: childrenList, showChildren: true };
         }
         if (id === findDoc.id) {
-          return { ...item, showChildren: !showChildren };
+          childrenList = closeAllChildren(children);
+          return { ...item, children: childrenList, showChildren: !showChildren };
         }
-        return { ...item, showChildren: false };
+        childrenList = closeAllChildren(children);
+        return { ...item, children: childrenList, showChildren: false };
       });
       return copyMenu;
     };
-
     setRealMenuList(toggleIsShowChildren(menu, doc));
+    // setTimeout(() => {
+    //   menuContainer.classList.remove(styles.hideScrollBar);
+    // }, 300);
   };
 
   const toggleMenu = status => {

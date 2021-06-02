@@ -65,9 +65,9 @@
     background-color: darkgrey;
   }
 
-  * {
-    transition: all 0.2s;
-  }
+  // * {
+  //   transition: all 0.2s;
+  // }
 
   .selectWrapper {
     padding-left: 1rem;
@@ -100,7 +100,7 @@
 
     > .menuNameWrapper {
       // padding: 0.45rem 1rem;
-      transition: 0.2s all linear;
+      // transition: 0.2s all linear;
 
       padding: 8px 0;
       color: @color-default-link;
@@ -189,11 +189,10 @@
   .menuChildWrapper {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s;
+    transition: max-height 0.3s linear;
 
     &.open {
-      max-height: 1000px;
-      transition: max-height 0.3s;
+      max-height: 500px;
       background-color: #fff;
     }
 
@@ -316,7 +315,7 @@
   .expandIcon {
     margin-left: 8px;
     margin-top: 2px;
-    transition: all 0.2s;
+    // transition: all 0.2s;
   }
 
   .menuChild3 {

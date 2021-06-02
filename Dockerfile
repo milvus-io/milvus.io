@@ -3,7 +3,6 @@ FROM zilliz/milvus.io.builder as builder
 WORKDIR /site
 COPY . .
 
-RUN yarn
 RUN yarn build
 
 # => Run container

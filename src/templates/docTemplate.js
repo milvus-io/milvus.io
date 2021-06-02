@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '../components/docLayout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import { graphql } from 'gatsby';
 import hljs from 'highlight.js';
 import ReactTooltip from 'react-tooltip';
@@ -304,6 +304,27 @@ export default function Template({
     setShowWarning(isLowVersion);
   }, [version]);
 
+  useEffect(() => {
+    // if not setTimeout, will throw render error
+    setTimeout(() => {
+      window.docsearch({
+        // Your apiKey and indexName will be given to you once
+        // we create your config
+        apiKey: '2dabff78331a44e47bedeb5fbd68ae70',
+        indexName: 'milvus',
+        //appId: '<APP_ID>', // Should be only included if you are running DocSearch on your own.
+        // Replace inputSelector with a CSS selector
+        // matching your search input
+        inputSelector: '#algolia-search',
+        // Set debug to true to inspect the dropdown
+        debug: false,
+        algoliaOptions: {
+          facetFilters: [`language:${locale}`, `version:${version}`],
+        },
+      });
+    }, 100);
+  }, [locale, version]);
+
   if (!data.allFile.edges[0]) {
     return null;
   }
@@ -407,7 +428,7 @@ export default function Template({
       isBlog={isBlog}
       editPath={editPath}
     >
-      <SEO title={title} lang={locale} />
+      <Seo title={title} lang={locale} version={version} />
       {isBenchmark ? (
         <div className="iframe-container">
           {showBack && (
@@ -455,8 +476,8 @@ export default function Template({
           ) : null}
 
           <div className="doc-post">
-            <div
-              className="doc-post-content"
+            <main
+              className="doc-post-content DocSearch-content"
               dangerouslySetInnerHTML={{ __html: newHtml }}
             />
             <ReactTooltip

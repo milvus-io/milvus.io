@@ -8,7 +8,6 @@
     "dotenv": "^8.2.0",
     "gatsby": "^3.0.0",
     "gatsby-image": "^3.0.0",
-    "gatsby-plugin-algolia-docsearch": "^1.0.5",
     "gatsby-plugin-google-analytics": "^3.0.0",
     "gatsby-plugin-google-tagmanager": "^3.0.0",
     "gatsby-plugin-gtag": "^1.0.11",

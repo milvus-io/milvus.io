@@ -6,7 +6,7 @@ const SecondHeader = ({
   isMobile,
   handleSearch,
   styles,
-  locale
+  locale,
 }) => {
   const [activeId, setActiveId] = useState(1);
   const [open, setOpen] = useState(false);
@@ -59,9 +59,7 @@ const SecondHeader = ({
                   className={styles.tabItem}
                   activeClassName={styles.active}
                   data-id={id}
-                  children={
-                    <span>{label}</span>
-                  }
+                  children={<span>{label}</span>}
                 />
               );
             })}

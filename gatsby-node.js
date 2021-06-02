@@ -3,7 +3,6 @@ const fs = require('fs');
 const ReadVersionJson = require('./walkFile');
 const locales = require('./src/constants/locales');
 const DOC_LANG_FOLDERS = ['/en/', '/zh-CN/'];
-// const benchmarksMenu = require('./benchmark-menu');
 const express = require('express');
 const env = process.env.IS_PREVIEW;
 // const env = 'preview';
@@ -68,6 +67,7 @@ fs.writeFile(
   }
 );
 
+/* create static pages from page folder */
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
   return new Promise(resolve => {
@@ -96,16 +96,134 @@ exports.onCreatePage = ({ page, actions }) => {
   });
 };
 
-exports.createPages = ({ actions, graphql }) => {
+/*
+ * utils to support generate html page from markdown or json dynamically
+ */
+const findVersion = str => {
+  // version: v.1.0.0 | v0.x
+  const regx = /versions\/master\/([v\dx\.]*)/;
+  const match = str.match(regx);
+  return match
+    ? match[1]
+      ? match[1]
+      : env === 'preview' && str.includes('preview')
+      ? 'preview'
+      : match[1]
+    : '';
+};
+
+const findLang = path => {
+  return DOC_LANG_FOLDERS.reduce((pre, cur) => {
+    if (path.includes(cur)) {
+      pre = cur === '/en/' ? 'en' : 'cn';
+    }
+    return pre;
+  }, '');
+};
+
+const getDefaultLang = () =>
+  Object.keys(locales).find(lang => locales[lang].default);
+
+// we generate path by menu structure
+const generatePath = (
+  id,
+  lang,
+  version,
+  isBlog,
+  needLocal = true,
+  isBenchmark
+) => {
+  const defaultLang = getDefaultLang();
+  if (isBenchmark) {
+    return lang === defaultLang ? `/docs/${id}` : `${lang}/docs/${id}`;
+  }
+  if (isBlog) {
+    if (!needLocal) return `/blogs/${id}`;
+    return lang === defaultLang ? `/blogs/${id}` : `${lang}/blogs/${id}`;
+  }
+
+  let localizedPath = '';
+  if (version && version !== 'master') {
+    localizedPath =
+      lang === defaultLang ? `/docs/${version}/` : `${lang}/docs/${version}/`;
+  } else {
+    // for master branch version -> false
+    localizedPath = lang === defaultLang ? `/docs/` : `${lang}/docs/`;
+  }
+
+  return needLocal ? `${localizedPath}${id}` : `${id}`;
+};
+
+const getCommunityPath = (fileId, fileLang) => {
+  const defaultLang = getDefaultLang();
+  return fileLang === defaultLang
+    ? `/community/${fileId}`
+    : `${fileLang}/community/${fileId}`;
+};
+
+const initGlobalSearch = markdown => {
+  const flatten = arr =>
+    arr
+      .map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
+        const fileLang = findLang(fileAbsolutePath);
+
+        // const version = newestVersion || 'master'; //findVersion(fileAbsolutePath) || "master";
+        const version = findVersion(fileAbsolutePath) || 'master';
+        const headingVals = headings.map(v => v.value);
+        const isBlog = checkIsblog(fileAbsolutePath);
+        const isBenchmark = checkIsBenchmark(fileAbsolutePath);
+        const keywords = frontmatter.keywords
+          ? frontmatter.keywords.split(',')
+          : [];
+        if (keywords.length) {
+          console.log(keywords);
+        }
+        return {
+          ...frontmatter,
+          fileLang,
+          version,
+          path: generatePath(
+            frontmatter.id,
+            fileLang,
+            version,
+            isBlog,
+            false,
+            isBenchmark
+          ),
+          // the value we need compare with search query
+          values: [...headingVals, frontmatter.id, ...keywords],
+        };
+      })
+      .filter(data => data.version === newestVersion);
+
+  const fileData = flatten(markdown);
+  fs.writeFile(
+    `${__dirname}/src/search.json`,
+    JSON.stringify(fileData),
+    err => {
+      if (err) throw err;
+      console.log("It's saved!");
+    }
+  );
+};
+
+const checkIsblog = path => path.includes('blog');
+const checkIsBenchmark = path => path.includes('benchmarks');
+
+/* create pages dynamically from submodule data */
+exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
+  // templates
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
+  const communityTemplate = path.resolve(`src/templates/community.jsx`);
 
-  // isMenu outLink can be add when need to use
   return graphql(`
     {
       allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/(?:site|blog)/" } }
+        filter: {
+          fileAbsolutePath: { regex: "/(?:site|blog|communityArticles)/" }
+        }
       ) {
         edges {
           node {
@@ -123,40 +241,91 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
       allFile(
-        filter: { relativeDirectory: { regex: "/(?:menuStructure|home)/" } }
+        filter: {
+          relativeDirectory: { regex: "/(?:menuStructure|home|community)/" }
+          extension: { eq: "json" }
+        }
       ) {
         edges {
           node {
             absolutePath
-            childMenuStructureJson {
+            childCommunity {
               menuList {
                 id
-                title
-                lang
+                isMenu
                 label1
                 label2
                 label3
                 order
-                isMenu
-                outLink
-              }
-            }
-            childrenHomeJson {
-              section1 {
                 title
-                items {
-                  title
-                  key
-                  btnLabel
+              }
+              contributeSection {
+                desc
+                title
+              }
+              contributorSection {
+                title
+                list {
+                  avatar {
+                    publicURL
+                  }
                   link
+                  login
                 }
               }
-              section2 {
+              heroSection {
+                list {
+                  desc
+                  link
+                  title
+                  type
+                }
                 title
+              }
+              mailingSection {
+                title
+                list {
+                  link
+                  title
+                }
+              }
+              repoSection {
+                list {
+                  desc
+                  link
+                  title
+                }
+                title
+              }
+            }
+            childMenu {
+              menuList {
+                id
+                isMenu
+                label1
+                label2
+                label3
+                lang
+                order
+                outLink
+                title
+              }
+            }
+            childDocHome {
+              section1 {
+                items {
+                  btnLabel
+                  key
+                  link
+                  title
+                }
+                title
+              }
+              section2 {
                 desc
+                title
               }
               section3 {
-                title
                 items {
                   label
                   list {
@@ -164,15 +333,16 @@ exports.createPages = ({ actions, graphql }) => {
                     text
                   }
                 }
+                title
               }
               section4 {
-                title
                 items {
-                  time
-                  title
                   abstract
                   imgSrc
+                  time
+                  title
                 }
+                title
               }
             }
           }
@@ -183,45 +353,15 @@ exports.createPages = ({ actions, graphql }) => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
-    const findVersion = str => {
-      // version: v.1.0.0 | v0.x
-      const regx = /versions\/master\/([v\dx\.]*)/;
-      const match = str.match(regx);
-      return match
-        ? match[1]
-          ? match[1]
-          : env === 'preview' && str.includes('preview')
-          ? 'preview'
-          : match[1]
-        : '';
-    };
-
-    const findLang = path => {
-      return DOC_LANG_FOLDERS.reduce((pre, cur) => {
-        if (path.includes(cur)) {
-          pre = cur === '/en/' ? 'en' : 'cn';
-        }
-        return pre;
-      }, '');
-    };
 
     // get all menuStructures
     const allMenus = result.data.allFile.edges
-      .filter(
-        ({ node: { childMenuStructureJson } }) =>
-          childMenuStructureJson !== null
-      )
-      .map(({ node: { absolutePath, childMenuStructureJson } }) => {
+      .filter(({ node: { childMenu } }) => childMenu !== null)
+      .map(({ node: { absolutePath, childMenu } }) => {
         let lang = absolutePath.includes('/en/') ? 'en' : 'cn';
         const isBlog = absolutePath.includes('blog');
         const version = findVersion(absolutePath) || 'master';
-        const menuStructureList =
-          (childMenuStructureJson && [...childMenuStructureJson.menuList]) ||
-          [];
-        // const benchmarkMenuList =
-        //   lang === 'en'
-        //     ? benchmarksMenu.benchmarksMenuListEN
-        //     : benchmarksMenu.benchmarksMenuListCN;
+        const menuStructureList = (childMenu && [...childMenu.menuList]) || [];
         const menuList = [...menuStructureList];
         return {
           lang,
@@ -234,14 +374,16 @@ exports.createPages = ({ actions, graphql }) => {
 
     // get new doc index page data
     const homeData = result.data.allFile.edges
-      .filter(({ node: { childrenHomeJson } }) => childrenHomeJson.length > 0)
-      .map(({ node: { absolutePath, childrenHomeJson } }) => {
+      .filter(({ node: { childDocHome } }) => childDocHome !== null)
+      .map(({ node: { absolutePath, childDocHome } }) => {
         const language = absolutePath.includes('/en') ? 'en' : 'cn';
+        const version = findVersion(absolutePath) || 'master';
 
-        const [data] = childrenHomeJson;
+        const data = childDocHome;
         return {
           language,
           data,
+          version,
           path: absolutePath,
         };
       });
@@ -255,95 +397,95 @@ exports.createPages = ({ actions, graphql }) => {
             fileAbsolutePath.includes('/blog/zh-CN') ||
             (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
               env === 'preview') ||
+            fileAbsolutePath.includes('communityArticles') ||
             fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
           frontmatter.id
         );
       }
     );
 
-    // we generate path by menu structure
-    const generatePath = (
-      id,
-      lang,
-      version,
-      isBlog,
-      needLocal = true,
-      isBenchmark
-    ) => {
-      if (isBenchmark) {
-        return lang === defaultLang ? `/docs/${id}` : `${lang}/docs/${id}`;
-      }
-      if (isBlog) {
-        if (!needLocal) return `/blogs/${id}`;
-        return lang === defaultLang ? `/blogs/${id}` : `${lang}/blogs/${id}`;
-      }
-
-      let localizedPath = '';
-      if (version && version !== 'master') {
-        localizedPath =
-          lang === defaultLang
-            ? `/docs/${version}/`
-            : `${lang}/docs/${version}/`;
-      } else {
-        // for master branch version -> false
-        localizedPath = lang === defaultLang ? `/docs/` : `${lang}/docs/`;
-      }
-
-      return needLocal ? `${localizedPath}${id}` : `${id}`;
-    };
-
-    const defaultLang = Object.keys(locales).find(
-      lang => locales[lang].default
+    // get community page data: articles md, menu and home json
+    const communityMd = result.data.allMarkdownRemark.edges.filter(
+      ({ node: { fileAbsolutePath, frontmatter } }) =>
+        fileAbsolutePath.includes('communityArticles') && frontmatter.id
     );
 
-    // -----  for global search begin -----
-    const flatten = arr =>
-      arr
-        .map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
-          const fileLang = findLang(fileAbsolutePath);
+    const communityMenu = result.data.allFile.edges
+      .filter(
+        ({ node: { childCommunity } }) =>
+          childCommunity !== null && childCommunity.menuList !== null
+      )
+      .map(({ node: { absolutePath, childCommunity } }) => {
+        const lang = absolutePath.includes('/en/') ? 'en' : 'cn';
+        const menuList = childCommunity.menuList || [];
+        return {
+          lang,
+          menuList,
+        };
+      });
 
-          // const version = newestVersion || 'master'; //findVersion(fileAbsolutePath) || "master";
-          const version = findVersion(fileAbsolutePath) || 'master';
-          const headingVals = headings.map(v => v.value);
-          const isBlog = checkIsblog(fileAbsolutePath);
-          const isBenchmark = checkIsBenchmark(fileAbsolutePath);
-          const keywords = frontmatter.keywords
-            ? frontmatter.keywords.split(',')
-            : [];
-          if (keywords.length) {
-            console.log(keywords);
-          }
-          return {
-            ...frontmatter,
-            fileLang,
-            version,
-            path: generatePath(
-              frontmatter.id,
-              fileLang,
-              version,
-              isBlog,
-              false,
-              isBenchmark
-            ),
-            // the value we need compare with search query
-            values: [...headingVals, frontmatter.id, ...keywords],
-          };
-        })
-        .filter(data => data.version === newestVersion);
+    const communityHome = result.data.allFile.edges
+      .filter(
+        ({ node: { childCommunity, absolutePath } }) =>
+          childCommunity !== null && absolutePath.includes('communityHome')
+      )
+      .map(({ node: { absolutePath, childCommunity } }) => {
+        const language = absolutePath.includes('/en') ? 'en' : 'cn';
+        const data = childCommunity;
+        return {
+          language,
+          data,
+          path: absolutePath,
+        };
+      });
 
-    const fileData = flatten(legalMd);
-    fs.writeFile(
-      `${__dirname}/src/search.json`,
-      JSON.stringify(fileData),
-      err => {
-        if (err) throw err;
-        console.log("It's saved!");
-      }
-    );
-    // -----  for global search end -----
+    initGlobalSearch(legalMd);
+
+    // create community articles
+    communityMd.forEach(({ node }) => {
+      const {
+        fileAbsolutePath,
+        html,
+        frontmatter: { id: fileId },
+      } = node;
+
+      const fileLang = findLang(fileAbsolutePath);
+      const path = getCommunityPath(fileId, fileLang);
+
+      createPage({
+        path,
+        component: communityTemplate,
+        context: {
+          locale: fileLang,
+          fileAbsolutePath,
+          html,
+          headings: node.headings.filter(v => v.depth < 4 && v.depth > 1),
+          menuList: communityMenu,
+          homeData: null,
+          activePost: fileId,
+        },
+      });
+    });
+
+    // create community home
+    communityHome.forEach(({ language, data, path }) => {
+      createPage({
+        path: language === 'en' ? '/community' : `/${language}/community`,
+        component: communityTemplate,
+        context: {
+          locale: language,
+          fileAbsolutePath: path,
+          homeData: data,
+          html: null,
+          headings: [],
+          menuList: communityMenu,
+          activePost: 'community',
+        },
+      });
+    });
 
     // create doc home page
-    homeData.forEach(({ language, data, path }) => {
+    homeData.forEach(({ language, data, path, version }) => {
       const isBlog = checkIsblog(path);
       const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
 
@@ -355,7 +497,7 @@ exports.createPages = ({ actions, graphql }) => {
           locale: language,
           versions: Array.from(versions),
           newestVersion,
-          version: newestVersion,
+          version,
           old: 'home',
           fileAbsolutePath: path,
           isBlog,
@@ -366,13 +508,13 @@ exports.createPages = ({ actions, graphql }) => {
       });
     });
 
-    return legalMd.forEach(({ node }) => {
+    // create Milvus docs
+    legalMd.forEach(({ node }) => {
       const fileAbsolutePath = node.fileAbsolutePath;
       const fileId = node.frontmatter.id;
       let version = findVersion(fileAbsolutePath) || 'master';
 
       const fileLang = findLang(fileAbsolutePath);
-
       const editPath = fileAbsolutePath.split(
         fileLang === 'en' ? '/en/' : '/zh-CN/'
       )[1];
@@ -416,8 +558,8 @@ exports.createPages = ({ actions, graphql }) => {
         });
       }
 
-      //  normal pages
-      return createPage({
+      // normal pages
+      createPage({
         path: localizedPath,
         component: docTemplate,
         context: {
@@ -441,5 +583,13 @@ exports.createPages = ({ actions, graphql }) => {
   });
 };
 
-const checkIsblog = path => path.includes('blog');
-const checkIsBenchmark = path => path.includes('benchmarks');
+exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
+  const config = getConfig();
+  const miniCssExtractPlugin = config.plugins.find(
+    plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
+  );
+  if (miniCssExtractPlugin) {
+    miniCssExtractPlugin.options.ignoreOrder = true;
+  }
+  actions.replaceWebpackConfig(config);
+};

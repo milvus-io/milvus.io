@@ -3,7 +3,7 @@ import BlogCard from '../card/blogCard/blogCard';
 import StartCard from '../card/startCard/startCard';
 import * as styles from './homeTemplate.module.less';
 
-const HomeTemplate = ({ data }) => {
+const HomeTemplate = ({ data, version }) => {
   const { section1, section2, section3, section4 } = data;
 
   return (

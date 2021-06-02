@@ -377,11 +377,13 @@ exports.createPages = async ({ actions, graphql }) => {
       .filter(({ node: { childDocHome } }) => childDocHome !== null)
       .map(({ node: { absolutePath, childDocHome } }) => {
         const language = absolutePath.includes('/en') ? 'en' : 'cn';
+        const version = findVersion(absolutePath) || 'master';
 
         const data = childDocHome;
         return {
           language,
           data,
+          version,
           path: absolutePath,
         };
       });
@@ -483,7 +485,7 @@ exports.createPages = async ({ actions, graphql }) => {
     });
 
     // create doc home page
-    homeData.forEach(({ language, data, path }) => {
+    homeData.forEach(({ language, data, path, version }) => {
       const isBlog = checkIsblog(path);
       const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
 
@@ -495,7 +497,7 @@ exports.createPages = async ({ actions, graphql }) => {
           locale: language,
           versions: Array.from(versions),
           newestVersion,
-          version: newestVersion,
+          version,
           old: 'home',
           fileAbsolutePath: path,
           isBlog,

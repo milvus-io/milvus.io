@@ -217,7 +217,7 @@ export default function Template({
               />
             </div>
           ) : homeData ? (
-            <HomeTemplate data={homeData} />
+            <HomeTemplate data={homeData} version={version} />
           ) : (
             <div className="doc-post-container">
               <>

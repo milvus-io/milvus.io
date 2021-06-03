@@ -1,5 +1,6 @@
 import React from 'react';
 import LocalizeLink from '../localizedLink/localizedLink';
+import Menu from '../menu/index';
 import * as styles from './sidebar.module.less';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
@@ -16,66 +17,98 @@ const Sidebar = props => {
     wrapperClass = '',
   } = props;
 
-  const { placeholder, onSearchChange } = searchConfig || {};
-  const { versions, version, homeTitle } = versionConfig || {};
-  const { menuList, activePost, formatVersion } = menuConfig || {};
+  const { placeholder } = searchConfig || {};
+  const {
+    // versions,
+    // version,
+    homeTitle,
+  } = versionConfig || {};
+  const { menuList, activePost, pageType, formatVersion, isBlog = false } =
+    menuConfig || {};
 
-  const docHomePath = ``;
+  const { menuList: menus } = menuList.find(menu => menu.lang === locale) || {
+    menuList: [],
+  };
+
+  const docHomePath = locale === 'en' ? '/docs/home' : `/${locale}/docs/home`;
 
   const [mobileSidebarOpened, setMobileSidebarOpened] = useState(false);
-
-  const handleSearch = event => {
-    const value = event.target.value;
-    if (event.code === 'Enter') {
-      onSearchChange(value);
-    }
-  };
 
   const onMaskClick = () => {
     setMobileSidebarOpened(false);
   };
 
-  return (
-    <aside className={`${wrapperClass}`}>
-      {showSearch && (
-        <section className={styles.searchWrapper}>
-          <input
-            type="text"
-            className={styles.search}
-            onKeyPress={handleSearch}
-            placeholder={placeholder}
-          />
-        </section>
-      )}
-      {showVersions && (
-        <section>
-          <LocalizeLink locale={locale} to={docHomePath}>
-            {homeTitle}
-          </LocalizeLink>
-          {/* @TODO: add version selector */}
-        </section>
-      )}
-      {showMenu && (
-        <Menu
-          menuList={menuList}
-          activePost={activePost}
-          formatVersion={formatVersion}
-          wrapperClass={styles.menuWrapper}
-        />
-      )}
+  const toggleControl = () => {
+    setMobileSidebarOpened(!mobileSidebarOpened);
+  };
 
+  return (
+    <>
+      <aside
+        className={`${wrapperClass} ${styles.wrapper} ${
+          !mobileSidebarOpened ? styles.hide : ''
+        }`}
+      >
+        {showSearch && (
+          <section className={styles.searchWrapper}>
+            <input
+              id="algolia-search"
+              type="text"
+              className={styles.search}
+              placeholder={placeholder}
+            />
+          </section>
+        )}
+        {showVersions && (
+          <section className={styles.versionWrapper}>
+            <LocalizeLink
+              className={styles.link}
+              locale={locale}
+              to={docHomePath}
+            >
+              {homeTitle}
+            </LocalizeLink>
+            {/* @TODO: add new version selector */}
+          </section>
+        )}
+        {showMenu && (
+          <Menu
+            locale={locale}
+            menuList={menus}
+            activePost={activePost}
+            pageType={pageType}
+            formatVersion={formatVersion}
+            isBlog={isBlog}
+          />
+        )}
+      </aside>
+      <button className={styles.miniControl} onClick={toggleControl}>
+        {mobileSidebarOpened ? (
+          <i className={`fas fa-times ${styles.icon}`}></i>
+        ) : (
+          <i className={`fas fa-bars ${styles.icon}`}></i>
+        )}
+      </button>
       {mobileSidebarOpened && (
-        <div className={styles.mask} onClick={onMaskClick}></div>
+        <div
+          className={styles.mask}
+          onClick={onMaskClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={onMaskClick}
+        >
+          .
+        </div>
       )}
-    </aside>
+    </>
   );
 };
 
 Sidebar.propTypes = {
   locale: PropTypes.string.isRequired,
-  showSearch: PropTypes.boolean,
-  showVersions: PropTypes.boolean,
-  showMenu: PropTypes.boolean,
+  showSearch: PropTypes.bool,
+  showVersions: PropTypes.bool,
+  showMenu: PropTypes.bool,
   menuConfig: PropTypes.object,
   searchConfig: PropTypes.object,
 };

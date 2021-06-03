@@ -3,7 +3,12 @@ import githubIcon from '../../../images/community/github.png';
 import slackIcon from '../../../images/community/slack.png';
 import * as style from './communityHeroCard.module.less';
 
-const CommunityHeroCard = ({ data, locale, wrapperClass = '' }) => {
+const CommunityHeroCard = ({
+  data,
+  wrapperClass = '',
+  githubLabel,
+  slackLabel,
+}) => {
   const { title, link, desc, type } = data;
 
   const imgSrcMap = {
@@ -12,8 +17,8 @@ const CommunityHeroCard = ({ data, locale, wrapperClass = '' }) => {
   };
 
   const btnLabelMap = {
-    SLACK: locale === 'en' ? 'Join Slack' : '加入 Slack',
-    GITHUB: locale === 'en' ? 'Join Github' : '加入 Github',
+    SLACK: slackLabel,
+    GITHUB: githubLabel,
   };
 
   return (

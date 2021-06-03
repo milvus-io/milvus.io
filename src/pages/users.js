@@ -15,7 +15,8 @@ importAllPics(
 );
 
 const UsersPage = ({ data, pageContext }) => {
-  const language = data.allFile.edges[0].node.childI18N.layout;
+  const language = data.allFile.edges(edge => edge.node.childI18N)[0].node
+    .childI18N.layout;
   const { locale } = pageContext;
   const { section6 } = language.home;
   return (

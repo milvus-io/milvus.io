@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import LocalizeLink from '../localizedLink/localizedLink';
-import { useMobileScreen } from '../../hooks';
 import * as styles from './index.module.less';
 
 const findItem = (key, value, arr) => {
@@ -38,24 +37,17 @@ const closeAllChildren = arr => {
 const Menu = props => {
   const {
     menuList,
-    activeDoc,
-    version,
-    versions,
+    activePost,
+    formatVersion,
     locale,
-    type,
-    onSearchChange,
-    language,
+    pageType = 'doc',
+    isBlog,
     wrapperClass = '',
     allApiMenus = [],
+    // mobileMenuOpened = false,
   } = props;
 
-  const { header } = language;
-  const [menuStatus, setMenuStatus] = useState(false);
-  const { isBlog } = menuList || {};
   const [realMenuList, setRealMenuList] = useState([]);
-  // version from apiDocTemplate may be empty string
-  const formatVersion =
-    version === 'master' || version === '' ? versions[0] : version;
 
   /**
    * find out matching api menus by compare the target doc version in each item
@@ -72,7 +64,7 @@ const Menu = props => {
   useEffect(() => {
     const generateMenu = list => {
       // get all labels , make sure will generate menu from top to bottom
-      const labelKeys = Object.keys(menuList.menuList[0])
+      const labelKeys = Object.keys(menuList[0])
         .filter(v => v.includes('label'))
         .sort((a, b) => a[a.length - 1] - b[b.length - 1]);
       let index = 0;
@@ -84,6 +76,12 @@ const Menu = props => {
           return copyMenu;
         }
         const generatePath = doc => {
+          if (pageType === 'community') {
+            // id community is home page
+            return doc.id === 'community'
+              ? `/community`
+              : `/community/${doc.id}`;
+          }
           if (doc.id.includes('benchmarks')) {
             return `/docs/${doc.id}`;
           }
@@ -128,7 +126,7 @@ const Menu = props => {
     };
 
     const checkActive = list => {
-      const findDoc = findItem('id', activeDoc, list);
+      const findDoc = findItem('id', activePost, list);
       if (!findDoc) {
         return;
       }
@@ -150,135 +148,110 @@ const Menu = props => {
         }
       });
     };
-    let arr = generateMenu(menuList.menuList)();
-    // add home page in menu if version is 2.0
-    if (type === 'new') {
-      const homeMenu = {
-        children: [],
-        id: 'home',
-        isActive: false,
-        isBlog: false,
-        isLast: false,
-        isMenu: null,
-        lang: null,
-        order: -1,
-        outLink: null,
-        path: '/docs/home',
-        showChildren: false,
-        title: 'Home',
-      };
-      // add new api_reference page if version is 2.0
-      const apiReferenceMenu = {
-        id: 'api_reference',
-        title: 'NEW API Reference',
-        lang: null,
-        label1: '',
-        label2: '',
-        label3: '',
-        order: -1,
-        isMenu: true,
-        outLink: null,
-      };
-      // filter out compatible api menus(left nav) by current doc version
-      const filteredApiMenus = filterApiMenus(allApiMenus, formatVersion);
-      const apiMenus = generateMenu([apiReferenceMenu, ...filteredApiMenus])();
-
-      arr = [homeMenu, ...arr, ...apiMenus];
-    }
-
+    let arr = generateMenu(menuList)();
+    // add new api_reference page if version is 2.0
+    const apiReferenceMenu = {
+      id: 'api_reference',
+      title: 'NEW API Reference',
+      lang: null,
+      label1: '',
+      label2: '',
+      label3: '',
+      order: -1,
+      isMenu: true,
+      outLink: null,
+    };
+    // filter out compatible api menus(left nav) by current doc version
+    const filteredApiMenus = filterApiMenus(allApiMenus, formatVersion);
+    const apiMenus = generateMenu([apiReferenceMenu, ...filteredApiMenus])();
     checkActive(arr);
     sortMenu(arr);
     setRealMenuList(arr);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [menuList, activeDoc, version]);
-
-  const { isMobile } = useMobileScreen();
-  useEffect(() => {
-    setMenuStatus(!isMobile);
-  }, [isMobile]);
+  }, [menuList, activePost, formatVersion]);
+  arr = [...arr, ...apiMenus];
 
   const menuRef = useRef(null);
 
-  useEffect(() => {
-    const html = document.querySelector('html');
-    html.style.overflowY = isMobile && menuStatus ? 'hidden' : 'auto';
-  }, [isMobile, menuStatus]);
-
-  const handleMenuClick = e => {
-    const menuContainer = menuRef.current;
-    if (menuContainer) {
-      window.localStorage.setItem('zilliz-height', menuContainer.scrollTop);
+  const handleMenuClick = doc => {
+    if (doc.isMenu) {
+      toggleMenuChild(doc);
     }
   };
 
   const generageMenuDom = (list, className = '') => {
-    return list.map(doc => (
-      <div
-        className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${
-          doc.isLast ? styles.menuLastLevel : ''
-        } ${doc.isActive ? styles.active : ''}`}
-        key={doc.id}
-      >
-        <div
-          className={`${styles.menuNameWrapper} ${
-            doc.showChildren ? styles.active : ''
-          }`}
-          onClick={
-            doc.isMenu
-              ? () => {
-                  toggleMenuChild(doc);
-                }
-              : handleMenuClick
-          }
-          style={doc.isMenu ? { cursor: 'pointer' } : null}
-        >
-          {doc.outLink ? (
-            <a
-              href={doc.outLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${styles.outlink} ${styles.text}`}
+    return (
+      <ul>
+        {list.map(doc => (
+          <li
+            className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${
+              doc.isLast ? styles.menuLastLevel : ''
+            } ${doc.isActive ? styles.active : ''}`}
+            key={doc.id}
+          >
+            <div
+              className={`${styles.menuNameWrapper} ${
+                doc.showChildren ? styles.active : ''
+              }`}
+              role="button"
+              tabIndex={0}
+              onKeyDown={() => handleMenuClick(doc)}
+              onClick={() => handleMenuClick(doc)}
+              style={doc.isMenu ? { cursor: 'pointer' } : null}
             >
-              <i className="fas fa-external-link-alt"></i>
-              {doc.title}
-            </a>
-          ) : doc.isMenu === true ? (
-            <span className={styles.text}>{doc.title}</span>
-          ) : (
-            <LocalizeLink locale={locale} className={styles.text} to={doc.path}>
-              {doc.title}
-            </LocalizeLink>
-          )}
-
-          {doc.children && doc.children.length ? (
-            <>
-              {doc.isMenu && doc.label1 === '' ? (
-                <i
-                  className={`fas fa-caret-down ${styles.arrow} ${
-                    doc.showChildren ? '' : styles.top
-                  }`}
-                ></i>
+              {doc.outLink ? (
+                <a
+                  href={doc.outLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.outlink} ${styles.text}`}
+                >
+                  <i className="fas fa-external-link-alt"></i>
+                  {doc.title}
+                </a>
+              ) : doc.isMenu === true ? (
+                <span className={styles.text}>{doc.title}</span>
               ) : (
-                <i
-                  className={`fas ${styles.expandIcon} ${
-                    doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
-                  }`}
-                ></i>
+                <LocalizeLink
+                  locale={locale}
+                  className={styles.text}
+                  to={doc.path}
+                >
+                  {doc.title}
+                </LocalizeLink>
               )}
-            </>
-          ) : null}
-        </div>
-        <div
-          className={`${styles.menuChildWrapper} ${
-            doc.showChildren ? styles.open : ''
-          }`}
-        >
-          {doc.children && doc.children.length
-            ? generageMenuDom(doc.children, styles.menuChild)
-            : null}
-        </div>
-      </div>
-    ));
+
+              {doc.children && doc.children.length ? (
+                <>
+                  {doc.isMenu && doc.label1 === '' ? (
+                    <i
+                      className={`fas fa-caret-down ${styles.arrow} ${
+                        doc.showChildren ? '' : styles.top
+                      }`}
+                    ></i>
+                  ) : (
+                    <i
+                      className={`fas ${styles.expandIcon} ${
+                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
+                      }`}
+                    ></i>
+                  )}
+                </>
+              ) : null}
+            </div>
+            <div
+              className={`${styles.menuChildWrapper} ${
+                doc.showChildren ? styles.open : ''
+              }`}
+            >
+              {doc.children && doc.children.length
+                ? generageMenuDom(doc.children, styles.menuChild)
+                : null}
+            </div>
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   const toggleMenuChild = doc => {
@@ -309,57 +282,11 @@ const Menu = props => {
     setRealMenuList(toggleIsShowChildren(menu, doc));
   };
 
-  const toggleMenu = status => {
-    setMenuStatus(status);
-  };
-
-  const handleSearch = event => {
-    const value = event.target.value;
-    if (event.code === 'Enter') {
-      onSearchChange(value);
-    }
-  };
-
-  const onMaskClick = () => {
-    setMenuStatus(false);
-  };
-
   return (
     <>
-      <section
-        className={`${wrapperClass} ${styles.menuContainer} ${
-          !menuStatus ? styles.hide : ''
-        }`}
-        ref={menuRef}
-      >
-        {!isMobile && (
-          <input
-            className={styles.search}
-            type="text"
-            onKeyPress={handleSearch}
-            placeholder={header.search}
-          />
-        )}
-
+      <nav className={`${wrapperClass} ${styles.menuContainer}`} ref={menuRef}>
         {generageMenuDom(realMenuList, `${styles.menuTopLevel}`)}
-      </section>
-      {isMobile && (
-        <div
-          className={styles.miniMenuControl}
-          onClick={() => {
-            toggleMenu(!menuStatus);
-          }}
-        >
-          {menuStatus ? (
-            <i className={`fas fa-times ${styles.v2}`}></i>
-          ) : (
-            <i className={`fas fa-bars ${styles.v2}`}></i>
-          )}
-        </div>
-      )}
-      {isMobile && menuStatus && (
-        <div className={styles.mask} onClick={onMaskClick}></div>
-      )}
+      </nav>
     </>
   );
 };

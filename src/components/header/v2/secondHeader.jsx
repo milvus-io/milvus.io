@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 
-const SecondHeader = ({
-  tabList,
-  isMobile,
-  handleSearch,
-  styles,
-  locale,
-}) => {
+const SecondHeader = ({ tabList, isMobile, styles, locale }) => {
   const [activeId, setActiveId] = useState(1);
   const [open, setOpen] = useState(false);
 
@@ -69,7 +63,6 @@ const SecondHeader = ({
               <input
                 className={styles.search}
                 type="text"
-                onKeyPress={handleSearch}
                 placeholder={locale === 'cn' ? '搜索' : 'Search'}
                 id="algolia-search"
               />

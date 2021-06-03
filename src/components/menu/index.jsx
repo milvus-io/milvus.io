@@ -43,10 +43,24 @@ const Menu = props => {
     pageType = 'doc',
     isBlog,
     wrapperClass = '',
+    allApiMenus = [],
     // mobileMenuOpened = false,
   } = props;
 
   const [realMenuList, setRealMenuList] = useState([]);
+
+  /**
+   * find out matching api menus by compare the target doc version in each item
+   * @param {array} apiMenus apiMenus from graphQL
+   * @param {string} currentDocVersion doc version in current page
+   * @returns {array} api menus matching current doc version, may be empty []
+   */
+  const filterApiMenus = (apiMenus = [], currentDocVersion) => {
+    return apiMenus.filter(
+      apiMenu => apiMenu?.docVersion === currentDocVersion
+    );
+  };
+
   useEffect(() => {
     const generateMenu = list => {
       // get all labels , make sure will generate menu from top to bottom
@@ -74,6 +88,10 @@ const Menu = props => {
           if (isBlog) {
             return `/blogs/${doc.id}`;
           }
+          if (doc?.isApiReference) {
+            return doc?.url;
+          }
+
           return `/docs/${formatVersion}/${doc.id}`;
         };
         // find top menu by current label
@@ -131,6 +149,22 @@ const Menu = props => {
       });
     };
     let arr = generateMenu(menuList)();
+    // add new api_reference page if version is 2.0
+    const apiReferenceMenu = {
+      id: 'api_reference',
+      title: 'NEW API Reference',
+      lang: null,
+      label1: '',
+      label2: '',
+      label3: '',
+      order: -1,
+      isMenu: true,
+      outLink: null,
+    };
+    // filter out compatible api menus(left nav) by current doc version
+    const filteredApiMenus = filterApiMenus(allApiMenus, formatVersion);
+    const apiMenus = filteredApiMenus.length && generateMenu([apiReferenceMenu, ...filteredApiMenus])();
+    apiMenus?.length && (arr = [...arr, ...apiMenus]);
 
     checkActive(arr);
     sortMenu(arr);

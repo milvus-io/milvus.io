@@ -176,9 +176,8 @@ const DocLayout = props => {
                 {isBlog || isBenchMark ? null : (
                   <a
                     className="btn-anchor"
-                    href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                      locale === 'en' ? 'en' : 'zh-CN'
-                    }/${editPath}`}
+                    href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
+                      }/${editPath}`}
                   >
                     <span className="btn-icon-wrapper">
                       <i className="far fa-edit btn-icon"></i>
@@ -246,8 +245,8 @@ const DocLayout = props => {
             tabIndex={0}
           >
             <svg
-              width="16"
-              height="16"
+              width="32"
+              height="32"
               focusable="false"
               role="img"
               xmlns="http://www.w3.org/2000/svg"

@@ -500,11 +500,11 @@ const generateApiMenus = nodes => {
 /**
  * create api reference pages
  * @param {function} createPage gatsby createPage action
- * @param {object} metadata nodes, template, allMenus, allApiMenus and versions
+ * @param {object} metadata nodes, template, allMenus, allApiMenus, versions and newestVersion
  */
 const generateApiReferencePages = (
   createPage,
-  { nodes, template: apiDocTemplate, allMenus, allApiMenus, versions }
+  { nodes, template: apiDocTemplate, allMenus, allApiMenus, versions, newestVersion }
 ) => {
   nodes.forEach(
     ({ abspath, doc, linkId, name, hrefs, version, category, docVersion }) => {
@@ -524,6 +524,7 @@ const generateApiReferencePages = (
           docVersion,
           docVersions: Array.from(versions),
           category,
+          newestVersion,
         },
       });
       createPage({
@@ -542,6 +543,7 @@ const generateApiReferencePages = (
           docVersion,
           docVersions: Array.from(versions),
           category,
+          newestVersion,
         },
       });
     }

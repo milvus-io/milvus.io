@@ -15,6 +15,7 @@ export default function Template({ data, pageContext }) {
     docVersions,
     docVersion,
     category,
+    newestVersion,
   } = pageContext;
 
   const layout = data.allFile.edges[0]
@@ -29,15 +30,22 @@ export default function Template({ data, pageContext }) {
     v => v.absolutePath.includes(docVersion) && v.lang === locale
   );
 
+  const nav = {
+    current: 'doc',
+  };
+
   return (
     <>
       <Layout
         language={layout}
         locale={locale}
+        nav={nav}
+        current="doc"
         menuList={menuList}
         version={docVersion}
         headings={[]}
         versions={docVersions}
+        newestVersion={newestVersion}
         id={name}
         isBenchMark={false}
         showDoc={false}
@@ -45,7 +53,6 @@ export default function Template({ data, pageContext }) {
         isHome={false}
         editPath=""
         header={v2}
-        setSearch={() => {}}
         isApiReference
         allApiMenus={allApiMenus}
       >
@@ -145,6 +152,9 @@ export const Query = graphql`
                 sendBtn
                 cancelBtn
                 placeholder
+              }
+              menu {
+                home
               }
             }
           }

@@ -15,6 +15,7 @@ const Sidebar = props => {
     searchConfig,
     versionConfig,
     wrapperClass = '',
+    allApiMenus,
   } = props;
 
   const { placeholder } = searchConfig || {};
@@ -79,6 +80,7 @@ const Sidebar = props => {
             pageType={pageType}
             formatVersion={formatVersion}
             isBlog={isBlog}
+            allApiMenus={allApiMenus}
           />
         )}
       </aside>

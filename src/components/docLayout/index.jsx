@@ -169,7 +169,6 @@ const DocLayout = props => {
           showSearch={false}
           wrapperClass={styles.menuContainer}
           allApiMenus={allApiMenus}
-          isApiReference={isApiReference}
           menuConfig={menuConfig}
           searchConfig={searchConfig}
           versionConfig={versionConfig}

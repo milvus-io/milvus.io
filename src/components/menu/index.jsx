@@ -163,13 +163,14 @@ const Menu = props => {
     };
     // filter out compatible api menus(left nav) by current doc version
     const filteredApiMenus = filterApiMenus(allApiMenus, formatVersion);
-    const apiMenus = generateMenu([apiReferenceMenu, ...filteredApiMenus])();
+    const apiMenus = filteredApiMenus.length && generateMenu([apiReferenceMenu, ...filteredApiMenus])();
+    apiMenus?.length && (arr = [...arr, ...apiMenus]);
+
     checkActive(arr);
     sortMenu(arr);
     setRealMenuList(arr);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuList, activePost, formatVersion]);
-  arr = [...arr, ...apiMenus];
 
   const menuRef = useRef(null);
 

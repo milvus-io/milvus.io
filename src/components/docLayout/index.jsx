@@ -101,7 +101,7 @@ const DocLayout = props => {
   }, []);
 
   // sidebar props
-  const menuConfig = {
+  const menuConfig = menuList && {
     menuList: [
       {
         lang: menuList.lang,

@@ -112,7 +112,6 @@ const DocLayout = props => {
   };
 
   const searchConfig = {
-    // onSearchChange: handleSearchChange,
     placeholder: language.header.search,
   };
 

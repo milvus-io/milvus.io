@@ -73,8 +73,6 @@ const Sidebar = props => {
         )}
         {showMenu && (
           <Menu
-            wrapperClass={styles.menuWrapper}
-            // mobileMenuOpened={mobileSidebarOpened}
             locale={locale}
             menuList={menus}
             activePost={activePost}

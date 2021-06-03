@@ -42,7 +42,17 @@ export const useSelectMenu = (locale, ref) => {
     const ele = ref.current;
     const selectHandler = e => {
       const { nodeName } = e.target;
-      if (nodeName === 'H1') return;
+      if (nodeName === 'H1') {
+        setOptions({
+          styles: {
+            visibility: 'hidden',
+            zIndex: -1,
+            transform: `translateX(0,0)`,
+          },
+          copy: '',
+        });
+        return;
+      };
       const innerContainer =
         typeof document !== 'undefined' &&
         document.querySelector('html');
@@ -113,15 +123,20 @@ export const useSelectMenu = (locale, ref) => {
         copy: str,
       });
     };
-    ele.addEventListener('mouseup', selectHandler, false);
-    ele.addEventListener('selectionchange', selectChangeHandler, false);
+    if (ele) {
+      ele.addEventListener('mouseup', selectHandler, false);
+      ele.addEventListener('selectionchange', selectChangeHandler, false);
+    }
     return () => {
-      ele.removeEventListener('mouseup', selectHandler, false);
-      ele.removeEventListener(
-        'selectionchange',
-        selectChangeHandler,
-        false
-      );
+      if (ele) {
+        ele.removeEventListener('mouseup', selectHandler, false);
+        ele.removeEventListener(
+          'selectionchange',
+          selectChangeHandler,
+          false
+        );
+      }
+
     };
   }, []);
 

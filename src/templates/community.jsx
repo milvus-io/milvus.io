@@ -222,8 +222,8 @@ export default function CommunityTemplate({ data, pageContext }) {
                 tabIndex={0}
               >
                 <svg
-                  width="16"
-                  height="16"
+                  width="32"
+                  height="32"
                   focusable="false"
                   role="img"
                   xmlns="http://www.w3.org/2000/svg"

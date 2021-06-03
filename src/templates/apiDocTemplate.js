@@ -18,11 +18,11 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const layout = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childLayoutJson.layout
+    ? data.allFile.edges[0].node.childI18N.layout
     : {};
 
   const v2 = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childLayoutJson.v2
+    ? data.allFile.edges[0].node.childI18N.v2
     : {};
 
   const menuList = allMenus.find(
@@ -68,7 +68,7 @@ export const Query = graphql`
     allFile(filter: { name: { eq: $locale } }) {
       edges {
         node {
-          childLayoutJson {
+          childI18N {
             v2 {
               header {
                 navlist {
@@ -78,7 +78,6 @@ export const Query = graphql`
               }
             }
             layout {
-              notFound
               header {
                 quick
                 benchmarks
@@ -139,6 +138,13 @@ export const Query = graphql`
                   wechat
                 }
                 content
+              }
+              selectMenu {
+                comment
+                github
+                sendBtn
+                cancelBtn
+                placeholder
               }
             }
           }

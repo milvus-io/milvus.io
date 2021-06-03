@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 /**
  * @param dirPath the root dir
@@ -16,16 +16,46 @@ function walkFiles(dirPath, fileObj = {}) {
       //递归调用
       walkFiles(filePath, fileObj);
     } else {
-      if (filesList[i] === "version.json") {
-        const paths = dirPath.split("/");
-        const parent = paths[paths.length - 1];
-        const doc = fs.readFileSync(filePath);
-        const content = JSON.parse(doc.toString());
-        fileObj[parent] = content;
+      switch (filesList[i]) {
+        // extract doc version
+        case 'version.json':
+          handleCfgFile(fileObj, { dirPath, filePath });
+          break;
+        // extract api versions
+        case 'Variables.json':
+          handleCfgFile(fileObj, { dirPath, filePath, isVariables: true });
+          break;
+        default:
+          break;
       }
     }
   }
   return fileObj;
 }
+
+/**
+ * read directory and generate versions result
+ * @param {obejct} fileObj versions result from file name: 
+ * {'v1.1.0': { pymilvus: 'v1.1.0', version: 'v1.1.0', released: 'yes' },
+ * master: { version: 'v2.0.0', released: 'no' }}
+ * @param {object} param1 { dirPath, filePath, isVariables }
+ */
+const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
+  const paths = dirPath.split('/');
+  const parent = paths[paths.length - 1];
+  const doc = fs.readFileSync(filePath);
+  const content = JSON.parse(doc.toString());
+  let result = content;
+  if (isVariables) {
+    // currently only handle python api
+    const pymilvus =
+      content?.milvus_python_sdk_version &&
+      `v${content?.milvus_python_sdk_version}`;
+    result = { pymilvus };
+  }
+  fileObj[parent] = fileObj[parent]
+    ? { ...fileObj[parent], ...result }
+    : result;
+};
 
 module.exports = walkFiles;

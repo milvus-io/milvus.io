@@ -20,6 +20,8 @@ const DocLayout = props => {
     isBlog,
     isHome,
     editPath,
+    allApiMenus,
+    isApiReference = false,
   } = props;
   const formatHeadings =
     headings &&
@@ -99,7 +101,7 @@ const DocLayout = props => {
   }, []);
 
   // sidebar props
-  const menuConfig = {
+  const menuConfig = menuList && {
     menuList: [
       {
         lang: menuList.lang,
@@ -166,6 +168,7 @@ const DocLayout = props => {
           showVersions={true}
           showSearch={false}
           wrapperClass={styles.menuContainer}
+          allApiMenus={allApiMenus}
           menuConfig={menuConfig}
           searchConfig={searchConfig}
           versionConfig={versionConfig}
@@ -189,7 +192,7 @@ const DocLayout = props => {
               {!isHome && (
                 <>
                   <div className={styles.buttonContainer}>
-                    {isBlog || isBenchMark ? null : (
+                    {isBlog || isBenchMark || isApiReference ? null : (
                       <a
                         className={styles.btnAnchor}
                         href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${

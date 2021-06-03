@@ -15,6 +15,7 @@ const Sidebar = props => {
     searchConfig,
     versionConfig,
     wrapperClass = '',
+    allApiMenus,
   } = props;
 
   const { placeholder } = searchConfig || {};
@@ -26,7 +27,8 @@ const Sidebar = props => {
   const { menuList, activePost, pageType, formatVersion, isBlog = false } =
     menuConfig || {};
 
-  const { menuList: menus } = menuList.find(menu => menu.lang === locale) || {
+  const { menuList: menus } = (menuList &&
+    menuList.find(menu => menu.lang === locale)) || {
     menuList: [],
   };
 
@@ -79,6 +81,7 @@ const Sidebar = props => {
             pageType={pageType}
             formatVersion={formatVersion}
             isBlog={isBlog}
+            allApiMenus={allApiMenus}
           />
         )}
       </aside>

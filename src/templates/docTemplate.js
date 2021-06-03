@@ -30,6 +30,7 @@ export default function Template({
     editPath,
     newHtml,
     homeData,
+    allApiMenus,
     newestVersion,
   } = pageContext;
 
@@ -173,6 +174,7 @@ export default function Template({
       isHome={newHtml === null}
       editPath={editPath}
       header={v2}
+      allApiMenus={allApiMenus}
     >
       <Seo title={title} lang={locale} version={version} />
       {isBenchmark ? (

@@ -305,7 +305,6 @@ exports.createPages = async ({ actions, graphql }) => {
                 label1
                 label2
                 label3
-                lang
                 order
                 outLink
                 title

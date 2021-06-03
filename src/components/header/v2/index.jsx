@@ -61,22 +61,19 @@ const tabList = [
 const languageList = [
   {
     label: '中文',
-    value: 'cn'
+    value: 'cn',
   },
   {
     label: 'English',
-    value: 'en'
-  }
+    value: 'en',
+  },
 ];
 
 const V2Header = ({
-  setVersion = () => { },
   type = 'home',
-  onSearchChange = () => { },
-  header,
   isSecondHeader,
   className = '',
-  locale
+  locale,
 }) => {
   const { pathname } = globalHistory.location;
   const { isMobile } = useMobileScreen();
@@ -94,18 +91,6 @@ const V2Header = ({
 
   const hideMask = () => {
     setOpen(false);
-  };
-
-  const handleSearchInMobile = value => {
-    onSearchChange(value);
-    hideMask();
-  };
-
-  const handleSearch = event => {
-    const value = event.target.value;
-    if (event.code === 'Enter') {
-      onSearchChange(value);
-    }
   };
 
   useClickOutside(container, () => {
@@ -149,8 +134,9 @@ const V2Header = ({
                     </a>
                   ) : (
                     <Link
-                      className={`${styles.navItem} ${pathname === link ? styles.active : ''
-                        }`}
+                      className={`${styles.navItem} ${
+                        pathname === link ? styles.active : ''
+                      }`}
                       to={link}
                       key={label}
                     >
@@ -159,10 +145,7 @@ const V2Header = ({
                   );
                 })}
                 <div className={styles.dropDown}>
-                  <LangSelector
-                    options={languageList}
-                    locale={locale}
-                  />
+                  <LangSelector options={languageList} locale={locale} />
                 </div>
               </div>
             </div>
@@ -225,7 +208,7 @@ const V2Header = ({
                     locale={locale}
                   />
                 ) : (
-                  <Search handleSearch={handleSearchInMobile} />
+                  <Search />
                 )}
               </MobilePopup>
             </div>
@@ -236,8 +219,6 @@ const V2Header = ({
         <SecondHeader
           tabList={tabList}
           isMobile={isMobile}
-          handleSearch={handleSearch}
-          header={header}
           styles={styles}
           locale={locale}
         />

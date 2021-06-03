@@ -2,8 +2,8 @@
 @import '../css/variables/color.less';
 
 // local variables
-@menu-width: 250px;
-@menu-left-margin: 40px;
+@sidebar-width: 250px;
+@sidebar-left-margin: 40px;
 @header-height: 147px;
 @footer-height: 48px;
 @anchor-width: 280px;
@@ -17,17 +17,18 @@
 
   main {
     display: flex;
+    justify-content: space-between;
     flex-grow: 1;
     margin: @header-height auto 0;
     width: 100%;
     max-width: @screen-lg-max;
 
-    .menu {
+    .sidebar {
       position: fixed;
       bottom: @footer-height;
       top: @header-height;
-      width: @menu-width;
-      margin-left: @menu-left-margin;
+      width: @sidebar-width;
+      margin-left: @sidebar-left-margin;
 
       @media @tablet {
         bottom: 136px;
@@ -41,7 +42,7 @@
 
     .content {
       // space between content and menu: 64px
-      margin-left: calc(@menu-left-margin + @menu-width + 64px);
+      margin-left: calc(@sidebar-left-margin + @sidebar-width + 64px);
       margin-top: 40px;
     }
 
@@ -70,6 +71,7 @@
           font-size: 24px;
           line-height: 32px;
           color: @color-dark;
+          font-weight: 600;
 
           @media @tablet {
             margin-bottom: 8px;

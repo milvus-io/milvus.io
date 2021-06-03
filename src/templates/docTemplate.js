@@ -10,7 +10,6 @@ import QueryModal from '../components/query-modal/query-modal';
 import { sortVersions } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
-import SearchResult from '../components/search-result';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
 import { useSelectMenu } from '../hooks/select-menu';
@@ -31,6 +30,7 @@ export default function Template({
     editPath,
     newHtml,
     homeData,
+    newestVersion,
   } = pageContext;
 
   versions = versions.sort(sortVersions);
@@ -39,22 +39,8 @@ export default function Template({
 
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [isSearch, setIsSearch] = useState(false);
-  const [searchVal, setSearchVal] = useState('');
   const [showWarning, setShowWarning] = useState(false);
   const docRef = useRef(null);
-  const handleSearch = value => {
-    setSearchVal(value);
-    setIsSearch(true);
-  };
-
-  const handleBack = () => {
-    setSearchVal('');
-    setIsSearch(false);
-    // In mobile search input will missing
-    document.querySelector('.search') &&
-      (document.querySelector('.search').value = '');
-  };
 
   const { options } = useSelectMenu(locale, docRef);
   useEmPanel(setShowModal);
@@ -98,7 +84,10 @@ export default function Template({
         // Set debug to true to inspect the dropdown
         debug: false,
         algoliaOptions: {
-          facetFilters: [`language:${locale}`, `version:${version}`],
+          facetFilters: [
+            `language:${locale === 'cn' ? 'zh-cn' : locale}`,
+            `version:${version}`,
+          ],
         },
       });
     }, 100);
@@ -176,14 +165,14 @@ export default function Template({
       version={version}
       headings={headings.filter((h, i) => i > 0)}
       versions={versions}
+      newestVersion={newestVersion}
       id={frontmatter ? frontmatter.id : 'home'}
       isBenchMark={isBenchmark}
       showDoc={false}
       isBlog={isBlog}
-      isHome={isSearch || newHtml === null}
+      isHome={newHtml === null}
       editPath={editPath}
       header={v2}
-      setSearch={handleSearch}
     >
       <Seo title={title} lang={locale} version={version} />
       {isBenchmark ? (
@@ -208,16 +197,7 @@ export default function Template({
         </div>
       ) : (
         <>
-          {isSearch ? (
-            <div className="doc-post-container">
-              <SearchResult
-                text={searchVal}
-                language={locale}
-                version={version}
-                handleBack={handleBack}
-              />
-            </div>
-          ) : homeData ? (
+          {homeData ? (
             <HomeTemplate data={homeData} version={version} />
           ) : (
             <div className="doc-post-container">
@@ -380,6 +360,9 @@ export const pageQuery = graphql`
                 sendBtn
                 cancelBtn
                 placeholder
+              }
+              menu {
+                home
               }
             }
           }

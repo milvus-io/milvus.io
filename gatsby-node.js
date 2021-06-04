@@ -6,9 +6,9 @@ const express = require('express');
 const createPagesUtils = require('./gatsbyUtils/createPages');
 const sourceNodesUtils = require('./gatsbyUtils/sourceNodes');
 
-const env = process.env.IS_PREVIEW;
-// const env = 'preview';
-console.log('========env========', env);
+// const env = process.env.IS_PREVIEW;
+const env = 'preview';
+// console.log('========env========', env);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
     v =>
@@ -140,6 +140,7 @@ exports.createPages = async ({ actions, graphql }) => {
     generateApiReferencePages,
     generateDocHome,
     generateAllDocPages,
+    getVersionsWithHome,
   } = createPagesUtils;
 
   const { createPage } = actions;
@@ -156,6 +157,7 @@ exports.createPages = async ({ actions, graphql }) => {
     const allMenus = generateAllMenus(result.data.allFile.edges);
     // get new doc index page data
     const homeData = generateHomeData(result.data.allFile.edges);
+    const versionsWithHome = getVersionsWithHome(homeData);
     // filter useless md file blog has't version
     const legalMd = filterMdWithVersion(result.data.allMarkdownRemark.edges);
     // get community page data: articles md, menu and home json
@@ -186,6 +188,7 @@ exports.createPages = async ({ actions, graphql }) => {
       allApiMenus,
       versions,
       newestVersion,
+      versionsWithHome,
     });
 
     generateDocHome(createPage, {
@@ -200,6 +203,7 @@ exports.createPages = async ({ actions, graphql }) => {
       nodes: legalMd,
       template: docTemplate,
       newestVersion,
+      versionsWithHome,
       versions,
       allMenus,
       allApiMenus,

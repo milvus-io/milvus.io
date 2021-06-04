@@ -38,6 +38,7 @@ export default function Template({ data, pageContext }) {
     <>
       <Layout
         language={layout}
+        pageContext={pageContext}
         locale={locale}
         nav={nav}
         current="doc"

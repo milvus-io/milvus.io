@@ -4,6 +4,7 @@ import Menu from '../menu/index';
 import * as styles from './sidebar.module.less';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+// import { getNormalVersionHomePath } from '../../../gatsbyUtils/createPages';
 
 const Sidebar = props => {
   const {
@@ -21,7 +22,7 @@ const Sidebar = props => {
   const { placeholder } = searchConfig || {};
   const {
     // versions,
-    // version,
+    version,
     homeTitle,
   } = versionConfig || {};
   const { menuList, activePost, pageType, formatVersion, isBlog = false } =
@@ -32,7 +33,11 @@ const Sidebar = props => {
     menuList: [],
   };
 
-  const docHomePath = locale === 'en' ? '/docs/home' : `/${locale}/docs/home`;
+  const map = {
+    en: `/docs/${version}/home`,
+    cn: `/${locale}/docs/${version}/home`,
+  };
+  const homePath = map[locale];
 
   const [mobileSidebarOpened, setMobileSidebarOpened] = useState(false);
 
@@ -63,11 +68,7 @@ const Sidebar = props => {
         )}
         {showVersions && (
           <section className={styles.versionWrapper}>
-            <LocalizeLink
-              className={styles.link}
-              locale={locale}
-              to={docHomePath}
-            >
+            <LocalizeLink className={styles.link} locale={locale} to={homePath}>
               {homeTitle}
             </LocalizeLink>
             {/* @TODO: add new version selector */}

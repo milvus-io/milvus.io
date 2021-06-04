@@ -68,15 +68,17 @@
     "released": "yes"
   },
   {
+    "pymilvus": "v1.0.1",
     "version": "v1.0.0",
+    "released": "yes"
+  },
+  {
+    "pymilvus": "v1.1.0",
+    "version": "v1.1.0",
     "released": "yes"
   },
   {
     "version": "v1.1.0",
     "released": "yes"
-  },
-  {
-    "version": "v2.0.0",
-    "released": "no"
   }
 ]

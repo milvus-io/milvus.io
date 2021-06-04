@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import Menu from '../menu';
+import React, { useState, useEffect, useRef } from 'react';
+import Sidebar from '../sidebar/sidebar';
 import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
-import { getStyleType } from '../../utils/docTemplate.util';
 import * as styles from './index.module.less';
 
 const DocLayout = props => {
   const {
+    pageContext,
     language,
     children,
     locale,
     menuList,
     id,
-    versions,
+    newestVersion,
+    // versions,
     version,
     headings,
     wrapperClass = styles.docWrapper,
@@ -20,8 +21,12 @@ const DocLayout = props => {
     isBlog,
     isHome,
     editPath,
-    setSearch,
+    allApiMenus,
+    isApiReference = false,
   } = props;
+
+  const { isVersionWithHome = null } = pageContext;
+
   const formatHeadings =
     headings &&
     headings.reduce((pre, cur) => {
@@ -38,11 +43,6 @@ const DocLayout = props => {
   const [hash, setHash] = useState(null);
   const docContainer = useRef(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
-
-  // check menu type based on whether version is 2.0
-  // here use v1 as test
-  const menuType = useMemo(() => getStyleType(version), [version]);
-  // star reference
   const star = useRef(null);
   useEffect(() => {
     if (!window) {
@@ -104,6 +104,28 @@ const DocLayout = props => {
     };
   }, []);
 
+  // sidebar props
+  const menuConfig = menuList && {
+    menuList: [
+      {
+        lang: menuList.lang,
+        menuList: menuList.menuList,
+      },
+    ],
+    activePost: id.split('-')[0],
+    isBlog: menuList.isBlog,
+    formatVersion: version === 'master' ? newestVersion : version,
+  };
+
+  const searchConfig = {
+    placeholder: language.header.search,
+  };
+
+  const versionConfig = {
+    homeTitle: language.menu.home,
+    version,
+  };
+
   const generateAnchorMenu = (headings, className) => {
     return headings.map(v => {
       /* eslint-disable-next-line */
@@ -136,44 +158,30 @@ const DocLayout = props => {
     });
   };
 
-  const handleSearchChange = value => {
-    setSearch(value);
-  };
-
-  const handleTabChange = id => {
-    console.log(id);
-  };
-
   return (
     <div className={styles.layoutWrapper}>
       <NewHeader
-        header={language.header}
         locale={locale}
-        versions={versions}
-        version={version}
         type="doc"
-        onSearchChange={handleSearchChange}
         isSecondHeader={true}
-        onTabChange={handleTabChange}
         className={styles.header}
       />
 
       <main className={wrapperClass}>
-        <Menu
-          menuList={menuList}
-          versions={versions}
-          activeDoc={id.split('-')[0]}
-          version={version}
+        <Sidebar
           locale={locale}
-          isBenchMark={isBenchMark}
-          type={menuType}
-          language={language}
-          onSearchChange={handleSearchChange}
+          showVersions={!!isVersionWithHome}
+          showSearch={false}
           wrapperClass={styles.menuContainer}
-        ></Menu>
+          allApiMenus={allApiMenus}
+          menuConfig={menuConfig}
+          searchConfig={searchConfig}
+          versionConfig={versionConfig}
+        />
         <div
-          className={`${styles.innerContainer} ${isHome ? styles.innerContainerHome : ''
-            } ${isBenchMark ? styles.fullWidth : ''}`}
+          className={`${styles.innerContainer} ${
+            isHome ? styles.innerContainerHome : ''
+          } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -189,11 +197,12 @@ const DocLayout = props => {
               {!isHome && (
                 <>
                   <div className={styles.buttonContainer}>
-                    {isBlog || isBenchMark ? null : (
+                    {isBlog || isBenchMark || isApiReference ? null : (
                       <a
                         className={styles.btnAnchor}
-                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
-                          }/${editPath}`}
+                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                          locale === 'en' ? 'en' : 'zh-CN'
+                        }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
                           <i className={`far fa-edit ${styles.btnIcon}`}></i>

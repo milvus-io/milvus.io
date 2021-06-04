@@ -27,7 +27,9 @@ const HomePage = ({ data, pageContext }) => {
     banner,
     content: { title, list, slogan },
     footer,
-  } = data.allFile.edges[0].node.childI18N.v2;
+  } = data.allFile.edges.filter(
+    edge => edge.node.childI18N
+  )[0].node.childI18N.v2;
   const { locale, versions } = pageContext;
 
   return (

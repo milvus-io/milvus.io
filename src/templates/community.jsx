@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import SEO from '../components/seo';
 import Header from '../components/header/v2';
 import './community.less';
 import CommunityHeroCard from '../components/card/communityHeroCard/communityHeroCard';
-import Menu from '../components/community/menu/treeMenu';
-// import Menu from '../components/menu';
+import Sidebar from '../components/sidebar/sidebar';
 import mailIcon from '../images/community/mail.png';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
-import { useEffect } from 'react';
 
 export default function CommunityTemplate({ data, pageContext }) {
   // i18n
   const {
     footer: { licence: footerTrans },
-  } = data.allFile.edges[0].node.childI18N.v2;
+  } = data.allFile.edges.filter(
+    edge => edge.node.childI18N
+  )[0].node.childI18N.v2;
 
   const {
     footer: { content: anchorTitleTrans },
-  } = data.allFile.edges[0].node.childI18N.layout;
+    community: { slack, github },
+  } = data.allFile.edges.filter(
+    edge => edge.node.childI18N
+  )[0].node.childI18N.layout;
 
   const {
     locale,
@@ -111,23 +114,23 @@ export default function CommunityTemplate({ data, pageContext }) {
     });
   };
 
+  const menuConfig = {
+    menuList,
+    activePost,
+    pageType: 'community',
+  };
+
   return (
     <section className="community-wrapper">
-      <Header isSecondHeader={true} header={{ search: 'Search' }} />
+      <Header isSecondHeader={true} locale={locale} />
       <SEO title={title} lang={locale} description={desc} />
       <main>
-        <Menu
-          wrapperClass="menu"
-          menuList={menuList}
+        <Sidebar
           locale={locale}
-          activePost={activePost}
+          showSearch={false}
+          wrapperClass="sidebar"
+          menuConfig={menuConfig}
         />
-        {/* <Menu
-          locale={locale}
-          menuList={menuList}
-          activeDoc={activePost}
-          wrapperClass="menu"
-        /> */}
         {isHomePage ? (
           <section className="content home">
             {/* h1 for SEO, not show on page */}
@@ -137,7 +140,11 @@ export default function CommunityTemplate({ data, pageContext }) {
               <ul>
                 {heroSection.list.map(item => (
                   <li className="card" key={item.title}>
-                    <CommunityHeroCard data={item} locale={locale} />
+                    <CommunityHeroCard
+                      data={item}
+                      githubLabel={github}
+                      slackLabel={slack}
+                    />
                   </li>
                 ))}
               </ul>
@@ -215,8 +222,8 @@ export default function CommunityTemplate({ data, pageContext }) {
                 tabIndex={0}
               >
                 <svg
-                  width="16"
-                  height="16"
+                  width="32"
+                  height="32"
                   focusable="false"
                   role="img"
                   xmlns="http://www.w3.org/2000/svg"
@@ -275,6 +282,10 @@ export const Query = graphql`
             layout {
               footer {
                 content
+              }
+              community {
+                slack
+                github
               }
             }
           }

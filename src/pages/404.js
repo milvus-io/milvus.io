@@ -7,7 +7,8 @@ import './404.less';
 import Layout from '../components/layout/404Layout/404Layout';
 
 const NotFoundPage = ({ data, pageContext }) => {
-  const language = data.allFile.edges[0].node.childI18N.layout;
+  const language = data.allFile.edges.filter(edge => edge.node.childI18N)[0]
+    .node.childI18N.layout;
   const { locale } = pageContext;
 
   return (

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import * as moduleStyle from './textSelectionMenu.module.less';
 import git from '../../images/git.svg';
 
-const TextSelectionMenu = ({ language, options }) => {
+const TextSelectionMenu = ({ language, options, locale }) => {
   const { selectMenu } = language;
   const { styles, copy } = options;
   const [style, setStyle] = useState({
     visibility: 'hidden',
     zIndex: -100,
+    width: `${locale === 'cn' ? '156px' : '179px'}`
   });
   const [body, setBody] = useState('');
   const [title, setTitle] = useState('');

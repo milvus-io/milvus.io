@@ -326,6 +326,13 @@
       "sendBtn": "Send",
       "cancelBtn": "Cancel",
       "placeholder": "Leave a message"
+    },
+    "menu": {
+      "home": "Home"
+    },
+    "community": {
+      "slack": "Join Slack",
+      "github": "Join Github"
     }
   },
   "v2": {
@@ -350,11 +357,7 @@
       ]
     },
     "banner": {
-      "title": [
-        "High Scalability.",
-        "Cloud-Native.",
-        "High Availability."
-      ],
+      "title": ["High Scalability.", "Cloud-Native.", "High Availability."],
       "text": "Milvus2.0: The world's most popular open-source vector database.",
       "startBtn": {
         "href": "/docs/install_milvus.md",

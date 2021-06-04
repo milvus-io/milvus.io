@@ -1,6 +1,26 @@
 @import '../../css/variables/responsive.less';
 @import '../../css/variables/color.less';
 
+.wrapper {
+  padding-top: 24px;
+
+  @media @tablet {
+    overflow: auto;
+    margin: 0;
+    padding: 16px;
+    border-radius: 6px;
+    background-color: #fff;
+
+    max-height: calc(100vh - 30px - 136px);
+  }
+}
+
+.hide {
+  @media @tablet {
+    transform: translate3d(-150%, 0, 0);
+  }
+}
+
 .searchWrapper {
   @media @tablet {
     display: none;
@@ -11,6 +31,7 @@
   display: inline-block;
   -webkit-appearance: none;
 
+  width: 100%;
   outline: none;
   border: 1px solid rgba(196, 196, 196, 0.5);
   border-radius: 8px;
@@ -35,6 +56,47 @@
   }
 }
 
+.versionWrapper {
+  .link {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(196, 196, 196, 0.5);
+    opacity: 0.75;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: 'Inter Bold';
+    color: @color-default-link;
+  }
+}
+
+.miniControl {
+  display: none;
+  border: none;
+  outline: none;
+
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  z-index: 1000;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+
+  .icon {
+    color: @color-doc-primary;
+  }
+
+  @media @tablet {
+    display: initial;
+  }
+}
+
 .mask {
   position: fixed;
   top: 0;
@@ -43,4 +105,6 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 999;
+
+  color: transparent;
 }

@@ -105,7 +105,6 @@ const DocLayout = props => {
   }, []);
 
   // sidebar props
-  console.log('verion', version);
   const menuConfig = menuList && {
     menuList: [
       {

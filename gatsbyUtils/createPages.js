@@ -1,7 +1,7 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
-// const env = process.env.IS_PREVIEW;
-const env = 'preview';
+const env = process.env.IS_PREVIEW;
+// const env = 'preview';
 
 // createPages: graphql query
 const query = `
@@ -603,7 +603,6 @@ const generateDocHome = (
 
     if (version === newestVersion) {
       const homePath = getNewestVersionHomePath(language);
-      console.log('home path 606', homePath);
       createPage({
         path: homePath,
         component: docTemplate,
@@ -612,7 +611,7 @@ const generateDocHome = (
           locale: language,
           versions: Array.from(versions),
           newestVersion,
-          version,
+          version: newestVersion,
           old: 'home',
           fileAbsolutePath: path,
           isBlog,
@@ -626,7 +625,6 @@ const generateDocHome = (
     }
 
     const homePath = getNormalVersionHomePath(version, language);
-    console.log('home path', homePath);
     createPage({
       path: homePath,
       component: docTemplate,

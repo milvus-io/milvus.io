@@ -4,7 +4,6 @@ import Menu from '../menu/index';
 import * as styles from './sidebar.module.less';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-// import { getNormalVersionHomePath } from '../../../gatsbyUtils/createPages';
 
 const Sidebar = props => {
   const {

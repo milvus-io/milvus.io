@@ -36,6 +36,8 @@ const query = `
       version
       category
       docVersion
+      labels
+      isDirectory
     }
   }
   allFile(
@@ -489,33 +491,69 @@ const generateCommunityHome = (
 };
 
 /**
+ * Generate a prettier title from menu's category or name.
+ * @param { object } param0 { category, name, isDirectory = false }
+ * @returns A prettier title.
+ */
+const generateTitle = ({ category, name, isDirectory = false }) => {
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
+  const titleMapping = {
+    'pymilvus': "Milvus Python SDK",
+    'pymilvus-orm': "Milvus Python SDK (ORM)"
+  };
+  let prettierCategory = titleMapping[category] || capitalize(category);
+  if (isDirectory || category === 'pymilvus') return prettierCategory;
+  return capitalize(name.split('.htm')[0]);
+};
+
+/**
  * generate full api menus for doc template and api doc template
  * left menus are composed with home, api menus and all other menus
  * @param {array} nodes api menus nodes from allApIfile.nodes
  * @returns {array} filtered and formatted api menus
  */
 const generateApiMenus = nodes => {
-  return nodes.reduce((prev, item) => {
-    // docVersion may be empty string
-    const { name, category, version, docVersion } = item;
-    const menuItem = {
-      id: name,
-      title: category,
-      lang: null,
-      label1: 'api_reference',
-      label2: '',
-      label3: '',
-      order: 0,
-      isMenu: null,
-      outLink: null,
-      isApiReference: true,
-      url: `/api-reference/${category}/${version}/${name}`,
-      category,
-      apiVersion: version,
-      docVersion,
-    };
-    return [...prev, menuItem];
-  }, []);
+  return nodes.reduce(
+    (prev, item) => {
+      // docVersion may be empty string
+      const { name, category, version, docVersion, labels, isDirectory } = item;
+      const [label1 = 'api_reference', label2 = '', label3 = ''] = labels;
+      const menuItem = {
+        id: name,
+        title: generateTitle({ name, category, isDirectory }),
+        lang: null,
+        label1,
+        label2,
+        label3,
+        order: 0,
+        isMenu: isDirectory,
+        outLink: null,
+        isApiReference: true,
+        url: `/api-reference/${category}/${version}/${name}`,
+        category,
+        apiVersion: version,
+        docVersion,
+      };
+      return [...prev, menuItem];
+    },
+    // initial item is the first level menu: api_reference
+    [
+      {
+        id: 'api_reference',
+        title: 'NEW API Reference',
+        lang: null,
+        label1: '',
+        label2: '',
+        label3: '',
+        order: -1,
+        isMenu: true,
+        outLink: null,
+      },
+    ]
+  );
 };
 
 /**
@@ -536,7 +574,20 @@ const generateApiReferencePages = (
   }
 ) => {
   nodes.forEach(
-    ({ abspath, doc, linkId, name, hrefs, version, category, docVersion }) => {
+    ({
+      abspath,
+      doc,
+      linkId,
+      name,
+      hrefs,
+      version,
+      category,
+      docVersion,
+      isDirectory,
+    }) => {
+      // Should ignore if the node is a directory.
+      if (isDirectory) return;
+      // Create default language page.
       createPage({
         path: `/api-reference/${category}/${version}/${name}`,
         component: apiDocTemplate,
@@ -557,6 +608,7 @@ const generateApiReferencePages = (
           isVersionWithHome: versionsWithHome.includes(version),
         },
       });
+      // Temporarily create cn page.
       createPage({
         path: `/cn/api-reference/${category}/${version}/${name}`,
         component: apiDocTemplate,

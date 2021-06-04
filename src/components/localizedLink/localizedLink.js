@@ -5,7 +5,7 @@ import * as styles from './localizedLink.module.less';
 
 const LocalizedLink = ({ locale, to, children, className = '' }) => {
   const language = locales[locale];
-  const toMedium = locale === 'en' && to.includes('blog');
+  const toMedium = locale === 'en' && to && to.includes('blog');
   if (toMedium) {
     return (
       <a

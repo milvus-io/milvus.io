@@ -6,6 +6,7 @@ import * as styles from './index.module.less';
 
 const DocLayout = props => {
   const {
+    pageContext,
     language,
     children,
     locale,
@@ -23,6 +24,9 @@ const DocLayout = props => {
     allApiMenus,
     isApiReference = false,
   } = props;
+
+  const { isVersionWithHome = null } = pageContext;
+
   const formatHeadings =
     headings &&
     headings.reduce((pre, cur) => {
@@ -110,7 +114,7 @@ const DocLayout = props => {
     ],
     activePost: id.split('-')[0],
     isBlog: menuList.isBlog,
-    formatVersion: newestVersion,
+    formatVersion: version === 'master' ? newestVersion : version,
   };
 
   const searchConfig = {
@@ -119,6 +123,7 @@ const DocLayout = props => {
 
   const versionConfig = {
     homeTitle: language.menu.home,
+    version,
   };
 
   const generateAnchorMenu = (headings, className) => {
@@ -165,7 +170,7 @@ const DocLayout = props => {
       <main className={wrapperClass}>
         <Sidebar
           locale={locale}
-          showVersions={true}
+          showVersions={!!isVersionWithHome}
           showSearch={false}
           wrapperClass={styles.menuContainer}
           allApiMenus={allApiMenus}

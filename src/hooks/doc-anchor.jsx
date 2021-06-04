@@ -27,7 +27,7 @@ export const useGenAnchor = (version, editPath) => {
         )
         .join('\n');
       const tpl = `
-      <ul>
+      <ul id="auto-anchors">
         ${items}
       </ul>
     `;

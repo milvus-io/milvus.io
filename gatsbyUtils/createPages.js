@@ -1,6 +1,7 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
 const env = process.env.IS_PREVIEW;
+// const env = 'preview';
 
 // createPages: graphql query
 const query = `
@@ -216,6 +217,26 @@ const generatePath = (
   }
 
   return needLocal ? `${localizedPath}${id}` : `${id}`;
+};
+
+const getVersionsWithHome = homeData => {
+  return homeData.map(data => data.version);
+};
+
+const getNewestVersionHomePath = locale => {
+  const map = {
+    en: `/docs/home`,
+    cn: `/${locale}/docs/home`,
+  };
+  return map[locale];
+};
+
+const getNormalVersionHomePath = (version, locale) => {
+  const map = {
+    en: `/docs/${version}/home`,
+    cn: `/${locale}/docs/${version}/home`,
+  };
+  return map[locale];
 };
 
 /**
@@ -504,7 +525,15 @@ const generateApiMenus = nodes => {
  */
 const generateApiReferencePages = (
   createPage,
-  { nodes, template: apiDocTemplate, allMenus, allApiMenus, versions, newestVersion }
+  {
+    nodes,
+    template: apiDocTemplate,
+    allMenus,
+    allApiMenus,
+    versions,
+    newestVersion,
+    versionsWithHome,
+  }
 ) => {
   nodes.forEach(
     ({ abspath, doc, linkId, name, hrefs, version, category, docVersion }) => {
@@ -525,6 +554,7 @@ const generateApiReferencePages = (
           docVersions: Array.from(versions),
           category,
           newestVersion,
+          isVersionWithHome: versionsWithHome.includes(version),
         },
       });
       createPage({
@@ -544,6 +574,7 @@ const generateApiReferencePages = (
           docVersions: Array.from(versions),
           category,
           newestVersion,
+          isVersionWithHome: versionsWithHome.includes(version),
         },
       });
     }
@@ -570,8 +601,32 @@ const generateDocHome = (
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
 
+    if (version === newestVersion) {
+      const homePath = getNewestVersionHomePath(language);
+      createPage({
+        path: homePath,
+        component: docTemplate,
+        context: {
+          homeData: data,
+          locale: language,
+          versions: Array.from(versions),
+          newestVersion,
+          version: newestVersion,
+          old: 'home',
+          fileAbsolutePath: path,
+          isBlog,
+          editPath,
+          allMenus,
+          newHtml: null,
+          allApiMenus,
+          isVersionWithHome: true,
+        },
+      });
+    }
+
+    const homePath = getNormalVersionHomePath(version, language);
     createPage({
-      path: language === 'en' ? '/docs/home' : `/${language}/docs/home`,
+      path: homePath,
       component: docTemplate,
       context: {
         homeData: data,
@@ -586,6 +641,7 @@ const generateDocHome = (
         allMenus,
         newHtml: null,
         allApiMenus,
+        isVersionWithHome: true,
       },
     });
   });
@@ -603,6 +659,7 @@ const generateAllDocPages = (
     template: docTemplate,
     newestVersion,
     versions,
+    versionsWithHome,
     allMenus,
     allApiMenus,
   }
@@ -652,6 +709,7 @@ const generateAllDocPages = (
           allMenus,
           newHtml,
           homeData: null,
+          isVersionWithHome: versionsWithHome.includes(newestVersion),
           allApiMenus,
         }, // additional data can be passed via context
       });
@@ -676,6 +734,7 @@ const generateAllDocPages = (
         isBenchmark,
         newHtml,
         homeData: null,
+        isVersionWithHome: versionsWithHome.includes(version),
         allApiMenus,
       }, // additional data can be passed via context
     });
@@ -685,6 +744,7 @@ const generateAllDocPages = (
 module.exports = {
   query,
   findLang,
+  getVersionsWithHome,
   generateAllMenus,
   generateHomeData,
   filterMdWithVersion,

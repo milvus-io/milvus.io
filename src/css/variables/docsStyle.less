@@ -1,0 +1,336 @@
+@color-primary: #0093c6;
+@color-visited: #09579c;
+@color-list-blue: #4fc4f9;
+@pre-bg-color: #f9f9f9;
+@code-bg-color: #eee;
+@note-bg-color: #f0f4f9;
+@warning-bg-color: rgba(242, 92, 5, 0.1);
+@faq-disc-color: #06aff2;
+
+.doc-post-container {
+  h1 {
+    font-size: 36px;
+    line-height: 40px;
+    font-family: Inter;
+    margin-bottom: 24px;
+    margin-top: 48px;
+  }
+
+  h2 {
+    font-size: 24px;
+    line-height: 32px;
+    font-family: Inter SemiBold;
+    letter-spacing: 3%;
+    margin-bottom: 16px;
+    margin-top: 32px;
+  }
+
+  h3 {
+    font-size: 18px;
+    line-height: 24px;
+    font-family: Inter Bold;
+    margin-bottom: 8px;
+    margin-top: 24px;
+  }
+
+  h4 {
+    font-size: 16px;
+    line-height: 28px;
+    font-family: Inter Bold;
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 28px;
+    font-family: Inter;
+    margin-bottom: 8px;
+    // margin-top: 12px;
+
+    @media @tablet {
+      font-size: 14px;
+      line-height: 24px;
+      letter-spacing: 2%;
+      margin-bottom: 8px;
+      // margin-top: 8px;
+    }
+  }
+
+  code {
+    font-size: 16px;
+    line-height: 20px;
+    font-family: Roboto Mono;
+    letter-spacing: 0.5px;
+    background-color: @code-bg-color;
+    border: 1px solid #e2e2e2;
+    border-radius: 4px;
+    padding: 2px 8px;
+  }
+
+  pre {
+    padding: 16px 31px 16px 21px;
+    background-color: @pre-bg-color;
+    margin-bottom: 24px;
+
+    @media @tablet {
+      margin-bottom: 16px;
+    }
+
+    code {
+      color: #454545;
+      font-size: 13px;
+      line-height: 20px;
+      font-family: Roboto Mono;
+      background-color: @pre-bg-color;
+      border: none;
+    }
+  }
+
+  a {
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.5%;
+    color: @color-primary;
+    display: inline-block;
+
+    &.icon-wrapper {
+      display: inline-block;
+      font-size: 0;
+      vertical-align: top;
+    }
+
+    &:hover {
+      font-family: Inter Bold;
+    }
+
+    &:visited {
+      font-family: Inter Bold;
+      color: @color-visited;
+    }
+
+    &:lang(zh-cn) {
+      font-family: Noto;
+    }
+  }
+
+  li {
+    //styleName: Body/Body2.Small;
+    font-family: Inter SemiBold;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: 0.25px;
+    text-align: left;
+    color: #000;
+    position: relative;
+  }
+  ul {
+    list-style-type: none;
+    color: @color-primary;
+    padding-left: 16px;
+
+    & > li::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: @color-primary;
+      position: absolute;
+      border-radius: 50%;
+      top: 10px;
+      left: -16px;
+    }
+  }
+
+  ol {
+    list-style: decimal;
+    padding-left: 24px;
+
+    & > li::marker {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 1.25px;
+      font-family: Inter Bold;
+      margin-right: 8px;
+      color: @color-list-blue;
+    }
+  }
+
+  .alert {
+    padding: 14px 21px;
+    margin-bottom: 24px;
+    margin-top: 51px;
+    font-family: Inter;
+    font-size: 14px;
+    line-height: 24px;
+    position: relative;
+
+    @media @tablet {
+      margin-bottom: 16px;
+    }
+  }
+  .note {
+    background-color: @note-bg-color;
+
+    &::before {
+      position: absolute;
+      content: 'NOTE';
+      line-height: 17px;
+      color: #454545;
+      left: 0;
+      top: -23px;
+    }
+  }
+
+  .info {
+    background-color: @note-bg-color;
+
+    &::before {
+      position: absolute;
+      content: 'INFO';
+      line-height: 17px;
+      color: #454545;
+      left: 0;
+      top: -23px;
+    }
+  }
+
+  .warning {
+    background-color: @warning-bg-color;
+
+    &::before {
+      position: absolute;
+      content: 'WARNING';
+      line-height: 17px;
+      color: #f25c05;
+      left: 0;
+      top: -23px;
+    }
+  }
+
+  table {
+    margin: 24px 0;
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+
+    @media @tablet {
+      margin: 16px 0;
+    }
+
+    thead {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      line-height: 22px;
+      font-family: Inter;
+      text-align: left;
+      // display: block;
+      // margin-bottom: 8px;
+
+      th {
+        padding: 8px 16px;
+        text-align: left;
+      }
+
+      td {
+        font-size: 14px;
+        line-height: 28px;
+      }
+    }
+
+    tbody {
+      font-family: Inter;
+      font-size: 16px;
+      line-height: 28px;
+      letter-spacing: 0.02em;
+      text-align: left;
+      // display: block;
+      // margin-top: 24px;
+
+      @media @tablet {
+        font-size: 14px;
+      }
+
+      tr {
+        &:nth-child(even) {
+          background-color: code-bg-color;
+        }
+      }
+
+      td {
+        padding: 8px 16px;
+        text-align: left;
+        font-size: 16px;
+        line-height: 28px;
+
+        @media @tablet {
+          font-size: 14px;
+          code {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .filter,
+  .tab-wrapper {
+    padding: 8px 0;
+    margin-bottom: 32px;
+
+    a {
+      padding: 6px 40px;
+      border-radius: 4px;
+
+      @media @tablet {
+        padding: 6px 8px;
+      }
+    }
+
+    & .active {
+      background-color: @color-list-blue;
+      color: #fff;
+    }
+  }
+
+  .filter-CPU {
+    ul,
+    ol {
+      list-style: none;
+    }
+  }
+}
+
+details {
+  color: #000;
+  font-size: 16px;
+  line-height: 24px;
+  padding-left: 16px;
+  margin: 24px 0;
+
+  @media @tablet {
+    margin: 16px 0;
+    font-size: 14px;
+  }
+
+  summary {
+    cursor: pointer;
+    position: relative;
+    color: @faq-disc-color;
+    margin-bottom: 16px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: @faq-disc-color;
+      position: absolute;
+      border-radius: 50%;
+      top: 8px;
+      left: -16px;
+    }
+  }
+}

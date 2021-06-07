@@ -101,20 +101,29 @@ exports.onCreatePage = ({ page, actions }) => {
 // APIReference page: generate source for api reference html
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions;
-  const { generateNodes, handlePyFiles } = sourceNodesUtils;
+  const { generateNodes, handlePyFiles, handlePyOrmFiles } = sourceNodesUtils;
 
   const dirPath = `src/pages/docs/versions/master/APIReference`;
-  // read categories, such as pymilvus and java-sdk
+  // read categories, such as pymilvus and pymilvus-orm
   const categories = fs.readdirSync(dirPath);
   const nodes = [];
   for (let category of categories) {
-    if (category === 'pymilvus') {
-      const path = `${dirPath}/${category}`;
-      const versions = fs.readdirSync(path);
-
-      for (let version of versions) {
-        handlePyFiles(path, version, nodes);
-      }
+    const path = `${dirPath}/${category}`;
+    const versions = fs.readdirSync(path);
+    switch (category) {
+      case 'pymilvus':
+        for (let version of versions) {
+          handlePyFiles(path, version, nodes);
+        }
+        break;
+      case 'pymilvus-orm':
+        // TODO need to update Variables.json, add pymilvus-orm verison
+        for (let version of versions) {
+          handlePyOrmFiles(path, version, nodes);
+        }
+        break;
+      default:
+        break;
     }
   }
   generateNodes(nodes, {

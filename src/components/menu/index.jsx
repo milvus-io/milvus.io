@@ -50,15 +50,42 @@ const Menu = props => {
   const [realMenuList, setRealMenuList] = useState([]);
 
   /**
-   * find out matching api menus by compare the target doc version in each item
+   * Find out the compatible api menus by comparing the target doc version for each item;
    * @param {array} apiMenus apiMenus from graphQL
    * @param {string} currentDocVersion doc version in current page
    * @returns {array} api menus matching current doc version, may be empty []
    */
   const filterApiMenus = (apiMenus = [], currentDocVersion) => {
-    return apiMenus.filter(
-      apiMenu => apiMenu?.docVersion === currentDocVersion
+    // level 1 menu
+    const rootMenu = [];
+    // level 2 menus
+    const secondLevelMenus = [];
+    // level 3 items' names
+    const thirdLevelMenuNames = [];
+    // filter all compatible api menu items(not a directory)
+    const filteredMenus = apiMenus.reduce((prev, menu) => {
+      //? vvvvvv Code below should be removed when publish.
+      //? Here just for show pymilvus-orm left menu when doc version is 'v1.1.0'
+      if (menu?.category === 'pymilvus-orm') menu.docVersion = 'v1.1.0';
+      //? ^^^^^^
+      if (menu?.isMenu) {
+        menu?.id === 'api_reference'
+          ? rootMenu.push(menu)
+          : secondLevelMenus.push(menu);
+      } else if (menu?.docVersion === currentDocVersion) {
+        prev.push(menu);
+        thirdLevelMenuNames.push(menu?.label2);
+      }
+      return prev;
+    }, []);
+    // filter level 2 menus if they has children(level 3 menu items)
+    const filteredSecondLevelMenus = secondLevelMenus.filter(v =>
+      thirdLevelMenuNames.includes(v?.id)
     );
+    // merge the level 1&2 menus into results
+    filteredMenus?.length &&
+      filteredMenus.push(...rootMenu, ...filteredSecondLevelMenus);
+    return filteredMenus;
   };
 
   useEffect(() => {
@@ -149,21 +176,11 @@ const Menu = props => {
       });
     };
     let arr = generateMenu(menuList)();
-    // add new api_reference page if version is 2.0
-    const apiReferenceMenu = {
-      id: 'api_reference',
-      title: 'NEW API Reference',
-      lang: null,
-      label1: '',
-      label2: '',
-      label3: '',
-      order: -1,
-      isMenu: true,
-      outLink: null,
-    };
+
     // filter out compatible api menus(left nav) by current doc version
     const filteredApiMenus = filterApiMenus(allApiMenus, formatVersion);
-    const apiMenus = filteredApiMenus.length && generateMenu([apiReferenceMenu, ...filteredApiMenus])();
+    const apiMenus =
+      filteredApiMenus.length && generateMenu(filteredApiMenus)();
     apiMenus?.length && (arr = [...arr, ...apiMenus]);
 
     checkActive(arr);
@@ -253,7 +270,7 @@ const Menu = props => {
   const toggleMenuChild = doc => {
     let menu = JSON.parse(JSON.stringify(realMenuList));
     const toggleIsShowChildren = (menu, doc) => {
-      const findDoc = findItem('title', doc.title, menu);
+      const findDoc = findItem('id', doc.id, menu);
       const copyMenu = menu.map(item => {
         const { showChildren, id, children } = item;
         let childrenList = children;

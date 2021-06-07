@@ -1,23 +1,30 @@
 .codeWrapper {
-  position: relative;
-  margin: 16px 0 8px;
   min-height: 24px;
+  display: flex;
 
   .content {
     overflow-x: auto;
     font-family: 'Source Code Pro', monospace;
+    flex-grow: 1;
+    line-height: 24px;
+
+    span {
+      display: inline-block;
+      font-size: 13px;
+      line-height: 20px;
+    }
   }
 
   .btn {
-    position: absolute;
-    top: -18px;
-    right: 0;
     border: none;
     border-radius: 4px;
     color: #b7b5bd;
     background-color: transparent;
     font-size: 1rem;
     cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    margin-left: 16px;
 
     &:active {
       outline: none;

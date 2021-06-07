@@ -75,7 +75,7 @@ export const useSelectMenu = (locale, ref) => {
       const offsetLeft = (innerWidth - docWrapWidth) / 2 + 250 + 40;
       // max width of single line
       // left menu width: 250; margin-left: 40px right anchor width: 280; doc padding: 64px 32px
-      const maxLineWidth = docWrapWidth - 280 - 250 - 40 - 64 - 32;
+      const maxLineWidth = docWrapWidth - 280 - 250 - 40 - 32;
 
       let scrollTop = 0;
       if (innerContainer) {
@@ -102,7 +102,7 @@ export const useSelectMenu = (locale, ref) => {
         .getBoundingClientRect();
       // if there is multiple lines, calculate it as single lin,to keep the menu stay center
       const realWidth = Math.min(maxLineWidth, width);
-      let translateX = left - offsetLeft + (realWidth - menuWidth) / 2 - 16;
+      let translateX = left - offsetLeft + (realWidth - menuWidth) / 2;
 
       //doc's paddng-left: 64
       if (translateX < 64) {

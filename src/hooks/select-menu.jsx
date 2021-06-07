@@ -40,9 +40,15 @@ export const useSelectMenu = (locale, ref) => {
 
   useEffect(() => {
     const ele = ref.current;
+
     const selectHandler = e => {
-      const { nodeName } = e.target;
-      if (nodeName === 'H1') {
+      const disabledClass = {
+        alert: 'alert',
+        hljs: 'hljs'
+      };
+
+      const { nodeName, classList } = e.target;
+      if (nodeName === 'H1' || [].some.call(classList, (item => disabledClass[item] !== null))) {
         setOptions({
           styles: {
             visibility: 'hidden',
@@ -62,7 +68,7 @@ export const useSelectMenu = (locale, ref) => {
         typeof document !== 'undefined' &&
         document.getElementsByClassName(styles.docWrapper)[0];
 
-      const menuWidth = locale === 'cn' ? 156 : 179;
+      const menuWidth = locale === 'cn' ? 156 : 187;
       let [docWrapWidth, innerWidth] = [
         0,
         typeof window !== 'undefined' ? window.innerWidth : 0,
@@ -105,8 +111,8 @@ export const useSelectMenu = (locale, ref) => {
       let translateX = left - offsetLeft + (realWidth - menuWidth) / 2;
 
       //doc's paddng-left: 64
-      if (translateX < 64) {
-        translateX = 64;
+      if (translateX < 32) {
+        translateX = 32;
       }
       //doc's paddng-right: 32
       if (translateX > maxLineWidth - menuWidth) {

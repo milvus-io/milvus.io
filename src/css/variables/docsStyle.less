@@ -2,16 +2,40 @@
 @color-visited: #09579c;
 @color-list-blue: #4fc4f9;
 @pre-bg-color: #f9f9f9;
+@pre-bg-color-dark: #242a35;
 @code-bg-color: #eee;
+
 @note-bg-color: #f0f4f9;
 @warning-bg-color: rgba(242, 92, 5, 0.1);
 @faq-disc-color: #06aff2;
+@link-color: #1493cc;
 
 .doc-post-container {
+  color: #191919;
+
+  a,
+  p,
+  li,
+  .alert,
+  .note,
+  .info,
+  .warning,
+  table,
+  tr,
+  td,
+  th {
+    font-family: SourceSansPro-Regular;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: Inter !important;
+  }
+
   h1 {
     font-size: 36px;
     line-height: 40px;
-    font-family: Inter;
     margin-bottom: 24px;
     margin-top: 48px;
   }
@@ -19,8 +43,6 @@
   h2 {
     font-size: 24px;
     line-height: 32px;
-    font-family: Inter SemiBold;
-    letter-spacing: 3%;
     margin-bottom: 16px;
     margin-top: 32px;
   }
@@ -28,7 +50,6 @@
   h3 {
     font-size: 18px;
     line-height: 24px;
-    font-family: Inter Bold;
     margin-bottom: 8px;
     margin-top: 24px;
   }
@@ -36,42 +57,38 @@
   h4 {
     font-size: 16px;
     line-height: 28px;
-    font-family: Inter Bold;
     margin-bottom: 8px;
     margin-top: 16px;
   }
 
   p {
     font-size: 16px;
-    line-height: 28px;
-    font-family: Inter;
-    margin-bottom: 8px;
+    line-height: 1.4em;
+    margin-bottom: 4px;
     // margin-top: 12px;
 
     @media @tablet {
       font-size: 14px;
       line-height: 24px;
-      letter-spacing: 2%;
       margin-bottom: 8px;
       // margin-top: 8px;
     }
   }
 
   code {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
-    font-family: Roboto Mono;
-    letter-spacing: 0.5px;
+    font-family: 'Source Code Pro' !important;
     background-color: @code-bg-color;
     border: 1px solid #e2e2e2;
     border-radius: 4px;
-    padding: 2px 8px;
+    padding: 0px 8px;
   }
 
   pre {
-    padding: 16px 31px 16px 21px;
-    background-color: @pre-bg-color;
     margin-bottom: 24px;
+    border-radius: 4px;
+    background-color: @pre-bg-color-dark;
 
     @media @tablet {
       margin-bottom: 16px;
@@ -79,20 +96,19 @@
 
     code {
       color: #454545;
+      display: block;
       font-size: 13px;
       line-height: 20px;
-      font-family: Roboto Mono;
-      background-color: @pre-bg-color;
+      font-family: 'Source Code Pro' !important;
       border: none;
+      color: #fff;
     }
   }
 
   a {
-    font-family: Inter;
     font-size: 16px;
-    line-height: 24px;
-    letter-spacing: -0.5%;
-    color: @color-primary;
+    line-height: 1.4em;
+    color: @link-color;
     display: inline-block;
 
     &.icon-wrapper {
@@ -101,59 +117,45 @@
       vertical-align: top;
     }
 
-    &:hover {
-      font-family: Inter Bold;
-    }
-
     &:visited {
-      font-family: Inter Bold;
+      font-family: SourceSansPro-Bold;
       color: @color-visited;
-    }
-
-    &:lang(zh-cn) {
-      font-family: Noto;
     }
   }
 
   li {
     //styleName: Body/Body2.Small;
-    font-family: Inter SemiBold;
     font-size: 16px;
-    line-height: 28px;
-    letter-spacing: 0.25px;
+    line-height: 1.4em;
     text-align: left;
     color: #000;
     position: relative;
+
+    & > ul {
+      list-style-type: circle;
+    }
   }
   ul {
-    list-style-type: none;
-    color: @color-primary;
-    padding-left: 16px;
+    list-style-type: disc;
+    margin: 16px 0;
+    padding-left: 24px;
 
-    & > li::before {
-      content: '';
+    & > li::marker {
+      // color: @color-primary;
       display: inline-block;
-      width: 8px;
-      height: 8px;
-      background-color: @color-primary;
-      position: absolute;
-      border-radius: 50%;
-      top: 10px;
-      left: -16px;
+      margin-right: 16px;
     }
   }
 
   ol {
     list-style: decimal;
     padding-left: 24px;
+    margin: 16px 0;
 
     & > li::marker {
       font-size: 16px;
-      line-height: 24px;
-      letter-spacing: 1.25px;
-      font-family: Inter Bold;
+      line-height: 1.4em;
       margin-right: 8px;
-      color: @color-list-blue;
     }
   }
 
@@ -161,8 +163,7 @@
     padding: 14px 21px;
     margin-bottom: 24px;
     margin-top: 51px;
-    font-family: Inter;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 24px;
     position: relative;
 
@@ -211,12 +212,13 @@
 
   table {
     margin: 24px 0;
-    display: block;
+
     overflow-x: auto;
     width: 100%;
 
     @media @tablet {
       margin: 16px 0;
+      display: block;
     }
 
     thead {
@@ -224,7 +226,6 @@
       border-bottom: 1px solid #eee;
       font-size: 14px;
       line-height: 22px;
-      font-family: Inter;
       text-align: left;
       // display: block;
       // margin-bottom: 8px;
@@ -241,10 +242,8 @@
     }
 
     tbody {
-      font-family: Inter;
       font-size: 16px;
-      line-height: 28px;
-      letter-spacing: 0.02em;
+      line-height: 1.4em;
       text-align: left;
       // display: block;
       // margin-top: 24px;
@@ -254,9 +253,7 @@
       }
 
       tr {
-        &:nth-child(even) {
-          background-color: code-bg-color;
-        }
+        border-bottom: 1px solid #eee;
       }
 
       td {
@@ -306,9 +303,9 @@
 details {
   color: #000;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 1.4em;
   padding-left: 16px;
-  margin: 24px 0;
+  margin: 0 0 16px 0;
 
   @media @tablet {
     margin: 16px 0;
@@ -318,15 +315,15 @@ details {
   summary {
     cursor: pointer;
     position: relative;
-    color: @faq-disc-color;
-    margin-bottom: 16px;
+    color: @link-color;
+    margin-bottom: 8px;
 
     &::before {
       content: '';
       display: inline-block;
-      width: 8px;
-      height: 8px;
-      background-color: @faq-disc-color;
+      width: 6px;
+      height: 6px;
+      background-color: #000;
       position: absolute;
       border-radius: 50%;
       top: 8px;

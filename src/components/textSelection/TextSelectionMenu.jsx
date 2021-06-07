@@ -25,19 +25,17 @@ const TextSelectionMenu = ({ language, options, locale }) => {
   return (
     <div className={moduleStyle.popToolWrapper} style={style}>
       <div className={moduleStyle.bgWrapper}>
-        <div className={moduleStyle.popToolContent}>
-          <a
-            href={`https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=${title}&body=${body}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={moduleStyle.contentItem}
-          >
-            <p className={moduleStyle.iconWrapper}>
-              <img src={git} alt="git-logo" />
-            </p>
-            <span>{selectMenu.github}</span>
-          </a>
-        </div>
+        <a
+          href={`https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=${title}&body=${body}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={moduleStyle.contentItem}
+        >
+          <p className={moduleStyle.iconWrapper}>
+            <img src={git} alt="git-logo" />
+          </p>
+          <span className={moduleStyle.text}>{selectMenu.github}</span>
+        </a>
       </div>
     </div>
   );

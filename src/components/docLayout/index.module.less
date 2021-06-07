@@ -58,7 +58,7 @@ html {
 
       background-color: #fff;
       font-size: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
       max-width: 270px;
 
       overflow-x: inherit;
@@ -86,7 +86,6 @@ html {
 
   .anchorTitle {
     font-size: 16px;
-    color: @color-default-link;
 
     line-height: 18px;
     font-weight: 500;
@@ -99,11 +98,10 @@ html {
 
   .parentItem {
     border: none;
-    padding-bottom: 16px;
+    padding-bottom: 8px;
   }
   .childItem {
     margin-left: 8px;
-    padding: 3px 0;
   }
 
   .anchor {
@@ -112,13 +110,10 @@ html {
     overflow-x: hidden;
     line-height: 21px;
     text-overflow: ellipsis;
-    color: #60606f;
+    color: @color-default-link;
 
     &:hover {
-      color: #33b6f2;
-    }
-    .active {
-      color: #33b6f2;
+      color: @color-doc-primary;
     }
   }
 }
@@ -160,6 +155,7 @@ html {
     flex-shrink: 0;
     top: 147px;
     margin-left: 40px;
+    width: 250px;
 
     // used for tablet or phone
     @media @tablet {
@@ -214,8 +210,8 @@ html {
   }
 
   .innerContainer {
-    // margin 64px menu width 250px
-    margin-left: 314px;
+    // menu width 250px margin 40px
+    margin-left: 290px;
     width: 100%;
     // menu part 314px and right anchors 280px
     max-width: calc(100% - 600px);

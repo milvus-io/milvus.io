@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as styles from './code.module.less';
+import './base16-apprentice.css';
 
 const Code = ({ html, content, locale }) => {
   const buttonTextMap = {
@@ -69,7 +70,7 @@ const Code = ({ html, content, locale }) => {
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
       <button className={styles.btn} onClick={onButtonClick}>
-        <span className="btn-copy-text">
+        <span className={`${styles.text} btn-copy-text`}>
           {locale === 'en' ? 'Copy' : '复制'}
         </span>
         <i className={`${styles.icon} fa fa-clone`} aria-hidden="true"></i>

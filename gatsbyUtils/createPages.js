@@ -506,11 +506,14 @@ const generateTitle = ({ category, name, isDirectory = false }) => {
     go: 'Milvus Go SDK',
   };
   let prettierCategory = titleMapping[category] || capitalize(category);
+  // return prettier category name if directory
   if (isDirectory) return prettierCategory;
   switch (category) {
+    // return prettier category name if single page
     case 'pymilvus':
     case 'go':
       return prettierCategory;
+    // return 3rd level items prettier name
     default:
       return capitalize(name.split('.htm')[0]);
   }

@@ -268,6 +268,16 @@ const handleGoFiles = (parentPath, version, apiFiles) => {
           const outerHTML = preEle.outerHTML;
           node.innerHTML = outerHTML;
         });
+        doc.querySelectorAll('h2').forEach(node => {
+          const ele = node.querySelector('a');
+          const textContent = ele?.textContent;
+          textContent && ele.replaceWith(textContent);
+        });
+        doc.querySelectorAll('h3').forEach(node => {
+          const ele = node.querySelector('a');
+          const textContent = ele?.textContent;
+          textContent && ele.replaceWith(textContent);
+        });
         doc.querySelector('#pkg-index h3').remove();
         doc.querySelector('#pkg-index p').remove();
         doc = doc.querySelector('div.container').innerHTML;

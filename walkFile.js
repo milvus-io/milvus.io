@@ -35,7 +35,7 @@ function walkFiles(dirPath, fileObj = {}) {
 
 /**
  * read directory and generate versions result
- * @param {obejct} fileObj versions result from file name: 
+ * @param {obejct} fileObj versions result from file name:
  * {'v1.1.0': { pymilvus: 'v1.1.0', version: 'v1.1.0', released: 'yes' },
  * master: { version: 'v2.0.0', released: 'no' }}
  * @param {object} param1 { dirPath, filePath, isVariables }
@@ -47,11 +47,15 @@ const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
   const content = JSON.parse(doc.toString());
   let result = content;
   if (isVariables) {
-    // currently only handle python api
+    // currently only handle python and go sdk
+    // TODO waiting for pymilvus-orm version
     const pymilvus =
       content?.milvus_python_sdk_version &&
       `v${content?.milvus_python_sdk_version}`;
-    result = { pymilvus };
+    const go =
+      content?.milvus_go_sdk_version &&
+      `v${content?.milvus_go_sdk_version}`;
+    result = { pymilvus, go };
   }
   fileObj[parent] = fileObj[parent]
     ? { ...fileObj[parent], ...result }

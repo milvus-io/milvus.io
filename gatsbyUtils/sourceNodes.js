@@ -237,8 +237,61 @@ const handlePyOrmFiles = (parentPath, version, apiFiles) => {
   }
 };
 
+const handleGoFiles = (parentPath, version, apiFiles) => {
+  const dirPath = `${parentPath}/${version}`;
+  try {
+    let filesList = fs.readdirSync(dirPath);
+    for (let i = 0; i < filesList.length; i++) {
+      let filePath = path.join(dirPath, filesList[i]);
+      if (filePath.endsWith('.html')) {
+        let doc = HTMLParser.parse(fs.readFileSync(filePath));
+        // get content
+        doc = doc.querySelector('#page');
+        doc.querySelector('#nav').remove();
+        doc
+          .querySelectorAll('script')
+          .forEach(node => node.parentNode.removeChild(node));
+        doc.querySelector('#short-nav').remove();
+        doc
+          .querySelectorAll('.collapsed')
+          .forEach(node => node.parentNode.removeChild(node));
+        doc.querySelector('#pkg-subdirectories').remove();
+        doc.querySelector('.pkg-dir').remove();
+        doc.querySelector('#footer').remove();
+        doc.querySelectorAll('pre').forEach(node => {
+          const innerHTML = node.innerHTML;
+          let preEle = HTMLParser.parse(innerHTML);
+          preEle.querySelectorAll('a').forEach(e => {
+            const textContent = e.textContent;
+            e.replaceWith(textContent);
+          });
+          const outerHTML = preEle.outerHTML;
+          node.innerHTML = outerHTML;
+        });
+        doc.querySelector('#pkg-index h3').remove();
+        doc.querySelector('#pkg-index p').remove();
+        doc = doc.querySelector('div.container').innerHTML;
+        apiFiles.push({
+          doc,
+          hrefs: [],
+          linkId: [],
+          name: filesList[i],
+          abspath: filePath,
+          version,
+          category: 'go',
+          labels: ['api_reference'],
+        });
+      }
+    }
+  } catch (e) {
+    console.log('Read milvus-sdk-go files failed');
+    throw e;
+  }
+};
+
 module.exports = {
   generateNodes,
   handlePyFiles,
   handlePyOrmFiles,
+  handleGoFiles,
 };

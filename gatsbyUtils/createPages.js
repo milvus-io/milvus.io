@@ -496,13 +496,13 @@ const generateCommunityHome = (
  * @returns A prettier title.
  */
 const generateTitle = ({ category, name, isDirectory = false }) => {
-  const capitalize = (s) => {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
-  }
+  const capitalize = s => {
+    if (typeof s !== 'string') return '';
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
   const titleMapping = {
-    'pymilvus': "Milvus Python SDK",
-    'pymilvus-orm': "Milvus Python SDK (ORM)"
+    pymilvus: 'Milvus Python SDK',
+    'pymilvus-orm': 'Milvus Python SDK (ORM)',
   };
   let prettierCategory = titleMapping[category] || capitalize(category);
   if (isDirectory || category === 'pymilvus') return prettierCategory;

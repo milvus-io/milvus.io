@@ -4,7 +4,6 @@
 @pre-bg-color: #f9f9f9;
 @pre-bg-color-dark: #242a35;
 @code-bg-color: #eee;
-
 @note-bg-color: #f0f4f9;
 @warning-bg-color: rgba(242, 92, 5, 0.1);
 @faq-disc-color: #06aff2;
@@ -38,6 +37,10 @@
     line-height: 40px;
     margin-bottom: 24px;
     margin-top: 48px;
+
+    @media @tablet {
+      margin-top: 0px;
+    }
   }
 
   h2 {
@@ -212,9 +215,10 @@
 
   table {
     margin: 24px 0;
-
+    background-color: @pre-bg-color;
     overflow-x: auto;
     width: 100%;
+    border-radius: 12px;
 
     @media @tablet {
       margin: 16px 0;
@@ -222,7 +226,7 @@
     }
 
     thead {
-      padding: 8px;
+      padding: 12px;
       border-bottom: 1px solid #eee;
       font-size: 14px;
       line-height: 22px;
@@ -231,13 +235,8 @@
       // margin-bottom: 8px;
 
       th {
-        padding: 8px 16px;
+        padding: 12px;
         text-align: left;
-      }
-
-      td {
-        font-size: 14px;
-        line-height: 28px;
       }
     }
 
@@ -245,6 +244,7 @@
       font-size: 16px;
       line-height: 1.4em;
       text-align: left;
+      padding: 12px;
       // display: block;
       // margin-top: 24px;
 
@@ -257,10 +257,10 @@
       }
 
       td {
-        padding: 8px 16px;
+        padding: 12px;
         text-align: left;
         font-size: 16px;
-        line-height: 28px;
+        line-height: 1.4em;
 
         @media @tablet {
           font-size: 14px;
@@ -269,6 +269,19 @@
           }
         }
       }
+    }
+
+    th {
+      font-size: 14px;
+      line-height: 22px;
+      padding: 12px;
+      font-family: SourceSansPro-SemiBold;
+    }
+
+    li,
+    details,
+    summary {
+      margin: 0;
     }
   }
 

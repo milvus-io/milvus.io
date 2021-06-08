@@ -81,7 +81,7 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
         );
         // match href with ids
         const hrefs = [];
-        doc.querySelectorAll('a').forEach(node => {
+        [...doc.querySelectorAll('a')].forEach(node => {
           linkId.forEach(link => {
             if (
               node.outerHTML.indexOf(`#${link}`) > 1 &&
@@ -92,7 +92,7 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
           });
         });
         // remove useless link
-        doc.querySelectorAll('.reference.internal').forEach(node => {
+        [...doc.querySelectorAll('.reference.internal')].forEach(node => {
           node.parentNode.removeChild(node);
         });
         // generate toc from hrefs and insert it behind of h1 title
@@ -180,7 +180,7 @@ const handlePyOrmFiles = (parentPath, version, apiFiles) => {
         );
         // match href with ids
         const hrefs = [];
-        doc.querySelectorAll('a').forEach(node => {
+        [...doc.querySelectorAll('a')].forEach(node => {
           linkId.forEach(link => {
             if (
               node.outerHTML.indexOf(`#${link}`) > 1 &&
@@ -191,7 +191,7 @@ const handlePyOrmFiles = (parentPath, version, apiFiles) => {
           });
         });
         // remove useless link
-        doc.querySelectorAll('.reference.internal').forEach(node => {
+        [...doc.querySelectorAll('.reference.internal')].forEach(node => {
           node.parentNode.removeChild(node);
         });
         // generate toc from hrefs and insert it behind of h1 title
@@ -255,40 +255,39 @@ const handleGoFiles = (parentPath, version, apiFiles) => {
         // get content
         doc = doc.querySelector('#page');
         // remove useless content
-        doc.querySelector('#nav').remove();
-        doc
-          .querySelectorAll('script')
-          .forEach(node => node.parentNode.removeChild(node));
-        doc.querySelector('#short-nav').remove();
-        doc
-          .querySelectorAll('.collapsed')
-          .forEach(node => node.parentNode.removeChild(node));
-        doc.querySelector('#pkg-subdirectories').remove();
-        doc.querySelector('.pkg-dir').remove();
-        doc.querySelector('#footer').remove();
+        doc.querySelector('#nav')?.remove();
+        [...doc.querySelectorAll('script')].forEach(node =>
+          node.parentNode.removeChild(node)
+        );
+        doc.querySelector('#short-nav')?.remove();
+        [...doc.querySelectorAll('.collapsed')].forEach(node =>
+          node.parentNode.removeChild(node)
+        );
+        doc.querySelector('#pkg-subdirectories')?.remove();
+        doc.querySelector('.pkg-dir')?.remove();
+        doc.querySelector('#footer')?.remove();
         // replace <a> tag with text
-        doc.querySelectorAll('pre').forEach(node => {
+        [...doc.querySelectorAll('pre')].forEach(node => {
           const innerHTML = node.innerHTML;
           let preEle = HTMLParser.parse(innerHTML);
-          preEle.querySelectorAll('a').forEach(e => {
+          [...preEle.querySelectorAll('a')].forEach(e => {
             const textContent = e.textContent;
-            e.replaceWith(textContent);
+            textContent && e.replaceWith(textContent);
           });
           const outerHTML = preEle.outerHTML;
           node.innerHTML = outerHTML;
         });
-        doc.querySelectorAll('h2').forEach(node => {
+        const removableAhrefs = [
+          ...doc.querySelectorAll('h2'),
+          ...doc.querySelectorAll('h3'),
+        ];
+        removableAhrefs.forEach(node => {
           const ele = node.querySelector('a');
           const textContent = ele?.textContent;
           textContent && ele.replaceWith(textContent);
         });
-        doc.querySelectorAll('h3').forEach(node => {
-          const ele = node.querySelector('a');
-          const textContent = ele?.textContent;
-          textContent && ele.replaceWith(textContent);
-        });
-        doc.querySelector('#pkg-index h3').remove();
-        doc.querySelector('#pkg-index p').remove();
+        doc.querySelector('#pkg-index h3')?.remove();
+        doc.querySelector('#pkg-index p')?.remove();
         doc = doc.querySelector('div.container').innerHTML;
         apiFiles.push({
           doc,

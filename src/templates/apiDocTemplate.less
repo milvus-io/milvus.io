@@ -23,6 +23,8 @@
   padding: 2rem;
   padding-left: 64px;
 
+  font-family: Inter;
+
   .headerlink {
     visibility: hidden;
 
@@ -37,9 +39,14 @@
   h4,
   h5,
   h6 {
-    &:hover .headerlink {
+    &:hover .headerlink,
+    &:hover .permalink {
       visibility: visible;
     }
+  }
+
+  .permalink {
+    visibility: hidden;
   }
 
   table.docutils {

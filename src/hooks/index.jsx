@@ -25,6 +25,8 @@ export const useClickOutside = (ref, handler, events) => {
 
   useEffect(() => {
     const detectClickOutside = event => {
+      console.log(event.target);
+      console.log(ref.current);
       !ref.current.contains(event.target) && handler(event);
     };
     for (const event of events)

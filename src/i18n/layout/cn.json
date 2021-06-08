@@ -349,7 +349,8 @@
     },
     "banner": {
       "title": ["High Scalability.", "Cloud-Native.", "High Availability."],
-      "text": "Milvus2.0: The world's most popular open-source vector database.",
+      "subTitle": "Milvus2.0",
+      "text": "The world's most popular open-source vector database.",
       "startBtn": {
         "href": "/docs/install_milvus.md",
         "label": "Get Started"

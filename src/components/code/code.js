@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as styles from './code.module.less';
-import './base16-apprentice.css';
 
 const Code = ({ html, content, locale }) => {
   const buttonTextMap = {

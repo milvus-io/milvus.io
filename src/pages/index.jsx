@@ -9,8 +9,7 @@ import storageIcon from '../images/v2/storage.svg';
 import supportIcon from '../images/v2/support.svg';
 import GithubButton from 'react-github-button';
 import './index.less';
-import AnimatedSvg from '../components/animatedSvg/animatedSvg';
-import { HOME_ANIMATION as HomeAnimation } from '../../static/anime/common/home';
+import mainBg from '../images/v2/main-bg.png';
 import Seo from '../components/seo';
 
 const icons = {
@@ -54,6 +53,7 @@ const HomePage = ({ data, pageContext }) => {
                   repo="milvus"
                 />
               </div>
+              <p className="sub-title">{banner.subTitle}</p>
               <div className="title-wrapper">
                 {banner.title.map(item => (
                   <p className="title" key={item}>
@@ -69,7 +69,7 @@ const HomePage = ({ data, pageContext }) => {
                   link={banner.startBtn.href}
                   children={
                     <>
-                      <span>{banner.startBtn.label}</span>
+                      <span>{banner.startBtn.label.toUpperCase()}</span>
                       <i className="fa fa-chevron-right"></i>
                     </>
                   }
@@ -81,21 +81,18 @@ const HomePage = ({ data, pageContext }) => {
                   link={banner.contributeBtn.href}
                   children={
                     <>
-                      <span>{banner.contributeBtn.label}</span>
+                      <span>{banner.contributeBtn.label.toUpperCase()}</span>
                       <i className="fas fa-pencil-alt"></i>
                     </>
                   }
                 />
               </div>
             </div>
-            <div className="banner-right">
-              <AnimatedSvg
-                data={HomeAnimation}
-                className="banner-right-anime"
-              />
-            </div>
-
-            <div className="banner-bg-container"></div>
+            <div className="banner-right"></div>
+          </div>
+          <div className="slogan">
+            <p className='text'>We have literally been unable to kill this thing. No matter what we’ve thrown at it.</p>
+            <p className="name">by Mi.Alato</p>
           </div>
           <div className="content">
             <p className="title-bar">
@@ -160,6 +157,7 @@ export const Query = graphql`
               }
               banner {
                 title
+                subTitle
                 text
                 startBtn {
                   href

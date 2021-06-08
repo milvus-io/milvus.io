@@ -101,6 +101,8 @@ export const useFilter = () => {
     });
     const allContents = document.querySelectorAll(`[class*="filter-"]`);
 
+    if (!allContents.length) return;
+
     const clickEventHandler = targetHash => {
       const hash = targetHash;
       const currentFilters = allFilters.filter(f => f.hash === hash);

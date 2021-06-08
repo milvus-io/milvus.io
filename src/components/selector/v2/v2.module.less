@@ -7,7 +7,6 @@
 
   .choosenWrapper {
     display: flex;
-    color: #12c3f4;
     cursor: pointer;
     outline: none;
 
@@ -16,6 +15,7 @@
       font-size: 16px;
       font-weight: 500;
       line-height: 24px;
+      height: 24px;
       margin-right: 8px;
       text-align: right;
       pointer-events: none;
@@ -45,6 +45,7 @@
     transition: all 0.2s ease-in-out;
     padding: 16px;
     left: -50%;
+    top: 35px;
     visibility: hidden;
     opacity: 0;
     background: #fff;
@@ -97,6 +98,18 @@
   .labelWrapper {
     text-align: left;
     padding: 0 16px;
+    position: relative;
+
+    .img {
+      width: 24px;
+      height: 24px;
+    }
+    .label {
+      font-size: 12px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
   }
 
   .optionsWrapper {

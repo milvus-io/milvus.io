@@ -3,7 +3,7 @@ import Layout from '../components/docLayout';
 import Seo from '../components/seo';
 import { graphql } from 'gatsby';
 import ReactTooltip from 'react-tooltip';
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/github-dark.css';
 import './docTemplate.less';
 import { useMobileScreen } from '../hooks';
 import QueryModal from '../components/query-modal/query-modal';
@@ -265,7 +265,7 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query($locale: String, $old: String, $fileAbsolutePath: String) {
+  query ($locale: String, $old: String, $fileAbsolutePath: String) {
     markdownRemark(
       fileAbsolutePath: { eq: $fileAbsolutePath }
       frontmatter: { id: { eq: $old } }

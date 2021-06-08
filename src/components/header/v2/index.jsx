@@ -6,7 +6,6 @@ import close from '../../../images/v2/close.svg';
 import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
 import { useMobileScreen } from '../../../hooks';
-
 import MobilePopup from '../components/MobilePopupV2';
 import Search from '../components/Search';
 import { Link } from 'gatsby';
@@ -14,18 +13,19 @@ import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
-import SecondHeader from './secondHeader';
 import LangSelector from '../../selector/v2';
+import git from '../../../images/v2/github.svg';
+import lang from '../../../images/v2/lang.svg';
 
 const navList = [
   {
     label: 'What is milvus?',
     link: '/docs/overview.md',
-    isExternal: false,
+    isExternal: false
   },
   {
     label: 'Documentation',
-    link: `/docs/home`,
+    link: '/docs/home',
     isExternal: false,
   },
   {
@@ -34,27 +34,15 @@ const navList = [
     isExternal: true,
   },
   {
+    label: 'Contribute',
+    link: '/community',
+    isExternal: false,
+  },
+  {
     label: 'Github',
     link: 'https://github.com/milvus-io/milvus/',
     isExternal: true,
-  },
-];
-
-const tabList = [
-  {
-    label: 'Developer Docs',
-    href: '/docs/home',
-    id: 1,
-  },
-  {
-    label: 'Bootcamp',
-    href: '/bootcamp',
-    id: 2,
-  },
-  {
-    label: 'Community',
-    href: '/community',
-    id: 3,
+    icon: git
   },
 ];
 
@@ -71,7 +59,6 @@ const languageList = [
 
 const V2Header = ({
   type = 'home',
-  isSecondHeader,
   className = '',
   locale,
 }) => {
@@ -121,7 +108,7 @@ const V2Header = ({
               </div>
               <div className={styles.navSection}>
                 {navList.map(i => {
-                  const { label, link, isExternal } = i;
+                  const { label, link, isExternal, icon } = i;
                   return isExternal ? (
                     <a
                       className={styles.navItem}
@@ -130,17 +117,24 @@ const V2Header = ({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {label}
+                      {
+                        icon ? (
+                          <img className={styles.img} src={icon} alt="github" />
+                        ) : label
+                      }
                     </a>
                   ) : (
                     <Link
-                      className={`${styles.navItem} ${
-                        pathname === link ? styles.active : ''
-                      }`}
+                      className={`${styles.navItem} ${pathname === link ? styles.active : ''
+                        }`}
                       to={link}
                       key={label}
                     >
-                      {label}
+                      {
+                        icon ? (
+                          <img className={styles.img} src={icon} alt="github" />
+                        ) : label
+                      }
                     </Link>
                   );
                 })}
@@ -215,14 +209,6 @@ const V2Header = ({
           )}
         </div>
       </div>
-      {isSecondHeader && !open ? (
-        <SecondHeader
-          tabList={tabList}
-          isMobile={isMobile}
-          styles={styles}
-          locale={locale}
-        />
-      ) : null}
     </header>
   );
 };

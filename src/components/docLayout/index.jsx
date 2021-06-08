@@ -13,7 +13,7 @@ const DocLayout = props => {
     menuList,
     id,
     newestVersion,
-    // versions,
+    versions,
     version,
     headings,
     wrapperClass = styles.docWrapper,
@@ -24,6 +24,7 @@ const DocLayout = props => {
     allApiMenus,
     isApiReference = false,
   } = props;
+
 
   const { isVersionWithHome = null } = pageContext;
 
@@ -124,6 +125,7 @@ const DocLayout = props => {
   const versionConfig = {
     homeTitle: language.menu.home,
     version,
+    versions
   };
 
   const generateAnchorMenu = (headings, className) => {
@@ -163,15 +165,13 @@ const DocLayout = props => {
       <NewHeader
         locale={locale}
         type="doc"
-        isSecondHeader={true}
-        className={styles.header}
+        isSecondHeader={false}
       />
 
       <main className={wrapperClass}>
         <Sidebar
           locale={locale}
           showVersions={!!isVersionWithHome}
-          showSearch={false}
           wrapperClass={styles.menuContainer}
           allApiMenus={allApiMenus}
           menuConfig={menuConfig}
@@ -179,9 +179,8 @@ const DocLayout = props => {
           versionConfig={versionConfig}
         />
         <div
-          className={`${styles.innerContainer} ${
-            isHome ? styles.innerContainerHome : ''
-          } ${isBenchMark ? styles.fullWidth : ''}`}
+          className={`${styles.innerContainer} ${isHome ? styles.innerContainerHome : ''
+            } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -200,9 +199,8 @@ const DocLayout = props => {
                     {isBlog || isBenchMark || isApiReference ? null : (
                       <a
                         className={styles.btnAnchor}
-                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                          locale === 'en' ? 'en' : 'zh-CN'
-                        }/${editPath}`}
+                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
+                          }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
                           <i className={`far fa-edit ${styles.btnIcon}`}></i>

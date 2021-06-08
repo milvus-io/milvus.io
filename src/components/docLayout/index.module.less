@@ -122,17 +122,9 @@ html {
 .layoutWrapper {
   display: flex;
   flex-direction: column;
-  // padding 16px + first header 74px + second header 57px
-  margin-top: 147px;
+  // padding 16px + first header 74px
+  margin-top: 90px;
   background-color: #fff;
-
-  @media @tablet {
-    margin-top: 144px;
-  }
-
-  .header {
-    background-color: #fafafa;
-  }
 
   .docWrapper {
     position: relative;
@@ -153,6 +145,7 @@ html {
     top: 147px;
     margin-left: 40px;
     width: 250px;
+    z-index: 1;
 
     // used for tablet or phone
     @media @tablet {

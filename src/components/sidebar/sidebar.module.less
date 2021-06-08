@@ -2,8 +2,6 @@
 @import '../../css/variables/color.less';
 
 .wrapper {
-  padding-top: 24px;
-
   @media @tablet {
     overflow: auto;
     margin: 0;
@@ -31,7 +29,7 @@
   display: inline-block;
   -webkit-appearance: none;
 
-  width: 100%;
+  width: 250px;
   outline: none;
   border: 1px solid rgba(196, 196, 196, 0.5);
   border-radius: 8px;
@@ -57,6 +55,10 @@
 }
 
 .versionWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   .link {
     display: inline-block;
     width: 100%;

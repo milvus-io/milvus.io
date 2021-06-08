@@ -4,11 +4,11 @@ import * as styles from './index.module.less';
 
 const Selector = props => {
   const {
-    selected,
     options,
+    selected,
     locale,
     isVersion = false,
-    setSelected = () => {},
+    setSelected = () => { },
   } = props;
   const [listStatus, setListStatus] = useState(false);
   const toggleList = e => {
@@ -33,9 +33,8 @@ const Selector = props => {
 
   return (
     <div
-      className={`${styles.selectorWrapper} ${
-        isVersion && styles.versionWrapper
-      }`}
+      className={`${styles.selectorWrapper} ${isVersion && styles.versionWrapper
+        }`}
     >
       <div
         className={styles.selected}

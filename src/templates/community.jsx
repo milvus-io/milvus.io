@@ -9,6 +9,7 @@ import mailIcon from '../images/community/mail.png';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
 
 export default function CommunityTemplate({ data, pageContext }) {
+  console.log(pageContext);
   // i18n
   const {
     footer: { licence: footerTrans },
@@ -127,9 +128,10 @@ export default function CommunityTemplate({ data, pageContext }) {
       <main>
         <Sidebar
           locale={locale}
-          showSearch={false}
+          showSearch={true}
           wrapperClass="sidebar"
           menuConfig={menuConfig}
+          searchConfig={{ placeholder: 'search' }}
         />
         {isHomePage ? (
           <section className="content home">

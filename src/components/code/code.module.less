@@ -2,6 +2,7 @@
   min-height: 24px;
   display: flex;
   color: #fff;
+  position: relative;
 
   .content {
     overflow-x: auto;
@@ -9,6 +10,7 @@
     flex-grow: 1;
     line-height: 24px;
     padding: 8px;
+    margin-right: 70px;
 
     span {
       display: inline-block;
@@ -23,11 +25,12 @@
     // color: #b7b5bd;
     color: #fff;
     background-color: transparent;
-    font-size: 1rem;
     cursor: pointer;
     display: flex;
     align-items: flex-start;
-    margin-left: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
 
     &:active {
       outline: none;

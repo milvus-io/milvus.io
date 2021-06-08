@@ -69,6 +69,7 @@ const Code = ({ html, content, locale }) => {
         className={styles.content}
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
+
       <button className={styles.btn} onClick={onButtonClick}>
         <span className={`${styles.text} btn-copy-text`}>
           {locale === 'en' ? 'Copy' : '复制'}

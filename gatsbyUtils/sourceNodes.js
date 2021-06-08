@@ -102,6 +102,9 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
           ''
         )}</ul>`;
         title.insertAdjacentHTML('afterend', tocElement);
+        [...doc.querySelectorAll('pre')].forEach(node => {
+          node.innerHTML = `<code>${node.innerHTML}</code>`;
+        });
         // only need article body html
         doc = doc.querySelector('[itemprop=articleBody] > div').innerHTML;
         apiFiles.push({
@@ -203,6 +206,9 @@ const handlePyOrmFiles = (parentPath, version, apiFiles) => {
           ''
         )}</ul>`;
         title.insertAdjacentHTML('afterend', tocElement);
+        [...doc.querySelectorAll('pre')].forEach(node => {
+          node.innerHTML = `<code>${node.innerHTML}</code>`;
+        });
         // only need article body html
         doc = doc.querySelector('[itemprop=articleBody] > section').innerHTML;
         apiFiles.push({
@@ -275,7 +281,7 @@ const handleGoFiles = (parentPath, version, apiFiles) => {
             textContent && e.replaceWith(textContent);
           });
           const outerHTML = preEle.outerHTML;
-          node.innerHTML = outerHTML;
+          node.innerHTML = `<code>${outerHTML}</code>`;
         });
         const removableAhrefs = [
           ...doc.querySelectorAll('h2'),

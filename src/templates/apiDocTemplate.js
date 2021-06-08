@@ -43,7 +43,7 @@ export default function Template({ data, pageContext }) {
         nav={nav}
         current="doc"
         menuList={menuList}
-        version={docVersion}
+        version={docVersion || 'master'}
         headings={[]}
         versions={docVersions}
         newestVersion={newestVersion}

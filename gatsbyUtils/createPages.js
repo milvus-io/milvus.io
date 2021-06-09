@@ -492,20 +492,39 @@ const generateCommunityHome = (
 
 /**
  * Generate a prettier title from menu's category or name.
- * @param { object } param0 { category, name, isDirectory = false }
+ * @param { object } param0 { category, name, isDirectory = false, labels = [] }
  * @returns A prettier title.
  */
-const generateTitle = ({ category, name, isDirectory = false }) => {
+const generateTitle = ({
+  category,
+  name,
+  isDirectory = false,
+  labels = [],
+}) => {
+  /**
+   * Capitalize string.
+   * "home" => "Hone"
+   * "exception/index" => "Index"
+   * @param {string} s String will be capitalized.
+   * @returns {string} Capitalized string.
+   */
   const capitalize = s => {
     if (typeof s !== 'string') return '';
-    return s.charAt(0).toUpperCase() + s.slice(1);
+    const result = s.split('/').pop();
+    return result.charAt(0).toUpperCase() + result.slice(1);
   };
   const titleMapping = {
     pymilvus: 'Milvus Python SDK',
     'pymilvus-orm': 'Milvus Python SDK (ORM)',
     go: 'Milvus Go SDK',
+    java: 'Milvus Java SDK',
   };
-  let prettierCategory = titleMapping[category] || capitalize(category);
+  const [, label2 = '',] = labels;
+  // Return name if the menu is a 3rd level menu(such as: API => java => exception)
+  // Return category name if the menu is a 1st or 2nd level menu(such as: API, API => java)
+  let prettierCategory = label2
+    ? capitalize(name)
+    : titleMapping[category] || capitalize(category);
   // return prettier category name if directory
   if (isDirectory) return prettierCategory;
   switch (category) {
@@ -533,7 +552,7 @@ const generateApiMenus = nodes => {
       const [label1 = 'api_reference', label2 = '', label3 = ''] = labels;
       const menuItem = {
         id: name,
-        title: generateTitle({ name, category, isDirectory }),
+        title: generateTitle({ name, category, isDirectory, labels }),
         lang: null,
         label1,
         label2,

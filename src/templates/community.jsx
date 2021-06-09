@@ -31,7 +31,6 @@ export default function CommunityTemplate({ data, pageContext }) {
     homeData,
     activePost,
     headings,
-    version
   } = pageContext;
   const isHomePage = homeData !== null;
 

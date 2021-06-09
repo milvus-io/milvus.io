@@ -75,6 +75,16 @@ const V2Header = props => {
     hideMask();
   });
 
+  const LinkContent = ({ label, icon }) => (
+    <>
+      {
+        icon ? (
+          <img className={styles.img} src={icon} alt="github" />
+        ) : label
+      }
+    </>
+  );
+
   return (
     <header className={`${styles.header} ${className}`} ref={headContainer}>
       <div className={styles.firstHeader}>
@@ -108,11 +118,7 @@ const V2Header = props => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {
-                        icon ? (
-                          <img className={styles.img} src={icon} alt="github" />
-                        ) : label
-                      }
+                      <LinkContent label={label} icon={icon} />
                     </a>
                   ) : (
                     <Link
@@ -121,11 +127,7 @@ const V2Header = props => {
                       to={link}
                       key={label}
                     >
-                      {
-                        icon ? (
-                          <img className={styles.img} src={icon} alt="github" />
-                        ) : label
-                      }
+                      <LinkContent label={label} icon={icon} />
                     </Link>
                   );
                 })}

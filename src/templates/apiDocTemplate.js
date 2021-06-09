@@ -3,6 +3,8 @@ import Seo from '../components/seo';
 import Layout from '../components/docLayout';
 import { graphql } from 'gatsby';
 import './apiDocTemplate.less';
+import { useCodeCopy } from '../hooks/doc-dom-operation';
+
 
 export default function Template({ data, pageContext }) {
   let {
@@ -17,6 +19,8 @@ export default function Template({ data, pageContext }) {
     category,
     newestVersion,
   } = pageContext;
+
+  useCodeCopy(locale);
 
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.layout
@@ -39,7 +43,7 @@ export default function Template({ data, pageContext }) {
         nav={nav}
         current="doc"
         menuList={menuList}
-        version={docVersion}
+        version={docVersion || 'master'}
         headings={[]}
         versions={docVersions}
         newestVersion={newestVersion}
@@ -58,7 +62,7 @@ export default function Template({ data, pageContext }) {
           version={version}
         />
         <div
-          className="api-reference-wrapper"
+          className={`api-reference-wrapper doc-post-container ${category}`}
           dangerouslySetInnerHTML={{ __html: doc }}
         ></div>
       </Layout>

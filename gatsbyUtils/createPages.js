@@ -562,10 +562,20 @@ const generateTitle = ({ category, name, isDirectory = false }) => {
   const titleMapping = {
     pymilvus: 'Milvus Python SDK',
     'pymilvus-orm': 'Milvus Python SDK (ORM)',
+    go: 'Milvus Go SDK',
   };
   let prettierCategory = titleMapping[category] || capitalize(category);
-  if (isDirectory || category === 'pymilvus') return prettierCategory;
-  return capitalize(name.split('.htm')[0]);
+  // return prettier category name if directory
+  if (isDirectory) return prettierCategory;
+  switch (category) {
+    // return prettier category name if single page
+    case 'pymilvus':
+    case 'go':
+      return prettierCategory;
+    // return 3rd level items prettier name
+    default:
+      return capitalize(name.split('.htm')[0]);
+  }
 };
 
 /**

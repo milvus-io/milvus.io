@@ -483,12 +483,7 @@ const initGlobalSearch = (markdown, newestVersion, rootDirName) => {
  */
 const generateCommunityPages = (
   createPage,
-  {
-    nodes: communityMd,
-    template: communityTemplate,
-    menu: communityMenu,
-    newestVersion,
-  }
+  { nodes: communityMd, template: communityTemplate, menu: communityMenu }
 ) => {
   communityMd.forEach(({ node }) => {
     const {
@@ -524,12 +519,7 @@ const generateCommunityPages = (
  */
 const generateCommunityHome = (
   createPage,
-  {
-    nodes: communityHome,
-    template: communityTemplate,
-    menu: communityMenu,
-    newestVersion,
-  }
+  { nodes: communityHome, template: communityTemplate, menu: communityMenu }
 ) => {
   communityHome.forEach(({ language, data, path }) => {
     createPage({

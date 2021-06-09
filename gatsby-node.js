@@ -101,12 +101,8 @@ exports.onCreatePage = ({ page, actions }) => {
 // APIReference page: generate source for api reference html
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions;
-  const {
-    generateNodes,
-    handlePyFiles,
-    handlePyOrmFiles,
-    handleGoFiles,
-  } = sourceNodesUtils;
+  const { generateNodes, handlePyFiles, handlePyOrmFiles, handleGoFiles } =
+    sourceNodesUtils;
 
   const dirPath = `src/pages/docs/versions/master/APIReference`;
   // read categories, such as pymilvus and pymilvus-orm
@@ -194,13 +190,11 @@ exports.createPages = async ({ actions, graphql }) => {
       nodes: communityMd,
       template: communityTemplate,
       menu: communityMenu,
-      newestVersion,
     });
     generateCommunityHome(createPage, {
       nodes: communityHome,
       template: communityTemplate,
       menu: communityMenu,
-      newestVersion,
     });
 
     const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);

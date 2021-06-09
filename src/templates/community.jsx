@@ -7,7 +7,6 @@ import CommunityHeroCard from '../components/card/communityHeroCard/communityHer
 import Sidebar from '../components/sidebar/sidebar';
 import mailIcon from '../images/community/mail.png';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
-import useAlgolia from '../hooks/use-algolia';
 
 
 export default function CommunityTemplate({ data, pageContext }) {
@@ -50,7 +49,6 @@ export default function CommunityTemplate({ data, pageContext }) {
   // add hooks used by doc template
   useFilter();
   useCodeCopy(locale);
-  useAlgolia(locale, version);
 
   const [hash, setHash] = useState(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
@@ -131,7 +129,7 @@ export default function CommunityTemplate({ data, pageContext }) {
       <main>
         <Sidebar
           locale={locale}
-          showSearch={true}
+          showSearch={false}
           wrapperClass="sidebar"
           menuConfig={menuConfig}
           searchConfig={{ placeholder: 'search' }}

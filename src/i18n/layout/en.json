@@ -340,19 +340,33 @@
       "navlist": [
         {
           "label": "What is milvus?",
-          "href": "#"
+          "link": "/docs/overview.md",
+          "isExternal": false,
+          "icon": null
         },
         {
           "label": "Documentation",
-          "href": "/docs/install_milvus.md"
+          "link": "/docs/home",
+          "isExternal": false,
+          "icon": null
         },
         {
           "label": "Blog",
-          "href": "https://blog.milvus.io/"
+          "link": "https://blog.milvus.io/",
+          "isExternal": true,
+          "icon": null
+        },
+        {
+          "label": "Contribute",
+          "link": "/community",
+          "isExternal": false,
+          "icon": null
         },
         {
           "label": "Github",
-          "href": "https://github.com/milvus-io/milvus/"
+          "link": "https://github.com/milvus-io/milvus/",
+          "isExternal": true,
+          "icon": "git"
         }
       ]
     },
@@ -368,6 +382,10 @@
         "href": "https://github.com/milvus-io",
         "label": "Contribute"
       }
+    },
+    "slogan": {
+      "text": "We have literally been unable to kill this thing. No matter what we’ve thrown at it.",
+      "author": "by Mi.Alato"
     },
     "content": {
       "title": "Features",
@@ -398,7 +416,7 @@
           "img": "storage"
         }
       ],
-      "slogan": {
+      "community": {
         "title": "Join the community",
         "text1": "Milvus is open-sourced on GitHub.",
         "text2": "Contributions and feedbacks are welcome!",

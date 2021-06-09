@@ -165,7 +165,6 @@ const DocLayout = props => {
       <NewHeader
         locale={locale}
         type="doc"
-        isSecondHeader={false}
       />
 
       <main className={wrapperClass}>

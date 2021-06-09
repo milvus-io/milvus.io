@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import Header from '../components/header/v2';
 import './community.less';
 import CommunityHeroCard from '../components/card/communityHeroCard/communityHeroCard';
 import Sidebar from '../components/sidebar/sidebar';
 import mailIcon from '../images/community/mail.png';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
+import useAlgolia from '../hooks/use-algolia';
+
 
 export default function CommunityTemplate({ data, pageContext }) {
-  console.log(pageContext);
   // i18n
   const {
     footer: { licence: footerTrans },
@@ -31,6 +32,7 @@ export default function CommunityTemplate({ data, pageContext }) {
     homeData,
     activePost,
     headings,
+    version
   } = pageContext;
   const isHomePage = homeData !== null;
 
@@ -48,6 +50,7 @@ export default function CommunityTemplate({ data, pageContext }) {
   // add hooks used by doc template
   useFilter();
   useCodeCopy(locale);
+  useAlgolia(locale, version);
 
   const [hash, setHash] = useState(null);
   const [showToTopButton, setShowToTopButton] = useState(false);
@@ -123,8 +126,8 @@ export default function CommunityTemplate({ data, pageContext }) {
 
   return (
     <section className="community-wrapper">
-      <Header isSecondHeader={true} locale={locale} />
-      <SEO title={title} lang={locale} description={desc} />
+      <Header locale={locale} />
+      <Seo title={title} lang={locale} description={desc} />
       <main>
         <Sidebar
           locale={locale}

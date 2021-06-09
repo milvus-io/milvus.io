@@ -22,10 +22,6 @@ export default function Template({ data, pageContext }) {
     ? data.allFile.edges[0].node.childI18N.layout
     : {};
 
-  const v2 = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childI18N.v2
-    : {};
-
   const menuList = allMenus.find(
     v => v.absolutePath.includes(docVersion) && v.lang === locale
   );
@@ -53,7 +49,6 @@ export default function Template({ data, pageContext }) {
         isBlog={false}
         isHome={false}
         editPath=""
-        header={v2}
         isApiReference
         allApiMenus={allApiMenus}
       >
@@ -77,14 +72,6 @@ export const Query = graphql`
       edges {
         node {
           childI18N {
-            v2 {
-              header {
-                navlist {
-                  label
-                  href
-                }
-              }
-            }
             layout {
               header {
                 quick

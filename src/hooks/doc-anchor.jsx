@@ -36,7 +36,7 @@ export const useGenAnchor = (version, editPath) => {
 
     const isAutoGenVersion = version && version.split('.')[0].slice(1) >= 1;
 
-    if (editPath.includes('faq') && isAutoGenVersion) {
+    if (editPath && editPath.includes('faq') && isAutoGenVersion) {
       const faqHeadersElements = document.querySelectorAll('h4');
       if (faqHeadersElements.length > 0) {
         const info = Array.from(faqHeadersElements).map(element => ({

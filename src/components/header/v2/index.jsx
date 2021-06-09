@@ -14,8 +14,8 @@ import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
 import LangSelector from '../../selector/v2';
+import { LANGUAGES } from './constants';
 import git from '../../../images/v2/github.svg';
-import lang from '../../../images/v2/lang.svg';
 
 const navList = [
   {
@@ -46,22 +46,13 @@ const navList = [
   },
 ];
 
-const languageList = [
-  {
-    label: '中文',
-    value: 'cn',
-  },
-  {
-    label: 'English',
-    value: 'en',
-  },
-];
 
-const V2Header = ({
-  type = 'home',
-  className = '',
-  locale,
-}) => {
+const V2Header = props => {
+  const {
+    type = 'home',
+    className = '',
+    locale,
+  } = props;
   const { pathname } = globalHistory.location;
   const { isMobile } = useMobileScreen();
 
@@ -139,7 +130,7 @@ const V2Header = ({
                   );
                 })}
                 <div className={styles.dropDown}>
-                  <LangSelector options={languageList} locale={locale} />
+                  <LangSelector options={LANGUAGES} locale={locale} />
                 </div>
               </div>
             </div>
@@ -197,7 +188,7 @@ const V2Header = ({
               >
                 {openType === 'menu' ? (
                   <Menu
-                    options={languageList}
+                    options={LANGUAGES}
                     navList={navList}
                     locale={locale}
                   />

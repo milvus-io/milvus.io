@@ -62,8 +62,8 @@ export const useSelectMenu = (locale, ref) => {
       const innerContainer =
         typeof document !== 'undefined' &&
         document.querySelector('html');
-      // header: 147px padding: 32px margin: 16
-      const offsetTop = 147 + 32 + 16;
+      // header: 90 padding: 32px margin: 16
+      const offsetTop = 90 + 32 + 16;
       const docWrapper =
         typeof document !== 'undefined' &&
         document.getElementsByClassName(styles.docWrapper)[0];
@@ -144,7 +144,7 @@ export const useSelectMenu = (locale, ref) => {
       }
 
     };
-  }, []);
+  }, [locale, ref]);
 
   return { options };
 };

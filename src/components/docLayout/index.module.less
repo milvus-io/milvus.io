@@ -1,17 +1,9 @@
 @import './docReset.less';
 
 html {
-  // padding 16px + first header 74px + second header 57px
-  scroll-padding-top: 147px;
-
-  @media @tablet {
-    // padding 16 + first header 71 + second header 57
-    scroll-padding-top: 144px;
-  }
+  // padding 16px + first header 74px
+  scroll-padding-top: 90px;
 }
-// body {
-//   background-color: #fafafa;
-// }
 
 .home {
   display: none;
@@ -29,15 +21,11 @@ html {
   section {
     position: sticky;
     position: -webkit-sticky;
-    // padding 16px + first header 74px + second header 57px
-    top: 147px;
+    // padding 16px + first header 74px
+    top: 90px;
     max-height: 100%;
     overflow: auto;
     padding-top: 32px;
-
-    @media @tablet {
-      top: 144px;
-    }
   }
 
   a {
@@ -142,7 +130,7 @@ html {
     bottom: 0;
     // max-height: calc(100vh - 90px);
     flex-shrink: 0;
-    top: 147px;
+    top: 90px;
     margin-left: 40px;
     width: 250px;
     z-index: 1;

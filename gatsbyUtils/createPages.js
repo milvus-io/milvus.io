@@ -1,7 +1,7 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
-const env = process.env.IS_PREVIEW;
-// const env = 'preview';
+// const env = process.env.IS_PREVIEW;
+const env = 'preview';
 
 // createPages: graphql query
 const query = `
@@ -42,7 +42,7 @@ const query = `
   }
   allFile(
     filter: {
-      relativeDirectory: { regex: "/(?:menuStructure|home|community)/" }
+      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp)/" }
       extension: { eq: "json" }
     }
   ) {
@@ -144,6 +144,37 @@ const query = `
             title
           }
         }
+        childBootcamp {
+          description
+          section1 {
+            title
+            content {
+              id
+              link
+              title
+            }
+          }
+          section2 {
+            content {
+              desc
+              id
+              link
+              title
+            }
+            title
+          }
+          section3 {
+            content {
+              desc
+              iconType
+              id
+              link
+              title
+            }
+            title
+          }
+          title
+        }
       }
     }
   }
@@ -225,18 +256,20 @@ const getVersionsWithHome = homeData => {
   return homeData.map(data => data.version);
 };
 
-const getNewestVersionHomePath = locale => {
+const getNewestVersionHomePath = (locale, path) => {
+  const tempPath = path || 'home';
   const map = {
-    en: `/docs/home`,
-    cn: `/${locale}/docs/home`,
+    en: `/docs/${tempPath}`,
+    cn: `/${locale}/docs/${tempPath}`,
   };
   return map[locale];
 };
 
-const getNormalVersionHomePath = (version, locale) => {
+const getNormalVersionHomePath = (version, locale, path) => {
+  const tempPath = path || 'home';
   const map = {
-    en: `/docs/${version}/home`,
-    cn: `/${locale}/docs/${version}/home`,
+    en: `/docs/${version}/${tempPath}`,
+    cn: `/${locale}/docs/${version}/${tempPath}`,
   };
   return map[locale];
 };
@@ -282,6 +315,20 @@ const generateHomeData = edges => {
         language,
         data,
         version,
+        path: absolutePath,
+      };
+    });
+};
+
+const generateBootcampData = edegs => {
+  return edegs
+    .filter(({ node: { childBootcamp } }) => childBootcamp !== null)
+    .map(({ node: { absolutePath, childBootcamp } }) => {
+      const language = absolutePath.includes('/en') ? 'en' : 'cn';
+      const data = childBootcamp;
+      return {
+        language,
+        data,
         path: absolutePath,
       };
     });
@@ -436,7 +483,12 @@ const initGlobalSearch = (markdown, newestVersion, rootDirName) => {
  */
 const generateCommunityPages = (
   createPage,
-  { nodes: communityMd, template: communityTemplate, menu: communityMenu }
+  {
+    nodes: communityMd,
+    template: communityTemplate,
+    menu: communityMenu,
+    newestVersion,
+  }
 ) => {
   communityMd.forEach(({ node }) => {
     const {
@@ -459,6 +511,7 @@ const generateCommunityPages = (
         menuList: communityMenu,
         homeData: null,
         activePost: fileId,
+        version: newestVersion,
       },
     });
   });
@@ -471,7 +524,12 @@ const generateCommunityPages = (
  */
 const generateCommunityHome = (
   createPage,
-  { nodes: communityHome, template: communityTemplate, menu: communityMenu }
+  {
+    nodes: communityHome,
+    template: communityTemplate,
+    menu: communityMenu,
+    newestVersion,
+  }
 ) => {
   communityHome.forEach(({ language, data, path }) => {
     createPage({
@@ -485,6 +543,7 @@ const generateCommunityHome = (
         headings: [],
         menuList: communityMenu,
         activePost: 'community',
+        version: newestVersion,
       },
     });
   });
@@ -699,6 +758,74 @@ const generateDocHome = (
   });
 };
 
+const generateBootcamp = (
+  createPage,
+  {
+    nodes: bootcampData,
+    template: docTemplate,
+    allMenus,
+    allApiMenus,
+    versions,
+    newestVersion,
+    versionsWithHome,
+  }
+) => {
+  versions.map(version => {
+    return bootcampData.forEach(({ language, data, path }) => {
+      const isBlog = checkIsblog(path);
+      const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
+
+      if (version === newestVersion) {
+        const bootcampPath = getNewestVersionHomePath(language, 'bootcamp');
+        createPage({
+          path: bootcampPath,
+          component: docTemplate,
+          context: {
+            bootcampData: data,
+            locale: language,
+            versions: Array.from(versions),
+            newestVersion,
+            version: newestVersion,
+            old: 'home',
+            fileAbsolutePath: path,
+            isBlog,
+            editPath,
+            allMenus,
+            newHtml: null,
+            allApiMenus,
+            isVersionWithHome: versionsWithHome.includes(version),
+          },
+        });
+      }
+
+      const bootcampPath = getNormalVersionHomePath(
+        version,
+        language,
+        'bootcamp'
+      );
+      createPage({
+        path: bootcampPath,
+        component: docTemplate,
+        context: {
+          bootcampData: data,
+          locale: language,
+          versions: Array.from(versions),
+          newestVersion,
+          version,
+          old: 'home',
+          fileAbsolutePath: path,
+          isBlog,
+          editPath,
+          allMenus,
+          newHtml: null,
+          allApiMenus,
+          isVersionWithHome: versionsWithHome.includes(version),
+        },
+      });
+    });
+  });
+};
+
 /**
  * create doc pages from markdown nodes
  * @param {function} createPage gatsby createPage action
@@ -799,6 +926,7 @@ module.exports = {
   getVersionsWithHome,
   generateAllMenus,
   generateHomeData,
+  generateBootcampData,
   filterMdWithVersion,
   handleCommunityData,
   initGlobalSearch,
@@ -807,5 +935,6 @@ module.exports = {
   generateApiMenus,
   generateApiReferencePages,
   generateDocHome,
+  generateBootcamp,
   generateAllDocPages,
 };

@@ -506,7 +506,6 @@ const generateCommunityPages = (
         menuList: communityMenu,
         homeData: null,
         activePost: fileId,
-        version: newestVersion,
       },
     });
   });
@@ -533,7 +532,6 @@ const generateCommunityHome = (
         headings: [],
         menuList: communityMenu,
         activePost: 'community',
-        version: newestVersion,
       },
     });
   });

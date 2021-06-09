@@ -6,7 +6,6 @@ import close from '../../../images/v2/close.svg';
 import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
 import { useMobileScreen } from '../../../hooks';
-
 import MobilePopup from '../components/MobilePopupV2';
 import Search from '../components/Search';
 import { Link } from 'gatsby';
@@ -14,18 +13,19 @@ import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
-import SecondHeader from './secondHeader';
 import LangSelector from '../../selector/v2';
+import { LANGUAGES } from './constants';
+import git from '../../../images/v2/github.svg';
 
 const navList = [
   {
     label: 'What is milvus?',
     link: '/docs/overview.md',
-    isExternal: false,
+    isExternal: false
   },
   {
     label: 'Documentation',
-    link: `/docs/home`,
+    link: '/docs/home',
     isExternal: false,
   },
   {
@@ -34,47 +34,25 @@ const navList = [
     isExternal: true,
   },
   {
+    label: 'Contribute',
+    link: '/community',
+    isExternal: false,
+  },
+  {
     label: 'Github',
     link: 'https://github.com/milvus-io/milvus/',
     isExternal: true,
+    icon: git
   },
 ];
 
-const tabList = [
-  {
-    label: 'Developer Docs',
-    href: '/docs/home',
-    id: 1,
-  },
-  {
-    label: 'Bootcamp',
-    href: '/bootcamp',
-    id: 2,
-  },
-  {
-    label: 'Community',
-    href: '/community',
-    id: 3,
-  },
-];
 
-const languageList = [
-  {
-    label: '中文',
-    value: 'cn',
-  },
-  {
-    label: 'English',
-    value: 'en',
-  },
-];
-
-const V2Header = ({
-  type = 'home',
-  isSecondHeader,
-  className = '',
-  locale,
-}) => {
+const V2Header = props => {
+  const {
+    type = 'home',
+    className = '',
+    locale,
+  } = props;
   const { pathname } = globalHistory.location;
   const { isMobile } = useMobileScreen();
 
@@ -96,6 +74,16 @@ const V2Header = ({
   useClickOutside(container, () => {
     hideMask();
   });
+
+  const LinkContent = ({ label, icon }) => (
+    <>
+      {
+        icon ? (
+          <img className={styles.img} src={icon} alt="github" />
+        ) : label
+      }
+    </>
+  );
 
   return (
     <header className={`${styles.header} ${className}`} ref={headContainer}>
@@ -121,7 +109,7 @@ const V2Header = ({
               </div>
               <div className={styles.navSection}>
                 {navList.map(i => {
-                  const { label, link, isExternal } = i;
+                  const { label, link, isExternal, icon } = i;
                   return isExternal ? (
                     <a
                       className={styles.navItem}
@@ -130,22 +118,21 @@ const V2Header = ({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {label}
+                      <LinkContent label={label} icon={icon} />
                     </a>
                   ) : (
                     <Link
-                      className={`${styles.navItem} ${
-                        pathname === link ? styles.active : ''
-                      }`}
+                      className={`${styles.navItem} ${pathname === link ? styles.active : ''
+                        }`}
                       to={link}
                       key={label}
                     >
-                      {label}
+                      <LinkContent label={label} icon={icon} />
                     </Link>
                   );
                 })}
                 <div className={styles.dropDown}>
-                  <LangSelector options={languageList} locale={locale} />
+                  <LangSelector options={LANGUAGES} locale={locale} />
                 </div>
               </div>
             </div>
@@ -203,7 +190,7 @@ const V2Header = ({
               >
                 {openType === 'menu' ? (
                   <Menu
-                    options={languageList}
+                    options={LANGUAGES}
                     navList={navList}
                     locale={locale}
                   />
@@ -215,14 +202,6 @@ const V2Header = ({
           )}
         </div>
       </div>
-      {isSecondHeader && !open ? (
-        <SecondHeader
-          tabList={tabList}
-          isMobile={isMobile}
-          styles={styles}
-          locale={locale}
-        />
-      ) : null}
     </header>
   );
 };

@@ -9,8 +9,6 @@ import storageIcon from '../images/v2/storage.svg';
 import supportIcon from '../images/v2/support.svg';
 import GithubButton from 'react-github-button';
 import './index.less';
-import AnimatedSvg from '../components/animatedSvg/animatedSvg';
-import { HOME_ANIMATION as HomeAnimation } from '../../static/anime/common/home';
 import Seo from '../components/seo';
 
 const icons = {
@@ -25,7 +23,8 @@ const HomePage = ({ data, pageContext }) => {
   const {
     header,
     banner,
-    content: { title, list, slogan },
+    slogan,
+    content: { title, list, community },
     footer,
   } = data.allFile.edges.filter(
     edge => edge.node.childI18N
@@ -54,6 +53,7 @@ const HomePage = ({ data, pageContext }) => {
                   repo="milvus"
                 />
               </div>
+              <p className="sub-title">{banner.subTitle}</p>
               <div className="title-wrapper">
                 {banner.title.map(item => (
                   <p className="title" key={item}>
@@ -69,7 +69,7 @@ const HomePage = ({ data, pageContext }) => {
                   link={banner.startBtn.href}
                   children={
                     <>
-                      <span>{banner.startBtn.label}</span>
+                      <span className="btn-label">{banner.startBtn.label}</span>
                       <i className="fa fa-chevron-right"></i>
                     </>
                   }
@@ -81,21 +81,18 @@ const HomePage = ({ data, pageContext }) => {
                   link={banner.contributeBtn.href}
                   children={
                     <>
-                      <span>{banner.contributeBtn.label}</span>
+                      <span className="btn-label">{banner.contributeBtn.label}</span>
                       <i className="fas fa-pencil-alt"></i>
                     </>
                   }
                 />
               </div>
             </div>
-            <div className="banner-right">
-              <AnimatedSvg
-                data={HomeAnimation}
-                className="banner-right-anime"
-              />
-            </div>
-
-            <div className="banner-bg-container"></div>
+            <div className="banner-right"></div>
+          </div>
+          <div className="slogan">
+            <p className='text'>{slogan.text}</p>
+            <p className="author">{slogan.author}</p>
           </div>
           <div className="content">
             <p className="title-bar">
@@ -117,21 +114,21 @@ const HomePage = ({ data, pageContext }) => {
               })}
               <div className="bg-container"></div>
             </ul>
-            <div className="slogan-section">
+            <div className="community-section">
               <div className="wrapper">
                 <div className="text-wrapper">
-                  <p className="title">{slogan.title}</p>
-                  <p className="text">{slogan.text1}</p>
-                  <p className="text ">{slogan.text2}</p>
+                  <p className="title">{community.title}</p>
+                  <p className="text">{community.text1}</p>
+                  <p className="text ">{community.text2}</p>
                 </div>
 
                 <Button
-                  className="sloganBtn"
+                  className="communityBtn"
                   type="link"
-                  link={slogan.gitBtn.href}
+                  link={community.gitBtn.href}
                   children={
                     <>
-                      <span>{slogan.gitBtn.label}</span>
+                      <span>{community.gitBtn.label}</span>
                       <i className="fa fa-chevron-right"></i>
                     </>
                   }
@@ -152,14 +149,9 @@ export const Query = graphql`
         node {
           childI18N {
             v2 {
-              header {
-                navlist {
-                  label
-                  href
-                }
-              }
               banner {
                 title
+                subTitle
                 text
                 startBtn {
                   href
@@ -170,6 +162,10 @@ export const Query = graphql`
                   label
                 }
               }
+              slogan {
+                text,
+                author
+              }
               content {
                 title
                 list {
@@ -177,7 +173,7 @@ export const Query = graphql`
                   text
                   img
                 }
-                slogan {
+                community {
                   title
                   text1
                   text2

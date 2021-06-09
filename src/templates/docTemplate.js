@@ -3,14 +3,16 @@ import Layout from '../components/docLayout';
 import Seo from '../components/seo';
 import { graphql } from 'gatsby';
 import ReactTooltip from 'react-tooltip';
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/github-dark.css';
 import './docTemplate.less';
 import { useMobileScreen } from '../hooks';
+import useAlgolia from '../hooks/use-algolia';
 import QueryModal from '../components/query-modal/query-modal';
 import { sortVersions } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
+import BootcampTemplate from '../components/bootcampTemplate';
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
 import { useSelectMenu } from '../hooks/select-menu';
 import { useGenAnchor } from '../hooks/doc-anchor';
@@ -30,10 +32,10 @@ export default function Template({
     editPath,
     newHtml,
     homeData,
+    bootcampData,
     allApiMenus,
     newestVersion,
   } = pageContext;
-
   versions = versions.sort(sortVersions);
 
   const { isMobile } = useMobileScreen();
@@ -70,29 +72,7 @@ export default function Template({
     };
   }, [isMobile]);
 
-  useEffect(() => {
-    // if not setTimeout, will throw render error
-    setTimeout(() => {
-      window.docsearch({
-        // Your apiKey and indexName will be given to you once
-        // we create your config
-        apiKey: '2dabff78331a44e47bedeb5fbd68ae70',
-        indexName: 'milvus',
-        //appId: '<APP_ID>', // Should be only included if you are running DocSearch on your own.
-        // Replace inputSelector with a CSS selector
-        // matching your search input
-        inputSelector: '#algolia-search',
-        // Set debug to true to inspect the dropdown
-        debug: false,
-        algoliaOptions: {
-          facetFilters: [
-            `language:${locale === 'cn' ? 'zh-cn' : locale}`,
-            `version:${version}`,
-          ],
-        },
-      });
-    }, 100);
-  }, [locale, version]);
+  useAlgolia(locale, version);
 
   if (!data.allFile.edges[0]) {
     return null;
@@ -100,9 +80,6 @@ export default function Template({
 
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.layout
-    : {};
-  const v2 = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childI18N.v2
     : {};
 
   const menuList = allMenus.find(
@@ -173,7 +150,6 @@ export default function Template({
       isBlog={isBlog}
       isHome={newHtml === null}
       editPath={editPath}
-      header={v2}
       allApiMenus={allApiMenus}
     >
       <Seo title={title} lang={locale} version={version} />
@@ -201,6 +177,8 @@ export default function Template({
         <>
           {homeData ? (
             <HomeTemplate data={homeData} version={version} />
+          ) : bootcampData ? (
+            <BootcampTemplate data={bootcampData} locale={locale} />
           ) : (
             <div className="doc-post-container">
               <>
@@ -265,7 +243,7 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query($locale: String, $old: String, $fileAbsolutePath: String) {
+  query ($locale: String, $old: String, $fileAbsolutePath: String) {
     markdownRemark(
       fileAbsolutePath: { eq: $fileAbsolutePath }
       frontmatter: { id: { eq: $old } }
@@ -286,14 +264,6 @@ export const pageQuery = graphql`
           relativeDirectory
 
           childI18N {
-            v2 {
-              header {
-                navlist {
-                  label
-                  href
-                }
-              }
-            }
             layout {
               header {
                 quick

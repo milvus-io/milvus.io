@@ -1,10 +1,9 @@
 import React from 'react';
-import { graphql } from 'gatsby';
-import BannerCard from '../../components/card/bannerCard';
-import LinkCard from '../../components/card/linkCard';
-import SolutionCard from '../../components/card/solutionCard';
+import BannerCard from '../card/bannerCard';
+import LinkCard from '../card/linkCard';
+import SolutionCard from '../card/solutionCard';
 import banner from '../../images/doc-home/banner.jpg';
-import Seo from '../../components/seo';
+import Seo from '../seo';
 import imageSearch from '../../images/doc-home/image_search.svg';
 import audioSearch from '../../images/doc-home/audio-search.svg';
 import hybrid from '../../images/doc-home/hybrid.svg';
@@ -12,7 +11,7 @@ import molecular from '../../images/doc-home/molecular.svg';
 import questionAnswering from '../../images/doc-home/question_answering.svg';
 import recommend from '../../images/doc-home/recommend.svg';
 import videoSearch from '../../images/doc-home/video-search.svg';
-import Header from '../../components/header/v2';
+import Header from '../header/v2';
 import * as styles from './index.module.less';
 
 const Icons = {
@@ -25,18 +24,14 @@ const Icons = {
   HYBRID: hybrid,
 };
 
-const BootcampTemplat = ({ data, pageContext }) => {
-  const { locale } = pageContext;
-  const { title, description, section1, section2, section3 } =
-    locale === 'en'
-      ? data.allBootcamp.nodes[0].data.en
-      : data.allBootcamp.nodes[0].data.cn;
+const BootcampTemplate = ({ data, locale }) => {
+  const { title, description, section1, section2, section3 } = data;
   const [title1, content1] = [section1.title, section1.content];
   const [title2, content2] = [section2.title, section2.content];
   const [title3, content3] = [section3.title, section3.content];
   return (
     <div className={styles.bootcampContainer}>
-      <Header type="doc" isSecondHeader={true} locale={locale} />
+      <Header type="doc" locale={locale} />
       <Seo title={title} lang={locale} />
       <main className={styles.mainContainer}>
         <div className={styles.container}>
@@ -100,71 +95,4 @@ const BootcampTemplat = ({ data, pageContext }) => {
   );
 };
 
-export default BootcampTemplat;
-
-export const pageQuery = graphql`
-  query bootcampQuery {
-    allBootcamp {
-      nodes {
-        data {
-          en {
-            title
-            description
-            section1 {
-              title
-              content {
-                link
-                title
-              }
-            }
-            section2 {
-              title
-              content {
-                link
-                title
-                desc
-              }
-            }
-            section3 {
-              title
-              content {
-                link
-                title
-                desc
-                iconType
-              }
-            }
-          }
-          cn {
-            title
-            description
-            section1 {
-              title
-              content {
-                link
-                title
-              }
-            }
-            section2 {
-              title
-              content {
-                link
-                title
-                desc
-              }
-            }
-            section3 {
-              title
-              content {
-                link
-                title
-                desc
-                iconType
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+export default BootcampTemplate;

@@ -330,26 +330,41 @@
     "header": {
       "navlist": [
         {
-          "label": "What is milvus?",
-          "href": "#"
+          "label": "什么是 milvus?",
+          "link": "/docs/overview.md",
+          "isExternal": false,
+          "icon": null
         },
         {
-          "label": "Documentation",
-          "href": "/docs/install_milvus.md"
+          "label": "文档",
+          "link": "/docs/home",
+          "isExternal": false,
+          "icon": null
         },
         {
-          "label": "Blog",
-          "href": "https://blog.milvus.io/"
+          "label": "博客",
+          "link": "https://blog.milvus.io/",
+          "isExternal": true,
+          "icon": null
+        },
+        {
+          "label": "社区",
+          "link": "/community",
+          "isExternal": false,
+          "icon": null
         },
         {
           "label": "Github",
-          "href": "https://github.com/milvus-io/milvus/"
+          "link": "https://github.com/milvus-io/milvus/",
+          "isExternal": true,
+          "icon": "git"
         }
       ]
     },
     "banner": {
       "title": ["High Scalability.", "Cloud-Native.", "High Availability."],
-      "text": "Milvus2.0: The world's most popular open-source vector database.",
+      "subTitle": "Milvus2.0",
+      "text": "The world's most popular open-source vector database.",
       "startBtn": {
         "href": "/docs/install_milvus.md",
         "label": "Get Started"
@@ -358,6 +373,10 @@
         "href": "https://github.com/milvus-io",
         "label": "Contribute"
       }
+    },
+    "slogan": {
+      "text": "We have literally been unable to kill this thing. No matter what we’ve thrown at it.",
+      "author": "by Mi.Alato"
     },
     "content": {
       "title": "Features",
@@ -388,7 +407,7 @@
           "img": "storage"
         }
       ],
-      "slogan": {
+      "community": {
         "title": "Join the community",
         "text1": "Milvus is open-sourced on GitHub.",
         "text2": "Contributions and feedbacks are welcome!",

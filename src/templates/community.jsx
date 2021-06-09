@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import Header from '../components/header/v2';
 import './community.less';
 import CommunityHeroCard from '../components/card/communityHeroCard/communityHeroCard';
 import Sidebar from '../components/sidebar/sidebar';
 import mailIcon from '../images/community/mail.png';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
+
 
 export default function CommunityTemplate({ data, pageContext }) {
   // i18n
@@ -122,14 +123,15 @@ export default function CommunityTemplate({ data, pageContext }) {
 
   return (
     <section className="community-wrapper">
-      <Header isSecondHeader={true} locale={locale} />
-      <SEO title={title} lang={locale} description={desc} />
+      <Header locale={locale} />
+      <Seo title={title} lang={locale} description={desc} />
       <main>
         <Sidebar
           locale={locale}
           showSearch={false}
           wrapperClass="sidebar"
           menuConfig={menuConfig}
+          searchConfig={{ placeholder: 'search' }}
         />
         {isHomePage ? (
           <section className="content home">

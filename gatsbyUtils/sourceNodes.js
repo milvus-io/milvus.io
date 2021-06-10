@@ -343,6 +343,9 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
         [...doc.querySelectorAll('pre')].forEach(node => {
           node.innerHTML = `<code>${node.innerHTML}</code>`;
         });
+        [...doc.querySelectorAll('a')].forEach(node => {
+          !node.textContent.split('\n').join('') && node?.remove();
+        });
         // only need article body html
         doc = doc.querySelector('body > main').innerHTML;
         getFileRelativePath(filePath, version).includes('exception')

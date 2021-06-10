@@ -4,7 +4,6 @@
 .menuContainer {
   box-sizing: border-box;
   color: #fafafa;
-  overflow: auto;
   line-height: 1.2rem;
 
   background-color: #fff;
@@ -143,7 +142,7 @@
     transition: max-height 0.3s;
 
     &.open {
-      max-height: 500px;
+      max-height: max-content;
       background-color: #fff;
     }
 
@@ -168,6 +167,8 @@
 
       .text {
         font-family: Inter;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
       }
 
       &:hover {

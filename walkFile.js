@@ -55,7 +55,9 @@ const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
     const go =
       content?.milvus_go_sdk_version &&
       `v${content?.milvus_go_sdk_version}`;
-    result = { pymilvus, go };
+    const java = content?.milvus_java_sdk_version &&
+    `v${content?.milvus_java_sdk_version}`;
+    result = { pymilvus, go, java };
   }
   fileObj[parent] = fileObj[parent]
     ? { ...fileObj[parent], ...result }

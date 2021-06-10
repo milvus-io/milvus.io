@@ -101,8 +101,13 @@ exports.onCreatePage = ({ page, actions }) => {
 // APIReference page: generate source for api reference html
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions;
-  const { generateNodes, handlePyFiles, handlePyOrmFiles, handleGoFiles } =
-    sourceNodesUtils;
+  const {
+    generateNodes,
+    handlePyFiles,
+    handlePyOrmFiles,
+    handleGoFiles,
+    handleJavaFiles,
+  } = sourceNodesUtils;
 
   const dirPath = `src/pages/docs/versions/master/APIReference`;
   // read categories, such as pymilvus and pymilvus-orm
@@ -126,6 +131,11 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
       case 'milvus-sdk-go':
         for (let version of versions) {
           handleGoFiles(path, version, nodes);
+        }
+        break;
+      case 'milvus-sdk-java':
+        for (let version of versions) {
+          handleJavaFiles(path, version, nodes);
         }
         break;
       default:

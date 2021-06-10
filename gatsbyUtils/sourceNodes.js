@@ -354,10 +354,11 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
           '.header .packageHierarchyLabel'
         );
         // remove packageHierarchyLabel and it's description if exists
-        packageHierarchyLabel &&
-          (doc.querySelector('.header span')?.remove() ||
-            doc.querySelector('.header ul')?.remove() ||
-            packageHierarchyLabel.remove());
+        if (packageHierarchyLabel) {
+          doc.querySelector('.header span')?.remove();
+          doc.querySelector('.header ul')?.remove();
+          packageHierarchyLabel.remove();
+        }
         // only need article body html
         doc = doc.querySelector('body > main').innerHTML;
         getFileRelativePath(filePath, version).includes('exception')

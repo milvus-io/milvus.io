@@ -13,6 +13,7 @@ import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
 import BootcampTemplate from '../components/bootcampTemplate';
+import RelatedQuestion from '../components/relatedQuestion'
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
 import { useSelectMenu } from '../hooks/select-menu';
 import { useGenAnchor } from '../hooks/doc-anchor';
@@ -35,6 +36,7 @@ export default function Template({
     bootcampData,
     allApiMenus,
     newestVersion,
+    relatedKey,
   } = pageContext;
   versions = versions.sort(sortVersions);
 
@@ -211,6 +213,7 @@ export default function Template({
                     ref={docRef}
                     dangerouslySetInnerHTML={{ __html: newHtml }}
                   />
+                  <RelatedQuestion relatedKey={relatedKey} layout={layout} />
                   <ReactTooltip
                     type="info"
                     // place="right"
@@ -283,6 +286,33 @@ export const pageQuery = graphql`
                 bootcamp
               }
               footer {
+                faq {
+                  contact {
+                    slack {
+                      label
+                      link
+                    }
+                    github {
+                      label
+                      link
+                    }
+                    follow {
+                      label
+                    }
+                    dialog {
+                      desc
+                      placeholder1
+                      placeholder2
+                      submit
+                      title
+                      invalid
+                    }
+                    title
+                  }
+                  question {
+                    title
+                  }
+                }
                 editBtn {
                   label
                 }

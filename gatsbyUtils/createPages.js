@@ -19,6 +19,7 @@ const query = `
         }
         frontmatter {
           id
+          related_key
           keywords
         }
         fileAbsolutePath
@@ -881,6 +882,7 @@ const generateAllDocPages = (
   legalMd.forEach(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
     const fileId = node.frontmatter.id;
+    const relatedKey = node.frontmatter.related_key;
     let version = findVersion(fileAbsolutePath) || 'master';
 
     const fileLang = findLang(fileAbsolutePath);
@@ -925,6 +927,7 @@ const generateAllDocPages = (
           homeData: null,
           isVersionWithHome: versionsWithHome.includes(newestVersion),
           allApiMenus,
+          relatedKey,
         }, // additional data can be passed via context
       });
     }
@@ -950,6 +953,7 @@ const generateAllDocPages = (
         homeData: null,
         isVersionWithHome: versionsWithHome.includes(version),
         allApiMenus,
+        relatedKey,
       }, // additional data can be passed via context
     });
   });

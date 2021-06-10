@@ -1,0 +1,188 @@
+@import '../../css/variables/responsive.less';
+@import '../../css/variables/color.less';
+
+.robot {
+  bottom: 60px;
+  position: fixed;
+  right: 90px;
+
+  .openBtn {
+    background-color: transparent;
+    background-image: url(../../images/v2/icon_bird.svg);
+    background-size: cover;
+    border: 0;
+    bottom: 0;
+    cursor: pointer;
+    font-size: 50px;
+    height: 75px;
+    position: absolute;
+    right: 0;
+    width: 75px;
+
+    &.close {
+      background-image: url(../../images/v2/close.svg);
+      border: 1px solid #EEEEEE;
+      border-radius: 50%;
+      bottom: 0;
+      position: absolute;
+      right: 0;
+    }
+  }
+
+  .dialog {
+    bottom: 95px;
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px 10px #888888;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    max-height: 600px;
+    position: absolute;
+    right: 0;
+    width: 400px;
+    
+    .logo {
+      filter: brightness(0) saturate(100%) invert(100%) sepia(11%) saturate(8%) hue-rotate(154deg) brightness(102%) contrast(102%);
+      height: 18px;
+      margin-left: 8px;
+      vertical-align: baseline;
+    }
+    
+    .dialogHeader {
+      background-color: @color-primary;
+      border-radius: 8px 8px 0 0;
+      color: white;
+      font-family: 'SF Pro Text';
+      font-size: 12px;
+      font-weight: 600;
+      height: 50px;
+      padding: 16px;
+    }
+
+    .dialogContent {
+      background-color: #F9F9F9;
+      border-left: 1px solid #EEEEEE;
+      border-right: 1px solid #EEEEEE;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      padding: 15px;
+      overflow-y: auto;
+
+      .myChat {
+        align-self: flex-end;
+        background-color: @color-primary;
+        border-radius: 4px;
+        color: white;
+        font-size: 14px;
+        padding: 10px;
+        max-width: 250px;
+        margin: 8px 0;
+        word-break: break-all;
+      }
+
+      .serverChat {
+        align-self: flex-start;
+        display: flex;
+        flex-direction: row;
+        font-family: 'Inter';
+        margin: 8px 0;
+        width: 270px;
+
+        & > img {
+          height: 25px;
+          margin-right: 8px;
+          width: 25px;
+        }
+
+        & > div {
+          background-color: white;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          padding: 10px;
+
+          & > button {
+            align-self: flex-end;
+          }
+        }
+
+        button {
+            background: transparent;
+            border: 0;
+            display: flex;
+            color: @color-primary;
+            font-family: 'Inter';
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+            padding: 0;
+            cursor: pointer;
+          }
+
+        i {
+            font-size: 16px;
+            margin-left: 10px;
+            vertical-align: middle;
+          }
+
+        .chatCard {
+          align-self: flex-start;
+          border-bottom: 1px solid #EEEEEE;
+          display: flex;
+          flex-direction: column;
+          line-height: 16px;
+          padding: 8px 0;
+          width: 100%;
+          word-break: break-word;
+          
+          
+          .chatTitle {
+            font-weight: 600;
+            margin-bottom: 8px;
+          }
+
+          &:last-child {
+            border-bottom: 0;
+          }
+
+          a {
+            color: @color-primary;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+          }
+        }
+      }
+      
+    }
+
+    .dialogInput {
+      border: 1px solid #EEEEEE;
+      border-radius: 0 0 8px 8px;
+      position: relative;
+      height: 50px;
+
+      input {
+        border: 0;
+        border-radius: 8px;
+        font-size: 14px;
+        height: 100%;
+        padding: 13px 18px;
+        width: 100%;
+      }
+      
+      button {
+        background: transparent;
+        background-image: url(../../images/v2/icon_send.svg);
+        background-size: cover;
+        border: 0;
+        height: 22px;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 22px;
+      }
+    }
+  }
+}

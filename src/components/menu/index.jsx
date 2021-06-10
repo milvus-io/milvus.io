@@ -68,7 +68,7 @@ const Menu = props => {
       //? Here just for show pymilvus-orm left menu when doc version is 'v1.1.0'
       if (menu?.category === 'pymilvus-orm') menu.docVersion = 'v1.1.0';
       //? ^^^^^^
-      if (menu?.isMenu) {
+      if (menu?.isMenu && !menu?.label2) {
         menu?.id === 'api_reference'
           ? rootMenu.push(menu)
           : secondLevelMenus.push(menu);

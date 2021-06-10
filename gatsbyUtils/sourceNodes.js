@@ -336,7 +336,9 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
       if (filePath.endsWith('.html')) {
         let doc = HTMLParser.parse(fs.readFileSync(filePath));
         // remove see also
-        doc.querySelector('.contentContainer .description dl:last-child')?.remove();
+        doc
+          .querySelector('.contentContainer .description dl:last-child')
+          ?.remove();
         [...doc.querySelectorAll('table')].forEach(element => {
           element.querySelector('caption')?.remove();
         });
@@ -348,6 +350,14 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
         });
         const title = doc.querySelector('.header .title');
         title?.replaceWith(`<h1 class="title">${title.textContent}</h1>`);
+        const packageHierarchyLabel = doc.querySelector(
+          '.header .packageHierarchyLabel'
+        );
+        // remove packageHierarchyLabel and it's description if exists
+        packageHierarchyLabel &&
+          (doc.querySelector('.header span')?.remove() ||
+            doc.querySelector('.header ul')?.remove() ||
+            packageHierarchyLabel.remove());
         // only need article body html
         doc = doc.querySelector('body > main').innerHTML;
         getFileRelativePath(filePath, version).includes('exception')

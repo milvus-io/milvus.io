@@ -566,7 +566,7 @@ const generateTitle = ({
     go: 'Milvus Go SDK',
     java: 'Milvus Java SDK',
   };
-  const [, label2 = '',] = labels;
+  const [, label2 = ''] = labels;
   // Return name if the menu is a 3rd level menu(such as: API => java => exception)
   // Return category name if the menu is a 1st or 2nd level menu(such as: API, API => java)
   let prettierCategory = label2
@@ -592,19 +592,33 @@ const generateTitle = ({
  * @returns {array} filtered and formatted api menus
  */
 const generateApiMenus = nodes => {
+  /**
+   * Calculate the order of menu item. 0 is default.
+   * @param {object} param0 Data to calculate item order.
+   * @returns {number} Order.(-1 is first of all, then 0, 1, 2 ...)
+   */
+  const calculateOrder = ({ category, name = '' }) => {
+    // java > package-tree.html & package-summary.html should be first.
+    if (category === 'java' && name.includes('package-')) return -1;
+    return 0;
+  };
   return nodes.reduce(
     (prev, item) => {
       // docVersion may be empty string
       const { name, category, version, docVersion, labels, isDirectory } = item;
       const [label1 = 'api_reference', label2 = '', label3 = ''] = labels;
       const menuItem = {
-        id: name,
+        // Use "_" instead of "-" in both api menu's id and api page's name.
+        // Due to a search algorithm use the word splited by "-".
+        // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
+        // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
+        id: name.replace('-', '_'),
         title: generateTitle({ name, category, isDirectory, labels }),
         lang: null,
         label1,
         label2,
         label3,
-        order: 0,
+        order: calculateOrder({ category, name }),
         isMenu: isDirectory,
         outLink: null,
         isApiReference: true,
@@ -673,7 +687,11 @@ const generateApiReferencePages = (
           doc,
           linkId,
           hrefs,
-          name,
+          // Use "_" instead of "-" in both api menu's id and api page's name.
+          // Due to a search algorithm use the word splited by "-".
+          // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
+          // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
+          name: name.replace('-', '_'),
           allApiMenus,
           allMenus,
           version,
@@ -694,7 +712,7 @@ const generateApiReferencePages = (
           doc,
           linkId,
           hrefs,
-          name,
+          name: name.replace('-', '_'),
           allApiMenus,
           allMenus,
           version,

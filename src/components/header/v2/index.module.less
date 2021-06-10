@@ -8,7 +8,7 @@
   top: 0;
   padding: 16px 26px 0;
   z-index: 3;
-  background-color: #fafafa;
+  background-color: #fff;
 
   @media @tablet {
     padding: 16px 16px 0;
@@ -47,7 +47,14 @@
         font-size: 16px;
         font-weight: 500;
         line-height: 24px;
+        height: 24px;
         color: @color-default-link;
+
+        .img {
+          width: 24px;
+          height: 24px;
+          font-size: 0;
+        }
 
         &:hover {
           color: @color-primary;

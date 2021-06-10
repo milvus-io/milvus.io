@@ -36,7 +36,7 @@
     font-size: 36px;
     line-height: 40px;
     margin-bottom: 24px;
-    margin-top: 48px;
+    margin-top: 32px;
 
     @media @tablet {
       margin-top: 0px;
@@ -92,6 +92,7 @@
     margin-bottom: 24px;
     border-radius: 4px;
     background-color: @pre-bg-color-dark;
+    padding: 8px;
 
     @media @tablet {
       margin-bottom: 16px;
@@ -105,6 +106,7 @@
       font-family: 'Source Code Pro' !important;
       border: none;
       color: #fff;
+      background-color: @pre-bg-color-dark;
     }
   }
 
@@ -231,8 +233,7 @@
       font-size: 14px;
       line-height: 22px;
       text-align: left;
-      // display: block;
-      // margin-bottom: 8px;
+      background-color: #e8e8e8;
 
       th {
         padding: 12px;
@@ -245,8 +246,6 @@
       line-height: 1.4em;
       text-align: left;
       padding: 12px;
-      // display: block;
-      // margin-top: 24px;
 
       @media @tablet {
         font-size: 14px;
@@ -254,6 +253,9 @@
 
       tr {
         border-bottom: 1px solid #eee;
+        &:hover {
+          background-color: #e8e8e8;
+        }
       }
 
       td {

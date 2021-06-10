@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LocalizeLink from '../localizedLink/localizedLink';
 import Menu from '../menu/index';
 import * as styles from './sidebar.module.less';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import Selector from '../selector';
+
 
 const Sidebar = props => {
   const {
@@ -20,7 +21,7 @@ const Sidebar = props => {
 
   const { placeholder } = searchConfig || {};
   const {
-    // versions,
+    versions,
     version,
     homeTitle,
   } = versionConfig || {};
@@ -51,9 +52,8 @@ const Sidebar = props => {
   return (
     <>
       <aside
-        className={`${wrapperClass} ${styles.wrapper} ${
-          !mobileSidebarOpened ? styles.hide : ''
-        }`}
+        className={`${wrapperClass} ${styles.wrapper} ${!mobileSidebarOpened ? styles.hide : ''
+          }`}
       >
         {showSearch && (
           <section className={styles.searchWrapper}>
@@ -70,7 +70,7 @@ const Sidebar = props => {
             <LocalizeLink className={styles.link} locale={locale} to={homePath}>
               {homeTitle}
             </LocalizeLink>
-            {/* @TODO: add new version selector */}
+            <Selector options={versions} locale={locale} selected={version} isVersion={true} />
           </section>
         )}
         {showMenu && (
@@ -113,6 +113,8 @@ Sidebar.propTypes = {
   showVersions: PropTypes.bool,
   showMenu: PropTypes.bool,
   menuConfig: PropTypes.object,
+  // {versions, version, hometitle}
+  versionConfig: PropTypes.object,
   searchConfig: PropTypes.object,
 };
 

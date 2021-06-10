@@ -156,6 +156,7 @@ exports.createPages = async ({ actions, graphql }) => {
     query,
     generateAllMenus,
     generateHomeData,
+    generateBootcampData,
     filterMdWithVersion,
     handleCommunityData,
     initGlobalSearch,
@@ -164,6 +165,7 @@ exports.createPages = async ({ actions, graphql }) => {
     generateApiMenus,
     generateApiReferencePages,
     generateDocHome,
+    generateBootcamp,
     generateAllDocPages,
     getVersionsWithHome,
   } = createPagesUtils;
@@ -182,6 +184,7 @@ exports.createPages = async ({ actions, graphql }) => {
     const allMenus = generateAllMenus(result.data.allFile.edges);
     // get new doc index page data
     const homeData = generateHomeData(result.data.allFile.edges);
+    const bootcampData = generateBootcampData(result.data.allFile.edges);
     const versionsWithHome = getVersionsWithHome(homeData);
     // filter useless md file blog has't version
     const legalMd = filterMdWithVersion(result.data.allMarkdownRemark.edges);
@@ -224,6 +227,17 @@ exports.createPages = async ({ actions, graphql }) => {
       versions,
       newestVersion,
     });
+
+    generateBootcamp(createPage, {
+      nodes: bootcampData,
+      template: docTemplate,
+      allMenus,
+      allApiMenus,
+      versions,
+      newestVersion,
+      versionsWithHome,
+    });
+
     generateAllDocPages(createPage, {
       nodes: legalMd,
       template: docTemplate,

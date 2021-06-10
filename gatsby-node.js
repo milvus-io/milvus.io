@@ -6,8 +6,8 @@ const express = require('express');
 const createPagesUtils = require('./gatsbyUtils/createPages');
 const sourceNodesUtils = require('./gatsbyUtils/sourceNodes');
 
-// const env = process.env.IS_PREVIEW;
-const env = 'preview';
+const env = process.env.IS_PREVIEW;
+// const env = 'preview';
 console.log('========env========', env);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(

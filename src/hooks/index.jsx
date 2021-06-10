@@ -41,9 +41,23 @@ export const useSelectMenu = (setOptions, ref, locale) => {
   // left menu width: 250; right anchor width: 280; doc padding: 64px
   const maxLineWidth = docWrapWidth - 280 - 250 - 64 - 8;
 
+  const disabledClass = {
+    alert: 'alert',
+    hljs: 'hljs'
+  };
   const selectHandler = e => {
-    const { nodeName } = e.target;
-    if (nodeName === 'H1') return;
+    const { nodeName, classList } = e.target;
+    if (nodeName === 'H1' || [].some.call(classList, (item) => disabledClass[item] !== null)) {
+      setOptions({
+        styles: {
+          visibility: 'hidden',
+          zIndex: -1,
+          transform: `translateX(0,0)`,
+        },
+        copy: '',
+      });
+      return;
+    };
     if (innerContainer) {
       scrollTop = innerContainer.scrollTop;
     }
@@ -75,7 +89,6 @@ export const useSelectMenu = (setOptions, ref, locale) => {
       translateX = left - offsetLeft + (realWidth - menuWidth) / 2;
 
     } else {
-      console.log(left);
       translateX = left;
     }
     if (translateX < 32) {
@@ -115,6 +128,7 @@ export const useSelectMenu = (setOptions, ref, locale) => {
 
   useEffect(() => {
     const ele = ref.current;
+    if (!ele) return;
     ele.addEventListener('mouseup', selectHandler, false);
     ele.addEventListener(
       'selectionchange',
@@ -122,6 +136,7 @@ export const useSelectMenu = (setOptions, ref, locale) => {
       false
     );
     return () => {
+      if (!ele) return;
       ele.removeEventListener('mouseup', selectHandler, false);
       ele.removeEventListener(
         'selectionchange',

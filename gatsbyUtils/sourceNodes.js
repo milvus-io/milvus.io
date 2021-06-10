@@ -346,6 +346,8 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
         [...doc.querySelectorAll('a')].forEach(node => {
           !node.textContent.split('\n').join('') && node?.remove();
         });
+        const title = doc.querySelector('.header .title');
+        title?.replaceWith(`<h1 class="title">${title.textContent}</h1>`);
         // only need article body html
         doc = doc.querySelector('body > main').innerHTML;
         getFileRelativePath(filePath, version).includes('exception')

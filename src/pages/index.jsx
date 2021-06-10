@@ -10,6 +10,8 @@ import supportIcon from '../images/v2/support.svg';
 import GithubButton from 'react-github-button';
 import './index.less';
 import Seo from '../components/seo';
+import bgImg3 from '../images/v2/bg-img3.png';
+import contributor from '../images/v2/contributor.png';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -24,17 +26,17 @@ const HomePage = ({ data, pageContext }) => {
     header,
     banner,
     slogan,
-    content: { title, list, community },
+    content: { feature, user, community },
     footer,
   } = data.allFile.edges.filter(
     edge => edge.node.childI18N
   )[0].node.childI18N.v2;
+  console.log(data);
   const { locale, versions } = pageContext;
 
   return (
     <div className="home-page-container">
       <div className="page-content">
-        <div className="bg3-container"></div>
         <V2Layout
           header={header}
           footer={footer}
@@ -95,12 +97,12 @@ const HomePage = ({ data, pageContext }) => {
             <p className="author">{slogan.author}</p>
           </div>
           <div className="content">
-            <p className="title-bar">
-              <span className="title">{title}</span>
+            <h3 className="title-bar">
+              <span className="title">{feature.title}</span>
               <span className="line"></span>
-            </p>
+            </h3>
             <ul className="feature-section">
-              {list.map(i => {
+              {feature.list.map(i => {
                 const { img, text, title } = i;
                 return (
                   <li className="section-item" key={img}>
@@ -112,8 +114,30 @@ const HomePage = ({ data, pageContext }) => {
                   </li>
                 );
               })}
-              <div className="bg-container"></div>
+              <li className="section-item">
+                <img className='img' src={bgImg3} alt="" />
+              </li>
             </ul>
+            <div className="user-section">
+              <h3 className="title-bar">
+                <span className="title">{user.title}</span>
+                <span className="line"></span>
+              </h3>
+              <ul className="users-list">
+                {
+                  user.list.map(item => {
+                    const { name, link } = item;
+                    return (
+                      <li key={name} className="list-item">
+                        <a href={link} target="_blank" rel="noreferrer">
+                          <img src={contributor} alt="contributor" />
+                        </a>
+                      </li>
+                    );
+                  })
+                }
+              </ul>
+            </div>
             <div className="community-section">
               <div className="wrapper">
                 <div className="text-wrapper">
@@ -167,11 +191,20 @@ export const Query = graphql`
                 author
               }
               content {
-                title
-                list {
+                feature {
                   title
-                  text
-                  img
+                  list {
+                    title
+                    text
+                    img
+                  }
+                }
+                user {
+                  title
+                  list {
+                    name
+                    link
+                  }
                 }
                 community {
                   title

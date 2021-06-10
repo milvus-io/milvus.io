@@ -21,26 +21,40 @@ body {
     }
   }
 
-  .bg3-container {
-    position: absolute;
-    background: url(../images/v2/bg-img3.png) left top no-repeat;
-    background-size: 100% 100%;
-    width: 26%;
-    height: 0;
-    padding-bottom: 25%;
-    left: 50px;
-    top: 49%;
+  .title-bar {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 53px;
+    width: 33%;
+    display: flex;
 
     @media @tablet {
-      width: 43%;
-      height: 0;
-      padding-bottom: 41%;
-      top: 46%;
-      left: 0;
+      width: 100%;
+      margin-bottom: 24px;
     }
 
-    @media @phone {
-      display: none;
+    .title {
+      font-family: Brinnan Bold;
+      font-size: 32px;
+      line-height: 40px;
+      letter-spacing: 0em;
+      text-align: left;
+      padding: 0 8px;
+
+      @media @tablet {
+        font-size: 20px;
+        line-height: 24px;
+      }
+    }
+
+    .line {
+      display: inline-block;
+      width: 133px;
+      height: 1px;
+      background-color: #12c3f4;
+      margin-left: 24px;
+      flex-grow: 1;
     }
   }
 
@@ -197,11 +211,41 @@ body {
     font-family: Inter SemiBold;
     margin: 64px 0;
 
+    @media @tablet {
+      padding: 32px;
+      margin: 32px;
+    }
+    @media @phone {
+      padding: 32px;
+      margin: 16px;
+    }
+
     .text {
+      padding-left: 40px;
       color: #0b9be7;
       font-size: 32px;
       line-height: 42px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+      position: relative;
+
+      @media @tablet {
+        font-size: 24px;
+        line-height: 34px;
+      }
+
+      &::before {
+        content: '"';
+        font-size: 80px;
+        position: absolute;
+        left: -10px;
+        top: -10px;
+
+        @media @tablet {
+          font-size: 60px;
+          left: 0px;
+          top: 0px;
+        }
+      }
     }
 
     .author {
@@ -219,52 +263,17 @@ body {
       padding: 0;
     }
 
-    .title-bar {
-      display: flex;
-      align-items: center;
-      padding: 8px;
-      margin-bottom: 53px;
-
-      @media @tablet {
-        margin-bottom: 24px;
-      }
-
-      .title {
-        font-family: Brinnan Bold;
-        font-size: 32px;
-        line-height: 40px;
-        letter-spacing: 0em;
-        text-align: left;
-        padding: 0 8px;
-
-        @media @tablet {
-          font-size: 20px;
-          line-height: 24px;
-        }
-      }
-
-      .line {
-        display: inline-block;
-        width: 133px;
-        height: 1px;
-        background-color: #12c3f4;
-        margin-left: 24px;
-      }
-    }
-
     .feature-section {
       position: relative;
       display: flex;
       flex-wrap: wrap;
       flex-direction: row-reverse;
       list-style: none;
-      padding-bottom: 200px;
 
       @media @phone {
         flex-direction: column;
         position: relative;
         overflow-x: hidden;
-        padding-bottom: 40px;
       }
 
       .spline-wrapper {
@@ -285,6 +294,10 @@ body {
         flex: 0 0 auto;
         padding: 8px 16px;
         z-index: 2;
+
+        .img {
+          max-width: 100%;
+        }
 
         @media @tablet {
           width: 50%;
@@ -336,20 +349,60 @@ body {
         }
       }
 
-      .bg-container {
-        display: none;
-        position: absolute;
-        background: url(../images/v2/bg-img3.png) center bottom no-repeat;
-        width: 486px;
-        height: 288px;
-        background-size: contain;
-        z-index: -1;
-        left: -150px;
-        bottom: 0;
-        opacity: 0.8;
+      // .bg-container {
+      //   display: none;
+      //   position: absolute;
+      //   background: url(../images/v2/bg-img3.png) center bottom no-repeat;
+      //   width: 486px;
+      //   height: 288px;
+      //   background-size: contain;
+      //   z-index: -1;
+      //   left: -150px;
+      //   bottom: 0;
+      //   opacity: 0.8;
 
+      //   @media @phone {
+      //     display: block;
+      //   }
+      // }
+    }
+    .user-section {
+      margin: 84px 0 64px;
+
+      @media @tablet {
+        margin: 32px 0;
+      }
+
+      .users-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-row-gap: 58px;
+
+        @media @tablet {
+          grid-template-columns: repeat(4, 1fr);
+          grid-row-gap: 38px;
+        }
         @media @phone {
-          display: block;
+          grid-template-columns: repeat(3, 1fr);
+          grid-row-gap: 18px;
+        }
+
+        .list-item {
+          text-align: center;
+
+          a {
+            display: inline-block;
+          }
+          img {
+            width: 100px;
+            height: 100px;
+
+            @media @phone {
+              width: 60px;
+              height: 60px;
+            }
+          }
         }
       }
     }

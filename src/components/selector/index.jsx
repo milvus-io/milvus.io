@@ -9,6 +9,7 @@ const Selector = props => {
     locale,
     isVersion = false,
     setSelected = () => { },
+    className = ''
   } = props;
   const [listStatus, setListStatus] = useState(false);
   const toggleList = e => {
@@ -34,7 +35,7 @@ const Selector = props => {
   return (
     <div
       className={`${styles.selectorWrapper} ${isVersion && styles.versionWrapper
-        }`}
+        } ${className}`}
     >
       <div
         className={styles.selected}
@@ -44,7 +45,7 @@ const Selector = props => {
         onClick={toggleList}
         onKeyDown={toggleList}
       >
-        {selected}
+        <span className={styles.label}>{selected}</span>
         <i className={`fas fa-chevron-down ${styles.arrow}`}></i>
       </div>
       <ul
@@ -69,7 +70,7 @@ const Selector = props => {
                 {v}
               </LocalizeLink>
             ) : (
-              <span data-value={v}>{v}</span>
+              <span className={styles.text} data-value={v}>{v}</span>
             )}
           </li>
         ))}

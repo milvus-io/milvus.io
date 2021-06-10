@@ -170,12 +170,13 @@ const DocLayout = props => {
       <main className={wrapperClass}>
         <Sidebar
           locale={locale}
-          showVersions={!!isVersionWithHome}
+          showVersions={true}
           wrapperClass={styles.menuContainer}
           allApiMenus={allApiMenus}
           menuConfig={menuConfig}
           searchConfig={searchConfig}
           versionConfig={versionConfig}
+          isVersionWithHome={isVersionWithHome}
         />
         <div
           className={`${styles.innerContainer} ${isHome ? styles.innerContainerHome : ''

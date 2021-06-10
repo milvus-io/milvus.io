@@ -36,11 +36,13 @@
       .text {
         display: block;
         color: #fafafa;
+        font-family: Inter;
       }
 
       &.active {
-        // not working: highlight current version
-        color: #4fc4f9;
+        .text {
+          color: #4fc4f9;
+        }
       }
     }
   }
@@ -54,6 +56,11 @@
     cursor: pointer;
     font-weight: 400;
     color: #000;
+
+    .label {
+      font-size: 12px;
+      line-height: 26px;
+    }
 
     .arrow {
       margin: 0 6px;

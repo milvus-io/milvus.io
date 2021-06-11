@@ -20,6 +20,33 @@
       "search": "搜索"
     },
     "footer": {
+      "faq": {
+        "question": {
+          "title": "最相关问题"
+        },
+        "contact": {
+          "title": "没有找到您想要的问题？",
+          "slack": {
+            "label": "在slack上讨论",
+            "link": "https://milvusio.slack.com/"
+          },
+          "github": {
+            "label": "在github上讨论",
+            "link": "https://github.com/milvus-io/milvus/issues/"
+          },
+          "follow": {
+            "label": "让我们跟进问题"
+          },
+          "dialog": {
+            "title": "我们将会跟进您的问题",
+            "desc": "请留下您的问题，我们将稍后联系您",
+            "placeholder1": "您的邮箱*",
+            "placeholder2": "您的问题*",
+            "submit": "提交",
+            "invalid": "请提交正确的邮箱和你的问题"
+          }
+        }
+      },
       "questionBtn": {
         "link": "https://milvusio.slack.com/",
         "label": "有问题，联系我们"

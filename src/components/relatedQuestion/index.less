@@ -1,0 +1,101 @@
+@import '../../css/variables/responsive.less';
+@import '../../css/variables/color.less';
+
+.doc-post {
+  .faq, .faq-links {
+    h2 {
+      border: 0;
+      color: #454545;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 28px;
+      margin-top: 32px;
+      padding: 0;
+    }
+  }
+
+  .faq-card-container {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, 250px);
+    grid-gap: 8px;
+    grid-auto-rows: minmax(90px, auto);
+  }
+  
+  .faq-links-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    
+    a {
+      color: @color-primary;
+      font-size: 12px;
+      line-height: 24px;
+      padding: 0;
+      text-decoration: none;
+
+      &:hover {
+        color: @color-btn-press;
+      }
+
+      i {
+        font-size: 20px;
+        margin-left: 10px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .faq-links {
+    button {
+      background: @color-primary;
+      border: 0;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      height: 40px;
+      line-height: 24px;
+      padding: 8px 20px;
+
+      &:hover {
+        background: @color-btn-press;
+      }
+      
+      &:disabled {
+        background: gray;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  form {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+
+    input, textarea {
+      border: 1px solid rgba(196,196,196,.5);
+      color: rgb(25,25,25);
+      font-size: 16px;
+      margin-top: 24px;
+      padding: 8px 16px;
+      width: 100%;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    span {
+      color: red;
+      font-size: 14px;
+      margin-top: 16px;
+    }
+
+    button {
+      margin-top: 24px;
+      width: 160px;
+    }
+  }
+}

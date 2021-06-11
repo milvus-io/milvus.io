@@ -20,6 +20,33 @@
       "search": "Search"
     },
     "footer": {
+      "faq": {
+        "question": {
+          "title": "Moste Related Questions"
+        },
+        "contact": {
+          "title": "Didn't find what you need?",
+          "slack": {
+            "label": "Discuss on Slack",
+            "link": "https://milvusio.slack.com/"
+          },
+          "github": {
+            "label": "Discuss on github",
+            "link": "https://github.com/milvus-io/milvus/issues/"
+          },
+          "follow": {
+            "label": "Follow up with me"
+          },
+          "dialog": {
+            "title": "We will follow up on your question",
+            "desc": "Please leave your question here and we will be in touch.",
+            "placeholder1": "Your Email*",
+            "placeholder2": "Your Question*",
+            "submit": "Submit",
+            "invalid": "please input valid email and your question"
+          }
+        }
+      },
       "questionBtn": {
         "link": "https://milvusio.slack.com/",
         "label": "Question. Slack us."

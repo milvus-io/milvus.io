@@ -9,6 +9,7 @@ import { useMobileScreen } from '../../../hooks';
 import MobilePopup from '../components/MobilePopupV2';
 import Search from '../components/Search';
 import { Link } from 'gatsby';
+import QuestionRobot from '../../questionRobot';
 import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
@@ -202,6 +203,7 @@ const V2Header = props => {
           )}
         </div>
       </div>
+      <QuestionRobot />
     </header>
   );
 };

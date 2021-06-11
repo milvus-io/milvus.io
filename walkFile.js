@@ -47,8 +47,8 @@ const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
   const content = JSON.parse(doc.toString());
   let result = content;
   if (isVariables) {
-    // currently only handle python and go sdk
     // TODO waiting for pymilvus-orm version
+    // TODO waiting for node version
     const pymilvus =
       content?.milvus_python_sdk_version &&
       `v${content?.milvus_python_sdk_version}`;

@@ -107,6 +107,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     handlePyOrmFiles,
     handleGoFiles,
     handleJavaFiles,
+    handleNodeFiles,
   } = sourceNodesUtils;
 
   const dirPath = `src/pages/docs/versions/master/APIReference`;
@@ -136,6 +137,12 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
       case 'milvus-sdk-java':
         for (let version of versions) {
           handleJavaFiles(path, version, nodes);
+        }
+        break;
+      // TODO need to update Variables.json, add node verison
+      case 'milvus-sdk-node':
+        for (let version of versions) {
+          handleNodeFiles(path, version, nodes);
         }
         break;
       default:

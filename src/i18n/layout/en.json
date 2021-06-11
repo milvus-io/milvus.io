@@ -402,12 +402,14 @@
       "subTitle": "Milvus2.0",
       "text": "The world's most popular open-source vector database.",
       "startBtn": {
-        "href": "/docs/install_milvus.md",
-        "label": "Get Started"
+        "href": "/docs/home",
+        "label": "Get Started",
+        "isExternal": false
       },
       "contributeBtn": {
-        "href": "https://github.com/milvus-io",
-        "label": "Contribute"
+        "href": "/community",
+        "label": "Contribute",
+        "isExternal": false
       }
     },
     "slogan": {
@@ -415,41 +417,89 @@
       "author": "by Mi.Alato"
     },
     "content": {
-      "title": "Features",
-      "list": [
-        {
-          "title": "Blazing Fast",
-          "text": "Provides millisecond average latency over 10 million data.CPU SIMD, GPU, FPGA accelerations are supported. Fully utilize your hardware resources and brings you striking cost-efficiency. ",
-          "img": "deployment"
-        },
-        {
-          "title": "Easy to Use",
-          "text": "Rich API designed for data-science workflow. Consistent experience across laptop, local cluster, and cloud.Easily embed real-time seach & analytic engine into your applications.",
-          "img": "search"
-        },
-        {
-          "title": "Resilient and predictable by design",
-          "text": "Capitalize on Milvus’s built-in replication and failover/failback features that ensure your data and applications live up to your business continuity requirements.",
-          "img": "supporting"
-        },
-        {
-          "title": "Highly Elastic",
-          "text": "Component level scalability, scale only where it is really needed.",
-          "img": "autoscaling"
-        },
-        {
-          "title": "Community Backed",
-          "text": "Open source, Linux foundation hot project. Empower over 1000 enterprise users.",
-          "img": "storage"
-        }
-      ],
+      "feature": {
+        "title": "Features",
+        "list": [
+          {
+            "title": "Blazing Fast",
+            "text": "Provides millisecond average latency over 10 million data.CPU SIMD, GPU, FPGA accelerations are supported. Fully utilize your hardware resources and brings you striking cost-efficiency. ",
+            "img": "deployment"
+          },
+          {
+            "title": "Easy to Use",
+            "text": "Rich API designed for data-science workflow. Consistent experience across laptop, local cluster, and cloud.Easily embed real-time seach & analytic engine into your applications.",
+            "img": "search"
+          },
+          {
+            "title": "Resilient and predictable by design",
+            "text": "Capitalize on Milvus’s built-in replication and failover/failback features that ensure your data and applications live up to your business continuity requirements.",
+            "img": "supporting"
+          },
+          {
+            "title": "Highly Elastic",
+            "text": "Component level scalability, scale only where it is really needed.",
+            "img": "autoscaling"
+          },
+          {
+            "title": "Community Backed",
+            "text": "Open source, Linux foundation hot project. Empower over 1000 enterprise users.",
+            "img": "storage"
+          }
+        ]
+      },
+      "user": {
+        "title": "Users",
+        "list": [
+          {
+            "name": "test1",
+            "link": "/#"
+          },
+          {
+            "name": "test2",
+            "link": "/#"
+          },
+          {
+            "name": "test3",
+            "link": "/#"
+          },
+          {
+            "name": "test4",
+            "link": "/#"
+          },
+          {
+            "name": "test5",
+            "link": "/#"
+          },
+          {
+            "name": "test6",
+            "link": "/#"
+          },
+          {
+            "name": "test7",
+            "link": "/#"
+          },
+          {
+            "name": "test8",
+            "link": "/#"
+          },
+          {
+            "name": "test9",
+            "link": "/#"
+          },
+          {
+            "name": "test10",
+            "link": "/#"
+          }
+        ]
+      },
       "community": {
         "title": "Join the community",
         "text1": "Milvus is open-sourced on GitHub.",
         "text2": "Contributions and feedbacks are welcome!",
         "gitBtn": {
-          "href": "#",
-          "label": "Go to Github"
+          "href": "https://github.com/milvus-io/milvus/",
+          "label": "Go to Github",
+          "isExternal": true
         }
       }
     },

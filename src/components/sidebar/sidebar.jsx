@@ -17,6 +17,7 @@ const Sidebar = props => {
     versionConfig,
     wrapperClass = '',
     allApiMenus,
+    isVersionWithHome = false
   } = props;
 
   const { placeholder } = searchConfig || {};
@@ -33,9 +34,12 @@ const Sidebar = props => {
     menuList: [],
   };
 
-  const map = {
+  const map = isVersionWithHome ? {
     en: `/docs/${version}/home`,
     cn: `/${locale}/docs/${version}/home`,
+  } : {
+    en: `/docs/${version}/overview.md`,
+    cn: `/${locale}/docs/${version}/overview.md`,
   };
   const homePath = map[locale];
 
@@ -70,7 +74,7 @@ const Sidebar = props => {
             <LocalizeLink className={styles.link} locale={locale} to={homePath}>
               {homeTitle}
             </LocalizeLink>
-            <Selector options={versions} locale={locale} selected={version} isVersion={true} />
+            <Selector className={styles.selector} options={versions} locale={locale} selected={version} isVersion={true} />
           </section>
         )}
         {showMenu && (

@@ -145,19 +145,25 @@ export const useFilter = () => {
  */
 export const useCodeCopy = locale => {
   useEffect(() => {
-    document.querySelectorAll('pre code').forEach(block => {
-      hljs.highlightBlock(block);
+    const elements = document.querySelectorAll('pre code');
+    if (!!elements.length) {
+      elements.forEach(block => {
+        hljs.highlightBlock(block);
 
-      const html = block.innerHTML;
-      const content = block.textContent;
-      const code = <Code html={html} content={content} locale={locale} />;
-      ReactDOM.render(code, block);
-    });
+        const html = block.innerHTML;
+        const content = block.textContent;
+        const code = <Code html={html} content={content} locale={locale} />;
+        ReactDOM.render(code, block);
+      });
+    }
 
     return () => {
-      document.querySelectorAll('pre code').forEach(block => {
-        ReactDOM.unmountComponentAtNode(block);
-      });
+      if (!!elements.length) {
+        elements.forEach(block => {
+          ReactDOM.unmountComponentAtNode(block);
+        });
+      }
+
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

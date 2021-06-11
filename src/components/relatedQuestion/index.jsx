@@ -52,9 +52,6 @@ const RelatedQuestion = props => {
   useEffect(() => {
     if (relatedKey) {
       getFaq({
-        headers: {
-          'secretCode': 'milvus-faq-131492-knowledge-search'
-        },
         params: {
           question: relatedKey,
           version: 1
@@ -63,8 +60,6 @@ const RelatedQuestion = props => {
         if (res?.data?.response) {
           setRelatedQuestions(res.data.response.slice(0, 6));
         }
-        console.log("res", res);
-        console.log("relatedKey", relatedKey);
       }).catch(err => {
         console.log("err", err);
         setRelatedQuestions();

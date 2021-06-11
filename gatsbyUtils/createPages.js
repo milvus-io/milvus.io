@@ -566,6 +566,7 @@ const generateTitle = ({
     'pymilvus-orm': 'Milvus Python SDK (ORM)',
     go: 'Milvus Go SDK',
     java: 'Milvus Java SDK',
+    node: 'Milvus Node SDK'
   };
   const [, label2 = ''] = labels;
   // Return name if the menu is a 3rd level menu(such as: API => java => exception)

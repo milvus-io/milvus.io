@@ -60,9 +60,6 @@ const QuestionRobot = () => {
       setChats([...chats].concat({ value: v, state: 0 }));
       setLocked(true);
       getFaq({
-        headers: {
-          'secretCode': 'milvus-faq-131492-knowledge-search'
-        },
         params: {
           question: v,
           version: 1

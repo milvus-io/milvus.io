@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use(
 );
 
 export const getFaq = config => {
-  return axios.get('http://demos.zilliz.com/faq/search', config);
+  return axios.get('https://demos.zilliz.com/faq/search', config);
 };
 
 export default axiosInstance;

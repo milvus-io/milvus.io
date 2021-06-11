@@ -344,16 +344,19 @@ const handleGoFiles = (parentPath, version, apiFiles) => {
     doc.querySelector('#pkg-subdirectories')?.remove();
     doc.querySelector('.pkg-dir')?.remove();
     doc.querySelector('#footer')?.remove();
-    // replace <a> tag with text
+    // Add <code> for <pre> content.
     [...doc.querySelectorAll('pre')].forEach(node => {
-      const innerHTML = node.innerHTML;
-      let preEle = HTMLParser.parse(innerHTML);
-      [...preEle.querySelectorAll('a')].forEach(e => {
+      const preNode = HTMLParser.parse(node.innerHTML);
+      // replace <a> tag with text
+      [...preNode.querySelectorAll('a')].forEach(e => {
         const textContent = e.textContent;
         textContent && e.replaceWith(textContent);
       });
-      const outerHTML = preEle.outerHTML;
-      node.innerHTML = `<code>${outerHTML}</code>`;
+      [...preNode.querySelectorAll('span')].forEach(span => {
+        const spanText = span.textContent;
+        span.replaceWith(spanText);
+      });
+      node.innerHTML = `<code>${preNode.outerHTML}</code>`;
     });
     const removableAhrefs = [
       ...doc.querySelectorAll('h2'),
@@ -394,8 +397,19 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
     [...doc.querySelectorAll('table')].forEach(element => {
       element.querySelector('caption')?.remove();
     });
+    // Add <code> for <pre> content.
     [...doc.querySelectorAll('pre')].forEach(node => {
-      node.innerHTML = `<code>${node.innerHTML}</code>`;
+      const preNode = HTMLParser.parse(node.innerHTML);
+      // replace <a> tag with text
+      [...preNode.querySelectorAll('a')].forEach(e => {
+        const textContent = e.textContent;
+        textContent && e.replaceWith(textContent);
+      });
+      [...preNode.querySelectorAll('span')].forEach(span => {
+        const spanText = span.textContent;
+        span.replaceWith(spanText);
+      });
+      node.innerHTML = `<code>${preNode.outerHTML}</code>`;
     });
     [...doc.querySelectorAll('a')].forEach(node => {
       !node.textContent.split('\n').join('') && node?.remove();

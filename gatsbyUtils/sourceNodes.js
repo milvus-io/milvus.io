@@ -235,8 +235,16 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
       ''
     )}</ul>`;
     title.insertAdjacentHTML('afterend', tocElement);
+    // Add <code> for <pre> content.
     [...doc.querySelectorAll('pre')].forEach(node => {
-      node.innerHTML = `<code>${node.innerHTML}</code>`;
+      const preNode = HTMLParser.parse(node.innerHTML);
+      // Remove all unescaped HTML, here's <span>, which cause highlight warning.
+      // https://github.com/highlightjs/highlight.js/issues/2886
+      [...preNode.querySelectorAll('span')].forEach(span => {
+        const spanText = span.textContent;
+        span.replaceWith(spanText);
+      });
+      node.innerHTML = `<code>${preNode.outerHTML}</code>`;
     });
     // only need article body html
     doc = doc.querySelector('[itemprop=articleBody] > div').innerHTML;
@@ -291,8 +299,16 @@ const handlePyOrmFiles = (parentPath, version, apiFiles) => {
       ''
     )}</ul>`;
     title.insertAdjacentHTML('afterend', tocElement);
+    // Add <code> for <pre> content.
     [...doc.querySelectorAll('pre')].forEach(node => {
-      node.innerHTML = `<code>${node.innerHTML}</code>`;
+      const preNode = HTMLParser.parse(node.innerHTML);
+      // Remove all unescaped HTML, here's <span>, which cause highlight warning.
+      // https://github.com/highlightjs/highlight.js/issues/2886
+      [...preNode.querySelectorAll('span')].forEach(span => {
+        const spanText = span.textContent;
+        span.replaceWith(spanText);
+      });
+      node.innerHTML = `<code>${preNode.outerHTML}</code>`;
     });
     // only need article body html
     doc = doc.querySelector('[itemprop=articleBody] > section').innerHTML;

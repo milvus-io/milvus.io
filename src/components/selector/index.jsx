@@ -46,7 +46,10 @@ const Selector = props => {
         onKeyDown={toggleList}
       >
         <span className={styles.label}>{selected}</span>
-        <i className={`fas fa-chevron-down ${styles.arrow}`}></i>
+        <p className={styles.iconWrapper}>
+          <i className={`fas fa-chevron-down ${styles.arrow}`}></i>
+        </p>
+
       </div>
       <ul
         className={`${styles.optionsWrapper} ${listStatus && styles.open}`}

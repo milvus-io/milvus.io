@@ -366,12 +366,14 @@
       "subTitle": "Milvus2.0",
       "text": "The world's most popular open-source vector database.",
       "startBtn": {
-        "href": "/docs/install_milvus.md",
-        "label": "Get Started"
+        "href": "/docs/home",
+        "label": "Get Started",
+        "isExternal": false
       },
       "contributeBtn": {
-        "href": "https://github.com/milvus-io",
-        "label": "Contribute"
+        "href": "/community",
+        "label": "Contribute",
+        "isExternal": false
       }
     },
     "slogan": {
@@ -459,8 +461,9 @@
         "text1": "Milvus is open-sourced on GitHub.",
         "text2": "Contributions and feedbacks are welcome!",
         "gitBtn": {
-          "href": "#",
-          "label": "Go to Github"
+          "href": "https://github.com/milvus-io/milvus/",
+          "label": "Go to Github",
+          "isExternal": true
         }
       }
     },

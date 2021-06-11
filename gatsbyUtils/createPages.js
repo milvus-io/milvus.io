@@ -142,9 +142,22 @@ const query = `
               title
             }
             title
+            loadBtn {
+              isExternal
+              label
+              link
+            }
           }
         }
         childBootcamp {
+          menuList {
+            id
+            label1
+            label2
+            label3
+            order
+            title
+          }
           description
           section1 {
             title
@@ -320,20 +333,6 @@ const generateHomeData = edges => {
     });
 };
 
-const generateBootcampData = edegs => {
-  return edegs
-    .filter(({ node: { childBootcamp } }) => childBootcamp !== null)
-    .map(({ node: { absolutePath, childBootcamp } }) => {
-      const language = absolutePath.includes('/en') ? 'en' : 'cn';
-      const data = childBootcamp;
-      return {
-        language,
-        data,
-        path: absolutePath,
-      };
-    });
-};
-
 /**
  * remove useless md file blog without version
  * @param {*} edges allMarkdownRemark.edges from graphql query response
@@ -412,6 +411,39 @@ const filterCommunityHome = edges => {
     });
 };
 
+const filterBootcampMenus = edges => {
+  return edges
+    .filter(
+      ({ node: { childBootcamp } }) =>
+        childBootcamp !== null && childBootcamp.menuList !== null
+    )
+    .map(({ node: { absolutePath, childBootcamp } }) => {
+      const lang = absolutePath.includes('/en/') ? 'en' : 'cn';
+      const menuList = childBootcamp.menuList || [];
+      return {
+        lang,
+        menuList,
+      };
+    });
+};
+
+const filterBootcampHome = edges => {
+  return edges
+    .filter(
+      ({ node: { childBootcamp, absolutePath } }) =>
+        childBootcamp !== null && absolutePath.includes('bootcampHome')
+    )
+    .map(({ node: { absolutePath, childBootcamp } }) => {
+      const language = absolutePath.includes('/en') ? 'en' : 'cn';
+      const data = childBootcamp;
+      return {
+        language,
+        data,
+        path: absolutePath,
+      };
+    });
+};
+
 /**
  * get community page data: articles md, menu and home json
  * @param {array} allMarkdownRemark allMarkdownRemark.edges from graphql query response
@@ -423,6 +455,12 @@ const handleCommunityData = (allMarkdownRemark, allFile) => {
   const communityMenu = filterCommunityMenus(allFile);
   const communityHome = filterCommunityHome(allFile);
   return { communityMd, communityMenu, communityHome };
+};
+
+const handleBootcampData = allFile => {
+  const bootcampHome = filterBootcampHome(allFile);
+  const bootcampMenu = filterBootcampMenus(allFile);
+  return { bootcampHome, bootcampMenu };
 };
 
 /**
@@ -537,6 +575,28 @@ const generateCommunityHome = (
   });
 };
 
+const generateBootcampHome = (
+  createPage,
+  { nodes: bootcampHome, template: bootcampTemplate, menu: bootcampMenu }
+) => {
+  console.log('bootcampHome:', bootcampHome);
+  bootcampHome.forEach(({ language, data, path }) => {
+    createPage({
+      path: language === 'en' ? '/bootcamp' : `/${language}/bootcamp`,
+      component: bootcampTemplate,
+      context: {
+        bootcampData: data,
+        locale: language,
+        old: 'home',
+        fileAbsolutePath: path,
+        newHtml: null,
+        menuList: bootcampMenu,
+        isVersionWithHome: false,
+      },
+    });
+  });
+};
+
 /**
  * Generate a prettier title from menu's category or name.
  * @param { object } param0 { category, name, isDirectory = false, labels = [] }
@@ -566,7 +626,7 @@ const generateTitle = ({
     go: 'Milvus Go SDK',
     java: 'Milvus Java SDK',
   };
-  const [, label2 = '',] = labels;
+  const [, label2 = ''] = labels;
   // Return name if the menu is a 3rd level menu(such as: API => java => exception)
   // Return category name if the menu is a 1st or 2nd level menu(such as: API, API => java)
   let prettierCategory = label2
@@ -775,74 +835,6 @@ const generateDocHome = (
   });
 };
 
-const generateBootcamp = (
-  createPage,
-  {
-    nodes: bootcampData,
-    template: docTemplate,
-    allMenus,
-    allApiMenus,
-    versions,
-    newestVersion,
-    versionsWithHome,
-  }
-) => {
-  versions.map(version => {
-    return bootcampData.forEach(({ language, data, path }) => {
-      const isBlog = checkIsblog(path);
-      const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
-
-      if (version === newestVersion) {
-        const bootcampPath = getNewestVersionHomePath(language, 'bootcamp');
-        createPage({
-          path: bootcampPath,
-          component: docTemplate,
-          context: {
-            bootcampData: data,
-            locale: language,
-            versions: Array.from(versions),
-            newestVersion,
-            version: newestVersion,
-            old: 'home',
-            fileAbsolutePath: path,
-            isBlog,
-            editPath,
-            allMenus,
-            newHtml: null,
-            allApiMenus,
-            isVersionWithHome: versionsWithHome.includes(version),
-          },
-        });
-      }
-
-      const bootcampPath = getNormalVersionHomePath(
-        version,
-        language,
-        'bootcamp'
-      );
-      createPage({
-        path: bootcampPath,
-        component: docTemplate,
-        context: {
-          bootcampData: data,
-          locale: language,
-          versions: Array.from(versions),
-          newestVersion,
-          version,
-          old: 'home',
-          fileAbsolutePath: path,
-          isBlog,
-          editPath,
-          allMenus,
-          newHtml: null,
-          allApiMenus,
-          isVersionWithHome: versionsWithHome.includes(version),
-        },
-      });
-    });
-  });
-};
-
 /**
  * create doc pages from markdown nodes
  * @param {function} createPage gatsby createPage action
@@ -943,7 +935,6 @@ module.exports = {
   getVersionsWithHome,
   generateAllMenus,
   generateHomeData,
-  generateBootcampData,
   filterMdWithVersion,
   handleCommunityData,
   initGlobalSearch,
@@ -952,6 +943,7 @@ module.exports = {
   generateApiMenus,
   generateApiReferencePages,
   generateDocHome,
-  generateBootcamp,
+  generateBootcampHome,
+  handleBootcampData,
   generateAllDocPages,
 };

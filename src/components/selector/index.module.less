@@ -1,16 +1,17 @@
 .selectorWrapper {
   font-size: 0.8rem;
   letter-spacing: 0.1rem;
-  width: 100%;
-  height: 26px;
+  width: 108px;
+  height: 32px;
   margin-bottom: 20px;
-  line-height: 26px;
-  border: 1px solid #60606f;
+  line-height: 20px;
+  border: 1px solid #e9e9ed;
   border-radius: 4px;
   text-align: center;
+  font-family: Inter;
 
   &.versionWrapper {
-    width: 92px;
+    width: 108px;
   }
 
   .optionsWrapper {
@@ -21,9 +22,12 @@
     overflow: hidden;
     transition: all 0.2s linear;
     border-radius: 4px;
-    background: #28292e;
-    border: 1px solid #60606f;
-    box-shadow: 0 25px 50px 0 rgba(16, 16, 16, 0.5);
+    background: #fff;
+    width: 100%;
+    list-style: none;
+    padding: 6px 8px;
+
+    border: 1px solid #e9e9ed;
     z-index: 10;
     cursor: pointer;
 
@@ -35,8 +39,12 @@
     li {
       .text {
         display: block;
-        color: #fafafa;
+        color: #757575;
         font-family: Inter;
+
+        &:hover {
+          color: #4fc4f9;
+        }
       }
 
       &.active {
@@ -48,22 +56,31 @@
   }
 
   .selected {
-    padding-left: 0.4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
     cursor: pointer;
     font-weight: 400;
     color: #000;
+    width: 100%;
+    height: 100%;
+    font-family: Inter;
+    padding: 6px 8px;
 
     .label {
       font-size: 12px;
-      line-height: 26px;
+      line-height: 20px;
+      width: calc(100% - 20px);
+    }
+
+    .iconWrapper {
+      width: 14px;
+      height: 14px;
+      text-align: center;
+      line-height: 14px;
     }
 
     .arrow {
-      margin: 0 6px;
       transform: rotate(0);
     }
   }

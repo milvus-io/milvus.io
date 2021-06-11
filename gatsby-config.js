@@ -1,7 +1,7 @@
 let gatsbyConfigs = {
   siteMetadata: {
     siteUrl: `https://milvus.io`,
-    title: ` · An Open Source Similarity Search Engine for Embeddings`,
+    title: `· Open Source Vector Database`,
     description: `Milvus is an open source similarity search engine for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.`,
     author: `@ZILLIZ.com`,
   },
@@ -239,8 +239,7 @@ if (process.env.NODE_ENV == 'development') {
     {
       resolve: '@sentry/gatsby',
       options: {
-        dsn:
-          'https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477',
+        dsn: 'https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477',
         sampleRate: 0.7,
       },
     }

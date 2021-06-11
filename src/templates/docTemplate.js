@@ -12,7 +12,6 @@ import { sortVersions } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
-import BootcampTemplate from '../components/bootcampTemplate';
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
 import { useSelectMenu } from '../hooks/select-menu';
 import { useGenAnchor } from '../hooks/doc-anchor';
@@ -32,7 +31,6 @@ export default function Template({
     editPath,
     newHtml,
     homeData,
-    bootcampData,
     allApiMenus,
     newestVersion,
   } = pageContext;
@@ -177,8 +175,6 @@ export default function Template({
         <>
           {homeData ? (
             <HomeTemplate data={homeData} version={version} />
-          ) : bootcampData ? (
-            <BootcampTemplate data={bootcampData} locale={locale} />
           ) : (
             <div className="doc-post-container">
               <>

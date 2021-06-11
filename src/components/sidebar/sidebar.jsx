@@ -17,7 +17,7 @@ const Sidebar = props => {
     versionConfig,
     wrapperClass = '',
     allApiMenus,
-    isVersionWithHome
+    isVersionWithHome = false
   } = props;
 
   const { placeholder } = searchConfig || {};

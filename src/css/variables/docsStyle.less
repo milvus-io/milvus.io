@@ -91,8 +91,6 @@
   pre {
     margin-bottom: 24px;
     border-radius: 4px;
-    background-color: @pre-bg-color-dark;
-    padding: 8px;
 
     @media @tablet {
       margin-bottom: 16px;
@@ -107,6 +105,7 @@
       border: none;
       color: #fff;
       background-color: @pre-bg-color-dark;
+      padding: 16px;
     }
   }
 
@@ -294,16 +293,28 @@
 
     a {
       padding: 6px 40px;
-      border-radius: 4px;
+      color: #000000;
 
       @media @tablet {
         padding: 6px 8px;
       }
     }
+  }
 
+  .filter {
+    a {
+      border-radius: 4px;
+      color: #000000;
+    }
     & .active {
       background-color: @color-list-blue;
       color: #fff;
+    }
+  }
+  .tab-wrapper {
+    & .active {
+      border-bottom: 2px solid @color-list-blue;
+      color: @color-list-blue;
     }
   }
 

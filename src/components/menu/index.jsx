@@ -109,6 +109,12 @@ const Menu = props => {
               ? `/community`
               : `/community/${doc.id}`;
           }
+          if (pageType === 'bootcamp') {
+            // id community is home page
+            return doc.id === 'bootcamp'
+              ? `/bootcamp`
+              : `/bootcamp/${doc.id}`;
+          }
           if (doc.id.includes('benchmarks')) {
             return `/docs/${doc.id}`;
           }

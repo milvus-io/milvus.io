@@ -1,36 +1,35 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import * as styles from './index.module.less';
 
 // type = 'link' || 'button'
 // variant = 'text' | 'outline' | contained
 
 const Button = ({
-  href,
-  type,
+  link,
   isExternal = false,
   variant = 'contained',
   className = '',
-  handleClick,
   children,
 }) => {
   return (
-    <div className={styles.buttonWrapper}>
-      {type === 'link' ? (
+    <div className={`${styles.buttonWrapper} ${className}`}>
+      {isExternal ? (
         <a
-          target={isExternal ? '_blank' : '_self'}
+          target='_blank'
           rel="noopener noreferrer"
-          href={href}
-          className={`${styles[variant]} ${className}`}
+          href={link}
+          className={`${styles[variant]}`}
         >
           {children}
         </a>
       ) : (
-        <button
-          onClick={handleClick}
-          className={`${styles[variant]} ${className}`}
+        <Link
+          to={link}
+          className={`${styles[variant]}`}
         >
           {children}
-        </button>
+        </Link>
       )}
     </div>
   );

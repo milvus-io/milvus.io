@@ -1,6 +1,7 @@
 import React from 'react';
 import BlogCard from '../card/blogCard/blogCard';
 import StartCard from '../card/startCard/startCard';
+import Button from '../button';
 import * as styles from './homeTemplate.module.less';
 
 const HomeTemplate = props => {
@@ -52,6 +53,17 @@ const HomeTemplate = props => {
             <BlogCard key={item.title} data={item} />
           ))}
         </div>
+        <Button
+          className={styles.loadBtn}
+          isExternal={section4.loadBtn.isExternal}
+          link={section4.loadBtn.link}
+          children={
+            <>
+              <span className={styles.btnLabel}>{section4.loadBtn.label}</span>
+              <i className="fa fa-chevron-right"></i>
+            </>
+          }
+        />
       </div>
     </section>
   );

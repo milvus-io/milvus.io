@@ -1,5 +1,5 @@
 import React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
 import autoscalingIcon from '../images/v2/autoscaling.svg';
@@ -31,7 +31,6 @@ const HomePage = ({ data, pageContext }) => {
   } = data.allFile.edges.filter(
     edge => edge.node.childI18N
   )[0].node.childI18N.v2;
-  console.log(data);
   const { locale, versions } = pageContext;
 
   return (
@@ -67,7 +66,7 @@ const HomePage = ({ data, pageContext }) => {
               <div className="banner-btn-wrapper">
                 <Button
                   className="banner-btn1"
-                  type="link"
+                  isExternal={banner.startBtn.isExternal}
                   link={banner.startBtn.href}
                   children={
                     <>
@@ -79,7 +78,7 @@ const HomePage = ({ data, pageContext }) => {
                 <Button
                   className="banner-btn2"
                   variant="outline"
-                  type="link"
+                  isExternal={banner.contributeBtn.isExternal}
                   link={banner.contributeBtn.href}
                   children={
                     <>
@@ -148,6 +147,7 @@ const HomePage = ({ data, pageContext }) => {
 
                 <Button
                   className="communityBtn"
+                  isExternal={community.gitBtn.isExternal}
                   type="link"
                   link={community.gitBtn.href}
                   children={
@@ -180,10 +180,12 @@ export const Query = graphql`
                 startBtn {
                   href
                   label
+                  isExternal
                 }
                 contributeBtn {
                   href
                   label
+                  isExternal
                 }
               }
               slogan {
@@ -213,6 +215,7 @@ export const Query = graphql`
                   gitBtn {
                     href
                     label
+                    isExternal
                   }
                 }
               }

@@ -57,7 +57,6 @@ Object.keys(versionInfo).forEach(v => {
     versions.push(v);
   }
 });
-console.log(versionInfo);
 
 // add versioninfo file for generate sitemap filter option
 fs.writeFile(
@@ -156,7 +155,6 @@ exports.createPages = async ({ actions, graphql }) => {
     query,
     generateAllMenus,
     generateHomeData,
-    generateBootcampData,
     filterMdWithVersion,
     handleCommunityData,
     initGlobalSearch,
@@ -165,9 +163,10 @@ exports.createPages = async ({ actions, graphql }) => {
     generateApiMenus,
     generateApiReferencePages,
     generateDocHome,
-    generateBootcamp,
     generateAllDocPages,
     getVersionsWithHome,
+    generateBootcampHome,
+    handleBootcampData,
   } = createPagesUtils;
 
   const { createPage } = actions;
@@ -175,6 +174,7 @@ exports.createPages = async ({ actions, graphql }) => {
   // templates
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
   const communityTemplate = path.resolve(`src/templates/community.jsx`);
+  const bootcampTemplate = path.resolve(`src/templates/bootcamp.jsx`);
 
   return graphql(query).then(result => {
     if (result.errors) {
@@ -184,7 +184,9 @@ exports.createPages = async ({ actions, graphql }) => {
     const allMenus = generateAllMenus(result.data.allFile.edges);
     // get new doc index page data
     const homeData = generateHomeData(result.data.allFile.edges);
-    const bootcampData = generateBootcampData(result.data.allFile.edges);
+    const { bootcampHome, bootcampMenu } = handleBootcampData(
+      result.data.allFile.edges
+    );
     const versionsWithHome = getVersionsWithHome(homeData);
     // filter useless md file blog has't version
     const legalMd = filterMdWithVersion(result.data.allMarkdownRemark.edges);
@@ -207,6 +209,12 @@ exports.createPages = async ({ actions, graphql }) => {
       menu: communityMenu,
     });
 
+    generateBootcampHome(createPage, {
+      nodes: bootcampHome,
+      template: bootcampTemplate,
+      menu: bootcampMenu,
+    });
+
     const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);
     const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
     generateApiReferencePages(createPage, {
@@ -226,16 +234,6 @@ exports.createPages = async ({ actions, graphql }) => {
       allApiMenus,
       versions,
       newestVersion,
-    });
-
-    generateBootcamp(createPage, {
-      nodes: bootcampData,
-      template: docTemplate,
-      allMenus,
-      allApiMenus,
-      versions,
-      newestVersion,
-      versionsWithHome,
     });
 
     generateAllDocPages(createPage, {

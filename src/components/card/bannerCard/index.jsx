@@ -16,7 +16,7 @@ const BannerCard = ({
           <>
             <div className={styles.contentWrapper}>
               <h1 className={styles.title}>{title}</h1>
-              <div className={styles.content}>
+              <div>
                 {
                   content.map(item => (
                     <p
@@ -37,7 +37,7 @@ const BannerCard = ({
             <div className={styles.bannerImg}>
               <img src={img} alt="banner" className={styles.img} />
             </div>
-            <div className={styles.content}>
+            <div>
               {
                 content.map(item => (
                   <p

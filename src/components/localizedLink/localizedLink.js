@@ -21,8 +21,17 @@ const LocalizedLink = ({ locale, to, children, className = '' }) => {
 
   let path;
 
+  const title = typeof children === 'string';
+
   language && !language.default ? (path = `/${locale}${to}`) : (path = to);
-  return (
+  return title ? (
+    <Link
+      className={`${styles.link} ${className}`}
+      children={children}
+      to={path}
+      title={children}
+    />
+  ) : (
     <Link
       className={`${styles.link} ${className}`}
       children={children}

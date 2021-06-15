@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
-import lfai from '../../../images/logo/lfai.svg';
+import lfai from '../../../images/v2/lfai.svg';
 import close from '../../../images/v2/close.svg';
 import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
@@ -57,19 +57,34 @@ const V2Header = props => {
   const { pathname } = globalHistory.location;
   const { isMobile } = useMobileScreen();
 
-  const [open, setOpen] = useState(false);
-  const [openType, setOpenType] = useState('');
+  const [maskConfig, setMaskConfig] = useState({
+    isOpen: false,
+    type: ''
+  });
   const container = useRef(null);
   const headContainer = useRef(null);
 
-  const handleOpenMask = e => {
-    const { type } = e.target.dataset;
-    setOpen(!open);
-    setOpenType(type);
-  };
+  const handleToggleMask = useCallback(
+    () => {
+      let timer = null;
+      return (function () {
+        if (!timer) {
+          const { isOpen } = maskConfig;
+          setTimeout(() => {
+            setMaskConfig({
+              isOpen: !isOpen,
+              type: !isOpen ? 'menu' : ''
+            });
+          }, 200);
+        }
+      })();
+    }, [maskConfig]);
 
   const hideMask = () => {
-    setOpen(false);
+    setMaskConfig({
+      isOpen: false,
+      type: '',
+    });
   };
 
   useClickOutside(container, () => {
@@ -140,7 +155,7 @@ const V2Header = props => {
           ) : (
             <div className={styles.mobileHeaderWrapper}>
               <div className={styles.logoSection}>
-                <Link to="/v2">
+                <Link to="/">
                   <img
                     className={styles.milvus}
                     src={milvusLogoMobile}
@@ -158,27 +173,18 @@ const V2Header = props => {
               <div className={styles.menuSection}>
                 <div
                   className={styles.menuWrapper}
-                  role="button"
-                  tabIndex={-1}
-                  onClick={handleOpenMask}
-                  onKeyDown={handleOpenMask}
                 >
-                  {type === 'doc' && (
-                    <div className={styles.iconWrapper} data-type="search">
-                      <img
-                        className={styles.btnIcon}
-                        src={open && openType === 'search' ? close : search}
-                        alt="menu-search-icon"
-                      />
-                    </div>
-                  )}
                   <div
                     className={styles.iconWrapper}
-                    data-type={open && openType === 'menu' ? 'close' : 'menu'}
+                    data-type={maskConfig.type === 'menu' ? 'close' : 'menu'}
+                    role="button"
+                    tabIndex={-1}
+                    onClick={handleToggleMask}
+                    onKeyDown={handleToggleMask}
                   >
                     <img
                       className={styles.btnIcon}
-                      src={open && openType === 'menu' ? close : menu}
+                      src={maskConfig.type === 'menu' ? close : menu}
                       alt="close-icon"
                     />
                   </div>
@@ -186,10 +192,10 @@ const V2Header = props => {
               </div>
               <MobilePopup
                 className={styles.v2Popup}
-                open={open}
+                open={maskConfig.isOpen}
                 hideMask={hideMask}
               >
-                {openType === 'menu' ? (
+                {maskConfig.type === 'menu' ? (
                   <Menu
                     options={LANGUAGES}
                     navList={navList}

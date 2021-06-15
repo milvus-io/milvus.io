@@ -8,7 +8,7 @@ const Notification = props => {
     <div className={styles.notificationV2}>
       <p>
         {language.v2.title}
-        <a href="/v2" className={styles.link}>
+        <a href="/" className={styles.link}>
           {language.v2.here}
         </a>
         &gt;

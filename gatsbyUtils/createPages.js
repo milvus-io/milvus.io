@@ -1,7 +1,7 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
-const env = process.env.IS_PREVIEW;
-// const env = 'preview';
+// const env = process.env.IS_PREVIEW;
+const env = 'preview';
 
 // createPages: graphql query
 const query = `
@@ -43,7 +43,7 @@ const query = `
   }
   allFile(
     filter: {
-      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp)/" }
+      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp|users)/" }
       extension: { eq: "json" }
     }
   ) {
@@ -626,7 +626,7 @@ const generateTitle = ({
     'pymilvus-orm': 'Milvus Python SDK (ORM)',
     go: 'Milvus Go SDK',
     java: 'Milvus Java SDK',
-    node: 'Milvus Node SDK'
+    node: 'Milvus Node SDK',
   };
   const [, label2 = ''] = labels;
   // Return name if the menu is a 3rd level menu(such as: API => java => exception)

@@ -641,6 +641,8 @@ const generateTitle = ({
     case 'pymilvus':
     case 'go':
       return prettierCategory;
+    case 'node':
+      return capitalize(name.split('.htm')[0]?.split('.')?.pop());
     // return 3rd level items prettier name
     default:
       return capitalize(name.split('.htm')[0]);

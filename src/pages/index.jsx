@@ -42,7 +42,7 @@ const HomePage = ({ data, pageContext }) => {
           locale={locale}
           versions={versions}
         >
-          <Seo title="Milvus 2.0" />
+          <Seo title="Milvus" />
           <div className="banner">
             <div className="banner-left">
               <div className="stars-layout">

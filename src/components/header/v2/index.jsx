@@ -123,7 +123,7 @@ const V2Header = props => {
                     </a>
                   ) : (
                     <Link
-                      className={`${styles.navItem} ${pathname === link ? styles.active : ''
+                      className={`${styles.navItem} ${pathname.includes(link) ? styles.active : ''
                         }`}
                       to={link}
                       key={label}

@@ -24,6 +24,7 @@ jobs:
           sudo git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           cd www.milvus.io
           sudo chmod 777 -R .
+          sudo git clean -f
           sudo git checkout ${GITHUB_REF##*/}
         
       - name: Get changed files

@@ -10,11 +10,9 @@ import useAlgolia from '../hooks/use-algolia';
 import QueryModal from '../components/query-modal/query-modal';
 import { sortVersions } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
-import TextSelectionMenu from '../components/textSelection/TextSelectionMenu';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
 import RelatedQuestion from '../components/relatedQuestion';
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
-import { useSelectMenu } from '../hooks/select-menu';
 import { useGenAnchor } from '../hooks/doc-anchor';
 
 export default function Template({
@@ -45,7 +43,6 @@ export default function Template({
   const [showWarning, setShowWarning] = useState(false);
   const docRef = useRef(null);
 
-  const { options } = useSelectMenu(locale, docRef);
   useEmPanel(setShowModal);
   useGenAnchor(version, editPath);
   useFilter();
@@ -217,7 +214,6 @@ export default function Template({
                     className="md-tooltip"
                   />
                 </div>
-                <TextSelectionMenu language={layout} options={options} />
               </>
             </div>
           )}

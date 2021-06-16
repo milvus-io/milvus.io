@@ -143,12 +143,13 @@ export const useFilter = () => {
 /**
  * Support copy code for code area
  */
-export const useCodeCopy = locale => {
+export const useCodeCopy = (locale, cfgs) => {
   useEffect(() => {
     const elements = document.querySelectorAll('pre code');
     if (!!elements.length) {
+      cfgs && hljs.configure(cfgs);
       elements.forEach(block => {
-        hljs.highlightBlock(block);
+        hljs.highlightElement(block);
 
         const html = block.innerHTML;
         const content = block.textContent;

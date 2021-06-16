@@ -16,8 +16,9 @@ const iconSet = {
   wechat,
 };
 
-const V2Footer = ({ footer }) => {
+const V2Footer = ({ locale, footer }) => {
   const {
+
     list: links,
     licence: {
       // list,
@@ -31,15 +32,15 @@ const V2Footer = ({ footer }) => {
     <section className={styles.footerContainer}>
       <ul className={styles.list}>
         {links.map(i => {
-          const { title, text, href, label, icons } = i;
+          const { title, text, href, label, icons, isExternal } = i;
           return (
             <li className={styles.item} key={title}>
               <p className={styles.title}>{title}</p>
               <p className={styles.content}>{text}</p>
               {href ? (
                 <Button
-                  href={href}
-                  type="link"
+                  link={href}
+                  locale={locale}
                   variant="text"
                   className={styles.btn}
                   children={
@@ -95,9 +96,8 @@ const ImageList = ({ images }) => {
             href={img.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${styles.columnImg} ${
-              img.name === 'wechat' ? styles.hoverBtn : ''
-            }`}
+            className={`${styles.columnImg} ${img.name === 'wechat' ? styles.hoverBtn : ''
+              }`}
             key={img.name}
             onClick={e => handleClick(e, img.name)}
           >

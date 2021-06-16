@@ -25,7 +25,11 @@ export const useClickOutside = (ref, handler, events) => {
 
   useEffect(() => {
     const detectClickOutside = event => {
-      !ref.current.contains(event.target) && handler(event);
+      try {
+        !ref.current.contains(event.target) && handler(event);
+      } catch (error) {
+        console.log(error);
+      }
     };
     for (const event of events)
       document.addEventListener(event, detectClickOutside);

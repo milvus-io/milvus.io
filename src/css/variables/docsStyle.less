@@ -221,10 +221,9 @@
     overflow-x: auto;
     width: 100%;
     border-radius: 12px;
-
+    display: block;
     @media @tablet {
       margin: 16px 0;
-      display: block;
     }
 
     thead {
@@ -234,10 +233,12 @@
       line-height: 22px;
       text-align: left;
       background-color: #e8e8e8;
-
+      min-width: 100%;
+      width: calc(100vw - 32px);
       th {
-        padding: 12px;
         text-align: left;
+        @media @tablet {
+        }
       }
     }
 
@@ -253,6 +254,7 @@
 
       tr {
         border-bottom: 1px solid #eee;
+
         &:hover {
           background-color: #e8e8e8;
         }
@@ -263,9 +265,10 @@
         text-align: left;
         font-size: 16px;
         line-height: 1.4em;
-
+        width: calc(100vw - 32px);
         @media @tablet {
           font-size: 14px;
+
           code {
             font-size: 14px;
           }
@@ -308,14 +311,14 @@
       color: #000000;
     }
     & .active {
-      background-color: @color-list-blue;
+      background-color: @link-color;
       color: #fff;
     }
   }
   .tab-wrapper {
     & .active {
-      border-bottom: 2px solid @color-list-blue;
-      color: @color-list-blue;
+      border-bottom: 2px solid @link-color;
+      color: @link-color;
     }
   }
 

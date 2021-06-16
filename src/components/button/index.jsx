@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import LocalizedLink from '../localizedLink/localizedLink';
 import * as styles from './index.module.less';
 
 // type = 'link' || 'button'
@@ -7,11 +7,13 @@ import * as styles from './index.module.less';
 
 const Button = ({
   link,
-  isExternal = false,
   variant = 'contained',
   className = '',
   children,
+  locale
 }) => {
+  const reg = /^(http|https)/;
+  const isExternal = reg.test(link);
   return (
     <div className={`${styles.buttonWrapper} ${className}`}>
       {isExternal ? (
@@ -24,12 +26,13 @@ const Button = ({
           {children}
         </a>
       ) : (
-        <Link
+        <LocalizedLink
           to={link}
           className={`${styles[variant]}`}
+          locale={locale}
         >
           {children}
-        </Link>
+        </LocalizedLink>
       )}
     </div>
   );

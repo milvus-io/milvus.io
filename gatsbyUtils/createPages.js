@@ -1,7 +1,7 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
-const env = process.env.IS_PREVIEW;
-// const env = 'preview';
+// const env = process.env.IS_PREVIEW;
+const env = 'preview';
 
 // createPages: graphql query
 const query = `
@@ -60,29 +60,6 @@ const query = `
             order
             title
           }
-          contributeSection {
-            desc
-            title
-          }
-          contributorSection {
-            title
-            list {
-              avatar {
-                publicURL
-              }
-              link
-              login
-            }
-          }
-          heroSection {
-            list {
-              desc
-              link
-              title
-              type
-            }
-            title
-          }
           mailingSection {
             title
             list {
@@ -90,13 +67,82 @@ const query = `
               title
             }
           }
-          repoSection {
+          joinSection {
+            list {
+              iconType
+              label
+              link
+            }
+            title
+          }
+          partnerSection {
+            list {
+              alt
+              name
+            }
+            title
+          }
+          recommendSection {
+            ambassador {
+              desc
+              introBtn {
+                label
+                link
+              }
+              joinBtn {
+                label
+                link
+              }
+              title
+            }
+            deploy {
+              list {
+                label
+                link
+              }
+              title
+            }
+            develop {
+              list {
+                label
+                link
+              }
+              title
+            }
+            start {
+              list {
+                label
+                link
+              }
+              title
+            }
+            test {
+              list {
+                label
+                link
+              }
+              title
+            }
+            title
+          }
+          resourceSection {
             list {
               desc
+              iconType
+              label
               link
               title
             }
             title
+          }
+          aboutSection {
+            content
+            title
+            list {
+              desc
+              iconType
+              title
+            }
           }
         }
         childMenu {
@@ -626,7 +672,7 @@ const generateTitle = ({
     'pymilvus-orm': 'Milvus Python SDK (ORM)',
     go: 'Milvus Go SDK',
     java: 'Milvus Java SDK',
-    node: 'Milvus Node SDK'
+    node: 'Milvus Node SDK',
   };
   const [, label2 = ''] = labels;
   // Return name if the menu is a 3rd level menu(such as: API => java => exception)

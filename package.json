@@ -28,7 +28,7 @@
     "gatsby-transformer-json": "^3.0.0",
     "gatsby-transformer-remark": "^4.3.0",
     "gatsby-transformer-sharp": "^3.0.0",
-    "highlight.js": "^11.0.0",
+    "highlight.js": "^11.0.1",
     "lottie-web": "^5.7.8",
     "node-html-parser": "^3.3.4",
     "prop-types": "^15.7.2",

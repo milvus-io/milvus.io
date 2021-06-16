@@ -69,20 +69,18 @@ const generateNodes = (
       name,
       abspath,
       doc,
-      linkId,
-      hrefs,
       category,
       version,
       labels,
       isDirectory,
+      title,
+      order,
     } = file;
     const docVersion = findDocVersion(versionInfo, category, version);
     const node = {
       name,
       abspath,
       doc,
-      linkId,
-      hrefs,
       id: createNodeId(`APIfile-${category}-${version}-${name}`),
       internal: {
         type: 'APIfile',
@@ -93,6 +91,8 @@ const generateNodes = (
       docVersion,
       labels,
       isDirectory,
+      title,
+      order,
     };
     createNode(node);
   });
@@ -126,7 +126,7 @@ const handleApiFiles = (
       let filePath = htmlFiles[i];
       let doc = HTMLParser.parse(fs.readFileSync(filePath));
       // Use custom doc2html function to generate docHTML and other data.
-      const { docHTML, hrefs = [], linkId = [] } = doc2html(doc);
+      const { docHTML, title = '', order = -2 } = doc2html(doc);
       const relativePath = getFileRelativePath(filePath, version);
       const parentPath = relativePath.split('/').slice(0, -1).join('/');
       // Record the parentPath as a thrid level directory.
@@ -136,12 +136,12 @@ const handleApiFiles = (
           // Need to remove label2/3 if it's a single page.
           apiFiles.push({
             doc: docHTML,
-            hrefs,
-            linkId,
             name: getFileRelativePath(filePath, version),
             abspath: filePath,
             version,
             category,
+            title,
+            order,
             labels: [
               'api_reference',
               isSinglePage ? '' : category.replace('-', '_'),
@@ -150,12 +150,12 @@ const handleApiFiles = (
           })
         : apiFiles.push({
             doc: docHTML,
-            hrefs,
-            linkId,
             name: getFileName(filePath),
             abspath: filePath,
             version,
             category,
+            title,
+            order,
             labels: [
               'api_reference',
               isSinglePage ? '' : category.replace('-', '_'),
@@ -168,8 +168,6 @@ const handleApiFiles = (
     !isSinglePage &&
       apiFiles.push({
         doc: '',
-        hrefs: [],
-        linkId: [],
         name: category.replace('-', '_'),
         abspath: dirPath,
         version,
@@ -180,8 +178,6 @@ const handleApiFiles = (
       uniq.forEach(f =>
         apiFiles.push({
           doc: '',
-          hrefs: [],
-          linkId: [],
           name: f.replace('-', '_'),
           abspath: `${dirPath}/${f}`,
           version,
@@ -203,38 +199,26 @@ const handleApiFiles = (
  * @param {array} apiFiles pages under `${parentPath}/${version}` will be formatted and pushed to apiFiles
  */
 const handlePyFiles = (parentPath, version, apiFiles) => {
+  const calculateOrder = toctree => {
+    for (let i = 0; i < toctree.length; i++) {
+      const isCurrent = toctree[i]?.getAttribute('class')?.includes('current');
+      if (isCurrent) return i;
+    }
+    return toctree.length;
+  };
   const doc2html = doc => {
     const bodyHTML = doc.querySelector(
       '[itemprop=articleBody] > div'
     ).innerHTML;
-    // filter out linked element ids
-    const linkRegex = /id="[A-Za-z0-9_-]*"/g;
-    const linkId = Array.from(bodyHTML.matchAll(linkRegex)).map(link =>
-      link[0].slice(4, link[0].length - 1)
-    );
-    // match href with ids
-    const hrefs = [];
-    [...doc.querySelectorAll('a')].forEach(node => {
-      linkId.forEach(link => {
-        if (
-          node.outerHTML.indexOf(`#${link}`) > 1 &&
-          node.outerHTML.indexOf('headerlink') === -1
-        ) {
-          hrefs.push(node.outerHTML);
-        }
-      });
-    });
     // remove useless link
-    [...doc.querySelectorAll('.reference.internal')].forEach(node => {
-      node.parentNode.removeChild(node);
-    });
-    // generate toc from hrefs and insert it behind of h1 title
-    const title = doc.querySelector('[itemprop=articleBody] > div > h1');
-    const tocElement = `<ul className="api-reference-toc">${hrefs.reduce(
-      (prev, item) => prev + `<li>${item}</li>`,
-      ''
-    )}</ul>`;
-    title.insertAdjacentHTML('afterend', tocElement);
+    [...doc.querySelectorAll('.reference.internal .viewcode-link')].forEach(
+      node => {
+        node.parentNode.parentNode.removeChild(node.parentNode);
+      }
+    );
+    const leftNav = doc.querySelectorAll('.toctree-l1');
+    const title = doc?.querySelector('h1')?.textContent?.slice(0, -1);
+    const order = calculateOrder([...leftNav]);
     // Add <code> for <pre> content.
     [...doc.querySelectorAll('pre')].forEach(node => {
       const preNode = HTMLParser.parse(node.innerHTML);
@@ -248,7 +232,7 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
     });
     // only need article body html
     doc = doc.querySelector('[itemprop=articleBody] > div').innerHTML;
-    return { docHTML: doc, hrefs, linkId };
+    return { docHTML: doc, title, order };
   };
   handleApiFiles(doc2html, apiFiles, {
     parentPath,

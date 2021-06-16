@@ -1,5 +1,5 @@
 # => Build container
-FROM zilliz/milvus.io.builder as builder
+FROM milvusdb/milvus.io.builder as builder
 WORKDIR /site
 COPY . .
 

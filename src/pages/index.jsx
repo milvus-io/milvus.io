@@ -72,8 +72,8 @@ const HomePage = ({ data, pageContext }) => {
               <div className="banner-btn-wrapper">
                 <Button
                   className="banner-btn1"
-                  isExternal={banner.startBtn.isExternal}
                   link={banner.startBtn.href}
+                  locale={locale}
                   children={
                     <>
                       <span className="btn-label">{banner.startBtn.label}</span>
@@ -84,8 +84,8 @@ const HomePage = ({ data, pageContext }) => {
                 <Button
                   className="banner-btn2"
                   variant="outline"
-                  isExternal={banner.contributeBtn.isExternal}
                   link={banner.contributeBtn.href}
+                  locale={locale}
                   children={
                     <>
                       <span className="btn-label">{banner.contributeBtn.label}</span>
@@ -157,8 +157,8 @@ const HomePage = ({ data, pageContext }) => {
 
                 <Button
                   className="communityBtn"
-                  isExternal={community.gitBtn.isExternal}
                   link={community.gitBtn.href}
+                  locale={locale}
                   children={
                     <>
                       <span>{community.gitBtn.label}</span>
@@ -189,12 +189,10 @@ export const Query = graphql`
                 startBtn {
                   href
                   label
-                  isExternal
                 }
                 contributeBtn {
                   href
                   label
-                  isExternal
                 }
               }
               content {
@@ -213,7 +211,6 @@ export const Query = graphql`
                   gitBtn {
                     href
                     label
-                    isExternal
                   }
                 }
               }

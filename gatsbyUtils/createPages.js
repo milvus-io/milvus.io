@@ -1,7 +1,7 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
-// const env = process.env.IS_PREVIEW;
-const env = 'preview';
+const env = process.env.IS_PREVIEW;
+// const env = 'preview';
 
 // createPages: graphql query
 const query = `
@@ -580,7 +580,6 @@ const generateBootcampHome = (
   createPage,
   { nodes: bootcampHome, template: bootcampTemplate, menu: bootcampMenu }
 ) => {
-  console.log('bootcampHome:', bootcampHome);
   bootcampHome.forEach(({ language, data, path }) => {
     createPage({
       path: language === 'en' ? '/bootcamp' : `/${language}/bootcamp`,

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/v2/lfai.svg';
@@ -8,7 +8,6 @@ import menu from '../../../images/v2/menu.svg';
 import { useMobileScreen } from '../../../hooks';
 import MobilePopup from '../components/MobilePopupV2';
 import Search from '../components/Search';
-import { Link } from 'gatsby';
 import QuestionRobot from '../../questionRobot';
 import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
@@ -17,6 +16,7 @@ import { globalHistory } from '@reach/router';
 import LangSelector from '../../selector/v2';
 import { LANGUAGES } from './constants';
 import git from '../../../images/v2/github.svg';
+import LocalizedLink from '../../localizedLink/localizedLink';
 
 const navList = [
   {
@@ -59,26 +59,18 @@ const V2Header = props => {
 
   const [maskConfig, setMaskConfig] = useState({
     isOpen: false,
-    type: ''
+    type: 'close'
   });
   const container = useRef(null);
   const headContainer = useRef(null);
 
-  const handleToggleMask = useCallback(
-    () => {
-      let timer = null;
-      return (function () {
-        if (!timer) {
-          const { isOpen } = maskConfig;
-          setTimeout(() => {
-            setMaskConfig({
-              isOpen: !isOpen,
-              type: !isOpen ? 'menu' : ''
-            });
-          }, 200);
-        }
-      })();
-    }, [maskConfig]);
+  const handleToggleMask = ({ isOpen }) => {
+    const type = isOpen ? 'menu' : 'close';
+    setMaskConfig({
+      isOpen,
+      type
+    });
+  };
 
   const hideMask = () => {
     setMaskConfig({
@@ -108,13 +100,13 @@ const V2Header = props => {
           {!isMobile ? (
             <div className={styles.contentWrapper}>
               <div className={styles.logoSection}>
-                <Link to="/">
+                <LocalizedLink to="/" locale={locale}>
                   <img
                     className={styles.milvus}
                     src={milvusLogo}
                     alt="milvus-logo"
                   />
-                </Link>
+                </LocalizedLink>
                 <a
                   href="https://lfaidata.foundation/projects/"
                   target="_blank"
@@ -137,14 +129,15 @@ const V2Header = props => {
                       <LinkContent label={label} icon={icon} />
                     </a>
                   ) : (
-                    <Link
+                    <LocalizedLink
                       className={`${styles.navItem} ${pathname === link ? styles.active : ''
                         }`}
                       to={link}
                       key={label}
+                      locale={locale}
                     >
                       <LinkContent label={label} icon={icon} />
-                    </Link>
+                    </LocalizedLink>
                   );
                 })}
                 <div className={styles.dropDown}>
@@ -155,13 +148,13 @@ const V2Header = props => {
           ) : (
             <div className={styles.mobileHeaderWrapper}>
               <div className={styles.logoSection}>
-                <Link to="/">
+                <LocalizedLink to="/" locale={locale}>
                   <img
                     className={styles.milvus}
                     src={milvusLogoMobile}
                     alt="milvus-logo"
                   />
-                </Link>
+                </LocalizedLink>
                 <a
                   href="https://lfaidata.foundation/projects/"
                   target="_blank"
@@ -177,16 +170,30 @@ const V2Header = props => {
                   <div
                     className={styles.iconWrapper}
                     data-type={maskConfig.type === 'menu' ? 'close' : 'menu'}
-                    role="button"
-                    tabIndex={-1}
-                    onClick={handleToggleMask}
-                    onKeyDown={handleToggleMask}
                   >
-                    <img
-                      className={styles.btnIcon}
-                      src={maskConfig.type === 'menu' ? close : menu}
-                      alt="close-icon"
-                    />
+                    {
+                      maskConfig.isOpen ? (
+                        <img
+                          role="button"
+                          tabIndex={-1}
+                          onClick={() => handleToggleMask({ isOpen: false })}
+                          onKeyDown={() => handleToggleMask({ isOpen: false })}
+                          className={styles.btnIcon}
+                          src={close}
+                          alt="close-icon"
+                        />
+                      ) : (
+                        <img
+                          role="button"
+                          tabIndex={-1}
+                          onClick={() => handleToggleMask({ isOpen: true })}
+                          onKeyDown={() => handleToggleMask({ isOpen: true })}
+                          className={styles.btnIcon}
+                          src={menu}
+                          alt="close-icon"
+                        />
+                      )
+                    }
                   </div>
                 </div>
               </div>

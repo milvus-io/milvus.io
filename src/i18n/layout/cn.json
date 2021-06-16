@@ -359,31 +359,26 @@
         {
           "label": "什么是 milvus?",
           "link": "/docs/overview.md",
-          "isExternal": false,
           "icon": null
         },
         {
           "label": "文档",
           "link": "/docs/home",
-          "isExternal": false,
           "icon": null
         },
         {
           "label": "博客",
           "link": "https://blog.milvus.io/",
-          "isExternal": true,
           "icon": null
         },
         {
           "label": "社区",
           "link": "/community",
-          "isExternal": false,
           "icon": null
         },
         {
           "label": "Github",
           "link": "https://github.com/milvus-io/milvus/",
-          "isExternal": true,
           "icon": "git"
         }
       ]
@@ -394,13 +389,11 @@
       "text": "The world's most popular open-source vector database.",
       "startBtn": {
         "href": "/docs/home",
-        "label": "Get Started",
-        "isExternal": false
+        "label": "Get Started"
       },
       "contributeBtn": {
         "href": "/community",
-        "label": "Contribute",
-        "isExternal": false
+        "label": "Contribute"
       }
     },
     "slogan": {
@@ -489,8 +482,7 @@
         "text2": "Contributions and feedbacks are welcome!",
         "gitBtn": {
           "href": "https://github.com/milvus-io/milvus/",
-          "label": "Go to Github",
-          "isExternal": true
+          "label": "Go to Github"
         }
       }
     },
@@ -500,7 +492,6 @@
           "title": "What is milvus? ",
           "text": "Open-source similarity search engine for massive-scale feature vectors",
           "href": "/docs/install_milvus.md",
-          "isExternal": false,
           "label": "Get started",
           "icons": []
         },
@@ -508,7 +499,6 @@
           "title": "Contribute",
           "text": "Milvus is a community project. We encourage you to join the effort and contribute feedback, ideas and code.",
           "href": "https://github.com/milvus-io",
-          "isExternal": true,
           "label": "Join us on Github",
           "icons": []
         },
@@ -516,7 +506,6 @@
           "title": "Follow us",
           "text": "Stay up to date with the latest Milvus news.",
           "href": "",
-          "isExternal": false,
           "label": "",
           "icons": [
             {

@@ -29,18 +29,11 @@ const Icons = {
 };
 
 const BootcampTemplate = ({ data, pageContext }) => {
-  console.log(data);
   const {
     bootcampData: { title, description, section1, section2, section3 },
     locale,
     menuList
   } = pageContext;
-
-  const {
-    footer: { licence: footerTrans },
-  } = data.allFile.edges.filter(
-    edge => edge.node.childI18N
-  )[0].node.childI18N.v2;
 
   const menuConfig = {
     menuList,

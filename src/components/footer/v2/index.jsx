@@ -16,8 +16,9 @@ const iconSet = {
   wechat,
 };
 
-const V2Footer = ({ footer }) => {
+const V2Footer = ({ locale, footer }) => {
   const {
+
     list: links,
     licence: {
       // list,
@@ -39,7 +40,7 @@ const V2Footer = ({ footer }) => {
               {href ? (
                 <Button
                   link={href}
-                  isExternal={isExternal}
+                  locale={locale}
                   variant="text"
                   className={styles.btn}
                   children={

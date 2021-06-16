@@ -26,11 +26,15 @@ jobs:
           sudo chmod -R 777 .
           sudo git reset HEAD --hard 
           sudo git checkout ${GITHUB_REF##*/}
+          
+      - name: Get commit sha
+        id: getsha
+        run: echo "::set-output name=sha::$(git rev-parse HEAD^2)"
         
       - name: Get changed files
         id: changesfiles
         run: |
-          echo "::set-output name=packagejson::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep package.json$ | xargs)"   
+          echo "::set-output name=packagejson::$(git diff-tree --no-commit-id --name-only -r ${{ steps.getsha.outputs.sha }} | grep package.json$ | xargs)"   
       
       - name: Login to DockerHub
         if: steps.changesfiles.outputs.packagejson == 'package.json'

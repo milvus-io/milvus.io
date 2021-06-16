@@ -117,7 +117,7 @@ const handleApiFiles = (
   try {
     let filesList = getAllFilesAbsolutePath(dirPath);
     // Level: api_reference(root directory) > 2nd level directory > 3rd level directory.
-    const thridLevelDirectoryList = [];
+    const thridLevelDirectories = {};
     // Get all HTML files under dirPath.
     const htmlFiles = filesList.filter(i => i.endsWith('.html'));
     // If this dirPath has only one page or not, regardless how many directories.
@@ -126,11 +126,19 @@ const handleApiFiles = (
       let filePath = htmlFiles[i];
       let doc = HTMLParser.parse(fs.readFileSync(filePath));
       // Use custom doc2html function to generate docHTML and other data.
-      const { docHTML, title = '', order = -2 } = doc2html(doc);
+      const {
+        docHTML,
+        title: docTitle,
+        order: docOrder,
+        parentMenu = {},
+      } = doc2html(doc);
+      // docOrder may be 0.
+      const order = typeof docOrder === 'undefined' ? null : docOrder;
+      const title = docTitle;
       const relativePath = getFileRelativePath(filePath, version);
       const parentPath = relativePath.split('/').slice(0, -1).join('/');
       // Record the parentPath as a thrid level directory.
-      parentPath && thridLevelDirectoryList.push(parentPath);
+      parentPath && (thridLevelDirectories[parentPath] = parentMenu);
       parentPath
         ? // Handle the pages those have a 3rd level directory and dd a label2/3.
           // Need to remove label2/3 if it's a single page.
@@ -163,7 +171,6 @@ const handleApiFiles = (
           });
     }
     // Deduplicate.
-    const uniq = [...new Set(thridLevelDirectoryList)];
     // Add 3rd level directory menu. Should ignore if single page.
     !isSinglePage &&
       apiFiles.push({
@@ -175,7 +182,9 @@ const handleApiFiles = (
         labels: ['api_reference'],
         isDirectory: true,
       }) &&
-      uniq.forEach(f =>
+      // uniq.forEach(f =>
+      Object.keys(thridLevelDirectories).forEach(f => {
+        const { name: dirName, order: dirOrder } = thridLevelDirectories[f];
         apiFiles.push({
           doc: '',
           name: f.replace('-', '_'),
@@ -184,8 +193,10 @@ const handleApiFiles = (
           category,
           labels: ['api_reference', category.replace('-', '_')],
           isDirectory: true,
-        })
-      );
+          order: dirOrder,
+          title: dirName || f.replace('-', '_'),
+        });
+      });
   } catch (e) {
     console.log(`Read ${category} api files failed`);
     throw e;
@@ -199,6 +210,11 @@ const handleApiFiles = (
  * @param {array} apiFiles pages under `${parentPath}/${version}` will be formatted and pushed to apiFiles
  */
 const handlePyFiles = (parentPath, version, apiFiles) => {
+  /**
+   * Get the TOC item index as menu item order.
+   * @param {array} toctree TOC tree.
+   * @returns {number} Current TOC item index, default is the length.
+   */
   const calculateOrder = toctree => {
     for (let i = 0; i < toctree.length; i++) {
       const isCurrent = toctree[i]?.getAttribute('class')?.includes('current');
@@ -207,9 +223,6 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
     return toctree.length;
   };
   const doc2html = doc => {
-    const bodyHTML = doc.querySelector(
-      '[itemprop=articleBody] > div'
-    ).innerHTML;
     // remove useless link
     [...doc.querySelectorAll('.reference.internal .viewcode-link')].forEach(
       node => {
@@ -251,38 +264,47 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
  * @param {array} apiFiles pages under `${parentPath}/${version}` will be formatted and pushed to apiFiles
  */
 const handlePyOrmFiles = (parentPath, version, apiFiles) => {
+  /**
+   * Get current item index as order in TOC tree/subtree.
+   * Will update parentMenu if it has a parent menu.
+   * @param {document} element DOM element.
+   * @param {string} className Class name to be found.
+   * @param {object} parentMenu Get current item's parent name and order.
+   * @returns {number} Order. The index in TOC sub tree or root tree.
+   */
+  const calculateOrder = (element, className, parentMenu = {}) => {
+    let order = -1;
+    const toctree = element?.querySelectorAll(className);
+    for (let i = 0; i < toctree.length; i++) {
+      const isCurrent = toctree[i]?.getAttribute('class')?.includes('current');
+      if (!isCurrent) continue;
+      if (className === '.toctree-l2') return i;
+      const result = calculateOrder(toctree[i], '.toctree-l2');
+      if (result !== -1) {
+        const eleName = toctree[i]?.querySelector('a')?.textContent;
+        parentMenu.name = eleName;
+        parentMenu.order = i;
+        return result;
+      }
+      return i;
+    }
+    return order;
+  };
   const doc2html = doc => {
-    const bodyHTML = doc.querySelector(
-      '[itemprop=articleBody] > section'
-    ).innerHTML;
-    // filter out linked element ids
-    const linkRegex = /id="[A-Za-z0-9_-]*"/g;
-    const linkId = Array.from(bodyHTML.matchAll(linkRegex)).map(link =>
-      link[0].slice(4, link[0].length - 1)
+    // const leftNav = doc.querySelectorAll('.toctree-l1');
+    const title = doc?.querySelector('h1')?.textContent?.slice(0, -1);
+    const parentMenu = {};
+    const order = calculateOrder(
+      doc.querySelector('.wy-menu ul'),
+      '.toctree-l1',
+      parentMenu
     );
-    // match href with ids
-    const hrefs = [];
-    [...doc.querySelectorAll('a')].forEach(node => {
-      linkId.forEach(link => {
-        if (
-          node.outerHTML.indexOf(`#${link}`) > 1 &&
-          node.outerHTML.indexOf('headerlink') === -1
-        ) {
-          hrefs.push(node.outerHTML);
-        }
-      });
-    });
     // remove useless link
-    [...doc.querySelectorAll('.reference.internal')].forEach(node => {
-      node.parentNode.removeChild(node);
-    });
-    // generate toc from hrefs and insert it behind of h1 title
-    const title = doc.querySelector('[itemprop=articleBody] > section > h1');
-    const tocElement = `<ul className="api-reference-toc">${hrefs.reduce(
-      (prev, item) => prev + `<li>${item}</li>`,
-      ''
-    )}</ul>`;
-    title.insertAdjacentHTML('afterend', tocElement);
+    [...doc.querySelectorAll('.reference.internal .viewcode-link')].forEach(
+      node => {
+        node.parentNode.parentNode.removeChild(node.parentNode);
+      }
+    );
     // Add <code> for <pre> content.
     [...doc.querySelectorAll('pre')].forEach(node => {
       const preNode = HTMLParser.parse(node.innerHTML);
@@ -296,7 +318,7 @@ const handlePyOrmFiles = (parentPath, version, apiFiles) => {
     });
     // only need article body html
     doc = doc.querySelector('[itemprop=articleBody] > section').innerHTML;
-    return { docHTML: doc, hrefs, linkId };
+    return { docHTML: doc, title, order, parentMenu };
   };
   handleApiFiles(doc2html, apiFiles, {
     parentPath,

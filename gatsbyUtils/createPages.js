@@ -603,6 +603,7 @@ const generateBootcampHome = (
  * @returns A prettier title.
  */
 const generateTitle = ({
+  title,
   category,
   name,
   isDirectory = false,
@@ -620,6 +621,7 @@ const generateTitle = ({
     const result = s.split('/').pop();
     return result.charAt(0).toUpperCase() + result.slice(1);
   };
+  if (title) return capitalize(title);
   const titleMapping = {
     pymilvus: 'Milvus Python SDK',
     'pymilvus-orm': 'Milvus Python SDK (ORM)',
@@ -677,7 +679,7 @@ const generateApiMenus = nodes => {
         // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
         // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
         id: name.replace('-', '_'),
-        title: title || generateTitle({ name, category, isDirectory, labels }),
+        title: generateTitle({ title, name, category, isDirectory, labels }),
         lang: null,
         label1,
         label2,

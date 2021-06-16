@@ -6,6 +6,14 @@
   position: fixed;
   right: 90px;
 
+  @media (max-width: 600px) {
+    align-items: center;    
+    display: flex;
+    flex-direction: column;
+    right: 16px;
+    width: 90%;
+  }
+
   .openBtn {
     background-color: transparent;
     background-image: url(../../images/v2/icon_bird.svg);
@@ -19,13 +27,15 @@
     right: 0;
     width: 75px;
 
+    @media (max-width: 600px) {
+      margin-top: 32px;
+      position: static;
+    }
+
     &.close {
       background-image: url(../../images/v2/close.svg);
       border: 1px solid #EEEEEE;
       border-radius: 50%;
-      bottom: 0;
-      position: absolute;
-      right: 0;
     }
   }
 
@@ -35,11 +45,16 @@
     box-shadow: 5px 5px 15px 10px #888888;
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    height: calc(80vh - 130px);
     max-height: 600px;
     position: absolute;
     right: 0;
     width: 400px;
+
+    @media (max-width: 600px) {
+      position: static;
+      width: 100%;
+    }
     
     .logo {
       filter: brightness(0) saturate(100%) invert(100%) sepia(11%) saturate(8%) hue-rotate(154deg) brightness(102%) contrast(102%);

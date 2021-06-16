@@ -22,7 +22,13 @@ export default function Template({ data, pageContext }) {
     newestVersion,
   } = pageContext;
 
-  useCodeCopy(locale);
+  // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
+  // Specify supported languages to fix Java doc code layout.
+  const hljsCfg = {
+    languages: ['java', 'go', 'python', 'javascript'],
+  };
+
+  useCodeCopy(locale, hljsCfg);
   useAlgolia(locale, docVersion);
 
   const layout = data.allFile.edges[0]

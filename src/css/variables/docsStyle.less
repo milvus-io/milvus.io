@@ -145,7 +145,8 @@
     padding-left: 24px;
 
     & > li::marker {
-      // color: @color-primary;
+      display: inline-block;
+      font-size: 16px;
       display: inline-block;
       margin-right: 16px;
     }
@@ -334,7 +335,7 @@ details {
   font-size: 16px;
   line-height: 1.4em;
   padding-left: 16px;
-  margin: 0 0 16px 0;
+  margin: 8px 0;
 
   @media @tablet {
     margin: 16px 0;
@@ -350,8 +351,8 @@ details {
     &::before {
       content: '';
       display: inline-block;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       background-color: #000;
       position: absolute;
       border-radius: 50%;

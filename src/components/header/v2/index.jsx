@@ -27,6 +27,7 @@ const navList = [
   {
     label: 'Documentation',
     link: '/docs/home',
+    keyWord: 'docs',
     isExternal: false,
   },
   {
@@ -37,6 +38,7 @@ const navList = [
   {
     label: 'Contribute',
     link: '/community',
+    keyWord: 'community',
     isExternal: false,
   },
   {
@@ -117,7 +119,7 @@ const V2Header = props => {
               </div>
               <div className={styles.navSection}>
                 {navList.map(i => {
-                  const { label, link, isExternal, icon } = i;
+                  const { label, link, isExternal, icon, keyWord } = i;
                   return isExternal ? (
                     <a
                       className={styles.navItem}
@@ -130,7 +132,7 @@ const V2Header = props => {
                     </a>
                   ) : (
                     <LocalizedLink
-                      className={`${styles.navItem} ${pathname === link ? styles.active : ''
+                      className={`${styles.navItem} ${pathname.includes(keyWord) ? styles.active : ''
                         }`}
                       to={link}
                       key={label}

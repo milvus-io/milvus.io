@@ -3,11 +3,48 @@ import { graphql } from 'gatsby';
 import Seo from '../components/seo';
 import Header from '../components/header/v2';
 import './community.less';
-import CommunityHeroCard from '../components/card/communityHeroCard/communityHeroCard';
 import Sidebar from '../components/sidebar/sidebar';
 import mailIcon from '../images/community/mail.png';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
+import banner from '../images/community/banner.png';
+import ambassador from '../images/community/ambassador.png';
+import build from '../images/community/build.svg';
+import event from '../images/community/event.svg';
+import github from '../images/community/github-2.png';
+import grow from '../images/community/grow.svg';
+import learn from '../images/community/learn.svg';
+import share from '../images/community/share.svg';
+import slack from '../images/community/slack-2.png';
+import twitter from '../images/community/twitter.png';
+import video from '../images/community/video.svg';
+import zoom from '../images/community/zoom.png';
+import kubesphere from '../images/community/kubesphere.png';
+import juice from '../images/community/juice.png';
+import pulsar from '../images/community/pulsar.png';
+import haystack from '../images/community/haystack.png';
+import paddle from '../images/community/paddle.png';
+import onnx from '../images/community/onnx.png';
+import CommunityCard from '../components/card/communityCard';
+import Button from '../components/button';
 
+const iconMap = {
+  build,
+  event,
+  github,
+  grow,
+  learn,
+  share,
+  slack,
+  twitter,
+  video,
+  zoom,
+  kubesphere,
+  juice,
+  pulsar,
+  haystack,
+  paddle,
+  onnx
+};
 
 export default function CommunityTemplate({ data, pageContext }) {
   // i18n
@@ -19,7 +56,6 @@ export default function CommunityTemplate({ data, pageContext }) {
 
   const {
     footer: { content: anchorTitleTrans },
-    community: { slack, github },
   } = data.allFile.edges.filter(
     edge => edge.node.childI18N
   )[0].node.childI18N.layout;
@@ -38,11 +74,12 @@ export default function CommunityTemplate({ data, pageContext }) {
   const desc = 'Join Milvus Community';
 
   const {
-    heroSection,
-    repoSection,
-    contributeSection,
-    mailingSection,
-    contributorSection,
+    aboutSection,
+    joinSection,
+    partnerSection,
+    recommendSection,
+    resourceSection,
+    mailingSection
   } = homeData || {};
 
   // add hooks used by doc template
@@ -135,47 +172,112 @@ export default function CommunityTemplate({ data, pageContext }) {
         />
         {isHomePage ? (
           <section className="content home">
-            {/* h1 for SEO, not show on page */}
-            <h1 className="home-h1">Milvus Community</h1>
-            <section className="section hero">
-              <h2>{heroSection.title}</h2>
-              <ul>
-                {heroSection.list.map(item => (
-                  <li className="card" key={item.title}>
-                    <CommunityHeroCard
-                      data={item}
-                      githubLabel={github}
-                      slackLabel={slack}
-                    />
-                  </li>
-                ))}
+            {/* banner */}
+            <section className="banner-section">
+              <img src={banner} alt="milvus community" />
+            </section>
+            {/* about */}
+            <section className="about-section">
+              <h2>{aboutSection.title}</h2>
+              <p className="about-content">{aboutSection.content}</p>
+              <ul className="about-list">
+                {
+                  aboutSection.list.map(item => {
+                    return (
+                      <li key={item.iconType}>
+                        <CommunityCard
+                          icon={iconMap[item.iconType]}
+                          {...item}
+                        />
+                      </li>
+                    );
+                  })
+                }
               </ul>
             </section>
-            <section className="section repo">
-              <h2>{repoSection.title}</h2>
-              <ul className="row-3">
-                {repoSection.list.map(repo => (
-                  <li className="card" key={repo.title}>
-                    <a href={repo.link} target="_blank" rel="noreferrer">
-                      <h3>{repo.title}</h3>
-                      <p>{repo.desc}</p>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            {/* recommend */}
+            <section className="recommend-section">
+              <h2>{recommendSection.title}</h2>
+              <div className="list-wrapper">
+                <div>
+                  <h3>{recommendSection.start.title}</h3>
+                  <ul className="recommend-list">
+                    {
+                      recommendSection.start.list.map(item => (
+                        <li key={item.label}>
+                          <a href={item.link}>{item.label}</a>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+                <div>
+                  <h3>{recommendSection.deploy.title}</h3>
+                  <ul className="recommend-list">
+                    {
+                      recommendSection.deploy.list.map(item => (
+                        <li key={item.label}>
+                          <a href={item.link}>{item.label}</a>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+                <div>
+                  <h3>{recommendSection.develop.title}</h3>
+                  <ul className="recommend-list">
+                    {
+                      recommendSection.develop.list.map(item => (
+                        <li key={item.label}>
+                          <a href={item.link}>{item.label}</a>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+                <div>
+                  <h3>{recommendSection.test.title}</h3>
+                  <ul className="recommend-list">
+                    {
+                      recommendSection.test.list.map(item => (
+                        <li key={item.label}>
+                          <a href={item.link}>{item.label}</a>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+              </div>
 
-            <section className="section contribute">
-              <h2>{contributeSection.title}</h2>
-              <p>{contributeSection.desc}</p>
+              <div className="ambassador-wrapper">
+                <img className="ambassadorImg" src={ambassador} alt="Milvus Ambassador" />
+                <h1 className="ambassador-title">{recommendSection.ambassador.title}</h1>
+                <p className="ambassador-content">{recommendSection.ambassador.desc}</p>
+                <Button
+                  className="ambassador-btn join-button"
+                  link={recommendSection.ambassador.joinBtn.link}
+                >
+                  {recommendSection.ambassador.joinBtn.label}
+                </Button>
+                <Button
+                  className="ambassador-btn introduction-button"
+                  link={recommendSection.ambassador.introBtn.label}
+                  variant="text"
+                  children={
+                    <>
+                      <span className="label">{recommendSection.ambassador.introBtn.label}</span>
+                      <i className="fas fa-arrow-right"></i>
+                    </>
+                  } />
+              </div>
             </section>
-
-            <section className="section mail">
+            {/* maile */}
+            <section className="maile-section">
               <h2>{mailingSection.title}</h2>
-              <ul className="row-3">
+              <ul className="maile-list">
                 {mailingSection.list.map(mail => (
                   <li className="card" key={mail.title}>
-                    <a href={mail.link} target="_blank" rel="noreferrer">
+                    <a className="maile-wrapper" href={mail.link} target="_blank" rel="noreferrer">
                       <img src={mailIcon} alt="mail icon" />
                       <p>{mail.title}</p>
                     </a>
@@ -183,17 +285,48 @@ export default function CommunityTemplate({ data, pageContext }) {
                 ))}
               </ul>
             </section>
+            {/* join the community */}
+            <section className="community-section">
+              <h2>{joinSection.title}</h2>
+              <ul className="community-list">
+                {
+                  joinSection.list.map(item => {
+                    const { iconType, label, link } = item;
+                    return (
+                      <li key={iconType}>
+                        <img src={iconMap[iconType]} alt={iconType} />
+                        <a href={link} >{label}</a>
+                      </li>
+                    );
 
-            <section className="section contributor">
-              <h2>{contributorSection.title}</h2>
-              <ul>
-                {contributorSection.list.map(item => (
-                  <li key={item.login}>
-                    <a href={item.link} target="_blank" rel="noreferrer">
-                      <img src={item.avatar.publicURL} alt="contributor" />
-                    </a>
-                  </li>
-                ))}
+                  })
+                }
+              </ul>
+            </section>
+            {/* resources */}
+            <section className="resource-section">
+              <h2>{resourceSection.title}</h2>
+              <ul className="resource-list">
+                {
+                  resourceSection.list.map(item => (
+                    <li>
+                      <CommunityCard icon={iconMap[item.iconType]} {...item} />
+                    </li>
+                  ))
+                }
+              </ul>
+            </section>
+            {/* community patner */}
+            <section className="patner-section">
+              <h2>{partnerSection.title}</h2>
+              <ul className="patner-list">
+                {
+                  partnerSection.list.map(item => (
+                    <li key={item.name}>
+                      <img src={iconMap[item.name]} alt={item.alt} />
+                    </li>
+                  ))
+                }
               </ul>
             </section>
           </section>

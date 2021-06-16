@@ -41,7 +41,7 @@ jobs:
       - name: Build and push
         if: steps.changesfiles.outputs.packagejson == 'package.json'
         run: |
-          docker build -t milvusdb/milvus.io.builder:${GITHUB_REF##*/} -f ./NPMDOCKER .
+          docker build -t milvusdb/milvus.io.builder:${GITHUB_REF##*/} -f ./Builder.Dockerfile .
           docker push milvusdb/milvus.io.builder:${GITHUB_REF##*/}
       
   build:

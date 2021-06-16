@@ -25,12 +25,18 @@ const HomePage = ({ data, pageContext }) => {
   const {
     header,
     banner,
-    slogan,
-    content: { feature, user, community },
+    content: { feature, community },
     footer,
   } = data.allFile.edges.filter(
     edge => edge.node.childI18N
   )[0].node.childI18N.v2;
+
+  const {
+    slogan,
+    user
+  } = data.allFile.edges.filter(
+    edge => edge.node.childUsers
+  )[0].node.childUsers;
   const { locale, versions } = pageContext;
 
   return (
@@ -66,8 +72,8 @@ const HomePage = ({ data, pageContext }) => {
               <div className="banner-btn-wrapper">
                 <Button
                   className="banner-btn1"
-                  isExternal={banner.startBtn.isExternal}
                   link={banner.startBtn.href}
+                  locale={locale}
                   children={
                     <>
                       <span className="btn-label">{banner.startBtn.label}</span>
@@ -78,8 +84,8 @@ const HomePage = ({ data, pageContext }) => {
                 <Button
                   className="banner-btn2"
                   variant="outline"
-                  isExternal={banner.contributeBtn.isExternal}
                   link={banner.contributeBtn.href}
+                  locale={locale}
                   children={
                     <>
                       <span className="btn-label">{banner.contributeBtn.label}</span>
@@ -117,26 +123,30 @@ const HomePage = ({ data, pageContext }) => {
                 <img className='img' src={bgImg3} alt="" />
               </li>
             </ul>
-            <div className="user-section">
-              <h3 className="title-bar">
-                <span className="title">{user.title}</span>
-                <span className="line"></span>
-              </h3>
-              <ul className="users-list">
-                {
-                  user.list.map(item => {
-                    const { name, link } = item;
-                    return (
-                      <li key={name} className="list-item">
-                        <a href={link} target="_blank" rel="noreferrer">
-                          <img src={contributor} alt="contributor" />
-                        </a>
-                      </li>
-                    );
-                  })
-                }
-              </ul>
-            </div>
+            {
+              !!user.list.length ? (
+                <div className="user-section">
+                  <h3 className="title-bar">
+                    <span className="title">{user.title}</span>
+                    <span className="line"></span>
+                  </h3>
+                  <ul className="users-list">
+                    {
+                      user.list.map(item => {
+                        const { name, link } = item;
+                        return (
+                          <li key={name} className="list-item">
+                            <a href={link} target="_blank" rel="noreferrer">
+                              <img src={contributor} alt="contributor" />
+                            </a>
+                          </li>
+                        );
+                      })
+                    }
+                  </ul>
+                </div>
+              ) : null
+            }
             <div className="community-section">
               <div className="wrapper">
                 <div className="text-wrapper">
@@ -147,9 +157,8 @@ const HomePage = ({ data, pageContext }) => {
 
                 <Button
                   className="communityBtn"
-                  isExternal={community.gitBtn.isExternal}
-                  type="link"
                   link={community.gitBtn.href}
+                  locale={locale}
                   children={
                     <>
                       <span>{community.gitBtn.label}</span>
@@ -180,17 +189,11 @@ export const Query = graphql`
                 startBtn {
                   href
                   label
-                  isExternal
                 }
                 contributeBtn {
                   href
                   label
-                  isExternal
                 }
-              }
-              slogan {
-                text,
-                author
               }
               content {
                 feature {
@@ -201,13 +204,6 @@ export const Query = graphql`
                     img
                   }
                 }
-                user {
-                  title
-                  list {
-                    name
-                    link
-                  }
-                }
                 community {
                   title
                   text1
@@ -215,7 +211,6 @@ export const Query = graphql`
                   gitBtn {
                     href
                     label
-                    isExternal
                   }
                 }
               }
@@ -249,6 +244,19 @@ export const Query = graphql`
                   }
                 }
               }
+            }
+          }
+          childUsers {
+            user {
+              title
+              list {
+                link
+                name
+              }
+            }
+            slogan {
+              author
+              text
             }
           }
         }

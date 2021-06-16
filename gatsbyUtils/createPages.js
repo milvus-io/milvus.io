@@ -43,7 +43,7 @@ const query = `
   }
   allFile(
     filter: {
-      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp)/" }
+      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp|users)/" }
       extension: { eq: "json" }
     }
   ) {
@@ -580,7 +580,6 @@ const generateBootcampHome = (
   createPage,
   { nodes: bootcampHome, template: bootcampTemplate, menu: bootcampMenu }
 ) => {
-  console.log('bootcampHome:', bootcampHome);
   bootcampHome.forEach(({ language, data, path }) => {
     createPage({
       path: language === 'en' ? '/bootcamp' : `/${language}/bootcamp`,
@@ -626,7 +625,7 @@ const generateTitle = ({
     'pymilvus-orm': 'Milvus Python SDK (ORM)',
     go: 'Milvus Go SDK',
     java: 'Milvus Java SDK',
-    node: 'Milvus Node SDK'
+    node: 'Milvus Node SDK',
   };
   const [, label2 = ''] = labels;
   // Return name if the menu is a 3rd level menu(such as: API => java => exception)

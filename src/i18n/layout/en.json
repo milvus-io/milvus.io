@@ -368,31 +368,26 @@
         {
           "label": "What is milvus?",
           "link": "/docs/overview.md",
-          "isExternal": false,
           "icon": null
         },
         {
           "label": "Documentation",
           "link": "/docs/home",
-          "isExternal": false,
           "icon": null
         },
         {
           "label": "Blog",
           "link": "https://blog.milvus.io/",
-          "isExternal": true,
           "icon": null
         },
         {
           "label": "Contribute",
           "link": "/community",
-          "isExternal": false,
           "icon": null
         },
         {
           "label": "Github",
           "link": "https://github.com/milvus-io/milvus/",
-          "isExternal": true,
           "icon": "git"
         }
       ]
@@ -403,13 +398,11 @@
       "text": "The world's most popular open-source vector database.",
       "startBtn": {
         "href": "/docs/home",
-        "label": "Get Started",
-        "isExternal": false
+        "label": "Get Started"
       },
       "contributeBtn": {
         "href": "/community",
-        "label": "Contribute",
-        "isExternal": false
+        "label": "Contribute"
       }
     },
     "slogan": {
@@ -498,8 +491,7 @@
         "text2": "Contributions and feedbacks are welcome!",
         "gitBtn": {
           "href": "https://github.com/milvus-io/milvus/",
-          "label": "Go to Github",
-          "isExternal": true
+          "label": "Go to Github"
         }
       }
     },

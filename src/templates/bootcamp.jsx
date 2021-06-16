@@ -1,4 +1,5 @@
 import React from 'react';
+import { graphql } from 'gatsby';
 import BannerCard from '../components/card/bannerCard';
 import LinkCard from '../components/card/linkCard';
 import SolutionCard from '../components/card/solutionCard';
@@ -14,6 +15,7 @@ import videoSearch from '../images/doc-home/video-search.svg';
 import Header from '../components/header/v2';
 import { useMobileScreen } from '../hooks/index';
 import SideBar from '../components/sidebar/sidebar';
+import Footer from '../components/footer/footer';
 import * as styles from './bootcampTemplate.module.less';
 
 const Icons = {
@@ -26,7 +28,7 @@ const Icons = {
   HYBRID: hybrid,
 };
 
-const BootcampTemplate = ({ pageContext }) => {
+const BootcampTemplate = ({ data, pageContext }) => {
   const {
     bootcampData: { title, description, section1, section2, section3 },
     locale,
@@ -118,10 +120,45 @@ const BootcampTemplate = ({ pageContext }) => {
             </ul>
           </div>
         </section>
-
       </main>
+      <Footer />
     </div>
   );
 };
+
+export const Query = graphql`
+  query bootcampQuery($locale: String) {
+    allFile(filter: { name: { eq: $locale } }) {
+      edges {
+        node {
+          childI18N {
+            v2 {
+              footer {
+                licence {
+                  text1 {
+                    label
+                    link
+                  }
+                  text2 {
+                    label
+                    link
+                  }
+                  text3 {
+                    label
+                    link
+                  }
+                  list {
+                    label
+                    link
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default BootcampTemplate;

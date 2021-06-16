@@ -56,11 +56,10 @@ export default function CommunityTemplate({ data, pageContext }) {
 
   const {
     footer: { content: anchorTitleTrans },
-    community: { slack, github },
   } = data.allFile.edges.filter(
     edge => edge.node.childI18N
   )[0].node.childI18N.layout;
-  console.log(pageContext);
+
   const {
     locale,
     html,
@@ -184,9 +183,8 @@ export default function CommunityTemplate({ data, pageContext }) {
               <ul className="about-list">
                 {
                   aboutSection.list.map(item => {
-                    console.log(item.iconType);
                     return (
-                      <li>
+                      <li key={item.iconType}>
                         <CommunityCard
                           icon={iconMap[item.iconType]}
                           {...item}
@@ -206,7 +204,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                   <ul className="recommend-list">
                     {
                       recommendSection.start.list.map(item => (
-                        <li>
+                        <li key={item.label}>
                           <a href={item.link}>{item.label}</a>
                         </li>
                       ))
@@ -218,7 +216,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                   <ul className="recommend-list">
                     {
                       recommendSection.deploy.list.map(item => (
-                        <li>
+                        <li key={item.label}>
                           <a href={item.link}>{item.label}</a>
                         </li>
                       ))
@@ -230,7 +228,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                   <ul className="recommend-list">
                     {
                       recommendSection.develop.list.map(item => (
-                        <li>
+                        <li key={item.label}>
                           <a href={item.link}>{item.label}</a>
                         </li>
                       ))
@@ -242,7 +240,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                   <ul className="recommend-list">
                     {
                       recommendSection.test.list.map(item => (
-                        <li>
+                        <li key={item.label}>
                           <a href={item.link}>{item.label}</a>
                         </li>
                       ))
@@ -268,7 +266,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                   children={
                     <>
                       <span className="label">{recommendSection.ambassador.introBtn.label}</span>
-                      <i class="fas fa-arrow-right"></i>
+                      <i className="fas fa-arrow-right"></i>
                     </>
                   } />
               </div>
@@ -295,7 +293,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                   joinSection.list.map(item => {
                     const { iconType, label, link } = item;
                     return (
-                      <li >
+                      <li key={iconType}>
                         <img src={iconMap[iconType]} alt={iconType} />
                         <a href={link} >{label}</a>
                       </li>
@@ -324,7 +322,7 @@ export default function CommunityTemplate({ data, pageContext }) {
               <ul className="patner-list">
                 {
                   partnerSection.list.map(item => (
-                    <li>
+                    <li key={item.name}>
                       <img src={iconMap[item.name]} alt={item.alt} />
                     </li>
                   ))

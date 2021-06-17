@@ -46,7 +46,6 @@ export default function CommunityTemplate({ data, pageContext }) {
     activePost,
     headings,
   } = pageContext;
-  console.log(pageContext);
   const isHomePage = homeData !== null;
 
   const title = 'Milvus Community';

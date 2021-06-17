@@ -385,7 +385,7 @@
     },
     "banner": {
       "title": ["High Scalability.", "Cloud-Native.", "High Availability."],
-      "subTitle": "Milvus2.0",
+      "subTitle": "Milvus",
       "text": "The world's most popular open-source vector database.",
       "startBtn": {
         "href": "/docs/home",

@@ -1,11 +1,9 @@
 # => Build container
-# FROM zilliz/milvus.io.builder as builder
-FROM node:14.16.0-buster as builder
+FROM milvusdb/milvus.io.builder:preview as builder
 WORKDIR /site
 ENV IS_PREVIEW preview
 
 COPY . .
-RUN yarn install --production && yarn cache clean
 
 RUN yarn build
 

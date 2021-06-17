@@ -1,5 +1,5 @@
 # => Build container
-FROM mhart/alpine-node:14 as builder
+FROM node:14.16.0-buster as builder
 WORKDIR /site
 COPY package.json .
 COPY yarn.lock .

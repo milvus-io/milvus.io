@@ -43,7 +43,7 @@ const query = `
   }
   allFile(
     filter: {
-      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp|users)/" }
+      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp)/" }
       extension: { eq: "json" }
     }
   ) {
@@ -60,29 +60,6 @@ const query = `
             order
             title
           }
-          contributeSection {
-            desc
-            title
-          }
-          contributorSection {
-            title
-            list {
-              avatar {
-                publicURL
-              }
-              link
-              login
-            }
-          }
-          heroSection {
-            list {
-              desc
-              link
-              title
-              type
-            }
-            title
-          }
           mailingSection {
             title
             list {
@@ -90,13 +67,82 @@ const query = `
               title
             }
           }
-          repoSection {
+          joinSection {
+            list {
+              iconType
+              label
+              link
+            }
+            title
+          }
+          partnerSection {
+            list {
+              alt
+              name
+            }
+            title
+          }
+          recommendSection {
+            ambassador {
+              desc
+              introBtn {
+                label
+                link
+              }
+              joinBtn {
+                label
+                link
+              }
+              title
+            }
+            deploy {
+              list {
+                label
+                link
+              }
+              title
+            }
+            develop {
+              list {
+                label
+                link
+              }
+              title
+            }
+            start {
+              list {
+                label
+                link
+              }
+              title
+            }
+            test {
+              list {
+                label
+                link
+              }
+              title
+            }
+            title
+          }
+          resourceSection {
             list {
               desc
+              iconType
+              label
               link
               title
             }
             title
+          }
+          aboutSection {
+            content
+            title
+            list {
+              desc
+              iconType
+              title
+            }
           }
         }
         childMenu {
@@ -580,6 +626,7 @@ const generateBootcampHome = (
   createPage,
   { nodes: bootcampHome, template: bootcampTemplate, menu: bootcampMenu }
 ) => {
+  console.log('bootcampHome:', bootcampHome);
   bootcampHome.forEach(({ language, data, path }) => {
     createPage({
       path: language === 'en' ? '/bootcamp' : `/${language}/bootcamp`,
@@ -642,8 +689,6 @@ const generateTitle = ({
     // case 'pymilvus':
     case 'go':
       return prettierCategory;
-    case 'node':
-      return capitalize(name.split('.htm')[0]?.split('.')?.pop());
     // return 3rd level items prettier name
     default:
       return capitalize(name.split('.htm')[0]);

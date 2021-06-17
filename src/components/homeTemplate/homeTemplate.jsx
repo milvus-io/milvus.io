@@ -6,14 +6,14 @@ import * as styles from './homeTemplate.module.less';
 
 const HomeTemplate = props => {
   const { data } = props;
-  const { section1, section2, section3, section4 } = data;
+  const { section1 = {}, section2, section3 = {}, section4 = {} } = data;
 
   return (
     <section className={styles.docHomeWrapper}>
       <div className={`${styles.section} ${styles.section1}`}>
         <h1>{section1.title}</h1>
         <div className={styles.cardWrapper}>
-          {section1.items.map(item => (
+          {section1.items && section1.items.map(item => (
             <StartCard
               key={item.title}
               data={item}
@@ -31,7 +31,7 @@ const HomeTemplate = props => {
       <div className={`${styles.section} ${styles.section3}`}>
         <h1>{section3.title}</h1>
         <div className={styles.itemWrapper}>
-          {section3.items.map(item => (
+          {section3.items && section3.items.map(item => (
             <div key={item.label}>
               <h4>{item.label}</h4>
               <ul>
@@ -49,21 +49,23 @@ const HomeTemplate = props => {
       <div className={styles.section}>
         <h1>{section4.title}</h1>
         <div>
-          {section4.items.map(item => (
+          {section4.items && section4.items.map(item => (
             <BlogCard key={item.title} data={item} />
           ))}
         </div>
-        <Button
-          className={styles.loadBtn}
-          isExternal={section4.loadBtn.isExternal}
-          link={section4.loadBtn.link}
-          children={
-            <>
-              <span className={styles.btnLabel}>{section4.loadBtn.label}</span>
-              <i className="fa fa-chevron-right"></i>
-            </>
-          }
-        />
+        {
+          section4.loadBtn && (<Button
+            className={styles.loadBtn}
+            isExternal={section4.loadBtn.isExternal}
+            link={section4.loadBtn.link}
+            children={
+              <>
+                <span className={styles.btnLabel}>{section4.loadBtn.label}</span>
+                <i className="fa fa-chevron-right"></i>
+              </>
+            }
+          />)
+        }
       </div>
     </section>
   );

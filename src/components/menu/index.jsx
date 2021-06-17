@@ -70,9 +70,9 @@ const Menu = props => {
         menu?.category === 'pymilvus-orm' &&
         menu?.apiVersion === 'v2.0.alpha'
       )
-        menu.docVersion = 'v1.1.0';
+        menu.docVersion = 'preview';
       if (menu?.category === 'node' && menu?.apiVersion === 'v1.0.0')
-        menu.docVersion = 'v1.1.0';
+        menu.docVersion = 'v1.1.1';
       //? ^^^^^^
       if (menu?.isMenu && !menu?.label2) {
         menu?.id === 'api_reference'

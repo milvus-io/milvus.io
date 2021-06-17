@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import LocalizedLink from '../../../localizedLink/localizedLink';
 import V2Selector from '../../../selector/v2';
 import * as navStyles from './menu.module.less';
 
@@ -30,9 +30,9 @@ const Menu = ({ options, navList, locale }) => {
             <LinkContent label={label} icon={icon} />
           </a>
         ) : (
-          <Link className={navStyles.navItem} to={link} key={label}>
+          <LocalizedLink className={navStyles.navItem} to={link} key={label} locale={locale}>
             <LinkContent label={label} icon={icon} />
-          </Link>
+          </LocalizedLink>
         );
       })}
       <div className={navStyles.dropDown}>

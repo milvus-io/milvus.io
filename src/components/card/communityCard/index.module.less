@@ -5,6 +5,10 @@
     width: 32px;
     height: 32px;
     margin-bottom: 16px;
+
+    @media @phone {
+      margin-bottom: 8px;
+    }
   }
 
   .title {
@@ -12,6 +16,12 @@
     font-size: 20px;
     line-height: 28px;
     font-family: Inter SemiBold;
+
+    @media @phone {
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 8px;
+    }
   }
 
   .desc {
@@ -19,6 +29,11 @@
     font-family: Inter;
     font-size: 16px;
     line-height: 24px;
+
+    @media @phone {
+      font-size: 14px;
+      line-height: 20px;
+    }
   }
 
   .button {
@@ -26,6 +41,10 @@
     margin-top: 30px;
     width: 100%;
 
+    @media @phone {
+      margin-top: 16px;
+    }
+    a,
     span {
       margin-right: 16px;
       font-size: 16px;
@@ -36,6 +55,11 @@
       @media @tablet {
         margin-right: 8px;
         color: #1493cc;
+      }
+
+      @media @phone {
+        font-size: 14px;
+        line-height: 20px;
       }
     }
 

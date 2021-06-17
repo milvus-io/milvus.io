@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import BannerCard from '../components/card/bannerCard';
 import LinkCard from '../components/card/linkCard';
 import SolutionCard from '../components/card/solutionCard';
-import banner from '../images/doc-home/banner.jpg';
 import Seo from '../components/seo';
 import imageSearch from '../images/doc-home/image_search.svg';
 import audioSearch from '../images/doc-home/audio-search.svg';
@@ -15,8 +14,8 @@ import videoSearch from '../images/doc-home/video-search.svg';
 import Header from '../components/header/v2';
 import { useMobileScreen } from '../hooks/index';
 import SideBar from '../components/sidebar/sidebar';
-import Footer from '../components/footer/footer';
-import * as styles from './bootcampTemplate.module.less';
+import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
+import './bootcampTemplate.less';
 
 const Icons = {
   IMAGE_SEARCH: imageSearch,
@@ -30,98 +29,238 @@ const Icons = {
 
 const BootcampTemplate = ({ data, pageContext }) => {
   const {
-    bootcampData: { title, description, section1, section2, section3 },
+    bootcampData,
     locale,
-    menuList
+    html,
+    menuList,
+    activePost,
+    headings,
   } = pageContext;
+  const isHomePage = bootcampData !== null;
+
+  const { banner, title, description, section1, section2, section3 } = bootcampData || {};
+
+  const SeoTitle = 'Milvus Bootcamp';
+  const desc = 'Join Milvus Bootcamp';
+
+  const {
+    footer: { content: anchorTitleTrans },
+  } = data.allFile.edges.filter(
+    edge => edge.node.childI18N
+  )[0].node.childI18N.layout;
+
+  const {
+    footer: { licence: footerTrans },
+  } = data.allFile.edges.filter(
+    edge => edge.node.childI18N
+  )[0].node.childI18N.v2;
+
+  // add hooks used by doc template
+  useFilter();
+  useCodeCopy(locale);
+
+  const [hash, setHash] = useState(null);
+  const [showToTopButton, setShowToTopButton] = useState(false);
+
+  useEffect(() => {
+    let currentPos = 0;
+
+    const cb = function () {
+      const container = document.querySelector('html');
+      const direction = container.scrollTop - currentPos > 0 ? 'down' : 'up';
+      currentPos = container.scrollTop;
+      const showButton = direction === 'up' && currentPos;
+
+      setShowToTopButton(showButton);
+    };
+    window.addEventListener('scroll', cb);
+
+    return () => {
+      window.removeEventListener('scroll', cb);
+    };
+  }, []);
+
+  const formatHeadings =
+    headings &&
+    headings.reduce((pre, cur) => {
+      const copyCur = JSON.parse(JSON.stringify(cur));
+      const preHead = pre[pre.length - 1];
+      if (preHead && preHead.depth < cur.depth) {
+        pre[pre.length - 1].children.push(cur);
+      } else {
+        copyCur.children = [];
+        pre = [...pre, copyCur];
+      }
+      return pre;
+    }, []);
+
+  const generateAnchorMenu = (headings, className) => {
+    return headings.map(v => {
+      const normalVal = v.value.replace(/[.｜,｜/｜'｜?｜？｜、|，]/g, '');
+      const anchor = normalVal.split(' ').join('-');
+      let childDom = null;
+      if (v.children && v.children.length) {
+        childDom = generateAnchorMenu(v.children, 'child-item');
+      }
+      return (
+        <div className={`item ${className}`} key={v.value}>
+          <a
+            href={`#${anchor}`}
+            title={v.value}
+            className={`anchor ${anchor === hash ? 'active' : ''}`}
+            onClick={() => setHash(anchor)}
+          >
+            {v.value}
+          </a>
+          {childDom}
+        </div>
+      );
+    });
+  };
+
+  const onToTopClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   const menuConfig = {
     menuList,
-    activePost: null,
+    activePost,
     pageType: 'bootcamp'
   };
 
-  const [title1, content1] = [section1.title, section1.content];
-  const [title2, content2] = [section2.title, section2.content];
-  const [title3, content3] = [section3.title, section3.content];
   const { isMobile } = useMobileScreen();
   return (
-    <div className={styles.bootcampContainer}>
+    <div className="bootcamp-wrapper">
       <Header type="doc" locale={locale} />
-      <Seo title={title} lang={locale} />
-      <main className={styles.mainContainer}>
-
+      <Seo title={SeoTitle} lang={locale} description={desc} />
+      <main className="mainContainer">
         <SideBar
           locale={locale}
           showSearch={false}
-          wrapperClass={styles.sidebar}
+          wrapperClass="sidebar"
           menuConfig={menuConfig}
         />
 
-        <section className={styles.content}>
-          <div className={styles.container}>
-            <BannerCard
-              content={description}
-              title={title}
-              img={banner}
-              isMobile={isMobile}
-            />
-          </div>
+        {
+          isHomePage ? (
+            <section className="content bootcamp">
+              <div className="container">
+                <BannerCard
+                  content={description}
+                  title={title}
+                  img={banner.img.publicURL}
+                  isMobile={isMobile}
+                />
+              </div>
 
-          <div className={styles.container}>
-            <h1 className={styles.title}>{title1}</h1>
-            <ul className={styles.solutionsWrapper}>
-              {content1.map(item => {
-                const { title, link } = item;
-                return (
-                  <li key={title}>
-                    <LinkCard label={title} href={link} />
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+              <div className="container">
+                <h1 className="title">{section1.title}</h1>
+                <ul className="solutionsWrapper">
+                  {section1.content.map(item => {
+                    const { title, link } = item;
+                    return (
+                      <li key={title}>
+                        <LinkCard label={title} href={link} />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
 
-          <div className={styles.container}>
-            <h1 className={styles.title}>{title2}</h1>
-            <ul className={styles.solutionsWrapper}>
-              {content2.map(item => {
-                const { title, link, desc, iconType } = item;
-                return (
-                  <li key={title}>
-                    <SolutionCard
-                      title={title}
-                      content={desc}
-                      img={Icons[iconType]}
-                      href={link}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+              <div className="container">
+                <h1 className="title">{section2.title}</h1>
+                <ul className="solutionsWrapper">
+                  {section2.content.map(item => {
+                    const { title, link, desc, iconType } = item;
+                    return (
+                      <li key={title}>
+                        <SolutionCard
+                          title={title}
+                          content={desc}
+                          img={Icons[iconType]}
+                          href={link}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
 
-          <div className={styles.container}>
-            <h1 className={styles.title}>{title3}</h1>
-            <ul className={styles.solutionsWrapper}>
-              {content3.map(item => {
-                const { title, link, iconType, desc } = item;
-                return (
-                  <li key={title}>
-                    <SolutionCard
-                      title={title}
-                      content={desc}
-                      img={Icons[iconType]}
-                      href={link}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
+              <div className="container">
+                <h1 className="title">{section3.title}</h1>
+                <ul className="solutionsWrapper">
+                  {section3.content.map(item => {
+                    const { title, link, iconType, desc } = item;
+                    return (
+                      <li key={title}>
+                        <SolutionCard
+                          title={title}
+                          content={desc}
+                          img={Icons[iconType]}
+                          href={link}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </section>
+          ) : (
+            <>
+              <section className="content articles doc-post">
+                {html && (
+                  <section
+                    className="doc-post-container articles-container"
+                    dangerouslySetInnerHTML={{ __html: html }}
+                  ></section>
+                )}
+              </section>
+              {formatHeadings.length > 0 && (
+                <div className="anchors-wrapper">
+                  <div className="anchors">
+                    <h4 className="anchor-title">{anchorTitleTrans}</h4>
+                    {generateAnchorMenu(formatHeadings, 'parent-item')}
+                  </div>
+                </div>
+              )}
+              {showToTopButton ? (
+                <div
+                  className="btn-to-top"
+                  role="button"
+                  onClick={onToTopClick}
+                  onKeyDown={onToTopClick}
+                  tabIndex={0}
+                >
+                  <svg
+                    width="32"
+                    height="32"
+                    focusable="false"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 384 512"
+                    className="svg-inline--fa fa-arrow-to-top fa-w-12 fa-2x"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M24 32h336c13.3 0 24 10.7 24 24v24c0 13.3-10.7 24-24 24H24C10.7 104 0 93.3 0 80V56c0-13.3 10.7-24 24-24zm66.4 280.5l65.6-65.6V456c0 13.3 10.7 24 24 24h24c13.3 0 24-10.7 24-24V246.9l65.6 65.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L209 126.1c-9.4-9.4-24.6-9.4-33.9 0L39.5 261.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0z"
+                    ></path>
+                  </svg>
+                </div>
+              ) : null}
+            </>
+          )
+        }
       </main>
-      <Footer />
+      <footer>
+        <span>{footerTrans.text1.label}</span>
+        <a className="link" href={footerTrans.text2.link}>
+          {footerTrans.text2.label}
+        </a>
+        {`, ${footerTrans.text3.label}`}
+      </footer>
     </div>
   );
 };
@@ -152,6 +291,15 @@ export const Query = graphql`
                     link
                   }
                 }
+              }
+            }
+            layout {
+              footer {
+                content
+              }
+              community {
+                slack
+                github
               }
             }
           }

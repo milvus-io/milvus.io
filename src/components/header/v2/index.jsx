@@ -14,40 +14,8 @@ import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
 import LangSelector from '../../selector/v2';
-import { LANGUAGES } from './constants';
-import git from '../../../images/v2/github.svg';
+import { LANGUAGES, NAVLIST } from './constants';
 import LocalizedLink from '../../localizedLink/localizedLink';
-
-const navList = [
-  {
-    label: 'What is milvus?',
-    link: '/docs/overview.md',
-    isExternal: false
-  },
-  {
-    label: 'Documentation',
-    link: '/docs/home',
-    keyWord: 'docs',
-    isExternal: false,
-  },
-  {
-    label: 'Blog',
-    link: 'https://blog.milvus.io/',
-    isExternal: true,
-  },
-  {
-    label: 'Contribute',
-    link: '/community',
-    keyWord: 'community',
-    isExternal: false,
-  },
-  {
-    label: 'Github',
-    link: 'https://github.com/milvus-io/milvus/',
-    isExternal: true,
-    icon: git
-  },
-];
 
 
 const V2Header = props => {
@@ -118,7 +86,7 @@ const V2Header = props => {
                 </a>
               </div>
               <div className={styles.navSection}>
-                {navList.map(i => {
+                {NAVLIST.map(i => {
                   const { label, link, isExternal, icon, keyWord } = i;
                   return isExternal ? (
                     <a
@@ -207,7 +175,7 @@ const V2Header = props => {
                 {maskConfig.type === 'menu' ? (
                   <Menu
                     options={LANGUAGES}
-                    navList={navList}
+                    navList={NAVLIST}
                     locale={locale}
                   />
                 ) : (

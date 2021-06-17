@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Octokit } from "@octokit/core";
 import FaqCard from '../card/faqCard'
 import './index.less';
 import * as styles from '../card/faqCard/index.module.less';
 import { getFaq } from '../../http/http';
+
+const userToken = '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';
 
 const RelatedQuestion = props => {
   const {
@@ -46,12 +49,29 @@ const RelatedQuestion = props => {
   }
 
   const onSubmit = () => {
-
+    const octokit = new Octokit({
+      auth: userToken,
+    });
+    console.log("inoctokit");
+    octokit.request("POST /repos/{owner}/{repo}/issues", {
+      owner: 'zilliz-bootcamp',
+      repo: 'record_user_question',
+      title: quest,
+      body: `user ${email} left a question: ${quest}`
+    }).then(res => {
+      toggleModal(false);
+    }).catch(err => {
+      console.log("user submit question error", err);
+      toggleModal(false);
+    });
   }
 
   useEffect(() => {
     if (relatedKey) {
       getFaq({
+        headers: {
+          secretCode: 'milvus-faq-131492-knowledge-search',
+        },
         params: {
           question: relatedKey,
           version: 1
@@ -106,8 +126,8 @@ const RelatedQuestion = props => {
                     <input onChange={emailOnChange} placeholder={contact.dialog.placeholder1} required />
                     <textarea onChange={questionOnChange} placeholder={contact.dialog.placeholder2} required rows={6} />
                     {!formValid && (<span>{contact.dialog.invalid}</span>)}
-                    <button onClick={() => { toggleModal(false) }} disabled={!formValid || !email}>{contact.dialog.submit}</button>
                   </form>
+                  <button onClick={onSubmit} disabled={!formValid || !email}>{contact.dialog.submit}</button>
                 </div>
               </div>
             )}

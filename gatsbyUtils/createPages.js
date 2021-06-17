@@ -8,7 +8,7 @@ const query = `
 {
   allMarkdownRemark(
     filter: {
-      fileAbsolutePath: { regex: "/(?:site|blog|communityArticles)/" }
+      fileAbsolutePath: { regex: "/(?:site|blog|communityArticles|bootcampArticles)/" }
     }
   ) {
     edges {
@@ -60,6 +60,12 @@ const query = `
             order
             title
           }
+          banner {
+            img {
+              publicURL
+            }
+            alt
+          }
           mailingSection {
             title
             list {
@@ -69,7 +75,9 @@ const query = `
           }
           joinSection {
             list {
-              iconType
+              img {
+                publicURL
+              }
               label
               link
             }
@@ -78,7 +86,9 @@ const query = `
           partnerSection {
             list {
               alt
-              name
+              img {
+                publicURL
+              }
             }
             title
           }
@@ -94,6 +104,9 @@ const query = `
                 link
               }
               title
+              img {
+                publicURL
+              }
             }
             deploy {
               list {
@@ -198,6 +211,7 @@ const query = `
         }
         childBootcamp {
           menuList {
+            isMenu
             id
             label1
             label2
@@ -206,6 +220,12 @@ const query = `
             title
           }
           description
+          banner {
+            img {
+              publicURL
+            }
+            alt
+          }
           section1 {
             title
             content {
@@ -280,6 +300,13 @@ const getCommunityPath = (fileId, fileLang) => {
   return fileLang === defaultLang
     ? `/community/${fileId}`
     : `${fileLang}/community/${fileId}`;
+};
+
+const getBootcampPath = (fileId, fileLang) => {
+  const defaultLang = getDefaultLang();
+  return fileLang === defaultLang
+    ? `/bootcamp/${fileId}`
+    : `${fileLang}/bootcamp/${fileId}`;
 };
 
 // we generate path by menu structure
@@ -394,6 +421,7 @@ const filterMdWithVersion = edges => {
         (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
           env === 'preview') ||
         fileAbsolutePath.includes('communityArticles') ||
+        fileAbsolutePath.includes('bootcampArticles') ||
         fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
       frontmatter.id
     );
@@ -458,6 +486,13 @@ const filterCommunityHome = edges => {
     });
 };
 
+const filterBootcampMd = edges => {
+  return edges.filter(
+    ({ node: { fileAbsolutePath, frontmatter } }) =>
+      fileAbsolutePath.includes('bootcampArticles') && frontmatter.id
+  );
+};
+
 const filterBootcampMenus = edges => {
   return edges
     .filter(
@@ -504,10 +539,11 @@ const handleCommunityData = (allMarkdownRemark, allFile) => {
   return { communityMd, communityMenu, communityHome };
 };
 
-const handleBootcampData = allFile => {
+const handleBootcampData = (allMarkdownRemark, allFile) => {
   const bootcampHome = filterBootcampHome(allFile);
   const bootcampMenu = filterBootcampMenus(allFile);
-  return { bootcampHome, bootcampMenu };
+  const bootcampMd = filterBootcampMd(allMarkdownRemark);
+  return { bootcampHome, bootcampMenu, bootcampMd };
 };
 
 /**
@@ -596,6 +632,36 @@ const generateCommunityPages = (
   });
 };
 
+const generateBootcampPages = (
+  createPage,
+  { nodes: bootcampMd, template: bootcampTemplate, menu: bootcampMenu }
+) => {
+  bootcampMd.forEach(({ node }) => {
+    const {
+      fileAbsolutePath,
+      html,
+      frontmatter: { id: fileId },
+    } = node;
+
+    const fileLang = findLang(fileAbsolutePath);
+    const path = getBootcampPath(fileId, fileLang);
+
+    createPage({
+      path,
+      component: bootcampTemplate,
+      context: {
+        locale: fileLang,
+        fileAbsolutePath,
+        html,
+        headings: node.headings.filter(v => v.depth < 4 && v.depth > 1),
+        menuList: bootcampMenu,
+        bootcampData: null,
+        activePost: fileId,
+      },
+    });
+  });
+};
+
 /**
  * create community home
  * @param {function} createPage gatsby createPage action
@@ -626,7 +692,6 @@ const generateBootcampHome = (
   createPage,
   { nodes: bootcampHome, template: bootcampTemplate, menu: bootcampMenu }
 ) => {
-  console.log('bootcampHome:', bootcampHome);
   bootcampHome.forEach(({ language, data, path }) => {
     createPage({
       path: language === 'en' ? '/bootcamp' : `/${language}/bootcamp`,
@@ -639,6 +704,7 @@ const generateBootcampHome = (
         newHtml: null,
         menuList: bootcampMenu,
         isVersionWithHome: false,
+        activePost: 'bootcamp',
       },
     });
   });
@@ -1011,6 +1077,7 @@ module.exports = {
   generateApiMenus,
   generateApiReferencePages,
   generateDocHome,
+  generateBootcampPages,
   generateBootcampHome,
   handleBootcampData,
   generateAllDocPages,

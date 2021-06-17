@@ -5,7 +5,7 @@ import './index.less';
 import * as styles from '../card/faqCard/index.module.less';
 import { getFaq } from '../../http/http';
 
-const userToken = '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';
+const userToken = `${process.env.GITHUB_TOKEN}`;
 const org = 'zilliz-bootcamp';
 const repo = 'record_user_question';
 

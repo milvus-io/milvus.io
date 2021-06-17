@@ -689,6 +689,8 @@ const generateTitle = ({
     // case 'pymilvus':
     case 'go':
       return prettierCategory;
+    case 'node':
+      return capitalize(name.split('.htm')[0]?.split('.')?.pop());
     // return 3rd level items prettier name
     default:
       return capitalize(name.split('.htm')[0]);
@@ -715,8 +717,16 @@ const generateApiMenus = nodes => {
   return nodes.reduce(
     (prev, item) => {
       // docVersion may be empty string
-      const { name, category, version, docVersion, labels, isDirectory, title,
-        order, } = item;
+      const {
+        name,
+        category,
+        version,
+        docVersion,
+        labels,
+        isDirectory,
+        title,
+        order,
+      } = item;
       const [label1 = 'api_reference', label2 = '', label3 = ''] = labels;
       const menuItem = {
         // Use "_" instead of "-" in both api menu's id and api page's name.
@@ -775,15 +785,7 @@ const generateApiReferencePages = (
   }
 ) => {
   nodes.forEach(
-    ({
-      abspath,
-      doc,
-      name,
-      version,
-      category,
-      docVersion,
-      isDirectory,
-    }) => {
+    ({ abspath, doc, name, version, category, docVersion, isDirectory }) => {
       // Should ignore if the node is a directory.
       if (isDirectory) return;
       // Create default language page.

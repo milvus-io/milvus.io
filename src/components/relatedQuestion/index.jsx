@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Octokit } from "@octokit/core";
 import FaqCard from '../card/faqCard'
 import './index.less';
 import * as styles from '../card/faqCard/index.module.less';
 import { getFaq } from '../../http/http';
+
+const userToken = `${process.env.GITHUB_TOKEN}`;
+const org = 'zilliz-bootcamp';
+const repo = 'record_user_question';
 
 const RelatedQuestion = props => {
   const {
@@ -46,7 +51,20 @@ const RelatedQuestion = props => {
   }
 
   const onSubmit = () => {
-
+    toggleModal(false);
+    const octokit = new Octokit({
+      auth: userToken,
+    });
+    octokit.request("POST /repos/{owner}/{repo}/issues", {
+      owner: org,
+      repo,
+      title: quest,
+      body: `user ${email} left a question: ${quest}`
+    }).then(res => {
+      console.log("user submit question success", res);
+    }).catch(err => {
+      console.log("user submit question error", err);
+    });
   }
 
   useEffect(() => {
@@ -106,8 +124,8 @@ const RelatedQuestion = props => {
                     <input onChange={emailOnChange} placeholder={contact.dialog.placeholder1} required />
                     <textarea onChange={questionOnChange} placeholder={contact.dialog.placeholder2} required rows={6} />
                     {!formValid && (<span>{contact.dialog.invalid}</span>)}
-                    <button onClick={() => { toggleModal(false) }} disabled={!formValid || !email}>{contact.dialog.submit}</button>
                   </form>
+                  <button onClick={onSubmit} disabled={!formValid || !email}>{contact.dialog.submit}</button>
                 </div>
               </div>
             )}

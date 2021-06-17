@@ -5,6 +5,7 @@
   "version": "0.1.2",
   "author": "zizhao.chen@zilliz.com",
   "dependencies": {
+    "@octokit/core": "^3.5.1",
     "@sentry/gatsby": "^6.3.5",
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",

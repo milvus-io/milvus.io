@@ -70,9 +70,6 @@ const RelatedQuestion = props => {
   useEffect(() => {
     if (relatedKey) {
       getFaq({
-        headers: {
-          secretCode: 'milvus-faq-131492-knowledge-search',
-        },
         params: {
           question: relatedKey,
           version: 1

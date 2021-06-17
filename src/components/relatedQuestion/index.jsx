@@ -51,6 +51,7 @@ const RelatedQuestion = props => {
   }
 
   const onSubmit = () => {
+    toggleModal(false);
     const octokit = new Octokit({
       auth: userToken,
     });
@@ -60,10 +61,9 @@ const RelatedQuestion = props => {
       title: quest,
       body: `user ${email} left a question: ${quest}`
     }).then(res => {
-      toggleModal(false);
+      console.log("user submit question success", res);
     }).catch(err => {
       console.log("user submit question error", err);
-      toggleModal(false);
     });
   }
 

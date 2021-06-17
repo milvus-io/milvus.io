@@ -173,6 +173,7 @@ exports.createPages = async ({ actions, graphql }) => {
     generateAllDocPages,
     getVersionsWithHome,
     generateBootcampHome,
+    generateBootcampPages,
     handleBootcampData,
   } = createPagesUtils;
 
@@ -191,7 +192,8 @@ exports.createPages = async ({ actions, graphql }) => {
     const allMenus = generateAllMenus(result.data.allFile.edges);
     // get new doc index page data
     const homeData = generateHomeData(result.data.allFile.edges);
-    const { bootcampHome, bootcampMenu } = handleBootcampData(
+    const { bootcampHome, bootcampMenu, bootcampMd } = handleBootcampData(
+      result.data.allMarkdownRemark.edges,
       result.data.allFile.edges
     );
     const versionsWithHome = getVersionsWithHome(homeData);
@@ -214,6 +216,12 @@ exports.createPages = async ({ actions, graphql }) => {
       nodes: communityHome,
       template: communityTemplate,
       menu: communityMenu,
+    });
+
+    generateBootcampPages(createPage, {
+      nodes: bootcampMd,
+      template: bootcampTemplate,
+      menu: bootcampMenu,
     });
 
     generateBootcampHome(createPage, {

@@ -6,44 +6,22 @@ import './community.less';
 import Sidebar from '../components/sidebar/sidebar';
 import mailIcon from '../images/community/mail.png';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
-import banner from '../images/community/banner.png';
-import ambassador from '../images/community/ambassador.png';
 import build from '../images/community/build.svg';
 import event from '../images/community/event.svg';
-import github from '../images/community/github-2.png';
 import grow from '../images/community/grow.svg';
 import learn from '../images/community/learn.svg';
 import share from '../images/community/share.svg';
-import slack from '../images/community/slack-2.png';
-import twitter from '../images/community/twitter.png';
 import video from '../images/community/video.svg';
-import zoom from '../images/community/zoom.png';
-import kubesphere from '../images/community/kubesphere.png';
-import juice from '../images/community/juice.png';
-import pulsar from '../images/community/pulsar.png';
-import haystack from '../images/community/haystack.png';
-import paddle from '../images/community/paddle.png';
-import onnx from '../images/community/onnx.png';
 import CommunityCard from '../components/card/communityCard';
 import Button from '../components/button';
 
 const iconMap = {
   build,
   event,
-  github,
   grow,
   learn,
   share,
-  slack,
-  twitter,
-  video,
-  zoom,
-  kubesphere,
-  juice,
-  pulsar,
-  haystack,
-  paddle,
-  onnx
+  video
 };
 
 export default function CommunityTemplate({ data, pageContext }) {
@@ -68,12 +46,14 @@ export default function CommunityTemplate({ data, pageContext }) {
     activePost,
     headings,
   } = pageContext;
+  console.log(pageContext);
   const isHomePage = homeData !== null;
 
   const title = 'Milvus Community';
   const desc = 'Join Milvus Community';
 
   const {
+    banner,
     aboutSection,
     joinSection,
     partnerSection,
@@ -174,7 +154,7 @@ export default function CommunityTemplate({ data, pageContext }) {
           <section className="content home">
             {/* banner */}
             <section className="banner-section">
-              <img src={banner} alt="milvus community" />
+              <img src={banner.img.publicURL} alt={banner.alt} />
             </section>
             {/* about */}
             <section className="about-section">
@@ -199,7 +179,7 @@ export default function CommunityTemplate({ data, pageContext }) {
             <section className="recommend-section">
               <h2>{recommendSection.title}</h2>
               <div className="list-wrapper">
-                <div>
+                <div className="list-wrapper-item">
                   <h3>{recommendSection.start.title}</h3>
                   <ul className="recommend-list">
                     {
@@ -211,7 +191,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                     }
                   </ul>
                 </div>
-                <div>
+                <div className="list-wrapper-item">
                   <h3>{recommendSection.deploy.title}</h3>
                   <ul className="recommend-list">
                     {
@@ -223,7 +203,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                     }
                   </ul>
                 </div>
-                <div>
+                <div className="list-wrapper-item">
                   <h3>{recommendSection.develop.title}</h3>
                   <ul className="recommend-list">
                     {
@@ -235,7 +215,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                     }
                   </ul>
                 </div>
-                <div>
+                <div className="list-wrapper-item">
                   <h3>{recommendSection.test.title}</h3>
                   <ul className="recommend-list">
                     {
@@ -250,7 +230,7 @@ export default function CommunityTemplate({ data, pageContext }) {
               </div>
 
               <div className="ambassador-wrapper">
-                <img className="ambassadorImg" src={ambassador} alt="Milvus Ambassador" />
+                <img className="ambassadorImg" src={recommendSection.ambassador.img.publicURL} alt="Milvus Ambassador" />
                 <h1 className="ambassador-title">{recommendSection.ambassador.title}</h1>
                 <p className="ambassador-content">{recommendSection.ambassador.desc}</p>
                 <Button
@@ -271,13 +251,13 @@ export default function CommunityTemplate({ data, pageContext }) {
                   } />
               </div>
             </section>
-            {/* maile */}
-            <section className="maile-section">
+            {/* mail */}
+            <section className="mail-section">
               <h2>{mailingSection.title}</h2>
-              <ul className="maile-list">
+              <ul className="mail-list">
                 {mailingSection.list.map(mail => (
                   <li className="card" key={mail.title}>
-                    <a className="maile-wrapper" href={mail.link} target="_blank" rel="noreferrer">
+                    <a className="mail-wrapper" href={mail.link} target="_blank" rel="noreferrer">
                       <img src={mailIcon} alt="mail icon" />
                       <p>{mail.title}</p>
                     </a>
@@ -291,10 +271,10 @@ export default function CommunityTemplate({ data, pageContext }) {
               <ul className="community-list">
                 {
                   joinSection.list.map(item => {
-                    const { iconType, label, link } = item;
+                    const { label, link } = item;
                     return (
-                      <li key={iconType}>
-                        <img src={iconMap[iconType]} alt={iconType} />
+                      <li key={label}>
+                        <img src={item.img.publicURL} alt={label} />
                         <a href={link} >{label}</a>
                       </li>
                     );
@@ -309,7 +289,7 @@ export default function CommunityTemplate({ data, pageContext }) {
               <ul className="resource-list">
                 {
                   resourceSection.list.map(item => (
-                    <li>
+                    <li key={item.iconType}>
                       <CommunityCard icon={iconMap[item.iconType]} {...item} />
                     </li>
                   ))
@@ -322,8 +302,8 @@ export default function CommunityTemplate({ data, pageContext }) {
               <ul className="patner-list">
                 {
                   partnerSection.list.map(item => (
-                    <li key={item.name}>
-                      <img src={iconMap[item.name]} alt={item.alt} />
+                    <li key={item.alt}>
+                      <img src={item.img.publicURL} alt={item.alt} />
                     </li>
                   ))
                 }

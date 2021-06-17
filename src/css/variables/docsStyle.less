@@ -266,6 +266,8 @@
         font-size: 16px;
         line-height: 1.4em;
         width: calc(100vw - 32px);
+        vertical-align: text-top;
+
         @media @tablet {
           font-size: 14px;
 
@@ -344,20 +346,7 @@ details {
 
   summary {
     cursor: pointer;
-    position: relative;
-    color: @link-color;
+    color: @pre-bg-color-dark;
     margin-bottom: 8px;
-
-    &::before {
-      content: '';
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      background-color: #000;
-      position: absolute;
-      border-radius: 50%;
-      top: 8px;
-      left: -16px;
-    }
   }
 }

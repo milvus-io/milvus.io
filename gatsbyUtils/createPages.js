@@ -29,16 +29,16 @@ const query = `
   }
   allApIfile {
     nodes {
-      linkId
       abspath
       name
       doc
-      hrefs
       version
       category
       docVersion
       labels
       isDirectory
+      title
+      order
     }
   }
   allFile(
@@ -716,6 +716,7 @@ const generateBootcampHome = (
  * @returns A prettier title.
  */
 const generateTitle = ({
+  title,
   category,
   name,
   isDirectory = false,
@@ -733,6 +734,7 @@ const generateTitle = ({
     const result = s.split('/').pop();
     return result.charAt(0).toUpperCase() + result.slice(1);
   };
+  if (title) return capitalize(title);
   const titleMapping = {
     pymilvus: 'Milvus Python SDK',
     'pymilvus-orm': 'Milvus Python SDK (ORM)',
@@ -750,9 +752,11 @@ const generateTitle = ({
   if (isDirectory) return prettierCategory;
   switch (category) {
     // return prettier category name if single page
-    case 'pymilvus':
+    // case 'pymilvus':
     case 'go':
       return prettierCategory;
+    case 'node':
+      return capitalize(name.split('.htm')[0]?.split('.')?.pop());
     // return 3rd level items prettier name
     default:
       return capitalize(name.split('.htm')[0]);
@@ -779,7 +783,16 @@ const generateApiMenus = nodes => {
   return nodes.reduce(
     (prev, item) => {
       // docVersion may be empty string
-      const { name, category, version, docVersion, labels, isDirectory } = item;
+      const {
+        name,
+        category,
+        version,
+        docVersion,
+        labels,
+        isDirectory,
+        title,
+        order,
+      } = item;
       const [label1 = 'api_reference', label2 = '', label3 = ''] = labels;
       const menuItem = {
         // Use "_" instead of "-" in both api menu's id and api page's name.
@@ -787,12 +800,12 @@ const generateApiMenus = nodes => {
         // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
         // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
         id: name.replace('-', '_'),
-        title: generateTitle({ name, category, isDirectory, labels }),
+        title: generateTitle({ title, name, category, isDirectory, labels }),
         lang: null,
         label1,
         label2,
         label3,
-        order: calculateOrder({ category, name }),
+        order: order < -1 ? calculateOrder({ category, name }) : order,
         isMenu: isDirectory,
         outLink: null,
         isApiReference: true,
@@ -838,17 +851,7 @@ const generateApiReferencePages = (
   }
 ) => {
   nodes.forEach(
-    ({
-      abspath,
-      doc,
-      linkId,
-      name,
-      hrefs,
-      version,
-      category,
-      docVersion,
-      isDirectory,
-    }) => {
+    ({ abspath, doc, name, version, category, docVersion, isDirectory }) => {
       // Should ignore if the node is a directory.
       if (isDirectory) return;
       // Create default language page.
@@ -859,8 +862,6 @@ const generateApiReferencePages = (
           locale: 'en',
           abspath,
           doc,
-          linkId,
-          hrefs,
           // Use "_" instead of "-" in both api menu's id and api page's name.
           // Due to a search algorithm use the word splited by "-".
           // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
@@ -884,8 +885,6 @@ const generateApiReferencePages = (
           locale: 'cn',
           abspath,
           doc,
-          linkId,
-          hrefs,
           name: name.replace('-', '_'),
           allApiMenus,
           allMenus,

@@ -6,6 +6,8 @@ import * as styles from '../card/faqCard/index.module.less';
 import { getFaq } from '../../http/http';
 
 const userToken = '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';
+const org = 'zilliz-bootcamp';
+const repo = 'record_user_question';
 
 const RelatedQuestion = props => {
   const {
@@ -52,10 +54,9 @@ const RelatedQuestion = props => {
     const octokit = new Octokit({
       auth: userToken,
     });
-    console.log("inoctokit");
     octokit.request("POST /repos/{owner}/{repo}/issues", {
-      owner: 'zilliz-bootcamp',
-      repo: 'record_user_question',
+      owner: org,
+      repo,
       title: quest,
       body: `user ${email} left a question: ${quest}`
     }).then(res => {

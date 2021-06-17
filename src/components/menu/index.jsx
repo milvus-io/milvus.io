@@ -85,8 +85,10 @@ const Menu = props => {
       return prev;
     }, []);
     // filter level 2 menus if they has children(level 3 menu items)
-    const filteredSecondLevelMenus = secondLevelMenus.filter(v =>
-      thirdLevelMenuNames.includes(v?.id)
+    const filteredSecondLevelMenus = secondLevelMenus.filter(
+      v =>
+        thirdLevelMenuNames.includes(v?.id) &&
+        v?.docVersion === currentDocVersion
     );
     // merge the level 1&2 menus into results
     filteredMenus?.length &&
@@ -117,9 +119,7 @@ const Menu = props => {
           }
           if (pageType === 'bootcamp') {
             // id community is home page
-            return doc.id === 'bootcamp'
-              ? `/bootcamp`
-              : `/bootcamp/${doc.id}`;
+            return doc.id === 'bootcamp' ? `/bootcamp` : `/bootcamp/${doc.id}`;
           }
           if (doc.id.includes('benchmarks')) {
             return `/docs/${doc.id}`;

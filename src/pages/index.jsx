@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { graphql } from 'gatsby';
+import { globalHistory } from '@reach/router';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
 import autoscalingIcon from '../images/v2/autoscaling.svg';
@@ -38,6 +39,7 @@ const HomePage = ({ data, pageContext }) => {
     edge => edge.node.childUsers
   )[0].node.childUsers;
   const { locale, versions } = pageContext;
+  const desc = 'Milvus is an open source vector database for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.';
 
   return (
     <div className="home-page-container">
@@ -48,7 +50,7 @@ const HomePage = ({ data, pageContext }) => {
           locale={locale}
           versions={versions}
         >
-          <Seo title="Milvus" />
+          <Seo title="Milvus" lang={locale} description={desc} />
           <div className="banner">
             <div className="banner-left">
               <div className="stars-layout">

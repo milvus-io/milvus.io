@@ -1,26 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
-import { globalHistory } from '@reach/router';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
-import autoscalingIcon from '../images/v2/autoscaling.svg';
-import deploymentIcon from '../images/v2/deployment.svg';
-import searchIcon from '../images/v2/searchicon.png';
-import storageIcon from '../images/v2/storage.svg';
-import supportIcon from '../images/v2/support.svg';
 import GithubButton from 'react-github-button';
 import './index.less';
 import Seo from '../components/seo';
-import bgImg3 from '../images/v2/bg-img3.png';
-import contributor from '../images/v2/contributor.png';
-
-const icons = {
-  autoscaling: autoscalingIcon,
-  deployment: deploymentIcon,
-  search: searchIcon,
-  storage: storageIcon,
-  supporting: supportIcon,
-};
+import icons from './assets';
 
 const HomePage = ({ data, pageContext }) => {
   const {
@@ -122,7 +107,7 @@ const HomePage = ({ data, pageContext }) => {
                 );
               })}
               <li className="section-item">
-                <img className='img' src={bgImg3} alt="" />
+                <img className='img' src={icons.bgImg3} alt="icon" />
               </li>
             </ul>
             {
@@ -135,17 +120,16 @@ const HomePage = ({ data, pageContext }) => {
                   <ul className="users-list">
                     {
                       user.list.map(item => {
-                        const { name, link } = item;
+                        const { name, alt, ratio } = item;
                         return (
                           <li key={name} className="list-item">
-                            <a href={link} target="_blank" rel="noreferrer">
-                              <img src={contributor} alt="contributor" />
-                            </a>
+                            <img src={icons[name]} alt={alt} style={{ height: ratio }} />
                           </li>
                         );
                       })
                     }
                   </ul>
+
                 </div>
               ) : null
             }
@@ -252,8 +236,9 @@ export const Query = graphql`
             user {
               title
               list {
-                link
+                alt
                 name
+                ratio
               }
             }
             slogan {

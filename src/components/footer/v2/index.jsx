@@ -32,7 +32,7 @@ const V2Footer = ({ locale, footer }) => {
     <section className={styles.footerContainer}>
       <ul className={styles.list}>
         {links.map(i => {
-          const { title, text, href, label, icons, isExternal } = i;
+          const { title, text, href, label, icons } = i;
           return (
             <li className={styles.item} key={title}>
               <p className={styles.title}>{title}</p>

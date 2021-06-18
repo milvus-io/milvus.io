@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useMobileScreen } from '../../../hooks';
 import LocallizeLink from '../../../components/localizedLink/localizedLink';
 import { globalHistory } from '@reach/router';
-import lang from '../../../images/v2/lang.svg';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './v2.module.less';
 
@@ -58,7 +57,7 @@ const V2Selector = ({
         onKeyDown={e => handleClick(e)}
       >
         <p className={styles.labelWrapper}>
-          <img className={styles.img} src={lang} alt="language" />
+          <i className={`fas fa-globe ${styles.navIcon}`}></i>
           <span className={styles.label}>{label}</span>
         </p>
       </div>

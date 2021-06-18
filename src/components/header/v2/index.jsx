@@ -3,7 +3,6 @@ import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/v2/lfai.svg';
 import close from '../../../images/v2/close.svg';
-import search from '../../../images/v2/search.svg';
 import menu from '../../../images/v2/menu.svg';
 import { useMobileScreen } from '../../../hooks';
 import MobilePopup from '../components/MobilePopupV2';
@@ -14,7 +13,7 @@ import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
 import LangSelector from '../../selector/v2';
-import { LANGUAGES, NAVLIST } from './constants';
+import { LANGUAGES, NAVLIST_EN, NAVLIST_CN } from './constants';
 import LocalizedLink from '../../localizedLink/localizedLink';
 
 
@@ -24,6 +23,7 @@ const V2Header = props => {
     className = '',
     locale,
   } = props;
+  const navList = locale === 'en' ? NAVLIST_EN : NAVLIST_CN;
   const { pathname } = globalHistory.location;
   const { isMobile } = useMobileScreen();
 
@@ -57,7 +57,7 @@ const V2Header = props => {
     <>
       {
         icon ? (
-          <img className={styles.img} src={icon} alt="github" />
+          icon
         ) : label
       }
     </>
@@ -86,8 +86,8 @@ const V2Header = props => {
                 </a>
               </div>
               <div className={styles.navSection}>
-                {NAVLIST.map(i => {
-                  const { label, link, isExternal, icon, keyWord } = i;
+                {navList.map(i => {
+                  const { label, link, isExternal, keyWord } = i;
                   return isExternal ? (
                     <a
                       className={styles.navItem}
@@ -96,7 +96,7 @@ const V2Header = props => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <LinkContent label={label} icon={icon} />
+                      {label}
                     </a>
                   ) : (
                     <LocalizedLink
@@ -106,10 +106,18 @@ const V2Header = props => {
                       key={label}
                       locale={locale}
                     >
-                      <LinkContent label={label} icon={icon} />
+                      {label}
                     </LocalizedLink>
                   );
                 })}
+                <a
+                  className={styles.navItem}
+                  href='https://github.com/milvus-io/milvus/'
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className={`fab fa-github ${styles.navIcon}`}></i>
+                </a>
                 <div className={styles.dropDown}>
                   <LangSelector options={LANGUAGES} locale={locale} />
                 </div>
@@ -175,7 +183,7 @@ const V2Header = props => {
                 {maskConfig.type === 'menu' ? (
                   <Menu
                     options={LANGUAGES}
-                    navList={NAVLIST}
+                    navList={navList}
                     locale={locale}
                   />
                 ) : (

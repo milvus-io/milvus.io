@@ -333,7 +333,6 @@
 }
 
 details {
-  color: #000;
   font-size: 16px;
   line-height: 1.4em;
   padding-left: 16px;
@@ -346,7 +345,13 @@ details {
 
   summary {
     cursor: pointer;
-    color: @pre-bg-color-dark;
+
+    color: @link-color;
     margin-bottom: 8px;
+
+    &::marker {
+      color: @pre-bg-color-dark;
+      font-size: 0.8em;
+    }
   }
 }

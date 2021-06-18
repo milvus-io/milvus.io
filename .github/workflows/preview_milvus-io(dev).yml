@@ -80,7 +80,7 @@ jobs:
 
       - name: Build app
         run: |
-          docker build -t milvusdb/milvus-io:preview -f ./Preview.Dockerfile .
+          docker build --progress plain -t milvusdb/milvus-io:preview -f ./Preview.Dockerfile .
           docker push milvusdb/milvus-io:preview
 
       # - name: Build and push container image to registry

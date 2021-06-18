@@ -75,7 +75,7 @@ jobs:
           
       - name: Inject ENV
         run: |
-          sed -i '3i ENV GITHUB_TOKEN ${{ secrets.QUESTION_TOKEN }}' Preview.Dockerfile
+          sed -i '3i ENV GITHUB_TOKEN1 ${{ secrets.QUESTION_TOKEN }}' Preview.Dockerfile
           cat Preview.Dockerfile
 
       - name: Build app

@@ -73,14 +73,9 @@ jobs:
           username: ${{ secrets.AzureAppService_ContainerUsername_47e96e1317e147dcbbdd5e0dfd07038f }}
           password: ${{ secrets.AzureAppService_ContainerPassword_0e5e5e1fd01b46f1b21e465a557eae65 }}
           
-      - name: Inject ENV
-        run: |
-          sed -i '3i ENV GITHUB_TOKEN ${{ secrets.QUESTION_TOKEN }}' Preview.Dockerfile
-          cat Preview.Dockerfile
-
       - name: Build app
         run: |
-          docker build -t milvusdb/milvus-io:preview -f ./Preview.Dockerfile .
+          docker build --progress plain -t milvusdb/milvus-io:preview -f ./Preview.Dockerfile .
           docker push milvusdb/milvus-io:preview
 
       # - name: Build and push container image to registry

@@ -52,8 +52,13 @@ const RelatedQuestion = props => {
 
   const onSubmit = () => {
     toggleModal(false);
+    console.log("userToken", userToken);
+    let auth;
+    if (atob) {
+      auth = atob(userToken);
+    }
     const octokit = new Octokit({
-      auth: userToken,
+      auth,
     });
     octokit.request("POST /repos/{owner}/{repo}/issues", {
       owner: org,

@@ -1,5 +1,6 @@
 # => Build container
 FROM milvusdb/milvus.io.builder:preview as builder
+ENV GITHUB_TOKEN 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
 WORKDIR /site
 ENV IS_PREVIEW preview
 

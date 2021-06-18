@@ -4,14 +4,17 @@
 .selectorContainer {
   position: relative;
   background: #fff;
+  font-family: Inter;
 
   .choosenWrapper {
     display: flex;
     cursor: pointer;
     outline: none;
+    &:hover {
+      color: @color-doc-primary;
+    }
 
     .labelWrapper {
-      font-family: Inter;
       font-size: 16px;
       font-weight: 500;
       line-height: 24px;
@@ -19,6 +22,19 @@
       margin-right: 8px;
       text-align: right;
       pointer-events: none;
+      &:hover {
+        color: @color-doc-primary;
+      }
+
+      .navIcon {
+        font-size: 24px;
+      }
+
+      .label {
+        vertical-align: sub;
+        text-transform: capitalize;
+        font-size: 16px;
+      }
     }
 
     .iconWrapper {
@@ -71,7 +87,6 @@
     .optionItem {
       display: inline-block;
       padding: 10px;
-      font-family: Inter;
       font-size: 16px;
       font-weight: 500;
       line-height: 24px;
@@ -100,12 +115,16 @@
     padding: 0 16px;
     position: relative;
 
-    .img {
-      width: 24px;
-      height: 24px;
+    .navIcon {
+      font-size: 24px;
+
+      &:hover {
+        color: @color-doc-primary;
+      }
     }
     .label {
       vertical-align: bottom;
+      text-transform: capitalize;
     }
   }
 

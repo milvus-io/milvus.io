@@ -1,18 +1,28 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
-import { globalHistory } from '@reach/router';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
-import autoscalingIcon from '../images/v2/autoscaling.svg';
-import deploymentIcon from '../images/v2/deployment.svg';
-import searchIcon from '../images/v2/searchicon.png';
-import storageIcon from '../images/v2/storage.svg';
-import supportIcon from '../images/v2/support.svg';
 import GithubButton from 'react-github-button';
 import './index.less';
 import Seo from '../components/seo';
-import bgImg3 from '../images/v2/bg-img3.png';
-import contributor from '../images/v2/contributor.png';
+import iqiyi from '../images/v2/iqiyi.svg';
+import vipcom from '../images/v2/vipcom.svg';
+import wps from '../images/v2/wps.svg';
+import trend from '../images/v2/trend.svg';
+import zs from '../images/v2/zs.svg';
+import axa from '../images/v2/axa.svg';
+import xiaomi from '../images/v2/xiaomi.svg';
+import feishu from '../images/v2/feishu.svg';
+import arcelor from '../images/v2/arcelor.svg';
+import walmart from '../images/v2/walmart.svg';
+import dxy from '../images/v2/dxy.svg';
+import alibaba from '../images/v2/alibaba.svg';
+import autoscalingIcon from '../images/v2/autoscaling.svg';
+import deploymentIcon from '../images/v2/deployment.svg';
+import searchIcon from '../images/v2/searchicon.svg';
+import storageIcon from '../images/v2/storage.svg';
+import supportIcon from '../images/v2/support.svg';
+import bgImg3 from '../images/v2/bgImg3.svg';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -20,6 +30,19 @@ const icons = {
   search: searchIcon,
   storage: storageIcon,
   supporting: supportIcon,
+  bgImg3,
+  iqiyi,
+  vipcom,
+  wps,
+  trend,
+  zs,
+  axa,
+  xiaomi,
+  feishu,
+  arcelor,
+  walmart,
+  dxy,
+  alibaba
 };
 
 const HomePage = ({ data, pageContext }) => {
@@ -122,7 +145,7 @@ const HomePage = ({ data, pageContext }) => {
                 );
               })}
               <li className="section-item">
-                <img className='img' src={bgImg3} alt="" />
+                <img className='img' src={icons.bgImg3} alt="icon" />
               </li>
             </ul>
             {
@@ -135,17 +158,16 @@ const HomePage = ({ data, pageContext }) => {
                   <ul className="users-list">
                     {
                       user.list.map(item => {
-                        const { name, link } = item;
+                        const { name, alt, ratio } = item;
                         return (
                           <li key={name} className="list-item">
-                            <a href={link} target="_blank" rel="noreferrer">
-                              <img src={contributor} alt="contributor" />
-                            </a>
+                            <img src={icons[name]} alt={alt} style={{ height: ratio }} />
                           </li>
                         );
                       })
                     }
                   </ul>
+
                 </div>
               ) : null
             }
@@ -252,8 +274,9 @@ export const Query = graphql`
             user {
               title
               list {
-                link
+                alt
                 name
+                ratio
               }
             }
             slogan {

@@ -50,17 +50,15 @@
         height: 24px;
         color: @color-default-link;
 
-        .img {
-          width: 24px;
-          height: 24px;
-          font-size: 0;
+        .navIcon {
+          font-size: 24px;
+
+          &:hover {
+            color: @color-doc-primary;
+          }
         }
 
         &:hover {
-          color: @color-primary;
-        }
-
-        &:active {
           color: @color-doc-primary;
         }
 
@@ -70,7 +68,7 @@
       }
 
       .active {
-        color: @color-primary;
+        color: @color-doc-primary;
       }
 
       .dropDown {

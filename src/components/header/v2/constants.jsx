@@ -1,4 +1,4 @@
-import git from '../../../images/v2/github.svg';
+import React from 'react';
 
 export const LANGUAGES = [
   {
@@ -11,7 +11,7 @@ export const LANGUAGES = [
   },
 ];
 
-export const NAVLIST = [
+export const NAVLIST_EN = [
   {
     label: 'What is milvus?',
     link: '/docs/overview.md',
@@ -34,10 +34,28 @@ export const NAVLIST = [
     keyWord: 'community',
     isExternal: false,
   },
+];
+export const NAVLIST_CN = [
   {
-    label: 'Github',
-    link: 'https://github.com/milvus-io/milvus/',
+    label: '什么是 milvus?',
+    link: '/docs/overview.md',
+    isExternal: false,
+  },
+  {
+    label: '文档',
+    link: '/docs/home',
+    keyWord: 'docs',
+    isExternal: false,
+  },
+  {
+    label: '博客',
+    link: 'https://blog.milvus.io/',
     isExternal: true,
-    icon: git,
+  },
+  {
+    label: '社区',
+    link: '/community',
+    keyWord: 'community',
+    isExternal: false,
   },
 ];

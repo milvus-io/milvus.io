@@ -8,6 +8,7 @@
 @warning-bg-color: rgba(242, 92, 5, 0.1);
 @faq-disc-color: #06aff2;
 @link-color: #1493cc;
+@color-warning: #f25c05;
 
 .doc-post-container {
   color: #191919;
@@ -62,6 +63,7 @@
     line-height: 28px;
     margin-bottom: 8px;
     margin-top: 16px;
+    font-weight: 700;
   }
 
   p {
@@ -175,43 +177,75 @@
     @media @tablet {
       margin-bottom: 16px;
     }
-  }
-  .note {
-    background-color: @note-bg-color;
+    &.warning {
+      background-color: @warning-bg-color;
 
-    &::before {
-      position: absolute;
-      content: 'NOTE';
-      line-height: 17px;
-      color: #454545;
-      left: 0;
-      top: -23px;
+      &::before {
+        position: absolute;
+        content: 'WARNING';
+        line-height: 17px;
+        color: @color-warning;
+        left: 0;
+        top: -23px;
+      }
+    }
+    &.note {
+      background-color: @note-bg-color;
+
+      &::before {
+        position: absolute;
+        content: 'NOTE';
+        line-height: 17px;
+        color: #454545;
+        left: 0;
+        top: -23px;
+      }
+    }
+
+    &.info {
+      background-color: @note-bg-color;
+
+      &::before {
+        position: absolute;
+        content: 'INFO';
+        line-height: 17px;
+        color: #454545;
+        left: 0;
+        top: -23px;
+      }
     }
   }
 
-  .info {
-    background-color: @note-bg-color;
-
-    &::before {
-      position: absolute;
-      content: 'INFO';
-      line-height: 17px;
-      color: #454545;
-      left: 0;
-      top: -23px;
+  .admonition {
+    font-size: 16px;
+    line-height: 17px;
+    margin-bottom: 24px;
+    @media @tablet {
+      margin-bottom: 16px;
     }
-  }
 
-  .warning {
-    background-color: @warning-bg-color;
+    &.danger {
+      p {
+        background-color: @warning-bg-color;
+        padding: 14px 21px;
+      }
 
-    &::before {
-      position: absolute;
-      content: 'WARNING';
-      line-height: 17px;
-      color: #f25c05;
-      left: 0;
-      top: -23px;
+      .admonition-title {
+        background: #fff;
+        color: @color-warning;
+        padding: 0;
+      }
+    }
+    &.note {
+      p {
+        background-color: @note-bg-color;
+        padding: 14px 21px;
+      }
+
+      .admonition-title {
+        background: #fff;
+        padding: 0;
+      }
     }
   }
 
@@ -354,4 +388,8 @@ details {
       font-size: 0.8em;
     }
   }
+}
+
+.hljs-meta {
+  user-select: none;
 }

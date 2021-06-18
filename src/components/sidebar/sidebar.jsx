@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import LocalizeLink from '../localizedLink/localizedLink';
 import Menu from '../menu/index';
 import * as styles from './sidebar.module.less';

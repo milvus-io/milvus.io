@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Octokit } from "@octokit/core";
-import FaqCard from '../card/faqCard'
+import FaqCard from '../card/faqCard';
 import './index.less';
 import * as styles from '../card/faqCard/index.module.less';
 import { getFaq } from '../../http/http';
@@ -45,10 +45,10 @@ const RelatedQuestion = props => {
   const checkValidation = ({ email = "", quest }) => {
     if (!email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) || !quest) {
       setFormValid(false);
-      return
+      return;
     }
     setFormValid(true);
-  }
+  };
 
   const onSubmit = () => {
     toggleModal(false);
@@ -70,7 +70,7 @@ const RelatedQuestion = props => {
     }).catch(err => {
       console.log("user submit question error", err);
     });
-  }
+  };
 
   useEffect(() => {
     if (relatedKey) {
@@ -86,11 +86,11 @@ const RelatedQuestion = props => {
       }).catch(err => {
         console.log("err", err);
         setRelatedQuestions();
-      })
+      });
     } else {
       setRelatedQuestions();
     }
-  }, [relatedKey])
+  }, [relatedKey]);
 
   return (
     <>
@@ -105,7 +105,7 @@ const RelatedQuestion = props => {
           <div className="faq-links">
             <h2>{contact.title}</h2>
             <div className="faq-links-container">
-              <button onClick={() => { toggleModal(true) }}>{contact.follow.label}</button>
+              <button onClick={() => { toggleModal(true); }}>{contact.follow.label}</button>
               <a href={contact.slack.link} target="_blank" rel="noopener noreferrer">
                 {contact.slack.label}
                 <i
@@ -122,7 +122,7 @@ const RelatedQuestion = props => {
             {showModal && (
               <div className={styles.modalMask}>
                 <div className={styles.mondalContainer}>
-                  <button className={styles.modalClose} onClick={() => { toggleModal(false) }}></button>
+                  <button className={styles.modalClose} onClick={() => { toggleModal(false); }}>{''}</button>
                   <p className={styles.modalTitle}>{contact.dialog.title}</p>
                   <p className={styles.modalContent}>{contact.dialog.desc}</p>
                   <form>

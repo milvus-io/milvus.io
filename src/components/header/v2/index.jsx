@@ -19,7 +19,6 @@ import LocalizedLink from '../../localizedLink/localizedLink';
 
 const V2Header = props => {
   const {
-    type = 'home',
     className = '',
     locale,
   } = props;
@@ -146,25 +145,34 @@ const V2Header = props => {
                   >
                     {
                       maskConfig.isOpen ? (
-                        <img
+                        <span
                           role="button"
                           tabIndex={-1}
                           onClick={() => handleToggleMask({ isOpen: false })}
                           onKeyDown={() => handleToggleMask({ isOpen: false })}
-                          className={styles.btnIcon}
-                          src={close}
-                          alt="close-icon"
-                        />
+                        >
+                          <img
+                            className={styles.btnIcon}
+                            src={close}
+                            alt="close-icon"
+                          />
+                        </span>
+
                       ) : (
-                        <img
+                        <span
                           role="button"
                           tabIndex={-1}
                           onClick={() => handleToggleMask({ isOpen: true })}
                           onKeyDown={() => handleToggleMask({ isOpen: true })}
-                          className={styles.btnIcon}
-                          src={menu}
-                          alt="close-icon"
-                        />
+                        >
+                          <img
+
+                            className={styles.btnIcon}
+                            src={menu}
+                            alt="close-icon"
+                          />
+                        </span>
+
                       )
                     }
                   </div>

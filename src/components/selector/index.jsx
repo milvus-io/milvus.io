@@ -8,7 +8,6 @@ const Selector = props => {
     selected,
     locale,
     isVersion = false,
-    setSelected = () => { },
     className = ''
   } = props;
   const [listStatus, setListStatus] = useState(false);
@@ -26,11 +25,6 @@ const Selector = props => {
       window.removeEventListener('click', cb);
     };
   }, []);
-
-  const handleSelected = e => {
-    const value = e.target.dataset.value;
-    setSelected(value);
-  };
 
   return (
     <div
@@ -53,10 +47,6 @@ const Selector = props => {
       </div>
       <ul
         className={`${styles.optionsWrapper} ${listStatus && styles.open}`}
-        tabIndex="0"
-        role="menu"
-        onKeyDown={handleSelected}
-        onClick={handleSelected}
       >
         {options.map(v => (
           <li

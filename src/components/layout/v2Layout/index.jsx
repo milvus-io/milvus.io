@@ -11,7 +11,6 @@ const V2Layout = ({ header, footer, children, locale, versions }) => {
         locale={locale}
         versions={versions}
         version="v2.0.0"
-        type="home"
         className={styles.header}
       />
       {children}

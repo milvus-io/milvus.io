@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/v2/lfai.svg';
@@ -24,13 +24,13 @@ const V2Header = props => {
     locale,
   } = props;
   const navList = locale === 'en' ? NAVLIST_EN : NAVLIST_CN;
-  const { pathname } = globalHistory.location;
   const { isMobile } = useMobileScreen();
 
   const [maskConfig, setMaskConfig] = useState({
     isOpen: false,
     type: 'close'
   });
+  const [path, setPath] = useState('');
   const container = useRef(null);
   const headContainer = useRef(null);
 
@@ -53,15 +53,10 @@ const V2Header = props => {
     hideMask();
   });
 
-  const LinkContent = ({ label, icon }) => (
-    <>
-      {
-        icon ? (
-          icon
-        ) : label
-      }
-    </>
-  );
+  useEffect(() => {
+    const { pathname } = globalHistory.location;
+    setPath(pathname);
+  }, []);
 
   return (
     <header className={`${styles.header} ${className}`} ref={headContainer}>
@@ -100,7 +95,7 @@ const V2Header = props => {
                     </a>
                   ) : (
                     <LocalizedLink
-                      className={`${styles.navItem} ${pathname.includes(keyWord) ? styles.active : ''
+                      className={`${styles.navItem} ${path.includes(keyWord) ? styles.active : ''
                         }`}
                       to={link}
                       key={label}

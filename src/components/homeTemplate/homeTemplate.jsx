@@ -10,6 +10,11 @@ const HomeTemplate = props => {
 
   return (
     <section className={styles.docHomeWrapper}>
+      <div className={`${styles.section} ${styles.section2}`}>
+        <h1>{section2.title}</h1>
+        <p className={styles.desc}>{section2.desc}</p>
+      </div>
+
       <div className={`${styles.section} ${styles.section1}`}>
         <h1>{section1.title}</h1>
         <div className={styles.cardWrapper}>
@@ -21,11 +26,6 @@ const HomeTemplate = props => {
             />
           ))}
         </div>
-      </div>
-
-      <div className={`${styles.section} ${styles.section2}`}>
-        <h1>{section2.title}</h1>
-        <p className={styles.desc}>{section2.desc}</p>
       </div>
 
       <div className={`${styles.section} ${styles.section3}`}>

@@ -13,13 +13,13 @@ const ChatItem = ({ chat = [] }) => {
   const answer = expand ? (
     <>
       {`A: ${content}`}
-      <button className={styles.answer} onClick={() => { setExpand(false) }}>
+      <button onClick={() => { setExpand(false); }}>
         Collapse
       <i className={`fas fa-chevron-up`}></i>
       </button>
     </>
   ) : (
-    <button className={styles.answer} onClick={() => { setExpand(true) }}>
+    <button onClick={() => { setExpand(true); }}>
       See Answers
       <i
         className={`fas fa-chevron-down`}
@@ -30,7 +30,7 @@ const ChatItem = ({ chat = [] }) => {
     <div key={title} className={styles.chatCard}>
       <span className={styles.chatTitle}>{title}</span>
       {isLink ? (
-        <a className={styles.chatAnswer} href={content} target="_blank" rel="noopener noreferrer">
+        <a href={content} target="_blank" rel="noopener noreferrer">
           See on Github
           <i
             className={`fab fa-github`}
@@ -39,7 +39,7 @@ const ChatItem = ({ chat = [] }) => {
       ) : answer}
     </div>
   );
-}
+};
 
 const QuestionRobot = () => {
   const [open, setOpen] = useState(false);
@@ -52,11 +52,11 @@ const QuestionRobot = () => {
 
   const toggle = () => {
     setOpen(!open);
-  }
+  };
 
   const keyPress = e => {
     const v = inputEl.current.value;
-    if ((e.key === 'Enter' || e.target.tagName == "BUTTON") && v && !locked) {
+    if ((e.key === 'Enter' || e.target.tagName === "BUTTON") && v && !locked) {
       setChats([...chats].concat({ value: v, state: 0 }));
       setLocked(true);
       getFaq({
@@ -75,16 +75,16 @@ const QuestionRobot = () => {
       }).catch(err => {
         console.log("err", err);
         setLocked(false);
-      })
+      });
       inputEl.current.value = '';
     }
-  }
+  };
 
   const expandAnswers = (index) => {
     const expandedChats = [...chats];
     expandedChats[index]['state'] = 2;
     setChats(expandedChats);
-  }
+  };
 
   useEffect(() => {
     if (chats.length !== chatNum) {
@@ -93,21 +93,21 @@ const QuestionRobot = () => {
         containerEl.current.scrollTop = containerEl.current.scrollHeight;
       }
     }
-  }, [chats])
+  }, [chats, chatNum]);
 
   return (
     <div className={styles.robot}>
       {open && (
         <div className={styles.dialog}>
-          <div className={styles.dialogHeader}>Search Engine powerd by <img src={milvus} className={styles.logo} /></div>
+          <div className={styles.dialogHeader}>Search Engine powerd by <img src={milvus} className={styles.logo} alt="logo" /></div>
           <div ref={containerEl} className={styles.dialogContent}>
             {chats.map((chat, index) => {
               if (chat.state === 0) {
-                return <div key={`${index}${chat.state}`} className={styles.myChat}>{chat.value}</div>
+                return <div key={`${index}${chat.state}`} className={styles.myChat}>{chat.value}</div>;
               } else if (chat.state === 1) {
                 return (
                   <div key={`${index}${chat.state}`} className={styles.serverChat}>
-                    <img src={iconBird} />
+                    <img src={iconBird} alt="icon" />
                     <div>
                       Hi! Here are related disscussion that might help you:
                       {
@@ -123,11 +123,11 @@ const QuestionRobot = () => {
                       </button>
                     </div>
                   </div>
-                )
+                );
               } else {
                 return (
                   <div key={`${index}${chat.state}`} className={styles.serverChat}>
-                    <img src={iconBird} />
+                    <img src={iconBird} alt="icon" />
                     <div>
                       Hi! Here are related disscussion that might help you:
                       {chat.value.map(chatEntry =>
@@ -135,17 +135,17 @@ const QuestionRobot = () => {
                     )}
                     </div>
                   </div>
-                )
+                );
               }
             })}
           </div>
           <div className={styles.dialogInput}>
             <input ref={inputEl} placeholder="Ask Milvus Anything..." onKeyPress={keyPress} />
-            <button onClick={keyPress}></button>
+            <button onClick={keyPress}>{''}</button>
           </div>
         </div>
       )}
-      <button onClick={toggle} className={`${styles.openBtn} ${open && styles.close}`}></button>
+      <button onClick={toggle} className={`${styles.openBtn} ${open && styles.close}`}>{''}</button>
     </div>
   );
 };

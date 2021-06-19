@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import milvusLogo from '../../../images/v2/milvus-logo.svg';
 import milvusLogoMobile from '../../../images/v2/milvus-logo-mobile.svg';
 import lfai from '../../../images/v2/lfai.svg';
@@ -19,18 +19,17 @@ import LocalizedLink from '../../localizedLink/localizedLink';
 
 const V2Header = props => {
   const {
-    type = 'home',
     className = '',
     locale,
   } = props;
   const navList = locale === 'en' ? NAVLIST_EN : NAVLIST_CN;
-  const { pathname } = globalHistory.location;
   const { isMobile } = useMobileScreen();
 
   const [maskConfig, setMaskConfig] = useState({
     isOpen: false,
     type: 'close'
   });
+  const [path, setPath] = useState('');
   const container = useRef(null);
   const headContainer = useRef(null);
 
@@ -53,15 +52,10 @@ const V2Header = props => {
     hideMask();
   });
 
-  const LinkContent = ({ label, icon }) => (
-    <>
-      {
-        icon ? (
-          icon
-        ) : label
-      }
-    </>
-  );
+  useEffect(() => {
+    const { pathname } = globalHistory.location;
+    setPath(pathname);
+  }, []);
 
   return (
     <header className={`${styles.header} ${className}`} ref={headContainer}>
@@ -100,7 +94,7 @@ const V2Header = props => {
                     </a>
                   ) : (
                     <LocalizedLink
-                      className={`${styles.navItem} ${pathname.includes(keyWord) ? styles.active : ''
+                      className={`${styles.navItem} ${path.includes(keyWord) ? styles.active : ''
                         }`}
                       to={link}
                       key={label}
@@ -151,25 +145,34 @@ const V2Header = props => {
                   >
                     {
                       maskConfig.isOpen ? (
-                        <img
+                        <span
                           role="button"
                           tabIndex={-1}
                           onClick={() => handleToggleMask({ isOpen: false })}
                           onKeyDown={() => handleToggleMask({ isOpen: false })}
-                          className={styles.btnIcon}
-                          src={close}
-                          alt="close-icon"
-                        />
+                        >
+                          <img
+                            className={styles.btnIcon}
+                            src={close}
+                            alt="close-icon"
+                          />
+                        </span>
+
                       ) : (
-                        <img
+                        <span
                           role="button"
                           tabIndex={-1}
                           onClick={() => handleToggleMask({ isOpen: true })}
                           onKeyDown={() => handleToggleMask({ isOpen: true })}
-                          className={styles.btnIcon}
-                          src={menu}
-                          alt="close-icon"
-                        />
+                        >
+                          <img
+
+                            className={styles.btnIcon}
+                            src={menu}
+                            alt="close-icon"
+                          />
+                        </span>
+
                       )
                     }
                   </div>

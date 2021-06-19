@@ -134,7 +134,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
   const { isMobile } = useMobileScreen();
   return (
     <div className="bootcamp-wrapper">
-      <Header type="doc" locale={locale} />
+      <Header locale={locale} />
       <Seo title={SeoTitle} lang={locale} description={desc} />
       <main className="mainContainer">
         <SideBar

@@ -7,15 +7,11 @@ import * as styles from './homeTemplate.module.less';
 const HomeTemplate = props => {
   const { data } = props;
   const { section1 = {}, section2, section3 = {}, section4 = {} } = data;
+  console.log(section1, section2);
 
   return (
     <section className={styles.docHomeWrapper}>
-      <div className={`${styles.section} ${styles.section2}`}>
-        <h1>{section2.title}</h1>
-        <p className={styles.desc}>{section2.desc}</p>
-      </div>
-
-      <div className={`${styles.section} ${styles.section1}`}>
+      <div className={`${styles.section} ${styles.section1}`} style={{ order: section1.order }}>
         <h1>{section1.title}</h1>
         <div className={styles.cardWrapper}>
           {section1.items && section1.items.map(item => (
@@ -26,6 +22,11 @@ const HomeTemplate = props => {
             />
           ))}
         </div>
+      </div>
+
+      <div className={`${styles.section} ${styles.section2}`} style={{ order: section2.order }}>
+        <h1>{section2.title}</h1>
+        <p className={styles.desc}>{section2.desc}</p>
       </div>
 
       <div className={`${styles.section} ${styles.section3}`}>

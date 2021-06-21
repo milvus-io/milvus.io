@@ -26,7 +26,6 @@ const HomeTemplate = props => {
 
       <div className={`${styles.section} ${styles.section2}`} style={{ order: section2.order }}>
         <h1>{section2.title}</h1>
-        {/* <p className={styles.desc}>{section2.desc}</p> */}
         <ul>
           {
             section2.desc.map(i => (<p className={styles.desc} key={i}>{i}</p>))

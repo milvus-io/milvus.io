@@ -3,7 +3,7 @@ import Layout from '../components/docLayout';
 import Seo from '../components/seo';
 import { graphql } from 'gatsby';
 import ReactTooltip from 'react-tooltip';
-import 'highlight.js/styles/github-dark.css';
+import 'highlight.js/styles/stackoverflow-light.css';
 import './docTemplate.less';
 import { useMobileScreen } from '../hooks';
 import useAlgolia from '../hooks/use-algolia';

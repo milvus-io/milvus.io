@@ -13,7 +13,6 @@ import recommend from '../images/doc-home/recommend.svg';
 import videoSearch from '../images/doc-home/video-search.svg';
 import Header from '../components/header/v2';
 import { useMobileScreen } from '../hooks/index';
-import SideBar from '../components/sidebar/sidebar';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
 import './bootcampTemplate.less';
 
@@ -32,8 +31,6 @@ const BootcampTemplate = ({ data, pageContext }) => {
     bootcampData,
     locale,
     html,
-    menuList,
-    activePost,
     headings,
   } = pageContext;
   const isHomePage = bootcampData !== null;
@@ -125,24 +122,12 @@ const BootcampTemplate = ({ data, pageContext }) => {
     });
   };
 
-  const menuConfig = {
-    menuList,
-    activePost,
-    pageType: 'bootcamp'
-  };
-
   const { isMobile } = useMobileScreen();
   return (
     <div className="bootcamp-wrapper">
       <Header locale={locale} />
       <Seo title={SeoTitle} lang={locale} description={desc} />
       <main className="mainContainer">
-        <SideBar
-          locale={locale}
-          showSearch={false}
-          wrapperClass="sidebar"
-          menuConfig={menuConfig}
-        />
 
         {
           isHomePage ? (

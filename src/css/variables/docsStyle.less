@@ -1,3 +1,4 @@
+@import './fontStyle.less';
 @color-primary: #0093c6;
 @color-visited: #09579c;
 @color-list-blue: #4fc4f9;
@@ -24,13 +25,14 @@
   tr,
   td,
   th {
-    font-family: SourceSansPro-Regular;
+    .fontSwitch();
   }
 
   h1,
   h2,
   h3 {
-    font-family: Inter !important;
+    .fontSwitch();
+    font-weight: 700;
   }
 
   h1 {

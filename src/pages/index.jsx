@@ -22,7 +22,7 @@ import deploymentIcon from '../images/v2/deployment.svg';
 import searchIcon from '../images/v2/searchicon.svg';
 import storageIcon from '../images/v2/storage.svg';
 import supportIcon from '../images/v2/support.svg';
-import bgImg3 from '../images/v2/bgImg3.svg';
+import bgImg3 from '../images/v2/bgImg3.png';
 
 const icons = {
   autoscaling: autoscalingIcon,

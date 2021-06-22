@@ -1,8 +1,11 @@
 @import '../../css/variables/responsive.less';
 @import '../../css/variables/color.less';
+@import '../../css/variables/fontStyle.less';
 
 .wrapper {
   padding-top: 32px;
+  .fontSwitch();
+
   @media @tablet {
     overflow: auto;
     margin: 0;
@@ -50,7 +53,7 @@
   }
 
   &:focus {
-    border-color: @color-doc-primary;
+    border-color: @color-primary;
     outline: none;
   }
 }
@@ -71,7 +74,6 @@
     opacity: 0.75;
     font-size: 14px;
     line-height: 20px;
-    font-family: 'Inter';
     font-weight: 700;
     color: @color-default-link;
   }

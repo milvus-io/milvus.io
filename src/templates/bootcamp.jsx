@@ -148,18 +148,17 @@ const BootcampTemplate = ({ data, pageContext }) => {
                     const { title, link } = item;
                     return (
                       <li key={title}>
-                        <LinkCard label={title} href={link} />
+                        <LinkCard label={title} href={link} className="link-card" />
                       </li>
                     );
                   })}
                 </ul>
               </div>
-
               <div className="container">
-                <h1 className="title">{section2.title}</h1>
+                <h1 className="title">{section3.title}</h1>
                 <ul className="solutionsWrapper">
-                  {section2.content.map(item => {
-                    const { title, link, desc, iconType } = item;
+                  {section3.content.map(item => {
+                    const { title, link, iconType, desc } = item;
                     return (
                       <li key={title}>
                         <SolutionCard
@@ -175,10 +174,10 @@ const BootcampTemplate = ({ data, pageContext }) => {
               </div>
 
               <div className="container">
-                <h1 className="title">{section3.title}</h1>
+                <h1 className="title">{section2.title}</h1>
                 <ul className="solutionsWrapper">
-                  {section3.content.map(item => {
-                    const { title, link, iconType, desc } = item;
+                  {section2.content.map(item => {
+                    const { title, link, desc, iconType } = item;
                     return (
                       <li key={title}>
                         <SolutionCard

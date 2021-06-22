@@ -1,5 +1,6 @@
 @import '../../../css/variables/responsive.less';
 @import '../../../css/variables/color.less';
+@import '../../../css/variables/fontStyle.less';
 
 .header {
   position: fixed;
@@ -9,6 +10,7 @@
   padding: 16px 26px 0;
   z-index: 3;
   background-color: #fff;
+  .fontSwitchInter();
 
   @media @tablet {
     padding: 16px 16px 0;
@@ -43,7 +45,6 @@
       align-items: center;
 
       .navItem {
-        font-family: Inter;
         font-size: 16px;
         font-weight: 500;
         line-height: 24px;
@@ -54,12 +55,12 @@
           font-size: 24px;
 
           &:hover {
-            color: @color-doc-primary;
+            color: @color-primary;
           }
         }
 
         &:hover {
-          color: @color-doc-primary;
+          color: @color-primary;
         }
 
         & + .navItem {
@@ -68,7 +69,7 @@
       }
 
       .active {
-        color: @color-doc-primary;
+        color: @color-primary;
       }
 
       .dropDown {
@@ -157,168 +158,5 @@
 
   @media @tablet {
     padding: 0 16px;
-  }
-}
-.secondHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 57px;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding-left: 44px;
-
-  @media @tablet {
-    padding-left: 0px;
-  }
-
-  .tabsWrapper {
-    display: flex;
-    list-style: none;
-    height: 100%;
-    align-items: center;
-
-    .tabItemWrapper {
-      box-sizing: border-box;
-      padding: 0 20px;
-      height: 100%;
-    }
-
-    .tabItem {
-      font-size: 14px;
-      line-height: 17px;
-      font-weight: 500;
-      cursor: pointer;
-      color: #82838e;
-      margin: 0 20px;
-      display: inline-block;
-      height: 100%;
-      display: flex;
-      align-items: center;
-
-      &:hover {
-        color: @color-doc-primary;
-      }
-
-      &.active {
-        border-bottom: 1px solid @color-doc-primary;
-        color: @color-doc-primary;
-        font-weight: 600;
-      }
-    }
-  }
-
-  .mobileTabWrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-    .location {
-      font-size: 14px;
-      line-height: 24px;
-      color: #82838e;
-    }
-
-    .selector {
-      span,
-      i {
-        font-size: 14px;
-        line-height: 24px;
-        pointer-events: none;
-      }
-      span {
-        color: #191919;
-        font-weight: 600;
-        margin-right: 8px;
-        display: inline-block;
-      }
-    }
-  }
-
-  .searchWrapper {
-    .search {
-      display: inline-block;
-      width: 319px;
-      -webkit-appearance: none;
-
-      outline: none;
-      border: 1px solid rgba(196, 196, 196, 0.5);
-      border-radius: 8px;
-
-      box-sizing: border-box;
-      padding: 10px 16px;
-
-      color: @color-dark;
-      font-size: 14px;
-      line-height: 16px;
-
-      transition: border-color 0.2s ease;
-
-      &::placeholder {
-        color: #aeaebb;
-      }
-
-      &:focus {
-        border-color: @color-doc-primary;
-        outline: none;
-      }
-    }
-  }
-
-  .maskContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.2);
-    transform-origin: bottom;
-    transition: all 0.2s ease-in-out;
-    transform: scaleY(0);
-
-    &.show {
-      transform: scaleY(1);
-    }
-
-    .selectorWrapper {
-      background: #fff;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 8px;
-
-      .iconWrapper {
-        width: 40px;
-        height: 40px;
-        display: inline-block;
-        text-align: center;
-        line-height: 40px;
-
-        i {
-          font-size: 24px;
-        }
-      }
-
-      .selectList {
-        padding: 16px;
-        list-style: none;
-
-        .tabItem {
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 24px;
-          color: #82838e;
-          display: block;
-          margin: 20px 0;
-        }
-
-        .active {
-          color: @color-doc-primary;
-          font-weight: 600;
-        }
-      }
-    }
   }
 }

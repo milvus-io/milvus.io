@@ -1,5 +1,6 @@
 @import '../css/variables/responsive.less';
 @import '../css/variables/color.less';
+@import '../css//variables/fontStyle.less';
 
 // local variables
 @sidebar-width: 250px;
@@ -49,8 +50,8 @@
 
     .home {
       margin-right: 80px;
-      font-family: Inter;
       box-sizing: border-box;
+      .fontSwitchInter();
 
       @media @tablet {
         margin: 32px 32px 0;
@@ -462,7 +463,7 @@
 
     .btn-to-top {
       position: fixed;
-      right: 20%;
+      right: 250px;
       bottom: 80px;
 
       display: flex;
@@ -485,19 +486,7 @@
 
       @media @tablet {
         position: fixed;
-        right: 30%;
-        bottom: 80px;
-      }
-
-      @media @desktop {
-        position: fixed;
-        right: 28%;
-        bottom: 80px;
-      }
-
-      @media (min-width: 2000px) {
-        position: fixed;
-        right: 32%;
+        right: 20%;
         bottom: 80px;
       }
     }

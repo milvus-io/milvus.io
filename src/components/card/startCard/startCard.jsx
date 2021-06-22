@@ -1,7 +1,7 @@
 import React from 'react';
 import * as styles from './startCard.module.less';
-import standAloneIcon from '../../../images/doc-home/stand-alone.png';
-import clusterIcon from '../../../images/doc-home/cluster.png';
+import standAloneIcon from '../../../images/doc-home/standalone.svg';
+import clusterIcon from '../../../images/doc-home/cluster.svg';
 import bootCamps from '../../../images/doc-home/bootcamps.png';
 import { useMobileScreen } from '../../../hooks/index';
 

@@ -1,7 +1,7 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
-const env = process.env.IS_PREVIEW;
-// const env = 'preview';
+// const env = process.env.IS_PREVIEW;
+const env = 'preview';
 
 // createPages: graphql query
 const query = `
@@ -179,10 +179,12 @@ const query = `
               title
             }
             title
+            order
           }
           section2 {
             desc
             title
+            order
           }
           section3 {
             items {

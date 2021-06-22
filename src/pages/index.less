@@ -2,6 +2,7 @@
 @import '../css/variables/color.less';
 @import '../../static/iconFonts/css/all.min.css';
 @import '../css/variables/fontStyle.less';
+
 body {
   background-color: #fff;
 }
@@ -9,7 +10,8 @@ body {
 .home-page-container {
   width: 100%;
   background-color: #fff;
-  .fontSwitch();
+  color: #191919;
+  .fontSwitchInter();
 
   .page-content {
     max-width: @screen-hp-max;
@@ -103,10 +105,10 @@ body {
         }
       }
       .sub-title {
-        font-family: Inter Bold;
         font-size: 20px;
         line-height: 20px;
         margin-bottom: 15px;
+        font-weight: 700;
       }
 
       .title {
@@ -127,9 +129,9 @@ body {
 
       .text {
         margin-bottom: 24px;
-        font-family: Inter SemiBold;
         font-size: 24px;
         line-height: 30px;
+        font-weight: 600;
 
         @media @tablet {
           display: none;
@@ -152,7 +154,7 @@ body {
 
           span {
             display: inline-block;
-            font-family: Inter Bold;
+            font-weight: 700;
             font-size: 16px;
             line-height: 24px;
             margin-right: 16px;
@@ -174,7 +176,7 @@ body {
 
           span {
             display: inline-block;
-            font-family: Inter Bold;
+            font-weight: 700;
             font-size: 16px;
             line-height: 24px;
             margin-right: 16px;
@@ -197,7 +199,7 @@ body {
 
     .banner-right {
       flex: 2;
-      background: url('../images/v2/main-bg.svg') no-repeat center right;
+      background: url('../images/v2/main-bg.png') no-repeat center right;
       background-size: contain;
 
       @media @phone {
@@ -210,7 +212,7 @@ body {
     border-radius: 16px;
     padding: 60px 221px 28px;
     font-style: italic;
-    font-family: Inter SemiBold;
+    font-weight: 600;
     margin: 64px 0;
 
     @media @tablet {
@@ -323,7 +325,7 @@ body {
         }
 
         .title {
-          font-family: Inter SemiBold;
+          font-weight: 600;
           font-size: 24px;
           line-height: 24px;
           margin-bottom: 24px;
@@ -340,7 +342,6 @@ body {
         }
 
         .text {
-          font-family: Inter;
           font-size: 14px;
           line-height: 24px;
           margin-bottom: 16px;
@@ -444,7 +445,6 @@ body {
         }
 
         .text {
-          font-family: Inter;
           font-size: 24px;
           line-height: 32px;
 
@@ -457,7 +457,7 @@ body {
         .communityBtn {
           span {
             display: inline-block;
-            font-family: Inter Bold;
+            font-weight: 700;
             font-size: 16px;
             line-height: 24px;
             margin-right: 16px;

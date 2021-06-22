@@ -16,12 +16,12 @@ const SolutionCard = ({
       rel="noopener noreferrer"
     >
       <div className={styles.titleBar}>
+        <h3 className={styles.title}>{title}</h3>
         {
           img ? (
             <img src={img} alt="icon" className={styles.img} />
           ) : null
         }
-        <h3 className={styles.title}>{title}</h3>
       </div>
 
       <p className={styles.content}>{content}</p>

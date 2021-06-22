@@ -16,6 +16,7 @@
   justify-content: space-between;
   font-family: Inter;
   height: 100vh;
+  color: #191919;
 
   main {
     display: flex;
@@ -44,6 +45,7 @@
     .content {
       margin-top: 32px;
       padding: 0 120px;
+      .fontSwitchInter();
 
       @media @tablet {
         margin-top: 0;
@@ -137,7 +139,7 @@
 
     .btn-to-top {
       position: fixed;
-      right: 20%;
+      right: 250px;
       bottom: 80px;
 
       display: flex;
@@ -160,19 +162,7 @@
 
       @media @tablet {
         position: fixed;
-        right: 30%;
-        bottom: 80px;
-      }
-
-      @media @desktop {
-        position: fixed;
-        right: 28%;
-        bottom: 80px;
-      }
-
-      @media (min-width: 2000px) {
-        position: fixed;
-        right: 32%;
+        right: 20%;
         bottom: 80px;
       }
     }
@@ -254,7 +244,7 @@
     font-size: 24px;
     line-height: 32px;
     padding-bottom: 20px;
-    .fontBold();
+    font-weight: bold;
 
     @media @tablet {
       padding: 14px 0;
@@ -275,6 +265,10 @@
     grid-row-gap: 20px;
     grid-column-gap: 20px;
     list-style: none;
+
+    & .link-card:hover {
+      color: @color-doc-primary;
+    }
 
     @media @tablet {
       grid-template-columns: repeat(2, 1fr);

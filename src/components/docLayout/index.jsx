@@ -202,7 +202,7 @@ const DocLayout = props => {
                           }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
-                          <i className={`far fa-edit ${styles.btnIcon}`}></i>
+                          <i className={`fas fa-pencil-alt ${styles.btnIcon}`}></i>
                         </span>
 
                         {language.footer.editBtn.label}

@@ -1,6 +1,6 @@
 @import './fontStyle.less';
-@color-primary: #0093c6;
-@color-visited: #09579c;
+
+@color-primary: #12c3f4;
 @color-list-blue: #4fc4f9;
 @pre-bg-color: #f9f9f9;
 @pre-bg-color-dark: #242a35;
@@ -10,9 +10,10 @@
 @faq-disc-color: #06aff2;
 @link-color: #1493cc;
 @color-warning: #f25c05;
+@main-text-color: #191919;
 
 .doc-post-container {
-  color: #191919;
+  color: @main-text-color;
 
   a,
   p,
@@ -32,7 +33,7 @@
   h2,
   h3 {
     .fontSwitch();
-    font-weight: 700;
+    font-weight: 600;
   }
 
   h1 {
@@ -89,6 +90,7 @@
     border: 1px solid #e2e2e2;
     border-radius: 4px;
     padding: 0px 8px;
+    color: @main-text-color;
   }
 
   pre {
@@ -121,11 +123,6 @@
       display: inline-block;
       font-size: 0;
       vertical-align: top;
-    }
-
-    &:visited {
-      font-family: SourceSansPro-Bold;
-      color: @color-visited;
     }
   }
 
@@ -173,6 +170,7 @@
     font-size: 16px;
     line-height: 24px;
     position: relative;
+    font-weight: 500;
 
     @media @tablet {
       margin-bottom: 16px;
@@ -187,18 +185,20 @@
         color: @color-warning;
         left: 0;
         top: -23px;
+        font-weight: 600;
       }
     }
     &.note {
       background-color: @note-bg-color;
 
       &::before {
+        color: @link-color;
         position: absolute;
         content: 'NOTE';
         line-height: 17px;
-        color: #454545;
         left: 0;
         top: -23px;
+        font-weight: 600;
       }
     }
 
@@ -209,9 +209,10 @@
         position: absolute;
         content: 'INFO';
         line-height: 17px;
-        color: #454545;
         left: 0;
         top: -23px;
+        font-weight: 600;
+        color: @color-list-blue;
       }
     }
   }
@@ -220,6 +221,7 @@
     font-size: 16px;
     line-height: 17px;
     margin-bottom: 24px;
+
     @media @tablet {
       margin-bottom: 16px;
     }
@@ -234,6 +236,7 @@
         background: #fff;
         color: @color-warning;
         padding: 0;
+        font-weight: 600;
       }
     }
     &.note {
@@ -245,6 +248,7 @@
       .admonition-title {
         background: #fff;
         padding: 0;
+        font-weight: 600;
       }
     }
   }
@@ -319,6 +323,10 @@
       font-family: SourceSansPro-SemiBold;
     }
 
+    b {
+      font-weight: 400;
+    }
+
     li,
     details,
     summary {
@@ -347,14 +355,14 @@
       color: #000000;
     }
     & .active {
-      background-color: @link-color;
+      background-color: @color-primary;
       color: #fff;
     }
   }
   .tab-wrapper {
     & .active {
-      border-bottom: 2px solid @link-color;
-      color: @link-color;
+      border-bottom: 2px solid @color-primary;
+      color: @color-primary;
     }
   }
 
@@ -369,7 +377,6 @@
 details {
   font-size: 16px;
   line-height: 1.4em;
-  padding-left: 16px;
   margin: 8px 0;
 
   @media @tablet {

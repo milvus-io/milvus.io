@@ -22,8 +22,15 @@
   }
 }
 
-.fontSwitch {
+.fontSwitchInter {
   font-family: Inter;
+  &:lang(zh-cn) {
+    font-family: Noto Sans SC;
+  }
+}
+
+.fontSwitch {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif, Inter;
   &:lang(zh-cn) {
     font-family: Noto Sans SC;
   }

@@ -18,7 +18,7 @@ export const NAVLIST_EN = [
   {
     label: 'Documentation',
     link: '/docs/home',
-    keyWord: 'docs',
+    keyWord: '/docs',
     isExternal: false,
   },
   {
@@ -29,7 +29,7 @@ export const NAVLIST_EN = [
   {
     label: 'Contribute',
     link: '/community',
-    keyWord: 'community',
+    keyWord: '/community',
     isExternal: false,
   },
 ];
@@ -42,7 +42,7 @@ export const NAVLIST_CN = [
   {
     label: '文档',
     link: '/docs/home',
-    keyWord: 'docs',
+    keyWord: '/docs',
     isExternal: false,
   },
   {
@@ -53,7 +53,7 @@ export const NAVLIST_CN = [
   {
     label: '社区',
     link: '/community',
-    keyWord: 'community',
+    keyWord: '/community',
     isExternal: false,
   },
 ];

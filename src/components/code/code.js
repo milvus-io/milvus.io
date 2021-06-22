@@ -24,7 +24,7 @@ const Code = ({ html, content, locale }) => {
       // change button icon
       item.nextSibling.className = isCurrentElement
         ? `${styles.icon} fa fa-check`
-        : `${styles.icon} fa fa-clone`;
+        : `${styles.icon} far fa-clone`;
     });
   };
 
@@ -73,7 +73,7 @@ const Code = ({ html, content, locale }) => {
         <span className={`${styles.text} btn-copy-text`}>
           {locale === 'en' ? 'Copy' : '复制'}
         </span>
-        <i className={`${styles.icon} fa fa-clone`} aria-hidden="true"></i>
+        <i className={`${styles.icon} far fa-clone`} aria-hidden="true"></i>
       </button>
     </section>
   );

@@ -1,4 +1,5 @@
 @import './docReset.less';
+@import '../../css//variables/fontStyle.less';
 
 html {
   // padding 16px + first header 74px
@@ -29,7 +30,6 @@ html {
   }
 
   a {
-    font-family: Inter;
     font-size: 14px;
   }
 
@@ -37,7 +37,6 @@ html {
     .btnAnchor {
       display: flex;
       align-items: center;
-      font-family: Inter;
 
       border-radius: 18px;
       color: #000;
@@ -51,7 +50,6 @@ html {
 
       &:hover {
         color: #808080;
-        font-weight: bold;
       }
 
       .btnIconWrapper {
@@ -64,7 +62,7 @@ html {
 
         .btnIcon {
           font-size: 20px;
-          color: rgba(0, 0, 0, 0.5);
+          color: #191919;
         }
       }
     }
@@ -72,14 +70,13 @@ html {
 
   .anchorTitle {
     font-size: 16px;
+    font-family: Inter Medium;
 
     line-height: 18px;
     font-weight: 500;
 
     margin-top: 80px;
     margin-bottom: 24px;
-
-    font-family: Inter;
   }
 
   .parentItem {
@@ -96,7 +93,7 @@ html {
     color: @color-default-link;
 
     &:hover {
-      color: @color-doc-primary;
+      color: @color-anchor-link;
     }
   }
 }
@@ -113,6 +110,7 @@ html {
   background-color: #fff;
 
   .docWrapper {
+    .fontSwitch();
     position: relative;
     display: flex;
 
@@ -145,7 +143,7 @@ html {
 
   .btnToTop {
     position: fixed;
-    right: 20%;
+    right: 250px;
     bottom: 80px;
 
     display: flex;
@@ -165,23 +163,8 @@ html {
     &:hover {
       color: @color-highlight;
     }
-
-    @media (min-width: 1200px) {
-      position: fixed;
-      right: 30%;
-      bottom: 80px;
-    }
-
-    @media (min-width: 1600px) {
-      position: fixed;
-      right: 28%;
-      bottom: 80px;
-    }
-
-    @media (min-width: 2000px) {
-      position: fixed;
-      right: 32%;
-      bottom: 80px;
+    @media @tablet {
+      right: 20%;
     }
   }
 

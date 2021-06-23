@@ -825,7 +825,7 @@ const generateApiMenus = nodes => {
     [
       {
         id: 'api_reference',
-        title: 'NEW API Reference',
+        title: 'API Reference',
         lang: null,
         label1: '',
         label2: '',

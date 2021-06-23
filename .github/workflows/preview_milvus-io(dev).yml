@@ -22,7 +22,7 @@ jobs:
         run: |
           cd ..
           sudo git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          cd www.milvus.io
+          cd milvus.io
           sudo chmod -R 777 .
           sudo git reset HEAD --hard 
           sudo git checkout ${GITHUB_REF##*/}

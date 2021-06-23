@@ -70,9 +70,7 @@ const Menu = props => {
         menu?.category === 'pymilvus-orm' &&
         menu?.apiVersion === 'v2.0.alpha'
       )
-        menu.docVersion = 'preview';
-      if (menu?.category === 'node' && menu?.apiVersion === 'v1.0.0')
-        menu.docVersion = 'v1.1.1';
+        menu.docVersion = formatVersion;
       //? ^^^^^^
       if (menu?.isMenu && !menu?.label2) {
         menu?.id === 'api_reference'
@@ -94,6 +92,25 @@ const Menu = props => {
     filteredMenus?.length &&
       filteredMenus.push(...rootMenu, ...filteredSecondLevelMenus);
     return filteredMenus;
+  };
+
+  /**
+   * Replace api reference menu in MenuList with allApiMenus.
+   * @param {array} menus MenuList.
+   * @param {array} apiMenus allApiMenus.
+   * @returns {array} Combined array with MenuList(without api reference) and allApiMenus.
+   */
+  const mergeMenus = (menus=[], apiMenus=[]) => {
+    const apiMenu = apiMenus[0];
+    if (!apiMenu) return menus;
+    return menus.reduce((prev, item) => {
+      const {id, order} = item;
+      if (id === "API") {
+        apiMenu.order = order;
+        return [...prev, apiMenu];
+      }
+      return [...prev, item];
+    }, []);
   };
 
   useEffect(() => {
@@ -193,7 +210,7 @@ const Menu = props => {
     const filteredApiMenus = filterApiMenus(allApiMenus, formatVersion);
     const apiMenus =
       filteredApiMenus.length && generateMenu(filteredApiMenus)();
-    apiMenus?.length && (arr = [...arr, ...apiMenus]);
+    apiMenus?.length && (arr = mergeMenus(arr, apiMenus));
 
     checkActive(arr);
     sortMenu(arr);

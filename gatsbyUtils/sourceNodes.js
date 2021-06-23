@@ -421,7 +421,7 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
       !node.textContent.split('\n').join('') && node?.remove();
     });
     const title = doc.querySelector('.header .title');
-    title?.replaceWith(`<h1 class="title">${title.textContent}</h1>`);
+    title && doc.querySelector('.header')?.replaceWith(`<h1 class="title">${title.textContent}</h1>`);
     const packageHierarchyLabel = doc.querySelector(
       '.header .packageHierarchyLabel'
     );

@@ -276,13 +276,13 @@ const DocLayout = props => {
               <path
                 d="M14.6663 10.9445L7.99967 4.27783L1.33301 10.9445"
                 stroke="#4FC4F9"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M-6.55672e-08 0.75C-2.93554e-08 0.335786 0.335786 2.93554e-08 0.75 6.5567e-08L15.25 1.3332e-06C15.6642 1.36941e-06 16 0.335788 16 0.750001C16 1.16421 15.6642 1.5 15.25 1.5L0.75 1.5C0.335786 1.5 -1.01779e-07 1.16421 -6.55672e-08 0.75Z"
                 fill="#4FC4F9"
               />

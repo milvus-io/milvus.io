@@ -95,6 +95,10 @@ const QuestionRobot = () => {
     }
   }, [chats, chatNum]);
 
+  const onMaskClick = () => {
+    setOpen(false);
+  };
+
   return (
     <div className={styles.robot}>
       {open && (
@@ -146,6 +150,16 @@ const QuestionRobot = () => {
         </div>
       )}
       <button onClick={toggle} className={`${styles.openBtn} ${open && styles.close}`}>{''}</button>
+      {open && (
+        <div
+          className={styles.mask}
+          onClick={onMaskClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={onMaskClick}
+        >
+        </div>
+      )}
     </div>
   );
 };

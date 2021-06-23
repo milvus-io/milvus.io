@@ -143,8 +143,8 @@ html {
 
   .btnToTop {
     position: fixed;
-    right: 250px;
-    bottom: 80px;
+    right: 90px;
+    bottom: 148px;
 
     display: flex;
     justify-content: center;
@@ -163,8 +163,9 @@ html {
     &:hover {
       color: @color-highlight;
     }
-    @media @tablet {
-      right: 20%;
+
+    @media (min-width: @screen-lg-max) {
+      right: calc(50vw - 710px);
     }
 
     @media @tablet {

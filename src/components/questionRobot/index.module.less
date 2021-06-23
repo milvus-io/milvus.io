@@ -5,6 +5,10 @@
   bottom: 64px;
   position: fixed;
   right: 90px;
+  
+  @media (min-width: @screen-lg-max) {
+    right: calc(50vw - 710px);
+  }
 
   @media @tablet {
     align-items: center;
@@ -22,10 +26,10 @@
     bottom: 0;
     cursor: pointer;
     font-size: 50px;
-    height: 75px;
+    height: 64px;
     position: absolute;
     right: 0;
-    width: 75px;
+    width: 64px;
 
     @media @tablet {
       height: 40px;

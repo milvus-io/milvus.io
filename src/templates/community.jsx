@@ -283,7 +283,7 @@ export default function CommunityTemplate({ data, pageContext }) {
               </ul>
             </section>
             {/* resources */}
-            <section className="resource-section">
+            <section className="resource-section" id="community_resources">
               <h2>{resourceSection.title}</h2>
               <ul className="resource-list">
                 {
@@ -296,7 +296,7 @@ export default function CommunityTemplate({ data, pageContext }) {
               </ul>
             </section>
             {/* community patner */}
-            <section className="patner-section">
+            <section className="patner-section" id="community_partners">
               <h2>{partnerSection.title}</h2>
               <ul className="patner-list">
                 {

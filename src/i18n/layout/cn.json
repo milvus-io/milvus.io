@@ -256,7 +256,7 @@
             ],
             "img": "nlp",
             "titleHref": "https://github.com/milvus-io/bootcamp/tree/master/solutions/QA_System",
-            "href": "http://40.117.75.127:8003/"
+            "href": "http://35.166.123.214:8003/"
           },
           {
             "title": "赋能传统向量计算",
@@ -268,7 +268,7 @@
             ],
             "img": "molsearch",
             "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/mols_search/README.md",
-            "href": "http://40.117.75.127:8002/"
+            "href": "http://35.166.123.214:8002/"
           },
           {
             "title": "音频数据处理",

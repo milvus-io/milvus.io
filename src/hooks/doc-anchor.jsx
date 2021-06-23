@@ -20,10 +20,10 @@ export const useGenAnchor = (version, editPath) => {
         .map(
           item =>
             `<li>
-            <a href=${item.id}>
-              ${item.title}
-            </a>
-          </li>`
+              <a href=${item.id}>
+                ${item.title}
+              </a>
+            </li>`
         )
         .join('\n');
       const tpl = `
@@ -41,7 +41,7 @@ export const useGenAnchor = (version, editPath) => {
       if (faqHeadersElements.length > 0) {
         const info = Array.from(faqHeadersElements).map(element => ({
           id: `#${element.id}`,
-          title: element.textContent,
+          title: element.innerHTML,
         }));
 
         const anchors = getAnchorsFromInfo(info);

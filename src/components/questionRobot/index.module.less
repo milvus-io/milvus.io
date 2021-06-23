@@ -2,11 +2,11 @@
 @import '../../css/variables/color.less';
 
 .robot {
-  bottom: 60px;
+  bottom: 64px;
   position: fixed;
   right: 90px;
 
-  @media (max-width: 600px) {
+  @media @tablet {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -27,9 +27,9 @@
     right: 0;
     width: 75px;
 
-    @media (max-width: 600px) {
-      margin-top: 32px;
-      position: static;
+    @media @tablet {
+      height: 40px;
+      width: 40px;
     }
 
     &.close {
@@ -51,8 +51,8 @@
     right: 0;
     width: 400px;
 
-    @media (max-width: 600px) {
-      position: static;
+    @media @tablet {
+      bottom: 48px;
       width: 100%;
     }
 
@@ -61,7 +61,7 @@
         hue-rotate(154deg) brightness(102%) contrast(102%);
       height: 18px;
       margin-left: 8px;
-      vertical-align: baseline;
+      vertical-align: middle;
     }
 
     .dialogHeader {
@@ -69,10 +69,11 @@
       border-radius: 8px 8px 0 0;
       color: white;
       font-family: 'SF Pro Text';
+      font-style: normal;
       font-size: 12px;
-      font-weight: 600;
-      height: 50px;
-      padding: 16px;
+      font-weight: bold;
+      line-height: 50px;
+      padding-left: 16px;
     }
 
     .dialogContent {
@@ -84,6 +85,10 @@
       flex-grow: 1;
       padding: 15px;
       overflow-y: auto;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
 
       .myChat {
         align-self: flex-end;
@@ -128,6 +133,7 @@
           border: 0;
           display: flex;
           color: @color-primary;
+          font-family: 'Inter';
           font-size: 12px;
           font-weight: bold;
           margin-top: 8px;
@@ -195,6 +201,15 @@
         right: 10px;
         top: 10px;
         width: 22px;
+      }
+
+      input::placeholder {
+        color: #afafaf;
+        opacity: 1;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
       }
     }
   }

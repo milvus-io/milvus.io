@@ -6,8 +6,6 @@ import './apiDocTemplate.less';
 import { useCodeCopy } from '../hooks/doc-dom-operation';
 import useAlgolia from '../hooks/use-algolia';
 
-
-
 export default function Template({ data, pageContext }) {
   let {
     doc,

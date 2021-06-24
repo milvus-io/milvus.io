@@ -164,7 +164,6 @@ export const useCodeCopy = (locale, cfgs) => {
           ReactDOM.unmountComponentAtNode(block);
         });
       }
-
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

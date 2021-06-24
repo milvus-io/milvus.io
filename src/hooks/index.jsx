@@ -13,9 +13,10 @@ export const useMobileScreen = () => {
     };
   }, []);
 
-  const isMobile = useMemo(() => screenWidth && screenWidth < 1000, [
-    screenWidth,
-  ]);
+  const isMobile = useMemo(
+    () => screenWidth && screenWidth < 1000,
+    [screenWidth]
+  );
 
   return { screenWidth, isMobile };
 };

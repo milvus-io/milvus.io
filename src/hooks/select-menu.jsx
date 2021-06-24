@@ -44,11 +44,14 @@ export const useSelectMenu = (locale, ref) => {
     const selectHandler = e => {
       const disabledClass = {
         alert: 'alert',
-        hljs: 'hljs'
+        hljs: 'hljs',
       };
 
       const { nodeName, classList } = e.target;
-      if (nodeName === 'H1' || [].some.call(classList, (item => disabledClass[item] !== null))) {
+      if (
+        nodeName === 'H1' ||
+        [].some.call(classList, item => disabledClass[item] !== null)
+      ) {
         setOptions({
           styles: {
             visibility: 'hidden',
@@ -58,10 +61,9 @@ export const useSelectMenu = (locale, ref) => {
           copy: '',
         });
         return;
-      };
+      }
       const innerContainer =
-        typeof document !== 'undefined' &&
-        document.querySelector('html');
+        typeof document !== 'undefined' && document.querySelector('html');
       // header: 90 padding: 32px margin: 16
       const offsetTop = 90 + 32 + 16;
       const docWrapper =
@@ -123,8 +125,9 @@ export const useSelectMenu = (locale, ref) => {
         styles: {
           visibility: 'visible',
           zIndex: 2,
-          transform: `translate(${translateX}px,${top - offsetTop + scrollTop
-            }px)`,
+          transform: `translate(${translateX}px,${
+            top - offsetTop + scrollTop
+          }px)`,
         },
         copy: str,
       });
@@ -136,13 +139,8 @@ export const useSelectMenu = (locale, ref) => {
     return () => {
       if (ele) {
         ele.removeEventListener('mouseup', selectHandler, false);
-        ele.removeEventListener(
-          'selectionchange',
-          selectChangeHandler,
-          false
-        );
+        ele.removeEventListener('selectionchange', selectChangeHandler, false);
       }
-
     };
   }, [locale, ref]);
 

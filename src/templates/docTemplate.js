@@ -36,6 +36,10 @@ export default function Template({
   } = pageContext;
   versions = versions.sort(sortVersions);
 
+  useEffect(() => {
+    window.localStorage.setItem('docVersion', version);
+  }, [version]);
+
   const { isMobile } = useMobileScreen();
 
   const [showBack, setShowBack] = useState(false);

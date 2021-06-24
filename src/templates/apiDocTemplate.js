@@ -26,15 +26,24 @@ export default function Template({ data, pageContext }) {
     languages: ['java', 'go', 'python', 'javascript'],
   };
 
+  // Get docVersion from local stroage, to keep the doc verison consistent.
+  const localStorageDocVer = window.localStorage.getItem('docVersion');
+  // To judge if docVersion includes local storage doc verion or not.
+  // Reset to the latest doc version if not including.
+  const targetDocVersion =
+    (docVersion.includes(localStorageDocVer)
+      ? localStorageDocVer
+      : docVersion[0]) || 'master';
+
   useCodeCopy(locale, hljsCfg);
-  useAlgolia(locale, docVersion);
+  useAlgolia(locale, targetDocVersion);
 
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.layout
     : {};
 
   const menuList = allMenus.find(
-    v => v.absolutePath.includes(docVersion) && v.lang === locale
+    v => v.absolutePath.includes(targetDocVersion) && v.lang === locale
   );
 
   const nav = {
@@ -50,7 +59,7 @@ export default function Template({ data, pageContext }) {
         nav={nav}
         current="doc"
         menuList={menuList}
-        version={docVersion || 'master'}
+        version={targetDocVersion}
         headings={[]}
         versions={docVersions}
         newestVersion={newestVersion}

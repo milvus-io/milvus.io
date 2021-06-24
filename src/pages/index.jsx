@@ -43,7 +43,7 @@ const icons = {
   moj,
   smartnew,
   trend,
-  xiaomi
+  xiaomi,
 };
 
 const HomePage = ({ data, pageContext }) => {
@@ -53,7 +53,7 @@ const HomePage = ({ data, pageContext }) => {
     content: { feature, community },
     footer,
   } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
-      .v2;
+    .v2;
 
   const { slogan, user } = data.allFile.edges.filter(
     edge => edge.node.childUsers
@@ -148,79 +148,49 @@ const HomePage = ({ data, pageContext }) => {
                 <img className="img" src={icons.bgImg3} alt="icon" />
               </li>
             </ul>
-<<<<<<< HEAD
-          {
-            !!user.list.length ? (
+            {!!user.list.length ? (
               <div className="user-section">
                 <h3 className="title-bar">
                   <span className="title">{user.title}</span>
                   <span className="line"></span>
                 </h3>
                 <ul className="users-list">
-                  {
-                    user.list.map(item => {
-                      const { name, alt } = item;
-                      return (
-                        <li key={name} className="list-item">
-                          <img src={icons[name]} alt={alt} />
-                        </li>
-                      );
-                    })
-                  }
+                  {user.list.map(item => {
+                    const { name, alt } = item;
+                    return (
+                      <li key={name} className="list-item">
+                        <img src={icons[name]} alt={alt} />
+                      </li>
+                    );
+                  })}
                 </ul>
-
               </div>
-            ) : null
-          }
-=======
-            {!!user.list.length ? (
-            <div className="user-section">
-              <h3 className="title-bar">
-                <span className="title">{user.title}</span>
-                <span className="line"></span>
-              </h3>
-              <ul className="users-list">
-                {user.list.map(item => {
-                  const { name, alt, ratio } = item;
-                  return (
-                    <li key={name} className="list-item">
-                      <img
-                        src={icons[name]}
-                        alt={alt}
-                        style={{ height: ratio }}
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ) : null}
->>>>>>> preview
-          <div className="community-section">
-            <div className="wrapper">
-              <div className="text-wrapper">
-                <p className="title">{community.title}</p>
-                <p className="text">{community.text1}</p>
-                <p className="text ">{community.text2}</p>
-              </div>
+            ) : null}
+            <div className="community-section">
+              <div className="wrapper">
+                <div className="text-wrapper">
+                  <p className="title">{community.title}</p>
+                  <p className="text">{community.text1}</p>
+                  <p className="text ">{community.text2}</p>
+                </div>
 
-              <Button
-                className="communityBtn"
-                link={community.gitBtn.href}
-                locale={locale}
-                children={
-                  <>
-                    <span>{community.gitBtn.label}</span>
-                    <i className="fa fa-chevron-right"></i>
-                  </>
-                }
-              />
+                <Button
+                  className="communityBtn"
+                  link={community.gitBtn.href}
+                  locale={locale}
+                  children={
+                    <>
+                      <span>{community.gitBtn.label}</span>
+                      <i className="fa fa-chevron-right"></i>
+                    </>
+                  }
+                />
+              </div>
             </div>
-          </div>
           </div>
         </V2Layout>
+      </div>
     </div>
-    </div >
   );
 };
 

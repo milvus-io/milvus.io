@@ -133,18 +133,18 @@ html {
 
     // used for tablet or phone
     @media @tablet {
-      bottom: 136px;
-      left: 25px;
       width: 70vw;
       z-index: 1000;
-      margin-left: 0;
+      bottom: 64px;
+      top: 260px;
+      right: 16px;
     }
   }
 
   .btnToTop {
     position: fixed;
-    right: 250px;
-    bottom: 80px;
+    right: 90px;
+    bottom: 148px;
 
     display: flex;
     justify-content: center;
@@ -158,13 +158,21 @@ html {
     background-color: #fff;
     cursor: pointer;
 
-    z-index: 1000;
+    z-index: 1;
 
     &:hover {
       color: @color-highlight;
     }
+
+    @media (min-width: @screen-lg-max) {
+      right: calc(50vw - 710px);
+    }
+
     @media @tablet {
-      right: 20%;
+      height: 40px;
+      width: 40px;
+      right: 16px;
+      bottom: 112px;
     }
   }
 

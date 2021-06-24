@@ -25,7 +25,6 @@ const DocLayout = props => {
     isApiReference = false,
   } = props;
 
-
   const { isVersionWithHome = null } = pageContext;
 
   const formatHeadings =
@@ -125,7 +124,7 @@ const DocLayout = props => {
   const versionConfig = {
     homeTitle: language.menu.home,
     version,
-    versions
+    versions,
   };
 
   const generateAnchorMenu = (headings, className) => {
@@ -162,9 +161,7 @@ const DocLayout = props => {
 
   return (
     <div className={styles.layoutWrapper}>
-      <NewHeader
-        locale={locale}
-      />
+      <NewHeader locale={locale} />
 
       <main className={wrapperClass}>
         <Sidebar
@@ -178,8 +175,9 @@ const DocLayout = props => {
           isVersionWithHome={isVersionWithHome}
         />
         <div
-          className={`${styles.innerContainer} ${isHome ? styles.innerContainerHome : ''
-            } ${isBenchMark ? styles.fullWidth : ''}`}
+          className={`${styles.innerContainer} ${
+            isHome ? styles.innerContainerHome : ''
+          } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
@@ -198,8 +196,9 @@ const DocLayout = props => {
                     {isBlog || isBenchMark || isApiReference ? null : (
                       <a
                         className={styles.btnAnchor}
-                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${locale === 'en' ? 'en' : 'zh-CN'
-                          }/${editPath}`}
+                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                          locale === 'en' ? 'en' : 'zh-CN'
+                        }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
                           <i className={`fas fa-pencil-alt ${styles.btnIcon}`}></i>
@@ -268,18 +267,25 @@ const DocLayout = props => {
             tabIndex={0}
           >
             <svg
-              width="32"
-              height="32"
-              focusable="false"
-              role="img"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 384 512"
-              className="svg-inline--fa fa-arrow-to-top fa-w-12 fa-2x"
+              width="16"
+              height="12"
+              viewBox="0 0 16 12"
+              fill="none"
             >
               <path
-                fill="currentColor"
-                d="M24 32h336c13.3 0 24 10.7 24 24v24c0 13.3-10.7 24-24 24H24C10.7 104 0 93.3 0 80V56c0-13.3 10.7-24 24-24zm66.4 280.5l65.6-65.6V456c0 13.3 10.7 24 24 24h24c13.3 0 24-10.7 24-24V246.9l65.6 65.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L209 126.1c-9.4-9.4-24.6-9.4-33.9 0L39.5 261.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0z"
-              ></path>
+                d="M14.6663 10.9445L7.99967 4.27783L1.33301 10.9445"
+                stroke="#4FC4F9"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M-6.55672e-08 0.75C-2.93554e-08 0.335786 0.335786 2.93554e-08 0.75 6.5567e-08L15.25 1.3332e-06C15.6642 1.36941e-06 16 0.335788 16 0.750001C16 1.16421 15.6642 1.5 15.25 1.5L0.75 1.5C0.335786 1.5 -1.01779e-07 1.16421 -6.55672e-08 0.75Z"
+                fill="#4FC4F9"
+              />
             </svg>
           </div>
         ) : null}

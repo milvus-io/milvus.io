@@ -64,14 +64,6 @@ const Menu = props => {
     const thirdLevelMenuNames = [];
     // filter all compatible api menu items(not a directory)
     const filteredMenus = apiMenus.reduce((prev, menu) => {
-      //? vvvvvv Code below should be removed when publish.
-      //? Here just for show pymilvus-orm & node left menu when doc version is 'v1.1.0'
-      if (
-        menu?.category === 'pymilvus-orm' &&
-        menu?.apiVersion === 'v2.0.alpha'
-      )
-        menu.docVersion = formatVersion;
-      //? ^^^^^^
       if (menu?.isMenu && !menu?.label2) {
         menu?.id === 'api_reference'
           ? rootMenu.push(menu)
@@ -96,6 +88,7 @@ const Menu = props => {
 
   /**
    * Replace api reference menu in MenuList with allApiMenus.
+   * Will append allApiMenus to the end if there's no api reference menu.
    * @param {array} menus MenuList.
    * @param {array} apiMenus allApiMenus.
    * @returns {array} Combined array with MenuList(without api reference) and allApiMenus.
@@ -103,6 +96,12 @@ const Menu = props => {
   const mergeMenus = (menus=[], apiMenus=[]) => {
     const apiMenu = apiMenus[0];
     if (!apiMenu) return menus;
+    // If menus doesn't have "API" menu, add apiMenu as the last one.
+    if (!menus.find(item => item?.id === "API")) {
+      apiMenu.order = menus.length;
+      return [...menus, apiMenu];
+    }
+    // If exists, replace "API" with apiMenu.
     return menus.reduce((prev, item) => {
       const {id, order} = item;
       if (id === "API") {

@@ -352,23 +352,6 @@ body {
           }
         }
       }
-
-      // .bg-container {
-      //   display: none;
-      //   position: absolute;
-      //   background: url(../images/v2/bg-img3.png) center bottom no-repeat;
-      //   width: 486px;
-      //   height: 288px;
-      //   background-size: contain;
-      //   z-index: -1;
-      //   left: -150px;
-      //   bottom: 0;
-      //   opacity: 0.8;
-
-      //   @media @phone {
-      //     display: block;
-      //   }
-      // }
     }
     .user-section {
       margin: 84px 0 64px;
@@ -382,14 +365,20 @@ body {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-row-gap: 58px;
+        grid-column-gap: 58px;
+        padding: 0 32px;
 
         @media @tablet {
           grid-template-columns: repeat(3, 1fr);
           grid-row-gap: 38px;
+          grid-column-gap: 38px;
+          padding: 0 24px;
         }
         @media @phone {
           grid-template-columns: repeat(2, 1fr);
           grid-row-gap: 18px;
+          grid-column-gap: 18px;
+          padding: 0 16px;
         }
 
         .list-item {
@@ -399,7 +388,12 @@ body {
           justify-content: center;
 
           img {
-            max-width: 100%;
+            width: 100%;
+            max-width: 238px;
+
+            @media @phone {
+              max-width: 150px;
+            }
           }
         }
       }

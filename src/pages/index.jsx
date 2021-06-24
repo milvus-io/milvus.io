@@ -5,24 +5,25 @@ import Button from '../components/button';
 import GithubButton from 'react-github-button';
 import './index.less';
 import Seo from '../components/seo';
-import iqiyi from '../images/v2/iqiyi.svg';
-import vipcom from '../images/v2/vipcom.svg';
-import wps from '../images/v2/wps.svg';
-import trend from '../images/v2/trend.svg';
-import zs from '../images/v2/zs.svg';
-import axa from '../images/v2/axa.svg';
-import xiaomi from '../images/v2/xiaomi.svg';
-import feishu from '../images/v2/feishu.svg';
-import arcelor from '../images/v2/arcelor.svg';
-import walmart from '../images/v2/walmart.svg';
-import dxy from '../images/v2/dxy.svg';
-import alibaba from '../images/v2/alibaba.svg';
 import autoscalingIcon from '../images/v2/autoscaling.svg';
 import deploymentIcon from '../images/v2/deployment.svg';
 import searchIcon from '../images/v2/searchicon.svg';
 import storageIcon from '../images/v2/storage.svg';
 import supportIcon from '../images/v2/support.svg';
 import bgImg3 from '../images/v2/bgImg3.png';
+
+import line from '../images/v2/line.png';
+import compass from '../images/v2/compass.png';
+import kuaishou from '../images/v2/kuaishou.png';
+import museum from '../images/v2/museum.png';
+import aiqiyi from '../images/v2/aiqiyi.png';
+import axa from '../images/v2/axa.png';
+import dailyhunt from '../images/v2/dailyhunt.png';
+import messagebird from '../images/v2/messagebird.png';
+import moj from '../images/v2/moj.png';
+import smartnew from '../images/v2/smartnew.png';
+import trend from '../images/v2/trend.png';
+import xiaomi from '../images/v2/xiaomi.png';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -31,18 +32,18 @@ const icons = {
   storage: storageIcon,
   supporting: supportIcon,
   bgImg3,
-  iqiyi,
-  vipcom,
-  wps,
-  trend,
-  zs,
+  line,
+  compass,
+  kuaishou,
+  museum,
+  aiqiyi,
   axa,
-  xiaomi,
-  feishu,
-  arcelor,
-  walmart,
-  dxy,
-  alibaba,
+  dailyhunt,
+  messagebird,
+  moj,
+  smartnew,
+  trend,
+  xiaomi
 };
 
 const HomePage = ({ data, pageContext }) => {
@@ -52,7 +53,7 @@ const HomePage = ({ data, pageContext }) => {
     content: { feature, community },
     footer,
   } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
-    .v2;
+      .v2;
 
   const { slogan, user } = data.allFile.edges.filter(
     edge => edge.node.childUsers
@@ -147,53 +148,79 @@ const HomePage = ({ data, pageContext }) => {
                 <img className="img" src={icons.bgImg3} alt="icon" />
               </li>
             </ul>
-            {!!user.list.length ? (
+<<<<<<< HEAD
+          {
+            !!user.list.length ? (
               <div className="user-section">
                 <h3 className="title-bar">
                   <span className="title">{user.title}</span>
                   <span className="line"></span>
                 </h3>
                 <ul className="users-list">
-                  {user.list.map(item => {
-                    const { name, alt, ratio } = item;
-                    return (
-                      <li key={name} className="list-item">
-                        <img
-                          src={icons[name]}
-                          alt={alt}
-                          style={{ height: ratio }}
-                        />
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ) : null}
-            <div className="community-section">
-              <div className="wrapper">
-                <div className="text-wrapper">
-                  <p className="title">{community.title}</p>
-                  <p className="text">{community.text1}</p>
-                  <p className="text ">{community.text2}</p>
-                </div>
-
-                <Button
-                  className="communityBtn"
-                  link={community.gitBtn.href}
-                  locale={locale}
-                  children={
-                    <>
-                      <span>{community.gitBtn.label}</span>
-                      <i className="fa fa-chevron-right"></i>
-                    </>
+                  {
+                    user.list.map(item => {
+                      const { name, alt } = item;
+                      return (
+                        <li key={name} className="list-item">
+                          <img src={icons[name]} alt={alt} />
+                        </li>
+                      );
+                    })
                   }
-                />
+                </ul>
+
               </div>
+            ) : null
+          }
+=======
+            {!!user.list.length ? (
+            <div className="user-section">
+              <h3 className="title-bar">
+                <span className="title">{user.title}</span>
+                <span className="line"></span>
+              </h3>
+              <ul className="users-list">
+                {user.list.map(item => {
+                  const { name, alt, ratio } = item;
+                  return (
+                    <li key={name} className="list-item">
+                      <img
+                        src={icons[name]}
+                        alt={alt}
+                        style={{ height: ratio }}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ) : null}
+>>>>>>> preview
+          <div className="community-section">
+            <div className="wrapper">
+              <div className="text-wrapper">
+                <p className="title">{community.title}</p>
+                <p className="text">{community.text1}</p>
+                <p className="text ">{community.text2}</p>
+              </div>
+
+              <Button
+                className="communityBtn"
+                link={community.gitBtn.href}
+                locale={locale}
+                children={
+                  <>
+                    <span>{community.gitBtn.label}</span>
+                    <i className="fa fa-chevron-right"></i>
+                  </>
+                }
+              />
             </div>
           </div>
+          </div>
         </V2Layout>
-      </div>
     </div>
+    </div >
   );
 };
 
@@ -274,7 +301,6 @@ export const Query = graphql`
               list {
                 alt
                 name
-                ratio
               }
             }
             slogan {

@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Seo from '../components/seo';
 import Layout from '../components/docLayout';
 import { graphql } from 'gatsby';
 import './apiDocTemplate.less';
 import { useCodeCopy } from '../hooks/doc-dom-operation';
 import useAlgolia from '../hooks/use-algolia';
-
-
 
 export default function Template({ data, pageContext }) {
   let {
@@ -22,21 +20,36 @@ export default function Template({ data, pageContext }) {
     newestVersion,
   } = pageContext;
 
+  const [targetDocVersion, setTargetDocVersion] = useState('master');
+
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
   const hljsCfg = {
     languages: ['java', 'go', 'python', 'javascript'],
   };
 
+  useEffect(() => {
+    // Get docVersion from local stroage, to keep the doc verison consistent.
+    const localStorageDocVer = window?.localStorage?.getItem('docVersion');
+    // To judge if docVersion includes local storage doc verion or not.
+    // Reset to the latest doc version if not including.
+    const ver =
+      (docVersion.includes(localStorageDocVer)
+        ? localStorageDocVer
+        : docVersion[0]) || 'master';
+    setTargetDocVersion(ver);
+    window?.localStorage?.setItem('docVersion', ver);
+  }, [docVersion]);
+
   useCodeCopy(locale, hljsCfg);
-  useAlgolia(locale, docVersion);
+  useAlgolia(locale, targetDocVersion);
 
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.layout
     : {};
 
   const menuList = allMenus.find(
-    v => v.absolutePath.includes(docVersion) && v.lang === locale
+    v => v.absolutePath.includes(targetDocVersion) && v.lang === locale
   );
 
   const nav = {
@@ -52,7 +65,7 @@ export default function Template({ data, pageContext }) {
         nav={nav}
         current="doc"
         menuList={menuList}
-        version={docVersion || 'master'}
+        version={targetDocVersion}
         headings={[]}
         versions={docVersions}
         newestVersion={newestVersion}

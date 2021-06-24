@@ -52,18 +52,15 @@ const HomePage = ({ data, pageContext }) => {
     banner,
     content: { feature, community },
     footer,
-  } = data.allFile.edges.filter(
-    edge => edge.node.childI18N
-  )[0].node.childI18N.v2;
+  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
+      .v2;
 
-  const {
-    slogan,
-    user
-  } = data.allFile.edges.filter(
+  const { slogan, user } = data.allFile.edges.filter(
     edge => edge.node.childUsers
   )[0].node.childUsers;
   const { locale, versions } = pageContext;
-  const desc = 'Milvus is an open source vector database for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.';
+  const desc =
+    'Milvus is an open source vector database for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.';
 
   return (
     <div className="home-page-container">
@@ -114,7 +111,9 @@ const HomePage = ({ data, pageContext }) => {
                   locale={locale}
                   children={
                     <>
-                      <span className="btn-label">{banner.contributeBtn.label}</span>
+                      <span className="btn-label">
+                        {banner.contributeBtn.label}
+                      </span>
                       <i className="fas fa-pencil-alt"></i>
                     </>
                   }
@@ -124,7 +123,7 @@ const HomePage = ({ data, pageContext }) => {
             <div className="banner-right"></div>
           </div>
           <div className="slogan">
-            <p className='text'>{slogan.text}</p>
+            <p className="text">{slogan.text}</p>
             <p className="author">{slogan.author}</p>
           </div>
           <div className="content">
@@ -146,57 +145,82 @@ const HomePage = ({ data, pageContext }) => {
                 );
               })}
               <li className="section-item">
-                <img className='img' src={icons.bgImg3} alt="icon" />
+                <img className="img" src={icons.bgImg3} alt="icon" />
               </li>
             </ul>
-            {
-              !!user.list.length ? (
-                <div className="user-section">
-                  <h3 className="title-bar">
-                    <span className="title">{user.title}</span>
-                    <span className="line"></span>
-                  </h3>
-                  <ul className="users-list">
-                    {
-                      user.list.map(item => {
-                        const { name, alt } = item;
-                        return (
-                          <li key={name} className="list-item">
-                            <img src={icons[name]} alt={alt} />
-                          </li>
-                        );
-                      })
-                    }
-                  </ul>
-
-                </div>
-              ) : null
-            }
-            <div className="community-section">
-              <div className="wrapper">
-                <div className="text-wrapper">
-                  <p className="title">{community.title}</p>
-                  <p className="text">{community.text1}</p>
-                  <p className="text ">{community.text2}</p>
-                </div>
-
-                <Button
-                  className="communityBtn"
-                  link={community.gitBtn.href}
-                  locale={locale}
-                  children={
-                    <>
-                      <span>{community.gitBtn.label}</span>
-                      <i className="fa fa-chevron-right"></i>
-                    </>
+<<<<<<< HEAD
+          {
+            !!user.list.length ? (
+              <div className="user-section">
+                <h3 className="title-bar">
+                  <span className="title">{user.title}</span>
+                  <span className="line"></span>
+                </h3>
+                <ul className="users-list">
+                  {
+                    user.list.map(item => {
+                      const { name, alt } = item;
+                      return (
+                        <li key={name} className="list-item">
+                          <img src={icons[name]} alt={alt} />
+                        </li>
+                      );
+                    })
                   }
-                />
+                </ul>
+
               </div>
+            ) : null
+          }
+=======
+            {!!user.list.length ? (
+            <div className="user-section">
+              <h3 className="title-bar">
+                <span className="title">{user.title}</span>
+                <span className="line"></span>
+              </h3>
+              <ul className="users-list">
+                {user.list.map(item => {
+                  const { name, alt, ratio } = item;
+                  return (
+                    <li key={name} className="list-item">
+                      <img
+                        src={icons[name]}
+                        alt={alt}
+                        style={{ height: ratio }}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ) : null}
+>>>>>>> preview
+          <div className="community-section">
+            <div className="wrapper">
+              <div className="text-wrapper">
+                <p className="title">{community.title}</p>
+                <p className="text">{community.text1}</p>
+                <p className="text ">{community.text2}</p>
+              </div>
+
+              <Button
+                className="communityBtn"
+                link={community.gitBtn.href}
+                locale={locale}
+                children={
+                  <>
+                    <span>{community.gitBtn.label}</span>
+                    <i className="fa fa-chevron-right"></i>
+                  </>
+                }
+              />
             </div>
           </div>
+          </div>
         </V2Layout>
-      </div>
     </div>
+    </div >
   );
 };
 

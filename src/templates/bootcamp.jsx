@@ -27,30 +27,24 @@ const Icons = {
 };
 
 const BootcampTemplate = ({ data, pageContext }) => {
-  const {
-    bootcampData,
-    locale,
-    html,
-    headings,
-  } = pageContext;
+  const { bootcampData, locale, html, headings } = pageContext;
   const isHomePage = bootcampData !== null;
 
-  const { banner, title, description, section1, section2, section3 } = bootcampData || {};
+  const { banner, title, description, section1, section2, section3 } =
+    bootcampData || {};
 
   const SeoTitle = 'Milvus Bootcamp';
   const desc = 'Join Milvus Bootcamp';
 
   const {
     footer: { content: anchorTitleTrans },
-  } = data.allFile.edges.filter(
-    edge => edge.node.childI18N
-  )[0].node.childI18N.layout;
+  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
+    .layout;
 
   const {
     footer: { licence: footerTrans },
-  } = data.allFile.edges.filter(
-    edge => edge.node.childI18N
-  )[0].node.childI18N.v2;
+  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
+    .v2;
 
   // add hooks used by doc template
   useFilter();
@@ -128,115 +122,116 @@ const BootcampTemplate = ({ data, pageContext }) => {
       <Header locale={locale} />
       <Seo title={SeoTitle} lang={locale} description={desc} />
       <main className="mainContainer">
+        {isHomePage ? (
+          <section className="content bootcamp">
+            <div className="container">
+              <BannerCard
+                content={description}
+                title={title}
+                img={banner.img.publicURL}
+                isMobile={isMobile}
+              />
+            </div>
 
-        {
-          isHomePage ? (
-            <section className="content bootcamp">
-              <div className="container">
-                <BannerCard
-                  content={description}
-                  title={title}
-                  img={banner.img.publicURL}
-                  isMobile={isMobile}
-                />
-              </div>
+            <div className="container">
+              <h1 className="title">{section1.title}</h1>
+              <ul className="solutionsWrapper">
+                {section1.content.map(item => {
+                  const { title, link } = item;
+                  return (
+                    <li key={title}>
+                      <LinkCard
+                        label={title}
+                        href={link}
+                        className="link-card"
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div className="container">
+              <h1 className="title">{section3.title}</h1>
+              <ul className="solutionsWrapper">
+                {section3.content.map(item => {
+                  const { title, link, iconType, desc } = item;
+                  return (
+                    <li key={title}>
+                      <SolutionCard
+                        title={title}
+                        content={desc}
+                        img={Icons[iconType]}
+                        href={link}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
 
-              <div className="container">
-                <h1 className="title">{section1.title}</h1>
-                <ul className="solutionsWrapper">
-                  {section1.content.map(item => {
-                    const { title, link } = item;
-                    return (
-                      <li key={title}>
-                        <LinkCard label={title} href={link} className="link-card" />
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-              <div className="container">
-                <h1 className="title">{section3.title}</h1>
-                <ul className="solutionsWrapper">
-                  {section3.content.map(item => {
-                    const { title, link, iconType, desc } = item;
-                    return (
-                      <li key={title}>
-                        <SolutionCard
-                          title={title}
-                          content={desc}
-                          img={Icons[iconType]}
-                          href={link}
-                        />
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-
-              <div className="container">
-                <h1 className="title">{section2.title}</h1>
-                <ul className="solutionsWrapper">
-                  {section2.content.map(item => {
-                    const { title, link, desc, iconType } = item;
-                    return (
-                      <li key={title}>
-                        <SolutionCard
-                          title={title}
-                          content={desc}
-                          img={Icons[iconType]}
-                          href={link}
-                        />
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </section>
-          ) : (
-            <>
-              <section className="content articles doc-post">
-                {html && (
-                  <section
-                    className="doc-post-container articles-container"
-                    dangerouslySetInnerHTML={{ __html: html }}
-                  ></section>
-                )}
-              </section>
-              {formatHeadings.length > 0 && (
-                <div className="anchors-wrapper">
-                  <div className="anchors">
-                    <h4 className="anchor-title">{anchorTitleTrans}</h4>
-                    {generateAnchorMenu(formatHeadings, 'parent-item')}
-                  </div>
-                </div>
+            <div className="container">
+              <h1 className="title">{section2.title}</h1>
+              <ul className="solutionsWrapper">
+                {section2.content.map(item => {
+                  const { title, link, desc, iconType } = item;
+                  return (
+                    <li key={title}>
+                      <SolutionCard
+                        title={title}
+                        content={desc}
+                        img={Icons[iconType]}
+                        href={link}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </section>
+        ) : (
+          <>
+            <section className="content articles doc-post">
+              {html && (
+                <section
+                  className="doc-post-container articles-container"
+                  dangerouslySetInnerHTML={{ __html: html }}
+                ></section>
               )}
-              {showToTopButton ? (
-                <div
-                  className="btn-to-top"
-                  role="button"
-                  onClick={onToTopClick}
-                  onKeyDown={onToTopClick}
-                  tabIndex={0}
-                >
-                  <svg
-                    width="32"
-                    height="32"
-                    focusable="false"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 384 512"
-                    className="svg-inline--fa fa-arrow-to-top fa-w-12 fa-2x"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M24 32h336c13.3 0 24 10.7 24 24v24c0 13.3-10.7 24-24 24H24C10.7 104 0 93.3 0 80V56c0-13.3 10.7-24 24-24zm66.4 280.5l65.6-65.6V456c0 13.3 10.7 24 24 24h24c13.3 0 24-10.7 24-24V246.9l65.6 65.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L209 126.1c-9.4-9.4-24.6-9.4-33.9 0L39.5 261.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0z"
-                    ></path>
-                  </svg>
+            </section>
+            {formatHeadings.length > 0 && (
+              <div className="anchors-wrapper">
+                <div className="anchors">
+                  <h4 className="anchor-title">{anchorTitleTrans}</h4>
+                  {generateAnchorMenu(formatHeadings, 'parent-item')}
                 </div>
-              ) : null}
-            </>
-          )
-        }
+              </div>
+            )}
+            {showToTopButton ? (
+              <div
+                className="btn-to-top"
+                role="button"
+                onClick={onToTopClick}
+                onKeyDown={onToTopClick}
+                tabIndex={0}
+              >
+                <svg
+                  width="32"
+                  height="32"
+                  focusable="false"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  className="svg-inline--fa fa-arrow-to-top fa-w-12 fa-2x"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M24 32h336c13.3 0 24 10.7 24 24v24c0 13.3-10.7 24-24 24H24C10.7 104 0 93.3 0 80V56c0-13.3 10.7-24 24-24zm66.4 280.5l65.6-65.6V456c0 13.3 10.7 24 24 24h24c13.3 0 24-10.7 24-24V246.9l65.6 65.6c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L209 126.1c-9.4-9.4-24.6-9.4-33.9 0L39.5 261.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0z"
+                  ></path>
+                </svg>
+              </div>
+            ) : null}
+          </>
+        )}
       </main>
       <footer>
         <span>{footerTrans.text1.label}</span>

@@ -21,31 +21,23 @@ const iconMap = {
   grow,
   learn,
   share,
-  video
+  video,
 };
 
 export default function CommunityTemplate({ data, pageContext }) {
   // i18n
   const {
     footer: { licence: footerTrans },
-  } = data.allFile.edges.filter(
-    edge => edge.node.childI18N
-  )[0].node.childI18N.v2;
+  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
+    .v2;
 
   const {
     footer: { content: anchorTitleTrans },
-  } = data.allFile.edges.filter(
-    edge => edge.node.childI18N
-  )[0].node.childI18N.layout;
+  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
+    .layout;
 
-  const {
-    locale,
-    html,
-    menuList,
-    homeData,
-    activePost,
-    headings,
-  } = pageContext;
+  const { locale, html, menuList, homeData, activePost, headings } =
+    pageContext;
   const isHomePage = homeData !== null;
 
   const title = 'Milvus Community';
@@ -58,7 +50,7 @@ export default function CommunityTemplate({ data, pageContext }) {
     partnerSection,
     recommendSection,
     resourceSection,
-    mailingSection
+    mailingSection,
   } = homeData || {};
 
   // add hooks used by doc template
@@ -160,18 +152,13 @@ export default function CommunityTemplate({ data, pageContext }) {
               <h2>{aboutSection.title}</h2>
               <p className="about-content">{aboutSection.content}</p>
               <ul className="about-list">
-                {
-                  aboutSection.list.map(item => {
-                    return (
-                      <li key={item.iconType}>
-                        <CommunityCard
-                          icon={iconMap[item.iconType]}
-                          {...item}
-                        />
-                      </li>
-                    );
-                  })
-                }
+                {aboutSection.list.map(item => {
+                  return (
+                    <li key={item.iconType}>
+                      <CommunityCard icon={iconMap[item.iconType]} {...item} />
+                    </li>
+                  );
+                })}
               </ul>
             </section>
             {/* recommend */}
@@ -181,57 +168,57 @@ export default function CommunityTemplate({ data, pageContext }) {
                 <div className="list-wrapper-item">
                   <h3>{recommendSection.start.title}</h3>
                   <ul className="recommend-list">
-                    {
-                      recommendSection.start.list.map(item => (
-                        <li key={item.label}>
-                          <a href={item.link}>{item.label}</a>
-                        </li>
-                      ))
-                    }
+                    {recommendSection.start.list.map(item => (
+                      <li key={item.label}>
+                        <a href={item.link}>{item.label}</a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="list-wrapper-item">
                   <h3>{recommendSection.deploy.title}</h3>
                   <ul className="recommend-list">
-                    {
-                      recommendSection.deploy.list.map(item => (
-                        <li key={item.label}>
-                          <a href={item.link}>{item.label}</a>
-                        </li>
-                      ))
-                    }
+                    {recommendSection.deploy.list.map(item => (
+                      <li key={item.label}>
+                        <a href={item.link}>{item.label}</a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="list-wrapper-item">
                   <h3>{recommendSection.develop.title}</h3>
                   <ul className="recommend-list">
-                    {
-                      recommendSection.develop.list.map(item => (
-                        <li key={item.label}>
-                          <a href={item.link}>{item.label}</a>
-                        </li>
-                      ))
-                    }
+                    {recommendSection.develop.list.map(item => (
+                      <li key={item.label}>
+                        <a href={item.link}>{item.label}</a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="list-wrapper-item">
                   <h3>{recommendSection.test.title}</h3>
                   <ul className="recommend-list">
-                    {
-                      recommendSection.test.list.map(item => (
-                        <li key={item.label}>
-                          <a href={item.link}>{item.label}</a>
-                        </li>
-                      ))
-                    }
+                    {recommendSection.test.list.map(item => (
+                      <li key={item.label}>
+                        <a href={item.link}>{item.label}</a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
 
               <div className="ambassador-wrapper">
-                <img className="ambassadorImg" src={recommendSection.ambassador.img.publicURL} alt="Milvus Ambassador" />
-                <h1 className="ambassador-title">{recommendSection.ambassador.title}</h1>
-                <p className="ambassador-content">{recommendSection.ambassador.desc}</p>
+                <img
+                  className="ambassadorImg"
+                  src={recommendSection.ambassador.img.publicURL}
+                  alt="Milvus Ambassador"
+                />
+                <h1 className="ambassador-title">
+                  {recommendSection.ambassador.title}
+                </h1>
+                <p className="ambassador-content">
+                  {recommendSection.ambassador.desc}
+                </p>
                 <Button
                   className="ambassador-btn join-button"
                   link={recommendSection.ambassador.joinBtn.link}
@@ -244,10 +231,13 @@ export default function CommunityTemplate({ data, pageContext }) {
                   variant="text"
                   children={
                     <>
-                      <span className="label">{recommendSection.ambassador.introBtn.label}</span>
+                      <span className="label">
+                        {recommendSection.ambassador.introBtn.label}
+                      </span>
                       <i className="fas fa-arrow-right"></i>
                     </>
-                  } />
+                  }
+                />
               </div>
             </section>
             {/* mail */}
@@ -256,7 +246,12 @@ export default function CommunityTemplate({ data, pageContext }) {
               <ul className="mail-list">
                 {mailingSection.list.map(mail => (
                   <li className="card" key={mail.title}>
-                    <a className="mail-wrapper" href={mail.link} target="_blank" rel="noreferrer">
+                    <a
+                      className="mail-wrapper"
+                      href={mail.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <img src={mailIcon} alt="mail icon" />
                       <p>{mail.title}</p>
                     </a>
@@ -268,44 +263,37 @@ export default function CommunityTemplate({ data, pageContext }) {
             <section className="community-section">
               <h2>{joinSection.title}</h2>
               <ul className="community-list">
-                {
-                  joinSection.list.map(item => {
-                    const { label, link } = item;
-                    return (
-                      <li key={label}>
-                        <img src={item.img.publicURL} alt={label} />
-                        <a href={link} >{label}</a>
-                      </li>
-                    );
-
-                  })
-                }
+                {joinSection.list.map(item => {
+                  const { label, link } = item;
+                  return (
+                    <li key={label}>
+                      <img src={item.img.publicURL} alt={label} />
+                      <a href={link}>{label}</a>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
             {/* resources */}
             <section className="resource-section" id="community_resources">
               <h2>{resourceSection.title}</h2>
               <ul className="resource-list">
-                {
-                  resourceSection.list.map(item => (
-                    <li key={item.iconType}>
-                      <CommunityCard icon={iconMap[item.iconType]} {...item} />
-                    </li>
-                  ))
-                }
+                {resourceSection.list.map(item => (
+                  <li key={item.iconType}>
+                    <CommunityCard icon={iconMap[item.iconType]} {...item} />
+                  </li>
+                ))}
               </ul>
             </section>
             {/* community patner */}
             <section className="patner-section" id="community_partners">
               <h2>{partnerSection.title}</h2>
               <ul className="patner-list">
-                {
-                  partnerSection.list.map(item => (
-                    <li key={item.alt}>
-                      <img src={item.img.publicURL} alt={item.alt} />
-                    </li>
-                  ))
-                }
+                {partnerSection.list.map(item => (
+                  <li key={item.alt}>
+                    <img src={item.img.publicURL} alt={item.alt} />
+                  </li>
+                ))}
               </ul>
             </section>
           </section>

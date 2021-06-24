@@ -68,7 +68,7 @@ const Menu = props => {
         menu?.id === 'api_reference'
           ? rootMenu.push(menu)
           : secondLevelMenus.push(menu);
-      } else if (menu?.docVersion === currentDocVersion) {
+      } else if (menu?.docVersion?.includes(currentDocVersion)) {
         prev.push(menu);
         thirdLevelMenuNames.push(menu?.label2);
       }
@@ -78,7 +78,7 @@ const Menu = props => {
     const filteredSecondLevelMenus = secondLevelMenus.filter(
       v =>
         thirdLevelMenuNames.includes(v?.id) &&
-        v?.docVersion === currentDocVersion
+        v?.docVersion?.includes(currentDocVersion)
     );
     // merge the level 1&2 menus into results
     filteredMenus?.length &&

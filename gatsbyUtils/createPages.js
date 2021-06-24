@@ -784,7 +784,6 @@ const generateApiMenus = nodes => {
   };
   return nodes.reduce(
     (prev, item) => {
-      // docVersion may be empty string
       const {
         name,
         category,

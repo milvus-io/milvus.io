@@ -49,6 +49,7 @@ const newestVersion = getNewestVersion(versionInfo);
 const versions = [];
 
 versionInfo.preview = {
+  ...versionInfo.preview,
   version: 'preview',
   released: 'no',
 };

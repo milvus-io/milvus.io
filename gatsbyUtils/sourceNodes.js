@@ -3,16 +3,16 @@ const HTMLParser = require('node-html-parser');
 const path = require('path');
 
 /**
- * use api version to find target doc version
- * @param {object} info version info from walkFile output
- * @param {string} category category name, such as pymilvus, java-sdk
- * @param {string} apiVersion current api version
- * @returns {string} target doc version, will return empty string if no match
+ * Use api version to find target doc versions.
+ * @param {object} info Version info from walkFile output.
+ * @param {string} category category name, such as pymilvus, java-sdk.
+ * @param {string} apiVersion Current api version.
+ * @returns {array} Target doc versions, will return empty array if no match.
  */
 const findDocVersion = (info, category, apiVersion) =>
   Object.keys(info)
     .reverse()
-    .find(i => info[i] && info[i][category] === apiVersion) || '';
+    .filter(i => info[i] && info[i][category] === apiVersion);
 
 /**
  * Find and get the path of all files under the dirPath.

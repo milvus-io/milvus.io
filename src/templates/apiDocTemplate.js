@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Seo from '../components/seo';
 import Layout from '../components/docLayout';
 import { graphql } from 'gatsby';
@@ -20,20 +20,26 @@ export default function Template({ data, pageContext }) {
     newestVersion,
   } = pageContext;
 
+  const [targetDocVersion, setTargetDocVersion] = useState('master');
+
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
   const hljsCfg = {
     languages: ['java', 'go', 'python', 'javascript'],
   };
 
-  // Get docVersion from local stroage, to keep the doc verison consistent.
-  const localStorageDocVer = window.localStorage.getItem('docVersion');
-  // To judge if docVersion includes local storage doc verion or not.
-  // Reset to the latest doc version if not including.
-  const targetDocVersion =
-    (docVersion.includes(localStorageDocVer)
-      ? localStorageDocVer
-      : docVersion[0]) || 'master';
+  useEffect(() => {
+    // Get docVersion from local stroage, to keep the doc verison consistent.
+    const localStorageDocVer = window?.localStorage?.getItem('docVersion');
+    // To judge if docVersion includes local storage doc verion or not.
+    // Reset to the latest doc version if not including.
+    const ver =
+      (docVersion.includes(localStorageDocVer)
+        ? localStorageDocVer
+        : docVersion[0]) || 'master';
+    setTargetDocVersion(ver);
+    window?.localStorage?.setItem('docVersion', ver);
+  }, [docVersion]);
 
   useCodeCopy(locale, hljsCfg);
   useAlgolia(locale, targetDocVersion);

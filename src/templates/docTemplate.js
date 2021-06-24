@@ -37,7 +37,7 @@ export default function Template({
   versions = versions.sort(sortVersions);
 
   useEffect(() => {
-    window.localStorage.setItem('docVersion', version);
+    window?.localStorage?.setItem('docVersion', version);
   }, [version]);
 
   const { isMobile } = useMobileScreen();

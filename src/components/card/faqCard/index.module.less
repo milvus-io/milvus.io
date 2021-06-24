@@ -3,7 +3,7 @@
 
 .faqCard {
   align-items: flex-start;
-  border: 1px solid #EEEEEE;
+  border: 1px solid #eeeeee;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -11,14 +11,15 @@
   justify-content: space-between;
   padding: 8px;
   width: 250px;
-  
+
   .title {
     color: #454545;
     font-size: 14px;
     line-height: 18px;
   }
 
-  a.answer,.answer{
+  .answer,
+  a.answer {
     background: transparent;
     border: 0;
     color: @color-primary;
@@ -41,7 +42,7 @@
 
 .modalMask {
   align-items: center;
-  background: rgba(128,128,128,.5);
+  background: rgba(128, 128, 128, 0.5);
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -58,7 +59,7 @@
     width: 600px;
 
     .modalTitle {
-      color: #010E29;
+      color: #010e29;
       font-size: 18px;
       font-weight: 700;
       line-height: 28px;
@@ -85,7 +86,8 @@
         background: transparent;
       }
 
-      &::before, &::after {
+      &::before,
+      &::after {
         background-color: @color-primary;
         content: ' ';
         cursor: pointer;

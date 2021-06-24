@@ -7,7 +7,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from '../../header/header';
+import Header from '../../header/v2';
 import Footer from '../../footer/footer';
 import * as styles from './404Layout.module.less';
 

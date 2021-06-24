@@ -43,6 +43,13 @@
     .navSection {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      flex-grow: 1;
+      margin-left: 20%;
+
+      @media (max-width: 1100px) {
+        margin-left: 8%;
+      }
 
       .navItem {
         font-size: 16px;
@@ -50,6 +57,11 @@
         line-height: 24px;
         height: 24px;
         color: @color-default-link;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-left: 16px;
 
         .navIcon {
           font-size: 24px;
@@ -61,19 +73,17 @@
 
         &:hover {
           color: @color-primary;
-        }
-
-        & + .navItem {
-          margin-left: 32px;
+          font-weight: 600;
         }
       }
 
       .active {
         color: @color-primary;
+        font-weight: 600;
       }
 
       .dropDown {
-        margin-left: 32px;
+        margin-left: 16px;
       }
     }
   }

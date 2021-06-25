@@ -5,7 +5,7 @@
   bottom: 64px;
   position: fixed;
   right: 90px;
-  
+
   @media (min-width: @screen-lg-max) {
     right: calc(50vw - 710px);
   }
@@ -19,7 +19,7 @@
   }
 
   .openBtn {
-    background-color: transparent;
+    background-color: #fff;
     background-image: url(../../images/v2/icon_bird.svg);
     background-size: cover;
     border: 0;
@@ -29,24 +29,33 @@
     position: absolute;
     right: 0;
     width: 64px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
 
     @media @tablet {
       height: 40px;
       width: 40px;
       z-index: 1000;
+      cursor: initial;
     }
 
     &.close {
-      background-image: url(../../images/v2/close.svg);
+      background-image: url(../../images/v2/vector.svg);
       border: 1px solid #eeeeee;
       border-radius: 50%;
+      background-repeat: no-repeat;
+      background-size: auto;
+      background-position: center;
+
+      @media @tablet {
+        background-image: url(../../images/v2/close_mobile.svg);
+      }
     }
   }
 
   .dialog {
-    bottom: 95px;
+    bottom: 84px;
     border-radius: 8px;
-    box-shadow: 5px 5px 15px 10px #888888;
     display: flex;
     flex-direction: column;
     height: calc(80vh - 130px);
@@ -54,6 +63,7 @@
     position: absolute;
     right: 0;
     width: 400px;
+    background: #f9f9f9;
 
     @media @tablet {
       bottom: 48px;
@@ -73,7 +83,7 @@
       background-color: @color-primary;
       border-radius: 8px 8px 0 0;
       color: white;
-      font-family: 'SF Pro Text';
+      font-family: 'Inter';
       font-style: normal;
       font-size: 12px;
       font-weight: bold;

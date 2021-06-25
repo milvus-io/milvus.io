@@ -98,13 +98,14 @@ const Sidebar = props => {
           />
         )}
       </aside>
-      <button className={styles.miniControl} onClick={toggleControl}>
-        {mobileSidebarOpened ? (
-          <i className={`fas fa-times ${styles.icon}`}></i>
-        ) : (
-          <i className={`fas fa-bars ${styles.icon}`}></i>
-        )}
-      </button>
+      <button
+        className={
+          mobileSidebarOpened
+            ? `${styles.miniControl} ${styles.miniControlOpen}`
+            : styles.miniControl
+        }
+        onClick={toggleControl}
+      />
       {mobileSidebarOpened && (
         <div
           className={styles.mask}

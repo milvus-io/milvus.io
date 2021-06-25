@@ -96,6 +96,10 @@
   color: #000;
   z-index: 1;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+  background-image: url(../../images/v2/nav.svg);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
 
   .icon {
     color: @color-doc-primary;
@@ -104,6 +108,11 @@
   @media @tablet {
     display: initial;
   }
+}
+
+.miniControlOpen {
+  z-index: 1000;
+  background-image: url(../../images/v2/close_mobile.svg);
 }
 
 .mask {

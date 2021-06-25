@@ -1,0 +1,151 @@
+@import '../../../css/variables/responsive.less';
+@import '../../../css/variables/color.less';
+
+.selectorContainer {
+  position: relative;
+  background: #fff;
+  font-family: Inter;
+
+  .choosenWrapper {
+    display: flex;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+      color: @color-doc-primary;
+    }
+
+    .labelWrapper {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      height: 24px;
+      margin-right: 8px;
+      text-align: right;
+      pointer-events: none;
+      white-space: nowrap;
+      &:hover {
+        color: @color-doc-primary;
+      }
+
+      .navIcon {
+        font-size: 24px;
+      }
+
+      .label {
+        vertical-align: sub;
+        text-transform: uppercase;
+        font-size: 16px;
+      }
+    }
+
+    .iconWrapper {
+      display: inline-block;
+      text-align: center;
+
+      pointer-events: none;
+      transition: transform 0.2s ease-in-out;
+
+      i {
+        line-height: 24px;
+        font-size: 16px;
+      }
+
+      &.show {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .optionsWrapper {
+    position: absolute;
+    z-index: 9;
+    transition: all 0.2s ease-in-out;
+    padding: 16px;
+    left: -50%;
+    top: 35px;
+    visibility: hidden;
+    opacity: 0;
+    background: #fff;
+    transform: scaleY(0);
+    transform-origin: top;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+
+    @media @tablet {
+      border-radius: 4px 4px 32px 32px;
+      padding: 16px 0 40px;
+    }
+
+    &.show {
+      transform: translateY(0);
+      visibility: visible;
+      opacity: 1;
+      transform: scaleY(1);
+    }
+
+    .optionItem {
+      display: inline-block;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      user-select: none;
+      cursor: pointer;
+      text-align: center;
+      color: #000;
+      cursor: pointer;
+      white-space: nowrap;
+      word-break: break-all;
+
+      &.active {
+        color: #12c3f4;
+      }
+
+      &:hover {
+        background: #e3f9ff;
+      }
+    }
+  }
+}
+
+.mobileSelector {
+  .labelWrapper {
+    text-align: left;
+    padding: 0 16px;
+    position: relative;
+
+    .navIcon {
+      font-size: 24px;
+
+      &:hover {
+        color: @color-doc-primary;
+      }
+    }
+    .label {
+      vertical-align: bottom;
+      text-transform: uppercase;
+    }
+  }
+
+  .optionsWrapper {
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    left: 0;
+    right: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: -1;
+
+    .active {
+      background-color: @color-btn-hover;
+    }
+
+    .optionItem {
+      padding: 8px 48px;
+      text-align: left;
+      white-space: nowrap;
+      word-break: break-all;
+    }
+  }
+}

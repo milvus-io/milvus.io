@@ -1,0 +1,71 @@
+@import '../../css/variables/responsive.less';
+@import '../../css/variables/color.less';
+
+.buttonWrapper {
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+
+  .contained {
+    display: inline-block;
+    padding: 16px 32px;
+
+    background-color: @color-primary;
+    color: #fff;
+    border: 1px solid @color-primary;
+    border-radius: 4px;
+
+    transition: all 0.3s;
+
+    @media @tablet {
+      padding: 8px 16px;
+    }
+
+    &:hover {
+      background-color: @color-btn-hover;
+      border: 1px solid @color-btn-hover;
+      color: @color-primary;
+    }
+
+    &:active {
+      background-color: @color-btn-press;
+      border: 1px solid @color-btn-press;
+      color: #fff;
+    }
+  }
+
+  .text {
+    color: @color-primary;
+  }
+
+  .outline {
+    display: inline-block;
+    padding: 16px 32px;
+
+    border: 1px solid @color-primary;
+    border-radius: 4px;
+    color: @color-primary;
+    background-color: #fff;
+
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: @color-btn-hover;
+    }
+
+    &:active {
+      background-color: @color-btn-press;
+      color: #fff;
+
+      svg {
+        path {
+          stroke: #fff;
+        }
+      }
+    }
+
+    @media @tablet {
+      padding: 8px 24px;
+    }
+  }
+}

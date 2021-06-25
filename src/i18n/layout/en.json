@@ -393,9 +393,9 @@
       ]
     },
     "banner": {
-      "title": ["High Scalability.", "Cloud-Native.", "High Availability."],
+      "title": ["Cloud-Native.", "Highly Scalable.", "Blazing Fast."],
       "subTitle": "Milvus",
-      "text": "The world's most popular open-source vector database.",
+      "text": "Open-source vector database for unstructured data",
       "startBtn": {
         "href": "/docs/home",
         "label": "Get Started"
@@ -414,29 +414,30 @@
         "title": "Features",
         "list": [
           {
-            "title": "Blazing Fast",
-            "text": "Provides millisecond average latency over 10 million data.CPU SIMD, GPU, FPGA accelerations are supported. Fully utilize your hardware resources and brings you striking cost-efficiency. ",
-            "img": "deployment"
-          },
-          {
-            "title": "Easy to Use",
-            "text": "Rich API designed for data-science workflow. Consistent experience across laptop, local cluster, and cloud.Easily embed real-time seach & analytic engine into your applications.",
-            "img": "search"
-          },
-          {
-            "title": "Resilient and predictable by design",
-            "text": "Capitalize on Milvus’s built-in replication and failover/failback features that ensure your data and applications live up to your business continuity requirements.",
+            "title": "Cost-efficiency",
+            "text": "Built upon high-performance column-based storage and index libraries, such as Faiss and HNSWLIB, Milvus is guaranteed to provide high-performance queries. Accelerated by CPU, SIMD, GPA, and FPGA, Milvus can retrieve vector data in milliseconds on a trillion-scale dataset. ",
             "img": "supporting"
           },
           {
-            "title": "Highly Elastic",
-            "text": "Component level scalability, scale only where it is really needed.",
-            "img": "autoscaling"
+            "title": "Performance On Demand",
+            "text": "Designed with cloud-native in mind, Milvus can be horizontally scaled with ease, and can handle storage and computation at any scale. Its microservice design supports on-demand scaling or even auto-scaling.",
+            "img": "search"
           },
           {
+            "title": "Born for Unstructured Data",
+            "text": " Milvus helps its users focus more on the semantic meaning of unstructured data than on complexities such as sharding, data persistence, and load balancing. Milvus supports high-performance, hybrid search of vector and scalar data, opening up renewed possibilities for unstructured data processing.",
+            "img": "deployment"
+          },
+
+          {
             "title": "Community Backed",
-            "text": "Open source, Linux foundation hot project. Empower over 1000 enterprise users.",
+            "text": "Graduated from the <a href=\"https://lfaidata.foundation/\" >LF AI & Data Foundation's</a>  incubator program, Milvus has been adopted by over 1,000 organizations worldwide. Milvus has an open, vibrant community. Contributions to Milvus are welcome from everyone.",
             "img": "storage"
+          },
+          {
+            "title": "Ease of Use",
+            "text": "Milvus supports multiple data types and provides comprehensive multi-language SDKs. Through ORM API, Milvus can provide an integrated user experience across laptops, local clusters and the cloud. We also provide a wealth of deployment and visualization tools to help users get started and operate faster.",
+            "img": "autoscaling"
           }
         ]
       },

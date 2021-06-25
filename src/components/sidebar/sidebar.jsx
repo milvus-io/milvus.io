@@ -5,7 +5,6 @@ import * as styles from './sidebar.module.less';
 import PropTypes from 'prop-types';
 import Selector from '../selector';
 
-
 const Sidebar = props => {
   const {
     locale,
@@ -17,30 +16,33 @@ const Sidebar = props => {
     versionConfig,
     wrapperClass = '',
     allApiMenus,
-    isVersionWithHome = false
+    isVersionWithHome = false,
   } = props;
 
   const { placeholder } = searchConfig || {};
+  const { versions, version, homeTitle } = versionConfig || {};
   const {
-    versions,
-    version,
-    homeTitle,
-  } = versionConfig || {};
-  const { menuList, activePost, pageType, formatVersion, isBlog = false } =
-    menuConfig || {};
+    menuList,
+    activePost,
+    pageType,
+    formatVersion,
+    isBlog = false,
+  } = menuConfig || {};
 
   const { menuList: menus } = (menuList &&
     menuList.find(menu => menu.lang === locale)) || {
     menuList: [],
   };
 
-  const map = isVersionWithHome ? {
-    en: `/docs/${version}/home`,
-    cn: `/${locale}/docs/${version}/home`,
-  } : {
-    en: `/docs/${version}/overview.md`,
-    cn: `/${locale}/docs/${version}/overview.md`,
-  };
+  const map = isVersionWithHome
+    ? {
+        en: `/docs/${version}/home`,
+        cn: `/docs/${version}/home`,
+      }
+    : {
+        en: `/docs/${version}/overview.md`,
+        cn: `/docs/${version}/overview.md`,
+      };
   const homePath = map[locale];
 
   const [mobileSidebarOpened, setMobileSidebarOpened] = useState(false);
@@ -56,8 +58,9 @@ const Sidebar = props => {
   return (
     <>
       <aside
-        className={`${wrapperClass} ${styles.wrapper} ${!mobileSidebarOpened ? styles.hide : ''
-          }`}
+        className={`${wrapperClass} ${styles.wrapper} ${
+          !mobileSidebarOpened ? styles.hide : ''
+        }`}
       >
         {showSearch && (
           <section className={styles.searchWrapper}>
@@ -74,7 +77,13 @@ const Sidebar = props => {
             <LocalizeLink className={styles.link} locale={locale} to={homePath}>
               {homeTitle}
             </LocalizeLink>
-            <Selector className={styles.selector} options={versions} locale={locale} selected={version} isVersion={true} />
+            <Selector
+              className={styles.selector}
+              options={versions}
+              locale={locale}
+              selected={version}
+              isVersion={true}
+            />
           </section>
         )}
         {showMenu && (

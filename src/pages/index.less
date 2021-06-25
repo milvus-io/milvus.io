@@ -207,13 +207,17 @@ body {
       }
     }
   }
-  .slogan {
+
+  .slogan-wrapper {
+    list-style: none;
+    min-height: 274px;
+    overflow: hidden;
+    margin: 64px 0;
     border: 1px solid #e2e2e2;
     border-radius: 16px;
-    padding: 60px 221px 28px;
     font-style: italic;
     font-weight: 600;
-    margin: 64px 0;
+    padding: 60px 60px 28px;
 
     @media @tablet {
       padding: 32px;
@@ -259,6 +263,7 @@ body {
       text-align: right;
     }
   }
+
   .content {
     margin-bottom: 60px;
     padding: 0;
@@ -328,7 +333,7 @@ body {
           font-weight: 600;
           font-size: 24px;
           line-height: 24px;
-          margin-bottom: 24px;
+          margin-bottom: 4px;
           height: 48px;
 
           @media @tablet {
@@ -345,6 +350,13 @@ body {
           font-size: 14px;
           line-height: 24px;
           margin-bottom: 16px;
+
+          a {
+            color: @color-primary;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
 
           @media @tablet {
             margin-bottom: 12px;

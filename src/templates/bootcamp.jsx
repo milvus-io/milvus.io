@@ -30,7 +30,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
   const { bootcampData, locale, html, headings } = pageContext;
   const isHomePage = bootcampData !== null;
 
-  const { banner, title, description, section1, section2, section3 } =
+  const { banner, title, description, section1, section2, section3, section4 } =
     bootcampData || {};
 
   const SeoTitle = 'Milvus Bootcamp';
@@ -182,6 +182,20 @@ const BootcampTemplate = ({ data, pageContext }) => {
                         img={Icons[iconType]}
                         href={link}
                       />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <div className="container">
+              <h1 className="title">{section4.title}</h1>
+              <ul className="solutionsWrapper">
+                {section4.content.map(item => {
+                  const { title, link, desc } = item;
+                  return (
+                    <li key={title}>
+                      <SolutionCard title={title} content={desc} href={link} />
                     </li>
                   );
                 })}

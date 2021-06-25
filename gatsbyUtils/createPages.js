@@ -255,6 +255,16 @@ const query = `
             }
             title
           }
+          section4 {
+            content {
+              desc
+              id
+              link
+              title
+              iconType
+            }
+            title
+          }
           title
         }
       }
@@ -617,7 +627,6 @@ const generateCommunityPages = (
 
     const fileLang = findLang(fileAbsolutePath);
     const path = getCommunityPath(fileId, fileLang);
-
     createPage({
       path,
       component: communityTemplate,

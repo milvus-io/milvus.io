@@ -1,0 +1,574 @@
+{
+  "layout": {
+    "notFound": "404 Page Not Found",
+    "backtohome": "Take me back to the home page.",
+    "header": {
+      "quick": "Quick Start",
+      "why": "Why Milvus",
+      "gui": "Admin",
+      "tutorials": "Tutorials",
+      "solution": "Scenarios",
+      "about": "About Milvus",
+      "doc": "Docs",
+      "blog": "Blog",
+      "tutorial": "Tutorial",
+      "benchmarks": "Benchmarks",
+      "bootcamp": "Bootcamp",
+      "try": "Try",
+      "loading": "Loading...",
+      "noresult": "No Result",
+      "search": "Search"
+    },
+    "footer": {
+      "faq": {
+        "question": {
+          "title": "Moste Related Questions"
+        },
+        "contact": {
+          "title": "Didn't find what you need?",
+          "slack": {
+            "label": "Discuss on Slack",
+            "link": "https://milvusio.slack.com/"
+          },
+          "github": {
+            "label": "Discuss on github",
+            "link": "https://github.com/milvus-io/milvus/issues/"
+          },
+          "follow": {
+            "label": "Follow up with me"
+          },
+          "dialog": {
+            "title": "We will follow up on your question",
+            "desc": "Please leave your question here and we will be in touch.",
+            "placeholder1": "Your Email*",
+            "placeholder2": "Your Question*",
+            "submit": "Submit",
+            "invalid": "please input valid email and your question"
+          }
+        }
+      },
+      "questionBtn": {
+        "link": "https://milvusio.slack.com/",
+        "label": "Question. Slack us."
+      },
+      "issueBtn": {
+        "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
+        "label": "Create a project issue."
+      },
+      "docIssueBtn": {
+        "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=",
+        "label": "Create a doc issue."
+      },
+      "editBtn": {
+        "label": "Edit this page."
+      },
+      "product": {
+        "title": "Product",
+        "txt1": "Milvus",
+        "txt2": "Milvus Roadmap"
+      },
+      "doc": {
+        "title": "Docs",
+        "txt1": "Quick Start",
+        "txt2": "FAQ",
+        "txt3": "Release Notes"
+      },
+      "tool": {
+        "title": "Tool",
+        "txt1": "Milvus Sizing Tool"
+      },
+      "resource": {
+        "title": "Resources",
+        "txt1": "Github",
+        "txt2": "Medium",
+        "txt3": "CSDN",
+        "txt4": "Milvus Bootcamp"
+      },
+      "contact": {
+        "title": "Connect",
+        "wechat": "Wechat"
+      },
+      "content": "On this page"
+    },
+    "home": {
+      "notification": {
+        "version": "Version",
+        "available": "is now available! ",
+        "more": "Learn more about the new features and fixes→",
+        "join": "Join the Milvus Slack channel here",
+        "interact": "to interact with our community!",
+        "v2": {
+          "title": "🎯 Check out our site for Milvus v2.0",
+          "here": " Here "
+        }
+      },
+      "section1": {
+        "desc1": "The world's most popular open-source vector database",
+        "desc2": "Milvus is easy-to-use, highly reliable, scalable, robust, and blazing fast.",
+        "link": "Learn More",
+        "link2": "Get Started",
+        "community": "Community"
+      },
+      "section2": {
+        "title": "What is Milvus",
+        "content": "Milvus is an open source similarity search engine for massive-scale feature vectors. Built with heterogeneous computing architecture for the best cost efficiency. Searches over billion-scale vectors take only milliseconds with minimum computing resources. Milvus can be used in a wide variety of scenarios to boost AI development.",
+        "link": "Quick Start"
+      },
+      "section3": {
+        "title": "Milvus Features",
+        "list": [
+          {
+            "title": "Comprehensive Similarity Metrics",
+            "content": "Milvus offers frequently used similarity metrics, including Euclidean distance, inner product, Hamming distance, Jaccard distance, etc., allowing you to explore vector similarity in the most effective and efficient way possible.",
+            "img": "metrics"
+          },
+          {
+            "title": "Leading-Edge Performance",
+            "content": "Milvus is built on top of multiple optimized Approximate Nearest Neighbor Search (ANNS) indexing libraries, including <a href='https://github.com/facebookresearch/faiss' target='_blank'>faiss</a>, <a href='https://github.com/spotify/annoy' target='_blank'>annoy</a>, <a href='https://github.com/nmslib/hnswlib' target='_blank'>hnswlib</a>, etc., thus ensuring that you always get the best performance across various scenarios.",
+            "img": "performence"
+          },
+          {
+            "title": "Dynamic Data Management",
+            "content": "No longer troubled by static data, you can operate data with insertion, deletion, search and update whenever needed.",
+            "img": "crud"
+          },
+          {
+            "title": "Near Real Time Search",
+            "content": "Data is available for search almost immediately after being inserted and updated. Milvus does the heavy lifting in your best interests in terms of both result accuracy and data consistency.",
+            "img": "realtime"
+          },
+          {
+            "title": "Cost Efficient",
+            "content": "Milvus harnesses the parallelism of modern processors and enables billion-scale similarity searches in milliseconds on a single off-the-shelf server.",
+            "img": "cost"
+          },
+          {
+            "title": "Rich Data Type and Advanced Search",
+            "content": "Milvus supports various data types for fields in a record. You can also use advanced search methods, such as filtering, sorting and aggregation for one or multiple fields.",
+            "img": "search"
+          },
+          {
+            "title": "Highly Scalable and Robust",
+            "content": "You can deploy Milvus in a distributed environment. To increase the capacity and reliability of a Milvus cluster, you can simply add more nodes.",
+            "img": "scalable"
+          },
+          {
+            "title": "Cloud Native",
+            "content": "We make it easy for you to run Milvus on public cloud, private cloud, or somewhere in between.",
+            "img": "cloud"
+          },
+          {
+            "title": "Ease of Use",
+            "content": "Milvus provides easy-to-use SDKs in Python, Java, Go and C++, as well as a RESTful API.",
+            "img": "availability"
+          }
+        ]
+      },
+      "section4": {
+        "title": "Open Source",
+        "desc1": "Milvus is open-sourced on GitHub. ",
+        "desc2": "Contributions and feedback are welcome!",
+        "contribute": "Contribute on Github",
+        "bootcamp": "Try Milvus Bootcamp"
+      },
+      "section5": {
+        "desc": "Milvus is an LF AI Foundation incubation project."
+      },
+      "section8": {
+        "title": "Scenarios",
+        "desc": "Step-by-step instructions to solve AI problems with Milvus.",
+        "img1": {
+          "title": "Reverse Image Search",
+          "content": "High-performance, customizable reverse image search system built with the VGG neural network model"
+        },
+        "img2": {
+          "title": "Personalized Recommender System",
+          "content": "High-performance recommender system built with the PaddlePaddle deep learning platform"
+        },
+        "img3": {
+          "title": "Chemical Structure Similarity Search",
+          "content": "High-performance similarity search of massive-scale chemical structures"
+        },
+        "button": "Try on Cloud",
+        "viewall": "View all scenarios"
+      },
+      "section6": {
+        "title": "Milvus User Community"
+      },
+      "section7": {
+        "title": "Get Involved",
+        "list": [
+          {
+            "title": "Use Milvus",
+            "desc": "Open source similarity search engine for massive-scale feature vectors",
+            "type": "milvus",
+            "urlList": [
+              {
+                "title": "Get Started >",
+                "url": "/docs/install_milvus.md"
+              }
+            ]
+          },
+          {
+            "title": "Contribute",
+            "desc": "Milvus is a community project. We encourage you to join the effort and contribute feedback, ideas and code.",
+            "type": "contribute",
+            "urlList": [
+              {
+                "title": "Join Us on Github >",
+                "url": "https://github.com/milvus-io"
+              }
+            ]
+          },
+          {
+            "title": "Follow Us",
+            "desc": "Stay up to date with the latest Milvus news.",
+            "type": "follow",
+            "urlList": []
+          },
+          {
+            "title": "Join Our Mailing List",
+            "desc": "",
+            "type": "conversation",
+            "urlList": [
+              {
+                "title": "Announcement >",
+                "url": "https://lists.lfaidata.foundation/g/milvus-announce"
+              },
+              {
+                "title": "Technical discussion >",
+                "url": "https://lists.lfaidata.foundation/g/milvus-technical-discuss"
+              },
+              {
+                "title": "Technical Steering Committee >",
+                "url": "https://lists.lfaidata.foundation/g/milvus-tsc"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "scenarios": {
+      "section1": {
+        "title": "Building The Search Engine For The AI Era",
+        "desc": "Adopted by hundreds of organizations and institutions worldwide, Milvus empowers applications in a variety of fields, including image processing, computer vision, natural language processing, voice recognition, recommender systems, drug discovery, etc."
+      },
+      "section2": {
+        "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data.",
+        "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users.",
+        "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds."
+      },
+      "section3": {
+        "title": "What Milvus Can help",
+        "list": [
+          {
+            "title": "Computer Vision",
+            "desc": "Milvus can support various applications in the field of computer vision with picture and video processing as its core, especially the efficient processing of ultra-large-scale data, making Milvus widely used in the field of computer vision.",
+            "list": [
+              "Search by image",
+              "Image deduplication",
+              "Video deduplication",
+              "Product search by product"
+            ],
+            "img": "cv",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/pic_search/README.md",
+            "href": "https://zilliz.com/milvus-demos/reverse-image-search"
+          },
+          {
+            "title": "Natural language processing",
+            "desc": "Vectorization of semantic features for words, sentences, articles, etc. is becoming the mainstream technology for natural language processing. Semantic analysis by comparing the distance of semantic feature vectors is being adopted by a large number of semantic analysis solutions. Usability, has been widely used in related fields.",
+            "list": [
+              "Semantic extraction",
+              "Personalized recommendation",
+              "Corpus analysis and recommendation"
+            ],
+            "img": "nlp",
+            "titleHref": "https://github.com/milvus-io/bootcamp/tree/master/solutions/QA_System",
+            "href": "http://40.117.75.127:8005/"
+          },
+          {
+            "title": "Traditional vector calculations",
+            "desc": "There are also a lot of vector calculation scenarios in the traditional data processing field. Using traditional calculation methods requires a lot of computing power. With advanced algorithms, Milvus can increase the vector data processing capacity by at least two orders of magnitude with the same computing power resources.",
+            "list": [
+              "Molecular structural similarity analysis",
+              "Molecular pharmacological analysis",
+              "Virtual screening of drug molecules"
+            ],
+            "img": "molsearch",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/mols_search/README.md",
+            "href": "http://40.117.75.127:8002/"
+          },
+          {
+            "title": "Audio data processing",
+            "desc": "Using deep learning models to analyze and process audio data can greatly improve the accuracy of speech recognition, and its core is to vectorize related audio slices and judge the meaning of its expression through the calculation of vector distance. Therefore, Milvus also have rich applications in speech , Music and other audio data processing fields.",
+            "list": [
+              "Personalized music recommendation",
+              "Music deduplication",
+              "Voiceprint verification",
+              "Speech recognition",
+              "Intelligent voice assistant",
+              "Intelligent translation robot"
+            ],
+            "img": "audio",
+            "href": ""
+          }
+        ]
+      }
+    },
+    "gui": {
+      "section1": {
+        "title": "Get Milvus EM",
+        "desc": "an easy-to-use milvus administration platform",
+        "link": "Get started"
+      },
+      "section2": {
+        "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data.",
+        "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users.",
+        "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds."
+      },
+      "section3": {
+        "title": "Install and Run",
+        "desc": "Then open your browser and visit",
+        "help": "NEED HELP?"
+      },
+      "section4": {
+        "feature1": {
+          "title": "Similarity Search ",
+          "desc1": "Quick vector similarity verification"
+        },
+        "feature2": {
+          "title": "Manipulate your data through an intuitive GUI",
+          "desc1": "View collection as tree",
+          "desc2": "CRUD data and indexes in just a few clicks"
+        },
+        "feature3": {
+          "title": "Easy Configuration",
+          "desc1": "Set up over 10's milvus pereference via GUI"
+        }
+      }
+    },
+    "selectMenu": {
+      "comment": "Comment",
+      "github": "Create doc issue",
+      "sendBtn": "Send",
+      "cancelBtn": "Cancel",
+      "placeholder": "Leave a message"
+    },
+    "menu": {
+      "home": "Home"
+    },
+    "community": {
+      "slack": "Join Slack",
+      "github": "Join Github"
+    }
+  },
+  "v2": {
+    "header": {
+      "navlist": [
+        {
+          "label": "What is milvus?",
+          "link": "/docs/overview.md",
+          "icon": null
+        },
+        {
+          "label": "Documentation",
+          "link": "/docs/home",
+          "icon": null
+        },
+        {
+          "label": "Blog",
+          "link": "https://blog.milvus.io/",
+          "icon": null
+        },
+        {
+          "label": "Contribute",
+          "link": "/community",
+          "icon": null
+        },
+        {
+          "label": "Github",
+          "link": "https://github.com/milvus-io/milvus/",
+          "icon": "git"
+        }
+      ]
+    },
+    "banner": {
+      "title": ["Cloud-Native.", "Highly Scalable.", "Blazing Fast."],
+      "subTitle": "Milvus",
+      "text": "Open-source vector database for unstructured data",
+      "startBtn": {
+        "href": "/docs/home",
+        "label": "Get Started"
+      },
+      "contributeBtn": {
+        "href": "/community",
+        "label": "Contribute"
+      }
+    },
+    "slogan": {
+      "text": "We have literally been unable to kill this thing. No matter what we’ve thrown at it.",
+      "author": "by Mi.Alato"
+    },
+    "content": {
+      "feature": {
+        "title": "Features",
+        "list": [
+          {
+            "title": "Cost-efficiency",
+            "text": "Built upon high-performance column-based storage and index libraries, such as Faiss and HNSWLIB, Milvus is guaranteed to provide high-performance queries. Accelerated by CPU, SIMD, GPA, and FPGA, Milvus can retrieve vector data in milliseconds on a trillion-scale dataset. ",
+            "img": "supporting"
+          },
+          {
+            "title": "Performance On Demand",
+            "text": "Designed with cloud-native in mind, Milvus can be horizontally scaled with ease, and can handle storage and computation at any scale. Its microservice design supports on-demand scaling or even auto-scaling.",
+            "img": "search"
+          },
+          {
+            "title": "Born for Unstructured Data",
+            "text": " Milvus helps its users focus more on the semantic meaning of unstructured data than on complexities such as sharding, data persistence, and load balancing. Milvus supports high-performance, hybrid search of vector and scalar data, opening up renewed possibilities for unstructured data processing.",
+            "img": "deployment"
+          },
+
+          {
+            "title": "Community Backed",
+            "text": "Graduated from the <a href=\"https://lfaidata.foundation/\" >LF AI & Data Foundation's</a>  incubator program, Milvus has been adopted by over 1,000 organizations worldwide. Milvus has an open, vibrant community. Contributions to Milvus are welcome from everyone.",
+            "img": "storage"
+          },
+          {
+            "title": "Ease of Use",
+            "text": "Milvus supports multiple data types and provides comprehensive multi-language SDKs. Through ORM API, Milvus can provide an integrated user experience across laptops, local clusters and the cloud. We also provide a wealth of deployment and visualization tools to help users get started and operate faster.",
+            "img": "autoscaling"
+          }
+        ]
+      },
+      "user": {
+        "title": "Users",
+        "list": [
+          {
+            "name": "test1",
+            "link": "/#"
+          },
+          {
+            "name": "test2",
+            "link": "/#"
+          },
+          {
+            "name": "test3",
+            "link": "/#"
+          },
+          {
+            "name": "test4",
+            "link": "/#"
+          },
+          {
+            "name": "test5",
+            "link": "/#"
+          },
+          {
+            "name": "test6",
+            "link": "/#"
+          },
+          {
+            "name": "test7",
+            "link": "/#"
+          },
+          {
+            "name": "test8",
+            "link": "/#"
+          },
+          {
+            "name": "test9",
+            "link": "/#"
+          },
+          {
+            "name": "test10",
+            "link": "/#"
+          }
+        ]
+      },
+      "community": {
+        "title": "Join the community",
+        "text1": "Milvus is open-sourced on GitHub.",
+        "text2": "Contributions and feedbacks are welcome!",
+        "gitBtn": {
+          "href": "https://github.com/milvus-io/milvus/",
+          "label": "Go to Github"
+        }
+      }
+    },
+    "footer": {
+      "list": [
+        {
+          "title": "What is milvus? ",
+          "text": "Open-source similarity search engine for massive-scale feature vectors",
+          "href": "/docs/install_milvus.md",
+          "label": "Get started",
+          "icons": []
+        },
+        {
+          "title": "Contribute",
+          "text": "Milvus is a community project. We encourage you to join the effort and contribute feedback, ideas and code.",
+          "href": "https://github.com/milvus-io",
+          "label": "Join us on Github",
+          "icons": []
+        },
+        {
+          "title": "Follow us",
+          "text": "Stay up to date with the latest Milvus news.",
+          "href": "",
+          "label": "",
+          "icons": [
+            {
+              "href": "#",
+              "name": "wechat"
+            },
+            {
+              "href": "https://medium.com/unstructured-data-service",
+              "name": "medium"
+            },
+            {
+              "href": "https://twitter.com/milvusio",
+              "name": "twitter"
+            },
+            {
+              "href": "https://milvusio.slack.com/join/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
+              "name": "slack"
+            }
+          ]
+        }
+      ],
+      "licence": {
+        "text1": {
+          "label": "© Milvus 2021",
+          "link": "#"
+        },
+        "text2": {
+          "label": "Milvus",
+          "link": "/"
+        },
+        "text3": {
+          "label": " and associated open source project names are trademarks of the LF AI & Data Foundation",
+          "link": "#"
+        },
+        "list": [
+          {
+            "label": "Terms and conditions",
+            "link": "#"
+          },
+          {
+            "label": "Compliance (data protection) ",
+            "link": "#"
+          },
+          {
+            "label": "Privacy policy",
+            "link": "#"
+          },
+          {
+            "label": "Cookie Policy",
+            "link": "#"
+          }
+        ]
+      }
+    }
+  }
+}

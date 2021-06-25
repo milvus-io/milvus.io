@@ -1,0 +1,22 @@
+// font-weight: 500 is not working
+.fontMedi {
+  font-family: Inter Medium;
+  &:lang(zh-cn) {
+    font-family: Noto Sans SC;
+    font-weight: 500;
+  }
+}
+
+.fontSwitchInter {
+  font-family: Inter;
+  &:lang(zh-cn) {
+    font-family: Noto Sans SC;
+  }
+}
+
+.fontSwitch {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif, Inter;
+  &:lang(zh-cn) {
+    font-family: Noto Sans SC;
+  }
+}

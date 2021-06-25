@@ -1,0 +1,286 @@
+@import '../css/variables/responsive.less';
+@import '../css/variables/color.less';
+@import '../css/variables/fontStyle.less';
+
+// local variables
+@sidebar-width: 250px;
+@sidebar-left-margin: 40px;
+@header-height: 90px;
+@footer-height: 48px;
+@anchor-width: 280px;
+@color-primary: #1493cc;
+
+.bootcamp-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: Inter;
+  height: 100vh;
+  color: #191919;
+
+  main {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    margin: @header-height auto 0;
+    width: 100%;
+    max-width: @screen-lg-max;
+
+    .sidebar {
+      position: fixed;
+      bottom: @footer-height;
+      top: @header-height;
+      width: @sidebar-width;
+      margin-left: @sidebar-left-margin;
+
+      @media @tablet {
+        bottom: 136px;
+        left: 25px;
+        width: 70vw;
+        z-index: 1000;
+        margin-left: 0;
+      }
+    }
+
+    .content {
+      margin-top: 32px;
+      padding: 0 120px;
+      .fontSwitchInter();
+
+      @media @tablet {
+        margin-top: 0;
+        margin-left: 0;
+        padding: 32px;
+      }
+
+      @media @phone {
+        margin-top: 0;
+        margin-left: 0;
+        padding: 16px;
+      }
+    }
+
+    .articles {
+      max-width: calc(100% - @anchor-width);
+
+      @media @tablet {
+        max-width: 100%;
+        margin-left: 0;
+        margin-top: 0;
+      }
+
+      .articles-container {
+        padding-left: 0;
+
+        @media @tablet {
+          padding: 16px;
+        }
+      }
+    }
+
+    .anchors-wrapper {
+      width: @anchor-width;
+      font-size: 14px;
+      padding-right: 24px;
+      font-family: Inter;
+
+      @media @tablet {
+        display: none;
+      }
+
+      .anchors {
+        position: sticky;
+        position: -webkit-sticky;
+        top: @header-height;
+        max-height: 100%;
+        overflow: auto;
+
+        padding-top: 32px;
+
+        .anchor-title {
+          margin-bottom: 24px;
+
+          font-size: 16px;
+          color: @color-default-link;
+          line-height: 18px;
+          font-weight: 500;
+        }
+
+        .parent-item {
+          border: none;
+          padding-bottom: 8px;
+        }
+
+        .item {
+          .child-item {
+            margin-left: 8px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+          }
+        }
+
+        .anchor {
+          display: block;
+          white-space: nowrap;
+          overflow-x: hidden;
+          line-height: 20px;
+          text-overflow: ellipsis;
+          color: #60606f;
+
+          &:hover {
+            color: @color-doc-primary;
+          }
+          .active {
+            color: @color-doc-primary;
+          }
+        }
+      }
+    }
+
+    .btn-to-top {
+      position: fixed;
+      right: 250px;
+      bottom: 80px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+
+      background-color: #fff;
+      cursor: pointer;
+
+      z-index: 1000;
+
+      &:hover {
+        color: @color-highlight;
+      }
+
+      @media @tablet {
+        position: fixed;
+        right: 20%;
+        bottom: 80px;
+      }
+    }
+  }
+
+  footer {
+    width: 100%;
+    max-width: @screen-lg-max;
+    margin: 0 auto;
+    text-align: center;
+    padding: 16px;
+
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    color: @color-default-link;
+
+    @media @tablet {
+      text-align: start;
+      padding-bottom: 32px;
+
+      span {
+        display: block;
+        margin-bottom: 16px;
+      }
+    }
+
+    .link {
+      display: inline-block;
+      margin-left: 40px;
+
+      color: @color-default-link;
+      text-decoration: underline;
+      text-decoration-color: @color-primary;
+
+      @media @tablet {
+        margin-left: 0;
+      }
+    }
+  }
+
+  /*
+  * shared styles
+  */
+
+  // 3 children in a row
+  .row-3 {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  .card {
+    border: 1px solid @color-card-border;
+    border-radius: 4px;
+    transition: all 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0px 10px 30px rgba(100, 100, 100, 0.1);
+    }
+  }
+}
+
+.bootcamp {
+  .container {
+    margin-bottom: 44px;
+
+    @media @tablet {
+      margin-bottom: 34px;
+    }
+
+    @media @phone {
+      margin-bottom: 24px;
+    }
+  }
+
+  .title {
+    font-size: 24px;
+    line-height: 32px;
+    padding-bottom: 20px;
+    font-weight: bold;
+
+    @media @tablet {
+      padding: 14px 0;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    @media @phone {
+      padding: 8px 0;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .solutionsWrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 20px;
+    grid-column-gap: 20px;
+    list-style: none;
+    grid-auto-rows: auto;
+
+    & .link-card:hover {
+      color: @color-doc-primary;
+    }
+
+    @media @tablet {
+      grid-template-columns: repeat(2, 1fr);
+      grid-row-gap: 16px;
+      grid-column-gap: 16px;
+    }
+
+    @media @phone {
+      grid-template-columns: repeat(1, 1fr);
+      grid-row-gap: 16px;
+      grid-column-gap: 0px;
+    }
+  }
+}

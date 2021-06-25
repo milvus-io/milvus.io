@@ -1,0 +1,55 @@
+.codeWrapper {
+  display: flex;
+  // color: #fff;
+  position: relative;
+
+  .content {
+    font-family: 'Source Code Pro' !important;
+    flex-grow: 1;
+    line-height: 20px;
+    overflow-x: auto;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: darkgrey;
+    }
+
+    span {
+      display: inline-block;
+      font-size: 13px;
+      line-height: 20px;
+    }
+  }
+
+  .btn {
+    border: none;
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    position: sticky;
+    top: 0px;
+    right: 0;
+    height: 100%;
+    z-index: 2;
+
+    &:active {
+      outline: none;
+    }
+
+    .text {
+      font-size: 11px;
+      line-height: 11px;
+    }
+    .icon {
+      margin-left: 4px;
+      font-size: 11px;
+    }
+  }
+}

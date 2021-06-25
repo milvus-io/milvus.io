@@ -1,0 +1,79 @@
+@import '../css/variables/fontStyle.less';
+@import '../css/variables/responsive.less';
+
+@header-height: 89px;
+@header-mobile-height: 87px;
+@footer-height: 60px;
+
+.notfound-container {
+  width: 100%;
+  min-height: calc(100vh - @header-height - @footer-height);
+  padding-top: @header-height;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  .fontSwitchInter();
+
+  @media @phone {
+    min-height: calc(100vh - @header-mobile-height - @footer-height);
+    padding-top: @header-mobile-height;
+  }
+
+  .notfount-center-wrapper {
+    width: 100%;
+    padding: 0 64px;
+
+    @media @tablet {
+      padding: 0 32px;
+    }
+
+    @media @phone {
+      padding: 0 16px;
+    }
+  }
+
+  .notfound-titlebar {
+    display: flex;
+    margin-top: 80px;
+    margin-bottom: 24px;
+    justify-content: center;
+    align-items: flex-end;
+
+    @media @phone {
+      margin-top: 24px;
+    }
+
+    .notfound-title {
+      font-family: Brinnan Bold;
+      font-size: 40px;
+      line-height: 32px;
+      margin-right: 24px;
+
+      @media @phone {
+        font-size: 16px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .notfound-content {
+    font-size: 16px;
+    line-height: 32px;
+
+    @media @phone {
+      font-size: 14px;
+    }
+  }
+
+  .notfound-button {
+    margin-top: 24px;
+
+    span {
+      margin-left: 16px;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 700;
+    }
+  }
+}

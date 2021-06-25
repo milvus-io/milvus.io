@@ -1,0 +1,52 @@
+@import '../../css/variables/color.less';
+@import '../../css/variables/responsive.less';
+
+html {
+  height: 100%;
+  overflow-y: auto;
+}
+
+body,
+ul,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  &:lang(en) {
+    font-weight: 100;
+  }
+}
+
+#gatsby-focus-wrapper,
+#___gatsby {
+  height: 100%;
+}
+
+body {
+  font-size: 16px;
+  // background-color: @color-default-bg;
+  color: @color-default-text;
+
+  @media @tablet {
+    font-size: 14px;
+  }
+}
+
+::selection {
+  background-color: @color-primary;
+  color: #fff;
+}

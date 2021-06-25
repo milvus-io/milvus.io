@@ -163,49 +163,55 @@ export default function CommunityTemplate({ data, pageContext }) {
             </section>
             {/* recommend */}
             <section className="recommend-section">
-              <h2>{recommendSection.title}</h2>
-              <div className="list-wrapper">
-                <div className="list-wrapper-item">
-                  <h3>{recommendSection.start.title}</h3>
-                  <ul className="recommend-list">
-                    {recommendSection.start.list.map(item => (
-                      <li key={item.label}>
-                        <a href={item.link}>{item.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="list-wrapper-item">
-                  <h3>{recommendSection.deploy.title}</h3>
-                  <ul className="recommend-list">
-                    {recommendSection.deploy.list.map(item => (
-                      <li key={item.label}>
-                        <a href={item.link}>{item.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="list-wrapper-item">
-                  <h3>{recommendSection.develop.title}</h3>
-                  <ul className="recommend-list">
-                    {recommendSection.develop.list.map(item => (
-                      <li key={item.label}>
-                        <a href={item.link}>{item.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="list-wrapper-item">
-                  <h3>{recommendSection.test.title}</h3>
-                  <ul className="recommend-list">
-                    {recommendSection.test.list.map(item => (
-                      <li key={item.label}>
-                        <a href={item.link}>{item.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              {false ? (
+                <>
+                  <h2>{recommendSection.title}</h2>
+                  <div className="list-wrapper">
+                    <div className="list-wrapper-item">
+                      <h3>{recommendSection.start.title}</h3>
+                      <ul className="recommend-list">
+                        {recommendSection.start.list.map(item => (
+                          <li key={item.label}>
+                            <a href={item.link}>{item.label}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="list-wrapper-item">
+                      <h3>{recommendSection.deploy.title}</h3>
+                      <ul className="recommend-list">
+                        {recommendSection.deploy.list.map(item => (
+                          <li key={item.label}>
+                            <a href={item.link}>{item.label}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="list-wrapper-item">
+                      <h3>{recommendSection.develop.title}</h3>
+                      <ul className="recommend-list">
+                        {recommendSection.develop.list.map(item => (
+                          <li key={item.label}>
+                            <a href={item.link}>{item.label}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="list-wrapper-item">
+                      <h3>{recommendSection.test.title}</h3>
+                      {
+                        <ul className="recommend-list">
+                          {recommendSection.test.list.map(item => (
+                            <li key={item.label}>
+                              <a href={item.link}>{item.label}</a>
+                            </li>
+                          ))}
+                        </ul>
+                      }
+                    </div>
+                  </div>
+                </>
+              ) : null}
 
               <div className="ambassador-wrapper">
                 <img
@@ -225,19 +231,21 @@ export default function CommunityTemplate({ data, pageContext }) {
                 >
                   {recommendSection.ambassador.joinBtn.label}
                 </Button>
-                <Button
-                  className="ambassador-btn introduction-button"
-                  link={recommendSection.ambassador.introBtn.label}
-                  variant="text"
-                  children={
-                    <>
-                      <span className="label">
-                        {recommendSection.ambassador.introBtn.label}
-                      </span>
-                      <i className="fas fa-arrow-right"></i>
-                    </>
-                  }
-                />
+                {recommendSection.ambassador.introBtn.label ? (
+                  <Button
+                    className="ambassador-btn introduction-button"
+                    link={recommendSection.ambassador.introBtn.label}
+                    variant="text"
+                    children={
+                      <>
+                        <span className="label">
+                          {recommendSection.ambassador.introBtn.label}
+                        </span>
+                        <i className="fas fa-arrow-right"></i>
+                      </>
+                    }
+                  />
+                ) : null}
               </div>
             </section>
             {/* mail */}

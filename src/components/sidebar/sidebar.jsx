@@ -37,11 +37,11 @@ const Sidebar = props => {
   const map = isVersionWithHome
     ? {
         en: `/docs/${version}/home`,
-        cn: `/${locale}/docs/${version}/home`,
+        cn: `/docs/${version}/home`,
       }
     : {
         en: `/docs/${version}/overview.md`,
-        cn: `/${locale}/docs/${version}/overview.md`,
+        cn: `/docs/${version}/overview.md`,
       };
   const homePath = map[locale];
 

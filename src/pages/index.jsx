@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
@@ -58,9 +58,28 @@ const HomePage = ({ data, pageContext }) => {
   const { slogan, user } = data.allFile.edges.filter(
     edge => edge.node.childUsers
   )[0].node.childUsers;
+  const len = slogan.length - 1;
   const { locale, versions } = pageContext;
   const desc =
     'Milvus is an open source vector database for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.';
+
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    let timer = null;
+    if (timer) {
+      clearInterval(timer);
+    }
+    setInterval(() => {
+      setIndex(v => (v < len ? (v += 1) : 0));
+    }, 15000);
+
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, []);
 
   return (
     <div className="home-page-container">
@@ -122,9 +141,9 @@ const HomePage = ({ data, pageContext }) => {
             </div>
             <div className="banner-right"></div>
           </div>
-          <div className="slogan">
-            <p className="text">{slogan.text}</p>
-            <p className="author">{slogan.author}</p>
+          <div className="slogan-wrapper">
+            <p className="text">{slogan[index].text}</p>
+            <p className="author">{slogan[index].author}</p>
           </div>
           <div className="content">
             <h3 className="title-bar">
@@ -140,7 +159,10 @@ const HomePage = ({ data, pageContext }) => {
                       <img src={icons[img]} alt={img} />
                     </div>
                     <p className="title">{title}</p>
-                    <p className="text">{text}</p>
+                    <p
+                      className="text"
+                      dangerouslySetInnerHTML={{ __html: text }}
+                    ></p>
                   </li>
                 );
               })}

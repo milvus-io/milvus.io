@@ -6,7 +6,8 @@ const SolutionCard = ({
   title,
   content,
   href,
-  className = ''
+  className = '',
+  liveDemo = '',
 }) => {
   return (
     <a
@@ -17,14 +18,15 @@ const SolutionCard = ({
     >
       <div className={styles.titleBar}>
         <h3 className={styles.title}>{title}</h3>
-        {
-          img ? (
-            <img src={img} alt="icon" className={styles.img} />
-          ) : null
-        }
+        {img ? <img src={img} alt="icon" className={styles.img} /> : null}
       </div>
 
       <p className={styles.content}>{content}</p>
+      {liveDemo ? (
+        <a href={liveDemo} target="_blank" rel="noopener noreferrer">
+          Live Demo
+        </a>
+      ) : null}
     </a>
   );
 };

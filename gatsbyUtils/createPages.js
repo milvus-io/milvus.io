@@ -787,10 +787,10 @@ const generateApiMenus = nodes => {
    * @param {object} param0 Data to calculate item order.
    * @returns {number} Order.(-1 is first of all, then 0, 1, 2 ...)
    */
-  const calculateOrder = ({ category, name = '' }) => {
+  const calculateOrder = ({ category, name = '', order }) => {
     // java > package-tree.html & package-summary.html should be first.
     if (category === 'java' && name.includes('package-')) return -1;
-    return 0;
+    return order;
   };
   return nodes.reduce(
     (prev, item) => {
@@ -819,7 +819,7 @@ const generateApiMenus = nodes => {
         label1,
         label2,
         label3,
-        order: order < -1 ? calculateOrder({ category, name }) : order,
+        order: calculateOrder({ category, name, order }),
         isMenu: isDirectory,
         outLink: null,
         isApiReference: true,

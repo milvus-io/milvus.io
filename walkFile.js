@@ -53,12 +53,17 @@ const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
       content?.milvus_python_sdk_version &&
       `v${content?.milvus_python_sdk_version}`;
     const go =
-      content?.milvus_go_sdk_version &&
-      `v${content?.milvus_go_sdk_version}`;
-    const java = content?.milvus_java_sdk_version &&
-    `v${content?.milvus_java_sdk_version}`;
-    const orm = content?.milvus_python_orm_sdk_version &&
-    `v${content?.milvus_python_orm_sdk_version}`;
+      content?.milvus_go_sdk_version && `v${content?.milvus_go_sdk_version}`;
+    const java =
+      content?.milvus_java_sdk_version &&
+      `v${content?.milvus_java_sdk_version}`;
+    const orm =
+      content?.milvus_python_orm_sdk_version &&
+      `v${content?.milvus_python_orm_sdk_version}`;
+    // Prepare for node sdk version.
+    // const node = content?.milvus_node_sdk_version &&
+    // `v${content?.milvus_node_sdk_version}`;
+    // result = { pymilvus, go, java, 'pymilvus-orm': orm, node };
     result = { pymilvus, go, java, 'pymilvus-orm': orm };
   }
   fileObj[parent] = fileObj[parent]

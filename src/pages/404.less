@@ -7,24 +7,22 @@
 
 .notfound-container {
   width: 100%;
-  height: calc(100vh - @header-height - @footer-height);
+  min-height: calc(100vh - @header-height - @footer-height);
   padding-top: @header-height;
   box-sizing: border-box;
   text-align: center;
+  display: flex;
+  align-items: center;
   .fontSwitchInter();
 
   @media @phone {
-    height: calc(100vh - @header-mobile-height - @footer-height);
+    min-height: calc(100vh - @header-mobile-height - @footer-height);
     padding-top: @header-mobile-height;
   }
 
   .notfount-center-wrapper {
     width: 100%;
     padding: 0 64px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 
     @media @tablet {
       padding: 0 32px;

@@ -252,6 +252,17 @@ const query = `
               id
               link
               title
+              liveDemo
+            }
+            title
+          }
+          section4 {
+            content {
+              desc
+              id
+              link
+              title
+              iconType
             }
             title
           }
@@ -617,7 +628,6 @@ const generateCommunityPages = (
 
     const fileLang = findLang(fileAbsolutePath);
     const path = getCommunityPath(fileId, fileLang);
-
     createPage({
       path,
       component: communityTemplate,

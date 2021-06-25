@@ -30,7 +30,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
   const { bootcampData, locale, html, headings } = pageContext;
   const isHomePage = bootcampData !== null;
 
-  const { banner, title, description, section1, section2, section3 } =
+  const { banner, title, description, section1, section2, section3, section4 } =
     bootcampData || {};
 
   const SeoTitle = 'Milvus Bootcamp';
@@ -39,12 +39,12 @@ const BootcampTemplate = ({ data, pageContext }) => {
   const {
     footer: { content: anchorTitleTrans },
   } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
-    .layout;
+      .layout;
 
   const {
     footer: { licence: footerTrans },
   } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
-    .v2;
+      .v2;
 
   // add hooks used by doc template
   useFilter();
@@ -154,7 +154,8 @@ const BootcampTemplate = ({ data, pageContext }) => {
               <h1 className="title">{section3.title}</h1>
               <ul className="solutionsWrapper">
                 {section3.content.map(item => {
-                  const { title, link, iconType, desc } = item;
+                  const { title, link, iconType, desc, liveDemo } = item;
+                  console.log(liveDemo);
                   return (
                     <li key={title}>
                       <SolutionCard
@@ -162,6 +163,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
                         content={desc}
                         img={Icons[iconType]}
                         href={link}
+                        liveDemo={liveDemo}
                       />
                     </li>
                   );
@@ -182,6 +184,20 @@ const BootcampTemplate = ({ data, pageContext }) => {
                         img={Icons[iconType]}
                         href={link}
                       />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <div className="container">
+              <h1 className="title">{section4.title}</h1>
+              <ul className="solutionsWrapper">
+                {section4.content.map(item => {
+                  const { title, link, desc } = item;
+                  return (
+                    <li key={title}>
+                      <SolutionCard title={title} content={desc} href={link} />
                     </li>
                   );
                 })}

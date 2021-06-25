@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="516px" viewBox="0 0 1440 516" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>hero/scenatios</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 -1.4321877e-14 1440 -1.4321877e-14 1440 420 716 516 3.99680289e-14 420"></polygon>
+    </defs>
+    <g id="light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Scenarios" transform="translate(0.000000, -60.000000)">
+            <g id="hero/scenatios" transform="translate(0.000000, 60.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#49AEE8" xlink:href="#path-1"></use>
+                <g id="hero/scenario" mask="url(#mask-2)" opacity="0.3" stroke="#FFFFFF" stroke-width="2">
+                    <g transform="translate(0.000000, -120.000000)">
+                        <line x1="24.5" y1="-0.5" x2="1444.5" y2="719.5" id="Line-5"></line>
+                        <line x1="24.47924" y1="29.4791956" x2="1385.52076" y2="719.520804" id="0" transform="translate(705.000000, 374.500000) rotate(-2.566044) translate(-705.000000, -374.500000) "></line>
+                        <line x1="24.4584799" y1="59.4583911" x2="1326.54152" y2="719.541609" id="1" transform="translate(675.500000, 389.500000) rotate(-5.132089) translate(-675.500000, -389.500000) "></line>
+                        <line x1="24.4373681" y1="89.4375867" x2="1266.56263" y2="719.562413" id="2" transform="translate(645.500000, 404.500000) rotate(-7.698133) translate(-645.500000, -404.500000) "></line>
+                        <line x1="24.416608" y1="119.416782" x2="1207.58339" y2="719.583218" id="3" transform="translate(616.000000, 419.500000) rotate(-10.264178) translate(-616.000000, -419.500000) "></line>
+                        <line x1="24.395848" y1="150.395978" x2="1148.60415" y2="720.604022" id="4" transform="translate(586.500000, 435.500000) rotate(-12.830222) translate(-586.500000, -435.500000) "></line>
+                        <line x1="24.375088" y1="180.375173" x2="1089.62491" y2="720.624827" id="5" transform="translate(557.000000, 450.500000) rotate(-15.396267) translate(-557.000000, -450.500000) "></line>
+                        <line x1="24.3543279" y1="210.354369" x2="1030.64567" y2="720.645631" id="6" transform="translate(527.500000, 465.500000) rotate(-17.962311) translate(-527.500000, -465.500000) "></line>
+                        <line x1="24.3335679" y1="240.333564" x2="971.666432" y2="720.666436" id="7" transform="translate(498.000000, 480.500000) rotate(-20.528356) translate(-498.000000, -480.500000) "></line>
+                        <line x1="24.312456" y1="270.31276" x2="911.687544" y2="720.68724" id="8" transform="translate(468.000000, 495.500000) rotate(-23.094400) translate(-468.000000, -495.500000) "></line>
+                        <line x1="25.291696" y1="300.291956" x2="853.708304" y2="720.708044" id="9" transform="translate(439.500000, 510.500000) rotate(-25.660445) translate(-439.500000, -510.500000) "></line>
+                        <line x1="25.270936" y1="330.271151" x2="794.729064" y2="720.728849" id="10" transform="translate(410.000000, 525.500000) rotate(-28.226489) translate(-410.000000, -525.500000) "></line>
+                        <line x1="25.2501759" y1="360.250347" x2="735.749824" y2="720.749653" id="11" transform="translate(380.500000, 540.500000) rotate(-30.792534) translate(-380.500000, -540.500000) "></line>
+                        <line x1="25.2294159" y1="390.229542" x2="676.770584" y2="720.770458" id="12" transform="translate(351.000000, 555.500000) rotate(-33.358578) translate(-351.000000, -555.500000) "></line>
+                        <line x1="25.2086559" y1="421.208738" x2="617.791344" y2="721.791262" id="13" transform="translate(321.500000, 571.500000) rotate(-35.924623) translate(-321.500000, -571.500000) "></line>
+                        <line x1="25.187544" y1="451.187933" x2="557.812456" y2="721.812067" id="14" transform="translate(291.500000, 586.500000) rotate(-38.490667) translate(-291.500000, -586.500000) "></line>
+                        <line x1="25.166784" y1="481.167129" x2="498.833216" y2="721.832871" id="15" transform="translate(262.000000, 601.500000) rotate(-41.056712) translate(-262.000000, -601.500000) "></line>
+                        <line x1="25.1460239" y1="511.146325" x2="439.853976" y2="721.853675" id="16" transform="translate(232.500000, 616.500000) rotate(-43.622756) translate(-232.500000, -616.500000) "></line>
+                        <line x1="25.1252639" y1="541.12552" x2="380.874736" y2="721.87448" id="17" transform="translate(203.000000, 631.500000) rotate(-46.188801) translate(-203.000000, -631.500000) "></line>
+                        <line x1="25.1045039" y1="571.104022" x2="321.895496" y2="720.895978" id="18" transform="translate(173.500000, 646.000000) rotate(-48.754845) translate(-173.500000, -646.000000) "></line>
+                        <line x1="25.0837438" y1="601.083218" x2="262.916256" y2="720.916782" id="19" transform="translate(144.000000, 661.000000) rotate(-51.320890) translate(-144.000000, -661.000000) "></line>
+                        <line x1="25" y1="631" x2="203" y2="721" id="Line-5" transform="translate(114.000000, 676.000000) rotate(-53.886934) translate(-114.000000, -676.000000) "></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="516px" viewBox="0 0 1440 516" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>hero/admin</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 -1.4321877e-14 1440 -1.4321877e-14 1440 420 716 516 3.99680289e-14 420"></polygon>
+    </defs>
+    <g id="light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Admin" transform="translate(0.000000, -60.000000)">
+            <g id="hero/admin" transform="translate(0.000000, 60.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#49AEE8" xlink:href="#path-1"></use>
+                <g mask="url(#mask-2)" opacity="0.3">
+                    <g transform="translate(183.000000, -3.000000)">
+                        <g id="Group" stroke="none" fill-rule="evenodd" transform="translate(253.180688, -206.312961)">
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(745.000000, 911.907584) rotate(-30.000000) translate(-745.000000, -911.907584) " points="745 533.907584 1072.3576 722.907584 1072.3576 1100.90758 745 1289.90758 417.642397 1100.90758 417.642397 722.907584"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(727.500000, 881.596695) rotate(-30.000000) translate(-727.500000, -881.596695) " points="727.5 503.596695 1054.8576 692.596695 1054.8576 1070.59669 727.5 1259.59669 400.142397 1070.59669 400.142397 692.596695"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(710.000000, 851.285806) rotate(-30.000000) translate(-710.000000, -851.285806) " points="710 473.285806 1037.3576 662.285806 1037.3576 1040.28581 710 1229.28581 382.642397 1040.28581 382.642397 662.285806"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(692.500000, 820.974917) rotate(-30.000000) translate(-692.500000, -820.974917) " points="692.5 442.974917 1019.8576 631.974917 1019.8576 1009.97492 692.5 1198.97492 365.142397 1009.97492 365.142397 631.974917"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(675.000000, 790.664028) rotate(-30.000000) translate(-675.000000, -790.664028) " points="675 412.664028 1002.3576 601.664028 1002.3576 979.664028 675 1168.66403 347.642397 979.664028 347.642397 601.664028"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(657.250000, 759.920126) rotate(-30.000000) translate(-657.250000, -759.920126) " points="657.25 382.420126 984.607603 571.170126 984.607603 948.670126 657.25 1137.42013 329.892397 948.670126 329.892397 571.170126"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(639.750000, 729.609237) rotate(-30.000000) translate(-639.750000, -729.609237) " points="639.75 352.109237 967.107603 540.859237 967.107603 918.359237 639.75 1107.10924 312.392397 918.359237 312.392397 540.859237"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(622.250000, 699.298347) rotate(-30.000000) translate(-622.250000, -699.298347) " points="622.25 321.798347 949.607603 510.548347 949.607603 888.048347 622.25 1076.79835 294.892397 888.048347 294.892397 510.548347"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(604.750000, 668.987458) rotate(-30.000000) translate(-604.750000, -668.987458) " points="604.75 291.487458 932.107603 480.237458 932.107603 857.737458 604.75 1046.48746 277.392397 857.737458 277.392397 480.237458"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(587.000000, 638.243557) rotate(-30.000000) translate(-587.000000, -638.243557) " points="587 260.243557 914.357603 449.243557 914.357603 827.243557 587 1016.24356 259.642397 827.243557 259.642397 449.243557"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(569.500000, 607.932667) rotate(-30.000000) translate(-569.500000, -607.932667) " points="569.5 229.932667 896.857603 418.932667 896.857603 796.932667 569.5 985.932667 242.142397 796.932667 242.142397 418.932667"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(552.000000, 577.621778) rotate(-30.000000) translate(-552.000000, -577.621778) " points="552 199.621778 879.357603 388.621778 879.357603 766.621778 552 955.621778 224.642397 766.621778 224.642397 388.621778"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(534.500000, 547.310889) rotate(-30.000000) translate(-534.500000, -547.310889) " points="534.5 169.310889 861.857603 358.310889 861.857603 736.310889 534.5 925.310889 207.142397 736.310889 207.142397 358.310889"></polygon>
+                            <polygon id="Polygon" stroke="#FFFFFF" transform="translate(517.000000, 517.000000) rotate(-30.000000) translate(-517.000000, -517.000000) " points="517 139 844.357603 328 844.357603 706 517 895 189.642397 706 189.642397 328"></polygon>
+                        </g>
+                        <polygon id="Polygon" stroke="#FFFFFF" transform="translate(406.000000, 363.907584) rotate(-30.000000) translate(-406.000000, -363.907584) " points="406 -14.0924159 733.357603 174.907584 733.357603 552.907584 406 741.907584 78.6423974 552.907584 78.6423974 174.907584"></polygon>
+                        <polygon id="Polygon" stroke="#FFFFFF" transform="translate(388.500000, 333.596695) rotate(-30.000000) translate(-388.500000, -333.596695) " points="388.5 -44.403305 715.857603 144.596695 715.857603 522.596695 388.5 711.596695 61.1423974 522.596695 61.1423974 144.596695"></polygon>
+                        <polygon id="Polygon" stroke="#FFFFFF" transform="translate(371.000000, 303.285806) rotate(-30.000000) translate(-371.000000, -303.285806) " points="371 -74.7141941 698.357603 114.285806 698.357603 492.285806 371 681.285806 43.6423974 492.285806 43.6423974 114.285806"></polygon>
+                        <polygon id="Polygon" stroke="#FFFFFF" transform="translate(353.500000, 272.974917) rotate(-30.000000) translate(-353.500000, -272.974917) " points="353.5 -105.025083 680.857603 83.9749167 680.857603 461.974917 353.5 650.974917 26.1423974 461.974917 26.1423974 83.9749167"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

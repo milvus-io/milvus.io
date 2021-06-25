@@ -1,5 +1,5 @@
 # => Build container
-FROM milvusdb/milvus.io.builder:master as builder
+FROM milvusdb/milvus.io.builder:preview as builder
 WORKDIR /site
 COPY . .
 

@@ -79,7 +79,7 @@ const HomePage = ({ data, pageContext }) => {
         clearInterval(timer);
       }
     };
-  }, []);
+  }, [len]);
 
   return (
     <div className="home-page-container">

@@ -124,8 +124,10 @@ const DocLayout = props => {
   const versionConfig = {
     homeTitle: language.menu.home,
     version,
-    versions,
+    // filter master version
+    versions: versions.filter(v => v !== 'master'),
   };
+  console.log('==== 130 versions', versions);
 
   const generateAnchorMenu = (headings, className) => {
     return headings.map(v => {
@@ -164,16 +166,18 @@ const DocLayout = props => {
       <NewHeader locale={locale} />
 
       <main className={wrapperClass}>
-        <Sidebar
-          locale={locale}
-          showVersions={true}
-          wrapperClass={styles.menuContainer}
-          allApiMenus={allApiMenus}
-          menuConfig={menuConfig}
-          searchConfig={searchConfig}
-          versionConfig={versionConfig}
-          isVersionWithHome={isVersionWithHome}
-        />
+        {!isBlog && (
+          <Sidebar
+            locale={locale}
+            showVersions={true}
+            wrapperClass={styles.menuContainer}
+            allApiMenus={allApiMenus}
+            menuConfig={menuConfig}
+            searchConfig={searchConfig}
+            versionConfig={versionConfig}
+            isVersionWithHome={isVersionWithHome}
+          />
+        )}
         <div
           className={`${styles.innerContainer} ${
             isHome ? styles.innerContainerHome : ''
@@ -201,7 +205,9 @@ const DocLayout = props => {
                         }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
-                          <i className={`fas fa-pencil-alt ${styles.btnIcon}`}></i>
+                          <i
+                            className={`fas fa-pencil-alt ${styles.btnIcon}`}
+                          ></i>
                         </span>
 
                         {language.footer.editBtn.label}

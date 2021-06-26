@@ -93,18 +93,18 @@ const Menu = props => {
    * @param {array} apiMenus allApiMenus.
    * @returns {array} Combined array with MenuList(without api reference) and allApiMenus.
    */
-  const mergeMenus = (menus=[], apiMenus=[]) => {
+  const mergeMenus = (menus = [], apiMenus = []) => {
     const apiMenu = apiMenus[0];
     if (!apiMenu) return menus;
     // If menus doesn't have "API" menu, add apiMenu as the last one.
-    if (!menus.find(item => item?.id === "API")) {
+    if (!menus.find(item => item?.id === 'API')) {
       apiMenu.order = menus.length;
       return [...menus, apiMenu];
     }
     // If exists, replace "API" with apiMenu.
     return menus.reduce((prev, item) => {
-      const {id, order} = item;
-      if (id === "API") {
+      const { id, order } = item;
+      if (id === 'API') {
         apiMenu.order = order;
         return [...prev, apiMenu];
       }
@@ -115,9 +115,12 @@ const Menu = props => {
   useEffect(() => {
     const generateMenu = list => {
       // get all labels , make sure will generate menu from top to bottom
-      const labelKeys = Object.keys(menuList[0])
-        .filter(v => v.includes('label'))
-        .sort((a, b) => a[a.length - 1] - b[b.length - 1]);
+      const labelKeys =
+        menuList.length > 0
+          ? Object.keys(menuList[0])
+              .filter(v => v.includes('label'))
+              .sort((a, b) => a[a.length - 1] - b[b.length - 1])
+          : [];
       let index = 0;
       return function innerFn(formatMenu = []) {
         let copyMenu = JSON.parse(JSON.stringify(formatMenu));
@@ -230,13 +233,15 @@ const Menu = props => {
       <ul>
         {list.map(doc => (
           <li
-            className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${doc.isLast ? styles.menuLastLevel : ''
-              } ${doc.isActive ? styles.active : ''}`}
+            className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${
+              doc.isLast ? styles.menuLastLevel : ''
+            } ${doc.isActive ? styles.active : ''}`}
             key={doc.id}
           >
             <div
-              className={`${styles.menuNameWrapper} ${doc.showChildren ? styles.active : ''
-                }`}
+              className={`${styles.menuNameWrapper} ${
+                doc.showChildren ? styles.active : ''
+              }`}
               role="button"
               tabIndex={0}
               onKeyDown={() => handleMenuClick(doc)}
@@ -269,21 +274,24 @@ const Menu = props => {
                 <>
                   {doc.isMenu && doc.label1 === '' ? (
                     <i
-                      className={`fas fa-caret-down ${styles.arrow} ${doc.showChildren ? '' : styles.top
-                        }`}
+                      className={`fas fa-caret-down ${styles.arrow} ${
+                        doc.showChildren ? '' : styles.top
+                      }`}
                     ></i>
                   ) : (
                     <i
-                      className={`fas ${styles.expandIcon} ${doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
-                        }`}
+                      className={`fas ${styles.expandIcon} ${
+                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
+                      }`}
                     ></i>
                   )}
                 </>
               ) : null}
             </div>
             <div
-              className={`${styles.menuChildWrapper} ${doc.showChildren ? styles.open : ''
-                }`}
+              className={`${styles.menuChildWrapper} ${
+                doc.showChildren ? styles.open : ''
+              }`}
             >
               {doc.children && doc.children.length
                 ? generageMenuDom(doc.children, styles.menuChild)

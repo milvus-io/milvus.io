@@ -124,8 +124,10 @@ const DocLayout = (props) => {
   const versionConfig = {
     homeTitle: language.menu.home,
     version,
-    versions,
+    // filter master version
+    versions: versions.filter((v) => v !== "master"),
   };
+  console.log("==== 130 versions", versions);
 
   const generateAnchorMenu = (headings, className) => {
     return headings.map((v) => {

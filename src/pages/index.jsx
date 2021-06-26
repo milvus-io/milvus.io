@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { graphql } from 'gatsby';
-import V2Layout from '../components/layout/v2Layout';
-import Button from '../components/button';
-import GithubButton from 'react-github-button';
-import './index.less';
-import Seo from '../components/seo';
-import autoscalingIcon from '../images/v2/autoscaling.svg';
-import deploymentIcon from '../images/v2/deployment.svg';
-import searchIcon from '../images/v2/searchicon.svg';
-import storageIcon from '../images/v2/storage.svg';
-import supportIcon from '../images/v2/support.svg';
-import bgImg3 from '../images/v2/bgImg3.png';
+import React, { useState, useEffect } from "react";
+import { graphql } from "gatsby";
+import V2Layout from "../components/layout/v2Layout";
+import Button from "../components/button";
+import GithubButton from "react-github-button";
+import "./index.less";
+import Seo from "../components/seo";
+import autoscalingIcon from "../images/v2/autoscaling.svg";
+import deploymentIcon from "../images/v2/deployment.svg";
+import searchIcon from "../images/v2/searchicon.svg";
+import storageIcon from "../images/v2/storage.svg";
+import supportIcon from "../images/v2/support.svg";
+import bgImg3 from "../images/v2/bgImg3.png";
 
-import line from '../images/v2/line.png';
-import compass from '../images/v2/compass.png';
-import kuaishou from '../images/v2/kuaishou.png';
-import museum from '../images/v2/museum.png';
-import aiqiyi from '../images/v2/aiqiyi.png';
-import axa from '../images/v2/axa.png';
-import dailyhunt from '../images/v2/dailyhunt.png';
-import messagebird from '../images/v2/messagebird.png';
-import moj from '../images/v2/moj.png';
-import smartnew from '../images/v2/smartnew.png';
-import trend from '../images/v2/trend.png';
-import xiaomi from '../images/v2/xiaomi.png';
+import line from "../images/v2/line.png";
+import compass from "../images/v2/compass.png";
+import kuaishou from "../images/v2/kuaishou.png";
+import museum from "../images/v2/museum.png";
+import aiqiyi from "../images/v2/aiqiyi.png";
+import axa from "../images/v2/axa.png";
+import dailyhunt from "../images/v2/dailyhunt.png";
+import messagebird from "../images/v2/messagebird.png";
+import moj from "../images/v2/moj.png";
+import smartnew from "../images/v2/smartnew.png";
+import trend from "../images/v2/trend.png";
+import xiaomi from "../images/v2/xiaomi.png";
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -52,16 +52,16 @@ const HomePage = ({ data, pageContext }) => {
     banner,
     content: { feature, community },
     footer,
-  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
+  } = data.allFile.edges.filter((edge) => edge.node.childI18N)[0].node.childI18N
     .v2;
 
   const { slogan, user } = data.allFile.edges.filter(
-    edge => edge.node.childUsers
+    (edge) => edge.node.childUsers
   )[0].node.childUsers;
   const len = slogan.length - 1;
   const { locale, versions } = pageContext;
   const desc =
-    'Milvus is an open source vector database for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.';
+    "Milvus is an open source vector database for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.";
 
   const [index, setIndex] = useState(0);
 
@@ -71,7 +71,7 @@ const HomePage = ({ data, pageContext }) => {
       clearInterval(timer);
     }
     setInterval(() => {
-      setIndex(v => (v < len ? (v += 1) : 0));
+      setIndex((v) => (v < len ? (v += 1) : 0));
     }, 15000);
 
     return () => {
@@ -79,7 +79,7 @@ const HomePage = ({ data, pageContext }) => {
         clearInterval(timer);
       }
     };
-  }, []);
+  }, [len]);
 
   return (
     <div className="home-page-container">
@@ -104,7 +104,7 @@ const HomePage = ({ data, pageContext }) => {
               </div>
               <p className="sub-title">{banner.subTitle}</p>
               <div className="title-wrapper">
-                {banner.title.map(item => (
+                {banner.title.map((item) => (
                   <p className="title" key={item}>
                     {item.toUpperCase()}
                   </p>
@@ -151,7 +151,7 @@ const HomePage = ({ data, pageContext }) => {
               <span className="line"></span>
             </h3>
             <ul className="feature-section">
-              {feature.list.map(i => {
+              {feature.list.map((i) => {
                 const { img, text, title } = i;
                 return (
                   <li className="section-item" key={img}>
@@ -177,7 +177,7 @@ const HomePage = ({ data, pageContext }) => {
                   <span className="line"></span>
                 </h3>
                 <ul className="users-list">
-                  {user.list.map(item => {
+                  {user.list.map((item) => {
                     const { name, alt } = item;
                     return (
                       <li key={name} className="list-item">

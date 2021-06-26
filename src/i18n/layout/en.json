@@ -366,7 +366,7 @@
     "header": {
       "navlist": [
         {
-          "label": "What is milvus?",
+          "label": "What is Milvus?",
           "link": "/docs/overview.md",
           "icon": null
         },
@@ -499,7 +499,7 @@
     "footer": {
       "list": [
         {
-          "title": "What is milvus? ",
+          "title": "What is Milvus? ",
           "text": "Open-source similarity search engine for massive-scale feature vectors",
           "href": "/docs/install_milvus.md",
           "label": "Get started",

@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
-import LocalizeLink from "../localizedLink/localizedLink";
-import * as styles from "./index.module.less";
+import React, { useEffect, useState, useRef } from 'react';
+import LocalizeLink from '../localizedLink/localizedLink';
+import * as styles from './index.module.less';
 
 const findItem = (key, value, arr) => {
   let find = undefined;
-  arr.forEach((v) => {
+  arr.forEach(v => {
     if (find) return;
     // because of tab id like: xxx-cpu
     // we only need string before "-" to compare
     // value already split with "-"
-    const target = v[key].split("-")[0];
+    const target = v[key].split('-')[0];
     if (target === value) {
       find = v;
     } else if (v.children && v.children.length) {
@@ -20,12 +20,12 @@ const findItem = (key, value, arr) => {
 };
 
 const isChildItem = (id, arr) => {
-  return !!findItem("id", id, arr);
+  return !!findItem('id', id, arr);
 };
 
-const closeAllChildren = (arr) => {
+const closeAllChildren = arr => {
   if (!arr.length) return [];
-  return arr.map((item) => {
+  return arr.map(item => {
     let { children } = item;
     if (children && children.length) {
       children = closeAllChildren(children);
@@ -34,15 +34,15 @@ const closeAllChildren = (arr) => {
   });
 };
 
-const Menu = (props) => {
+const Menu = props => {
   const {
     menuList,
     activePost,
     formatVersion,
     locale,
-    pageType = "doc",
+    pageType = 'doc',
     isBlog,
-    wrapperClass = "",
+    wrapperClass = '',
     allApiMenus = [],
     // mobileMenuOpened = false,
   } = props;
@@ -65,7 +65,7 @@ const Menu = (props) => {
     // filter all compatible api menu items(not a directory)
     const filteredMenus = apiMenus.reduce((prev, menu) => {
       if (menu?.isMenu && !menu?.label2) {
-        menu?.id === "api_reference"
+        menu?.id === 'api_reference'
           ? rootMenu.push(menu)
           : secondLevelMenus.push(menu);
       } else if (menu?.docVersion?.includes(currentDocVersion)) {
@@ -76,7 +76,7 @@ const Menu = (props) => {
     }, []);
     // filter level 2 menus if they has children(level 3 menu items)
     const filteredSecondLevelMenus = secondLevelMenus.filter(
-      (v) =>
+      v =>
         thirdLevelMenuNames.includes(v?.id) &&
         v?.docVersion?.includes(currentDocVersion)
     );
@@ -97,14 +97,14 @@ const Menu = (props) => {
     const apiMenu = apiMenus[0];
     if (!apiMenu) return menus;
     // If menus doesn't have "API" menu, add apiMenu as the last one.
-    if (!menus.find((item) => item?.id === "API")) {
+    if (!menus.find(item => item?.id === 'API')) {
       apiMenu.order = menus.length;
       return [...menus, apiMenu];
     }
     // If exists, replace "API" with apiMenu.
     return menus.reduce((prev, item) => {
       const { id, order } = item;
-      if (id === "API") {
+      if (id === 'API') {
         apiMenu.order = order;
         return [...prev, apiMenu];
       }
@@ -113,34 +113,34 @@ const Menu = (props) => {
   };
 
   useEffect(() => {
-    const generateMenu = (list) => {
+    const generateMenu = list => {
       // get all labels , make sure will generate menu from top to bottom
       const labelKeys =
         menuList.length > 0
           ? Object.keys(menuList[0])
-              .filter((v) => v.includes("label"))
+              .filter(v => v.includes('label'))
               .sort((a, b) => a[a.length - 1] - b[b.length - 1])
           : [];
       let index = 0;
       return function innerFn(formatMenu = []) {
         let copyMenu = JSON.parse(JSON.stringify(formatMenu));
-        const parentLabel = index ? labelKeys[index - 1] : "";
+        const parentLabel = index ? labelKeys[index - 1] : '';
 
         if (index && !parentLabel) {
           return copyMenu;
         }
-        const generatePath = (doc) => {
-          if (pageType === "community") {
+        const generatePath = doc => {
+          if (pageType === 'community') {
             // id community is home page
-            return doc.id === "community"
+            return doc.id === 'community'
               ? `/community`
               : `/community/${doc.id}`;
           }
-          if (pageType === "bootcamp") {
+          if (pageType === 'bootcamp') {
             // id community is home page
-            return doc.id === "bootcamp" ? `/bootcamp` : `/bootcamp/${doc.id}`;
+            return doc.id === 'bootcamp' ? `/bootcamp` : `/bootcamp/${doc.id}`;
           }
-          if (doc.id.includes("benchmarks")) {
+          if (doc.id.includes('benchmarks')) {
             return `/docs/${doc.id}`;
           }
           if (isBlog) {
@@ -153,14 +153,14 @@ const Menu = (props) => {
           return `/docs/${formatVersion}/${doc.id}`;
         };
         // find top menu by current label
-        const topMenu = list.filter((v) => {
+        const topMenu = list.filter(v => {
           if (!labelKeys[index] || !v[labelKeys[index]]) {
             return index > 0 ? (v[parentLabel] ? true : false) : true;
           }
           return false;
         });
 
-        topMenu.forEach((v) => {
+        topMenu.forEach(v => {
           const item = {
             ...v,
             children: [],
@@ -173,7 +173,7 @@ const Menu = (props) => {
           if (index === 0) {
             copyMenu.push(item);
           } else {
-            const parent = findItem("id", v[parentLabel], copyMenu);
+            const parent = findItem('id', v[parentLabel], copyMenu);
             parent && parent.children.push(item);
           }
         });
@@ -183,24 +183,24 @@ const Menu = (props) => {
       };
     };
 
-    const checkActive = (list) => {
-      const findDoc = findItem("id", activePost, list);
+    const checkActive = list => {
+      const findDoc = findItem('id', activePost, list);
       if (!findDoc) {
         return;
       }
-      const labelKeys = Object.keys(findDoc).filter((v) => v.includes("label"));
+      const labelKeys = Object.keys(findDoc).filter(v => v.includes('label'));
       findDoc.isActive = true; // here will open the right menu and give the active color
-      labelKeys.forEach((label) => {
-        const parentDoc = findItem("id", findDoc[label], list);
+      labelKeys.forEach(label => {
+        const parentDoc = findItem('id', findDoc[label], list);
         parentDoc && (parentDoc.showChildren = true);
       });
     };
 
-    const sortMenu = (list) => {
+    const sortMenu = list => {
       list.sort((a, b) => {
         return a.order - b.order;
       });
-      list.forEach((v) => {
+      list.forEach(v => {
         if (v.children && v.children.length) {
           sortMenu(v.children);
         }
@@ -222,31 +222,31 @@ const Menu = (props) => {
 
   const menuRef = useRef(null);
 
-  const handleMenuClick = (doc) => {
+  const handleMenuClick = doc => {
     if (doc.isMenu) {
       toggleMenuChild(doc);
     }
   };
 
-  const generageMenuDom = (list, className = "") => {
+  const generageMenuDom = (list, className = '') => {
     return (
       <ul>
-        {list.map((doc) => (
+        {list.map(doc => (
           <li
-            className={`${className} ${doc.label2 ? styles.menuChild3 : ""}  ${
-              doc.isLast ? styles.menuLastLevel : ""
-            } ${doc.isActive ? styles.active : ""}`}
+            className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${
+              doc.isLast ? styles.menuLastLevel : ''
+            } ${doc.isActive ? styles.active : ''}`}
             key={doc.id}
           >
             <div
               className={`${styles.menuNameWrapper} ${
-                doc.showChildren ? styles.active : ""
+                doc.showChildren ? styles.active : ''
               }`}
               role="button"
               tabIndex={0}
               onKeyDown={() => handleMenuClick(doc)}
               onClick={() => handleMenuClick(doc)}
-              style={doc.isMenu ? { cursor: "pointer" } : null}
+              style={doc.isMenu ? { cursor: 'pointer' } : null}
             >
               {doc.outLink ? (
                 <a
@@ -272,16 +272,16 @@ const Menu = (props) => {
 
               {doc.children && doc.children.length ? (
                 <>
-                  {doc.isMenu && doc.label1 === "" ? (
+                  {doc.isMenu && doc.label1 === '' ? (
                     <i
                       className={`fas fa-caret-down ${styles.arrow} ${
-                        doc.showChildren ? "" : styles.top
+                        doc.showChildren ? '' : styles.top
                       }`}
                     ></i>
                   ) : (
                     <i
                       className={`fas ${styles.expandIcon} ${
-                        doc.showChildren ? "fa-minus-square" : "fa-plus-square"
+                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
                       }`}
                     ></i>
                   )}
@@ -290,7 +290,7 @@ const Menu = (props) => {
             </div>
             <div
               className={`${styles.menuChildWrapper} ${
-                doc.showChildren ? styles.open : ""
+                doc.showChildren ? styles.open : ''
               }`}
             >
               {doc.children && doc.children.length
@@ -303,11 +303,11 @@ const Menu = (props) => {
     );
   };
 
-  const toggleMenuChild = (doc) => {
+  const toggleMenuChild = doc => {
     let menu = JSON.parse(JSON.stringify(realMenuList));
     const toggleIsShowChildren = (menu, doc) => {
-      const findDoc = findItem("id", doc.id, menu);
-      const copyMenu = menu.map((item) => {
+      const findDoc = findItem('id', doc.id, menu);
+      const copyMenu = menu.map(item => {
         const { showChildren, id, children } = item;
         let childrenList = children;
 

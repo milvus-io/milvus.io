@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import Sidebar from "../sidebar/sidebar";
-import Footer from "../footer/footer";
-import NewHeader from "../header/v2/index";
-import * as styles from "./index.module.less";
+import React, { useState, useEffect, useRef } from 'react';
+import Sidebar from '../sidebar/sidebar';
+import Footer from '../footer/footer';
+import NewHeader from '../header/v2/index';
+import * as styles from './index.module.less';
 
-const DocLayout = (props) => {
+const DocLayout = props => {
   const {
     pageContext,
     language,
@@ -52,9 +52,9 @@ const DocLayout = (props) => {
       return;
     }
     const repoUrl = `https://api.github.com/repos/milvus-io/milvus`;
-    let latest = window.localStorage.getItem("milvus.io.stargazers");
+    let latest = window.localStorage.getItem('milvus.io.stargazers');
     const latestFetchTime = window.localStorage.getItem(
-      "milvus.io.stargazers_fetch_time"
+      'milvus.io.stargazers_fetch_time'
     );
 
     if (
@@ -64,17 +64,17 @@ const DocLayout = (props) => {
     ) {
       // get
       fetch(repoUrl)
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           if (data) {
             if (data.stargazers_count >= latest) {
               console.log(data.stargazers_count);
               window.localStorage.setItem(
-                "milvus.io.stargazers",
+                'milvus.io.stargazers',
                 data.stargazers_count
               );
               window.localStorage.setItem(
-                "milvus.io.stargazers_fetch_time",
+                'milvus.io.stargazers_fetch_time',
                 Date.now()
               );
               star.current.innerHTML = `${data.stargazers_count}`;
@@ -90,17 +90,17 @@ const DocLayout = (props) => {
     let currentPos = 0;
 
     const cb = function () {
-      const container = document.querySelector("html");
-      const direction = container.scrollTop - currentPos > 0 ? "down" : "up";
+      const container = document.querySelector('html');
+      const direction = container.scrollTop - currentPos > 0 ? 'down' : 'up';
       currentPos = container.scrollTop;
-      const showButton = direction === "up" && currentPos;
+      const showButton = direction === 'up' && currentPos;
 
       setShowToTopButton(showButton);
     };
-    window.addEventListener("scroll", cb);
+    window.addEventListener('scroll', cb);
 
     return () => {
-      window.removeEventListener("scroll", cb);
+      window.removeEventListener('scroll', cb);
     };
   }, []);
 
@@ -112,9 +112,9 @@ const DocLayout = (props) => {
         menuList: menuList.menuList,
       },
     ],
-    activePost: id.split("-")[0],
+    activePost: id.split('-')[0],
     isBlog: menuList.isBlog,
-    formatVersion: version === "master" ? newestVersion : version,
+    formatVersion: version === 'master' ? newestVersion : version,
   };
 
   const searchConfig = {
@@ -125,15 +125,15 @@ const DocLayout = (props) => {
     homeTitle: language.menu.home,
     version,
     // filter master version
-    versions: versions.filter((v) => v !== "master"),
+    versions: versions.filter(v => v !== 'master'),
   };
-  console.log("==== 130 versions", versions);
+  console.log('==== 130 versions', versions);
 
   const generateAnchorMenu = (headings, className) => {
-    return headings.map((v) => {
+    return headings.map(v => {
       /* eslint-disable-next-line */
-      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, "");
-      const anchor = normalVal.split(" ").join("-");
+      const normalVal = v.value.replace(/[.｜,｜\/｜\'｜\?｜？｜、|，]/g, '');
+      const anchor = normalVal.split(' ').join('-');
       let childDom = null;
       if (v.children && v.children.length) {
         childDom = generateAnchorMenu(v.children, styles.childItem);
@@ -143,7 +143,7 @@ const DocLayout = (props) => {
           <a
             href={`#${anchor}`}
             title={v.value}
-            className={`${styles.anchor} ${anchor === hash ? "active" : ""}`}
+            className={`${styles.anchor} ${anchor === hash ? 'active' : ''}`}
             onClick={() => setHash(anchor)}
           >
             {v.value}
@@ -157,7 +157,7 @@ const DocLayout = (props) => {
   const onToTopClick = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -180,18 +180,18 @@ const DocLayout = (props) => {
         )}
         <div
           className={`${styles.innerContainer} ${
-            isHome ? styles.innerContainerHome : ""
-          } ${isBenchMark ? styles.fullWidth : ""}`}
+            isHome ? styles.innerContainerHome : ''
+          } ${isBenchMark ? styles.fullWidth : ''}`}
           ref={docContainer}
         >
           {children}
           {!isBenchMark && (
-            <Footer locale={locale} style={{ background: "#fff" }}></Footer>
+            <Footer locale={locale} style={{ background: '#fff' }}></Footer>
           )}
         </div>
         {formatHeadings && !isBenchMark && (
           <div
-            className={`${styles.anchorWrapper} ${isHome ? styles.home : ""}`}
+            className={`${styles.anchorWrapper} ${isHome ? styles.home : ''}`}
           >
             <section>
               {!isHome && (
@@ -201,7 +201,7 @@ const DocLayout = (props) => {
                       <a
                         className={styles.btnAnchor}
                         href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
-                          locale === "en" ? "en" : "zh-CN"
+                          locale === 'en' ? 'en' : 'zh-CN'
                         }/${editPath}`}
                       >
                         <span className={styles.btnIconWrapper}>
@@ -255,7 +255,7 @@ const DocLayout = (props) => {
                     </div>
                   )}
                   {/* filter faq page */}
-                  {!id.includes("faq")
+                  {!id.includes('faq')
                     ? generateAnchorMenu(formatHeadings, styles.parentItem)
                     : null}
                 </>

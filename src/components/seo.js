@@ -69,7 +69,7 @@ function SEO({ description, lang, meta, title, version }) {
         },
         {
           name: 'docsearch:language',
-          content: lang,
+          content: lang === 'cn' ? 'zh-cn' : lang,
         },
         {
           name: 'docsearch:version',

@@ -929,11 +929,16 @@ const generateDocHome = (
     allApiMenus,
     versions,
     newestVersion,
+    versionInfo,
   }
 ) => {
   homeData.forEach(({ language, data, path, version }) => {
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
+    const link = versionInfo[version]['pymilvus-orm'];
+    // only need to be replaced in version v2.0.0
+    version === 'v2.0.0' &&
+      (data.section3.items[1].list[0].link = `/api-reference/pymilvus-orm/${link}/install.html`);
 
     if (version === newestVersion) {
       const homePath = getNewestVersionHomePath(language);

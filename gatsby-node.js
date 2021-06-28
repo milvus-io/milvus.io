@@ -250,6 +250,7 @@ exports.createPages = async ({ actions, graphql }) => {
       allApiMenus,
       versions,
       newestVersion,
+      versionInfo,
     });
 
     generateAllDocPages(createPage, {

@@ -20,7 +20,7 @@ export default function Template({ data, pageContext }) {
     newestVersion,
   } = pageContext;
 
-  const [targetDocVersion, setTargetDocVersion] = useState('master');
+  const [targetDocVersion, setTargetDocVersion] = useState();
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.

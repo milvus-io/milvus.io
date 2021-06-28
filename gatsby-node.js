@@ -66,7 +66,6 @@ fs.writeFile(
   JSON.stringify(Object.values(versionInfo), null, 2),
   err => {
     if (err) throw err;
-    console.log('versionInfo file write to file', versionInfo);
   }
 );
 

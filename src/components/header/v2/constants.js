@@ -23,7 +23,7 @@ export const NAVLIST_EN = [
   },
   {
     label: 'Blog',
-    link: 'https://blog.milvus.io/',
+    link: 'https://zilliz.com/blog',
     isExternal: true,
   },
   {
@@ -47,7 +47,7 @@ export const NAVLIST_CN = [
   },
   {
     label: '博客',
-    link: 'https://blog.milvus.io/',
+    link: 'https://zilliz.com/blog',
     isExternal: true,
   },
   {

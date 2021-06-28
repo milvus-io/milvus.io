@@ -15,6 +15,7 @@ import Header from '../components/header/v2';
 import { useMobileScreen } from '../hooks/index';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
 import './bootcampTemplate.less';
+import { useFormatAnchor } from '../hooks/doc-anchor';
 
 const Icons = {
   IMAGE_SEARCH: imageSearch,
@@ -49,6 +50,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
   // add hooks used by doc template
   useFilter();
   useCodeCopy(locale);
+  useFormatAnchor();
 
   const [hash, setHash] = useState(null);
   const [showToTopButton, setShowToTopButton] = useState(false);

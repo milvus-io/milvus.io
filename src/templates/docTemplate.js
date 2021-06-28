@@ -73,7 +73,7 @@ export default function Template({
     };
   }, [isMobile]);
 
-  useAlgolia(locale, version);
+  useAlgolia(locale, version, !isBlog);
 
   if (!data.allFile.edges[0]) {
     return null;

@@ -13,7 +13,7 @@ import { NOT_SUPPORTED_VERSION } from '../config';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
 import RelatedQuestion from '../components/relatedQuestion';
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
-import { useGenAnchor } from '../hooks/doc-anchor';
+import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
 
 export default function Template({
   data,
@@ -50,6 +50,7 @@ export default function Template({
   useEmPanel(setShowModal);
   useGenAnchor(version, editPath);
   useFilter();
+  useFormatAnchor();
   useCodeCopy(locale);
 
   useEffect(() => {

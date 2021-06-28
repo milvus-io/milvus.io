@@ -14,6 +14,7 @@ import share from '../images/community/share.svg';
 import video from '../images/community/video.svg';
 import CommunityCard from '../components/card/communityCard';
 import Button from '../components/button';
+import { useFormatAnchor } from '../hooks/doc-anchor';
 
 const iconMap = {
   build,
@@ -55,6 +56,7 @@ export default function CommunityTemplate({ data, pageContext }) {
 
   // add hooks used by doc template
   useFilter();
+  useFormatAnchor();
   useCodeCopy(locale);
 
   const [hash, setHash] = useState(null);

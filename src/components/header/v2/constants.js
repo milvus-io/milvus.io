@@ -35,7 +35,7 @@ export const NAVLIST_EN = [
 ];
 export const NAVLIST_CN = [
   {
-    label: '什么是 milvus?',
+    label: '什么是 Milvus?',
     link: '/docs/overview.md',
     isExternal: false,
   },

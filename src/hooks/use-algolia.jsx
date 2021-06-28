@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 
-export default function useAlgolia(locale, version, condition = true) {
+export default function useAlgolia(locale, version) {
   useEffect(() => {
-    if (!condition) return;
     // if not setTimeout, will throw render error
     setTimeout(() => {
       window.docsearch({
@@ -24,5 +23,5 @@ export default function useAlgolia(locale, version, condition = true) {
         },
       });
     }, 100);
-  }, [locale, version, condition]);
+  }, [locale, version]);
 }

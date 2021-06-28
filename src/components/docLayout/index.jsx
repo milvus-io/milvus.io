@@ -172,7 +172,6 @@ const DocLayout = props => {
           allApiMenus={allApiMenus}
           menuConfig={menuConfig}
           searchConfig={searchConfig}
-          showSearch={!isBlog}
           versionConfig={versionConfig}
           isVersionWithHome={isVersionWithHome}
         />

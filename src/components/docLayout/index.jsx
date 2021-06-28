@@ -165,18 +165,16 @@ const DocLayout = props => {
       <NewHeader locale={locale} />
 
       <main className={wrapperClass}>
-        {!isBlog && (
-          <Sidebar
-            locale={locale}
-            showVersions={true}
-            wrapperClass={styles.menuContainer}
-            allApiMenus={allApiMenus}
-            menuConfig={menuConfig}
-            searchConfig={searchConfig}
-            versionConfig={versionConfig}
-            isVersionWithHome={isVersionWithHome}
-          />
-        )}
+        <Sidebar
+          locale={locale}
+          showVersions={!isBlog}
+          wrapperClass={styles.menuContainer}
+          allApiMenus={allApiMenus}
+          menuConfig={menuConfig}
+          searchConfig={searchConfig}
+          versionConfig={versionConfig}
+          isVersionWithHome={isVersionWithHome}
+        />
         <div
           className={`${styles.innerContainer} ${
             isHome ? styles.innerContainerHome : ''

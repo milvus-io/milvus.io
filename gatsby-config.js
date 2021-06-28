@@ -84,6 +84,10 @@ let gatsbyConfigs = {
           switch (node.sourceInstanceName) {
             case 'i18n':
               return `i18n`;
+            case 'blogs':
+              if (node.relativePath.includes('menuStructure')) {
+                return `menu`;
+              }
             case 'docs':
               if (
                 node.relativePath.includes('versionInfo') ||

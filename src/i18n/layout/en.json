@@ -31,7 +31,7 @@
             "link": "https://milvusio.slack.com/"
           },
           "github": {
-            "label": "Discuss on github",
+            "label": "Discuss on GitHub",
             "link": "https://github.com/milvus-io/milvus/issues/"
           },
           "follow": {
@@ -79,7 +79,7 @@
       },
       "resource": {
         "title": "Resources",
-        "txt1": "Github",
+        "txt1": "GitHub",
         "txt2": "Medium",
         "txt3": "CSDN",
         "txt4": "Milvus Bootcamp"
@@ -168,7 +168,7 @@
         "title": "Open Source",
         "desc1": "Milvus is open-sourced on GitHub. ",
         "desc2": "Contributions and feedback are welcome!",
-        "contribute": "Contribute on Github",
+        "contribute": "Contribute on GitHub",
         "bootcamp": "Try Milvus Bootcamp"
       },
       "section5": {
@@ -215,7 +215,7 @@
             "type": "contribute",
             "urlList": [
               {
-                "title": "Join Us on Github >",
+                "title": "Join Us on GitHub >",
                 "url": "https://github.com/milvus-io"
               }
             ]
@@ -359,7 +359,7 @@
     },
     "community": {
       "slack": "Join Slack",
-      "github": "Join Github"
+      "github": "Join GitHub"
     }
   },
   "v2": {
@@ -386,7 +386,7 @@
           "icon": null
         },
         {
-          "label": "Github",
+          "label": "GitHub",
           "link": "https://github.com/milvus-io/milvus/",
           "icon": "git"
         }
@@ -492,7 +492,7 @@
         "text2": "Contributions and feedbacks are welcome!",
         "gitBtn": {
           "href": "https://github.com/milvus-io/milvus/",
-          "label": "Go to Github"
+          "label": "Go to GitHub"
         }
       }
     },
@@ -509,7 +509,7 @@
           "title": "Contribute",
           "text": "Milvus is a community project. We encourage you to join the effort and contribute feedback, ideas and code.",
           "href": "https://github.com/milvus-io",
-          "label": "Join us on Github",
+          "label": "Join us on GitHub",
           "icons": []
         },
         {

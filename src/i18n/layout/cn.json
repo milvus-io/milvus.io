@@ -31,7 +31,7 @@
             "link": "https://milvusio.slack.com/"
           },
           "github": {
-            "label": "在github上讨论",
+            "label": "在 GitHub 上讨论",
             "link": "https://github.com/milvus-io/milvus/issues/"
           },
           "follow": {
@@ -79,7 +79,7 @@
       },
       "resource": {
         "title": "资源",
-        "txt1": "Github",
+        "txt1": "GitHub",
         "txt2": "Medium",
         "txt3": "CSDN",
         "txt4": "Milvus 在线训练营"
@@ -166,9 +166,9 @@
       },
       "section4": {
         "title": "开源",
-        "desc1": "Milvus 是 Github 上的开源产品 ",
+        "desc1": "Milvus 是 GitHub 上的开源产品 ",
         "desc2": "欢迎任何贡献和反馈",
-        "contribute": "在 Github 上贡献",
+        "contribute": "在 GitHub 上贡献",
         "bootcamp": "试用Bootcamp"
       },
       "section5": {
@@ -215,7 +215,7 @@
             "type": "contribute",
             "urlList": [
               {
-                "title": "在 Github 上加入我们 >",
+                "title": "在 GitHub 上加入我们 >",
                 "url": "https://github.com/milvus-io"
               },
               {
@@ -350,7 +350,7 @@
     },
     "community": {
       "slack": "加入 Slack",
-      "github": "加入 Github"
+      "github": "加入 GitHub"
     }
   },
   "v2": {
@@ -377,7 +377,7 @@
           "icon": null
         },
         {
-          "label": "Github",
+          "label": "GitHub",
           "link": "https://github.com/milvus-io/milvus/",
           "icon": "git"
         }
@@ -406,7 +406,7 @@
         "list": [
           {
             "title": "经济高效",
-            "text": "高性能的列式存储和Faiss，HNSWLib等向量索引保证了Milvus可以高效实现数据查询。通过利用 CPU SiMD，GPA， FPGA 的加速，Milvus 可以实现千万级向量数据毫秒级召回。",
+            "text": "高性能的列式存储和 Faiss，HNSWLib 等向量索引保证了 Milvus 可以高效实现数据查询。通过利用 CPU SiMD，GPA， FPGA 的加速，Milvus 可以实现千万级向量数据毫秒级召回。",
             "img": "supporting"
           },
           {
@@ -416,7 +416,7 @@
           },
           {
             "title": "专注非结构化数据",
-            "text": " Milvus帮助用户关注非结构化数据的语意本身，用户无需再关注Sharding，数据持久化，负载均衡等复杂问题。Milvus 支持高性能向量标量混合查询，解锁了更多非结构化数据的处理方式。 ",
+            "text": " Milvus 帮助用户关注非结构化数据的语意本身，用户无需再关注 Sharding，数据持久化，负载均衡等复杂问题。Milvus 支持高性能向量标量混合查询，解锁了更多非结构化数据的处理方式。 ",
             "img": "deployment"
           },
 
@@ -427,59 +427,14 @@
           },
           {
             "title": "易于使用",
-            "text": "Milvus支持丰富的数据类型，并提供了完善的多语言支持。通过 ORM API，Milvus 可以在笔记本，本地集群和云上提供统一的使用体验。我们同时提供了丰富的部署和可视化工具帮助用户更快的上手和运维。",
+            "text": "Milvus 支持丰富的数据类型，并提供了完善的多语言支持。通过 ORM API，Milvus 可以在笔记本，本地集群和云上提供统一的使用体验。我们同时提供了丰富的部署和可视化工具帮助用户更快的上手和运维。",
             "img": "autoscaling"
-          }
-        ]
-      },
-      "user": {
-        "title": "Users",
-        "list": [
-          {
-            "name": "test1",
-            "link": "/#"
-          },
-          {
-            "name": "test2",
-            "link": "/#"
-          },
-          {
-            "name": "test3",
-            "link": "/#"
-          },
-          {
-            "name": "test4",
-            "link": "/#"
-          },
-          {
-            "name": "test5",
-            "link": "/#"
-          },
-          {
-            "name": "test6",
-            "link": "/#"
-          },
-          {
-            "name": "test7",
-            "link": "/#"
-          },
-          {
-            "name": "test8",
-            "link": "/#"
-          },
-          {
-            "name": "test9",
-            "link": "/#"
-          },
-          {
-            "name": "test10",
-            "link": "/#"
           }
         ]
       },
       "community": {
         "title": "加入社区",
-        "text1": "Milvus在github上开源",
+        "text1": "Milvus 在 GitHub 上开源",
         "text2": "欢迎大家对开源项目做贡献!",
         "gitBtn": {
           "href": "https://github.com/milvus-io/milvus/",
@@ -500,7 +455,7 @@
           "title": "贡献",
           "text": "Milvus 是一款社区产品，欢迎提供反馈与贡献代码。",
           "href": "https://github.com/milvus-io",
-          "label": "在 Github 上加入我们",
+          "label": "在 GitHub 上加入我们",
           "icons": []
         },
         {

@@ -854,6 +854,9 @@ const generateApiMenus = nodes => {
         order: -1,
         isMenu: true,
         outLink: null,
+        i18n: {
+          title: { en: 'API Reference', cn: 'API 参考' },
+        },
       },
     ]
   );

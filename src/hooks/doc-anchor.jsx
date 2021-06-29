@@ -66,7 +66,7 @@ export const useFormatAnchor = () => {
         const anchorIndex = link.indexOf('#');
         const anchorLink = anchorIndex !== -1 ? link.slice(anchorIndex) : '';
         const validAnchorLink = decodeURI(anchorLink)
-          .replace(/[.｜,｜/｜'｜?｜？｜、|，|(|)]/g, '')
+          .replace(/[.｜,｜/｜'｜?｜？｜、|，|(|)|:]/g, '')
           .split(' ')
           .join('-');
         a.href =

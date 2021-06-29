@@ -427,8 +427,20 @@ const generateHomeData = edges => {
  */
 const filterMdWithVersion = edges => {
   return edges.filter(({ node: { fileAbsolutePath, frontmatter } }) => {
+    /**
+     * Filter correct md file by version.
+     * Drop md file with no version or older than v1.0.0 (except v0.x).
+     * @param {string} path File absolute path.
+     * @returns {boolean} If this md should be dropped or not.
+     */
+    const filterVersion = path => {
+      const mdVersion = findVersion(path);
+      if (mdVersion?.startsWith('v0.') && !mdVersion?.startsWith('v0.x'))
+        return false;
+      return !!mdVersion;
+    };
     return (
-      (!!findVersion(fileAbsolutePath) ||
+      (filterVersion(fileAbsolutePath) ||
         fileAbsolutePath.includes('/docs/versions/master/common') ||
         fileAbsolutePath.includes('/blog/zh-CN') ||
         (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
@@ -842,6 +854,9 @@ const generateApiMenus = nodes => {
         order: -1,
         isMenu: true,
         outLink: null,
+        i18n: {
+          title: { en: 'API Reference', cn: 'API 参考' },
+        },
       },
     ]
   );

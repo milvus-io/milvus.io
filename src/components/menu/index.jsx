@@ -161,6 +161,12 @@ const Menu = props => {
         });
 
         topMenu.forEach(v => {
+          // i18n: { title: { en: 'API Reference', cn: 'API 参考' }, }
+          if (v?.i18n) {
+            const { i18n, title } = v;
+            const localizedTitle = i18n?.title?.[locale] || title;
+            localizedTitle && (v.title = localizedTitle);
+          }
           const item = {
             ...v,
             children: [],

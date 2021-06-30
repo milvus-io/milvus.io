@@ -3,6 +3,8 @@ import * as styles from './startCard.module.less';
 import standAloneIcon from '../../../images/doc-home/standalone.svg';
 import clusterIcon from '../../../images/doc-home/cluster.svg';
 import bootCamps from '../../../images/doc-home/bootcamps.png';
+import cpu from '../../../images/doc-home/cpu.svg';
+import gpu from '../../../images/doc-home/gpu.svg';
 import { useMobileScreen } from '../../../hooks/index';
 
 const StartCard = ({ data, wrapperClass = '' }) => {
@@ -12,7 +14,9 @@ const StartCard = ({ data, wrapperClass = '' }) => {
   const imgMap = {
     'stand-alone': standAloneIcon,
     cluster: clusterIcon,
-    bootcamps: bootCamps
+    bootcamps: bootCamps,
+    cpu,
+    gpu,
   };
 
   const imgSrc = imgMap[key.toLowerCase()];

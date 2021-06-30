@@ -147,9 +147,10 @@ let gatsbyConfigs = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 650,
+              maxWidth: 1000,
               wrapperStyle:
-                'display:inline-block; min-width: 22px;height: auto;width:100%;margin-top:32px',
+                'min-width: 22px;height: auto;width:90%;margin: 32px auto 0;',
+              quality: 100,
             },
           },
           {
@@ -174,7 +175,9 @@ let gatsbyConfigs = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

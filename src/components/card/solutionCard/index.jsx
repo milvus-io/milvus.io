@@ -9,40 +9,32 @@ const SolutionCard = ({
   className = '',
   liveDemo = '',
 }) => {
+  const handleClick = () => {
+    window.open(href, {
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    });
+  };
   return (
-    <>
-      {liveDemo ? (
-        <>
-          <div className={`${styles.solutionCard} ${className}`}>
-            <div className={styles.titleBar}>
-              <h3 className={styles.title}>{title}</h3>
-              {img ? <img src={img} alt="icon" className={styles.img} /> : null}
-            </div>
+    <div
+      tabIndex={0}
+      role="button"
+      className={`${styles.solutionCard} ${className}`}
+      onClick={handleClick}
+      onKeyDown={handleClick}
+    >
+      <div className={styles.titleBar}>
+        <h3 className={styles.title}>{title}</h3>
+        {img ? <img src={img} alt="icon" className={styles.img} /> : null}
+      </div>
 
-            <p className={styles.content}>{content}</p>
-            <a href={liveDemo} target="_blank" rel="noopener noreferrer">
-              Live Demo
-            </a>
-          </div>
-        </>
-      ) : (
-        <>
-          <a
-            className={`${styles.solutionCard} ${className}`}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className={styles.titleBar}>
-              <h3 className={styles.title}>{title}</h3>
-              {img ? <img src={img} alt="icon" className={styles.img} /> : null}
-            </div>
-
-            <p className={styles.content}>{content}</p>
-          </a>
-        </>
+      <p className={styles.content}>{content}</p>
+      {liveDemo && (
+        <a href={liveDemo} target="_blank" rel="noopener noreferrer">
+          Live Demo
+        </a>
       )}
-    </>
+    </div>
   );
 };
 

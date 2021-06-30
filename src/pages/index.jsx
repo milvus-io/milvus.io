@@ -70,7 +70,7 @@ const HomePage = ({ data, pageContext }) => {
     if (timer) {
       clearInterval(timer);
     }
-    setInterval(() => {
+    timer = setInterval(() => {
       setIndex(v => (v < len ? (v += 1) : 0));
     }, 15000);
 

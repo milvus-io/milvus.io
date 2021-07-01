@@ -124,5 +124,7 @@
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 999;
 
-  color: transparent;
+  @media (min-width: @screen-md-max) {
+    display: none;
+  }
 }

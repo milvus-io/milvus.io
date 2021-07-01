@@ -241,13 +241,19 @@ export default function Template({
                     <span className="text">Is this page helpful?</span>
                     <span
                       className="icon-wrapper hover-like"
+                      role="button"
+                      tabIndex={0}
                       onClick={() => handleFeedback('like')}
+                      onKeyDown={() => handleFeedback('dislike')}
                     >
                       <i className="fas fa-thumbs-up"></i>
                     </span>
                     <span
                       className="icon-wrapper hover-dislike"
+                      role="button"
+                      tabIndex={0}
                       onClick={() => handleFeedback('dislike')}
+                      onKeyDown={() => handleFeedback('dislike')}
                     >
                       <i className="fas fa-thumbs-down"></i>
                     </span>

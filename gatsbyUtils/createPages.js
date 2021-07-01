@@ -20,7 +20,6 @@ const query = `
         frontmatter {
           id
           related_key
-          keywords
         }
         fileAbsolutePath
         html

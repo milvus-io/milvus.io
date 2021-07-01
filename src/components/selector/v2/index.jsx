@@ -1,29 +1,24 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useMobileScreen } from '../../../hooks';
 import LocallizeLink from '../../../components/localizedLink/localizedLink';
-import { globalHistory } from '@reach/router';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './v2.module.less';
 
-const V2Selector = ({
-  options,
-  className = '',
-  locale
-}) => {
+const V2Selector = ({ options, className = '', locale, path }) => {
   const choosenWrapper = useRef(null);
   const wrapper = useRef(null);
   const [open, setOpen] = useState(false);
   const label = locale;
-  const to = globalHistory.location.pathname
-    .replace('/en/', '/')
-    .replace('/cn/', '/');
+  const to = path.replace('/en/', '/').replace('/cn/', '/');
   const { isMobile } = useMobileScreen();
 
   const handleClick = e => {
     e.stopPropagation();
     setOpen(open ? false : true);
   };
-  useClickOutside(wrapper, () => { setOpen(false); });
+  useClickOutside(wrapper, () => {
+    setOpen(false);
+  });
 
   useEffect(() => {
     const hideOptions = e => {
@@ -44,8 +39,9 @@ const V2Selector = ({
 
   return (
     <div
-      className={`${styles.selectorContainer} ${className} ${isMobile ? styles.mobileSelector : ''
-        }`}
+      className={`${styles.selectorContainer} ${className} ${
+        isMobile ? styles.mobileSelector : ''
+      }`}
       ref={wrapper}
     >
       <div
@@ -62,16 +58,15 @@ const V2Selector = ({
         </p>
       </div>
 
-      <div
-        className={`${styles.optionsWrapper} ${open ? styles.show : ''}`}
-      >
+      <div className={`${styles.optionsWrapper} ${open ? styles.show : ''}`}>
         {options.map(option => (
           <LocallizeLink
             locale={option.value}
             to={to}
             data-option={option}
-            className={`${styles.optionItem} ${option.value === label && styles.active
-              }`}
+            className={`${styles.optionItem} ${
+              option.value === label && styles.active
+            }`}
             key={option.value}
           >
             {option.label}

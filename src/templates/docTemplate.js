@@ -4,7 +4,6 @@ import Seo from '../components/seo';
 import { graphql } from 'gatsby';
 import 'highlight.js/styles/stackoverflow-light.css';
 import './docTemplate.less';
-import { useMobileScreen } from '../hooks';
 import useAlgolia from '../hooks/use-algolia';
 import QueryModal from '../components/query-modal/query-modal';
 import { sortVersions } from '../utils/docTemplate.util';
@@ -38,8 +37,6 @@ export default function Template({
   useEffect(() => {
     window?.localStorage?.setItem('docVersion', version);
   }, [version]);
-
-  const { isMobile } = useMobileScreen();
 
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);

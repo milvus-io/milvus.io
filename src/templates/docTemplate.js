@@ -15,6 +15,8 @@ import RelatedQuestion from '../components/relatedQuestion';
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
 import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
 
+const FEEDBACK_INFO = 'feedback_info';
+
 export default function Template({
   data,
   pageContext, // this prop will be injected by the GraphQL query below.
@@ -33,6 +35,7 @@ export default function Template({
     allApiMenus,
     newestVersion,
     relatedKey,
+    old, // id of markdown
   } = pageContext;
   versions = versions.sort(sortVersions);
 
@@ -46,6 +49,7 @@ export default function Template({
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [isFeedback, setIsFeedback] = useState(false);
   const docRef = useRef(null);
 
   useEmPanel(setShowModal);
@@ -74,6 +78,17 @@ export default function Template({
       window.removeEventListener('click', cb);
     };
   }, [isMobile]);
+
+  useEffect(() => {
+    // make sure whether this doc has been feedbacked
+    const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
+    const feedbackInfo = feedbackInfoString
+      ? JSON.parse(feedbackInfoString)
+      : [];
+
+    const isFeedback = feedbackInfo.some(item => item.md_id === old);
+    setIsFeedback(isFeedback);
+  }, [old]);
 
   useAlgolia(locale, version, !isBlog);
 
@@ -134,6 +149,25 @@ export default function Template({
     : `${headings[0] && headings[0].value}`;
 
   const onOverlayClick = () => setShowModal(false);
+
+  const handleFeedback = val => {
+    const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
+    const feedbackInfo = feedbackInfoString
+      ? JSON.parse(feedbackInfoString)
+      : [];
+    if (!isFeedback) {
+      feedbackInfo.push({
+        md_id: old,
+        feedback: val,
+      });
+
+      setTimeout(() => {
+        setIsFeedback(true);
+      }, 3000);
+    }
+    window.localStorage.setItem(FEEDBACK_INFO, JSON.stringify(feedbackInfo));
+    setFeedback(val);
+  };
 
   return (
     <Layout
@@ -221,17 +255,43 @@ export default function Template({
                   />
                 </div>
 
-                <div className="feedback-wrapper">
-                  <div>
-                    <span>Is this page helpful?</span>
-                    <span className="icon-wrapper">
-                      <i class="fas fa-thumbs-up"></i>
+                <div className={`feedback-wrapper ${isFeedback ? 'hide' : ''}`}>
+                  <div
+                    className={`feedback-options ${
+                      feedback !== '' ? 'hideOptions' : ''
+                    }`}
+                  >
+                    <span className="text">Is this page helpful?</span>
+                    <span
+                      className="icon-wrapper hover-like"
+                      onClick={() => handleFeedback('like')}
+                    >
+                      <i className="fas fa-thumbs-up"></i>
                     </span>
-                    <span className="icon-wrapper">
-                      <i class="fas fa-thumbs-down"></i>
+                    <span
+                      className="icon-wrapper hover-dislike"
+                      onClick={() => handleFeedback('dislike')}
+                    >
+                      <i className="fas fa-thumbs-down"></i>
                     </span>
                   </div>
-                  {}
+
+                  <div
+                    className={`is-like-wrapper ${
+                      feedback !== '' ? 'active' : ''
+                    }`}
+                  >
+                    {feedback === 'like' ? (
+                      <span className="icon-wrapper like">
+                        <i className="fas fa-thumbs-up"></i>
+                      </span>
+                    ) : (
+                      <span className="icon-wrapper dislike">
+                        <i className="fas fa-thumbs-down"></i>
+                      </span>
+                    )}
+                    <span className="text">Scored Successfully!</span>
+                  </div>
                 </div>
               </>
             </div>

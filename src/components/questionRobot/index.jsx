@@ -1,54 +1,23 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import * as styles from './index.module.less';
-import iconBird from '../../images/v2/icon_bird.svg';
 import milvus from '../../images/v2/milvus.svg';
 import { getFaq } from '../../http/http';
-
-
-const ChatItem = ({ chat = [] }) => {
-  const [title, content, isLink] = chat;
-  const [expand, setExpand] = useState(false);
-
-  const answer = expand ? (
-    <>
-      {`A: ${content}`}
-      <button onClick={() => { setExpand(false); }}>
-        Collapse
-      <i className={`fas fa-chevron-up`}></i>
-      </button>
-    </>
-  ) : (
-    <button onClick={() => { setExpand(true); }}>
-      See Answers
-      <i
-        className={`fas fa-chevron-down`}
-      ></i>
-    </button>
-  );
-  return (
-    <div key={title} className={styles.chatCard}>
-      <span className={styles.chatTitle}>{title}</span>
-      {isLink ? (
-        <a href={content} target="_blank" rel="noopener noreferrer">
-          See on Github
-          <i
-            className={`fab fa-github`}
-          ></i>
-        </a>
-      ) : answer}
-    </div>
-  );
-};
+import WelcomBlock from './welcomBlock';
+import AnswerBlock from './answerBlock';
 
 const QuestionRobot = () => {
   const [open, setOpen] = useState(false);
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState([{ state: 0 }]);
   const [chatNum, setChatNum] = useState(0);
   const [locked, setLocked] = useState(0);
+  const [version, setVersion] = useState(2);
+  const [currentExpand, setCurrentExpand] = useState(0);
+  const [question, setQuestion] = useState('');
 
   const inputEl = useRef(null);
   const containerEl = useRef(null);
+  const chatCopy = useRef(null);
+  chatCopy.current = [...chats];
 
   const toggle = () => {
     setOpen(!open);
@@ -56,44 +25,70 @@ const QuestionRobot = () => {
 
   const keyPress = e => {
     const v = inputEl.current.value;
-    if ((e.key === 'Enter' || e.target.tagName === "BUTTON") && v && !locked) {
-      setChats([...chats].concat({ value: v, state: 0 }));
-      setLocked(true);
-      getFaq({
-        params: {
-          question: v,
-          version: 1
-        },
-      }).then(res => {
-        if (res?.data?.response) {
-          setChats([...chats].concat([
-            { value: v, state: 0 },
-            { value: res.data.response.slice(0, 5), state: 1 }
-          ]));
-        }
-        setLocked(false);
-      }).catch(err => {
-        console.log("err", err);
-        setLocked(false);
-      });
-      inputEl.current.value = '';
+    if ((e.key === 'Enter' || e.target.tagName === 'BUTTON') && v && !locked) {
+      setQuestion(v);
     }
   };
 
-  const expandAnswers = (index) => {
-    const expandedChats = [...chats];
-    expandedChats[index]['state'] = 2;
-    setChats(expandedChats);
-  };
+  // check if doc version changed
+  useEffect(() => {
+    const hrefs = window.location.href.split('docs/v');
+    if (hrefs[1] && (hrefs[1].startsWith('0') || hrefs[1].startsWith('1'))) {
+      setVersion(1);
+    } else {
+      setVersion(2);
+    }
+  }, []);
 
+  // raise a new question
+  useEffect(() => {
+    if (question) {
+      setChats([...chatCopy.current].concat({ value: question, state: 100 }));
+      setLocked(true);
+      getFaq({
+        params: {
+          question,
+          version,
+        },
+      })
+        .then(res => {
+          if (res?.data?.response) {
+            setChats(
+              [...chatCopy.current].concat([
+                { value: res.data.response.slice(0, 5), state: 1 },
+              ])
+            );
+          }
+          setLocked(false);
+        })
+        .catch(err => {
+          console.log('err', err);
+          setLocked(false);
+        });
+      if (inputEl && inputEl.current) {
+        inputEl.current.value = '';
+      }
+    }
+  }, [question, version]);
+
+  // scroll when new chat entry created
   useEffect(() => {
     if (chats.length !== chatNum) {
       setChatNum(chats.length);
-      if (containerEl) {
+      if (containerEl && containerEl.current) {
         containerEl.current.scrollTop = containerEl.current.scrollHeight;
       }
     }
   }, [chats, chatNum]);
+
+  // scroll when last answer is expand
+  useEffect(() => {
+    if (currentExpand + 1 === chats.length) {
+      if (containerEl && containerEl.current) {
+        containerEl.current.scrollTop = containerEl.current.scrollHeight;
+      }
+    }
+  }, [currentExpand, chats]);
 
   const onMaskClick = () => {
     setOpen(false);
@@ -103,62 +98,64 @@ const QuestionRobot = () => {
     <div className={styles.robot}>
       {open && (
         <div className={styles.dialog}>
-          <div className={styles.dialogHeader}>Search Engine powerd by <img src={milvus} className={styles.logo} alt="logo" /></div>
+          <div className={styles.dialogHeader}>
+            Search Engine powerd by{' '}
+            <img src={milvus} className={styles.logo} alt="logo" />
+          </div>
           <div ref={containerEl} className={styles.dialogContent}>
             {chats.map((chat, index) => {
               if (chat.state === 0) {
-                return <div key={`${index}${chat.state}`} className={styles.myChat}>{chat.value}</div>;
-              } else if (chat.state === 1) {
                 return (
-                  <div key={`${index}${chat.state}`} className={styles.serverChat}>
-                    <img src={iconBird} alt="icon" />
-                    <div>
-                      Hi! Here are related disscussion that might help you:
-                      {
-                        chat.value.slice(0, 3).map(chatEntry =>
-                          <ChatItem chat={chatEntry} />
-                        )
-                      }
-                      <button onClick={() => expandAnswers(index)}>
-                        See More
-                        <i
-                          className={`fas fa-chevron-down`}
-                        ></i>
-                      </button>
-                    </div>
+                  <div
+                    key={`${index}-${chat.state}`}
+                    className={styles.serverChat}
+                  >
+                    <WelcomBlock version={version} setInit={setQuestion} />
                   </div>
                 );
-              } else {
+              } else if (chat.state === 1) {
                 return (
-                  <div key={`${index}${chat.state}`} className={styles.serverChat}>
-                    <img src={iconBird} alt="icon" />
-                    <div>
-                      Hi! Here are related disscussion that might help you:
-                      {chat.value.map(chatEntry =>
-                      <ChatItem chat={chatEntry} />
-                    )}
-                    </div>
+                  <div
+                    key={`${index}-${chat.state}`}
+                    className={styles.serverChat}
+                  >
+                    <AnswerBlock
+                      chat={chat}
+                      index={index}
+                      setCurrent={setCurrentExpand}
+                    />
                   </div>
                 );
               }
+              return (
+                <div key={`${index}-${chat.state}`} className={styles.myChat}>
+                  {chat.value}
+                </div>
+              );
             })}
           </div>
           <div className={styles.dialogInput}>
-            <input ref={inputEl} placeholder="Ask Milvus Anything..." onKeyPress={keyPress} />
+            <input
+              ref={inputEl}
+              placeholder="Ask Milvus Anything..."
+              onKeyPress={keyPress}
+            />
             <button onClick={keyPress}>{''}</button>
           </div>
         </div>
       )}
-      <button onClick={toggle} className={`${styles.openBtn} ${open && styles.close}`}>{''}</button>
+      <button
+        onClick={toggle}
+        className={`${styles.openBtn} ${open && styles.close}`}
+      >
+        {''}
+      </button>
       {open && (
         <div
           className={styles.mask}
+          role="presentation"
           onClick={onMaskClick}
-          role="button"
-          tabIndex={0}
-          onKeyDown={onMaskClick}
-        >
-        </div>
+        />
       )}
     </div>
   );

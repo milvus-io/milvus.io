@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
 import GithubButton from 'react-github-button';
+import 'react-github-button/assets/style.css';
 import './index.less';
 import Seo from '../components/seo';
 import autoscalingIcon from '../images/v2/autoscaling.svg';

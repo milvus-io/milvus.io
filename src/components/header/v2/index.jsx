@@ -16,20 +16,16 @@ import LangSelector from '../../selector/v2';
 import { LANGUAGES, NAVLIST_EN, NAVLIST_CN } from './constants';
 import LocalizedLink from '../../localizedLink/localizedLink';
 
-
 const V2Header = props => {
-  const {
-    className = '',
-    locale,
-  } = props;
+  const { className = '', locale } = props;
   const navList = locale === 'en' ? NAVLIST_EN : NAVLIST_CN;
   const { isMobile } = useMobileScreen();
 
   const [maskConfig, setMaskConfig] = useState({
     isOpen: false,
-    type: 'close'
+    type: 'close',
   });
-  const [path, setPath] = useState('');
+  const [path, setPath] = useState('/');
   const container = useRef(null);
   const headContainer = useRef(null);
 
@@ -37,7 +33,7 @@ const V2Header = props => {
     const type = isOpen ? 'menu' : 'close';
     setMaskConfig({
       isOpen,
-      type
+      type,
     });
   };
 
@@ -94,8 +90,9 @@ const V2Header = props => {
                     </a>
                   ) : (
                     <LocalizedLink
-                      className={`${styles.navItem} ${path.includes(keyWord) ? styles.active : ''
-                        }`}
+                      className={`${styles.navItem} ${
+                        path.includes(keyWord) ? styles.active : ''
+                      }`}
                       to={link}
                       key={label}
                       locale={locale}
@@ -106,14 +103,18 @@ const V2Header = props => {
                 })}
                 <a
                   className={styles.navItem}
-                  href='https://github.com/milvus-io/milvus/'
+                  href="https://github.com/milvus-io/milvus/"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <i className={`fab fa-github ${styles.navIcon}`}></i>
                 </a>
                 <div className={styles.dropDown}>
-                  <LangSelector options={LANGUAGES} locale={locale} />
+                  <LangSelector
+                    options={LANGUAGES}
+                    locale={locale}
+                    path={path}
+                  />
                 </div>
               </div>
             </div>
@@ -136,45 +137,38 @@ const V2Header = props => {
                 </a>
               </div>
               <div className={styles.menuSection}>
-                <div
-                  className={styles.menuWrapper}
-                >
+                <div className={styles.menuWrapper}>
                   <div
                     className={styles.iconWrapper}
                     data-type={maskConfig.type === 'menu' ? 'close' : 'menu'}
                   >
-                    {
-                      maskConfig.isOpen ? (
-                        <span
-                          role="button"
-                          tabIndex={-1}
-                          onClick={() => handleToggleMask({ isOpen: false })}
-                          onKeyDown={() => handleToggleMask({ isOpen: false })}
-                        >
-                          <img
-                            className={styles.btnIcon}
-                            src={close}
-                            alt="close-icon"
-                          />
-                        </span>
-
-                      ) : (
-                        <span
-                          role="button"
-                          tabIndex={-1}
-                          onClick={() => handleToggleMask({ isOpen: true })}
-                          onKeyDown={() => handleToggleMask({ isOpen: true })}
-                        >
-                          <img
-
-                            className={styles.btnIcon}
-                            src={menu}
-                            alt="close-icon"
-                          />
-                        </span>
-
-                      )
-                    }
+                    {maskConfig.isOpen ? (
+                      <span
+                        role="button"
+                        tabIndex={-1}
+                        onClick={() => handleToggleMask({ isOpen: false })}
+                        onKeyDown={() => handleToggleMask({ isOpen: false })}
+                      >
+                        <img
+                          className={styles.btnIcon}
+                          src={close}
+                          alt="close-icon"
+                        />
+                      </span>
+                    ) : (
+                      <span
+                        role="button"
+                        tabIndex={-1}
+                        onClick={() => handleToggleMask({ isOpen: true })}
+                        onKeyDown={() => handleToggleMask({ isOpen: true })}
+                      >
+                        <img
+                          className={styles.btnIcon}
+                          src={menu}
+                          alt="close-icon"
+                        />
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -188,6 +182,7 @@ const V2Header = props => {
                     options={LANGUAGES}
                     navList={navList}
                     locale={locale}
+                    path={path}
                   />
                 ) : (
                   <Search />

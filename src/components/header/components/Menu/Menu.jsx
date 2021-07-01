@@ -3,15 +3,10 @@ import LocalizedLink from '../../../localizedLink/localizedLink';
 import V2Selector from '../../../selector/v2';
 import * as navStyles from './menu.module.less';
 
-const Menu = ({ options, navList, locale }) => {
-
+const Menu = ({ options, navList, locale, path }) => {
   const LinkContent = ({ label, icon }) => (
     <>
-      {
-        icon ? (
-          <img className={navStyles.img} src={icon} alt="github" />
-        ) : label
-      }
+      {icon ? <img className={navStyles.img} src={icon} alt="github" /> : label}
     </>
   );
 
@@ -30,7 +25,12 @@ const Menu = ({ options, navList, locale }) => {
             <LinkContent label={label} icon={icon} />
           </a>
         ) : (
-          <LocalizedLink className={navStyles.navItem} to={link} key={label} locale={locale}>
+          <LocalizedLink
+            className={navStyles.navItem}
+            to={link}
+            key={label}
+            locale={locale}
+          >
             <LinkContent label={label} icon={icon} />
           </LocalizedLink>
         );
@@ -40,6 +40,7 @@ const Menu = ({ options, navList, locale }) => {
           className={navStyles.mobileSelector}
           options={options}
           locale={locale}
+          path={path}
         />
       </div>
     </div>

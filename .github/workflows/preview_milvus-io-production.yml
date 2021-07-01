@@ -1,9 +1,8 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy container app to Azure Web App - milvus-io-production(dev)
+name: Build and deploy to preview
 
 on:
+  repository_dispatch:
+    types: dev-deploy
   push:
     branches:
       - preview
@@ -36,7 +35,7 @@ jobs:
       with:
         push: true
         tags: zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_0106db9abf8a481291d42e2e124070d5 }}/milvuspreview2021:${{ github.sha }}
-        file: ./Dockerfile
+        file: ./Preview.Dockerfile
 
   deploy:
     runs-on: ubuntu-latest

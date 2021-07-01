@@ -1,0 +1,93 @@
+name: Build and deploy to preview
+
+on:
+  repository_dispatch:
+    types: dev-deploy
+  push:
+    branches:
+      - preview
+  workflow_dispatch:
+
+jobs:
+# Build npm package docker
+  buildnpm:
+    runs-on: ubuntu-latest
+    # output if package.json is updated
+    outputs:
+      packagejson: ${{ steps.changesfiles.outputs.packagejson }}
+    steps:
+      - name: Checkout Code
+        run: |
+          cd ..
+          sudo git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          cd milvus.io
+          sudo chmod -R 777 .
+          sudo git reset HEAD --hard 
+          sudo git checkout ${GITHUB_REF##*/}
+
+      - name: Get commit sha
+        id: getsha
+        run: echo "::set-output name=sha::$(git rev-parse HEAD^2)"
+
+      - name: Get changed files
+        id: changesfiles
+        run: |
+          echo "::set-output name=packagejson::$(git diff-tree --no-commit-id --name-only -r ${{ steps.getsha.outputs.sha }} | grep package.json$ | xargs)"
+
+      - name: Login to DockerHub
+        if: steps.changesfiles.outputs.packagejson == 'package.json'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PWD }}
+
+      - name: Build and push
+        if: steps.changesfiles.outputs.packagejson == 'package.json'
+        run: |
+          docker build -t milvusdb/milvus.io.builder:${GITHUB_REF##*/} -f ./Builder.Dockerfile .
+          docker push milvusdb/milvus.io.builder:${GITHUB_REF##*/}
+
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      
+    - name: update submodules
+      run: |
+        git submodule init
+        git submodule update --remote
+
+    - name: Log in to registry
+      uses: docker/login-action@v1
+      with:
+        registry: https://zilliz.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_fcdf52b41adf4d978d72b00dbf9f4165 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_0106db9abf8a481291d42e2e124070d5 }}/milvuspreview2021:${{ github.sha }}
+        file: ./Preview.Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'dev'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'milvus-io-production'
+        slot-name: 'dev'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_fa1b3ab4f557439ca4cb7a2f63c50d3e }}
+        images: 'zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_0106db9abf8a481291d42e2e124070d5 }}/milvuspreview2021:${{ github.sha }}'

@@ -44,11 +44,17 @@ const Menu = props => {
     isBlog,
     wrapperClass = '',
     allApiMenus = [],
+    showSearch = false,
+    showVersions = false,
     // mobileMenuOpened = false,
   } = props;
 
   const [realMenuList, setRealMenuList] = useState([]);
   const menuRef = useRef(null);
+
+  const searchBarHeight = showSearch ? 62 : 0;
+  const versionBarHeight = showVersions ? 57 : 0;
+  const maxHeight = `calc(100% - ${searchBarHeight}px - ${versionBarHeight}px)`;
 
   /**
    * Find out the compatible api menus by comparing the target doc version for each item;
@@ -241,6 +247,10 @@ const Menu = props => {
       attributes: true,
       subtree: true,
     });
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -359,7 +369,11 @@ const Menu = props => {
 
   return (
     <>
-      <nav className={`${wrapperClass} ${styles.menuContainer}`} ref={menuRef}>
+      <nav
+        className={`${wrapperClass} ${styles.menuContainer}`}
+        ref={menuRef}
+        style={{ maxHeight: maxHeight }}
+      >
         {generageMenuDom(realMenuList, `${styles.menuTopLevel}`)}
       </nav>
     </>

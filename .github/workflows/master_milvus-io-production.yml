@@ -9,44 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-# Build npm package docker
-  buildnpm:
-    runs-on: ubuntu-latest
-    # output if package.json is updated
-    outputs:
-      packagejson: ${{ steps.changesfiles.outputs.packagejson }}
-    steps:
-      - name: Checkout Code
-        run: |
-          cd ..
-          sudo git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          cd milvus.io
-          sudo chmod -R 777 .
-          sudo git reset HEAD --hard 
-          sudo git checkout ${GITHUB_REF##*/}
-
-      - name: Get commit sha
-        id: getsha
-        run: echo "::set-output name=sha::$(git rev-parse HEAD^2)"
-
-      - name: Get changed files
-        id: changesfiles
-        run: |
-          echo "::set-output name=packagejson::$(git diff-tree --no-commit-id --name-only -r ${{ steps.getsha.outputs.sha }} | grep package.json$ | xargs)"
-
-      - name: Login to DockerHub
-        if: steps.changesfiles.outputs.packagejson == 'package.json'
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PWD }}
-
-      - name: Build and push
-        if: steps.changesfiles.outputs.packagejson == 'package.json'
-        run: |
-          docker build -t milvusdb/milvus.io.builder:${GITHUB_REF##*/} -f ./Builder.Dockerfile .
-          docker push milvusdb/milvus.io.builder:${GITHUB_REF##*/}
-  
   build:
     runs-on: 'ubuntu-latest'
 

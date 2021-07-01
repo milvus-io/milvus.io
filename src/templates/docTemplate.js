@@ -45,6 +45,7 @@ export default function Template({
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [feedback, setFeedback] = useState('');
   const docRef = useRef(null);
 
   useEmPanel(setShowModal);
@@ -218,6 +219,19 @@ export default function Template({
                     globalEventOff="click"
                     className="md-tooltip"
                   />
+                </div>
+
+                <div className="feedback-wrapper">
+                  <div>
+                    <span>Is this page helpful?</span>
+                    <span className="icon-wrapper">
+                      <i class="fas fa-thumbs-up"></i>
+                    </span>
+                    <span className="icon-wrapper">
+                      <i class="fas fa-thumbs-down"></i>
+                    </span>
+                  </div>
+                  {}
                 </div>
               </>
             </div>

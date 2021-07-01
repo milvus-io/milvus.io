@@ -4,8 +4,6 @@
 name: Build and deploy container app to Azure Web App - milvus-io-production(dev)
 
 on:
-  repository_dispatch:
-    types: dev-deploy
   push:
     branches:
       - preview
@@ -20,24 +18,19 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-      
-    - name: update submodules
-      run: |
-        git submodule init
-        git submodule update --remote
 
     - name: Log in to registry
       uses: docker/login-action@v1
       with:
         registry: https://zilliz.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_3ef5a93db4c14494be0728d3715a42bd }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_0d316acc413546f88e013106ab1f235e }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_350cc3788a744ed983b4f63e3a500db0 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_8968a0c2f1ad4cfb8e5a803331cb17eb }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_3ef5a93db4c14494be0728d3715a42bd }}/zilliz.azurecr.iozilliz/milvusioproduction9745:${{ github.sha }}
+        tags: zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_350cc3788a744ed983b4f63e3a500db0 }}/zilliz/milvusioproductionpreview9745:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -54,5 +47,5 @@ jobs:
       with:
         app-name: 'milvus-io-production'
         slot-name: 'dev'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_c167412035944c86abc10c5b5396baee }}
-        images: 'zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_3ef5a93db4c14494be0728d3715a42bd }}/zilliz.azurecr.iozilliz/milvusioproduction9745:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_af43dd1e24fa4b61b80642865afec9f8 }}
+        images: 'zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_350cc3788a744ed983b4f63e3a500db0 }}/zilliz/milvusioproductionpreview9745:${{ github.sha }}'

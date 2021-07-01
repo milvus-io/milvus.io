@@ -16,6 +16,8 @@ const QuestionRobot = () => {
 
   const inputEl = useRef(null);
   const containerEl = useRef(null);
+  const chatCopy = useRef(null);
+  chatCopy.current = [...chats];
 
   const toggle = () => {
     setOpen(!open);
@@ -40,8 +42,8 @@ const QuestionRobot = () => {
 
   // raise a new question
   useEffect(() => {
-    if (question && question !== chats[chats.length - 1]['value']) {
-      setChats([...chats].concat({ value: question, state: 100 }));
+    if (question) {
+      setChats([...chatCopy.current].concat({ value: question, state: 100 }));
       setLocked(true);
       getFaq({
         params: {
@@ -52,8 +54,7 @@ const QuestionRobot = () => {
         .then(res => {
           if (res?.data?.response) {
             setChats(
-              [...chats].concat([
-                { value: question, state: 100 },
+              [...chatCopy.current].concat([
                 { value: res.data.response.slice(0, 5), state: 1 },
               ])
             );
@@ -68,7 +69,7 @@ const QuestionRobot = () => {
         inputEl.current.value = '';
       }
     }
-  }, [question, chats, version]);
+  }, [question, version]);
 
   // scroll when new chat entry created
   useEffect(() => {

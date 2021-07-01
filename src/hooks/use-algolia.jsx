@@ -44,7 +44,7 @@ export default function useAlgolia(locale, version, condition = true) {
         content: version || '',
       },
     ];
-  }, []);
+  }, [locale, version]);
 
   return docsearchMeta;
 }

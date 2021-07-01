@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/docLayout';
 import Seo from '../components/seo';
 import { graphql } from 'gatsby';
-import ReactTooltip from 'react-tooltip';
 import 'highlight.js/styles/stackoverflow-light.css';
 import './docTemplate.less';
 import { useMobileScreen } from '../hooks';
@@ -60,19 +59,6 @@ export default function Template({
       !window.location.pathname.includes('data_migration');
     setShowWarning(isLowVersion);
   }, [version]);
-
-  useEffect(() => {
-    if (!isMobile) return;
-    const cb = e => {
-      if (e.target.dataset.tip) {
-        ReactTooltip.show(e.target);
-      }
-    };
-    window.addEventListener('click', cb);
-    return () => {
-      window.removeEventListener('click', cb);
-    };
-  }, [isMobile]);
 
   useAlgolia(locale, version, !isBlog);
 
@@ -212,12 +198,6 @@ export default function Template({
                     dangerouslySetInnerHTML={{ __html: newHtml }}
                   />
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
-                  <ReactTooltip
-                    type="info"
-                    // place="right"
-                    globalEventOff="click"
-                    className="md-tooltip"
-                  />
                 </div>
               </>
             </div>

@@ -48,6 +48,7 @@ const Menu = props => {
   } = props;
 
   const [realMenuList, setRealMenuList] = useState([]);
+  const menuRef = useRef(null);
 
   /**
    * Find out the compatible api menus by comparing the target doc version for each item;
@@ -111,6 +112,136 @@ const Menu = props => {
       return [...prev, item];
     }, []);
   };
+
+  const handleMenuClick = doc => {
+    cacheLastClickPosition();
+    if (doc.isMenu) {
+      toggleMenuChild(doc);
+    }
+  };
+
+  const generageMenuDom = (list, className = '') => {
+    return (
+      <ul>
+        {list.map(doc => (
+          <li
+            className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${
+              doc.isLast ? styles.menuLastLevel : ''
+            } ${doc.isActive ? styles.active : ''}`}
+            key={doc.id}
+          >
+            <div
+              className={`${styles.menuNameWrapper} ${
+                doc.showChildren ? styles.active : ''
+              }`}
+              role="button"
+              tabIndex={0}
+              onKeyDown={() => handleMenuClick(doc)}
+              onClick={() => handleMenuClick(doc)}
+              style={doc.isMenu ? { cursor: 'pointer' } : null}
+            >
+              {doc.outLink ? (
+                <a
+                  href={doc.outLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.outlink} ${styles.text}`}
+                >
+                  <i className="fas fa-external-link-alt"></i>
+                  {doc.title}
+                </a>
+              ) : doc.isMenu === true ? (
+                <span className={styles.text}>{doc.title}</span>
+              ) : (
+                <LocalizeLink
+                  locale={locale}
+                  className={styles.text}
+                  to={doc.path}
+                >
+                  {doc.title}
+                </LocalizeLink>
+              )}
+
+              {doc.children && doc.children.length ? (
+                <>
+                  {doc.isMenu && doc.label1 === '' ? (
+                    <i
+                      className={`fas fa-caret-down ${styles.arrow} ${
+                        doc.showChildren ? '' : styles.top
+                      }`}
+                    ></i>
+                  ) : (
+                    <i
+                      className={`fas ${styles.expandIcon} ${
+                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
+                      }`}
+                    ></i>
+                  )}
+                </>
+              ) : null}
+            </div>
+            <div
+              className={`${styles.menuChildWrapper} ${
+                doc.showChildren ? styles.open : ''
+              }`}
+            >
+              {doc.children && doc.children.length
+                ? generageMenuDom(doc.children, styles.menuChild)
+                : null}
+            </div>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  const toggleMenuChild = doc => {
+    let menu = JSON.parse(JSON.stringify(realMenuList));
+    const toggleIsShowChildren = (menu, doc) => {
+      const findDoc = findItem('id', doc.id, menu);
+      const copyMenu = menu.map(item => {
+        const { showChildren, id, children } = item;
+        let childrenList = children;
+
+        if (children && children.length && isChildItem(findDoc.id, children)) {
+          childrenList = toggleIsShowChildren(children, findDoc);
+          return { ...item, children: childrenList, showChildren: true };
+        }
+        if (id === findDoc.id) {
+          childrenList = closeAllChildren(children);
+          return {
+            ...item,
+            children: childrenList,
+            showChildren: !showChildren,
+          };
+        }
+        childrenList = closeAllChildren(children);
+        return { ...item, children: childrenList, showChildren: false };
+      });
+      return copyMenu;
+    };
+    setRealMenuList(toggleIsShowChildren(menu, doc));
+  };
+
+  const cacheLastClickPosition = () => {
+    const { scrollTop } = menuRef.current;
+    window.sessionStorage.setItem('@@scrollTop', scrollTop);
+  };
+
+  useEffect(() => {
+    const scrollTop = window.sessionStorage.getItem('@@scrollTop') || 0;
+    const observer = new MutationObserver(() => {
+      menuRef.current.scrollTo({
+        top: scrollTop,
+        behavior: 'smooth',
+      });
+    });
+    observer.observe(menuRef.current, {
+      childList: true,
+      attributes: true,
+      subtree: true,
+    });
+  }, []);
 
   useEffect(() => {
     const generateMenu = list => {
@@ -225,117 +356,6 @@ const Menu = props => {
     setRealMenuList(arr);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuList, activePost, formatVersion]);
-
-  const menuRef = useRef(null);
-
-  const handleMenuClick = doc => {
-    if (doc.isMenu) {
-      toggleMenuChild(doc);
-    }
-  };
-
-  const generageMenuDom = (list, className = '') => {
-    return (
-      <ul>
-        {list.map(doc => (
-          <li
-            className={`${className} ${doc.label2 ? styles.menuChild3 : ''}  ${
-              doc.isLast ? styles.menuLastLevel : ''
-            } ${doc.isActive ? styles.active : ''}`}
-            key={doc.id}
-          >
-            <div
-              className={`${styles.menuNameWrapper} ${
-                doc.showChildren ? styles.active : ''
-              }`}
-              role="button"
-              tabIndex={0}
-              onKeyDown={() => handleMenuClick(doc)}
-              onClick={() => handleMenuClick(doc)}
-              style={doc.isMenu ? { cursor: 'pointer' } : null}
-            >
-              {doc.outLink ? (
-                <a
-                  href={doc.outLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${styles.outlink} ${styles.text}`}
-                >
-                  <i className="fas fa-external-link-alt"></i>
-                  {doc.title}
-                </a>
-              ) : doc.isMenu === true ? (
-                <span className={styles.text}>{doc.title}</span>
-              ) : (
-                <LocalizeLink
-                  locale={locale}
-                  className={styles.text}
-                  to={doc.path}
-                >
-                  {doc.title}
-                </LocalizeLink>
-              )}
-
-              {doc.children && doc.children.length ? (
-                <>
-                  {doc.isMenu && doc.label1 === '' ? (
-                    <i
-                      className={`fas fa-caret-down ${styles.arrow} ${
-                        doc.showChildren ? '' : styles.top
-                      }`}
-                    ></i>
-                  ) : (
-                    <i
-                      className={`fas ${styles.expandIcon} ${
-                        doc.showChildren ? 'fa-minus-square' : 'fa-plus-square'
-                      }`}
-                    ></i>
-                  )}
-                </>
-              ) : null}
-            </div>
-            <div
-              className={`${styles.menuChildWrapper} ${
-                doc.showChildren ? styles.open : ''
-              }`}
-            >
-              {doc.children && doc.children.length
-                ? generageMenuDom(doc.children, styles.menuChild)
-                : null}
-            </div>
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  const toggleMenuChild = doc => {
-    let menu = JSON.parse(JSON.stringify(realMenuList));
-    const toggleIsShowChildren = (menu, doc) => {
-      const findDoc = findItem('id', doc.id, menu);
-      const copyMenu = menu.map(item => {
-        const { showChildren, id, children } = item;
-        let childrenList = children;
-
-        if (children && children.length && isChildItem(findDoc.id, children)) {
-          childrenList = toggleIsShowChildren(children, findDoc);
-          return { ...item, children: childrenList, showChildren: true };
-        }
-        if (id === findDoc.id) {
-          childrenList = closeAllChildren(children);
-          return {
-            ...item,
-            children: childrenList,
-            showChildren: !showChildren,
-          };
-        }
-        childrenList = closeAllChildren(children);
-        return { ...item, children: childrenList, showChildren: false };
-      });
-      return copyMenu;
-    };
-    setRealMenuList(toggleIsShowChildren(menu, doc));
-  };
 
   return (
     <>

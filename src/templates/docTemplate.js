@@ -45,7 +45,7 @@ export default function Template({
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [feedback, setFeedback] = useState('');
-  const [isFeedback, setIsFeedback] = useState(false);
+  const [isFeedback, setIsFeedback] = useState(true);
   const docRef = useRef(null);
 
   useEmPanel(setShowModal);
@@ -82,6 +82,10 @@ export default function Template({
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.layout
     : {};
+
+  const {
+    feedback: { text1, text2 },
+  } = data.allFile.edges[0] ? data.allFile.edges[0].node.childI18N.v2 : {};
 
   const menuList = allMenus.find(
     v =>
@@ -238,7 +242,7 @@ export default function Template({
                       feedback !== '' ? 'hideOptions' : ''
                     }`}
                   >
-                    <span className="text">Is this page helpful?</span>
+                    <span className="text">{text1}</span>
                     <span
                       className="icon-wrapper hover-like"
                       role="button"
@@ -273,7 +277,7 @@ export default function Template({
                         <i className="fas fa-thumbs-down"></i>
                       </span>
                     )}
-                    <span className="text">Scored Successfully!</span>
+                    <span className="text">{text2}</span>
                   </div>
                 </div>
               </>
@@ -419,6 +423,12 @@ export const pageQuery = graphql`
               }
               menu {
                 home
+              }
+            }
+            v2 {
+              feedback {
+                text1
+                text2
               }
             }
           }

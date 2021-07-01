@@ -2,7 +2,7 @@ let gatsbyConfigs = {
   siteMetadata: {
     siteUrl: `https://milvus.io`,
     title: `· Open Source Vector Database`,
-    description: `Milvus is an open source similarity search engine for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.`,
+    description: `Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications. Powered by Faiss, NMSLIB, and Annoy, the platform supports real-time vector similarity search on massive, trillion-scale datasets.`,
     author: `@ZILLIZ.com`,
   },
   plugins: [

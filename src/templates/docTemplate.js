@@ -63,19 +63,6 @@ export default function Template({
   }, [version]);
 
   useEffect(() => {
-    if (!isMobile) return;
-    const cb = e => {
-      if (e.target.dataset.tip) {
-        ReactTooltip.show(e.target);
-      }
-    };
-    window.addEventListener('click', cb);
-    return () => {
-      window.removeEventListener('click', cb);
-    };
-  }, [isMobile]);
-
-  useEffect(() => {
     // make sure whether this doc has been feedbacked
     const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
     const feedbackInfo = feedbackInfoString

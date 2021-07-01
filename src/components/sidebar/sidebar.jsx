@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import LocalizeLink from "../localizedLink/localizedLink";
-import Menu from "../menu/index";
-import * as styles from "./sidebar.module.less";
-import PropTypes from "prop-types";
-import Selector from "../selector";
+import React, { useState } from 'react';
+import LocalizeLink from '../localizedLink/localizedLink';
+import Menu from '../menu/index';
+import * as styles from './sidebar.module.less';
+import PropTypes from 'prop-types';
+import Selector from '../selector';
 
-const Sidebar = (props) => {
+const Sidebar = props => {
   const {
     locale,
     showSearch = true,
@@ -14,7 +14,7 @@ const Sidebar = (props) => {
     menuConfig,
     searchConfig,
     versionConfig,
-    wrapperClass = "",
+    wrapperClass = '',
     allApiMenus,
     isVersionWithHome = false,
   } = props;
@@ -30,7 +30,7 @@ const Sidebar = (props) => {
   } = menuConfig || {};
 
   const { menuList: menus } = (menuList &&
-    menuList.find((menu) => menu.lang === locale)) || {
+    menuList.find(menu => menu.lang === locale)) || {
     menuList: [],
   };
 
@@ -59,7 +59,7 @@ const Sidebar = (props) => {
     <>
       <aside
         className={`${wrapperClass} ${styles.wrapper} ${
-          !mobileSidebarOpened ? styles.hide : ""
+          !mobileSidebarOpened ? styles.hide : ''
         }`}
       >
         {showSearch && (
@@ -95,6 +95,8 @@ const Sidebar = (props) => {
             formatVersion={formatVersion}
             isBlog={isBlog}
             allApiMenus={allApiMenus}
+            showSearch={showSearch}
+            showVersions={showVersions}
           />
         )}
       </aside>
@@ -106,7 +108,7 @@ const Sidebar = (props) => {
         }
         onClick={toggleControl}
       >
-        {""}
+        {''}
       </button>
       {mobileSidebarOpened && (
         <div

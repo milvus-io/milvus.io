@@ -4,6 +4,8 @@
 name: Build and deploy container app to Azure Web App - milvus-io-production
 
 on:
+  repository_dispatch:
+    types: dev-deploy
   push:
     branches:
       - master

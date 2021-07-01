@@ -57,8 +57,9 @@ export default function Template({
     setShowWarning(isLowVersion);
   }, [version]);
 
-  useAlgolia(locale, version, !isBlog);
+  const docsearchMeta = useAlgolia(locale, version, !isBlog);
 
+  console.log(docsearchMeta);
   if (!data.allFile.edges[0]) {
     return null;
   }
@@ -137,7 +138,7 @@ export default function Template({
       editPath={editPath}
       allApiMenus={allApiMenus}
     >
-      <Seo title={title} lang={locale} version={version} />
+      <Seo title={title} lang={locale} version={version} meta={docsearchMeta} />
       {isBenchmark ? (
         <div className="iframe-container">
           {showBack && (

@@ -114,12 +114,8 @@ const Sidebar = props => {
         <div
           className={styles.mask}
           onClick={onMaskClick}
-          role="button"
-          tabIndex={0}
-          onKeyDown={onMaskClick}
-        >
-          .
-        </div>
+          role="presentation"
+        ></div>
       )}
     </>
   );

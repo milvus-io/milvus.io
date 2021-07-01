@@ -34,7 +34,7 @@ const closeAllChildren = arr => {
   });
 };
 
-const SCROLLTOP = '@@scrollTop';
+const SCROLL_TOP = '@@scrollTop';
 
 const Menu = props => {
   const {
@@ -233,11 +233,11 @@ const Menu = props => {
 
   const cacheLastClickPosition = () => {
     const { scrollTop } = menuRef.current;
-    window.sessionStorage.setItem(SCROLLTOP, scrollTop);
+    window.sessionStorage.setItem(SCROLL_TOP, scrollTop);
   };
 
   useEffect(() => {
-    const scrollTop = window.sessionStorage.getItem(SCROLLTOP) || 0;
+    const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
     const observer = new MutationObserver(() => {
       menuRef.current.scrollTo({
         top: scrollTop,

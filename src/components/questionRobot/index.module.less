@@ -52,181 +52,187 @@
       }
     }
   }
+}
 
-  .dialog {
-    bottom: 84px;
-    border-radius: 8px;
+.dialog {
+  bottom: 84px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: calc(80vh - 130px);
+  max-height: 600px;
+  position: absolute;
+  right: 0;
+  width: 400px;
+  background: #f9f9f9;
+
+  @media @tablet {
+    bottom: 48px;
+    max-width: 400px;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .logo {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(11%) saturate(8%)
+      hue-rotate(154deg) brightness(102%) contrast(102%);
+    height: 18px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .dialogHeader {
+    background-color: @color-primary;
+    border-radius: 8px 8px 0 0;
+    color: white;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 50px;
+    padding-left: 16px;
+  }
+
+  .dialogContent {
+    background-color: #f9f9f9;
+    border-left: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
     display: flex;
     flex-direction: column;
-    height: calc(80vh - 130px);
-    max-height: 600px;
-    position: absolute;
-    right: 0;
-    width: 400px;
-    background: #f9f9f9;
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
 
-    @media @tablet {
-      bottom: 48px;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    .logo {
-      filter: brightness(0) saturate(100%) invert(100%) sepia(11%) saturate(8%)
-        hue-rotate(154deg) brightness(102%) contrast(102%);
-      height: 18px;
-      margin-left: 8px;
-      vertical-align: middle;
-    }
-
-    .dialogHeader {
+    .myChat {
+      align-self: flex-end;
       background-color: @color-primary;
-      border-radius: 8px 8px 0 0;
+      border-radius: 4px;
       color: white;
-      font-family: 'Inter';
-      font-style: normal;
-      font-size: 12px;
-      font-weight: bold;
-      line-height: 50px;
-      padding-left: 16px;
-    }
-
-    .dialogContent {
-      background-color: #f9f9f9;
-      border-left: 1px solid #eeeeee;
-      border-right: 1px solid #eeeeee;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      padding: 15px;
-      overflow-y: auto;
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 500;
       font-size: 14px;
-
-      .myChat {
-        align-self: flex-end;
-        background-color: @color-primary;
-        border-radius: 4px;
-        color: white;
-        font-size: 14px;
-        padding: 10px;
-        max-width: 250px;
-        margin: 8px 0;
-        word-break: break-all;
-      }
-
-      .serverChat {
-        align-self: flex-start;
-        display: flex;
-        flex-direction: row;
-        font-size: 14px;
-        margin: 8px 0;
-        width: 270px;
-
-        & > img {
-          height: 25px;
-          margin-right: 8px;
-          width: 25px;
-        }
-
-        & > div {
-          background-color: white;
-          border-radius: 8px;
-          display: flex;
-          flex-direction: column;
-          padding: 10px;
-
-          & > button {
-            align-self: flex-end;
-          }
-        }
-
-        button {
-          background: transparent;
-          border: 0;
-          display: flex;
-          color: @color-primary;
-          font-family: 'Inter';
-          font-size: 12px;
-          font-weight: bold;
-          margin-top: 8px;
-          padding: 0;
-          cursor: pointer;
-        }
-
-        i {
-          font-size: 16px;
-          margin-left: 10px;
-          vertical-align: middle;
-        }
-
-        .chatCard {
-          align-self: flex-start;
-          border-bottom: 1px solid #eeeeee;
-          display: flex;
-          flex-direction: column;
-          line-height: 16px;
-          padding: 8px 0;
-          width: 100%;
-          word-break: break-word;
-
-          .chatTitle {
-            font-weight: 600;
-            margin-bottom: 8px;
-          }
-
-          &:last-child {
-            border-bottom: 0;
-          }
-
-          a {
-            color: @color-primary;
-            font-size: 12px;
-            font-weight: bold;
-            margin-top: 8px;
-          }
-        }
-      }
+      padding: 10px;
+      max-width: 250px;
+      margin: 8px 0;
+      word-break: break-all;
     }
 
-    .dialogInput {
-      border: 1px solid #eeeeee;
-      border-radius: 0 0 8px 8px;
-      position: relative;
-      height: 50px;
-      background: white;
+    .serverChat {
+      align-self: flex-start;
+      display: flex;
+      flex-direction: row;
+      font-size: 14px;
+      margin: 8px 0;
+      width: 270px;
 
-      input {
-        border: 0;
+      & > img {
+        height: 25px;
+        margin-right: 8px;
+        width: 25px;
+      }
+
+      & > div {
+        background-color: white;
         border-radius: 8px;
-        font-size: 14px;
-        height: 100%;
-        padding: 13px 18px;
-        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        & > button {
+          align-self: flex-end;
+        }
+      }
+
+      .feedback {
+        margin-top: 10px;
       }
 
       button {
         background: transparent;
-        background-image: url(../../images/v2/icon_send.svg);
-        background-size: cover;
         border: 0;
-        height: 22px;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        width: 22px;
+        color: @color-primary;
+        cursor: pointer;
+        display: flex;
+        font-family: 'Inter';
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 8px;
+        padding: 0;
+        text-align: left;
       }
 
-      input::placeholder {
-        color: #afafaf;
-        opacity: 1;
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
+      i {
+        font-size: 16px;
+        margin-left: 10px;
+        vertical-align: middle;
       }
+
+      .chatCard {
+        align-self: flex-start;
+        border-bottom: 1px solid #eeeeee;
+        display: flex;
+        flex-direction: column;
+        line-height: 16px;
+        padding: 8px 0;
+        width: 100%;
+        word-break: break-word;
+
+        .chatTitle {
+          font-weight: 600;
+          margin-bottom: 8px;
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        a {
+          color: @color-primary;
+          font-size: 12px;
+          font-weight: bold;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  .dialogInput {
+    border: 1px solid #eeeeee;
+    border-radius: 0 0 8px 8px;
+    position: relative;
+    height: 50px;
+    background: white;
+
+    input {
+      border: 0;
+      border-radius: 8px;
+      font-size: 14px;
+      height: 100%;
+      padding: 13px 18px;
+      width: 100%;
+    }
+
+    button {
+      background: transparent;
+      background-image: url(../../images/v2/icon_send.svg);
+      background-size: cover;
+      border: 0;
+      height: 22px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 22px;
+    }
+
+    input::placeholder {
+      color: #afafaf;
+      opacity: 1;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
     }
   }
 }
@@ -239,7 +245,6 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 9;
-  color: transparent;
 
   @media (min-width: @screen-md-max) {
     display: none;

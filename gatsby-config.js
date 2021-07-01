@@ -2,7 +2,7 @@ let gatsbyConfigs = {
   siteMetadata: {
     siteUrl: `https://milvus.io`,
     title: `· Open Source Vector Database`,
-    description: `Milvus is an open source similarity search engine for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.`,
+    description: `Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications. Powered by Faiss, NMSLIB, and Annoy, the platform supports real-time vector similarity search on massive, trillion-scale datasets.`,
     author: `@ZILLIZ.com`,
   },
   plugins: [
@@ -203,23 +203,7 @@ if (process.env.NODE_ENV == 'development') {
     options: {
       name: `docs`,
       path: `${__dirname}/src/pages/docs/versions`,
-      ignore: [
-        `**/v0.6.0/*`,
-        `**/v0.7.0/*`,
-        `**/v0.7.1/*`,
-        `**/v0.8.0/*`,
-        `**/v0.8.1/*`,
-        `**/v0.9.0/*`,
-        `**/v0.9.1/*`,
-        `**/v0.10.0/*`,
-        `**/v0.10.1/*`,
-        `**/v0.10.2/*`,
-        `**/v0.10.3/*`,
-        `**/v0.10.4/*`,
-        `**/v0.10.5/*`,
-        `**/v0.10.6/*`,
-        // `**/v0.11.0/*`,
-      ],
+      ignore: [`**/v0.6*`, `**/v0.7*`, `**/v0.8*`, `**/v0.9*`, `**/v0.1*`],
     },
   });
 } else {
@@ -229,6 +213,7 @@ if (process.env.NODE_ENV == 'development') {
       options: {
         name: `docs`,
         path: `${__dirname}/src/pages/docs/versions`,
+        ignore: [`**/v0.6*`, `**/v0.7*`, `**/v0.8*`, `**/v0.9*`, `**/v0.1*`],
       },
     },
     {

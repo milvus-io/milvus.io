@@ -1,45 +1,5 @@
-@import '../../../css/variables/responsive.less';
-@import '../../../css/variables/color.less';
-
-.faqCard {
-  align-items: flex-start;
-  border: 1px solid #eeeeee;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  height: 90px;
-  justify-content: space-between;
-  padding: 8px;
-  width: 250px;
-
-  .title {
-    color: #454545;
-    font-size: 14px;
-    line-height: 18px;
-  }
-
-  .answer,
-  a.answer {
-    background: transparent;
-    border: 0;
-    color: @color-primary;
-    cursor: pointer;
-    font-size: 12px;
-    line-height: 24px;
-    padding: 0;
-    text-decoration: none;
-
-    &:hover {
-      color: @color-btn-press;
-    }
-
-    .btnIcon {
-      font-size: 20px;
-      margin-left: 10px;
-      vertical-align: middle;
-    }
-  }
-}
+@import '../../css/variables/responsive.less';
+@import '../../css/variables/color.less';
 
 .modalMask {
   align-items: center;
@@ -71,6 +31,55 @@
       line-height: 22px;
       margin-top: 16px;
       word-break: break-word;
+    }
+
+    form {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+
+      input,
+      textarea {
+        border: 1px solid rgba(196, 196, 196, 0.5);
+        color: rgb(25, 25, 25);
+        font-size: 16px;
+        margin-top: 24px;
+        padding: 8px 16px;
+        width: 100%;
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      span {
+        color: red;
+        font-size: 14px;
+        margin-top: 16px;
+      }
+
+      .submitButton {
+        background: @color-primary;
+        border: 0;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        height: 40px;
+        line-height: 24px;
+        padding: 8px 20px;
+        margin-top: 24px;
+        text-align: center;
+
+        &:hover {
+          background: @color-btn-press;
+        }
+
+        &:disabled {
+          background: gray;
+          cursor: not-allowed;
+        }
+      }
     }
 
     .modalClose {

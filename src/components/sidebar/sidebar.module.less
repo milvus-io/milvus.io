@@ -13,7 +13,7 @@
     border-radius: 6px;
     background-color: #fff;
 
-    max-height: calc(100vh - 30px - 136px);
+    max-height: 100%;
   }
 }
 
@@ -24,6 +24,7 @@
 }
 
 .searchWrapper {
+  box-sizing: border-box;
   @media @tablet {
     display: none;
   }
@@ -124,5 +125,7 @@
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 999;
 
-  color: transparent;
+  @media (min-width: @screen-md-max) {
+    display: none;
+  }
 }

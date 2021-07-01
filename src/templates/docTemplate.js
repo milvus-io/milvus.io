@@ -2,10 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/docLayout';
 import Seo from '../components/seo';
 import { graphql } from 'gatsby';
-import ReactTooltip from 'react-tooltip';
 import 'highlight.js/styles/stackoverflow-light.css';
 import './docTemplate.less';
-import { useMobileScreen } from '../hooks';
 import useAlgolia from '../hooks/use-algolia';
 import QueryModal from '../components/query-modal/query-modal';
 import { sortVersions } from '../utils/docTemplate.util';
@@ -42,8 +40,6 @@ export default function Template({
   useEffect(() => {
     window?.localStorage?.setItem('docVersion', version);
   }, [version]);
-
-  const { isMobile } = useMobileScreen();
 
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -90,7 +86,7 @@ export default function Template({
     setIsFeedback(isFeedback);
   }, [old]);
 
-  useAlgolia(locale, version, !isBlog);
+  const docsearchMeta = useAlgolia(locale, version, !isBlog);
 
   if (!data.allFile.edges[0]) {
     return null;
@@ -189,7 +185,7 @@ export default function Template({
       editPath={editPath}
       allApiMenus={allApiMenus}
     >
-      <Seo title={title} lang={locale} version={version} />
+      <Seo title={title} lang={locale} version={version} meta={docsearchMeta} />
       {isBenchmark ? (
         <div className="iframe-container">
           {showBack && (
@@ -247,12 +243,6 @@ export default function Template({
                     dangerouslySetInnerHTML={{ __html: newHtml }}
                   />
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
-                  <ReactTooltip
-                    type="info"
-                    // place="right"
-                    globalEventOff="click"
-                    className="md-tooltip"
-                  />
                 </div>
 
                 <div className={`feedback-wrapper ${isFeedback ? 'hide' : ''}`}>

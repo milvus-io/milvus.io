@@ -201,7 +201,7 @@ const DocLayout = props => {
                     {isBlog || isBenchMark || isApiReference ? null : (
                       <a
                         className={styles.btnAnchor}
-                        href={`https://github.com/milvus-io/docs/edit/master/${version}/site/${
+                        href={`https://github.com/milvus-io/milvus-docs/edit/${version}/site/${
                           locale === 'en' ? 'en' : 'zh-CN'
                         }/${editPath}`}
                       >

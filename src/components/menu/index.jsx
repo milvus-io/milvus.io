@@ -34,6 +34,8 @@ const closeAllChildren = arr => {
   });
 };
 
+const SCROLLTOP = '@@scrollTop';
+
 const Menu = props => {
   const {
     menuList,
@@ -156,7 +158,7 @@ const Menu = props => {
                   <i className="fas fa-external-link-alt"></i>
                   {doc.title}
                 </a>
-              ) : doc.isMenu === true ? (
+              ) : doc.isMenu ? (
                 <span className={styles.text}>{doc.title}</span>
               ) : (
                 <LocalizeLink
@@ -231,11 +233,11 @@ const Menu = props => {
 
   const cacheLastClickPosition = () => {
     const { scrollTop } = menuRef.current;
-    window.sessionStorage.setItem('@@scrollTop', scrollTop);
+    window.sessionStorage.setItem(SCROLLTOP, scrollTop);
   };
 
   useEffect(() => {
-    const scrollTop = window.sessionStorage.getItem('@@scrollTop') || 0;
+    const scrollTop = window.sessionStorage.getItem(SCROLLTOP) || 0;
     const observer = new MutationObserver(() => {
       menuRef.current.scrollTo({
         top: scrollTop,

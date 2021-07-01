@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export default function useAlgolia(locale, version, condition = true) {
   useEffect(() => {
@@ -25,4 +25,26 @@ export default function useAlgolia(locale, version, condition = true) {
       });
     }, 100);
   }, [locale, version, condition]);
+
+  // if pathname without version, like /docs/overview.md, need ignored by docsearch
+  const docsearchMeta = useMemo(() => {
+    if (
+      typeof window === 'undefined' ||
+      !window.location.pathname.includes(version)
+    ) {
+      return [];
+    }
+    return [
+      {
+        name: 'docsearch:language',
+        content: locale === 'cn' ? 'zh-cn' : locale,
+      },
+      {
+        name: 'docsearch:version',
+        content: version || '',
+      },
+    ];
+  }, []);
+
+  return docsearchMeta;
 }

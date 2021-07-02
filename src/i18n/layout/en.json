@@ -49,15 +49,15 @@
       },
       "questionBtn": {
         "link": "https://milvusio.slack.com/",
-        "label": "Question. Slack us."
+        "label": "Join Slack channel."
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
-        "label": "Create a project issue."
+        "label": "Report a bug."
       },
       "docIssueBtn": {
-        "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=",
-        "label": "Create a doc issue."
+        "link": "https://github.com/milvus-io/milvus/discussions/new",
+        "label": "Discuss it on GitHub."
       },
       "editBtn": {
         "label": "Edit this page."

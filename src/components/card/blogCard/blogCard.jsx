@@ -4,7 +4,6 @@ import { useMobileScreen } from '../../../hooks/index';
 
 const BlogCard = ({ data, wrapperClass = '' }) => {
   const { title, abstract, imgSrc, time, link } = data;
-  console.log(link);
   const { isMobile } = useMobileScreen();
 
   return (

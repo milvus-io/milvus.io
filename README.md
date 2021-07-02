@@ -5,7 +5,7 @@ milvus.io Official website
 ## local development set up
 
 0. git submodule init
-1. git submodule update --remot
+1. git submodule update --remote
 2. yarn install
 3. yarn start
 

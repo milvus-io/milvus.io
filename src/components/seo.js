@@ -67,14 +67,6 @@ function SEO({ description, lang, meta, title, version }) {
           name: `twitter:description`,
           content: metaDescription,
         },
-        {
-          name: 'docsearch:language',
-          content: lang === 'cn' ? 'zh-cn' : lang,
-        },
-        {
-          name: 'docsearch:version',
-          content: version || '',
-        },
       ].concat(meta)}
     ></Helmet>
   );

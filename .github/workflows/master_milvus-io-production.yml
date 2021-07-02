@@ -30,12 +30,10 @@ jobs:
           username: ${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}
           password: ${{ secrets.AzureAppService_ContainerPassword_fcdf52b41adf4d978d72b00dbf9f4165 }}
 
-      - name: Build and push container image to registry
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}
-          file: ./Dockerfile
+      - name: Docker build and push image to registry
+        run: |
+          docker build -t zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }} -f ./Dockerfile .
+          docker push zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest

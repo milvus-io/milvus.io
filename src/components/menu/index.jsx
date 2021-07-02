@@ -238,20 +238,16 @@ const Menu = props => {
 
   useEffect(() => {
     const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
-    const observer = new MutationObserver(() => {
+    let timer = null;
+    timer = setTimeout(() => {
       menuRef.current.scrollTo({
         top: scrollTop,
         behavior: 'smooth',
       });
-    });
-    observer.observe(menuRef.current, {
-      childList: true,
-      attributes: true,
-      subtree: true,
-    });
+    }, 16);
 
     return () => {
-      observer.disconnect();
+      timer && clearTimeout(timer);
     };
   }, []);
 

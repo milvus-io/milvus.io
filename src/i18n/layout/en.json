@@ -428,7 +428,6 @@
             "text": " Milvus helps its users focus more on the semantic meaning of unstructured data than on complexities such as sharding, data persistence, and load balancing. Milvus supports high-performance, hybrid search of vector and scalar data, opening up renewed possibilities for unstructured data processing.",
             "img": "deployment"
           },
-
           {
             "title": "Community Backed",
             "text": "Graduated from the <a href=\"https://lfaidata.foundation/\" >LF AI & Data Foundation's</a>  incubator program, Milvus has been adopted by over 1,000 organizations worldwide. Milvus has an open, vibrant community. Contributions to Milvus are welcome from everyone.",
@@ -456,7 +455,7 @@
         {
           "title": "What is Milvus? ",
           "text": "Open-source similarity search engine for massive-scale feature vectors",
-          "href": "/docs/install_milvus.md",
+          "href": "/docs/overview.md",
           "label": "Get started",
           "icons": []
         },

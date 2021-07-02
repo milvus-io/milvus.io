@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy container app to Azure Web App - milvus-io-production
+name: Build and deploy to milvus.io
 
 on:
   repository_dispatch:
@@ -38,7 +35,7 @@ jobs:
         with:
           push: true
           tags: zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}
-          file: ./Preview.Dockerfile
+          file: ./Dockerfile
 
   deploy:
     runs-on: ubuntu-latest

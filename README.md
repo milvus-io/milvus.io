@@ -4,9 +4,12 @@ milvus.io Official website
 
 ## local development set up
 
-0. git submodule sync
-1. yarn install
-1. yarn start
+0. git submodule init
+1. git submodule update --remote
+2. yarn install
+3. yarn start
+
+We use submodule to update docs pages. So we must update submodules before yarn start.
 
 ## Preview
 
@@ -28,11 +31,13 @@ add new version doc (branch in repo)
 ```
 
 add comunity
+
 ```
     git submodule add -b master https://github.com/milvus-io/community.git src/pages/blogs/versions/master
 ```
 
 // add benchmark
+
 ```
 git submodule add -b 0.10.0 https://github.com/milvus-io/benchmarks.git static/benchmarks
 ```

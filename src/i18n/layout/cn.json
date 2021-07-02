@@ -419,7 +419,6 @@
             "text": " Milvus 帮助用户关注非结构化数据的语意本身，用户无需再关注 Sharding，数据持久化，负载均衡等复杂问题。Milvus 支持高性能向量标量混合查询，解锁了更多非结构化数据的处理方式。 ",
             "img": "deployment"
           },
-
           {
             "title": "广受社区支持",
             "text": "Milvus 作为 Linux LF&AI 及基金会的毕业项目，支持了超过1000家以上的企业级用户。我们拥有一个活跃且开放的社区，欢迎加入。",
@@ -447,7 +446,7 @@
         {
           "title": "使用 Milvus",
           "text": "Milvus 是一款开源的、针对海量特征向量的相似性搜索引擎。",
-          "href": "/docs/install_milvus.md",
+          "href": "/docs/overview.md",
           "label": "快速开始",
           "icons": []
         },

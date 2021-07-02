@@ -49,15 +49,15 @@
       },
       "questionBtn": {
         "link": "https://milvusio.slack.com/",
-        "label": "有问题，联系我们"
+        "label": "加入 Slack"
       },
       "issueBtn": {
-        "link": "https://github.com/milvus-io/milvus/issues/new/choose",
-        "label": "我要提交 Bug"
+        "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
+        "label": "提交 Bug"
       },
       "docIssueBtn": {
-        "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=",
-        "label": "提交文档错误"
+        "link": "https://github.com/milvus-io/milvus/discussions/new",
+        "label": "GitHub 讨论"
       },
       "editBtn": {
         "label": "编辑"

@@ -2,7 +2,7 @@ name: Build and deploy to milvus.io
 
 on:
   repository_dispatch:
-    types: dev-deploy
+    types: prod-deploy
   push:
     branches:
       - master

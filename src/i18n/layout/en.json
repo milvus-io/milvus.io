@@ -111,7 +111,7 @@
       },
       "section2": {
         "title": "What is Milvus",
-        "content": "Milvus is an open source similarity search engine for massive-scale feature vectors. Built with heterogeneous computing architecture for the best cost efficiency. Searches over billion-scale vectors take only milliseconds with minimum computing resources. Milvus can be used in a wide variety of scenarios to boost AI development.",
+        "content": "Milvus is an open source vector database for massive-scale feature vectors. Built with heterogeneous computing architecture for the best cost efficiency. Searches over billion-scale vectors take only milliseconds with minimum computing resources. Milvus can be used in a wide variety of scenarios to boost AI development.",
         "link": "Quick Start"
       },
       "section3": {
@@ -200,7 +200,7 @@
         "list": [
           {
             "title": "Use Milvus",
-            "desc": "Open source similarity search engine for massive-scale feature vectors",
+            "desc": "Open-source vector database built to power AI applications and vector similarity search.",
             "type": "milvus",
             "urlList": [
               {
@@ -454,7 +454,7 @@
       "list": [
         {
           "title": "What is Milvus? ",
-          "text": "Open-source similarity search engine for massive-scale feature vectors",
+          "text": "Open-source vector database for unstrcutured data",
           "href": "/docs/overview.md",
           "label": "Get started",
           "icons": []

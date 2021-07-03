@@ -1,8 +1,6 @@
-name: Build and deploy to milvus.io
+name: Build and deploy to milvus.io(prod)
 
 on:
-  repository_dispatch:
-    types: prod-deploy
   push:
     branches:
       - master

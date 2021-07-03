@@ -1,8 +1,6 @@
-name: Build and deploy to preview
+name: Build and deploy to preview(dev)
 
 on:
-  repository_dispatch:
-    types: dev-deploy
   push:
     branches:
       - preview

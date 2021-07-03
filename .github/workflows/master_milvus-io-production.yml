@@ -32,8 +32,8 @@ jobs:
 
       - name: Docker build and push image to registry
         run: |
-          docker build -t zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }} -f ./Dockerfile .
-          docker push zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}
+          docker build -t zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}${{github.run_id}} -f ./Dockerfile .
+          docker push zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}${{github.run_id}}
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,4 +50,4 @@ jobs:
           app-name: 'milvus-io-production'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_454153c5568a4a2eb06c10a5d41c255d }}
-          images: 'zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}'
+          images: 'zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}${{github.run_id}}'

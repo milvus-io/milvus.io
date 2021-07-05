@@ -56,6 +56,12 @@ export default function Template({ data, pageContext }) {
     current: 'doc',
   };
 
+  const apiReferenceData = {
+    projName: category,
+    relativePath: name,
+    apiVersion: version,
+  };
+
   return (
     <>
       <Layout
@@ -77,6 +83,7 @@ export default function Template({ data, pageContext }) {
         editPath=""
         isApiReference
         allApiMenus={allApiMenus}
+        apiReferenceData={apiReferenceData}
       >
         <Seo
           title={`API Reference: ${category}`}

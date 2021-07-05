@@ -22,7 +22,7 @@ body {
 
     @media @tablet {
       padding: 0;
-      padding-top: 48px;
+      padding-top: 87px;
     }
   }
 
@@ -134,8 +134,10 @@ body {
         line-height: 30px;
         font-weight: 600;
 
-        @media @tablet {
-          display: none;
+        @media @phone {
+          width: 80%;
+          font-size: 16px;
+          line-height: 20px;
         }
       }
 
@@ -204,7 +206,11 @@ body {
       background-size: contain;
 
       @media @phone {
-        display: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 40%;
+        height: 40%;
       }
     }
   }

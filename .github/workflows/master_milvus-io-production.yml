@@ -1,11 +1,8 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy container app to Azure Web App - milvus-io-production
+name: Build and deploy to milvus.io
 
 on:
   repository_dispatch:
-    types: dev-deploy
+    types: prod-deploy
   push:
     branches:
       - master
@@ -33,12 +30,10 @@ jobs:
           username: ${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}
           password: ${{ secrets.AzureAppService_ContainerPassword_fcdf52b41adf4d978d72b00dbf9f4165 }}
 
-      - name: Build and push container image to registry
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}
-          file: ./Preview.Dockerfile
+      - name: Docker build and push image to registry
+        run: |
+          docker build -t zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}${{github.run_id}} -f ./Dockerfile .
+          docker push zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}${{github.run_id}}
 
   deploy:
     runs-on: ubuntu-latest
@@ -55,4 +50,4 @@ jobs:
           app-name: 'milvus-io-production'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_454153c5568a4a2eb06c10a5d41c255d }}
-          images: 'zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}'
+          images: 'zilliz.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_19b2bf4e76ed4da5979091a842d3fd2d }}/milvusioproduction9745:${{ github.sha }}${{github.run_id}}'

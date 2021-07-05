@@ -49,15 +49,15 @@
       },
       "questionBtn": {
         "link": "https://milvusio.slack.com/",
-        "label": "Question. Slack us."
+        "label": "Join Slack channel."
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
-        "label": "Create a project issue."
+        "label": "Report a bug."
       },
       "docIssueBtn": {
-        "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=documentation-request.md&title=",
-        "label": "Create a doc issue."
+        "link": "https://github.com/milvus-io/milvus/discussions/new",
+        "label": "Discuss it on GitHub."
       },
       "editBtn": {
         "label": "Edit this page."
@@ -111,7 +111,7 @@
       },
       "section2": {
         "title": "What is Milvus",
-        "content": "Milvus is an open source similarity search engine for massive-scale feature vectors. Built with heterogeneous computing architecture for the best cost efficiency. Searches over billion-scale vectors take only milliseconds with minimum computing resources. Milvus can be used in a wide variety of scenarios to boost AI development.",
+        "content": "Milvus is an open source vector database for massive-scale feature vectors. Built with heterogeneous computing architecture for the best cost efficiency. Searches over billion-scale vectors take only milliseconds with minimum computing resources. Milvus can be used in a wide variety of scenarios to boost AI development.",
         "link": "Quick Start"
       },
       "section3": {
@@ -200,7 +200,7 @@
         "list": [
           {
             "title": "Use Milvus",
-            "desc": "Open source similarity search engine for massive-scale feature vectors",
+            "desc": "Open-source vector database built to power AI applications and vector similarity search.",
             "type": "milvus",
             "urlList": [
               {
@@ -428,7 +428,6 @@
             "text": " Milvus helps its users focus more on the semantic meaning of unstructured data than on complexities such as sharding, data persistence, and load balancing. Milvus supports high-performance, hybrid search of vector and scalar data, opening up renewed possibilities for unstructured data processing.",
             "img": "deployment"
           },
-
           {
             "title": "Community Backed",
             "text": "Graduated from the <a href=\"https://lfaidata.foundation/\" >LF AI & Data Foundation's</a>  incubator program, Milvus has been adopted by over 1,000 organizations worldwide. Milvus has an open, vibrant community. Contributions to Milvus are welcome from everyone.",
@@ -455,8 +454,8 @@
       "list": [
         {
           "title": "What is Milvus? ",
-          "text": "Open-source similarity search engine for massive-scale feature vectors",
-          "href": "/docs/install_milvus.md",
+          "text": "Open-source vector database for unstrcutured data",
+          "href": "/docs/overview.md",
           "label": "Get started",
           "icons": []
         },

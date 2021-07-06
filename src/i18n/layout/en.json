@@ -382,7 +382,7 @@
         },
         {
           "label": "Contribute",
-          "link": "/community/making_your_first_contributions.md",
+          "link": "/community",
           "icon": null
         },
         {
@@ -401,7 +401,7 @@
         "label": "Get Started"
       },
       "contributeBtn": {
-        "href": "/community",
+        "href": "/community/making_your_first_contributions.md",
         "label": "Contribute"
       }
     },

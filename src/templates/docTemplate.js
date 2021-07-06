@@ -203,12 +203,7 @@ export default function Template({
                   />
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
                 </div>
-                <ScoredFeedback
-                  feedbackText={feedback}
-                  old={old}
-                  locale={locale}
-                  version={version}
-                />
+                <ScoredFeedback feedbackText={feedback} old={old} />
               </>
             </div>
           )}

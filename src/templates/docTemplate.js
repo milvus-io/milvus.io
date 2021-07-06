@@ -12,8 +12,7 @@ import HomeTemplate from '../components/homeTemplate/homeTemplate';
 import RelatedQuestion from '../components/relatedQuestion';
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
 import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
-
-const FEEDBACK_INFO = 'feedback_info';
+import ScoredFeedback from '../components/scoredFeedback';
 
 export default function Template({
   data,
@@ -44,8 +43,7 @@ export default function Template({
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  const [feedback, setFeedback] = useState('');
-  const [isFeedback, setIsFeedback] = useState(true);
+
   const docRef = useRef(null);
 
   useEmPanel(setShowModal);
@@ -62,17 +60,6 @@ export default function Template({
     setShowWarning(isLowVersion);
   }, [version]);
 
-  useEffect(() => {
-    // make sure whether this doc has been feedbacked
-    const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
-    const feedbackInfo = feedbackInfoString
-      ? JSON.parse(feedbackInfoString)
-      : [];
-
-    const isFeedback = feedbackInfo.some(item => item.md_id === old);
-    setIsFeedback(isFeedback);
-  }, [old]);
-
   const docsearchMeta = useAlgolia(locale, version, !isBlog);
 
   if (!data.allFile.edges[0]) {
@@ -83,9 +70,9 @@ export default function Template({
     ? data.allFile.edges[0].node.childI18N.layout
     : {};
 
-  const {
-    feedback: { text1, text2 },
-  } = data.allFile.edges[0] ? data.allFile.edges[0].node.childI18N.v2 : {};
+  const { feedback } = data.allFile.edges[0]
+    ? data.allFile.edges[0].node.childI18N.v2
+    : {};
 
   const menuList = allMenus.find(
     v =>
@@ -136,25 +123,6 @@ export default function Template({
     : `${headings[0] && headings[0].value}`;
 
   const onOverlayClick = () => setShowModal(false);
-
-  const handleFeedback = val => {
-    const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
-    const feedbackInfo = feedbackInfoString
-      ? JSON.parse(feedbackInfoString)
-      : [];
-    if (!isFeedback) {
-      feedbackInfo.push({
-        md_id: old,
-        feedback: val,
-      });
-
-      setTimeout(() => {
-        setIsFeedback(true);
-      }, 3000);
-    }
-    window.localStorage.setItem(FEEDBACK_INFO, JSON.stringify(feedbackInfo));
-    setFeedback(val);
-  };
 
   return (
     <Layout
@@ -235,51 +203,12 @@ export default function Template({
                   />
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
                 </div>
-
-                <div className={`feedback-wrapper ${isFeedback ? 'hide' : ''}`}>
-                  <div
-                    className={`feedback-options ${
-                      feedback !== '' ? 'hideOptions' : ''
-                    }`}
-                  >
-                    <span className="text">{text1}</span>
-                    <span
-                      className="icon-wrapper hover-like"
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => handleFeedback('like')}
-                      onKeyDown={() => handleFeedback('dislike')}
-                    >
-                      <i className="fas fa-thumbs-up"></i>
-                    </span>
-                    <span
-                      className="icon-wrapper hover-dislike"
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => handleFeedback('dislike')}
-                      onKeyDown={() => handleFeedback('dislike')}
-                    >
-                      <i className="fas fa-thumbs-down"></i>
-                    </span>
-                  </div>
-
-                  <div
-                    className={`is-like-wrapper ${
-                      feedback !== '' ? 'active' : ''
-                    }`}
-                  >
-                    {feedback === 'like' ? (
-                      <span className="icon-wrapper like">
-                        <i className="fas fa-thumbs-up"></i>
-                      </span>
-                    ) : (
-                      <span className="icon-wrapper dislike">
-                        <i className="fas fa-thumbs-down"></i>
-                      </span>
-                    )}
-                    <span className="text">{text2}</span>
-                  </div>
-                </div>
+                <ScoredFeedback
+                  feedbackText={feedback}
+                  old={old}
+                  locale={locale}
+                  version={version}
+                />
               </>
             </div>
           )}

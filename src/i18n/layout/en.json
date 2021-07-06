@@ -53,7 +53,8 @@
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
-        "label": "Report a bug."
+        "label": "Report a bug.",
+        "communityLink": "https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=bug_report.md&title="
       },
       "docIssueBtn": {
         "link": "https://github.com/milvus-io/milvus/discussions/new",

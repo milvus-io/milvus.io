@@ -640,6 +640,10 @@ const generateCommunityPages = (
 
     const fileLang = findLang(fileAbsolutePath);
     const path = getCommunityPath(fileId, fileLang);
+    const editPath = fileAbsolutePath.split(
+      fileLang === 'en' ? '/en/' : '/zh-CN/'
+    )[1];
+
     createPage({
       path,
       component: communityTemplate,
@@ -651,6 +655,8 @@ const generateCommunityPages = (
         menuList: communityMenu,
         homeData: null,
         activePost: fileId,
+        editPath,
+        isCommunity: true,
       },
     });
   });
@@ -707,6 +713,8 @@ const generateCommunityHome = (
         headings: [],
         menuList: communityMenu,
         activePost: 'community',
+        editPath: null,
+        isCommunity: true,
       },
     });
   });

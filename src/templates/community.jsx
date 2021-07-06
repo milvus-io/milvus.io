@@ -15,6 +15,7 @@ import video from '../images/community/video.svg';
 import CommunityCard from '../components/card/communityCard';
 import Button from '../components/button';
 import { useFormatAnchor } from '../hooks/doc-anchor';
+import BtnGroups from '../components/btnGroups';
 
 const iconMap = {
   build,
@@ -32,13 +33,19 @@ export default function CommunityTemplate({ data, pageContext }) {
   } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
     .v2;
 
-  const {
-    footer: { content: anchorTitleTrans },
-  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
-    .layout;
+  const layout = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node
+    .childI18N.layout;
 
-  const { locale, html, menuList, homeData, activePost, headings } =
-    pageContext;
+  const {
+    locale,
+    html,
+    menuList,
+    homeData,
+    activePost,
+    headings,
+    editPath,
+    isCommunity,
+  } = pageContext;
   const isHomePage = homeData !== null;
 
   const title = 'Milvus Community';
@@ -317,14 +324,30 @@ export default function CommunityTemplate({ data, pageContext }) {
                 ></section>
               )}
             </section>
-            {formatHeadings.length > 0 && (
-              <div className="anchors-wrapper">
-                <div className="anchors">
-                  <h4 className="anchor-title">{anchorTitleTrans}</h4>
-                  {generateAnchorMenu(formatHeadings, 'parent-item')}
+            <section className="anchor-container">
+              <BtnGroups
+                isBlog={false}
+                isBenchMark={false}
+                isApiReference={false}
+                isCommunity={isCommunity}
+                version={'master'}
+                locale={locale}
+                editPath={editPath}
+                language={layout}
+                apiReferenceData={{}}
+              />
+              {formatHeadings.length > 0 && (
+                <div className="anchors-wrapper">
+                  <div className="anchors">
+                    <h4 className="anchor-title">
+                      {layout.footer.content.anchorTitleTrans}
+                    </h4>
+                    {generateAnchorMenu(formatHeadings, 'parent-item')}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </section>
+
             {showToTopButton ? (
               <div
                 className="btn-to-top"
@@ -394,6 +417,17 @@ export const Query = graphql`
             layout {
               footer {
                 content
+                editBtn {
+                  label
+                }
+                questionBtn {
+                  label
+                  link
+                }
+                issueBtn {
+                  label
+                  communityLink
+                }
               }
               community {
                 slack

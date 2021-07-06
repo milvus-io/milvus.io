@@ -48,12 +48,13 @@
         }
       },
       "questionBtn": {
-        "link": "https://milvusio.slack.com/",
+        "link": "https://join.slack.com/t/milvusio/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ/",
         "label": "加入 Slack"
       },
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
-        "label": "提交 Bug"
+        "label": "提交 Bug",
+        "communityLink": "https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=bug_report.md&title="
       },
       "docIssueBtn": {
         "link": "https://github.com/milvus-io/milvus/discussions/new",
@@ -392,7 +393,7 @@
         "label": "Get Started"
       },
       "contributeBtn": {
-        "href": "/community",
+        "href": "/community/making_your_first_contributions.md",
         "label": "Contribute"
       }
     },

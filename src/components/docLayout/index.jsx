@@ -3,6 +3,7 @@ import Sidebar from '../sidebar/sidebar';
 import Footer from '../footer/footer';
 import NewHeader from '../header/v2/index';
 import * as styles from './index.module.less';
+import BtnGroups from '../btnGroups';
 
 const DocLayout = props => {
   const {
@@ -162,108 +163,6 @@ const DocLayout = props => {
       top: 0,
       behavior: 'smooth',
     });
-  };
-
-  const BtnGroups = ({
-    styles,
-    isBlog,
-    isBenchMark,
-    isApiReference,
-    version,
-    locale,
-    editPath,
-    language,
-    apiReferenceData: { projName, relativePath, apiVersion },
-  }) => {
-    const generateEditLink = ({
-      version,
-      locale,
-      editPath,
-      projName,
-      relativePath,
-    }) => {
-      let editLink = `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${
-        locale === 'en' ? 'en' : 'zh-CN'
-      }/${editPath}`;
-      switch (projName) {
-        case 'pymilvus-orm':
-          const path = relativePath
-            ?.split('pymilvus_orm_')?.[1]
-            ?.replace('.html', '.rst');
-          editLink = `https://github.com/milvus-io/pymilvus-orm/edit/${apiVersion.slice(
-            1
-          )}/docs/source/${path}`;
-          break;
-        default:
-          break;
-      }
-      return editLink;
-    };
-
-    const shouldRenderBtns =
-      !isBlog &&
-      !isBenchMark &&
-      projName &&
-      relativePath &&
-      apiVersion &&
-      projName === 'pymilvus-orm';
-
-    return (
-      <>
-        <div className={styles.buttonContainer}>
-          {shouldRenderBtns && (
-            <a
-              className={styles.btnAnchor}
-              href={generateEditLink({
-                version,
-                locale,
-                editPath,
-                projName,
-                relativePath,
-              })}
-            >
-              <span className={styles.btnIconWrapper}>
-                <i className={`fas fa-pencil-alt ${styles.btnIcon}`}></i>
-              </span>
-
-              {language.footer.editBtn.label}
-            </a>
-          )}
-          <a
-            className={styles.btnAnchor}
-            href={language.footer.docIssueBtn.link}
-          >
-            <span className={styles.btnIconWrapper}>
-              <i className={`fab fa-github ${styles.btnIcon}`}></i>
-            </span>
-            {language.footer.docIssueBtn.label}
-          </a>
-          <a
-            className={styles.btnAnchor}
-            id="btn-bug"
-            href={language.footer.issueBtn.link}
-          >
-            <span className={styles.btnIconWrapper}>
-              <i className={`fas fa-bug ${styles.btnIcon}`}></i>
-            </span>
-
-            {language.footer.issueBtn.label}
-          </a>
-
-          <a
-            className={styles.btnAnchor}
-            id="btn-question"
-            href={language.footer.questionBtn.link}
-          >
-            <span className={styles.btnIconWrapper}>
-              <i className={`fab fa-slack-hash ${styles.btnIcon}`}></i>
-            </span>
-
-            {language.footer.questionBtn.label}
-          </a>
-        </div>
-      </>
-    );
   };
 
   return (

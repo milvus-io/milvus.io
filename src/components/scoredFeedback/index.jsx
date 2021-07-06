@@ -11,27 +11,29 @@ const ScoredFeedback = ({ old, feedbackText }) => {
   const [feedback, setFeedback] = useState('');
   const [isFeedback, setIsFeedback] = useState(true);
 
-  const handleUpdateStatisData = async (islike = false) => {
-    const { like, dislike, sha } = await readStatisData();
-    if (islike) {
-      like[pathname] ? (like[pathname] += 1) : (like[pathname] = 1);
-    } else {
-      dislike[pathname] ? (dislike[pathname] += 1) : (dislike[pathname] = 1);
-    }
+  const handleUpdateStatisData = async value => {
+    const { statistic, sha } = await readStatisData();
+    const info = statistic[value];
+
+    const pathnameCount = statistic[value][pathname];
+    const content = pathnameCount
+      ? { ...statistic, [value]: { ...info, [pathname]: pathnameCount + 1 } }
+      : { ...statistic, [value]: { ...info, [pathname]: 1 } };
 
     writeStatisData({
       sha,
-      content: window.btoa(JSON.stringify({ like, dislike })),
-      message: 'update statistics data',
+      content: window.btoa(JSON.stringify(content)),
+      message: 'update statistic data',
     });
   };
 
   const handleFeedback = val => {
     const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
-    const feedbackInfo = feedbackInfoString
-      ? JSON.parse(feedbackInfoString)
-      : [];
-    if (!isFeedback) {
+    try {
+      const feedbackInfo = feedbackInfoString
+        ? JSON.parse(feedbackInfoString)
+        : [];
+
       feedbackInfo.push({
         md_id: old,
         feedback: val,
@@ -40,10 +42,13 @@ const ScoredFeedback = ({ old, feedbackText }) => {
       setTimeout(() => {
         setIsFeedback(true);
       }, 3000);
+
+      // window.localStorage.setItem(FEEDBACK_INFO, JSON.stringify(feedbackInfo));
+      setFeedback(val);
+      handleUpdateStatisData(val);
+    } catch (error) {
+      console.log(error);
     }
-    window.localStorage.setItem(FEEDBACK_INFO, JSON.stringify(feedbackInfo));
-    setFeedback(val);
-    handleUpdateStatisData(Boolean(val === 'like'));
   };
 
   useEffect(() => {
@@ -72,7 +77,7 @@ const ScoredFeedback = ({ old, feedbackText }) => {
           role="button"
           tabIndex={0}
           onClick={() => handleFeedback('like')}
-          onKeyDown={() => handleFeedback('dislike')}
+          onKeyDown={() => handleFeedback('like')}
         >
           <i className="fas fa-thumbs-up"></i>
         </span>

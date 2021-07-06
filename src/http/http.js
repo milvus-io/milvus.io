@@ -7,9 +7,8 @@ const userToken = `Z2hwX2ZYUWQwTVNBa3dudTB4UkJjWGhxNUZXVmZGYVdWWjIzQnVnSA==`;
 const org = 'zilliz-bootcamp';
 const repo = 'record_user_question';
 
-//'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';
 const feedbackToken =
-  'Z2hwX2VzcmU3cjkxZ0FaRlU5aGNndlhCOFBXcXMxc2N1dzFmTkJqNw==';
+  'Z2hwX0k4ZmNWQnlrQlAzUWlRaTJjbXdzWXBEWFhPeDdmbDJLeG5IMA==';
 const feedbackOrg = 'milvus-io';
 const feedbackRepo = 'milvus.io.feedback';
 
@@ -78,12 +77,9 @@ export const readStatisData = async () => {
       }
     );
     const { content, sha } = res.data;
-    const { like, dislike } = JSON.parse(
-      window.atob(content.replaceAll('\n', ''))
-    );
+    const statistic = JSON.parse(window.atob(content.replaceAll('\n', '')));
     return {
-      like,
-      dislike,
+      statistic,
       sha,
     };
   } catch (error) {

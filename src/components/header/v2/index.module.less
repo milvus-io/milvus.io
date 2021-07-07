@@ -22,6 +22,7 @@
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+    align-items: center;
 
     .logoSection {
       display: flex;
@@ -29,12 +30,12 @@
       padding: 16px 0;
 
       .milvus {
-        width: 148px;
+        width: auto;
         height: 34px;
       }
 
       .lfai {
-        width: 120px;
+        width: auto;
         height: 39px;
         margin-left: 24px;
       }
@@ -62,7 +63,7 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        margin-left: 16px;
+        text-align: center;
 
         .navIcon {
           font-size: 24px;
@@ -76,42 +77,25 @@
           color: @color-primary;
         }
       }
+      .navMenuItem {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        height: 24px;
+        color: @color-default-link;
+        user-select: none;
+
+        .label {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          text-align: center;
+        }
+      }
 
       .active {
         color: @color-primary;
         font-weight: 600;
-      }
-
-      .dropDown {
-        margin-left: 16px;
-      }
-    }
-  }
-
-  .mobileHeaderWrapper {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    align-items: center;
-
-    .logoSection {
-      display: flex;
-      align-items: center;
-      padding: 16px 0;
-
-      .milvus {
-        width: auto;
-        height: 37px;
-      }
-
-      .lfai {
-        width: auto;
-        height: 34px;
-        margin-left: 24px;
-
-        @media @tablet {
-          margin-left: 16px;
-        }
       }
     }
 
@@ -141,18 +125,56 @@
         }
       }
     }
+  }
+  .v2Popup {
+    left: 16px;
+    right: 16px;
+    width: calc(100% - 32px);
+    box-sizing: border-box;
+    top: 16px;
+    background: #fff;
+    padding-top: 100px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    z-index: -1;
+    border-radius: 32px;
 
-    .v2Popup {
-      left: 16px;
-      right: 16px;
-      width: calc(100% - 32px);
-      box-sizing: border-box;
-      top: 16px;
-      background: #fff;
-      padding: 100px 0px 60px;
-      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-      z-index: -1;
-      border-radius: 32px;
+    .navSection {
+      .navItem {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        height: 24px;
+        margin-bottom: 24px;
+        padding: 0 16px;
+        color: @color-default-link;
+        display: block;
+
+        .navIcon {
+          font-size: 24px;
+
+          &:hover {
+            color: @color-primary;
+          }
+        }
+
+        &:hover {
+          color: @color-primary;
+        }
+      }
+      .navMenuItem {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        color: @color-default-link;
+        user-select: none;
+        margin-bottom: 24px;
+        padding: 0 16px;
+      }
+
+      .active {
+        color: @color-primary;
+        font-weight: 600;
+      }
     }
   }
 }

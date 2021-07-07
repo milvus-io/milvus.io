@@ -6,9 +6,7 @@ import close from '../../../images/v2/close.svg';
 import menu from '../../../images/v2/menu.svg';
 import { useMobileScreen } from '../../../hooks';
 import MobilePopup from '../components/MobilePopupV2';
-import Search from '../components/Search';
 import QuestionRobot from '../../questionRobot';
-import Menu from '../components/Menu/Menu';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
@@ -48,6 +46,49 @@ const V2Header = props => {
     hideMask();
   });
 
+  const generateNavication = (navlist, path, styles) => {
+    return (
+      <>
+        {navlist.map(i => {
+          const { label, link, isExternal, activeKey, subMenu } = i;
+          return subMenu && subMenu.length ? (
+            <div className={`${styles.navMenuItem}`}>
+              {
+                <LangSelector
+                  options={subMenu}
+                  locale={locale}
+                  path={path}
+                  navItemLabel={label}
+                />
+              }
+            </div>
+          ) : isExternal ? (
+            <a
+              className={styles.navItem}
+              href={link}
+              key={label}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {label}
+            </a>
+          ) : (
+            <LocalizedLink
+              className={`${styles.navItem} ${
+                path.includes(activeKey) ? styles.active : ''
+              }`}
+              to={link}
+              key={label}
+              locale={locale}
+            >
+              {label}
+            </LocalizedLink>
+          );
+        })}
+      </>
+    );
+  };
+
   useEffect(() => {
     const { pathname } = globalHistory.location;
     setPath(pathname);
@@ -57,85 +98,24 @@ const V2Header = props => {
     <header className={`${styles.header} ${className}`} ref={headContainer}>
       <div className={styles.firstHeader}>
         <div className={styles.headerContainer} ref={container}>
-          {!isMobile ? (
-            <div className={styles.contentWrapper}>
-              <div className={styles.logoSection}>
-                <LocalizedLink to="/" locale={locale}>
-                  <img
-                    className={styles.milvus}
-                    src={milvusLogo}
-                    alt="milvus-logo"
-                  />
-                </LocalizedLink>
-                <a
-                  href="https://lfaidata.foundation/projects/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img className={styles.lfai} src={lfai} alt="lfai-icon" />
-                </a>
-              </div>
-              <div className={styles.navSection}>
-                {navList.map(i => {
-                  const { label, link, isExternal, keyWord } = i;
-                  return isExternal ? (
-                    <a
-                      className={styles.navItem}
-                      href={link}
-                      key={label}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {label}
-                    </a>
-                  ) : (
-                    <LocalizedLink
-                      className={`${styles.navItem} ${
-                        path.includes(keyWord) ? styles.active : ''
-                      }`}
-                      to={link}
-                      key={label}
-                      locale={locale}
-                    >
-                      {label}
-                    </LocalizedLink>
-                  );
-                })}
-                <a
-                  className={styles.navItem}
-                  href="https://github.com/milvus-io/milvus/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <i className={`fab fa-github ${styles.navIcon}`}></i>
-                </a>
-                <div className={styles.dropDown}>
-                  <LangSelector
-                    options={LANGUAGES}
-                    locale={locale}
-                    path={path}
-                  />
-                </div>
-              </div>
+          <div className={styles.contentWrapper}>
+            <div className={styles.logoSection}>
+              <LocalizedLink to="/" locale={locale}>
+                <img
+                  className={styles.milvus}
+                  src={isMobile ? milvusLogoMobile : milvusLogo}
+                  alt="milvus-logo"
+                />
+              </LocalizedLink>
+              <a
+                href="https://lfaidata.foundation/projects/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img className={styles.lfai} src={lfai} alt="lfai-icon" />
+              </a>
             </div>
-          ) : (
-            <div className={styles.mobileHeaderWrapper}>
-              <div className={styles.logoSection}>
-                <LocalizedLink to="/" locale={locale}>
-                  <img
-                    className={styles.milvus}
-                    src={milvusLogoMobile}
-                    alt="milvus-logo"
-                  />
-                </LocalizedLink>
-                <a
-                  href="https://lfaidata.foundation/projects/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img className={styles.lfai} src={lfai} alt="lfai-icon" />
-                </a>
-              </div>
+            {isMobile ? (
               <div className={styles.menuSection}>
                 <div className={styles.menuWrapper}>
                   <div
@@ -172,23 +152,56 @@ const V2Header = props => {
                   </div>
                 </div>
               </div>
-              <MobilePopup
-                className={styles.v2Popup}
-                open={maskConfig.isOpen}
-                hideMask={hideMask}
-              >
-                {maskConfig.type === 'menu' ? (
-                  <Menu
+            ) : (
+              <div className={styles.navSection}>
+                {generateNavication(navList, path, styles)}
+                <a
+                  className={styles.navItem}
+                  href="https://github.com/milvus-io/milvus/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className={`fab fa-github ${styles.navIcon}`}></i>
+                </a>
+                <div className={styles.navMenuItem}>
+                  <LangSelector
                     options={LANGUAGES}
-                    navList={navList}
                     locale={locale}
                     path={path}
+                    isLangSelector={true}
+                    navItemLabel={locale}
                   />
-                ) : (
-                  <Search />
-                )}
-              </MobilePopup>
-            </div>
+                </div>
+              </div>
+            )}
+          </div>
+          {isMobile && (
+            <MobilePopup
+              className={styles.v2Popup}
+              open={maskConfig.isOpen}
+              hideMask={hideMask}
+            >
+              <div className={styles.navSection}>
+                {generateNavication(navList, path, styles)}
+                <a
+                  className={styles.navItem}
+                  href="https://github.com/milvus-io/milvus/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className={`fab fa-github ${styles.navIcon}`}></i>
+                </a>
+                <div className={styles.navMenuItem}>
+                  <LangSelector
+                    options={LANGUAGES}
+                    locale={locale}
+                    path={path}
+                    isLangSelector={true}
+                    navItemLabel={locale}
+                  />
+                </div>
+              </div>
+            </MobilePopup>
           )}
         </div>
       </div>

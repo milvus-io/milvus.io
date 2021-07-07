@@ -1,16 +1,20 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useMobileScreen } from '../../../hooks';
 import LocallizeLink from '../../../components/localizedLink/localizedLink';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './v2.module.less';
 
-const V2Selector = ({ options, className = '', locale, path }) => {
+const V2Selector = ({
+  options,
+  className = '',
+  locale,
+  path,
+  isLangSelector = false,
+  navItemLabel,
+}) => {
   const choosenWrapper = useRef(null);
   const wrapper = useRef(null);
   const [open, setOpen] = useState(false);
-  const label = locale;
   const to = path.replace('/en/', '/').replace('/cn/', '/');
-  const { isMobile } = useMobileScreen();
 
   const handleClick = e => {
     e.stopPropagation();
@@ -38,12 +42,7 @@ const V2Selector = ({ options, className = '', locale, path }) => {
   }, []);
 
   return (
-    <div
-      className={`${styles.selectorContainer} ${className} ${
-        isMobile ? styles.mobileSelector : ''
-      }`}
-      ref={wrapper}
-    >
+    <div className={`${styles.selectorContainer} ${className}`} ref={wrapper}>
       <div
         role="button"
         tabIndex={0}
@@ -52,26 +51,54 @@ const V2Selector = ({ options, className = '', locale, path }) => {
         onClick={e => handleClick(e)}
         onKeyDown={e => handleClick(e)}
       >
-        <p className={styles.labelWrapper}>
-          <i className={`fas fa-globe ${styles.navIcon}`}></i>
-          <span className={styles.label}>{label}</span>
-        </p>
+        {isLangSelector ? (
+          <p className={styles.labelWrapper}>
+            <i className={`fas fa-globe ${styles.navIcon}`}></i>
+            <span className={`${styles.label} ${styles.uppercase}`}>
+              {navItemLabel}
+            </span>
+          </p>
+        ) : (
+          <span className={styles.label}>{navItemLabel}</span>
+        )}
       </div>
 
       <div className={`${styles.optionsWrapper} ${open ? styles.show : ''}`}>
-        {options.map(option => (
-          <LocallizeLink
-            locale={option.value}
-            to={to}
-            data-option={option}
-            className={`${styles.optionItem} ${
-              option.value === label && styles.active
-            }`}
-            key={option.value}
-          >
-            {option.label}
-          </LocallizeLink>
-        ))}
+        {options.map(option => {
+          return isLangSelector ? (
+            <LocallizeLink
+              locale={option.value}
+              to={to}
+              className={`${styles.optionItem} ${
+                option.value === navItemLabel && styles.active
+              }`}
+              key={option.value}
+            >
+              {option.label}
+            </LocallizeLink>
+          ) : option.isExternal ? (
+            <a
+              href={option.link}
+              target="_blank"
+              rel="noreferrer noopener"
+              className={styles.optionItem}
+              key={option.label}
+            >
+              {option.label}
+            </a>
+          ) : (
+            <LocallizeLink
+              locale={locale}
+              to={option.link}
+              className={`${styles.optionItem} ${
+                option.link.includes(option.activeKey) && styles.active
+              }`}
+              key={option.label}
+            >
+              {option.label}
+            </LocallizeLink>
+          );
+        })}
       </div>
     </div>
   );

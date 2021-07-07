@@ -10,8 +10,15 @@
     display: flex;
     cursor: pointer;
     outline: none;
+
     &:hover {
       color: @color-primary;
+    }
+
+    @media @phone {
+      &:hover {
+        color: #000;
+      }
     }
 
     .labelWrapper {
@@ -30,12 +37,18 @@
       .navIcon {
         font-size: 24px;
       }
+    }
+    .label {
+      vertical-align: sub;
 
-      .label {
-        vertical-align: sub;
-        text-transform: uppercase;
-        font-size: 14px;
-      }
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+    .uppercase {
+      text-transform: uppercase;
     }
 
     .iconWrapper {
@@ -59,14 +72,14 @@
   .optionsWrapper {
     position: absolute;
     z-index: 9;
-    transition: all 0.2s ease-in-out;
-    padding: 16px;
-    left: -50%;
-    top: 35px;
+    transition: all 0.4s ease-in-out;
+    padding: 8px;
+    left: 0;
+    top: 32px;
     visibility: hidden;
     opacity: 0;
     background: #fff;
-    transform: scaleY(0);
+
     transform-origin: top;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     border-radius: 4px;
@@ -74,79 +87,50 @@
     flex-direction: column;
 
     @media @tablet {
-      border-radius: 4px 4px 32px 32px;
-      padding: 16px 0 40px;
+      position: relative;
+      max-height: 0;
+      top: 8px;
+      width: 100%;
+      box-shadow: none;
+      padding: 0;
     }
 
     &.show {
       transform: translateY(0);
       visibility: visible;
       opacity: 1;
-      transform: scaleY(1);
+
+      @media @tablet {
+        max-height: 200px;
+      }
     }
 
     .optionItem {
       display: inline-block;
-      padding: 10px;
+      padding: 8px;
       font-size: 16px;
       font-weight: 500;
       line-height: 24px;
       user-select: none;
       cursor: pointer;
-      text-align: center;
+      text-align: left;
       color: #000;
       cursor: pointer;
       white-space: nowrap;
       word-break: break-all;
+      border-bottom: 1px solid #eee;
+
+      @media @phone {
+        padding: 8px;
+      }
 
       &.active {
         color: #12c3f4;
       }
 
       &:hover {
-        background: #e3f9ff;
+        color: #12c3f4;
       }
-    }
-  }
-}
-
-.mobileSelector {
-  .labelWrapper {
-    text-align: left;
-    padding: 0 16px;
-    position: relative;
-
-    .navIcon {
-      font-size: 24px;
-
-      &:hover {
-        color: @color-primary;
-      }
-    }
-    .label {
-      vertical-align: bottom;
-      text-transform: uppercase;
-      font-size: 14px;
-    }
-  }
-
-  .optionsWrapper {
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    left: 0;
-    right: 0;
-    max-height: 300px;
-    overflow-y: auto;
-    z-index: -1;
-
-    .active {
-      background-color: @color-btn-hover;
-    }
-
-    .optionItem {
-      padding: 8px 48px;
-      text-align: left;
-      white-space: nowrap;
-      word-break: break-all;
     }
   }
 }

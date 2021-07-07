@@ -46,13 +46,13 @@ const V2Header = props => {
     hideMask();
   });
 
-  const generateNavication = (navlist, path, styles) => {
+  const generateNavigation = (navlist, path, styles) => {
     return (
       <>
         {navlist.map(i => {
           const { label, link, isExternal, activeKey, subMenu } = i;
           return subMenu && subMenu.length ? (
-            <div className={`${styles.navMenuItem}`}>
+            <div className={`${styles.navMenuItem}`} key={label}>
               {
                 <LangSelector
                   options={subMenu}
@@ -154,7 +154,7 @@ const V2Header = props => {
               </div>
             ) : (
               <div className={styles.navSection}>
-                {generateNavication(navList, path, styles)}
+                {generateNavigation(navList, path, styles)}
                 <a
                   className={styles.navItem}
                   href="https://github.com/milvus-io/milvus/"
@@ -182,7 +182,7 @@ const V2Header = props => {
               hideMask={hideMask}
             >
               <div className={styles.navSection}>
-                {generateNavication(navList, path, styles)}
+                {generateNavigation(navList, path, styles)}
                 <a
                   className={styles.navItem}
                   href="https://github.com/milvus-io/milvus/"

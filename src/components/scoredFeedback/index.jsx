@@ -52,14 +52,18 @@ const ScoredFeedback = ({ old, feedbackText }) => {
   };
 
   useEffect(() => {
-    // make sure whether this doc has been feedbacked
-    const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
-    const feedbackInfo = feedbackInfoString
-      ? JSON.parse(feedbackInfoString)
-      : [];
+    try {
+      // make sure whether this doc has been feedbacked
+      const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
+      const feedbackInfo = feedbackInfoString
+        ? JSON.parse(feedbackInfoString)
+        : [];
 
-    const isFeedback = feedbackInfo.some(item => item.md_id === old);
-    setIsFeedback(isFeedback);
+      const isFeedback = feedbackInfo.some(item => item.md_id === old);
+      setIsFeedback(isFeedback);
+    } catch (error) {
+      console.log(error);
+    }
   }, [old]);
 
   return (

@@ -108,7 +108,7 @@ export const writeStatisData = async ({ sha, content, message }) => {
       }
     );
     if (status === 200) {
-      console.log('score succesfully!');
+      // score succesfully!
     }
   } catch (error) {
     console.log('error:', error);

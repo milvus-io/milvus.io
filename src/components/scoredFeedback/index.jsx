@@ -4,6 +4,7 @@ import { readStatisData, writeStatisData } from '../../http/http';
 import * as styles from './index.module.less';
 
 const FEEDBACK_INFO = 'feedback_info';
+let feedbackInfo = [];
 
 const ScoredFeedback = ({ old, feedbackText }) => {
   const { pathname } = globalHistory.location;
@@ -15,10 +16,11 @@ const ScoredFeedback = ({ old, feedbackText }) => {
     const { statistic, sha } = await readStatisData();
     const info = statistic[value];
 
-    const pathnameCount = statistic[value][pathname];
-    const content = pathnameCount
-      ? { ...statistic, [value]: { ...info, [pathname]: pathnameCount + 1 } }
-      : { ...statistic, [value]: { ...info, [pathname]: 1 } };
+    const pathnameCount = pathname in info ? info[pathname] + 1 : 1;
+    const content = {
+      ...statistic,
+      [value]: { ...info, [pathname]: pathnameCount },
+    };
 
     writeStatisData({
       sha,
@@ -28,37 +30,23 @@ const ScoredFeedback = ({ old, feedbackText }) => {
   };
 
   const handleFeedback = val => {
-    const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
-    try {
-      const feedbackInfo = feedbackInfoString
-        ? JSON.parse(feedbackInfoString)
-        : [];
-
-      feedbackInfo.push({
-        md_id: old,
-        feedback: val,
-      });
-
-      setTimeout(() => {
-        setIsFeedback(true);
-      }, 3000);
-
-      // window.localStorage.setItem(FEEDBACK_INFO, JSON.stringify(feedbackInfo));
-      setFeedback(val);
-      handleUpdateStatisData(val);
-    } catch (error) {
-      console.log(error);
-    }
+    feedbackInfo.push({
+      md_id: old,
+      feedback: val,
+    });
+    setTimeout(() => {
+      setIsFeedback(true);
+    }, 3000);
+    window.localStorage.setItem(FEEDBACK_INFO, JSON.stringify(feedbackInfo));
+    setFeedback(val);
+    handleUpdateStatisData(val);
   };
 
   useEffect(() => {
     try {
       // make sure whether this doc has been feedbacked
       const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
-      const feedbackInfo = feedbackInfoString
-        ? JSON.parse(feedbackInfoString)
-        : [];
-
+      feedbackInfo = feedbackInfoString ? JSON.parse(feedbackInfoString) : [];
       const isFeedback = feedbackInfo.some(item => item.md_id === old);
       setIsFeedback(isFeedback);
     } catch (error) {

@@ -1,0 +1,84 @@
+@import '../../css/variables/color.less';
+@import '../../css/variables/fontStyle.less';
+
+.feedbackWrapper {
+  margin: 64px 0;
+  position: relative;
+  .fontSwitchInter();
+
+  svg {
+    display: block;
+  }
+
+  .text {
+    font-size: 14px;
+    line-height: 24px;
+    margin-right: 16px;
+    display: inline-block;
+  }
+
+  .iconWrapper {
+    margin-right: 16px;
+    display: inline-block;
+    line-height: 24px;
+    cursor: pointer;
+
+    &.hoverLike {
+      &:hover {
+        svg path {
+          fill: @color-highlight;
+        }
+      }
+    }
+
+    &.hoverDislike {
+      &:hover {
+        svg path {
+          fill: @color-dislike;
+        }
+      }
+    }
+
+    &.like {
+      svg path {
+        fill: @color-highlight;
+      }
+    }
+
+    &.dislike {
+      svg path {
+        fill: @color-dislike;
+      }
+    }
+  }
+
+  .feedbackOptions {
+    transition: all 0.5s;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    display: flex;
+    align-items: center;
+
+    &.hideOption {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-28px);
+    }
+  }
+
+  .islikeWrapper {
+    transition: all 0.5s;
+    transform: translateY(0);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+
+    &.showResult {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(-28px);
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import LocalizeLink from '../localizedLink/localizedLink';
+import LocalizedLink from '../localizedLink/localizedLink';
 import * as styles from './index.module.less';
 
 const findItem = (key, value, arr) => {
@@ -161,13 +161,13 @@ const Menu = props => {
               ) : doc.isMenu ? (
                 <span className={styles.text}>{doc.title}</span>
               ) : (
-                <LocalizeLink
+                <LocalizedLink
                   locale={locale}
                   className={styles.text}
                   to={doc.path}
                 >
                   {doc.title}
-                </LocalizeLink>
+                </LocalizedLink>
               )}
 
               {doc.children && doc.children.length ? (

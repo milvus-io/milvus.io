@@ -172,7 +172,7 @@
   }
 
   .alert {
-    padding: 14px 21px;
+    padding: 40px 21px 14px 21px;
     margin-bottom: 24px;
     margin-top: 51px;
     font-size: 16px;
@@ -185,40 +185,46 @@
     }
     &.warning {
       background-color: @warning-bg-color;
+      border-left: 2px solid @color-warning;
+      border-radius: 4px;
 
       &::before {
         position: absolute;
         content: 'WARNING';
-        line-height: 17px;
+        line-height: 20px;
         color: @color-warning;
-        left: 0;
-        top: -23px;
+        left: 21px;
+        top: 12px;
         font-weight: 600;
       }
     }
     &.note {
       background-color: @note-bg-color;
+      border-left: 2px solid @link-color;
+      border-radius: 4px;
 
       &::before {
         color: @link-color;
         position: absolute;
         content: 'NOTE';
-        line-height: 17px;
-        left: 0;
-        top: -23px;
+        line-height: 20px;
+        left: 21px;
+        top: 12px;
         font-weight: 600;
       }
     }
 
     &.info {
       background-color: @note-bg-color;
+      border-left: 2px solid @color-list-blue;
+      border-radius: 4px;
 
       &::before {
         position: absolute;
         content: 'INFO';
-        line-height: 17px;
-        left: 0;
-        top: -23px;
+        line-height: 20px;
+        left: 21px;
+        top: 12px;
         font-weight: 600;
         color: @color-list-blue;
       }
@@ -235,28 +241,29 @@
     }
 
     &.danger {
-      p {
-        background-color: @warning-bg-color;
-        padding: 14px 21px;
-      }
+      background-color: @warning-bg-color;
+      padding: 14px 21px;
+      border-left: 2px solid @color-warning;
+      border-radius: 4px;
 
       .admonition-title {
-        background: #fff;
         color: @color-warning;
         padding: 0;
         font-weight: 600;
+        margin-bottom: 8px;
       }
     }
     &.note {
-      p {
-        background-color: @note-bg-color;
-        padding: 14px 21px;
-      }
+      background-color: @note-bg-color;
+      padding: 14px 21px;
+      border-left: 2px solid @link-color;
+      border-radius: 4px;
 
       .admonition-title {
-        background: #fff;
         padding: 0;
         font-weight: 600;
+        margin-bottom: 8px;
+        color: @link-color;
       }
     }
   }

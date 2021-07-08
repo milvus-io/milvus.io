@@ -7,6 +7,11 @@ const userToken = `Z2hwX2ZYUWQwTVNBa3dudTB4UkJjWGhxNUZXVmZGYVdWWjIzQnVnSA==`;
 const org = 'zilliz-bootcamp';
 const repo = 'record_user_question';
 
+const feedbackToken =
+  'Z2hwX0k4ZmNWQnlrQlAzUWlRaTJjbXdzWXBEWFhPeDdmbDJLeG5IMA==';
+const feedbackOrg = 'milvus-io';
+const feedbackRepo = 'milvus.io.feedback';
+
 const axiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}`,
   timeout: 10000,
@@ -51,6 +56,63 @@ export const sendQuestion = ({ quest = '', email = '' }) => {
     .catch(err => {
       console.log('user submit question error', err);
     });
+};
+
+export const readStatisData = async () => {
+  let auth;
+  if (atob) {
+    auth = atob(feedbackToken);
+  }
+  const octokit = new Octokit({
+    auth,
+  });
+
+  try {
+    const res = await octokit.request(
+      'GET /repos/{owner}/{repo}/contents/{path}',
+      {
+        owner: feedbackOrg,
+        repo: feedbackRepo,
+        path: 'statistics/index.json',
+      }
+    );
+    const { content, sha } = res.data;
+    const statistic = JSON.parse(window.atob(content.replaceAll('\n', '')));
+    return {
+      statistic,
+      sha,
+    };
+  } catch (error) {
+    console.log('error:', error);
+  }
+};
+
+export const writeStatisData = async ({ sha, content, message }) => {
+  let auth;
+  if (atob) {
+    auth = atob(feedbackToken);
+  }
+  const octokit = new Octokit({
+    auth,
+  });
+  try {
+    const { status } = await octokit.request(
+      'PUT /repos/{owner}/{repo}/contents/{path}',
+      {
+        owner: feedbackOrg,
+        repo: feedbackRepo,
+        path: 'statistics/index.json',
+        message,
+        sha,
+        content,
+      }
+    );
+    if (status === 200) {
+      // score succesfully!
+    }
+  } catch (error) {
+    console.log('error:', error);
+  }
 };
 
 export default axiosInstance;

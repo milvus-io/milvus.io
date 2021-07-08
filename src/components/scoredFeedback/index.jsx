@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { globalHistory } from '@reach/router';
 import { readStatisData, writeStatisData } from '../../http/http';
+import { LikeSvg } from './svgComponent';
+import { DislikeSvg } from './svgComponent';
 import * as styles from './index.module.less';
 
 const FEEDBACK_INFO = 'feedback_info';
-let feedbackInfo = [];
+let feedbackInfo = {};
 
 const ScoredFeedback = ({ old, feedbackText }) => {
   const { pathname } = globalHistory.location;
 
   const [feedback, setFeedback] = useState('');
-  const [isFeedback, setIsFeedback] = useState(true);
+  const [isShowOption, setIsShowOption] = useState(true);
 
   const handleUpdateStatisData = async value => {
     const { statistic, sha } = await readStatisData();
@@ -30,12 +32,15 @@ const ScoredFeedback = ({ old, feedbackText }) => {
   };
 
   const handleFeedback = val => {
-    feedbackInfo.push({
-      md_id: old,
-      feedback: val,
-    });
+    if (val === feedback) {
+      return;
+    }
+    // feedbackInfo: {'a-path': 'like','b-path':'dislike'}
+    Object.assign(feedbackInfo, { [old]: val });
+
+    setIsShowOption(false);
     setTimeout(() => {
-      setIsFeedback(true);
+      setIsShowOption(true);
     }, 3000);
     window.localStorage.setItem(FEEDBACK_INFO, JSON.stringify(feedbackInfo));
     setFeedback(val);
@@ -46,21 +51,21 @@ const ScoredFeedback = ({ old, feedbackText }) => {
     try {
       // make sure whether this doc has been feedbacked
       const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
-      feedbackInfo = feedbackInfoString ? JSON.parse(feedbackInfoString) : [];
-      const isFeedback = feedbackInfo.some(item => item.md_id === old);
-      setIsFeedback(isFeedback);
+      feedbackInfo = feedbackInfoString ? JSON.parse(feedbackInfoString) : {};
+      const feedbackDetail = feedbackInfo[old];
+      if (feedbackDetail) {
+        setFeedback(feedbackDetail);
+      }
     } catch (error) {
       console.log(error);
     }
   }, [old]);
 
   return (
-    <div
-      className={`${styles.feedbackWrapper} ${isFeedback ? styles.hide : ''}`}
-    >
+    <div className={styles.feedbackWrapper}>
       <div
         className={`${styles.feedbackOptions} ${
-          feedback !== '' ? styles.hideOptions : ''
+          !isShowOption ? styles.hideOption : ''
         }`}
       >
         <span className={`${styles.text}`}>{feedbackText.text1}</span>
@@ -71,7 +76,7 @@ const ScoredFeedback = ({ old, feedbackText }) => {
           onClick={() => handleFeedback('like')}
           onKeyDown={() => handleFeedback('like')}
         >
-          <i className="fas fa-thumbs-up"></i>
+          <LikeSvg color={feedback === 'like' ? '#4fc4f9' : '#545454'} />
         </span>
         <span
           className={`${styles.iconWrapper} ${styles.hoverDislike}`}
@@ -80,22 +85,22 @@ const ScoredFeedback = ({ old, feedbackText }) => {
           onClick={() => handleFeedback('dislike')}
           onKeyDown={() => handleFeedback('dislike')}
         >
-          <i className="fas fa-thumbs-down"></i>
+          <DislikeSvg color={feedback === 'dislike' ? '#f25c05' : '#445454'} />
         </span>
       </div>
 
       <div
         className={`${styles.islikeWrapper} ${
-          feedback !== '' ? styles.active : ''
+          !isShowOption ? styles.showResult : ''
         }`}
       >
         {feedback === 'like' ? (
           <span className={`${styles.iconWrapper} ${styles.like}`}>
-            <i className="fas fa-thumbs-up"></i>
+            <LikeSvg />
           </span>
         ) : (
           <span className={`${styles.iconWrapper} ${styles.dislike}`}>
-            <i className="fas fa-thumbs-down"></i>
+            <DislikeSvg />
           </span>
         )}
         <span className={`${styles.text}`}>{feedbackText.text2}</span>

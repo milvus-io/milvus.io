@@ -5,17 +5,18 @@ import * as styles from './localizedLink.module.less';
 
 const LocalizedLink = ({ locale, to, children, className = '' }) => {
   const language = locales[locale];
-  const toMedium = locale === 'en' && to && to.includes('blog');
-  if (toMedium) {
+  const reg = /^(http|https)/;
+  const isExternal = reg.test(to);
+  if (isExternal) {
     return (
       <a
-        href="https://medium.com/tag/milvus-project/latest"
         target="_blank"
+        href={to}
         rel="noopener noreferrer"
-        children={children}
-        aria-label="Milvus Blog"
         className={`${styles.link} ${className}`}
-      ></a>
+      >
+        {children}
+      </a>
     );
   }
 

@@ -3,7 +3,7 @@ import {
   getAnchorElement,
   scrollToElement,
 } from '../../../utils/docTemplate.util';
-import LocalizeLink from '../../localizedLink/localizedLink';
+import LocalizedLink from '../../localizedLink/localizedLink';
 import * as styles from './index.module.less';
 
 const DOCS_JSON = require('../../../search.json');
@@ -157,7 +157,7 @@ const SearchForWeb = props => {
                       onClick={() => onSearchItemClick(isCurrentPage, title)}
                       onKeyDown={() => onSearchItemClick(isCurrentPage, title)}
                     >
-                      <LocalizeLink
+                      <LocalizedLink
                         locale={lang}
                         to={`/docs/${version}/${path}${
                           isId ? '' : `?${anchor}`
@@ -169,7 +169,7 @@ const SearchForWeb = props => {
                             __html: `${highlight} ${version}`,
                           }}
                         ></span>
-                      </LocalizeLink>
+                      </LocalizedLink>
                     </i>
                     {/* <a
                       href={`${targetLink}${isId ? '' : `?${anchor}`}`}

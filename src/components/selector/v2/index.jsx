@@ -51,16 +51,7 @@ const V2Selector = ({
         onClick={e => handleClick(e)}
         onKeyDown={e => handleClick(e)}
       >
-        {isLangSelector ? (
-          <p className={styles.labelWrapper}>
-            <i className={`fas fa-globe ${styles.navIcon}`}></i>
-            <span className={`${styles.label} ${styles.uppercase}`}>
-              {navItemLabel}
-            </span>
-          </p>
-        ) : (
-          <span className={styles.label}>{navItemLabel}</span>
-        )}
+        {navItemLabel}
       </div>
 
       <div className={`${styles.optionsWrapper} ${open ? styles.show : ''}`}>

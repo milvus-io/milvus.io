@@ -7,7 +7,6 @@
   font-family: Inter;
 
   .choosenWrapper {
-    display: flex;
     cursor: pointer;
     outline: none;
 
@@ -36,35 +35,6 @@
 
       .navIcon {
         font-size: 24px;
-      }
-    }
-    .label {
-      vertical-align: sub;
-
-      font-size: 14px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      text-align: center;
-    }
-    .uppercase {
-      text-transform: uppercase;
-    }
-
-    .iconWrapper {
-      display: inline-block;
-      text-align: center;
-
-      pointer-events: none;
-      transition: transform 0.2s ease-in-out;
-
-      i {
-        line-height: 24px;
-        font-size: 16px;
-      }
-
-      &.show {
-        transform: rotate(180deg);
       }
     }
   }

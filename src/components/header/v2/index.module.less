@@ -84,13 +84,22 @@
         height: 24px;
         color: @color-default-link;
         user-select: none;
+      }
 
-        .label {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          text-align: center;
+      .iconWrapper {
+        display: inline-block;
+        text-align: center;
+        pointer-events: none;
+        line-height: 24px;
+        font-size: 16px;
+
+        i {
+          font-size: 24px;
         }
+      }
+      .uppercase {
+        text-transform: uppercase;
+        vertical-align: sub;
       }
 
       .active {
@@ -138,7 +147,7 @@
     z-index: -1;
     border-radius: 32px;
 
-    .navSection {
+    .mobileNavSection {
       .navItem {
         font-size: 16px;
         font-weight: 500;
@@ -169,6 +178,21 @@
         user-select: none;
         margin-bottom: 24px;
         padding: 0 16px;
+      }
+      .iconWrapper {
+        display: inline-block;
+        text-align: center;
+        pointer-events: none;
+        line-height: 24px;
+        font-size: 16px;
+
+        i {
+          font-size: 24px;
+        }
+      }
+      .uppercase {
+        text-transform: uppercase;
+        vertical-align: sub;
       }
 
       .active {

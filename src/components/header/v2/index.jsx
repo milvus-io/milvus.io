@@ -10,7 +10,7 @@ import QuestionRobot from '../../questionRobot';
 import { useClickOutside } from '../../../hooks';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
-import LangSelector from '../../selector/v2';
+import Selector from '../../selector/v2';
 import { LANGUAGES, NAVLIST_EN, NAVLIST_CN } from './constants';
 import LocalizedLink from '../../localizedLink/localizedLink';
 
@@ -54,7 +54,7 @@ const V2Header = props => {
           return subMenu && subMenu.length ? (
             <div className={`${styles.navMenuItem}`} key={label}>
               {
-                <LangSelector
+                <Selector
                   options={subMenu}
                   locale={locale}
                   path={path}
@@ -161,15 +161,24 @@ const V2Header = props => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <i className={`fab fa-github ${styles.navIcon}`}></i>
+                  <span className={styles.iconWrapper}>
+                    <i className={`fab fa-github ${styles.navIcon}`}></i>
+                  </span>
                 </a>
                 <div className={styles.navMenuItem}>
-                  <LangSelector
+                  <Selector
                     options={LANGUAGES}
                     locale={locale}
                     path={path}
                     isLangSelector={true}
-                    navItemLabel={locale}
+                    navItemLabel={
+                      <>
+                        <span className={styles.iconWrapper}>
+                          <i className={`fas fa-globe ${styles.navIcon}`}></i>
+                        </span>
+                        <span className={styles.uppercase}>{locale}</span>
+                      </>
+                    }
                   />
                 </div>
               </div>
@@ -181,7 +190,7 @@ const V2Header = props => {
               open={maskConfig.isOpen}
               hideMask={hideMask}
             >
-              <div className={styles.navSection}>
+              <div className={styles.mobileNavSection}>
                 {generateNavigation(navList, path, styles)}
                 <a
                   className={styles.navItem}
@@ -192,12 +201,19 @@ const V2Header = props => {
                   <i className={`fab fa-github ${styles.navIcon}`}></i>
                 </a>
                 <div className={styles.navMenuItem}>
-                  <LangSelector
+                  <Selector
                     options={LANGUAGES}
                     locale={locale}
                     path={path}
                     isLangSelector={true}
-                    navItemLabel={locale}
+                    navItemLabel={
+                      <>
+                        <span className={styles.iconWrapper}>
+                          <i className={`fas fa-globe ${styles.navIcon}`}></i>
+                        </span>
+                        <span className={styles.uppercase}>{locale}</span>
+                      </>
+                    }
                   />
                 </div>
               </div>

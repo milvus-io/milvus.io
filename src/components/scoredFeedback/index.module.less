@@ -1,15 +1,16 @@
 @import '../../css/variables/color.less';
+@import '../../css/variables/fontStyle.less';
 
 .feedbackWrapper {
-  margin: 64px 0 24px;
+  margin: 64px 0;
   position: relative;
+  .fontSwitchInter();
 
-  &.hide {
-    visibility: hidden;
+  svg {
+    display: block;
   }
 
   .text {
-    font-family: Roboto;
     font-size: 14px;
     line-height: 24px;
     margin-right: 16px;
@@ -17,7 +18,6 @@
   }
 
   .iconWrapper {
-    font-size: 16px;
     margin-right: 16px;
     display: inline-block;
     line-height: 24px;
@@ -25,45 +25,58 @@
 
     &.hoverLike {
       &:hover {
-        color: @color-highlight;
+        svg path {
+          fill: @color-highlight;
+        }
       }
     }
 
     &.hoverDislike {
       &:hover {
-        color: @color-dislike;
+        svg path {
+          fill: @color-dislike;
+        }
       }
     }
 
     &.like {
-      color: @color-highlight;
+      svg path {
+        fill: @color-highlight;
+      }
     }
 
     &.dislike {
-      color: @color-dislike;
+      svg path {
+        fill: @color-dislike;
+      }
     }
   }
 
   .feedbackOptions {
     transition: all 0.5s;
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
+    display: flex;
+    align-items: center;
 
-    &.hideOptions {
+    &.hideOption {
       opacity: 0;
+      visibility: hidden;
       transform: translateY(-28px);
     }
   }
 
   .islikeWrapper {
     transition: all 0.5s;
-    opacity: 0;
     transform: translateY(0);
-    position: absolute;
-    top: 28px;
-    left: 0;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    visibility: hidden;
 
-    &.active {
+    &.showResult {
+      visibility: visible;
       opacity: 1;
       transform: translateY(-28px);
     }

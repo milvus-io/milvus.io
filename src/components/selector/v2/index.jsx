@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
-import LocallizeLink from '../../../components/localizedLink/localizedLink';
+import LocalizedLink from '../../../components/localizedLink/localizedLink';
 import { useClickOutside } from '../../../hooks';
+import { globalHistory } from '@reach/router';
 import * as styles from './v2.module.less';
 
 const V2Selector = ({
@@ -15,6 +16,7 @@ const V2Selector = ({
   const wrapper = useRef(null);
   const [open, setOpen] = useState(false);
   const to = path.replace('/en/', '/').replace('/cn/', '/');
+  const { pathname } = globalHistory.location;
 
   const handleClick = e => {
     e.stopPropagation();
@@ -57,37 +59,27 @@ const V2Selector = ({
       <div className={`${styles.optionsWrapper} ${open ? styles.show : ''}`}>
         {options.map(option => {
           return isLangSelector ? (
-            <LocallizeLink
+            <LocalizedLink
               locale={option.value}
               to={to}
               className={`${styles.optionItem} ${
-                option.value === navItemLabel && styles.active
+                option.value === locale && styles.active
               }`}
               key={option.value}
             >
               {option.label}
-            </LocallizeLink>
-          ) : option.isExternal ? (
-            <a
-              href={option.link}
-              target="_blank"
-              rel="noreferrer noopener"
-              className={styles.optionItem}
-              key={option.label}
-            >
-              {option.label}
-            </a>
+            </LocalizedLink>
           ) : (
-            <LocallizeLink
+            <LocalizedLink
               locale={locale}
               to={option.link}
               className={`${styles.optionItem} ${
-                option.link.includes(option.activeKey) && styles.active
+                pathname.includes(option.link) && styles.active
               }`}
               key={option.label}
             >
               {option.label}
-            </LocallizeLink>
+            </LocalizedLink>
           );
         })}
       </div>

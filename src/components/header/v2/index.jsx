@@ -50,7 +50,7 @@ const V2Header = props => {
     return (
       <>
         {navlist.map(i => {
-          const { label, link, isExternal, activeKey, subMenu } = i;
+          const { label, link, activeKey, subMenu } = i;
           return subMenu && subMenu.length ? (
             <div className={`${styles.navMenuItem}`} key={label}>
               {
@@ -62,16 +62,6 @@ const V2Header = props => {
                 />
               }
             </div>
-          ) : isExternal ? (
-            <a
-              className={styles.navItem}
-              href={link}
-              key={label}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {label}
-            </a>
           ) : (
             <LocalizedLink
               className={`${styles.navItem} ${

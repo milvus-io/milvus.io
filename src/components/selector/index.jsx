@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import LocalizeLink from '../localizedLink/localizedLink';
+import LocalizedLink from '../localizedLink/localizedLink';
 import * as styles from './index.module.less';
 
 const Selector = props => {
@@ -8,7 +8,7 @@ const Selector = props => {
     selected,
     locale,
     isVersion = false,
-    className = ''
+    className = '',
   } = props;
   const [listStatus, setListStatus] = useState(false);
   const toggleList = e => {
@@ -28,8 +28,9 @@ const Selector = props => {
 
   return (
     <div
-      className={`${styles.selectorWrapper} ${isVersion && styles.versionWrapper
-        } ${className}`}
+      className={`${styles.selectorWrapper} ${
+        isVersion && styles.versionWrapper
+      } ${className}`}
     >
       <div
         className={styles.selected}
@@ -43,11 +44,8 @@ const Selector = props => {
         <p className={styles.iconWrapper}>
           <i className={`fas fa-chevron-down ${styles.arrow}`}></i>
         </p>
-
       </div>
-      <ul
-        className={`${styles.optionsWrapper} ${listStatus && styles.open}`}
-      >
+      <ul className={`${styles.optionsWrapper} ${listStatus && styles.open}`}>
         {options.map(v => (
           <li
             className={v === selected ? styles.active : ''}
@@ -55,15 +53,17 @@ const Selector = props => {
             data-value={v}
           >
             {isVersion ? (
-              <LocalizeLink
+              <LocalizedLink
                 locale={locale}
                 className={styles.text}
-                to={`/docs/${v}/overview.md`}
+                to={`/docs/${v}/home`}
               >
                 {v}
-              </LocalizeLink>
+              </LocalizedLink>
             ) : (
-              <span className={styles.text} data-value={v}>{v}</span>
+              <span className={styles.text} data-value={v}>
+                {v}
+              </span>
             )}
           </li>
         ))}

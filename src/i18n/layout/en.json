@@ -446,8 +446,8 @@
         "text1": "Milvus is open-sourced on GitHub.",
         "text2": "Contributions and feedbacks are welcome!",
         "gitBtn": {
-          "href": "https://github.com/milvus-io/milvus/",
-          "label": "Go to GitHub"
+          "href": "/community",
+          "label": "Go to Community"
         }
       }
     },
@@ -455,7 +455,7 @@
       "list": [
         {
           "title": "What is Milvus? ",
-          "text": "Open-source vector database for unstrcutured data",
+          "text": "Open-source vector database for unstrcutured data.",
           "href": "/docs/overview.md",
           "label": "Get started",
           "icons": []
@@ -502,7 +502,7 @@
           "link": "/"
         },
         "text3": {
-          "label": " and associated open source project names are trademarks of the LF AI & Data Foundation",
+          "label": " and associated open source project names are trademarks of the LF AI & Data Foundation.",
           "link": "#"
         },
         "list": [

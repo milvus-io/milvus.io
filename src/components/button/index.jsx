@@ -10,30 +10,13 @@ const Button = ({
   variant = 'contained',
   className = '',
   children,
-  locale
+  locale,
 }) => {
-  const reg = /^(http|https)/;
-  const isExternal = reg.test(link);
   return (
     <div className={`${styles.buttonWrapper} ${className}`}>
-      {isExternal ? (
-        <a
-          target='_blank'
-          rel="noopener noreferrer"
-          href={link}
-          className={`${styles[variant]}`}
-        >
-          {children}
-        </a>
-      ) : (
-        <LocalizedLink
-          to={link}
-          className={`${styles[variant]}`}
-          locale={locale}
-        >
-          {children}
-        </LocalizedLink>
-      )}
+      <LocalizedLink to={link} className={`${styles[variant]}`} locale={locale}>
+        {children}
+      </LocalizedLink>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LocalizeLink from '../localizedLink/localizedLink';
+import LocalizedLink from '../localizedLink/localizedLink';
 import Menu from '../menu/index';
 import * as styles from './sidebar.module.less';
 import PropTypes from 'prop-types';
@@ -74,9 +74,13 @@ const Sidebar = props => {
         )}
         {showVersions && (
           <section className={styles.versionWrapper}>
-            <LocalizeLink className={styles.link} locale={locale} to={homePath}>
+            <LocalizedLink
+              className={styles.link}
+              locale={locale}
+              to={homePath}
+            >
               {homeTitle}
-            </LocalizeLink>
+            </LocalizedLink>
             <Selector
               className={styles.selector}
               options={versions}

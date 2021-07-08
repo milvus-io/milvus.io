@@ -12,6 +12,7 @@ import HomeTemplate from '../components/homeTemplate/homeTemplate';
 import RelatedQuestion from '../components/relatedQuestion';
 import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
 import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
+import ScoredFeedback from '../components/scoredFeedback';
 
 export default function Template({
   data,
@@ -31,6 +32,7 @@ export default function Template({
     allApiMenus,
     newestVersion,
     relatedKey,
+    old, // id of markdown
   } = pageContext;
   versions = versions.sort(sortVersions);
 
@@ -41,6 +43,7 @@ export default function Template({
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+
   const docRef = useRef(null);
 
   useEmPanel(setShowModal);
@@ -59,13 +62,16 @@ export default function Template({
 
   const docsearchMeta = useAlgolia(locale, version, !isBlog);
 
-  console.log(docsearchMeta);
   if (!data.allFile.edges[0]) {
     return null;
   }
 
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.layout
+    : {};
+
+  const { feedback } = data.allFile.edges[0]
+    ? data.allFile.edges[0].node.childI18N.v2
     : {};
 
   const menuList = allMenus.find(
@@ -197,6 +203,7 @@ export default function Template({
                   />
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
                 </div>
+                <ScoredFeedback feedbackText={feedback} old={old} />
               </>
             </div>
           )}
@@ -340,6 +347,12 @@ export const pageQuery = graphql`
               }
               menu {
                 home
+              }
+            }
+            v2 {
+              feedback {
+                text1
+                text2
               }
             }
           }

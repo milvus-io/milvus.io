@@ -1,0 +1,71 @@
+@import '../../css/variables/color.less';
+
+.feedbackWrapper {
+  margin: 64px 0 24px;
+  position: relative;
+
+  &.hide {
+    visibility: hidden;
+  }
+
+  .text {
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 24px;
+    margin-right: 16px;
+    display: inline-block;
+  }
+
+  .iconWrapper {
+    font-size: 16px;
+    margin-right: 16px;
+    display: inline-block;
+    line-height: 24px;
+    cursor: pointer;
+
+    &.hoverLike {
+      &:hover {
+        color: @color-highlight;
+      }
+    }
+
+    &.hoverDislike {
+      &:hover {
+        color: @color-dislike;
+      }
+    }
+
+    &.like {
+      color: @color-highlight;
+    }
+
+    &.dislike {
+      color: @color-dislike;
+    }
+  }
+
+  .feedbackOptions {
+    transition: all 0.5s;
+    opacity: 1;
+    transform: translateY(0);
+
+    &.hideOptions {
+      opacity: 0;
+      transform: translateY(-28px);
+    }
+  }
+
+  .islikeWrapper {
+    transition: all 0.5s;
+    opacity: 0;
+    transform: translateY(0);
+    position: absolute;
+    top: 28px;
+    left: 0;
+
+    &.active {
+      opacity: 1;
+      transform: translateY(-28px);
+    }
+  }
+}

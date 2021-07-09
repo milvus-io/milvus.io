@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import LocalizedLink from '../localizedLink/localizedLink';
+import { useMobileScreen } from '../../hooks';
 import * as styles from './index.module.less';
 
 const findItem = (key, value, arr) => {
@@ -56,7 +57,10 @@ const Menu = props => {
 
   const searchBarHeight = showSearch ? 62 : 0;
   const versionBarHeight = showVersions ? 57 : 0;
-  const maxHeight = `calc(100% - ${searchBarHeight}px - ${versionBarHeight}px)`;
+  const { isMobile } = useMobileScreen();
+  const maxHeight = isMobile
+    ? `calc(100% - ${searchBarHeight}px)`
+    : `calc(100% - ${searchBarHeight}px - ${versionBarHeight}px)`;
 
   /**
    * Find out the compatible api menus by comparing the target doc version for each item;

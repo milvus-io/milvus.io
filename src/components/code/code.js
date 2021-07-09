@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as styles from './code.module.less';
 
@@ -13,6 +13,9 @@ const Code = ({ html, content, locale }) => {
       false: '复制',
     },
   };
+
+  const contentRef = useRef(null);
+  const [isScoll, setIsScroll] = useState(false);
 
   const handleButtonsContent = () => {
     document.querySelectorAll('.btn-copy-text').forEach(item => {
@@ -62,10 +65,16 @@ const Code = ({ html, content, locale }) => {
     document.body.removeChild(el);
   };
 
+  useEffect(() => {
+    const el = contentRef.current;
+    setIsScroll(el.scrollWidth > el.clientWidth);
+  }, []);
+
   return (
     <section className={styles.codeWrapper}>
       <div
-        className={styles.content}
+        ref={contentRef}
+        className={`${styles.content} ${isScoll ? styles.scroll : ''}`}
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
 

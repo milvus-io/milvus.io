@@ -46,27 +46,27 @@ const Selector = props => {
         </p>
       </div>
       <ul className={`${styles.optionsWrapper} ${listStatus && styles.open}`}>
-        {options.map(v => (
-          <li
-            className={v === selected ? styles.active : ''}
-            key={v}
-            data-value={v}
-          >
-            {isVersion ? (
-              <LocalizedLink
-                locale={locale}
-                className={styles.text}
-                to={`/docs/${v}/home`}
-              >
-                {v}
-              </LocalizedLink>
-            ) : (
-              <span className={styles.text} data-value={v}>
-                {v}
-              </span>
-            )}
-          </li>
-        ))}
+        {options.map(v => {
+          const to =
+            v === 'v0.x' ? `/docs/${v}/overview.md` : `/docs/${v}/home`;
+          return (
+            <li
+              className={v === selected ? styles.active : ''}
+              key={v}
+              data-value={v}
+            >
+              {isVersion ? (
+                <LocalizedLink locale={locale} className={styles.text} to={to}>
+                  {v}
+                </LocalizedLink>
+              ) : (
+                <span className={styles.text} data-value={v}>
+                  {v}
+                </span>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

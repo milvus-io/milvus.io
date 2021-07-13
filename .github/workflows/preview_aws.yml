@@ -97,4 +97,4 @@ jobs:
         run: |
           echo ${{ secrets.KUBECONFIG }} > config64
           base64 -d config64 > kubeconfig
-          kubectl set image deployment/milvusio miluvsio=harbor-us1.zilliz.cc/ued/milvusio:${{ github.sha }}${{github.run_id}} --kubeconfig=kubeconfig
+          kubectl set image deployment/milvusio milvusio=harbor-us1.zilliz.cc/ued/milvusio:${{ github.sha }}${{github.run_id}} --kubeconfig=kubeconfig

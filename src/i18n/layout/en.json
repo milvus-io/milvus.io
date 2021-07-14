@@ -415,28 +415,28 @@
         "title": "Features",
         "list": [
           {
-            "title": "Cost-efficiency",
-            "text": "Built upon high-performance column-based storage and index libraries, such as Faiss and HNSWLIB, Milvus is guaranteed to provide high-performance queries. Accelerated by CPU, SIMD, GPA, and FPGA, Milvus can retrieve vector data in milliseconds on a trillion-scale dataset. ",
+            "title": "Cost-efficient",
+            "text": "Milvus improves upon high-performance storage and index libraries such as Faiss and hnswlib, guaranteeing  time and resource efficient query speeds. Using a variety of acceleration methods (e.g., CPU, SIMD, GPU, and FPGA), Milvus can retrieve vector data on trillion-scale datasets in milliseconds.",
             "img": "supporting"
           },
           {
-            "title": "Performance On Demand",
-            "text": "Designed with cloud-native in mind, Milvus can be horizontally scaled with ease, and can handle storage and computation at any scale. Its microservice design supports on-demand scaling or even auto-scaling.",
+            "title": "On-demand Performance",
+            "text": "Milvus is cloud native and can be horizontally scaled with ease. The platform is capable of handling storage and computation at any scale, and has a microservice design that supports on-demand and automatic scaling.",
             "img": "search"
           },
           {
-            "title": "Born for Unstructured Data",
-            "text": " Milvus helps its users focus more on the semantic meaning of unstructured data than on complexities such as sharding, data persistence, and load balancing. Milvus supports high-performance, hybrid search of vector and scalar data, opening up renewed possibilities for unstructured data processing.",
+            "title": "Built for Unstructured Data",
+            "text": "Milvus helps users focus on the semantic meaning of unstructured data rather than complexities such as sharding, data persistence, and load balancing. Milvus supports high-performance, hybrid search of vector and scalar data, opening up new possibilities for unstructured data processing.",
             "img": "deployment"
           },
           {
-            "title": "Community Backed",
-            "text": "Graduated from the <a href=\"https://lfaidata.foundation/\" >LF AI & Data Foundation's</a>  incubator program, Milvus has been adopted by over 1,000 organizations worldwide. Milvus has an open, vibrant community. Contributions to Milvus are welcome from everyone.",
+            "title": "Community-backed",
+            "text": "Milvus is a graduate of the LF AI & Data Foundation's incubator program and has been adopted by  1,000+ organizations worldwide. The platform's vibrant open-source community welcomes contributions from everyone.",
             "img": "storage"
           },
           {
-            "title": "Ease of Use",
-            "text": "Milvus supports multiple data types and provides comprehensive multi-language SDKs. Through ORM API, Milvus can provide an integrated user experience across laptops, local clusters and the cloud. We also provide a wealth of deployment and visualization tools to help users get started and operate faster.",
+            "title": "User-friendly",
+            "text": "Milvus supports multiple data types and provides comprehensive multi-language SDKs. Through the Python-ORM API, Milvus offers an integrated user experience across laptops, local clusters, and the cloud. A wealth of deployment and visualization tools are available to help users get Milvus up and running faster.",
             "img": "autoscaling"
           }
         ]

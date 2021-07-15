@@ -78,6 +78,7 @@ jobs:
 
       - name: build site
         run: |
+          yarn install
           yarn build
 
       - name: Log in to registry

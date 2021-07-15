@@ -57,11 +57,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install openvpn -y
-          sudo apt-get install -y apt-transport-https ca-certificates curl
-          sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-          echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-          sudo apt-get update
-          sudo apt-get install kubectl -y
 
       - name: Connect VPN
         uses: golfzaptw/action-connect-ovpn@master
@@ -81,6 +76,10 @@ jobs:
           git submodule init
           git submodule update --remote
 
+      - name: build site
+        run: |
+          yarn build
+
       - name: Log in to registry
         uses: docker/login-action@v1
         with:
@@ -88,13 +87,9 @@ jobs:
           username: ${{ secrets.HARBOR_USER }}
           password: ${{ secrets.HARBOR_PASSWD }}
 
-      - name: Docker build and push image to registry
+      - name: Sync files
         run: |
-          docker build -t harbor-us1.zilliz.cc/ued/milvusio:${{ github.sha }}${{github.run_id}} -f ./Preview.Dockerfile .
-          docker push harbor-us1.zilliz.cc/ued/milvusio:${{ github.sha }}${{github.run_id}}
-
-      - name: Deploy to k8s us1
-        run: |
-          echo ${{ secrets.KUBECONFIG }} > config64
-          base64 -d config64 > kubeconfig
-          kubectl set image deployment/milvusio milvusio=harbor-us1.zilliz.cc/ued/milvusio:${{ github.sha }}${{github.run_id}} --kubeconfig=kubeconfig
+          echo ${{ secrets.RSYNC_PASSWORD }} > rsync.pass
+          sudo chmod 600 rsync.pass
+          sudo chown root rsync.pass
+          sudo rsync --password-file=rsync.pass -rltDpvz --delete  public/ rsync://milvusio@a1202fdac6c7d488ba400d2b01203056-1949499790.us-west-2.elb.amazonaws.com/milvusio

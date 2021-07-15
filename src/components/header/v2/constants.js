@@ -45,6 +45,11 @@ export const NAVLIST_EN = [
         link: 'https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g',
         activeKey: null,
       },
+      {
+        label: 'Demos',
+        link: 'https://zilliz.com/milvus-demos?isZilliz=true',
+        activeKey: null,
+      },
     ],
   },
   {
@@ -85,6 +90,11 @@ export const NAVLIST_CN = [
       {
         label: '视频',
         link: 'https://space.bilibili.com/478166626?spm_id_from=333.33.b_73656375726974794f75744c696e6b.1',
+      },
+      {
+        label: '示例',
+        link: 'https://zilliz.com/milvus-demos?isZilliz=true',
+        activeKey: null,
       },
     ],
   },

@@ -9,44 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Build npm package docker
-  buildnpm:
-    runs-on: ubuntu-latest
-    # output if package.json is updated
-    outputs:
-      packagejson: ${{ steps.changesfiles.outputs.packagejson }}
-    steps:
-      - name: Checkout Code
-        run: |
-          cd ..
-          sudo git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          cd milvus.io
-          sudo chmod -R 777 .
-          sudo git reset HEAD --hard 
-          sudo git checkout ${GITHUB_REF##*/}
-
-      - name: Get commit sha
-        id: getsha
-        run: echo "::set-output name=sha::$(git rev-parse HEAD^2)"
-
-      - name: Get changed files
-        id: changesfiles
-        run: |
-          echo "::set-output name=packagejson::$(git diff-tree --no-commit-id --name-only -r ${{ steps.getsha.outputs.sha }} | grep package.json$ | xargs)"
-
-      - name: Login to DockerHub
-        if: steps.changesfiles.outputs.packagejson == 'package.json'
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PWD }}
-
-      - name: Build and push
-        if: steps.changesfiles.outputs.packagejson == 'package.json'
-        run: |
-          docker build -t milvusdb/milvus.io.builder:${GITHUB_REF##*/} -f ./Builder.Dockerfile .
-          docker push milvusdb/milvus.io.builder:${GITHUB_REF##*/}
-
   build:
     runs-on: 'ubuntu-latest'
 
@@ -68,9 +30,6 @@ jobs:
           USER_CRT: ${{ secrets.VPN_CRT }}
           USER_KEY: ${{ secrets.VPN_KEY }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
       - name: update submodules
         run: |
           git submodule init
@@ -81,16 +40,9 @@ jobs:
           yarn install
           yarn build
 
-      - name: Log in to registry
-        uses: docker/login-action@v1
-        with:
-          registry: https://harbor-us1.zilliz.cc
-          username: ${{ secrets.HARBOR_USER }}
-          password: ${{ secrets.HARBOR_PASSWD }}
-
       - name: Sync files
         run: |
           echo ${{ secrets.RSYNC_PASSWORD }} > rsync.pass
           sudo chmod 600 rsync.pass
           sudo chown root rsync.pass
-          sudo rsync --password-file=rsync.pass -rltDpvz --delete  public/ rsync://milvusio@a1202fdac6c7d488ba400d2b01203056-1949499790.us-west-2.elb.amazonaws.com/milvusio
+          sudo rsync --password-file=rsync.pass -rlDpvz --delete public/ rsync://milvusio@a1202fdac6c7d488ba400d2b01203056-1949499790.us-west-2.elb.amazonaws.com/milvusio

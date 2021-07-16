@@ -1,5 +1,3 @@
-[![Build Status](https://dev.azure.com/zhifengzhang/milvus-io-production/_apis/build/status/milvus-io?branchName=master)](https://dev.azure.com/zhifengzhang/milvus-io-production/_build/latest?definitionId=33&branchName=master)
-
 milvus.io Official website
 
 ## local development set up
@@ -11,10 +9,6 @@ milvus.io Official website
 
 We use submodule to update docs pages. So we must update submodules before yarn start.
 
-## Preview
-
-preview site: https://milvus-io.azurewebsites.net/
-
 ## how to contribution
 
 1. fork the repo
@@ -23,21 +17,3 @@ preview site: https://milvus-io.azurewebsites.net/
 4. pull request to the preview branch
 
 ### This site is built with Gatsbyjs, please check https://www.gatsbyjs.org/docs/ for reference
-
-add new version doc (branch in repo)
-
-```
-    git submodule add https://github.com/milvus-io/docs.git src/pages/docs/versions/your-version-branch
-```
-
-add comunity
-
-```
-    git submodule add -b master https://github.com/milvus-io/community.git src/pages/blogs/versions/master
-```
-
-// add benchmark
-
-```
-git submodule add -b 0.10.0 https://github.com/milvus-io/benchmarks.git static/benchmarks
-```

@@ -45,4 +45,4 @@ jobs:
           echo ${{ secrets.RSYNC_PASSWORD }} > rsync.pass
           sudo chmod 600 rsync.pass
           sudo chown root rsync.pass
-          sudo rsync --password-file=rsync.pass -rlDpvz --delete public/ rsync://milvusio@a1202fdac6c7d488ba400d2b01203056-1949499790.us-west-2.elb.amazonaws.com/milvusio
+          sudo rsync --password-file=rsync.pass -rDvpzc --delete public/ rsync://milvusio@a1202fdac6c7d488ba400d2b01203056-1949499790.us-west-2.elb.amazonaws.com/milvusio

@@ -2,7 +2,7 @@
   "name": "mivlus.io",
   "private": true,
   "description": "Milvus.io website",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "zizhao.chen@zilliz.com",
   "dependencies": {
     "@octokit/core": "^3.5.1",

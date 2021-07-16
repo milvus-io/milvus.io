@@ -193,6 +193,7 @@ let gatsbyConfigs = {
     {
       resolve: 'gatsby-plugin-zopfli',
     },
+    `gatsby-plugin-remove-fingerprints`,
   ],
 };
 

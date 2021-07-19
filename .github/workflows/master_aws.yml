@@ -2,7 +2,7 @@ name: Build and deploy to preview
 
 on:
   repository_dispatch:
-    types: dev-deploy
+    types: prod-deploy
   push:
     branches:
       - master
@@ -31,4 +31,3 @@ jobs:
           sudo chmod 600 rsync.pass
           sudo chown root rsync.pass
           sudo rsync --password-file=rsync.pass -rDvpzc --delete public/ rsync://${{secrets.PROD_SITE}}
-

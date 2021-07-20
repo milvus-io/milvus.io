@@ -25,7 +25,7 @@ const FaqCard = ({ question = [] }) => {
             toggleModal(true);
           }}
         >
-          See Answers
+          See answers
           <i className={`fas fa-eye ${styles.btnIcon}`}></i>
         </button>
       )}

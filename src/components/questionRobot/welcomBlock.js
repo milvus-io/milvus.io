@@ -10,7 +10,7 @@ const WelcomBlock = ({ version = 2, setInit = () => {} }) => {
       'How to choose a Milvus index',
     ],
     2: [
-      'The way to install milvus.',
+      'How to install Milvus?',
       'What are the factors affecting recall?',
       'Can multiple indexes be created in a collection?',
       'The limit to the number of partitions.',

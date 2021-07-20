@@ -62,7 +62,7 @@ const HomePage = ({ data, pageContext }) => {
   const len = slogan.length - 1;
   const { locale, versions } = pageContext;
   const desc =
-    'Milvus is an open source vector database for embeddings, it is powered by Faiss, NMSLIB and Annoy, it is easy-to-use, highly reliable, scalable, robust, and blazing fast.';
+    "Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications.";
 
   const [index, setIndex] = useState(0);
 

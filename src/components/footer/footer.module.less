@@ -17,4 +17,43 @@
   .link {
     color: #60606f;
   }
+
+  .iconsWrapper {
+    text-align: center;
+
+    .listWrapper {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+
+      .listItem + .listItem {
+        margin-left: 16px;
+      }
+
+      .wechatWrapper {
+        position: relative;
+
+        .qrcode {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 32px;
+          transition: all 0.3s linear;
+          visibility: hidden;
+          opacity: 0;
+          border: 1px solid #eee;
+          border-radius: 8px;
+        }
+
+        &:hover {
+          .qrcode {
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
 }

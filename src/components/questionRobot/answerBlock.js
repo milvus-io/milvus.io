@@ -69,7 +69,7 @@ const AnswerBlock = ({ chat = [], setCurrent = () => {}, index = 0 }) => {
       <>
         <img src={iconBird} alt="icon" />
         <div>
-          Hi! Here are related disscussion that might help you:
+          Hi! Here are some related questions that might help:
           {chat.value.map((chatEntry, index) => (
             <ChatItem key={`${chatEntry.title}-${index}`} chat={chatEntry} />
           ))}
@@ -91,7 +91,7 @@ const AnswerBlock = ({ chat = [], setCurrent = () => {}, index = 0 }) => {
     <>
       <img src={iconBird} alt="icon" />
       <div>
-        Hi! Here are related disscussion that might help you:
+        Hi! Here are some related questions that might help:
         {chat.value.slice(0, 3).map((chatEntry, index) => (
           <ChatItem key={`${chatEntry.title}-${index}`} chat={chatEntry} />
         ))}

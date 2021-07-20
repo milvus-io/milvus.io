@@ -99,7 +99,7 @@ const QuestionRobot = () => {
       {open && (
         <div className={styles.dialog}>
           <div className={styles.dialogHeader}>
-            Search Engine powerd by{' '}
+            Search engine powerd by{' '}
             <img src={milvus} className={styles.logo} alt="logo" />
           </div>
           <div ref={containerEl} className={styles.dialogContent}>
@@ -137,7 +137,7 @@ const QuestionRobot = () => {
           <div className={styles.dialogInput}>
             <input
               ref={inputEl}
-              placeholder="Ask Milvus Anything..."
+              placeholder="Ask MilMil Anything..."
               onKeyPress={keyPress}
             />
             <button onClick={keyPress}>{''}</button>

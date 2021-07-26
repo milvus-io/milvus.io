@@ -85,16 +85,30 @@ export const useEmPanel = setShowModal => {
  * will show different content depend on #xxx in url.
  */
 export const useFilter = () => {
+  const SEARCH = 'search';
   useEffect(() => {
+    const setSearch = val =>
+      window.localStorage.setItem(SEARCH, JSON.stringify(val));
+    const getSearch = () => {
+      let val = '';
+      try {
+        val = JSON.parse(window.localStorage.getItem(SEARCH));
+      } catch (error) {
+        console.log(error);
+      }
+      return val;
+    };
+
     const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];
-    let firstHash = '';
+    let firstSearch = '';
     filterWrappers.forEach(fw => {
       const fs = fw.querySelectorAll('a');
 
       fs.forEach(f => {
-        if (!firstHash) {
-          firstHash = f.hash;
+        if (!firstSearch) {
+          // <a href='?node' >xxx</a>
+          firstSearch = f.search;
         }
         allFilters.push(f);
       });
@@ -102,40 +116,33 @@ export const useFilter = () => {
     const allContents = document.querySelectorAll(`[class*="filter-"]`);
 
     if (!allContents.length) return;
-
-    const clickEventHandler = targetHash => {
-      const hash = targetHash;
-      const currentFilters = allFilters.filter(f => f.hash === hash);
+    const clickEventHandler = targetSearch => {
+      const search = targetSearch;
+      setSearch(search);
+      const currentFilters = allFilters.filter(f => f.search === search);
       allFilters.forEach(f => f.classList.toggle('active', false));
       currentFilters.forEach(cf => cf.classList.toggle('active', true));
       allContents.forEach(c => c.classList.toggle('active', false));
       const contents = document.querySelectorAll(
-        `.filter-${hash.replace('#', '').replace(/%/g, '')}`
+        `.filter-${search.replace('?', '').replace(/%/g, '')}`
       );
       contents.forEach(c => c.classList.toggle('active', true));
     };
+
     filterWrappers.forEach(w => {
       w.addEventListener('click', e => {
+        e.preventDefault();
         if (e.target.tagName === 'A') {
-          clickEventHandler(e.target.hash);
+          clickEventHandler(e.target.search);
         }
       });
     });
 
     if (window) {
-      const windowHash = window.location.hash || firstHash;
-      if (windowHash) {
-        clickEventHandler(windowHash);
+      const localSearch = getSearch() || firstSearch;
+      if (localSearch) {
+        clickEventHandler(localSearch);
       }
-      window.history.pushState(null, null, windowHash);
-
-      window.addEventListener(
-        'hashchange',
-        () => {
-          clickEventHandler(window.location.hash);
-        },
-        false
-      );
     }
   }, []);
 };

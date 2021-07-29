@@ -27,8 +27,8 @@
         "contact": {
           "title": "没有找到您想要的问题？",
           "slack": {
-            "label": "在slack上讨论",
-            "link": "https://milvusio.slack.com/"
+            "label": "在 Slack 上讨论",
+            "link": "https://slack.milvus.io/"
           },
           "github": {
             "label": "在 GitHub 上讨论",
@@ -48,7 +48,7 @@
         }
       },
       "questionBtn": {
-        "link": "https://join.slack.com/t/milvusio/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ/",
+        "link": "hhttps://slack.milvus.io/",
         "label": "加入 Slack"
       },
       "issueBtn": {
@@ -477,7 +477,7 @@
               "name": "twitter"
             },
             {
-              "href": "https://milvusio.slack.com/join/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
+              "href": "https://slack.milvus.io/",
               "name": "slack"
             }
           ]

@@ -176,6 +176,8 @@ exports.createPages = async ({ actions, graphql }) => {
     generateBootcampHome,
     generateBootcampPages,
     handleBootcampData,
+    generateBlogArticlePage,
+    filterMDwidthBlog,
   } = createPagesUtils;
 
   const { createPage } = actions;
@@ -184,6 +186,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
   const communityTemplate = path.resolve(`src/templates/community.jsx`);
   const bootcampTemplate = path.resolve(`src/templates/bootcamp.jsx`);
+  const blogTemplate = path.resolve('src/templates/blogTemplate.jsx');
 
   return graphql(query).then(result => {
     if (result.errors) {
@@ -200,6 +203,7 @@ exports.createPages = async ({ actions, graphql }) => {
     const versionsWithHome = getVersionsWithHome(homeData);
     // filter useless md file blog has't version
     const legalMd = filterMdWithVersion(result.data.allMarkdownRemark.edges);
+    const blogMD = filterMDwidthBlog(result.data.allMarkdownRemark.edges);
     // get community page data: articles md, menu and home json
     const { communityMd, communityMenu, communityHome } = handleCommunityData(
       result.data.allMarkdownRemark.edges,
@@ -241,6 +245,10 @@ exports.createPages = async ({ actions, graphql }) => {
       versions,
       newestVersion,
       versionsWithHome,
+    });
+    generateBlogArticlePage(createPage, {
+      nodes: blogMD,
+      template: blogTemplate,
     });
 
     generateDocHome(createPage, {

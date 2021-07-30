@@ -176,7 +176,7 @@ const Menu = props => {
 
               {doc.children && doc.children.length ? (
                 <>
-                  {doc.isMenu && doc.label1 === '' ? (
+                  {doc.isMenu && !doc.label1 ? (
                     <i
                       className={`fas fa-caret-down ${styles.arrow} ${
                         doc.showChildren ? '' : styles.top

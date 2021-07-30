@@ -36,7 +36,7 @@ export const NAVLIST_EN = [
         activeKey: null,
       },
       {
-        label: 'SizingTool',
+        label: 'Sizing Tool',
         link: 'https://zilliz.com/sizing-tool',
         activeKey: null,
       },
@@ -89,7 +89,7 @@ export const NAVLIST_CN = [
         link: 'https://zilliz.com/blog',
       },
       {
-        label: 'SizingTool',
+        label: 'Sizing Tool',
         link: 'https://zilliz.com/sizing-tool',
         activeKey: null,
       },

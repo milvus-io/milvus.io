@@ -59,6 +59,7 @@ const V2Header = props => {
                   locale={locale}
                   path={path}
                   navItemLabel={label}
+                  trigger="hover"
                 />
               }
             </div>

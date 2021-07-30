@@ -11,7 +11,6 @@ const V2Selector = ({
   path,
   isLangSelector = false,
   navItemLabel,
-  trigger = 'click',
 }) => {
   const choosenWrapper = useRef(null);
   const wrapper = useRef(null);
@@ -21,46 +20,28 @@ const V2Selector = ({
 
   const handleClick = e => {
     e.stopPropagation();
-    if (trigger !== 'click') return;
     setOpen(open ? false : true);
   };
-
-  const handleHover = e => {
-    if (trigger !== 'hover') return;
-    setOpen(open ? false : true);
-  };
-
-  const handleMouseLeave = e => {
-    e.stopPropagation();
-    if (trigger !== 'hover') return;
-    setOpen(open ? false : true);
-  };
-
   useClickOutside(wrapper, () => {
     setOpen(false);
   });
 
   useEffect(() => {
-    let clickHideOptions = null;
-    if (trigger === 'click') {
-      clickHideOptions = e => {
-        const container = document.querySelector('.selector-container');
-        if (container) {
-          const isInclude = container.contains(e.target);
-          if (!isInclude) {
-            setOpen(false);
-          }
+    const hideOptions = e => {
+      const container = document.querySelector('.selector-container');
+      if (container) {
+        const isInclude = container.contains(e.target);
+        if (!isInclude) {
+          setOpen(false);
         }
-      };
-      window.addEventListener('click', clickHideOptions, false);
-    }
-
-    return () => {
-      if (clickHideOptions) {
-        window.removeEventListener('click', clickHideOptions, false);
       }
     };
-  }, [trigger]);
+
+    window.addEventListener('click', hideOptions, false);
+    return () => {
+      window.removeEventListener('click', hideOptions, false);
+    };
+  }, []);
 
   return (
     <div className={`${styles.selectorContainer} ${className}`} ref={wrapper}>
@@ -69,10 +50,8 @@ const V2Selector = ({
         tabIndex={0}
         className={styles.choosenWrapper}
         ref={choosenWrapper}
-        onClick={handleClick}
-        onKeyDown={handleClick}
-        onMouseEnter={handleHover}
-        onMouseOut={handleMouseLeave}
+        onClick={e => handleClick(e)}
+        onKeyDown={e => handleClick(e)}
       >
         {navItemLabel}
       </div>

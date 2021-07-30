@@ -4,7 +4,6 @@ import LocalizedLink from '../../../localizedLink/localizedLink';
 import BlogTag from '../../../blogDetail/blogTag';
 
 const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
-  console.log(tags.slice(0, 2));
   const to = `/blogs/${path}`;
   return (
     <LocalizedLink locale={locale} to={to} className={styles.blogCardWrapper}>
@@ -15,12 +14,11 @@ const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
         <h6 className={styles.title}>{title}</h6>
         <p className={styles.desc}>{desc}</p>
         <div className={styles.bottomWrapper}>
-          <ul>
+          <ul className={styles.tags}>
             {tags.slice(0, 2).map(tag => {
-              console.log(tag);
               return (
                 <li key={tag}>
-                  <BlogTag name={tags} isActive={false} />
+                  <BlogTag name={tag} isActive={false} />
                 </li>
               );
             })}

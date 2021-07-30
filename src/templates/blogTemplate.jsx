@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from 'react';
 import * as styles from './blogTemplate.module.less';
 import Seo from '../components/seo';
 import Footer from '../components/footer/v2';
@@ -8,8 +14,19 @@ import BlogCard from '../components/card/blogCard/v2';
 import BlogTag from '../components/blogDetail/blogTag';
 import Header from '../components/header/v2';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
+import { deepClone } from '../utils';
 
-const FILTER_TAG = 'filter_tag';
+export const FILTER_TAG = 'filter_tag';
+const splitAllBlogs = (list, n) => {
+  const temp = deepClone(list);
+  const result = [];
+
+  while (temp.length >= n) {
+    result.push(temp.splice(0, n));
+  }
+  result.push(temp);
+  return result;
+};
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { footer } = data.allFile.edges.filter(edge => edge.node.childI18N)[0]
@@ -26,10 +43,10 @@ const BlogTemplate = ({ data, pageContext }) => {
     tags,
     banner,
     title,
+    id,
   } = pageContext;
-  let tagList = [];
 
-  tagList = useMemo(() => {
+  const tagList = useMemo(() => {
     if (!isHomePage) return [];
     let tempList = blogList.reduce((acc, cur) => {
       return acc.concat(cur.tags);
@@ -46,6 +63,7 @@ const BlogTemplate = ({ data, pageContext }) => {
     );
   }, [blogList, isHomePage]);
 
+  const sliceList = splitAllBlogs(blogList, 6);
   const [currentTag, setCurrentTag] = useState('all');
   const [renderList, setRenderList] = useState(blogList);
 
@@ -81,6 +99,27 @@ const BlogTemplate = ({ data, pageContext }) => {
       isHomePage && window.history.pushState(null, null, '#all');
     }
   }, [isHomePage, handleFilter]);
+
+  useEffect(() => {
+    const scrollHanlder = () => {
+      const scrollHeight =
+        document.documentElement.scrollHeight || document.body.scrollHeight;
+      const windowHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollBottom = scrollHeight - windowHeight - scrollTop;
+
+      if (scrollBottom <= 600) {
+        sliceList.length && setRenderList(v => v.concat(sliceList.shift()));
+      }
+    };
+    window.addEventListener('scroll', scrollHanlder, false);
+
+    return () => {
+      window.removeEventListener('scroll', scrollHanlder, false);
+    };
+  }, []);
 
   return (
     <div className={styles.blogWrapper}>
@@ -132,6 +171,8 @@ const BlogTemplate = ({ data, pageContext }) => {
           date={date}
           title={title}
           locale={locale}
+          blogList={blogList}
+          id={id}
         />
       )}
       <div className={styles.footerWrapper}>

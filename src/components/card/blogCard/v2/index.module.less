@@ -59,6 +59,13 @@
       justify-content: space-between;
       align-items: center;
 
+      .tags {
+        display: flex;
+        li + li {
+          margin-left: 10px;
+        }
+      }
+
       .date {
         color: @color-highlight;
         font-size: 12px;

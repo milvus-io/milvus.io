@@ -1128,49 +1128,19 @@ const generateBlogArticlePage = (
   createPage,
   { nodes: blogMD, template: blogTemplate }
 ) => {
+  // get blogs list data, create blogs list page
   const list = blogMD.map(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
-    const isBlog = checkIsblog(fileAbsolutePath);
-    const fileId = node.frontmatter.id;
     const fileLang = findLang(fileAbsolutePath);
-    const isBenchmark = checkIsBenchmark(fileAbsolutePath);
-    const localizedPath = generatePath(
-      fileId,
-      fileLang,
-      null,
-      isBlog,
-      true,
-      isBenchmark
-    );
-    const newHtml = node.html;
-    let [date, tag = '', banner, author, title, desc, id, cover] = [
+
+    let [date, tag = '', title, desc, id, cover] = [
       node.frontmatter.date,
       node.frontmatter.tag,
-      node.frontmatter.banner,
-      node.frontmatter.author,
       node.frontmatter.title,
       node.frontmatter.desc,
       node.frontmatter.id,
       node.frontmatter.cover,
     ];
-
-    createPage({
-      path: localizedPath,
-      component: blogTemplate,
-      context: {
-        locale: fileLang,
-        fileAbsolutePath,
-        localizedPath,
-        newHtml,
-        isHomePage: false,
-        date,
-        tags: tag.split(' '),
-        banner,
-        author,
-        title,
-      },
-    });
-
     return {
       date,
       tags: tag.split(' '),
@@ -1198,6 +1168,51 @@ const generateBlogArticlePage = (
       },
     });
   }
+
+  // create blog detail page
+  blogMD.forEach(({ node }) => {
+    const fileAbsolutePath = node.fileAbsolutePath;
+    const isBlog = checkIsblog(fileAbsolutePath);
+    const fileId = node.frontmatter.id;
+    const fileLang = findLang(fileAbsolutePath);
+    const isBenchmark = checkIsBenchmark(fileAbsolutePath);
+    const localizedPath = generatePath(
+      fileId,
+      fileLang,
+      null,
+      isBlog,
+      true,
+      isBenchmark
+    );
+    const newHtml = node.html;
+    let [date, tag = '', banner, author, title, id] = [
+      node.frontmatter.date,
+      node.frontmatter.tag,
+      node.frontmatter.banner,
+      node.frontmatter.author,
+      node.frontmatter.title,
+      node.frontmatter.id,
+    ];
+
+    createPage({
+      path: localizedPath,
+      component: blogTemplate,
+      context: {
+        locale: fileLang,
+        fileAbsolutePath,
+        localizedPath,
+        newHtml,
+        isHomePage: false,
+        date,
+        tags: tag.split(' '),
+        banner,
+        author,
+        title,
+        blogList: allBlogsList[fileLang],
+        id,
+      },
+    });
+  });
 };
 
 module.exports = {

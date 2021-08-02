@@ -236,15 +236,6 @@ const query = `
               title
             }
           }
-          section2 {
-            content {
-              desc
-              id
-              link
-              title
-            }
-            title
-          }
           section3 {
             content {
               desc

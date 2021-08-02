@@ -172,25 +172,26 @@ const BootcampTemplate = ({ data, pageContext }) => {
               </ul>
             </div>
 
-            <div className="container">
-              <h1 className="title">{section2.title}</h1>
-              <ul className="solutionsWrapper">
-                {section2.content.map(item => {
-                  const { title, link, desc, iconType } = item;
-                  return (
-                    <li key={title}>
-                      <SolutionCard
-                        title={title}
-                        content={desc}
-                        img={Icons[iconType]}
-                        href={link}
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-
+            {section2 && (
+              <div className="container">
+                <h1 className="title">{section2.title}</h1>
+                <ul className="solutionsWrapper">
+                  {section2.content.map(item => {
+                    const { title, link, desc, iconType } = item;
+                    return (
+                      <li key={title}>
+                        <SolutionCard
+                          title={title}
+                          content={desc}
+                          img={Icons[iconType]}
+                          href={link}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
             <div className="container">
               <h1 className="title">{section4.title}</h1>
               <ul className="solutionsWrapper">

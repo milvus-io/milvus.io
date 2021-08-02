@@ -1,8 +1,8 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import BlogTag from '../../components/blogDetail/blogTag';
 import LocalizedLink from '../../components/localizedLink/localizedLink';
 import * as styles from './index.module.less';
-import { FILTER_TAG } from '../../templates/blogTemplate';
+import { FILTER_TAG } from '../../constants';
 
 const BlogDetail = ({
   innerHtml,
@@ -36,6 +36,7 @@ const BlogDetail = ({
     } else {
       filteredList = blogList.filter(i => i.tags.includes(filterTag));
     }
+    console.log(filteredList);
 
     const index = filteredList.findIndex(i => i.id === id);
     const [previewBlogPath, previewBlogTitle, nextBlogPath, nextBlogTitle] = [
@@ -50,7 +51,7 @@ const BlogDetail = ({
       nextBlogPath,
       nextBlogTitle,
     });
-  }, []);
+  }, [blogList, id]);
 
   return (
     <div className={styles.blogDetailWrapper}>

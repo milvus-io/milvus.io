@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  useRef,
-} from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import * as styles from './blogTemplate.module.less';
 import Seo from '../components/seo';
 import Footer from '../components/footer/v2';
@@ -14,9 +8,9 @@ import BlogCard from '../components/card/blogCard/v2';
 import BlogTag from '../components/blogDetail/blogTag';
 import Header from '../components/header/v2';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
-import { deepClone } from '../utils';
+import { deepClone, debounce } from '../utils';
+import { FILTER_TAG, PAGE_INDEX } from '../constants';
 
-export const FILTER_TAG = 'filter_tag';
 const splitAllBlogs = (list, n) => {
   const temp = deepClone(list);
   const result = [];
@@ -27,6 +21,7 @@ const splitAllBlogs = (list, n) => {
   result.push(temp);
   return result;
 };
+const pageSize = 9;
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { footer } = data.allFile.edges.filter(edge => edge.node.childI18N)[0]
@@ -45,10 +40,14 @@ const BlogTemplate = ({ data, pageContext }) => {
     title,
     id,
   } = pageContext;
+  const slicedList = splitAllBlogs(blogList, pageSize);
+
+  // list that can be viewed after pagination
+  const [pageTotalList, setPageTotalList] = useState(slicedList[0]);
 
   const tagList = useMemo(() => {
     if (!isHomePage) return [];
-    let tempList = blogList.reduce((acc, cur) => {
+    let tempList = pageTotalList.reduce((acc, cur) => {
       return acc.concat(cur.tags);
     }, []);
 
@@ -61,22 +60,22 @@ const BlogTemplate = ({ data, pageContext }) => {
       },
       ['all']
     );
-  }, [blogList, isHomePage]);
+  }, [pageTotalList, isHomePage]);
 
-  const sliceList = splitAllBlogs(blogList, 6);
   const [currentTag, setCurrentTag] = useState('all');
-  const [renderList, setRenderList] = useState(blogList);
+  // list that used for rendering after filter by tag
+  const [renderList, setRenderList] = useState(pageTotalList);
 
   const filterTag = useCallback(
     tag => {
       setCurrentTag(tag);
       if (tag === 'all') {
-        setRenderList(blogList);
+        setRenderList(pageTotalList);
         return;
       }
-      setRenderList(blogList.filter(i => i.tags.includes(tag)));
+      setRenderList(pageTotalList.filter(i => i.tags.includes(tag)));
     },
-    [blogList]
+    [pageTotalList]
   );
 
   const handleFilter = useCallback(
@@ -101,25 +100,40 @@ const BlogTemplate = ({ data, pageContext }) => {
   }, [isHomePage, handleFilter]);
 
   useEffect(() => {
-    const scrollHanlder = () => {
-      const scrollHeight =
-        document.documentElement.scrollHeight || document.body.scrollHeight;
-      const windowHeight =
-        document.documentElement.clientHeight || document.body.clientHeight;
-      const scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollBottom = scrollHeight - windowHeight - scrollTop;
+    let scrollHanlder = null;
+    let pageIdx = Number(window.sessionStorage.getItem(PAGE_INDEX)) || 1;
 
-      if (scrollBottom <= 600) {
-        sliceList.length && setRenderList(v => v.concat(sliceList.shift()));
-      }
-    };
-    window.addEventListener('scroll', scrollHanlder, false);
+    if (pageIdx >= slicedList.length) {
+      console.log(1111111);
+      setPageTotalList(slicedList.flat());
+    } else {
+      scrollHanlder = () => {
+        const scrollHeight =
+          document.documentElement.scrollHeight || document.body.scrollHeight;
+        const windowHeight =
+          document.documentElement.clientHeight || document.body.clientHeight;
+        const scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollBottom = scrollHeight - windowHeight - scrollTop;
+
+        if (scrollBottom <= 550 && pageIdx < slicedList.length && isHomePage) {
+          pageIdx += 1;
+          window.sessionStorage.setItem(PAGE_INDEX, pageIdx);
+          setPageTotalList(slicedList.slice(0, pageIdx).flat());
+        }
+      };
+      window.addEventListener('scroll', debounce(scrollHanlder, 100), false);
+    }
 
     return () => {
-      window.removeEventListener('scroll', scrollHanlder, false);
+      scrollHanlder &&
+        window.removeEventListener(
+          'scroll',
+          debounce(scrollHanlder, 100),
+          false
+        );
     };
-  }, []);
+  }, [isHomePage]);
 
   return (
     <div className={styles.blogWrapper}>
@@ -171,7 +185,7 @@ const BlogTemplate = ({ data, pageContext }) => {
           date={date}
           title={title}
           locale={locale}
-          blogList={blogList}
+          blogList={pageTotalList}
           id={id}
         />
       )}

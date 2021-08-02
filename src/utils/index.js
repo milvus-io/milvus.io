@@ -13,3 +13,13 @@ export const deepClone = origin => {
   }
   return result;
 };
+
+export const debounce = (fn, delay) => {
+  let timer = null;
+  return function () {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(fn, delay);
+  };
+};

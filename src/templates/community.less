@@ -383,7 +383,8 @@
     }
 
     .articles {
-      max-width: calc(100% - @anchor-width);
+      // sidebari:margin-left: 40px padding-left: 32px
+      max-width: calc(100% - @anchor-width - @sidebar-width - 32px - 40px);
 
       @media @tablet {
         max-width: 100%;

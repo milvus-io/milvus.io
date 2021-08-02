@@ -84,22 +84,72 @@ export const useEmPanel = setShowModal => {
  * filter content must has class filter-xxx (same with #xxx)
  * will show different content depend on #xxx in url.
  */
+
 export const useFilter = () => {
+  useEffect(() => {
+    const filterWrappers = document.querySelectorAll('.filter');
+    const allFilters = [];
+    let firstHash = '';
+    filterWrappers.forEach(fw => {
+      const fs = fw.querySelectorAll('a');
+
+      fs.forEach(f => {
+        if (!firstHash) {
+          firstHash = f.hash;
+        }
+        allFilters.push(f);
+      });
+    });
+    const allContents = document.querySelectorAll(`[class*="filter-"]`);
+
+    if (!allContents.length) return;
+
+    const clickEventHandler = targetHash => {
+      const hash = targetHash;
+      const currentFilters = allFilters.filter(f => f.hash === hash);
+      allFilters.forEach(f => f.classList.toggle('active', false));
+      currentFilters.forEach(cf => cf.classList.toggle('active', true));
+      allContents.forEach(c => c.classList.toggle('active', false));
+      const contents = document.querySelectorAll(
+        `.filter-${hash.replace('#', '').replace(/%/g, '')}`
+      );
+      contents.forEach(c => c.classList.toggle('active', true));
+    };
+    filterWrappers.forEach(w => {
+      w.addEventListener('click', e => {
+        if (e.target.tagName === 'A') {
+          clickEventHandler(e.target.hash);
+        }
+      });
+    });
+
+    if (window) {
+      const windowHash = window.location.hash || firstHash;
+      if (windowHash) {
+        clickEventHandler(windowHash);
+      }
+      window.history.pushState(null, null, windowHash);
+
+      window.addEventListener(
+        'hashchange',
+        () => {
+          clickEventHandler(window.location.hash);
+        },
+        false
+      );
+    }
+  }, []);
+};
+
+export const useMutipleCodeFilter = () => {
   const SEARCH = 'search';
   useEffect(() => {
-    const setSearch = val =>
-      window.localStorage.setItem(SEARCH, JSON.stringify(val));
+    const setSearch = val => window.localStorage.setItem(SEARCH, val);
     const getSearch = () => {
-      let val = '';
-      try {
-        val = JSON.parse(window.localStorage.getItem(SEARCH));
-      } catch (error) {
-        console.log(error);
-      }
-      return val;
+      return window.localStorage.getItem(SEARCH);
     };
 
-    const filterWrappers = document.querySelectorAll('.filter');
+    const filterWrappers = document.querySelectorAll('.mutipleCode');
     const allFilters = [];
     let firstSearch = '';
     filterWrappers.forEach(fw => {
@@ -113,7 +163,7 @@ export const useFilter = () => {
         allFilters.push(f);
       });
     });
-    const allContents = document.querySelectorAll(`[class*="filter-"]`);
+    const allContents = document.querySelectorAll(`[class*="mutipleCode-"]`);
 
     if (!allContents.length) return;
     const clickEventHandler = targetSearch => {
@@ -124,7 +174,7 @@ export const useFilter = () => {
       currentFilters.forEach(cf => cf.classList.toggle('active', true));
       allContents.forEach(c => c.classList.toggle('active', false));
       const contents = document.querySelectorAll(
-        `.filter-${search.replace('?', '').replace(/%/g, '')}`
+        `.mutipleCode-${search.replace('?', '').replace(/%/g, '')}`
       );
       contents.forEach(c => c.classList.toggle('active', true));
     };

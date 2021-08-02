@@ -10,7 +10,12 @@ import { sortVersions } from '../utils/docTemplate.util';
 import { NOT_SUPPORTED_VERSION } from '../config';
 import HomeTemplate from '../components/homeTemplate/homeTemplate';
 import RelatedQuestion from '../components/relatedQuestion';
-import { useEmPanel, useFilter, useCodeCopy } from '../hooks/doc-dom-operation';
+import {
+  useEmPanel,
+  useFilter,
+  useCodeCopy,
+  useMutipleCodeFilter,
+} from '../hooks/doc-dom-operation';
 import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
 import ScoredFeedback from '../components/scoredFeedback';
 
@@ -51,6 +56,7 @@ export default function Template({
   useFilter();
   useFormatAnchor();
   useCodeCopy(locale);
+  useMutipleCodeFilter();
 
   useEffect(() => {
     const isLowVersion =

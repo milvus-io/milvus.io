@@ -1,9 +1,59 @@
+@import '../../css/variables/color.less';
+
 .pageinationWrapper {
   display: flex;
+  justify-content: center;
+  margin: 40px 0;
 
   .iconWrapper {
+    padding: 4px 12px;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 25px;
+    margin: 0 5px;
+    border-radius: 50%;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
     &.disabled {
       cursor: not-allowed;
+      color: #eee;
+
+      &:hover {
+        background: #fff;
+      }
+    }
+  }
+
+  .pagesList {
+    list-style: none;
+    display: flex;
+    align-items: center;
+
+    .pagesItem {
+      padding: 4px 12px;
+      font-size: 16px;
+      line-height: 25px;
+      cursor: pointer;
+      margin: 0 5px;
+      border-radius: 50%;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+
+      &.active {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+
+      &.disabled {
+        cursor: ;
+        &:hover {
+          background: #fff;
+        }
+      }
     }
   }
 }

@@ -176,7 +176,7 @@ const BlogTemplate = ({ data, pageContext }) => {
               );
             })}
           </ul>
-          <Pageination total={slicedList} />
+          <Pageination />
         </div>
       ) : (
         <BlogDeatil

@@ -84,6 +84,7 @@ export const useEmPanel = setShowModal => {
  * filter content must has class filter-xxx (same with #xxx)
  * will show different content depend on #xxx in url.
  */
+
 export const useFilter = () => {
   useEffect(() => {
     const filterWrappers = document.querySelectorAll('.filter');
@@ -136,6 +137,62 @@ export const useFilter = () => {
         },
         false
       );
+    }
+  }, []);
+};
+
+export const useMutipleCodeFilter = () => {
+  const SEARCH = 'search';
+  useEffect(() => {
+    const setSearch = val => window.localStorage.setItem(SEARCH, val);
+    const getSearch = () => {
+      return window.localStorage.getItem(SEARCH);
+    };
+
+    const filterWrappers = document.querySelectorAll('.mutipleCode');
+    const allFilters = [];
+    let firstSearch = '';
+    filterWrappers.forEach(fw => {
+      const fs = fw.querySelectorAll('a');
+
+      fs.forEach(f => {
+        if (!firstSearch) {
+          // <a href='?node' >xxx</a>
+          firstSearch = f.search;
+        }
+        allFilters.push(f);
+      });
+    });
+    const allContents = document.querySelectorAll(`[class*="mutipleCode-"]`);
+
+    if (!allContents.length) return;
+    const clickEventHandler = targetSearch => {
+      const search = targetSearch;
+      setSearch(search);
+      const currentFilters = allFilters.filter(f => f.search === search);
+      allFilters.forEach(f => f.classList.toggle('active', false));
+      currentFilters.forEach(cf => cf.classList.toggle('active', true));
+      allContents.forEach(c => c.classList.toggle('active', false));
+      const contents = document.querySelectorAll(
+        `.mutipleCode-${search.replace('?', '').replace(/%/g, '')}`
+      );
+      contents.forEach(c => c.classList.toggle('active', true));
+    };
+
+    filterWrappers.forEach(w => {
+      w.addEventListener('click', e => {
+        e.preventDefault();
+        if (e.target.tagName === 'A') {
+          clickEventHandler(e.target.search);
+        }
+      });
+    });
+
+    if (window) {
+      const localSearch = getSearch() || firstSearch;
+      if (localSearch) {
+        clickEventHandler(localSearch);
+      }
     }
   }, []);
 };

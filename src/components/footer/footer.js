@@ -73,7 +73,7 @@ const Footer = ({ locale, style }) => {
               </a>
             </li>
             <li className={`${styles.listItem} ${styles.wechatWrapper}`}>
-              <img src={wechat} alt="微信" className={styles.wechat} />
+              <img src={wechat} alt="微信" />
               <img
                 src={qrcode}
                 alt="Zilliz 技术交流微信群"

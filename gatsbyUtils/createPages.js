@@ -236,15 +236,6 @@ const query = `
               title
             }
           }
-          section2 {
-            content {
-              desc
-              id
-              link
-              title
-            }
-            title
-          }
           section3 {
             content {
               desc
@@ -773,11 +764,11 @@ const generateTitle = ({
   };
   if (title) return capitalize(title);
   const titleMapping = {
-    pymilvus: 'Milvus Python SDK',
-    'pymilvus-orm': 'Milvus Python SDK (ORM)',
-    go: 'Milvus Go SDK',
-    java: 'Milvus Java SDK',
-    node: 'Milvus Node SDK',
+    pymilvus: 'Python',
+    'pymilvus-orm': 'Python (ORM)',
+    go: 'Go',
+    java: 'Java',
+    node: 'Node',
   };
   const [, label2 = ''] = labels;
   // Return name if the menu is a 3rd level menu(such as: API => java => exception)

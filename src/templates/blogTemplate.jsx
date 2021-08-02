@@ -10,6 +10,7 @@ import Header from '../components/header/v2';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
 import { deepClone, debounce } from '../utils';
 import { FILTER_TAG, PAGE_INDEX } from '../constants';
+import Pageination from '../components/pagination';
 
 const splitAllBlogs = (list, n) => {
   const temp = deepClone(list);
@@ -175,6 +176,7 @@ const BlogTemplate = ({ data, pageContext }) => {
               );
             })}
           </ul>
+          <Pageination total={slicedList} />
         </div>
       ) : (
         <BlogDeatil

@@ -36,7 +36,12 @@ export const NAVLIST_EN = [
         activeKey: null,
       },
       {
-        label: 'Tools',
+        label: 'Sizing Tool',
+        link: 'https://zilliz.com/sizing-tool',
+        activeKey: null,
+      },
+      {
+        label: 'Insight',
         link: 'https://github.com/milvus-io/milvus-insight',
         activeKey: null,
       },
@@ -84,7 +89,12 @@ export const NAVLIST_CN = [
         link: 'https://zilliz.com/blog',
       },
       {
-        label: '工具',
+        label: 'Sizing Tool',
+        link: 'https://zilliz.com/sizing-tool',
+        activeKey: null,
+      },
+      {
+        label: 'Insight',
         link: 'https://github.com/milvus-io/milvus-insight',
       },
       {

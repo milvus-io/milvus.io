@@ -100,6 +100,24 @@ const Menu = props => {
   };
 
   /**
+   * Merge old "API" menu's children to apiMenu if not exists.
+   * @param {array} children Children will be filtered to merge from source.
+   * @param {object} target Target apiMenu.
+   */
+  const mergeChildren = (children, target) => {
+    const transformId = { pymilvus: 'Python', java: 'Java', go: 'Go' };
+    const existedApiNames = target.children.map(
+      child => transformId[child.category] || ''
+    );
+    children.forEach(child => {
+      const { id } = child;
+      if (!existedApiNames.includes(id)) {
+        target.children.push({ ...child, label1: '"api_reference"' });
+      }
+    });
+  };
+
+  /**
    * Replace api reference menu in MenuList with allApiMenus.
    * Will append allApiMenus to the end if there's no api reference menu.
    * @param {array} menus MenuList.
@@ -116,9 +134,12 @@ const Menu = props => {
     }
     // If exists, replace "API" with apiMenu.
     return menus.reduce((prev, item) => {
-      const { id, order } = item;
+      const { id, order, children } = item;
       if (id === 'API') {
         apiMenu.order = order;
+        // Copy "API" menu's children to apiMenu if not exists.
+        // Such as "C++"" and "RESTful".
+        mergeChildren(children, apiMenu);
         return [...prev, apiMenu];
       }
       return [...prev, item];
@@ -176,7 +197,7 @@ const Menu = props => {
 
               {doc.children && doc.children.length ? (
                 <>
-                  {doc.isMenu && doc.label1 === '' ? (
+                  {doc.isMenu && !doc.label1 ? (
                     <i
                       className={`fas fa-caret-down ${styles.arrow} ${
                         doc.showChildren ? '' : styles.top

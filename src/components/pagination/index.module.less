@@ -3,13 +3,15 @@
 .pageinationWrapper {
   display: flex;
   justify-content: center;
-  margin: 40px 0;
+  margin: 60px 0;
 
   .iconWrapper {
-    padding: 4px 12px;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    line-height: 32px;
+    text-align: center;
     cursor: pointer;
-    display: inline-block;
-    line-height: 25px;
     margin: 0 5px;
     border-radius: 50%;
 
@@ -18,8 +20,8 @@
     }
 
     &.disabled {
-      cursor: not-allowed;
-      color: #eee;
+      cursor: unset;
+      color: #ccc;
 
       &:hover {
         background: #fff;
@@ -33,12 +35,14 @@
     align-items: center;
 
     .pagesItem {
-      padding: 4px 12px;
+      width: 32px;
+      height: 32px;
       font-size: 16px;
-      line-height: 25px;
+      line-height: 32px;
       cursor: pointer;
       margin: 0 5px;
       border-radius: 50%;
+      text-align: center;
 
       &:hover {
         background: rgba(0, 0, 0, 0.03);
@@ -47,13 +51,10 @@
       &.active {
         background-color: rgba(0, 0, 0, 0.08);
       }
+    }
 
-      &.disabled {
-        cursor: ;
-        &:hover {
-          background: #fff;
-        }
-      }
+    .ellipsis {
+      user-select: none;
     }
   }
 }

@@ -23,3 +23,14 @@ export const debounce = (fn, delay) => {
     timer = setTimeout(fn, delay);
   };
 };
+
+export const splitList = (list, n) => {
+  const temp = deepClone(list);
+  const result = [];
+
+  while (temp.length >= n) {
+    result.push(temp.splice(0, n));
+  }
+  result.push(temp);
+  return result;
+};

@@ -8,21 +8,9 @@ import BlogCard from '../components/card/blogCard/v2';
 import BlogTag from '../components/blogDetail/blogTag';
 import Header from '../components/header/v2';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
-import { deepClone, debounce } from '../utils';
-import { FILTER_TAG, PAGE_INDEX } from '../constants';
-import Pageination from '../components/pagination';
-
-const splitAllBlogs = (list, n) => {
-  const temp = deepClone(list);
-  const result = [];
-
-  while (temp.length >= n) {
-    result.push(temp.splice(0, n));
-  }
-  result.push(temp);
-  return result;
-};
-const pageSize = 9;
+import { splitList } from '../utils';
+import { FILTER_TAG } from '../constants';
+import Pagination from '../components/pagination';
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { footer } = data.allFile.edges.filter(edge => edge.node.childI18N)[0]
@@ -41,12 +29,17 @@ const BlogTemplate = ({ data, pageContext }) => {
     title,
     id,
   } = pageContext;
-  const slicedList = splitAllBlogs(blogList, pageSize);
+  const pageinationConfig = {
+    total: blogList.length,
+    pageSize: 9,
+  };
 
+  const slicedList = splitList(blogList, pageinationConfig.pageSize);
   // list that can be viewed after pagination
-  const [pageTotalList, setPageTotalList] = useState(slicedList[0]);
+  const [pageTotalList, setPageTotalList] = useState([]);
 
   const tagList = useMemo(() => {
+    console.log(pageTotalList);
     if (!isHomePage) return [];
     let tempList = pageTotalList.reduce((acc, cur) => {
       return acc.concat(cur.tags);
@@ -88,6 +81,12 @@ const BlogTemplate = ({ data, pageContext }) => {
     [filterTag]
   );
 
+  const setPageIndex = idx => {
+    if (idx < 1 || idx > slicedList.length) return;
+    setPageTotalList(slicedList[idx - 1]);
+    setRenderList(slicedList[idx - 1]);
+  };
+
   useCodeCopy(locale);
   useFilter();
 
@@ -99,42 +98,6 @@ const BlogTemplate = ({ data, pageContext }) => {
       isHomePage && window.history.pushState(null, null, '#all');
     }
   }, [isHomePage, handleFilter]);
-
-  useEffect(() => {
-    let scrollHanlder = null;
-    let pageIdx = Number(window.sessionStorage.getItem(PAGE_INDEX)) || 1;
-
-    if (pageIdx >= slicedList.length) {
-      console.log(1111111);
-      setPageTotalList(slicedList.flat());
-    } else {
-      scrollHanlder = () => {
-        const scrollHeight =
-          document.documentElement.scrollHeight || document.body.scrollHeight;
-        const windowHeight =
-          document.documentElement.clientHeight || document.body.clientHeight;
-        const scrollTop =
-          document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollBottom = scrollHeight - windowHeight - scrollTop;
-
-        if (scrollBottom <= 550 && pageIdx < slicedList.length && isHomePage) {
-          pageIdx += 1;
-          window.sessionStorage.setItem(PAGE_INDEX, pageIdx);
-          setPageTotalList(slicedList.slice(0, pageIdx).flat());
-        }
-      };
-      window.addEventListener('scroll', debounce(scrollHanlder, 100), false);
-    }
-
-    return () => {
-      scrollHanlder &&
-        window.removeEventListener(
-          'scroll',
-          debounce(scrollHanlder, 100),
-          false
-        );
-    };
-  }, [isHomePage]);
 
   return (
     <div className={styles.blogWrapper}>
@@ -176,7 +139,7 @@ const BlogTemplate = ({ data, pageContext }) => {
               );
             })}
           </ul>
-          <Pageination />
+          <Pagination {...pageinationConfig} setPageIndex={setPageIndex} />
         </div>
       ) : (
         <BlogDeatil

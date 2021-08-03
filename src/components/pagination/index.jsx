@@ -46,7 +46,7 @@ const generateArray = (count, size) => {
 const Pagination = ({ className = '', total = 0, pageSize, setPageIndex }) => {
   const { search } = globalHistory.location;
 
-  if (search === '') {
+  if (search === '' && typeof window !== 'undefined') {
     window.location.search = `?page=1`;
   }
   const pageIdx = search ? Number(search.replace(/\?page=/g, '')) : 1;

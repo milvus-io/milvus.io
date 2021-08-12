@@ -103,10 +103,11 @@
         .qrcodeWrapper {
           position: absolute;
           top: -170px;
-          right: 0;
+          left: 0;
           visibility: hidden;
           z-index: -1;
           width: 300px;
+          box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 
           @media @tablet {
             left: 0;
@@ -114,8 +115,8 @@
           }
 
           img {
-            width: 150px;
-            height: 150px;
+            width: 300px;
+            height: auto;
           }
         }
       }

@@ -186,8 +186,8 @@ export default function Template({
                     <a
                       href={
                         locale === 'en'
-                          ? `/docs/data_migration.md`
-                          : `/cn/docs/data_migration.md`
+                          ? `/docs/migrate_overview.md`
+                          : `/cn/docs/migrate_overview.md`
                       }
                       alt="sign up milvus"
                       rel="noreferrer noopener"

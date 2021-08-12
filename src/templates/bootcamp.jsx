@@ -31,7 +31,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
   const { bootcampData, locale, html, headings } = pageContext;
   const isHomePage = bootcampData !== null;
 
-  const { banner, title, description, section1, section2, section3, section4 } =
+  const { banner, title, description, section1, section3, section4 } =
     bootcampData || {};
 
   const SeoTitle = 'Milvus Bootcamp';

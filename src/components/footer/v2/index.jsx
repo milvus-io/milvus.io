@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import Button from '../../button';
-import qrcode from '../../../images/qrcode.jpeg';
-import milvusUserWechat from '../../../images/milvus-user-wechat.png';
+import milvusQrcode from '../../../images/milvus-qrcode.png';
 import medium from '../../../images/website/community/medium.svg';
 import slack from '../../../images/website/community/slack.svg';
 import twitter from '../../../images/website/community/twitter.svg';
@@ -18,7 +17,6 @@ const iconSet = {
 
 const V2Footer = ({ locale, footer }) => {
   const {
-
     list: links,
     licence: {
       // list,
@@ -96,16 +94,16 @@ const ImageList = ({ images }) => {
             href={img.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${styles.columnImg} ${img.name === 'wechat' ? styles.hoverBtn : ''
-              }`}
+            className={`${styles.columnImg} ${
+              img.name === 'wechat' ? styles.hoverBtn : ''
+            }`}
             key={img.name}
             onClick={e => handleClick(e, img.name)}
           >
             <img src={iconSet[img.name]} alt={img.name} />
             {img.name === 'wechat' && (
               <p className={styles.qrcodeWrapper}>
-                <img src={qrcode} alt="qrcode" />
-                <img src={milvusUserWechat} alt="qrcode" />
+                <img src={milvusQrcode} alt="qrcode" />
               </p>
             )}
           </a>

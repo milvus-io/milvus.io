@@ -39,7 +39,6 @@ const BlogTemplate = ({ data, pageContext }) => {
   const [pageTotalList, setPageTotalList] = useState([]);
 
   const tagList = useMemo(() => {
-    console.log(pageTotalList);
     if (!isHomePage) return [];
     let tempList = pageTotalList.reduce((acc, cur) => {
       return acc.concat(cur.tags);

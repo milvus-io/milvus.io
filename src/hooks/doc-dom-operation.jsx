@@ -163,7 +163,7 @@ export const useMutipleCodeFilter = () => {
         allFilters.push(f);
       });
     });
-    const allContents = document.querySelectorAll(`[class*="mutipleCode-"]`);
+    const allContents = document.querySelectorAll(`[class*="language-"]`);
 
     if (!allContents.length) return;
     const clickEventHandler = targetSearch => {
@@ -174,7 +174,7 @@ export const useMutipleCodeFilter = () => {
       currentFilters.forEach(cf => cf.classList.toggle('active', true));
       allContents.forEach(c => c.classList.toggle('active', false));
       const contents = document.querySelectorAll(
-        `.mutipleCode-${search.replace('?', '').replace(/%/g, '')}`
+        `.language-${search.replace('?', '').replace(/%/g, '')}`
       );
       contents.forEach(c => c.classList.toggle('active', true));
     };

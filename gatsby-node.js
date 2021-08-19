@@ -124,7 +124,6 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
         }
         break;
       case 'pymilvus-orm':
-        // TODO need to update Variables.json, add pymilvus-orm verison
         for (let version of versions) {
           handlePyOrmFiles(path, version, nodes);
         }
@@ -139,7 +138,6 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
           handleJavaFiles(path, version, nodes);
         }
         break;
-      // TODO need to update Variables.json, add node verison
       case 'milvus-sdk-node':
         for (let version of versions) {
           handleNodeFiles(path, version, nodes);

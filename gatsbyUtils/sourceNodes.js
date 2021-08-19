@@ -475,13 +475,28 @@ const handleNodeFiles = (parentPath, version, apiFiles) => {
       const isIndex = node?.getAttribute('class')?.includes('tsd-index');
       const isLastChild = sections?.length === index + 1;
       const isValid = isIndex || isLastChild;
-      if (!isValid) node.remove();
+      if (!isValid) node?.remove();
+      if (isIndex) {
+        // Remove toc title "index"
+        node.querySelector('h2')?.remove();
+      }
+      if (isLastChild) {
+        // Remove source code link and desc elements
+        const lastChild = HTMLParser.parse(node.innerHTML);
+        [...lastChild.querySelectorAll('ul.tsd-signatures')].forEach(i =>
+          i.remove()
+        );
+        [...lastChild.querySelectorAll('aside.tsd-sources')].forEach(i =>
+          i.remove()
+        );
+        node.innerHTML = lastChild.outerHTML;
+      }
     });
     [...doc.querySelectorAll('.tsd-index-section')].forEach(node => {
       const sectionNode = HTMLParser.parse(node.innerHTML);
       const title = sectionNode.querySelector('h3');
       if (title?.textContent === 'Methods') {
-        title.remove();
+        title?.remove();
         [...sectionNode.querySelectorAll('a')].forEach(aNode => {
           const ahref = aNode?.getAttribute('href')?.split('#')?.pop();
           const newHref = `#${ahref}`;
@@ -492,9 +507,13 @@ const handleNodeFiles = (parentPath, version, apiFiles) => {
       }
       node.innerHTML = sectionNode.outerHTML;
     });
-    // only need article body html
+    // only need article title & body html
     doc.querySelector('.tsd-typography p')?.remove();
-    doc = doc.querySelector('.container-main  .col-content').innerHTML;
+    const isDupTitle = doc.querySelectorAll('h1')?.length > 1;
+    const docTitleHTML = isDupTitle ? '' : doc.querySelector('h1').outerHTML;
+    doc =
+      docTitleHTML +
+      doc.querySelector('.container-main .col-content').innerHTML;
     return { docHTML: doc };
   };
   handleApiFiles(doc2html, apiFiles, {

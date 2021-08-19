@@ -166,6 +166,10 @@ export const useMutipleCodeFilter = () => {
     const allContents = document.querySelectorAll(`[class*="language-"]`);
 
     if (!allContents.length) return;
+    if (!filterWrappers.length) {
+      allContents.forEach(c => c.classList.toggle('active', true));
+      return;
+    }
     const clickEventHandler = targetSearch => {
       const search = targetSearch;
       setSearch(search);

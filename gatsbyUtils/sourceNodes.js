@@ -181,8 +181,8 @@ const handleApiFiles = (
         category,
         labels: ['api_reference'],
         isDirectory: true,
+        order: category.includes('pymilvus') ? -1 : null,
       }) &&
-      // uniq.forEach(f =>
       Object.keys(thridLevelDirectories).forEach(f => {
         const { name: dirName, order: dirOrder } = thridLevelDirectories[f];
         apiFiles.push({
@@ -421,7 +421,10 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
       !node.textContent.split('\n').join('') && node?.remove();
     });
     const title = doc.querySelector('.header .title');
-    title && doc.querySelector('.header')?.replaceWith(`<h1 class="title">${title.textContent}</h1>`);
+    title &&
+      doc
+        .querySelector('.header')
+        ?.replaceWith(`<h1 class="title">${title.textContent}</h1>`);
     const packageHierarchyLabel = doc.querySelector(
       '.header .packageHierarchyLabel'
     );
@@ -451,7 +454,46 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
  */
 const handleNodeFiles = (parentPath, version, apiFiles) => {
   const doc2html = doc => {
+    // Format <pre> content for highlight.js
+    [...doc.querySelectorAll('pre')].forEach(node => {
+      const preNode = HTMLParser.parse(node.innerHTML);
+      [...preNode.querySelectorAll('a')].forEach(e => {
+        const textContent = e.textContent;
+        textContent && e.replaceWith(textContent);
+      });
+      [...preNode.querySelectorAll('span')].forEach(span => {
+        const spanText = span.textContent;
+        span.replaceWith(spanText);
+      });
+      node.innerHTML = preNode.outerHTML;
+    });
+    // Remove hierarchy
+    doc.querySelector('.tsd-hierarchy')?.remove();
+    // Remove useless sections
+    const sections = doc.querySelectorAll('.col-content > section');
+    [...sections].forEach((node, index) => {
+      const isIndex = node?.getAttribute('class')?.includes('tsd-index');
+      const isLastChild = sections?.length === index + 1;
+      const isValid = isIndex || isLastChild;
+      if (!isValid) node.remove();
+    });
+    [...doc.querySelectorAll('.tsd-index-section')].forEach(node => {
+      const sectionNode = HTMLParser.parse(node.innerHTML);
+      const title = sectionNode.querySelector('h3');
+      if (title?.textContent === 'Methods') {
+        title.remove();
+        [...sectionNode.querySelectorAll('a')].forEach(aNode => {
+          const ahref = aNode?.getAttribute('href')?.split('#')?.pop();
+          const newHref = `#${ahref}`;
+          aNode.setAttribute('href', newHref);
+        });
+      } else {
+        node.remove();
+      }
+      node.innerHTML = sectionNode.outerHTML;
+    });
     // only need article body html
+    doc.querySelector('.tsd-typography p')?.remove();
     doc = doc.querySelector('.container-main  .col-content').innerHTML;
     return { docHTML: doc };
   };

@@ -755,7 +755,10 @@ const generateTitle = ({
   const capitalize = s => {
     if (typeof s !== 'string') return '';
     const result = s.split('/').pop();
-    return result.charAt(0).toUpperCase() + result.slice(1);
+    const resultList = result
+      .split(' ')
+      .map(i => i.charAt(0).toUpperCase() + i.slice(1));
+    return resultList.join(' ');
   };
   if (title) return capitalize(title);
   const titleMapping = {

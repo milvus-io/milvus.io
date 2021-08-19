@@ -58,10 +58,9 @@ const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
     const orm =
       content?.milvus_python_orm_sdk_version &&
       `v${content?.milvus_python_orm_sdk_version}`;
-    // Prepare for node sdk version.
     const node =
       content?.milvus_node_sdk_version &&
-      content?.milvus_node_sdk_version > '1.0.11' &&
+      content?.milvus_node_sdk_version >= '1.0.14' &&
       `v${content?.milvus_node_sdk_version}`;
     result = { pymilvus, go, java, 'pymilvus-orm': orm, node };
   }

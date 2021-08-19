@@ -3,7 +3,7 @@ import Seo from '../components/seo';
 import Layout from '../components/docLayout';
 import { graphql } from 'gatsby';
 import './apiDocTemplate.less';
-import { useCodeCopy, useMutipleCodeFilter } from '../hooks/doc-dom-operation';
+import { useCodeCopy, useMultipleCodeFilter } from '../hooks/doc-dom-operation';
 import useAlgolia from '../hooks/use-algolia';
 
 export default function Template({ data, pageContext }) {
@@ -43,7 +43,7 @@ export default function Template({ data, pageContext }) {
 
   useCodeCopy(locale, hljsCfg);
   useAlgolia(locale, targetDocVersion);
-  useMutipleCodeFilter();
+  useMultipleCodeFilter();
 
   const layout = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.layout

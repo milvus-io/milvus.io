@@ -14,7 +14,7 @@ import {
   useEmPanel,
   useFilter,
   useCodeCopy,
-  useMutipleCodeFilter,
+  useMultipleCodeFilter,
 } from '../hooks/doc-dom-operation';
 import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
 import ScoredFeedback from '../components/scoredFeedback';
@@ -56,7 +56,7 @@ export default function Template({
   useFilter();
   useFormatAnchor();
   useCodeCopy(locale);
-  useMutipleCodeFilter();
+  useMultipleCodeFilter();
 
   useEffect(() => {
     const isLowVersion =

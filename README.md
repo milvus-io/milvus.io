@@ -20,7 +20,7 @@ We use submodule to update docs pages. So we must update submodules before yarn 
 
 ### Mutiple code in markdown submodule
 
-<div class="mutipleCode">
+<div class="multipleCode">
   <a href="?python">Python </a>
   <a href="?javascript">Node</a>
 </div>

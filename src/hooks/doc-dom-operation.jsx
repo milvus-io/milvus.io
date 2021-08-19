@@ -141,7 +141,7 @@ export const useFilter = () => {
   }, []);
 };
 
-export const useMutipleCodeFilter = () => {
+export const useMultipleCodeFilter = () => {
   const SEARCH = 'search';
   useEffect(() => {
     const setSearch = val => window.localStorage.setItem(SEARCH, val);
@@ -149,7 +149,7 @@ export const useMutipleCodeFilter = () => {
       return window.localStorage.getItem(SEARCH);
     };
 
-    const filterWrappers = document.querySelectorAll('.mutipleCode');
+    const filterWrappers = document.querySelectorAll('.multipleCode');
     const allFilters = [];
     let firstSearch = '';
     filterWrappers.forEach(fw => {

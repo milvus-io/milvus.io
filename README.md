@@ -17,3 +17,18 @@ We use submodule to update docs pages. So we must update submodules before yarn 
 4. pull request to the preview branch
 
 ### This site is built with Gatsbyjs, please check https://www.gatsbyjs.org/docs/ for reference
+
+### Mutiple code in markdown submodule
+
+<div class="mutipleCode">
+  <a href="?python">Python </a>
+  <a href="?javascript">Node</a>
+</div>
+
+```javascript
+milvusClient.closeConnection();
+```
+
+```python
+>>> connections.disconnect("default")
+```

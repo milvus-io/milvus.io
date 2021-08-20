@@ -82,6 +82,17 @@ const query = `
             }
             title
           }
+          contributorSection {
+            title,
+            list {
+              avatar {
+                publicURL
+              }
+              name
+              company
+              jobTitle
+            }
+          }
           partnerSection {
             list {
               alt

@@ -167,10 +167,12 @@
             li {
               font-size: 16px;
               line-height: 24px;
+
               & + li {
                 margin-top: 8px;
               }
             }
+
             a {
               color: @color-primary;
             }
@@ -199,6 +201,7 @@
             font-size: 24px;
             line-height: 24px;
             font-weight: bold;
+            text-align: center;
           }
 
           .ambassador-content {
@@ -220,6 +223,7 @@
             line-height: 24px;
             font-weight: Bold;
           }
+
           .introduction-button {
             margin-top: 16px;
 
@@ -262,16 +266,19 @@
             .mail-wrapper {
               display: flex;
               align-items: center;
+
               @media @tablet {
                 font-size: 16px;
 
                 display: flex;
                 align-items: center;
               }
+
               img {
                 width: 24px;
                 height: 24px;
               }
+
               p {
                 font-size: 20px;
                 line-height: 28px;
@@ -312,7 +319,43 @@
 
           @media @phone {
             flex-wrap: wrap;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
+            grid-row-gap: 32px;
+          }
+
+          li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            img {
+              width: 160px;
+              height: 130px;
+            }
+
+            a {
+              color: @color-primary;
+              text-decoration: underline;
+              .fontMedi();
+            }
+          }
+        }
+
+        .contributor-list {
+          list-style: none;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+
+          @media @tablet {
+            flex-wrap: wrap;
+            grid-template-columns: repeat(2, 1fr);
+            grid-row-gap: 32px;
+          }
+
+          @media @phone {
+            flex-wrap: wrap;
+            grid-template-columns: repeat(2, 1fr);
             grid-row-gap: 32px;
           }
 
@@ -326,6 +369,38 @@
               color: @color-primary;
               text-decoration: underline;
               .fontMedi();
+            }
+
+            .avatar-wrapper {
+              width: 130px;
+              height: 130px;
+              border-radius: 50%;
+              overflow: hidden;
+              margin-bottom: 16px;
+
+              & > img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+
+            .name {
+              font-size: 24px;
+              line-height: 30px;
+              display: inline-block;
+              font-weight: 600;
+              margin-bottom: 8px;
+            }
+
+            .info {
+              font-size: 14px;
+              line-height: 20px;
+              display: inline-block;
+              font-weight: 500;
+
+              & + .info {
+                margin-top: 8px;
+              }
             }
           }
         }
@@ -453,6 +528,7 @@
           &:hover {
             color: @color-doc-primary;
           }
+
           .active {
             color: @color-doc-primary;
           }

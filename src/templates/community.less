@@ -319,7 +319,7 @@
 
           @media @phone {
             flex-wrap: wrap;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
             grid-row-gap: 32px;
           }
 
@@ -328,6 +328,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
+
+            img {
+              width: 160px;
+              height: 130px;
+            }
 
             a {
               color: @color-primary;

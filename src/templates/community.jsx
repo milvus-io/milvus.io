@@ -59,6 +59,7 @@ export default function CommunityTemplate({ data, pageContext }) {
     recommendSection,
     resourceSection,
     mailingSection,
+    contributorSection,
   } = homeData || {};
 
   // add hooks used by doc template
@@ -274,6 +275,25 @@ export default function CommunityTemplate({ data, pageContext }) {
                     </a>
                   </li>
                 ))}
+              </ul>
+            </section>
+            {/* contributorSection */}
+            <section className="community-section">
+              <h2>{contributorSection.title}</h2>
+              <ul className="contributor-list">
+                {contributorSection.list.map(item => {
+                  const { avatar, name, company, jobTitle } = item;
+                  return (
+                    <li key={name}>
+                      <div className="avatar-wrapper">
+                        <img src={avatar.publicURL} alt={name} />
+                      </div>
+                      <span className="name">{name}</span>
+                      <span className="info">{company}</span>
+                      <span className="info">{jobTitle}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
             {/* join the community */}

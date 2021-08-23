@@ -10,40 +10,12 @@ const BtnGroups = ({
   editPath,
   language,
   isCommunity = false,
-  apiReferenceData: { projName, relativePath, apiVersion },
+  apiReferenceData,
 }) => {
-  const generateEditLink = ({
-    version,
-    locale,
-    editPath,
-    projName,
-    relativePath,
-  }) => {
-    let editLink = isCommunity
-      ? `https://github.com/milvus-io/web-content/edit/master/community/site/${
-          locale === 'en' ? 'en' : 'zh-CN'
-        }/${editPath}`
-      : `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${
-          locale === 'en' ? 'en' : 'zh-CN'
-        }/${editPath}`;
-    switch (projName) {
-      case 'pymilvus-orm':
-        const path = relativePath
-          ?.split('pymilvus_orm_')?.[1]
-          ?.replace('.html', '.rst');
-        editLink = `https://github.com/milvus-io/pymilvus-orm/edit/${apiVersion.slice(
-          1
-        )}/docs/source/${path}`;
-        break;
-      default:
-        break;
-    }
-    return editLink;
-  };
-
+  const { projName, relativePath, apiVersion, sourceUrl } = apiReferenceData;
   const shouldRenderBtns = !isApiReference
     ? !isBlog && !isBenchMark
-    : projName && relativePath && apiVersion && projName === 'pymilvus-orm';
+    : projName && relativePath && apiVersion && sourceUrl;
 
   return (
     <>
@@ -55,8 +27,8 @@ const BtnGroups = ({
               version,
               locale,
               editPath,
-              projName,
-              relativePath,
+              isCommunity,
+              apiReferenceData,
             })}
           >
             <span className={styles.btnIconWrapper}>
@@ -110,6 +82,24 @@ const BtnGroups = ({
       </div>
     </>
   );
+};
+
+const generateEditLink = ({
+  version,
+  locale,
+  editPath,
+  isCommunity,
+  apiReferenceData: { projName, relativePath, apiVersion, sourceUrl },
+}) => {
+  if (sourceUrl) return sourceUrl;
+  let editLink = isCommunity
+    ? `https://github.com/milvus-io/web-content/edit/master/community/site/${
+        locale === 'en' ? 'en' : 'zh-CN'
+      }/${editPath}`
+    : `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${
+        locale === 'en' ? 'en' : 'zh-CN'
+      }/${editPath}`;
+  return editLink;
 };
 
 export default BtnGroups;

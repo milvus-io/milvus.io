@@ -63,6 +63,38 @@ export default function Template({ data, pageContext }) {
     apiVersion: version,
   };
 
+  // Generate apiReferenceData.sourceUrl for final page's Edit Button.
+  switch (category) {
+    case 'pymilvus-orm':
+      const path = name?.split('pymilvus_orm_')?.[1]?.replace('.html', '.rst');
+      const url = `https://github.com/milvus-io/pymilvus-orm/edit/${version.slice(
+        1
+      )}/docs/source/${path}`;
+      apiReferenceData.sourceUrl = url;
+      break;
+    case 'node':
+      const relativePath = name
+        ?.split('node_')?.[1]
+        ?.replace('.html', '.ts')
+        ?.split('/')
+        ?.pop();
+      const transformName = (originName = '') => {
+        if (originName === 'index.ts') return 'MilvusIndex.ts';
+        return originName.charAt(0).toUpperCase() + originName.slice(1);
+      };
+      if (name.includes('api reference')) {
+        const fileName = transformName(relativePath);
+        apiReferenceData.sourceUrl = `https://github.com/milvus-io/milvus-sdk-node/edit/main/milvus/${fileName}`;
+      }
+      if (name.includes('tutorial')) {
+        apiReferenceData.sourceUrl =
+          'https://github.com/milvus-io/milvus-sdk-node/edit/main/README.md';
+      }
+      break;
+    default:
+      break;
+  }
+
   return (
     <>
       <Layout

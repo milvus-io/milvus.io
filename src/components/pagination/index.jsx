@@ -7,26 +7,17 @@ const formateList = (list, idx) => {
   let res = [];
   if (len <= 7) return list;
 
-  if (idx > 0 && idx <= 3) {
-    res = [].concat(list.slice(0, 5), '...', list[len - 1]);
-  } else if (idx > 3 && idx < list[len - 3]) {
-    let temp = list.slice(idx - 3, idx + 2);
-    let [start, end] = [temp[0], temp[temp.length - 1]];
-    if (start === 2) {
-      res = [].concat(list.slice(0, 6), '...', list[len - 1]);
-    } else if (end === list[len - 2]) {
-      res = [].concat(list[0], '...', list.slice(len - 6, len));
-    } else {
-      res = [].concat(
-        list[0],
-        '...',
-        list.slice(idx - 3, idx + 2),
-        '...',
-        list[len - 1]
-      );
-    }
+  if (idx === 1 || idx === 2) {
+    res = [].concat(list.slice(0, 3), '...', list[len - 1]);
+  } else if (idx === 3) {
+    res = [].concat(list.slice(0, 4), '...', list[len - 1]);
+  } else if (idx > 3 && idx < len - 2) {
+    let temp = list.slice(idx - 2, idx + 1);
+    res = [].concat(1, '...', temp, '...', list[len - 1]);
+  } else if (idx === len - 2) {
+    res = [].concat(1, '...', list.slice(len - 4, len));
   } else {
-    res = [].concat(list[0], '...', list.slice(len - 6, len));
+    res = [].concat(1, '...', list.slice(len - 3, len));
   }
   return res;
 };

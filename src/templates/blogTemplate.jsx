@@ -29,14 +29,14 @@ const BlogTemplate = ({ data, pageContext }) => {
     title,
     id,
   } = pageContext;
-  const pageinationConfig = {
-    total: blogList.length,
-    pageSize: 9,
-  };
 
-  const slicedList = splitList(blogList, pageinationConfig.pageSize);
   // list that can be viewed after pagination
   const [pageTotalList, setPageTotalList] = useState([]);
+  const [pageinationConfig, setPageinationConfig] = useState({
+    total: blogList.length,
+    pageSize: 9,
+  });
+  const slicedList = splitList(blogList, pageinationConfig.pageSize);
 
   const tagList = useMemo(() => {
     if (!isHomePage) return [];
@@ -64,9 +64,17 @@ const BlogTemplate = ({ data, pageContext }) => {
       setCurrentTag(tag);
       if (tag === 'all') {
         setRenderList(pageTotalList);
+        setPageinationConfig({
+          total: blogList.length,
+          pageSize: 9,
+        });
         return;
       }
       setRenderList(pageTotalList.filter(i => i.tags.includes(tag)));
+      setPageinationConfig({
+        total: pageTotalList.filter(i => i.tags.includes(tag)).length,
+        pageSize: 9,
+      });
     },
     [pageTotalList]
   );

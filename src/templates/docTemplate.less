@@ -40,11 +40,12 @@
     }
   }
 
-  div[class*='mutipleCode-'] {
+  code[class*='language-'] {
     display: none;
-
+    margin: 0;
     &.active {
       display: block;
+      margin-bottom: 24px;
     }
   }
 
@@ -329,5 +330,17 @@
     -ms-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
     -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
     font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+  }
+}
+
+.node {
+  .tsd-member-group {
+    ul {
+      list-style-type: none;
+    }
+  }
+
+  h5 {
+    font-weight: unset;
   }
 }

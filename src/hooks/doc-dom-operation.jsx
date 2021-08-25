@@ -141,7 +141,7 @@ export const useFilter = () => {
   }, []);
 };
 
-export const useMutipleCodeFilter = () => {
+export const useMultipleCodeFilter = () => {
   const SEARCH = 'search';
   useEffect(() => {
     const setSearch = val => window.localStorage.setItem(SEARCH, val);
@@ -149,7 +149,7 @@ export const useMutipleCodeFilter = () => {
       return window.localStorage.getItem(SEARCH);
     };
 
-    const filterWrappers = document.querySelectorAll('.mutipleCode');
+    const filterWrappers = document.querySelectorAll('.multipleCode');
     const allFilters = [];
     let firstSearch = '';
     filterWrappers.forEach(fw => {
@@ -163,9 +163,13 @@ export const useMutipleCodeFilter = () => {
         allFilters.push(f);
       });
     });
-    const allContents = document.querySelectorAll(`[class*="mutipleCode-"]`);
+    const allContents = document.querySelectorAll(`[class*="language-"]`);
 
     if (!allContents.length) return;
+    if (!filterWrappers.length) {
+      allContents.forEach(c => c.classList.toggle('active', true));
+      return;
+    }
     const clickEventHandler = targetSearch => {
       const search = targetSearch;
       setSearch(search);
@@ -174,7 +178,7 @@ export const useMutipleCodeFilter = () => {
       currentFilters.forEach(cf => cf.classList.toggle('active', true));
       allContents.forEach(c => c.classList.toggle('active', false));
       const contents = document.querySelectorAll(
-        `.mutipleCode-${search.replace('?', '').replace(/%/g, '')}`
+        `.language-${search.replace('?', '').replace(/%/g, '')}`
       );
       contents.forEach(c => c.classList.toggle('active', true));
     };

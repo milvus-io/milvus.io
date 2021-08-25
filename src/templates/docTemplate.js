@@ -14,7 +14,7 @@ import {
   useEmPanel,
   useFilter,
   useCodeCopy,
-  useMutipleCodeFilter,
+  useMultipleCodeFilter,
 } from '../hooks/doc-dom-operation';
 import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
 import ScoredFeedback from '../components/scoredFeedback';
@@ -56,7 +56,7 @@ export default function Template({
   useFilter();
   useFormatAnchor();
   useCodeCopy(locale);
-  useMutipleCodeFilter();
+  useMultipleCodeFilter();
 
   useEffect(() => {
     const isLowVersion =
@@ -186,8 +186,8 @@ export default function Template({
                     <a
                       href={
                         locale === 'en'
-                          ? `/docs/data_migration.md`
-                          : `/cn/docs/data_migration.md`
+                          ? `/docs/migrate_overview.md`
+                          : `/cn/docs/migrate_overview.md`
                       }
                       alt="sign up milvus"
                       rel="noreferrer noopener"

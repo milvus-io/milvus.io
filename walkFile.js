@@ -47,8 +47,6 @@ const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
   const content = JSON.parse(doc.toString());
   let result = content;
   if (isVariables) {
-    // TODO waiting for pymilvus-orm version
-    // TODO waiting for node version
     const pymilvus =
       content?.milvus_python_sdk_version &&
       `v${content?.milvus_python_sdk_version}`;
@@ -60,11 +58,11 @@ const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
     const orm =
       content?.milvus_python_orm_sdk_version &&
       `v${content?.milvus_python_orm_sdk_version}`;
-    // Prepare for node sdk version.
-    // const node = content?.milvus_node_sdk_version &&
-    // `v${content?.milvus_node_sdk_version}`;
-    // result = { pymilvus, go, java, 'pymilvus-orm': orm, node };
-    result = { pymilvus, go, java, 'pymilvus-orm': orm };
+    const node =
+      content?.milvus_node_sdk_version &&
+      content?.milvus_node_sdk_version >= '1.0.14' &&
+      `v${content?.milvus_node_sdk_version}`;
+    result = { pymilvus, go, java, 'pymilvus-orm': orm, node };
   }
   fileObj[parent] = fileObj[parent]
     ? { ...fileObj[parent], ...result }

@@ -25,7 +25,7 @@ const formateList = (list, idx) => {
 const generateArray = (count, size) => {
   if (count === 0 || size === 0) return [];
   let n = 0;
-  if (count % size == 0) {
+  if (count % size === 0) {
     n = count / size;
   } else {
     n = count / size + 1;
@@ -34,7 +34,12 @@ const generateArray = (count, size) => {
   return Array.from({ length: n }).map((_, k) => k + 1);
 };
 
-const Pagination = ({ className = '', total = 0, pageSize, setPageIndex }) => {
+const Pagination = ({
+  className = '',
+  total = 0,
+  pageSize,
+  handlePageIndexChange,
+}) => {
   const { search } = globalHistory.location;
 
   if (search === '' && typeof window !== 'undefined') {
@@ -50,18 +55,26 @@ const Pagination = ({ className = '', total = 0, pageSize, setPageIndex }) => {
   };
 
   useEffect(() => {
-    setPageIndex(pageIdx);
-  }, []);
+    handlePageIndexChange(pageIdx);
+    // will fix this logic soon
+    // eslint-disable-next-line
+  }, [pageIdx]);
 
   return (
     <div
       className={`${styles.pageinationWrapper} ${className ? className : ''}`}
     >
       <span
+        role="button"
+        tabIndex="-1"
         className={`${styles.iconWrapper} ${
           pageIdx === 1 ? styles.disabled : ''
         }`}
         onClick={() => {
+          if (pageIdx === 1) return;
+          window.location.search = `?page=${pageIdx - 1}`;
+        }}
+        onKeyDown={() => {
           if (pageIdx === 1) return;
           window.location.search = `?page=${pageIdx - 1}`;
         }}
@@ -71,23 +84,33 @@ const Pagination = ({ className = '', total = 0, pageSize, setPageIndex }) => {
 
       <ul className={styles.pagesList}>
         {navList.map((item, idx) => (
-          <li
-            className={`${
-              typeof item !== 'number' ? styles.ellipsis : styles.pagesItem
-            } ${item === pageIdx ? styles.active : ''} `}
-            onClick={() => handleChoosePage(item)}
-            key={item + idx}
-          >
-            {item}
+          <li key={item + idx}>
+            <span
+              role="button"
+              tabIndex="-1"
+              className={`${
+                typeof item !== 'number' ? styles.ellipsis : styles.pagesItem
+              } ${item === pageIdx ? styles.active : ''} `}
+              onClick={() => handleChoosePage(item)}
+              onKeyDown={() => handleChoosePage(item)}
+            >
+              {item}
+            </span>
           </li>
         ))}
       </ul>
 
       <span
+        role="button"
+        tabIndex="-1"
         className={`${styles.iconWrapper} ${
           pageIdx === tempList.length ? styles.disabled : ''
         }`}
         onClick={() => {
+          if (pageIdx === navList.length) return;
+          window.location.search = `?page=${pageIdx + 1}`;
+        }}
+        onKeyDown={() => {
           if (pageIdx === navList.length) return;
           window.location.search = `?page=${pageIdx + 1}`;
         }}

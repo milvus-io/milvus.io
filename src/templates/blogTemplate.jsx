@@ -76,7 +76,7 @@ const BlogTemplate = ({ data, pageContext }) => {
         pageSize: 9,
       });
     },
-    [pageTotalList]
+    [pageTotalList, blogList.length]
   );
 
   const handleFilter = useCallback(
@@ -88,11 +88,14 @@ const BlogTemplate = ({ data, pageContext }) => {
     [filterTag]
   );
 
-  const setPageIndex = idx => {
-    if (idx < 1 || idx > slicedList.length) return;
-    setPageTotalList(slicedList[idx - 1]);
-    setRenderList(slicedList[idx - 1]);
-  };
+  const handlePageIndexChange = useCallback(
+    idx => {
+      if (idx < 1 || idx > slicedList.length) return;
+      setPageTotalList(slicedList[idx - 1]);
+      setRenderList(slicedList[idx - 1]);
+    },
+    [slicedList]
+  );
 
   useCodeCopy(locale);
   useFilter();
@@ -116,15 +119,16 @@ const BlogTemplate = ({ data, pageContext }) => {
           <h1 className={styles.blogHeader}>Milvus Blogs</h1>
           <ul className={styles.tags}>
             {tagList.map(tag => (
-              <li
-                role="button"
-                tabIndex={0}
-                key={tag}
-                className={styles.tagItem}
-                onClick={() => handleFilter(tag)}
-                onKeyDown={() => handleFilter(tag)}
-              >
-                <BlogTag name={tag} isActive={currentTag === tag} />
+              <li key={tag}>
+                <span
+                  role="button"
+                  tabIndex={0}
+                  className={styles.tagItem}
+                  onClick={() => handleFilter(tag)}
+                  onKeyDown={() => handleFilter(tag)}
+                >
+                  <BlogTag name={tag} isActive={currentTag === tag} />
+                </span>
               </li>
             ))}
           </ul>
@@ -146,7 +150,10 @@ const BlogTemplate = ({ data, pageContext }) => {
               );
             })}
           </ul>
-          <Pagination {...pageinationConfig} setPageIndex={setPageIndex} />
+          <Pagination
+            {...pageinationConfig}
+            handlePageIndexChange={handlePageIndexChange}
+          />
         </div>
       ) : (
         <BlogDeatil
@@ -157,7 +164,7 @@ const BlogTemplate = ({ data, pageContext }) => {
           date={date}
           title={title}
           locale={locale}
-          blogList={pageTotalList}
+          blogList={blogList}
           id={id}
         />
       )}

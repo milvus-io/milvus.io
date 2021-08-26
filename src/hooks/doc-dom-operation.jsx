@@ -150,13 +150,6 @@ export const useMultipleCodeFilter = () => {
     };
 
     const filterWrappers = document.querySelectorAll('.multipleCode');
-    if (!filterWrappers.length) return;
-    // the language options of current code block
-    // we must make sure options are same on single page
-    const languageList = Array.prototype.map.call(
-      filterWrappers[0].children,
-      item => item.getAttribute('href')
-    );
 
     const allFilters = [];
     let firstSearch = '';
@@ -177,6 +170,12 @@ export const useMultipleCodeFilter = () => {
       allContents.forEach(c => c.classList.toggle('active', true));
       return;
     }
+    // the language options of current code block
+    // we must make sure options are same on single page
+    const languageList = Array.prototype.map.call(
+      filterWrappers[0].children,
+      item => item.getAttribute('href')
+    );
     const clickEventHandler = targetSearch => {
       const search = targetSearch;
       setSearch(search);

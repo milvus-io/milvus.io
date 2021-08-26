@@ -150,6 +150,7 @@ export const useMultipleCodeFilter = () => {
     };
 
     const filterWrappers = document.querySelectorAll('.multipleCode');
+    if (!filterWrappers.length) return;
     // the language options of current code block
     // we must make sure options are same on single page
     const languageList = Array.prototype.map.call(

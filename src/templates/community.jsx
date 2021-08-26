@@ -12,6 +12,7 @@ import grow from '../images/community/grow.svg';
 import learn from '../images/community/learn.svg';
 import share from '../images/community/share.svg';
 import video from '../images/community/video.svg';
+import meeting from '../images/community/meeting.svg';
 import CommunityCard from '../components/card/communityCard';
 import Button from '../components/button';
 import { useFormatAnchor } from '../hooks/doc-anchor';
@@ -24,6 +25,7 @@ const iconMap = {
   learn,
   share,
   video,
+  meeting,
 };
 
 export default function CommunityTemplate({ data, pageContext }) {

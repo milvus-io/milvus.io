@@ -150,6 +150,13 @@ export const useMultipleCodeFilter = () => {
     };
 
     const filterWrappers = document.querySelectorAll('.multipleCode');
+    // the language options of current code block
+    // we must make sure options are same on single page
+    const languageList = Array.prototype.map.call(
+      filterWrappers[0].children,
+      item => item.getAttribute('href')
+    );
+
     const allFilters = [];
     let firstSearch = '';
     filterWrappers.forEach(fw => {
@@ -164,7 +171,6 @@ export const useMultipleCodeFilter = () => {
       });
     });
     const allContents = document.querySelectorAll(`[class*="language-"]`);
-
     if (!allContents.length) return;
     if (!filterWrappers.length) {
       allContents.forEach(c => c.classList.toggle('active', true));
@@ -180,6 +186,7 @@ export const useMultipleCodeFilter = () => {
       const contents = document.querySelectorAll(
         `.language-${search.replace('?', '').replace(/%/g, '')}`
       );
+
       contents.forEach(c => c.classList.toggle('active', true));
     };
 
@@ -193,7 +200,15 @@ export const useMultipleCodeFilter = () => {
     });
 
     if (window) {
-      const localSearch = getSearch() || firstSearch;
+      const cacheSearch = getSearch();
+      let localSearch;
+      // there may be no recorded language on the current page
+      // so we must judge
+      if (cacheSearch && languageList.includes(cacheSearch)) {
+        localSearch = cacheSearch;
+      } else {
+        localSearch = firstSearch;
+      }
       if (localSearch) {
         clickEventHandler(localSearch);
       }

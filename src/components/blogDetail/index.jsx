@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BlogTag from '../../components/blogDetail/blogTag';
 import LocalizedLink from '../../components/localizedLink/localizedLink';
 import * as styles from './index.module.less';
-import { FILTER_TAG } from '../../constants';
+import { globalHistory } from '@reach/router';
 
 const BlogDetail = ({
   innerHtml,
@@ -26,10 +26,20 @@ const BlogDetail = ({
     nextBlogPath: '',
     nextBlogTitle: '',
   });
+  const [pageInfo, setPageInfo] = useState({
+    pageIdx: 1,
+    filterTag: 'all',
+  });
 
   useEffect(() => {
+    const { search, hash } = globalHistory.location;
+    const pageIdx = search.replace(/\?page=/g, '') || 1;
+    const filterTag = hash.replace(/#/g, '') || 'all';
+    setPageInfo({
+      pageIdx,
+      filterTag,
+    });
     let filteredList = [];
-    const filterTag = window.sessionStorage.getItem(FILTER_TAG) || 'all';
 
     filteredList =
       filterTag === 'all'
@@ -78,7 +88,7 @@ const BlogDetail = ({
       <div className={styles.breadcrumd}>
         <LocalizedLink
           locale={locale}
-          to="/blogs"
+          to={`/blogs?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
           className={styles.breadcrumdLink}
         >
           {NAV_TEXT[locale][0]}

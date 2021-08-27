@@ -23,7 +23,7 @@ const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
               );
             })}
           </ul>
-          <span className={styles.date}>{date}</span>
+          <span className={styles.date}>{new Date(date).toLocaleString()}</span>
         </div>
       </div>
     </LocalizedLink>

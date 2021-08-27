@@ -1,4 +1,5 @@
 @import '../../../../css/variables/color.less';
+@import '../../../../css/variables/responsive.less';
 
 .blogCardWrapper {
   display: block;
@@ -17,6 +18,14 @@
   }
 
   .coverWrapper {
+    width: 358px;
+    height: 201px;
+
+    @media @phone {
+      width: 100%;
+      height: auto;
+    }
+
     img {
       width: 100%;
       height: 100%;
@@ -61,6 +70,7 @@
 
       .tags {
         display: flex;
+
         li + li {
           margin-left: 10px;
         }

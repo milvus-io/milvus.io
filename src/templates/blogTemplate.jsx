@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import * as styles from './blogTemplate.module.less';
 import Seo from '../components/seo';
 import Footer from '../components/footer/v2';
@@ -10,6 +10,7 @@ import Header from '../components/header/v2';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
 import { FILTER_TAG, PAGE_INDEX } from '../constants';
 import Pagination from '../components/pagination';
+import { globalHistory } from '@reach/router';
 
 const PAGE_SIZE = 9;
 
@@ -64,77 +65,107 @@ const BlogTemplate = ({ data, pageContext }) => {
     );
   }, [blogList, isHomePage]);
 
-  const filterByTag = tag => {
-    setCurrentTag(tag);
-    window.sessionStorage.setItem(FILTER_TAG, tag);
-    if (tag === 'all') {
-      setCurrentPageList(getCurrentPageArray(blogList, 1));
+  const filterByTag = useCallback(
+    tag => {
+      setCurrentTag(tag);
+      window.sessionStorage.setItem(FILTER_TAG, tag);
+      window.sessionStorage.setItem(PAGE_INDEX, 1);
+      if (tag === 'all') {
+        setCurrentPageList(getCurrentPageArray(blogList, 1));
+        setPageIndex(1);
+        setPaginationConfig({
+          total: blogList.length,
+          pageSize: PAGE_SIZE,
+          pageIndex: 1,
+        });
+        return;
+      }
+      const filteredArray = blogList.filter(i => i.tags.includes(tag));
+      setFilteredArray(filteredArray);
       setPageIndex(1);
-      setPaginationConfig({
-        total: blogList.length,
-        pageSize: PAGE_SIZE,
-        pageIndex: 1,
-      });
-      return;
-    }
-    const filteredArray = blogList.filter(i => i.tags.includes(tag));
-    setFilteredArray(filteredArray);
-    setPageIndex(1);
-    setCurrentPageList(getCurrentPageArray(filteredArray, 1));
-    setPaginationConfig({
-      total: filteredArray.length,
-      pageSize: PAGE_SIZE,
-      pageIndex: 1,
-    });
-  };
-
-  const filterByPageIndex = idx => {
-    if (currentTag === 'all') {
-      setCurrentPageList(getCurrentPageArray(blogList, idx));
-      setPaginationConfig({
-        total: blogList.length,
-        pageSize: PAGE_SIZE,
-        pageIndex: idx,
-      });
-    } else {
-      setCurrentPageList(getCurrentPageArray(filteredArray, idx));
+      setCurrentPageList(getCurrentPageArray(filteredArray, 1));
       setPaginationConfig({
         total: filteredArray.length,
         pageSize: PAGE_SIZE,
-        pageIndex: idx,
+        pageIndex: 1,
       });
-    }
-    setPageIndex(idx);
-    window.sessionStorage.setItem(PAGE_INDEX, idx);
-    window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
-  };
+    },
+    [blogList]
+  );
 
-  const handleFilter = (tag, isRestore = true) => {
-    window.history.pushState(null, null, `?page=1#${tag}`);
-    isRestore && window.sessionStorage.setItem(FILTER_TAG, tag);
-    filterByTag(tag);
-  };
+  const filterByPageIndex = useCallback(
+    idx => {
+      if (currentTag === 'all') {
+        setCurrentPageList(getCurrentPageArray(blogList, idx));
+        setPaginationConfig({
+          total: blogList.length,
+          pageSize: PAGE_SIZE,
+          pageIndex: idx,
+        });
+      } else {
+        setCurrentPageList(getCurrentPageArray(filteredArray, idx));
+        setPaginationConfig({
+          total: filteredArray.length,
+          pageSize: PAGE_SIZE,
+          pageIndex: idx,
+        });
+      }
+      setPageIndex(idx);
+      window.sessionStorage.setItem(PAGE_INDEX, idx);
+      window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
+    },
+    [blogList, filteredArray, currentTag]
+  );
 
-  const handlePagination = (idx, isRestore = true) => {
-    window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
-    isRestore && window.sessionStorage.setItem(PAGE_INDEX, idx);
-    filterByPageIndex(idx);
-  };
+  const handleFilter = useCallback(
+    (tag, isRestore = true) => {
+      window.history.pushState(null, null, `?page=1#${tag}`);
+      isRestore && window.sessionStorage.setItem(FILTER_TAG, tag);
+      filterByTag(tag);
+    },
+    [filterByTag]
+  );
+
+  const handlePagination = useCallback(
+    (idx, isRestore = true) => {
+      window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
+      isRestore && window.sessionStorage.setItem(PAGE_INDEX, idx);
+      filterByPageIndex(idx);
+    },
+    [filterByPageIndex, currentTag]
+  );
 
   useCodeCopy(locale);
   useFilter();
 
   useEffect(() => {
-    isHomePage && window.history.pushState(null, null, '?page=1#all');
-    isHomePage && window.sessionStorage.setItem(FILTER_TAG, 'all');
-    isHomePage && window.sessionStorage.setItem(PAGE_INDEX, 1);
+    const { search, hash } = globalHistory.location;
+    if (!isHomePage) {
+      return;
+    }
+    const pageIdx = search.replace(/\?page=/g, '') || 1;
+    const tag = hash.replace(/#/g, '') || 'all';
 
-    // const search = window.sessionStorage.getItem(FILTER_TAG) || 1,
-    //   hash = window.sessionStorage.getItem(PAGE_INDEX) || "all";
-    // handleFilter(hash, false);
-    // handlePagination(search, false);
-    // window.history.pushState(null, null, `?page=${search}#${hash}`);
-  }, [isHomePage]);
+    setCurrentTag(tag);
+    setPageIndex(parseInt(pageIdx));
+    if (tag === 'all') {
+      setCurrentPageList(getCurrentPageArray(blogList, parseInt(pageIdx)));
+      setPaginationConfig({
+        total: blogList.length,
+        pageSize: PAGE_SIZE,
+        pageIndex: parseInt(pageIdx),
+      });
+      return;
+    }
+    const filteredArray = blogList.filter(i => i.tags.includes(tag));
+    setFilteredArray(filteredArray);
+    setCurrentPageList(getCurrentPageArray(filteredArray, parseInt(pageIdx)));
+    setPaginationConfig({
+      total: filteredArray.length,
+      pageSize: PAGE_SIZE,
+      pageIndex: parseInt(pageIdx),
+    });
+  }, []);
 
   return (
     <div className={styles.blogWrapper}>
@@ -171,7 +202,7 @@ const BlogTemplate = ({ data, pageContext }) => {
                     cover={cover.publicURL}
                     desc={desc}
                     tags={tags}
-                    path={id}
+                    path={`${id}?page=${pageIndex}#${currentTag}`}
                   />
                 </li>
               );

@@ -31,11 +31,10 @@ const BlogDetail = ({
     let filteredList = [];
     const filterTag = window.sessionStorage.getItem(FILTER_TAG) || 'all';
 
-    if (filterTag === 'all') {
-      filteredList = blogList;
-    } else {
-      filteredList = blogList.filter(i => i.tags.includes(filterTag));
-    }
+    filteredList =
+      filterTag === 'all'
+        ? blogList
+        : blogList.filter(i => i.tags.includes(filterTag));
 
     const index = filteredList.findIndex(i => i.id === id);
     const [previewBlogPath, previewBlogTitle, nextBlogPath, nextBlogTitle] = [
@@ -100,12 +99,10 @@ const BlogDetail = ({
               to={`/blogs/${navInfo.previewBlogPath}`}
               className={styles.blogLink}
             >
-              &nbsp;&nbsp;{navInfo.previewBlogTitle}
+              {navInfo.previewBlogTitle}
             </LocalizedLink>
           ) : (
-            <span className={styles.text}>
-              &nbsp;&nbsp;{NAV_TEXT[locale][4]}
-            </span>
+            <span className={styles.text}>{NAV_TEXT[locale][4]}</span>
           )}
         </p>
         <p className={styles.navItem}>
@@ -116,12 +113,10 @@ const BlogDetail = ({
               to={`/blogs/${navInfo.nextBlogPath}`}
               className={styles.blogLink}
             >
-              &nbsp;&nbsp;{navInfo.nextBlogTitle}
+              {navInfo.nextBlogTitle}
             </LocalizedLink>
           ) : (
-            <span className={styles.text}>
-              &nbsp;&nbsp;{NAV_TEXT[locale][4]}
-            </span>
+            <span className={styles.text}>{NAV_TEXT[locale][4]}</span>
           )}
         </p>
       </div>

@@ -1,5 +1,6 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
+const { start } = require('repl');
 const env = process.env.IS_PREVIEW;
 // const env = 'preview';
 
@@ -20,6 +21,17 @@ const query = `
         frontmatter {
           id
           related_key
+          date
+          author
+          tag
+          title
+          banner {
+            publicURL
+          }
+          cover {
+            publicURL
+          }
+          desc
         }
         fileAbsolutePath
         html
@@ -166,18 +178,6 @@ const query = `
               iconType
               title
             }
-          }
-        }
-        childMenu {
-          menuList {
-            id
-            isMenu
-            label1
-            label2
-            label3
-            order
-            outLink
-            title
           }
         }
         childDocHome {
@@ -339,7 +339,7 @@ const generatePath = (
   }
   if (isBlog) {
     if (!needLocal) return `/blogs/${id}`;
-    return lang === defaultLang ? `/blogs/${id}` : `${lang}/blogs/${id}`;
+    return lang === defaultLang ? `/blogs/${id}` : `/${lang}/blogs/${id}`;
   }
 
   let localizedPath = '';
@@ -444,7 +444,6 @@ const filterMdWithVersion = edges => {
     return (
       (filterVersion(fileAbsolutePath) ||
         fileAbsolutePath.includes('/docs/versions/master/common') ||
-        fileAbsolutePath.includes('/blog/zh-CN') ||
         (fileAbsolutePath.includes('/docs/versions/master/preview/') &&
           env === 'preview') ||
         fileAbsolutePath.includes('communityArticles') ||
@@ -452,6 +451,12 @@ const filterMdWithVersion = edges => {
         fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
       frontmatter.id
     );
+  });
+};
+
+const filterMDwidthBlog = edges => {
+  return edges.filter(({ node: { fileAbsolutePath } }) => {
+    return fileAbsolutePath.includes('/blogs/versions/master/blog');
   });
 };
 
@@ -1033,6 +1038,7 @@ const generateAllDocPages = (
 ) => {
   legalMd.forEach(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
+    const isBlog = checkIsblog(fileAbsolutePath);
     const fileId = node.frontmatter.id;
     const relatedKey = node.frontmatter.related_key;
     let version = findVersion(fileAbsolutePath) || 'master';
@@ -1041,7 +1047,6 @@ const generateAllDocPages = (
     const editPath = fileAbsolutePath.split(
       fileLang === 'en' ? '/en/' : '/zh-CN/'
     )[1];
-    const isBlog = checkIsblog(fileAbsolutePath);
     const isBenchmark = checkIsBenchmark(fileAbsolutePath);
     const localizedPath = generatePath(
       fileId,
@@ -1111,6 +1116,110 @@ const generateAllDocPages = (
   });
 };
 
+// const generateBlogList = (createPage, { node, template: blogTemplate }) => {
+//   const { lang, menuList } = node[0];
+//   createPage({
+//     path: lang === 'cn' ? `/${lang}/blogs` : `/blogs`,
+//     component: blogTemplate,
+//     context: {
+//       locale: lang,
+//       blogList: menuList,
+//       isHomePage: true,
+//     },
+//   });
+// };
+
+const generateBlogArticlePage = (
+  createPage,
+  { nodes: blogMD, template: blogTemplate }
+) => {
+  // get blogs list data, create blogs list page
+  const list = blogMD.map(({ node }) => {
+    const fileAbsolutePath = node.fileAbsolutePath;
+    const fileLang = findLang(fileAbsolutePath);
+
+    let [date, tag = '', title, desc, id, cover] = [
+      node.frontmatter.date,
+      node.frontmatter.tag,
+      node.frontmatter.title,
+      node.frontmatter.desc,
+      node.frontmatter.id,
+      node.frontmatter.cover,
+    ];
+    return {
+      date,
+      tags: tag.split(' '),
+      desc,
+      title,
+      id,
+      cover,
+      fileLang,
+    };
+  });
+
+  const allBlogsList = {
+    cn: list.filter(i => i.fileLang === 'cn'),
+    en: list.filter(i => i.fileLang === 'en'),
+  };
+
+  for (let key in allBlogsList) {
+    createPage({
+      path: key === 'cn' ? `/${key}/blogs` : `/blogs`,
+      component: blogTemplate,
+      context: {
+        locale: key,
+        blogList: allBlogsList[key],
+        isHomePage: true,
+      },
+    });
+  }
+
+  // create blog detail page
+  blogMD.forEach(({ node }) => {
+    const fileAbsolutePath = node.fileAbsolutePath;
+    const isBlog = checkIsblog(fileAbsolutePath);
+    const fileId = node.frontmatter.id;
+    const fileLang = findLang(fileAbsolutePath);
+    const isBenchmark = checkIsBenchmark(fileAbsolutePath);
+    const localizedPath = generatePath(
+      fileId,
+      fileLang,
+      null,
+      isBlog,
+      true,
+      isBenchmark
+    );
+    const newHtml = node.html;
+    let [date, tag = '', banner, author, title, id] = [
+      node.frontmatter.date,
+      node.frontmatter.tag,
+      node.frontmatter.banner,
+      node.frontmatter.author,
+      node.frontmatter.title,
+      node.frontmatter.id,
+    ];
+
+    createPage({
+      path: localizedPath,
+      component: blogTemplate,
+      context: {
+        locale: fileLang,
+        fileAbsolutePath,
+        localizedPath,
+        newHtml,
+        isHomePage: false,
+        date,
+        tags: tag.split(' '),
+        banner,
+        author,
+        title,
+        blogList: allBlogsList[fileLang],
+        id,
+      },
+    });
+  });
+};
+
 module.exports = {
   query,
   findLang,
@@ -1129,4 +1238,6 @@ module.exports = {
   generateBootcampHome,
   handleBootcampData,
   generateAllDocPages,
+  generateBlogArticlePage,
+  filterMDwidthBlog,
 };

@@ -67,9 +67,6 @@ const BlogDetail = ({
         className={styles.articleHeader}
         style={{
           backgroundImage: `url(${banner})`,
-          backgroundPosition: 'center center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
         }}
       >
         <h1 className={styles.title}>{title}</h1>
@@ -106,7 +103,7 @@ const BlogDetail = ({
           {navInfo.previewBlogPath ? (
             <LocalizedLink
               locale={locale}
-              to={`/blogs/${navInfo.previewBlogPath}`}
+              to={`/blogs/${navInfo.previewBlogPath}/?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
               className={styles.blogLink}
             >
               {navInfo.previewBlogTitle}
@@ -120,7 +117,7 @@ const BlogDetail = ({
           {navInfo.nextBlogPath ? (
             <LocalizedLink
               locale={locale}
-              to={`/blogs/${navInfo.nextBlogPath}`}
+              to={`/blogs/${navInfo.nextBlogPath}/?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
               className={styles.blogLink}
             >
               {navInfo.nextBlogTitle}

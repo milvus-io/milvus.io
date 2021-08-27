@@ -50,26 +50,18 @@ const BlogTemplate = ({ data, pageContext }) => {
   // list of tags
   const tagList = useMemo(() => {
     if (!isHomePage) return [];
-    let tempList = blogList.reduce((acc, cur) => {
-      return acc.concat(cur.tags);
-    }, []);
 
-    return tempList.reduce(
-      (acc, cur) => {
-        if (!acc.includes(cur)) {
-          acc.push(cur);
-        }
-        return acc;
-      },
-      ['all']
-    );
+    const resObj = {};
+    blogList.forEach(item => {
+      const { tags } = item;
+      tags.forEach(subItem => (resObj[subItem] = subItem));
+    });
+    return Object.keys(resObj);
   }, [blogList, isHomePage]);
 
   const filterByTag = useCallback(
     tag => {
       setCurrentTag(tag);
-      window.sessionStorage.setItem(FILTER_TAG, tag);
-      window.sessionStorage.setItem(PAGE_INDEX, 1);
       if (tag === 'all') {
         setCurrentPageList(getCurrentPageArray(blogList, 1));
         setPageIndex(1);
@@ -165,6 +157,7 @@ const BlogTemplate = ({ data, pageContext }) => {
       pageSize: PAGE_SIZE,
       pageIndex: parseInt(pageIdx),
     });
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -222,7 +215,6 @@ const BlogTemplate = ({ data, pageContext }) => {
           date={date}
           title={title}
           locale={locale}
-          tag={currentTag}
           blogList={blogList}
           id={id}
         />

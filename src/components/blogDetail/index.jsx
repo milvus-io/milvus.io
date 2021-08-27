@@ -19,7 +19,7 @@ const BlogDetail = ({
     cn: ['博客', '文章', '上一篇', '下一篇', '无'],
     en: ['Blog', 'Article', 'Previous', 'Next', 'None'],
   };
-  console.log('bloglist---', blogList);
+
   const [navInfo, setNavInfo] = useState({
     previewBlogPath: '',
     previewBlogTitle: '',
@@ -36,7 +36,6 @@ const BlogDetail = ({
     } else {
       filteredList = blogList.filter(i => i.tags.includes(filterTag));
     }
-    console.log(filteredList);
 
     const index = filteredList.findIndex(i => i.id === id);
     const [previewBlogPath, previewBlogTitle, nextBlogPath, nextBlogTitle] = [

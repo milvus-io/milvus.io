@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import * as styles from './blogTemplate.module.less';
 import Seo from '../components/seo';
 import Footer from '../components/footer/v2';
@@ -8,9 +8,13 @@ import BlogCard from '../components/card/blogCard/v2';
 import BlogTag from '../components/blogDetail/blogTag';
 import Header from '../components/header/v2';
 import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
-import { splitList } from '../utils';
-import { FILTER_TAG } from '../constants';
+import { FILTER_TAG, PAGE_INDEX } from '../constants';
 import Pagination from '../components/pagination';
+
+const PAGE_SIZE = 9;
+
+const getCurrentPageArray = (list, pageIndex) =>
+  list.slice((pageIndex - 1) * PAGE_SIZE, pageIndex * PAGE_SIZE);
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { footer } = data.allFile.edges.filter(edge => edge.node.childI18N)[0]
@@ -29,18 +33,23 @@ const BlogTemplate = ({ data, pageContext }) => {
     title,
     id,
   } = pageContext;
-
-  // list that can be viewed after pagination
-  const [pageTotalList, setPageTotalList] = useState([]);
-  const [pageinationConfig, setPageinationConfig] = useState({
+  const [pageIndex, setPageIndex] = useState(1);
+  // currentPageList: blog list of currrent page
+  const [currentPageList, setCurrentPageList] = useState(
+    getCurrentPageArray(blogList, pageIndex)
+  );
+  const [currentTag, setCurrentTag] = useState('all');
+  const [paginationConfig, setPaginationConfig] = useState({
     total: blogList.length,
-    pageSize: 9,
+    pageSize: PAGE_SIZE,
+    pageIndex,
   });
-  const slicedList = splitList(blogList, pageinationConfig.pageSize);
-
+  // array filtered by tags
+  const [filteredArray, setFilteredArray] = useState(blogList);
+  // list of tags
   const tagList = useMemo(() => {
     if (!isHomePage) return [];
-    let tempList = pageTotalList.reduce((acc, cur) => {
+    let tempList = blogList.reduce((acc, cur) => {
       return acc.concat(cur.tags);
     }, []);
 
@@ -53,61 +62,79 @@ const BlogTemplate = ({ data, pageContext }) => {
       },
       ['all']
     );
-  }, [pageTotalList, isHomePage]);
+  }, [blogList, isHomePage]);
 
-  const [currentTag, setCurrentTag] = useState('all');
-  // list that used for rendering after filter by tag
-  const [renderList, setRenderList] = useState(pageTotalList);
-
-  const filterTag = useCallback(
-    tag => {
-      setCurrentTag(tag);
-      if (tag === 'all') {
-        setRenderList(pageTotalList);
-        setPageinationConfig({
-          total: blogList.length,
-          pageSize: 9,
-        });
-        return;
-      }
-      setRenderList(pageTotalList.filter(i => i.tags.includes(tag)));
-      setPageinationConfig({
-        total: pageTotalList.filter(i => i.tags.includes(tag)).length,
-        pageSize: 9,
+  const filterByTag = tag => {
+    setCurrentTag(tag);
+    window.sessionStorage.setItem(FILTER_TAG, tag);
+    if (tag === 'all') {
+      setCurrentPageList(getCurrentPageArray(blogList, 1));
+      setPageIndex(1);
+      setPaginationConfig({
+        total: blogList.length,
+        pageSize: PAGE_SIZE,
+        pageIndex: 1,
       });
-    },
-    [pageTotalList, blogList.length]
-  );
+      return;
+    }
+    const filteredArray = blogList.filter(i => i.tags.includes(tag));
+    setFilteredArray(filteredArray);
+    setPageIndex(1);
+    setCurrentPageList(getCurrentPageArray(filteredArray, 1));
+    setPaginationConfig({
+      total: filteredArray.length,
+      pageSize: PAGE_SIZE,
+      pageIndex: 1,
+    });
+  };
 
-  const handleFilter = useCallback(
-    (tag, isRestore = true) => {
-      window.history.pushState(null, null, `#${tag}`);
-      isRestore && window.sessionStorage.setItem(FILTER_TAG, tag);
-      filterTag(tag);
-    },
-    [filterTag]
-  );
+  const filterByPageIndex = idx => {
+    if (currentTag === 'all') {
+      setCurrentPageList(getCurrentPageArray(blogList, idx));
+      setPaginationConfig({
+        total: blogList.length,
+        pageSize: PAGE_SIZE,
+        pageIndex: idx,
+      });
+    } else {
+      setCurrentPageList(getCurrentPageArray(filteredArray, idx));
+      setPaginationConfig({
+        total: filteredArray.length,
+        pageSize: PAGE_SIZE,
+        pageIndex: idx,
+      });
+    }
+    setPageIndex(idx);
+    window.sessionStorage.setItem(PAGE_INDEX, idx);
+    window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
+  };
 
-  const handlePageIndexChange = useCallback(
-    idx => {
-      if (idx < 1 || idx > slicedList.length) return;
-      setPageTotalList(slicedList[idx - 1]);
-      setRenderList(slicedList[idx - 1]);
-    },
-    [slicedList]
-  );
+  const handleFilter = (tag, isRestore = true) => {
+    window.history.pushState(null, null, `?page=1#${tag}`);
+    isRestore && window.sessionStorage.setItem(FILTER_TAG, tag);
+    filterByTag(tag);
+  };
+
+  const handlePagination = (idx, isRestore = true) => {
+    window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
+    isRestore && window.sessionStorage.setItem(PAGE_INDEX, idx);
+    filterByPageIndex(idx);
+  };
 
   useCodeCopy(locale);
   useFilter();
 
   useEffect(() => {
-    const hash = window.sessionStorage.getItem(FILTER_TAG);
-    if (hash) {
-      isHomePage && handleFilter(hash, false);
-    } else {
-      isHomePage && window.history.pushState(null, null, '#all');
-    }
-  }, [isHomePage, handleFilter]);
+    isHomePage && window.history.pushState(null, null, '?page=1#all');
+    isHomePage && window.sessionStorage.setItem(FILTER_TAG, 'all');
+    isHomePage && window.sessionStorage.setItem(PAGE_INDEX, 1);
+
+    // const search = window.sessionStorage.getItem(FILTER_TAG) || 1,
+    //   hash = window.sessionStorage.getItem(PAGE_INDEX) || "all";
+    // handleFilter(hash, false);
+    // handlePagination(search, false);
+    // window.history.pushState(null, null, `?page=${search}#${hash}`);
+  }, [isHomePage]);
 
   return (
     <div className={styles.blogWrapper}>
@@ -133,7 +160,7 @@ const BlogTemplate = ({ data, pageContext }) => {
             ))}
           </ul>
           <ul className={styles.content}>
-            {renderList.map(item => {
+            {currentPageList.map(item => {
               const { desc, cover, date, tags, id, title } = item;
               return (
                 <li key={item.id}>
@@ -151,8 +178,8 @@ const BlogTemplate = ({ data, pageContext }) => {
             })}
           </ul>
           <Pagination
-            {...pageinationConfig}
-            handlePageIndexChange={handlePageIndexChange}
+            {...paginationConfig}
+            handlePageIndexChange={handlePagination}
           />
         </div>
       ) : (
@@ -164,6 +191,7 @@ const BlogTemplate = ({ data, pageContext }) => {
           date={date}
           title={title}
           locale={locale}
+          tag={currentTag}
           blogList={blogList}
           id={id}
         />

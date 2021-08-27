@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as styles from './index.module.less';
-import { globalHistory } from '@reach/router';
 
 const formateList = (list, idx) => {
   const len = list.length;
@@ -30,7 +29,6 @@ const generateArray = (count, size) => {
   } else {
     n = count / size + 1;
   }
-
   return Array.from({ length: n }).map((_, k) => k + 1);
 };
 
@@ -39,26 +37,28 @@ const Pagination = ({
   total = 0,
   pageSize,
   handlePageIndexChange,
+  pageIndex,
 }) => {
-  const { search } = globalHistory.location;
-
-  if (search === '' && typeof window !== 'undefined') {
-    window.location.search = `?page=1`;
-  }
-  const pageIdx = search ? Number(search.replace(/\?page=/g, '')) : 1;
   const tempList = generateArray(total, pageSize);
-  const navList = formateList(tempList, pageIdx);
+  const navList = formateList(tempList, pageIndex);
 
   const handleChoosePage = idx => {
-    if (typeof idx !== 'number') return;
-    window.location.search = `?page=${idx}`;
+    let value = 0;
+    switch (idx) {
+      case 'prev':
+        if (pageIndex === 1) return;
+        value = pageIndex - 1;
+        break;
+      case 'next':
+        if (pageIndex === navList.length) return;
+        value = pageIndex + 1;
+        break;
+      default:
+        value = idx;
+        break;
+    }
+    handlePageIndexChange(value);
   };
-
-  useEffect(() => {
-    handlePageIndexChange(pageIdx);
-    // will fix this logic soon
-    // eslint-disable-next-line
-  }, [pageIdx]);
 
   return (
     <div
@@ -68,15 +68,13 @@ const Pagination = ({
         role="button"
         tabIndex="-1"
         className={`${styles.iconWrapper} ${
-          pageIdx === 1 ? styles.disabled : ''
+          pageIndex === 1 ? styles.disabled : ''
         }`}
         onClick={() => {
-          if (pageIdx === 1) return;
-          window.location.search = `?page=${pageIdx - 1}`;
+          handleChoosePage('prev');
         }}
         onKeyDown={() => {
-          if (pageIdx === 1) return;
-          window.location.search = `?page=${pageIdx - 1}`;
+          handleChoosePage('prev');
         }}
       >
         <i className="fas fa-chevron-left"></i>
@@ -90,7 +88,7 @@ const Pagination = ({
               tabIndex="-1"
               className={`${
                 typeof item !== 'number' ? styles.ellipsis : styles.pagesItem
-              } ${item === pageIdx ? styles.active : ''} `}
+              } ${item === pageIndex ? styles.active : ''} `}
               onClick={() => handleChoosePage(item)}
               onKeyDown={() => handleChoosePage(item)}
             >
@@ -104,15 +102,13 @@ const Pagination = ({
         role="button"
         tabIndex="-1"
         className={`${styles.iconWrapper} ${
-          pageIdx === tempList.length ? styles.disabled : ''
+          pageIndex === tempList.length ? styles.disabled : ''
         }`}
         onClick={() => {
-          if (pageIdx === navList.length) return;
-          window.location.search = `?page=${pageIdx + 1}`;
+          handleChoosePage('next');
         }}
         onKeyDown={() => {
-          if (pageIdx === navList.length) return;
-          window.location.search = `?page=${pageIdx + 1}`;
+          handleChoosePage('next');
         }}
       >
         <i className="fas fa-chevron-right"></i>

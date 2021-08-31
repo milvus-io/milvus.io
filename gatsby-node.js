@@ -104,7 +104,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const {
     generateNodes,
     handlePyFiles,
-    handlePyOrmFiles,
+    handlePyFilesWithOrm,
     handleGoFiles,
     handleJavaFiles,
     handleNodeFiles,
@@ -120,12 +120,12 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     switch (category) {
       case 'pymilvus':
         for (let version of versions) {
-          handlePyFiles(path, version, nodes);
-        }
-        break;
-      case 'pymilvus-orm':
-        for (let version of versions) {
-          handlePyOrmFiles(path, version, nodes);
+          // Pymilvus-orm was merged into pymilvus in 2.0
+          if (version >= 'v2.0.0') {
+            handlePyFilesWithOrm(path, version, nodes);
+          } else {
+            handlePyFiles(path, version, nodes);
+          }
         }
         break;
       case 'milvus-sdk-go':

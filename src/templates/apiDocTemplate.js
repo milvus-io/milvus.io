@@ -65,9 +65,9 @@ export default function Template({ data, pageContext }) {
 
   // Generate apiReferenceData.sourceUrl for final page's Edit Button.
   switch (category) {
-    case 'pymilvus-orm':
-      const path = name?.split('pymilvus_orm_')?.[1]?.replace('.html', '.rst');
-      const url = `https://github.com/milvus-io/pymilvus-orm/edit/${version.slice(
+    case 'pymilvus':
+      const path = name?.split('pymilvus_')?.[1]?.replace('.html', '.rst');
+      const url = `https://github.com/milvus-io/pymilvus/edit/${version.slice(
         1
       )}/docs/source/${path}`;
       apiReferenceData.sourceUrl = url;

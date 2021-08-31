@@ -104,7 +104,7 @@ export default function Template({
     ? data.allFile.edges[0].node.childI18N.layout
     : {};
 
-  const { feedback } = data.allFile.edges[0]
+  const { feedback, commit: commitTrans } = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.v2
     : {};
 
@@ -238,11 +238,17 @@ export default function Template({
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
                 </div>
                 <div className="commit-info-wrapper">
-                  <a target="_blank" href={commitInfo.source}>
+                  <a target="_blank" rel="noreferrer" href={commitInfo.source}>
                     {old}
                   </a>
-                  <span> was last updated {commitInfo.date}: </span>
-                  <a target="_blank" href={commitInfo.commitUrl}>
+                  <span>
+                    {commitTrans} {commitInfo.date}:{' '}
+                  </span>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={commitInfo.commitUrl}
+                  >
                     {commitInfo.message}
                   </a>
                 </div>
@@ -397,6 +403,7 @@ export const pageQuery = graphql`
                 text1
                 text2
               }
+              commit
             }
           }
         }

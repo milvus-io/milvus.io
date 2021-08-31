@@ -528,6 +528,7 @@
     "feedback": {
       "text1": "Is this page helpful?",
       "text2": "Scored Successfully!"
-    }
+    },
+    "commit": "was last updated"
   }
 }

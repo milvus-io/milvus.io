@@ -115,4 +115,11 @@ export const writeStatisData = async ({ sha, content, message }) => {
   }
 };
 
+export const getGithubCommits = async (path, version) => {
+  const res = await axios.get(
+    `https://api.github.com/repos/milvus-io/milvus-docs/commits?path=${path}&sha=${version}`
+  );
+  return res;
+};
+
 export default axiosInstance;

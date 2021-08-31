@@ -12,6 +12,7 @@
 @color-warning: #f25c05;
 @main-text-color: #191919;
 
+.articleContent,
 .doc-post-container {
   color: @main-text-color;
 
@@ -94,6 +95,12 @@
     border-radius: 4px;
     padding: 0px 8px;
     color: @main-text-color;
+    display: inline-block;
+
+    @media @phone {
+      max-width: calc(100vw - 32px);
+      overflow-x: auto;
+    }
   }
 
   pre {
@@ -437,6 +444,10 @@
     ol {
       list-style: none;
     }
+  }
+
+  img {
+    margin: 20px 0;
   }
 }
 

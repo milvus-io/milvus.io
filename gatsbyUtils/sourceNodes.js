@@ -508,7 +508,7 @@ const handleNodeFiles = (parentPath, version, apiFiles) => {
       node.innerHTML = sectionNode.outerHTML;
     });
     // only need article title & body html
-    doc.querySelector('.tsd-typography p')?.remove();
+    doc.querySelector('.tsd-panel.tsd-typography p')?.remove();
     const isDupTitle = doc.querySelectorAll('h1')?.length > 1;
     const docTitleHTML = isDupTitle ? '' : doc.querySelector('h1').outerHTML;
     doc =

@@ -51,7 +51,9 @@ const BlogTemplate = ({ data, pageContext }) => {
   const tagList = useMemo(() => {
     if (!isHomePage) return [];
 
-    const resObj = {};
+    const resObj = {
+      all: 'all',
+    };
     blogList.forEach(item => {
       const { tags } = item;
       tags.forEach(subItem => (resObj[subItem] = subItem));

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Layout from '../components/docLayout';
 import Seo from '../components/seo';
 import { graphql } from 'gatsby';
@@ -18,7 +18,8 @@ import {
 } from '../hooks/doc-dom-operation';
 import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
 import ScoredFeedback from '../components/scoredFeedback';
-
+import { getGithubCommits } from '../http/http';
+import dayjs from 'dayjs';
 export default function Template({
   data,
   pageContext, // this prop will be injected by the GraphQL query below.
@@ -48,8 +49,35 @@ export default function Template({
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [commitInfo, setCommitInfo] = useState({
+    message: '',
+    date: '',
+    commitUrl: '',
+    source: '',
+  });
 
   const docRef = useRef(null);
+  const commitPath = useMemo(() => {
+    return locale === 'en' ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
+  }, [locale, editPath]);
+
+  useEffect(() => {
+    if (isBenchmark || isBlog) return;
+
+    const fetchData = async () => {
+      const res = await getGithubCommits(commitPath, version);
+      if (res.status === 200) {
+        const lastCommit = res.data[0];
+        const message = lastCommit.commit.message.split('\n')[0];
+        const date = lastCommit.commit.committer.date;
+        const commitUrl = lastCommit.html_url;
+        const formatDate = dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+        const source = `https://github.com/milvus-io/milvus-docs/blob/${version}/${commitPath}`;
+        setCommitInfo({ commitUrl, date: formatDate, source, message });
+      }
+    };
+    fetchData();
+  }, [commitPath, version, isBenchmark, isBlog]);
 
   useEmPanel(setShowModal);
   useGenAnchor(version, editPath);
@@ -76,7 +104,7 @@ export default function Template({
     ? data.allFile.edges[0].node.childI18N.layout
     : {};
 
-  const { feedback } = data.allFile.edges[0]
+  const { feedback, commit: commitTrans } = data.allFile.edges[0]
     ? data.allFile.edges[0].node.childI18N.v2
     : {};
 
@@ -208,6 +236,21 @@ export default function Template({
                     dangerouslySetInnerHTML={{ __html: newHtml }}
                   />
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
+                </div>
+                <div className="commit-info-wrapper">
+                  <a target="_blank" rel="noreferrer" href={commitInfo.source}>
+                    {old}
+                  </a>
+                  <span>
+                    {commitTrans} {commitInfo.date}:{' '}
+                  </span>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={commitInfo.commitUrl}
+                  >
+                    {commitInfo.message}
+                  </a>
                 </div>
                 <ScoredFeedback feedbackText={feedback} old={old} />
               </>
@@ -360,6 +403,7 @@ export const pageQuery = graphql`
                 text1
                 text2
               }
+              commit
             }
           }
         }

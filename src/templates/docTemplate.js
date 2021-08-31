@@ -238,19 +238,27 @@ export default function Template({
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
                 </div>
                 <div className="commit-info-wrapper">
-                  <a target="_blank" rel="noreferrer" href={commitInfo.source}>
-                    {old}
-                  </a>
-                  <span>
-                    {commitTrans} {commitInfo.date}:{' '}
-                  </span>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={commitInfo.commitUrl}
-                  >
-                    {commitInfo.message}
-                  </a>
+                  {commitInfo.message && (
+                    <>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={commitInfo.source}
+                      >
+                        {old}
+                      </a>
+                      <span>
+                        {commitTrans} {commitInfo.date}:{' '}
+                      </span>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={commitInfo.commitUrl}
+                      >
+                        {commitInfo.message}
+                      </a>
+                    </>
+                  )}
                 </div>
                 <ScoredFeedback feedbackText={feedback} old={old} />
               </>

@@ -180,18 +180,6 @@ const query = `
             }
           }
         }
-        childMenu {
-          menuList {
-            id
-            isMenu
-            label1
-            label2
-            label3
-            order
-            outLink
-            title
-          }
-        }
         childDocHome {
           section1 {
             items {

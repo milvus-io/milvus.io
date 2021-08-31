@@ -263,7 +263,7 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
  * @param {string} version api version, such as "v1.0.1"
  * @param {array} apiFiles pages under `${parentPath}/${version}` will be formatted and pushed to apiFiles
  */
-const handlePyOrmFiles = (parentPath, version, apiFiles) => {
+const handlePyFilesWithOrm = (parentPath, version, apiFiles) => {
   /**
    * Get current item index as order in TOC tree/subtree.
    * Will update parentMenu if it has a parent menu.
@@ -323,7 +323,7 @@ const handlePyOrmFiles = (parentPath, version, apiFiles) => {
   handleApiFiles(doc2html, apiFiles, {
     parentPath,
     version,
-    category: 'pymilvus-orm',
+    category: 'pymilvus',
   });
 };
 
@@ -526,7 +526,7 @@ const handleNodeFiles = (parentPath, version, apiFiles) => {
 module.exports = {
   generateNodes,
   handlePyFiles,
-  handlePyOrmFiles,
+  handlePyFilesWithOrm,
   handleGoFiles,
   handleJavaFiles,
   handleNodeFiles,

@@ -4,7 +4,7 @@ import LocalizedLink from '../../../localizedLink/localizedLink';
 import BlogTag from '../../../blogDetail/blogTag';
 
 const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
-  const to = `/blogs/${path}`;
+  const to = `/blog/${path}`;
   return (
     <LocalizedLink locale={locale} to={to} className={styles.blogCardWrapper}>
       <div className={styles.coverWrapper}>
@@ -23,7 +23,9 @@ const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
               );
             })}
           </ul>
-          <span className={styles.date}>{new Date(date).toLocaleString()}</span>
+          <span className={styles.date}>
+            {date ? new Date(date).toLocaleString() : 'Unknown'}
+          </span>
         </div>
       </div>
     </LocalizedLink>

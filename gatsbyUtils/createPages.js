@@ -25,9 +25,7 @@ const query = `
           author
           tag
           title
-          banner {
-            publicURL
-          }
+          origin
           cover {
             publicURL
           }
@@ -350,8 +348,8 @@ const generatePath = (
     return lang === defaultLang ? `/docs/${id}` : `${lang}/docs/${id}`;
   }
   if (isBlog) {
-    if (!needLocal) return `/blogs/${id}`;
-    return lang === defaultLang ? `/blogs/${id}` : `/${lang}/blogs/${id}`;
+    if (!needLocal) return `/blog/${id}`;
+    return lang === defaultLang ? `/blog/${id}` : `/${lang}/blog/${id}`;
   }
 
   let localizedPath = '';
@@ -1128,19 +1126,6 @@ const generateAllDocPages = (
   });
 };
 
-// const generateBlogList = (createPage, { node, template: blogTemplate }) => {
-//   const { lang, menuList } = node[0];
-//   createPage({
-//     path: lang === 'cn' ? `/${lang}/blogs` : `/blogs`,
-//     component: blogTemplate,
-//     context: {
-//       locale: lang,
-//       blogList: menuList,
-//       isHomePage: true,
-//     },
-//   });
-// };
-
 const generateBlogArticlePage = (
   createPage,
   { nodes: blogMD, template: blogTemplate }
@@ -1170,18 +1155,22 @@ const generateBlogArticlePage = (
   });
 
   const allBlogsList = {
-    cn: list.filter(i => i.fileLang === 'cn'),
-    en: list.filter(i => i.fileLang === 'en'),
+    cn: list
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .filter(i => i.fileLang === 'cn'),
+    en: list
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .filter(i => i.fileLang === 'en'),
   };
 
   for (let key in allBlogsList) {
     createPage({
-      path: key === 'cn' ? `/${key}/blogs` : `/blogs`,
+      path: key === 'cn' ? `/${key}/blog` : `/blog`,
       component: blogTemplate,
       context: {
         locale: key,
         blogList: allBlogsList[key],
-        isHomePage: true,
+        isBlogListPage: true,
       },
     });
   }
@@ -1202,10 +1191,10 @@ const generateBlogArticlePage = (
       isBenchmark
     );
     const newHtml = node.html;
-    let [date, tag = '', banner, author, title, id] = [
+    let [date, tag = '', origin, author, title, id] = [
       node.frontmatter.date,
       node.frontmatter.tag,
-      node.frontmatter.banner,
+      node.frontmatter.origin,
       node.frontmatter.author,
       node.frontmatter.title,
       node.frontmatter.id,
@@ -1219,10 +1208,10 @@ const generateBlogArticlePage = (
         fileAbsolutePath,
         localizedPath,
         newHtml,
-        isHomePage: false,
+        isBlogListPage: false,
         date,
         tags: tag.split(' '),
-        banner,
+        origin,
         author,
         title,
         blogList: allBlogsList[fileLang],

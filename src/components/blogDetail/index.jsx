@@ -8,7 +8,6 @@ const BlogDetail = ({
   innerHtml,
   author,
   tags,
-  banner,
   date,
   title,
   locale,
@@ -63,12 +62,7 @@ const BlogDetail = ({
 
   return (
     <div className={styles.blogDetailWrapper}>
-      <div
-        className={styles.articleHeader}
-        style={{
-          backgroundImage: `url(${banner})`,
-        }}
-      >
+      <div className={styles.articleHeader}>
         <h1 className={styles.title}>{title}</h1>
         <div className={styles.flexBox}>
           <p>{new Date(date).toLocaleDateString()}</p>
@@ -77,7 +71,7 @@ const BlogDetail = ({
         <ul className={styles.tagsLine}>
           {tags.map(tag => (
             <li key={tag}>
-              <BlogTag name={tag} />
+              <BlogTag name={tag} className={styles.tags} />
             </li>
           ))}
         </ul>
@@ -85,7 +79,7 @@ const BlogDetail = ({
       <div className={styles.breadcrumd}>
         <LocalizedLink
           locale={locale}
-          to={`/blogs?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
+          to={`/blog?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
           className={styles.breadcrumdLink}
         >
           {NAV_TEXT[locale][0]}
@@ -103,7 +97,7 @@ const BlogDetail = ({
           {navInfo.previewBlogPath ? (
             <LocalizedLink
               locale={locale}
-              to={`/blogs/${navInfo.previewBlogPath}/?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
+              to={`/blog/${navInfo.previewBlogPath}/?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
               className={styles.blogLink}
             >
               {navInfo.previewBlogTitle}
@@ -117,7 +111,7 @@ const BlogDetail = ({
           {navInfo.nextBlogPath ? (
             <LocalizedLink
               locale={locale}
-              to={`/blogs/${navInfo.nextBlogPath}/?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
+              to={`/blog/${navInfo.nextBlogPath}/?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
               className={styles.blogLink}
             >
               {navInfo.nextBlogTitle}

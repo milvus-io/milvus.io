@@ -20,20 +20,25 @@ const getCurrentPageArray = (list, pageIndex) =>
 const BlogTemplate = ({ data, pageContext }) => {
   const { footer } = data.allFile.edges.filter(edge => edge.node.childI18N)[0]
     .node.childI18N.v2;
-  const [seoTitle, seoDesc] = ['Milvus Blogs', 'Milvus Blogs'];
-
   const {
-    isHomePage,
+    isBlogListPage,
     blogList,
     locale,
     newHtml,
     author,
     date,
     tags,
-    banner,
+    origin,
     title,
     id,
   } = pageContext;
+  const [seoTitle, seoDesc] = ['Milvus Blogs', title || 'Milvus Blogs'];
+  const canonicalLink = origin
+    ? {
+        rel: 'canonical',
+        href: `https://${origin}`,
+      }
+    : {};
   const [pageIndex, setPageIndex] = useState(1);
   // currentPageList: blog list of currrent page
   const [currentPageList, setCurrentPageList] = useState(
@@ -49,7 +54,7 @@ const BlogTemplate = ({ data, pageContext }) => {
   const [filteredArray, setFilteredArray] = useState(blogList);
   // list of tags
   const tagList = useMemo(() => {
-    if (!isHomePage) return [];
+    if (!isBlogListPage) return [];
 
     const resObj = {
       all: 'all',
@@ -59,7 +64,7 @@ const BlogTemplate = ({ data, pageContext }) => {
       tags.forEach(subItem => (resObj[subItem] = subItem));
     });
     return Object.keys(resObj);
-  }, [blogList, isHomePage]);
+  }, [blogList, isBlogListPage]);
 
   const filterByTag = useCallback(
     tag => {
@@ -134,7 +139,7 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   useEffect(() => {
     const { search, hash } = globalHistory.location;
-    if (!isHomePage) {
+    if (!isBlogListPage) {
       return;
     }
     const pageIdx = search.replace(/\?page=/g, '') || 1;
@@ -165,9 +170,13 @@ const BlogTemplate = ({ data, pageContext }) => {
   return (
     <div className={styles.blogWrapper}>
       <Header locale={locale} />
-      <Seo title={seoTitle} lang={locale} description={seoDesc} />
-
-      {isHomePage ? (
+      <Seo
+        title={seoTitle}
+        lang={locale}
+        description={seoDesc}
+        link={canonicalLink}
+      />
+      {isBlogListPage ? (
         <div className={styles.blogContentWrapper}>
           <h1 className={styles.blogHeader}>Milvus Blogs</h1>
           <ul className={styles.tags}>
@@ -213,7 +222,6 @@ const BlogTemplate = ({ data, pageContext }) => {
           innerHtml={newHtml}
           author={author}
           tags={tags}
-          banner={banner.publicURL}
           date={date}
           title={title}
           locale={locale}
@@ -221,9 +229,11 @@ const BlogTemplate = ({ data, pageContext }) => {
           id={id}
         />
       )}
-      <div className={styles.footerWrapper}>
-        <Footer local={locale} footer={footer} />
-      </div>
+      {isBlogListPage && (
+        <div className={styles.footerWrapper}>
+          <Footer local={locale} footer={footer} />
+        </div>
+      )}
     </div>
   );
 };

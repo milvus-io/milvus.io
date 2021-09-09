@@ -26,9 +26,7 @@ const query = `
           tag
           title
           origin
-          cover {
-            publicURL
-          }
+          cover
           desc
         }
         fileAbsolutePath

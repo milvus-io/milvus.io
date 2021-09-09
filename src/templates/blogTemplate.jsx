@@ -203,7 +203,7 @@ const BlogTemplate = ({ data, pageContext }) => {
                     locale={locale}
                     title={title}
                     date={date}
-                    cover={cover.publicURL}
+                    cover={`https://${cover}`}
                     desc={desc}
                     tags={tags}
                     path={`${id}?page=${pageIndex}#${currentTag}`}

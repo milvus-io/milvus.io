@@ -17,7 +17,8 @@ const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
         : new Date(date).getMonth() + 1;
     const day = new Date(date).getDay();
     return `${year}/${month}/${day}`;
-  }, [date]);
+  }, [date, locale]);
+
   return (
     <LocalizedLink locale={locale} to={to} className={styles.blogCardWrapper}>
       <div

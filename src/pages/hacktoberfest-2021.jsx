@@ -24,7 +24,6 @@ const Hackathon = ({ data, pageContext }) => {
     .hackathon;
   const { footer } = data.allFile.edges.filter(i => i.node.childI18N)[0].node
     .childI18N.v2;
-
   const { locale } = pageContext;
   return (
     <>
@@ -333,6 +332,7 @@ export const Query = graphql`
                 title
                 content
                 btnLabel
+                btnLink
               }
               thirdSection {
                 title
@@ -363,6 +363,7 @@ export const Query = graphql`
                 title
                 content
                 btnLabel
+                btnLink
                 tip
                 tipLabel
                 tipHref
@@ -382,6 +383,7 @@ export const Query = graphql`
                 title
                 content
                 btnLabel
+                btnLink
                 image {
                   publicURL
                 }

@@ -394,6 +394,7 @@
       ]
     },
     "banner": {
+      "entry": "Hacktoberfest is here! Dive into open source with Milvus. Join now",
       "title": ["Cloud-Native.", "Highly Scalable.", "Blazing Fast."],
       "subTitle": "Milvus",
       "text": "Open-source vector database for unstructured data",
@@ -560,21 +561,21 @@
           "title": "Sign Up",
           "content": "Sign-up to Hacktoberfest on the event website.",
           "iconType": "external",
-          "href": "/#"
+          "href": "#"
         },
         {
           "stepNum": 2,
           "title": "Join Discussion",
           "content": "Create a Milvus Forum account and interact with other community members.",
           "iconType": "external",
-          "href": "/#"
+          "href": "#"
         },
         {
           "stepNum": 3,
           "title": "Pull Request",
           "content": "Browse the following components and start creating pull requests.",
           "iconType": "anchor",
-          "href": "/#"
+          "href": "#"
         }
       ]
     },
@@ -590,36 +591,36 @@
           "cate": "Milvus Code",
           "desc": "Fix bugs, improve code, or help us make a new feature come true.",
           "icon": "",
-          "issueHref": "/#",
-          "guideHref": "/#"
+          "issueHref": "#",
+          "guideHref": "#"
         },
         {
           "cate": "Milvus Documentation",
           "desc": "Improve, extend or add Milvus documentation. ",
           "icon": "",
-          "issueHref": "/#",
-          "guideHref": "/#"
+          "issueHref": "#",
+          "guideHref": "#"
         },
         {
           "cate": "Milvus Golang API reference",
           "desc": "Help extend and add more examples to Golang API documentation.",
           "icon": "",
-          "issueHref": "/#",
-          "guideHref": "/#"
+          "issueHref": "#",
+          "guideHref": "#"
         },
         {
           "cate": "Bootcamp / Tutorials",
           "desc": "Showcase a project you built with Milvus.",
           "icon": "",
-          "issueHref": "/#",
-          "guideHref": "/#"
+          "issueHref": "#",
+          "guideHref": "#"
         },
         {
           "cate": "Other community content",
           "desc": "Write blog posts, create video content, design artwork, share your insight on website design, and more.",
           "icon": "",
-          "issueHref": "/#",
-          "guideHref": "/#"
+          "issueHref": "#",
+          "guideHref": "#"
         }
       ]
     },
@@ -630,7 +631,7 @@
       "btnLink": "/#",
       "tip": "*Prize rules to apply,",
       "tipLabel": "Learn More",
-      "tipHref": "/#",
+      "tipHref": "#",
       "image": "../../images/hackathon/prize.jpg",
       "label1": "Biggest Prize",
       "label2": "DJI Mavic Air 2",
@@ -660,11 +661,11 @@
       "title": "Contact Us",
       "list": [
         {
-          "href": "/#",
+          "href": "#",
           "image": "../../images/hackathon/iscourse.png"
         },
         {
-          "href": "/#",
+          "href": "#",
           "image": "../../images/hackathon/slack.png"
         }
       ]

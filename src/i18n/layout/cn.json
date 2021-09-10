@@ -385,6 +385,7 @@
       ]
     },
     "banner": {
+      "entry": "Hacktoberfest is here! Dive into open source with Milvus. Join now",
       "title": ["Cloud-Native.", "Highly Scalable.", "Blazing Fast."],
       "subTitle": "Milvus",
       "text": "Open-source vector database for unstructured data",
@@ -644,7 +645,7 @@
       "title": "Events and Resources",
       "content": "Please visit our Milvus Discussion Forums for resources you might need for Hacktoberfest and the events surrounding Hacktoberfest.",
       "btnLabel": "Explore More",
-      "btnLink": "/#",
+      "btnLink": "//#",
       "image": "../../images/hackathon/discuss-forum.jpg"
     },
     "eighthSection": {

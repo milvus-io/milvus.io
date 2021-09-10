@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import * as styles from './index.module.less';
 import LocalizedLink from '../../../localizedLink/localizedLink';
 import BlogTag from '../../../blogDetail/blogTag';
 
 const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
   const to = `/blog/${path}`;
+
+  const dateTime = useMemo(() => {
+    if (!date) {
+      return locale === 'en' ? 'Unknown' : '未知';
+    }
+    const year = new Date(date).getFullYear();
+    const month =
+      new Date(date).getMonth() < 9
+        ? `0${new Date(date).getMonth() + 1}`
+        : new Date(date).getMonth() + 1;
+    const day = new Date(date).getDay();
+    return `${year}/${month}/${day}`;
+  }, [date]);
   return (
     <LocalizedLink locale={locale} to={to} className={styles.blogCardWrapper}>
       <div
@@ -24,9 +37,7 @@ const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
               );
             })}
           </ul>
-          <span className={styles.date}>
-            {date ? new Date(date).toLocaleString() : 'Unknown'}
-          </span>
+          <span className={styles.date}>{dateTime}</span>
         </div>
       </div>
     </LocalizedLink>

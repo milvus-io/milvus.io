@@ -530,5 +530,140 @@
       "text2": "Scored Successfully!"
     },
     "commit": "was last updated"
+  },
+  "hackathon": {
+    "firstSection": {
+      "firstBanner": {
+        "title": "Milvus Hacktoberfest 2021",
+        "content": "You know it's that time of the year again... Hackoberfest is coming! And this year, we are going in and going strong. ",
+        "image": "../../images/hackathon/banner-image-1.svg",
+        "alert": "Spoiler alert - our biggest prize is spelled as D-R-O-N-E."
+      },
+      "secondBanner": {
+        "title": "What is Hacktoberfest",
+        "content": "Hacktobefest is an annual month-long celebration of open source. It is a great opportunity for everyone, from seasoned developers to students and code newbies, from technical writers to UX designers, to contribute to open source communities and develop your skills, with the perks of winning limited edition swags.",
+        "image": "../../images/hackathon/second-banner.jpg"
+      }
+    },
+    "secondSection": {
+      "title": "What is Milvus",
+      "content": "Milvus, an open-source vector database built to power AI applications and vector similarity search, is participating for the first time! The Milvus community has planned a series of events and activities throughout October, and we would love for you to be a part of them!",
+      "btnLabel": "Explore Milvus",
+      "btnLink": "/#"
+    },
+    "thirdSection": {
+      "title": "Quick Start",
+      "list": [
+        {
+          "stepNum": 1,
+          "title": "Sign Up",
+          "content": "Sign-up to Hacktoberfest on the event website.",
+          "iconType": "external",
+          "href": "/#"
+        },
+        {
+          "stepNum": 2,
+          "title": "Join Discussion",
+          "content": "Create a Milvus Forum account and interact with other community members.",
+          "iconType": "external",
+          "href": "/#"
+        },
+        {
+          "stepNum": 1,
+          "title": "Pull Request",
+          "content": "Browse the following components and start creating pull requests.",
+          "iconType": "anchor",
+          "href": "/#"
+        }
+      ]
+    },
+    "forthSection": {
+      "title": "How to Contribute",
+      "content": "Below we've prepared lists of issues marked as <span>[hacktoberfest]</span> to get you warmed up. Feel free to crack upon any open issues, unmarked ones included, or submit new ones yourselves. Just make sure you mention Hacktoberfest in your pull requests so we can set the topic and make sure they count toward your Hactobefest participation once deemed valid."
+    },
+    "fifthSection": {
+      "title": "Issue List",
+      "listHeader": ["Category", "Description", "Issue Lists / Guidelines"],
+      "list": [
+        {
+          "cate": "Milvus Code",
+          "desc": "Fix bugs, improve code, or help us make a new feature come true.",
+          "icon": "",
+          "issueHref": "/#",
+          "guideHref": "/#"
+        },
+        {
+          "cate": "Milvus Documentation",
+          "desc": "Improve, extend or add Milvus documentation. ",
+          "icon": "",
+          "issueHref": "/#",
+          "guideHref": "/#"
+        },
+        {
+          "cate": "Milvus Golang API reference",
+          "desc": "Help extend and add more examples to Golang API documentation.",
+          "icon": "",
+          "issueHref": "/#",
+          "guideHref": "/#"
+        },
+        {
+          "cate": "Bootcamp / Tutorials",
+          "desc": "Showcase a project you built with Milvus.",
+          "icon": "",
+          "issueHref": "/#",
+          "guideHref": "/#"
+        },
+        {
+          "cate": "Other community content",
+          "desc": "Write blog posts, create video content, design artwork, share your insight on website design, and more.",
+          "icon": "",
+          "issueHref": "/#",
+          "guideHref": "/#"
+        }
+      ]
+    },
+    "sixthSection": {
+      "title": "Claim your prize",
+      "content": "Every pull request counts. Don't forget to come back here to fill in your information once you've made your contribution and we will send gifts your way.",
+      "btnLabel": "Fill in the Form",
+      "btnLink": "/#",
+      "tip": "*Prize rules to apply,",
+      "tipLabel": "Learn More",
+      "tipHref": "/#",
+      "list": [
+        {
+          "image": "../../images/hackathon/prize-keybord.jpg",
+          "name": "Logitech Keyboard"
+        },
+        {
+          "image": "../../images/hackathon/prize-sticker.jpg",
+          "name": "Milvus 2021 New Stickers"
+        },
+        {
+          "image": "../../images/hackathon/prize-tshirt.jpg",
+          "name": "Milvus T-Shirts and Badge"
+        }
+      ]
+    },
+    "seventhSection": {
+      "title": "Events and Resources",
+      "content": "Please visit our Milvus Discussion Forums for resources you might need for Hacktoberfest and the events surrounding Hacktoberfest.",
+      "btnLabel": "Explore More",
+      "btnLink": "/#",
+      "image": "../../images/hackathon/discuss-forum.jpg"
+    },
+    "eighthSection": {
+      "title": "Contact Us",
+      "list": [
+        {
+          "href": "/#",
+          "image": "../../images/hackathon/iscourse.jpg"
+        },
+        {
+          "href": "/#",
+          "image": "../../images/hackathon/slack.jpg"
+        }
+      ]
+    }
   }
 }

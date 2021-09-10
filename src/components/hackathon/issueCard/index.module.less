@@ -1,0 +1,65 @@
+@import '../../../css/variables/responsive.less';
+
+.issueCardWrapper {
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 32px;
+
+  @media @phone {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 20px;
+    padding: 0 16px;
+  }
+
+  .itemWrapper {
+    border-bottom: 1px solid #eee;
+    padding: 32px 0;
+  }
+
+  .cate {
+    color: #545454;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: Inter Medium;
+  }
+
+  .desc {
+    color: #757575;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .btnWrapper {
+    display: flex;
+    margin-left: 76px;
+    border-bottom: 1px solid #eee;
+    padding: 32px 0;
+    align-items: center;
+    flex-wrap: wrap;
+
+    @media @phone {
+      margin-left: 0;
+    }
+
+    .button {
+      padding: 16px 24px;
+      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+      background-color: #fff;
+      color: #010e29;
+      font-size: 14px;
+      line-height: 18px;
+      font-family: Inter Medium;
+      margin-bottom: 8px;
+
+      &:hover {
+        color: #29b6f8;
+      }
+
+      &:first-child {
+        margin-right: 32px;
+      }
+    }
+  }
+}

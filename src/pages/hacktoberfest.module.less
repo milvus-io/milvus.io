@@ -1,0 +1,427 @@
+@import '../css/variables/responsive.less';
+@import '../css/variables/color.less';
+@import '../../static/iconFonts/css/all.min.css';
+@import '../css/variables/fontStyle.less';
+@import '../css/fonts/fonts.less';
+
+.hackathonContainer {
+  background: #fafafa;
+  margin-top: 120px;
+  .fontSwitchInter();
+
+  h1 {
+    font-family: Brinnan Bold;
+    font-size: 48px;
+    line-height: 60px;
+  }
+
+  h2,
+  h3 {
+    font-family: Brinnan Bold;
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  .innerWrapper {
+    max-width: @screen-hp-max;
+    margin: 0 auto;
+    padding: 40px 32px;
+
+    @media @phone {
+      padding: 40px 16px;
+    }
+  }
+
+  .btnLabel {
+    margin-right: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+
+  .spliteLine {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    width: 33.33%;
+
+    @media @tablet {
+      width: 80%;
+    }
+
+    @media @phone {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .text {
+      flex-grow: 1;
+    }
+
+    .line {
+      margin-left: 24px;
+      display: inline-block;
+      width: 15%;
+      height: 1px;
+      background: #4fc4f9;
+      flex-grow: 1;
+    }
+  }
+
+  .firstSection {
+    width: 100%;
+    background: #fff;
+
+    h1,
+    h2 {
+      margin-bottom: 40px;
+
+      @media @phone {
+        margin-bottom: 24px;
+      }
+    }
+
+    .alert {
+      color: #29b6f8;
+      display: flex;
+      align-items: center;
+      margin-top: 40px;
+
+      p {
+        font-style: italic;
+        margin-right: 24px;
+        font-family: Inter Medium;
+        font-style: 20px;
+        line-height: 24px;
+      }
+    }
+
+    .bannerWrapper {
+      display: flex;
+      padding: 40px 0;
+
+      &:first-child {
+        border-bottom: 1px solid #afafaf;
+      }
+
+      .firstContent {
+        color: #545454;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .secondContent {
+        color: #010e29;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .leftPart {
+        flex: 3;
+      }
+
+      .rightPart {
+        flex: 2;
+        text-align: center;
+
+        @media @phone {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .secondSection {
+    .innerWrapper {
+      width: 600px;
+      text-align: center;
+
+      @media @tablet {
+        width: 80%;
+      }
+
+      @media @phone {
+        width: 100%;
+      }
+    }
+
+    h2,
+    p {
+      margin-bottom: 40px;
+
+      @media @phone {
+        margin-bottom: 24px;
+      }
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .thirdSection {
+    background: #fff;
+    padding: 40px 0;
+
+    .stepContent {
+      display: flex;
+      justify-content: space-between;
+
+      @media @phone {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+
+  .forthSection {
+    max-width: @screen-lg-max;
+    margin: 0 auto;
+    padding-top: 75px;
+    background: url('../images/hackathon/bg-image-1.png') 0% 0% no-repeat;
+    background-size: 349px 271px;
+
+    @media @phone {
+      background-size: 115px 91px;
+    }
+
+    .innerWrapper {
+      text-align: center;
+      width: 846px;
+
+      @media @tablet {
+        width: 80%;
+      }
+
+      @media @phone {
+        width: 100%;
+      }
+
+      h2 {
+        margin-bottom: 40px;
+
+        @media @phone {
+          margin-bottom: 24px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+
+        span {
+          color: #29b6f8;
+        }
+      }
+    }
+  }
+
+  .fifthSection {
+    max-width: @screen-lg-max;
+    margin: 0 auto;
+    padding: 40px 0;
+    background: url('../images/hackathon/bg-image-2.png') right bottom no-repeat;
+    background-size: 120px 100px;
+
+    .issueListWrapper {
+      background-color: #fff;
+      padding: 24px 32px;
+
+      .listHeader {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 32px;
+        padding: 0 32px;
+
+        @media @phone {
+          grid-template-columns: 1fr;
+          column-gap: 0;
+          row-gap: 20px;
+          padding: 0 16px;
+        }
+
+        .headerItem {
+          padding: 32px 0;
+          border-bottom: 1px solid #ccc;
+          text-align: left;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 600;
+          text-transform: uppercase;
+
+          &:last-child {
+            margin-left: 76px;
+
+            @media @phone {
+              margin-left: 0;
+            }
+          }
+        }
+      }
+
+      .listBody {
+        list-style: none;
+
+        .lastIssueCard {
+          div {
+            border: none;
+          }
+        }
+      }
+    }
+  }
+
+  .sixthSection {
+    background-color: #fff;
+    padding: 40px 0;
+
+    .contentWrapper {
+      width: 645px;
+      text-align: center;
+      margin: 0 auto;
+
+      @media @tablet {
+        width: 80%;
+      }
+
+      @media @phone {
+        width: 100%;
+      }
+
+      h2,
+      p {
+        text-align: center;
+        margin: 0 auto;
+        margin-bottom: 40px;
+
+        @media @phone {
+          margin-bottom: 24px;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 24px;
+      }
+    }
+
+    .tip {
+      color: #82838e;
+      font-size: 16px;
+      line-height: 24px;
+      margin-top: 8px;
+
+      a {
+        color: #29b6f8;
+        text-decoration: underline;
+        padding: 0 4px;
+        text-transform: lowercase;
+      }
+    }
+
+    .prizeList {
+      width: 100%;
+      list-style: none;
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 20px;
+
+      @media @phone {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 20px;
+      }
+
+      .prizeListItem {
+        img {
+          width: 100%;
+        }
+
+        .nameWprapper {
+          padding: 46px 0 71px 0;
+          text-align: center;
+          font-size: 18px;
+          line-height: 28px;
+          font-weight: 700;
+          border-color: transparent #e2e2e2 #e2e2e2 #e2e2e2;
+          border-width: 1px;
+          border-style: solid;
+          box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
+        }
+      }
+    }
+  }
+
+  .seventhSection {
+    background: #fff;
+
+    .innerWrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 50px;
+
+      @media @phone {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 40px;
+      }
+
+      .spliteLine {
+        display: flex;
+
+        .line {
+          flex: 1;
+        }
+      }
+
+      .leftPart {
+        p {
+          margin: 80px 0 40px 0;
+          font-size: 16px;
+          line-height: 24px;
+          color: #010e29;
+        }
+      }
+
+      .rightPart {
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .eighthSection {
+    max-width: @screen-lg-max;
+    margin: 0 auto;
+    padding: 50px 0 130px 0;
+    background: url('../images/hackathon/bg-image-3.png') right bottom no-repeat;
+    background-size: 189px 198px;
+    text-align: center;
+
+    h2 {
+      margin-bottom: 68px;
+    }
+
+    .contactList {
+      display: flex;
+      justify-content: space-around;
+
+      @media @phone {
+        flex-direction: column;
+
+        &:first-child {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+}
+
+.footerWrapper {
+  max-width: @screen-hp-max;
+  margin: 0 auto;
+}

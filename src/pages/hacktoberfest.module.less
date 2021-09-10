@@ -6,13 +6,18 @@
 
 .hackathonContainer {
   background: #fafafa;
-  margin-top: 120px;
+  margin-top: 90px;
   .fontSwitchInter();
 
   h1 {
     font-family: Brinnan Bold;
     font-size: 48px;
     line-height: 60px;
+
+    @media @phone {
+      font-size: 40px;
+      line-height: 50px;
+    }
   }
 
   h2,
@@ -20,6 +25,21 @@
     font-family: Brinnan Bold;
     font-size: 32px;
     line-height: 38px;
+
+    @media @phone {
+      font-size: 26px;
+      line-height: 32px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+
+    @media @phone {
+      font-size: 14px;
+      line-height: 20px;
+    }
   }
 
   .innerWrapper {
@@ -37,6 +57,11 @@
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
+
+    @media @phone {
+      font-size: 14px;
+      line-height: 20px;
+    }
   }
 
   .spliteLine {
@@ -87,18 +112,30 @@
       align-items: center;
       margin-top: 40px;
 
+      img {
+        height: 42px;
+        margin-right: 8px;
+      }
+
       p {
         font-style: italic;
         margin-right: 24px;
         font-family: Inter Medium;
         font-style: 20px;
-        line-height: 24px;
+
+        @media @phone {
+          margin-right: 16px;
+        }
       }
     }
 
     .bannerWrapper {
       display: flex;
-      padding: 40px 0;
+      padding-bottom: 40px;
+
+      &:last-child {
+        padding-top: 40px;
+      }
 
       &:first-child {
         border-bottom: 1px solid #afafaf;
@@ -108,12 +145,22 @@
         color: #545454;
         font-size: 16px;
         line-height: 24px;
+
+        @media @phone {
+          font-size: 14px;
+          line-height: 20px;
+        }
       }
 
       .secondContent {
         color: #010e29;
         font-size: 16px;
         line-height: 24px;
+
+        @media @phone {
+          font-size: 14px;
+          line-height: 20px;
+        }
       }
 
       .leftPart {
@@ -157,6 +204,11 @@
     p {
       font-size: 16px;
       line-height: 24px;
+
+      @media @phone {
+        font-size: 14px;
+        line-height: 20px;
+      }
     }
   }
 
@@ -167,6 +219,7 @@
     .stepContent {
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
 
       @media @phone {
         flex-direction: column;
@@ -207,9 +260,6 @@
       }
 
       p {
-        font-size: 16px;
-        line-height: 24px;
-
         span {
           color: #29b6f8;
         }
@@ -228,16 +278,18 @@
       background-color: #fff;
       padding: 24px 32px;
 
+      @media @tablet {
+        padding: 0;
+      }
+
       .listHeader {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         column-gap: 32px;
         padding: 0 32px;
 
-        @media @phone {
-          grid-template-columns: 1fr;
-          column-gap: 0;
-          row-gap: 20px;
+        @media @tablet {
+          column-gap: 16px;
           padding: 0 16px;
         }
 
@@ -250,10 +302,14 @@
           font-weight: 600;
           text-transform: uppercase;
 
+          @media @tablet {
+            padding: 16px 0;
+          }
+
           &:last-child {
             margin-left: 76px;
 
-            @media @phone {
+            @media @tablet {
               margin-left: 0;
             }
           }
@@ -301,8 +357,6 @@
       }
 
       p {
-        font-size: 16px;
-        line-height: 24px;
         margin-bottom: 24px;
       }
     }
@@ -313,11 +367,88 @@
       line-height: 24px;
       margin-top: 8px;
 
+      @media @phone {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
       a {
         color: #29b6f8;
         text-decoration: underline;
         padding: 0 4px;
         text-transform: lowercase;
+      }
+    }
+
+    .bigstPrize {
+      display: flex;
+      border: 2px solid #e2e2e2ee;
+
+      @media @tablet {
+        flex-direction: column;
+      }
+
+      .leftPart {
+        flex: 3;
+
+        @media @tablet {
+          margin-bottom: 16px;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .rightPart {
+        flex: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .textWrapper {
+          position: relative;
+
+          &::before {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: url('../images/hackathon/marks.svg') center center
+              no-repeat;
+            background-size: contain;
+            position: absolute;
+            left: -35px;
+            top: -5px;
+          }
+
+          &::after {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: url('../images/hackathon/marks.svg') center center
+              no-repeat;
+            background-size: contain;
+            position: absolute;
+            right: -35px;
+            top: -5px;
+          }
+
+          .text {
+            text-align: center;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 30px;
+            display: block;
+            margin-bottom: 16px;
+
+            @media @phone {
+              font-size: 20px;
+              line-height: 24px;
+            }
+          }
+        }
       }
     }
 
@@ -328,6 +459,11 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       column-gap: 20px;
+
+      @media @tablet {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 20px;
+      }
 
       @media @phone {
         grid-template-columns: 1fr;
@@ -350,6 +486,11 @@
           border-width: 1px;
           border-style: solid;
           box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
+
+          @media @phone {
+            font-size: 16px;
+            line-height: 22px;
+          }
         }
       }
     }
@@ -380,8 +521,6 @@
       .leftPart {
         p {
           margin: 80px 0 40px 0;
-          font-size: 16px;
-          line-height: 24px;
           color: #010e29;
         }
       }

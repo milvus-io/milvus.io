@@ -24,7 +24,7 @@ const Hackathon = ({ data, pageContext }) => {
     .hackathon;
   const { footer } = data.allFile.edges.filter(i => i.node.childI18N)[0].node
     .childI18N.v2;
-  console.log(secondSection);
+
   const { locale } = pageContext;
   return (
     <>
@@ -43,6 +43,10 @@ const Hackathon = ({ data, pageContext }) => {
                       {firstSection.firstBanner.content}
                     </p>
                     <a className={styles.alert} href="#prize">
+                      <img
+                        src={firstSection.firstBanner.badge.publicURL}
+                        alt=""
+                      />
                       <p>{firstSection.firstBanner.alert}</p>
                       <i className="far fa-arrow-alt-circle-down"></i>
                     </a>
@@ -187,6 +191,18 @@ const Hackathon = ({ data, pageContext }) => {
                 </p>
               </div>
 
+              <div className={styles.bigstPrize}>
+                <div className={styles.leftPart}>
+                  <img src={sixthSection.image.publicURL} alt="" />
+                </div>
+                <div className={styles.rightPart}>
+                  <div className={styles.textWrapper}>
+                    <p className={styles.text}>{sixthSection.label1}</p>
+                    <p className={styles.text}>{sixthSection.label2}</p>
+                  </div>
+                </div>
+              </div>
+
               <ul className={styles.prizeList}>
                 {sixthSection.list.map(item => (
                   <li className={styles.prizeListItem} key={item.name}>
@@ -210,12 +226,12 @@ const Hackathon = ({ data, pageContext }) => {
                 </h3>
                 <p className="">{seventhSection.content}</p>
                 <Button
-                  link={sixthSection.btnLink}
+                  link={seventhSection.btnLink}
                   locale={locale}
                   children={
                     <>
                       <span className={styles.btnLabel}>
-                        {sixthSection.btnLabel}
+                        {seventhSection.btnLabel}
                       </span>
                       <i className="fa fa-chevron-right"></i>
                     </>
@@ -301,6 +317,9 @@ export const Query = graphql`
                     publicURL
                   }
                   alert
+                  badge {
+                    publicURL
+                  }
                 }
                 secondBanner {
                   title
@@ -347,6 +366,11 @@ export const Query = graphql`
                 tip
                 tipLabel
                 tipHref
+                image {
+                  publicURL
+                }
+                label1
+                label2
                 list {
                   image {
                     publicURL

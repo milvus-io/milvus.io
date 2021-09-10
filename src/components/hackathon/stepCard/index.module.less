@@ -1,4 +1,5 @@
 @import '../../../css/variables/fontStyle.less';
+@import '../../../css/variables/responsive.less';
 
 .stepCardWrapper {
   position: relative;
@@ -8,6 +9,10 @@
   align-items: flex-end;
   transition: all 0.1s linear;
   color: #000;
+
+  @media @tablet {
+    margin-bottom: 24px;
+  }
 
   &:hover {
     transform: translateY(-10px);

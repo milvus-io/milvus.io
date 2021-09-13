@@ -46,21 +46,37 @@ const V2Header = props => {
     hideMask();
   });
 
-  const generateNavigation = (navlist, path, styles) => {
+  const generateSubNav = (list, styles, locale) => {
+    return list.map(item => {
+      return (
+        <li className={styles.subNavItemWrapper} key={item.path}>
+          <LocalizedLink
+            className={styles.subNavLink}
+            to={item.link}
+            key={item.label}
+            locale={locale}
+          >
+            {item.label}
+          </LocalizedLink>
+        </li>
+      );
+    });
+  };
+
+  const generateNavigation = (navlist, path, styles, locale) => {
     return (
       <>
         {navlist.map(i => {
           const { label, link, activeKey, subMenu } = i;
           return subMenu && subMenu.length ? (
-            <div className={`${styles.navMenuItem}`} key={label}>
-              {
-                <Selector
-                  options={subMenu}
-                  locale={locale}
-                  path={path}
-                  navItemLabel={label}
-                />
-              }
+            <div
+              className={`${styles.navMenuItem} ${styles.noLink}`}
+              key={label}
+            >
+              <span className={styles.navItem}>{label}</span>
+              <ul className={styles.subNavList}>
+                {generateSubNav(subMenu, styles, locale)}
+              </ul>
             </div>
           ) : (
             <LocalizedLink
@@ -144,7 +160,7 @@ const V2Header = props => {
               </div>
             ) : (
               <div className={styles.navSection}>
-                {generateNavigation(navList, path, styles)}
+                {generateNavigation(navList, path, styles, locale)}
                 <a
                   className={styles.navItem}
                   href="https://github.com/milvus-io/milvus/"

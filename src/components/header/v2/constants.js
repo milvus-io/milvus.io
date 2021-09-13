@@ -22,7 +22,7 @@ export const NAVLIST_EN = [
   },
   {
     label: 'Forum',
-    link: 'https://discuss.milvus.io/c/hacktoberfest/9',
+    link: 'https://discuss.milvus.io/',
     activeKey: 'null',
   },
   {

@@ -15,7 +15,7 @@ const iconSet = {
   wechat,
 };
 
-const V2Footer = ({ locale, footer }) => {
+const V2Footer = ({ locale, footer, className = '' }) => {
   const {
     list: links,
     licence: {
@@ -27,7 +27,7 @@ const V2Footer = ({ locale, footer }) => {
   } = footer;
 
   return (
-    <section className={styles.footerContainer}>
+    <section className={`${styles.footerContainer} ${className}`}>
       <ul className={styles.list}>
         {links.map(i => {
           const { title, text, href, label, icons } = i;

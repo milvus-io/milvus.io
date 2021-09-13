@@ -63,21 +63,33 @@ const V2Header = props => {
     });
   };
 
-  const generateNavigation = (navlist, path, styles, locale) => {
+  const generateNavigation = (navlist, path, styles, locale, isMobile) => {
     return (
       <>
         {navlist.map(i => {
           const { label, link, activeKey, subMenu } = i;
           return subMenu && subMenu.length ? (
             <div
-              className={`${styles.navMenuItem} ${styles.noLink}`}
-              key={label}
+              className={`${styles.navMenuItem} ${
+                !isMobile ? styles.noLink : ''
+              }`}
               key={label}
             >
-              <span className={styles.navItem}>{label}</span>
-              <ul className={styles.subNavList}>
-                {generateSubNav(subMenu, styles, locale)}
-              </ul>
+              {isMobile ? (
+                <Selector
+                  options={subMenu}
+                  locale={locale}
+                  path={path}
+                  navItemLabel={label}
+                />
+              ) : (
+                <>
+                  <span className={styles.navItem}>{label}</span>
+                  <ul className={styles.subNavList}>
+                    {generateSubNav(subMenu, styles, locale)}
+                  </ul>
+                </>
+              )}
             </div>
           ) : (
             <LocalizedLink
@@ -161,7 +173,7 @@ const V2Header = props => {
               </div>
             ) : (
               <div className={styles.navSection}>
-                {generateNavigation(navList, path, styles, locale)}
+                {generateNavigation(navList, path, styles, locale, isMobile)}
                 <a
                   className={styles.navItem}
                   href="https://github.com/milvus-io/milvus/"
@@ -198,7 +210,7 @@ const V2Header = props => {
               hideMask={hideMask}
             >
               <div className={styles.mobileNavSection}>
-                {generateNavigation(navList, path, styles, locale)}
+                {generateNavigation(navList, path, styles, locale, isMobile)}
                 <a
                   className={styles.navItem}
                   href="https://github.com/milvus-io/milvus/"

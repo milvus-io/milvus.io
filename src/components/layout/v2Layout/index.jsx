@@ -14,7 +14,7 @@ const V2Layout = ({ header, footer, children, locale, versions }) => {
         className={styles.header}
       />
       {children}
-      <Footer footer={footer} locale={locale} />
+      <Footer footer={footer} locale={locale} className={styles.footer} />
     </div>
   );
 };

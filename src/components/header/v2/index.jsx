@@ -15,7 +15,7 @@ import { LANGUAGES, NAVLIST_EN, NAVLIST_CN } from './constants';
 import LocalizedLink from '../../localizedLink/localizedLink';
 
 const V2Header = props => {
-  const { className = '', locale } = props;
+  const { className = '', locale, showRobot = true } = props;
   const navList = locale === 'en' ? NAVLIST_EN : NAVLIST_CN;
   const { isMobile } = useMobileScreen();
 
@@ -71,6 +71,7 @@ const V2Header = props => {
           return subMenu && subMenu.length ? (
             <div
               className={`${styles.navMenuItem} ${styles.noLink}`}
+              key={label}
               key={label}
             >
               <span className={styles.navItem}>{label}</span>
@@ -197,7 +198,7 @@ const V2Header = props => {
               hideMask={hideMask}
             >
               <div className={styles.mobileNavSection}>
-                {generateNavigation(navList, path, styles)}
+                {generateNavigation(navList, path, styles, locale)}
                 <a
                   className={styles.navItem}
                   href="https://github.com/milvus-io/milvus/"
@@ -227,7 +228,7 @@ const V2Header = props => {
           )}
         </div>
       </div>
-      <QuestionRobot />
+      {showRobot && <QuestionRobot />}
     </header>
   );
 };

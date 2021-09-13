@@ -28,7 +28,7 @@ const Hackathon = ({ data, pageContext }) => {
   const { locale } = pageContext;
   return (
     <>
-      <Header locale={locale} />
+      <Header locale={locale} showRobot={false} />
       <Seo title="Hacktoberfest-2021" lang={locale} description={DESC} />
       <main className={styles.hackathonContainer}>
         {/* banner section */}

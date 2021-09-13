@@ -11,17 +11,22 @@ export const LANGUAGES = [
 
 export const NAVLIST_EN = [
   {
-    label: 'What is Milvus?',
-    link: '/docs/overview.md',
-    activeKey: null,
-  },
-  {
-    label: 'Documentation',
+    label: 'Docs',
     link: '/docs/home',
     activeKey: '/docs',
   },
   {
-    label: 'Resources',
+    label: 'Blog',
+    link: '/blog',
+    activeKey: '/blog',
+  },
+  {
+    label: 'Forum',
+    link: 'https://discuss.milvus.io/c/hacktoberfest/9',
+    activeKey: 'null',
+  },
+  {
+    label: 'Tutorials',
     link: null,
     activeKey: null,
     subMenu: [
@@ -31,10 +36,22 @@ export const NAVLIST_EN = [
         activeKey: 'bootcamp',
       },
       {
-        label: 'Blog',
-        link: 'https://zilliz.com/blog',
+        label: 'Live Demos',
+        link: 'https://zilliz.com/milvus-demos?isZilliz=true',
         activeKey: null,
       },
+      {
+        label: 'Video',
+        link: 'https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g',
+        activeKey: null,
+      },
+    ],
+  },
+  {
+    label: 'Tools',
+    link: null,
+    activeKey: null,
+    subMenu: [
       {
         label: 'Sizing Tool',
         link: 'https://zilliz.com/sizing-tool',
@@ -43,16 +60,6 @@ export const NAVLIST_EN = [
       {
         label: 'Insight',
         link: 'https://github.com/milvus-io/milvus-insight',
-        activeKey: null,
-      },
-      {
-        label: 'Video',
-        link: 'https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g',
-        activeKey: null,
-      },
-      {
-        label: 'Demos',
-        link: 'https://zilliz.com/milvus-demos?isZilliz=true',
         activeKey: null,
       },
     ],
@@ -66,28 +73,47 @@ export const NAVLIST_EN = [
 
 export const NAVLIST_CN = [
   {
-    label: '什么是 Milvus?',
-    link: '/docs/overview.md',
-    activeKey: null,
-  },
-  {
     label: '文档',
     link: '/docs/home',
     activeKey: '/docs',
   },
   {
-    label: '资源',
+    label: '博客',
+    link: '/blog',
+    activeKey: '/blog',
+  },
+  {
+    label: '论坛',
+    link: 'https://discuss.milvus.io/c/hacktoberfest/9',
+    activeKey: 'null',
+  },
+  {
+    label: '教程',
     link: null,
     activeKey: null,
     subMenu: [
       {
         label: '训练营',
         link: '/bootcamp',
+        activeKey: 'bootcamp',
       },
       {
-        label: '博客',
-        link: 'https://zilliz.com/blog',
+        label: '在线 Demos',
+        link: 'https://zilliz.com/milvus-demos?isZilliz=true',
+        activeKey: null,
       },
+      {
+        label: '视频',
+        link: 'https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g',
+        activeKey: null,
+      },
+    ],
+  },
+  {
+    label: '工具',
+    link: null,
+    activeKey: null,
+    subMenu: [
       {
         label: 'Sizing Tool',
         link: 'https://zilliz.com/sizing-tool',
@@ -96,14 +122,6 @@ export const NAVLIST_CN = [
       {
         label: 'Insight',
         link: 'https://github.com/milvus-io/milvus-insight',
-      },
-      {
-        label: '视频',
-        link: 'https://space.bilibili.com/478166626?spm_id_from=333.33.b_73656375726974794f75744c696e6b.1',
-      },
-      {
-        label: '示例',
-        link: 'https://zilliz.com/milvus-demos?isZilliz=true',
         activeKey: null,
       },
     ],

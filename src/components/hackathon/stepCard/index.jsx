@@ -26,7 +26,7 @@ const StepCard = props => {
           )}
         </div>
 
-        <p className={styles.content}>{content}</p>
+        <p>{content}</p>
       </div>
     </a>
   );

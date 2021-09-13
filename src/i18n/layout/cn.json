@@ -652,12 +652,12 @@
       "title": "Contact Us",
       "list": [
         {
-          "href": "https://discuss.milvus.io/c/hacktoberfest/9",
+          "href": "https://discuss.milvus.io/",
           "icon": "../../images/hackathon/iscourse.svg",
           "content": "Join in our Discourse Forum"
         },
         {
-          "href": "https://app.slack.com/client/TM98LD8DQ/C025LE9NRDM",
+          "href": "https://join.slack.com/t/milvusio/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
           "icon": "../../images/hackathon/slack.svg",
           "content": "Join in our Slack Channel"
         }

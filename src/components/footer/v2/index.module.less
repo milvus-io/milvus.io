@@ -2,10 +2,10 @@
 @import '../../../css/variables/color.less';
 
 .footerContainer {
-  padding: 60px 0 60px 0;
+  padding: 60px 32px;
 
-  @media @tablet {
-    padding: 40px 16px 48px;
+  @media @phone {
+    padding: 48px 16px;
   }
 
   .list {
@@ -82,9 +82,11 @@
           display: inline-block;
           width: 24px;
           height: 24px;
+
           & + a {
             margin-left: 16px;
           }
+
           img {
             width: 24px;
             height: 24px;
@@ -191,6 +193,7 @@
             width: 45%;
             margin-bottom: 16px;
           }
+
           &:nth-child(even) {
             width: 55%;
           }

@@ -12,6 +12,7 @@ import searchIcon from '../images/v2/searchicon.svg';
 import storageIcon from '../images/v2/storage.svg';
 import supportIcon from '../images/v2/support.svg';
 import bgImg3 from '../images/v2/bgImg3.png';
+import LocalizedLink from '../components/localizedLink/localizedLink';
 
 import line from '../images/v2/line.png';
 import compass from '../images/v2/compass.png';
@@ -25,6 +26,7 @@ import moj from '../images/v2/moj.png';
 import smartnew from '../images/v2/smartnew.png';
 import trend from '../images/v2/trend.png';
 import xiaomi from '../images/v2/xiaomi.png';
+import enter from '../images/hackathon/icon-enter.svg';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -92,125 +94,137 @@ const HomePage = ({ data, pageContext }) => {
           versions={versions}
         >
           <Seo title="Milvus" lang={locale} description={desc} />
-          <div className="banner">
-            <div className="banner-left">
-              <div className="stars-layout">
-                <GithubButton
-                  className="git-stars"
-                  type="stargazers"
-                  size="large"
-                  namespace="milvus-io"
-                  repo="milvus"
-                />
-              </div>
-              <p className="sub-title">{banner.subTitle}</p>
-              <div className="title-wrapper">
-                {banner.title.map(item => (
-                  <p className="title" key={item}>
-                    {item.toUpperCase()}
-                  </p>
-                ))}
-              </div>
-              <p className="text">{banner.text}</p>
-              <div className="banner-btn-wrapper">
-                <Button
-                  className="banner-btn1"
-                  link={banner.startBtn.href}
-                  locale={locale}
-                  children={
-                    <>
-                      <span className="btn-label">{banner.startBtn.label}</span>
-                      <i className="fa fa-chevron-right"></i>
-                    </>
-                  }
-                />
-                <Button
-                  className="banner-btn2"
-                  variant="outline"
-                  link={banner.contributeBtn.href}
-                  locale={locale}
-                  children={
-                    <>
-                      <span className="btn-label">
-                        {banner.contributeBtn.label}
-                      </span>
-                      <i className="fas fa-pencil-alt"></i>
-                    </>
-                  }
-                />
-              </div>
-            </div>
-            <div className="banner-right"></div>
+          <div className="entry-wrapper">
+            <span className="text">{banner.entry}</span>
+            <LocalizedLink
+              className="entery-link-wrapper"
+              to="/hacktoberfest-2021"
+              children={<img src={enter} alt="hacktoberfest-2021" />}
+            />
           </div>
-          <div className="slogan-wrapper">
-            <p className="text">{slogan[index].text}</p>
-            <p className="author">{slogan[index].author}</p>
-          </div>
-          <div className="content">
-            <h3 className="title-bar">
-              <span className="title">{feature.title}</span>
-              <span className="line"></span>
-            </h3>
-            <ul className="feature-section">
-              {feature.list.map(i => {
-                const { img, text, title } = i;
-                return (
-                  <li className="section-item" key={img}>
-                    <div className="icon-wrapper">
-                      <img src={icons[img]} alt={img} />
-                    </div>
-                    <p className="title">{title}</p>
-                    <p
-                      className="text"
-                      dangerouslySetInnerHTML={{ __html: text }}
-                    ></p>
-                  </li>
-                );
-              })}
-              <li className="section-item">
-                <img className="img" src={icons.bgImg3} alt="icon" />
-              </li>
-            </ul>
-            {!!user.list.length ? (
-              <div className="user-section">
-                <h3 className="title-bar">
-                  <span className="title">{user.title}</span>
-                  <span className="line"></span>
-                </h3>
-                <ul className="users-list">
-                  {user.list.map(item => {
-                    const { name, alt } = item;
-                    return (
-                      <li key={name} className="list-item">
-                        <img src={icons[name]} alt={alt} />
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ) : null}
-            <div className="community-section">
-              <div className="wrapper">
-                <div className="text-wrapper">
-                  <p className="title">{community.title}</p>
-                  <p className="text">{community.text1}</p>
-                  <p className="text ">{community.text2}</p>
+          <main className="main-container">
+            <div className="banner">
+              <div className="banner-left">
+                <div className="stars-layout">
+                  <GithubButton
+                    className="git-stars"
+                    type="stargazers"
+                    size="large"
+                    namespace="milvus-io"
+                    repo="milvus"
+                  />
                 </div>
+                <p className="sub-title">{banner.subTitle}</p>
+                <div className="title-wrapper">
+                  {banner.title.map(item => (
+                    <p className="title" key={item}>
+                      {item.toUpperCase()}
+                    </p>
+                  ))}
+                </div>
+                <p className="text">{banner.text}</p>
+                <div className="banner-btn-wrapper">
+                  <Button
+                    className="banner-btn1"
+                    link={banner.startBtn.href}
+                    locale={locale}
+                    children={
+                      <>
+                        <span className="btn-label">
+                          {banner.startBtn.label}
+                        </span>
+                        <i className="fa fa-chevron-right"></i>
+                      </>
+                    }
+                  />
+                  <Button
+                    className="banner-btn2"
+                    variant="outline"
+                    link={banner.contributeBtn.href}
+                    locale={locale}
+                    children={
+                      <>
+                        <span className="btn-label">
+                          {banner.contributeBtn.label}
+                        </span>
+                        <i className="fas fa-pencil-alt"></i>
+                      </>
+                    }
+                  />
+                </div>
+              </div>
+              <div className="banner-right"></div>
+            </div>
+            <div className="slogan-wrapper">
+              <p className="text">{slogan[index].text}</p>
+              <p className="author">{slogan[index].author}</p>
+            </div>
+            <div className="content">
+              <h3 className="title-bar">
+                <span className="title">{feature.title}</span>
+                <span className="line"></span>
+              </h3>
+              <ul className="feature-section">
+                {feature.list.map(i => {
+                  const { img, text, title } = i;
+                  return (
+                    <li className="section-item" key={img}>
+                      <div className="icon-wrapper">
+                        <img src={icons[img]} alt={img} />
+                      </div>
+                      <p className="title">{title}</p>
+                      <p
+                        className="text"
+                        dangerouslySetInnerHTML={{ __html: text }}
+                      ></p>
+                    </li>
+                  );
+                })}
+                <li className="section-item">
+                  <img className="img" src={icons.bgImg3} alt="icon" />
+                </li>
+              </ul>
+              {!!user.list.length ? (
+                <div className="user-section">
+                  <h3 className="title-bar">
+                    <span className="title">{user.title}</span>
+                    <span className="line"></span>
+                  </h3>
+                  <ul className="users-list">
+                    {user.list.map(item => {
+                      const { name, alt } = item;
+                      return (
+                        <li key={name} className="list-item">
+                          <img src={icons[name]} alt={alt} />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ) : null}
+              <div className="community-section">
+                <div className="wrapper">
+                  <div className="text-wrapper">
+                    <p className="title">{community.title}</p>
+                    <p className="text">{community.text1}</p>
+                    <p className="text ">{community.text2}</p>
+                  </div>
 
-                <Button
-                  className="communityBtn"
-                  link={community.gitBtn.href}
-                  locale={locale}
-                  children={
-                    <>
-                      <span>{community.gitBtn.label}</span>
-                      <i className="fa fa-chevron-right"></i>
-                    </>
-                  }
-                />
+                  <Button
+                    className="communityBtn"
+                    link={community.gitBtn.href}
+                    locale={locale}
+                    children={
+                      <>
+                        <span>{community.gitBtn.label}</span>
+                        <i className="fa fa-chevron-right"></i>
+                      </>
+                    }
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </main>
         </V2Layout>
       </div>
     </div>
@@ -236,6 +250,7 @@ export const Query = graphql`
                   href
                   label
                 }
+                entry
               }
               content {
                 feature {

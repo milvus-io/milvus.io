@@ -14,9 +14,20 @@
   .itemWrapper {
     border-bottom: 1px solid #eee;
     padding: 32px 0;
+    display: flex;
+    align-items: center;
 
     @media @tablet {
       padding: 16px 0;
+    }
+
+    img {
+      width: 24px;
+      margin-right: 8px;
+
+      @media @phone {
+        display: none;
+      }
     }
   }
 

@@ -19,34 +19,34 @@ body {
     background-size: cover;
     margin-top: 90px;
     padding: 0 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 32px;
 
     @media @phone {
-      padding: 0 16px;
+      padding: 10px 16px;
+    }
+
+    .text {
+      font-size: 20px;
+      line-height: 60px;
+      font-weight: 700;
+      display: inline-block;
+      margin-right: 12px;
+      color: #fff;
+
+      @media @phone {
+        font-size: 14px;
+        line-height: 36px;
+
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
     }
 
     .entery-link-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px 0;
-
-      .text {
-        font-size: 20px;
-        line-height: 60px;
-        font-weight: 700;
-        display: inline-block;
-        margin-right: 12px;
-
-        @media @phone {
-          font-size: 14px;
-          line-height: 36px;
-
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-        }
-      }
-
       img {
         height: 48px;
 

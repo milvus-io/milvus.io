@@ -544,14 +544,14 @@
       "secondBanner": {
         "title": "What is Hacktoberfest",
         "content": "Hacktobefest is an annual month-long celebration of open source. It is a great opportunity for everyone, from seasoned developers to students and code newbies, from technical writers to UX designers, to contribute to open source communities and develop your skills, with the perks of winning limited edition swags.",
-        "image": "../../images/hackathon/second-banner.jpg"
+        "image": "../../images/hackathon/banner-image-2.png"
       }
     },
     "secondSection": {
       "title": "What is Milvus",
       "content": "Milvus, an open-source vector database built to power AI applications and vector similarity search, is participating for the first time! The Milvus community has planned a series of events and activities throughout October, and we would love for you to be a part of them!",
       "btnLabel": "Explore Milvus",
-      "btnLink": "/#"
+      "btnLink": "/docs/overview.md"
     },
     "thirdSection": {
       "title": "Quick Start",
@@ -561,21 +561,21 @@
           "title": "Sign Up",
           "content": "Sign-up to Hacktoberfest on the event website.",
           "iconType": "external",
-          "href": "#"
+          "href": "https://hacktoberfest.digitalocean.com/"
         },
         {
           "stepNum": 2,
           "title": "Join Discussion",
           "content": "Create a Milvus Forum account and interact with other community members.",
           "iconType": "external",
-          "href": "#"
+          "href": "https://discuss.milvus.io/c/hacktoberfest/9"
         },
         {
           "stepNum": 3,
           "title": "Pull Request",
           "content": "Browse the following components and start creating pull requests.",
           "iconType": "anchor",
-          "href": "#"
+          "href": "#issue_list"
         }
       ]
     },
@@ -590,37 +590,37 @@
         {
           "cate": "Milvus Code",
           "desc": "Fix bugs, improve code, or help us make a new feature come true.",
-          "icon": "",
-          "issueHref": "#",
-          "guideHref": "#"
+          "icon": "../../images/hackathon/code.svg",
+          "issueHref": "https://github.com/milvus-io/milvus/issues?q=is%3Aopen+is%3Aissue+label%3AHacktoberfest",
+          "guideHref": "https://github.com/milvus-io/milvus/blob/master/CONTRIBUTING.md"
         },
         {
           "cate": "Milvus Documentation",
           "desc": "Improve, extend or add Milvus documentation. ",
-          "icon": "",
-          "issueHref": "#",
-          "guideHref": "#"
+          "icon": "../../images/hackathon/doc.svg",
+          "issueHref": "https://github.com/milvus-io/milvus-docs/issues?q=is%3Aopen+is%3Aissue+label%3Ahacktoberfest",
+          "guideHref": "https://github.com/milvus-io/milvus-docs/blob/v2.0.0/CONTRIBUTING.md"
         },
         {
           "cate": "Milvus Golang API reference",
           "desc": "Help extend and add more examples to Golang API documentation.",
-          "icon": "",
-          "issueHref": "#",
-          "guideHref": "#"
+          "icon": "../../images/hackathon/api.svg",
+          "issueHref": "https://github.com/milvus-io/milvus-sdk-go/issues?q=is%3Aopen+is%3Aissue+label%3AHACKTOBERFEST",
+          "guideHref": "https://github.com/milvus-io/milvus-sdk-go/blob/master/CONTRIBUTING.md"
         },
         {
           "cate": "Bootcamp / Tutorials",
           "desc": "Showcase a project you built with Milvus.",
-          "icon": "",
-          "issueHref": "#",
-          "guideHref": "#"
+          "icon": "../../images/hackathon/bootcamp.svg",
+          "issueHref": "https://github.com/milvus-io/bootcamp/issues/new?assignees=&labels=&template=feature_request.md&title=",
+          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72"
         },
         {
           "cate": "Other community content",
           "desc": "Write blog posts, create video content, design artwork, share your insight on website design, and more.",
-          "icon": "",
-          "issueHref": "#",
-          "guideHref": "#"
+          "icon": "../../images/hackathon/others.svg",
+          "issueHref": "https://github.com/milvus-io/web-content/issues/new/choose",
+          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72"
         }
       ]
     },
@@ -628,24 +628,24 @@
       "title": "Claim your prize",
       "content": "Every pull request counts. Don't forget to come back here to fill in your information once you've made your contribution and we will send gifts your way.",
       "btnLabel": "I’ve submitted my PR!",
-      "btnLink": "/#",
+      "btnLink": "https://milvus.typeform.com/to/xvyhEadO",
       "tip": "*Prize rules to apply,",
       "tipLabel": "Learn More",
-      "tipHref": "#",
+      "tipHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72",
       "image": "../../images/hackathon/prize.jpg",
       "label1": "Biggest Prize",
       "label2": "DJI Mavic Air 2",
       "list": [
         {
-          "image": "../../images/hackathon/prize-keybord.jpg",
+          "image": "../../images/hackathon/prize-keybord.png",
           "name": "Logitech Keyboard"
         },
         {
-          "image": "../../images/hackathon/prize-sticker.jpg",
+          "image": "../../images/hackathon/prize-sticker.png",
           "name": "Milvus 2021 New Stickers"
         },
         {
-          "image": "../../images/hackathon/prize-tshirt.jpg",
+          "image": "../../images/hackathon/prize-tshirt.png",
           "name": "Milvus T-Shirts and Badge"
         }
       ]
@@ -654,19 +654,21 @@
       "title": "Events and Resources",
       "content": "Please visit our Milvus Discussion Forums for resources you might need for Hacktoberfest and the events surrounding Hacktoberfest.",
       "btnLabel": "Explore More",
-      "btnLink": "/#",
-      "image": "../../images/hackathon/discuss-forum.jpg"
+      "btnLink": "https://discuss.milvus.io/c/hacktoberfest/9",
+      "image": "../../images/hackathon/discuss-forum.png"
     },
     "eighthSection": {
       "title": "Contact Us",
       "list": [
         {
-          "href": "#",
-          "image": "../../images/hackathon/iscourse.png"
+          "href": "https://discuss.milvus.io/c/hacktoberfest/9",
+          "icon": "../../images/hackathon/iscourse.svg",
+          "content": "Join in our Discourse Forum"
         },
         {
-          "href": "#",
-          "image": "../../images/hackathon/slack.png"
+          "href": "https://app.slack.com/client/TM98LD8DQ/C025LE9NRDM",
+          "icon": "../../images/hackathon/slack.svg",
+          "content": "Join in our Slack Channel"
         }
       ]
     }

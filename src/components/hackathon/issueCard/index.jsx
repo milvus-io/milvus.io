@@ -3,6 +3,7 @@ import * as styles from './index.module.less';
 
 const IssueCard = props => {
   const {
+    icon,
     category,
     description,
     issueHref = '/#',
@@ -13,7 +14,7 @@ const IssueCard = props => {
   return (
     <div className={`${styles.issueCardWrapper} ${className}`}>
       <div className={styles.itemWrapper}>
-        <img src="" alt="" />
+        <img src={icon} alt="" />
         <p className={styles.cate}>{category}</p>
       </div>
       <div className={styles.itemWrapper}>

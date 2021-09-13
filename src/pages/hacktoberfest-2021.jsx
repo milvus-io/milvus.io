@@ -7,6 +7,7 @@ import { graphql } from 'gatsby';
 import Header from '../components/header/v2';
 import Footer from '../components/footer/v2';
 import Seo from '../components/seo';
+import LocalizedLink from '../components/localizedLink/localizedLink';
 
 const DESC = 'hacktoberfest-2021';
 
@@ -59,7 +60,9 @@ const Hackathon = ({ data, pageContext }) => {
                 </div>
               )}
               {firstSection.secondBanner && (
-                <div className={styles.bannerWrapper}>
+                <div
+                  className={`${styles.bannerWrapper} ${styles.secondBannerWrapper}`}
+                >
                   <div className={styles.leftPart}>
                     <h2>{firstSection.secondBanner.title}</h2>
                     <p className={styles.secondContent}>
@@ -147,6 +150,7 @@ const Hackathon = ({ data, pageContext }) => {
                   {fifthSection.list.map((item, index) => (
                     <li key={item.cate}>
                       <IssueCard
+                        icon={item.icon.publicURL}
                         category={item.cate}
                         description={item.desc}
                         issueHref={item.issueHref}
@@ -249,13 +253,21 @@ const Hackathon = ({ data, pageContext }) => {
           <section className={styles.eighthSection}>
             <div className={styles.innerWrapper}>
               <h2>{eighthSection.title}</h2>
-              <ul className={styles.contactList}>
+              <div className={styles.contactList}>
                 {eighthSection.list.map(item => (
-                  <a href={item.href} key={item.image.publicURL}>
-                    <img src={item.image.publicURL} alt="" />
-                  </a>
+                  <LocalizedLink
+                    key={item.href}
+                    to={item.href}
+                    className={styles.contactCard}
+                    children={
+                      <>
+                        <img src={item.icon.publicURL} alt="" />
+                        <p>{item.content}</p>
+                      </>
+                    }
+                  />
                 ))}
-              </ul>
+              </div>
             </div>
           </section>
         )}
@@ -352,9 +364,11 @@ export const Query = graphql`
                 title
                 listHeader
                 list {
+                  icon {
+                    publicURL
+                  }
                   cate
                   desc
-                  icon
                   issueHref
                   guideHref
                 }
@@ -392,9 +406,10 @@ export const Query = graphql`
                 title
                 list {
                   href
-                  image {
+                  icon {
                     publicURL
                   }
+                  content
                 }
               }
             }

@@ -133,6 +133,10 @@
       display: flex;
       padding-bottom: 40px;
 
+      @media @tablet {
+        flex-direction: column;
+      }
+
       &:last-child {
         padding-top: 40px;
       }
@@ -164,17 +168,32 @@
       }
 
       .leftPart {
-        flex: 3;
+        flex: 1 1 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        @media @tablet {
+          margin-bottom: 40px;
+        }
       }
 
       .rightPart {
-        flex: 2;
+        flex: 1 1 40%;
         text-align: center;
+
+        img {
+          max-width: 100%;
+        }
 
         @media @phone {
           display: none;
         }
       }
+    }
+
+    .secondBannerWrapper {
+      margin-top: 40px;
     }
   }
 
@@ -219,9 +238,8 @@
     .stepContent {
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
 
-      @media @phone {
+      @media @tablet {
         flex-direction: column;
         align-items: center;
       }
@@ -465,11 +483,6 @@
       column-gap: 20px;
 
       @media @tablet {
-        grid-template-columns: repeat(2, 1fr);
-        row-gap: 20px;
-      }
-
-      @media @phone {
         grid-template-columns: 1fr;
         column-gap: 0;
         row-gap: 20px;
@@ -489,7 +502,6 @@
           border-color: transparent #e2e2e2 #e2e2e2 #e2e2e2;
           border-width: 1px;
           border-style: solid;
-          box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
 
           @media @phone {
             font-size: 16px;
@@ -516,6 +528,7 @@
 
       .spliteLine {
         display: flex;
+        width: 100%;
 
         .line {
           flex: 1;
@@ -540,20 +553,51 @@
   .eighthSection {
     max-width: @screen-lg-max;
     margin: 0 auto;
-    padding: 50px 0 130px 0;
+    padding: 50px 0;
     background: url('../images/hackathon/bg-image-3.png') right bottom no-repeat;
     background-size: 189px 198px;
     text-align: center;
 
     h2 {
-      margin-bottom: 68px;
+      margin-bottom: 40px;
     }
 
     .contactList {
       display: flex;
       justify-content: space-around;
+      padding: 40px 0;
 
-      @media @phone {
+      .contactCard {
+        display: flex;
+        padding: 24px;
+        background-color: #fff;
+        border: 1px solid #e2e2e2;
+        transition: all 0.3s linear;
+        border-radius: 8px;
+        color: #000;
+        box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 8px;
+
+        &:hover {
+          transform: translateY(-15px);
+        }
+
+        img {
+          margin-right: 16px;
+        }
+
+        p {
+          font-size: 14px;
+          line-height: 24px;
+
+          @media @phone {
+            font-size: 12px;
+            line-height: 20px;
+          }
+        }
+      }
+
+      @media (max-width: 730px) {
         flex-direction: column;
 
         &:first-child {
@@ -567,4 +611,9 @@
 .footerWrapper {
   max-width: @screen-hp-max;
   margin: 0 auto;
+  padding: 0 32px;
+
+  @media @tablet {
+    padding: 0;
+  }
 }

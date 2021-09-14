@@ -21,6 +21,7 @@ const query = `
         frontmatter {
           id
           related_key
+          summary
           date
           author
           tag
@@ -1049,6 +1050,7 @@ const generateAllDocPages = (
     const isBlog = checkIsblog(fileAbsolutePath);
     const fileId = node.frontmatter.id;
     const relatedKey = node.frontmatter.related_key;
+    const summary = node.frontmatter.summary || '';
     let version = findVersion(fileAbsolutePath) || 'master';
 
     const fileLang = findLang(fileAbsolutePath);
@@ -1093,6 +1095,7 @@ const generateAllDocPages = (
           isVersionWithHome: versionsWithHome.includes(newestVersion),
           allApiMenus,
           relatedKey,
+          summary,
         }, // additional data can be passed via context
       });
     }
@@ -1119,6 +1122,7 @@ const generateAllDocPages = (
         isVersionWithHome: versionsWithHome.includes(version),
         allApiMenus,
         relatedKey,
+        summary,
       }, // additional data can be passed via context
     });
   });

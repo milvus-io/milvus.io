@@ -39,9 +39,9 @@ export default function Template({
     newestVersion,
     relatedKey,
     old, // id of markdown
+    summary,
   } = pageContext;
   versions = versions.sort(sortVersions);
-
   useEffect(() => {
     window?.localStorage?.setItem('docVersion', version);
   }, [version]);
@@ -178,7 +178,13 @@ export default function Template({
       editPath={editPath}
       allApiMenus={allApiMenus}
     >
-      <Seo title={title} lang={locale} version={version} meta={docsearchMeta} />
+      <Seo
+        title={title}
+        lang={locale}
+        version={version}
+        meta={docsearchMeta}
+        description={summary}
+      />
       {isBenchmark ? (
         <div className="iframe-container">
           {showBack && (

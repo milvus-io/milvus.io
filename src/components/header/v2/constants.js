@@ -63,7 +63,7 @@ export const NAVLIST_EN = [
         activeKey: null,
       },
       {
-        label: 'Milvus Cli',
+        label: 'Milvus CLI',
         link: 'https://github.com/milvus-io/milvus_cli',
         activeKey: null,
       },
@@ -130,7 +130,7 @@ export const NAVLIST_CN = [
         activeKey: null,
       },
       {
-        label: 'Milvus Cli',
+        label: 'Milvus CLI',
         link: 'https://github.com/milvus-io/milvus_cli',
         activeKey: null,
       },

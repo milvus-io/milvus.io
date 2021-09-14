@@ -21,12 +21,16 @@ const IssueCard = props => {
         <p className={styles.desc}>{description}</p>
       </div>
       <div className={styles.btnWrapper}>
-        <a className={styles.button} href={issueHref}>
-          Issues
-        </a>
-        <a className={styles.button} href={guideHref}>
-          Guidelines
-        </a>
+        {issueHref && (
+          <a className={styles.button} href={issueHref}>
+            Issues
+          </a>
+        )}
+        {guideHref && (
+          <a className={styles.button} href={guideHref}>
+            Guidelines
+          </a>
+        )}
       </div>
     </div>
   );

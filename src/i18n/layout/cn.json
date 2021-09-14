@@ -603,15 +603,15 @@
           "cate": "Bootcamp / Tutorials",
           "desc": "Showcase a project you built with Milvus.",
           "icon": "../../images/hackathon/bootcamp.svg",
-          "issueHref": "https://github.com/milvus-io/bootcamp/issues/new?assignees=&labels=&template=feature_request.md&title=",
-          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72"
+          "issueHref": "",
+          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72#community-content-4"
         },
         {
           "cate": "Other community content",
           "desc": "Write blog posts, create video content, design artwork, share your insight on website design, and more.",
           "icon": "../../images/hackathon/others.svg",
-          "issueHref": "https://github.com/milvus-io/web-content/issues/new/choose",
-          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72"
+          "issueHref": "",
+          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72#community-content-4"
         }
       ]
     },

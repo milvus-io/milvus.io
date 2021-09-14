@@ -536,7 +536,7 @@
     "firstSection": {
       "firstBanner": {
         "title": "Milvus Hacktoberfest 2021",
-        "content": "You know it's that time of the year again... Hackoberfest is coming! And this year, we are going in and going strong. ",
+        "content": "You know it's that time of the year again. <br />Hackoberfest is coming! And this year, we are going in and going strong.",
         "image": "../../images/hackathon/banner-image-1.svg",
         "alert": "Spoiler alert - our biggest prize is spelled as D-R-O-N-E.",
         "badge": "../../images/hackathon/badge.svg"
@@ -642,7 +642,7 @@
         },
         {
           "image": "../../images/hackathon/prize-sticker.png",
-          "name": "Milvus 2021 New Stickers"
+          "name": "Milvus Sticker Packs"
         },
         {
           "image": "../../images/hackathon/prize-tshirt.png",
@@ -652,7 +652,7 @@
     },
     "seventhSection": {
       "title": "Events and Resources",
-      "content": "Please visit our Milvus Discussion Forums for resources you might need for Hacktoberfest and the events surrounding Hacktoberfest.",
+      "content": "Please visit our Milvus Community Forum for resources you might need for Hacktoberfest and the events surrounding Hacktoberfest.",
       "btnLabel": "Explore More",
       "btnLink": "https://discuss.milvus.io/c/hacktoberfest/9",
       "image": "../../images/hackathon/discuss-forum.png"

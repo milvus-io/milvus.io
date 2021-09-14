@@ -1143,8 +1143,8 @@ const generateBlogArticlePage = (
     ];
     return {
       date,
-      tags: tag.split(' '),
-      desc,
+      tags: tag ? tag.split(' ') : [],
+      desc: desc || '',
       title,
       id,
       cover,
@@ -1208,7 +1208,7 @@ const generateBlogArticlePage = (
         newHtml,
         isBlogListPage: false,
         date,
-        tags: tag.split(' '),
+        tags: tag ? tag.split(' ') : [],
         origin,
         author,
         title,

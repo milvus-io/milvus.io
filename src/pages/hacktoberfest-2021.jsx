@@ -39,9 +39,12 @@ const Hackathon = ({ data, pageContext }) => {
                 <div className={styles.bannerWrapper}>
                   <div className={styles.leftPart}>
                     <h1>{firstSection.firstBanner.title}</h1>
-                    <p className={styles.firstContent}>
-                      {firstSection.firstBanner.content}
-                    </p>
+                    <p
+                      className={styles.firstContent}
+                      dangerouslySetInnerHTML={{
+                        __html: firstSection.firstBanner.content,
+                      }}
+                    ></p>
                     <a className={styles.alert} href="#prize">
                       <img
                         src={firstSection.firstBanner.badge.publicURL}

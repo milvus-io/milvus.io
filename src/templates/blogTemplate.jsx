@@ -130,7 +130,10 @@ const BlogTemplate = ({ data, pageContext }) => {
       window.history.pushState(null, null, `?page=${idx}#${currentTag}`);
       isRestore && window.sessionStorage.setItem(PAGE_INDEX, idx);
       filterByPageIndex(idx);
-      window.scrollTo(0, 0);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     },
     [filterByPageIndex, currentTag]
   );

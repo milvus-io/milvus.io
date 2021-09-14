@@ -1128,6 +1128,15 @@ const generateAllDocPages = (
   });
 };
 
+const generateDefaultBlogCover = (date, coverList = []) => {
+  const coverImgList = [
+    'zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_2_9e3f35962c.jpg',
+    'zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_8ed7696269.jpg',
+  ].concat(coverList);
+  const day = new Date(date).getDay();
+  return day % 2 === 0 ? coverImgList[0] : coverImgList[1];
+};
+
 const generateBlogArticlePage = (
   createPage,
   { nodes: blogMD, template: blogTemplate }
@@ -1147,11 +1156,11 @@ const generateBlogArticlePage = (
     ];
     return {
       date,
-      tags: tag ? tag.split(' ') : [],
+      tags: tag ? tag.split(',') : [],
       desc: desc || '',
       title,
       id,
-      cover,
+      cover: cover || generateDefaultBlogCover(date),
       fileLang,
     };
   });
@@ -1212,7 +1221,7 @@ const generateBlogArticlePage = (
         newHtml,
         isBlogListPage: false,
         date,
-        tags: tag ? tag.split(' ') : [],
+        tags: tag ? tag.split(',') : [],
         origin,
         author,
         title,

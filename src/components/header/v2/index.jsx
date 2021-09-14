@@ -49,7 +49,7 @@ const V2Header = props => {
   const generateSubNav = (list, styles, locale) => {
     return list.map(item => {
       return (
-        <li className={styles.subNavItemWrapper} key={item.path}>
+        <li className={styles.subNavItemWrapper} key={item.label}>
           <LocalizedLink
             className={styles.subNavLink}
             to={item.link}

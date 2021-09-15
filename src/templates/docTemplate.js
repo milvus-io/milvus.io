@@ -40,6 +40,7 @@ export default function Template({
     relatedKey,
     old, // id of markdown
     summary,
+    newestBlog,
   } = pageContext;
   versions = versions.sort(sortVersions);
   useEffect(() => {
@@ -208,7 +209,12 @@ export default function Template({
       ) : (
         <>
           {homeData ? (
-            <HomeTemplate data={homeData} version={version} />
+            <HomeTemplate
+              data={homeData}
+              version={version}
+              locale={locale}
+              newestBlog={newestBlog}
+            />
           ) : (
             <div className="doc-post-container">
               <>

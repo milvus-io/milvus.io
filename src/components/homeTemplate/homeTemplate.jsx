@@ -3,10 +3,28 @@ import BlogCard from '../card/blogCard/blogCard';
 import StartCard from '../card/startCard/startCard';
 import Button from '../button';
 import * as styles from './homeTemplate.module.less';
+import * as dayjs from 'dayjs';
 
 const HomeTemplate = props => {
-  const { data } = props;
+  const { data, locale, newestBlog = {} } = props;
   const { section1 = {}, section2, section3 = {}, section4 = {} } = data;
+
+  const generateNewsetBlog = (blogObj, locale) => {
+    console.log(blogObj, locale);
+    const { title, desc, cover, date, id } = blogObj[locale];
+    const dateTime = dayjs(date).format('YYYY/MM/DD');
+    return (
+      <BlogCard
+        data={{
+          title,
+          abstract: desc,
+          imgSrc: `https://${cover}`,
+          time: dateTime,
+          link: `/${locale}/blog/${id}`,
+        }}
+      />
+    );
+  };
 
   return (
     <section className={styles.docHomeWrapper}>
@@ -64,12 +82,7 @@ const HomeTemplate = props => {
 
       <div className={styles.section}>
         <h1>{section4.title}</h1>
-        <div>
-          {section4.items &&
-            section4.items.map(item => (
-              <BlogCard key={item.title} data={item} />
-            ))}
-        </div>
+        <div>{generateNewsetBlog(newestBlog, locale)}</div>
         {section4.loadBtn && (
           <Button
             className={styles.loadBtn}

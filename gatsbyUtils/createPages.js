@@ -367,6 +367,16 @@ const getVersionsWithHome = homeData => {
   return homeData.map(data => data.version);
 };
 
+// generate default blog cover according to blog's date
+const generateDefaultBlogCover = (date, coverList = []) => {
+  const coverImgList = [
+    'zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_2_9e3f35962c.jpg',
+    'zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_8ed7696269.jpg',
+  ].concat(coverList);
+  const day = new Date(date).getDay();
+  return day % 2 === 0 ? coverImgList[0] : coverImgList[1];
+};
+
 const getNewestVersionHomePath = (locale, path) => {
   const tempPath = path || 'home';
   const map = {
@@ -966,6 +976,7 @@ const generateDocHome = (
   createPage,
   {
     nodes: homeData,
+    blogs: blogMD,
     template: docTemplate,
     allMenus,
     allApiMenus,
@@ -974,6 +985,40 @@ const generateDocHome = (
     versionInfo,
   }
 ) => {
+  // generate newest blog
+  const list = blogMD.map(({ node }) => {
+    const fileAbsolutePath = node.fileAbsolutePath;
+    const fileLang = findLang(fileAbsolutePath);
+
+    let [date, tag = '', title, desc, id, cover] = [
+      node.frontmatter.date,
+      node.frontmatter.tag,
+      node.frontmatter.title,
+      node.frontmatter.desc,
+      node.frontmatter.id,
+      node.frontmatter.cover,
+    ];
+    return {
+      date,
+      tags: tag ? tag.split(',') : [],
+      desc: desc || '',
+      title,
+      id,
+      cover: cover || generateDefaultBlogCover(date),
+      fileLang,
+      fileAbsolutePath,
+    };
+  });
+
+  const newestBlog = {
+    cn: list
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .filter(i => i.fileLang === 'cn')[0],
+    en: list
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .filter(i => i.fileLang === 'en')[0],
+  };
+
   homeData.forEach(({ language, data, path, version }) => {
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
@@ -1001,6 +1046,7 @@ const generateDocHome = (
           newHtml: null,
           allApiMenus,
           isVersionWithHome: true,
+          newestBlog,
         },
       });
     }
@@ -1023,6 +1069,7 @@ const generateDocHome = (
         newHtml: null,
         allApiMenus,
         isVersionWithHome: true,
+        newestBlog,
       },
     });
   });
@@ -1126,15 +1173,6 @@ const generateAllDocPages = (
       }, // additional data can be passed via context
     });
   });
-};
-
-const generateDefaultBlogCover = (date, coverList = []) => {
-  const coverImgList = [
-    'zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_2_9e3f35962c.jpg',
-    'zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_8ed7696269.jpg',
-  ].concat(coverList);
-  const day = new Date(date).getDay();
-  return day % 2 === 0 ? coverImgList[0] : coverImgList[1];
 };
 
 const generateBlogArticlePage = (

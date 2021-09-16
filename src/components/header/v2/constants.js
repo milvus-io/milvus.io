@@ -11,6 +11,12 @@ export const LANGUAGES = [
 
 export const NAVLIST_EN = [
   {
+    label: 'Milvus 2021 survey!',
+    link: 'https://milvus.typeform.com/to/EgMCxy2T',
+    activeKey: null,
+    className: 'fancyLink',
+  },
+  {
     label: 'Docs',
     link: '/docs/home',
     activeKey: '/docs',
@@ -78,6 +84,12 @@ export const NAVLIST_EN = [
 
 export const NAVLIST_CN = [
   {
+    label: 'Milvus 2021 survey',
+    link: 'https://milvus.typeform.com/to/GM5f8HOe',
+    activeKey: null,
+    className: 'fancyLink',
+  },
+  {
     label: '文档',
     link: '/docs/home',
     activeKey: '/docs',
@@ -89,7 +101,7 @@ export const NAVLIST_CN = [
   },
   {
     label: '论坛',
-    link: 'https://discuss.milvus.io/c/hacktoberfest/9',
+    link: 'https://discuss.milvus.io/',
     activeKey: 'null',
   },
   {

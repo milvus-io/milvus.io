@@ -116,7 +116,7 @@ const Hackathon = ({ data, pageContext }) => {
               </h3>
               <div className={styles.stepContent}>
                 {thirdSection.list.map(item => (
-                  <StepCard {...item} key={item.title} />
+                  <StepCard {...item} key={item.title} locale={locale} />
                 ))}
               </div>
             </div>
@@ -158,6 +158,7 @@ const Hackathon = ({ data, pageContext }) => {
                         description={item.desc}
                         issueHref={item.issueHref}
                         guideHref={item.guideHref}
+                        locale={locale}
                         className={
                           index === fifthSection.list.length - 1
                             ? styles.lastIssueCard
@@ -193,7 +194,13 @@ const Hackathon = ({ data, pageContext }) => {
                 />
                 <p className={styles.tip}>
                   <span>{sixthSection.tip}</span>
-                  <a href={sixthSection.tipHref}>{sixthSection.tipLabel}</a>
+                  <a
+                    href={sixthSection.tipHref}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {sixthSection.tipLabel}
+                  </a>
                 </p>
               </div>
 

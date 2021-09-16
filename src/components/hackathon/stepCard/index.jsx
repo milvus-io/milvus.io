@@ -1,8 +1,10 @@
 import React from 'react';
 import * as styles from './index.module.less';
+import LocalizedLink from '../../localizedLink/localizedLink';
 
 const StepCard = props => {
   const {
+    locale,
     title,
     content,
     stepNum,
@@ -12,7 +14,11 @@ const StepCard = props => {
   } = props;
 
   return (
-    <a className={`${styles.stepCardWrapper} ${className}`} href={href}>
+    <LocalizedLink
+      className={`${styles.stepCardWrapper} ${className}`}
+      to={href}
+      locale={locale}
+    >
       <div className={styles.numberWrapper}>
         <div className={styles.numberContent}>{stepNum}</div>
       </div>
@@ -28,7 +34,7 @@ const StepCard = props => {
 
         <p>{content}</p>
       </div>
-    </a>
+    </LocalizedLink>
   );
 };
 export default StepCard;

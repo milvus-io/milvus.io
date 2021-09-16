@@ -46,11 +46,32 @@
       align-items: center;
       justify-content: space-between;
       flex-grow: 1;
+      flex-direction: row;
+      // max-width: 620px;
       margin-left: 20%;
-      max-width: 620px;
+
+      @media (max-width: 1200px) {
+        margin-left: 10%;
+      }
 
       @media (max-width: 1100px) {
         margin-left: 8%;
+      }
+
+      .fancyLink {
+        background: linear-gradient(
+          265.5deg,
+          #06f3af -9.56%,
+          #06aff2 43.51%,
+          #156cdd 66.33%,
+          #010e29 100%
+        );
+        -webkit-background-clip: text;
+        color: transparent;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: Inter Medium;
+        padding: 8px 16px;
       }
 
       .navItem {
@@ -59,7 +80,6 @@
         line-height: 24px;
         height: 24px;
         color: @color-default-link;
-
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -151,6 +171,7 @@
       .uppercase {
         text-transform: uppercase;
         vertical-align: sub;
+        font-size: 12px;
       }
 
       .active {
@@ -248,6 +269,7 @@
       .uppercase {
         text-transform: uppercase;
         vertical-align: sub;
+        font-size: 12px;
       }
 
       .active {
@@ -266,6 +288,10 @@
   max-width: @screen-lg-max;
   margin: 0 auto;
   background: #fff;
+
+  @media (max-width: 1200px) {
+    padding: 0 32px;
+  }
 
   @media @tablet {
     padding: 0 16px;

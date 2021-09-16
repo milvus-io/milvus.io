@@ -251,6 +251,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
     generateDocHome(createPage, {
       nodes: homeData,
+      blogs: blogMD,
       template: docTemplate,
       allMenus,
       allApiMenus,

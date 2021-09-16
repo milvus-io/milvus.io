@@ -67,7 +67,12 @@ const V2Header = props => {
     return (
       <>
         {navlist.map(i => {
-          const { label, link, activeKey, subMenu } = i;
+          const { label, link, activeKey, subMenu, className } = i;
+          const classes = className
+            ? `${styles[className]}`
+            : `${styles.navItem} ${
+                path.includes(activeKey) ? styles.active : ''
+              }`;
           return subMenu && subMenu.length ? (
             <div
               className={`${styles.navMenuItem} ${
@@ -93,9 +98,7 @@ const V2Header = props => {
             </div>
           ) : (
             <LocalizedLink
-              className={`${styles.navItem} ${
-                path.includes(activeKey) ? styles.active : ''
-              }`}
+              className={classes}
               to={link}
               key={label}
               locale={locale}

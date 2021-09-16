@@ -40,6 +40,7 @@ export default function Template({
     relatedKey,
     old, // id of markdown
     summary,
+    newestBlog,
   } = pageContext;
   versions = versions.sort(sortVersions);
   useEffect(() => {
@@ -208,7 +209,12 @@ export default function Template({
       ) : (
         <>
           {homeData ? (
-            <HomeTemplate data={homeData} version={version} />
+            <HomeTemplate
+              data={homeData}
+              version={version}
+              locale={locale}
+              newestBlog={newestBlog}
+            />
           ) : (
             <div className="doc-post-container">
               <>
@@ -236,6 +242,14 @@ export default function Template({
                   </div>
                 )}
                 <div className="doc-post">
+                  {/* <a
+                    className="alert survey"
+                    href={locale === 'en' ? 'https://milvus.typeform.com/to/EgMCxy2T' : 'https://milvus.typeform.com/to/GM5f8HOe'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>some words</span>
+                  </a> */}
                   <div
                     className="doc-post-content"
                     ref={docRef}

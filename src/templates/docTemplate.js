@@ -242,6 +242,14 @@ export default function Template({
                   </div>
                 )}
                 <div className="doc-post">
+                  {/* <a
+                    className="alert survey"
+                    href={locale === 'en' ? 'https://milvus.typeform.com/to/EgMCxy2T' : 'https://milvus.typeform.com/to/GM5f8HOe'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>some words</span>
+                  </a> */}
                   <div
                     className="doc-post-content"
                     ref={docRef}

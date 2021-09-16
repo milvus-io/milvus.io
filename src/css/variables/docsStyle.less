@@ -238,6 +238,23 @@
         color: @color-list-blue;
       }
     }
+
+    &.survey {
+      background-color: @warning-bg-color;
+      border-left: 2px solid @color-warning;
+      border-radius: 4px;
+      display: block;
+
+      &::before {
+        position: absolute;
+        content: 'Milvus 2021 survey!';
+        line-height: 20px;
+        left: 21px;
+        top: 12px;
+        font-weight: 600;
+        color: @color-warning;
+      }
+    }
   }
 
   .admonition {

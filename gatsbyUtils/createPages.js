@@ -29,6 +29,7 @@ const query = `
           origin
           cover
           desc
+          isPublish
         }
         fileAbsolutePath
         html
@@ -474,8 +475,13 @@ const filterMdWithVersion = edges => {
 };
 
 const filterMDwidthBlog = edges => {
-  return edges.filter(({ node: { fileAbsolutePath } }) => {
-    return fileAbsolutePath.includes('/blogs/versions/master/blog');
+  return edges.filter(({ node }) => {
+    const isBlog = node.fileAbsolutePath.includes(
+      '/blogs/versions/master/blog'
+    );
+    // only when the value of isPublish is false it will be filtered
+    const isPublish = node.frontmatter.isPublish !== false;
+    return isBlog && isPublish;
   });
 };
 

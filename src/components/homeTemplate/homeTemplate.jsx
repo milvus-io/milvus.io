@@ -10,7 +10,6 @@ const HomeTemplate = props => {
   const { section1 = {}, section2, section3 = {}, section4 = {} } = data;
 
   const generateNewsetBlog = (blogObj, locale) => {
-    console.log(blogObj, locale);
     const { title, desc, cover, date, id } = blogObj[locale];
     const dateTime = dayjs(date).format('YYYY/MM/DD');
     return (
@@ -20,7 +19,8 @@ const HomeTemplate = props => {
           abstract: desc,
           imgSrc: `https://${cover}`,
           time: dateTime,
-          link: `/${locale}/blog/${id}`,
+          link: `/blog/${id}`,
+          locale: locale,
         }}
       />
     );
@@ -82,7 +82,7 @@ const HomeTemplate = props => {
 
       <div className={styles.section}>
         <h1>{section4.title}</h1>
-        <div>{generateNewsetBlog(newestBlog, locale)}</div>
+        {generateNewsetBlog(newestBlog, locale)}
         {section4.loadBtn && (
           <Button
             className={styles.loadBtn}

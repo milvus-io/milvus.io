@@ -194,7 +194,13 @@ const Hackathon = ({ data, pageContext }) => {
                 />
                 <p className={styles.tip}>
                   <span>{sixthSection.tip}</span>
-                  <a href={sixthSection.tipHref}>{sixthSection.tipLabel}</a>
+                  <a
+                    href={sixthSection.tipHref}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {sixthSection.tipLabel}
+                  </a>
                 </p>
               </div>
 

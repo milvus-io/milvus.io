@@ -1,8 +1,10 @@
 import React from 'react';
 import * as styles from './index.module.less';
+import LocalizedLink from '../../localizedLink/localizedLink';
 
 const IssueCard = props => {
   const {
+    locale,
     icon,
     category,
     description,
@@ -22,14 +24,22 @@ const IssueCard = props => {
       </div>
       <div className={styles.btnWrapper}>
         {issueHref && (
-          <a className={styles.button} href={issueHref}>
+          <LocalizedLink
+            className={styles.button}
+            to={issueHref}
+            locale={locale}
+          >
             Issues
-          </a>
+          </LocalizedLink>
         )}
         {guideHref && (
-          <a className={styles.button} href={guideHref}>
+          <LocalizedLink
+            className={styles.button}
+            to={guideHref}
+            locale={locale}
+          >
             Guidelines
-          </a>
+          </LocalizedLink>
         )}
       </div>
     </div>

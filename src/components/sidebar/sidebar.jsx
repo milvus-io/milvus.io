@@ -36,8 +36,8 @@ const Sidebar = props => {
 
   const map = isVersionWithHome
     ? {
-        en: `/docs/${version}/home`,
-        cn: `/docs/${version}/home`,
+        en: `/docs/${version}`,
+        cn: `/docs/${version}`,
       }
     : {
         en: `/docs/${version}/overview.md`,

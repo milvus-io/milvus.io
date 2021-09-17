@@ -164,7 +164,7 @@ const DocLayout = props => {
       behavior: 'smooth',
     });
   };
-
+  console.log(isVersionWithHome);
   return (
     <div className={styles.layoutWrapper}>
       <NewHeader locale={locale} />

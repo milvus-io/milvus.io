@@ -18,7 +18,7 @@ export const NAVLIST_EN = [
   },
   {
     label: 'Docs',
-    link: '/docs/home',
+    link: '/docs',
     activeKey: '/docs',
   },
   {
@@ -91,7 +91,7 @@ export const NAVLIST_CN = [
   },
   {
     label: '文档',
-    link: '/docs/home',
+    link: '/docs',
     activeKey: '/docs',
   },
   {

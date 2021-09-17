@@ -47,8 +47,7 @@ const Selector = props => {
       </div>
       <ul className={`${styles.optionsWrapper} ${listStatus && styles.open}`}>
         {options.map(v => {
-          const to =
-            v === 'v0.x' ? `/docs/${v}/overview.md` : `/docs/${v}/home`;
+          const to = v === 'v0.x' ? `/docs/${v}/overview.md` : `/docs/${v}`;
           return (
             <li
               className={v === selected ? styles.active : ''}

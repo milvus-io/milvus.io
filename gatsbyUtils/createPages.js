@@ -379,19 +379,17 @@ const generateDefaultBlogCover = (date, coverList = []) => {
 };
 
 const getNewestVersionHomePath = (locale, path) => {
-  const tempPath = path || 'home';
   const map = {
-    en: `/docs/${tempPath}`,
-    cn: `/${locale}/docs/${tempPath}`,
+    en: `/docs`,
+    cn: `/${locale}/docs`,
   };
   return map[locale];
 };
 
 const getNormalVersionHomePath = (version, locale, path) => {
-  const tempPath = path || 'home';
   const map = {
-    en: `/docs/${version}/${tempPath}`,
-    cn: `/${locale}/docs/${version}/${tempPath}`,
+    en: `/docs/${version}`,
+    cn: `/${locale}/docs/${version}`,
   };
   return map[locale];
 };

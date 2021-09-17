@@ -32,6 +32,7 @@ milvusClient.closeConnection();
 ```python
 >>> connections.disconnect("default")
 ```
+
 <br><!-- Do not remove start of hero-bot --><br>
 <img src="https://img.shields.io/badge/all--contributors-10-orange"><br>
 <a href="https://github.com/ThyeeZz"><img src="https://avatars.githubusercontent.com/u/41352919?v=4" width="30px" /></a>

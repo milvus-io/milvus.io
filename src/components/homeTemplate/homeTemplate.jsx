@@ -71,7 +71,9 @@ const HomeTemplate = props => {
                 <ul>
                   {item.list.map(link => (
                     <li key={link.text}>
-                      <a href={link.link}>{link.text}</a>
+                      <a href={`${window.location.href}/${link.link}`}>
+                        {link.text}
+                      </a>
                     </li>
                   ))}
                 </ul>

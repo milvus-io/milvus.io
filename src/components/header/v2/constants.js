@@ -84,7 +84,7 @@ export const NAVLIST_EN = [
 
 export const NAVLIST_CN = [
   {
-    label: 'Milvus 2021 survey',
+    label: 'Milvus 2021 问卷!',
     link: 'https://milvus.typeform.com/to/GM5f8HOe',
     activeKey: null,
     className: 'fancyLink',

@@ -456,7 +456,7 @@
       "list": [
         {
           "title": "What is Milvus? ",
-          "text": "Open-source vector database for unstrcutured data.",
+          "text": "Open-source vector database for unstructured data.",
           "href": "/docs/overview.md",
           "label": "Get started",
           "icons": []

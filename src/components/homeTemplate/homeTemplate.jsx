@@ -31,7 +31,10 @@ const HomeTemplate = props => {
       ...v,
       list: v.list.map(item => ({
         ...item,
-        link: `${window.location.href}/${item.link}`,
+        link:
+          typeof window !== `undefined`
+            ? `${window.location.href}/${item.link}`
+            : item.link,
       })),
     }));
   }, [section3]);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import * as styles from './startCard.module.less';
 import standAloneIcon from '../../../images/doc-home/standalone.svg';
 import clusterIcon from '../../../images/doc-home/cluster.svg';
@@ -20,6 +20,11 @@ const StartCard = ({ data, wrapperClass = '' }) => {
   };
 
   const imgSrc = imgMap[key.toLowerCase()];
+  const formatLink = useMemo(() => {
+    return typeof window !== `undefined` && link !== '/bootcamp'
+      ? `${window.location.href}/${link}`
+      : link;
+  }, [link]);
 
   return (
     <div className={`${styles.cardWrapper} ${wrapperClass}`}>
@@ -28,7 +33,7 @@ const StartCard = ({ data, wrapperClass = '' }) => {
         <div className={styles.title}>{title}</div>
       </div>
       <div className={styles.btnWrapper}>
-        <a href={link} className={styles.btn}>
+        <a href={formatLink} className={styles.btn}>
           <span className={styles.text}>{isMobile ? 'Learn' : btnLabel}</span>
           <span className={styles.icon}>
             <i className="fa fa-chevron-right"></i>

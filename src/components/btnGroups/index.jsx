@@ -8,6 +8,7 @@ const BtnGroups = ({
   version,
   locale,
   editPath,
+  id,
   language,
   isCommunity = false,
   apiReferenceData,
@@ -30,6 +31,8 @@ const BtnGroups = ({
               isCommunity,
               apiReferenceData,
             })}
+            target="_blank"
+            rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
               <i className={`fas fa-pencil-alt ${styles.btnIcon}`}></i>
@@ -41,7 +44,12 @@ const BtnGroups = ({
         {!!language.footer.docIssueBtn ? (
           <a
             className={styles.btnAnchor}
-            href={language.footer.docIssueBtn.link}
+            href={generateDisscussLink({
+              isCommunity,
+              apiReferenceData,
+            })}
+            target="_blank"
+            rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
               <i className={`fab fa-github ${styles.btnIcon}`}></i>
@@ -53,11 +61,14 @@ const BtnGroups = ({
           <a
             className={styles.btnAnchor}
             id="btn-bug"
-            href={
-              language.footer.issueBtn.link
-                ? language.footer.issueBtn.link
-                : language.footer.issueBtn.communityLink
-            }
+            href={generateIssueLink({
+              version,
+              id,
+              isCommunity,
+              apiReferenceData,
+            })}
+            target="_blank"
+            rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
               <i className={`fas fa-bug ${styles.btnIcon}`}></i>
@@ -71,6 +82,8 @@ const BtnGroups = ({
             className={styles.btnAnchor}
             id="btn-question"
             href={language.footer.questionBtn.link}
+            target="_blank"
+            rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
               <i className={`fab fa-slack-hash ${styles.btnIcon}`}></i>
@@ -100,6 +113,33 @@ const generateEditLink = ({
         locale === 'en' ? 'en' : 'zh-CN'
       }/${editPath}`;
   return editLink;
+};
+
+const generateIssueLink = ({
+  version,
+  id,
+  isCommunity,
+  apiReferenceData: { projName, relativePath, apiVersion, sourceUrl },
+}) => {
+  if (sourceUrl) {
+    const title = `${projName},${version},${relativePath}`;
+    return `https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=${title}`;
+  }
+  const title = `${version},${id}`;
+  let issueLink = isCommunity
+    ? `https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=error-report.md&title=${id}`
+    : `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=error-report.md&title=${title}`;
+  return issueLink;
+};
+
+const generateDisscussLink = ({
+  isCommunity,
+  apiReferenceData: { sourceUrl },
+}) => {
+  if (sourceUrl) return 'https://github.com/milvus-io/milvus/discussions/new';
+  return isCommunity
+    ? 'https://github.com/milvus-io/web-content/discussions/new'
+    : 'https://github.com/milvus-io/milvus-docs/discussions/new';
 };
 
 export default BtnGroups;

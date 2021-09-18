@@ -355,6 +355,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                 version={'master'}
                 locale={locale}
                 editPath={editPath}
+                id={activePost}
                 language={layout}
                 apiReferenceData={{}}
               />

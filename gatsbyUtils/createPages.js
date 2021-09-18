@@ -945,7 +945,7 @@ const generateApiReferencePages = (
           docVersions: Array.from(versions),
           category,
           newestVersion,
-          isVersionWithHome: versionsWithHome.includes(version),
+          isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
         },
       });
       // Temporarily create cn page.
@@ -964,7 +964,7 @@ const generateApiReferencePages = (
           docVersions: Array.from(versions),
           category,
           newestVersion,
-          isVersionWithHome: versionsWithHome.includes(version),
+          isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
         },
       });
     }

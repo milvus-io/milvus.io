@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import BlogCard from '../card/blogCard/blogCard';
 import StartCard from '../card/startCard/startCard';
 import Button from '../button';
@@ -25,6 +25,19 @@ const HomeTemplate = props => {
       />
     );
   };
+
+  const formatSection3Items = useMemo(() => {
+    return (section3.items || []).map(v => ({
+      ...v,
+      list: v.list.map(item => ({
+        ...item,
+        link:
+          typeof window !== `undefined`
+            ? `${window.location.href}/${item.link}`
+            : item.link,
+      })),
+    }));
+  }, [section3]);
 
   return (
     <section className={styles.docHomeWrapper}>
@@ -64,21 +77,18 @@ const HomeTemplate = props => {
       <div className={`${styles.section} ${styles.section3}`}>
         <h1>{section3.title}</h1>
         <div className={styles.itemWrapper}>
-          {section3.items &&
-            section3.items.map(item => (
-              <div key={item.label}>
-                <h4>{item.label}</h4>
-                <ul>
-                  {item.list.map(link => (
-                    <li key={link.text}>
-                      <a href={`${window.location.href}/${link.link}`}>
-                        {link.text}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          {formatSection3Items.map(item => (
+            <div key={item.label}>
+              <h4>{item.label}</h4>
+              <ul>
+                {item.list.map(link => (
+                  <li key={link.text}>
+                    <a href={link.link}>{link.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
 

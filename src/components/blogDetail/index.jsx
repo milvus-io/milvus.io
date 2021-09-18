@@ -3,6 +3,7 @@ import BlogTag from '../../components/blogDetail/blogTag';
 import LocalizedLink from '../../components/localizedLink/localizedLink';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
+import NavButton from './navButton';
 
 const BlogDetail = ({
   innerHtml,
@@ -98,7 +99,9 @@ const BlogDetail = ({
         <ul className={styles.tagsLine}>
           {tags.map(tag => (
             <li key={tag}>
-              <BlogTag name={tag} className={styles.tags} />
+              <LocalizedLink locale={locale} to={`/blog?page=1#${tag}`}>
+                <BlogTag name={tag} className={styles.tags} />
+              </LocalizedLink>
             </li>
           ))}
         </ul>
@@ -119,34 +122,20 @@ const BlogDetail = ({
         dangerouslySetInnerHTML={{ __html: innerHtml }}
       ></div>
       <div className={styles.navWrapper}>
-        <p className={styles.navItem}>
-          <span className={styles.text}>{NAV_TEXT[locale][2]}:</span>
-          {navInfo.previewBlogPath ? (
-            <LocalizedLink
-              locale={locale}
-              to={`/blog/${navInfo.previewBlogPath}/?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
-              className={styles.blogLink}
-            >
-              {navInfo.previewBlogTitle}
-            </LocalizedLink>
-          ) : (
-            <span className={styles.text}>{NAV_TEXT[locale][4]}</span>
-          )}
-        </p>
-        <p className={styles.navItem}>
-          <span className={styles.text}>{NAV_TEXT[locale][3]}:</span>
-          {navInfo.nextBlogPath ? (
-            <LocalizedLink
-              locale={locale}
-              to={`/blog/${navInfo.nextBlogPath}/?page=${pageInfo.pageIdx}#${pageInfo.filterTag}`}
-              className={styles.blogLink}
-            >
-              {navInfo.nextBlogTitle}
-            </LocalizedLink>
-          ) : (
-            <span className={styles.text}>{NAV_TEXT[locale][4]}</span>
-          )}
-        </p>
+        <NavButton
+          pageInfo={pageInfo}
+          nav="previous"
+          link={navInfo.previewBlogPath}
+          title={navInfo.previewBlogTitle}
+          locale={locale}
+        />
+        <NavButton
+          pageInfo={pageInfo}
+          nav="next"
+          link={navInfo.nextBlogPath}
+          title={navInfo.nextBlogTitle}
+          locale={locale}
+        />
       </div>
       {showToTopButton ? (
         <div

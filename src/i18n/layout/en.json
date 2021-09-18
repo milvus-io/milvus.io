@@ -373,7 +373,7 @@
         },
         {
           "label": "Documentation",
-          "link": "/docs/home",
+          "link": "/docs",
           "icon": null
         },
         {
@@ -399,7 +399,7 @@
       "subTitle": "Milvus",
       "text": "Open-source vector database for unstructured data",
       "startBtn": {
-        "href": "/docs/home",
+        "href": "/docs",
         "label": "Get Started"
       },
       "contributeBtn": {

@@ -1244,13 +1244,14 @@ const generateBlogArticlePage = (
       isBenchmark
     );
     const newHtml = node.html;
-    let [date, tag = '', origin, author, title, id] = [
+    let [date, tag = '', origin, author, title, id, desc] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.origin,
       node.frontmatter.author,
       node.frontmatter.title,
       node.frontmatter.id,
+      node.frontmatter.desc,
     ];
 
     createPage({
@@ -1269,6 +1270,7 @@ const generateBlogArticlePage = (
         title,
         blogList: allBlogsList[fileLang],
         id,
+        desc,
       },
     });
   });

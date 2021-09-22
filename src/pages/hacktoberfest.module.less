@@ -49,8 +49,8 @@
     margin: 0 auto;
     padding: 40px 125px;
 
-    @media (max-width: @screan-layout-width) {
-      padding: 40px 32px;
+    @media @tablet {
+      padding: 40px 80px;
     }
 
     @media @phone {
@@ -156,6 +156,7 @@
         color: #545454;
         font-size: 16px;
         line-height: 24px;
+        margin-bottom: 24px;
 
         @media @phone {
           font-size: 14px;
@@ -187,7 +188,9 @@
 
       .rightPart {
         flex: 0 1 40%;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         img {
           max-width: 100%;
@@ -217,6 +220,7 @@
     .innerWrapper {
       width: 850px;
       text-align: center;
+      padding: 40px;
 
       @media (max-width: @screan-layout-width) {
         width: 80%;
@@ -276,6 +280,7 @@
     .innerWrapper {
       text-align: center;
       width: 1000px;
+      padding: 40px;
 
       @media (max-width: @screan-layout-width) {
         width: 80%;
@@ -600,6 +605,7 @@
 
         img {
           margin-right: 16px;
+          width: 80px;
         }
 
         p {

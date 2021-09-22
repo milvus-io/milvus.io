@@ -6,7 +6,7 @@ import * as styles from './index.module.less';
 // variant = 'text' | 'outline' | contained
 
 const Button = ({
-  link,
+  link = '',
   variant = 'contained',
   className = '',
   children,
@@ -14,9 +14,19 @@ const Button = ({
 }) => {
   return (
     <div className={`${styles.buttonWrapper} ${className}`}>
-      <LocalizedLink to={link} className={`${styles[variant]}`} locale={locale}>
-        {children}
-      </LocalizedLink>
+      {link.includes('#') ? (
+        <a href={link} className={`${styles[variant]}`} target="_self">
+          {children}
+        </a>
+      ) : (
+        <LocalizedLink
+          to={link}
+          className={`${styles[variant]}`}
+          locale={locale}
+        >
+          {children}
+        </LocalizedLink>
+      )}
     </div>
   );
 };

@@ -9,32 +9,53 @@ const StepCard = props => {
     content,
     stepNum,
     iconType = 'anchor',
-    href = '#issue_list',
+    href = '',
     className = '',
   } = props;
 
-  return (
-    <LocalizedLink
-      className={`${styles.stepCardWrapper} ${className}`}
-      to={href}
-      locale={locale}
-    >
-      <div className={styles.numberWrapper}>
-        <div className={styles.numberContent}>{stepNum}</div>
-      </div>
-      <div className={styles.contentWrapper}>
-        <div className={styles.titleBar}>
-          <h4 className="title">{title}</h4>
-          {iconType === 'external' ? (
-            <i className="fas fa-external-link-alt"></i>
-          ) : (
-            <i className="far fa-arrow-alt-circle-down"></i>
-          )}
+  const generateContent = (title, stepNum, content, styles) => {
+    return (
+      <>
+        <div className={styles.numberWrapper}>
+          <div className={styles.numberContent}>{stepNum}</div>
         </div>
+        <div className={styles.contentWrapper}>
+          <div className={styles.titleBar}>
+            <h4 className="title">{title}</h4>
+            {iconType === 'external' ? (
+              <i className="fas fa-external-link-alt"></i>
+            ) : (
+              <i className="far fa-arrow-alt-circle-down"></i>
+            )}
+          </div>
 
-        <p>{content}</p>
-      </div>
-    </LocalizedLink>
+          <p>{content}</p>
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <>
+      {href.includes('#') ? (
+        <a
+          className={`${styles.stepCardWrapper} ${className}`}
+          href={href}
+          locale={locale}
+          target="_self"
+        >
+          {generateContent(title, stepNum, content, styles)}
+        </a>
+      ) : (
+        <LocalizedLink
+          className={`${styles.stepCardWrapper} ${className}`}
+          to={href}
+          locale={locale}
+        >
+          {generateContent(title, stepNum, content, styles)}
+        </LocalizedLink>
+      )}
+    </>
   );
 };
 export default StepCard;

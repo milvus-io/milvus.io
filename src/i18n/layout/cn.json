@@ -530,7 +530,9 @@
         "content": "You know it's that time of the year again. <br />Hackoberfest is coming! And this year, we are going in and going strong.",
         "image": "../../images/hackathon/banner-image-1.svg",
         "alert": "Spoiler alert - our biggest prize is spelled as D-R-O-N-E.",
-        "badge": "../../images/hackathon/badge.svg"
+        "badge": "../../images/hackathon/badge.svg",
+        "btnLabel": "Quick Start",
+        "btnLink": "#quick_start"
       },
       "secondBanner": {
         "title": "What is Hacktoberfest",
@@ -653,7 +655,7 @@
       "list": [
         {
           "href": "https://discuss.milvus.io/",
-          "icon": "../../images/hackathon/iscourse.svg",
+          "icon": "../../images/hackathon/discourse.png",
           "content": "Join in our Discourse Forum"
         },
         {

@@ -94,14 +94,18 @@ const HomePage = ({ data, pageContext }) => {
           versions={versions}
         >
           <Seo title="Milvus" lang={locale} description={desc} />
-          <div className="entry-wrapper">
-            <span className="text">{banner.entry}</span>
-            <LocalizedLink
-              className="entery-link-wrapper"
-              to="/hacktoberfest-2021"
-              children={<img src={enter} alt="hacktoberfest-2021" />}
-            />
-          </div>
+          <LocalizedLink
+            className="entery-link-wrapper"
+            to="/hacktoberfest-2021"
+            locale={locale}
+            children={
+              <>
+                <span className="text">{banner.entry}</span>
+                <img src={enter} alt="hacktoberfest-2021" />
+              </>
+            }
+          />
+
           <main className="main-container">
             <div className="banner">
               <div className="banner-left">

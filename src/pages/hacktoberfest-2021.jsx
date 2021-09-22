@@ -45,6 +45,18 @@ const Hackathon = ({ data, pageContext }) => {
                         __html: firstSection.firstBanner.content,
                       }}
                     ></p>
+                    <Button
+                      link={firstSection.firstBanner.btnLink}
+                      locale={locale}
+                      children={
+                        <>
+                          <span className={styles.btnLabel}>
+                            {firstSection.firstBanner.btnLabel}
+                          </span>
+                          <i className="fa fa-chevron-down"></i>
+                        </>
+                      }
+                    />
                     <a className={styles.alert} href="#prize">
                       <img
                         src={firstSection.firstBanner.badge.publicURL}
@@ -108,7 +120,7 @@ const Hackathon = ({ data, pageContext }) => {
 
         {/* quick start section */}
         {thirdSection && (
-          <section className={styles.thirdSection}>
+          <section className={styles.thirdSection} id="quick_start">
             <div className={styles.innerWrapper}>
               <h3 className={styles.spliteLine}>
                 <span>{thirdSection.title}</span>
@@ -341,6 +353,8 @@ export const Query = graphql`
                   badge {
                     publicURL
                   }
+                  btnLabel
+                  btnLink
                 }
                 secondBanner {
                   title

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import * as styles from './startCard.module.less';
 import standAloneIcon from '../../../images/doc-home/standalone.svg';
 import clusterIcon from '../../../images/doc-home/cluster.svg';

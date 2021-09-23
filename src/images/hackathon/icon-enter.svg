@@ -1,18 +1,1 @@
-<svg width="55" height="48" viewBox="0 0 55 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="31" cy="24" r="24" fill="white"/>
-<circle cx="28" cy="24" r="24" fill="url(#paint0_linear)"/>
-<circle opacity="0.78" cx="24" cy="24" r="24" fill="url(#paint1_linear)"/>
-<path d="M38.0607 25.0607C38.6464 24.4749 38.6464 23.5251 38.0607 22.9393L28.5147 13.3934C27.9289 12.8076 26.9792 12.8076 26.3934 13.3934C25.8076 13.9792 25.8076 14.9289 26.3934 15.5147L34.8787 24L26.3934 32.4853C25.8076 33.0711 25.8076 34.0208 26.3934 34.6066C26.9792 35.1924 27.9289 35.1924 28.5147 34.6066L38.0607 25.0607ZM11 25.5L37 25.5L37 22.5L11 22.5L11 25.5Z" fill="white"/>
-<defs>
-<linearGradient id="paint0_linear" x1="4" y1="24" x2="76.2791" y2="24" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F74700"/>
-<stop offset="0.59707" stop-color="#F74700" stop-opacity="0.356052"/>
-<stop offset="1" stop-color="#7C2F0F" stop-opacity="0"/>
-</linearGradient>
-<linearGradient id="paint1_linear" x1="0" y1="24" x2="72.2791" y2="24" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F74700"/>
-<stop offset="0.59707" stop-color="#F74700" stop-opacity="0.356052"/>
-<stop offset="1" stop-color="#7C2F0F" stop-opacity="0"/>
-</linearGradient>
-</defs>
-</svg>
+<svg fill="none" height="48" viewBox="0 0 55 48" width="55" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><linearGradient id="a"><stop offset="0" stop-color="#f74700"/><stop offset=".59707" stop-color="#f74700" stop-opacity=".356052"/><stop offset="1" stop-color="#7c2f0f" stop-opacity="0"/></linearGradient><linearGradient id="b" gradientUnits="userSpaceOnUse" x1="4" x2="76.2791" xlink:href="#a" y1="24" y2="24"/><linearGradient id="c" gradientUnits="userSpaceOnUse" x1="0" x2="72.2791" xlink:href="#a" y1="24" y2="24"/><circle cx="31" cy="24" fill="#fff" r="24"/><circle cx="28" cy="24" fill="url(#b)" r="24"/><circle cx="24" cy="24" fill="url(#c)" opacity=".78" r="24"/><path d="m38.0607 25.0607c.5857-.5858.5857-1.5356 0-2.1214l-9.546-9.5459c-.5858-.5858-1.5355-.5858-2.1213 0s-.5858 1.5355 0 2.1213l8.4853 8.4853-8.4853 8.4853c-.5858.5858-.5858 1.5355 0 2.1213s1.5355.5858 2.1213 0zm-27.0607.4393h26v-3h-26z" fill="#fff"/></svg>

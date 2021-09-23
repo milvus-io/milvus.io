@@ -26,26 +26,6 @@ const HomeTemplate = props => {
     );
   };
 
-  // const formatSection3Items = useMemo(() => {
-  //   return (section3.items || []).map(v => {
-  //     console.log(
-  //       typeof window !== `undefined` ? window.location.href : 'undefined'
-  //     );
-  //     return {
-  //       ...v,
-  //       list: v.list.map(item => ({
-  //         ...item,
-  //         link:
-  //           typeof window !== `undefined`
-  //             ? `${window.location.href}/${item.link}`
-  //             : item.link,
-  //       })),
-  //     };
-  //   });
-  // }, [section3.items]);
-
-  // console.log(formatSection3Items);
-
   return (
     <section className={styles.docHomeWrapper}>
       <div

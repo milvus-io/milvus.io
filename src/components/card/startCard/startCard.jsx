@@ -7,7 +7,7 @@ import cpu from '../../../images/doc-home/cpu.svg';
 import gpu from '../../../images/doc-home/gpu.svg';
 import { useMobileScreen } from '../../../hooks/index';
 
-const StartCard = ({ data, wrapperClass = '' }) => {
+const StartCard = ({ data, wrapperClass = '', homePath }) => {
   const { title, link, key, btnLabel } = data;
   const { isMobile } = useMobileScreen();
 
@@ -20,11 +20,6 @@ const StartCard = ({ data, wrapperClass = '' }) => {
   };
 
   const imgSrc = imgMap[key.toLowerCase()];
-  const formatLink = useMemo(() => {
-    return typeof window !== `undefined` && link !== '/bootcamp'
-      ? `${window.location.href}/${link}`
-      : link;
-  }, [link]);
 
   return (
     <div className={`${styles.cardWrapper} ${wrapperClass}`}>
@@ -33,7 +28,7 @@ const StartCard = ({ data, wrapperClass = '' }) => {
         <div className={styles.title}>{title}</div>
       </div>
       <div className={styles.btnWrapper}>
-        <a href={formatLink} className={styles.btn}>
+        <a href={`${homePath}/${link}`} className={styles.btn}>
           <span className={styles.text}>{isMobile ? 'Learn' : btnLabel}</span>
           <span className={styles.icon}>
             <i className="fa fa-chevron-right"></i>

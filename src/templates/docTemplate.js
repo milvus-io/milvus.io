@@ -41,6 +41,7 @@ export default function Template({
     old, // id of markdown
     summary,
     newestBlog,
+    homePath, // for home page to generate absolute link.
   } = pageContext;
   versions = versions.sort(sortVersions);
   useEffect(() => {
@@ -214,6 +215,7 @@ export default function Template({
               version={version}
               locale={locale}
               newestBlog={newestBlog}
+              homePath={homePath}
             />
           ) : (
             <div className="doc-post-container">

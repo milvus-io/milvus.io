@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import BlogCard from '../card/blogCard/blogCard';
 import StartCard from '../card/startCard/startCard';
 import Button from '../button';

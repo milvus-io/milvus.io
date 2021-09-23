@@ -1185,6 +1185,10 @@ const generateBlogArticlePage = (
   createPage,
   { nodes: blogMD, template: blogTemplate }
 ) => {
+  const generateTags = tag => {
+    if (!tag) return [];
+    return tag.split(',').map(i => i && i.trim() && i.trim().toLowerCase());
+  };
   // get blogs list data, create blogs list page
   const list = blogMD.map(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
@@ -1198,9 +1202,10 @@ const generateBlogArticlePage = (
       node.frontmatter.id,
       node.frontmatter.cover,
     ];
+
     return {
       date,
-      tags: tag ? tag.split(',') : [],
+      tags: generateTags(tag),
       desc: desc || '',
       title,
       id,
@@ -1266,7 +1271,7 @@ const generateBlogArticlePage = (
         newHtml,
         isBlogListPage: false,
         date,
-        tags: tag ? tag.split(',') : [],
+        tags: generateTags(tag),
         origin,
         author,
         title,

@@ -36,7 +36,9 @@ const Hackathon = ({ data, pageContext }) => {
           <section className={styles.firstSection}>
             <div className={styles.innerWrapper}>
               {firstSection.firstBanner && (
-                <div className={styles.bannerWrapper}>
+                <div
+                  className={`${styles.bannerWrapper} ${styles.firstBannerWrapper}`}
+                >
                   <div className={styles.leftPart}>
                     <h1>{firstSection.firstBanner.title}</h1>
                     <p

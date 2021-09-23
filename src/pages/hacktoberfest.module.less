@@ -4,6 +4,8 @@
 @import '../css/variables/fontStyle.less';
 @import '../css/fonts/fonts.less';
 
+@screan-layout-width: 1440px;
+
 .hackathonContainer {
   background: #fafafa;
   margin-top: 90px;
@@ -43,9 +45,13 @@
   }
 
   .innerWrapper {
-    max-width: @screen-hp-max;
+    max-width: @screan-layout-width;
     margin: 0 auto;
-    padding: 40px 32px;
+    padding: 40px 125px;
+
+    @media @tablet {
+      padding: 40px 80px;
+    }
 
     @media @phone {
       padding: 40px 16px;
@@ -132,6 +138,7 @@
     .bannerWrapper {
       display: flex;
       padding-bottom: 40px;
+      justify-content: space-between;
 
       @media @tablet {
         flex-direction: column;
@@ -149,6 +156,7 @@
         color: #545454;
         font-size: 16px;
         line-height: 24px;
+        margin-bottom: 24px;
 
         @media @phone {
           font-size: 14px;
@@ -168,7 +176,7 @@
       }
 
       .leftPart {
-        flex: 1 1 60%;
+        flex: 0 1 55%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -179,8 +187,10 @@
       }
 
       .rightPart {
-        flex: 1 1 40%;
-        text-align: center;
+        flex: 0 1 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         img {
           max-width: 100%;
@@ -194,15 +204,25 @@
 
     .secondBannerWrapper {
       margin-top: 40px;
+
+      .leftPart {
+        box-sizing: border-box;
+        padding-right: 32px;
+      }
+
+      .rightPart {
+        padding: 0 60px;
+      }
     }
   }
 
   .secondSection {
     .innerWrapper {
-      width: 600px;
+      width: 850px;
       text-align: center;
+      padding: 40px;
 
-      @media @tablet {
+      @media (max-width: @screan-layout-width) {
         width: 80%;
       }
 
@@ -259,9 +279,10 @@
 
     .innerWrapper {
       text-align: center;
-      width: 846px;
+      width: 1000px;
+      padding: 40px;
 
-      @media @tablet {
+      @media (max-width: @screan-layout-width) {
         width: 80%;
       }
 
@@ -584,6 +605,7 @@
 
         img {
           margin-right: 16px;
+          width: 80px;
         }
 
         p {

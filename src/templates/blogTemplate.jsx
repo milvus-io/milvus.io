@@ -31,8 +31,12 @@ const BlogTemplate = ({ data, pageContext }) => {
     origin,
     title,
     id,
+    desc,
   } = pageContext;
-  const [seoTitle, seoDesc] = ['Milvus Blogs', title || 'Milvus Blogs'];
+  const [seoTitle, seoDesc] = [
+    isBlogListPage ? 'Milvus Blogs' : title,
+    isBlogListPage ? 'Milvus Blogs' : desc,
+  ];
   const canonicalLink = origin
     ? {
         rel: 'canonical',

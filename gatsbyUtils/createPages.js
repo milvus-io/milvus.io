@@ -945,7 +945,7 @@ const generateApiReferencePages = (
           docVersions: Array.from(versions),
           category,
           newestVersion,
-          isVersionWithHome: versionsWithHome.includes(version),
+          isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
         },
       });
       // Temporarily create cn page.
@@ -964,7 +964,7 @@ const generateApiReferencePages = (
           docVersions: Array.from(versions),
           category,
           newestVersion,
-          isVersionWithHome: versionsWithHome.includes(version),
+          isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
         },
       });
     }
@@ -1246,13 +1246,14 @@ const generateBlogArticlePage = (
       isBenchmark
     );
     const newHtml = node.html;
-    let [date, tag = '', origin, author, title, id] = [
+    let [date, tag = '', origin, author, title, id, desc] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.origin,
       node.frontmatter.author,
       node.frontmatter.title,
       node.frontmatter.id,
+      node.frontmatter.desc,
     ];
 
     createPage({
@@ -1271,6 +1272,7 @@ const generateBlogArticlePage = (
         title,
         blogList: allBlogsList[fileLang],
         id,
+        desc,
       },
     });
   });

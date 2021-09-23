@@ -155,7 +155,7 @@ export default function Template({
   const title = isBenchmark
     ? `Milvus benchmark`
     : newHtml === null
-    ? `Milvus home`
+    ? `Milvus documentation`
     : `${headings[0] && headings[0].value}`;
 
   const onOverlayClick = () => setShowModal(false);

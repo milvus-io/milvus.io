@@ -1051,6 +1051,7 @@ const generateDocHome = (
           allApiMenus,
           isVersionWithHome: true,
           newestBlog,
+          homePath,
         },
       });
     }
@@ -1074,6 +1075,7 @@ const generateDocHome = (
         allApiMenus,
         isVersionWithHome: true,
         newestBlog,
+        homePath,
       },
     });
   });

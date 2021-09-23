@@ -6,7 +6,7 @@ import * as styles from './homeTemplate.module.less';
 import * as dayjs from 'dayjs';
 
 const HomeTemplate = props => {
-  const { data, locale, newestBlog = {} } = props;
+  const { data, locale, newestBlog = {}, homePath = '' } = props;
   const { section1 = {}, section2, section3 = {}, section4 = {} } = data;
 
   const generateNewsetBlog = (blogObj, locale) => {
@@ -26,18 +26,25 @@ const HomeTemplate = props => {
     );
   };
 
-  const formatSection3Items = useMemo(() => {
-    return (section3.items || []).map(v => ({
-      ...v,
-      list: v.list.map(item => ({
-        ...item,
-        link:
-          typeof window !== `undefined`
-            ? `${window.location.href}/${item.link}`
-            : item.link,
-      })),
-    }));
-  }, [section3]);
+  // const formatSection3Items = useMemo(() => {
+  //   return (section3.items || []).map(v => {
+  //     console.log(
+  //       typeof window !== `undefined` ? window.location.href : 'undefined'
+  //     );
+  //     return {
+  //       ...v,
+  //       list: v.list.map(item => ({
+  //         ...item,
+  //         link:
+  //           typeof window !== `undefined`
+  //             ? `${window.location.href}/${item.link}`
+  //             : item.link,
+  //       })),
+  //     };
+  //   });
+  // }, [section3.items]);
+
+  // console.log(formatSection3Items);
 
   return (
     <section className={styles.docHomeWrapper}>
@@ -53,6 +60,7 @@ const HomeTemplate = props => {
                 key={item.title}
                 data={item}
                 wrapperClass={styles.cardItem}
+                homePath={homePath}
               />
             ))}
         </div>
@@ -77,18 +85,19 @@ const HomeTemplate = props => {
       <div className={`${styles.section} ${styles.section3}`}>
         <h1>{section3.title}</h1>
         <div className={styles.itemWrapper}>
-          {formatSection3Items.map(item => (
-            <div key={item.label}>
-              <h4>{item.label}</h4>
-              <ul>
-                {item.list.map(link => (
-                  <li key={link.text}>
-                    <a href={link.link}>{link.text}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {section3.items &&
+            section3.items.map(item => (
+              <div key={item.label}>
+                <h4>{item.label}</h4>
+                <ul>
+                  {item.list.map(link => (
+                    <li key={link.text}>
+                      <a href={`${homePath}/${link.link}`}>{link.text}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
         </div>
       </div>
 

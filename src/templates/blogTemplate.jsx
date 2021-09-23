@@ -61,7 +61,9 @@ const BlogTemplate = ({ data, pageContext }) => {
     };
     blogList.forEach(item => {
       const { tags } = item;
-      tags.forEach(subItem => (resObj[subItem] = subItem));
+      tags.forEach(subItem => {
+        resObj[subItem.trim().toLowerCase()] = subItem;
+      });
     });
     return Object.keys(resObj);
   }, [blogList, isBlogListPage]);

@@ -269,7 +269,6 @@ body {
     margin: 64px 0;
     border: 1px solid #e2e2e2;
     border-radius: 16px;
-    font-style: italic;
     font-weight: 600;
     padding: 60px 60px 28px;
     font-family: Inter;
@@ -284,12 +283,12 @@ body {
 
     .text {
       padding-left: 40px;
-      color: #0b9be7;
-      font-size: 32px;
-      line-height: 42px;
-      margin-bottom: 16px;
+      color: #545454;
+      font-size: 24px;
+      line-height: 32px;
+      margin-bottom: 40px;
       position: relative;
-      font-weight: 600;
+      font-weight: 400;
 
       @media @phone {
         font-size: 24px;
@@ -302,6 +301,8 @@ body {
         position: absolute;
         left: -10px;
         top: -10px;
+        font-style: italic;
+        color: #0ba9f6;
 
         @media @tablet {
           font-size: 60px;
@@ -312,9 +313,12 @@ body {
     }
 
     .author {
-      font-size: 24px;
-      line-height: 42px;
-      text-align: right;
+      color: #000;
+      font-family: Inter Medium;
+      padding-left: 40px;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: left;
     }
   }
 
@@ -356,7 +360,7 @@ body {
       .section-item {
         width: 33.33%;
         flex: 0 0 auto;
-        padding: 8px 16px;
+        padding: 8px 32px;
         z-index: 2;
 
         .img {
@@ -377,8 +381,8 @@ body {
         }
 
         .icon-wrapper {
-          width: 32px;
-          height: 32px;
+          width: 20px;
+          height: 20px;
           margin-bottom: 8px;
 
           @media @tablet {
@@ -392,7 +396,7 @@ body {
           font-size: 24px;
           line-height: 24px;
           margin-bottom: 4px;
-          height: 48px;
+          padding: 12px 0;
 
           @media @tablet {
             border-left: 2px solid #00ffa3;
@@ -462,7 +466,7 @@ body {
 
           img {
             width: 100%;
-            max-width: 238px;
+            max-width: 200px;
 
             @media @phone {
               max-width: 150px;

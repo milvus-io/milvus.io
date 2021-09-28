@@ -1,23 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FontUrl1 from '../static/fonts/Brinnan-Bold.woff2';
+import FontUrl2 from '../static/fonts/Inter-Bold.woff2';
+import FontUrl3 from '../static/fonts/Inter-SemiBold.woff2';
+import FontUrl4 from '../static/fonts/Inter-Medium.woff2';
+import FontUrl5 from '../static/fonts/Inter-Regular.woff2';
+import FontUrl6 from '../static/fonts/Brinnan-Bold.woff2';
 
-const fontNames = [
-  'SourceCodePro-Regular',
-  'Inter-Bold',
-  'Inter-SemiBold',
-  'Inter-Medium',
-  'Inter-Regular',
-  'Brinnan-Bold',
-];
+const fonts = {
+  'SourceCodePro-Regular': FontUrl1,
+  'Inter-Bold': FontUrl2,
+  'Inter-SemiBold': FontUrl3,
+  'Inter-Medium': FontUrl4,
+  'Inter-Regular': FontUrl5,
+  'Brinnan-Bold': FontUrl6,
+};
 const generatePreloadLink = () => (
   <>
-    {fontNames.map(fontName => (
+    {Object.keys(fonts).map(fontName => (
       <link
         key={`${fontName}-link`}
         rel="preload"
-        href={`/fonts/${fontName}.woff`}
+        href={fonts[fontName]}
         as="font"
-        type="font/woff"
+        type="font/woff2"
         crossOrigin="anonymous"
       />
     ))}
@@ -51,9 +57,9 @@ export default function HTML(props) {
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
           rel="stylesheet"
         ></link>
+        {generatePreloadLink()}
         {/* <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Roboto&family=Source+Code+Pro&display=swap" rel="stylesheet" /> */}
         {props.headComponents}
-        {generatePreloadLink()}
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}

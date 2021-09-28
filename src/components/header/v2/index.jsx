@@ -51,8 +51,7 @@ const V2Header = props => {
       <ul className={styles.dropDownList}>
         {/* <p className={styles.dropDowunLabel}>{label}</p> */}
         {list.map(item => {
-          const { icon: Icon, label, link, activeKey } = item;
-          console.log(path, activeKey);
+          const { icon: Icon, label, link } = item;
           return (
             <li className={styles.dropDownItemWrapper} key={item.label}>
               <LocalizedLink

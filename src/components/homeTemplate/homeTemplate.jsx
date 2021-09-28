@@ -4,6 +4,7 @@ import StartCard from '../card/startCard/startCard';
 import Button from '../button';
 import * as styles from './homeTemplate.module.less';
 import * as dayjs from 'dayjs';
+import LocalizedLink from '../localizedLink/localizedLink';
 
 const HomeTemplate = props => {
   const { data, locale, newestBlog = {}, homePath = '' } = props;
@@ -71,8 +72,19 @@ const HomeTemplate = props => {
                 <h4>{item.label}</h4>
                 <ul>
                   {item.list.map(link => (
-                    <li key={link.text}>
-                      <a href={`${homePath}/${link.link}`}>{link.text}</a>
+                    <li key={link.link}>
+                      {link.link.includes('html') ? (
+                        <LocalizedLink locale={locale} to={link.link}>
+                          {link.text}
+                        </LocalizedLink>
+                      ) : (
+                        <LocalizedLink
+                          locale={locale}
+                          to={`${homePath}/${link.link}`}
+                        >
+                          {link.text}
+                        </LocalizedLink>
+                      )}
                     </li>
                   ))}
                 </ul>

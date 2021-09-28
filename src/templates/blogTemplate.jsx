@@ -239,11 +239,7 @@ const BlogTemplate = ({ data, pageContext }) => {
           id={id}
         />
       )}
-      {isBlogListPage && (
-        <div className={styles.footerWrapper}>
-          <Footer local={locale} footer={footer} />
-        </div>
-      )}
+      {isBlogListPage && <Footer local={locale} footer={footer} />}
     </div>
   );
 };

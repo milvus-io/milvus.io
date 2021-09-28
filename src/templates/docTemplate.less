@@ -15,7 +15,7 @@
 }
 
 .doc-post-container {
-  padding: 0 2rem;
+  padding: 0 4rem;
   background: #fff;
   // min-height: 80vh;
   // max-width: calc(100% - 280px);
@@ -43,9 +43,16 @@
   code[class*='language-'] {
     display: none;
     margin: 0;
+
     &.active {
       display: block;
+      margin-top: 24px;
       margin-bottom: 24px;
+
+      @media @phone {
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
     }
   }
 
@@ -116,12 +123,14 @@
       left: 0 !important;
     }
   }
+
   .commit-info-wrapper {
     margin-top: 4rem;
     padding: 1rem;
     background-color: #fafafa;
     line-height: 1.8;
     min-height: 60px;
+
     span {
       margin-left: 4px;
     }

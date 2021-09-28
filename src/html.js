@@ -1,6 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const fontNames = [
+  'SourceCodePro-Regular',
+  'Inter-Bold',
+  'Inter-SemiBold',
+  'Inter-Medium',
+  'Inter-Regular',
+  'Brinnan-Bold',
+];
+const generatePreloadLink = () => (
+  <>
+    {fontNames.map(fontName => (
+      <link
+        key={`${fontName}-link`}
+        rel="preload"
+        href={`/fonts/${fontName}.woff`}
+        as="font"
+        type="font/woff"
+        crossOrigin="anonymous"
+      />
+    ))}
+  </>
+);
+
 export default function HTML(props) {
   return (
     <html {...props.htmlAttributes}>
@@ -30,6 +53,7 @@ export default function HTML(props) {
         ></link>
         {/* <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Roboto&family=Source+Code+Pro&display=swap" rel="stylesheet" /> */}
         {props.headComponents}
+        {generatePreloadLink()}
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}

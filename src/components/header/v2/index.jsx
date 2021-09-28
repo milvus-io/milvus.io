@@ -46,21 +46,32 @@ const V2Header = props => {
     hideMask();
   });
 
-  const generateSubNav = (list, styles, locale) => {
-    return list.map(item => {
-      return (
-        <li className={styles.subNavItemWrapper} key={item.label}>
-          <LocalizedLink
-            className={styles.subNavLink}
-            to={item.link}
-            key={item.label}
-            locale={locale}
-          >
-            {item.label}
-          </LocalizedLink>
-        </li>
-      );
-    });
+  const generateSubNav = (label, list, styles, locale) => {
+    return (
+      <ul className={styles.dropDownList}>
+        {/* <p className={styles.dropDowunLabel}>{label}</p> */}
+        {list.map(item => {
+          const { icon: Icon, label, link, activeKey } = item;
+          console.log(path, activeKey);
+          return (
+            <li className={styles.dropDownItemWrapper} key={item.label}>
+              <LocalizedLink
+                className={styles.dropDownItem}
+                to={link}
+                key={label}
+                locale={locale}
+                children={
+                  <>
+                    <Icon />
+                    {label}
+                  </>
+                }
+              />
+            </li>
+          );
+        })}
+      </ul>
+    );
   };
 
   const generateNavigation = (navlist, path, styles, locale, isMobile) => {
@@ -90,9 +101,7 @@ const V2Header = props => {
               ) : (
                 <>
                   <span className={styles.navItem}>{label}</span>
-                  <ul className={styles.subNavList}>
-                    {generateSubNav(subMenu, styles, locale)}
-                  </ul>
+                  {generateSubNav(label, subMenu, styles, locale)}
                 </>
               )}
             </div>

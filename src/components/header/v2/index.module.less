@@ -102,9 +102,11 @@
 
       .noLink {
         cursor: pointer;
+        height: 40px;
+        line-height: 40px;
 
         &:hover {
-          .subNavList {
+          .dropDownList {
             visibility: visible;
             opacity: 1;
             z-index: 2;
@@ -115,16 +117,13 @@
       .navMenuItem {
         font-family: Inter;
         font-size: 16px;
-        line-height: 24px;
-
-        height: 24px;
         color: @color-default-link;
         user-select: none;
         position: relative;
 
-        .subNavList {
+        .dropDownList {
           list-style-type: none;
-          padding: 0 8px;
+          padding: 24px;
           display: block;
           visibility: hidden;
           opacity: 0;
@@ -132,27 +131,58 @@
           z-index: -1;
           background-color: #fff;
           top: 35px;
-          left: 0;
+          left: -40px;
           border: 1px solid #eee;
           box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
           transition: all 0.3s linear;
+          box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);
+          border-radius: 6px;
 
-          & > li {
-            margin-bottom: 8px;
-          }
-
-          .subNavLink {
+          .dropDownItemWrapper {
+            padding: 8px 16px;
+            border-radius: 4px;
+            min-width: 280px;
             color: #000;
-            padding: 8px 0;
-            white-space: nowrap;
-            border-bottom: 1px solid #eee;
-            display: block;
-            cursor: pointer;
-            text-align: left;
             font-family: Inter;
 
+            &:not(:last-child) {
+              margin-bottom: 8px;
+            }
+
             &:hover {
-              color: @color-primary;
+              background-color: #f6f6f6;
+
+              & .dropDownItem {
+                color: @color-primary;
+
+                svg > path {
+                  fill: @color-primary;
+                }
+              }
+            }
+
+            .dropDownItem {
+              white-space: nowrap;
+              display: block;
+              cursor: pointer;
+              text-align: left;
+              display: flex;
+              align-items: center;
+              color: #000;
+              font-style: 16px;
+              line-height: 24px;
+
+              // &.active {
+              //   color: @color-primary;
+
+              //   svg>path {
+              //     fill: @color-primary;
+              //   }
+              // }
+
+              svg {
+                margin-right: 16px;
+              }
             }
           }
         }

@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { Octokit } from '@octokit/core';
 
-console.log(process.env.NODE_ENV, 'api:', process.env.NEXT_PUBLIC_API_BASE_URL);
-
 const userToken = `Z2hwX2ZYUWQwTVNBa3dudTB4UkJjWGhxNUZXVmZGYVdWWjIzQnVnSA==`;
 const org = 'zilliz-bootcamp';
 const repo = 'record_user_question';

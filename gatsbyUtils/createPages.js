@@ -1027,10 +1027,13 @@ const generateDocHome = (
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
     const link = versionInfo[version]['pymilvus'];
-    // only need to be replaced in version v2.0.0
-    version === 'v2.0.0' &&
-      (data.section3.items[1].list[0].link = `/api-reference/pymilvus/${link}/install.html`);
-
+    // generate pyMilvus API link according to different version
+    // and render it at Doc home Recommended Articles section last item of Get started
+    const pyMilvus = {
+      text: 'PyMilvus API Reference',
+      link: `/api-reference/pymilvus/${link}/install.html`,
+    };
+    data.section3.items[0].list.push(pyMilvus);
     if (version === newestVersion) {
       const homePath = getNewestVersionHomePath(language);
       createPage({

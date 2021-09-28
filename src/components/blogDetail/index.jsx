@@ -4,6 +4,7 @@ import LocalizedLink from '../../components/localizedLink/localizedLink';
 import * as styles from './index.module.less';
 import { globalHistory } from '@reach/router';
 import NavButton from './navButton';
+import Footer from '../footer/footer';
 
 const BlogDetail = ({
   innerHtml,
@@ -137,6 +138,8 @@ const BlogDetail = ({
           locale={locale}
         />
       </div>
+
+      <Footer locale={locale} style={{ marginTop: '64px' }} />
       {showToTopButton ? (
         <div
           className="btn-to-top"

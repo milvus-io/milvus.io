@@ -148,8 +148,6 @@ let gatsbyConfigs = {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 1000,
-              wrapperStyle:
-                'min-width: 22px;height: auto;width:90%;margin: 32px auto 0;',
               quality: 100,
             },
           },

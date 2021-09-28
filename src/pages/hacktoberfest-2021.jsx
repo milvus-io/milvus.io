@@ -296,9 +296,7 @@ const Hackathon = ({ data, pageContext }) => {
           </section>
         )}
       </main>
-      <footer className={styles.footerWrapper}>
-        <Footer footer={footer} locale={locale} />
-      </footer>
+      <Footer footer={footer} locale={locale} />
     </>
   );
 };

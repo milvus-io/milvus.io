@@ -67,7 +67,7 @@
 
   h4 {
     font-size: 16px;
-    line-height: 28px;
+    line-height: 20px;
     margin-bottom: 8px;
     margin-top: 16px;
     font-weight: 700;
@@ -76,7 +76,7 @@
   p {
     font-size: 16px;
     line-height: 1.4em;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
 
     @media @tablet {
       font-size: 14px;
@@ -86,16 +86,27 @@
     }
   }
 
+  img {
+    width: 90%;
+    margin: 32px auto;
+    display: block;
+
+    @media @tablet {
+      margin: 24px auto;
+    }
+  }
+
   code {
     font-size: 14px;
-    line-height: 20px;
+    line-height: 1.4rem;
     font-family: 'Source Code Pro' !important;
     background-color: @code-bg-color;
     border: 1px solid #e2e2e2;
     border-radius: 4px;
     padding: 0px 8px;
-    color: @main-text-color;
+    color: @color-doc-primary;
     display: inline-block;
+    font-weight: 600;
 
     @media @phone {
       max-width: calc(100vw - 32px);
@@ -106,10 +117,6 @@
   pre {
     border-radius: 4px;
 
-    @media @tablet {
-      margin-bottom: 16px;
-    }
-
     code {
       color: #454545;
       display: block;
@@ -119,7 +126,6 @@
       border: none;
       padding: 16px;
       background-color: rgb(246, 246, 246);
-      margin-bottom: 24px;
     }
   }
 
@@ -128,9 +134,11 @@
     color: @link-color;
 
     &.icon-wrapper {
+      width: 20px;
+      height: 20px;
       display: inline-block;
       font-size: 0;
-      vertical-align: top;
+      vertical-align: middle;
     }
   }
 
@@ -150,7 +158,7 @@
 
   ul {
     list-style-type: disc;
-    margin: 16px 0;
+    margin: 8px 0;
     padding-left: 24px;
 
     & > li::marker {
@@ -163,7 +171,7 @@
   ol {
     list-style: decimal;
     padding-left: 24px;
-    margin: 16px 0;
+    margin: 8px 0;
 
     & > li::marker {
       font-size: 16px;
@@ -255,6 +263,22 @@
         color: @color-warning;
       }
     }
+
+    &.quote {
+      background-color: #f6f6f6;
+      border-left: 2px solid #82838e;
+      border-radius: 4px;
+
+      &::before {
+        position: absolute;
+        content: 'QUOTE';
+        line-height: 20px;
+        left: 21px;
+        top: 12px;
+        font-weight: 600;
+        color: #82838e;
+      }
+    }
   }
 
   .admonition {
@@ -311,7 +335,7 @@
     thead {
       padding: 12px;
       border-bottom: 1px solid #eee;
-      font-size: 14px;
+      font-size: 12px;
       line-height: 22px;
       text-align: left;
       background-color: #e8e8e8;
@@ -324,7 +348,7 @@
     }
 
     tbody {
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1.4em;
       text-align: left;
       padding: 12px;
@@ -360,7 +384,7 @@
     }
 
     th {
-      font-size: 14px;
+      font-size: 12px;
       line-height: 22px;
       padding: 12px;
       font-weight: 600;
@@ -462,10 +486,6 @@
       list-style: none;
     }
   }
-
-  img {
-    margin: 20px 0;
-  }
 }
 
 details {
@@ -525,6 +545,7 @@ i {
     line-height: 17px;
     cursor: pointer;
     padding: 4px 0;
+    color: #454545;
 
     & + a {
       margin-left: 24px;
@@ -554,6 +575,16 @@ i {
   background-color: #f6f6f6;
   border-radius: 4px;
   font-size: 14px;
+}
+
+.gatsby-resp-image-wrapper {
+  min-width: 22px;
+  height: auto;
+  width: 90%;
+
+  @media @tablet {
+    margin: 24px auto;
+  }
 }
 
 // pre {

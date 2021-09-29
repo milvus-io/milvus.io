@@ -1014,15 +1014,11 @@ const generateDocHome = (
     };
   });
 
-  const newestBlog = {
-    cn: list
+  const getTwoNewestBlog = lang => {
+    return list
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'cn')
-      .slice(0, 2),
-    en: list
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'en')
-      .slice(0, 2),
+      .filter(i => i.fileLang === lang)
+      .slice(0, 2);
   };
 
   homeData.forEach(({ language, data, path, version }) => {
@@ -1061,7 +1057,7 @@ const generateDocHome = (
           newHtml: null,
           allApiMenus,
           isVersionWithHome: true,
-          newestBlog,
+          newestBlog: getTwoNewestBlog(language),
           homePath,
         },
       });
@@ -1085,7 +1081,7 @@ const generateDocHome = (
         newHtml: null,
         allApiMenus,
         isVersionWithHome: true,
-        newestBlog,
+        newestBlog: getTwoNewestBlog(language),
         homePath,
       },
     });
@@ -1225,13 +1221,14 @@ const generateBlogArticlePage = (
     };
   });
 
+  const filterAndSortBlogs = (list, lang) => {
+    return list
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .filter(i => i.fileLang === lang);
+  };
   const allBlogsList = {
-    cn: list
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'cn'),
-    en: list
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'en'),
+    cn: filterAndSortBlogs(list, 'cn'),
+    en: filterAndSortBlogs(list, 'en'),
   };
 
   for (let key in allBlogsList) {

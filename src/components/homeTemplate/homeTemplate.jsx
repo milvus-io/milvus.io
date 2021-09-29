@@ -5,12 +5,10 @@ import Button from '../button';
 import * as styles from './homeTemplate.module.less';
 
 const HomeTemplate = props => {
-  const { data, locale, newestBlog = {}, homePath = '' } = props;
+  const { data, locale, newestBlog = [], homePath = '' } = props;
   const { section1 = {}, section2, section3 = {}, section4 = {} } = data;
 
-  const generateNewsetBlog = (blogObj, locale) => {
-    const bloglist = blogObj[locale];
-
+  const generateNewsetBlog = (bloglist, locale) => {
     return (
       <ul className={styles.blogContent}>
         {bloglist.map(item => {

@@ -57,11 +57,13 @@ const BtnGroups = ({
             rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
-              {isDocs ? (
-                <i className={`fas fa-bug ${styles.btnIcon}`}></i>
-              ) : (
-                <i className={`fab fa-github ${styles.btnIcon}`}></i>
-              )}
+              <i
+                className={
+                  isDocs
+                    ? `fas fa-bug ${styles.btnIcon}`
+                    : `fab fa-github ${styles.btnIcon}`
+                }
+              ></i>
             </span>
             {isDocs
               ? language.footer.docIssueBtn.docLabel
@@ -82,11 +84,13 @@ const BtnGroups = ({
             rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
-              {isDocs ? (
-                <i className={`fas fa-lightbulb ${styles.btnIcon}`}></i>
-              ) : (
-                <i className={`fas fa-bug ${styles.btnIcon}`}></i>
-              )}
+              <i
+                className={
+                  isDocs
+                    ? `fas fa-lightbulb ${styles.btnIcon}`
+                    : `fas fa-bug ${styles.btnIcon}`
+                }
+              ></i>
             </span>
             {isDocs
               ? language.footer.issueBtn.docLabel

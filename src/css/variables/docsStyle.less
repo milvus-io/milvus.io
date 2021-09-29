@@ -16,6 +16,10 @@
 .doc-post-container {
   color: @main-text-color;
 
+  details {
+    margin-bottom: 24px;
+  }
+
   a,
   p,
   li,
@@ -189,8 +193,7 @@
 
   .alert {
     padding: 40px 21px 14px 21px;
-    margin-bottom: 24px;
-    margin-top: 51px;
+    margin: 36px 0;
     font-size: 16px;
     line-height: 24px;
     position: relative;
@@ -321,7 +324,7 @@
   }
 
   table {
-    margin: 24px 0;
+    margin-bottom: 24px;
     background-color: @pre-bg-color;
     overflow-x: auto;
     width: 100%;
@@ -439,16 +442,19 @@
     }
 
     li,
-    details,
     summary {
       margin: 0;
+    }
+
+    details {
+      margin-bottom: 24px;
     }
   }
 
   .filter,
   .tab-wrapper {
     padding: 8px 0;
-    margin-bottom: 32px;
+    margin-bottom: 8px;
 
     a {
       padding: 6px 40px;
@@ -531,7 +537,7 @@ i {
   display: flex;
   list-style: none;
   padding: 0;
-  margin: 20px 20px -14px 20px;
+  margin: 20px 20px -20px 20px;
   overflow-x: auto;
 
   a {

@@ -11,29 +11,28 @@ const HomeTemplate = props => {
   const { section1 = {}, section2, section3 = {}, section4 = {} } = data;
 
   const generateNewsetBlog = (blogObj, locale) => {
-    return null;
-    // const { title, desc, cover, date, id } = blogObj[locale];
-    // const dateTime = dayjs(date).format('YYYY/MM/DD');
-    // return (
-    //   <ul className={styles.content}>
-    //     {currentPageList.map(item => {
-    //       const { desc, cover, date, tags, id, title } = item;
-    //       return (
-    //         <li key={item.id}>
-    //           <BlogCard
-    //             locale={locale}
-    //             title={title}
-    //             date={date}
-    //             cover={`https://${cover}`}
-    //             desc={desc}
-    //             tags={tags}
-    //             path={`${id}?page=${pageIndex}#${currentTag}`}
-    //           />
-    //         </li>
-    //       );
-    //     })}
-    //   </ul>
-    // );
+    const bloglist = blogObj[locale];
+
+    return (
+      <ul className={styles.blogContent}>
+        {bloglist.map(item => {
+          const { desc, cover, date, tags, id, title } = item;
+          return (
+            <li key={item.id}>
+              <BlogCard
+                locale={locale}
+                title={title}
+                date={date}
+                cover={`https://${cover}`}
+                desc={desc}
+                tags={tags}
+                path={id}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    );
   };
 
   return (
@@ -101,28 +100,25 @@ const HomeTemplate = props => {
             ))}
         </div>
       </div>
-
-      {false && (
-        <div className={styles.section}>
-          <h1>{section4.title}</h1>
-          {generateNewsetBlog(newestBlog, locale)}
-          {section4.loadBtn && (
-            <Button
-              className={styles.loadBtn}
-              isExternal={section4.loadBtn.isExternal}
-              link={section4.loadBtn.link}
-              children={
-                <>
-                  <span className={styles.btnLabel}>
-                    {section4.loadBtn.label}
-                  </span>
-                  <i className="fa fa-chevron-right"></i>
-                </>
-              }
-            />
-          )}
-        </div>
-      )}
+      <div className={styles.section}>
+        <h1>{section4.title}</h1>
+        {generateNewsetBlog(newestBlog, locale)}
+        {section4.loadBtn && (
+          <Button
+            className={styles.loadBtn}
+            isExternal={section4.loadBtn.isExternal}
+            link="/blog"
+            children={
+              <>
+                <span className={styles.btnLabel}>
+                  {section4.loadBtn.label}
+                </span>
+                <i className="fa fa-chevron-right"></i>
+              </>
+            }
+          />
+        )}
+      </div>
     </section>
   );
 };

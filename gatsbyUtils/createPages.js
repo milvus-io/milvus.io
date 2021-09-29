@@ -989,6 +989,7 @@ const generateDocHome = (
     versionInfo,
   }
 ) => {
+  console.log('versionInfo---', versionInfo);
   // generate newest blog
   const list = blogMD.map(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
@@ -1017,23 +1018,31 @@ const generateDocHome = (
   const newestBlog = {
     cn: list
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'cn')[0],
+      .filter(i => i.fileLang === 'cn')
+      .slice(0, 2),
     en: list
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'en')[0],
+      .filter(i => i.fileLang === 'en')
+      .slice(0, 2),
   };
 
   homeData.forEach(({ language, data, path, version }) => {
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
-    const link = versionInfo[version]['pymilvus'];
-    // generate pyMilvus API link according to different version
-    // and render it at Doc home Recommended Articles section last item of Get started
-    const pyMilvus = {
-      text: 'PyMilvus API Reference',
-      link: `/api-reference/pymilvus/${link}/install.html`,
-    };
-    data.section3.items[0].list.push(pyMilvus);
+    data.section3.items.forEach(item => {
+      item.list.forEach(subItem => {
+        const { link } = subItem;
+        if (link.includes('{{') && link.includes('}}')) {
+          const head = link.match(/(\S*)\{{/)[1];
+          // must be one of pymilvus,go node java
+          const language = link.match(/\{{(\S*)\}}/)[1].split('_')[0];
+          const foot = link.match(/\}}(\S*)/)[1];
+          const apiVersion = versionInfo[version][language];
+          subItem.link = `${head}${apiVersion}${foot}`;
+        }
+      });
+    });
+
     if (version === newestVersion) {
       const homePath = getNewestVersionHomePath(language);
       createPage({

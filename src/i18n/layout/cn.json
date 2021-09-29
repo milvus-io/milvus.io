@@ -54,11 +54,13 @@
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
         "label": "提交 Bug",
+        "docLabel": "内容建议",
         "communityLink": "https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=bug_report.md&title="
       },
       "docIssueBtn": {
         "link": "https://github.com/milvus-io/milvus/discussions/new",
-        "label": "GitHub 讨论"
+        "label": "GitHub 讨论",
+        "docLabel": "提交 Issue"
       },
       "editBtn": {
         "label": "编辑"

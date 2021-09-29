@@ -25,6 +25,7 @@ const DocLayout = props => {
     allApiMenus,
     isApiReference = false,
     apiReferenceData = {},
+    mdTitle = '',
   } = props;
 
   const { isVersionWithHome = null } = pageContext;
@@ -209,6 +210,7 @@ const DocLayout = props => {
                     editPath={editPath}
                     language={language}
                     apiReferenceData={apiReferenceData}
+                    mdTitle={mdTitle}
                   />
                   {formatHeadings.length > 0 && (
                     <div className={styles.anchorTitle}>

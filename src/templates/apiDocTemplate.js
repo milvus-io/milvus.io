@@ -19,9 +19,7 @@ export default function Template({ data, pageContext }) {
     category,
     newestVersion,
   } = pageContext;
-
   const [targetDocVersion, setTargetDocVersion] = useState();
-
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
   const hljsCfg = {
@@ -44,11 +42,8 @@ export default function Template({ data, pageContext }) {
   useCodeCopy(locale, hljsCfg);
   useAlgolia(locale, targetDocVersion);
   useMultipleCodeFilter();
-
-  const layout = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childI18N.layout
-    : {};
-
+  const layout = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node
+    .childI18N.layout;
   const menuList = allMenus.find(
     v => v.absolutePath.includes(targetDocVersion) && v.lang === locale
   );

@@ -47,7 +47,6 @@ export default function Template({
   useEffect(() => {
     window?.localStorage?.setItem('docVersion', version);
   }, [version]);
-
   const [showBack, setShowBack] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
@@ -102,13 +101,12 @@ export default function Template({
     return null;
   }
 
-  const layout = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childI18N.layout
-    : {};
+  const layout = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node
+    .childI18N.layout;
 
-  const { feedback, commit: commitTrans } = data.allFile.edges[0]
-    ? data.allFile.edges[0].node.childI18N.v2
-    : {};
+  const { feedback, commit: commitTrans } = data.allFile.edges.filter(
+    edge => edge.node.childI18N
+  )[0].node.childI18N.v2;
 
   const menuList = allMenus.find(
     v =>
@@ -170,6 +168,7 @@ export default function Template({
       menuList={menuList}
       version={version}
       headings={headings.filter((h, i) => i > 0)}
+      mdTitle={title}
       versions={versions}
       newestVersion={newestVersion}
       id={frontmatter ? frontmatter.id : 'home'}
@@ -384,10 +383,12 @@ export const pageQuery = graphql`
                 issueBtn {
                   label
                   link
+                  docLabel
                 }
                 docIssueBtn {
                   label
                   link
+                  docLabel
                 }
                 product {
                   title

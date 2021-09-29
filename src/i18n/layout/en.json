@@ -54,11 +54,13 @@
       "issueBtn": {
         "link": "https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=",
         "label": "Report a bug.",
+        "docLabel": "Suggest new content.",
         "communityLink": "https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=bug_report.md&title="
       },
       "docIssueBtn": {
         "link": "https://github.com/milvus-io/milvus/discussions/new",
-        "label": "Discuss it on GitHub."
+        "label": "Discuss it on GitHub.",
+        "docLabel": "Report doc issue."
       },
       "editBtn": {
         "label": "Edit this page."

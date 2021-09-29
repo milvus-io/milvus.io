@@ -989,7 +989,6 @@ const generateDocHome = (
     versionInfo,
   }
 ) => {
-  console.log('versionInfo---', versionInfo);
   // generate newest blog
   const list = blogMD.map(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;

@@ -1014,26 +1014,30 @@ const generateDocHome = (
     };
   });
 
-  const newestBlog = {
-    cn: list
+  const getTwoNewestBlog = lang => {
+    return list
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'cn')[0],
-    en: list
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'en')[0],
+      .filter(i => i.fileLang === lang)
+      .slice(0, 2);
   };
 
   homeData.forEach(({ language, data, path, version }) => {
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
-    const link = versionInfo[version]['pymilvus'];
-    // generate pyMilvus API link according to different version
-    // and render it at Doc home Recommended Articles section last item of Get started
-    const pyMilvus = {
-      text: 'PyMilvus API Reference',
-      link: `/api-reference/pymilvus/${link}/install.html`,
-    };
-    data.section3.items[0].list.push(pyMilvus);
+    data.section3.items.forEach(item => {
+      item.list.forEach(subItem => {
+        const { link } = subItem;
+        if (link.includes('{{') && link.includes('}}')) {
+          const head = link.match(/(\S*)\{{/)[1];
+          // must be one of pymilvus,go node java
+          const language = link.match(/\{{(\S*)\}}/)[1].split('_')[0];
+          const foot = link.match(/\}}(\S*)/)[1];
+          const apiVersion = versionInfo[version][language];
+          subItem.link = `${head}${apiVersion}${foot}`;
+        }
+      });
+    });
+
     if (version === newestVersion) {
       const homePath = getNewestVersionHomePath(language);
       createPage({
@@ -1053,7 +1057,7 @@ const generateDocHome = (
           newHtml: null,
           allApiMenus,
           isVersionWithHome: true,
-          newestBlog,
+          newestBlog: getTwoNewestBlog(language),
           homePath,
         },
       });
@@ -1077,7 +1081,7 @@ const generateDocHome = (
         newHtml: null,
         allApiMenus,
         isVersionWithHome: true,
-        newestBlog,
+        newestBlog: getTwoNewestBlog(language),
         homePath,
       },
     });
@@ -1217,13 +1221,14 @@ const generateBlogArticlePage = (
     };
   });
 
+  const filterAndSortBlogs = (list, lang) => {
+    return list
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .filter(i => i.fileLang === lang);
+  };
   const allBlogsList = {
-    cn: list
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'cn'),
-    en: list
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === 'en'),
+    cn: filterAndSortBlogs(list, 'cn'),
+    en: filterAndSortBlogs(list, 'en'),
   };
 
   for (let key in allBlogsList) {

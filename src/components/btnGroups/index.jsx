@@ -43,12 +43,12 @@ const BtnGroups = ({
         },
         docIssueBtn: {
           label: language.footer.docIssueBtn.docLabel,
-          link: `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=error-report.md&title=${title}`,
+          link: `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--error-report.yaml&title=${title}`,
           icon: 'fas fa-bug',
         },
         issueBtn: {
           label: language.footer.issueBtn.docLabel,
-          link: 'https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=change-request.md&title=New Doc Proposal',
+          link: 'https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--new-content-proposal.yaml&title=New Doc Proposal',
           icon: 'fas fa-lightbulb',
         },
       };

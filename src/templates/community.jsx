@@ -450,7 +450,6 @@ export const Query = graphql`
                 }
                 issueBtn {
                   label
-                  communityLink
                 }
               }
               community {

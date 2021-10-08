@@ -17,15 +17,15 @@ const BtnGroups = ({
 }) => {
   const [commonEditBtn, commonDocIssueBtn, commonIssueBtn] = [
     {
-      label: locale === 'en' ? 'Edit this page.' : '编辑',
+      label: language.footer.editBtn.label,
       icon: 'fas fa-pencil-alt',
     },
     {
-      label: locale === 'en' ? 'Discuss it on GitHub.' : 'GitHub 讨论',
+      label: isCommunity ? null : language.footer.docIssueBtn.label,
       icon: 'fab fa-github',
     },
     {
-      label: locale === 'en' ? 'Report a bug.' : '提交 Bug',
+      label: language.footer.issueBtn.label,
       icon: 'fas fa-bug',
     },
   ];
@@ -42,12 +42,12 @@ const BtnGroups = ({
           icon: commonEditBtn.icon,
         },
         docIssueBtn: {
-          label: locale === 'en' ? 'Report doc issue.' : '提交 Issue',
+          label: language.footer.docIssueBtn.docLabel,
           link: `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=error-report.md&title=${title}`,
           icon: 'fas fa-bug',
         },
         issueBtn: {
-          label: locale === 'en' ? 'Suggest new content.' : '内容建议',
+          label: language.footer.issueBtn.docLabel,
           link: 'https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=change-request.md&title=New Doc Proposal',
           icon: 'fas fa-lightbulb',
         },

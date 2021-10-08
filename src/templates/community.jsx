@@ -358,6 +358,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                 id={activePost}
                 language={layout}
                 apiReferenceData={{}}
+                category="community"
               />
               {formatHeadings.length > 0 && (
                 <div className="anchors-wrapper">

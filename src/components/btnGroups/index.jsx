@@ -13,12 +13,100 @@ const BtnGroups = ({
   isCommunity = false,
   apiReferenceData,
   mdTitle = '',
+  category = 'docs', // docs | api | community
 }) => {
+  const [commonEditBtn, commonDocIssueBtn, commonIssueBtn] = [
+    {
+      label: language.footer.editBtn.label,
+      icon: 'fas fa-pencil-alt',
+    },
+    {
+      label: isCommunity ? null : language.footer.docIssueBtn.label,
+      icon: 'fab fa-github',
+    },
+    {
+      label: language.footer.issueBtn.label,
+      icon: 'fas fa-bug',
+    },
+  ];
+  const btnConfiguration = {
+    docs: ({ locale, version, editPath, mdTitle }) => {
+      const name = editPath.split('/').pop();
+      const title = `${version} ${mdTitle} (${name}) Doc Update`;
+      return {
+        editBtn: {
+          label: commonEditBtn.label,
+          link: `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${
+            locale === 'en' ? 'en' : 'zh-CN'
+          }/${editPath}`,
+          icon: commonEditBtn.icon,
+        },
+        docIssueBtn: {
+          label: language.footer.docIssueBtn.docLabel,
+          link: `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=error-report.md&title=${title}`,
+          icon: 'fas fa-bug',
+        },
+        issueBtn: {
+          label: language.footer.issueBtn.docLabel,
+          link: 'https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=change-request.md&title=New Doc Proposal',
+          icon: 'fas fa-lightbulb',
+        },
+      };
+    },
+    api: ({ apiReferenceData }) => {
+      const { projName, relativePath, sourceUrl } = apiReferenceData;
+      const title = `${projName},${version},${relativePath}`;
+      return {
+        editBtn: {
+          label: commonEditBtn.label,
+          link: sourceUrl,
+          icon: commonEditBtn.icon,
+        },
+        docIssueBtn: {
+          label: commonDocIssueBtn.label,
+          link: 'https://github.com/milvus-io/milvus/discussions/new',
+          icon: commonDocIssueBtn.icon,
+        },
+        issueBtn: {
+          label: commonIssueBtn.label,
+          link: `https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=${title}`,
+          icon: commonIssueBtn.icon,
+        },
+      };
+    },
+    community: ({ locale, editPath, id }) => ({
+      editBtn: {
+        label: commonEditBtn.label,
+        link: `https://github.com/milvus-io/web-content/edit/master/community/site/${
+          locale === 'en' ? 'en' : 'zh-CN'
+        }/${editPath}`,
+        icon: commonEditBtn.icon,
+      },
+      docIssueBtn: {
+        label: commonDocIssueBtn.label,
+        link: 'https://github.com/milvus-io/web-content/discussions/new',
+        icon: commonDocIssueBtn.icon,
+      },
+      issueBtn: {
+        label: commonIssueBtn.label,
+        link: `https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=error-report.md&title=${id}`,
+        icon: commonIssueBtn.icon,
+      },
+    }),
+  };
+
+  const { editBtn, docIssueBtn, issueBtn } = btnConfiguration[category]({
+    locale,
+    version,
+    editPath,
+    mdTitle,
+    id,
+    apiReferenceData,
+  });
   const { projName, relativePath, apiVersion, sourceUrl } = apiReferenceData;
   const shouldRenderBtns = !isApiReference
     ? !isBlog && !isBenchMark
     : projName && relativePath && apiVersion && sourceUrl;
-  const isDocs = !(isBlog || isBenchMark || isApiReference || isCommunity);
 
   return (
     <>
@@ -26,67 +114,42 @@ const BtnGroups = ({
         {shouldRenderBtns && (
           <a
             className={styles.btnAnchor}
-            href={generateEditLink({
-              version,
-              locale,
-              editPath,
-              isCommunity,
-              apiReferenceData,
-            })}
+            href={editBtn.link}
             target="_blank"
             rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
-              <i className={`fas fa-pencil-alt ${styles.btnIcon}`}></i>
+              <i className={`${editBtn.icon} ${styles.btnIcon}`}></i>
             </span>
 
-            {language.footer.editBtn.label}
+            {editBtn.label}
           </a>
         )}
         {!!language.footer.docIssueBtn ? (
           <a
             className={styles.btnAnchor}
-            href={generateDisscussLink({
-              editPath,
-              version,
-              mdTitle,
-              isCommunity,
-              apiReferenceData,
-            })}
+            href={docIssueBtn.link}
             target="_blank"
             rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
-              <i
-                className={`${isDocs ? 'fas fa-bug' : 'fab fa-github'} ${
-                  styles.btnIcon
-                }`}
-              ></i>
+              <i className={`${docIssueBtn.icon} ${styles.btnIcon}`}></i>
             </span>
-            {language.footer.docIssueBtn[isDocs ? 'docLabel' : 'label']}
+            {docIssueBtn.label}
           </a>
         ) : null}
         {!!language.footer.issueBtn ? (
           <a
             className={styles.btnAnchor}
             id="btn-bug"
-            href={generateIssueLink({
-              id,
-              version,
-              isCommunity,
-              apiReferenceData,
-            })}
+            href={issueBtn.link}
             target="_blank"
             rel="noreferrer"
           >
             <span className={styles.btnIconWrapper}>
-              <i
-                className={`${isDocs ? 'fas fa-lightbulb' : 'fas fa-bug'} ${
-                  styles.btnIcon
-                }`}
-              ></i>
+              <i className={`${issueBtn.icon} ${styles.btnIcon}`}></i>
             </span>
-            {language.footer.issueBtn[isDocs ? 'docLabel' : 'label']}
+            {issueBtn.label}
           </a>
         ) : null}
         {!!language.footer.questionBtn ? (
@@ -107,56 +170,6 @@ const BtnGroups = ({
       </div>
     </>
   );
-};
-
-const generateEditLink = ({
-  version,
-  locale,
-  editPath,
-  isCommunity,
-  apiReferenceData: { projName, relativePath, apiVersion, sourceUrl },
-}) => {
-  if (sourceUrl) return sourceUrl;
-  let editLink = isCommunity
-    ? `https://github.com/milvus-io/web-content/edit/master/community/site/${
-        locale === 'en' ? 'en' : 'zh-CN'
-      }/${editPath}`
-    : `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${
-        locale === 'en' ? 'en' : 'zh-CN'
-      }/${editPath}`;
-  return editLink;
-};
-
-const generateIssueLink = ({
-  id,
-  version,
-  isCommunity,
-  apiReferenceData: { projName, relativePath, apiVersion, sourceUrl },
-}) => {
-  if (sourceUrl) {
-    const title = `${projName},${version},${relativePath}`;
-    return `https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=${title}`;
-  }
-
-  let issueLink = isCommunity
-    ? `https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=error-report.md&title=${id}`
-    : `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=change-request.md&title=New Doc Proposal`;
-  return issueLink;
-};
-
-const generateDisscussLink = ({
-  editPath,
-  version,
-  mdTitle,
-  isCommunity,
-  apiReferenceData: { sourceUrl },
-}) => {
-  if (sourceUrl) return 'https://github.com/milvus-io/milvus/discussions/new';
-  const name = editPath.split('/').pop();
-  const title = `${version} ${mdTitle} (${name}) Doc Update`;
-  return isCommunity
-    ? 'https://github.com/milvus-io/web-content/discussions/new'
-    : `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=error-report.md&title=${title}`;
 };
 
 export default BtnGroups;

@@ -211,6 +211,9 @@ const DocLayout = props => {
                     language={language}
                     apiReferenceData={apiReferenceData}
                     mdTitle={mdTitle}
+                    category={
+                      JSON.stringify(apiReferenceData) === '{}' ? 'docs' : 'api'
+                    }
                   />
                   {formatHeadings.length > 0 && (
                     <div className={styles.anchorTitle}>

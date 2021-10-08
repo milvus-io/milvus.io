@@ -161,11 +161,9 @@ export const Query = graphql`
                 }
                 issueBtn {
                   label
-                  link
                 }
                 docIssueBtn {
                   label
-                  link
                 }
                 product {
                   title

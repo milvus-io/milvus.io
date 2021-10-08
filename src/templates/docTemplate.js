@@ -382,12 +382,10 @@ export const pageQuery = graphql`
                 }
                 issueBtn {
                   label
-                  link
                   docLabel
                 }
                 docIssueBtn {
                   label
-                  link
                   docLabel
                 }
                 product {

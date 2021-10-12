@@ -7223,6 +7223,11 @@ git-up@^4.0.2:
     is-ssh "^1.3.0"
     parse-url "^5.0.0"
 
+github-buttons@^2.8.0:
+  version "2.19.1"
+  resolved "https://registry.npmmirror.com/github-buttons/download/github-buttons-2.19.1.tgz#9703755a4da1c5b229d3f1d875c2f787efa59bd5"
+  integrity sha1-lwN1Wk2hxbIp0/HYdcL3h++lm9U=
+
 github-from-package@0.0.0:
   version "0.0.0"
   resolved "https://registry.npmjs.org/github-from-package/-/github-from-package-0.0.0.tgz#97fb5d96bfde8973313f20e8288ef9a167fa64ce"
@@ -11542,7 +11547,7 @@ prompts@^2.3.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.7.2:
+prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -11812,12 +11817,12 @@ react-fullpage@^0.1.19:
     react "16.4.2"
     react-dom "16.4.2"
 
-react-github-button@^0.1.11:
-  version "0.1.11"
-  resolved "https://registry.npmjs.org/react-github-button/-/react-github-button-0.1.11.tgz#fc61e1f1e1371169d3618c1ba37306ba04081e56"
-  integrity sha1-/GHh8eE3EWnTYYwbo3MGugQIHlY=
+react-github-btn@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.nlark.com/react-github-btn/download/react-github-btn-1.2.1.tgz#ece93f609a4bad5e7eb9f47ae49bfaba69466dce"
+  integrity sha1-7Ok/YJpLrV5+ufR65Jv6umlGbc4=
   dependencies:
-    prop-types "^15.5.10"
+    github-buttons "^2.8.0"
 
 react-helmet@^6.1.0:
   version "6.1.0"

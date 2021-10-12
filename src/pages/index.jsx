@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
-import GithubButton from 'react-github-button';
-import 'react-github-button/assets/style.css';
+import GitHubButton from 'react-github-btn';
 import './index.less';
 import Seo from '../components/seo';
 import autoscalingIcon from '../images/v2/autoscaling.svg';
@@ -110,13 +109,25 @@ const HomePage = ({ data, pageContext }) => {
             <div className="banner">
               <div className="banner-left">
                 <div className="stars-layout">
-                  <GithubButton
-                    className="git-stars"
-                    type="stargazers"
-                    size="large"
-                    namespace="milvus-io"
-                    repo="milvus"
-                  />
+                  <div className="git-stars">
+                    <GitHubButton
+                      href="https://github.com/milvus-io/milvus"
+                      data-size="large"
+                      data-show-count={true}
+                    >
+                      Star
+                    </GitHubButton>
+                  </div>
+                  <div className="git-stars">
+                    <GitHubButton
+                      href="https://github.com/milvus-io/milvus/fork"
+                      data-size="large"
+                      data-icon="octicon-repo-forked"
+                      data-show-count={true}
+                    >
+                      Fork
+                    </GitHubButton>
+                  </div>
                 </div>
                 <p className="sub-title">{banner.subTitle}</p>
                 <div className="title-wrapper">

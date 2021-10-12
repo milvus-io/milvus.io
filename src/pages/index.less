@@ -137,6 +137,11 @@ body {
         align-items: center;
         margin-bottom: 40px;
 
+        .git-stars {
+          margin-right: 12px;
+          box-sizing: border-box;
+        }
+
         @media @tablet {
           margin-bottom: 24px;
         }
@@ -251,6 +256,7 @@ body {
       flex: 2;
       background: url('../images/v2/main-bg.png') no-repeat center right;
       background-size: contain;
+      z-index: -1;
 
       @media @phone {
         position: absolute;

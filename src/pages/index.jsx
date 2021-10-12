@@ -118,7 +118,7 @@ const HomePage = ({ data, pageContext }) => {
                       Star
                     </GitHubButton>
                   </div>
-                  <div className="git-forks">
+                  <div className="git-stars">
                     <GitHubButton
                       href="https://github.com/milvus-io/milvus/fork"
                       data-size="large"

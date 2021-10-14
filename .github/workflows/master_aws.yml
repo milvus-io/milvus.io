@@ -34,25 +34,25 @@ jobs:
             ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
             ${{ runner.os }}-yarn-
             
-      - name: Caching Gatsby
-        id: gatsby-cache-build
-        uses: actions/cache@v2
-        with:
-          path: |
-            public
-            .cache
-          key: ${{ runner.os }}-gatsby-build-master-${{ github.run_id }}
-          restore-keys: |
-            ${{ runner.os }}-gatsby-build-master
+#       - name: Caching Gatsby
+#         id: gatsby-cache-build
+#         uses: actions/cache@v2
+#         with:
+#           path: |
+#             public
+#             .cache
+#           key: ${{ runner.os }}-gatsby-build-master-${{ github.run_id }}
+#           restore-keys: |
+#             ${{ runner.os }}-gatsby-build-master
 
       - name: Installing dependencies
         run: yarn install
           
       - name: Building Gatsby site
         run: yarn build --log-pages
-        env:
-          GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
-          CI: true
+#         env:
+#           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
+#           CI: true
 
       - name: Sync files
         run: |

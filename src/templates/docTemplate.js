@@ -67,7 +67,7 @@ export default function Template({
 
     const fetchData = async () => {
       const res = await getGithubCommits(commitPath, version);
-      if (res.status === 200) {
+      if (res.status === 200 && res.data.length) {
         const lastCommit = res.data[0];
         const message = lastCommit.commit.message.split('\n')[0];
         const date = lastCommit.commit.committer.date;

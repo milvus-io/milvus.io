@@ -2,3 +2,4 @@
 node_modules/
 public/
 .git/
+.DS_Store

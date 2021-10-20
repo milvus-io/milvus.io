@@ -17,3 +17,4 @@ COPY --from=builder /site/public /usr/share/nginx/html/
 
 # Default port exposure
 EXPOSE 80
+

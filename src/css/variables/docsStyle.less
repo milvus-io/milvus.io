@@ -6,10 +6,12 @@
 @pre-bg-color-dark: #242a35;
 @code-bg-color: #eee;
 @note-bg-color: #f0f4f9;
-@warning-bg-color: rgba(242, 92, 5, 0.1);
+@caution-bg-color: rgba(242, 92, 5, 0.1);
+@warning-bg-color: #fce8e5;
 @faq-disc-color: #06aff2;
 @link-color: #1493cc;
-@color-warning: #f25c05;
+@color-caution: #f25c05;
+@color-warning: #d51f00;
 @main-text-color: #191919;
 
 .articleContent,
@@ -213,6 +215,22 @@
         content: 'WARNING';
         line-height: 20px;
         color: @color-warning;
+        left: 21px;
+        top: 12px;
+        font-weight: 600;
+      }
+    }
+
+    &.caution {
+      background-color: @caution-bg-color;
+      border-left: 2px solid @color-caution;
+      border-radius: 4px;
+
+      &::before {
+        position: absolute;
+        content: 'CAUTION';
+        line-height: 20px;
+        color: @color-caution;
         left: 21px;
         top: 12px;
         font-weight: 600;

@@ -240,6 +240,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                 <Button
                   className="ambassador-btn join-button"
                   link={recommendSection.ambassador.joinBtn.link}
+                  locale={locale}
                 >
                   {recommendSection.ambassador.joinBtn.label}
                 </Button>
@@ -248,6 +249,7 @@ export default function CommunityTemplate({ data, pageContext }) {
                     className="ambassador-btn introduction-button"
                     link={recommendSection.ambassador.introBtn.label}
                     variant="text"
+                    locale={locale}
                     children={
                       <>
                         <span className="label">

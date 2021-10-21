@@ -1,5 +1,9 @@
 name: Docker Build
 on:
+  push:
+    branches:
+      - preview
+
   merge:
     branches:
       - master

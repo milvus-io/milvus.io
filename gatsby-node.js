@@ -55,7 +55,7 @@ versionInfo.preview = {
 };
 
 Object.keys(versionInfo).forEach(v => {
-  if (versionInfo[v].released === 'yes' || env === 'preview') {
+  if (versionInfo[v].released === 'yes') {
     versions.push(v);
   }
 });

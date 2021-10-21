@@ -5,4 +5,4 @@ COPY . /site
 RUN yarn install && yarn cache clean
 
 EXPOSE 8000
-# CMD yarn start
+CMD yarn start

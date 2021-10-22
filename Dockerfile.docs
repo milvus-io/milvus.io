@@ -1,0 +1,8 @@
+FROM node:14.16.0-buster as builder
+WORKDIR /site
+ENV IS_PREVIEW preview
+COPY . /site
+RUN yarn install && yarn cache clean
+
+EXPOSE 8000
+CMD yarn start

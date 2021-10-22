@@ -51,11 +51,11 @@ const versions = [];
 versionInfo.preview = {
   ...versionInfo.preview,
   version: 'preview',
-  released: 'no',
+  released: env === 'preview' ? 'yes' : 'no',
 };
 
 Object.keys(versionInfo).forEach(v => {
-  if (versionInfo[v].released === 'yes' || env === 'preview') {
+  if (versionInfo[v].released === 'yes') {
     versions.push(v);
   }
 });

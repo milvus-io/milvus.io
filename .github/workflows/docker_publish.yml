@@ -1,0 +1,45 @@
+name: Milvus.io Preview Docker
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: update submodules
+        run: |
+          git submodule init
+          git submodule update --remote
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Caching yarn
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+            ${{ runner.os }}-yarn-
+
+      - name: Installing dependencies
+        run: yarn install
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME}}
+          password: ${{ secrets.DOCKER_PWD}}
+
+      - name: Build and upload docker
+        run: |
+          docker build -t milvusdb/milvus-doc-preview:latest -f Dockerfile.docs .
+          docker push milvusdb/milvus-doc-preview:latest

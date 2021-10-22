@@ -2,7 +2,7 @@ name: Milvus.io Preview Docker
 on:
   push:
     branches:
-      - preview
+      - master
 
 jobs:
   build:

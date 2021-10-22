@@ -133,7 +133,12 @@ const V2Header = props => {
               <LocalizedLink to="/" locale={locale}>
                 <img
                   className={styles.milvus}
-                  src={isMobile ? milvusLogoMobile : milvusLogo}
+                  src={milvusLogo}
+                  alt="milvus-logo"
+                />
+                <img
+                  className={styles.milvusMobile}
+                  src={milvusLogoMobile}
                   alt="milvus-logo"
                 />
               </LocalizedLink>
@@ -145,76 +150,75 @@ const V2Header = props => {
                 <img className={styles.lfai} src={lfai} alt="lfai-icon" />
               </a>
             </div>
-            {isMobile ? (
-              <div className={styles.menuSection}>
-                <div className={styles.menuWrapper}>
-                  <div
-                    className={styles.iconWrapper}
-                    data-type={maskConfig.type === 'menu' ? 'close' : 'menu'}
-                  >
-                    {maskConfig.isOpen ? (
-                      <span
-                        role="button"
-                        tabIndex={-1}
-                        onClick={() => handleToggleMask({ isOpen: false })}
-                        onKeyDown={() => handleToggleMask({ isOpen: false })}
-                      >
-                        <img
-                          className={styles.btnIcon}
-                          src={close}
-                          alt="close-icon"
-                        />
+            {/* nav section for desktop */}
+            <div className={styles.navSection}>
+              {generateNavigation(navList, path, styles, locale, isMobile)}
+              <a
+                className={styles.navItem}
+                href="https://github.com/milvus-io/milvus/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className={styles.iconWrapper}>
+                  <i className={`fab fa-github ${styles.navIcon}`}></i>
+                </span>
+              </a>
+              <div className={styles.navMenuItem}>
+                <Selector
+                  options={LANGUAGES}
+                  locale={locale}
+                  path={path}
+                  isLangSelector={true}
+                  navItemLabel={
+                    <>
+                      <span className={styles.iconWrapper}>
+                        <i className={`fas fa-globe ${styles.navIcon}`}></i>
                       </span>
-                    ) : (
-                      <span
-                        role="button"
-                        tabIndex={-1}
-                        onClick={() => handleToggleMask({ isOpen: true })}
-                        onKeyDown={() => handleToggleMask({ isOpen: true })}
-                      >
-                        <img
-                          className={styles.btnIcon}
-                          src={menu}
-                          alt="close-icon"
-                        />
-                      </span>
-                    )}
-                  </div>
-                </div>
+                      <span className={styles.uppercase}>{locale}</span>
+                    </>
+                  }
+                />
               </div>
-            ) : (
-              <div className={styles.navSection}>
-                {generateNavigation(navList, path, styles, locale, isMobile)}
-                <a
-                  className={styles.navItem}
-                  href="https://github.com/milvus-io/milvus/"
-                  target="_blank"
-                  rel="noreferrer"
+            </div>
+            {/* nav section for mobile */}
+            <div className={styles.menuSection}>
+              <div className={styles.menuWrapper}>
+                <div
+                  className={styles.iconWrapper}
+                  data-type={maskConfig.type === 'menu' ? 'close' : 'menu'}
                 >
-                  <span className={styles.iconWrapper}>
-                    <i className={`fab fa-github ${styles.navIcon}`}></i>
-                  </span>
-                </a>
-                <div className={styles.navMenuItem}>
-                  <Selector
-                    options={LANGUAGES}
-                    locale={locale}
-                    path={path}
-                    isLangSelector={true}
-                    navItemLabel={
-                      <>
-                        <span className={styles.iconWrapper}>
-                          <i className={`fas fa-globe ${styles.navIcon}`}></i>
-                        </span>
-                        <span className={styles.uppercase}>{locale}</span>
-                      </>
-                    }
-                  />
+                  {maskConfig.isOpen ? (
+                    <span
+                      role="button"
+                      tabIndex={-1}
+                      onClick={() => handleToggleMask({ isOpen: false })}
+                      onKeyDown={() => handleToggleMask({ isOpen: false })}
+                    >
+                      <img
+                        className={styles.btnIcon}
+                        src={close}
+                        alt="close-icon"
+                      />
+                    </span>
+                  ) : (
+                    <span
+                      role="button"
+                      tabIndex={-1}
+                      onClick={() => handleToggleMask({ isOpen: true })}
+                      onKeyDown={() => handleToggleMask({ isOpen: true })}
+                    >
+                      <img
+                        className={styles.btnIcon}
+                        src={menu}
+                        alt="close-icon"
+                      />
+                    </span>
+                  )}
                 </div>
               </div>
-            )}
+            </div>
           </div>
-          {isMobile && (
+          {/* {isMobile && (
             <MobilePopup
               className={styles.v2Popup}
               open={maskConfig.isOpen}
@@ -248,7 +252,7 @@ const V2Header = props => {
                 </div>
               </div>
             </MobilePopup>
-          )}
+          )} */}
         </div>
       </div>
       {showRobot && <QuestionRobot />}

@@ -258,8 +258,8 @@ export default function Template({
                   />
                   <RelatedQuestion relatedKey={relatedKey} layout={layout} />
                 </div>
-                <div className="commit-info-wrapper">
-                  {commitInfo.message && (
+                {commitInfo.message && (
+                  <div className="commit-info-wrapper">
                     <>
                       <a
                         target="_blank"
@@ -279,8 +279,9 @@ export default function Template({
                         {commitInfo.message}
                       </a>
                     </>
-                  )}
-                </div>
+                  </div>
+                )}
+
                 <ScoredFeedback feedbackText={feedback} old={old} />
               </>
             </div>

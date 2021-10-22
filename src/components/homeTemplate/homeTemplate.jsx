@@ -77,7 +77,7 @@ const HomeTemplate = props => {
                 <ul>
                   {item.list.map(link => (
                     <li key={link.link}>
-                      {link.link.includes('html') ? (
+                      {link.link.charAt(0) === '/' ? (
                         <a href={link.link}>{link.text}</a>
                       ) : (
                         <a href={`${homePath}/${link.link}`}>{link.text}</a>

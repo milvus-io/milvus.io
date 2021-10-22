@@ -1,4 +1,4 @@
-name: Docker Build
+name: Milvus.io Preview Docker
 on:
   push:
     branches:
@@ -42,4 +42,4 @@ jobs:
       - name: Build and upload docker
         run: |
           docker build -t milvusdb/milvus-doc-preview:latest -f Dockerfile.docs .
-          docker push
+          docker push milvusdb/milvus-doc-preview:latest

@@ -75,7 +75,7 @@ body {
   .title-bar {
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding: 8px 16px;
     margin-bottom: 53px;
     width: 33%;
     display: flex;
@@ -91,7 +91,6 @@ body {
       line-height: 40px;
       letter-spacing: 0em;
       text-align: left;
-      padding: 0 8px;
 
       @media @tablet {
         font-size: 20px;
@@ -136,6 +135,7 @@ body {
         display: flex;
         align-items: center;
         margin-bottom: 40px;
+        min-height: 37px;
 
         .git-stars {
           margin-right: 50px;
@@ -367,8 +367,16 @@ body {
       .section-item {
         width: 33.33%;
         flex: 0 0 auto;
-        padding: 8px 32px;
+        padding: 8px 64px 8px 8px;
         z-index: 2;
+
+        @media @tablet {
+          padding: 8px 32px 8px 8px;
+        }
+
+        @media @tablet {
+          padding: 8px 16px 8px 8px;
+        }
 
         .img {
           max-width: 100%;

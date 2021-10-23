@@ -47,6 +47,18 @@
       .milvus {
         width: auto;
         height: 34px;
+
+        @media @tablet {
+          display: none;
+        }
+      }
+
+      .milvusMobile {
+        display: none;
+
+        @media @tablet {
+          display: block;
+        }
       }
 
       .lfai {
@@ -63,6 +75,10 @@
       flex-grow: 1;
       flex-direction: row;
       margin-left: 20%;
+
+      @media @tablet {
+        display: none;
+      }
 
       @media (max-width: 1300px) {
         margin-left: 10%;
@@ -214,6 +230,12 @@
     }
 
     .menuSection {
+      display: none;
+
+      @media @tablet {
+        display: block;
+      }
+
       .menuWrapper {
         display: flex;
         outline: none;

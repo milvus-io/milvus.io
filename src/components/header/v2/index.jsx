@@ -218,7 +218,7 @@ const V2Header = props => {
               </div>
             </div>
           </div>
-          {/* {isMobile && (
+          {isMobile && (
             <MobilePopup
               className={styles.v2Popup}
               open={maskConfig.isOpen}
@@ -252,7 +252,7 @@ const V2Header = props => {
                 </div>
               </div>
             </MobilePopup>
-          )} */}
+          )}
         </div>
       </div>
       {showRobot && <QuestionRobot />}

@@ -22,7 +22,7 @@ const StartCard = ({ data, wrapperClass = '', homePath }) => {
   const imgSrc = imgMap[key.toLowerCase()];
   const formatLink = useMemo(() => {
     return link.charAt(0) === '/' ? link : `${homePath}/${link}`;
-  }, []);
+  }, [homePath, link]);
   return (
     <div className={`${styles.cardWrapper} ${wrapperClass}`}>
       <div className={styles.textWrapper}>
@@ -31,7 +31,10 @@ const StartCard = ({ data, wrapperClass = '', homePath }) => {
       </div>
       <div className={styles.btnWrapper}>
         <a href={formatLink} className={styles.btn}>
-          <span className={styles.text}>{isMobile ? 'Learn' : btnLabel}</span>
+          <span className={`${styles.text} ${styles.desktopOnly}`}>
+            {btnLabel}
+          </span>
+          <span className={`${styles.text} ${styles.tabletOnly}`}>Learn</span>
           <span className={styles.icon}>
             <i className="fa fa-chevron-right"></i>
           </span>

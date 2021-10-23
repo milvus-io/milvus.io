@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 246px;
 
   align-items: center;
   border: 1px solid @color-card-border;
@@ -15,6 +16,22 @@
     display: flex;
     margin-bottom: 16px;
     padding: 16px;
+    min-height: 216px;
+  }
+
+  .desktopOnly {
+    display: inline-block;
+
+    @media @tablet {
+      display: none;
+    }
+  }
+  .tabletOnly {
+    display: none;
+
+    @media @tablet {
+      display: inline-block;
+    }
   }
 
   .textWrapper {

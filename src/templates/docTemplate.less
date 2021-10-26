@@ -41,13 +41,17 @@
   }
 
   code[class*='language-'] {
-    display: none;
-    margin: 0;
+    display: block;
+
+    &.language-javascript,
+    &.language-python,
+    &.language-go,
+    &.language-java {
+      display: none;
+    }
 
     &.active {
       display: block;
-      margin-top: 24px;
-      margin-bottom: 24px;
 
       @media @phone {
         margin-top: 16px;
@@ -349,6 +353,12 @@
     -ms-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
     -webkit-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
     font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+  }
+
+  .words-prompt {
+    padding-top: 4px;
+    font-size: 12px;
+    line-height: 16px;
   }
 }
 

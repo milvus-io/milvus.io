@@ -14,9 +14,10 @@ const Code = ({ html, content, locale }) => {
       item.classList.add('far');
       item.classList.add('fa-clone');
     });
-
+    // copy icon
     e.target.classList.toggle('far');
     e.target.classList.toggle('fa-clone');
+    // copied icon
     e.target.classList.toggle('fa');
     e.target.classList.toggle('fa-check');
   };

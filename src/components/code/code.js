@@ -1,34 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as styles from './code.module.less';
 
 const Code = ({ html, content, locale }) => {
-  const buttonTextMap = {
-    en: {
-      true: 'Copied',
-      false: 'Copy',
-    },
-    cn: {
-      true: '已复制',
-      false: '复制',
-    },
-  };
+  const handleButtonsContent = e => {
+    if (Array.from(e.target.classList)[2] === 'fa-check') {
+      return;
+    }
 
-  const contentRef = useRef(null);
-  const [isScoll, setIsScroll] = useState(false);
-
-  const handleButtonsContent = () => {
-    document.querySelectorAll('.btn-copy-text').forEach(item => {
-      const isCurrentElement =
-        item.parentNode.previousSibling.innerHTML === html;
-
-      // change button text
-      item.textContent = buttonTextMap[locale][isCurrentElement];
-      // change button icon
-      item.nextSibling.className = isCurrentElement
-        ? `${styles.icon} fa fa-check`
-        : `${styles.icon} far fa-clone`;
+    document.querySelectorAll('.btn-copy').forEach(item => {
+      item.classList.remove('fa');
+      item.classList.remove('fa-check');
+      item.classList.add('far');
+      item.classList.add('fa-clone');
     });
+    // copy icon
+    e.target.classList.toggle('far');
+    e.target.classList.toggle('fa-clone');
+    // copied icon
+    e.target.classList.toggle('fa');
+    e.target.classList.toggle('fa-check');
   };
 
   const formatContent = content => {
@@ -47,8 +38,8 @@ const Code = ({ html, content, locale }) => {
     return code;
   };
 
-  const onButtonClick = () => {
-    handleButtonsContent();
+  const onButtonClick = e => {
+    handleButtonsContent(e);
     const code = formatContent(content);
     copyToClipboard(code);
   };
@@ -65,26 +56,20 @@ const Code = ({ html, content, locale }) => {
     document.body.removeChild(el);
   };
 
-  useEffect(() => {
-    const el = contentRef.current;
-    setIsScroll(el.scrollWidth > el.clientWidth);
-  }, []);
-
   return (
-    <section className={styles.codeWrapper}>
+    <>
       <div
-        ref={contentRef}
-        className={`${styles.content} ${isScoll ? styles.scroll : ''}`}
+        className={`${styles.codeSection}`}
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
 
-      <button className={styles.btn} onClick={onButtonClick}>
-        <span className={`${styles.text} btn-copy-text`}>
-          {locale === 'en' ? 'Copy' : '复制'}
-        </span>
-        <i className={`${styles.icon} far fa-clone`} aria-hidden="true"></i>
+      <button className={styles.copyBtn} onClick={onButtonClick}>
+        <i
+          className={`btn-copy ${styles.icon} far fa-clone`}
+          aria-hidden="true"
+        ></i>
       </button>
-    </section>
+    </>
   );
 };
 

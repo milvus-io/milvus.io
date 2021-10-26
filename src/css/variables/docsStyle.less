@@ -122,6 +122,13 @@
 
   pre {
     border-radius: 4px;
+    background-color: rgb(246, 246, 246);
+
+    margin: 24px 0;
+    position: relative;
+    &::-webkit-scrollbar-track {
+      width: 12px;
+    }
 
     code {
       color: #454545;
@@ -130,9 +137,11 @@
       line-height: 20px;
       font-family: 'Source Code Pro' !important;
       border: none;
-      padding: 16px;
-      background-color: rgb(246, 246, 246);
+      padding: 12px;
+      background-color: transparent;
       font-weight: 400;
+      overflow: auto;
+      margin: 12px 32px 12px 12px;
     }
   }
 

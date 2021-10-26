@@ -41,7 +41,12 @@
   }
 
   code[class*='language-'] {
-    display: none;
+    display: block;
+
+    &.language-javascript,
+    &.language-python {
+      display: none;
+    }
 
     &.active {
       display: block;

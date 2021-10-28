@@ -5,11 +5,11 @@ import clusterIcon from '../../../images/doc-home/cluster.svg';
 import bootCamps from '../../../images/doc-home/bootcamps.png';
 import cpu from '../../../images/doc-home/cpu.svg';
 import gpu from '../../../images/doc-home/gpu.svg';
-import { useMobileScreen } from '../../../hooks/index';
+// import { useMobileScreen } from '../../../hooks/index';
 
 const StartCard = ({ data, wrapperClass = '', homePath }) => {
   const { title, link, key, btnLabel } = data;
-  const { isMobile } = useMobileScreen();
+  // const { isMobile } = useMobileScreen();
 
   const imgMap = {
     'stand-alone': standAloneIcon,

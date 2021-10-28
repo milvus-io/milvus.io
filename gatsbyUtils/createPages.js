@@ -231,6 +231,11 @@ const query = `
               link
             }
           }
+          section5 {
+            title
+            date
+            list 
+          }
         }
         childBootcamp {
           menuList {

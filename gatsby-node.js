@@ -169,6 +169,7 @@ exports.createPages = async ({ actions, graphql }) => {
     generateApiMenus,
     generateApiReferencePages,
     generateDocHome,
+    generateDocHomeWidthMd,
     generateAllDocPages,
     getVersionsWithHome,
     generateBootcampHome,
@@ -176,6 +177,7 @@ exports.createPages = async ({ actions, graphql }) => {
     handleBootcampData,
     generateBlogArticlePage,
     filterMDwidthBlog,
+    filterHomeMdWithVersion,
   } = createPagesUtils;
 
   const { createPage } = actions;
@@ -202,6 +204,7 @@ exports.createPages = async ({ actions, graphql }) => {
     // filter useless md file blog has't version
     const legalMd = filterMdWithVersion(result.data.allMarkdownRemark.edges);
     const blogMD = filterMDwidthBlog(result.data.allMarkdownRemark.edges);
+    const homeMd = filterHomeMdWithVersion(result.data.allMarkdownRemark.edges);
     // get community page data: articles md, menu and home json
     const { communityMd, communityMenu, communityHome } = handleCommunityData(
       result.data.allMarkdownRemark.edges,
@@ -249,8 +252,19 @@ exports.createPages = async ({ actions, graphql }) => {
       template: blogTemplate,
     });
 
-    generateDocHome(createPage, {
-      nodes: homeData,
+    // generateDocHome(createPage, {
+    //   nodes: homeData,
+    //   blogs: blogMD,
+    //   template: docTemplate,
+    //   allMenus,
+    //   allApiMenus,
+    //   versions,
+    //   newestVersion,
+    //   versionInfo,
+    // });
+
+    generateDocHomeWidthMd(createPage, {
+      nodes: homeMd,
       blogs: blogMD,
       template: docTemplate,
       allMenus,

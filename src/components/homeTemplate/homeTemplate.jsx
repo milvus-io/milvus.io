@@ -6,7 +6,13 @@ import * as styles from './homeTemplate.module.less';
 
 const HomeTemplate = props => {
   const { data, locale, newestBlog = [], homePath = '' } = props;
-  const { section1 = {}, section2, section3 = {}, section4 = {} } = data;
+  const {
+    section1 = {},
+    section2,
+    section3 = {},
+    section4 = {},
+    section5,
+  } = data;
 
   const generateNewsetBlog = (bloglist, locale) => {
     return (
@@ -89,6 +95,18 @@ const HomeTemplate = props => {
             ))}
         </div>
       </div>
+
+      {section5 && section5.title && (
+        <div className={`${styles.section} ${styles.section5}`}>
+          <h1>{section5.title}</h1>
+          <p className={styles.date}>{section5.date}</p>
+          <ul>
+            {section5.list.map(i => (
+              <li key={i} dangerouslySetInnerHTML={{ __html: i }}></li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className={styles.section}>
         <h1>{section4.title}</h1>
         {generateNewsetBlog(newestBlog, locale)}

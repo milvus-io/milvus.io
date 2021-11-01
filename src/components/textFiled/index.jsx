@@ -14,40 +14,11 @@ const TextFiled = ({
   errorMsg,
   type = 'text',
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
-
   const handleFocus = e => {
-    setIsFocused(true);
     onFocus(e);
     e.target.classList.add(styles.show);
   };
   return (
-    // <div className={`${styles.textFiledWrapper} ${className}`}>
-
-    //   <div className={`${styles.inputWrapper} ${isFocused ? styles.focused : ''}`}>
-    //     <div className={`${styles.labelWrapper} ${isFocused ? styles.scale : ''}`}>
-    // <span>{label}</span>
-    // {
-    //   isRequired && (
-    //     <span className={styles.icon}>*</span>
-    //   )
-    // }
-    //     </div>
-
-    //     <input
-    // type={type}
-    // className={`${styles.input} ${styles.focused}`}
-    // value={value}
-    // onChange={(e) => onChange(e)}
-    // onFocus={handleFocus}
-    // onBlur={e => onBlur(e)}
-    //     />
-    //   </div>
-    // {
-    //   ErrorMsg && <ErrorMsg />
-    // }
-    // </div>
-
     <div className={`${styles.textFiledWrapper} ${className}`}>
       <label htmlFor="">
         <p className={styles.labelWrapper}>

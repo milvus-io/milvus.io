@@ -30,7 +30,7 @@ const Hackathon = ({ data, pageContext }) => {
     <>
       <Header locale={locale} showRobot={false} />
       <Seo title="Hacktoberfest-2021" lang={locale} description={DESC} />
-      <main className={styles.hackathonContainer}>
+      <main className={`${styles.pageContainer} ${styles.hackathonContainer}`}>
         {/* banner section */}
         {firstSection && (
           <section className={styles.firstSection}>

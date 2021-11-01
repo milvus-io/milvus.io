@@ -175,7 +175,7 @@ export const NAVLIST_EN = [
     subMenu: [
       {
         label: 'Sizing Tool',
-        link: 'https://zilliz.com/sizing-tool',
+        link: '/tools/sizing',
         activeKey: null,
         icon: Tool,
       },
@@ -254,7 +254,7 @@ export const NAVLIST_CN = [
     subMenu: [
       {
         label: 'Sizing Tool',
-        link: 'https://zilliz.com/sizing-tool',
+        link: '/tools/sizing',
         activeKey: null,
         icon: Tool,
       },

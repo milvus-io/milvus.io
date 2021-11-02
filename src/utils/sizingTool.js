@@ -45,7 +45,7 @@ export const computMilvusRecommonds = (
 
   const size = vector * dimensions * 4;
   const nlistSize = dimensions * 4 * nlist;
-  const mSize = m * vector + nlist * m * 32;
+  // const mSize = m * vector + nlist * m * 32;
   const byteSize = (dimensions / 8) * vector;
 
   const rawFileSize = {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Seo from '../components/seo';
-import * as styles from './hacktoberfest.module.less';
+import * as styles from './common-layout.module.less';
 import sizingToolLogo from '../images/sizing-tool/milvusSizingTool.svg';
-import TextFiled from '../components/textFiled';
+import TextFiled from '../components/textField';
 import CustomTable from '../components/customTable';
 import TableColumn from '../components/customTable/tableColumn';
 import { computMilvusRecommonds, formatSize } from '../utils/sizingTool';
@@ -15,7 +15,6 @@ const [TITLE, DESCRIPTION] = [
 
 const SizingTool = ({ pageContext, data }) => {
   const { locale } = pageContext;
-  console.log(locale);
 
   const MHint = (
     <div className={styles.mHint}>

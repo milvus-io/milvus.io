@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from './hacktoberfest.module.less';
+import * as styles from './common-layout.module.less';
 import Button from '../components/button';
 import StepCard from '../components/hackathon/stepCard';
 import IssueCard from '../components/hackathon/issueCard';

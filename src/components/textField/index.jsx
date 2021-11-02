@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import * as styles from './index.module.less';
 
 const TextFiled = ({

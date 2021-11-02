@@ -317,7 +317,11 @@ const handlePyFilesWithOrm = (parentPath, version, apiFiles) => {
       node.innerHTML = `<code>${preNode.outerHTML}</code>`;
     });
     // only need article body html
-    doc = doc.querySelector('[itemprop=articleBody] > section').innerHTML;
+    // <=rc7 use "section", >=rc8 use ".section"
+    const docContent =
+      doc.querySelector('[itemprop=articleBody] > section') ||
+      doc.querySelector('[itemprop=articleBody] > .section');
+    doc = docContent?.innerHTML;
     return { docHTML: doc, title, order, parentMenu };
   };
   handleApiFiles(doc2html, apiFiles, {

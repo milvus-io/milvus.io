@@ -472,7 +472,8 @@ const filterMdWithVersion = edges => {
         fileAbsolutePath.includes('communityArticles') ||
         fileAbsolutePath.includes('bootcampArticles') ||
         fileAbsolutePath.includes('/docs/versions/benchmarks/')) &&
-      frontmatter.id
+      frontmatter.id &&
+      frontmatter.id !== 'home.md'
     );
   });
 };

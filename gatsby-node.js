@@ -81,7 +81,9 @@ exports.onCreatePage = ({ page, actions }) => {
       if (page.path.includes('tool')) {
         let toolName = page.path.split('-')[1];
         toolName = toolName.substring(0, toolName.length - 1);
-        localizedPath = `/tools/${toolName}`;
+        localizedPath = locales[lang].default
+          ? `/tools/${toolName}`
+          : `${locales[lang].path}/tools/${toolName}`;
       }
 
       return createPage({

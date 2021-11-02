@@ -1,0 +1,39 @@
+@import '../../css/variables/color.less';
+
+.tableContainer {
+  font-size: 16px;
+  line-height: 24px;
+
+  .tableHead {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #ccc;
+  }
+  .tableHeadItem {
+    flex: 1;
+    padding: 16px;
+  }
+
+  a {
+    color: @color-primary;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.tableRow {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+
+  p {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+  }
+}

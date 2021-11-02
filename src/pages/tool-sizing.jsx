@@ -343,7 +343,7 @@ const SizingTool = ({ pageContext, data }) => {
               {/* M */}
               <TextFiled
                 type="number"
-                label="Number of vectors"
+                label="m"
                 value={m.value}
                 helpMsg=" "
                 showError={m.showError}

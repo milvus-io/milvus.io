@@ -19,13 +19,13 @@ const SizingTool = ({ pageContext, data }) => {
   const MHint = (
     <div className={styles.mHint}>
       <p>
-        <strong>CPU only:</strong> dimension ≡ 0 (mod m)
+        <strong>CPU only:</strong> Milvus: m ≡ dim (mod m);
       </p>
       <br />
       <p>
-        <strong>GPU enabled:</strong> m ∈{'{'}1, 2, 3, 4, 8, 12, 16, 20, 24, 28,
-        32, 40, 48, 56, 64, 96{'}'}, and (dimension / m) ∈{'{'}1, 2, 3, 4, 6, 8,
-        10, 12, 16, 20, 24, 28, 32{'}'}.
+        <strong>GPU enabled:</strong> Milvus: m ∈{'{'}1, 2, 3, 4, 8, 12, 16, 20,
+        24, 28, 32, 40, 48, 56, 64, 96{'}'}, and (dimension / m) ∈{'{'}1, 2, 3,
+        4, 6, 8, 10, 12, 16, 20, 24, 28, 32{'}'}.
         <br />
         (m x 1024) ≥<code> MaxSharedMemPerBlock</code> of your graphics card.
       </p>

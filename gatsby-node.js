@@ -78,10 +78,12 @@ exports.onCreatePage = ({ page, actions }) => {
       let localizedPath = locales[lang].default
         ? page.path
         : locales[lang].path + page.path;
-      if (page.path.includes('tool')) {
+      if (page.path.includes('tool') && !page.path.includes('.md')) {
         let toolName = page.path.split('-')[1];
         toolName = toolName.substring(0, toolName.length - 1);
-        localizedPath = `/tools/${toolName}`;
+        localizedPath = locales[lang].default
+          ? `/tools/${toolName}`
+          : `${locales[lang].path}/tools/${toolName}`;
       }
 
       return createPage({
@@ -294,5 +296,6 @@ exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
   if (miniCssExtractPlugin) {
     miniCssExtractPlugin.options.ignoreOrder = true;
   }
+
   actions.replaceWebpackConfig(config);
 };

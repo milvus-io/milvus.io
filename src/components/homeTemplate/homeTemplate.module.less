@@ -1,0 +1,161 @@
+@import '../../css/variables/responsive.less';
+@import '../../css/variables/color.less';
+
+.docHomeWrapper {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+
+  @media @tablet {
+    padding: 20px 16px;
+  }
+
+  .section {
+    margin-bottom: 64px;
+
+    @media @tablet {
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+      color: @color-dark;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: bold;
+      text-transform: capitalize;
+      text-align: left;
+    }
+
+    .loadBtn {
+      margin-top: 16px;
+      width: 100%;
+      text-align: center;
+      font-weight: 700;
+
+      .btnLabel {
+        margin-right: 24px;
+
+        @media @tablet {
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+
+  .section1 {
+    .card {
+      &Wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 20px;
+
+        @media @tablet {
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: 2;
+          grid-row-gap: 20px;
+        }
+
+        @media @phone {
+          grid-template-columns: repeat(1, 1fr);
+          grid-template-rows: 3;
+          grid-row-gap: 20px;
+        }
+      }
+
+      &Item {
+        flex-basis: 48%;
+
+        @media (max-width: 1570px) {
+          flex: 1;
+          margin-top: 16px;
+        }
+      }
+    }
+  }
+
+  .section2 {
+    .desc {
+      color: @color-dark;
+      font-size: 16px;
+      line-height: 24px;
+
+      a {
+        color: @color-doc-primary;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      & + .desc {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  .section3 {
+    .itemWrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 20px;
+    }
+
+    h4 {
+      margin-bottom: 16px;
+
+      color: @color-dark;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+    }
+
+    ul {
+      list-style-position: outside;
+      margin-left: 16px;
+
+      li {
+        margin-bottom: 8px;
+        color: @color-doc-primary;
+      }
+    }
+
+    a {
+      color: @color-doc-primary;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .blogContent {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(358px, 1fr));
+    grid-column-gap: 40px;
+    grid-row-gap: 40px;
+    margin: 40px 0;
+  }
+
+  .section5 {
+    a {
+      color: @color-doc-primary;
+    }
+
+    .date {
+      font-weight: 600;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    ul {
+      padding-left: 16px;
+
+      li {
+        margin-bottom: 8px;
+        font-size: 16px;
+        line-height: 24px;
+        color: #010e29;
+      }
+    }
+  }
+}

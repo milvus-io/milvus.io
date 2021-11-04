@@ -530,7 +530,7 @@
     "firstSection": {
       "firstBanner": {
         "title": "Milvus Hacktoberfest 2021",
-        "content": "You know it's that time of the year again. <br />Hackoberfest is coming! And this year, we are going in and going strong.",
+        "content": "You know it's that time of the year again. <br />Hacktoberfest is coming! And this year, we are going in and going strong.",
         "image": "../../images/hackathon/banner-image-1.svg",
         "alert": "Spoiler alert - our biggest prize is spelled as D-R-O-N-E.",
         "badge": "../../images/hackathon/badge.svg",
@@ -539,7 +539,7 @@
       },
       "secondBanner": {
         "title": "What is Hacktoberfest",
-        "content": "Hacktobefest is an annual month-long celebration of open source. It is a great opportunity for everyone, from seasoned developers to students and code newbies, from technical writers to UX designers, to contribute to open source communities and develop your skills, with the perks of winning limited edition swags.",
+        "content": "Hacktoberfest is an annual month-long celebration of open source. It is a great opportunity for everyone, from seasoned developers to students and code newbies, from technical writers to UX designers, to contribute to open source communities and develop your skills, with the perks of winning limited edition swags.",
         "image": "../../images/hackathon/banner-image-2.png"
       }
     },

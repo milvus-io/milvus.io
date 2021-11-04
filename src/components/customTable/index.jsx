@@ -9,7 +9,7 @@ const CustomTable = ({ className = '', data = [], children }) => {
     <div className={`${styles.tableContainer} ${className}`}>
       <div className={styles.tableHead}>{children}</div>
 
-      <div className={styles.tableBody}>
+      <div>
         {data.map((item, idx) => {
           return <TableRow key={idx} data={item} propList={propList} />;
         })}

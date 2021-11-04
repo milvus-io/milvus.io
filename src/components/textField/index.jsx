@@ -16,7 +16,6 @@ const TextFiled = ({
 }) => {
   const handleFocus = e => {
     onFocus(e);
-    e.target.classList.add(styles.show);
   };
   return (
     <div className={`${styles.textFiledWrapper} ${className}`}>

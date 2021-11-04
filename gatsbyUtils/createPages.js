@@ -959,112 +959,6 @@ const generateApiReferencePages = (
   );
 };
 
-/**
- * create doc home
- * @param {function} createPage gatsby createPage action
- * @param {object} metadata nodes, template, allMenus, allApiMenus, versions and newestVersion
- */
-const generateDocHome = (
-  createPage,
-  {
-    nodes: homeData,
-    blogs: blogMD,
-    template: docTemplate,
-    mds: homeMd,
-    allMenus,
-    allApiMenus,
-    versions,
-    newestVersion,
-    versionInfo,
-  }
-) => {
-  // generate newest blog
-  const list = blogMD.map(({ node }) => {
-    const fileAbsolutePath = node.fileAbsolutePath;
-    const fileLang = findLang(fileAbsolutePath);
-
-    let [date, tag = '', title, desc, id, cover] = [
-      node.frontmatter.date,
-      node.frontmatter.tag,
-      node.frontmatter.title,
-      node.frontmatter.desc,
-      node.frontmatter.id,
-      node.frontmatter.cover,
-    ];
-    return {
-      date,
-      tags: tag ? tag.split(',') : [],
-      desc: desc || '',
-      title,
-      id,
-      cover: cover || generateDefaultBlogCover(date),
-      fileLang,
-      fileAbsolutePath,
-    };
-  });
-
-  const getTwoNewestBlog = lang => {
-    return list
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter(i => i.fileLang === lang)
-      .slice(0, 2);
-  };
-
-  homeData.forEach(({ language, data, path, version }) => {
-    const isBlog = checkIsblog(path);
-    const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
-
-    if (version === newestVersion) {
-      const homePath = getNewestVersionHomePath(language);
-      createPage({
-        path: homePath,
-        component: docTemplate,
-        context: {
-          homeData: data,
-
-          locale: language,
-          versions: Array.from(versions),
-          newestVersion,
-          version: newestVersion,
-          old: 'home',
-          fileAbsolutePath: path,
-          isBlog,
-          editPath,
-          allMenus,
-          newHtml: null,
-          allApiMenus,
-          isVersionWithHome: true,
-          newestBlog: getTwoNewestBlog(language),
-          homePath,
-        },
-      });
-    }
-
-    const homePath = getNormalVersionHomePath(version, language);
-    createPage({
-      path: homePath,
-      component: docTemplate,
-      context: {
-        homeData: data,
-        locale: language,
-
-        versions: Array.from(versions),
-        newestVersion,
-        version,
-        old: 'home',
-        fileAbsolutePath: path,
-        isBlog,
-        editPath,
-        allMenus,
-        newHtml: null,
-        allApiMenus,
-        isVersionWithHome: true,
-        newestBlog: getTwoNewestBlog(language),
-        homePath,
-      },
-    });
-  });
-};
 const generateDocHomeWidthMd = (
   createPage,
   {
@@ -1395,7 +1289,6 @@ module.exports = {
   generateCommunityHome,
   generateApiMenus,
   generateApiReferencePages,
-  generateDocHome,
   generateBootcampPages,
   generateBootcampHome,
   handleBootcampData,

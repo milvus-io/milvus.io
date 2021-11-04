@@ -170,7 +170,6 @@ exports.createPages = async ({ actions, graphql }) => {
     generateCommunityHome,
     generateApiMenus,
     generateApiReferencePages,
-    generateDocHome,
     generateDocHomeWidthMd,
     generateAllDocPages,
     getVersionsWithHome,
@@ -253,17 +252,6 @@ exports.createPages = async ({ actions, graphql }) => {
       nodes: blogMD,
       template: blogTemplate,
     });
-
-    // generateDocHome(createPage, {
-    //   nodes: homeData,
-    //   blogs: blogMD,
-    //   template: docTemplate,
-    //   allMenus,
-    //   allApiMenus,
-    //   versions,
-    //   newestVersion,
-    //   versionInfo,
-    // });
 
     generateDocHomeWidthMd(createPage, {
       nodes: homeMd,

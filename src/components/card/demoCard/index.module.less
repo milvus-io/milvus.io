@@ -4,14 +4,15 @@
   font-size: 16px;
   line-height: 24px;
   overflow: hidden;
-  background-color: #fff;
+  box-shadow: 10px 20px 50px rgba(0, 0, 0, 0.05);
 
   &:hover {
-    box-shadow: 10px 20px 50px rgb(0 0 0 / 15%);
+    box-shadow: 10px 20px 50px rgba(0, 0, 0, 0.15);
   }
 
   .titleBar {
-    background-color: #fafafa;
+    background-color: transparent;
+
     .title {
       color: #fff;
       width: 75%;
@@ -38,6 +39,7 @@
     .bottomSection {
       flex: 1;
       padding: 24px;
+      background-color: #fff;
 
       .description {
         margin-bottom: 24px;

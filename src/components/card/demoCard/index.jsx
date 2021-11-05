@@ -3,13 +3,20 @@ import Button from '../../button';
 import { Link } from 'gatsby';
 import * as styles from './index.module.less';
 
-const DemoCard = ({ name, href, videoLink, desc, coverImg }) => {
+const DemoCard = ({
+  name,
+  href,
+  videoLink,
+  desc,
+  coverImg,
+  className = '',
+}) => {
   const handlePlayVideo = link => {
     console.log(link);
   };
 
   return (
-    <div className={styles.cardContainer}>
+    <div className={`${styles.cardContainer} ${className}`}>
       <div className={styles.titleBar}>
         <p className={styles.title}>{name}</p>
       </div>

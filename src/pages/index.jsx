@@ -7,7 +7,7 @@ import './index.less';
 import Seo from '../components/seo';
 import autoscalingIcon from '../images/v2/autoscaling.svg';
 import deploymentIcon from '../images/v2/deployment.svg';
-import searchIcon from '../images/v2/searchicon.svg';
+import searchIcon from '../images/v2/search_icon.svg';
 import storageIcon from '../images/v2/storage.svg';
 import supportIcon from '../images/v2/support.svg';
 import bgImg3 from '../images/v2/bgImg3.png';

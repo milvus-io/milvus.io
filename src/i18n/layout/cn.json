@@ -520,7 +520,11 @@
       "text1": "该页面是否对你有帮助?",
       "text2": "评价成功!"
     },
-    "commit": "更新于"
+    "commit": "更新于",
+    "docHome": {
+      "title": "博客",
+      "btnLabel": "更多"
+    }
   },
   "hackathon": {
     "firstSection": {

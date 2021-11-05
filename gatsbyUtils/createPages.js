@@ -190,53 +190,7 @@ const query = `
             title
           }
         }
-        childDocHome {
-          section1 {
-            items {
-              btnLabel
-              key
-              link
-              title
-            }
-            title
-            order
-          }
-          section2 {
-            desc
-            title
-            order
-          }
-          section3 {
-            items {
-              label
-              list {
-                link
-                text
-              }
-            }
-            title
-          }
-          section4 {
-            items {
-              abstract
-              imgSrc
-              time
-              title
-              link
-            }
-            title
-            loadBtn {
-              isExternal
-              label
-              link
-            }
-          }
-          section5 {
-            title
-            date
-            list 
-          }
-        }
+        
         childBootcamp {
           menuList {
             isMenu
@@ -487,6 +441,34 @@ const filterMDwidthBlog = edges => {
     const isPublish = node.frontmatter.isPublish !== false;
     return isBlog && isPublish;
   });
+};
+
+// converte home.json to md, filter all files and it's corresponding version
+const filterHomeMdWithVersion = edges => {
+  const filterVersion = path => {
+    const mdVersion = findVersion(path);
+    if (mdVersion?.startsWith('v0.') && !mdVersion?.startsWith('v0.x'))
+      return false;
+    return !!mdVersion;
+  };
+
+  return edges.reduce((acc, cur) => {
+    const {
+      node: { fileAbsolutePath, frontmatter, html },
+    } = cur;
+
+    if (filterVersion(fileAbsolutePath) && frontmatter.id === 'home.md') {
+      const version = findVersion(fileAbsolutePath) || 'master';
+      const fileLang = findLang(fileAbsolutePath);
+      acc.push({
+        language: fileLang,
+        html,
+        path: fileAbsolutePath,
+        version,
+      });
+    }
+    return acc;
+  }, []);
 };
 
 /**
@@ -977,15 +959,10 @@ const generateApiReferencePages = (
   );
 };
 
-/**
- * create doc home
- * @param {function} createPage gatsby createPage action
- * @param {object} metadata nodes, template, allMenus, allApiMenus, versions and newestVersion
- */
-const generateDocHome = (
+const generateDocHomeWidthMd = (
   createPage,
   {
-    nodes: homeData,
+    nodes: homeMd,
     blogs: blogMD,
     template: docTemplate,
     allMenus,
@@ -1027,22 +1004,24 @@ const generateDocHome = (
       .slice(0, 2);
   };
 
-  homeData.forEach(({ language, data, path, version }) => {
+  const formatHtml = (html, homePath, version) => {
+    const regex = /\<a (\S*)\>/g;
+    let newHtml = html.replace(regex, link => {
+      const [start, originPath, end] = link.split('"');
+      const formatPath =
+        originPath.charAt(0) === '#' ||
+        originPath.charAt(0) === '/' ||
+        originPath.includes('http')
+          ? originPath
+          : `${homePath}/${originPath}`;
+      return [start, formatPath, end].join('"');
+    });
+    return newHtml;
+  };
+
+  homeMd.forEach(({ language, html, path, version }) => {
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
-    data.section3.items.forEach(item => {
-      item.list.forEach(subItem => {
-        const { link } = subItem;
-        if (link.includes('{{') && link.includes('}}')) {
-          const head = link.match(/(\S*)\{{/)[1];
-          // must be one of pymilvus,go node java
-          const language = link.match(/\{{(\S*)\}}/)[1].split('_')[0];
-          const foot = link.match(/\}}(\S*)/)[1];
-          const apiVersion = versionInfo[version][language];
-          subItem.link = `${head}${apiVersion}${foot}`;
-        }
-      });
-    });
 
     if (version === newestVersion) {
       const homePath = getNewestVersionHomePath(language);
@@ -1050,7 +1029,7 @@ const generateDocHome = (
         path: homePath,
         component: docTemplate,
         context: {
-          homeData: data,
+          homeData: formatHtml(html, homePath, version),
           locale: language,
           versions: Array.from(versions),
           newestVersion,
@@ -1074,7 +1053,7 @@ const generateDocHome = (
       path: homePath,
       component: docTemplate,
       context: {
-        homeData: data,
+        homeData: formatHtml(html, homePath, version),
         locale: language,
         versions: Array.from(versions),
         newestVersion,
@@ -1310,11 +1289,12 @@ module.exports = {
   generateCommunityHome,
   generateApiMenus,
   generateApiReferencePages,
-  generateDocHome,
   generateBootcampPages,
   generateBootcampHome,
   handleBootcampData,
   generateAllDocPages,
   generateBlogArticlePage,
   filterMDwidthBlog,
+  filterHomeMdWithVersion,
+  generateDocHomeWidthMd,
 };

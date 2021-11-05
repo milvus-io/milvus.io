@@ -49,7 +49,7 @@ const SizingTool = ({ pageContext, data }) => {
     showError: false,
   });
   const [segmetFileSize, setsegmetFileSize] = useState({
-    vlaue: '',
+    value: '',
     showError: false,
   });
   const [isInit, setIsInit] = useState(true);
@@ -360,7 +360,7 @@ const SizingTool = ({ pageContext, data }) => {
                 helpMsg="must > 0"
                 showError={segmetFileSize.showError}
                 errorMsg={
-                  <span className={styles.warn}>
+                  <span>
                     Size of segment file should be greater than 0 and less than
                     131072 MB
                   </span>

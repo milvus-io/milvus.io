@@ -1011,6 +1011,7 @@ const generateDocHomeWidthMd = (
       const formatPath =
         originPath.charAt(0) === '#' ||
         originPath.charAt(0) === '/' ||
+        originPath.includes('api-reference') ||
         originPath.includes('http')
           ? originPath
           : `${homePath}/${originPath}`;

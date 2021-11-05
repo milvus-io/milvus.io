@@ -14,18 +14,24 @@ const Button = ({
 }) => {
   return (
     <div className={`${styles.buttonWrapper} ${className}`}>
-      {link.includes('#') ? (
-        <a href={link} className={`${styles[variant]}`} target="_self">
-          {children}
-        </a>
+      {link ? (
+        link.includes('#') ? (
+          <a href={link} className={`${styles[variant]}`} target="_self">
+            {children}
+          </a>
+        ) : (
+          <LocalizedLink
+            to={link}
+            className={`${styles[variant]}`}
+            locale={locale}
+          >
+            {children}
+          </LocalizedLink>
+        )
       ) : (
-        <LocalizedLink
-          to={link}
-          className={`${styles[variant]}`}
-          locale={locale}
-        >
+        <button className={`${styles[variant]} ${styles.button}`}>
           {children}
-        </LocalizedLink>
+        </button>
       )}
     </div>
   );

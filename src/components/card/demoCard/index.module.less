@@ -1,0 +1,76 @@
+.cardContainer {
+  flex: 1;
+  font-family: Inter;
+  font-size: 16px;
+  line-height: 24px;
+  overflow: hidden;
+  background-color: #fff;
+
+  &:hover {
+    box-shadow: 10px 20px 50px rgb(0 0 0 / 15%);
+  }
+
+  .titleBar {
+    background-color: #fafafa;
+    .title {
+      color: #fff;
+      width: 75%;
+      background: #156cdd;
+      border-radius: 0px 20px 0px 0px;
+      font-family: Inter Medium;
+      padding: 16px;
+    }
+  }
+
+  .contentWrapper {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+
+    .topSection {
+      flex: 1;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .bottomSection {
+      flex: 1;
+      padding: 24px;
+
+      .description {
+        margin-bottom: 24px;
+        font-size: 14px;
+        line-height: 22px;
+      }
+
+      .buttonWrapper {
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        .tryBtn {
+          margin-left: 24px;
+          a {
+            padding: 8px 16px;
+          }
+
+          .tryBtnLabel {
+            margin-right: 8px;
+          }
+        }
+        .playBtn {
+          .playBtnLabel {
+            font-family: Inter;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 700;
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+  }
+}

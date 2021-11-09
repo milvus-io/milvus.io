@@ -1,0 +1,55 @@
+.playerContainer {
+  position: relative;
+
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    z-index: 1;
+  }
+
+  .closeBtnWrapper {
+    background: transparent;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .iconWrapper {
+      width: 100%;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      color: #fff;
+      line-height: 24px;
+      font-size: 24px;
+    }
+  }
+  .playerWrapper {
+    background: #010e29;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loadingIcon {
+      color: #fff;
+      font-size: 24px;
+      animation: circle 1.5s linear infinite;
+      transform-origin: center;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%);
+    }
+  }
+
+  @keyframes circle {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

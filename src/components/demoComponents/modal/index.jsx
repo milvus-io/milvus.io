@@ -4,17 +4,24 @@ import * as styles from './index.module.less';
 const Modal = ({
   open = false,
   className = '',
-  children,
+  component: CustomComponent,
   handleCloseModal = () => {},
 }) => {
+  const handleClickContainer = e => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+    handleCloseModal();
+  };
+
   return (
     <div
       className={`${styles.modalWrapper} ${
         open ? styles.show : styles.hidden
       } ${className}`}
-      onClick={handleCloseModal}
+      onClick={handleClickContainer}
     >
-      {children}
+      <CustomComponent />
     </div>
   );
 };

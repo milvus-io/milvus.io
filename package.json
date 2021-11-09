@@ -7,7 +7,7 @@
   "dependencies": {
     "@octokit/core": "^3.5.1",
     "@sentry/gatsby": "^6.3.5",
-    "axios": "^0.21.1",
+    "axios": "^0.24.0",
     "d3-format": "^3.0.1",
     "dayjs": "^1.10.6",
     "dotenv": "^10.0.0",

@@ -11,6 +11,7 @@ const Button = ({
   className = '',
   children,
   locale,
+  onClick,
 }) => {
   return (
     <div className={`${styles.buttonWrapper} ${className}`}>
@@ -29,7 +30,10 @@ const Button = ({
           </LocalizedLink>
         )
       ) : (
-        <button className={`${styles[variant]} ${styles.button}`}>
+        <button
+          className={`${styles[variant]} ${styles.button}`}
+          onClick={onClick}
+        >
           {children}
         </button>
       )}

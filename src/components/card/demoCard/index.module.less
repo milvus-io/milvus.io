@@ -4,7 +4,8 @@
   font-size: 16px;
   line-height: 24px;
   box-shadow: 10px 20px 50px rgba(0, 0, 0, 0.05);
-  position: relative;
+  display: flex;
+  flex-direction: column;
 
   &:hover {
     box-shadow: 10px 20px 50px rgba(0, 0, 0, 0.15);
@@ -12,11 +13,11 @@
 
   .titleBar {
     background-color: transparent;
-    position: absolute;
-    left: 0;
-    bottom: 100%;
-    height: 56px;
-    width: 100%;
+    // position: absolute;
+    // left: 0;
+    // bottom: 100%;
+    // height: 56px;
+    // width: 100%;
 
     .title {
       color: #fff;
@@ -24,7 +25,8 @@
       background: #156cdd;
       border-radius: 0px 20px 0px 0px;
       font-family: Inter Medium;
-      padding: 16px;
+      padding: 12px 24px;
+      font-weight: 600;
     }
   }
 
@@ -33,6 +35,7 @@
     flex-direction: column;
     border-radius: 8px;
     overflow: hidden;
+    flex: 1;
 
     .topSection {
       flex: 1;
@@ -44,11 +47,15 @@
 
     .bottomSection {
       flex: 1;
-      padding: 24px;
       background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
 
       .description {
-        margin-bottom: 24px;
+        margin-bottom: 40px;
+
         font-size: 14px;
         line-height: 22px;
       }
@@ -58,15 +65,20 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        // padding: 0 24px 24px;
 
         .tryBtn {
           margin-left: 24px;
-          a {
+          button {
             padding: 8px 16px;
           }
 
           .tryBtnLabel {
             margin-right: 8px;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 700;
+            font-family: Inter;
           }
         }
         .playBtn {

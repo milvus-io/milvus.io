@@ -8,20 +8,112 @@ import { DEMOS } from './constants';
 import DemoCard from '../../components/card/demoCard';
 import * as styles from './index.module.less';
 import Modal from '../../components/demoComponents/modal';
+import VideoPlayer from '../../components/demoComponents/videoPlayer';
+import InfoSubmitter from '../../components/demoComponents/infoSubmitter';
+import SnackBar from '../../components/demoComponents/snackBar';
+import { navigate } from '@reach/router';
 
 const TITLE =
   'Milvus Reverse Image Search - Open-Source Vector Similarity Application Dem';
 const DESC =
   'With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.';
+const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
 const MilvusDemos = ({ data, pageContext }) => {
   const { footer } = data.allFile.edges.filter(i => i.node.childI18N)[0].node
     .childI18N.v2;
   const { locale } = pageContext;
-  const [open, setOpen] = useState(true);
 
-  const handleClick = () => {
-    console.log(111);
+  const [modalConfig, setModalConfig] = useState({
+    open: false,
+    handleCloseModal: () => {},
+    component: () => <></>,
+  });
+  const [snackBarConfig, setSnackBarConfig] = useState({
+    open: false,
+    type: 'info',
+    message: '',
+    handleCloseSnackBar: () => {},
+  });
+
+  // close dialog
+  const hideModal = () => {
+    setModalConfig({
+      open: false,
+      component: () => <></>,
+    });
+  };
+
+  // callback of form submit
+  const handleSubmitInfo = (statusCode, unique_email_id, href) => {
+    const config = {
+      open: true,
+      handleCloseSnackBar: () =>
+        setSnackBarConfig({
+          open: false,
+        }),
+    };
+
+    if (statusCode === 200) {
+      window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
+      setSnackBarConfig({
+        ...config,
+        type: 'success',
+        message: 'Thank you, you have been added to our mailing list!',
+      });
+      //
+      window.location.href = href;
+    } else {
+      setSnackBarConfig({
+        ...config,
+        type: 'warning',
+        message: 'This email is already subscribed!',
+      });
+    }
+  };
+
+  // click play video
+  const handleWatchVideo = src => {
+    const { innerWidth } = window;
+    const clientWidth =
+      innerWidth < 800
+        ? innerWidth
+        : innerWidth < 1200
+        ? innerWidth * 0.8
+        : 1200 * 0.8;
+    setModalConfig({
+      open: true,
+      handleCloseModal: hideModal,
+      component: () => (
+        <VideoPlayer
+          clientWidth={clientWidth}
+          videoSrc={src}
+          hideVideoDialog={hideModal}
+        />
+      ),
+    });
+  };
+
+  // click try demo
+  const handleTryDemo = ({ href }) => {
+    const unique_email_id = window.localStorage.getItem(UNIQUE_EMAIL_ID);
+    if (unique_email_id) {
+      window.location.href = href;
+      return;
+    }
+    setModalConfig({
+      open: true,
+      handleCloseModal: hideModal,
+      component: () => (
+        <InfoSubmitter
+          loale={locale}
+          submitCb={handleSubmitInfo}
+          source="Ads：Reddit"
+          hideModal={hideModal}
+          href={href}
+        />
+      ),
+    });
   };
 
   return (
@@ -40,14 +132,14 @@ const MilvusDemos = ({ data, pageContext }) => {
                 coverImg={demo.coverImg}
                 href={demo.href}
                 videoLink={demo.videoLink}
+                handlePlayVideo={handleWatchVideo}
+                handleTryDemo={handleTryDemo}
               />
             );
           })}
         </div>
-        <Modal open={open} handleCloseModal={() => setOpen(false)}>
-          <p>lala</p>
-          <button onClick={handleClick}>click</button>
-        </Modal>
+        <Modal {...modalConfig} />
+        <SnackBar {...snackBarConfig} />
       </main>
       <Footer footer={footer} locale={locale} />
     </>

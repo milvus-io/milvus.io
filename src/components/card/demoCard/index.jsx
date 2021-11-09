@@ -10,11 +10,9 @@ const DemoCard = ({
   desc,
   coverImg,
   className = '',
+  handlePlayVideo = () => {},
+  handleTryDemo = () => {},
 }) => {
-  const handlePlayVideo = link => {
-    console.log(link);
-  };
-
   return (
     <div className={`${styles.cardContainer} ${className}`}>
       <div className={styles.titleBar}>
@@ -28,24 +26,25 @@ const DemoCard = ({
           <p className={styles.description}>{desc}</p>
           <div className={styles.buttonWrapper}>
             <Button
+              onClick={() => handlePlayVideo(videoLink)}
               variant="text"
               className={styles.playBtn}
               children={
                 <>
                   <i className="fas fa-play-circle"></i>
-                  <span
-                    className={styles.playBtnLabel}
-                    onClick={() => handlePlayVideo(videoLink)}
-                  >
-                    Watch Demo
-                  </span>
+                  <span className={styles.playBtnLabel}>Watch Demo</span>
                 </>
               }
             />
             <Button
+              onClick={() =>
+                handleTryDemo({
+                  name,
+                  href,
+                })
+              }
               variant="contained"
               className={styles.tryBtn}
-              link={href}
               children={
                 <>
                   <span className={styles.tryBtnLabel}>Try Demo</span>

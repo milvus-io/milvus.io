@@ -33,11 +33,10 @@ const SnackBar = ({
   useEffect(() => {
     if (open) {
       setStartTime(new Date().getTime());
-
       const timer = setTimeout(handleCloseSnackBar, duration);
       setTimer(timer);
     }
-  }, [open]);
+  }, [open, handleCloseSnackBar, duration]);
 
   return (
     <div
@@ -46,6 +45,8 @@ const SnackBar = ({
       }`}
       onMouseEnter={handleHover}
       onMouseLeave={handleMouseLeave}
+      role="button"
+      tabIndex="-1"
     >
       <div className={`${styles[type]} ${styles.content}`}>
         <p>{message}</p>

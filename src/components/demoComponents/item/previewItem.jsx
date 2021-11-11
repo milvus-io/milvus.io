@@ -1,6 +1,5 @@
 import React from 'react';
 import { useMobileScreen } from '../../../hooks';
-import blackSearch from '../../../images/milvus-demos/search-black.svg';
 import SearchIcon from './searchIcon';
 import * as styles from './preview.module.less';
 
@@ -20,7 +19,10 @@ const PreviewItem = ({ src, distance, handleSearch }) => {
 
         <div
           className={styles.searchBtnWrapper}
+          role="button"
+          tabIndex="-1"
           onClick={() => handleSearch(src)}
+          onKeyDown={() => handleSearch(src)}
         >
           <span className={styles.iconWrapper}>
             <SearchIcon color="#fff" />

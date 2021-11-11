@@ -53,7 +53,10 @@ const Item = props => {
       <div
         className={styles.imgWrapper}
         onClick={handlePreview}
+        onKeyDown={handlePreview}
         draggable="true"
+        role="button"
+        tabIndex="-1"
       >
         <Image
           alt="Test"
@@ -67,6 +70,9 @@ const Item = props => {
         <span
           className={styles.iconWrapper}
           onClick={e => searchThisPic(e, src)}
+          onKeyDown={e => searchThisPic(e, src)}
+          role="button"
+          tabIndex="-1"
         >
           <img src={blackSearch} alt="search-icon" />
         </span>

@@ -15,9 +15,15 @@ const VideoPlayer = ({ clientWidth, videoSrc, hideVideoDialog }) => {
       className={styles.playerContainer}
     >
       <div className={styles.closeBtnWrapper}>
-        <p className={styles.iconWrapper} onClick={hideVideoDialog}>
+        <span
+          className={styles.iconWrapper}
+          role="button"
+          tabIndex="-1"
+          onClick={hideVideoDialog}
+          onKeyDown={hideVideoDialog}
+        >
           <i className="fas fa-times"></i>
-        </p>
+        </span>
       </div>
       <div className={styles.playerWrapper}>
         {!ready && <i className={`${styles.loadingIcon} fas fa-spinner`}></i>}

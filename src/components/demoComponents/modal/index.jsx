@@ -20,6 +20,9 @@ const Modal = ({
         open ? styles.show : styles.hidden
       } ${className}`}
       onClick={handleClickContainer}
+      role="button"
+      tabIndex="-1"
+      onKeyDown={handleClickContainer}
     >
       <CustomComponent />
     </div>

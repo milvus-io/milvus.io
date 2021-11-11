@@ -35,7 +35,13 @@ const InfoSubmitter = ({
     <div className={styles.submitterContainer}>
       <div className={styles.titleBar}>
         <h3 className={styles.title}>Before you go...</h3>
-        <div className={styles.iconWrapper} onClick={hideModal}>
+        <div
+          className={styles.iconWrapper}
+          role="button"
+          onClick={hideModal}
+          onKeyDown={hideModal}
+          tabIndex="-1"
+        >
           <i className="fas fa-times"></i>
         </div>
       </div>

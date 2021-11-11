@@ -3,7 +3,6 @@ import { graphql } from 'gatsby';
 import Header from '../../components/header/v2';
 import Footer from '../../components/footer/v2';
 import Seo from '../../components/seo';
-import LocalizedLink from '../../components/localizedLink/localizedLink';
 import DemoCard from '../../components/card/demoCard';
 import * as styles from './index.module.less';
 import Modal from '../../components/demoComponents/modal';

@@ -6,14 +6,16 @@ import {
   getBase64Image,
 } from '../../utils/demo-helper';
 import Masonry from '../../components/demoComponents/masonry';
-import { search, getCount } from '../../utils/imageSearch';
+import { search } from '../../utils/imageSearch';
 import DemoImg from '../../images/milvus-demos/demo.jpg';
 import UploaderHeader from '../../components/demoComponents/uploader';
 import { useMobileScreen } from '../../hooks';
-import * as styles from './index.module.less';
+import * as styles from './demo.module.less';
 import Button from '../../components/button';
 import Modal from '../../components/demoComponents/modal';
 import 'gestalt/dist/gestalt.css';
+import FloatBord from '../../components/demoComponents/floatBord';
+import Loading from '../../components/demoComponents/loading';
 
 const TITLE =
   'Milvus Reverse Image Search - Open-Source Vector Similarity Application Dem';
@@ -45,7 +47,6 @@ const ImageSearchPage = ({ pageContext }) => {
   const { locale } = pageContext;
 
   const formatImgData = async (list, setFunc) => {
-    console.log(list);
     const results = list.map(item => {
       const distance = item[1] ? item[1].toFixed(6) : 0;
       const src = item[0][0];
@@ -80,7 +81,7 @@ const ImageSearchPage = ({ pageContext }) => {
 
     try {
       const [res, duration = 0] = await search(fd, false);
-      setDuration(Number.prototype.toFixed.call(duration, 4));
+      setDuration(`${Number.prototype.toFixed.call(duration * 1000, 2)} ms`);
       if (!res.length) {
         setNoData(true);
         return;
@@ -109,8 +110,7 @@ const ImageSearchPage = ({ pageContext }) => {
 
   // reduce unnecessary rerendering
   const loadItems = useCallback(
-    () => async () => {
-      console.log('loading more');
+    async () => {
       try {
         setPartialLoading(true);
         await handleImgSearch(file, false, page);
@@ -120,6 +120,8 @@ const ImageSearchPage = ({ pageContext }) => {
         setPartialLoading(false);
       }
     },
+
+    // eslint-disable-next-line
     [file, page]
   );
 
@@ -138,13 +140,15 @@ const ImageSearchPage = ({ pageContext }) => {
 
   // reduce unnecessary rerendering
   const handleSearch = useCallback(
-    () => src => {
+    src => {
+      console.log(src);
       handleImgToBlob(src, true);
       setSelected({
         src: src,
         isSelected: true,
       });
     },
+    // eslint-disable-next-line
     []
   );
 
@@ -209,10 +213,9 @@ const ImageSearchPage = ({ pageContext }) => {
           </div>
           {isShowCode ? <div className={styles.codeContainer}>123</div> : null}
         </div>
-        {loading && !partialLoading ? (
-          <div className={styles.loadingWrapper}>loading...</div>
-        ) : null}
+        {loading && !partialLoading ? <Loading /> : null}
         <Modal {...modalConfig} />
+        <FloatBord />
       </main>
     </>
   );

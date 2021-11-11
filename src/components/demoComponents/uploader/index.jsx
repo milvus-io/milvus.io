@@ -6,13 +6,6 @@ import { FileDrop } from 'react-file-drop';
 import Cropper from '../Cropper';
 import { useMobileScreen } from '../../../hooks';
 
-const calculateDuration = s => {
-  if (typeof s === 'string') {
-    return 'Searching...';
-  }
-  return (s * 1000).toFixed(0);
-};
-
 const UploaderHeader = ({
   handleImgSearch,
   handleSelectedImg,
@@ -24,8 +17,6 @@ const UploaderHeader = ({
   const { isMobile } = useMobileScreen();
   const inputRef = useRef(null);
   const uploadSection = useRef(null);
-
-  const duration_ms = calculateDuration(duration);
 
   const handleUploadImg = () => {
     inputRef.current.click();
@@ -72,7 +63,6 @@ const UploaderHeader = ({
           onDragOver={handlerDragEnter}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={styles.target}
         >
           <div className={styles.uploadSection} ref={uploadSection}>
             <h4 className={styles.desc}>
@@ -82,7 +72,6 @@ const UploaderHeader = ({
             <div className={styles.uploadBtnWrapper}>
               <input
                 accept="image/*"
-                className={styles.input}
                 style={{ display: 'none' }}
                 type="file"
                 ref={inputRef}
@@ -116,7 +105,6 @@ const UploaderHeader = ({
                 <div className={styles.uploadBtnWrapper}>
                   <input
                     accept="image/*"
-                    className={styles.input}
                     style={{ display: 'none' }}
                     type="file"
                     ref={inputRef}
@@ -132,7 +120,7 @@ const UploaderHeader = ({
                 </div>
                 <div className={styles.resultDesc}>
                   <p className={styles.text}>Search Result: {count}</p>
-                  <p className={styles.text}>Duration: {duration_ms} ms</p>
+                  <p className={styles.text}>Duration: {duration}</p>
                 </div>
                 <div className={styles.iconWrapper}>
                   <Button
@@ -153,10 +141,10 @@ const UploaderHeader = ({
               </>
             ) : (
               <>
-                <div className={styles.left}>
+                <div>
                   <div className={styles.resultDesc}>
                     <p className={styles.text}>Search Result: {count}</p>
-                    <p className={styles.text}>Duration: {duration_ms} ms</p>
+                    <p className={styles.text}>Duration: {duration}</p>
                   </div>
                   <div className={styles.iconWrapper}>
                     <Button
@@ -168,7 +156,6 @@ const UploaderHeader = ({
                 <div className={styles.uploadBtnWrapper}>
                   <input
                     accept="image/*"
-                    className={styles.input}
                     style={{ display: 'none' }}
                     type="file"
                     ref={inputRef}

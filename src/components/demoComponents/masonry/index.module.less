@@ -30,25 +30,24 @@
   display: flex;
   align-items: center;
   visibility: hidden;
-  position: absolute;
-  z-index: -1;
 
   &.open {
     visibility: visible;
-    z-index: 1;
   }
 
-  .icon-wrapper {
+  .iconWrapper {
     display: inline-block;
     height: 26px;
     width: 26px;
     line-height: 30px;
     font-size: 16px;
     margin-left: 8px;
-    text-align: center;
     cursor: pointer;
     border-radius: 50%;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       background-color: #e9e9ed;
@@ -71,11 +70,11 @@
       visibility: hidden;
       opacity: 0;
       left: 0;
-      top: 42px;
+      top: 32px;
       white-space: nowrap;
 
       @media @phone {
-        top: 34px;
+        top: 24px;
       }
     }
 

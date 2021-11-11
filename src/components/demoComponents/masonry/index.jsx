@@ -17,8 +17,6 @@ function Main({
 }) {
   const { isMobile } = useMobileScreen();
 
-  console.log('loadItems---', loadItems);
-
   return useMemo(
     () => (
       <div
@@ -27,7 +25,7 @@ function Main({
         }`}
       >
         <div className={`${styles.toopTip} ${isSelected ? styles.open : ''}`}>
-          <p className={styles.text}>Sorted by Similarity metric</p>
+          <p>Sorted by Similarity metric</p>
           <span className={styles.iconWrapper}>
             <i className="fas fa-exclamation-circle"></i>
           </span>
@@ -65,6 +63,7 @@ function Main({
       handleSearch,
       setModal,
       scrollContainer,
+      isMobile,
     ]
   );
 }

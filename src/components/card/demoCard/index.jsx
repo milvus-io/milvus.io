@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '../../button';
-import { Link } from 'gatsby';
 import * as styles from './index.module.less';
 
 const DemoCard = ({

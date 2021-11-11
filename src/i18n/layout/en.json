@@ -529,7 +529,11 @@
       "text1": "Is this page helpful?",
       "text2": "Scored Successfully!"
     },
-    "commit": "was last updated"
+    "commit": "was last updated",
+    "docHome": {
+      "title": "Blog",
+      "btnLabel": "Read More"
+    }
   },
   "hackathon": {
     "firstSection": {

@@ -104,9 +104,12 @@ export default function Template({
   const layout = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node
     .childI18N.layout;
 
-  const { feedback, commit: commitTrans } = data.allFile.edges.filter(
-    edge => edge.node.childI18N
-  )[0].node.childI18N.v2;
+  const {
+    feedback,
+    commit: commitTrans,
+    docHome: docHomeText,
+  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
+    .v2;
 
   const menuList = allMenus.find(
     v =>
@@ -215,6 +218,7 @@ export default function Template({
               locale={locale}
               newestBlog={newestBlog}
               homePath={homePath}
+              text={docHomeText}
             />
           ) : (
             <div className="doc-post-container">
@@ -434,6 +438,10 @@ export const pageQuery = graphql`
                 text2
               }
               commit
+              docHome {
+                title
+                btnLabel
+              }
             }
           }
         }

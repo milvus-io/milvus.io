@@ -1,0 +1,31 @@
+@import '../../../css/variables/responsive.less';
+
+.cropper {
+  width: 247px;
+  height: 264px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media @phone {
+    width: 311px;
+    height: 306px;
+  }
+
+  .cropper-line {
+    background-color: #fff;
+  }
+
+  .cropper-view-box {
+    outline: 1px solid #fff;
+    outline-color: rgba(255, 255, 255, 0.75);
+  }
+
+  .cropper-point {
+    width: 16px;
+    height: 16px;
+    border: 4px solid rgba(255, 255, 255, 1);
+    z-index: -1;
+    background: none;
+  }
+}

@@ -1,14 +1,45 @@
 import React from 'react';
 import { Box, Image } from 'gestalt';
+import PreviewItem from './PreviewItem';
+import blackSearch from '../../../images/milvus-demos/search-black.svg';
+import * as styles from './item.module.less';
 
-const Item = () => {
-  const [height, width, src, distance, origin_src] = [
-    100,
-    100,
-    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fdd502cc56049fca09420e7b77a786bc5c7a9b3ffb1371-l7vKt5_fw658&refer=http%3A%2F%2Fhbimg.b0.upaiyun.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1638703199&t=3d356ab2db4431851731cbed874a1914',
-    0.11111,
-    '',
-  ];
+const Item = props => {
+  const {
+    data: { height, width, src, distance, origin_src },
+    isSelected,
+    handleSearch,
+    setModal,
+  } = props;
+
+  const closeCustomDialog = () => {
+    setModal({
+      open: false,
+    });
+  };
+
+  const handlePreview = () => {
+    setModal({
+      open: true,
+      component: () => (
+        <PreviewItem
+          src={origin_src}
+          distance={distance}
+          closeCustomDialog={closeCustomDialog}
+          handleSearch={() => {
+            handleSearch(src);
+            closeCustomDialog();
+          }}
+        />
+      ),
+      handleCloseModal: closeCustomDialog,
+    });
+  };
+
+  const searchThisPic = (e, src) => {
+    e.stopPropagation();
+    handleSearch(src);
+  };
 
   return (
     <Box
@@ -19,7 +50,11 @@ const Item = () => {
       fit={true}
       padding={0}
     >
-      <div draggable="true">
+      <div
+        className={styles.imgWrapper}
+        onClick={handlePreview}
+        draggable="true"
+      >
         <Image
           alt="Test"
           color="#fff"
@@ -29,21 +64,22 @@ const Item = () => {
         />
 
         {/* <div className="icon-mask"> */}
-        {/* <span >
+        <span
+          className={styles.iconWrapper}
+          onClick={e => searchThisPic(e, src)}
+        >
           <img src={blackSearch} alt="search-icon" />
-        </span> */}
+        </span>
         {/* </div> */}
       </div>
-      {/* {
-        props.isSelected ?
-          (
-            <div className={classes.textWrapper}>
-              <Typography variant="body1" className='title'>Similarity Metirc:&nbsp;&nbsp;</Typography>
-              <Typography variant="h5" className='title'>{distance}</Typography>
-            </div>
-          ) : null
-      } */}
+      {isSelected ? (
+        <div className={styles.textWrapper}>
+          <p>Similarity Metirc:&nbsp;&nbsp;</p>
+          <h5>{distance}</h5>
+        </div>
+      ) : null}
     </Box>
   );
 };
+
 export default Item;

@@ -10,13 +10,13 @@ const Button = ({
   variant = 'contained',
   className = '',
   children,
-  locale,
-  onClick,
+  locale = null,
+  onClick = () => {},
 }) => {
   return (
-    <div className={`${styles.buttonWrapper} ${className}`}>
+    <div className={`${styles.btnContainer} ${className}`}>
       {link ? (
-        link.includes('#') ? (
+        link.includes('#') || !locale ? (
           <a href={link} className={`${styles[variant]}`} target="_self">
             {children}
           </a>

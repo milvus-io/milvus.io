@@ -4,7 +4,7 @@ import * as styles from './index.module.less';
 const Modal = ({
   open = false,
   className = '',
-  component: CustomComponent,
+  component: CustomComponent = () => <></>,
   handleCloseModal = () => {},
 }) => {
   const handleClickContainer = e => {

@@ -10,22 +10,32 @@ const Button = ({
   variant = 'contained',
   className = '',
   children,
-  locale,
+  locale = null,
+  onClick = () => {},
 }) => {
   return (
-    <div className={`${styles.buttonWrapper} ${className}`}>
-      {link.includes('#') ? (
-        <a href={link} className={`${styles[variant]}`} target="_self">
-          {children}
-        </a>
+    <div className={`${styles.btnContainer} ${className}`}>
+      {link ? (
+        link.includes('#') || !locale ? (
+          <a href={link} className={`${styles[variant]}`} target="_self">
+            {children}
+          </a>
+        ) : (
+          <LocalizedLink
+            to={link}
+            className={`${styles[variant]}`}
+            locale={locale}
+          >
+            {children}
+          </LocalizedLink>
+        )
       ) : (
-        <LocalizedLink
-          to={link}
-          className={`${styles[variant]}`}
-          locale={locale}
+        <button
+          className={`${styles[variant]} ${styles.button}`}
+          onClick={onClick}
         >
           {children}
-        </LocalizedLink>
+        </button>
       )}
     </div>
   );

@@ -1,0 +1,49 @@
+@import '../../css/variables/responsive.less';
+
+.container {
+  padding: 80px;
+  font-family: Inter;
+
+  @media @tablet {
+    padding: 60px 32px;
+  }
+
+  @media @phone {
+    padding: 60px 16px;
+  }
+
+  margin-top: 90px;
+  background-color: #fafafa;
+
+  .titleContainer {
+    max-width: 1600px;
+    margin: 28px auto;
+
+    .desc {
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 42px;
+      margin: -20px 0 0 0;
+      /* text-align: center; */
+      color: #333;
+    }
+    .title {
+      margin-top: 28px;
+      font-size: 24px;
+      font-family: system-ui;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+
+  .demoCardWrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+    // padding-top: 60px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    row-gap: 40px;
+    column-gap: 40px;
+  }
+}

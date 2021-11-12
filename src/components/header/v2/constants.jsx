@@ -156,7 +156,7 @@ export const NAVLIST_EN = [
       },
       {
         label: 'Live Demos',
-        link: 'https://zilliz.com/milvus-demos?isZilliz=true',
+        link: '/milvus-demos',
         activeKey: null,
         icon: Demos,
       },
@@ -235,7 +235,7 @@ export const NAVLIST_CN = [
       },
       {
         label: '在线 Demos',
-        link: 'https://zilliz.com/milvus-demos?isZilliz=true',
+        link: '/milvus-demos',
         activeKey: null,
         icon: Demos,
       },

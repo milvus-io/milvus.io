@@ -186,104 +186,112 @@ const SizingTool = ({ pageContext, data }) => {
     return formatSize(value);
   };
 
-  useEffect(() => {
-    if (
-      !vectors.showError &&
-      !dimensions.showError &&
-      !nlist.showError &&
-      !segmetFileSize.showError
-    ) {
-      const milvusRecommends = computMilvusRecommonds(
-        vectors.value ? Number(vectors.value) : NaN,
-        dimensions.value ? Number(dimensions.value) : NaN,
-        nlist.value ? Number(nlist.value) : NaN,
-        m.value ? Number(m.value) : NaN,
-        segmetFileSize.value ? Number(segmetFileSize.value) * 1024 * 1024 : NaN
-      );
+  useEffect(
+    () => {
+      if (
+        !vectors.showError &&
+        !dimensions.showError &&
+        !nlist.showError &&
+        !segmetFileSize.showError
+      ) {
+        const milvusRecommends = computMilvusRecommonds(
+          vectors.value ? Number(vectors.value) : NaN,
+          dimensions.value ? Number(dimensions.value) : NaN,
+          nlist.value ? Number(nlist.value) : NaN,
+          m.value ? Number(m.value) : NaN,
+          segmetFileSize.value
+            ? Number(segmetFileSize.value) * 1024 * 1024
+            : NaN
+        );
 
-      setFirstTBody([
-        {
-          indexType: 'FLAT',
-          rowFileSize: getTableCellContent(milvusRecommends.rawFileSize.flat),
-          memorySize: getTableCellContent(milvusRecommends.memorySize.flat),
-          stableDiskSize: getTableCellContent(milvusRecommends.diskSize.flat),
-        },
-        {
-          indexType: 'IVF_FLAT',
-          rowFileSize: getTableCellContent(
-            milvusRecommends.rawFileSize['ivf_flat']
-          ),
-          memorySize: getTableCellContent(
-            milvusRecommends.memorySize['ivf_flat']
-          ),
-          stableDiskSize: getTableCellContent(
-            milvusRecommends.diskSize['ivf_flat']
-          ),
-        },
-        {
-          indexType: (
-            <>
-              IVF_SQ8
-              <br />
-              IVF_SQ8h
-            </>
-          ),
-          rowFileSize: getTableCellContent(
-            milvusRecommends.rawFileSize['ivf_sq8']
-          ),
-          memorySize: getTableCellContent(
-            milvusRecommends.memorySize['ivf_sq8']
-          ),
-          stableDiskSize: getTableCellContent(
-            milvusRecommends.diskSize['ivf_sq8']
-          ),
-        },
-        {
-          indexType: 'IVF_PQ',
-          rowFileSize: getTableCellContent(
-            milvusRecommends.rawFileSize['ivf_pq']
-          ),
-          memorySize: getTableCellContent(
-            milvusRecommends.memorySize['ivf_pq']
-          ),
-          stableDiskSize: getTableCellContent(
-            milvusRecommends.diskSize['ivf_pq']
-          ),
-        },
-      ]);
+        setFirstTBody([
+          {
+            indexType: 'FLAT',
+            rowFileSize: getTableCellContent(milvusRecommends.rawFileSize.flat),
+            memorySize: getTableCellContent(milvusRecommends.memorySize.flat),
+            stableDiskSize: getTableCellContent(milvusRecommends.diskSize.flat),
+          },
+          {
+            indexType: 'IVF_FLAT',
+            rowFileSize: getTableCellContent(
+              milvusRecommends.rawFileSize['ivf_flat']
+            ),
+            memorySize: getTableCellContent(
+              milvusRecommends.memorySize['ivf_flat']
+            ),
+            stableDiskSize: getTableCellContent(
+              milvusRecommends.diskSize['ivf_flat']
+            ),
+          },
+          {
+            indexType: (
+              <>
+                IVF_SQ8
+                <br />
+                IVF_SQ8h
+              </>
+            ),
+            rowFileSize: getTableCellContent(
+              milvusRecommends.rawFileSize['ivf_sq8']
+            ),
+            memorySize: getTableCellContent(
+              milvusRecommends.memorySize['ivf_sq8']
+            ),
+            stableDiskSize: getTableCellContent(
+              milvusRecommends.diskSize['ivf_sq8']
+            ),
+          },
+          {
+            indexType: 'IVF_PQ',
+            rowFileSize: getTableCellContent(
+              milvusRecommends.rawFileSize['ivf_pq']
+            ),
+            memorySize: getTableCellContent(
+              milvusRecommends.memorySize['ivf_pq']
+            ),
+            stableDiskSize: getTableCellContent(
+              milvusRecommends.diskSize['ivf_pq']
+            ),
+          },
+        ]);
 
-      setSecondTBody([
-        {
-          indexType: 'FLAT',
-          rowFileSize: getTableCellContent(
-            milvusRecommends.byteRawFileSize.flat
-          ),
-          memorySize: getTableCellContent(milvusRecommends.byteMemorySize.flat),
-          stableDiskSize: getTableCellContent(
-            milvusRecommends.byteDiskSize.flat
-          ),
-        },
-        {
-          indexType: 'IVF_FLAT',
-          rowFileSize: getTableCellContent(
-            milvusRecommends.byteRawFileSize['ivf_flat']
-          ),
-          memorySize: getTableCellContent(
-            milvusRecommends.byteMemorySize['ivf_flat']
-          ),
-          stableDiskSize: getTableCellContent(
-            milvusRecommends.byteDiskSize['ivf_flat']
-          ),
-        },
-      ]);
-    }
-  }, [
-    vectors.value,
-    dimensions.value,
-    nlist.value,
-    m.value,
-    segmetFileSize.value,
-  ]);
+        setSecondTBody([
+          {
+            indexType: 'FLAT',
+            rowFileSize: getTableCellContent(
+              milvusRecommends.byteRawFileSize.flat
+            ),
+            memorySize: getTableCellContent(
+              milvusRecommends.byteMemorySize.flat
+            ),
+            stableDiskSize: getTableCellContent(
+              milvusRecommends.byteDiskSize.flat
+            ),
+          },
+          {
+            indexType: 'IVF_FLAT',
+            rowFileSize: getTableCellContent(
+              milvusRecommends.byteRawFileSize['ivf_flat']
+            ),
+            memorySize: getTableCellContent(
+              milvusRecommends.byteMemorySize['ivf_flat']
+            ),
+            stableDiskSize: getTableCellContent(
+              milvusRecommends.byteDiskSize['ivf_flat']
+            ),
+          },
+        ]);
+      }
+    },
+    // eslint-disable-next-line
+    [
+      vectors.value,
+      dimensions.value,
+      nlist.value,
+      m.value,
+      segmetFileSize.value,
+    ]
+  );
 
   return (
     <>

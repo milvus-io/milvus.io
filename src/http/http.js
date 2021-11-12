@@ -120,4 +120,23 @@ export const getGithubCommits = async (path, version) => {
   return res;
 };
 
+export const getGithubStatis = async () => {
+  let auth;
+  if (atob) {
+    auth = atob(feedbackToken);
+  }
+  const octokit = new Octokit({
+    auth,
+  });
+  try {
+    const res = await octokit.request('GET /repos/{owner}/{repo}', {
+      owner: feedbackOrg,
+      repo: 'milvus',
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default axiosInstance;

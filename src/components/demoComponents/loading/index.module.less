@@ -1,0 +1,37 @@
+.loadingContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  color: #fff;
+  flex-direction: column;
+  font-family: Inter;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+
+  .iconWrapper {
+    margin-bottom: 8px;
+    animation: circle 2s linear infinite;
+    transform-origin: center;
+
+    i {
+      font-size: 22px;
+    }
+  }
+
+  @keyframes circle {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

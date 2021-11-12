@@ -1,0 +1,26 @@
+@import '../../../css/variables/responsive.less';
+
+.modalWrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media @phone {
+    padding: 16px;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  &.show {
+    display: flex;
+  }
+}

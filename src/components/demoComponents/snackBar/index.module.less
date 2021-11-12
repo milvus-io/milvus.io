@@ -1,0 +1,47 @@
+.snackBarWrapper {
+  position: fixed;
+  top: 120px;
+  right: 0;
+  transition: transform 0.5s linear;
+
+  z-index: 12;
+
+  &.hidden {
+    max-width: 0;
+    transform: translateX(100%);
+  }
+
+  &.show {
+    max-width: 500px;
+    transform: translateX(0);
+  }
+
+  .content {
+    padding: 16px 24px;
+    border-radius: 4px;
+  }
+
+  .success {
+    background-color: #f0faeb;
+    color: #67c23a;
+    border: 1px solid #f0faeb;
+  }
+
+  .info {
+    background-color: #e9e9eb;
+    color: #909399;
+    border: 1px solid #e9e9eb;
+  }
+
+  .warning {
+    background-color: #faecd8;
+    color: #e6a23c;
+    border: 1px solid #faecd8;
+  }
+
+  .error {
+    background-color: #fde2e1;
+    color: #fb6b6b;
+    border: 1px solid #fde2e1;
+  }
+}

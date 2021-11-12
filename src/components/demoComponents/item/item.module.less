@@ -1,0 +1,72 @@
+@import '../../../css/variables/responsive.less';
+
+.imgWrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  &:hover {
+    .icon-mask {
+      transform: translateY(0);
+      visibility: visible;
+    }
+  }
+
+  img {
+    position: absolute;
+    border-radius: 16px;
+    cursor: zoom-in;
+  }
+
+  .icon-mask {
+    width: 100%;
+    text-align: right;
+    padding: 0 16px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    visibility: hidden;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.1s ease-in-out;
+    box-sizing: border-box;
+    height: 40px;
+    transform: translateY(-40px);
+    border-radius: 0 0 16px 16px;
+  }
+}
+
+.iconWrapper {
+  cursor: pointer;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  font-size: 18px;
+  text-align: center;
+  line-height: 24px;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+
+  & > img {
+    cursor: pointer;
+  }
+}
+
+.textWrapper {
+  font-size: 12px;
+  line-height: 16px;
+  color: #010e29;
+  text-align: center;
+  margin-top: 8px;
+  display: flex;
+
+  @media @phone {
+    display: block;
+    text-align: left;
+  }
+
+  p {
+    color: #82838e;
+    word-break: keep-all;
+  }
+}

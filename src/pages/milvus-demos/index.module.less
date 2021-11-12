@@ -1,0 +1,36 @@
+@import '../../css/variables/responsive.less';
+
+.container {
+  padding: 80px;
+
+  @media @tablet {
+    padding: 60px 32px;
+  }
+
+  @media @phone {
+    padding: 60px 16px;
+  }
+
+  margin-top: 90px;
+  background-color: #fafafa;
+
+  h1 {
+    margin-bottom: 80px;
+    max-width: 1600px;
+    text-align: center;
+    font-size: 26px;
+    line-height: 42px;
+    font-weight: 800;
+  }
+
+  .demoCardWrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+    // padding-top: 60px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    row-gap: 40px;
+    column-gap: 40px;
+  }
+}

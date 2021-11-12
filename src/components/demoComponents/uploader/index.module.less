@@ -1,0 +1,139 @@
+@import '../../../css/variables/responsive.less';
+
+.uploadSection {
+  width: 100%;
+  border: 1px dashed #000;
+  padding: 72px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  line-height: 22px;
+
+  @media @phone {
+    padding: 8px 10px;
+  }
+
+  &.drag-enter {
+    border: 1px dashed #06aff2;
+  }
+
+  .desc {
+    color: #82838e;
+    text-align: center;
+    margin-bottom: 40px;
+
+    @media @phone {
+      padding: 8px;
+    }
+  }
+}
+
+.uploadedHeader {
+  display: flex;
+
+  @media @phone {
+    flex-direction: column;
+  }
+
+  .btnsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    @media @phone {
+      flex-direction: row;
+      padding: 24px 0;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .resultDesc {
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #82838e;
+
+      @media @phone {
+        margin-bottom: 16px;
+      }
+
+      .text {
+        font-size: 16px;
+        line-height: 22px;
+
+        @media @phone {
+          font-size: 13px;
+          line-height: 20px;
+        }
+      }
+    }
+
+    .iconWrapper {
+      .linkBtn {
+        a {
+          padding: 8px 16px;
+        }
+      }
+      .linkBtn:first-child {
+        margin-right: 16px;
+      }
+    }
+  }
+}
+
+.uploadBtnWrapper {
+  margin-bottom: 24px;
+
+  .uploadBtn {
+    color: #fff;
+    border-radius: 4px;
+
+    button {
+      font-size: 16px; //24px
+      line-height: 18px; // 28px
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+}
+
+.backgroundBlock {
+  width: 279px;
+  padding: 16px;
+  max-width: 50%;
+  background: #555;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-right: 32px;
+
+  @media @phone {
+    width: 100%;
+    padding: 8px;
+    max-width: 343px;
+    margin-right: 0;
+  }
+
+  .cropImgWrapper {
+    width: 247px;
+    height: 264px;
+
+    img {
+      max-width: 247px;
+      max-height: 264px;
+    }
+
+    @media @phone {
+      width: 311px;
+      height: 306px;
+
+      img {
+        max-width: 311px;
+        max-height: 306px;
+      }
+    }
+  }
+  .cropImg {
+    display: none;
+  }
+}

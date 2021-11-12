@@ -3,7 +3,7 @@ import * as styles from './index.module.less';
 import Button from '../../button';
 import { getImgUrl } from '../../../utils/demo-helper';
 import { FileDrop } from 'react-file-drop';
-import Cropper from '../Cropper';
+import Cropper from '../cropper';
 import { useMobileScreen } from '../../../hooks';
 
 const UploaderHeader = ({

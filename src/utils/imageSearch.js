@@ -2,10 +2,7 @@ import axios from 'axios';
 
 let hasError = false;
 
-const baseURL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://35.166.123.214:5004' // "http://192.168.1.38:5008"
-    : 'http://40.117.75.127:5004';
+const baseURL = 'https://demos.zilliz.com';
 
 const instance = axios.create({
   baseURL,
@@ -56,21 +53,14 @@ instance.interceptors.response.use(
   }
 );
 
-export const search = async formData => {
-  const res = await instance.post('api/v1/search', formData);
+export const search = async (formData, isCn = false) => {
+  const url = `${isCn ? 'cn' : 'en'}_img_serh/api/v1/search`;
+  const res = await instance.post(url, formData);
   return res.data;
 };
 
-export async function getCount() {
-  const res = await instance.post('api/v1/count');
+export const getCount = async isCn => {
+  const url = `${isCn ? 'cn' : 'en'}_img_serh/api/v1/count`;
+  const res = await instance.post(url);
   return res.data;
-}
-
-export const uploadUserInfo = async param => {
-  try {
-    const res = await instance.put(`demos/${param.id}`, param.params);
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
 };

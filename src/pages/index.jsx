@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
-import GitHubButton from 'react-github-btn';
 import './index.less';
 import Seo from '../components/seo';
 import autoscalingIcon from '../images/v2/autoscaling.svg';
@@ -24,6 +23,7 @@ import moj from '../images/v2/moj.png';
 import smartnew from '../images/v2/smartnew.png';
 import trend from '../images/v2/trend.png';
 import xiaomi from '../images/v2/xiaomi.png';
+import GitHubButton from '../components/button/githubButton';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -96,25 +96,20 @@ const HomePage = ({ data, pageContext }) => {
             <div className="banner">
               <div className="banner-left">
                 <div className="stars-layout">
-                  <div className="git-stars">
-                    <GitHubButton
-                      href="https://github.com/milvus-io/milvus"
-                      data-size="large"
-                      data-show-count={true}
-                    >
-                      Star
-                    </GitHubButton>
-                  </div>
-                  <div className="git-stars">
-                    <GitHubButton
-                      href="https://github.com/milvus-io/milvus/fork"
-                      data-size="large"
-                      data-icon="octicon-repo-forked"
-                      data-show-count={true}
-                    >
-                      Fork
-                    </GitHubButton>
-                  </div>
+                  <GitHubButton
+                    type="star"
+                    className="star-btn"
+                    href="https://github.com/milvus-io/milvus"
+                  >
+                    Star
+                  </GitHubButton>
+
+                  <GitHubButton
+                    type="fork"
+                    href="https://github.com/milvus-io/milvus"
+                  >
+                    Forks
+                  </GitHubButton>
                 </div>
                 <p className="sub-title">{banner.subTitle}</p>
                 <div className="title-wrapper">

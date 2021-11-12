@@ -1,0 +1,85 @@
+@import '../../../css/variables/responsive.less';
+
+.scrollContainer {
+  height: 100%;
+  position: relative;
+  margin-top: 34px;
+  padding: 0 16px;
+
+  @media @phone {
+    margin-top: 16px;
+  }
+
+  .openCode {
+    width: 100%;
+  }
+
+  .loadingWrapper {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.imgContainer {
+  margin-top: 32px;
+}
+
+.toopTip {
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+
+  &.open {
+    visibility: visible;
+  }
+
+  .iconWrapper {
+    display: inline-block;
+    height: 26px;
+    width: 26px;
+    line-height: 30px;
+    font-size: 16px;
+    margin-left: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: #e9e9ed;
+
+      &::after {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &::after {
+      content: '"how picture sorted by"';
+      background: #232f34;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 12px;
+      line-height: 14px;
+      color: #fff;
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+      left: 0;
+      top: 32px;
+      white-space: nowrap;
+
+      @media @phone {
+        top: 24px;
+      }
+    }
+
+    svg {
+      font-size: 16px;
+    }
+  }
+}

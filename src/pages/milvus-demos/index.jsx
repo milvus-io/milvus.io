@@ -149,7 +149,12 @@ const MilvusDemos = ({ data, pageContext }) => {
       <Header locale={locale} showRobot={false} />
       <Seo title={TITLE} lang={locale} description={DESC} />
       <main className={styles.container}>
-        <h1>Try Milvus, the open sourced vector database for any situation.</h1>
+        <div className={styles.titleContainer}>
+          <p className={styles.desc}>
+            Milvus makes it easy to add similarity search to your applications.
+          </p>
+          <h3 className={styles.title}>Try our demos</h3>
+        </div>
         <div className={styles.demoCardWrapper}>
           {DEMOS.map(demo => {
             return (

@@ -1,3 +1,5 @@
+@import '../../../css/variables/responsive.less';
+
 .gitBtnWrapper {
   display: flex;
   color: #000;
@@ -9,6 +11,11 @@
   overflow: hidden;
   border: 1px solid #ccc;
 
+  @media @phone {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
   .link {
     color: #000;
     display: flex;
@@ -16,9 +23,21 @@
     background-image: linear-gradient(180deg, #f6f8fa, #ebf0f4 90%);
     align-items: center;
 
+    @media @tablet {
+      padding: 8px;
+    }
+
+    @media @phone {
+      padding: 4px 8px;
+    }
+
     .iconWrapper {
       font-size: 20px;
       margin-right: 8px;
+
+      @media @phone {
+        font-size: 16px;
+      }
     }
   }
 
@@ -27,7 +46,13 @@
     background-image: none;
     border: none;
     min-width: 70px;
-    text-align: center;
     border-left: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media @phone {
+      min-width: 50px;
+    }
   }
 }

@@ -90,14 +90,15 @@ const MilvusDemos = ({ data, pageContext }) => {
         message: 'Thank you, you have been added to our mailing list!',
       });
       //
-      window.location.href = href;
     } else {
       setSnackBarConfig({
         ...config,
         type: 'warning',
         message: 'This email is already subscribed!',
       });
+      window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
     }
+    window.location.href = href;
   };
 
   // click play video

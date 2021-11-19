@@ -41,9 +41,7 @@ const GitHubButton = ({
       </a>
       {stat.star !== 0 && (
         <a href={sublink} className={`${styles.link} ${styles.num}`}>
-          <span className={styles.numWrapper}>
-            {type === 'star' ? stat.star : stat.forks}
-          </span>
+          <span>{type === 'star' ? stat.star : stat.forks}</span>
         </a>
       )}
     </div>

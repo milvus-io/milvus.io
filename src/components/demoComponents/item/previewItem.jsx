@@ -9,7 +9,7 @@ const PreviewItem = ({ src, distance, handleSearch }) => {
   return (
     <div className={styles.previewContainer}>
       <div className={styles.imgContent}>
-        <img src={src} alt="" />
+        <img src={src} alt="Preview Image" />
       </div>
       <div className={styles.descSection}>
         <div className={styles.distance}>

@@ -12,27 +12,37 @@ const Button = ({
   children,
   locale = null,
   onClick = () => {},
+  disabled = false,
 }) => {
   return (
     <div className={`${styles.btnContainer} ${className}`}>
       {link ? (
         link.includes('#') || !locale ? (
-          <a href={link} className={`${styles[variant]}`} target="_self">
+          <a
+            href={link}
+            className={`${styles[variant]} ${disabled ? styles.disabled : ''}`}
+            target="_self"
+            disabled={disabled}
+          >
             {children}
           </a>
         ) : (
           <LocalizedLink
             to={link}
-            className={`${styles[variant]}`}
+            className={`${styles[variant]} ${disabled ? styles.disabled : ''}`}
             locale={locale}
+            disabled={disabled}
           >
             {children}
           </LocalizedLink>
         )
       ) : (
         <button
-          className={`${styles[variant]} ${styles.button}`}
+          className={`${styles[variant]} ${styles.button} ${
+            disabled ? styles.disabled : ''
+          } `}
           onClick={onClick}
+          disabled={disabled}
         >
           {children}
         </button>

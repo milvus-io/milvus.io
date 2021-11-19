@@ -10,7 +10,7 @@ const FloatBord = () => {
       <div className={styles.linkItem}>
         <p className={styles.desc}>Dive into the source code.</p>
         <Button
-          link="https://github.com/milvus-io/bootcamp"
+          link="https://bit.ly/3Ct2dKo"
           variant="outline"
           className={`${styles.linkBtn} ${styles.whiteBtn}`}
           children={

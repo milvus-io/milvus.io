@@ -11,6 +11,8 @@ const InfoSubmitter = ({
   hideModal = () => {},
   href = '',
 }) => {
+  const regx =
+    /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$/;
   const [value, setValue] = useState('');
 
   const handleChange = e => {
@@ -65,6 +67,7 @@ const InfoSubmitter = ({
           locale={locale}
           children="Submit"
           className={styles.submitBtn}
+          disabled={!regx.test(value)}
         />
       </div>
     </div>

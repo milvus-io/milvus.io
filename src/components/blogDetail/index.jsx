@@ -119,7 +119,7 @@ const BlogDetail = ({
         <span className={styles.breadcrumdItem}>{NAV_TEXT[locale][1]}</span>
       </div>
       <div
-        className={styles.articleContent}
+        className={`${styles.articleContent} articleContent`}
         dangerouslySetInnerHTML={{ __html: innerHtml }}
       ></div>
       <div className={styles.navWrapper}>

@@ -24,6 +24,7 @@ import smartnew from '../images/v2/smartnew.png';
 import trend from '../images/v2/trend.png';
 import xiaomi from '../images/v2/xiaomi.png';
 import GitHubButton from '../components/button/githubButton';
+import Swiper from '../components/swiper';
 
 const icons = {
   autoscaling: autoscalingIcon,
@@ -46,6 +47,9 @@ const icons = {
   xiaomi,
 };
 
+const DESC =
+  "Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications.";
+
 const HomePage = ({ data, pageContext }) => {
   const {
     header,
@@ -58,28 +62,7 @@ const HomePage = ({ data, pageContext }) => {
   const { slogan, user } = data.allFile.edges.filter(
     edge => edge.node.childUsers
   )[0].node.childUsers;
-  const len = slogan.length - 1;
   const { locale, versions } = pageContext;
-  const desc =
-    "Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications.";
-
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    let timer = null;
-    if (timer) {
-      clearInterval(timer);
-    }
-    timer = setInterval(() => {
-      setIndex(v => (v < len ? (v += 1) : 0));
-    }, 15000);
-
-    return () => {
-      if (timer) {
-        clearInterval(timer);
-      }
-    };
-  }, [len]);
 
   return (
     <div className="home-page-container">
@@ -90,7 +73,7 @@ const HomePage = ({ data, pageContext }) => {
           locale={locale}
           versions={versions}
         >
-          <Seo title="Milvus" lang={locale} description={desc} />
+          <Seo title="Milvus" lang={locale} description={DESC} />
 
           <main className="main-container">
             <div className="banner">
@@ -152,10 +135,8 @@ const HomePage = ({ data, pageContext }) => {
               </div>
               <div className="banner-right"></div>
             </div>
-            <div className="slogan-wrapper">
-              <p className="text">{slogan[index].text}</p>
-              <p className="author">{slogan[index].author}</p>
-            </div>
+
+            <Swiper list={slogan} direction="column" duration={15000} />
             <div className="content">
               <h3 className="title-bar">
                 <span className="title">{feature.title}</span>

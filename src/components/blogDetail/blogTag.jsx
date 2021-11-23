@@ -1,14 +1,8 @@
 import React from 'react';
 import * as styles from './index.module.less';
 
-const BlogTag = ({ name, isActive, className = '' }) => (
-  <span
-    className={`${styles.tagWrapper} ${
-      isActive ? styles.active : ''
-    } ${className}`}
-  >
-    {name}
-  </span>
+const BlogTag = ({ name, className = '' }) => (
+  <span className={`${styles.tagWrapper} ${className}`}>{name}</span>
 );
 
 export default BlogTag;

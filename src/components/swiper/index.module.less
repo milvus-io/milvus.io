@@ -1,0 +1,58 @@
+@import '../../css/variables/responsive.less';
+
+.swiperContainer {
+  overflow: hidden;
+  border-radius: 16px;
+
+  font-family: Inter;
+  background: #f9f9f9;
+  font-size: 24px;
+  line-height: 32px;
+
+  @media @phone {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .listWrapper {
+    display: flex;
+    width: 800%;
+    list-style: none;
+    transition: transform 0.5s linear;
+
+    .listItem {
+      flex: 0 0 12.5%;
+      padding: 64px 64px 28px 64px;
+
+      @media @phone {
+        padding: 32px 32px 14px 32px;
+      }
+
+      .content {
+        color: #545454;
+        margin-bottom: 40px;
+        font-weight: 400;
+        font-style: italic;
+
+        @media @phone {
+          margin-bottom: 24px;
+        }
+      }
+
+      .author {
+        color: #000;
+        font-family: Inter Medium;
+        padding-left: 40px;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: right;
+        font-style: italic;
+
+        @media @phone {
+          font-size: 12px;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+}

@@ -199,7 +199,12 @@ const BlogTemplate = ({ data, pageContext }) => {
                   onClick={() => handleFilter(tag)}
                   onKeyDown={() => handleFilter(tag)}
                 >
-                  <BlogTag name={tag} isActive={currentTag === tag} />
+                  <BlogTag
+                    className={`${styles.tagBarItem} ${
+                      currentTag === tag ? styles.active : ''
+                    }`}
+                    name={tag}
+                  />
                 </span>
               </li>
             ))}

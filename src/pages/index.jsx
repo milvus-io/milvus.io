@@ -135,8 +135,9 @@ const HomePage = ({ data, pageContext }) => {
               </div>
               <div className="banner-right"></div>
             </div>
-
-            <Swiper list={slogan} direction="column" duration={15000} />
+            <div className="content">
+              <Swiper list={slogan} direction="column" duration={15000} />
+            </div>
             <div className="content">
               <h3 className="title-bar">
                 <span className="title">{feature.title}</span>

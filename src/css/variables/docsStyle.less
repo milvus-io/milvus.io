@@ -497,13 +497,12 @@
 
   .filter {
     a {
-      border-radius: 4px;
       color: #000000;
     }
 
     & .active {
-      background-color: @color-primary;
-      color: #fff;
+      border-bottom: 1px solid @color-primary;
+      color: @color-primary;
     }
   }
 
@@ -573,7 +572,6 @@ i {
     cursor: pointer;
     user-select: none;
     border-radius: 0px;
-    text-transform: uppercase;
     position: relative;
     font-size: 14px;
     line-height: 17px;

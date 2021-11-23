@@ -1,61 +1,107 @@
 @import '../../css/variables/responsive.less';
 
-.swiperContainer {
-  list-style: none;
-  overflow: hidden;
-  margin-bottom: 100px;
-  border-radius: 16px;
-  font-weight: 600;
-  padding: 60px 60px 28px;
-  font-family: Inter;
-  height: 300px;
-  background: #f9f9f9;
+// .swiperContainer {
+//   list-style: none;
+//   overflow: hidden;
+//   margin-bottom: 100px;
+//   border-radius: 16px;
+//   font-weight: 600;
+//   padding: 60px 0;
+//   font-family: Inter;
+//   min-height: 300px;
+//   background: #f9f9f9;
 
-  @media @tablet {
-    padding: 32px;
-    height: 400px;
-    margin-bottom: 64px;
-  }
+//   @media @tablet {
+//     padding: 32px;
+//     // height: 400px;
+//     margin-bottom: 64px;
+//   }
+
+//   @media @phone {
+//     margin-bottom: 32px;
+//     // height: 530px;
+//   }
+
+//   .listWrapper {
+//     display: flex;
+//     transition: transform 0.5s linear;
+//     list-style: none;
+//     width: 100%;
+//     padding: 0 32px;
+
+//     .listItem {
+//       height: 100%;
+//       width: 100%;
+//       flex-shrink: 0;
+
+//       &.hidden {
+//         visibility: none;
+//         opacity: 0;
+//       }
+
+//       &.show {
+//         visibility: visible;
+//         opacity: 1;
+//       }
+
+// .content {
+//   color: #545454;
+//   font-size: 24px;
+//   line-height: 32px;
+//   margin-bottom: 40px;
+//   font-weight: 400;
+//   font-style: italic;
+// }
+
+// .author {
+//   color: #000;
+//   font-family: Inter Medium;
+//   padding-left: 40px;
+//   font-size: 16px;
+//   line-height: 24px;
+//   text-align: right;
+//   font-style: italic;
+// }
+//     }
+//   }
+// }
+.swiperContainer {
+  overflow: hidden;
+  border-radius: 16px;
+
+  font-family: Inter;
+  background: #f9f9f9;
+  font-size: 24px;
+  line-height: 32px;
 
   @media @phone {
-    margin-bottom: 32px;
-    height: 530px;
+    font-size: 18px;
+    line-height: 24px;
   }
 
   .listWrapper {
     display: flex;
-    flex-direction: column;
-    transition: transform 0.5s linear;
+    width: 800%;
     list-style: none;
+    transition: transform 0.5s linear;
 
     .listItem {
-      height: 300px;
-
-      @media @tablet {
-        height: 400px;
-      }
+      flex: 0 0 12.5%;
+      padding: 64px 64px 28px 64px;
 
       @media @phone {
-        height: 530px;
-      }
-
-      &.hidden {
-        visibility: none;
-        opacity: 0;
-      }
-
-      &.show {
-        visibility: visible;
-        opacity: 1;
+        padding: 32px 32px 14px 32px;
       }
 
       .content {
         color: #545454;
-        font-size: 24px;
-        line-height: 32px;
         margin-bottom: 40px;
         font-weight: 400;
         font-style: italic;
+
+        @media @phone {
+          margin-bottom: 24px;
+        }
       }
 
       .author {
@@ -66,6 +112,11 @@
         line-height: 24px;
         text-align: right;
         font-style: italic;
+
+        @media @phone {
+          font-size: 12px;
+          line-height: 20px;
+        }
       }
     }
   }

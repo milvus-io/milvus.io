@@ -31,13 +31,11 @@
     &:hover {
       background-color: @color-btn-hover;
       border: 1px solid @color-btn-hover;
-      color: @color-primary;
     }
 
     &:active {
       background-color: @color-btn-press;
       border: 1px solid @color-btn-press;
-      color: #fff;
     }
   }
 
@@ -57,12 +55,13 @@
     transition: all 0.3s;
 
     &:hover {
-      background-color: @color-btn-hover;
+      color: @color-btn-hover;
+      border-color: @color-btn-hover;
     }
 
     &:active {
-      background-color: @color-btn-press;
-      color: #fff;
+      color: @color-btn-press;
+      border-color: @color-btn-press;
 
       svg {
         path {

@@ -134,16 +134,6 @@ export const NAVLIST_EN = [
     activeKey: '/docs',
   },
   {
-    label: 'Blog',
-    link: '/blog',
-    activeKey: '/blog',
-  },
-  {
-    label: 'Forum',
-    link: 'https://discuss.milvus.io/',
-    activeKey: 'null',
-  },
-  {
     label: 'Tutorials',
     link: null,
     activeKey: null,
@@ -194,9 +184,19 @@ export const NAVLIST_EN = [
     ],
   },
   {
-    label: 'Community',
+    label: 'Contribute',
     link: '/community',
     activeKey: '/community',
+  },
+  {
+    label: 'Blog',
+    link: '/blog',
+    activeKey: '/blog',
+  },
+  {
+    label: 'Forum',
+    link: 'https://discuss.milvus.io/',
+    activeKey: 'null',
   },
 ];
 
@@ -211,16 +211,6 @@ export const NAVLIST_CN = [
     label: '文档',
     link: '/docs',
     activeKey: '/docs',
-  },
-  {
-    label: '博客',
-    link: '/blog',
-    activeKey: '/blog',
-  },
-  {
-    label: '论坛',
-    link: 'https://discuss.milvus.io/',
-    activeKey: 'null',
   },
   {
     label: '教程',
@@ -276,5 +266,15 @@ export const NAVLIST_CN = [
     label: '社区',
     link: '/community',
     activeKey: '/community',
+  },
+  {
+    label: '博客',
+    link: '/blog',
+    activeKey: '/blog',
+  },
+  {
+    label: '论坛',
+    link: 'https://discuss.milvus.io/',
+    activeKey: 'null',
   },
 ];

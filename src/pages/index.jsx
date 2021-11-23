@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';
@@ -135,8 +135,9 @@ const HomePage = ({ data, pageContext }) => {
               </div>
               <div className="banner-right"></div>
             </div>
-
-            <Swiper list={slogan} direction="column" duration={15000} />
+            <div className="content">
+              <Swiper list={slogan} direction="column" duration={15000} />
+            </div>
             <div className="content">
               <h3 className="title-bar">
                 <span className="title">{feature.title}</span>

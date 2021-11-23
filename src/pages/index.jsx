@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { graphql } from 'gatsby';
 import V2Layout from '../components/layout/v2Layout';
 import Button from '../components/button';

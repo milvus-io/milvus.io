@@ -2,30 +2,42 @@
 
 .swiperContainer {
   list-style: none;
-  height: 274px;
   overflow: hidden;
-  margin: 64px 0;
-  border: 1px solid #e2e2e2;
+  margin-bottom: 100px;
   border-radius: 16px;
   font-weight: 600;
   padding: 60px 60px 28px;
   font-family: Inter;
+  height: 300px;
+  background: #f9f9f9;
 
   @media @tablet {
     padding: 32px;
+    height: 400px;
+    margin-bottom: 64px;
   }
 
   @media @phone {
-    padding: 32px;
+    margin-bottom: 32px;
+    height: 530px;
   }
 
   .listWrapper {
     display: flex;
+    flex-direction: column;
     transition: transform 0.5s linear;
     list-style: none;
 
     .listItem {
       height: 300px;
+
+      @media @tablet {
+        height: 400px;
+      }
+
+      @media @phone {
+        height: 530px;
+      }
 
       &.hidden {
         visibility: none;
@@ -38,34 +50,12 @@
       }
 
       .content {
-        padding-left: 40px;
         color: #545454;
         font-size: 24px;
         line-height: 32px;
         margin-bottom: 40px;
-        position: relative;
         font-weight: 400;
-
-        &::before {
-          content: '"';
-          font-size: 80px;
-          position: absolute;
-          left: -10px;
-          top: -10px;
-          font-style: italic;
-          color: #0ba9f6;
-
-          @media @tablet {
-            font-size: 60px;
-            left: 0px;
-            top: 0px;
-          }
-        }
-
-        @media @phone {
-          font-size: 24px;
-          line-height: 34px;
-        }
+        font-style: italic;
       }
 
       .author {
@@ -74,7 +64,8 @@
         padding-left: 40px;
         font-size: 16px;
         line-height: 24px;
-        text-align: left;
+        text-align: right;
+        font-style: italic;
       }
     }
   }

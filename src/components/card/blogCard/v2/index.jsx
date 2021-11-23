@@ -28,7 +28,7 @@ const BlogCard = ({ title, date, desc, tags, cover, locale, path }) => {
             {tags.slice(0, 2).map(tag => {
               return (
                 <li key={tag}>
-                  <BlogTag name={tag} isActive={false} />
+                  <BlogTag name={tag} />
                 </li>
               );
             })}

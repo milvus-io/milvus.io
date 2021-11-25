@@ -19,7 +19,7 @@ let gatsbyConfigs = {
               '/cn/404',
               '/cn/blogs/',
               '/docs/Changelog',
-              '/docs/v*.md$',
+              '/docs/v0*.md$',
               '/gui',
               '/tools/sizing',
             ],

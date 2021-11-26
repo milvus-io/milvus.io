@@ -44,14 +44,7 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, height=device-height, initial-scale=1.0"
         />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
-        />
+
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
@@ -71,7 +64,6 @@ export default function HTML(props) {
           id="___gatsby"
           dangerouslySetInnerHTML={{ __html: props.body }}
         />
-        <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
 
         {props.postBodyComponents}
       </body>

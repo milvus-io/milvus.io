@@ -5,6 +5,7 @@
   "version": "0.1.5",
   "author": "zizhao.chen@zilliz.com",
   "dependencies": {
+    "@docsearch/react": "^3.0.0-alpha.41",
     "@octokit/core": "^3.5.1",
     "@sentry/gatsby": "^6.3.5",
     "axios": "^0.24.0",

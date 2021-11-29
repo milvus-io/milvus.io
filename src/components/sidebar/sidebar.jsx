@@ -4,6 +4,7 @@ import Menu from '../menu/index';
 import * as styles from './sidebar.module.less';
 import PropTypes from 'prop-types';
 import Selector from '../selector';
+import { AlgoliaSearch } from '../search/algolia';
 
 const Sidebar = props => {
   const {
@@ -12,14 +13,12 @@ const Sidebar = props => {
     showVersions = false,
     showMenu = true,
     menuConfig,
-    searchConfig,
     versionConfig,
     wrapperClass = '',
     allApiMenus,
     isVersionWithHome = false,
   } = props;
 
-  const { placeholder } = searchConfig || {};
   const { versions, version, homeTitle } = versionConfig || {};
   const {
     menuList,
@@ -55,23 +54,22 @@ const Sidebar = props => {
     setMobileSidebarOpened(!mobileSidebarOpened);
   };
 
+  // Close menu after click search icon in mobile
+  const handleAsideClick = e => {
+    if (e.target.className.includes('DocSearch')) {
+      setMobileSidebarOpened(false);
+    }
+  };
+
   return (
     <>
       <aside
         className={`${wrapperClass} ${styles.wrapper} ${
           !mobileSidebarOpened ? styles.hide : ''
         }`}
+        onClick={handleAsideClick}
       >
-        {showSearch && (
-          <section className={styles.searchWrapper}>
-            <input
-              id="algolia-search"
-              type="text"
-              className={styles.search}
-              placeholder={placeholder}
-            />
-          </section>
-        )}
+        {showSearch && <AlgoliaSearch locale={locale} version={version} />}
         {showVersions && (
           <section className={styles.versionWrapper}>
             <LocalizedLink

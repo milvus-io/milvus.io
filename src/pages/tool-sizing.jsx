@@ -5,7 +5,11 @@ import sizingToolLogo from '../images/sizing-tool/milvusSizingTool.svg';
 import TextFiled from '../components/textField';
 import CustomTable from '../components/customTable';
 import TableColumn from '../components/customTable/tableColumn';
-import { computMilvusRecommonds, formatSize } from '../utils/sizingTool';
+import {
+  computMilvusRecommonds,
+  formatSize,
+  formatVectors,
+} from '../utils/sizingTool';
 import LocalizedLink from '../components/localizedLink/localizedLink';
 
 const [TITLE, DESCRIPTION] = [
@@ -184,6 +188,20 @@ const SizingTool = ({ pageContext, data }) => {
     }
 
     return formatSize(value);
+  };
+
+  const getVectorTitle = () => {
+    const value = vectors.value;
+    const vectorNumber = formatVectors(value).toUpperCase();
+    return Number(value) === 1 ? (
+      <span>
+        for <span className={styles.vectorNumber}>1</span> vector{' '}
+      </span>
+    ) : (
+      <span>
+        for <span className={styles.vectorNumber}>{vectorNumber}</span> vectors
+      </span>
+    );
   };
 
   useEffect(
@@ -379,14 +397,16 @@ const SizingTool = ({ pageContext, data }) => {
           </div>
 
           <div className={styles.rightSection}>
-            <h2>Recommendation</h2>
+            <h2>Recommendation {vectors.value !== '' && getVectorTitle()}</h2>
 
             <div className={styles.tableWrapper}>
               <h2>Float</h2>
               <CustomTable data={firstTBody}>
                 <TableColumn
                   prop="indexType"
-                  label={<a href="www.baidu.com">Index Type</a>}
+                  label={
+                    <a href="https://milvus.io/docs/index.md#CPU">Index Type</a>
+                  }
                 />
                 <TableColumn prop="rowFileSize" label="Raw File Size" />
                 <TableColumn prop="memorySize" label="Memory Size" />
@@ -399,7 +419,9 @@ const SizingTool = ({ pageContext, data }) => {
               <CustomTable data={secondTBody}>
                 <TableColumn
                   prop="indexType"
-                  label={<a href="www.baidu.com">Index Type</a>}
+                  label={
+                    <a href="https://milvus.io/docs/index.md#CPU">Index Type</a>
+                  }
                 />
                 <TableColumn prop="rowFileSize" label="Raw File Size" />
                 <TableColumn prop="memorySize" label="Memory Size" />

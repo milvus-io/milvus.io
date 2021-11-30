@@ -7398,6 +7398,11 @@ inquirer@^7.0.0:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
+instantsearch.css@^7.4.5:
+  version "7.4.5"
+  resolved "https://registry.npm.taobao.org/instantsearch.css/download/instantsearch.css-7.4.5.tgz#2a521aa634329bf1680f79adf87c79d67669ec8d"
+  integrity sha1-KlIapjQym/FoD3mt+Hx51nZp7I0=
+
 internal-slot@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/internal-slot/-/internal-slot-1.0.3.tgz#7347e307deeea2faac2ac6205d4bc7d34967f59c"

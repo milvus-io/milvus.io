@@ -1,6 +1,8 @@
 import React from 'react';
 import { DocSearch } from '@docsearch/react';
 import '@docsearch/css';
+import 'instantsearch.css/themes/reset.css';
+import './index.less';
 
 export const AlgoliaSearch = props => {
   const { locale, version } = props;

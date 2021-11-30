@@ -386,7 +386,9 @@ const SizingTool = ({ pageContext, data }) => {
               <CustomTable data={firstTBody}>
                 <TableColumn
                   prop="indexType"
-                  label={<a href="www.baidu.com">Index Type</a>}
+                  label={
+                    <a href="https://milvus.io/docs/index.md#CPU">Index Type</a>
+                  }
                 />
                 <TableColumn prop="rowFileSize" label="Raw File Size" />
                 <TableColumn prop="memorySize" label="Memory Size" />
@@ -399,7 +401,9 @@ const SizingTool = ({ pageContext, data }) => {
               <CustomTable data={secondTBody}>
                 <TableColumn
                   prop="indexType"
-                  label={<a href="www.baidu.com">Index Type</a>}
+                  label={
+                    <a href="https://milvus.io/docs/index.md#CPU">Index Type</a>
+                  }
                 />
                 <TableColumn prop="rowFileSize" label="Raw File Size" />
                 <TableColumn prop="memorySize" label="Memory Size" />

@@ -12,6 +12,7 @@ import SnackBar from '../../components/demoComponents/snackBar';
 import imageSearch from '../../images/milvus-demos/image-search.png';
 import chemical from '../../images/milvus-demos/chemical-search.svg';
 import chatBot from '../../images/milvus-demos/chat-bots.svg';
+import FloatBord from '../../components/demoComponents/floatBord';
 
 const DEMOS = [
   {
@@ -172,6 +173,7 @@ const MilvusDemos = ({ data, pageContext }) => {
             );
           })}
         </div>
+        <FloatBord className={styles.floatBord} />
         <Modal {...modalConfig} />
         <SnackBar {...snackBarConfig} />
       </main>

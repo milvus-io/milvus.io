@@ -4,9 +4,9 @@ import github from '../../../images/milvus-demos/github.png';
 import forum from '../../../images/milvus-demos/forum.png';
 import Button from '../../button';
 
-const FloatBord = () => {
+const FloatBord = ({ className = '' }) => {
   return (
-    <div className={styles.floatBordContainer}>
+    <div className={`${styles.floatBordContainer} ${className}`}>
       <div className={styles.linkItem}>
         <p className={styles.desc}>Dive into the source code.</p>
         <Button

@@ -1,8 +1,9 @@
 @import '../../css/variables/responsive.less';
 
 .container {
-  padding: 80px;
+  padding: 80px 80px 40px 80px;
   font-family: Inter;
+  position: relative;
 
   @media @tablet {
     padding: 60px 32px;
@@ -45,5 +46,17 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     row-gap: 40px;
     column-gap: 40px;
+  }
+
+  .floatBord {
+    position: static;
+    box-shadow: none;
+    background-color: transparent;
+    border: none;
+    margin-top: 40px;
+
+    @media @phone {
+      margin-top: 60px;
+    }
   }
 }

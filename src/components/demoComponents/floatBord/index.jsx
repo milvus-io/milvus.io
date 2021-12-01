@@ -4,15 +4,16 @@ import github from '../../../images/milvus-demos/github.png';
 import forum from '../../../images/milvus-demos/forum.png';
 import Button from '../../button';
 
-const FloatBord = () => {
+const FloatBord = ({ className = '' }) => {
   return (
-    <div className={styles.floatBordContainer}>
+    <div className={`${styles.floatBordContainer} ${className}`}>
       <div className={styles.linkItem}>
         <p className={styles.desc}>Dive into the source code.</p>
         <Button
           link="https://bit.ly/3Ct2dKo"
           variant="outline"
           className={`${styles.linkBtn} ${styles.whiteBtn}`}
+          target="_blank"
           children={
             <div className={styles.content}>
               <img src={github} alt="github" />
@@ -28,6 +29,7 @@ const FloatBord = () => {
         <Button
           link="https://bit.ly/3H7KOuu"
           className={styles.linkBtn}
+          target="_blank"
           variant="contained"
           children={
             <div className={styles.content}>

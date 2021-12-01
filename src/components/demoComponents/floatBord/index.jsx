@@ -13,6 +13,7 @@ const FloatBord = ({ className = '' }) => {
           link="https://bit.ly/3Ct2dKo"
           variant="outline"
           className={`${styles.linkBtn} ${styles.whiteBtn}`}
+          target="_blank"
           children={
             <div className={styles.content}>
               <img src={github} alt="github" />
@@ -28,6 +29,7 @@ const FloatBord = ({ className = '' }) => {
         <Button
           link="https://bit.ly/3H7KOuu"
           className={styles.linkBtn}
+          target="_blank"
           variant="contained"
           children={
             <div className={styles.content}>

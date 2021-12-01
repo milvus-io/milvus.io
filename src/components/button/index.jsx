@@ -13,6 +13,7 @@ const Button = ({
   locale = null,
   onClick = () => {},
   disabled = false,
+  target = '_self',
 }) => {
   return (
     <div className={`${styles.btnContainer} ${className}`}>
@@ -21,7 +22,7 @@ const Button = ({
           <a
             href={link}
             className={`${styles[variant]} ${disabled ? styles.disabled : ''}`}
-            target="_self"
+            target={target}
             disabled={disabled}
           >
             {children}

@@ -152,7 +152,7 @@ export const NAVLIST_EN = [
       },
       {
         label: 'Video',
-        link: 'https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g',
+        link: 'https://www.youtube.com/zillizchannel',
         activeKey: null,
         icon: Video,
       },
@@ -231,7 +231,7 @@ export const NAVLIST_CN = [
       },
       {
         label: '视频',
-        link: 'https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g',
+        link: 'https://www.youtube.com/zillizchannel',
         activeKey: null,
         icon: Video,
       },

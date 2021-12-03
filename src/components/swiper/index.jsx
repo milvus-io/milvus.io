@@ -9,15 +9,17 @@ const Swiper = ({ list, duration = 10000 }) => {
 
   const getArrItem = (list, index) => {
     if (index < 0) {
-      return list[index + list.length];
+      return getArrItem(list, index + list.length);
     }
     return list[index];
   };
 
-  const isActiveItem = (activeIndex, targetIndex) => {
-    const tempIndex =
-      activeIndex - 1 < 0 ? activeIndex - 1 + list.length : activeIndex - 1;
-    if (activeIndex === targetIndex || tempIndex === targetIndex) {
+  // need to hide the item that is moved from the far left to the far right,
+  // because it will overlap when it moves through the window.
+  const getHiddenItem = (activeIndex, currentIndex) => {
+    let temp =
+      activeIndex - 2 < 0 ? activeIndex - 2 + list.length : activeIndex - 2;
+    if (temp === currentIndex) {
       return true;
     }
     return false;
@@ -63,7 +65,7 @@ const Swiper = ({ list, duration = 10000 }) => {
       {list.map((item, index) => (
         <div
           className={`${styles.swiperItem} ${
-            isActiveItem(activeIndex, index) ? styles.active : ''
+            getHiddenItem(activeIndex, index) ? styles.hidden : ''
           } swiper-item`}
           key={item.text}
           style={{ left: `${100 * index}%` }}

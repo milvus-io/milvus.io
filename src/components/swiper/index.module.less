@@ -2,13 +2,15 @@
 
 .swiperContainer {
   overflow: hidden;
-  border-radius: 16px;
+
   font-family: Inter;
   font-size: 24px;
   line-height: 32px;
   display: flex;
   position: relative;
-  height: 300px;
+  height: 350px;
+  border-radius: 16px;
+  background: #f9f9f9;
 
   @media @phone {
     font-size: 18px;
@@ -19,9 +21,10 @@
     width: 100%;
     position: absolute;
     padding: 64px 64px 28px 64px;
-    background: #f9f9f9;
+    top: 50%;
+    transform: translateY(-50%);
     transition: left 0.5s linear;
-    z-index: -1;
+    z-index: 2;
 
     @media @phone {
       padding: 32px 32px 14px 32px;
@@ -54,7 +57,7 @@
     }
   }
 
-  .active {
-    z-index: 2;
+  .hidden {
+    z-index: -1;
   }
 }

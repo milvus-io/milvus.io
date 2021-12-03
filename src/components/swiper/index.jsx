@@ -2,17 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as styles from './index.module.less';
 import { useMobileScreen } from '../../hooks';
 
+const getArrItem = (list, index) => {
+  if (index < 0) {
+    return getArrItem(list, index + list.length);
+  }
+  return list[index];
+};
+
 const Swiper = ({ list, duration = 10000 }) => {
   const wrapper = useRef(null);
   const { screenWidth } = useMobileScreen();
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const getArrItem = (list, index) => {
-    if (index < 0) {
-      return getArrItem(list, index + list.length);
-    }
-    return list[index];
-  };
 
   // need to hide the item that is moved from the far left to the far right,
   // because it will overlap when it moves through the window.
@@ -58,7 +58,7 @@ const Swiper = ({ list, duration = 10000 }) => {
         clearInterval(timer);
       }
     };
-  }, [screenWidth]);
+  }, [screenWidth, duration, list.length]);
 
   return (
     <div className={styles.swiperContainer} ref={wrapper}>

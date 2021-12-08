@@ -13,6 +13,7 @@ import imageSearch from '../../images/milvus-demos/image-search.png';
 import chemical from '../../images/milvus-demos/chemical-search.svg';
 import chatBot from '../../images/milvus-demos/chat-bots.svg';
 import FloatBord from '../../components/demoComponents/floatBord';
+import { globalHistory } from '@reach/router';
 
 const DEMOS = [
   {
@@ -52,6 +53,12 @@ const MilvusDemos = ({ data, pageContext }) => {
   const { footer } = data.allFile.edges.filter(i => i.node.childI18N)[0].node
     .childI18N.v2;
   const { locale } = pageContext;
+
+  const { search } = globalHistory.location;
+  const source =
+    search === '?utm_source=Reddit&utm_medium=cpc&utm_campaign=psocial'
+      ? 'Ads：Reddit'
+      : 'Milvus：demo';
 
   const [modalConfig, setModalConfig] = useState({
     open: false,
@@ -138,7 +145,7 @@ const MilvusDemos = ({ data, pageContext }) => {
         <InfoSubmitter
           loale={locale}
           submitCb={handleSubmitInfo}
-          source="Ads：Reddit"
+          source={source}
           hideModal={hideModal}
           href={href}
         />

@@ -74,6 +74,7 @@ const query = `
               publicURL
             }
             alt
+            href
           }
           mailingSection {
             title

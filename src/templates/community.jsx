@@ -157,7 +157,13 @@ export default function CommunityTemplate({ data, pageContext }) {
           <section className="content home">
             {/* banner */}
             <section className="banner-section">
-              <img src={banner.img.publicURL} alt={banner.alt} />
+              {banner.href ? (
+                <a href={banner.href} target="_blank">
+                  <img src={banner.img.publicURL} alt={banner.alt} />
+                </a>
+              ) : (
+                <img src={banner.img.publicURL} alt={banner.alt} />
+              )}
             </section>
             {/* about */}
             <section className="about-section">

@@ -55,10 +55,11 @@ const MilvusDemos = ({ data, pageContext }) => {
   const { locale } = pageContext;
 
   const { search } = globalHistory.location;
-  const source =
-    search === '?utm_source=Reddit&utm_medium=cpc&utm_campaign=psocial'
-      ? 'Ads：Reddit'
-      : 'Milvus：demo';
+  const source = ['utm_source', 'utm_medium', 'utm_campaign'].every(v =>
+    search.includes(v)
+  )
+    ? 'Ads：Reddit'
+    : 'Milvus：demo';
 
   const [modalConfig, setModalConfig] = useState({
     open: false,

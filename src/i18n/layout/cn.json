@@ -407,7 +407,7 @@
         "list": [
           {
             "title": "经济高效",
-            "text": "高性能的列式存储和 Faiss，HNSWLib 等向量索引保证了 Milvus 可以高效实现数据查询。通过利用 CPU SiMD，GPA， FPGA 的加速，Milvus 可以实现千万级向量数据毫秒级召回。",
+            "text": "高性能的列式存储和 Faiss，HNSWLib 等向量索引保证了 Milvus 可以高效实现数据查询。通过利用 CPU SiMD，GPU， FPGA 的加速，Milvus 可以实现千万级向量数据毫秒级召回。",
             "img": "supporting"
           },
           {

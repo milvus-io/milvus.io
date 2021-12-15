@@ -416,7 +416,7 @@
         "list": [
           {
             "title": "Cost-efficient",
-            "text": "Improving upon columnar storage and similarity search libraries like Faiss and HNSW, the Milvus vector database  provides efficient vector similarity search performance. With the acceleration of CPU, GPA, and FPGA, Milvus can retrieve billion-scale vectors within milliseconds.",
+            "text": "Improving upon columnar storage and similarity search libraries like Faiss and HNSW, the Milvus vector database  provides efficient vector similarity search performance. With the acceleration of CPU, GPU, and FPGA, Milvus can retrieve billion-scale vectors within milliseconds.",
             "img": "supporting"
           },
           {

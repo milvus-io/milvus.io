@@ -1,5 +1,6 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
+const wordCount = require('html-word-count');
 const { start } = require('repl');
 const env = process.env.IS_PREVIEW;
 // const env = 'preview';
@@ -909,8 +910,11 @@ const generateApiReferencePages = (
     versionsWithHome,
   }
 ) => {
+  let apiTotalCount = 0;
   nodes.forEach(
     ({ abspath, doc, name, version, category, docVersion, isDirectory }) => {
+      const currentMdWordsCount = wordCount(doc);
+      apiTotalCount += currentMdWordsCount;
       // Should ignore if the node is a directory.
       if (isDirectory) return;
       // Create default language page.
@@ -935,6 +939,8 @@ const generateApiReferencePages = (
           category,
           newestVersion,
           isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
+          currentMdWordsCount,
+          apiTotalCount,
         },
       });
       // Temporarily create cn page.
@@ -954,10 +960,13 @@ const generateApiReferencePages = (
           category,
           newestVersion,
           isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
+          currentMdWordsCount,
+          apiTotalCount,
         },
       });
     }
   );
+  console.log('api word count--', apiTotalCount);
 };
 
 const generateDocHomeWidthMd = (
@@ -1091,6 +1100,7 @@ const generateAllDocPages = (
     allApiMenus,
   }
 ) => {
+  let [docWordCount_EN, docWordCount_CN] = [0, 0];
   legalMd.forEach(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
     const isBlog = checkIsblog(fileAbsolutePath);
@@ -1114,7 +1124,10 @@ const generateAllDocPages = (
     );
 
     const newHtml = node.html;
-
+    const currentMdWordsCount = wordCount(newHtml);
+    fileLang === 'en'
+      ? (docWordCount_EN += currentMdWordsCount)
+      : (docWordCount_CN += currentMdWordsCount);
     // the newest doc version is master so we need to make route without version.
     // for easy link to the newest doc
     if (version === newestVersion) {
@@ -1142,6 +1155,8 @@ const generateAllDocPages = (
           allApiMenus,
           relatedKey,
           summary,
+          docWordCount_EN,
+          currentMdWordsCount,
         }, // additional data can be passed via context
       });
     }
@@ -1169,9 +1184,14 @@ const generateAllDocPages = (
         allApiMenus,
         relatedKey,
         summary,
+        docWordCount_CN,
+        currentMdWordsCount,
       }, // additional data can be passed via context
     });
   });
+
+  console.log('docWordCount_CN--', docWordCount_CN);
+  console.log('docWordCount_EN--', docWordCount_EN);
 };
 
 const generateBlogArticlePage = (

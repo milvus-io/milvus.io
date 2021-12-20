@@ -40,18 +40,37 @@
     }
   }
 
-  table[class*='language-'],
-  code[class*='language-'] {
-    display: block;
+  // div[class*='language-'],
+  // table[class*='language-'],
+  // code[class*='language-'] {
+  //   display: block;
 
-    &.language-javascript,
-    &.language-python,
-    &.language-go,
-    &.language-java,
-    &.language-cli,
-    &.language-cpp {
-      display: none;
-    }
+  //   &.language-javascript,
+  //   &.language-python,
+  //   &.language-go,
+  //   &.language-java,
+  //   &.language-cli,
+  //   &.language-cpp {
+  //     display: none;
+  //   }
+
+  //   &.active {
+  //     display: block;
+
+  //     @media @phone {
+  //       margin-top: 16px;
+  //       margin-bottom: 16px;
+  //     }
+  //   }
+  // }
+
+  .language-javascript,
+  .language-python,
+  .language-go,
+  .language-java,
+  .language-cli,
+  .language-cpp {
+    display: none;
 
     &.active {
       display: block;

@@ -1,8 +1,17 @@
 const locales = require('../src/constants/locales');
 const fs = require('fs');
+const path = require('path');
 const wordCount = require('html-word-count');
 const { start } = require('repl');
 const env = process.env.IS_PREVIEW;
+const axios = require('axios');
+const axiosInstance = axios.create({
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? 'https://mservice.zilliz.cc'
+      : 'http://localhost:3000',
+  timeout: 10000,
+});
 // const env = 'preview';
 
 // createPages: graphql query
@@ -910,11 +919,8 @@ const generateApiReferencePages = (
     versionsWithHome,
   }
 ) => {
-  let apiTotalCount = 0;
   nodes.forEach(
     ({ abspath, doc, name, version, category, docVersion, isDirectory }) => {
-      const currentMdWordsCount = wordCount(doc);
-      apiTotalCount += currentMdWordsCount;
       // Should ignore if the node is a directory.
       if (isDirectory) return;
       // Create default language page.
@@ -939,8 +945,6 @@ const generateApiReferencePages = (
           category,
           newestVersion,
           isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
-          currentMdWordsCount,
-          apiTotalCount,
         },
       });
       // Temporarily create cn page.
@@ -960,13 +964,10 @@ const generateApiReferencePages = (
           category,
           newestVersion,
           isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
-          currentMdWordsCount,
-          apiTotalCount,
         },
       });
     }
   );
-  console.log('api word count--', apiTotalCount);
 };
 
 const generateDocHomeWidthMd = (
@@ -1088,7 +1089,7 @@ const generateDocHomeWidthMd = (
  * @param {function} createPage gatsby createPage action
  * @param {object} metadata nodes, template, allMenus, allApiMenus, versions and newestVersion
  */
-const generateAllDocPages = (
+const generateAllDocPages = async (
   createPage,
   {
     nodes: legalMd,
@@ -1100,7 +1101,15 @@ const generateAllDocPages = (
     allApiMenus,
   }
 ) => {
-  let [docWordCount_EN, docWordCount_CN] = [0, 0];
+  let statisticsResult = {};
+  versions.forEach(v => {
+    if (['v1.1.1', 'v2.0.0'].includes(v)) {
+      statisticsResult[v] = {
+        en: 0,
+        cn: 0,
+      };
+    }
+  });
   legalMd.forEach(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
     const isBlog = checkIsblog(fileAbsolutePath);
@@ -1124,10 +1133,25 @@ const generateAllDocPages = (
     );
 
     const newHtml = node.html;
-    const currentMdWordsCount = wordCount(newHtml);
-    fileLang === 'en'
-      ? (docWordCount_EN += currentMdWordsCount)
-      : (docWordCount_CN += currentMdWordsCount);
+    if (
+      ['bootcamp', 'community', 'common', 'preview'].every(
+        i => !fileAbsolutePath.includes(i)
+      ) &&
+      ['v1.1.1', 'v2.0.0'].includes(version)
+    ) {
+      let [docWordCount_EN, docWordCount_CN, currentMdWordsCount] = [0, 0, 0];
+
+      currentMdWordsCount = wordCount(newHtml);
+      fileLang === 'en'
+        ? (docWordCount_EN += currentMdWordsCount)
+        : (docWordCount_CN += currentMdWordsCount);
+
+      statisticsResult[version] = {
+        en: statisticsResult[version].en + docWordCount_EN,
+        cn: statisticsResult[version].cn + docWordCount_CN,
+      };
+    }
+
     // the newest doc version is master so we need to make route without version.
     // for easy link to the newest doc
     if (version === newestVersion) {
@@ -1155,8 +1179,6 @@ const generateAllDocPages = (
           allApiMenus,
           relatedKey,
           summary,
-          docWordCount_EN,
-          currentMdWordsCount,
         }, // additional data can be passed via context
       });
     }
@@ -1184,14 +1206,28 @@ const generateAllDocPages = (
         allApiMenus,
         relatedKey,
         summary,
-        docWordCount_CN,
-        currentMdWordsCount,
       }, // additional data can be passed via context
     });
   });
 
-  console.log('docWordCount_CN--', docWordCount_CN);
-  console.log('docWordCount_EN--', docWordCount_EN);
+  const requestBody = [];
+
+  for (let v in statisticsResult) {
+    const { en, cn } = statisticsResult[v];
+    console.log(v + '----' + `en:${en},cn:${cn}`);
+    requestBody.push({
+      version: v,
+      count_en: en,
+      count_cn: cn,
+      type: 'doc',
+    });
+  }
+
+  try {
+    await axiosInstance.post('/word-count/create', requestBody);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const generateBlogArticlePage = (
@@ -1297,6 +1333,71 @@ const generateBlogArticlePage = (
   });
 };
 
+// Count the number of words in each language and version of APIReference
+const walkApiReferenceFile = async dirpath => {
+  const dirStructure = {};
+  const languageList = fs.readdirSync(dirpath);
+
+  for (let i = 0; i < languageList.length; i++) {
+    const versionList = fs.readdirSync(path.join(dirpath, languageList[i]));
+
+    dirStructure[languageList[i]] = {};
+
+    for (let j = 0; j < versionList.length; j++) {
+      const versionFolder = fs.readdirSync(
+        path.join(dirpath, languageList[i], versionList[j])
+      );
+
+      const filePath = path.join(dirpath, languageList[i], versionList[j]);
+      dirStructure[languageList[i]][versionList[j]] = countAPiWords(
+        filePath,
+        versionFolder,
+        dirStructure
+      );
+    }
+  }
+
+  let requestBody = [];
+  for (let l in dirStructure) {
+    let languageObj = dirStructure[l];
+    Object.entries(languageObj).forEach(([version, number]) => {
+      requestBody.push({
+        version,
+        count_en: number,
+        count_cn: 0,
+        type: l,
+      });
+    });
+  }
+  console.log('APIReference word count---', requestBody);
+  try {
+    await axiosInstance.post('/word-count/create', requestBody);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const countAPiWords = (filePath, filePathList) => {
+  let count = 0;
+
+  (function interateFolder(filePath, filePathList) {
+    for (let k = 0; k < filePathList.length; k++) {
+      const htmlOrFolderPath = path.join(filePath, filePathList[k]);
+      const stats = fs.statSync(htmlOrFolderPath);
+
+      if (stats.isDirectory()) {
+        const folder = fs.readdirSync(htmlOrFolderPath);
+        // console.log(folder)
+        countAPiWords(htmlOrFolderPath, folder, count);
+      } else {
+        const html = fs.readFileSync(htmlOrFolderPath);
+        count += wordCount(html);
+      }
+    }
+  })(filePath, filePathList);
+  return count;
+};
+
 module.exports = {
   query,
   findLang,
@@ -1318,4 +1419,5 @@ module.exports = {
   filterMDwidthBlog,
   filterHomeMdWithVersion,
   generateDocHomeWidthMd,
+  walkApiReferenceFile,
 };

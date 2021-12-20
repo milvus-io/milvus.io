@@ -4,6 +4,7 @@ const path = require('path');
 const wordCount = require('html-word-count');
 const { start } = require('repl');
 const env = process.env.IS_PREVIEW;
+const allowDocVersion = ['v1.1.1', 'v2.0.0'];
 const axios = require('axios');
 const axiosInstance = axios.create({
   baseURL:
@@ -1103,7 +1104,7 @@ const generateAllDocPages = async (
 ) => {
   let statisticsResult = {};
   versions.forEach(v => {
-    if (['v1.1.1', 'v2.0.0'].includes(v)) {
+    if (allowDocVersion.includes(v)) {
       statisticsResult[v] = {
         en: 0,
         cn: 0,
@@ -1137,7 +1138,7 @@ const generateAllDocPages = async (
       ['bootcamp', 'community', 'common', 'preview'].every(
         i => !fileAbsolutePath.includes(i)
       ) &&
-      ['v1.1.1', 'v2.0.0'].includes(version)
+      allowDocVersion.includes(version)
     ) {
       let [docWordCount_EN, docWordCount_CN, currentMdWordsCount] = [0, 0, 0];
 

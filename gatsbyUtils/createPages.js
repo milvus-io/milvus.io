@@ -7,10 +7,7 @@ const env = process.env.IS_PREVIEW;
 const allowDocVersion = ['v1.1.1', 'v2.0.0'];
 const axios = require('axios');
 const axiosInstance = axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'production'
-      ? 'https://mservice.zilliz.cc'
-      : 'http://localhost:3000',
+  baseURL: process.env.MSERVICE_URL || 'http://localhost:3000',
   timeout: 10000,
 });
 // const env = 'preview';

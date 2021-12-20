@@ -36,6 +36,7 @@
     "gatsby-transformer-sharp": "^3.0.0",
     "gestalt": "^39.2.6",
     "highlight.js": "^11.0.1",
+    "html-word-count": "^2.0.0",
     "instantsearch.css": "^7.4.5",
     "lottie-web": "^5.7.8",
     "node-html-parser": "^3.3.4",

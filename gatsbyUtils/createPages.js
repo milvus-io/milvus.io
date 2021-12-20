@@ -1389,7 +1389,7 @@ const countAPiWords = (filePath, filePathList) => {
       if (stats.isDirectory()) {
         const folder = fs.readdirSync(htmlOrFolderPath);
         // console.log(folder)
-        countAPiWords(htmlOrFolderPath, folder, count);
+        interateFolder(htmlOrFolderPath, folder);
       } else {
         const html = fs.readFileSync(htmlOrFolderPath);
         count += wordCount(html);

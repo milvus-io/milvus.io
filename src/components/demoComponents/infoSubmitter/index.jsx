@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as styles from './index.module.less';
 import TextField from '../../textField';
 import Button from '../../button';
-import { submitInfoForm } from '../../../utils/http';
+import { submitInfoForm } from '../../../http/mailchimp';
 
 const InfoSubmitter = ({
   locale,

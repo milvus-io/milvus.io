@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const API_BASE_URL =
+  process.env.SUBSCRIBE_API_BASE_URL || 'http://localhost:3000';
 const axiosInstance = axios.create({
   timeout: 20000,
-  baseURL: process.env.SUBSCRIBE_API_BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
   },
@@ -29,5 +31,5 @@ axiosInstance.interceptors.response.use(
 // This interface requires Nginx proxy before it can be used
 // Need to be packaged by docker to debug
 export const submitInfoForm = async params => {
-  return axiosInstance.post(`/email/mailchimp`, params);
+  return axiosInstance.post(`/mailchimp`, params);
 };

@@ -10,6 +10,8 @@ import "./commonDocTemplate.less";
 import LeftNav from "../components/leftNavigation";
 // import TocTreeView from "../components/treeView/TocTreeView";
 import Aside from "../components/aside";
+import Footer from "../components/footer";
+import "../css/variables/main.less";
 
 export const query = graphql`
   query ($language: String!) {
@@ -47,7 +49,7 @@ export default function Template({ data, pageContext }) {
 
   const isHomePage = activePost === "home.md";
   const leftNavMenus =
-    menuList?.find((menu) => menu.lang === locale)?.menuList || [];
+    menuList?.find(menu => menu.lang === locale)?.menuList || [];
 
   return (
     <Layout t={t} showFooter={false}>
@@ -71,33 +73,38 @@ export default function Template({ data, pageContext }) {
           language={language}
           trans={t}
         />
-        <div
-          className={clsx("doc-content-container", {
-            [`community-home`]: isHomePage,
-            [`is-mobile`]: isMobile,
-          })}
-        >
+        <div className="doc-right-container">
           <div
-            className={clsx({
-              [`community-home-html-wrapper`]: isHomePage,
-              [`doc-post-content`]: !isHomePage,
+            className={clsx("doc-content-container", {
+              [`community-home`]: isHomePage,
+              [`is-mobile`]: isMobile,
             })}
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          >
+            <div className="doc-post-wrapper">
+              <div
+                className={clsx({
+                  [`community-home-html-wrapper`]: isHomePage,
+                  [`doc-post-content`]: !isHomePage,
+                })}
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+            </div>
+            {!isPhone && !!headings?.length && (
+              <Aside
+                locale={locale}
+                // version={version}
+                editPath={editPath}
+                mdTitle={headings[0]}
+                category="doc"
+                isHome={isHomePage}
+                items={headings}
+                title={t("v3trans.docs.tocTitle")}
+                className="doc-toc-container"
+              />
+            )}
+          </div>
+          <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>
-        {!isPhone && !!headings?.length && (
-          <Aside
-            locale={locale}
-            // version={version}
-            editPath={editPath}
-            mdTitle={headings[0]}
-            category="doc"
-            isHome={isHomePage}
-            items={headings}
-            title={t("v3trans.docs.tocTitle")}
-            className="doc-toc-container"
-          />
-        )}
       </div>
     </Layout>
   );

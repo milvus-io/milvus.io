@@ -1,5 +1,3 @@
-@import "./fontStyle.less";
-
 @color-primary: #1493cc;
 @color-list-blue: #4fc4f9;
 @pre-bg-color: #f9f9f9;
@@ -16,35 +14,14 @@
 @color-gray: #9ca6b2;
 
 .articleContent,
-.doc-content-container {
+.doc-post-wrapper,
+.doc-home-html-Wrapper,
+.community-home-html-wrapper,
+.api-reference-wrapper {
   color: @main-text-color;
 
   details {
     margin-bottom: 24px;
-  }
-
-  a,
-  p,
-  li,
-  .alert,
-  .note,
-  .info,
-  .warning,
-  table,
-  tr,
-  td,
-  th,
-  h1,
-  h2,
-  h3,
-  h4 {
-    .fontSwitch();
-  }
-
-  h1,
-  h2,
-  h3 {
-    .fontMedi();
   }
 
   h1 {

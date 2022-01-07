@@ -17,7 +17,7 @@
 }
 
 .doc-post-container {
-  padding: 0 4rem;
+  // padding: 0 4rem;
   background: #fff;
   // min-height: 80vh;
   // max-width: calc(100% - 280px);
@@ -450,9 +450,10 @@
   }
 
   .card-wrapper {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    grid-gap: 20px;
+    display: grid;
+    grid-auto-rows: minmax(230px, auto);
+    grid-template-columns: repeat(auto-fit, 300px);
 
     .start_card_container {
       background: @color-white;
@@ -538,9 +539,10 @@
   }
 
   .doc-home-recommend-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    grid-gap: 20px;
+    display: grid;
+    grid-auto-rows: minmax(220px, auto);
+    grid-template-columns: repeat(auto-fit, 200px);
 
     .recomment-item {
       > p {
@@ -573,6 +575,7 @@
     background: @bg-blue;
     border-left: 4px solid @icon-blue;
     padding: 26px 30px;
+    margin-top: 60px;
 
     font-family: Inter;
     font-style: normal;
@@ -609,6 +612,11 @@
     margin-left: 48px;
     margin-right: 48px;
 
+    h2 {
+      margin-bottom: 20px;
+      margin-top: 60px;
+    }
+
     img {
       margin: 0;
     }
@@ -616,15 +624,8 @@
 }
 
 .doc-temp-container .doc-home.doc-content-container {
+  display: block;
   margin-right: 0;
   max-width: 950px;
   padding: 0;
-}
-
-.is-mobile.doc-temp-container .doc-home.doc-content-container {
-  margin: 0 48px;
-}
-
-.is-phone.doc-temp-container .doc-home.doc-content-container {
-  margin: 0 16px;
 }

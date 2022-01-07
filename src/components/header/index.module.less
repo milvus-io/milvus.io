@@ -11,6 +11,10 @@
   z-index: 100;
   .spaceBetween;
 
+  @media (max-width: 1440px) {
+    display: none;
+  }
+
   &.light {
     background-color: white;
     position: sticky;
@@ -32,7 +36,7 @@
       color: black;
     }
 
-    .menuLink {
+    .menuItem {
       color: black;
     }
 
@@ -132,14 +136,19 @@
 }
 
 .mobileHead {
+  display: none;
   padding: 35px 0;
-  display: flex;
-  justify-content: center;
+
   position: sticky;
   top: 0;
   background-color: white;
   width: 100%;
   z-index: 100;
+
+  @media (max-width: 1440px) {
+    display: flex;
+    justify-content: center;
+  }
 
   @media @phone {
     padding: 15px 0;
@@ -155,7 +164,7 @@
     color: black;
   }
 
-  .menuLink {
+  .menuItem {
     color: black;
   }
 }
@@ -276,7 +285,7 @@
   }
 }
 
-.menuLink {
+.menuItem {
   background: transparent;
   border: 0;
   color: white;
@@ -287,6 +296,11 @@
   line-height: 40px;
   text-decoration: none;
   .hover;
+}
+
+.menuLink {
+  .menuItem;
+  color: black;
 }
 
 .mobileMenuLink {

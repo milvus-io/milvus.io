@@ -94,7 +94,6 @@ const BlogTemplate = ({ data, pageContext }) => {
     <Layout t={t}>
       <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
         {/* screen > 1024  */}
-
         <section className={`${styles.featuredBlog} `}>
           <div className={`${styles.featuredImg}  col-6`}>
             <img src={`https://${featuredBlog.cover}  `} />
@@ -104,7 +103,6 @@ const BlogTemplate = ({ data, pageContext }) => {
             <Link to={`/blog/${featuredBlog.id}`}>
               <p className={styles.title}>{featuredBlog.title}</p>
             </Link>
-
             <p className={styles.desc}>{featuredBlog.desc}</p>
           </div>
         </section>

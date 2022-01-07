@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Layout from "../../components/layout";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
@@ -12,7 +12,7 @@ import Forum from "../../images/demos/forum.svg";
 import { CustomizedContentDialogs } from "../../components/dialog/Dialog";
 import { CustomizedSnackbars } from "../../components/snackBar";
 import { useWindowSize } from "../../http/hooks";
-import { submitInfoForm } from "../../http/submitEmail";
+import Signup from "../../components/signup";
 
 const DEMOS = [
   {
@@ -42,11 +42,9 @@ const DEMOS = [
   },
 ];
 
-const UNIQUE_EMAIL_ID = "UNIQUE_EMAIL_ID";
-
 const DemoPage = () => {
   const { t } = useI18next();
-  const inputRef = useRef(null);
+
   const [dialogConfig, setDialogConfig] = useState({
     open: false,
     title: "",
@@ -61,51 +59,6 @@ const DemoPage = () => {
 
   const currentSize = useWindowSize();
   const isMobile = ["phone", "tablet"].includes(currentSize);
-
-  const handleSubmitEmail = async () => {
-    const regx =
-      /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$/;
-
-    const value = inputRef.current.value;
-    if (!regx.test(value)) {
-      handleOpenSnackbar({
-        type: "error",
-        message: "Email format error",
-      });
-      return;
-    }
-    const { search } = window.location;
-    const source = ["utm_source", "utm_medium", "utm_campaign"].every((v) =>
-      search.includes(v)
-    )
-      ? "Ads：Reddit"
-      : "Milvus：demo";
-
-    try {
-      const { statusCode, unique_email_id } = await submitInfoForm({
-        email: value,
-        form: {
-          SOURCE: source,
-        },
-      });
-      if (statusCode === 200) {
-        window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
-        handleOpenSnackbar({
-          type: "success",
-          message: "Thank you, you have been added to our mailing list!",
-        });
-        //
-      } else {
-        handleOpenSnackbar({
-          type: "warning",
-          message: "This email is already subscribed!",
-        });
-        window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handelOpenDialog = (content, title) => {
     setDialogConfig({
@@ -221,31 +174,7 @@ const DemoPage = () => {
             </div>
           </div>
         </section>
-        <section className={styles.subscribe}>
-          <div className={styles.inner}>
-            <div className={styles.section}>
-              <h2>Sign up for our newsletter</h2>
-              <p>
-                Monthly hand-picked discoveries and stories of thriving
-                {!isMobile && <br />}technologies in a new world of data.
-              </p>
-            </div>
-            <div className={`${styles.section} ${styles.inputWrapper}`}>
-              <input
-                className={styles.input}
-                type="text"
-                placeholder="What’s your email?"
-                ref={inputRef}
-              />
-              <button
-                className={`customButton containedBtn ${styles.subscribeBtn}`}
-                onClick={handleSubmitEmail}
-              >
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </section>
+        <Signup callback={handleOpenSnackbar} t={t} />
       </Layout>
       <CustomizedContentDialogs
         open={dialogConfig.open}

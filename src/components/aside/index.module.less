@@ -1,5 +1,7 @@
-.rightNavWrapper {
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
 
+.rightNavWrapper {
   .btnsGroup {
     list-style: none;
     padding: 0;
@@ -7,14 +9,14 @@
 
     .link {
       display: inline-block;
-      color: #000;
+      color: @color-black;
       margin-bottom: 8px;
       display: flex;
       align-items: center;
       font-size: 14px;
 
       &:hover {
-        color: grey;
+        color: @color-grey-01;
       }
     }
   }
@@ -30,7 +32,7 @@
 
   .global {
     path {
-      fill: black;
+      fill: @color-black;
     }
   }
 }

@@ -17,6 +17,7 @@ import Seo from "../components/seo";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
 import { useCodeCopy, useMultipleCodeFilter } from "../hooks/doc-dom-operation";
+import { useGenAnchor } from "../hooks/doc-anchor";
 
 export const query = graphql`
   query ($language: String!) {
@@ -135,6 +136,7 @@ export default function Template({ data, pageContext }) {
 
   useCodeCopy(language, hljsCfg);
   useMultipleCodeFilter();
+  useGenAnchor(version, editPath);
 
   return (
     <Layout t={t} showFooter={false}>

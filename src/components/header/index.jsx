@@ -17,7 +17,7 @@ import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import { useWindowSize } from "../../http/hooks";
 
-const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
+const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +32,7 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
     if (!darkMode) {
       return;
     }
-    const onScroll = (e) => {
+    const onScroll = e => {
       setIsLightHeader(e.target.documentElement.scrollTop > 100);
     };
     window.addEventListener("scroll", onScroll);
@@ -42,14 +42,14 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
   const currentSize = useWindowSize();
   const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
 
-  const handleLangClick = (event) => {
+  const handleLangClick = event => {
     setAnchorEl(event.currentTarget);
   };
   const handleLangClose = () => {
     setAnchorEl(null);
   };
 
-  const openTutorial = (open) => {
+  const openTutorial = open => {
     let isOpen = open;
     if (isOpen === undefined) {
       isOpen = !isTutOpen;
@@ -57,7 +57,7 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
     setIsTutOpen(isOpen);
   };
 
-  const openTool = (open) => {
+  const openTool = open => {
     let isOpen = open;
     if (isOpen === undefined) {
       isOpen = !isToolOpen;
@@ -120,10 +120,14 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
           "aria-labelledby": "basic-button",
         }}
       >
-        {languages.map((lng) => {
+        {languages.map(lng => {
           return (
             <MenuItem key={lng} value={lng} onClick={handleLangClose}>
-              <Link to={originalPath} language={lng}>
+              <Link
+                className={styles.menuLink}
+                to={originalPath}
+                language={lng}
+              >
                 {lng === "en" ? "English" : "中文"}
               </Link>
             </MenuItem>
@@ -295,14 +299,14 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
         <nav>
           <ul className={`${styles.flexstart} ${styles.menu}`}>
             <li>
-              <Link to="/docs" className={styles.menuLink}>
+              <Link to="/docs" className={styles.menuItem}>
                 {t("v3trans.main.nav.docs")}
               </Link>
             </li>
             <li>
               <button
                 ref={tutRef}
-                className={styles.menuLink}
+                className={styles.menuItem}
                 onClick={openTutorial}
               >
                 {t("v3trans.main.nav.tutorials")}
@@ -311,19 +315,19 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
             <li>
               <button
                 ref={toolRef}
-                className={styles.menuLink}
+                className={styles.menuItem}
                 onClick={openTool}
               >
                 {t("v3trans.main.nav.tools")}
               </button>
             </li>
             <li>
-              <Link to="/blog" className={styles.menuLink}>
+              <Link to="/blog" className={styles.menuItem}>
                 {t("v3trans.main.nav.blog")}
               </Link>
             </li>
             <li>
-              <Link to="/community" className={styles.menuLink}>
+              <Link to="/community" className={styles.menuItem}>
                 {t("v3trans.main.nav.community")}
               </Link>
             </li>
@@ -345,7 +349,11 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
               horizontal: "left",
             }}
           >
-            <MenuItem>{t("v3trans.main.nav.bootcamp")}</MenuItem>
+            <MenuItem>
+              <Link to="/milvus-demos" className={styles.menuLink}>
+                {t("v3trans.main.nav.bootcamp")}
+              </Link>
+            </MenuItem>
             <MenuItem>
               <Link to="/milvus-demos" className={styles.menuLink}>
                 {t("v3trans.main.nav.demo")}
@@ -391,7 +399,11 @@ const Header = ({ darkMode = false, t = (v) => v, className = "" }) => {
                 Milvus_CLI
               </a>
             </MenuItem>
-            <MenuItem>Sizing Tool</MenuItem>
+            <MenuItem>
+              <Link to="/tool-sizing" className={styles.menuLink}>
+                Sizing Tool
+              </Link>
+            </MenuItem>
           </Menu>
         </nav>
       </div>

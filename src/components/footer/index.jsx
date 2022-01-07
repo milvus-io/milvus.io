@@ -82,14 +82,19 @@ const socialJson = [
   },
 ];
 
-const Footer = ({ darkMode = true, t }) => {
+const Footer = ({ darkMode = true, t, className }) => {
   return (
-    <div className={clsx(styles.footer, { [styles.dark]: darkMode })}>
+    <div
+      className={clsx(styles.footer, {
+        [className]: className,
+        [styles.dark]: darkMode,
+      })}
+    >
       <div
         className={clsx(styles.container, { [`col-4 col-8 col-12`]: darkMode })}
       >
         <div className={styles.flexstart}>
-          {footerJson.map((f) => (
+          {footerJson.map(f => (
             <div key={f.title} className={`${styles.footerItem} col-2`}>
               <span className={styles.itemTitle}>
                 {t(`v3trans.main.nav.${f.title}`)}
@@ -125,7 +130,7 @@ const Footer = ({ darkMode = true, t }) => {
         <div className={styles.bottombar}>
           Milvus. 2022 All rights reserved.
           <div className={styles.social}>
-            {socialJson.map((s) => (
+            {socialJson.map(s => (
               <a
                 key={s.link}
                 href={s.link}

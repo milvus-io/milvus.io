@@ -14,7 +14,7 @@ import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
 import Seo from "../components/seo";
-// import Footer from "../components/footer";
+import Footer from "../components/footer";
 
 export const query = graphql`
   query ($language: String!) {
@@ -57,7 +57,7 @@ export default function Template({ data, pageContext }) {
   const { language, t } = useI18next();
 
   const menuList = allMenus.find(
-    (v) =>
+    v =>
       v.absolutePath.includes(version) &&
       isBlog === v.isBlog &&
       locale === v.lang
@@ -78,10 +78,10 @@ export default function Template({ data, pageContext }) {
     homeTitle: "Docs Home",
     version,
     // filter master version
-    versions: versions.filter((v) => v !== "master"),
+    versions: versions.filter(v => v !== "master"),
   };
   const leftNavMenus =
-    menuConfig?.menuList?.find((menu) => menu.lang === locale)?.menuList || [];
+    menuConfig?.menuList?.find(menu => menu.lang === locale)?.menuList || [];
   const leftNavHomeUrl =
     version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
 
@@ -160,49 +160,51 @@ export default function Template({ data, pageContext }) {
           trans={t}
           version={version}
         />
-        <div
-          className={clsx("doc-content-container", {
-            [`doc-home`]: homeData,
-            [`is-mobile`]: isMobile,
-          })}
-        >
-          {homeData ? (
-            <HomeContent
-              homeData={homeData}
-              newestBlog={newestBlog}
-              trans={t}
-            />
-          ) : (
-            <DocContent
-              htmlContent={mdHtml}
-              commitInfo={commitInfo}
-              mdId={mdId}
-              relatedKey={relatedKey}
-              isMobile={isMobile}
-              trans={t}
-            />
-          )}
-          {/* <Footer t={t} /> */}
+        <div className="doc-right-container">
+          <div
+            className={clsx("doc-content-container", {
+              [`doc-home`]: homeData,
+              [`is-mobile`]: isMobile,
+            })}
+          >
+            {homeData ? (
+              <HomeContent
+                homeData={homeData}
+                newestBlog={newestBlog}
+                trans={t}
+              />
+            ) : (
+              <DocContent
+                htmlContent={mdHtml}
+                commitInfo={commitInfo}
+                mdId={mdId}
+                relatedKey={relatedKey}
+                isMobile={isMobile}
+                trans={t}
+              />
+            )}
+            {!isPhone && (
+              <Aside
+                locale={locale}
+                version={version}
+                editPath={editPath}
+                mdTitle={headings[0]}
+                category="doc"
+                isHome={!!homeData}
+                items={headings}
+                title={t("v3trans.docs.tocTitle")}
+                className="doc-toc-container"
+              />
+            )}
+          </div>
+          <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>
-        {!isPhone && (
-          <Aside
-            locale={locale}
-            version={version}
-            editPath={editPath}
-            mdTitle={headings[0]}
-            category="doc"
-            isHome={!!homeData}
-            items={headings}
-            title={t("v3trans.docs.tocTitle")}
-            className="doc-toc-container"
-          />
-        )}
       </div>
     </Layout>
   );
 }
 
-const HomeContent = (props) => {
+const HomeContent = props => {
   const { homeData, newestBlog = [], trans } = props;
   return (
     <>
@@ -220,7 +222,7 @@ const HomeContent = (props) => {
   );
 };
 
-const GitCommitInfo = (props) => {
+const GitCommitInfo = props => {
   const { commitInfo = {}, mdId, commitTrans = "was last updated at" } = props;
   return (
     <div className="commit-info-wrapper">
@@ -235,9 +237,8 @@ const GitCommitInfo = (props) => {
   );
 };
 
-const DocContent = (props) => {
-  const { htmlContent, commitInfo, mdId, relatedKey, isMobile, trans } =
-    props;
+const DocContent = props => {
+  const { htmlContent, commitInfo, mdId, relatedKey, isMobile, trans } = props;
   //! TO REMOVE
   const faqMock = {
     contact: {
@@ -268,7 +269,7 @@ const DocContent = (props) => {
   };
   return (
     <>
-      <div>
+      <div className="doc-post-wrapper">
         <div
           className="doc-post-content"
           dangerouslySetInnerHTML={{ __html: htmlContent }}

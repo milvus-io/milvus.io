@@ -8,6 +8,7 @@ import "./docTemplate.less";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
+import Footer from "../components/footer";
 
 export const query = graphql`
   query ($language: String!) {
@@ -37,10 +38,12 @@ export default function Template({ data, pageContext }) {
     // newestVersion,
   } = pageContext;
   const [targetDocVersion, setTargetDocVersion] = useState();
-  const { t } = useI18next();
 
   const currentWindowSize = useWindowSize();
   const isMobile = ["phone", "tablet"].includes(currentWindowSize);
+  const isPhone = ["phone"].includes(currentWindowSize);
+  const desktop1024 = ["desktop1024"].includes(currentWindowSize);
+  const { language, t } = useI18next();
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
@@ -107,7 +110,7 @@ export default function Template({ data, pageContext }) {
   const leftNavHomeUrl = `/docs/${targetDocVersion}`;
   const menuList =
     allMenus.find(
-      (v) => v.absolutePath.includes(targetDocVersion) && v.lang === locale
+      v => v.absolutePath.includes(targetDocVersion) && v.lang === locale
     ) || [];
 
   return (
@@ -125,23 +128,28 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           pageType="api"
         />
-        <div
-          className={clsx("doc-content-container", {
-            [`is-mobile`]: isMobile,
-          })}
-        >
+        <div className="doc-right-container">
           <div
-            className={`api-reference-wrapper doc-post-container ${category}`}
-            dangerouslySetInnerHTML={{ __html: doc }}
-          ></div>
+            className={clsx("doc-content-container", {
+              [`is-mobile`]: isMobile,
+            })}
+          >
+            <div className="doc-post-wrapper">
+              <div
+                className={`api-reference-wrapper doc-post-container ${category}`}
+                dangerouslySetInnerHTML={{ __html: doc }}
+              ></div>
+            </div>
+            {!isPhone && (
+              <Aside
+                apiReferenceData={apiReferenceData}
+                category="api"
+                isHome={false}
+              />
+            )}
+          </div>
+          <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>
-        {!isMobile && (
-          <Aside
-            apiReferenceData={apiReferenceData}
-            category="api"
-            isHome={false}
-          />
-        )}
       </div>
     </Layout>
   );

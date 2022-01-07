@@ -120,7 +120,7 @@ const IndexPage = () => {
             </p>
             <div className="btn-group">
               <button className="btn-start">Get Started</button>
-              <button className="btn-watch">
+              <a className="btn-watch" href="https://www.youtube.com/watch?v=nQkmgCtVz5k&t=7s" target="_blank">
                 Watch Video
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +134,7 @@ const IndexPage = () => {
                     fill="white"
                   ></path>
                 </svg>
-              </button>
+              </a>
             </div>
             <div className="bucket bucket-container ">
               <svg

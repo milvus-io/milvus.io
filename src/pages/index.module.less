@@ -41,6 +41,7 @@
 
   @media @desktop1024, @tablet, @phone {
     padding: 60px 70px 0 70px;
+    font-size: 24px;
   }
 
   @media @phone {
@@ -53,6 +54,10 @@
   line-height: 24px;
   color: white;
   margin-bottom: 32px;
+
+  @media @tablet, @phone {
+    font-size: 12px;
+  }
 }
 
 .communityLinkContainer {
@@ -83,9 +88,12 @@
     line-height: 42px;
     font-weight: bold;
 
+    @media @tablet, @desktop1024 {
+      font-size: 24px;
+    }
+
     @media @phone {
-      font-size: 14px;
-      line-height: 24px;
+      font-size: 18px;
     }
 
     svg {
@@ -100,6 +108,10 @@
   line-height: 58px;
   margin-bottom: 60px;
   text-align: center;
+
+  @media @desktop1024, @tablet, @phone {
+    font-size: 24px;
+  }
 }
 
 .brands {

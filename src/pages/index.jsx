@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { graphql } from "gatsby";
-import { useI18next } from "gatsby-plugin-react-i18next";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import "./index.less";
 import * as styles from "./index.module.less";
 import Layout from "../components/layout";
@@ -97,7 +97,7 @@ const IndexPage = () => {
 
   const communityLinks = [
     { name: "Slack", to: "https://slack.milvus.io" },
-    { name: "Repo", to: "https://github.com/milvus-io/milvus" },
+    { name: "Github", to: "https://github.com/milvus-io/milvus" },
     { name: "Forum", to: "https://discuss.milvus.io/" },
   ];
 
@@ -112,16 +112,19 @@ const IndexPage = () => {
             <div className="shooting_star"></div>
           </div>
           <div className="banner-grid-container col-12 col-8 col-4">
-            <p className="title">
-              Vector database built for scalable similarity search
-            </p>
-            <p className="subtitle">
-              Open-source, highly scalable, and blazing fast
-            </p>
+            <p className="title">{t("v3trans.main.h1")}</p>
+            <p className="subtitle">{t("v3trans.main.desc")}</p>
             <div className="btn-group">
-              <button className="btn-start">Get Started</button>
-              <a className="btn-watch" href="https://www.youtube.com/watch?v=nQkmgCtVz5k&t=7s" target="_blank">
-                Watch Video
+              <Link to="/docs">
+                <button className="btn-start">
+                  {t("v3trans.main.nav.getstarted")}
+                </button>
+              </Link>
+
+              <a className="btn-watch" href="https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g"
+                target="_blank"
+                rel="noopener noreferrer">
+                {t("v3trans.main.nav.watchvideo")}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -135,6 +138,7 @@ const IndexPage = () => {
                   ></path>
                 </svg>
               </a>
+
             </div>
             <div className="bucket bucket-container ">
               <svg
@@ -699,19 +703,19 @@ const IndexPage = () => {
             </div>
             <div className="stats col-3 col-8">
               <div className="stats-detail">
-                <p className="name">Stars at Github</p>
+                <p className="name">{t("v3trans.main.stars")}</p>
                 <p className="num">9k+</p>
               </div>
               <div className="stats-detail">
-                <p className="name">Contirbutors</p>
+                <p className="name">{t("v3trans.main.contirbutors")}</p>
                 <p className="num">150</p>
               </div>
               <div className="stats-detail">
-                <p className="name">Downloads</p>
+                <p className="name">{t("v3trans.main.downloads")}</p>
                 <p className="num">60M</p>
               </div>
               <div className="stats-detail">
-                <p className="name">Customers</p>
+                <p className="name">{t("v3trans.main.customers")}</p>
                 <p className="num">1500+</p>
               </div>
             </div>

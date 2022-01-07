@@ -26,8 +26,8 @@ const footerJson = [
   {
     title: "tutorials",
     children: [
-      { name: "bootcamp", trans: true, to: "/" },
-      { name: "demo", trans: true, to: "/demo" },
+      { name: "bootcamp", trans: true, to: "/bootcamp" },
+      { name: "demo", trans: true, to: "/milvus-demos" },
       {
         name: "video",
         trans: true,
@@ -50,14 +50,13 @@ const footerJson = [
   {
     title: "community",
     children: [
-      { name: "getinvolved", trans: true, to: "/" },
+      { name: "getinvolved", trans: true, to: "/docs" },
       { name: "Slack", trans: false, to: "https://slack.milvus.io" },
       {
         name: "Github",
         trans: false,
         to: "https://github.com/milvus-io/milvus",
       },
-      { name: "repo", trans: true, to: "https://github.com/milvus-io/milvus" },
       { name: "forum", trans: true, to: "https://discuss.milvus.io/" },
     ],
   },

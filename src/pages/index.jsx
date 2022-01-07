@@ -18,6 +18,7 @@ import smartnews from "../images/brands/smartnews.png";
 import vivo from "../images/brands/vivo.png";
 import walmart from "../images/brands/walmart.png";
 import xiaomi from "../images/brands/xiaomi.png";
+import CustomIconLink from "../components/customIconLink";
 
 const brands = [
   {
@@ -93,6 +94,12 @@ const IndexPage = () => {
       message: "",
     });
   };
+
+  const communityLinks = [
+    { name: "Slack", to: "https://slack.milvus.io" },
+    { name: "Repo", to: "https://github.com/milvus-io/milvus" },
+    { name: "Forum", to: "https://discuss.milvus.io/" },
+  ];
 
   return (
     <main className="main">
@@ -710,6 +717,26 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
+
+        <section className={`${styles.community} col-4 col-8 col-12`}>
+          <p className={styles.communityTitle}>
+            {t("v3trans.main.communitytitle")}
+          </p>
+          <div className={styles.communityLinkContainer}>
+            <p className={styles.communityLinkTitle}>
+              {t("v3trans.main.communitydesc")}
+            </p>
+            <div className={styles.communityLinks}>
+              {communityLinks.map(co => {
+                return (
+                  <CustomIconLink className={styles.communityLink} to={co.to}>
+                    {co.name}
+                  </CustomIconLink>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
         <section className={`${styles.customer} col-4 col-8 col-12`}>
           <p className={styles.customerTitle}>{t("v3trans.main.customer")}</p>

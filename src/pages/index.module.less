@@ -1,0 +1,44 @@
+@import "../css/variables/main.less";
+
+.customer {
+  margin: 160px auto;
+
+  @media @desktop1024 {
+    margin: 130px auto;
+  }
+
+  @media @tablet {
+    margin: 100px auto;
+  }
+
+  @media @phone {
+    margin: 80px auto;
+  }
+}
+
+.customerTitle {
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 58px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.brands {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 69px);
+  grid-gap: 20px;
+  justify-items: center;
+
+  @media @desktop1024 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 69px);
+  }
+
+  @media @phone, @tablet {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 48px);
+  }
+}

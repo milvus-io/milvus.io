@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { graphql } from "gatsby";
-import { useI18next } from "gatsby-plugin-react-i18next";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import "./index.less";
 import * as styles from "./index.module.less";
 import Layout from "../components/layout";
@@ -119,22 +119,30 @@ const IndexPage = () => {
               Open-source, highly scalable, and blazing fast
             </p>
             <div className="btn-group">
-              <button className="btn-start">Get Started</button>
-              <button className="btn-watch">
-                Watch Video
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="m10 16.5 6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                    fill="white"
-                  ></path>
-                </svg>
-              </button>
+              <Link to="/docs">
+                <button className="btn-start">Get Started</button>
+              </Link>
+              <a
+                href="https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="btn-watch">
+                  Watch Video
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="m10 16.5 6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                      fill="white"
+                    ></path>
+                  </svg>
+                </button>
+              </a>
             </div>
             <div className="bucket bucket-container ">
               <svg

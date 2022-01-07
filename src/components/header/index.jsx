@@ -280,9 +280,11 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
             variant="fullwidth"
             sx={{ position: "absolute", bottom: "78px", width: "100%" }}
           />
-          <button className={styles.startBtn}>
-            {t("v3trans.main.nav.getstarted")}
-          </button>
+          <Link to="/docs">
+            <button className={styles.startBtn}>
+              {t("v3trans.main.nav.getstarted")}
+            </button>
+          </Link>
         </nav>
       </div>
     </header>
@@ -410,9 +412,11 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
       <div className={styles.flexend}>
         {actionBar}
-        <button className={styles.startBtn}>
-          {t("v3trans.main.nav.getstarted")}
-        </button>
+        <Link to="/docs">
+          <button className={styles.startBtn}>
+            {t("v3trans.main.nav.getstarted")}
+          </button>
+        </Link>
       </div>
     </header>
   );

@@ -1,5 +1,5 @@
-@import '../css/variables/fontStyle.less';
-@import '../css/variables/responsive.less';
+@import "../css/variables/fontStyle.less";
+@import "../css/variables/main.less";
 
 @header-height: 89px;
 @header-mobile-height: 87px;
@@ -23,6 +23,10 @@
   .notfount-center-wrapper {
     width: 100%;
     padding: 0 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
 
     @media @tablet {
       padding: 0 32px;
@@ -68,6 +72,7 @@
 
   .notfound-button {
     margin-top: 24px;
+    .primaryBtn;
 
     span {
       margin-left: 16px;

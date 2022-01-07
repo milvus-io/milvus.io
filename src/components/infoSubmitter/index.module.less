@@ -1,0 +1,70 @@
+@import '../../css/variables/color.less';
+@import '../../css/variables/responsive.less';
+@import '../../css/variables/fontStyle.less';
+
+.submitterContainer {
+  font-family: 'Inter';
+  background-color: #fff;
+  padding: 32px;
+  border-radius: 8px 32px;
+
+  @media @phone {
+    padding: 16px;
+  }
+
+  .titleBar {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+    .iconWrapper {
+      font-size: 20px;
+      color: @color-primary;
+      cursor: pointer;
+    }
+  }
+
+  .alert {
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 40px;
+  }
+
+  .prompt {
+    font-size: 14px;
+    line-height: 22px;
+    color: red;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  .btnWrapper {
+    text-align: right;
+
+    .submitBtn {
+      background: @color-primary;
+      padding: 10px 20px;
+      font-size: 14px;
+      line-height: 18px;
+      border-radius: 19px;
+      font-weight: 600;
+      color: #fff;
+      border: none;
+      outline: none;
+      cursor: pointer;
+
+      &:disabled {
+        background: @color-grey-04;
+        color: @color-tag-gray;
+        
+      }
+    }
+  }
+}
+

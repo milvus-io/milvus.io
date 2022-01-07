@@ -1,0 +1,113 @@
+@import "../css/variables/responsive.less";
+@font-size-normal: 18px;
+
+@font-size-title-normal: 32px;
+@font-size-title-large: 40px;
+
+@primary-color: #1493cc;
+.listWrapper {
+  margin: 0 auto;
+  .title {
+    font-weight: bold;
+    font-size: @font-size-title-large;
+    line-height: 50px;
+    color: #000;
+    @media @desktop1024 {
+      font-size: @font-size-title-normal;
+      line-height: 40px;
+    }
+  }
+  .featuredImg {
+    display: flex;
+    align-items: center;
+    @media @desktop1920 {
+      width: calc((100% - 340px) / 18 * 8 + 140px);
+    }
+  }
+  .featuredBlog {
+    display: flex;
+    justify-content: space-between;
+    @media @phone, @tablet {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+    }
+    .featuredBlogContent {
+      .tag {
+        text-transform: uppercase;
+        color: @primary-color;
+        font-size: @font-size-normal;
+      }
+
+      .desc {
+        font-size: @font-size-normal;
+        color: #4c5a67;
+      }
+    }
+  }
+  .mobileFeatured {
+    display: none;
+    @media @phone, @tablet {
+      display: block;
+    }
+  }
+
+  .blogList {
+    margin-top: 110px;
+    @media @tablet, @phone {
+      margin-top: 30px;
+    }
+    ul {
+      padding: 0;
+      li {
+        list-style: none;
+        text-transform: capitalize;
+      }
+    }
+    .tagsWrapper {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      gap: 34px;
+
+      li:hover {
+        cursor: pointer;
+      }
+      .active {
+        padding: 11px 20px;
+        background: #eff9fe;
+        border-radius: 100px;
+        color: @primary-color;
+        @media @tablet, @phone {
+          padding: 6px 10px;
+        }
+      }
+
+      @media @tablet, @phone {
+        gap: 18px;
+        font-size: 12px;
+      }
+    }
+    .blogCards {
+      display: grid;
+      grid-template-columns: repeat(3, 30%);
+      column-gap: 3%;
+      row-gap: 92px;
+      @media @desktop1024 {
+        grid-template-columns: repeat(2, 50%);
+      }
+      @media @tablet, @phone {
+        grid-template-columns: repeat(1, 100%);
+        row-gap: 40px;
+      }
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 100px auto 120px auto;
+    }
+  }
+}

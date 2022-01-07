@@ -1,0 +1,19 @@
+@import "../../css/variables/fontStyle.less";
+@import "../../css/variables/responsive.less";
+
+.DocSearch-Container {
+  .fontSwitchInter();
+}
+.DocSearch {
+  width: 100%;
+  @media @tablet, @phone {
+    margin-top: 0px;
+    margin-right: 10px;
+    z-index: 111111;
+  }
+}
+.DocSearchWrapper {
+  padding-top: 10px;
+  display: flex;
+  justify-content: right;
+}

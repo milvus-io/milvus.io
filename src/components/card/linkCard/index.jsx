@@ -1,17 +1,13 @@
-import React from 'react';
-import * as styles from './index.module.less';
-import LinkIcon from '../../../images/doc-home/link.svg';
+import React from "react";
+import * as styles from "./index.module.less";
+import LinkIcon from "../../../images/docs/link.svg";
 
-const LinkCard = ({
-  label,
-  href,
-  className = ''
-}) => {
+const LinkCard = ({ label, href, className = "" }) => {
   return (
     <a
       className={`${styles.linkCard} ${className}`}
       href={href}
-      target='_blank'
+      target="_blank"
       rel="noreferrer"
     >
       <span className={styles.label}>{label}</span>

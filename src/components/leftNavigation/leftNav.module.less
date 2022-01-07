@@ -1,0 +1,63 @@
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
+
+.selectorItem {
+  color: black;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+
+  width: 100%;
+}
+
+.aside {
+  min-width: 196px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  // border-right: 1px solid @color-grey-04;
+}
+
+.tree {
+  overflow: scroll;
+}
+
+.treeItemLink {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  > svg {
+    height: 16px;
+    width: 16px;
+  }
+}
+.drawer {
+  padding-top: 10px;
+}
+
+.treeItem,
+.treeItemLink {
+  color: @color-grey-01;
+}
+
+.mobile {
+  &.selector {
+    padding: 18px;
+  }
+
+  &.tree {
+    width: 200px;
+  }
+}

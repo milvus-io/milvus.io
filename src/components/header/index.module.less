@@ -1,0 +1,301 @@
+@import "../../css/variables/main.less";
+
+.header {
+  align-items: center;
+  background-color: transparent;
+  height: 120px;
+  padding: 0 40px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  .spaceBetween;
+
+  &.light {
+    background-color: white;
+    position: sticky;
+    width: 100%;
+
+    .logoSection {
+      span {
+        border-color: @color-primary;
+      }
+    }
+
+    .global {
+      path {
+        fill: black;
+      }
+    }
+
+    .globalText {
+      color: black;
+    }
+
+    .menuLink {
+      color: black;
+    }
+
+    .startBtn {
+      color: white;
+      background: unset;
+      background: @color-primary;
+    }
+  }
+}
+
+.actionBar {
+  .flexend;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @media @phone, @tablet, @desktop1024 {
+    .spaceBetween;
+    margin: 20px 0;
+  }
+
+  .langSelect {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    margin-left: 15px;
+    margin-right: 35px;
+
+    @media @phone, @tablet, @desktop1024 {
+      margin: 20px 0;
+    }
+
+    & > div {
+      padding-right: 14px;
+    }
+
+    & > svg {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}
+
+.logoSection {
+  height: 40px;
+
+  img {
+    height: 100%;
+    .hover;
+  }
+
+  span {
+    border: 1px solid white;
+    display: inline-block;
+    height: 100%;
+    margin: 0 20px;
+
+    @media @tablet, @desktop1024 {
+      margin: 0 10px;
+      border-left: 0;
+    }
+
+    @media @phone {
+      margin: 0 6px;
+      border-left: 0;
+    }
+  }
+
+  @media @tablet, @desktop1024 {
+    height: 30px;
+
+    span {
+      border-color: @color-primary;
+    }
+  }
+
+  @media @phone {
+    height: 20px;
+
+    span {
+      border-color: @color-primary;
+    }
+  }
+}
+
+.startBtn {
+  background: linear-gradient(90.14deg, #ffffff 0.15%, #669dde 104.21%);
+  .button;
+
+  @media @phone, @tablet, @desktop1024 {
+    background: unset;
+    .primaryBtnSm;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+  }
+}
+
+.mobileHead {
+  padding: 35px 0;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  z-index: 100;
+
+  @media @phone {
+    padding: 15px 0;
+  }
+
+  .global {
+    path {
+      fill: black;
+    }
+  }
+
+  .globalText {
+    color: black;
+  }
+
+  .menuLink {
+    color: black;
+  }
+}
+
+.hamburg {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  height: 30px;
+  position: relative;
+  width: 35px;
+
+  @media @phone {
+    height: 20px;
+    width: 25px;
+  }
+
+  span {
+    background: black;
+    border: none;
+    height: 5px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: all 0.25s ease;
+    width: 100%;
+
+    @media @phone {
+      height: 4px;
+    }
+  }
+
+  & span:nth-of-type(2) {
+    top: 11px;
+
+    @media @phone {
+      top: 7px;
+    }
+  }
+  & span:nth-of-type(3) {
+    top: 22px;
+
+    @media @phone {
+      top: 14px;
+    }
+  }
+
+  &.active {
+    background-color: white;
+
+    span {
+      background: black;
+    }
+
+    .top {
+      transform: translateY(11px) translateX(0) rotate(45deg);
+
+      @media @phone {
+        transform: translateY(7px) translateX(0) rotate(45deg);
+      }
+    }
+
+    .middle {
+      opacity: 0;
+    }
+
+    .bottom {
+      transform: translateY(-11px) translateX(0) rotate(-45deg);
+
+      @media @phone {
+        transform: translateY(-7px) translateX(0) rotate(-45deg);
+      }
+    }
+  }
+}
+
+.overlay {
+  background: white;
+  height: 0;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  transition: all 0.25s;
+  width: 100%;
+  z-index: -1;
+  .flexcenter;
+
+  &.open {
+    height: 100vh;
+  }
+}
+
+.nav {
+  margin-top: 120px;
+  position: relative;
+}
+
+.global {
+  width: 24px;
+  path {
+    fill: white;
+  }
+}
+
+.globalText {
+  color: white;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.menu {
+  margin: 0;
+
+  li {
+    display: block;
+    margin-left: 40px;
+  }
+}
+
+.menuLink {
+  background: transparent;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-family: Inter;
+  font-size: 14px;
+  line-height: 40px;
+  text-decoration: none;
+  .hover;
+}
+
+.mobileMenuLink {
+  font-size: 14px;
+  color: black;
+  padding: 20px;
+  .hover;
+}
+
+.turnLeft {
+  transform: rotate(-90deg);
+}

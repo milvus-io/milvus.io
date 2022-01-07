@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { Masonry } from 'gestalt';
 import * as styles from './index.module.less';
 import Item from '../item/item';
-import { useMobileScreen } from '../../../hooks';
 import 'gestalt/dist/gestalt.css';
+import { useWindowSize } from '../../../http/hooks';
 
 function Main({
   pins,
@@ -15,14 +15,15 @@ function Main({
   setModal,
   scrollContainer,
 }) {
-  const { isMobile } = useMobileScreen();
+
+  const currentSize = useWindowSize();
+  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
 
   return useMemo(
     () => (
       <div
-        className={`${styles.scrollContainer} ${
-          isShowCode ? styles.openCode : ''
-        }`}
+        className={`${styles.scrollContainer} ${isShowCode ? styles.openCode : ''
+          }`}
       >
         <div className={`${styles.toopTip} ${isSelected ? styles.open : ''}`}>
           <p>Sorted by Similarity metric</p>

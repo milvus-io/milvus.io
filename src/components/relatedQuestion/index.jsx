@@ -1,89 +1,111 @@
-import React, { useEffect, useState } from 'react';
-import FaqCard from '../card/faqCard';
-import FeedbackModal from '../feedbackModal';
-import './index.less';
-import { getFaq } from '../../http/http';
+import React, { useState } from "react";
+import Typography from "@mui/material/Typography";
+import { useGetFaq } from "../../http/hooks";
+import CustomIconLink from "../customIconLink";
+import { CustomizedDialogs } from "../dialog/Dialog";
+import FeedbackDialog from "../dialog/FeedbackDialog";
+import * as styles from "./relatedQuestion.module.less";
+import clsx from "clsx";
+import "../../css/variables/main.less";
 
-const RelatedQuestion = props => {
-  const { layout, relatedKey } = props;
-
-  const [relatedQuestions, setRelatedQuestions] = useState();
+export default function RelatedQuestion(props) {
+  const { title, contact, relatedKey, isMobile, trans } = props;
   const [showModal, setShowModal] = useState(false);
+  const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState({});
 
-  const {
-    footer: { faq = {} },
-  } = layout;
-  const { question = {}, contact = {} } = faq;
+  const relatedQuestions = useGetFaq(relatedKey);
 
-  useEffect(() => {
-    if (relatedKey) {
-      getFaq({
-        params: {
-          question: relatedKey,
-          version: 1,
-        },
-      })
-        .then(res => {
-          if (res?.data?.response) {
-            setRelatedQuestions(res.data.response.slice(0, 6));
-          }
-        })
-        .catch(err => {
-          console.log('err', err);
-          setRelatedQuestions();
-        });
-    } else {
-      setRelatedQuestions();
-    }
-  }, [relatedKey]);
+  const handleClickQuestion = (question) => {
+    const [title, content] = question;
+    setSelectedQuestion({ q: title, a: content });
+    setShowModal(true);
+  };
+
+  const handleClickFollowUp = () => {
+    setShowFeedbackDialog(true);
+  };
+  const handleCancelFollowUp = () => {
+    setShowFeedbackDialog(false);
+  };
 
   return (
     <>
-      {relatedQuestions && (
-        <>
-          <div className="faq">
-            <h2>{question.title}</h2>
-            <div className="faq-card-container">
-              {relatedQuestions.map(question => (
-                <FaqCard question={question} key={question[0]} />
-              ))}
-            </div>
-          </div>
-          <div className="faq-links">
-            <h2>{contact.title}</h2>
-            <div className="faq-links-container">
-              <button
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              >
-                {contact.follow.label}
-              </button>
-              <a
-                href={contact.slack.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {contact.slack.label}
-                <i className="fab fa-slack-hash"></i>
-              </a>
-              <a
-                href={contact.github.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {contact.github.label}
-                <i className="fab fa-github"></i>
-              </a>
-            </div>
-            {showModal && (
-              <FeedbackModal setShowModal={setShowModal} contact={contact} />
-            )}
-          </div>
-        </>
-      )}
+      <Typography variant="h2" component="h2" className={styles.title}>
+        {title}
+      </Typography>
+      <ul className={styles.container}>
+        {relatedQuestions?.map((question) => {
+          const [title, content, isLink] = question;
+          return (
+            // <FaqCard question={question} key={question[0]} />
+            <Typography
+              key={question[0]}
+              variant="li"
+              component="li"
+              onClick={() => {
+                !isLink && handleClickQuestion(question);
+              }}
+              className={styles.item}
+            >
+              {isLink ? (
+                <CustomIconLink to={content} className={styles.link}>
+                  {question[0]}
+                </CustomIconLink>
+              ) : (
+                question[0]
+              )}
+            </Typography>
+          );
+        })}
+      </ul>
+      <div className={clsx(styles.faqLinks, { [styles.isMobile]: isMobile })}>
+        <Typography variant="h6" component="h3" className={styles.subTitle}>
+          {trans("v3trans.docs.faqBtnGroupTitle")}
+        </Typography>
+        <div className={styles.btnGroups}>
+          <button
+            className={clsx("primaryBtnSm", styles.pBtn)}
+            onClick={() => {
+              handleClickFollowUp();
+            }}
+          >
+            {trans("v3trans.docs.contactFollow")}
+          </button>
+          <a
+            className={clsx("secondaryBtnSm", styles.sBtn)}
+            href={contact.slack.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {trans("v3trans.docs.contactSlack")}
+          </a>
+          <a
+            className={clsx("secondaryBtnSm", styles.sBtn)}
+            href={contact.github.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {trans("v3trans.docs.contactGithub")}
+          </a>
+        </div>
+        {showFeedbackDialog && (
+          <FeedbackDialog
+            open={showFeedbackDialog}
+            handleCancel={handleCancelFollowUp}
+            handleSubmit={handleCancelFollowUp}
+            trans={trans}
+          />
+        )}
+      </div>
+      <CustomizedDialogs
+        open={showModal}
+        handleClose={() => {
+          setShowModal(false);
+        }}
+        title={selectedQuestion?.q}
+        content={selectedQuestion?.a}
+      />
     </>
   );
-};
-
-export default RelatedQuestion;
+}

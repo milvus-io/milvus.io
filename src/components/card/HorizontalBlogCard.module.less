@@ -1,0 +1,57 @@
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
+
+.root {
+  display: flex;
+  padding: 30px;
+  gap: 43px;
+
+  .loading {
+    display: none;
+  }
+
+  .cardImg {
+    height: 160px;
+    width: 250px;
+  }
+
+  .cardContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+    gap: 10px;
+  }
+}
+
+.tag,
+.title,
+.desc {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.tag {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: @text-blue;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 34px;
+  height: 100%;
+
+  color: @color-black;
+}
+
+.desc {
+  font-size: 14px;
+  line-height: 20px;
+
+  color: @color-grey-01;
+}

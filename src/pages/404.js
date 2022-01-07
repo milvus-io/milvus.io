@@ -1,29 +1,36 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Seo from '../components/seo';
-import notFound from '../images/v2/404.svg';
-import notFound_mobile from '../images/v2/404-mobile.svg';
-import bird from '../images/v2/bird.svg';
-import bird_mobile from '../images/v2/bird-mobile.svg';
-import './404.less';
-import Layout from '../components/layout/404Layout/404Layout';
-import Button from '../components/button';
-import { useMobileScreen } from '../hooks';
+import {
+  Link,
+  useI18next,
+} from "gatsby-plugin-react-i18next";
 
-const NotFoundPage = ({ data, pageContext }) => {
-  const language = data.allFile.edges.filter(edge => edge.node.childI18N)[0]
-    .node.childI18N.layout;
-  const { locale } = pageContext;
-  const { isMobile } = useMobileScreen();
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+// import Seo from '../components/seo';
+import notFound from '../images/404/404.svg';
+import notFound_mobile from '../images/404/404-mobile.svg';
+import bird from '../images/404/bird.svg';
+import bird_mobile from '../images/404/bird-mobile.svg';
+import './404.less';
+
+import Layout from '../components/layout/index';
+import { useWindowSize } from "../http/hooks";
+// import { useMobileScreen } from '../hooks';
+
+const NotFoundPage = () => {
+  const { t } = useI18next();
+  const currentSize = useWindowSize();
+  const isMobile = ["phone", "tablet"].includes(currentSize);
 
   return (
-    <Layout language={language} locale={locale}>
-      <Seo title="404: Not found" />
+    <Layout t={t}>
+      {/* <Seo title="404: Not found" /> */}
       <div className="notfound-container">
         <div className="notfount-center-wrapper">
           <img src={isMobile ? notFound_mobile : notFound} alt="not found" />
           <div className="notfound-titlebar">
-            <h1 className="notfound-title">Uoops...something went wrong!</h1>
+            <h1 className="notfound-title">{t('v3trans.404.title')}</h1>
             <img
               className="notfound-icon"
               src={isMobile ? bird_mobile : bird}
@@ -32,19 +39,18 @@ const NotFoundPage = ({ data, pageContext }) => {
           </div>
 
           <p className="notfound-content">
-            Looks like you’ve wandered off too far!
+            {t('v3trans.404.desc1')}
           </p>
           <p className="notfound-content">
-            We can’t find the page you are looking for:(
+            {t('v3trans.404.desc2')}
           </p>
-          <Button
-            locale={locale}
-            link={'/'}
+          <Link
+            to={'/'}
             className="notfound-button"
             children={
               <>
-                <i className="fas fa-chevron-left"></i>
-                <span>Go to home page</span>
+                <FontAwesomeIcon icon={faChevronLeft} />
+                <span>{t('v3trans.404.gobtn')}</span>
               </>
             }
           />
@@ -53,86 +59,18 @@ const NotFoundPage = ({ data, pageContext }) => {
     </Layout>
   );
 };
+export default NotFoundPage;
 
-export const Query = graphql`
-  query F0FQuery($locale: String) {
-    allFile(filter: { name: { eq: $locale } }) {
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
       edges {
         node {
-          childI18N {
-            layout {
-              notFound
-              backtohome
-              header {
-                quick
-                benchmarks
-                why
-                gui
-                tutorials
-                solution
-                about
-                doc
-                blog
-                try
-                loading
-                noresult
-                tutorial
-                search
-                bootcamp
-              }
-              footer {
-                product {
-                  title
-                  txt1
-                  txt2
-                }
-                doc {
-                  title
-                  txt1
-                  txt2
-                  txt3
-                }
-                tool {
-                  title
-                  txt1
-                }
-                resource {
-                  title
-                  txt1
-                  txt2
-                  txt3
-                  txt4
-                }
-                contact {
-                  title
-                  wechat
-                }
-              }
-              home {
-                section1 {
-                  desc1
-                  desc2
-                  link
-                }
-                section2 {
-                  title
-                  content
-                  link
-                }
-                section3 {
-                  title
-                  list {
-                    title
-                    content
-                  }
-                }
-              }
-            }
-          }
+          data
+          language
+          ns
         }
       }
     }
   }
 `;
-
-export default NotFoundPage;

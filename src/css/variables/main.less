@@ -1,0 +1,151 @@
+@import "./responsive.less";
+@import "./color.less";
+
+* {
+  box-sizing: border-box;
+  font-family: Inter;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.button {
+  border-radius: 40px;
+  cursor: pointer;
+  height: 58px;
+  padding: 20px 40px;
+  font-family: "Roboto Mono";
+  font-size: 16px;
+  line-height: 18px;
+  border: 0;
+
+  @media @phone,
+  @tablet,
+  @desktop1024 {
+    height: 38px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .hover;
+}
+
+.buttonSm {
+  .button;
+  height: 38px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.hover {
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.primaryBtn {
+  background-color: @color-primary;
+  color: white;
+  .button;
+}
+
+.primaryBtnSm {
+  background-color: @color-primary;
+  color: white;
+  .buttonSm;
+}
+
+.secondaryBtn {
+  background: transparent;
+  color: @color-black;
+  .button;
+  border: 1px solid @color-black;
+}
+
+.secondaryBtnSm {
+  background: transparent;
+  color: @color-black;
+  .buttonSm;
+  border: 1px solid @color-black;
+}
+
+.flexstart {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flexend {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flexcenter {
+  display: flex;
+  justify-content: center;
+}
+
+.spaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.customButton {
+  line-height: 18px;
+  padding: 10px 20px;
+  border-radius: 19px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+
+  &.containedBtn {
+    background-color: @color-primary;
+    color: #fff;
+
+    &:hover {
+      background-color: @color-text;
+    }
+
+    &:disabled {
+      background-color: #8AC9E5;
+    }
+  }
+
+  &.textBtn {
+    background-color: transparent;
+    color: #000;
+
+    &:hover {
+      background-color: @color-primary;
+      color: #fff;
+    }
+
+    &:disabled {
+      background-color: #8AC9E5;
+      color: #fff;
+    }
+  }
+
+  &.outlinedBtn {
+    background-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000;
+    color: #000;
+
+    &:hover {
+      color: @color-primary;
+      border-color: @color-primary;
+    }
+
+    &:disabled {
+      color: #8AC9E5;
+      border-color: #8AC9E5;
+    }
+  }
+}

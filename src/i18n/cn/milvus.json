@@ -1,0 +1,729 @@
+{
+  "layout": {
+    "notFound": "您访问的页面不存在",
+    "backtohome": "返回首页",
+    "header": {
+      "quick": "快速开始",
+      "why": "为什么选择Milvus",
+      "gui": "Admin",
+      "tutorials": "教程",
+      "solution": "应用场景",
+      "about": "关于Milvus",
+      "doc": "文档",
+      "blog": "博客",
+      "tutorial": "教程",
+      "benchmarks": "性能评测",
+      "bootcamp": "训练营",
+      "try": "试用",
+      "loading": "加载中...",
+      "noresult": "未查询到数据",
+      "search": "搜索"
+    },
+    "footer": {
+      "faq": {
+        "question": {
+          "title": "相关问题"
+        },
+        "contact": {
+          "title": "没有找到您想要的问题？",
+          "slack": {
+            "label": "在 Slack 上讨论",
+            "link": "https://slack.milvus.io/"
+          },
+          "github": {
+            "label": "在 GitHub 上讨论",
+            "link": "https://github.com/milvus-io/milvus/issues/"
+          },
+          "follow": {
+            "label": "让我们跟进问题"
+          },
+          "dialog": {
+            "title": "我们将会跟进您的问题",
+            "desc": "请留下您的问题，我们将稍后联系您",
+            "placeholder1": "您的邮箱*",
+            "placeholder2": "您的问题*",
+            "submit": "提交",
+            "invalid": "请提交正确的邮箱和你的问题"
+          }
+        }
+      },
+      "questionBtn": {
+        "link": "hhttps://slack.milvus.io/",
+        "label": "加入 Slack"
+      },
+      "issueBtn": {
+        "label": "提交 Bug",
+        "docLabel": "内容建议"
+      },
+      "docIssueBtn": {
+        "label": "GitHub 讨论",
+        "docLabel": "提交 Issue"
+      },
+      "editBtn": {
+        "label": "编辑"
+      },
+      "product": {
+        "title": "产品",
+        "txt1": "Milvus",
+        "txt2": "Milvus 路线图"
+      },
+      "doc": {
+        "title": "文档",
+        "txt1": "快速开始",
+        "txt2": "常见问题",
+        "txt3": "版本说明"
+      },
+      "tool": {
+        "title": "工具",
+        "txt1": "资源评估工具"
+      },
+      "resource": {
+        "title": "资源",
+        "txt1": "GitHub",
+        "txt2": "Medium",
+        "txt3": "CSDN",
+        "txt4": "Milvus 在线训练营"
+      },
+      "contact": {
+        "title": "联系我们",
+        "wechat": "微信群聊"
+      },
+      "content": "本页目录"
+    },
+    "home": {
+      "notification": {
+        "version": "版本",
+        "available": "已更新!",
+        "more": "了解更多新的特性→",
+        "join": "加入 Milvus Slack 频道",
+        "interact": "与社区互动讨论!",
+        "v2": {
+          "title": "🎯 Check out our site for Milvus v2.0",
+          "here": " Here "
+        }
+      },
+      "section1": {
+        "desc1": "全球最受欢迎的开源向量数据库",
+        "desc2": "Milvus 使用方便、实用可靠、易于扩展、稳定高效和搜索迅速。",
+        "link": "了解更多",
+        "link2": "快速开始",
+        "community": "社区"
+      },
+      "section2": {
+        "title": "什么是 Milvus",
+        "content": "Milvus 是一款开源的、针对海量特征向量的向量数据库。基于异构众核计算框架设计，成本更低，性能更好。 在有限的计算资源下，十亿向量搜索仅毫秒响应。Milvus 能够广泛应用于各种 AI 场景，为 AI 发展提供有效助力。",
+        "link": "快速开始"
+      },
+      "section3": {
+        "title": "Milvus 特性",
+        "list": [
+          {
+            "title": "全面的相似度指标",
+            "content": "Milvus 支持各种常用的相似度计算指标，包括欧氏距离、内积、汉明距离和杰卡德距离等。您可以根据应用需求来选择最有效的向量相似度计算方式。",
+            "img": "support"
+          },
+          {
+            "title": "业界领先的性能",
+            "content": "Milvus 基于高度优化的 Approximate Nearest Neighbor Search (ANNS) 索引库构建，包括 <a href='https://github.com/facebookresearch/faiss' target='_blank'>faiss</a>、 <a href='https://github.com/spotify/annoy' target='_blank'>annoy</a>、和 <a href='https://github.com/nmslib/hnswlib' target='_blank'>hnswlib</a> 等。您可以针对不同使用场景选择不同的索引类型。",
+            "img": "performence"
+          },
+          {
+            "title": "动态数据管理",
+            "content": "您可以随时对数据进行插入、删除、搜索、更新等操作而无需受到静态数据带来的困扰。",
+            "img": "crud"
+          },
+          {
+            "title": "近实时搜索",
+            "content": "在插入或更新数据之后，您可以几乎立刻对插入或更新过的数据进行搜索。Milvus 负责保证搜索结果的准确率和数据一致性。",
+            "img": "realtime"
+          },
+          {
+            "title": "高成本效益",
+            "content": "Milvus 充分利用现代处理器的并行计算能力，可以在单台通用服务器上完成对十亿级数据的毫秒级搜索。",
+            "img": "cost"
+          },
+          {
+            "title": "支持多种数据类型和高级搜索",
+            "content": "Milvus 的数据记录中的字段支持多种数据类型。您还可以对一个或多个字段使用高级搜索，例如过滤、排序和聚合。",
+            "img": "availability"
+          },
+          {
+            "title": "高扩展性和可靠性",
+            "content": "您可以在分布式环境中部署 Milvus。如果要对集群扩容或者增加可靠性，您只需增加节点。",
+            "img": "scalable"
+          },
+          {
+            "title": "云原生",
+            "content": "您可以轻松在公有云、私有云、或混合云上运行 Milvus。",
+            "img": "cloud"
+          },
+          {
+            "title": "简单易用",
+            "content": "Milvus 提供了易用的 Python、Java、Go 和 C++ SDK，另外还提供了 RESTful API。",
+            "img": "hybrid"
+          }
+        ]
+      },
+      "section4": {
+        "title": "开源",
+        "desc1": "Milvus 是 GitHub 上的开源产品 ",
+        "desc2": "欢迎任何贡献和反馈",
+        "contribute": "在 GitHub 上贡献",
+        "bootcamp": "试用Bootcamp"
+      },
+      "section5": {
+        "desc": "我们是一个 LF AI 基金会的孵化项目"
+      },
+      "section8": {
+        "title": "应用场景",
+        "desc": "Step-by-step instructions to solve AI problems with Milvus.",
+        "img1": {
+          "title": "以图搜图",
+          "content": "结合 VGG 神经网络模型的高性能、可自定义的以图搜图系统"
+        },
+        "img2": {
+          "title": "个性化推荐系统",
+          "content": "结合 PaddlePaddle 深度学习平台的高性能个性化推荐系统"
+        },
+        "img3": {
+          "title": "化学式相似度检索",
+          "content": "针对海量化学式的高性能相似度检索"
+        },
+        "button": "试用",
+        "viewall": "浏览更多"
+      },
+      "section6": {
+        "title": "Milvus 用户社区"
+      },
+      "section7": {
+        "title": "参与其中",
+        "list": [
+          {
+            "title": "使用 Milvus",
+            "desc": "Milvus 是一款开源的，针对海量特征向量的向量数据库",
+            "type": "milvus",
+            "urlList": [
+              {
+                "title": "快速开始 >",
+                "url": "/docs/install_milvus.md"
+              }
+            ]
+          },
+          {
+            "title": "贡献",
+            "desc": "Milvus 是一款社区产品，欢迎提供反馈与贡献代码",
+            "type": "contribute",
+            "urlList": [
+              {
+                "title": "在 GitHub 上加入我们 >",
+                "url": "https://github.com/milvus-io"
+              },
+              {
+                "title": "在 Gitee 上加入我们 >",
+                "url": "https://gitee.com/milvus-io/milvus"
+              }
+            ]
+          },
+          {
+            "title": "关注我们",
+            "desc": "随时了解 Milvus 最新消息",
+            "type": "follow",
+            "urlList": []
+          },
+          {
+            "title": "加入邮件列表讨论",
+            "desc": "",
+            "type": "conversation",
+            "urlList": [
+              {
+                "title": "公告 >",
+                "url": "mailto:milvus-announce+subscribe@lists.lfai.foundation"
+              },
+              {
+                "title": "技术讨论 >",
+                "url": "mailto:milvus-technical-discuss+subscribe@lists.lfai.foundation"
+              },
+              {
+                "title": "技术指导委员会 >",
+                "url": "mailto:milvus-tsc+subscribe@lists.lfai.foundation"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "scenarios": {
+      "section1": {
+        "title": "打造AI时代的向量数据库",
+        "desc": "Milvus 已经被广泛应用于多个领域，其中包括图像处理、机器视觉、自然语言处理、语音识别、推荐系统以及新药发现，在全球范围内被上百家组织和机构所采用"
+      },
+      "section2": {
+        "desc1": "处理图片、视频、语音、文本等非结构化数据的需求正在随着智慧城市，短视频，商品个性化推荐，视觉商品搜索等新兴应用领域的出现而持续的增长。而处理这些非结构化数据最主流的方法就是通过人工智能技术（深度学习算法）提取这些非结构化数据的特征，并用特征向量来表示，然后通过对这些特征向量的计算和检索来实现对非结构化数据的分析与检索。",
+        "desc2": "Milvus就是为了方便用户能够方便的对特征向量进行计算和检索而设计，支持丰富的特征向量索引算法和异构计算资源的调度，具有完备的用户接口、数据管理组件和图形化管理工具，云原生的设计理念可以让 Milvus 基于K8S轻松实现水平拓展和高可用。自产品开源以来获得了广大用户的认可和支持，目前全球社区规模超过3000人，企业用户超过50家。",
+        "desc3": "Milvus凭借对向量检索算法的优化以及异构计算资源的整合，可以为企业级应用提供稳定、高性能的向量检索支持。在绝大部分场景中，保证Top 1召回率100%，同时Top100召回率不低于95%的情况下，百万级数据规模检索时间0.01秒级，亿级数据规模检索时间0.1秒级， 百亿级数据规模检索时间秒级。"
+      },
+      "section3": {
+        "title": "Milvus 能做些什么",
+        "list": [
+          {
+            "title": "图像视频检索",
+            "desc": "深度学习模型最开始就是用来对图像、视频等进行处理，通过训练可以精准的提取图片、视频中的特征从而对图片、视频进行分类，打标签，以图搜图，以图搜视频等等。Milvus凭借其出色的性能和数据管理能力，可以支持各种深度学习模型，实现对海量图片和视频的高性能分析检索能力。",
+            "list": ["图片搜索", "图片去重", "视频去重", "以商品搜商品"],
+            "img": "cv",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/pic_search/README.md",
+            "href": "https://zilliz.com/milvus-demos/reverse-image-search?lan=cn"
+          },
+          {
+            "title": "智能问答机器人",
+            "desc": "传统的问答机器人大都是基于规则的知识图谱方式实现，这种方式需要对大量的语料进行分类整理。而基于深度学习模型的实现方式可以彻底摆脱对语料的预处理，只需提供问题和答案的对应关系，通过自然语言处理的语义分析模型对问题库提取语义特征向量存入Milvus中，然后对提问的问题也进行语义特征向量提取，通过对向量特征的匹配就可以实现自动回复，轻松实现智能客服等应用。",
+            "list": ["语义提取", "个性化推荐", "语料分析和推荐"],
+            "img": "nlp",
+            "titleHref": "https://github.com/milvus-io/bootcamp/tree/master/solutions/QA_System",
+            "href": "http://40.117.75.127:8003/"
+          },
+          {
+            "title": "赋能传统向量计算",
+            "desc": "在传统的数据处理领域也存在大量向量计算的场景，使用传统的计算方式需要消耗大量的算力而Milvus凭借先进的算法可以在同等算力资源下将向量数据处理能力提高至少两个数量级。",
+            "list": ["分子结构相似性分析", "分子药理分析", "药物分子虚拟筛选"],
+            "img": "molsearch",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/mols_search/README.md",
+            "href": "http://40.117.75.127:8002/"
+          },
+          {
+            "title": "音频数据处理",
+            "desc": "利用深度学习模型对音频数据进行分析和处理能够大大提高语音识别的准确率，而其核心也是对相关音频切片进行向量化处理并且通过向量距离的计算来判断其表达的含义，因此，Milvus在语音、音乐等音频数据处理领域的也有丰富的应用。",
+            "list": [
+              "个性化音乐推荐",
+              "音乐去重",
+              "声纹验证",
+              "语音识别",
+              "智能语音小助手",
+              "智能翻译机器人"
+            ],
+            "img": "audio",
+            "href": ""
+          }
+        ]
+      }
+    },
+    "gui": {
+      "section1": {
+        "title": "Get Milvus Admin",
+        "desc": "简单易用 Milvus 管理平台",
+        "link": "快速开始"
+      },
+      "section2": {
+        "desc1": "The demand for processing unstructured data such as pictures, videos, voices, and text is continuously increasing with the emergence of emerging applications such as smart cities, short videos, personalized product recommendations, and visual product search. The most mainstream method for processing these unstructured data is to use artificial intelligence technology (deep learning algorithms) to extract the features of these unstructured data, and use feature vectors to represent them, and then calculate and retrieve these feature vectors to achieve non-unstructured data. Analysis and retrieval of structured data",
+        "desc2": "Milvus is designed to facilitate users to easily calculate and retrieve feature vectors. It supports rich feature vector indexing algorithms and the scheduling of heterogeneous computing resources. It has a complete user interface, data management components, and graphical management tools. Cloud-native The design concept allows Milvus to easily achieve horizontal expansion and high availability based on K8S. Since the product has been open sourced, it has received recognition and support from a large number of users. At present, the global community scale exceeds 3,000 people and there are more than 50 enterprise users",
+        "desc3": "With the optimization of vector retrieval algorithms and the integration of heterogeneous computing resources, Milvus can provide stable and high-performance vector retrieval support for enterprise applications. In most scenarios, when the Top 1 recall rate is guaranteed to be 100%, and the Top100 recall rate is not less than 95%, the retrieval time for millions of data scales is 0.01 seconds, and the retrieval time for 100 million data scales is 0.1 seconds. Retrieval time of billions of data scale seconds"
+      },
+      "section3": {
+        "title": "安装与运行",
+        "desc": "打开浏览器，输入URL:",
+        "help": "需要帮助？"
+      },
+      "section4": {
+        "feature1": {
+          "title": "相似度搜索",
+          "desc1": "快速验证向量相似度，提升开发效率"
+        },
+        "feature2": {
+          "title": "在图形界面上更直观的操作Milvus",
+          "desc1": "树形结构数据展示，一览无余",
+          "desc2": "只需要点几下鼠标就可以增删改查向量和设置索引"
+        },
+        "feature3": {
+          "title": "全面设置Milvus",
+          "desc1": "通过GUI，您可以设置超过10多项Milvus配置"
+        }
+      }
+    },
+    "selectMenu": {
+      "comment": "评论",
+      "github": "提交文档错误",
+      "sendBtn": "发送",
+      "cancelBtn": "取消",
+      "placeholder": "留下您的评论"
+    },
+    "menu": {
+      "home": "首页"
+    },
+    "community": {
+      "slack": "加入 Slack",
+      "github": "加入 GitHub"
+    }
+  },
+  "v2": {
+    "header": {
+      "navlist": [
+        {
+          "label": "什么是 milvus?",
+          "link": "/docs/overview.md",
+          "icon": null
+        },
+        {
+          "label": "文档",
+          "link": "/docs",
+          "icon": null
+        },
+        {
+          "label": "博客",
+          "link": "https://blog.milvus.io/",
+          "icon": null
+        },
+        {
+          "label": "社区",
+          "link": "/community",
+          "icon": null
+        },
+        {
+          "label": "GitHub",
+          "link": "https://github.com/milvus-io/milvus/",
+          "icon": "git"
+        }
+      ]
+    },
+    "banner": {
+      "entry": "Hacktoberfest is here! Dive into open source with Milvus. Join now",
+      "title": ["Cloud-Native.", "Highly Scalable.", "Blazing Fast."],
+      "subTitle": "Milvus",
+      "text": "Open-source vector database for unstructured data",
+      "startBtn": {
+        "href": "/docs",
+        "label": "Get Started"
+      },
+      "contributeBtn": {
+        "href": "/community/making_your_first_contributions.md",
+        "label": "Contribute"
+      }
+    },
+    "slogan": {
+      "text": "We have literally been unable to kill this thing. No matter what we’ve thrown at it.",
+      "author": "by Mi.Alato"
+    },
+    "content": {
+      "feature": {
+        "title": "特性",
+        "list": [
+          {
+            "title": "经济高效",
+            "text": "高性能的列式存储和 Faiss，HNSWLib 等向量索引保证了 Milvus 可以高效实现数据查询。通过利用 CPU SiMD，GPU， FPGA 的加速，Milvus 可以实现千万级向量数据毫秒级召回。",
+            "img": "supporting"
+          },
+          {
+            "title": "按需扩展",
+            "text": "云原生设计使的 Milvus 可以轻松横向扩展，能够支持任意规模的存储和计算。微服务化使得用户可以按需扩展，甚至 Auto Scaling。",
+            "img": "search"
+          },
+          {
+            "title": "专注非结构化数据",
+            "text": " Milvus 帮助用户关注非结构化数据的语意本身，用户无需再关注 Sharding，数据持久化，负载均衡等复杂问题。Milvus 支持高性能向量标量混合查询，解锁了更多非结构化数据的处理方式。 ",
+            "img": "deployment"
+          },
+          {
+            "title": "广受社区支持",
+            "text": "Milvus 作为 Linux LF&AI 及基金会的毕业项目，支持了超过1000家以上的企业级用户。我们拥有一个活跃且开放的社区，欢迎加入。",
+            "img": "storage"
+          },
+          {
+            "title": "易于使用",
+            "text": "Milvus 支持丰富的数据类型，并提供了完善的多语言支持。通过 ORM API，Milvus 可以在笔记本，本地集群和云上提供统一的使用体验。我们同时提供了丰富的部署和可视化工具帮助用户更快的上手和运维。",
+            "img": "autoscaling"
+          }
+        ]
+      },
+      "community": {
+        "title": "加入社区",
+        "text1": "Milvus 在 GitHub 上开源",
+        "text2": "欢迎大家对开源项目做贡献!",
+        "gitBtn": {
+          "href": "https://github.com/milvus-io/milvus/",
+          "label": "立即加入"
+        }
+      }
+    },
+    "footer": {
+      "list": [
+        {
+          "title": "使用 Milvus",
+          "text": "Milvus 是一款开源向量数据库。",
+          "href": "/docs/overview.md",
+          "label": "快速开始",
+          "icons": []
+        },
+        {
+          "title": "贡献",
+          "text": "Milvus 是一款社区产品，欢迎提供反馈与贡献代码。",
+          "href": "https://github.com/milvus-io",
+          "label": "在 GitHub 上加入我们",
+          "icons": []
+        },
+        {
+          "title": "关注我们",
+          "text": "随时了解 Milvus 最新消息。",
+          "href": "",
+          "label": "",
+          "icons": [
+            {
+              "href": "#",
+              "name": "wechat"
+            },
+            {
+              "href": "https://medium.com/unstructured-data-service",
+              "name": "medium"
+            },
+            {
+              "href": "https://twitter.com/milvusio",
+              "name": "twitter"
+            },
+            {
+              "href": "https://slack.milvus.io/",
+              "name": "slack"
+            }
+          ]
+        }
+      ],
+      "licence": {
+        "text1": {
+          "label": "© Milvus 2021",
+          "link": "#"
+        },
+        "text2": {
+          "label": "Milvus",
+          "link": "/"
+        },
+        "text3": {
+          "label": " and associated open source project names are trademarks of the LF AI & Data Foundation",
+          "link": "#"
+        },
+        "list": [
+          {
+            "label": "Terms and conditions",
+            "link": "#"
+          },
+          {
+            "label": "Compliance (data protection) ",
+            "link": "#"
+          },
+          {
+            "label": "Privacy policy",
+            "link": "#"
+          },
+          {
+            "label": "Cookie Policy",
+            "link": "#"
+          }
+        ]
+      }
+    },
+    "feedback": {
+      "text1": "该页面是否对你有帮助?",
+      "text2": "评价成功!"
+    },
+    "commit": "更新于",
+    "docHome": {
+      "title": "博客",
+      "btnLabel": "更多"
+    }
+  },
+  "hackathon": {
+    "firstSection": {
+      "firstBanner": {
+        "title": "Milvus Hacktoberfest 2021",
+        "content": "You know it's that time of the year again. <br />Hacktoberfest is coming! And this year, we are going in and going strong.",
+        "image": "../../images/hackathon/banner-image-1.svg",
+        "alert": "Spoiler alert - our biggest prize is spelled as D-R-O-N-E.",
+        "badge": "../../images/hackathon/badge.svg",
+        "btnLabel": "Quick Start",
+        "btnLink": "#quick_start"
+      },
+      "secondBanner": {
+        "title": "What is Hacktoberfest",
+        "content": "Hacktoberfest is an annual month-long celebration of open source. It is a great opportunity for everyone, from seasoned developers to students and code newbies, from technical writers to UX designers, to contribute to open source communities and develop your skills, with the perks of winning limited edition swags.",
+        "image": "../../images/hackathon/banner-image-2.png"
+      }
+    },
+    "secondSection": {
+      "title": "What is Milvus",
+      "content": "Milvus, an open-source vector database built to power AI applications and vector similarity search, is participating for the first time! The Milvus community has planned a series of events and activities throughout October, and we would love for you to be a part of them!",
+      "btnLabel": "Explore Milvus",
+      "btnLink": "/docs/overview.md"
+    },
+    "thirdSection": {
+      "title": "Quick Start",
+      "list": [
+        {
+          "stepNum": 1,
+          "title": "Sign Up",
+          "content": "Sign-up to Hacktoberfest on the event website.",
+          "iconType": "external",
+          "href": "https://hackathon-tracker.digitalocean.com/users/oauth/github?success_redirect=https://hacktoberfest.digitalocean.com/register/info&error_redirect=https://hacktoberfest.digitalocean.com/register"
+        },
+        {
+          "stepNum": 2,
+          "title": "Join Discussion",
+          "content": "Create a Milvus Forum account and interact with other community members.",
+          "iconType": "external",
+          "href": "https://discuss.milvus.io/c/hacktoberfest/9"
+        },
+        {
+          "stepNum": 3,
+          "title": "Pull Request",
+          "content": "Browse the following components and start creating pull requests.",
+          "iconType": "anchor",
+          "href": "#issue_list"
+        }
+      ]
+    },
+    "forthSection": {
+      "title": "How to Contribute",
+      "content": "Below we've prepared lists of issues marked as <span>[hacktoberfest]</span> to get you warmed up. Feel free to take a crack at any open issues, unmarked ones included, or submit new ones yourselves. Just make sure to mention Hacktoberfest in your pull requests so we can set the topic and make sure they count toward your Hacktoberfest participation once deemed valid."
+    },
+    "fifthSection": {
+      "title": "Issues",
+      "listHeader": ["Component", "Description", "Issues / Guidelines"],
+      "list": [
+        {
+          "cate": "Milvus Code",
+          "desc": "Fix bugs, improve code, or help us make a new feature come true.",
+          "icon": "../../images/hackathon/code.svg",
+          "issueHref": "https://github.com/milvus-io/milvus/issues?q=is%3Aopen+is%3Aissue+label%3AHacktoberfest",
+          "guideHref": "https://github.com/milvus-io/milvus/blob/master/CONTRIBUTING.md"
+        },
+        {
+          "cate": "Milvus Documentation",
+          "desc": "Improve, extend or add Milvus documentation. ",
+          "icon": "../../images/hackathon/doc.svg",
+          "issueHref": "https://github.com/milvus-io/milvus-docs/issues?q=is%3Aopen+is%3Aissue+label%3Ahacktoberfest",
+          "guideHref": "https://github.com/milvus-io/milvus-docs/blob/v2.0.0/CONTRIBUTING.md"
+        },
+        {
+          "cate": "Milvus Golang API reference",
+          "desc": "Help extend and add more examples to Golang API documentation.",
+          "icon": "../../images/hackathon/api.svg",
+          "issueHref": "https://github.com/milvus-io/milvus-sdk-go/issues?q=is%3Aopen+is%3Aissue+label%3AHACKTOBERFEST",
+          "guideHref": "https://github.com/milvus-io/milvus-sdk-go/blob/master/CONTRIBUTING.md"
+        },
+        {
+          "cate": "Bootcamp / Tutorials",
+          "desc": "Showcase a project you built with Milvus.",
+          "icon": "../../images/hackathon/bootcamp.svg",
+          "issueHref": "",
+          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72#community-content-4"
+        },
+        {
+          "cate": "Other community content",
+          "desc": "Write blog posts, create video content, design artwork, share your insight on website design, and more.",
+          "icon": "../../images/hackathon/others.svg",
+          "issueHref": "",
+          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72#community-content-4"
+        }
+      ]
+    },
+    "sixthSection": {
+      "title": "Claim your prize",
+      "content": "Every pull request counts. Don't forget to come back here to fill in your information once you've made your contribution and we will send gifts your way.",
+      "btnLabel": "I’ve submitted my PR!",
+      "btnLink": "https://milvus.typeform.com/to/xvyhEadO",
+      "tip": "*Prize rules to apply,",
+      "tipLabel": "Learn More",
+      "tipHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72",
+      "image": "../../images/hackathon/prize.jpg",
+      "label1": "Biggest Prize",
+      "label2": "DJI Mavic Air 2",
+      "list": [
+        {
+          "image": "../../images/hackathon/prize-keybord.png",
+          "name": ""
+        },
+        {
+          "image": "../../images/hackathon/prize-sticker.png",
+          "name": "Milvus Sticker Packs"
+        },
+        {
+          "image": "../../images/hackathon/prize-tshirt.png",
+          "name": "Milvus T-Shirts and Badge"
+        }
+      ]
+    },
+    "seventhSection": {
+      "title": "Events and Resources",
+      "content": "Please visit our Milvus Community Forum for resources you might need for Hacktoberfest and the events surrounding Hacktoberfest.",
+      "btnLabel": "Explore More",
+      "btnLink": "https://discuss.milvus.io/c/hacktoberfest/9",
+      "image": "../../images/hackathon/discuss-forum.png"
+    },
+    "eighthSection": {
+      "title": "Contact Us",
+      "list": [
+        {
+          "href": "https://discuss.milvus.io/",
+          "icon": "../../images/hackathon/discourse.png",
+          "content": "Join in our Discourse Forum"
+        },
+        {
+          "href": "https://join.slack.com/t/milvusio/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
+          "icon": "../../images/hackathon/slack.svg",
+          "content": "Join in our Slack Channel"
+        }
+      ]
+    }
+  },
+  "v3trans": {
+    "desc": "所有第三版翻译放在此目录下",
+    "docs": {
+      "homeTitle": "首页",
+      "blogTitle": "博客",
+      "commitTrans": "最后更新于",
+      "faqTitle": "相关问题",
+      "faqBtnGroupTitle": "没有找到您想要的问题？",
+      "scoreQuestion": "该页面是否对你有帮助?",
+      "scoreThanks": "评价成功!",
+      "yes": "是",
+      "no": "否",
+      "contactFollow": "让我们跟进问题",
+      "contactSlack": "在Slack上讨论",
+      "contactGithub": "在Github上讨论",
+      "feedbackDialogTitle": "我们将会跟进您的问题",
+      "feedbackDialogContent": "请留下您的问题，我们将稍后联系您。",
+      "emailAddress": "您的邮箱",
+      "emailInvaild": "请输入正确的邮箱。",
+      "yourQuestion": "您的问题",
+      "yourQuestionInvalid": "请输入正确的问题。",
+      "cancel": "取消",
+      "submit": "提交",
+      "tocTitle": "本页目录",
+      "btnGroup": {
+        "editBtn": "编辑",
+        "issueBtn": "提交 issue",
+        "bugBtn": "提交 bug",
+        "suggestBtn": "内容建议",
+        "joinBtn": "加入 Slack",
+        "discussBtn": "在 GitHub 讨论"
+      }
+    },
+    "main": {
+      "nav": {
+        "docs": "文档",
+        "tutorials": "教程",
+        "tools": "工具",
+        "blog": "博客",
+        "community": "社区",
+        "bootcamp": "训练营",
+        "demo": "示例",
+        "video": "视频",
+        "getstarted": "开始",
+        "about": "关于",
+        "getinvolved": "开始参与",
+        "repo": "项目地址",
+        "forum": "论坛"
+      }
+    },
+    "404": {
+      "title":"噢。。好像哪里出错了！",
+      "desc1":"看起来我们走的有点远！",
+      "desc2":"找不到回家的路了:(",
+      "gobtn":"回到首页"
+    }
+  }
+}

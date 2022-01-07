@@ -1,0 +1,353 @@
+@import "../css/variables/responsive.less";
+@import "../css/variables/color.less";
+// @import "../css/variables/docsStyle.less";
+
+.community-home.doc-content-container {
+  .community-h1-wrapper {
+    background-image: url(../images/community_banner.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 235px;
+    width: 100%;
+    padding: 49px 47px;
+
+    .title {
+      /* H2/Regular */
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 40px;
+      line-height: 50px;
+      /* identical to box height, or 125% */
+
+      color: @color-white;
+
+      padding-bottom: 9px;
+    }
+
+    .sub-title {
+      /* H6/Regular */
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+      /* identical to box height, or 150% */
+
+      color: @color-white;
+    }
+  }
+
+  h2 {
+    /* H2/Regular */
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 50px;
+    /* identical to box height, or 125% */
+
+    /* Black */
+
+    color: @color-black;
+  }
+
+  p {
+    /* H6/Regular */
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    /* or 150% */
+
+    /* Black */
+
+    color: @color-black;
+  }
+
+  .about-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 139px;
+    grid-template-rows: 1fr 1fr;
+    grid-row-gap: 64px;
+  }
+
+  .about-card-container {
+    .about-title {
+      /* H5/Bold */
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 26px;
+    }
+
+    p {
+      /* H7/Regular */
+
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    img {
+      width: 32px;
+      height: 32px;
+      margin: 0;
+    }
+  }
+
+  .advocate-banner {
+    padding: 26px 35px;
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    /* Grey 05 */
+    background: @color-grey-05;
+    border-radius: 6px;
+
+    .img-container {
+      width: 180px;
+      height: 180px;
+    }
+
+    .banner-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 180px;
+    }
+
+    .banner-title {
+      .title {
+        /* H4/Bold */
+
+        font-family: Inter;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 34px;
+      }
+
+      .subtitle {
+        /* H7/Regular */
+
+        font-family: Inter;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+
+    a {
+      width: fit-content;
+    }
+  }
+
+  .advocates-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    p {
+      margin: 0;
+    }
+
+    .img-container {
+      width: 100px;
+      height: 100px;
+    }
+
+    .advocates-card-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .advocate-name {
+      /* H5/Bold */
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 26px;
+    }
+
+    .advocate-co {
+      /* H7/Regular */
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .advocate-title {
+      /* H8/Regular */
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  .join-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  img,
+  .img-container {
+    height: 130px;
+    width: 160px;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .join-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .label {
+      /* H5/Bold */
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 26px;
+    }
+  }
+
+  .resource-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+
+  .resource-card-container {
+    width: 260px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background: @color-white;
+    border: 1px solid #dee8f1;
+    box-sizing: border-box;
+    border-radius: 4px;
+
+    min-height: 260px;
+    padding: 30px;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .label {
+      /* H5/Bold */
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 26px;
+    }
+
+    .content {
+      /* H7/Regular */
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    a {
+      font-family: Roboto Mono;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 18px;
+      /* identical to box height, or 129% */
+
+      /* Black */
+
+      color: @color-black;
+
+      width: fit-content;
+    }
+  }
+
+  .partners-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    grid-column-gap: 20px;
+
+    .img-container {
+      width: 130px;
+      height: 80px;
+
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .mailing-wrapper {
+    display: flex;
+    gap: 20px;
+
+    img {
+      width: 18px;
+      height: 18px;
+    }
+
+    a {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      width: fit-content;
+    }
+  }
+}
+
+.doc-temp-container {
+  .community-home.doc-content-container {
+    padding: 0;
+    max-width: 950px;
+    margin-right: 0;
+  }
+}
+
+.community-home-html-wrapper {
+  > * {
+    margin: 0 48px;
+  }
+
+  .community-h1-wrapper {
+    margin: 0;
+  }
+}
+
+.is-mobile.doc-temp-container .community-home.doc-content-container {
+  margin: 0 48px;
+}
+
+.is-phone.doc-temp-container .community-home.doc-content-container {
+  margin: 0 16px;
+}

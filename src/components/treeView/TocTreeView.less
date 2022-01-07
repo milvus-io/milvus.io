@@ -1,0 +1,33 @@
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
+
+.mv3-toc-container {
+  .MuiTreeItem-content {
+    padding-left: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .MuiTreeItem-iconContainer {
+      display: none;
+    }
+  }
+
+  .mv3-toc-tree .MuiTreeItem-label {
+    padding-left: 0;
+
+    /* H8/Regular */
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+
+    letter-spacing: 0.02em;
+
+    color: @color-grey-01;
+
+    a {
+      color: @color-grey-01;
+    }
+  }
+}

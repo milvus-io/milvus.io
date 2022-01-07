@@ -11,6 +11,7 @@ import LeftNav from "../components/leftNavigation";
 // import TocTreeView from "../components/treeView/TocTreeView";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
+import "../css/variables/main.less";
 
 export const query = graphql`
   query ($language: String!) {

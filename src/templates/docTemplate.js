@@ -15,6 +15,7 @@ import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
 import Seo from "../components/seo";
 import Footer from "../components/footer";
+import "../css/variables/main.less";
 
 export const query = graphql`
   query ($language: String!) {

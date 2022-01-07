@@ -1,0 +1,117 @@
+@import "../../css/variables/color.less";
+@import "../../css/variables/main.less";
+
+.subscribe {
+  height: 258px;
+  display: flex;
+  align-items: center;
+  background: url("../../images/demos/subscribe-bg.png") top left no-repeat;
+  background-size: cover;
+
+  .inner {
+    max-width: 1440px;
+    flex: 1;
+    display: flex;
+    margin: 0 auto;
+    padding: 32px 90px;
+
+    @media @tablet {
+      padding: 0 64px;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+    }
+
+    @media @phone {
+      padding: 0 32px;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .section {
+      width: 50%;
+      text-align: center;
+
+      @media @tablet {
+        width: 100%;
+        &:first-child {
+          margin-bottom: 48px;
+        }
+      }
+
+      @media @phone {
+        width: 100%;
+        &:first-child {
+          margin-bottom: 36px;
+        }
+      }
+
+      h2 {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 50px;
+        margin-bottom: 10px;
+
+        @media @phone {
+          font-size: 24px;
+          line-height: 28px;
+        }
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 20px;
+
+        @media @phone {
+          font-size: 12px;
+          line-height: 18px;
+        }
+      }
+    }
+
+    .inputWrapper {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+
+      .input {
+        display: inline-block;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 19px 30px;
+        border-radius: 29px;
+        margin-right: 20px;
+        width: 440px;
+        border: none;
+        outline: none;
+
+        @media @phone {
+          width: 290px;
+          padding: 10px 15px;
+          margin-bottom: 16px;
+          font-size: 12px;
+        }
+
+        &:focus {
+          outline: @color-primary auto 1px;
+        }
+      }
+
+      .subscribeBtn {
+        display: inline-block;
+        font-size: 16px;
+        line-height: 18px;
+        padding: 20px 40px;
+        border-radius: 29px;
+        border: none;
+        color: #fff;
+
+        @media @phone {
+          padding: 10px 20px;
+          border-radius: 19px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

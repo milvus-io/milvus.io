@@ -1,12 +1,40 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { graphql } from "gatsby";
-import "./index.less";
-import Layout from "../components/layout";
 import { useI18next } from "gatsby-plugin-react-i18next";
+import "./index.less";
+import { useWindowSize } from "../http/hooks";
+import Layout from "../components/layout";
+import Signup from "../components/signup";
+import { CustomizedSnackbars } from "../components/snackBar";
 
 // markup
 const IndexPage = () => {
   const { t } = useI18next();
+
+  const currentSize = useWindowSize();
+  const isMobile = ["phone", "tablet"].includes(currentSize);
+
+  const [snackbarConfig, setSnackbarConfig] = useState({
+    open: false,
+    type: "info",
+    message: "",
+  });
+
+  const handleOpenSnackbar = ({ message, type }) => {
+    setSnackbarConfig({
+      open: true,
+      type,
+      message,
+    });
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarConfig({
+      open: false,
+      type: "info",
+      message: "",
+    });
+  };
 
   return (
     <main className="main">
@@ -624,6 +652,14 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
+
+        <Signup isMobile={isMobile} callback={handleOpenSnackbar} />
+        <CustomizedSnackbars
+          open={snackbarConfig.open}
+          type={snackbarConfig.type}
+          message={snackbarConfig.message}
+          handleClose={handleCloseSnackbar}
+        />
       </Layout>
     </main>
   );

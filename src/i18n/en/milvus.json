@@ -722,11 +722,18 @@
         "demo": "Demo",
         "video": "Video",
         "getstarted": "Get Started",
+        "watchvideo": "Watch Video",
         "about": "About",
         "getinvolved": "Get involved",
         "repo": "Repo",
         "forum": "Forum"
       },
+      "h1": "Vector database built for scalable similarity search",
+      "desc": "Open-source, highly scalable, and blazing fast",
+      "stars": "Stars at Github",
+      "contirbutors": "Contirbutors",
+      "downloads": "Downloads",
+      "customers": "Customers",
       "communitydesc":"Milvus is backed by a strong source community",
       "communitytitle":"Join our community",
       "customer": "Trusted by our customer"

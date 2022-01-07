@@ -141,11 +141,13 @@ export default function Template({ data, pageContext }) {
               ></div>
             </div>
             {!isPhone && (
-              <Aside
-                apiReferenceData={apiReferenceData}
-                category="api"
-                isHome={false}
-              />
+              <div className="doc-toc-container">
+                <Aside
+                  apiReferenceData={apiReferenceData}
+                  category="api"
+                  isHome={false}
+                />
+              </div>
             )}
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />

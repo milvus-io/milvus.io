@@ -53,12 +53,12 @@ const Signup = ({ isMobile, callback }) => {
 
   return (
     <section className={styles.subscribe}>
-      <div className={styles.inner}>
+      <div className={`${styles.inner} col-4 col-8 col-12`}>
         <div className={styles.section}>
           <h2>Sign up for our newsletter</h2>
           <p>
-            Monthly hand-picked discoveries and stories of thriving
-            {!isMobile && <br />}technologies in a new world of data.
+            Monthly hand-picked discoveries and stories of thriving technologies
+            in a new world of data.
           </p>
         </div>
         <div className={`${styles.section} ${styles.inputWrapper}`}>

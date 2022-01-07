@@ -31,7 +31,11 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <HightLight className={codeType}>{codeExample[codeType]}</HightLight>
+          <HightLight className={codeType}>
+            {`
+from pymilvus import Collection
+              `}
+          </HightLight>
           {/* <pre className={codeType}>
             <code></code>
           </pre> */}

@@ -10,6 +10,7 @@ import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
+import { useCodeCopy } from "../hooks/doc-dom-operation";
 
 export const query = graphql`
   query ($language: String!) {
@@ -48,9 +49,9 @@ export default function Template({ data, pageContext }) {
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
-  // const hljsCfg = {
-  //   languages: ["java", "go", "python", "javascript"],
-  // };
+  const hljsCfg = {
+    languages: ["java", "go", "python", "javascript"],
+  };
 
   useEffect(() => {
     // Get docVersion from local stroage, to keep the doc verison consistent.
@@ -65,9 +66,7 @@ export default function Template({ data, pageContext }) {
     window?.localStorage?.setItem("docVersion", ver);
   }, [docVersion]);
 
-  // useCodeCopy(locale, hljsCfg);
-  // useAlgolia(locale, targetDocVersion);
-  // useMultipleCodeFilter();
+  useCodeCopy(language, hljsCfg);
 
   const apiReferenceData = {
     projName: category,
@@ -142,11 +141,13 @@ export default function Template({ data, pageContext }) {
               ></div>
             </div>
             {!isPhone && (
-              <Aside
-                apiReferenceData={apiReferenceData}
-                category="api"
-                isHome={false}
-              />
+              <div className="doc-toc-container">
+                <Aside
+                  apiReferenceData={apiReferenceData}
+                  category="api"
+                  isHome={false}
+                />
+              </div>
             )}
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />

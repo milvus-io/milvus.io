@@ -4,7 +4,7 @@ import * as styles from "./index.module.less";
 
 const UNIQUE_EMAIL_ID = "UNIQUE_EMAIL_ID";
 
-const Signup = ({ isMobile, callback }) => {
+const Signup = ({ callback, t }) => {
   const inputRef = useRef(null);
   const handleSubmitEmail = async () => {
     const regx =
@@ -14,7 +14,7 @@ const Signup = ({ isMobile, callback }) => {
     if (!regx.test(value)) {
       callback({
         type: "error",
-        message: "Email format error",
+        message: t("v3trans.signup.emailerror"),
       });
       return;
     }
@@ -36,13 +36,13 @@ const Signup = ({ isMobile, callback }) => {
         window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
         callback({
           type: "success",
-          message: "Thank you, you have been added to our mailing list!",
+          message: t("v3trans.signup.emailerror"),
         });
         //
       } else {
         callback({
           type: "warning",
-          message: "This email is already subscribed!",
+          message: t("v3trans.signup.subscribed"),
         });
         window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
       }
@@ -55,24 +55,21 @@ const Signup = ({ isMobile, callback }) => {
     <section className={styles.subscribe}>
       <div className={`${styles.inner} col-4 col-8 col-12`}>
         <div className={styles.section}>
-          <h2>Sign up for our newsletter</h2>
-          <p>
-            Monthly hand-picked discoveries and stories of thriving technologies
-            in a new world of data.
-          </p>
+          <h2>{t("v3trans.signup.signup")}</h2>
+          <p>{t("v3trans.signup.montyly")}</p>
         </div>
         <div className={`${styles.section} ${styles.inputWrapper}`}>
           <input
             className={styles.input}
             type="text"
-            placeholder="What’s your email?"
+            placeholder={t("v3trans.signup.placeholder")}
             ref={inputRef}
           />
           <button
             className={`customButton containedBtn ${styles.subscribeBtn}`}
             onClick={handleSubmitEmail}
           >
-            Subscribe
+            {t("v3trans.signup.subscribe")}
           </button>
         </div>
       </div>

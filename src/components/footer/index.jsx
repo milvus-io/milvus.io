@@ -26,8 +26,8 @@ const footerJson = [
   {
     title: "tutorials",
     children: [
-      { name: "bootcamp", trans: true, to: "/" },
-      { name: "demo", trans: true, to: "/demo" },
+      { name: "bootcamp", trans: true, to: "/bootcamp" },
+      { name: "demo", trans: true, to: "/milvus-demos" },
       {
         name: "video",
         trans: true,
@@ -50,14 +50,13 @@ const footerJson = [
   {
     title: "community",
     children: [
-      { name: "getinvolved", trans: true, to: "/" },
+      { name: "getinvolved", trans: true, to: "/docs" },
       { name: "Slack", trans: false, to: "https://slack.milvus.io" },
       {
         name: "Github",
         trans: false,
         to: "https://github.com/milvus-io/milvus",
       },
-      { name: "repo", trans: true, to: "https://github.com/milvus-io/milvus" },
       { name: "forum", trans: true, to: "https://discuss.milvus.io/" },
     ],
   },
@@ -93,7 +92,7 @@ const Footer = ({ darkMode = true, t, className }) => {
       <div
         className={clsx(styles.container, { [`col-4 col-8 col-12`]: darkMode })}
       >
-        <div className={styles.flexstart}>
+        <div className={styles.footContentWrapper}>
           {footerJson.map(f => (
             <div key={f.title} className={`${styles.footerItem} col-2`}>
               <span className={styles.itemTitle}>

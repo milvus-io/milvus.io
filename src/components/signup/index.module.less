@@ -2,7 +2,7 @@
 @import "../../css/variables/main.less";
 
 .subscribe {
-  height: 258px;
+  height: 306px;
   display: flex;
   align-items: center;
   background: url("../../images/demos/subscribe-bg.png") top left no-repeat;
@@ -21,9 +21,7 @@
     }
 
     @media @phone {
-      padding: 0 32px;
       flex-direction: column;
-      width: 100%;
     }
 
     .section {
@@ -72,6 +70,10 @@
       align-items: flex-start;
       justify-content: center;
 
+      @media @phone {
+        flex-direction: column;
+      }
+
       .input {
         display: inline-block;
         font-size: 14px;
@@ -79,15 +81,17 @@
         padding: 19px 30px;
         border-radius: 29px;
         margin-right: 20px;
-        width: 440px;
+        max-width: 440px;
         border: none;
         outline: none;
+        width: calc(100% - 200px);
 
         @media @phone {
-          width: 290px;
-          padding: 10px 15px;
+          width: 100%;
+          padding: 14px 15px;
           margin-bottom: 16px;
           font-size: 12px;
+          border-radius: 32px;
         }
 
         &:focus {
@@ -105,9 +109,11 @@
         color: #fff;
 
         @media @phone {
-          padding: 10px 20px;
+          width: 100%;
+          padding: 14px 20px;
           border-radius: 19px;
           font-size: 12px;
+          border-radius: 32px;
         }
       }
     }

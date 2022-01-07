@@ -137,7 +137,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     </div>
   );
 
-  const MobileHead = () => (
+  const MobileHead = (
     <header className={`${styles.mobileHead} ${className}`}>
       <div className={`${styles.spaceBetween} col-4 col-8 col-12`}>
         {logoSection}
@@ -280,18 +280,21 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
             variant="fullwidth"
             sx={{ position: "absolute", bottom: "78px", width: "100%" }}
           />
-          <button className={styles.startBtn}>
-            {t("v3trans.main.nav.getstarted")}
-          </button>
+          <Link to="/docs">
+            <button className={styles.startBtn}>
+              {t("v3trans.main.nav.getstarted")}
+            </button>
+          </Link>
         </nav>
       </div>
     </header>
   );
 
-  const DesktopHead = () => (
+  const DesktopHead = (
     <header
-      className={`${styles.header} ${isLightHeader ? styles.light : ""
-        } ${className}`}
+      className={`${styles.header} ${
+        isLightHeader ? styles.light : ""
+      } ${className}`}
     >
       <div className={styles.flexstart}>
         {logoSection}
@@ -409,19 +412,16 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
       <div className={styles.flexend}>
         {actionBar}
-        <button className={styles.startBtn}>
-          {t("v3trans.main.nav.getstarted")}
-        </button>
+        <Link to="/docs">
+          <button className={styles.startBtn}>
+            {t("v3trans.main.nav.getstarted")}
+          </button>
+        </Link>
       </div>
     </header>
   );
 
-  return (
-    <>
-      <DesktopHead />
-      <MobileHead />
-    </>
-  );
+  return <>{isMobile ? MobileHead : DesktopHead}</>;
 };
 
 export default Header;

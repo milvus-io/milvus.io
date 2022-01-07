@@ -712,18 +712,37 @@
         "bootcamp": "训练营",
         "demo": "示例",
         "video": "视频",
-        "getstarted": "开始",
+        "getstarted": "快速开始",
+        "watchvideo": "观看视频",
         "about": "关于",
         "getinvolved": "开始参与",
         "repo": "项目地址",
         "forum": "论坛"
-      }
+      },
+      "h1": "高可用相似度搜索向量数据库",
+      "desc": "开源，高可用 并且 迅速",
+      "stars": "Github 星数",
+      "contirbutors": "贡献者",
+      "downloads": "下载",
+      "customers": "用户",
+      "communitydesc": "Milvus 背后有强大社区支持",
+      "communitytitle": "加入我们的社区",
+      "customer": "用户列表"
     },
     "404": {
-      "title":"噢。。好像哪里出错了！",
-      "desc1":"看起来我们走的有点远！",
-      "desc2":"找不到回家的路了:(",
-      "gobtn":"回到首页"
+      "title": "噢。。好像哪里出错了！",
+      "desc1": "看起来我们走的有点远！",
+      "desc2": "找不到回家的路了:(",
+      "gobtn": "回到首页"
+    },
+    "signup": {
+      "emailerror": "Email 格式错误",
+      "thankyou": "感谢，您已经被添加到邮件列表！",
+      "subscribed": "此邮箱地址已被注册！",
+      "placeholder": "您的邮箱是？",
+      "signup": "注册以收到我们的简讯",
+      "montyly": "每月收到精心挑选的数据科技发展动态。",
+      "subscribe": "注册"
     }
   }
 }

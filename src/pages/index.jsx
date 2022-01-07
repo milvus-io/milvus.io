@@ -97,7 +97,7 @@ const IndexPage = () => {
 
   const communityLinks = [
     { name: "Slack", to: "https://slack.milvus.io" },
-    { name: "Repo", to: "https://github.com/milvus-io/milvus" },
+    { name: "Github", to: "https://github.com/milvus-io/milvus" },
     { name: "Forum", to: "https://discuss.milvus.io/" },
   ];
 
@@ -112,12 +112,8 @@ const IndexPage = () => {
             <div className="shooting_star"></div>
           </div>
           <div className="banner-grid-container col-12 col-8 col-4">
-            <p className="title">
-              Vector database built for scalable similarity search
-            </p>
-            <p className="subtitle">
-              Open-source, highly scalable, and blazing fast
-            </p>
+            <p className="title">{t("v3trans.main.h1")}</p>
+            <p className="subtitle">{t("v3trans.main.desc")}</p>
             <div className="btn-group">
               <Link to="/docs">
                 <button className="btn-start">
@@ -709,19 +705,19 @@ const IndexPage = () => {
             </div>
             <div className="stats col-3 col-8">
               <div className="stats-detail">
-                <p className="name">Stars at Github</p>
+                <p className="name">{t("v3trans.main.stars")}</p>
                 <p className="num">9k+</p>
               </div>
               <div className="stats-detail">
-                <p className="name">Contirbutors</p>
+                <p className="name">{t("v3trans.main.contirbutors")}</p>
                 <p className="num">150</p>
               </div>
               <div className="stats-detail">
-                <p className="name">Downloads</p>
+                <p className="name">{t("v3trans.main.downloads")}</p>
                 <p className="num">60M</p>
               </div>
               <div className="stats-detail">
-                <p className="name">Customers</p>
+                <p className="name">{t("v3trans.main.customers")}</p>
                 <p className="num">1500+</p>
               </div>
             </div>

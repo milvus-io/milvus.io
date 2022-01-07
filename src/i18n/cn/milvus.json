@@ -719,6 +719,12 @@
         "repo": "项目地址",
         "forum": "论坛"
       },
+      "h1": "高可用相似度搜索向量数据库",
+      "desc": "开源，高可用 并且 迅速",
+      "stars": "Github 星数",
+      "contirbutors": "贡献者",
+      "downloads": "下载",
+      "customers": "用户",
       "communitydesc":"Milvus 背后有强大社区支持",
       "communitytitle":"加入我们的社区",
       "customer": "用户列表"

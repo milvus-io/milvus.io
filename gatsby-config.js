@@ -63,7 +63,7 @@ let gatsbyConfigs = {
           const res = allPages.reduce((acc, cur) => {
             // filter out docs with version info with released value is no
             const path = cur.path;
-            if (versions.every((ver) => path.indexOf(ver.version) === -1)) {
+            if (versions.every(ver => path.indexOf(ver.version) === -1)) {
               if (path.endsWith("/") && path.length > 1) {
                 cur.path = path.slice(0, path.length - 1);
               }
@@ -306,6 +306,10 @@ if (process.env.NODE_ENV == "development") {
               //text: 'Hello'
               //fontDisplay: 'swap',
               //strategy: 'selfHosted' // 'base64' || 'cdn'
+            },
+            {
+              family: "Source Code Pro",
+              variants: ["400"],
             },
           ],
         },

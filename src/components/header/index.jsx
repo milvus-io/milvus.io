@@ -417,12 +417,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     </header>
   );
 
-  return (
-    <>
-      {DesktopHead}
-      {MobileHead}
-    </>
-  );
+  return <>{isMobile ? MobileHead : DesktopHead}</>;
 };
 
 export default Header;

@@ -717,13 +717,23 @@
         "getinvolved": "开始参与",
         "repo": "项目地址",
         "forum": "论坛"
-      }
+      },
+      "customer": "用户列表"
     },
     "404": {
       "title":"噢。。好像哪里出错了！",
       "desc1":"看起来我们走的有点远！",
       "desc2":"找不到回家的路了:(",
       "gobtn":"回到首页"
+    },
+     "signup": {
+      "emailerror": "Email 格式错误",
+      "thankyou": "感谢，您已经被添加到邮件列表！",
+      "subscribed": "此邮箱地址已被注册！",
+      "placeholder":"您的邮箱是？",
+      "signup":"注册以收到我们的简讯",
+      "montyly":"每月收到精心挑选的数据科技发展动态。",
+      "subscribe": "注册"
     }
   }
 }

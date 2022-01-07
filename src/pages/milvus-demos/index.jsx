@@ -174,7 +174,7 @@ const DemoPage = () => {
             </div>
           </div>
         </section>
-        <Signup isMobile={isMobile} callback={handleOpenSnackbar} />
+        <Signup callback={handleOpenSnackbar} t={t} />
       </Layout>
       <CustomizedContentDialogs
         open={dialogConfig.open}

@@ -726,13 +726,23 @@
         "getinvolved": "Get involved",
         "repo": "Repo",
         "forum": "Forum"
-      }
+      },
+      "customer": "Trusted by our customer"
     },
     "404": {
       "title":"Uoops...something went wrong!",
       "desc1":"Looks like you’ve wandered off too far!",
       "desc2":"We can’t find the page you are looking for:(",
       "gobtn":"Go to home page"
+    },
+    "signup": {
+      "emailerror": "Email format error",
+      "thankyou": "Thank you, you have been added to our mailing list!",
+      "subscribed": "This email is already subscribed!",
+      "placeholder":"What’s your email?",
+      "signup":"Sign up for our newsletter",
+      "montyly":"Monthly hand-picked discoveries and stories of thriving technologies in a new world of data.",
+      "subscribe": "Subscribe"
     }
   }
 }

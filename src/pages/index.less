@@ -1,5 +1,6 @@
 @import "../css/variables/main.less";
 @import "../css/reset/index.less";
+@import "../css/variables/responsive.less";
 
 @font-size-normal: 18px;
 @font-size-title: 40px;
@@ -9,25 +10,39 @@
     text-align: center;
     margin: 0 auto;
     h2 {
-      font-size: @font-size-title;
+      font-size: 24px;
       font-weight: bold;
       line-height: 50px;
+      @media @desktop1440 {
+        font-size: 32px;
+      }
+      @media @desktop1920 {
+        font-size: 40px;
+      }
     }
     h5 {
-      margin: 24px auto 142px auto;
+      margin: 24px auto 80px auto;
       line-height: 26px;
       max-width: 626px;
       font-size: @font-size-normal;
+      @media @phone {
+        font-size: 14px;
+        margin-bottom: 40px;
+      }
     }
     ul {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10%;
       li {
         display: flex;
         list-style: none;
         align-items: center;
         flex-direction: column;
         max-width: 320px;
+        min-width: 285px;
+        margin-top: 60px;
         h4 {
           margin: 20px 0;
           font-weight: bold;
@@ -42,6 +57,188 @@
         img {
           max-width: 100px;
         }
+      }
+    }
+  }
+  .section3 {
+    margin: 160px auto;
+    .example-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 124px;
+      margin-top: 10px;
+      @media @tablet, @phone {
+        display: block;
+        flex-direction: column;
+        .code-example {
+          margin-bottom: 40px;
+        }
+      }
+      .code-example {
+        flex: 1;
+        min-width: 300px;
+        overflow: scroll;
+        background: #021726;
+        box-shadow: 0px 20px 40px rgba(22, 36, 111, 0.2);
+        border-radius: 12px;
+        height: 460px;
+        pre code.hljs {
+          display: block;
+          overflow-x: auto;
+        }
+        code.hljs {
+          padding: 3px 5px;
+        }
+        .hljs {
+          color: #eff;
+          background: #021726;
+        }
+        .hljs ::selection,
+        .hljs::selection {
+          background-color: #353535;
+          color: #eff;
+        }
+        .hljs-comment {
+          color: #4a4a4a;
+        }
+        .hljs-tag {
+          color: #b2ccd6;
+        }
+        .hljs-operator,
+        .hljs-punctuation,
+        .hljs-subst {
+          color: #eff;
+        }
+        .hljs-operator {
+          opacity: 0.7;
+        }
+        .hljs-bullet,
+        .hljs-deletion,
+        .hljs-name,
+        .hljs-selector-tag,
+        .hljs-template-variable,
+        .hljs-variable {
+          color: #f07178;
+        }
+        .hljs-attr,
+        .hljs-link,
+        .hljs-literal,
+        .hljs-number,
+        .hljs-symbol,
+        .hljs-variable.constant_ {
+          color: #f78c6c;
+        }
+        .hljs-class .hljs-title,
+        .hljs-title,
+        .hljs-title.class_ {
+          color: #ffcb6b;
+        }
+        .hljs-strong {
+          font-weight: 700;
+          color: #ffcb6b;
+        }
+        .hljs-addition,
+        .hljs-code,
+        .hljs-string,
+        .hljs-title.class_.inherited__ {
+          color: #c3e88d;
+        }
+        .hljs-built_in,
+        .hljs-doctag,
+        .hljs-keyword.hljs-atrule,
+        .hljs-quote,
+        .hljs-regexp {
+          color: #89ddff;
+        }
+        .hljs-attribute,
+        .hljs-function .hljs-title,
+        .hljs-section,
+        .hljs-title.function_,
+        .ruby .hljs-property {
+          color: #82aaff;
+        }
+        .diff .hljs-meta,
+        .hljs-keyword,
+        .hljs-template-tag,
+        .hljs-type {
+          color: #c792ea;
+        }
+        .hljs-emphasis {
+          color: #c792ea;
+          font-style: italic;
+        }
+        .hljs-meta,
+        .hljs-meta .hljs-keyword,
+        .hljs-meta .hljs-string {
+          color: #ff5370;
+        }
+        .hljs-meta .hljs-keyword,
+        .hljs-meta-keyword {
+          font-weight: 700;
+        }
+      }
+      .milvus-feature {
+        flex: 0 0 40%;
+        position: relative;
+        p {
+          padding: 20px 0;
+          border-top: 1px solid#EFF9FE;
+          font-size: 32px;
+          line-height: 42px;
+          color: #c5ccd6;
+          cursor: pointer;
+          &.active {
+            color: #4fc4f9;
+          }
+          @media @tablet, @phone {
+            font-size: 18px;
+            line-height: 26px;
+          }
+        }
+
+        .shooting_star_container {
+          position: absolute;
+          left: 0;
+          transform: rotateZ(0deg);
+          &.manage-shooting {
+            top: 0px;
+          }
+          &.search-shooting {
+            top: 83px;
+            @media @tablet, @phone {
+              top: 67px;
+            }
+          }
+          &.index-shooting {
+            top: 164px;
+            @media @tablet, @phone {
+              top: 134px;
+            }
+          }
+          .shooting_star {
+            animation: tail1 6000ms ease-in-out infinite,
+              shooting1 6000ms ease-in-out infinite;
+          }
+        }
+
+        .shooting_star {
+          position: absolute;
+          height: 2px;
+          background: linear-gradient(
+            270deg,
+            #00a1ea 2%,
+            rgba(0, 161, 234, 0) 100%
+          );
+          border-radius: 999px;
+          filter: drop-shadow(0 0 6px rgba(66, 255, 210, 1));
+        }
+      }
+    }
+    pre {
+      code {
+        line-height: 26px;
+        background: #fff;
       }
     }
   }

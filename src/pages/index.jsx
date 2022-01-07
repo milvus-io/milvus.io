@@ -120,7 +120,9 @@ const IndexPage = () => {
             </p>
             <div className="btn-group">
               <Link to="/docs">
-                <button className="btn-start">Get Started</button>
+                <button className="btn-start">
+                  {t("v3trans.main.nav.getstarted")}
+                </button>
               </Link>
               <a
                 href="https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g"
@@ -128,7 +130,7 @@ const IndexPage = () => {
                 rel="noopener noreferrer"
               >
                 <button className="btn-watch">
-                  Watch Video
+                  {t("v3trans.main.nav.watchvideo")}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

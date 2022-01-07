@@ -10,6 +10,8 @@ import BlogCard from "../components/card/BlogCard";
 import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
 import Pagination from "@mui/material/Pagination";
+import Signup from '../components/signup';
+import { CustomizedSnackbars } from "../components/snackBar";
 
 const PAGE_SIZE = 6;
 
@@ -22,7 +24,27 @@ const BlogTemplate = ({ data, pageContext }) => {
   const [currentTag, setCurrentTag] = useState("all");
   const [pageIndex, setPageIndex] = useState(1);
   const featuredBlog = useMemo(() => blogList[0], [blogList]);
+  const [snackbarConfig, setSnackbarConfig] = useState({
+    open: false,
+    type: "info",
+    message: "",
+  });
 
+  const handleOpenSnackbar = ({ message, type }) => {
+    setSnackbarConfig({
+      open: true,
+      type,
+      message,
+    });
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarConfig({
+      open: false,
+      type: "info",
+      message: "",
+    });
+  };
   // list of tags
   const tagList = useMemo(() => {
     const resObj = {
@@ -159,7 +181,16 @@ const BlogTemplate = ({ data, pageContext }) => {
             className={styles.pagination}
           />
         </section>
+
+
       </div>
+      <Signup callback={handleOpenSnackbar} t={t} />
+      <CustomizedSnackbars
+        open={snackbarConfig.open}
+        type={snackbarConfig.type}
+        message={snackbarConfig.message}
+        handleClose={handleCloseSnackbar}
+      />
     </Layout>
   );
 };

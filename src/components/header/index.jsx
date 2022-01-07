@@ -137,7 +137,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     </div>
   );
 
-  const mobileHead = (
+  const MobileHead = () => (
     <header className={`${styles.mobileHead} ${className}`}>
       <div className={`${styles.spaceBetween} col-4 col-8 col-12`}>
         {logoSection}
@@ -288,11 +288,10 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     </header>
   );
 
-  const desktopHead = (
+  const DesktopHead = () => (
     <header
-      className={`${styles.header} ${
-        isLightHeader ? styles.light : ""
-      } ${className}`}
+      className={`${styles.header} ${isLightHeader ? styles.light : ""
+        } ${className}`}
     >
       <div className={styles.flexstart}>
         {logoSection}
@@ -417,7 +416,12 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     </header>
   );
 
-  return isMobile ? mobileHead : desktopHead;
+  return (
+    <>
+      <DesktopHead />
+      <MobileHead />
+    </>
+  );
 };
 
 export default Header;

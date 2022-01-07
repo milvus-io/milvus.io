@@ -1,5 +1,6 @@
 import React from "react";
 import "./banner.less";
+import { Link, useI18next } from "gatsby-plugin-react-i18next";
 const HomeBanner = () => {
   return (
     <div className="banner">
@@ -17,8 +18,8 @@ const HomeBanner = () => {
           Open-source, highly scalable, and blazing fast
         </p>
         <div className="btn-group">
-          <button className="btn-start">Get Started</button>
-          <button className="btn-watch">
+          <Link className="btn-start" to="/docs/v2.0.0/install_standalone-docker.md">Get Started</Link>
+          <a className="btn-watch" href="https://www.youtube.com/watch?v=nQkmgCtVz5k&t=7s" target="_blank">
             Watch Video
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +33,7 @@ const HomeBanner = () => {
                 fill="white"
               ></path>
             </svg>
-          </button>
+          </a>
         </div>
         <div className="bucket bucket-container ">
           <svg
@@ -565,15 +566,15 @@ const HomeBanner = () => {
           </div>
           <div className="stats-detail">
             <p className="name">Contirbutors</p>
-            <p className="num">150</p>
+            <p className="num">150+</p>
           </div>
           <div className="stats-detail">
             <p className="name">Downloads</p>
-            <p className="num">60M</p>
+            <p className="num">70M+</p>
           </div>
           <div className="stats-detail">
             <p className="name">Customers</p>
-            <p className="num">1500+</p>
+            <p className="num">1000+</p>
           </div>
         </div>
       </div>

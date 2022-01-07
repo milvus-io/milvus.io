@@ -127,7 +127,8 @@ const Footer = ({ darkMode = true, t, className }) => {
           ))}
         </div>
         <div className={styles.bottombar}>
-          Milvus. 2022 All rights reserved.
+          <span>{`Milvus. ${new Date().getFullYear()} All rights reserved.`}</span>
+
           <div className={styles.social}>
             {socialJson.map(s => (
               <a

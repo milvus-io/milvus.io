@@ -280,7 +280,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
             variant="fullwidth"
             sx={{ position: "absolute", bottom: "78px", width: "100%" }}
           />
-          <Link to="/docs">
+          <Link to="/docs/v2.0.0/install_standalone-docker.md">
             <button className={styles.startBtn}>
               {t("v3trans.main.nav.getstarted")}
             </button>
@@ -292,9 +292,8 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
   const DesktopHead = (
     <header
-      className={`${styles.header} ${
-        isLightHeader ? styles.light : ""
-      } ${className}`}
+      className={`${styles.header} ${isLightHeader ? styles.light : ""
+        } ${className}`}
     >
       <div className={styles.flexstart}>
         {logoSection}

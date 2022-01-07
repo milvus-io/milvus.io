@@ -62,6 +62,10 @@
     position: relative;
     margin: 0 auto;
 
+    @media @phone {
+      width: 80%;
+    }
+
     .ellipse-svg2 {
       width: 80%;
       left: 10%;
@@ -158,6 +162,7 @@
 
     .btn-start,
     .btn-watch {
+      display: inline-block;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -173,10 +178,16 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 18px;
+
+      @media @phone {
+        width: 100%;
+      }
     }
 
     .btn-start {
       .primaryBtn;
+      background-color: @color-white;
+      color: @color-black;
     }
 
     .btn-watch {
@@ -307,7 +318,7 @@
       "btns"
       "stats";
     justify-items: center;
-    padding: unset;
+    padding: 40px 0;
 
     .stats {
       grid-template-rows: repeat(2, 1fr);
@@ -352,6 +363,7 @@
     .btn-group {
       flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
   }
 }

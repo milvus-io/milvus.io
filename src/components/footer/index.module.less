@@ -4,6 +4,7 @@
   width: 100%;
   min-height: 390px;
   background-color: #f5f8fb;
+  box-sizing: border-box;
 }
 
 .dark {
@@ -67,17 +68,36 @@
 
 .bottombar {
   margin-top: 85px;
-  .spaceBetween;
+  display: flex;
+  align-items: center;
 
   @media @phone {
-    flex-wrap: wrap-reverse;
+    flex-direction: column-reverse;
   }
 }
 
 .social {
   .spaceBetween;
-  width: 30%;
-  margin-bottom: 24px;
+  margin-left: 278px;
+
+  & > a:not(:last-child) {
+    margin-right: 70px;
+
+    @media @phone {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 1240px) {
+    margin-left: 178px;
+  }
+
+  @media @phone {
+    display: flex;
+    margin-left: 0;
+    margin-bottom: 24px;
+    justify-content: space-between;
+  }
 
   .iconWrapper {
     height: 30px;

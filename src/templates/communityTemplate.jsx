@@ -90,17 +90,18 @@ export default function Template({ data, pageContext }) {
               />
             </div>
             {!isPhone && !!headings?.length && (
-              <Aside
-                locale={locale}
-                // version={version}
-                editPath={editPath}
-                mdTitle={headings[0]}
-                category="doc"
-                isHome={isHomePage}
-                items={headings}
-                title={t("v3trans.docs.tocTitle")}
-                className="doc-toc-container"
-              />
+              <div className="doc-toc-container">
+                <Aside
+                  locale={locale}
+                  // version={version}
+                  editPath={editPath}
+                  mdTitle={headings[0]}
+                  category="doc"
+                  isHome={isHomePage}
+                  items={headings}
+                  title={t("v3trans.docs.tocTitle")}
+                />
+              </div>
             )}
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />

@@ -50,11 +50,12 @@
     list-style: none;
     padding: 0;
     justify-content: center;
-    font-weight: bold;
+
     li {
       color: @color-text;
       text-transform: uppercase;
       cursor: pointer;
+      font-weight: bold;
     }
     li + li {
       margin-left: 10px;
@@ -93,6 +94,9 @@
 .shareSection {
   margin: 80px auto 110px auto;
   text-align: center;
+  p {
+    margin-bottom: 24px;
+  }
   .share {
     margin: 0 auto;
     justify-content: center;
@@ -100,14 +104,17 @@
 }
 
 .moreBlog {
-  margin: 100px auto 0 auto;
+  margin: 100px auto 100px auto;
   h2 {
     font-weight: bold;
     font-size: 40px;
     line-height: 50px;
+    margin-bottom: 44px;
+
     @media @desktop1024 {
       font-size: 32px;
       line-height: 40px;
+      margin-bottom: 24px;
     }
   }
 

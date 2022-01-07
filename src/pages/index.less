@@ -2,7 +2,6 @@
 @import "../css/reset/index.less";
 
 .main {
-
   .banner {
     background-image: url(../images/index/bg.svg);
     display: flex;
@@ -174,11 +173,12 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 18px;
-
     }
 
     .btn-start {
       .primaryBtn;
+      background-color: @color-white;
+      color: @color-black;
     }
 
     .btn-watch {
@@ -309,7 +309,7 @@
       "btns"
       "stats";
     justify-items: center;
-    padding: unset;
+    padding: 80px 0;
 
     .stats {
       grid-template-rows: repeat(2, 1fr);
@@ -354,6 +354,10 @@
     .btn-group {
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      button {
+        width: 100%;
+      }
     }
   }
 }

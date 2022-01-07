@@ -16,7 +16,7 @@
   --color-state-hover: rgba(255, 255, 255, 0.15);
 }
 
-.doc-post-container {
+.doc-post-content {
   // padding: 0 4rem;
   background: #fff;
   // min-height: 80vh;
@@ -42,18 +42,13 @@
     }
   }
 
-  table[class*="language-"],
-  code[class*="language-"] {
-    display: block;
-
-    &.language-javascript,
-    &.language-python,
-    &.language-go,
-    &.language-java,
-    &.language-cli,
-    &.language-cpp {
-      display: none;
-    }
+  .language-javascript,
+  .language-python,
+  .language-go,
+  .language-java,
+  .language-cli,
+  .language-cpp {
+    display: none;
 
     &.active {
       display: block;

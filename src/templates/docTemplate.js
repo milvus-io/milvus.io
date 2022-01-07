@@ -16,6 +16,7 @@ import Aside from "../components/aside";
 import Seo from "../components/seo";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
+import { useCodeCopy, useMultipleCodeFilter } from "../hooks/doc-dom-operation";
 
 export const query = graphql`
   query ($language: String!) {
@@ -56,6 +57,9 @@ export default function Template({ data, pageContext }) {
   const isPhone = ["phone"].includes(currentWindowSize);
   const desktop1024 = ["desktop1024"].includes(currentWindowSize);
   const { language, t } = useI18next();
+  const hljsCfg = {
+    languages: ["java", "go", "python", "javascript"],
+  };
 
   const menuList = allMenus.find(
     v =>
@@ -129,6 +133,9 @@ export default function Template({ data, pageContext }) {
       ? `Milvus documentation`
       : `${headings[0] && headings[0].value}`;
 
+  useCodeCopy(language, hljsCfg);
+  useMultipleCodeFilter();
+
   return (
     <Layout t={t} showFooter={false}>
       <Seo
@@ -185,17 +192,18 @@ export default function Template({ data, pageContext }) {
               />
             )}
             {!isPhone && (
-              <Aside
-                locale={locale}
-                version={version}
-                editPath={editPath}
-                mdTitle={headings[0]}
-                category="doc"
-                isHome={!!homeData}
-                items={headings}
-                title={t("v3trans.docs.tocTitle")}
-                className="doc-toc-container"
-              />
+              <div className="doc-toc-container">
+                <Aside
+                  locale={locale}
+                  version={version}
+                  editPath={editPath}
+                  mdTitle={headings[0]}
+                  category="doc"
+                  isHome={!!homeData}
+                  items={headings}
+                  title={t("v3trans.docs.tocTitle")}
+                />
+              </div>
             )}
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />

@@ -34,7 +34,7 @@ import clsx from "clsx";
 //   },
 // };
 
-const Aside = (props) => {
+const Aside = props => {
   const {
     category = "doc",
     items,
@@ -160,7 +160,7 @@ const Aside = (props) => {
     const btns = btnConfiguration[category](props) || [];
     return (
       <>
-        {btns.map((btn) => (
+        {btns.map(btn => (
           <li key={btn.label}>
             <a
               href={btn.link}

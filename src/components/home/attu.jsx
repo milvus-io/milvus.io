@@ -108,7 +108,15 @@ const Attu = props => {
             </div>
           </div>
 
-          <div className="attu-example">{/* insert images here*/}</div>
+          <div
+            className={clsx("attu-example", {
+              [`attu-example-0`]: activeExample === 0,
+              [`attu-example-1`]: activeExample === 1,
+              [`attu-example-2`]: activeExample === 2,
+            })}
+          >
+            {/* insert images here*/}
+          </div>
         </div>
       </section>
     </>

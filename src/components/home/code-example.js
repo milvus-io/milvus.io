@@ -1,19 +1,25 @@
 export const ManageVectorCodes = {
   python: `
-from pymilvus import Collection, CollectionSchema
+import random
+from pymilvus import Collection
+// Parepare data
+data = [
+  [i for i in range(2000)],
+  [i for i in range(10000, 12000)],
+  [[random.random() for _ in range(2)] for _ in range(2000)],
+]
 
-# create a collection
+# Get an existing collection.
 collection = Collection("book")
-CollectionSchema(
-  fields=[book_id, word_count, book_intro], 
-  description="Test book search"
-)
-
-# insert data
 mr = collection.insert(data)
+
 `,
 
   javascript: `
+import { MilvusClient } from '@zilliz/milvus2-sdk-node';
+const milvusClient = new MilvusClient(YOUR_MILVUS_ADDRESS);
+// Assume we have a collection book
+// Prepare insert data
 const data = Array.from({ length: 2000 }, (v,k) => ({
   "book_id": k,
   "word_count": k+10000,
@@ -36,6 +42,10 @@ import -c book 'https://raw.githubusercontent.com/milvus-io/milvus_cli/main/exam
 
 export const SearchCodes = {
   python: `
+from pymilvus import Collection
+
+# Get an existing collection.
+collection = Collection("book")
 #search
 search_params = {"metric_type": "L2", "params": {"nprobe": 10}}
 results = collection.search(
@@ -49,6 +59,9 @@ results = collection.search(
 `,
 
   javascript: `
+import { MilvusClient } from '@zilliz/milvus2-sdk-node';
+const milvusClient = new MilvusClient(YOUR_MILVUS_ADDRESS);
+
 const searchParams = {
   anns_field: "book_intro",
   topk: "10",
@@ -88,8 +101,9 @@ The max number of returned record, also known as topk: 10
 export const IndexCodes = {
   python: `
 from pymilvus import Collection
-collection = Collection("book")      # Get an existing collection.
 
+# Get an existing collection.
+collection = Collection("book")
 index_params = {
     "metric_type":"L2",
     "index_type":"IVF_FLAT",
@@ -104,6 +118,9 @@ collection.create_index(
 `,
 
   javascript: `
+import { MilvusClient } from '@zilliz/milvus2-sdk-node';
+const milvusClient = new MilvusClient(YOUR_MILVUS_ADDRESS);
+
 const index_params = {
   metric_type: "L2",
   index_type: "IVF_FLAT",

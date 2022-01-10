@@ -255,4 +255,132 @@
       }
     }
   }
+
+  .attu-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0 auto;
+
+    h2 {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 40px;
+      line-height: 50px;
+      text-align: center;
+      color: @color-black;
+    }
+    p {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 26px;
+      text-align: center;
+      color: @color-grey-01;
+      max-width: 600px;
+    }
+  }
+
+  .attu-section {
+    margin: 80px auto;
+
+    .left-title {
+      height: 84px;
+      padding-bottom: 34px;
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 32px;
+      line-height: 42px;
+      color: @color-black;
+
+      @media @tablet, @phone {
+        font-size: 24px;
+        line-height: 34px;
+        text-align: center;
+      }
+
+      span {
+        color: #4fc4f9;
+      }
+    }
+
+    .milvus-feature p.left-li {
+      padding: 10px 0;
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 24px;
+
+      @media @tablet, @phone {
+        font-size: 14px;
+        line-height: 20px;
+
+        padding: 15px 0;
+      }
+    }
+
+    .milvus-feature.attu-feature {
+      .shooting_star_container {
+        &.manage-shooting {
+          top: 84px;
+        }
+        &.search-shooting {
+          top: 128px;
+          @media @tablet, @phone {
+            top: 134px;
+          }
+        }
+        &.index-shooting {
+          top: 172px;
+          @media @tablet, @phone {
+            top: 184px;
+          }
+        }
+      }
+    }
+
+    .btn-groups {
+      display: flex;
+      gap: 10px;
+      padding-top: 34px;
+
+      @media @tablet, @phone {
+        justify-content: center;
+      }
+
+      @media @phone {
+        flex-direction: column;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+
+    .example-wrapper {
+      flex-wrap: nowrap;
+      gap: unset;
+      @media @tablet, @phone {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+    }
+
+    .attu-example {
+      max-width: 710px;
+      min-height: 395px;
+      width: 100%;
+      height: auto;
+      background-image: url(../images/home/attu.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+  }
 }

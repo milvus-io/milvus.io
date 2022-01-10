@@ -58,7 +58,8 @@ const EXAMPLES = {
 let timeId = null;
 let keyIndex = 0;
 
-const Code = () => {
+const Code = props => {
+  const { t = () => {} } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.manage);
 
@@ -149,24 +150,26 @@ const Code = () => {
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.manage)}
           >
-            Manage massive vectors
+            {t("v3trans.home.code.manage")}
           </p>
           <p
             className={clsx({ active: activeExample === EXAMPLES.search })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.search)}
           >
-            Vector similarity search
+            {t("v3trans.home.code.search")}
           </p>
           <p
             className={clsx({ active: activeExample === EXAMPLES.index })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.index)}
           >
-            Build with 6 index
+            {t("v3trans.home.code.index")}
           </p>
           <Link to="/docs">
-            <button className="learn-more">Learn More</button>
+            <button className="learn-more">
+              {t("v3trans.home.code.learn")}
+            </button>
           </Link>
         </div>
       </div>

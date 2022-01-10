@@ -109,11 +109,11 @@ const IndexPage = () => {
     <main className="homepage">
       <Layout darkMode={true} t={t}>
         {/* all css about banner in banner.less */}
-        <HomeBanner />
+        <HomeBanner t={t} />
         {/* all these sections about banner in banner.less */}
 
-        <HomeFeatures />
-        <HomeCode />
+        <HomeFeatures t={t} />
+        <HomeCode t={t} />
         <Attu />
 
         <section className={`${styles.community} col-4 col-8 col-12`}>

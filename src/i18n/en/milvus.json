@@ -722,7 +722,7 @@
         "statistics": "View milvus cluster statistics",
         "manage": "Browse, query, and manage collections",
         "operation": "Perform CRUD or bulk operations",
-        "download": "Download Insight",
+        "download": "Download Attu",
         "learn": "Learn more"
       }
     },

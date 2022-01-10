@@ -573,11 +573,11 @@ const HomeBanner = props => {
           </div>
           <div className="stats-detail">
             <p className="name">Contirbutors</p>
-            <p className="num">150</p>
+            <p className="num">150+</p>
           </div>
           <div className="stats-detail">
             <p className="name">Downloads</p>
-            <p className="num">60M</p>
+            <p className="num">70M+</p>
           </div>
           <div className="stats-detail">
             <p className="name">Customers</p>

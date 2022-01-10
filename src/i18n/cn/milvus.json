@@ -726,7 +726,7 @@
         "statistics": "查看 milvus 集群统计信息",
         "manage": "浏览、查询和管理 collection",
         "operation": "执行 CRUD 或批量操作",
-        "download": "下载 Insight",
+        "download": "下载 Attu",
         "learn": "了解更多"
       }
     },

@@ -12,7 +12,7 @@ import LeftNav from "../components/leftNavigation";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
-import Seo from '../components/seo';
+import Seo from "../components/seo";
 
 export const query = graphql`
   query ($language: String!) {
@@ -49,8 +49,8 @@ export default function Template({ data, pageContext }) {
   const { language, t } = useI18next();
 
   const isHomePage = activePost === "home.md";
-  const TITLE = 'Milvus Community';
-  const DESC = 'Join Milvus Community';
+  const TITLE = "Milvus Community";
+  const DESC = "Join Milvus Community";
 
   const leftNavMenus =
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
@@ -66,6 +66,7 @@ export default function Template({ data, pageContext }) {
           [`home`]: isHomePage,
         })}
       >
+        {/* TODO: "id": "#community_resources", #community_partners should be updated */}
         <LeftNav
           menus={leftNavMenus}
           apiMenus={[]}

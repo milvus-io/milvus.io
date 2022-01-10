@@ -1,39 +1,38 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as styles from './code.module.less';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import * as styles from "./code.module.less";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-regular-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import Tooltip from "@mui/material/Tooltip";
 
-const Code = ({ html, content, locale }) => {
+const Code = ({ html, content, tooltip = {} }) => {
+  const [isCopied, setIscopied] = useState(false);
+
+  const { copy: copyText = "copy", copied: copiedText = "copied" } = tooltip;
+
   const handleButtonsContent = e => {
-    if (Array.from(e.target.classList)[2] === 'fa-check') {
+    if (isCopied) {
       return;
     }
-
-    document.querySelectorAll('.btn-copy').forEach(item => {
-      item.classList.remove('fa');
-      item.classList.remove('fa-check');
-      item.classList.add('far');
-      item.classList.add('fa-clone');
-    });
-    // copy icon
-    e.target.classList.toggle('far');
-    e.target.classList.toggle('fa-clone');
-    // copied icon
-    e.target.classList.toggle('fa');
-    e.target.classList.toggle('fa-check');
+    setIscopied(true);
+    setTimeout(() => {
+      setIscopied(false);
+    }, 2000);
   };
 
   const formatContent = content => {
     const code = content
-      .split('\n')
-      .filter(item => item[0] !== '#')
+      .split("\n")
+      .filter(item => item[0] !== "#")
       .map(str => {
-        const invalidItems = ['$', '>>>'];
+        const invalidItems = ["$", ">>>"];
         return str
-          .split(' ')
+          .split(" ")
           .filter(s => !invalidItems.includes(s))
-          .join(' ');
+          .join(" ");
       })
-      .join('\n');
+      .join("\n");
 
     return code;
   };
@@ -63,12 +62,22 @@ const Code = ({ html, content, locale }) => {
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
 
-      <button className={styles.copyBtn} onClick={onButtonClick}>
-        <i
-          className={`btn-copy ${styles.icon} far fa-clone`}
-          aria-hidden="true"
-        ></i>
-      </button>
+      {/* <button className={styles.copyBtn} onClick={onButtonClick}>
+        {isCopied ? (
+          <FontAwesomeIcon icon={faCheck} />
+        ) : (
+          <FontAwesomeIcon icon={faCopy} />
+        )}
+      </button> */}
+      <Tooltip title={isCopied ? copiedText : copyText} arrow placement="top">
+        <button className={styles.copyBtn} onClick={onButtonClick}>
+          {isCopied ? (
+            <FontAwesomeIcon icon={faCheck} />
+          ) : (
+            <FontAwesomeIcon icon={faCopy} />
+          )}
+        </button>
+      </Tooltip>
     </>
   );
 };

@@ -1,14 +1,11 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-// import { ManageVectorCodes, SearchCodes, IndexCodes } from "./code-example";
 import clsx from "clsx";
-// import HightLight from "react-highlight";
-import { useIntervalWhen } from 'rooks';
+import { useIntervalWhen } from "rooks";
+import Typography from "@mui/material/Typography";
 
+const Attu = props => {
+  const { t = v => v } = props;
 
-const Attu = () => {
   const [when, setWhen] = useState(true);
   const [activeExample, setActivExample] = useState(0);
   const timeid = useRef(0);
@@ -16,31 +13,19 @@ const Attu = () => {
   const incremental = () => {
     let el = activeExample + 1;
     if (el > 2) {
-      el = 0
+      el = 0;
     }
     setActivExample(el);
   };
 
-  useIntervalWhen(() => {
-    incremental();
-  },
+  useIntervalWhen(
+    () => {
+      incremental();
+    },
     5000,
     when,
-    true,
-  )
-
-  // const codeExample = useMemo(() => {
-  //   switch (activeExample) {
-  //     case 0:
-  //       return ManageVectorCodes;
-  //     case 1:
-  //       return SearchCodes;
-  //     case 2:
-  //       return IndexCodes;
-  //     default:
-  //       return ManageVectorCodes;
-  //   }
-  // }, [activeExample]);
+    true
+  );
 
   const handleActiveClick = active => {
     if (timeid.current) {
@@ -52,65 +37,89 @@ const Attu = () => {
     timeid.current = setTimeout(() => {
       setWhen(true);
       timeid.current = 0;
-    }, 5000)
+    }, 5000);
   };
 
   return (
-    <section className="section3 col-12 col-8 col-4">
-      <div className="example-wrapper">
-        <div className="milvus-feature">
-          <div className="shooting_star_container manage-shooting">
-            <div
-              className={clsx({
-                shooting_star: activeExample === 0,
-              })}
-            ></div>
-          </div>
-          <div className="shooting_star_container search-shooting">
-            <div
-              className={clsx({
-                shooting_star: activeExample === 1,
-              })}
-            ></div>
-          </div>
-          <div className="shooting_star_container index-shooting">
-            <div
-              className={clsx({
-                shooting_star: activeExample === 2,
-              })}
-            ></div>
-          </div>
-          <p
-            className={clsx({ active: activeExample === 0 })}
-            role="button"
-            onClick={() => handleActiveClick(0)}
-          >
-            Manage massive vectors
-          </p>
-          <p
-            className={clsx({ active: activeExample === 1 })}
-            role="button"
-            onClick={() => handleActiveClick(1)}
-          >
-            Vector similarity search
-          </p>
-          <p
-            className={clsx({ active: activeExample === 2 })}
-            role="button"
-            onClick={() => handleActiveClick(2)}
-          >
-            Build with 6 index
-          </p>
-        </div>
-
-
-        <div className="code-example">
-          {activeExample}
-          {/* insert images here*/}
-        </div>
-
+    <>
+      <div className="attu-desc col-12 col-8 col-4">
+        <Typography component="h2" variant="h2">
+          {t("v3trans.home.attu.title")}
+        </Typography>
+        <Typography component="p" variant="h5">
+          {t("v3trans.home.attu.desc")}
+        </Typography>
       </div>
-    </section>
+      <section className="section3 col-12 col-8 col-4 attu-section">
+        <div className="example-wrapper">
+          <div className="milvus-feature attu-feature">
+            <div className="shooting_star_container manage-shooting">
+              <div
+                className={clsx({
+                  shooting_star: activeExample === 0,
+                })}
+              ></div>
+            </div>
+            <div className="shooting_star_container search-shooting">
+              <div
+                className={clsx({
+                  shooting_star: activeExample === 1,
+                })}
+              ></div>
+            </div>
+            <div className="shooting_star_container index-shooting">
+              <div
+                className={clsx({
+                  shooting_star: activeExample === 2,
+                })}
+              ></div>
+            </div>
+            <Typography component="h3" variant="h3" className="left-title">
+              {t("v3trans.home.attu.sub-title")} <span>Attu</span>
+            </Typography>
+            <p
+              className={clsx("left-li", { active: activeExample === 0 })}
+              role="button"
+              onClick={() => handleActiveClick(0)}
+            >
+              {t("v3trans.home.attu.statistics")}
+            </p>
+            <p
+              className={clsx("left-li", { active: activeExample === 1 })}
+              role="button"
+              onClick={() => handleActiveClick(1)}
+            >
+              {t("v3trans.home.attu.manage")}
+            </p>
+            <p
+              className={clsx("left-li", { active: activeExample === 2 })}
+              role="button"
+              onClick={() => handleActiveClick(2)}
+            >
+              {t("v3trans.home.attu.operation")}
+            </p>
+            <div className="btn-groups">
+              <button className={`primaryBtnSm`}>
+                {t("v3trans.home.attu.download")}
+              </button>
+              <button className={`secondaryBtnSm`}>
+                {t("v3trans.home.attu.learn")}
+              </button>
+            </div>
+          </div>
+
+          <div
+            className={clsx("attu-example", {
+              [`attu-example-0`]: activeExample === 0,
+              [`attu-example-1`]: activeExample === 1,
+              [`attu-example-2`]: activeExample === 2,
+            })}
+          >
+            {/* insert images here*/}
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

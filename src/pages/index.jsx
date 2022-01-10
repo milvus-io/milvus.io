@@ -113,12 +113,12 @@ const IndexPage = () => {
       <Layout darkMode={true} t={t}>
         <Seo title="Milvus" lang={language} description={DESC} />
         {/* all css about banner in banner.less */}
-        <HomeBanner />
+        <HomeBanner t={t} />
         {/* all these sections about banner in banner.less */}
 
-        <HomeFeatures />
-        <HomeCode />
-        <Attu />
+        <HomeFeatures t={t} />
+        <HomeCode t={t} />
+        <Attu t={t} />
 
         <section className={`${styles.community} col-4 col-8 col-12`}>
           <p className={styles.communityTitle}>

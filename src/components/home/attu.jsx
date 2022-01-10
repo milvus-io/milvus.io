@@ -103,7 +103,7 @@ const Attu = props => {
             <div className="btn-groups">
               <CustomIconLink
                 to="https://github.com/zilliztech/attu/releases/tag/v0.1.8"
-                className={`primaryBtnSm`}
+                className={`primaryBtnSm download-attu`}
               >
                 {t("v3trans.home.attu.download")}
               </CustomIconLink>

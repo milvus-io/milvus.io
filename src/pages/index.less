@@ -328,13 +328,19 @@
     .milvus-feature.attu-feature {
       .shooting_star_container {
         &.manage-shooting {
-          top: 0;
+          top: 84px;
         }
         &.search-shooting {
-          top: 45px;
+          top: 128px;
+          @media @tablet, @phone {
+            top: 134px;
+          }
         }
         &.index-shooting {
-          top: 90px;
+          top: 172px;
+          @media @tablet, @phone {
+            top: 184px;
+          }
         }
       }
     }
@@ -346,6 +352,9 @@
 
       @media @tablet, @phone {
         justify-content: center;
+        .download-attu {
+          justify-content: center;
+        }
       }
 
       @media @phone {

@@ -743,6 +743,10 @@
       "signup": "注册以收到我们的简讯",
       "montyly": "每月收到精心挑选的数据科技发展动态。",
       "subscribe": "注册"
+    },
+    "copyBtn": {
+      "copyLabel": "复制",
+      "copiedLabel": "已复制!"
     }
   }
 }

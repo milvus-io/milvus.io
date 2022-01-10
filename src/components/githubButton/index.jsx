@@ -49,7 +49,7 @@ const GitHubButton = ({
       <Divider orientation="vertical" variant="middle" flexItem />
       <a
         href={sublink}
-        className={`${styles.link} ${styles.num}`}
+        className={`${styles.link} ${styles.num} `}
         target="_blank"
         rel="noopener noreferrer"
       >

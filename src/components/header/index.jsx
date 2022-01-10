@@ -294,7 +294,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
         className={`${styles.header} ${isLightHeader ? styles.light : ""
           } ${className}`}
       >
-        <div className={styles.flexstart}>
+        <div className={styles.leftSection}>
           {logoSection}
           <nav>
             <ul className={`${styles.flexstart} ${styles.menu}`}>
@@ -408,12 +408,10 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
           </nav>
         </div>
 
-        <div className={styles.flexend}>
+        <div className={styles.rightSection}>
           {actionBar}
-          <Link to="/docs">
-            <button className={styles.startBtn}>
-              {t("v3trans.main.nav.getstarted")}
-            </button>
+          <Link to="/docs/v2.0.0/install_standalone-docker.md" className={styles.startBtn}>
+            {t("v3trans.main.nav.getstarted")}
           </Link>
         </div>
       </header>

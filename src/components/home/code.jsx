@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import { ManageVectorCodes, SearchCodes, IndexCodes } from "./code-example";
 import clsx from "clsx";
 import HightLight from "react-highlight";
+import { Link } from "gatsby-plugin-react-i18next";
+
 function TabPanel(props) {
   const { children, value, index, codeExample, ...other } = props;
 
@@ -163,6 +165,9 @@ const Code = () => {
           >
             Build with 6 index
           </p>
+          <Link to="/docs">
+            <button className="learn-more">Learn More</button>
+          </Link>
         </div>
       </div>
     </section>

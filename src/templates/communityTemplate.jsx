@@ -12,6 +12,7 @@ import LeftNav from "../components/leftNavigation";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
+import Seo from '../components/seo';
 
 export const query = graphql`
   query ($language: String!) {
@@ -48,11 +49,15 @@ export default function Template({ data, pageContext }) {
   const { language, t } = useI18next();
 
   const isHomePage = activePost === "home.md";
+  const TITLE = 'Milvus Community';
+  const DESC = 'Join Milvus Community';
+
   const leftNavMenus =
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
 
   return (
     <Layout t={t} showFooter={false}>
+      <Seo title={TITLE} lang={language} description={DESC} />
       <div
         className={clsx("doc-temp-container", {
           [`is-desktop1024`]: desktop1024,

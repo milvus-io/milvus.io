@@ -13,6 +13,7 @@ import { CustomizedContentDialogs } from "../../components/dialog/Dialog";
 import { CustomizedSnackbars } from "../../components/snackBar";
 import { useWindowSize } from "../../http/hooks";
 import Signup from "../../components/signup";
+import Seo from '../../components/seo';
 
 const DEMOS = [
   {
@@ -41,9 +42,13 @@ const DEMOS = [
     lowerCaseName: "chemical",
   },
 ];
+const TITLE =
+  'Milvus Demos';
+const DESC =
+  'With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.';
 
 const DemoPage = () => {
-  const { t } = useI18next();
+  const { language, t } = useI18next();
 
   const [dialogConfig, setDialogConfig] = useState({
     open: false,
@@ -94,11 +99,10 @@ const DemoPage = () => {
 
   return (
     <main className={styles.main}>
-      {
-        // use for seo
-      }
+      {/* use for seo */}
       <h1 style={{ display: "none" }}>Milvus Demos</h1>
       <Layout darkMode={true} t={t}>
+        <Seo title={TITLE} lang={language} description={DESC} />
         <section className={styles.banner}>
           <div className={styles.bannerContent}>
             <h2>

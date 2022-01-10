@@ -9,6 +9,7 @@ import Tags from "../components/tags";
 import BlogCard from "../components/card/BlogCard";
 import dayjs from "dayjs";
 import Share from "../components/share";
+import Seo from '../components/seo';
 
 export default function Template({ data, pageContext }) {
   const {
@@ -49,6 +50,7 @@ export default function Template({ data, pageContext }) {
   };
   return (
     <Layout t={t}>
+      <Seo title={title} lang={language} description={desc} />
       <div
         className={styles.blogImg}
         style={{ backgroundImage: `url("https://${cover}")` }}

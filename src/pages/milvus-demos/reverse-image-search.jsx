@@ -19,7 +19,7 @@ import Loading from "../../components/demoComponents/loading";
 import { useWindowSize } from "../../http/hooks";
 
 const TITLE =
-  "Milvus Reverse Image Search - Open-Source Vector Similarity Application Dem";
+  "Milvus Reverse Image Search - Open-Source Vector Similarity Application Demo";
 const DESC =
   "With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.";
 
@@ -54,7 +54,7 @@ const ImageSearchPage = ({ pageContext }) => {
   const isMobile = ["phone", "tablet"].includes(currentSize);
   const [modalConfig, setModalConfig] = useState({
     open: false,
-    handleCloseModal: () => {},
+    handleCloseModal: () => { },
     component: () => <></>,
   });
 
@@ -182,9 +182,8 @@ const ImageSearchPage = ({ pageContext }) => {
       <main className={styles.root} ref={scrollContainer}>
         <div className={styles.searchPageContainer}>
           <div
-            className={`${styles.contentContainer} ${
-              isShowCode ? "shrink" : ""
-            }`}
+            className={`${styles.contentContainer} ${isShowCode ? "shrink" : ""
+              }`}
           >
             <div>
               <Link to="/milvus-demos" className={styles.backButton}>

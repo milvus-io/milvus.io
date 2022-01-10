@@ -113,15 +113,14 @@ const Code = props => {
           aria-label="basic tabs example"
         >
           <Tab label="Python" {...a11yProps(0)} />
-          <Tab label="Node" {...a11yProps(1)} />
-          <Tab label="Cli" {...a11yProps(2)} />
+          <Tab label="Node.js" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <div className="example-wrapper">
         <div className="code-example">
           <TabPanel value={value} index={0} codeExample={codeExample} />
           <TabPanel value={value} index={1} codeExample={codeExample} />
-          <TabPanel value={value} index={2} codeExample={codeExample} />
+          {/* <TabPanel value={value} index={2} codeExample={codeExample} /> */}
         </div>
         <div className="milvus-feature">
           <div className="shooting_star_container manage-shooting">

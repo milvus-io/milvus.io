@@ -350,7 +350,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
               }}
             >
               <MenuItem>
-                <Link to="/milvus-demos" className={styles.menuLink}>
+                <Link to="/bootcamp" className={styles.menuLink}>
                   {t("v3trans.main.nav.bootcamp")}
                 </Link>
               </MenuItem>

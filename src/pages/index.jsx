@@ -23,6 +23,7 @@ import vivo from "../images/brands/vivo.png";
 import walmart from "../images/brands/walmart.png";
 import xiaomi from "../images/brands/xiaomi.png";
 import CustomIconLink from "../components/customIconLink";
+import Seo from '../components/seo';
 
 const brands = [
   {
@@ -74,9 +75,11 @@ const brands = [
     icon: xiaomi,
   },
 ];
+const DESC =
+  "Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications.";
 
 const IndexPage = () => {
-  const { t } = useI18next();
+  const { language, t } = useI18next();
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
     type: "info",
@@ -108,6 +111,7 @@ const IndexPage = () => {
   return (
     <main className="homepage">
       <Layout darkMode={true} t={t}>
+        <Seo title="Milvus" lang={language} description={DESC} />
         {/* all css about banner in banner.less */}
         <HomeBanner t={t} />
         {/* all these sections about banner in banner.less */}

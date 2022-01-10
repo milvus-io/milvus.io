@@ -12,8 +12,11 @@ import { globalHistory } from "@reach/router";
 import Pagination from "@mui/material/Pagination";
 import Signup from '../components/signup';
 import { CustomizedSnackbars } from "../components/snackBar";
+import Seo from '../components/seo';
 
 const PAGE_SIZE = 6;
+const TITLE = 'MIlvus Blogs';
+const DESC = 'MIlvus Blogs';
 
 const getCurrentPageArray = (list, pageIndex) =>
   list.slice((pageIndex - 1) * PAGE_SIZE, pageIndex * PAGE_SIZE);
@@ -114,6 +117,7 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   return (
     <Layout t={t}>
+      <Seo title={TITLE} lang={language} description={DESC} />
       <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
         {/* screen > 1024  */}
         <section className={`${styles.featuredBlog} `}>

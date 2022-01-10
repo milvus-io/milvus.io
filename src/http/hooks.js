@@ -195,7 +195,7 @@ export function useGetFaq(relatedKey) {
 }
 
 export function useWindowSize() {
-  const [size, setSize] = useState("desktop1024");
+  const [size, setSize] = useState("");
 
   useEffect(() => {
     const onResize = () => {

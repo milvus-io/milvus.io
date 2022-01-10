@@ -54,6 +54,7 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const currentWindowSize = useWindowSize();
+  console.log(`currentWindowSize ${currentWindowSize}`);
   const isMobile = ["phone", "tablet"].includes(currentWindowSize);
   const isPhone = ["phone"].includes(currentWindowSize);
   const desktop1024 = ["desktop1024"].includes(currentWindowSize);
@@ -159,6 +160,7 @@ export default function Template({ data, pageContext }) {
           [`is-mobile`]: isMobile,
           [`is-phone`]: isPhone,
           [`home`]: homeData,
+          [`loading`]: !currentWindowSize,
         })}
       >
         <LeftNav

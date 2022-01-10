@@ -18,8 +18,17 @@ const HomeBanner = () => {
           Open-source, highly scalable, and blazing fast
         </p>
         <div className="btn-group">
-          <Link className="btn-start" to="/docs/v2.0.0/install_standalone-docker.md">Get Started</Link>
-          <a className="btn-watch" href="https://www.youtube.com/watch?v=nQkmgCtVz5k&t=7s" target="_blank">
+          <Link
+            className="btn-start"
+            to="/docs/v2.0.0/install_standalone-docker.md"
+          >
+            Get Started
+          </Link>
+          <a
+            className="btn-watch"
+            href="https://www.youtube.com/watch?v=nQkmgCtVz5k&t=7s"
+            target="_blank"
+          >
             Watch Video
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -566,15 +575,15 @@ const HomeBanner = () => {
           </div>
           <div className="stats-detail">
             <p className="name">Contirbutors</p>
-            <p className="num">150+</p>
+            <p className="num">150</p>
           </div>
           <div className="stats-detail">
             <p className="name">Downloads</p>
-            <p className="num">70M+</p>
+            <p className="num">60M</p>
           </div>
           <div className="stats-detail">
             <p className="name">Customers</p>
-            <p className="num">1000+</p>
+            <p className="num">1500+</p>
           </div>
         </div>
       </div>

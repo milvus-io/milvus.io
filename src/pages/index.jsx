@@ -114,7 +114,7 @@ const IndexPage = () => {
 
         <HomeFeatures t={t} />
         <HomeCode t={t} />
-        <Attu />
+        <Attu t={t} />
 
         <section className={`${styles.community} col-4 col-8 col-12`}>
           <p className={styles.communityTitle}>

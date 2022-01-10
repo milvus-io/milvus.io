@@ -10,6 +10,11 @@
   border: 1px solid @color-grey-03;
   border-radius: 4px;
 
+  @media @phone {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .loading {
     display: none;
   }
@@ -51,6 +56,11 @@
   height: 100%;
 
   color: @color-black;
+
+  @media @phone {
+    font-size: 18px;
+    line-height: 24px;
+  }
 }
 
 .desc {

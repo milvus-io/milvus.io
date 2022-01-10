@@ -268,7 +268,12 @@
           {
             "title": "图像视频检索",
             "desc": "深度学习模型最开始就是用来对图像、视频等进行处理，通过训练可以精准的提取图片、视频中的特征从而对图片、视频进行分类，打标签，以图搜图，以图搜视频等等。Milvus凭借其出色的性能和数据管理能力，可以支持各种深度学习模型，实现对海量图片和视频的高性能分析检索能力。",
-            "list": ["图片搜索", "图片去重", "视频去重", "以商品搜商品"],
+            "list": [
+              "图片搜索",
+              "图片去重",
+              "视频去重",
+              "以商品搜商品"
+            ],
             "img": "cv",
             "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/pic_search/README.md",
             "href": "https://zilliz.com/milvus-demos/reverse-image-search?lan=cn"
@@ -276,7 +281,11 @@
           {
             "title": "智能问答机器人",
             "desc": "传统的问答机器人大都是基于规则的知识图谱方式实现，这种方式需要对大量的语料进行分类整理。而基于深度学习模型的实现方式可以彻底摆脱对语料的预处理，只需提供问题和答案的对应关系，通过自然语言处理的语义分析模型对问题库提取语义特征向量存入Milvus中，然后对提问的问题也进行语义特征向量提取，通过对向量特征的匹配就可以实现自动回复，轻松实现智能客服等应用。",
-            "list": ["语义提取", "个性化推荐", "语料分析和推荐"],
+            "list": [
+              "语义提取",
+              "个性化推荐",
+              "语料分析和推荐"
+            ],
             "img": "nlp",
             "titleHref": "https://github.com/milvus-io/bootcamp/tree/master/solutions/QA_System",
             "href": "http://40.117.75.127:8003/"
@@ -284,7 +293,11 @@
           {
             "title": "赋能传统向量计算",
             "desc": "在传统的数据处理领域也存在大量向量计算的场景，使用传统的计算方式需要消耗大量的算力而Milvus凭借先进的算法可以在同等算力资源下将向量数据处理能力提高至少两个数量级。",
-            "list": ["分子结构相似性分析", "分子药理分析", "药物分子虚拟筛选"],
+            "list": [
+              "分子结构相似性分析",
+              "分子药理分析",
+              "药物分子虚拟筛选"
+            ],
             "img": "molsearch",
             "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/solutions/mols_search/README.md",
             "href": "http://40.117.75.127:8002/"
@@ -385,7 +398,11 @@
     },
     "banner": {
       "entry": "Hacktoberfest is here! Dive into open source with Milvus. Join now",
-      "title": ["Cloud-Native.", "Highly Scalable.", "Blazing Fast."],
+      "title": [
+        "Cloud-Native.",
+        "Highly Scalable.",
+        "Blazing Fast."
+      ],
       "subTitle": "Milvus",
       "text": "Open-source vector database for unstructured data",
       "startBtn": {
@@ -581,7 +598,11 @@
     },
     "fifthSection": {
       "title": "Issues",
-      "listHeader": ["Component", "Description", "Issues / Guidelines"],
+      "listHeader": [
+        "Component",
+        "Description",
+        "Issues / Guidelines"
+      ],
       "list": [
         {
           "cate": "Milvus Code",
@@ -671,6 +692,34 @@
   },
   "v3trans": {
     "desc": "所有第三版翻译放在此目录下",
+    "home": {
+      "banner": {
+        "title": "为可扩展的相似性搜索构建的向量数据库",
+        "desc": "开源、高度可扩展且速度极快",
+        "getstart": "快速开始",
+        "watch": "浏览视频",
+        "star": "Github 星数",
+        "contirbutor": "贡献者",
+        "downloads": "下载量",
+        "customers": "用户"
+      },
+      "feature": {
+        "title": "推动您的机器学习部署",
+        "desc": "存储、索引和管理由深度神经网络和其他机器学习 (ML) 模型生成的大量向量。",
+        "cloud": "云原生",
+        "cloud-desc": "云原生架构有助于实现突破性的效率和敏捷性。",
+        "search": "向量相似性搜索",
+        "search-desc": "矢量搜索与属性过滤相结合，以利用各种数据类型的协同作用",
+        "devfirst": "开发者有限",
+        "devfirst-desc": "Milvus 为您的机器学习应用提供全面的多语言 SDK。"
+      },
+      "code": {
+        "manage": "管理大量向量数据",
+        "search": "向量相似性搜索",
+        "index": "六大索引共同构建",
+        "learn": "了解更多"
+      }
+    },
     "docs": {
       "homeTitle": "首页",
       "blogTitle": "博客",
@@ -743,6 +792,10 @@
       "signup": "注册以收到我们的简讯",
       "montyly": "每月收到精心挑选的数据科技发展动态。",
       "subscribe": "注册"
+    },
+    "copyBtn": {
+      "copyLabel": "复制",
+      "copiedLabel": "已复制!"
     }
   }
 }

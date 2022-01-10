@@ -1,6 +1,8 @@
 import React from "react";
 import "./banner.less";
-const HomeBanner = () => {
+import { Link } from "gatsby-plugin-react-i18next";
+const HomeBanner = props => {
+  const { t = v => v } = props;
   return (
     <div className="banner">
       <div className="shooting_star_container1">
@@ -10,16 +12,22 @@ const HomeBanner = () => {
         <div className="shooting_star"></div>
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
-        <p className="title">
-          Vector database built for scalable similarity search
-        </p>
-        <p className="subtitle">
-          Open-source, highly scalable, and blazing fast
-        </p>
+        <p className="title">{t("v3trans.home.banner.title")}</p>
+        <p className="subtitle">{t("v3trans.home.banner.desc")}</p>
         <div className="btn-group">
-          <button className="btn-start">Get Started</button>
-          <button className="btn-watch">
-            Watch Video
+          <Link
+            className="btn-start"
+            to="/docs/v2.0.0/install_standalone-docker.md"
+          >
+            {t("v3trans.home.banner.getstart")}
+          </Link>
+          <a
+            className="btn-watch"
+            href="https://www.youtube.com/watch?v=nQkmgCtVz5k&t=7s"
+            target="_blank"
+          >
+            {t("v3trans.home.banner.watch")}
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -32,7 +40,7 @@ const HomeBanner = () => {
                 fill="white"
               ></path>
             </svg>
-          </button>
+          </a>
         </div>
         <div className="bucket bucket-container ">
           <svg
@@ -560,7 +568,7 @@ const HomeBanner = () => {
         </div>
         <div className="stats col-3 col-8">
           <div className="stats-detail">
-            <p className="name">Stars at Github</p>
+            <p className="name"> {t("v3trans.home.banner.getstart")}</p>
             <p className="num">9k+</p>
           </div>
           <div className="stats-detail">

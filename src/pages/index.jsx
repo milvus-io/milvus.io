@@ -8,6 +8,7 @@ import Signup from "../components/signup";
 import HomeBanner from "../components/home/banner";
 import HomeFeatures from "../components/home/features";
 import HomeCode from "../components/home/code";
+import Attu from "../components/home/attu";
 import { CustomizedSnackbars } from "../components/snackBar";
 import cmb from "../images/brands/cmb.png";
 import ebay from "../images/brands/ebay.png";
@@ -108,11 +109,12 @@ const IndexPage = () => {
     <main className="homepage">
       <Layout darkMode={true} t={t}>
         {/* all css about banner in banner.less */}
-        <HomeBanner />
+        <HomeBanner t={t} />
         {/* all these sections about banner in banner.less */}
 
-        <HomeFeatures />
-        <HomeCode />
+        <HomeFeatures t={t} />
+        <HomeCode t={t} />
+        <Attu />
 
         <section className={`${styles.community} col-4 col-8 col-12`}>
           <p className={styles.communityTitle}>

@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import { ManageVectorCodes, SearchCodes, IndexCodes } from "./code-example";
 import clsx from "clsx";
 import HightLight from "react-highlight";
+import { Link } from "gatsby-plugin-react-i18next";
+
 function TabPanel(props) {
   const { children, value, index, codeExample, ...other } = props;
 
@@ -30,12 +32,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <HightLight className={codeType}>
-            {`
-from pymilvus import Collection
-              `}
-          </HightLight>
+        <Box sx={{ p: 3 }} style={{ paddingTop: 0 }}>
+          <HightLight className={codeType}>{codeExample[codeType]}</HightLight>
           {/* <pre className={codeType}>
             <code></code>
           </pre> */}
@@ -60,7 +58,8 @@ const EXAMPLES = {
 let timeId = null;
 let keyIndex = 0;
 
-const Code = () => {
+const Code = props => {
+  const { t = () => {} } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.manage);
 
@@ -151,22 +150,27 @@ const Code = () => {
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.manage)}
           >
-            Manage massive vectors
+            {t("v3trans.home.code.manage")}
           </p>
           <p
             className={clsx({ active: activeExample === EXAMPLES.search })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.search)}
           >
-            Vector similarity search
+            {t("v3trans.home.code.search")}
           </p>
           <p
             className={clsx({ active: activeExample === EXAMPLES.index })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.index)}
           >
-            Build with 6 index
+            {t("v3trans.home.code.index")}
           </p>
+          <Link to="/docs">
+            <button className="learn-more">
+              {t("v3trans.home.code.learn")}
+            </button>
+          </Link>
         </div>
       </div>
     </section>

@@ -3,15 +3,22 @@
 .header {
   align-items: center;
   background-color: transparent;
-  height: 120px;
-  padding: 0 40px;
+  // make header height = 80px
+  padding: 11px 40px;
   position: absolute;
   top: 0;
   width: 100%;
   z-index: 100;
   .spaceBetween;
 
-  @media (max-width: 1240px) {
+  @media (max-width: 1440px) {
+    padding: 19px 40px;
+  }
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
+  @media @phone {
     display: none;
   }
 
@@ -46,6 +53,32 @@
       background: @color-primary;
     }
   }
+
+  .leftSection {
+    .flexstart;
+    align-items: center;
+
+    @media (max-width: 1440px) {
+      li {
+        margin-left: 24px;
+      }
+    }
+  }
+
+  .rightSection {
+    .flexend;
+    align-items: center;
+
+    .startBtn {
+      width: fit-content;
+      position: static;
+      margin-left: 34px;
+
+      @media (max-width: 1240px) {
+        margin-left: 16px;
+      }
+    }
+  }
 }
 
 .actionBar {
@@ -53,21 +86,15 @@
   align-items: center;
   flex-wrap: wrap;
 
-  @media @phone, @tablet, @desktop1024 {
-    .spaceBetween;
-    margin: 20px 0;
-  }
+  // @media @phone, @tablet, @desktop1024 {
+  //   .spaceBetween;
+  //   margin: 20px 0;
+  // }
 
   .langSelect {
     background: transparent;
     border: 0;
     cursor: pointer;
-    margin-left: 15px;
-    margin-right: 35px;
-
-    @media @phone, @tablet, @desktop1024 {
-      margin: 20px 0;
-    }
 
     & > div {
       padding-right: 14px;
@@ -137,7 +164,7 @@
 
 .mobileHead {
   display: none;
-  padding: 35px 0;
+  padding: 25px 0;
 
   position: sticky;
   top: 0;
@@ -145,13 +172,15 @@
   width: 100%;
   z-index: 100;
 
-  @media (max-width: 1240px) {
+  @media (max-width: 1200px) {
     display: flex;
     justify-content: center;
   }
 
   @media @phone {
     padding: 15px 0;
+    display: flex;
+    justify-content: center;
   }
 
   .global {

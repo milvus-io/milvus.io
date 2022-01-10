@@ -253,7 +253,7 @@ const DOC_LANG_FOLDERS = ["/en/", "/zh-CN/"];
 /*
  * utils to support generate html page from markdown or json dynamically
  */
-const findVersion = (str) => {
+const findVersion = str => {
   // version: v.1.0.0 | v0.x
   const regx = /versions\/master\/([v\dx\.]*)/;
   const match = str.match(regx);
@@ -266,7 +266,7 @@ const findVersion = (str) => {
     : "";
 };
 
-const findLang = (path) => {
+const findLang = path => {
   return DOC_LANG_FOLDERS.reduce((pre, cur) => {
     if (path.includes(cur)) {
       pre = cur === "/en/" ? "en" : "cn";
@@ -275,12 +275,12 @@ const findLang = (path) => {
   }, "");
 };
 
-const checkIsblog = (path) => path.includes("blog");
+const checkIsblog = path => path.includes("blog");
 
-const checkIsBenchmark = (path) => path.includes("benchmarks");
+const checkIsBenchmark = path => path.includes("benchmarks");
 
 const getDefaultLang = () =>
-  Object.keys(locales).find((lang) => locales[lang].default);
+  Object.keys(locales).find(lang => locales[lang].default);
 
 const getCommunityPath = (fileId, fileLang) => {
   const defaultLang = getDefaultLang();
@@ -326,8 +326,8 @@ const generatePath = (
   return needLocal ? `${localizedPath}${id}` : `/${id}`;
 };
 
-const getVersionsWithHome = (homeData) => {
-  return homeData.map((data) => data.version);
+const getVersionsWithHome = homeData => {
+  return homeData.map(data => data.version);
 };
 
 // generate default blog cover according to blog's date
@@ -361,7 +361,7 @@ const getNormalVersionHomePath = (version, locale, path) => {
  * @param {array} edges allFile.edges from graphql query response
  * @returns {array} {nodes} for all menus in doc page
  */
-const generateAllMenus = (edges) => {
+const generateAllMenus = edges => {
   return edges
     .filter(({ node: { childMenu } }) => childMenu !== null)
     .map(({ node: { absolutePath, childMenu } }) => {
@@ -385,7 +385,7 @@ const generateAllMenus = (edges) => {
  * @param {array} edges allFile.edges from graphql query response
  * @returns {array} {nodes} for home data in doc page
  */
-const generateHomeData = (edges) => {
+const generateHomeData = edges => {
   return edges
     .filter(({ node: { childDocHome } }) => childDocHome !== null)
     .map(({ node: { absolutePath, childDocHome } }) => {
@@ -407,7 +407,7 @@ const generateHomeData = (edges) => {
  * @param {*} edges allMarkdownRemark.edges from graphql query response
  * @returns {array} {nodes} for md file with version
  */
-const filterMdWithVersion = (edges) => {
+const filterMdWithVersion = edges => {
   return edges.filter(({ node: { fileAbsolutePath, frontmatter } }) => {
     /**
      * Filter correct md file by version.
@@ -415,7 +415,7 @@ const filterMdWithVersion = (edges) => {
      * @param {string} path File absolute path.
      * @returns {boolean} If this md should be dropped or not.
      */
-    const filterVersion = (path) => {
+    const filterVersion = path => {
       const mdVersion = findVersion(path);
       if (mdVersion?.startsWith("v0.") && !mdVersion?.startsWith("v0.x"))
         return false;
@@ -435,7 +435,7 @@ const filterMdWithVersion = (edges) => {
   });
 };
 
-const filterMDwidthBlog = (edges) => {
+const filterMDwidthBlog = edges => {
   return edges.filter(({ node }) => {
     const isBlog = node.fileAbsolutePath.includes(
       "/blogs/versions/master/blog"
@@ -447,8 +447,8 @@ const filterMDwidthBlog = (edges) => {
 };
 
 // converte home.json to md, filter all files and it's corresponding version
-const filterHomeMdWithVersion = (edges) => {
-  const filterVersion = (path) => {
+const filterHomeMdWithVersion = edges => {
+  const filterVersion = path => {
     const mdVersion = findVersion(path);
     if (mdVersion?.startsWith("v0.") && !mdVersion?.startsWith("v0.x"))
       return false;
@@ -480,7 +480,7 @@ const filterHomeMdWithVersion = (edges) => {
  * @param {array} edges allMarkdownRemark.edges from graphql query response
  * @returns {array} {nodes} for community md file
  */
-const filterCommunityMd = (edges) => {
+const filterCommunityMd = edges => {
   return edges.filter(
     ({ node: { fileAbsolutePath, frontmatter } }) =>
       fileAbsolutePath.includes("communityArticles") && frontmatter.id
@@ -493,7 +493,7 @@ const filterCommunityMd = (edges) => {
  * @param {*} edges allFile.edges from graphql query response
  * @returns {array} {nodes} for community menus
  */
-const filterCommunityMenus = (edges) => {
+const filterCommunityMenus = edges => {
   return edges
     .filter(
       ({ node: { childCommunity } }) =>
@@ -515,21 +515,21 @@ const filterCommunityMenus = (edges) => {
  * @param {*} edges allMarkdownRemark.edges from graphql query response
  * @returns  {array} {nodes} for community home
  */
-const filterCommunityHome = (edges) => {
+const filterCommunityHome = edges => {
   return edges.filter(
     ({ node: { fileAbsolutePath, frontmatter } }) =>
       frontmatter.id && fileAbsolutePath.includes("communityHome")
   );
 };
 
-const filterBootcampMd = (edges) => {
+const filterBootcampMd = edges => {
   return edges.filter(
     ({ node: { fileAbsolutePath, frontmatter } }) =>
       fileAbsolutePath.includes("bootcampArticles") && frontmatter.id
   );
 };
 
-const filterBootcampMenus = (edges) => {
+const filterBootcampMenus = edges => {
   return edges
     .filter(
       ({ node: { childBootcamp } }) =>
@@ -545,7 +545,7 @@ const filterBootcampMenus = (edges) => {
     });
 };
 
-const filterBootcampHome = (edges) => {
+const filterBootcampHome = edges => {
   return edges
     .filter(
       ({ node: { childBootcamp, absolutePath } }) =>
@@ -590,12 +590,12 @@ const handleBootcampData = (allMarkdownRemark, allFile) => {
  * @param {*} rootDirName root path for search.json location
  */
 const initGlobalSearch = (markdown, newestVersion, rootDirName) => {
-  const flatten = (arr) =>
+  const flatten = arr =>
     arr
       .map(({ node: { frontmatter, fileAbsolutePath, headings } }) => {
         const fileLang = findLang(fileAbsolutePath);
         const version = findVersion(fileAbsolutePath) || "master";
-        const headingVals = headings.map((v) => v.value);
+        const headingVals = headings.map(v => v.value);
         const isBlog = checkIsblog(fileAbsolutePath);
         const isBenchmark = checkIsBenchmark(fileAbsolutePath);
         const keywords = frontmatter.keywords
@@ -620,13 +620,13 @@ const initGlobalSearch = (markdown, newestVersion, rootDirName) => {
           values: [...headingVals, frontmatter.id, ...keywords],
         };
       })
-      .filter((data) => data.version === newestVersion);
+      .filter(data => data.version === newestVersion);
 
   const fileData = flatten(markdown);
   fs.writeFile(
     `${rootDirName}/src/search.json`,
     JSON.stringify(fileData),
-    (err) => {
+    err => {
       if (err) throw err;
       console.log("It's saved!");
     }
@@ -662,7 +662,7 @@ const generateCommunityPages = (
         locale: fileLang,
         fileAbsolutePath,
         html,
-        headings: node.headings.filter((v) => v.depth < 4 && v.depth > 1),
+        headings: node.headings.filter(v => v.depth < 4 && v.depth > 1),
         menuList: communityMenu,
         homeData: null,
         activePost: fileId,
@@ -694,7 +694,7 @@ const generateBootcampPages = (
         locale: fileLang,
         fileAbsolutePath,
         html,
-        headings: node.headings.filter((v) => v.depth < 4 && v.depth > 1),
+        headings: node.headings.filter(v => v.depth < 4 && v.depth > 1),
         menuList: bootcampMenu,
         bootcampData: null,
         activePost: fileId,
@@ -777,12 +777,12 @@ const generateTitle = ({
    * @param {string} s String will be capitalized.
    * @returns {string} Capitalized string.
    */
-  const capitalize = (s) => {
+  const capitalize = s => {
     if (typeof s !== "string") return "";
     const result = s.split("/").pop();
     const resultList = result
       .split(" ")
-      .map((i) => i.charAt(0).toUpperCase() + i.slice(1));
+      .map(i => i.charAt(0).toUpperCase() + i.slice(1));
     return resultList.join(" ");
   };
   if (title) return capitalize(title);
@@ -820,7 +820,7 @@ const generateTitle = ({
  * @param {array} nodes api menus nodes from allApIfile.nodes
  * @returns {array} filtered and formatted api menus
  */
-const generateApiMenus = (nodes) => {
+const generateApiMenus = nodes => {
   /**
    * Calculate the order of menu item. 0 is default.
    * @param {object} param0 Data to calculate item order.
@@ -906,6 +906,9 @@ const generateApiReferencePages = (
     versionsWithHome,
   }
 ) => {
+  const filteredVersions = Array.from(versions).filter(
+    i => i && i !== "master"
+  );
   nodes.forEach(
     ({ abspath, doc, name, version, category, docVersion, isDirectory }) => {
       // Should ignore if the node is a directory.
@@ -928,7 +931,7 @@ const generateApiReferencePages = (
           allMenus,
           version,
           docVersion,
-          docVersions: Array.from(versions),
+          docVersions: filteredVersions,
           category,
           newestVersion,
           isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
@@ -947,7 +950,7 @@ const generateApiReferencePages = (
           allMenus,
           version,
           docVersion,
-          docVersions: Array.from(versions),
+          docVersions: filteredVersions,
           category,
           newestVersion,
           isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
@@ -996,16 +999,16 @@ const generateDocHomeWidthMd = (
     };
   });
 
-  const getTwoNewestBlog = (lang) => {
+  const getTwoNewestBlog = lang => {
     return list
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter((i) => i.fileLang === lang)
+      .filter(i => i.fileLang === lang)
       .slice(0, 2);
   };
 
   const formatDocHomeHtml = (html, homePath, version) => {
     const regex = /\<a (\S*)\>/g;
-    let newHtml = html.replace(regex, (link) => {
+    let newHtml = html.replace(regex, link => {
       const [start, originPath, end] = link.split('"');
       const formatPath =
         originPath.charAt(0) === "#" ||
@@ -1128,7 +1131,7 @@ const generateAllDocPages = (
           versions: Array.from(versions),
           newestVersion,
           old: fileId,
-          headings: node.headings.filter((v) => v.depth < 4 && v.depth >= 1),
+          headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
           fileAbsolutePath,
           localizedPath,
           isBlog,
@@ -1153,7 +1156,7 @@ const generateAllDocPages = (
         version: isBenchmark ? newestVersion : version,
         versions: Array.from(versions),
         old: fileId,
-        headings: node.headings.filter((v) => v.depth < 4 && v.depth >= 1),
+        headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
         fileAbsolutePath,
         localizedPath,
         newestVersion,
@@ -1176,9 +1179,9 @@ const generateBlogArticlePage = (
   createPage,
   { nodes: blogMD, template: blogTemplate, listTemplate: blogListTemplate }
 ) => {
-  const generateTags = (tag) => {
+  const generateTags = tag => {
     if (!tag) return [];
-    return tag.split(",").map((i) => i && i.trim() && i.trim().toLowerCase());
+    return tag.split(",").map(i => i && i.trim() && i.trim().toLowerCase());
   };
   // get blogs list data, create blogs list page
   const list = blogMD.map(({ node }) => {
@@ -1208,7 +1211,7 @@ const generateBlogArticlePage = (
   const filterAndSortBlogs = (list, lang) => {
     return list
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .filter((i) => i.fileLang === lang);
+      .filter(i => i.fileLang === lang);
   };
   const allBlogsList = {
     cn: filterAndSortBlogs(list, "cn"),

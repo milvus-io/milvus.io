@@ -134,7 +134,13 @@ export default function Template({ data, pageContext }) {
       ? `Milvus documentation`
       : `${headings[0] && headings[0].value}`;
 
-  useCodeCopy(language, hljsCfg);
+  useCodeCopy(
+    {
+      copy: t("v3trans.copyBtn.copyLabel"),
+      copied: t("v3trans.copyBtn.copiedLabel"),
+    },
+    hljsCfg
+  );
   useMultipleCodeFilter();
   useGenAnchor(version, editPath);
 

@@ -42,7 +42,10 @@ const BootcampTemplate = ({ data, pageContext }) => {
 
   // add hooks used by doc template
   useFilter();
-  useCodeCopy(locale);
+  useCodeCopy({
+    copy: t("v3trans.copyBtn.copyLabel"),
+    copied: t("v3trans.copyBtn.copiedLabel"),
+  });
   useFormatAnchor();
 
   const [hash, setHash] = useState(null);
@@ -81,7 +84,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
     }, []);
 
   const generateAnchorMenu = (headings, className) => {
-    return headings.map((v) => {
+    return headings.map(v => {
       const normalVal = v.value.replace(/[.｜,｜/｜'｜?｜？｜、|，]/g, "");
       const anchor = normalVal.split(" ").join("-");
       let childDom = null;
@@ -131,7 +134,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
               <div className="container">
                 <h1 className="title">{section1.title}</h1>
                 <ul className="solutionsWrapper">
-                  {section1.content.map((item) => {
+                  {section1.content.map(item => {
                     const { title, link } = item;
                     return (
                       <li key={title}>
@@ -148,7 +151,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
               <div className="container">
                 <h1 className="title">{section3.title}</h1>
                 <ul className="solutionsWrapper">
-                  {section3.content.map((item) => {
+                  {section3.content.map(item => {
                     const { title, link, iconType, desc, liveDemo } = item;
                     return (
                       <li key={title}>
@@ -168,7 +171,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
               <div className="container">
                 <h1 className="title">{section4.title}</h1>
                 <ul className="solutionsWrapper">
-                  {section4.content.map((item) => {
+                  {section4.content.map(item => {
                     const { title, link, desc } = item;
                     return (
                       <li key={title}>

@@ -66,7 +66,13 @@ export default function Template({ data, pageContext }) {
     window?.localStorage?.setItem("docVersion", ver);
   }, [docVersion]);
 
-  useCodeCopy(language, hljsCfg);
+  useCodeCopy(
+    {
+      copy: t("v3trans.copyBtn.copyLabel"),
+      copied: t("v3trans.copyBtn.copiedLabel"),
+    },
+    hljsCfg
+  );
 
   const apiReferenceData = {
     projName: category,
@@ -115,7 +121,13 @@ export default function Template({ data, pageContext }) {
 
   return (
     <Layout t={t} showFooter={false}>
-      <div className={clsx("doc-temp-container", { [`is-mobile`]: isMobile })}>
+      <div
+        className={clsx("doc-temp-container", {
+          [`is-desktop1024`]: desktop1024,
+          [`is-mobile`]: isMobile,
+          [`is-phone`]: isPhone,
+        })}
+      >
         <LeftNav
           homeUrl={leftNavHomeUrl}
           homeLabel={"Docs Home"}

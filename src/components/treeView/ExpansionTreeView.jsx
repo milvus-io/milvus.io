@@ -6,6 +6,8 @@ import TreeItem from "@mui/lab/TreeItem";
 import CustomIconLink from "../customIconLink";
 import "./ExpansionTreeView.less";
 
+const SCROLL_TOP = '@@scrollTop';
+
 const ExpansionTreeView = (props) => {
   // https://mui.com/components/tree-view/
   // itemList = [ { id='', children = [], label='', link='' }, ...]
@@ -38,10 +40,41 @@ const ExpansionTreeView = (props) => {
     return ids;
   };
 
+  const handleClickMenuLink = (e) => {
+    const menuTree = document.querySelector('.mv3-tree-view');
+    if (e.target.nodeName === 'A') {
+      window.sessionStorage.setItem(SCROLL_TOP, menuTree.scrollTop);
+    }
+  };
+
   useEffect(() => {
     const initIds = filterExpandedItems(currentMdId, itemList);
     setExpandedIds(initIds);
   }, [itemList, currentMdId]);
+
+  useEffect(() => {
+    const menuTree = document.querySelector('.mv3-tree-view');
+    const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
+
+    const observer = new MutationObserver((mutationsList, observer) => {
+      if (menuTree) {
+        menuTree.scrollTo({
+          top: scrollTop,
+          behavior: 'smooth',
+        });
+      } else {
+        observer.disconnect();
+      }
+    });
+    observer.observe(menuTree, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    return () => { observer.disconnect(); };
+  }, []);
+
 
   const handleClickParentTree = (id) => {
     const currentSelectedIds = [...expandedIds].reverse();
@@ -110,6 +143,7 @@ const ExpansionTreeView = (props) => {
       selected={currentMdId === "home" ? `home-${homeLabel}` : currentMdId}
       expanded={expandedIds}
       {...others}
+      onClick={handleClickMenuLink}
     >
       {homeLabel && homeUrl && (
         <TreeItem

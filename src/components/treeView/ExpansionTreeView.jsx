@@ -6,7 +6,7 @@ import TreeItem from "@mui/lab/TreeItem";
 import CustomIconLink from "../customIconLink";
 import "./ExpansionTreeView.less";
 
-const SCROLL_TOP = '@@scrollTop';
+const SCROLL_TOP = '@@scroll|menu';
 
 const ExpansionTreeView = (props) => {
   // https://mui.com/components/tree-view/
@@ -40,11 +40,9 @@ const ExpansionTreeView = (props) => {
     return ids;
   };
 
-  const handleClickMenuLink = (e) => {
+  const handleClickMenuLink = () => {
     const menuTree = document.querySelector('.mv3-tree-view');
-    if (e.target.nodeName === 'A') {
-      window.sessionStorage.setItem(SCROLL_TOP, menuTree.scrollTop);
-    }
+    window.sessionStorage.setItem(SCROLL_TOP, menuTree.scrollTop);
   };
 
   useEffect(() => {
@@ -56,23 +54,16 @@ const ExpansionTreeView = (props) => {
     const menuTree = document.querySelector('.mv3-tree-view');
     const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
 
-    const observer = new MutationObserver((mutationsList, observer) => {
+    // mutationObserver can't be disconnected,it leads to container scrolls as long as menu item be clicked
+    // todo: find another way to replace setTimeout
+    setTimeout(() => {
       if (menuTree) {
         menuTree.scrollTo({
           top: scrollTop,
           behavior: 'smooth',
         });
-      } else {
-        observer.disconnect();
       }
     });
-    observer.observe(menuTree, {
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
-
-    return () => { observer.disconnect(); };
   }, []);
 
 
@@ -131,7 +122,7 @@ const ExpansionTreeView = (props) => {
             key={id}
             className={itemClassName}
             nodeId={id}
-            label={link ? generateLink(link, label, linkClassName) : label}
+            label={link ? generateLink(link, label, handleClickMenuLink, linkClassName) : label}
           />
         )}
       </>

@@ -148,8 +148,6 @@ let gatsbyConfigs = {
               quality: 100,
               backgroundColor: "transparent",
               maxWidth: 1000,
-              wrapperStyle: fluidResult =>
-                `flex:${_.round(fluidResult.aspectRatio, 2)};`,
             },
           },
           {

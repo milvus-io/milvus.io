@@ -301,7 +301,7 @@ if (process.env.NODE_ENV == "development") {
             },
             {
               family: "Inter",
-              variants: ["300", "400", "500"],
+              variants: ["300", "400", "500", "700"],
               //subsets: ['latin']
               //text: 'Hello'
               //fontDisplay: 'swap',

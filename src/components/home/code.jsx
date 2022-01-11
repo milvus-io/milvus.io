@@ -112,8 +112,8 @@ const Code = props => {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Python" {...a11yProps(0)} />
-          <Tab label="Node.js" {...a11yProps(1)} />
+          <Tab disableRipple label="Python" {...a11yProps(0)} />
+          <Tab disableRipple label="Node.js" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <div className="example-wrapper">

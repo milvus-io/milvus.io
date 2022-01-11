@@ -34,7 +34,7 @@
   .featuredBlog {
     display: flex;
     justify-content: space-between;
-
+    gap: 160px;
     @media @phone, @tablet {
       display: none;
     }
@@ -44,20 +44,17 @@
       align-items: center;
       overflow: hidden;
       height: 300px;
+      width: 460px;
 
       img {
         width: 100%;
         height: 100%;
         border-radius: 6px;
       }
-
-      @media @desktop1920 {
-        width: calc((100% - 340px) / 18 * 8 + 140px);
-      }
     }
 
     .featuredBlogContent {
-      margin-left: 158px;
+      flex: 1;
 
       @media @desktop1024 {
         margin-left: 79px;
@@ -80,6 +77,7 @@
   }
   .mobileFeatured {
     display: none;
+
     @media @phone, @tablet {
       display: block;
     }
@@ -106,13 +104,14 @@
       align-items: center;
       flex-wrap: wrap;
       margin-bottom: 40px;
-      gap: 34px;
+      gap: 14px;
 
-      li:hover {
+      li {
+        padding: 11px 20px;
         cursor: pointer;
       }
+
       .active {
-        padding: 11px 20px;
         background: #eff9fe;
         border-radius: 100px;
         color: @primary-color;
@@ -143,6 +142,29 @@
       display: flex;
       justify-content: center;
       margin: 100px auto 120px auto;
+    }
+    .cardItem {
+      position: absolute;
+      top: -1000px;
+      opacity: 0;
+    }
+    .fadeInup {
+      position: relative;
+      top: 0;
+      animation: fadeInUp 0.3s ease-out;
+      animation-fill-mode: both;
+    }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      transform: translate3d(0, 4rem, 0);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
     }
   }
 }

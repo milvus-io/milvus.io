@@ -14,18 +14,16 @@ import Signup from "../components/signup";
 import { CustomizedSnackbars } from "../components/snackBar";
 import Seo from "../components/seo";
 
-const PAGE_SIZE = 18;
+const SCROLL_SIZE = 6;
 const TITLE = "MIlvus Blogs";
 const DESC = "MIlvus Blogs";
-
-const getCurrentPageArray = (list, pageIndex) =>
-  list.slice((pageIndex - 1) * PAGE_SIZE, pageIndex * PAGE_SIZE);
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { blogList } = pageContext;
   const { language, t, navigate, originalPath } = useI18next();
   const [currentTag, setCurrentTag] = useState("all");
-  const [pageIndex, setPageIndex] = useState(1);
+  const [scrollIndex, setScrollIndex] = useState(1);
+
   const featuredBlog = useMemo(() => blogList[0], [blogList]);
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
@@ -62,57 +60,59 @@ const BlogTemplate = ({ data, pageContext }) => {
     return Object.keys(resObj);
   }, [blogList]);
 
-  const { renderBlogList, total } = useMemo(() => {
-    if (currentTag === "all")
-      return {
-        total: Math.ceil(blogList.length / PAGE_SIZE),
-        renderBlogList: getCurrentPageArray(blogList, pageIndex),
-      };
-    const list = blogList.filter(v => v.tags.includes(currentTag));
-    return {
-      total: Math.ceil(list.length / PAGE_SIZE),
-      renderBlogList: getCurrentPageArray(list, pageIndex),
+  const filteredBlogs = useMemo(() => {
+    return currentTag === "all"
+      ? blogList
+      : blogList.filter(v => v.tags.includes(currentTag));
+  }, [currentTag, blogList]);
+
+  useEffect(() => {
+    const FOOT_HEIGHT = 675;
+    const FOOT_DISTANCE = 80;
+    const cb = e => {
+      // 浏览器可见区域高度为：
+      const viewHeight = document.documentElement.clientHeight;
+      // 窗口滚动条高度
+      const scrollHeight = document.documentElement.scrollTop;
+      // 文档内容实际高度：
+      const contentHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      );
+      const scrolllBtmHeight = contentHeight - scrollHeight - viewHeight;
+      const maxScrollIndex = Math.ceil(filteredBlogs.length / SCROLL_SIZE);
+      if (scrolllBtmHeight < FOOT_HEIGHT + FOOT_DISTANCE) {
+        console.log("---set---", scrollIndex);
+        setScrollIndex(v => (v < maxScrollIndex ? (v += 1) : v));
+      }
     };
-  }, [currentTag, blogList, pageIndex]);
+    window.addEventListener("scroll", cb);
+    return () => {
+      window.removeEventListener("scroll", cb);
+    };
+  }, [filteredBlogs, scrollIndex]);
 
   const filterByTag = useCallback(
     tag => {
       setCurrentTag(tag);
-      setPageIndex(1);
     },
     [blogList]
   );
 
   const handleFilter = useCallback(
     (tag, isRestore = true) => {
-      navigate(`${originalPath}?page=1#${tag}`);
+      navigate(`${originalPath}?#${tag}`);
       isRestore && window.sessionStorage.setItem(FILTER_TAG, tag);
       filterByTag(tag);
     },
     [filterByTag]
   );
 
-  const handlePagination = useCallback(
-    (e, page) => {
-      window.history.pushState(null, null, `?page=${page}#${currentTag}`);
-      window.sessionStorage.setItem(PAGE_INDEX, page);
-      setPageIndex(page);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    },
-    [currentTag]
-  );
-
   useEffect(() => {
-    const { search, hash } = globalHistory.location;
-
-    const pageIdx = search.replace(/\?page=/g, "") || 1;
+    const { hash } = globalHistory.location;
     const tag = hash.replace(/#/g, "") || "all";
 
     setCurrentTag(tag);
-    setPageIndex(parseInt(pageIdx));
   }, []);
 
   return (
@@ -154,11 +154,23 @@ const BlogTemplate = ({ data, pageContext }) => {
           />
 
           <ul className={styles.blogCards}>
-            {renderBlogList.map((v, index) => {
+            {filteredBlogs.map((v, index) => {
               const { desc, cover, date, tags, title, id } = v;
               return (
-                <li key={index} className={styles.blogcard}>
+                <li
+                  key={index}
+                  className={`${styles.blogcard} ${
+                    index < SCROLL_SIZE * scrollIndex
+                      ? styles.fadeInup
+                      : styles.cardItem
+                  }`}
+                >
                   <BlogCard
+                    className={`${
+                      index < SCROLL_SIZE * scrollIndex
+                        ? styles.fadeInup
+                        : styles.cardItem
+                    }`}
                     locale={language}
                     title={title}
                     date={date}
@@ -171,19 +183,6 @@ const BlogTemplate = ({ data, pageContext }) => {
               );
             })}
           </ul>
-          {/* <Pagination
-          total={total}
-          pageIndex={pageIndex}
-          pageSize={PAGE_SIZE}
-          handlePageIndexChange={handlePagination}
-        /> */}
-          <Pagination
-            count={total}
-            page={pageIndex}
-            size="small"
-            onChange={handlePagination}
-            className={styles.pagination}
-          />
         </section>
       </div>
       <Signup callback={handleOpenSnackbar} t={t} />

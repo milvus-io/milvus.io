@@ -34,8 +34,11 @@
   .featuredBlog {
     display: flex;
     justify-content: space-between;
-    gap: 160px;
-    @media @phone, @tablet {
+    gap: 80px;
+    @media @desktop1440, @desktop1920 {
+      gap: 160px;
+    }
+    @media (max-width: 1200px) {
       display: none;
     }
 
@@ -56,10 +59,6 @@
     .featuredBlogContent {
       flex: 1;
 
-      @media @desktop1024 {
-        margin-left: 79px;
-      }
-
       .tag {
         text-transform: uppercase;
         color: @primary-color;
@@ -78,7 +77,7 @@
   .mobileFeatured {
     display: none;
 
-    @media @phone, @tablet {
+    @media (max-width: 1200px) {
       display: block;
     }
   }
@@ -109,19 +108,18 @@
       li {
         padding: 11px 20px;
         cursor: pointer;
+        @media @tablet, @phone {
+          padding: 6px 10px;
+        }
       }
 
       .active {
         background: #eff9fe;
         border-radius: 100px;
         color: @primary-color;
-        @media @tablet, @phone {
-          padding: 6px 10px;
-        }
       }
 
       @media @tablet, @phone {
-        gap: 18px;
         font-size: 12px;
       }
     }

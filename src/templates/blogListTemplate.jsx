@@ -9,10 +9,10 @@ import BlogCard from "../components/card/BlogCard";
 
 import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
-import Pagination from "@mui/material/Pagination";
 import Signup from "../components/signup";
 import { CustomizedSnackbars } from "../components/snackBar";
 import Seo from "../components/seo";
+import { useWindowSize } from "../http/hooks";
 
 const SCROLL_SIZE = 6;
 const TITLE = "MIlvus Blogs";
@@ -23,6 +23,9 @@ const BlogTemplate = ({ data, pageContext }) => {
   const { language, t, navigate, originalPath } = useI18next();
   const [currentTag, setCurrentTag] = useState("all");
   const [scrollIndex, setScrollIndex] = useState(1);
+  const currentSize = useWindowSize();
+
+  const isMobile = ["phone"].includes(currentSize);
 
   const featuredBlog = useMemo(() => blogList[0], [blogList]);
   const [snackbarConfig, setSnackbarConfig] = useState({
@@ -67,7 +70,7 @@ const BlogTemplate = ({ data, pageContext }) => {
   }, [currentTag, blogList]);
 
   useEffect(() => {
-    const FOOT_HEIGHT = 675;
+    const FOOT_HEIGHT = isMobile ? 845 : 675;
     const FOOT_DISTANCE = 80;
     const cb = e => {
       // 浏览器可见区域高度为：
@@ -90,7 +93,7 @@ const BlogTemplate = ({ data, pageContext }) => {
     return () => {
       window.removeEventListener("scroll", cb);
     };
-  }, [filteredBlogs, scrollIndex]);
+  }, [filteredBlogs, scrollIndex, isMobile]);
 
   const filterByTag = useCallback(
     tag => {

@@ -106,7 +106,7 @@ const Code = props => {
 
   return (
     <section className="section3 col-12 col-8 col-4">
-      <Box sx={{ borderColor: "divider", padding: "0 20px" }}>
+      <Box sx={{ borderColor: "divider" }} className={`code-example-tab`}>
         <Tabs
           value={value}
           onChange={handleChange}

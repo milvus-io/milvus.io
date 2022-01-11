@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
@@ -53,10 +53,18 @@ export default function Template({ data, pageContext }) {
     newestBlog,
   } = pageContext;
 
+  const [windowSize, setWindowSize] = useState();
+
   const currentWindowSize = useWindowSize();
-  const isMobile = ["phone", "tablet"].includes(currentWindowSize);
-  const isPhone = ["phone"].includes(currentWindowSize);
-  const desktop1024 = ["desktop1024"].includes(currentWindowSize);
+
+  useEffect(() => {
+    setWindowSize(currentWindowSize);
+  }, [currentWindowSize]);
+
+  const isMobile = ["phone", "tablet"].includes(windowSize);
+  const isPhone = ["phone"].includes(windowSize);
+  const desktop1024 = ["desktop1024"].includes(windowSize);
+
   const { language, t } = useI18next();
   const hljsCfg = {
     languages: ["java", "go", "python", "javascript"],
@@ -159,6 +167,7 @@ export default function Template({ data, pageContext }) {
           [`is-mobile`]: isMobile,
           [`is-phone`]: isPhone,
           [`home`]: homeData,
+          [`loading`]: !windowSize,
         })}
       >
         <LeftNav

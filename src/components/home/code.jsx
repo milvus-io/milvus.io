@@ -67,16 +67,16 @@ const Code = props => {
     setValue(newValue);
   };
 
-  // useEffect(() => {
-  //   timeId = setInterval(() => {
-  //     const keys = Object.keys(EXAMPLES);
-  //     keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-  //     setActivExample(EXAMPLES[keys[keyIndex]]);
-  //   }, 6000);
-  //   return () => {
-  //     clearInterval(timeId);
-  //   };
-  // }, []);
+  useEffect(() => {
+    timeId = setInterval(() => {
+      const keys = Object.keys(EXAMPLES);
+      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setActivExample(EXAMPLES[keys[keyIndex]]);
+    }, 6000);
+    return () => {
+      clearInterval(timeId);
+    };
+  }, []);
 
   const codeExample = useMemo(() => {
     switch (activeExample) {
@@ -96,24 +96,24 @@ const Code = props => {
     keyIndex = index;
     setActivExample(active);
 
-    // timeId && clearInterval(timeId);
-    // timeId = setInterval(() => {
-    //   const keys = Object.keys(EXAMPLES);
-    //   keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-    //   setActivExample(EXAMPLES[keys[keyIndex]]);
-    // }, 6000);
+    timeId && clearInterval(timeId);
+    timeId = setInterval(() => {
+      const keys = Object.keys(EXAMPLES);
+      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setActivExample(EXAMPLES[keys[keyIndex]]);
+    }, 6000);
   };
 
   return (
     <section className="section3 col-12 col-8 col-4">
-      <Box sx={{ borderColor: "divider", padding: "0 20px" }}>
+      <Box sx={{ borderColor: "divider" }} className={`code-example-tab`}>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Python" {...a11yProps(0)} />
-          <Tab label="Node.js" {...a11yProps(1)} />
+          <Tab disableRipple label="Python" {...a11yProps(0)} />
+          <Tab disableRipple label="Node.js" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <div className="example-wrapper">
@@ -168,7 +168,7 @@ const Code = props => {
             {t("v3trans.home.code.index")}
           </p>
           <Link to="/docs">
-            <button className="learn-more">
+            <button className="secondaryBtnSm learn-more">
               {t("v3trans.home.code.learn")}
             </button>
           </Link>

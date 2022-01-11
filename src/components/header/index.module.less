@@ -28,6 +28,7 @@
     background-color: white;
     position: sticky;
     width: 100%;
+    border-bottom: 1px solid #ededed;
 
     .logoSection {
       span {
@@ -53,6 +54,10 @@
       color: white;
       background: unset;
       background: @color-primary;
+
+      &:hover {
+        background: @text-blue;
+      }
     }
   }
 
@@ -70,11 +75,12 @@
   .rightSection {
     .flexend;
     align-items: center;
+    gap: 20px;
 
     .startBtn {
       width: fit-content;
       position: static;
-      margin-left: 34px;
+      // margin-left: 34px;
 
       @media (max-width: 1240px) {
         margin-left: 16px;
@@ -112,6 +118,7 @@
     background: transparent;
     border: 0;
     cursor: pointer;
+    .hover;
 
     & > div {
       padding-right: 14px;
@@ -125,7 +132,7 @@
 }
 
 .logoSection {
-  height: 40px;
+  height: 30px;
 
   .darkLfai {
     display: block;
@@ -143,23 +150,16 @@
   }
 
   img {
-    height: 40px;
+    height: 30px;
     .hover;
-
-    @media (max-width: 1200px) {
-      height: 30px;
-    }
 
     @media @phone {
       height: 20px;
     }
   }
 
-  span {
-    border: 1px solid white;
-    display: inline-block;
-    height: 100%;
-    margin: 0 20px;
+  .logoSplit {
+    margin: 0 13px;
 
     @media @tablet, @desktop1024 {
       margin: 0 10px;
@@ -174,24 +174,16 @@
 
   @media (max-width: 1200px) {
     height: 30px;
-
-    span {
-      border-color: @color-primary;
-    }
   }
 
   @media @phone {
     height: 20px;
-
-    span {
-      border-color: @color-primary;
-    }
   }
 }
 
 .startBtn {
   background: linear-gradient(90.14deg, #ffffff 0.15%, #669dde 104.21%);
-  .button;
+  .buttonSm;
 
   @media @phone, @tablet, @desktop1024 {
     background: unset;

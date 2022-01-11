@@ -23,7 +23,8 @@ import vivo from "../images/brands/vivo.png";
 import walmart from "../images/brands/walmart.png";
 import xiaomi from "../images/brands/xiaomi.png";
 import CustomIconLink from "../components/customIconLink";
-import Seo from '../components/seo';
+import Seo from "../components/seo";
+import SvgIcon from "@mui/material/SvgIcon";
 
 const brands = [
   {
@@ -108,6 +109,23 @@ const IndexPage = () => {
     { name: "Forum", to: "https://discuss.milvus.io/" },
   ];
 
+  const ExternalLinkIcon = props => {
+    return (
+      <SvgIcon
+        viewBox="0 0 12 12"
+        style={{ width: "15px", height: "15px" }}
+        {...props}
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M9.84623 1.30028H1.15384L1.15384 0.300279L11.0533 0.300279L11.5533 0.30028L11.5533 0.800279L11.5533 10.6998L10.5533 10.6998L10.5533 2.00738L0.80029 11.7604L0.0931833 11.0533L9.84623 1.30028Z"
+          fill="white"
+        />
+      </SvgIcon>
+    );
+  };
+
   return (
     <main className="homepage">
       <Layout darkMode={true} t={t}>
@@ -131,7 +149,11 @@ const IndexPage = () => {
             <div className={styles.communityLinks}>
               {communityLinks.map(co => {
                 return (
-                  <CustomIconLink className={styles.communityLink} to={co.to}>
+                  <CustomIconLink
+                    className={styles.communityLink}
+                    to={co.to}
+                    customIcon={ExternalLinkIcon}
+                  >
                     {co.name}
                   </CustomIconLink>
                 );

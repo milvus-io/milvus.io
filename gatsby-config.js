@@ -145,9 +145,9 @@ let gatsbyConfigs = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 1000,
               quality: 100,
               backgroundColor: "transparent",
+              maxWidth: 1000,
             },
           },
           {

@@ -714,9 +714,9 @@
         "devfirst-desc": "Milvus 为您的机器学习应用提供全面的多语言 SDK。"
       },
       "code": {
-        "manage": "管理大量向量数据",
-        "search": "向量相似性搜索",
-        "index": "六大索引共同构建",
+        "install": "Install milvus in 2 minutes",
+        "manage": "Manage data in a traditional way",
+        "search": "Vector search never so easy",
         "learn": "了解更多"
       },
       "attu": {

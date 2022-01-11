@@ -166,7 +166,7 @@ const Code = props => {
             {t("v3trans.home.code.index")}
           </p>
           <Link to="/docs">
-            <button className="learn-more">
+            <button className="secondaryBtnSm learn-more">
               {t("v3trans.home.code.learn")}
             </button>
           </Link>

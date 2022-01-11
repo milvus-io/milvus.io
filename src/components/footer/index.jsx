@@ -50,7 +50,7 @@ const footerJson = [
   {
     title: "community",
     children: [
-      { name: "getinvolved", trans: true, to: "/docs" },
+      { name: "getinvolved", trans: true, to: "/community" },
       { name: "Slack", trans: false, to: "https://slack.milvus.io" },
       {
         name: "Github",

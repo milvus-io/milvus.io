@@ -23,6 +23,8 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
+  const [isDesktopTutOpen, setIsDesktopTutOpen] = useState(false);
+  const [isDesktopToolOpen, setIsDesktopToolOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const isLangOpen = Boolean(anchorEl);
   const toolRef = useRef(null);
@@ -75,19 +77,26 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
         href="https://lfaidata.foundation/projects/"
         target="_blank"
         rel="noopener noreferrer"
+        style={{ display: 'inline-block', lineHeight: 0 }}
       >
-        {isLightHeader || isMobile ? (
-          <img src={lfLogoLight} alt="lfai-icon" />
-        ) : (
-          <img src={lfLogoDark} alt="lfai-icon" />
-        )}
+        {
+          !isLightHeader ? (
+            <>
+              <img src={lfLogoDark} alt="lfai-icon" className={styles.darkLfai} />
+              <img src={lfLogoLight} alt="lfai-icon" className={styles.lightLfai} />
+            </>
+          ) : (
+            <img src={lfLogoLight} alt="lfai-icon" />
+          )
+        }
+
       </a>
     </div>
   );
 
   const actionBar = (
     <div className={styles.actionBar}>
-      <div className={styles.flexend}>
+      <div className={styles.gitBtnsWrapper}>
         <GitHubButton
           type="star"
           // className="star-btn"
@@ -139,6 +148,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
   return (
     <>
+      {/**mobile header todo: header element should be only*/}
       <header className={`${styles.mobileHead} ${className}`}>
         <div className={`${styles.spaceBetween} col-4 col-8 col-12`}>
           {logoSection}
@@ -289,7 +299,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
           </nav>
         </div>
       </header>
-
+      {/* desktop header */}
       <header
         className={`${styles.header} ${isLightHeader ? styles.light : ""
           } ${className}`}
@@ -307,7 +317,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                 <button
                   ref={tutRef}
                   className={styles.menuItem}
-                  onClick={openTutorial}
+                  onClick={() => setIsDesktopTutOpen(true)}
                 >
                   {t("v3trans.main.nav.tutorials")}
                 </button>
@@ -316,7 +326,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                 <button
                   ref={toolRef}
                   className={styles.menuItem}
-                  onClick={openTool}
+                  onClick={() => setIsDesktopToolOpen(true)}
                 >
                   {t("v3trans.main.nav.tools")}
                 </button>
@@ -336,9 +346,9 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
               id="demo-positioned-menu"
               aria-labelledby="demo-positioned-button"
               anchorEl={tutRef.current}
-              open={isTutOpen}
+              open={isDesktopTutOpen}
               onClose={() => {
-                openTutorial(false);
+                setIsDesktopTutOpen(false);
               }}
               anchorOrigin={{
                 vertical: "bottom",
@@ -374,9 +384,9 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
               id="demo-positioned-menu"
               aria-labelledby="demo-positioned-button"
               anchorEl={toolRef.current}
-              open={isToolOpen}
+              open={isDesktopToolOpen}
               onClose={() => {
-                openTool(false);
+                setIsDesktopToolOpen(false);
               }}
             >
               <MenuItem>

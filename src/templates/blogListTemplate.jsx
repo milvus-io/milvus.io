@@ -4,7 +4,7 @@ import * as styles from "./blogListTemplate.module.less";
 // import Seo from "../components/seo";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
-import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
+import { FILTER_TAG } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
 
 import Tags from "../components/tags";
@@ -162,18 +162,16 @@ const BlogTemplate = ({ data, pageContext }) => {
               return (
                 <li
                   key={index}
-                  className={`${styles.blogcard} ${
-                    index < SCROLL_SIZE * scrollIndex
-                      ? styles.fadeInup
-                      : styles.cardItem
-                  }`}
+                  className={`${index < SCROLL_SIZE * scrollIndex
+                    ? styles.fadeInup
+                    : styles.cardItem
+                    }`}
                 >
                   <BlogCard
-                    className={`${
-                      index < SCROLL_SIZE * scrollIndex
-                        ? styles.fadeInup
-                        : styles.cardItem
-                    }`}
+                    className={`${index < SCROLL_SIZE * scrollIndex
+                      ? styles.fadeInup
+                      : styles.cardItem
+                      }`}
                     locale={language}
                     title={title}
                     date={date}

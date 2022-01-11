@@ -4,8 +4,8 @@ const Tags = (props) => {
   const {
     tagsClass = "",
     list,
-    onClick = () => {},
-    genTagClass = () => {},
+    onClick = () => { },
+    genTagClass = () => { },
   } = props;
   return (
     <ul className={tagsClass}>
@@ -15,6 +15,8 @@ const Tags = (props) => {
           onClick={() => onClick(tag)}
           onKeyDown={() => onClick(tag)}
           className={genTagClass(tag)}
+          role="button"
+          tabIndex={0}
         >
           {tag}
         </li>

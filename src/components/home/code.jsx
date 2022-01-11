@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -55,11 +55,11 @@ const EXAMPLES = {
   search: "search",
   index: "index",
 };
-let timeId = null;
+// let timeId = null;
 let keyIndex = 0;
 
 const Code = props => {
-  const { t = () => {} } = props;
+  const { t = () => { } } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.manage);
 
@@ -148,6 +148,8 @@ const Code = props => {
             className={clsx({ active: activeExample === EXAMPLES.manage })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.manage)}
+            onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
+            tabIndex={0}
           >
             {t("v3trans.home.code.manage")}
           </p>

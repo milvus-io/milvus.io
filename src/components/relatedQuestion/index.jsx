@@ -36,7 +36,7 @@ export default function RelatedQuestion(props) {
       </Typography>
       <ul className={styles.container}>
         {relatedQuestions?.map((question) => {
-          const [title, content, isLink] = question;
+          const [content, isLink] = question;
           return (
             // <FaqCard question={question} key={question[0]} />
             <Typography
@@ -65,7 +65,7 @@ export default function RelatedQuestion(props) {
         </Typography>
         <div className={styles.btnGroups}>
           <button
-            className={clsx("primaryBtnSm", styles.pBtn)}
+            className={clsx("primaryBtnSm")}
             onClick={() => {
               handleClickFollowUp();
             }}

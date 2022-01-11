@@ -16,7 +16,7 @@
     overflow: hidden;
     margin-bottom: 100px;
     background-color: black;
-    height: 960px;
+    height: 840px;
     background-repeat: repeat no-repeat;
     z-index: 90;
   }
@@ -59,8 +59,8 @@
     background-image: url(../../images/index/bucket.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    height: 100%;
-    width: auto;
+    height: auto;
+    width: 100%;
     max-width: 491px;
     position: relative;
     margin: 0 auto;
@@ -128,12 +128,8 @@
     "btns bucket"
     "stats stats";
   height: 100%;
-  padding: 220px 0;
+  padding: 160px 0 80px 0;
   grid-column-gap: 10%;
-
-  @media @desktop1024 {
-    padding: 152px 0;
-  }
 
   .bucket-container {
     aspect-ratio: 1;
@@ -267,6 +263,19 @@
         font-size: 24px;
         line-height: 31.65px;
       }
+    }
+  }
+}
+
+// ! TO REMOVE
+@media (max-width: 1200px) {
+  .homepage {
+    .banner {
+      height: 660px;
+    }
+
+    .banner-grid-container {
+      padding: 80px 0;
     }
   }
 }

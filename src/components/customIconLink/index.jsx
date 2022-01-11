@@ -14,7 +14,9 @@ export default function CustomIconLink(props) {
       rel="noopener noreferrer"
       className={clsx(styles.link, className)}
     >
-      {showIcon && <Icon />}
+      {showIcon && (
+        <span className={styles.iconWrapper}><Icon /></span>
+      )}
       {children}
     </a>
   );

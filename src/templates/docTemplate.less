@@ -46,6 +46,11 @@ html {
     }
   }
 
+  // image in docs
+  .gatsby-resp-image-wrapper {
+    margin-top: 32px;
+  }
+
   .language-javascript,
   .language-python,
   .language-go,
@@ -402,12 +407,18 @@ html {
 .doc-home.doc-content-container {
   .doc-h1-wrapper {
     background-image: url(../images/docs/home_banner.svg);
+    background-position: 500px center;
     background-color: @color-grey-05;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
+    background-color: #f5f8fb;
     min-height: 235px;
-    width: 100%;
+    width: calc(100vw - 282px);
     padding: 49px 47px;
+
+    @media @tablet, @phone {
+      width: 100vw;
+    }
 
     .title {
       /* H2/Regular */
@@ -422,6 +433,7 @@ html {
       // color: @color-white;
 
       padding-bottom: 9px;
+      max-width: 650px;
     }
 
     .sub-title {
@@ -432,6 +444,7 @@ html {
       font-weight: normal;
       font-size: 16px;
       line-height: 24px;
+      max-width: 650px;
       /* identical to box height, or 150% */
 
       // color: @color-white;
@@ -446,6 +459,7 @@ html {
     font-weight: bold;
     font-size: 40px;
     line-height: 50px;
+    margin-bottom: 34px;
   }
 
   .card-wrapper {
@@ -520,7 +534,7 @@ html {
     background-color: @color-grey-05;
     padding: 24px 100px 24px 30px;
     position: relative;
-    margin-top: 40px;
+    margin-top: 54px;
 
     p {
       margin: 0;
@@ -598,6 +612,10 @@ html {
 
       color: @color-black;
     }
+    p > em {
+      display: block;
+      margin-top: 20px;
+    }
   }
 
   .doc-home-html-Wrapper {
@@ -619,6 +637,7 @@ html {
   .doc-home-blog {
     margin-left: 48px;
     margin-right: 48px;
+    box-shadow: none;
 
     h2 {
       margin-bottom: 20px;

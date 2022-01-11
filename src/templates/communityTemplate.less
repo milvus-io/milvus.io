@@ -3,12 +3,23 @@
 // @import "../css/variables/docsStyle.less";
 
 .community-home.doc-content-container {
+  > div {
+    max-width: 950px;
+  }
   .community-h1-wrapper {
     background-image: url(../images/community_banner.svg);
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 235px;
-    width: 100%;
+    width: calc(100vw - 286px);
+    @media @phone {
+      width: 100%;
+    }
+
+    @media @tablet {
+      width: 100%;
+    }
+
     padding: 49px 47px;
 
     .title {
@@ -76,6 +87,7 @@
     grid-column-gap: 139px;
     grid-template-rows: 1fr 1fr;
     grid-row-gap: 64px;
+    padding: 40px 0;
   }
 
   .about-card-container {
@@ -154,6 +166,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding: 40px 0;
 
     p {
       margin: 0;
@@ -192,7 +205,7 @@
 
     .advocate-title {
       /* H8/Regular */
-
+      color: #9ca6b2;
       font-family: Inter;
       font-style: normal;
       font-weight: normal;
@@ -243,7 +256,6 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
     background: @color-white;
     border: 1px solid #dee8f1;
@@ -253,9 +265,15 @@
     min-height: 260px;
     padding: 30px;
 
+    &:hover {
+      border-color: @color-primary;
+    }
+
     img {
       width: 30px;
       height: 30px;
+      display: block;
+      margin-bottom: 8px;
     }
 
     .label {
@@ -265,6 +283,7 @@
       font-style: normal;
       font-weight: bold;
       font-size: 18px;
+      height: 45px;
       line-height: 26px;
     }
 
@@ -276,6 +295,7 @@
       font-weight: normal;
       font-size: 14px;
       line-height: 20px;
+      height: 100px;
     }
 
     a {
@@ -300,8 +320,8 @@
     grid-column-gap: 20px;
 
     .img-container {
-      width: 130px;
-      height: 80px;
+      width: 240px;
+      height: 100px;
 
       display: flex;
       align-items: center;

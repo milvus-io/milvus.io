@@ -194,8 +194,8 @@ const HomeBanner = props => {
             <path
               d="M6 207L6 6"
               stroke="url(#paint0_linear_478_1764)"
-              stroke-width="4"
-              stroke-linecap="round"
+              strokeWidth="4"
+              strokeLinecap="round"
               id="line-path-1"
               clipPath="url(#line1-clip)"
               filter="url(#filter0_f_478_1764)"
@@ -260,8 +260,8 @@ const HomeBanner = props => {
               <path
                 d="M6.00098 6L6.00098 81"
                 stroke="url(#paint0_linear_478_1769)"
-                stroke-width="4"
-                stroke-linecap="round"
+                strokeWidth="4"
+                strokeLinecap="round"
               />
             </g>
             <defs>
@@ -311,8 +311,8 @@ const HomeBanner = props => {
               <path
                 d="M6.00098 149V6"
                 stroke="url(#paint0_linear_478_1770)"
-                stroke-width="4"
-                stroke-linecap="round"
+                strokeWidth="4"
+                strokeLinecap="round"
               />
             </g>
             <defs>
@@ -362,15 +362,15 @@ const HomeBanner = props => {
                       <path
                         d="M6.00098 207V6"
                         stroke="url(#paint0_linear_478_1761)"
-                        stroke-width="4"
-                        stroke-linecap="round"
+                        strokeWidth="4"
+                        strokeLinecap="round"
                       />
                     </g> */}
             <path
               d="M6 6L6 207"
               stroke="url(#paint0_linear_478_1761)"
-              stroke-width="4"
-              stroke-linecap="round"
+              strokeWidth="4"
+              strokeLinecap="round"
               filter="url(#filter0_f_478_1761)"
               id="line-path-2"
               clipPath="url(#line2-clip)"
@@ -498,8 +498,8 @@ const HomeBanner = props => {
               <path
                 d="M6.91016 6.39999L6.91016 35.0659"
                 stroke="url(#paint0_linear_478_2074)"
-                stroke-width="4"
-                stroke-linecap="round"
+                strokeWidth="4"
+                strokeLinecap="round"
               />
             </g>
             <g
@@ -568,19 +568,19 @@ const HomeBanner = props => {
         </div>
         <div className="stats col-3 col-8">
           <div className="stats-detail">
-            <p className="name"> {t("v3trans.home.banner.getstart")}</p>
+            <p className="name"> {t("v3trans.home.banner.star")}</p>
             <p className="num">9k+</p>
           </div>
           <div className="stats-detail">
-            <p className="name">Contirbutors</p>
+            <p className="name">{t("v3trans.home.banner.contirbutor")}</p>
             <p className="num">150+</p>
           </div>
           <div className="stats-detail">
-            <p className="name">Downloads</p>
+            <p className="name">{t("v3trans.home.banner.downloads")}</p>
             <p className="num">70M+</p>
           </div>
           <div className="stats-detail">
-            <p className="name">Customers</p>
+            <p className="name">{t("v3trans.home.banner.users")}</p>
             <p className="num">1500+</p>
           </div>
         </div>

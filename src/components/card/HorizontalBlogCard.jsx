@@ -18,7 +18,7 @@ export default function HorizontalBlogCard(props) {
   };
   return (
     <Link to={`/blog/${id}`}>
-      <Card classes={{ root: styles.root }}>
+      <Card classes={{ root: styles.root }} sx={{ boxShadow: 0 }}>
         <CardMedia
           component="img"
           classes={{ img: styles.cardImg }}

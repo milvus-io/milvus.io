@@ -145,9 +145,9 @@ let gatsbyConfigs = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 1000,
               quality: 100,
               backgroundColor: "transparent",
+              maxWidth: 1000,
             },
           },
           {
@@ -301,7 +301,7 @@ if (process.env.NODE_ENV == "development") {
             },
             {
               family: "Inter",
-              variants: ["300", "400", "500"],
+              variants: ["300", "400", "500", "700"],
               //subsets: ['latin']
               //text: 'Hello'
               //fontDisplay: 'swap',

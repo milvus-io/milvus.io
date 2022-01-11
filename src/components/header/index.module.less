@@ -68,11 +68,12 @@
   .rightSection {
     .flexend;
     align-items: center;
+    gap: 20px;
 
     .startBtn {
       width: fit-content;
       position: static;
-      margin-left: 34px;
+      // margin-left: 34px;
 
       @media (max-width: 1240px) {
         margin-left: 16px;
@@ -123,7 +124,7 @@
 }
 
 .logoSection {
-  height: 40px;
+  height: 30px;
 
   .darkLfai {
     display: block;
@@ -141,23 +142,16 @@
   }
 
   img {
-    height: 40px;
+    height: 30px;
     .hover;
-
-    @media (max-width: 1200px) {
-      height: 30px;
-    }
 
     @media @phone {
       height: 20px;
     }
   }
 
-  span {
-    border: 1px solid white;
-    display: inline-block;
-    height: 100%;
-    margin: 0 20px;
+  .logoSplit {
+    margin: 0 13px;
 
     @media @tablet, @desktop1024 {
       margin: 0 10px;
@@ -172,18 +166,10 @@
 
   @media (max-width: 1200px) {
     height: 30px;
-
-    span {
-      border-color: @color-primary;
-    }
   }
 
   @media @phone {
     height: 20px;
-
-    span {
-      border-color: @color-primary;
-    }
   }
 }
 

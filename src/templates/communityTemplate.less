@@ -11,7 +11,15 @@
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 235px;
-    width: 100vw;
+    width: calc(100vw - 286px);
+    @media @phone {
+      width: 100%;
+    }
+
+    @media @tablet {
+      width: 100%;
+    }
+
     padding: 49px 47px;
 
     .title {
@@ -197,7 +205,7 @@
 
     .advocate-title {
       /* H8/Regular */
-      color: #9CA6B2;
+      color: #9ca6b2;
       font-family: Inter;
       font-style: normal;
       font-weight: normal;

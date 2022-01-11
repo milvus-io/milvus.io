@@ -194,29 +194,31 @@ export function useGetFaq(relatedKey) {
   return resultMock.response.slice(0, 6);
 }
 
-export function useWindowSize() {
-  const [size, setSize] = useState("");
+const getCurrentSize = () => {
+  if (typeof window !== "undefined") {
+    const desktop1920 = window.matchMedia("(min-width: 1920px)");
+    const desktop1440 = window.matchMedia("(min-width: 1440px)");
+    const desktop1024 = window.matchMedia("(min-width: 1024px)");
+    const desktop744 = window.matchMedia("(min-width: 744px)");
 
-  const getCurrentSize = () => {
-    if (typeof window !== "undefined") {
-      const desktop1920 = window.matchMedia("(min-width: 1920px)");
-      const desktop1440 = window.matchMedia("(min-width: 1440px)");
-      const desktop1024 = window.matchMedia("(min-width: 1024px)");
-      const desktop744 = window.matchMedia("(min-width: 744px)");
-
-      if (desktop1920.matches) {
-        return "desktop1920";
-      } else if (desktop1440.matches) {
-        return "desktop1440";
-      } else if (desktop1024.matches) {
-        return "desktop1024";
-      } else if (desktop744.matches) {
-        return "tablet";
-      }
-      return "phone";
+    if (desktop1920.matches) {
+      return "desktop1920";
+    } else if (desktop1440.matches) {
+      return "desktop1440";
+    } else if (desktop1024.matches) {
+      return "desktop1024";
+    } else if (desktop744.matches) {
+      return "tablet";
     }
-    return "";
-  };
+    return "phone";
+  }
+  return "";
+};
+
+export function useWindowSize() {
+  const [size, setSize] = useState(() => {
+    return getCurrentSize();
+  });
 
   useEffect(() => {
     const onResize = () => {
@@ -232,5 +234,5 @@ export function useWindowSize() {
     setSize(cur);
   }, []);
 
-  return size ? size : getCurrentSize();
+  return size;
 }

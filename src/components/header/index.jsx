@@ -11,6 +11,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import milvusLogo from "../../images/milvus_logo.svg";
+import logoSpliter from "../../images/spliter.svg";
 import lfLogoDark from "../../images/lf_logo_dark.svg";
 import lfLogoLight from "../../images/lf_logo_light.svg";
 import * as styles from "./index.module.less";
@@ -72,24 +73,29 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       <Link to="/">
         <img src={milvusLogo} alt="milvus-logo" />
       </Link>
-      <span />
+      <img
+        src={logoSpliter}
+        alt="milvus-logo-split"
+        className={styles.logoSplit}
+      />
       <a
         href="https://lfaidata.foundation/projects/"
         target="_blank"
         rel="noopener noreferrer"
-        style={{ display: 'inline-block', lineHeight: 0 }}
+        style={{ display: "inline-block", lineHeight: 0 }}
       >
-        {
-          !isLightHeader ? (
-            <>
-              <img src={lfLogoDark} alt="lfai-icon" className={styles.darkLfai} />
-              <img src={lfLogoLight} alt="lfai-icon" className={styles.lightLfai} />
-            </>
-          ) : (
-            <img src={lfLogoLight} alt="lfai-icon" />
-          )
-        }
-
+        {!isLightHeader ? (
+          <>
+            <img src={lfLogoDark} alt="lfai-icon" className={styles.darkLfai} />
+            <img
+              src={lfLogoLight}
+              alt="lfai-icon"
+              className={styles.lightLfai}
+            />
+          </>
+        ) : (
+          <img src={lfLogoLight} alt="lfai-icon" />
+        )}
       </a>
     </div>
   );
@@ -255,7 +261,10 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                         >
                           Milvus_CLI
                         </a>
-                        <Link to="/tool-sizing" className={styles.mobileMenuLink}>
+                        <Link
+                          to="/tool-sizing"
+                          className={styles.mobileMenuLink}
+                        >
                           Sizing Tool
                         </Link>
                       </>
@@ -301,8 +310,9 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       </header>
       {/* desktop header */}
       <header
-        className={`${styles.header} ${isLightHeader ? styles.light : ""
-          } ${className}`}
+        className={`${styles.header} ${
+          isLightHeader ? styles.light : ""
+        } ${className}`}
       >
         <div className={styles.leftSection}>
           {logoSection}
@@ -420,7 +430,10 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
         <div className={styles.rightSection}>
           {actionBar}
-          <Link to="/docs/v2.0.0/install_standalone-docker.md" className={styles.startBtn}>
+          <Link
+            to="/docs/v2.0.0/install_standalone-docker.md"
+            className={styles.startBtn}
+          >
             {t("v3trans.main.nav.getstarted")}
           </Link>
         </div>

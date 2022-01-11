@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
@@ -40,12 +40,18 @@ export default function Template({ data, pageContext }) {
     // isCommunity,
   } = pageContext;
 
-  // console.log(pageContext);
+  const [windowSize, setWindowSize] = useState();
 
   const currentWindowSize = useWindowSize();
-  const isMobile = ["phone", "tablet"].includes(currentWindowSize);
-  const isPhone = ["phone"].includes(currentWindowSize);
-  const desktop1024 = ["desktop1024"].includes(currentWindowSize);
+
+  useEffect(() => {
+    setWindowSize(currentWindowSize);
+  }, [currentWindowSize]);
+
+  const isMobile = ["phone", "tablet"].includes(windowSize);
+  const isPhone = ["phone"].includes(windowSize);
+  const desktop1024 = ["desktop1024"].includes(windowSize);
+
   const { language, t } = useI18next();
 
   const isHomePage = activePost === "home.md";
@@ -64,6 +70,7 @@ export default function Template({ data, pageContext }) {
           [`is-mobile`]: isMobile,
           [`is-phone`]: isPhone,
           [`home`]: isHomePage,
+          [`loading`]: !windowSize,
         })}
       >
         {/* TODO: "id": "#community_resources", #community_partners should be updated */}

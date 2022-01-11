@@ -25,7 +25,7 @@
   align-items: center;
   height: 250px;
 
-  @media @desktop1024, @tablet, @phone {
+  @media @tablet, @phone {
     flex-direction: column;
     height: 350px;
     align-items: flex-start;
@@ -39,7 +39,7 @@
   font-weight: bold;
   padding: 60px 0 60px 100px;
 
-  @media @desktop1024, @tablet, @phone {
+  @media @tablet, @phone {
     padding: 60px 70px 0 70px;
     font-size: 24px;
   }
@@ -88,6 +88,7 @@
     line-height: 42px;
     font-weight: bold;
     display: flex;
+    flex-direction: row-reverse;
 
     @media @tablet, @desktop1024 {
       font-size: 24px;
@@ -97,9 +98,9 @@
       font-size: 18px;
     }
 
-    svg {
-      margin: 5px;
-      order: 2;
+    &:hover svg {
+      transform: translateX(8px);
+      transition: all 0.5s;
     }
   }
 }

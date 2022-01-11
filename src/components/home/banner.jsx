@@ -568,19 +568,19 @@ const HomeBanner = props => {
         </div>
         <div className="stats col-3 col-8">
           <div className="stats-detail">
-            <p className="name"> {t("v3trans.home.banner.getstart")}</p>
+            <p className="name"> {t("v3trans.home.banner.star")}</p>
             <p className="num">9k+</p>
           </div>
           <div className="stats-detail">
-            <p className="name">Contirbutors</p>
+            <p className="name">{t("v3trans.home.banner.contirbutor")}</p>
             <p className="num">150+</p>
           </div>
           <div className="stats-detail">
-            <p className="name">Downloads</p>
+            <p className="name">{t("v3trans.home.banner.downloads")}</p>
             <p className="num">70M+</p>
           </div>
           <div className="stats-detail">
-            <p className="name">Customers</p>
+            <p className="name">{t("v3trans.home.banner.users")}</p>
             <p className="num">1500+</p>
           </div>
         </div>

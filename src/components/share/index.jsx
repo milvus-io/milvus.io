@@ -1,16 +1,16 @@
 import React from "react";
 import {
   FacebookShareButton,
-  FacebookIcon,
   LinkedinShareButton,
-  LinkedinIcon,
   TwitterShareButton,
-  TwitterIcon,
 } from "react-share";
 import { Helmet } from "react-helmet";
 import * as styles from "./index.module.less";
+import twitterIcon from "../../images/blog/twitter.svg";
+import linkedinIcon from "../../images/blog/linkedin.svg";
+import facebookIcon from "../../images/blog/facebook.svg";
 
-const Share = (props) => {
+const Share = props => {
   const { url, quote, desc, image, wrapperClass, vertical = false } = props;
 
   return (
@@ -31,16 +31,15 @@ const Share = (props) => {
         <meta name="twitter:description" content={desc} />
         <meta name="twitter:image" content={image} />
       </Helmet>
-
+      <LinkedinShareButton url={url} title={quote}>
+        <img src={linkedinIcon} alt="twitter" className={styles.icon} />
+      </LinkedinShareButton>
       <TwitterShareButton url={url} title={quote}>
-        <TwitterIcon size="30" borderRadius={50} />
+        <img src={twitterIcon} alt="twitter" className={styles.icon} />
       </TwitterShareButton>
       <FacebookShareButton url={url} quote={quote}>
-        <FacebookIcon size="30" borderRadius={50} />
+        <img src={facebookIcon} alt="twitter" className={styles.icon} />
       </FacebookShareButton>
-      <LinkedinShareButton url={url} title={quote}>
-        <LinkedinIcon size="30" borderRadius={50} />
-      </LinkedinShareButton>
     </div>
   );
 };

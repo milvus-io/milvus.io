@@ -10,13 +10,13 @@ import BlogCard from "../components/card/BlogCard";
 import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
 import Pagination from "@mui/material/Pagination";
-import Signup from '../components/signup';
+import Signup from "../components/signup";
 import { CustomizedSnackbars } from "../components/snackBar";
-import Seo from '../components/seo';
+import Seo from "../components/seo";
 
-const PAGE_SIZE = 6;
-const TITLE = 'MIlvus Blogs';
-const DESC = 'MIlvus Blogs';
+const PAGE_SIZE = 18;
+const TITLE = "MIlvus Blogs";
+const DESC = "MIlvus Blogs";
 
 const getCurrentPageArray = (list, pageIndex) =>
   list.slice((pageIndex - 1) * PAGE_SIZE, pageIndex * PAGE_SIZE);
@@ -53,9 +53,9 @@ const BlogTemplate = ({ data, pageContext }) => {
     const resObj = {
       all: "all",
     };
-    blogList.forEach((item) => {
+    blogList.forEach(item => {
       const { tags } = item;
-      tags.forEach((subItem) => {
+      tags.forEach(subItem => {
         resObj[subItem] = subItem;
       });
     });
@@ -68,7 +68,7 @@ const BlogTemplate = ({ data, pageContext }) => {
         total: Math.ceil(blogList.length / PAGE_SIZE),
         renderBlogList: getCurrentPageArray(blogList, pageIndex),
       };
-    const list = blogList.filter((v) => v.tags.includes(currentTag));
+    const list = blogList.filter(v => v.tags.includes(currentTag));
     return {
       total: Math.ceil(list.length / PAGE_SIZE),
       renderBlogList: getCurrentPageArray(list, pageIndex),
@@ -76,7 +76,7 @@ const BlogTemplate = ({ data, pageContext }) => {
   }, [currentTag, blogList, pageIndex]);
 
   const filterByTag = useCallback(
-    (tag) => {
+    tag => {
       setCurrentTag(tag);
       setPageIndex(1);
     },
@@ -122,7 +122,7 @@ const BlogTemplate = ({ data, pageContext }) => {
         {/* screen > 1024  */}
         <section className={`${styles.featuredBlog} `}>
           <div className={`${styles.featuredImg}  col-6`}>
-            <img src={`https://${featuredBlog.cover}  `} />
+            <img src={`https://${featuredBlog.cover}`} />
           </div>
           <div className={`${styles.featuredBlogContent} col-7`}>
             <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>
@@ -149,7 +149,7 @@ const BlogTemplate = ({ data, pageContext }) => {
           <Tags
             list={tagList}
             tagsClass={styles.tagsWrapper}
-            genTagClass={(tag) => (currentTag === tag ? styles.active : "")}
+            genTagClass={tag => (currentTag === tag ? styles.active : "")}
             onClick={handleFilter}
           />
 
@@ -185,8 +185,6 @@ const BlogTemplate = ({ data, pageContext }) => {
             className={styles.pagination}
           />
         </section>
-
-
       </div>
       <Signup callback={handleOpenSnackbar} t={t} />
       <CustomizedSnackbars

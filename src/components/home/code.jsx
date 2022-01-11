@@ -67,16 +67,16 @@ const Code = props => {
     setValue(newValue);
   };
 
-  // useEffect(() => {
-  //   timeId = setInterval(() => {
-  //     const keys = Object.keys(EXAMPLES);
-  //     keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-  //     setActivExample(EXAMPLES[keys[keyIndex]]);
-  //   }, 6000);
-  //   return () => {
-  //     clearInterval(timeId);
-  //   };
-  // }, []);
+  useEffect(() => {
+    timeId = setInterval(() => {
+      const keys = Object.keys(EXAMPLES);
+      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setActivExample(EXAMPLES[keys[keyIndex]]);
+    }, 6000);
+    return () => {
+      clearInterval(timeId);
+    };
+  }, []);
 
   const codeExample = useMemo(() => {
     switch (activeExample) {
@@ -96,12 +96,12 @@ const Code = props => {
     keyIndex = index;
     setActivExample(active);
 
-    // timeId && clearInterval(timeId);
-    // timeId = setInterval(() => {
-    //   const keys = Object.keys(EXAMPLES);
-    //   keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-    //   setActivExample(EXAMPLES[keys[keyIndex]]);
-    // }, 6000);
+    timeId && clearInterval(timeId);
+    timeId = setInterval(() => {
+      const keys = Object.keys(EXAMPLES);
+      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setActivExample(EXAMPLES[keys[keyIndex]]);
+    }, 6000);
   };
 
   return (

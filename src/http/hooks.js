@@ -195,49 +195,39 @@ export function useGetFaq(relatedKey) {
 }
 
 export function useWindowSize() {
-  const [size, setSize] = useState("desktop1024");
+  const [size, setSize] = useState("");
 
-  useEffect(() => {
-    const onResize = () => {
-      const desktop1920 = window.matchMedia("(min-width: 1920px)");
-      const desktop1440 = window.matchMedia("(min-width: 1440px)");
-      const desktop1024 = window.matchMedia("(min-width: 1024px)");
-      const desktop744 = window.matchMedia("(min-width: 744px)");
-
-      if (desktop1920.matches) {
-        setSize("desktop1920");
-      } else if (desktop1440.matches) {
-        setSize("desktop1440");
-      } else if (desktop1024.matches) {
-        setSize("desktop1024");
-      } else if (desktop744.matches) {
-        setSize("tablet");
-      } else {
-        setSize("phone");
-      }
-    };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  });
-
-  useEffect(() => {
+  const getCurrentSize = () => {
     const desktop1920 = window.matchMedia("(min-width: 1920px)");
     const desktop1440 = window.matchMedia("(min-width: 1440px)");
     const desktop1024 = window.matchMedia("(min-width: 1024px)");
     const desktop744 = window.matchMedia("(min-width: 744px)");
 
     if (desktop1920.matches) {
-      setSize("desktop1920");
+      return "desktop1920";
     } else if (desktop1440.matches) {
-      setSize("desktop1440");
+      return "desktop1440";
     } else if (desktop1024.matches) {
-      setSize("desktop1024");
+      return "desktop1024";
     } else if (desktop744.matches) {
-      setSize("tablet");
-    } else {
-      setSize("phone");
+      return "tablet";
     }
+    return "phone";
+  };
+
+  useEffect(() => {
+    const onResize = () => {
+      const cur = getCurrentSize();
+      setSize(cur);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  });
+
+  useEffect(() => {
+    const cur = getCurrentSize();
+    setSize(cur);
   }, []);
 
-  return size;
+  return size ? size : getCurrentSize();
 }

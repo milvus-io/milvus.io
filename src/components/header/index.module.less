@@ -60,7 +60,7 @@
 
     @media (max-width: 1440px) {
       li {
-        margin-left: 24px;
+        margin-left: 16px;
       }
     }
   }
@@ -84,12 +84,27 @@
 .actionBar {
   .flexend;
   align-items: center;
-  flex-wrap: wrap;
 
-  // @media @phone, @tablet, @desktop1024 {
-  //   .spaceBetween;
-  //   margin: 20px 0;
-  // }
+  @media @tablet, (max-width: 1200px) {
+    padding: 0 16px;
+    margin-top: 24px;
+    justify-content: space-between;
+  }
+
+  @media @phone {
+    margin-top: 24px;
+    padding: 0 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gitBtnsWrapper {
+    .flexend;
+
+    @media @phone {
+      margin-bottom: 24px;
+    }
+  }
 
   .langSelect {
     background: transparent;
@@ -110,9 +125,32 @@
 .logoSection {
   height: 40px;
 
+  .darkLfai {
+    display: block;
+
+    @media (max-width: 1200px) {
+      display: none;
+    }
+  }
+  .lightLfai {
+    display: none;
+
+    @media (max-width: 1200px) {
+      display: block;
+    }
+  }
+
   img {
-    height: 100%;
+    height: 40px;
     .hover;
+
+    @media (max-width: 1200px) {
+      height: 30px;
+    }
+
+    @media @phone {
+      height: 20px;
+    }
   }
 
   span {
@@ -337,6 +375,13 @@
   color: black;
   padding: 20px;
   .hover;
+
+  @media @phone {
+    display: block;
+    padding: 8px 20px;
+
+    margin-bottom: 8px;
+  }
 }
 
 .turnLeft {

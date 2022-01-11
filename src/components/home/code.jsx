@@ -58,16 +58,16 @@ const Code = props => {
     setValue(newValue);
   };
 
-  // useEffect(() => {
-  //   timeId = setInterval(() => {
-  //     const keys = Object.keys(EXAMPLES);
-  //     keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-  //     setActivExample(EXAMPLES[keys[keyIndex]]);
-  //   }, 6000);
-  //   return () => {
-  //     clearInterval(timeId);
-  //   };
-  // }, []);
+  useEffect(() => {
+    timeId = setInterval(() => {
+      const keys = Object.keys(EXAMPLES);
+      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setActivExample(EXAMPLES[keys[keyIndex]]);
+    }, 6000);
+    return () => {
+      clearInterval(timeId);
+    };
+  }, []);
 
   const codeExample = useMemo(() => {
     switch (activeExample) {
@@ -87,12 +87,12 @@ const Code = props => {
     keyIndex = index;
     setActivExample(active);
 
-    // timeId && clearInterval(timeId);
-    // timeId = setInterval(() => {
-    //   const keys = Object.keys(EXAMPLES);
-    //   keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-    //   setActivExample(EXAMPLES[keys[keyIndex]]);
-    // }, 6000);
+    timeId && clearInterval(timeId);
+    timeId = setInterval(() => {
+      const keys = Object.keys(EXAMPLES);
+      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setActivExample(EXAMPLES[keys[keyIndex]]);
+    }, 6000);
   };
 
   const { tabs, learnMoreLink } = useMemo(() => {
@@ -118,7 +118,7 @@ const Code = props => {
 
   return (
     <section className="section3 col-12 col-8 col-4">
-      <Box sx={{ borderColor: "divider", padding: "0 20px" }}>
+      <Box sx={{ borderColor: "divider" }} className={`code-example-tab`}>
         <Tabs
           value={value}
           onChange={handleChange}

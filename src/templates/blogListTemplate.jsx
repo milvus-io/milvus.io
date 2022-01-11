@@ -122,7 +122,7 @@ const BlogTemplate = ({ data, pageContext }) => {
         {/* screen > 1024  */}
         <section className={`${styles.featuredBlog} `}>
           <div className={`${styles.featuredImg}  col-6`}>
-            <img src={`https://${featuredBlog.cover}  `} />
+            <img src={`https://${featuredBlog.cover}`} />
           </div>
           <div className={`${styles.featuredBlogContent} col-7`}>
             <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>

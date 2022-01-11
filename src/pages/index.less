@@ -67,7 +67,7 @@
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 124px;
-      margin-top: 10px;
+      margin-top: 32px;
       @media @tablet, @phone {
         display: block;
         flex-direction: column;
@@ -294,7 +294,7 @@
     margin: 80px auto;
 
     .left-title {
-      height: 84px;
+      height: 118px;
       padding-bottom: 34px;
       font-family: Inter;
       font-style: normal;
@@ -332,20 +332,22 @@
     }
 
     .milvus-feature.attu-feature {
+      max-width: 400px;
+
       .shooting_star_container {
         &.manage-shooting {
-          top: 84px;
+          top: 118px;
         }
         &.search-shooting {
-          top: 128px;
+          top: 162px;
           @media @tablet, @phone {
-            top: 134px;
+            top: 168px;
           }
         }
         &.index-shooting {
-          top: 172px;
+          top: 206px;
           @media @tablet, @phone {
-            top: 184px;
+            top: 218px;
           }
         }
       }
@@ -375,6 +377,8 @@
     .example-wrapper {
       flex-wrap: nowrap;
       gap: unset;
+      align-items: center;
+
       @media @tablet, @phone {
         display: flex;
         flex-direction: column-reverse;
@@ -391,6 +395,8 @@
       background-repeat: no-repeat;
       background-size: contain;
       filter: drop-shadow(0px 20px 40px rgba(0, 43, 125, 0.25));
+      border-radius: 6px;
+      transition: all 0.5s;
 
       &.attu-example-1 {
         background-image: url(../images/home/attu_2.jpg);

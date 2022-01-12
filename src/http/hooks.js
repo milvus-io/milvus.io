@@ -34,7 +34,8 @@ export function useGithubCommits({ commitPath, version, isDoc = false }) {
 }
 
 export function useGetFaq(relatedKey) {
-  const [_, setRelatedQuestions] = useState();
+  // const [relatedQuestions, setRelatedQuestions] = useState();
+  const [, setRelatedQuestions] = useState();
 
   useEffect(() => {
     const fetchData = async () => {

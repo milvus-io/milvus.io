@@ -4,9 +4,6 @@ import milvus from "../../images/milvus_logo.svg";
 import { getFaq } from "../../http";
 import WelcomBlock from "./welcomBlock";
 import AnswerBlock from "./answerBlock";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import SvgIcon from "@mui/material/SvgIcon";
@@ -137,10 +134,6 @@ const QuestionRobot = props => {
   const chatCopy = useRef(null);
   chatCopy.current = [...chats];
 
-  const toggle = () => {
-    setOpen(!open);
-  };
-
   const keyPress = e => {
     const v = inputEl.current.value;
     if ((e.key === "Enter" || e.target.tagName === "BUTTON") && v && !locked) {
@@ -208,77 +201,11 @@ const QuestionRobot = props => {
     }
   }, [currentExpand, chats]);
 
-  const onMaskClick = () => {
-    setOpen(false);
-  };
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div className={styles.robot}>
-      {/* {open && (
-        <div className={styles.dialog}>
-          <div className={styles.dialogHeader}>
-            Search engine powerd by{" "}
-            <img src={milvus} className={styles.logo} alt="logo" />
-          </div>
-          <div ref={containerEl} className={styles.dialogContent}>
-            {chats.map((chat, index) => {
-              if (chat.state === 0) {
-                return (
-                  <div
-                    key={`${index}-${chat.state}`}
-                    className={styles.serverChat}
-                  >
-                    <WelcomBlock version={version} setInit={setQuestion} />
-                  </div>
-                );
-              } else if (chat.state === 1) {
-                return (
-                  <div
-                    key={`${index}-${chat.state}`}
-                    className={styles.serverChat}
-                  >
-                    <AnswerBlock
-                      chat={chat}
-                      index={index}
-                      setCurrent={setCurrentExpand}
-                    />
-                  </div>
-                );
-              }
-              return (
-                <div key={`${index}-${chat.state}`} className={styles.myChat}>
-                  {chat.value}
-                </div>
-              );
-            })}
-          </div>
-          <div className={styles.dialogInput}>
-            <input
-              ref={inputEl}
-              placeholder="Ask MilMil Anything..."
-              onKeyPress={keyPress}
-            />
-            <button onClick={keyPress}>{""}</button>
-          </div>
-        </div>
-      )}
-      <button
-        onClick={toggle}
-        className={`${styles.openBtn} ${open && styles.close}`}
-      >
-        {""}
-      </button>
-      {open && (
-        <div
-          className={styles.mask}
-          role="presentation"
-          onClick={onMaskClick}
-        />
-      )} */}
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <IconButton
         aria-label="open"
         size="large"

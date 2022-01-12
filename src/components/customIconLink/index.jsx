@@ -15,7 +15,7 @@ export default function CustomIconLink(props) {
       className={clsx("CustomIconLink", styles.link, className)}
     >
       {showIcon && (
-        <span className={clsx(styles.iconWrapper, "CustomIconLink-wrapper")}>
+        <span className={clsx("CustomIconLink-wrapper")}>
           <Icon className="CustomIconLink-icon" />
         </span>
       )}

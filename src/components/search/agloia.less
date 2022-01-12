@@ -1,11 +1,28 @@
 @import "../../css/variables/responsive.less";
 
-.DocSearch {
+.DocSearch-Button {
   width: 100%;
+  font-size: 14px;
+  margin-right: 10px;
+  padding-left: 20px;
+  background-color: #f5f8fb;
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .DocSearch-Button-Keys {
+    display: none;
+  }
+}
+.DocSearch {
   @media @tablet, @phone {
-    margin-top: 0px;
-    margin-right: 10px;
     z-index: 111111;
+  }
+}
+.DocSearch-Button-Placeholder {
+  @media (max-width: 750px) {
+    display: block;
   }
 }
 .DocSearch-Container * {

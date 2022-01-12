@@ -694,7 +694,7 @@
         "desc": "Open-source, highly scalable, and blazing fast",
         "getstart": "Get Started",
         "watch": "Watch Video",
-        "star": "Stars at Github",
+        "star": "Stars at GitHub",
         "contirbutor": "Contirbutors",
         "downloads": "Downloads",
         "users": "Users"
@@ -738,7 +738,7 @@
       "no": "No",
       "contactFollow": "Follow up with me",
       "contactSlack": "Discuss on Slack",
-      "contactGithub": "Discuss on Github",
+      "contactGithub": "Discuss on GitHub",
       "feedbackDialogTitle": "We will follow up on your question",
       "feedbackDialogContent": "Please leave your question here and we will be in touch.",
       "emailAddress": "Email Address",
@@ -776,13 +776,13 @@
       },
       "h1": "Vector database built for scalable similarity search",
       "desc": "Open-source, highly scalable, and blazing fast",
-      "stars": "Stars at Github",
+      "stars": "Stars at GitHub",
       "contirbutors": "Contirbutors",
       "downloads": "Downloads",
       "customers": "Customers",
       "communitydesc": "Milvus is backed by a strong open source community",
       "communitytitle": "Join our community",
-      "customer": "Trusted by our customer"
+      "customer": "Trusted by our customers"
     },
     "404": {
       "title": "Uoops...something went wrong!",

@@ -121,7 +121,7 @@ const Code = props => {
       <Box sx={{ borderColor: "divider" }} className={`code-example-tab`}>
         <Tabs value={value} onChange={handleChange} aria-label="code tab">
           {tabs.map((v, i) => (
-            <Tab key={v} label={v} {...a11yProps(i)} />
+            <Tab disableRipple key={v} label={v} {...a11yProps(i)} />
           ))}
         </Tabs>
       </Box>

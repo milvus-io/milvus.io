@@ -125,9 +125,9 @@ const HomeBanner = props => {
                 width="12"
                 height="213"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -147,8 +147,8 @@ const HomeBanner = props => {
                 y2="6.0641"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0.140625" stop-color="white" stop-opacity="0" />
-                <stop offset="1" stop-color="#0066FF" />
+                <stop offset="0.140625" stopColor="white" stopOpacity="0" />
+                <stop offset="1" stopColor="#0066FF" />
               </linearGradient>
               <filter
                 xmlns="http://www.w3.org/2000/svg"
@@ -158,9 +158,9 @@ const HomeBanner = props => {
                 width="16"
                 height="16"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -233,9 +233,9 @@ const HomeBanner = props => {
                 width="29"
                 height="29"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -273,9 +273,9 @@ const HomeBanner = props => {
                 width="12"
                 height="87"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -295,8 +295,8 @@ const HomeBanner = props => {
                 y2="6.00026"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0.140625" stop-color="white" stop-opacity="0" />
-                <stop offset="1" stop-color="#0066FF" />
+                <stop offset="0.140625" stopColor="white" stopOpacity="0" />
+                <stop offset="1" stopColor="#0066FF" />
               </linearGradient>
             </defs>
           </svg>
@@ -324,9 +324,9 @@ const HomeBanner = props => {
                 width="12"
                 height="155"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -346,8 +346,8 @@ const HomeBanner = props => {
                 y2="148.98"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0.140625" stop-color="white" stop-opacity="0" />
-                <stop offset="1" stop-color="#FF8F00" />
+                <stop offset="0.140625" stopColor="white" stopOpacity="0" />
+                <stop offset="1" stopColor="#FF8F00" />
               </linearGradient>
             </defs>
           </svg>
@@ -397,9 +397,9 @@ const HomeBanner = props => {
                 width="12"
                 height="213"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -419,8 +419,8 @@ const HomeBanner = props => {
                 y2="206.936"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0.140625" stop-color="white" stop-opacity="0" />
-                <stop offset="1" stop-color="#FF8F00" />
+                <stop offset="0.140625" stopColor="white" stopOpacity="0" />
+                <stop offset="1" stopColor="#FF8F00" />
               </linearGradient>
               <filter
                 xmlns="http://www.w3.org/2000/svg"
@@ -430,9 +430,9 @@ const HomeBanner = props => {
                 width="16"
                 height="16"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -452,9 +452,9 @@ const HomeBanner = props => {
                 width="16"
                 height="16"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -517,9 +517,9 @@ const HomeBanner = props => {
                 width="12"
                 height="40.666"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -539,8 +539,8 @@ const HomeBanner = props => {
                 y2="6.39884"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0.140625" stop-color="white" stop-opacity="0" />
-                <stop offset="1" stop-color="#E5FF59" />
+                <stop offset="0.140625" stopColor="white" stopOpacity="0" />
+                <stop offset="1" stopColor="#E5FF59" />
               </linearGradient>
               <filter
                 xmlns="http://www.w3.org/2000/svg"
@@ -550,9 +550,9 @@ const HomeBanner = props => {
                 width="15.166"
                 height="15.1665"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"

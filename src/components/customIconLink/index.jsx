@@ -12,10 +12,12 @@ export default function CustomIconLink(props) {
       target="_blank"
       href={to}
       rel="noopener noreferrer"
-      className={clsx(styles.link, className)}
+      className={clsx("CustomIconLink", styles.link, className)}
     >
       {showIcon && (
-        <span className={styles.iconWrapper}><Icon /></span>
+        <span className={clsx(styles.iconWrapper, "CustomIconLink-wrapper")}>
+          <Icon className="CustomIconLink-icon" />
+        </span>
       )}
       {children}
     </a>

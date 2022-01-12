@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import FeedbackModal from '../feedbackModal';
-import iconBird from "../../images/icon_bird.svg";
+import iconBird from "../../images/milmil_logo.svg";
 import * as styles from "./index.module.less";
 import FeedbackDialog from "../dialog/FeedbackDialog";
 

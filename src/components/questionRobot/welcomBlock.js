@@ -1,5 +1,5 @@
 import React from "react";
-import iconBird from "../../images/icon_bird.svg";
+import iconBird from "../../images/milmil_logo.svg";
 
 const WelcomBlock = ({ version = 2, setInit = () => {} }) => {
   const initQuestions = {

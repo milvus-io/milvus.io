@@ -43,7 +43,7 @@
 
     .content {
       // space between content and menu: 64px
-      margin-left: ~"calc(@sidebar-left-margin + @sidebar-width + 32px)";
+      margin-left: ~"calc("@sidebar-left-margin" + "@sidebar-width" + 32px)";
       margin-top: 32px;
     }
 
@@ -455,7 +455,7 @@
 
     .articles {
       // sidebari:margin-left: 40px padding-left: 32px
-      max-width: ~"calc(100% - @anchor-width - @sidebar-width - 32px - 40px)";
+      max-width: ~"calc(100% - "@anchor-width~" - "@sidebar-width~" - 32px - 40px)";
 
       @media @tablet {
         max-width: 100%;

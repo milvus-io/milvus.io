@@ -16,6 +16,7 @@ import lfLogoDark from "../../images/lf_logo_dark.svg";
 import lfLogoLight from "../../images/lf_logo_light.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
+import QuestionRobot from "../questionRobot";
 
 const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const { language, languages, originalPath } = useI18next();
@@ -431,6 +432,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
           </Link>
         </div>
       </header>
+      <QuestionRobot trans={t} />
     </>
   );
 };

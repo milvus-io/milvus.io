@@ -6,7 +6,7 @@
 
 .notfound-container {
   width: 100%;
-  min-height: calc(100vh - @header-height - @footer-height);
+  min-height: ~"calc(100vh - @header-height - @footer-height)";
   padding-top: @header-height;
   box-sizing: border-box;
   text-align: center;
@@ -14,7 +14,7 @@
   align-items: center;
 
   @media @phone {
-    min-height: calc(100vh - @header-mobile-height - @footer-height);
+    min-height: ~"calc(100vh - @header-mobile-height - @footer-height)";
     padding-top: @header-mobile-height;
   }
 

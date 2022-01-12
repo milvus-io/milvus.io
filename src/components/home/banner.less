@@ -130,6 +130,8 @@
   height: 100%;
   padding: 160px 0 80px 0;
   grid-column-gap: 10%;
+  // no more than header
+  z-index: 10;
 
   .bucket-container {
     aspect-ratio: 1;
@@ -145,6 +147,7 @@
     line-break: auto;
     min-height: 210px;
     padding-bottom: 26px;
+    padding-top: 32px;
     grid-area: title;
   }
   p.subtitle {
@@ -202,7 +205,9 @@
 
     .btn-watch {
       .secondaryBtn();
-      background: #000000;
+      // background: #000000;
+      background: transparent;
+      border: 0;
       color: #ffffff;
       &:hover {
         border-color: transparent;
@@ -226,7 +231,7 @@
     }
     .num {
       font-family: "Roboto Mono";
-      font-weight: 300;
+      font-weight: 400;
       font-size: 32px;
       line-height: 42.2px;
       letter-spacing: 0.2px;

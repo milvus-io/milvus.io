@@ -14,8 +14,9 @@ import ExpansionTreeView from "../treeView/ExpansionTreeView";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
+import { sortVersions } from "../../utils/index";
 
-const LeftNav = (props) => {
+const LeftNav = props => {
   const {
     homeUrl,
     homeLabel,
@@ -62,7 +63,7 @@ const LeftNav = (props) => {
     setTreeItems(mergedMenuList);
   }, [docMenus]);
 
-  const handleVersionChange = (event) => {
+  const handleVersionChange = event => {
     const v = event.target.value;
     setSelectedVersion(v);
   };
@@ -70,6 +71,8 @@ const LeftNav = (props) => {
   useEffect(() => {
     setSelectedVersion(currentVersion);
   }, [currentVersion]);
+
+  const sortedVersions = docVersions.sort(sortVersions);
 
   const generateContent = () => (
     <>
@@ -85,7 +88,7 @@ const LeftNav = (props) => {
             value={selectedVersion}
             onChange={handleVersionChange}
           >
-            {docVersions.map((i) => (
+            {sortedVersions.map(i => (
               <MenuItem key={i} value={i}>
                 <Link
                   to={i === "v0.x" ? `/docs/${i}/overview.md` : `/docs/${i}`}

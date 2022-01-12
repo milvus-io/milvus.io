@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -46,11 +46,11 @@ const EXAMPLES = {
   search: "search",
   install: "install",
 };
-let timeId = null;
-let keyIndex = 0;
+// let timeId = null;
+// let keyIndex = 0;
 
 const Code = props => {
-  const { t = () => { } } = props;
+  const { t = () => {} } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.manage);
 
@@ -58,16 +58,16 @@ const Code = props => {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    timeId = setInterval(() => {
-      const keys = Object.keys(EXAMPLES);
-      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-      setActivExample(EXAMPLES[keys[keyIndex]]);
-    }, 6000);
-    return () => {
-      clearInterval(timeId);
-    };
-  }, []);
+  // useEffect(() => {
+  //   timeId = setInterval(() => {
+  //     const keys = Object.keys(EXAMPLES);
+  //     keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+  //     setActivExample(EXAMPLES[keys[keyIndex]]);
+  //   }, 6000);
+  //   return () => {
+  //     clearInterval(timeId);
+  //   };
+  // }, []);
 
   const codeExample = useMemo(() => {
     switch (activeExample) {
@@ -83,16 +83,16 @@ const Code = props => {
   }, [activeExample]);
 
   const handleActiveClick = active => {
-    const index = Object.keys(EXAMPLES).findIndex(v => v === active);
-    keyIndex = index;
+    // const index = Object.keys(EXAMPLES).findIndex(v => v === active);
+    // keyIndex = index;
     setActivExample(active);
 
-    timeId && clearInterval(timeId);
-    timeId = setInterval(() => {
-      const keys = Object.keys(EXAMPLES);
-      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-      setActivExample(EXAMPLES[keys[keyIndex]]);
-    }, 6000);
+    // timeId && clearInterval(timeId);
+    // timeId = setInterval(() => {
+    //   const keys = Object.keys(EXAMPLES);
+    //   keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+    //   setActivExample(EXAMPLES[keys[keyIndex]]);
+    // }, 6000);
   };
 
   const { tabs, learnMoreLink } = useMemo(() => {
@@ -158,7 +158,9 @@ const Code = props => {
             ></div>
           </div>
           <div
-            className={clsx('shooting-title', { active: activeExample === EXAMPLES.manage })}
+            className={clsx("shooting-title", {
+              active: activeExample === EXAMPLES.manage,
+            })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.manage)}
             onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
@@ -167,7 +169,9 @@ const Code = props => {
             {t("v3trans.home.code.manage")}
           </div>
           <div
-            className={clsx('shooting-title', { active: activeExample === EXAMPLES.search })}
+            className={clsx("shooting-title", {
+              active: activeExample === EXAMPLES.search,
+            })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.search)}
             tabIndex={0}
@@ -176,7 +180,9 @@ const Code = props => {
             {t("v3trans.home.code.search")}
           </div>
           <div
-            className={clsx('shooting-title', { active: activeExample === EXAMPLES.index })}
+            className={clsx("shooting-title", {
+              active: activeExample === EXAMPLES.index,
+            })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.index)}
             tabIndex={0}
@@ -184,7 +190,7 @@ const Code = props => {
           >
             {t("v3trans.home.code.index")}
           </div>
-          <Link to="/docs">
+          <Link to={learnMoreLink}>
             <button className="secondaryBtnSm learn-more">
               {t("v3trans.home.code.learn")}
             </button>

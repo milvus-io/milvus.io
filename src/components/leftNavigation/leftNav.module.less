@@ -2,13 +2,14 @@
 @import "../../css/variables/color.less";
 
 .selectorItem {
-  color: black;
-
   font-family: Inter;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.02em;
+
+  color: @color-black;
 
   width: 100%;
 }
@@ -18,7 +19,6 @@
 
   display: flex;
   flex-direction: column;
-  gap: 20px;
 
   // border-right: 1px solid @color-grey-04;
 }
@@ -53,11 +53,35 @@
 }
 
 .mobile {
-  &.selector {
-    padding: 18px;
+  &.tree {
+    width: 250px;
+  }
+}
+
+.selectorContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 250px;
+  padding: 12px 8px 6px 31px;
+
+  .selector {
+    width: 90px;
   }
 
-  &.tree {
-    width: 200px;
+  .homeBtn {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: @color-grey-01;
+
+    &.selected {
+      font-weight: bold;
+
+      color: @text-blue;
+    }
   }
 }

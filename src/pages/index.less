@@ -202,6 +202,7 @@
           position: absolute;
           left: 0;
           transform: rotateZ(0deg);
+          // overflow: hidden;
           &.install-shooting {
             top: 0px;
           }
@@ -220,6 +221,11 @@
           .shooting_star {
             animation: tail1 6000ms ease-in-out infinite,
               shooting1 6000ms ease-in-out infinite;
+
+            @media @tablet, @phone {
+              animation: tail1 6000ms ease-in-out infinite,
+                shooting3 6000ms ease-in-out infinite;
+            }
           }
         }
 
@@ -279,16 +285,6 @@
       text-align: center;
       color: @color-black;
     }
-    p {
-      font-family: Inter;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 18px;
-      line-height: 26px;
-      text-align: center;
-      color: @color-grey-01;
-      max-width: 600px;
-    }
   }
 
   .attu-section {
@@ -323,6 +319,11 @@
       font-weight: bold;
       font-size: 16px;
       line-height: 24px;
+      color: @color-grey-03;
+
+      &.active {
+        color: @color-black;
+      }
 
       @media @tablet, @phone {
         font-size: 14px;
@@ -332,7 +333,7 @@
       }
     }
 
-    .attu-feature {
+    &.section3 .attu-feature {
       .shooting_star_container {
         &.manage-shooting {
           top: 118px;

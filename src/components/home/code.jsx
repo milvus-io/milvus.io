@@ -110,7 +110,7 @@ const Code = props => {
       case EXAMPLES.install:
       default:
         return {
-          tabs: ["Ubuntu", "CentOS", "Kubernetes"],
+          tabs: ["Ubuntu", "Centos", "Kubernetes"],
           learnMoreLink: "/docs/install_cluster-helm.md",
         };
     }
@@ -119,11 +119,7 @@ const Code = props => {
   return (
     <section className="section3 col-12 col-8 col-4">
       <Box sx={{ borderColor: "divider" }} className={`code-example-tab`}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={value} onChange={handleChange} aria-label="code tab">
           {tabs.map((v, i) => (
             <Tab key={v} label={v} {...a11yProps(i)} />
           ))}

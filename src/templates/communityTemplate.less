@@ -12,6 +12,7 @@
     background-size: cover;
     min-height: 235px;
     width: calc(100vw - 286px);
+
     @media @tablet, @phone {
       width: 100%;
     }
@@ -31,6 +32,11 @@
       color: @color-white;
 
       padding-bottom: 9px;
+
+      @media @phone {
+        font-size: 32px;
+        line-height: 42px;
+      }
     }
 
     .sub-title {
@@ -44,6 +50,10 @@
       /* identical to box height, or 150% */
 
       color: @color-white;
+      @media @phone {
+        font-size: 14px;
+        line-height: 20px;
+      }
     }
   }
 
@@ -80,6 +90,10 @@
     /* Black */
 
     color: @color-black;
+    @media @phone {
+      font-size: 14px;
+      line-height: 20px;
+    }
 
     @media @phone {
       font-size: 14px;

@@ -48,7 +48,13 @@ html {
 
   // image in docs
   .gatsby-resp-image-wrapper {
-    margin-top: 32px;
+    min-width: 32px;
+    height: auto;
+    width: 90%;
+
+    @media @tablet {
+      margin: 24px auto;
+    }
   }
 
   .language-javascript,

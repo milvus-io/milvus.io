@@ -31,6 +31,7 @@ const LeftNav = props => {
     isMobile = false,
     language,
     version,
+    showHome = false,
   } = props;
 
   const [treeItems, setTreeItems] = useState([]);
@@ -77,29 +78,45 @@ const LeftNav = props => {
   const generateContent = () => (
     <>
       {selectedVersion && (
-        <FormControl
-          fullWidth
-          size="small"
-          className={clsx(styles.selector, { [styles.mobile]: isMobile })}
+        <div
+          className={clsx("selector-container", styles.selectorContainer, {
+            [styles.mobile]: isMobile,
+          })}
         >
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={selectedVersion}
-            onChange={handleVersionChange}
+          <Link
+            to={homeUrl}
+            className={clsx(styles.homeBtn, {
+              [styles.selected]: mdId === "home",
+            })}
           >
-            {sortedVersions.map(i => (
-              <MenuItem key={i} value={i}>
-                <Link
-                  to={i === "v0.x" ? `/docs/${i}/overview.md` : `/docs/${i}`}
-                  className={styles.selectorItem}
-                >
-                  {i}
-                </Link>
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            {homeLabel}
+          </Link>
+          <FormControl
+            fullWidth
+            size="small"
+            className={clsx("selector", styles.selector, {
+              [styles.mobile]: isMobile,
+            })}
+          >
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedVersion}
+              onChange={handleVersionChange}
+            >
+              {sortedVersions.map(i => (
+                <MenuItem key={i} value={i}>
+                  <Link
+                    to={i === "v0.x" ? `/docs/${i}/overview.md` : `/docs/${i}`}
+                    className={styles.selectorItem}
+                  >
+                    {i}
+                  </Link>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
       )}
       <ExpansionTreeView
         itemList={treeItems}
@@ -111,6 +128,7 @@ const LeftNav = props => {
         defaultExpandIcon={<ChevronRightIcon />}
         homeUrl={homeUrl}
         homeLabel={homeLabel}
+        showHome={showHome}
         currentMdId={mdId}
         language={language}
       />

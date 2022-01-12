@@ -394,11 +394,7 @@
     },
     "banner": {
       "entry": "Hacktoberfest is here! Dive into open source with Milvus. Join now",
-      "title": [
-        "Cloud-Native.",
-        "Highly Scalable.",
-        "Blazing Fast."
-      ],
+      "title": ["Cloud-Native.", "Highly Scalable.", "Blazing Fast."],
       "subTitle": "Milvus",
       "text": "Open-source vector database for unstructured data",
       "startBtn": {
@@ -594,11 +590,7 @@
     },
     "fifthSection": {
       "title": "Issues",
-      "listHeader": [
-        "Component",
-        "Description",
-        "Issue / Guidelines"
-      ],
+      "listHeader": ["Component", "Description", "Issue / Guidelines"],
       "list": [
         {
           "cate": "Milvus Code",
@@ -727,7 +719,7 @@
       }
     },
     "docs": {
-      "homeTitle": "Docs Home",
+      "homeTitle": "Home",
       "blogTitle": "Blog",
       "commitTrans": "was last updated at",
       "faqTitle": "Most Related Questions",

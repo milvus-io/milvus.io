@@ -18,6 +18,7 @@ const ExpansionTreeView = props => {
     linkClassName = "",
     homeUrl,
     homeLabel,
+    showHome = false,
     currentMdId,
     language: lng,
     ...others
@@ -136,7 +137,7 @@ const ExpansionTreeView = props => {
       {...others}
       onClick={handleClickMenuLink}
     >
-      {homeLabel && homeUrl && (
+      {showHome && (
         <TreeItem
           nodeId={`home-${homeLabel}`}
           className={itemClassName}

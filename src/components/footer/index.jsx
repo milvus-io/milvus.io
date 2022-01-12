@@ -12,15 +12,15 @@ import * as styles from "./index.module.less";
 
 const footerJson = [
   {
-    title: "about",
+    title: "resources",
     children: [
-      { name: "Milvus", trans: false, to: "/" },
+      { name: "Docs", trans: false, to: "/docs" },
       {
-        name: "Milvus_CLI",
+        name: "Blog",
         trans: false,
-        to: "https://github.com/zilliztech/milvus_cli",
+        to: "/blog",
       },
-      { name: "blog", trans: true, to: "/blog" },
+      { name: "Learn", trans: false, to: "https://zilliz.com/learn" },
     ],
   },
   {

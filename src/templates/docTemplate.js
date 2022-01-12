@@ -16,7 +16,11 @@ import Aside from "../components/aside";
 import Seo from "../components/seo";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
-import { useCodeCopy, useMultipleCodeFilter } from "../hooks/doc-dom-operation";
+import {
+  useCodeCopy,
+  useMultipleCodeFilter,
+  useFilter,
+} from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
 
 export const query = graphql`
@@ -151,7 +155,7 @@ export default function Template({ data, pageContext }) {
   );
   useMultipleCodeFilter();
   useGenAnchor(version, editPath);
-
+  useFilter();
   return (
     <Layout t={t} showFooter={false}>
       <Seo
@@ -290,7 +294,7 @@ const DocContent = props => {
       title: "Didn't find what you need?",
     },
     question: {
-      title: "Most Related Questions",
+      title: "You may also want to know",
     },
   };
   return (

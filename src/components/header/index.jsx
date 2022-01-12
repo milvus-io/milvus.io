@@ -307,9 +307,8 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       </header>
       {/* desktop header */}
       <header
-        className={`${styles.header} ${
-          isLightHeader ? styles.light : ""
-        } ${className}`}
+        className={`${styles.header} ${isLightHeader ? styles.light : ""
+          } ${className}`}
       >
         <div className={styles.leftSection}>
           {logoSection}

@@ -105,13 +105,13 @@ const Code = props => {
       case EXAMPLES.manage:
         return {
           tabs: ["Create collection", "Create index", "Insert data"],
-          learnMoreLink: "/docs/serach.md",
+          learnMoreLink: "/docs/create_collection.md",
         };
       case EXAMPLES.install:
       default:
         return {
           tabs: ["Ubuntu", "Centos", "Kubernetes"],
-          learnMoreLink: "/docs/install_cluster-helm.md",
+          learnMoreLink: "/docs/search.md",
         };
     }
   }, [activeExample]);

@@ -15,11 +15,11 @@ export default function FormDialog(props) {
   const [question, setQuestion] = useState("");
   const [isQuestionValid, setIsQuestionValid] = useState(true);
 
-  const handleEmailChange = (event) => {
+  const handleEmailChange = event => {
     setEmail(event.target.value);
   };
 
-  const handleQuestionChange = (event) => {
+  const handleQuestionChange = event => {
     setQuestion(event.target.value);
   };
 

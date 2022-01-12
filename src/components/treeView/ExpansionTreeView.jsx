@@ -6,9 +6,9 @@ import TreeItem from "@mui/lab/TreeItem";
 import CustomIconLink from "../customIconLink";
 import "./ExpansionTreeView.less";
 
-const SCROLL_TOP = '@@scroll|menu';
+const SCROLL_TOP = "@@scroll|menu";
 
-const ExpansionTreeView = (props) => {
+const ExpansionTreeView = props => {
   // https://mui.com/components/tree-view/
   // itemList = [ { id='', children = [], label='', link='' }, ...]
   const {
@@ -27,7 +27,7 @@ const ExpansionTreeView = (props) => {
   const filterExpandedItems = (targetId, items = []) => {
     const ids = [];
     const treeForEach = (tree, func, parent = {}) => {
-      tree.forEach((data) => {
+      tree.forEach(data => {
         data.children && treeForEach(data.children, func, data);
         func(parent, data);
       });
@@ -41,7 +41,7 @@ const ExpansionTreeView = (props) => {
   };
 
   const handleClickMenuLink = () => {
-    const menuTree = document.querySelector('.mv3-tree-view');
+    const menuTree = document.querySelector(".mv3-tree-view");
     window.sessionStorage.setItem(SCROLL_TOP, menuTree.scrollTop);
   };
 
@@ -51,7 +51,7 @@ const ExpansionTreeView = (props) => {
   }, [itemList, currentMdId]);
 
   useEffect(() => {
-    const menuTree = document.querySelector('.mv3-tree-view');
+    const menuTree = document.querySelector(".mv3-tree-view");
     const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
 
     // mutationObserver can't be disconnected,it leads to container scrolls as long as menu item be clicked
@@ -60,14 +60,13 @@ const ExpansionTreeView = (props) => {
       if (menuTree) {
         menuTree.scrollTo({
           top: scrollTop,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       }
     });
   }, []);
 
-
-  const handleClickParentTree = (id) => {
+  const handleClickParentTree = id => {
     const currentSelectedIds = [...expandedIds].reverse();
     const idIndex = currentSelectedIds.indexOf(id);
     if (idIndex === -1) {
@@ -103,31 +102,32 @@ const ExpansionTreeView = (props) => {
   };
 
   const generateTreeItem = ({ id, label, link, children }) => {
-    return (
-      <>
-        {children?.length ? (
-          <TreeItem
-            key={id}
-            className={itemClassName}
-            nodeId={id}
-            label={label}
-            onClick={() => {
-              handleClickParentTree(id);
-            }}
-          >
-            {children.map((i) => generateTreeItem(i))}
-          </TreeItem>
-        ) : (
-          <TreeItem
-            key={id}
-            className={itemClassName}
-            nodeId={id}
-            label={link ? generateLink(link, label, handleClickMenuLink, linkClassName) : label}
-          />
-        )}
-      </>
+    return children?.length ? (
+      <TreeItem
+        key={`parent-${id}-${link}`}
+        className={itemClassName}
+        nodeId={id}
+        label={label}
+        onClick={() => {
+          handleClickParentTree(id);
+        }}
+      >
+        {children.map(i => generateTreeItem(i))}
+      </TreeItem>
+    ) : (
+      <TreeItem
+        key={`child-${id}-${link}`}
+        className={itemClassName}
+        nodeId={id}
+        label={
+          link
+            ? generateLink(link, label, handleClickMenuLink, linkClassName)
+            : label
+        }
+      />
     );
   };
+
   return (
     <TreeView
       className={clsx("mv3-tree-view", { [treeClassName]: treeClassName })}
@@ -153,7 +153,7 @@ const ExpansionTreeView = (props) => {
           }
         />
       )}
-      {itemList.map((i) => generateTreeItem(i))}
+      {itemList.map(i => generateTreeItem(i))}
     </TreeView>
   );
 };

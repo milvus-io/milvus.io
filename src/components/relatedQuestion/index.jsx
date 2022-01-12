@@ -16,7 +16,7 @@ export default function RelatedQuestion(props) {
 
   const relatedQuestions = useGetFaq(relatedKey);
 
-  const handleClickQuestion = (question) => {
+  const handleClickQuestion = question => {
     const [title, content] = question;
     setSelectedQuestion({ q: title, a: content });
     setShowModal(true);
@@ -35,8 +35,8 @@ export default function RelatedQuestion(props) {
         {title}
       </Typography>
       <ul className={styles.container}>
-        {relatedQuestions?.map((question) => {
-          const [content, isLink] = question;
+        {relatedQuestions?.map(question => {
+          const [, content, isLink] = question;
           return (
             // <FaqCard question={question} key={question[0]} />
             <Typography

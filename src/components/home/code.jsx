@@ -159,12 +159,23 @@ const Code = props => {
           </div>
           <div
             className={clsx("shooting-title", {
+              active: activeExample === EXAMPLES.install,
+            })}
+            role="button"
+            onClick={() => handleActiveClick(EXAMPLES.install)}
+            onKeyDown={() => handleActiveClick(EXAMPLES.install)}
+            tabIndex={0}
+          >
+            {t("v3trans.home.code.install")}
+          </div>
+          <div
+            className={clsx("shooting-title", {
               active: activeExample === EXAMPLES.manage,
             })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.manage)}
-            onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
             tabIndex={0}
+            onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
           >
             {t("v3trans.home.code.manage")}
           </div>
@@ -178,17 +189,6 @@ const Code = props => {
             onKeyDown={() => handleActiveClick(EXAMPLES.search)}
           >
             {t("v3trans.home.code.search")}
-          </div>
-          <div
-            className={clsx("shooting-title", {
-              active: activeExample === EXAMPLES.install,
-            })}
-            role="button"
-            onClick={() => handleActiveClick(EXAMPLES.install)}
-            tabIndex={0}
-            onKeyDown={() => handleActiveClick(EXAMPLES.install)}
-          >
-            {t("v3trans.home.code.install")}
           </div>
           <Link to={learnMoreLink}>
             <button className="secondaryBtnSm learn-more">

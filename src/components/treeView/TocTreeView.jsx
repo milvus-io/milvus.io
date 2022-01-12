@@ -13,7 +13,7 @@ const title2hash = (title = "") => {
   return anchor;
 };
 
-const TocTreeView = (props) => {
+const TocTreeView = props => {
   const { maxDepth = 3, items, title, className } = props;
 
   const parseItems = (originItems = []) => {
@@ -72,24 +72,20 @@ const TocTreeView = (props) => {
   };
 
   const generateTreeItem = ({ id, label, link, children }) => {
-    return (
-      <>
-        {children?.length ? (
-          <TreeItem
-            key={`${id}-parent`}
-            nodeId={id}
-            label={link ? generateLink(link, label) : label}
-          >
-            {children.map((i) => generateTreeItem(i))}
-          </TreeItem>
-        ) : (
-          <TreeItem
-            key={`${id}-children`}
-            nodeId={id}
-            label={link ? generateLink(link, label) : label}
-          />
-        )}
-      </>
+    return children?.length ? (
+      <TreeItem
+        key={`${id}-parent`}
+        nodeId={id}
+        label={link ? generateLink(link, label) : label}
+      >
+        {children.map(i => generateTreeItem(i))}
+      </TreeItem>
+    ) : (
+      <TreeItem
+        key={`${id}-children`}
+        nodeId={id}
+        label={link ? generateLink(link, label) : label}
+      />
     );
   };
 
@@ -109,7 +105,7 @@ const TocTreeView = (props) => {
         // selected={selectedId}
         expanded={expandedItemsIdList}
       >
-        {nestedItemsMemo.result.map((i) => generateTreeItem(i))}
+        {nestedItemsMemo.result.map(i => generateTreeItem(i))}
       </TreeView>
     </div>
   );

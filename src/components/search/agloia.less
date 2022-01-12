@@ -3,12 +3,19 @@
 .DocSearch-Button {
   width: 100%;
   font-size: 14px;
-  margin-right: 10px;
   padding-left: 20px;
   background-color: #f5f8fb;
-  svg {
+  border-radius: 4px;
+  margin: 0;
+  @media @desktop1024, @phone, @tablet {
+    margin: 0 10px;
+  }
+
+  .DocSearch-Search-Icon {
     width: 14px;
     height: 14px;
+    margin-right: 10px;
+    color: #9ca6b2;
   }
 
   .DocSearch-Button-Keys {
@@ -21,6 +28,7 @@
   }
 }
 .DocSearch-Button-Placeholder {
+  color: #9ca6b2;
   @media (max-width: 750px) {
     display: block;
   }
@@ -29,7 +37,9 @@
   font-family: Inter;
 }
 .DocSearchWrapper {
-  padding-top: 10px;
   display: flex;
   justify-content: right;
+  @media @tablet, @phone {
+    padding-top: 10px;
+  }
 }

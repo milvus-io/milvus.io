@@ -426,10 +426,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
         <div className={styles.rightSection}>
           {actionBar}
-          <Link
-            to="/docs/v2.0.0/install_standalone-docker.md"
-            className={styles.startBtn}
-          >
+          <Link to="/docs/example_code.md" className={styles.startBtn}>
             {t("v3trans.main.nav.getstarted")}
           </Link>
         </div>

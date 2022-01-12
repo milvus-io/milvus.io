@@ -25,6 +25,7 @@ const HomeBanner = props => {
             className="btn-watch"
             href="https://www.youtube.com/watch?v=nQkmgCtVz5k&t=7s"
             target="_blank"
+            rel="noreferrer noopener"
           >
             {t("v3trans.home.banner.watch")}
 

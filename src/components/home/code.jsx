@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -55,7 +55,7 @@ const EXAMPLES = {
   search: "search",
   index: "index",
 };
-// let timeId = null;
+let timeId = null;
 let keyIndex = 0;
 
 const Code = props => {
@@ -144,29 +144,33 @@ const Code = props => {
               })}
             ></div>
           </div>
-          <p
-            className={clsx({ active: activeExample === EXAMPLES.manage })}
+          <div
+            className={clsx('shooting-title', { active: activeExample === EXAMPLES.manage })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.manage)}
             onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
             tabIndex={0}
           >
             {t("v3trans.home.code.manage")}
-          </p>
-          <p
-            className={clsx({ active: activeExample === EXAMPLES.search })}
+          </div>
+          <div
+            className={clsx('shooting-title', { active: activeExample === EXAMPLES.search })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.search)}
+            tabIndex={0}
+            onKeyDown={() => handleActiveClick(EXAMPLES.search)}
           >
             {t("v3trans.home.code.search")}
-          </p>
-          <p
-            className={clsx({ active: activeExample === EXAMPLES.index })}
+          </div>
+          <div
+            className={clsx('shooting-title', { active: activeExample === EXAMPLES.index })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.index)}
+            tabIndex={0}
+            onKeyDown={() => handleActiveClick(EXAMPLES.index)}
           >
             {t("v3trans.home.code.index")}
-          </p>
+          </div>
           <Link to="/docs">
             <button className="secondaryBtnSm learn-more">
               {t("v3trans.home.code.learn")}

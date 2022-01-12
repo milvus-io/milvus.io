@@ -1,0 +1,226 @@
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
+
+.robot {
+  bottom: 64px;
+  position: fixed;
+  right: 20px;
+  z-index: 100;
+
+  @media @desktop1920 {
+    right: calc(50vw - ((100vw - 340px) / 3 + 110px));
+  }
+  @media @desktop1440, @desktop1024 {
+    right: calc(50vw - ((100vw - 260px) / 7 * 3 + 110px));
+  }
+
+  @media @tablet {
+    right: calc(50vw - ((100vw - 180px) / 5 * 2 + 70px));
+  }
+
+  .openBtn,
+  .openBtnIcon {
+    width: 64px;
+    height: 64px;
+    fill: @color-white;
+
+    @media @phone {
+      height: 40px;
+      width: 40px;
+    }
+  }
+}
+
+.dialog {
+  bottom: 150px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: calc(80vh - 130px);
+  max-height: 600px;
+  position: absolute;
+  right: 20px;
+  width: 400px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+
+  @media @phone {
+    bottom: 110px;
+    max-width: 400px;
+    width: calc(100vw - 40px);
+  }
+
+  @media @desktop1920 {
+    right: calc(50vw - ((100vw - 340px) / 3 + 110px));
+  }
+  @media @desktop1440, @desktop1024 {
+    right: calc(50vw - ((100vw - 260px) / 7 * 3 + 110px));
+  }
+
+  @media @tablet {
+    right: calc(50vw - ((100vw - 180px) / 5 * 2 + 70px));
+  }
+
+  .logo {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(11%) saturate(8%)
+      hue-rotate(154deg) brightness(102%) contrast(102%);
+    height: 18px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .dialogHeader {
+    background-color: @color-primary;
+    border-radius: 8px 8px 0 0;
+    color: white;
+    font-family: "Inter";
+    font-style: normal;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 50px;
+    padding-left: 16px;
+  }
+
+  .dialogContent {
+    background-color: #f9f9f9;
+    border-left: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+
+    .myChat {
+      align-self: flex-end;
+      background-color: @color-primary;
+      border-radius: 4px;
+      color: white;
+      font-size: 14px;
+      padding: 10px;
+      max-width: 250px;
+      margin: 8px 0;
+      word-break: break-all;
+    }
+
+    .serverChat {
+      align-self: flex-start;
+      display: flex;
+      flex-direction: row;
+      font-size: 14px;
+      margin: 8px 0;
+      width: 270px;
+
+      & > img {
+        height: 25px;
+        margin-right: 8px;
+        width: 25px;
+      }
+
+      & > div {
+        background-color: white;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        & > button {
+          align-self: flex-end;
+        }
+      }
+
+      .feedback {
+        margin-top: 10px;
+      }
+
+      button {
+        background: transparent;
+        border: 0;
+        color: @color-primary;
+        cursor: pointer;
+        display: flex;
+        font-family: "Inter";
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 8px;
+        padding: 0;
+        text-align: left;
+      }
+
+      i {
+        font-size: 16px;
+        margin-left: 10px;
+        vertical-align: middle;
+      }
+
+      .chatCard {
+        align-self: flex-start;
+        border-bottom: 1px solid #eeeeee;
+        display: flex;
+        flex-direction: column;
+        line-height: 16px;
+        padding: 8px 0;
+        width: 100%;
+        word-break: break-word;
+
+        .chatTitle {
+          font-weight: 600;
+          margin-bottom: 8px;
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        a {
+          color: @color-primary;
+          font-size: 12px;
+          font-weight: bold;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  .dialogInput {
+    border: 1px solid #eeeeee;
+    border-radius: 0 0 8px 8px;
+    position: relative;
+    height: 50px;
+    background: white;
+
+    input {
+      border: 0;
+      border-radius: 8px;
+      font-size: 14px;
+      height: 100%;
+      padding: 13px 18px;
+      width: 100%;
+    }
+
+    button {
+      background: transparent;
+      background-image: url(../../images/icon_send.svg);
+      background-size: cover;
+      border: 0;
+      height: 22px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 22px;
+    }
+
+    input::placeholder {
+      color: #afafaf;
+      opacity: 1;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+}

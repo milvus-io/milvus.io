@@ -710,9 +710,9 @@
         "devfirst-desc": "Milvus provides comprehensive multi-language SDKs for your ML applications."
       },
       "code": {
-        "manage": "Manage massive vectors",
-        "search": "Vector similarity search",
-        "index": "Build with 6 index",
+        "install": "Install milvus in 2 minutes",
+        "manage": "Manage data in a traditional way",
+        "search": "Vector search never so easy",
         "learn": "Learn More"
       },
       "attu": {

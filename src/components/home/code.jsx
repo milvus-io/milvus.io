@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import { ManageVectorCodes, SearchCodes, IndexCodes } from "./code-example";
+import { MANAGE_DATA, VECTOR_SEARCH, INSTALL_MILVUS } from "./code-example";
 import clsx from "clsx";
 import HightLight from "react-highlight";
 import { Link } from "gatsby-plugin-react-i18next";
@@ -11,17 +11,8 @@ function TabPanel(props) {
   const { children, value, index, codeExample, ...other } = props;
 
   const codeType = useMemo(() => {
-    switch (index) {
-      case 0:
-        return "python";
-      case 1:
-        return "javascript";
-      case 2:
-        return "cli";
-      default:
-        return "python";
-    }
-  }, [index]);
+    return Object.keys(codeExample)[index];
+  }, [index, codeExample]);
 
   return (
     <div
@@ -33,7 +24,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }} style={{ paddingTop: 0 }}>
-          <HightLight className={codeType}>{codeExample[codeType]}</HightLight>
+          <HightLight className="python">{codeExample[codeType]}</HightLight>
           {/* <pre className={codeType}>
             <code></code>
           </pre> */}
@@ -51,9 +42,9 @@ function a11yProps(index) {
 }
 
 const EXAMPLES = {
-  manage: "manageVector",
+  manage: "manage",
   search: "search",
-  index: "index",
+  install: "install",
 };
 let timeId = null;
 let keyIndex = 0;
@@ -81,13 +72,13 @@ const Code = props => {
   const codeExample = useMemo(() => {
     switch (activeExample) {
       case EXAMPLES.manage:
-        return ManageVectorCodes;
+        return MANAGE_DATA;
       case EXAMPLES.search:
-        return SearchCodes;
-      case EXAMPLES.index:
-        return IndexCodes;
+        return VECTOR_SEARCH;
+      case EXAMPLES.install:
+        return INSTALL_MILVUS;
       default:
-        return ManageVectorCodes;
+        return INSTALL_MILVUS;
     }
   }, [activeExample]);
 
@@ -104,6 +95,27 @@ const Code = props => {
     }, 6000);
   };
 
+  const { tabs, learnMoreLink } = useMemo(() => {
+    switch (activeExample) {
+      case EXAMPLES.search:
+        return {
+          tabs: ["Vector search", "hybrid search", "Time travel"],
+          learnMoreLink: "/docs/install_cluster-helm.md",
+        };
+      case EXAMPLES.manage:
+        return {
+          tabs: ["Create collection", "Create index", "Insert data"],
+          learnMoreLink: "/docs/serach.md",
+        };
+      case EXAMPLES.install:
+      default:
+        return {
+          tabs: ["Ubuntu", "CentOS", "Kubernetes"],
+          learnMoreLink: "/docs/install_cluster-helm.md",
+        };
+    }
+  }, [activeExample]);
+
   return (
     <section className="section3 col-12 col-8 col-4">
       <Box sx={{ borderColor: "divider" }} className={`code-example-tab`}>
@@ -112,17 +124,25 @@ const Code = props => {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab disableRipple label="Python" {...a11yProps(0)} />
-          <Tab disableRipple label="Node.js" {...a11yProps(1)} />
+          {tabs.map((v, i) => (
+            <Tab key={v} label={v} {...a11yProps(i)} />
+          ))}
         </Tabs>
       </Box>
       <div className="example-wrapper">
         <div className="code-example">
           <TabPanel value={value} index={0} codeExample={codeExample} />
           <TabPanel value={value} index={1} codeExample={codeExample} />
-          {/* <TabPanel value={value} index={2} codeExample={codeExample} /> */}
+          <TabPanel value={value} index={2} codeExample={codeExample} />
         </div>
         <div className="milvus-feature">
+          <div className="shooting_star_container install-shooting">
+            <div
+              className={clsx({
+                shooting_star: activeExample === EXAMPLES.install,
+              })}
+            ></div>
+          </div>
           <div className="shooting_star_container manage-shooting">
             <div
               className={clsx({
@@ -134,13 +154,6 @@ const Code = props => {
             <div
               className={clsx({
                 shooting_star: activeExample === EXAMPLES.search,
-              })}
-            ></div>
-          </div>
-          <div className="shooting_star_container index-shooting">
-            <div
-              className={clsx({
-                shooting_star: activeExample === EXAMPLES.index,
               })}
             ></div>
           </div>

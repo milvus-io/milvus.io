@@ -50,7 +50,7 @@ let timeId = null;
 let keyIndex = 0;
 
 const Code = props => {
-  const { t = () => {} } = props;
+  const { t = () => { } } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.manage);
 
@@ -157,31 +157,35 @@ const Code = props => {
               })}
             ></div>
           </div>
-
-          <p
-            className={clsx({ active: activeExample === EXAMPLES.install })}
-            role="button"
-            onClick={() => handleActiveClick(EXAMPLES.install)}
-          >
-            {t("v3trans.home.code.install")}
-          </p>
-          <p
-            className={clsx({ active: activeExample === EXAMPLES.manage })}
+          <div
+            className={clsx('shooting-title', { active: activeExample === EXAMPLES.manage })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.manage)}
+            onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
+            tabIndex={0}
           >
             {t("v3trans.home.code.manage")}
-          </p>
-          <p
-            className={clsx({ active: activeExample === EXAMPLES.search })}
+          </div>
+          <div
+            className={clsx('shooting-title', { active: activeExample === EXAMPLES.search })}
             role="button"
             onClick={() => handleActiveClick(EXAMPLES.search)}
+            tabIndex={0}
+            onKeyDown={() => handleActiveClick(EXAMPLES.search)}
           >
             {t("v3trans.home.code.search")}
-          </p>
-
-          <Link to={learnMoreLink}>
-            <button className=" secondaryBtnSm learn-more">
+          </div>
+          <div
+            className={clsx('shooting-title', { active: activeExample === EXAMPLES.index })}
+            role="button"
+            onClick={() => handleActiveClick(EXAMPLES.index)}
+            tabIndex={0}
+            onKeyDown={() => handleActiveClick(EXAMPLES.index)}
+          >
+            {t("v3trans.home.code.index")}
+          </div>
+          <Link to="/docs">
+            <button className="secondaryBtnSm learn-more">
               {t("v3trans.home.code.learn")}
             </button>
           </Link>

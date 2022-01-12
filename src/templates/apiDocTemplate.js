@@ -45,7 +45,7 @@ export default function Template({ data, pageContext }) {
   const isMobile = ["phone", "tablet"].includes(currentWindowSize);
   const isPhone = ["phone"].includes(currentWindowSize);
   const desktop1024 = ["desktop1024"].includes(currentWindowSize);
-  const { language, t } = useI18next();
+  const { t } = useI18next();
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.

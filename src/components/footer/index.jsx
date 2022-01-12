@@ -134,7 +134,6 @@ const Footer = ({ darkMode = true, t, className }) => {
               <a
                 key={s.link}
                 href={s.link}
-                className={styles.link}
                 target="_blank"
                 rel="noopener noreferrer"
               >

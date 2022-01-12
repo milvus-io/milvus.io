@@ -93,7 +93,7 @@ export default function Template({ data, pageContext }) {
               [`is-mobile`]: isMobile,
             })}
           >
-            <div className={clsx({ ["doc-post-wrapper"]: !isHomePage })}>
+            <div className={clsx({ "doc-post-wrapper": !isHomePage })}>
               <div
                 className={clsx({
                   [`community-home-html-wrapper`]: isHomePage,

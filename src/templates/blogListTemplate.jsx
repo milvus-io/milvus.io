@@ -4,7 +4,7 @@ import * as styles from "./blogListTemplate.module.less";
 // import Seo from "../components/seo";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
-import { FILTER_TAG, PAGE_INDEX } from "../consts/index";
+import { FILTER_TAG } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
 
 import Tags from "../components/tags";
@@ -99,7 +99,7 @@ const BlogTemplate = ({ data, pageContext }) => {
     tag => {
       setCurrentTag(tag);
     },
-    [blogList]
+    []
   );
 
   const handleFilter = useCallback(
@@ -108,7 +108,7 @@ const BlogTemplate = ({ data, pageContext }) => {
       isRestore && window.sessionStorage.setItem(FILTER_TAG, tag);
       filterByTag(tag);
     },
-    [filterByTag]
+    [filterByTag, originalPath, navigate]
   );
 
   useEffect(() => {
@@ -125,7 +125,7 @@ const BlogTemplate = ({ data, pageContext }) => {
         {/* screen > 1024  */}
         <section className={`${styles.featuredBlog} `}>
           <div className={`${styles.featuredImg}  col-6`}>
-            <img src={`https://${featuredBlog.cover}`} />
+            <img src={`https://${featuredBlog.cover}`} alt="blog cover" />
           </div>
           <div className={`${styles.featuredBlogContent} col-7`}>
             <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>
@@ -162,18 +162,16 @@ const BlogTemplate = ({ data, pageContext }) => {
               return (
                 <li
                   key={index}
-                  className={`${styles.blogcard} ${
-                    index < SCROLL_SIZE * scrollIndex
-                      ? styles.fadeInup
-                      : styles.cardItem
-                  }`}
+                  className={`${index < SCROLL_SIZE * scrollIndex
+                    ? styles.fadeInup
+                    : styles.cardItem
+                    }`}
                 >
                   <BlogCard
-                    className={`${
-                      index < SCROLL_SIZE * scrollIndex
-                        ? styles.fadeInup
-                        : styles.cardItem
-                    }`}
+                    className={`${index < SCROLL_SIZE * scrollIndex
+                      ? styles.fadeInup
+                      : styles.cardItem
+                      }`}
                     locale={language}
                     title={title}
                     date={date}

@@ -199,11 +199,11 @@ const SizingTool = () => {
     const vectorNumber = formatVectors(value).toUpperCase();
     return Number(value) === 1 ? (
       <span>
-        for <span className={styles.vectorNumber}>1</span> vector{" "}
+        for <span>1</span> vector{" "}
       </span>
     ) : (
       <span>
-        for <span className={styles.vectorNumber}>{vectorNumber}</span> vectors
+        for <span>{vectorNumber}</span> vectors
       </span>
     );
   };

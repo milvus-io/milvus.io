@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import clsx from "clsx";
 import { useIntervalWhen } from "rooks";
 import Typography from "@mui/material/Typography";
@@ -79,27 +79,33 @@ const Attu = props => {
             <Typography component="h3" variant="h3" className="left-title">
               {t("v3trans.home.attu.sub-title")} <span>Attu</span>
             </Typography>
-            <p
+            <div
               className={clsx("left-li", { active: activeExample === 0 })}
               role="button"
               onClick={() => handleActiveClick(0)}
+              onKeyDown={() => handleActiveClick(0)}
+              tabIndex={0}
             >
               {t("v3trans.home.attu.statistics")}
-            </p>
-            <p
+            </div>
+            <div
               className={clsx("left-li", { active: activeExample === 1 })}
               role="button"
               onClick={() => handleActiveClick(1)}
+              onKeyDown={() => handleActiveClick(1)}
+              tabIndex={0}
             >
               {t("v3trans.home.attu.manage")}
-            </p>
-            <p
+            </div>
+            <div
               className={clsx("left-li", { active: activeExample === 2 })}
               role="button"
               onClick={() => handleActiveClick(2)}
+              onKeyDown={() => handleActiveClick(2)}
+              tabIndex={0}
             >
               {t("v3trans.home.attu.operation")}
-            </p>
+            </div>
             <div className="btn-groups">
               <CustomIconLink
                 to="https://github.com/zilliztech/attu/releases/tag/v0.1.8"

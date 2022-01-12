@@ -28,8 +28,8 @@ export default function FormDialog(props) {
       email === ""
         ? true
         : !!email.match(
-            /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-          )
+          /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        )
     );
     setIsQuestionValid(question === "" ? true : !!question?.length);
   }, [email, question]);
@@ -58,7 +58,6 @@ export default function FormDialog(props) {
             {trans("v3trans.docs.feedbackDialogContent")}
           </DialogContentText>
           <TextField
-            autoFocus
             margin="dense"
             id="email"
             label={trans("v3trans.docs.emailAddress")}

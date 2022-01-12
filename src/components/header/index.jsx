@@ -16,7 +16,6 @@ import lfLogoDark from "../../images/lf_logo_dark.svg";
 import lfLogoLight from "../../images/lf_logo_light.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
-import { useWindowSize } from "../../http/hooks";
 
 const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const { language, languages, originalPath } = useI18next();
@@ -41,9 +40,6 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, [isLightHeader, darkMode]);
-
-  const currentSize = useWindowSize();
-  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
 
   const handleLangClick = event => {
     setAnchorEl(event.currentTarget);

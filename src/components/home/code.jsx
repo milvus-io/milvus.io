@@ -181,14 +181,14 @@ const Code = props => {
           </div>
           <div
             className={clsx("shooting-title", {
-              active: activeExample === EXAMPLES.index,
+              active: activeExample === EXAMPLES.install,
             })}
             role="button"
-            onClick={() => handleActiveClick(EXAMPLES.index)}
+            onClick={() => handleActiveClick(EXAMPLES.install)}
             tabIndex={0}
-            onKeyDown={() => handleActiveClick(EXAMPLES.index)}
+            onKeyDown={() => handleActiveClick(EXAMPLES.install)}
           >
-            {t("v3trans.home.code.index")}
+            {t("v3trans.home.code.install")}
           </div>
           <Link to={learnMoreLink}>
             <button className="secondaryBtnSm learn-more">

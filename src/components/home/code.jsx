@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -46,28 +46,28 @@ const EXAMPLES = {
   search: "search",
   install: "install",
 };
-// let timeId = null;
-// let keyIndex = 0;
+let timeId = null;
+let keyIndex = 0;
 
 const Code = props => {
   const { t = () => {} } = props;
   const [value, setValue] = useState(0);
-  const [activeExample, setActivExample] = useState(EXAMPLES.manage);
+  const [activeExample, setActivExample] = useState(EXAMPLES.install);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  // useEffect(() => {
-  //   timeId = setInterval(() => {
-  //     const keys = Object.keys(EXAMPLES);
-  //     keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-  //     setActivExample(EXAMPLES[keys[keyIndex]]);
-  //   }, 6000);
-  //   return () => {
-  //     clearInterval(timeId);
-  //   };
-  // }, []);
+  useEffect(() => {
+    timeId = setInterval(() => {
+      const keys = Object.keys(EXAMPLES);
+      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setActivExample(EXAMPLES[keys[keyIndex]]);
+    }, 10000);
+    return () => {
+      clearInterval(timeId);
+    };
+  }, []);
 
   const codeExample = useMemo(() => {
     switch (activeExample) {
@@ -83,16 +83,16 @@ const Code = props => {
   }, [activeExample]);
 
   const handleActiveClick = active => {
-    // const index = Object.keys(EXAMPLES).findIndex(v => v === active);
-    // keyIndex = index;
+    const index = Object.keys(EXAMPLES).findIndex(v => v === active);
+    keyIndex = index;
     setActivExample(active);
 
-    // timeId && clearInterval(timeId);
-    // timeId = setInterval(() => {
-    //   const keys = Object.keys(EXAMPLES);
-    //   keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
-    //   setActivExample(EXAMPLES[keys[keyIndex]]);
-    // }, 6000);
+    timeId && clearInterval(timeId);
+    timeId = setInterval(() => {
+      const keys = Object.keys(EXAMPLES);
+      keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setActivExample(EXAMPLES[keys[keyIndex]]);
+    }, 10000);
   };
 
   const { tabs, learnMoreLink } = useMemo(() => {

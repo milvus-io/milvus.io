@@ -1,11 +1,14 @@
 import React, { useRef } from "react";
 import { submitInfoForm } from "../../http/submitEmail";
 import * as styles from "./index.module.less";
+import { useSubscribeSrouce } from '../../hooks';
 
 const UNIQUE_EMAIL_ID = "UNIQUE_EMAIL_ID";
 
 const Signup = ({ callback, t }) => {
   const inputRef = useRef(null);
+  const source = useSubscribeSrouce();
+  console.log('source---', source);
   const handleSubmitEmail = async () => {
     const regx =
       /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$/;
@@ -18,12 +21,6 @@ const Signup = ({ callback, t }) => {
       });
       return;
     }
-    const { search } = window.location;
-    const source = ["utm_source", "utm_medium", "utm_campaign"].every(v =>
-      search.includes(v)
-    )
-      ? "Ads：Reddit"
-      : "Milvus：demo";
 
     try {
       const { statusCode, unique_email_id } = await submitInfoForm({

@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import { sourceMap } from '../consts/newsletterSource';
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
   useEffect(() => {
@@ -39,4 +40,32 @@ export const useClickOutside = (ref, handler, events) => {
         document.removeEventListener(event, detectClickOutside);
     };
   }, [events, handler, ref]);
+};
+
+export const useSubscribeSrouce = () => {
+  const [source, setSource] = useState('');
+
+  useEffect(() => {
+    const path = window ? window.location.pathname : '';
+    if (!path) {
+      return;
+    }
+    const pathname = path === '/' ? '/' : path.replaceAll('/', '');
+    const pageSource = sourceMap[pathname];
+
+    if (pageSource === 'Milvus: demo') {
+      const { search = [] } = window && window.location;
+      const source = ["utm_source", "utm_medium", "utm_campaign"].every(v =>
+        search.includes(v)
+      )
+        ? "Ads: Reddit"
+        : "Milvus: demo";
+
+      setSource(source);
+    } else {
+      setSource(pageSource);
+    }
+
+  }, []);
+  return source;
 };

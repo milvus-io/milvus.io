@@ -31,7 +31,11 @@ const TocTreeView = props => {
       };
       const { depth, value } = item;
       const curHash = title2hash(value);
-      if (depth <= maxDepth) allLegalIds.push(`${idx}-${curHash}`);
+      if (depth <= maxDepth) {
+        allLegalIds.push(`${idx}-${curHash}`);
+      } else {
+        return prev;
+      }
       const newItem = {
         id: `${idx}-${curHash}`,
         label: value,

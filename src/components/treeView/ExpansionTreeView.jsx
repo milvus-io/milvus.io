@@ -88,7 +88,7 @@ const ExpansionTreeView = props => {
           [linkClassName]: linkClassName,
         })}
       >
-        <span>{label}</span>
+        {label}
       </CustomIconLink>
     ) : (
       <Link

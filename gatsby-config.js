@@ -210,6 +210,7 @@ let gatsbyConfigs = {
           defaultNS: "milvus",
           ns: ["milvus"],
         },
+        redirect: false,
         // pages: [
         //   {
         //     matchPath: '/docs',

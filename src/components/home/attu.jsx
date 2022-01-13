@@ -77,7 +77,7 @@ const Attu = props => {
               ></div>
             </div>
             <Typography component="h3" variant="h3" className="left-title">
-              {t("v3trans.home.attu.sub-title")} <span>Attu</span>
+              <span>Attu</span>
             </Typography>
             <div
               className={clsx("left-li", { active: activeExample === 0 })}

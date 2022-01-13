@@ -102,11 +102,6 @@ const Aside = props => {
           link: "https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--new-content-proposal.yaml&title=New Doc Proposal",
           icon: suggestBtnConf.icon,
         },
-        {
-          label: commonJoinBtnConf.label,
-          link: "https://slack.milvus.io",
-          icon: commonJoinBtnConf.icon,
-        },
       ];
     },
     api: ({ apiReferenceData }) => {
@@ -188,7 +183,12 @@ const Aside = props => {
             </ul>
           )}
           {category === "doc" && (
-            <TocTreeView items={items} title={title} className={className} />
+            <TocTreeView
+              items={items}
+              title={title}
+              className={className}
+              maxDepth={2}
+            />
           )}
         </>
       )}

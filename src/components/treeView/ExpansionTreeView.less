@@ -29,18 +29,16 @@
 }
 
 .mv3-item-link {
-  align-items: flex-start;
+  display: inline-block;
   width: 100%;
   height: 100%;
-  display: inline-block;
 
-  .CustomIconLink-wrapper {
-    padding: 3px 0;
-    margin-right: 4px;
-
-    svg {
-      height: 18px;
-      width: 18px;
-    }
+  svg,
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  svg {
+    margin-right: 8px;
   }
 }

@@ -3,7 +3,13 @@ import clsx from "clsx";
 import * as styles from "./CustomIconLink.module.less";
 
 export default function CustomIconLink(props) {
-  const { to, className = "", showIcon = true, children } = props;
+  const {
+    to,
+    className = "",
+    showIcon = true,
+    children,
+    customIcon: Icon,
+  } = props;
 
   return (
     <a
@@ -35,7 +41,6 @@ export default function CustomIconLink(props) {
           />
         </svg>
       )}
-
       {children}
     </a>
   );

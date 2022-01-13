@@ -394,7 +394,11 @@
     },
     "banner": {
       "entry": "Hacktoberfest is here! Dive into open source with Milvus. Join now",
-      "title": ["Cloud-Native.", "Highly Scalable.", "Blazing Fast."],
+      "title": [
+        "Cloud-Native.",
+        "Highly Scalable.",
+        "Blazing Fast."
+      ],
       "subTitle": "Milvus",
       "text": "Open-source vector database for unstructured data",
       "startBtn": {
@@ -590,7 +594,11 @@
     },
     "fifthSection": {
       "title": "Issues",
-      "listHeader": ["Component", "Description", "Issue / Guidelines"],
+      "listHeader": [
+        "Component",
+        "Description",
+        "Issue / Guidelines"
+      ],
       "list": [
         {
           "cate": "Milvus Code",
@@ -775,7 +783,7 @@
       "customers": "Customers",
       "communitydesc": "Milvus is backed by a strong open source community",
       "communitytitle": "Join our community",
-      "customer": "Trusted by our customers"
+      "customer": "Trusted by our users"
     },
     "404": {
       "title": "Uoops...something went wrong!",

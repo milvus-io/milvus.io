@@ -5,7 +5,7 @@
   bottom: 64px;
   position: fixed;
   right: 20px;
-  z-index: 100;
+  z-index: 90;
 
   @media @desktop1920 {
     right: calc(50vw - ((100vw - 340px) / 3 + 110px));
@@ -14,9 +14,9 @@
     right: calc(50vw - ((100vw - 260px) / 7 * 3 + 110px));
   }
 
-  @media @tablet {
-    right: calc(50vw - ((100vw - 180px) / 5 * 2 + 70px));
-  }
+  // @media @tablet {
+  //   right: calc(50vw - ((100vw - 180px) / 5 * 2 + 70px));
+  // }
 
   .openBtn,
   .openBtnIcon {
@@ -25,7 +25,7 @@
     padding: 0;
     fill: @color-white;
 
-    @media @phone {
+    @media @phone, @tablet {
       height: 40px;
       width: 40px;
     }

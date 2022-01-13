@@ -582,7 +582,7 @@ const HomeBanner = props => {
           </div>
           <div className="stats-detail">
             <p className="name">{t("v3trans.home.banner.users")}</p>
-            <p className="num">1500+</p>
+            <p className="num">1000+</p>
           </div>
         </div>
       </div>

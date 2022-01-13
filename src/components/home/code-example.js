@@ -2,46 +2,24 @@ export const MANAGE_DATA = {
   collection: `
 from pymilvus import CollectionSchema, FieldSchema, DataType, Collection
 # Prepare Schema
-book_id = FieldSchema(
-    name="book_id", 
-    dtype=DataType.INT64, 
-    is_primary=True, 
-)
-word_count = FieldSchema(
-    name="word_count", 
-    dtype=DataType.INT64,  
-)
-book_intro = FieldSchema(
-    name="book_intro", 
-    dtype=DataType.FLOAT_VECTOR, 
-    dim=2
-)
-schema = CollectionSchema(
-    fields=[book_id, word_count, book_intro], 
-    description="Test book search"
-)
+book_id = FieldSchema(name="book_id", dtype=DataType.INT64, is_primary=True)
+word_count = FieldSchema(name="word_count", dtype=DataType.INT64)
+book_intro = FieldSchema(name="book_intro", dtype=DataType.FLOAT_VECTOR, dim=2)
+schema = CollectionSchema(fields=[book_id, word_count, book_intro], description="Test book search")
 collection_name = "book"
 # Create a collection with the schema
 collection = Collection(name=collection_name, schema=schema, using='default', shards_num=2)
-
 `,
 
   index: `
 from pymilvus import Collection
 
 # Prepare index parameter
-index_params = {
-    "metric_type":"L2",
-    "index_type":"IVF_FLAT",
-    "params":{"nlist":1024}
-}
+index_params = {"metric_type":"L2", "index_type":"IVF_FLAT", "params":{"nlist":1024}}
 # Get an existing collection.
 collection = Collection("book")
 # Build Index with index params
-collection.create_index(
-    field_name="book_intro", 
-    index_params=index_params
-)
+collection.create_index(field_name="book_intro", index_params=index_params)
 `,
   insert: `
 import random

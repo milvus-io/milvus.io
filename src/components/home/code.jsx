@@ -110,7 +110,7 @@ const Code = props => {
       case EXAMPLES.install:
       default:
         return {
-          tabs: ["Ubuntu", "Centos", "Kubernetes"],
+          tabs: ["Ubuntu", "CentOS", "Kubernetes"],
           learnMoreLink: "/docs/search.md",
         };
     }

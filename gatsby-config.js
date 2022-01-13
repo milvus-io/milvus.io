@@ -145,6 +145,7 @@ let gatsbyConfigs = {
           {
             resolve: `gatsby-remark-images`,
             options: {
+              // showCaptions: ["title", "alt"],
               quality: 100,
               backgroundColor: "transparent",
               maxWidth: 1000,

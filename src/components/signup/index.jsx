@@ -8,7 +8,7 @@ const UNIQUE_EMAIL_ID = "UNIQUE_EMAIL_ID";
 const Signup = ({ callback, t }) => {
   const inputRef = useRef(null);
   const source = useSubscribeSrouce();
-  console.log('source---', source);
+
   const handleSubmitEmail = async () => {
     const regx =
       /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$/;

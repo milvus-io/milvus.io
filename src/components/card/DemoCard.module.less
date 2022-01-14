@@ -1,13 +1,11 @@
-@import '../../css/variables/color.less';
-@import '../../css/variables/responsive.less';
-@import '../../css/variables/main.less';
+@import "../../css/variables/color.less";
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/main.less";
 
 .demoCard {
   display: flex;
   width: 100%;
   justify-content: space-between;
-
-  
 
   @media @tablet {
     flex-direction: column;
@@ -48,7 +46,6 @@
       @media @tablet {
         max-width: 100%;
       }
-
 
       @media @phone {
         width: 100%;
@@ -109,7 +106,6 @@
         justify-content: center;
       }
 
-
       .tryBtn {
         text-transform: capitalize;
         margin-right: 10px;
@@ -123,8 +119,11 @@
         border-radius: 19px;
 
         &:hover {
-          svg>path {
-            fill: #fff
+          color: #00a1ea;
+          svg {
+            path {
+              fill: #00a1ea;
+            }
           }
         }
 
@@ -132,7 +131,7 @@
           margin-left: 10px;
 
           path {
-            fill: #000
+            fill: #000;
           }
         }
       }

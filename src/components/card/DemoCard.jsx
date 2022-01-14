@@ -54,7 +54,7 @@ const DemoCard = ({
 
   const handleSubmitEmail = () => {
     const { search } = window.location;
-    const source = ["utm_source", "utm_medium", "utm_campaign"].every((v) =>
+    const source = ["utm_source", "utm_medium", "utm_campaign"].every(v =>
       search.includes(v)
     )
       ? "Ads：Reddit"
@@ -82,7 +82,7 @@ const DemoCard = ({
               </button>
 
               <button
-                className={`customButton textBtn ${styles.watchBtn}`}
+                className={` customButton ${styles.watchBtn}`}
                 onClick={handleWatchVideo}
               >
                 Watch Demo
@@ -122,7 +122,7 @@ const DemoCard = ({
               </button>
 
               <button
-                className={`customButton textBtn ${styles.watchBtn}`}
+                className={`customButton  ${styles.watchBtn}`}
                 onClick={handleWatchVideo}
               >
                 Watch Demo

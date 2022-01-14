@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import milvusLogo from "../../images/milvus_logo.svg";
 import logoSpliter from "../../images/spliter.svg";
+
 import lfLogoDark from "../../images/lf_logo_dark.svg";
 import lfLogoLight from "../../images/lf_logo_light.svg";
 import * as styles from "./index.module.less";
@@ -307,8 +308,9 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       </header>
       {/* desktop header */}
       <header
-        className={`${styles.header} ${isLightHeader ? styles.light : ""
-          } ${className}`}
+        className={`${styles.header} ${
+          isLightHeader ? styles.light : ""
+        } ${className}`}
       >
         <div className={styles.leftSection}>
           {logoSection}

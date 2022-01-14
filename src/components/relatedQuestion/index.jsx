@@ -49,7 +49,11 @@ export default function RelatedQuestion(props) {
               className={styles.item}
             >
               {isLink ? (
-                <CustomIconLink to={content} className={styles.link}>
+                <CustomIconLink
+                  to={content}
+                  className={styles.link}
+                  isDoc={true}
+                >
                   {question[0]}
                 </CustomIconLink>
               ) : (

@@ -46,7 +46,8 @@ const Attu = props => {
     <>
       <div className="attu-desc col-12 col-8 col-4">
         <Typography component="h2" variant="h2">
-          {t("v3trans.home.attu.title")}
+          {t("v3trans.home.attu.title")} with{" "}
+          <span style={{ color: "#4fc4f9" }}>Attu</span>
         </Typography>
         {/* <Typography component="p" variant="h5">
           {t("v3trans.home.attu.desc")}
@@ -76,9 +77,7 @@ const Attu = props => {
                 })}
               ></div>
             </div>
-            <Typography component="h3" variant="h3" className="left-title">
-              <span>Attu</span>
-            </Typography>
+
             <div
               className={clsx("left-li", { active: activeExample === 0 })}
               role="button"

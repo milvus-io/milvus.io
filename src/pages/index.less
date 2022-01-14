@@ -360,7 +360,7 @@
       border-top: 1px solid#EFF9FE;
       color: @color-grey-03;
 
-      width: 512px;
+      width: 400px;
 
       &.active {
         color: @color-black;
@@ -391,6 +391,15 @@
           top: 206px;
           @media @tablet, @phone {
             top: 218px;
+          }
+        }
+
+        .shooting_star {
+          // be same with left-li width
+          .shootingStyle(translateX(400px));
+
+          @media @tablet, @phone {
+            .shootingStyle(translateX(300px));
           }
         }
       }

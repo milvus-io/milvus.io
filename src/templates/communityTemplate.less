@@ -86,7 +86,6 @@
 
   .about-title {
     margin-bottom: 20px;
-    margin-top: 60px;
   }
 
   p {
@@ -247,7 +246,7 @@
       font-weight: bold;
       font-size: 16px;
       line-height: 26px;
-      margin-bottom: 10px;
+      margin: 10px 0;
     }
 
     .advocate-co {
@@ -443,6 +442,11 @@
       align-items: center;
       width: fit-content;
       flex-shrink: 0;
+
+      &:hover img {
+        filter: invert(54%) sepia(53%) saturate(4664%) hue-rotate(169deg)
+          brightness(97%) contrast(101%);
+      }
     }
   }
 }

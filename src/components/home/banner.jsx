@@ -86,7 +86,7 @@ const HomeBanner = props => {
                   fill="#f92020"
                 >
                   <animateMotion
-                    dur="5s"
+                    dur="3s"
                     repeatCount="indefinite"
                     rotate="auto"
                   >
@@ -104,7 +104,7 @@ const HomeBanner = props => {
               strokeWidth="2"
               fill="#42FFD2"
             >
-              <animateMotion dur="5s" repeatCount="indefinite" rotate="auto">
+              <animateMotion dur="3s" repeatCount="indefinite" rotate="auto">
                 <mpath xlinkHref="#path" />
               </animateMotion>
             </circle>

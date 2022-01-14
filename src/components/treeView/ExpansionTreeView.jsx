@@ -87,6 +87,7 @@ const ExpansionTreeView = props => {
         className={clsx("mv3-item-link", {
           [linkClassName]: linkClassName,
         })}
+        isDoc={true}
       >
         {label}
       </CustomIconLink>

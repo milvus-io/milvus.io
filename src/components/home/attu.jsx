@@ -56,28 +56,6 @@ const Attu = props => {
       <section className="section3 col-12 col-8 col-4 attu-section">
         <div className="example-wrapper">
           <div className="milvus-feature attu-feature">
-            <div className="shooting_star_container manage-shooting">
-              <div
-                className={clsx({
-                  shooting_star: activeExample === 0,
-                })}
-              ></div>
-            </div>
-            <div className="shooting_star_container search-shooting">
-              <div
-                className={clsx({
-                  shooting_star: activeExample === 1,
-                })}
-              ></div>
-            </div>
-            <div className="shooting_star_container index-shooting">
-              <div
-                className={clsx({
-                  shooting_star: activeExample === 2,
-                })}
-              ></div>
-            </div>
-
             <div
               className={clsx("shooting-title", {
                 active: activeExample === 0,
@@ -88,6 +66,7 @@ const Attu = props => {
               tabIndex={0}
             >
               {t("v3trans.home.attu.statistics")}
+              <span className="horizontal_shooting_star" />
             </div>
             <div
               className={clsx("shooting-title", {
@@ -99,6 +78,7 @@ const Attu = props => {
               tabIndex={0}
             >
               {t("v3trans.home.attu.manage")}
+              <span className="horizontal_shooting_star" />
             </div>
             <div
               className={clsx("shooting-title", {
@@ -110,6 +90,7 @@ const Attu = props => {
               tabIndex={0}
             >
               {t("v3trans.home.attu.operation")}
+              <span className="horizontal_shooting_star" />
             </div>
             <div className="btn-groups">
               <CustomIconLink

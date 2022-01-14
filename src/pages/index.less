@@ -102,10 +102,15 @@
       gap: 124px;
       margin-top: 32px;
       @media @tablet, @phone {
-        display: block;
+        gap: 40px;
+        align-items: center;
         flex-direction: column;
         .code-example {
-          margin-bottom: 40px;
+          flex: inherit;
+          width: 100%;
+        }
+        .milvus-feature {
+          flex: inherit;
         }
       }
       .code-example {
@@ -213,6 +218,9 @@
       .milvus-feature {
         flex: 0 0 512px;
         position: relative;
+        @media @tablet, @phone {
+          flex: inherit;
+        }
         .shooting-title {
           padding: 20px 0;
           border-top: 1px solid#EFF9FE;
@@ -280,6 +288,9 @@
 
         .learn-more {
           margin-top: 40px;
+          @media @phone {
+            width: 100%;
+          }
         }
       }
     }
@@ -379,18 +390,18 @@
     &.section3 .attu-feature {
       .shooting_star_container {
         &.manage-shooting {
-          top: 118px;
+          top: 0;
         }
         &.search-shooting {
-          top: 162px;
+          top: 45px;
           @media @tablet, @phone {
-            top: 168px;
+            top: 51px;
           }
         }
         &.index-shooting {
-          top: 206px;
+          top: 90px;
           @media @tablet, @phone {
-            top: 218px;
+            top: 102px;
           }
         }
 
@@ -434,6 +445,7 @@
       @media @tablet, @phone {
         display: flex;
         flex-direction: column-reverse;
+        gap: 40px;
       }
     }
 

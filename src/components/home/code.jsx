@@ -132,27 +132,6 @@ const Code = props => {
           <TabPanel value={value} index={2} codeExample={codeExample} />
         </div>
         <div className="milvus-feature">
-          <div className="shooting_star_container install-shooting">
-            <div
-              className={clsx({
-                shooting_star: activeExample === EXAMPLES.install,
-              })}
-            ></div>
-          </div>
-          <div className="shooting_star_container manage-shooting">
-            <div
-              className={clsx({
-                shooting_star: activeExample === EXAMPLES.manage,
-              })}
-            ></div>
-          </div>
-          <div className="shooting_star_container search-shooting">
-            <div
-              className={clsx({
-                shooting_star: activeExample === EXAMPLES.search,
-              })}
-            ></div>
-          </div>
           <div
             className={clsx("shooting-title", {
               active: activeExample === EXAMPLES.install,
@@ -163,6 +142,7 @@ const Code = props => {
             tabIndex={0}
           >
             {t("v3trans.home.code.install")}
+            <span className="horizontal_shooting_star" />
           </div>
           <div
             className={clsx("shooting-title", {
@@ -174,6 +154,7 @@ const Code = props => {
             onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
           >
             {t("v3trans.home.code.manage")}
+            <span className="horizontal_shooting_star" />
           </div>
           <div
             className={clsx("shooting-title", {
@@ -185,6 +166,7 @@ const Code = props => {
             onKeyDown={() => handleActiveClick(EXAMPLES.search)}
           >
             {t("v3trans.home.code.search")}
+            <span className="horizontal_shooting_star" />
           </div>
           <Link to={learnMoreLink}>
             <button className="secondaryBtnSm learn-more">

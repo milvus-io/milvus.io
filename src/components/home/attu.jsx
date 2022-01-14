@@ -56,54 +56,41 @@ const Attu = props => {
       <section className="section3 col-12 col-8 col-4 attu-section">
         <div className="example-wrapper">
           <div className="milvus-feature attu-feature">
-            <div className="shooting_star_container manage-shooting">
-              <div
-                className={clsx({
-                  shooting_star: activeExample === 0,
-                })}
-              ></div>
-            </div>
-            <div className="shooting_star_container search-shooting">
-              <div
-                className={clsx({
-                  shooting_star: activeExample === 1,
-                })}
-              ></div>
-            </div>
-            <div className="shooting_star_container index-shooting">
-              <div
-                className={clsx({
-                  shooting_star: activeExample === 2,
-                })}
-              ></div>
-            </div>
-
             <div
-              className={clsx("left-li", { active: activeExample === 0 })}
+              className={clsx("shooting-title", {
+                active: activeExample === 0,
+              })}
               role="button"
               onClick={() => handleActiveClick(0)}
               onKeyDown={() => handleActiveClick(0)}
               tabIndex={0}
             >
               {t("v3trans.home.attu.statistics")}
+              <span className="horizontal_shooting_star" />
             </div>
             <div
-              className={clsx("left-li", { active: activeExample === 1 })}
+              className={clsx("shooting-title", {
+                active: activeExample === 1,
+              })}
               role="button"
               onClick={() => handleActiveClick(1)}
               onKeyDown={() => handleActiveClick(1)}
               tabIndex={0}
             >
               {t("v3trans.home.attu.manage")}
+              <span className="horizontal_shooting_star" />
             </div>
             <div
-              className={clsx("left-li", { active: activeExample === 2 })}
+              className={clsx("shooting-title", {
+                active: activeExample === 2,
+              })}
               role="button"
               onClick={() => handleActiveClick(2)}
               onKeyDown={() => handleActiveClick(2)}
               tabIndex={0}
             >
               {t("v3trans.home.attu.operation")}
+              <span className="horizontal_shooting_star" />
             </div>
             <div className="btn-groups">
               <CustomIconLink

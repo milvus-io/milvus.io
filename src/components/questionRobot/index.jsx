@@ -17,7 +17,7 @@ const BirdIcon = props => {
       // style={{ width: "64px", height: "64px", fill: "white" }}
       {...props}
     >
-      <g clip-path="url(#clip0_1254_2064)">
+      <g clipPath="url(#clip0_1254_2064)">
         <rect width="80" height="80" rx="40" fill="#4FC4F9" />
         <path
           d="M18 22.0803L43.2937 24.2123L47.5263 35.4459L26.0804 43.5262L18 22.0803Z"

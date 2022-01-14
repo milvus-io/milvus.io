@@ -5,8 +5,8 @@
 @font-size-normal: 18px;
 @font-size-title: 40px;
 
-.shootingStyle(@len: translateX(400px)) {
-  animation: tail1 6000ms ease-in-out infinite,
+.shootingStyle(@len: translateX(512px)) {
+  animation: tail 6000ms ease-in-out infinite,
     shootings 6000ms ease-in-out infinite;
 
   @keyframes shootings {
@@ -393,21 +393,21 @@
           top: 0;
         }
         &.search-shooting {
-          top: 45px;
+          top: 83px;
           @media @tablet, @phone {
-            top: 51px;
+            top: 67px;
           }
         }
         &.index-shooting {
-          top: 90px;
+          top: 208px;
           @media @tablet, @phone {
-            top: 102px;
+            top: 160px;
           }
         }
 
         .shooting_star {
           // be same with left-li width
-          .shootingStyle(translateX(400px));
+          .shootingStyle(translateX(512px));
 
           @media @tablet, @phone {
             .shootingStyle(translateX(300px));
@@ -439,7 +439,6 @@
 
     .example-wrapper {
       flex-wrap: nowrap;
-      gap: unset;
       align-items: center;
 
       @media @tablet, @phone {
@@ -461,6 +460,10 @@
       filter: drop-shadow(0px 20px 40px rgba(0, 43, 125, 0.25));
       border-radius: 6px;
       transition: all 0.5s;
+
+      @media @phone {
+        min-height: 240px;
+      }
 
       &.attu-example-1 {
         background-image: url(../images/home/attu_2.jpg);

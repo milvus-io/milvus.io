@@ -37,7 +37,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       return;
     }
     const onScroll = e => {
-      setIsLightHeader(e.target.documentElement.scrollTop > 100);
+      setIsLightHeader(e.target.documentElement.scrollTop > 78);
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -308,9 +308,8 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       </header>
       {/* desktop header */}
       <header
-        className={`${styles.header} ${
-          isLightHeader ? styles.light : ""
-        } ${className}`}
+        className={`${styles.header} ${isLightHeader ? styles.light : ""
+          } ${className}`}
       >
         <div className={styles.leftSection}>
           {logoSection}

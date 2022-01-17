@@ -11,13 +11,6 @@
   z-index: 100;
   .spaceBetween;
 
-  @media (max-width: 1200px) {
-    display: none;
-  }
-  @media @phone {
-    display: none;
-  }
-
   &.light {
     background-color: white;
     position: sticky;
@@ -128,21 +121,6 @@
 .logoSection {
   height: 30px;
 
-  .darkLfai {
-    display: block;
-
-    @media (max-width: 1200px) {
-      display: none;
-    }
-  }
-  .lightLfai {
-    display: none;
-
-    @media (max-width: 1200px) {
-      display: block;
-    }
-  }
-
   img {
     height: 30px;
     .hover;
@@ -199,7 +177,8 @@
 }
 
 .mobileHead {
-  display: none;
+  display: flex;
+  justify-content: center;
   padding: 25px 0;
 
   position: sticky;
@@ -207,11 +186,6 @@
   background-color: white;
   width: 100%;
   z-index: 100;
-
-  @media (max-width: 1200px) {
-    display: flex;
-    justify-content: center;
-  }
 
   @media @phone {
     padding: 15px 0;

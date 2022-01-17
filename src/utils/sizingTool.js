@@ -104,7 +104,9 @@ export const formatSize = size => {
     size = size / 1024;
     sizeStatus++;
   }
-  sizeStatus === 2
+  sizeStatus === 1
+    ? (status = 'B')
+    : sizeStatus === 2
     ? (status = 'KB')
     : sizeStatus === 3
     ? (status = 'MB')
@@ -115,7 +117,6 @@ export const formatSize = size => {
     : (status = 'KB');
 
   size = Math.ceil(size);
-
   return `${size} ${status}`;
 };
 

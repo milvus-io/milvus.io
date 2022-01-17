@@ -1,6 +1,7 @@
 @import "../css/variables/color.less";
 @import "../css/variables/responsive.less";
 @import "../css/variables/docsStyle.less";
+@import "../css/variables/main.less";
 
 @gray: #9ca6b2;
 @font-size-normal: 18px;
@@ -84,6 +85,11 @@
       position: absolute;
       right: -20%;
       top: 0;
+      .hover;
+
+      @media @tablet, @phone {
+        display: none;
+      }
     }
   }
 
@@ -102,6 +108,8 @@
   .share {
     margin: 0 auto;
     justify-content: center;
+
+    .hover;
   }
 }
 

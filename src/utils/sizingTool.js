@@ -98,13 +98,16 @@ export const computMilvusRecommonds = (
 };
 
 export const formatSize = size => {
+  console.log('size---', size);
   let sizeStatus = 1;
   let status = 'BYTE';
   while (sizeStatus < 4 && size > 4096) {
     size = size / 1024;
     sizeStatus++;
   }
-  sizeStatus === 2
+  sizeStatus === 1
+    ? (status = 'B')
+    : sizeStatus === 2
     ? (status = 'KB')
     : sizeStatus === 3
     ? (status = 'MB')
@@ -115,6 +118,7 @@ export const formatSize = size => {
     : (status = 'KB');
 
   size = Math.ceil(size);
+  console.log('sizeStatus---', sizeStatus);
 
   return `${size} ${status}`;
 };

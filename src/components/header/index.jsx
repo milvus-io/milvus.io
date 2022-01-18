@@ -72,6 +72,16 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     setIsToolOpen(isOpen);
   };
 
+  const handleMenuLinkClick = e => {
+    const link = e.target?.children[0];
+    if (link && link.tagName.toLowerCase() === "a") {
+      e.preventDefault();
+      e.stopPropagation();
+      link.click();
+      setIsDesktopTutOpen(false);
+    }
+  };
+
   const logoSection = (
     <div className={styles.logoSection}>
       <Link to="/">
@@ -310,116 +320,114 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     >
       <div className={styles.leftSection}>
         {logoSection}
-        <nav>
-          <ul className={`${styles.flexstart} ${styles.menu}`}>
-            <li>
-              <Link to="/docs" className={styles.menuItem}>
-                {t("v3trans.main.nav.docs")}
-              </Link>
-            </li>
-            <li>
-              <button
-                ref={tutRef}
-                className={styles.menuItem}
-                onClick={() => setIsDesktopTutOpen(true)}
-              >
-                {t("v3trans.main.nav.tutorials")}
-              </button>
-            </li>
-            <li>
-              <button
-                ref={toolRef}
-                className={styles.menuItem}
-                onClick={() => setIsDesktopToolOpen(true)}
-              >
-                {t("v3trans.main.nav.tools")}
-              </button>
-            </li>
-            <li>
-              <Link to="/blog" className={styles.menuItem}>
-                {t("v3trans.main.nav.blog")}
-              </Link>
-            </li>
-            <li>
-              <Link to="/community" className={styles.menuItem}>
-                {t("v3trans.main.nav.community")}
-              </Link>
-            </li>
-          </ul>
-          <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            anchorEl={tutRef.current}
-            open={isDesktopTutOpen}
-            onClose={() => {
-              setIsDesktopTutOpen(false);
-            }}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-          >
-            <MenuItem>
-              <Link to="/bootcamp" className={styles.menuLink}>
-                {t("v3trans.main.nav.bootcamp")}
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link to="/milvus-demos" className={styles.menuLink}>
-                {t("v3trans.main.nav.demo")}
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href="https://www.youtube.com/zillizchannel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.menuLink}
-              >
-                {t("v3trans.main.nav.video")}
-              </a>
-            </MenuItem>
-          </Menu>
-          <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            anchorEl={toolRef.current}
-            open={isDesktopToolOpen}
-            onClose={() => {
-              setIsDesktopToolOpen(false);
-            }}
-          >
-            <MenuItem>
-              <a
-                href="https://github.com/zilliztech/attu"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.menuLink}
-              >
-                Attu
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <a
-                href="https://github.com/zilliztech/milvus_cli"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.menuLink}
-              >
-                Milvus_CLI
-              </a>
-            </MenuItem>
-            <MenuItem>
-              <Link to="/tool-sizing" className={styles.menuLink}>
-                Sizing Tool
-              </Link>
-            </MenuItem>
-          </Menu>
-        </nav>
+        <ul className={`${styles.flexstart} ${styles.menu}`}>
+          <li>
+            <Link to="/docs" className={styles.menuItem}>
+              {t("v3trans.main.nav.docs")}
+            </Link>
+          </li>
+          <li>
+            <button
+              ref={tutRef}
+              className={styles.menuItem}
+              onClick={() => setIsDesktopTutOpen(true)}
+            >
+              {t("v3trans.main.nav.tutorials")}
+            </button>
+          </li>
+          <li>
+            <button
+              ref={toolRef}
+              className={styles.menuItem}
+              onClick={() => setIsDesktopToolOpen(true)}
+            >
+              {t("v3trans.main.nav.tools")}
+            </button>
+          </li>
+          <li>
+            <Link to="/blog" className={styles.menuItem}>
+              {t("v3trans.main.nav.blog")}
+            </Link>
+          </li>
+          <li>
+            <Link to="/community" className={styles.menuItem}>
+              {t("v3trans.main.nav.community")}
+            </Link>
+          </li>
+        </ul>
+        <Menu
+          id="demo-positioned-menu"
+          aria-labelledby="demo-positioned-button"
+          anchorEl={tutRef.current}
+          open={isDesktopTutOpen}
+          onClose={() => {
+            setIsDesktopTutOpen(false);
+          }}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+        >
+          <MenuItem onClick={handleMenuLinkClick}>
+            <Link to="/bootcamp" className={styles.menuLink}>
+              {t("v3trans.main.nav.bootcamp")}
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleMenuLinkClick}>
+            <Link to="/milvus-demos" className={styles.menuLink}>
+              {t("v3trans.main.nav.demo")}
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleMenuLinkClick}>
+            <a
+              href="https://www.youtube.com/zillizchannel"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.menuLink}
+            >
+              {t("v3trans.main.nav.video")}
+            </a>
+          </MenuItem>
+        </Menu>
+        <Menu
+          id="demo-positioned-menu"
+          aria-labelledby="demo-positioned-button"
+          anchorEl={toolRef.current}
+          open={isDesktopToolOpen}
+          onClose={() => {
+            setIsDesktopToolOpen(false);
+          }}
+        >
+          <MenuItem onClick={handleMenuLinkClick}>
+            <a
+              href="https://github.com/zilliztech/attu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.menuLink}
+            >
+              Attu
+            </a>
+          </MenuItem>
+          <MenuItem onClick={handleMenuLinkClick}>
+            <a
+              href="https://github.com/zilliztech/milvus_cli"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.menuLink}
+            >
+              Milvus_CLI
+            </a>
+          </MenuItem>
+          <MenuItem onClick={handleMenuLinkClick}>
+            <Link to="/tool-sizing" className={styles.menuLink}>
+              Sizing Tool
+            </Link>
+          </MenuItem>
+        </Menu>
       </div>
 
       <div className={styles.rightSection}>

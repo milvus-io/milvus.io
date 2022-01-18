@@ -28,20 +28,25 @@ const BlogTemplate = ({ data, pageContext }) => {
   const isMobile = ["phone"].includes(currentSize);
 
   const { featuredBlog, restBlogs } = useMemo(() => {
-    let [recommendBlogs, restBlogs, featuredBlog] = [[], [], null];
+    let [restBlogs, featuredBlog] = [[], null];
+
+    let isDetectRecommend = false;
     blogList.forEach(i => {
-      i.isRecommend ? recommendBlogs.push(i) : restBlogs.push(i);
+      if (i.isRecommend && !isDetectRecommend) {
+        // bloglist is sorted by time, 
+        // if there is more than one recommended blog, take the newest one
+        featuredBlog = i;
+        isDetectRecommend = true;
+      } else {
+        restBlogs.push(i);
+      }
     });
-    featuredBlog = recommendBlogs[0];
-    if (recommendBlogs.length === 0) {
-      // no recommend blog, take the first one
-      featuredBlog = restBlogs[0];
-      restBlogs = restBlogs.slice(1);
-    } else if (recommendBlogs.length > 1) {
-      // more than one recommend blog, take the first one, handle the rest as unrecommended
-      featuredBlog = recommendBlogs[0];
-      restBlogs = [...restBlogs, ...recommendBlogs.slice(1)];
+
+    if (!featuredBlog) {
+      featuredBlog = blogList[0];
+      restBlogs = blogList.slice(1);
     }
+
     return {
       featuredBlog,
       restBlogs

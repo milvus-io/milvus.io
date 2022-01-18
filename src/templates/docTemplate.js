@@ -54,6 +54,7 @@ export default function Template({ data, pageContext }) {
     relatedKey,
     old: mdId,
     summary,
+    group,
     newestBlog,
   } = pageContext;
 
@@ -188,6 +189,7 @@ export default function Template({ data, pageContext }) {
           language={language}
           trans={t}
           version={version}
+          group={group}
         />
         <div className="doc-right-container">
           <div

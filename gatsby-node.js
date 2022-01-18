@@ -10,20 +10,20 @@ const env = process.env.IS_PREVIEW;
 // const env = 'preview';
 console.log("========env IS_PREVIEW========", env);
 console.log("========env GITHUB_TOKEN========", process.env.GITHUB_TOKEN);
-const getNewestVersion = (versionInfo) => {
+const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
-    (v) =>
+    v =>
       v !== "master" && (versionInfo[v].released === "yes" || env === "preview")
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur
       .substring(1)
       .split(".")
-      .map((v) => Number(v));
+      .map(v => Number(v));
     const preVersion = pre
       .substring(1)
       .split(".")
-      .map((v) => Number(v));
+      .map(v => Number(v));
 
     if (curVersion[0] !== preVersion[0]) {
       pre = curVersion[0] < preVersion[0] ? pre : cur;
@@ -54,7 +54,7 @@ versionInfo.preview = {
   released: env === "preview" ? "yes" : "no",
 };
 
-Object.keys(versionInfo).forEach((v) => {
+Object.keys(versionInfo).forEach(v => {
   if (versionInfo[v].released === "yes") {
     versions.push(v);
   }
@@ -64,7 +64,7 @@ Object.keys(versionInfo).forEach((v) => {
 fs.writeFile(
   `${DOC_ROOT}/versionInfo.json`,
   JSON.stringify(Object.values(versionInfo), null, 2),
-  (err) => {
+  err => {
     if (err) throw err;
   }
 );
@@ -117,6 +117,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       origin: String
       isPublish: Boolean
       author: String
+      recommend: Boolean
       group: String
     }
   `;
@@ -213,7 +214,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const blogTemplate = path.resolve("src/templates/blogTemplate.jsx");
   const blogListTemplate = path.resolve("src/templates/blogListTemplate.jsx");
 
-  return graphql(query).then((result) => {
+  return graphql(query).then(result => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
@@ -304,34 +305,34 @@ exports.createPages = async ({ actions, graphql }) => {
 exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
   const config = getConfig();
   const miniCssExtractPlugin = config.plugins.find(
-    (plugin) => plugin.constructor.name === "MiniCssExtractPlugin"
+    plugin => plugin.constructor.name === "MiniCssExtractPlugin"
   );
   if (miniCssExtractPlugin) {
     miniCssExtractPlugin.options.ignoreOrder = true;
   }
 
-  const cssMinimizerPlugin = config.optimization?.minimizer?.find(
-    (plugin) => {
-      return plugin.constructor.name === "CssMinimizerPlugin"
-    }
-  );
+  const cssMinimizerPlugin = config.optimization?.minimizer?.find(plugin => {
+    return plugin.constructor.name === "CssMinimizerPlugin";
+  });
   if (cssMinimizerPlugin) {
-    console.log("---------------config123------------",cssMinimizerPlugin.options.minimizerOptions);
+    console.log(
+      "---------------config123------------",
+      cssMinimizerPlugin.options.minimizerOptions
+    );
     // const preset = cssMinimizerPlugin.options?.minimizerOptions?.preset;
     cssMinimizerPlugin.options.minimizerOptions = {
-      // Fix me if there is better config 
+      // Fix me if there is better config
       // refert to https://github.com/webpack-contrib/css-minimizer-webpack-plugin/blob/master/README.md
       // and https://cssnano.co/docs/optimisations/
       // preset: [
-      //   ...preset, 
+      //   ...preset,
       //   {
       //     calc: false,
       //     convertValues: false
       //   }
       // ]
-      preset: require.resolve("cssnano-preset-lite")
-
-    }
+      preset: require.resolve("cssnano-preset-lite"),
+    };
   }
   actions.replaceWebpackConfig(config);
 };

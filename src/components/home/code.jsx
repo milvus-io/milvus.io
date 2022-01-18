@@ -11,8 +11,8 @@ import "highlight.js/styles/stackoverflow-light.css";
 const HighlightBlock = ({ content }) => {
   const highlightCode = hljs.highlight(content, { language: 'python' });
   return (
-    <pre className="">
-      <code className="hljs code-block" dangerouslySetInnerHTML={{ __html: highlightCode.value }}></code>
+    <pre>
+      <code className="hljs home-code-block" dangerouslySetInnerHTML={{ __html: highlightCode.value }}></code>
     </pre>
   );
 };

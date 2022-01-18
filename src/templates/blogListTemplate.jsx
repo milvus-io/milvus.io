@@ -27,16 +27,30 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   const isMobile = ["phone"].includes(currentSize);
 
-  const [featuredBlog, restBlogs] = useMemo(() => {
-    let [recommendBlog, restBlogs] = [null, null];
-    recommendBlog = blogList.filter(v => v.isRecommend)[0];
-    if (!recommendBlog) {
-      recommendBlog = blogList[0];
+  const { featuredBlog, restBlogs } = useMemo(() => {
+    let [restBlogs, featuredBlog] = [[], null];
+
+    let isDetectRecommend = false;
+    blogList.forEach(i => {
+      if (i.isRecommend && !isDetectRecommend) {
+        // bloglist is sorted by time, 
+        // if there is more than one recommended blog, take the newest one
+        featuredBlog = i;
+        isDetectRecommend = true;
+      } else {
+        restBlogs.push(i);
+      }
+    });
+
+    if (!featuredBlog) {
+      featuredBlog = blogList[0];
       restBlogs = blogList.slice(1);
-    } else {
-      restBlogs = blogList.filter(v => !v.isRecommend);
     }
-    return [recommendBlog, restBlogs];
+
+    return {
+      featuredBlog,
+      restBlogs
+    };
   }, [blogList]);
 
   const [snackbarConfig, setSnackbarConfig] = useState({

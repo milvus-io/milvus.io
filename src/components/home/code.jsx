@@ -4,8 +4,18 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { MANAGE_DATA, VECTOR_SEARCH, INSTALL_MILVUS } from "./code-example";
 import clsx from "clsx";
-import HightLight from "react-highlight";
+import hljs from 'highlight.js';
 import { Link } from "gatsby-plugin-react-i18next";
+import "highlight.js/styles/stackoverflow-light.css";
+
+const HighlightBlock = ({ content }) => {
+  const highlightCode = hljs.highlight(content, { language: 'python' });
+  return (
+    <pre className="">
+      <code className="hljs code-block" dangerouslySetInnerHTML={{ __html: highlightCode.value }}></code>
+    </pre>
+  );
+};
 
 function TabPanel(props) {
   const { children, value, index, codeExample, ...other } = props;
@@ -24,10 +34,8 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }} style={{ paddingTop: 0 }}>
-          <HightLight className="python">{codeExample[codeType]}</HightLight>
-          {/* <pre className={codeType}>
-            <code></code>
-          </pre> */}
+          {/* <HightLight className="python">{codeExample[codeType]}</HightLight> */}
+          <HighlightBlock content={codeExample[codeType]} />
         </Box>
       )}
     </div>
@@ -50,7 +58,7 @@ let timeId = null;
 let keyIndex = 0;
 
 const Code = props => {
-  const { t = () => {} } = props;
+  const { t = () => { } } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.install);
 

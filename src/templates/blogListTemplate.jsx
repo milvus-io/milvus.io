@@ -27,7 +27,18 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   const isMobile = ["phone"].includes(currentSize);
 
-  const featuredBlog = useMemo(() => blogList[0], [blogList]);
+  const [featuredBlog, restBlogs] = useMemo(() => {
+    let [recommendBlog, restBlogs] = [null, null];
+    recommendBlog = blogList.filter(v => v.isRecommend)[0];
+    if (!recommendBlog) {
+      recommendBlog = blogList[0];
+      restBlogs = blogList.slice(1);
+    } else {
+      restBlogs = blogList.filter(v => !v.isRecommend);
+    }
+    return [recommendBlog, restBlogs];
+  }, [blogList]);
+
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
     type: "info",
@@ -65,9 +76,9 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   const filteredBlogs = useMemo(() => {
     return currentTag === "all"
-      ? blogList
-      : blogList.filter(v => v.tags.includes(currentTag));
-  }, [currentTag, blogList]);
+      ? restBlogs
+      : restBlogs.filter(v => v.tags.includes(currentTag));
+  }, [currentTag, restBlogs]);
 
   useEffect(() => {
     const FOOT_HEIGHT = isMobile ? 845 : 675;

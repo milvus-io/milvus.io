@@ -32,6 +32,7 @@ const query = `
           desc
           isPublish
           id
+          recommend
         }
         fileAbsolutePath
         html
@@ -1211,13 +1212,14 @@ const generateBlogArticlePage = (
     const fileAbsolutePath = node.fileAbsolutePath;
     const fileLang = findLang(fileAbsolutePath);
 
-    let [date, tag = "", title, desc, id, cover] = [
+    let [date, tag = "", title, desc, id, cover, isRecommend = false] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.title,
       node.frontmatter.desc,
       node.frontmatter.id,
       node.frontmatter.cover,
+      node.frontmatter.recommend,
     ];
 
     return {
@@ -1228,6 +1230,7 @@ const generateBlogArticlePage = (
       id,
       cover: cover || generateDefaultBlogCover(date),
       fileLang,
+      isRecommend,
     };
   });
 

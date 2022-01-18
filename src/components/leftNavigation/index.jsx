@@ -32,8 +32,10 @@ const LeftNav = props => {
     language,
     version,
     showHome = false,
+    group,
   } = props;
 
+  const nodeId = group || mdId;
   const [treeItems, setTreeItems] = useState([]);
   const [selectedVersion, setSelectedVersion] = useState(currentVersion);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -129,7 +131,7 @@ const LeftNav = props => {
         homeUrl={homeUrl}
         homeLabel={homeLabel}
         showHome={showHome}
-        currentMdId={mdId}
+        currentMdId={nodeId}
         language={language}
       />
     </>

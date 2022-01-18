@@ -32,6 +32,7 @@ const query = `
           desc
           isPublish
           id
+          group
         }
         fileAbsolutePath
         html
@@ -1121,6 +1122,7 @@ const generateAllDocPages = (
     const fileId = node.frontmatter?.id;
     const relatedKey = node.frontmatter.related_key;
     const summary = node.frontmatter.summary || "";
+    const group = node.frontmatter.group || "";
     let version = findVersion(fileAbsolutePath) || "master";
 
     const fileLang = findLang(fileAbsolutePath);
@@ -1166,6 +1168,7 @@ const generateAllDocPages = (
           allApiMenus,
           relatedKey,
           summary,
+          group
         }, // additional data can be passed via context
       });
     }
@@ -1193,6 +1196,7 @@ const generateAllDocPages = (
         allApiMenus,
         relatedKey,
         summary,
+        group
       }, // additional data can be passed via context
     });
   });

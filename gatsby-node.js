@@ -117,6 +117,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       origin: String
       isPublish: Boolean
       author: String
+      group: String
     }
   `;
   createTypes(typeDefs);

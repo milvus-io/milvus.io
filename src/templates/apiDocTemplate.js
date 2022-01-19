@@ -40,11 +40,16 @@ export default function Template({ data, pageContext }) {
     // newestVersion,
   } = pageContext;
   const [targetDocVersion, setTargetDocVersion] = useState();
+  const [windowSize, setWindowSize] = useState();
 
   const currentWindowSize = useWindowSize();
-  const isMobile = ["phone", "tablet"].includes(currentWindowSize);
-  const isPhone = ["phone"].includes(currentWindowSize);
-  const desktop1024 = ["desktop1024"].includes(currentWindowSize);
+  useEffect(() => {
+    setWindowSize(currentWindowSize);
+  }, [currentWindowSize]);
+
+  const isMobile = ["phone", "tablet"].includes(windowSize);
+  const isPhone = ["phone"].includes(windowSize);
+  const desktop1024 = ["desktop1024"].includes(windowSize);
   const { t } = useI18next();
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
@@ -126,6 +131,7 @@ export default function Template({ data, pageContext }) {
           [`is-desktop1024`]: desktop1024,
           [`is-mobile`]: isMobile,
           [`is-phone`]: isPhone,
+          [`loading`]: !windowSize,
         })}
       >
         <LeftNav

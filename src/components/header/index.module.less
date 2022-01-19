@@ -9,7 +9,7 @@
   top: 0;
   width: 100%;
   z-index: 100;
-  .spaceBetween;
+  .flexcenter;
 
   &.light {
     background-color: white;
@@ -20,6 +20,10 @@
     .logoSection {
       span {
         border-color: @color-primary;
+      }
+
+      .lfaiLogo {
+        background-image: url("../../images/lf_logo_light.svg");
       }
     }
 
@@ -48,15 +52,20 @@
     }
   }
 
+  .headerContainer {
+    .col-4;
+    .col-8;
+    .col-12;
+    .spaceBetween;
+  }
+
+  @media @phone, @tablet, @desktop1024 {
+    .light;
+  }
+
   .leftSection {
     .flexstart;
     align-items: center;
-
-    @media (max-width: 1440px) {
-      li {
-        margin-left: 16px;
-      }
-    }
   }
 
   .rightSection {
@@ -69,10 +78,18 @@
       position: static;
       // margin-left: 34px;
 
-      @media (max-width: 1240px) {
-        margin-left: 16px;
+      @media @phone, @tablet, @desktop1024 {
       }
     }
+  }
+}
+
+.desktopHeaderBar {
+  flex: 1;
+  .spaceBetween;
+
+  @media @phone, @tablet, @desktop1024 {
+    display: none;
   }
 }
 
@@ -126,6 +143,25 @@
     .hover;
 
     @media @phone {
+      height: 20px;
+    }
+  }
+
+  .lfaiLogo {
+    background-image: url("../../images/lf_logo_dark.svg");
+    background-size: contain;
+    display: block;
+    height: 30px;
+    transition: none;
+    width: 55px;
+    .hover;
+
+    @media @phone, @tablet, @desktop1024 {
+      background-image: url("../../images/lf_logo_light.svg");
+    }
+
+    @media @phone {
+      width: 37px;
       height: 20px;
     }
   }
@@ -215,6 +251,11 @@
   height: 30px;
   position: relative;
   width: 35px;
+  display: none;
+
+  @media @phone, @tablet, @desktop1024 {
+    display: block;
+  }
 
   @media @phone {
     height: 20px;

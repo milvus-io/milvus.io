@@ -315,22 +315,11 @@ exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
     return plugin.constructor.name === "CssMinimizerPlugin";
   });
   if (cssMinimizerPlugin) {
-    console.log(
-      "---------------config123------------",
-      cssMinimizerPlugin.options.minimizerOptions
-    );
     // const preset = cssMinimizerPlugin.options?.minimizerOptions?.preset;
     cssMinimizerPlugin.options.minimizerOptions = {
-      // Fix me if there is better config
+      //! Fix me if there is better config
       // refert to https://github.com/webpack-contrib/css-minimizer-webpack-plugin/blob/master/README.md
       // and https://cssnano.co/docs/optimisations/
-      // preset: [
-      //   ...preset,
-      //   {
-      //     calc: false,
-      //     convertValues: false
-      //   }
-      // ]
       preset: require.resolve("cssnano-preset-lite"),
     };
   }

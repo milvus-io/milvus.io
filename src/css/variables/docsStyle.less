@@ -459,8 +459,14 @@
 
   .filter,
   .tab-wrapper {
-    padding: 8px 0;
+    padding: 16px 0;
     margin-bottom: 8px;
+    white-space: nowrap;
+    overflow-x: auto;
+
+    @media @tablet, @phone {
+      padding: 8px 0;
+    }
 
     a {
       padding: 6px 40px;
@@ -468,7 +474,11 @@
       display: inline-block;
       line-height: 1.4em;
 
-      @media @tablet {
+      @media @tablet, @phone {
+        padding: 6px 16px;
+      }
+
+      @media @phone {
         padding: 6px 8px;
       }
     }

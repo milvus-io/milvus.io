@@ -11,7 +11,6 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import milvusLogo from "../../images/milvus_logo.svg";
-import logoSpliter from "../../images/spliter.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import QuestionRobot from "../questionRobot";
@@ -78,11 +77,22 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       <Link to="/">
         <img src={milvusLogo} alt="milvus-logo" />
       </Link>
-      <img
-        src={logoSpliter}
-        alt="milvus-logo-split"
-        className={styles.logoSplit}
+      <Divider
+        variant="middle"
+        sx={{
+          margin: "0 13px",
+          opacity: "0.3",
+          border: "1px solid #d1d1d1",
+          transform: "scaleX(0.5)",
+          "@media(max-width: 1024px)": {
+            margin: "0 10px",
+          },
+          "@media(max-width: 744px)": {
+            margin: "0 6px",
+          },
+        }}
       />
+
       <a
         href="https://lfaidata.foundation/projects/"
         target="_blank"
@@ -414,10 +424,15 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
           </Link>
         </nav>
       </div>
-      <QuestionRobot trans={t} />
     </header>
   );
-  return header;
+
+  return (
+    <>
+      {header}
+      <QuestionRobot trans={t} />
+    </>
+  );
 };
 
 export default Header;

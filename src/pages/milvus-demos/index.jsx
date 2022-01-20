@@ -13,7 +13,7 @@ import { CustomizedContentDialogs } from "../../components/dialog/Dialog";
 import { CustomizedSnackbars } from "../../components/snackBar";
 import { useWindowSize } from "../../http/hooks";
 import Signup from "../../components/signup";
-import Seo from '../../components/seo';
+import Seo from "../../components/seo";
 
 const DEMOS = [
   {
@@ -42,10 +42,9 @@ const DEMOS = [
     lowerCaseName: "chemical",
   },
 ];
-const TITLE =
-  'Milvus Demos';
+const TITLE = "Milvus Demos";
 const DESC =
-  'With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.';
+  "With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.";
 
 const DemoPage = () => {
   const { language, t } = useI18next();
@@ -116,7 +115,7 @@ const DemoPage = () => {
             </p>
           </div>
         </section>
-        <section className={styles.content}>
+        <section className={`${styles.content} col-4 col-8 col-12`}>
           <ul className={styles.demoList}>
             {DEMOS.map((demo, index) => (
               <li key={demo.name}>

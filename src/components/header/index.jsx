@@ -148,7 +148,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
         isLightHeader ? styles.light : ""
       } ${className}`}
     >
-      <div className={styles.headerContainer}>
+      <div className={`${styles.headerContainer} headerContainer`}>
         {logoSection}
         <div className={styles.desktopHeaderBar}>
           <div className={styles.leftSection}>

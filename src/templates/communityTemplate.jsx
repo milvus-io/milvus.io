@@ -62,7 +62,7 @@ export default function Template({ data, pageContext }) {
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
 
   return (
-    <Layout t={t} showFooter={false}>
+    <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo title={TITLE} lang={language} description={DESC} />
       <div
         className={clsx("doc-temp-container", {

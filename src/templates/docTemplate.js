@@ -158,7 +158,7 @@ export default function Template({ data, pageContext }) {
   useGenAnchor(version, editPath);
   useFilter();
   return (
-    <Layout t={t} showFooter={false}>
+    <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo
         title={title}
         lang={locale}

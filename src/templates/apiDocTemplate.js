@@ -125,7 +125,7 @@ export default function Template({ data, pageContext }) {
     ) || [];
 
   return (
-    <Layout t={t} showFooter={false}>
+    <Layout t={t} showFooter={false} headerClassName="docHeader">
       <div
         className={clsx("doc-temp-container", {
           [`is-desktop1024`]: desktop1024,

@@ -1251,11 +1251,11 @@ const generateAllDocPages = (
       type: "doc",
     });
   }
-  // try {
-  //   await axiosInstance.post("/word-count", { count_data: requestBody });
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    await axiosInstance.post("/word-count", { count_data: requestBody });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const generateBlogArticlePage = (
@@ -1420,11 +1420,11 @@ const walkApiReferenceFile = async dirpath => {
     });
   }
   console.log("APIReference word count---", requestBody);
-  // try {
-  //   await axiosInstance.post("/word-count", { count_data: requestBody });
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    await axiosInstance.post("/word-count", { count_data: requestBody });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {

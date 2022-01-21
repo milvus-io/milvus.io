@@ -1,6 +1,9 @@
+import "@fontsource/roboto-mono";
+import "@fontsource/inter";
+
 let nextRoute = '';
 
-exports.onPreRouteUpdate = ({ location }) => {
+export const onPreRouteUpdate = ({ location }) => {
   nextRoute = location.pathname;
 };
 

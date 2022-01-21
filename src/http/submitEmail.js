@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axiosInstance = axios.create({
   timeout: 20000,
-  baseURL: 'https://mservice.zilliz.com/',
+  baseURL: process.env.MSERVICE_URL || "http://localhost:3000",
   headers: {
-    'Content-Type': 'application/json; charset=utf-8',
+    "Content-Type": "application/json; charset=utf-8",
   },
 });
 

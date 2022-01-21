@@ -1222,7 +1222,10 @@ const generateAllDocPages = async (
   }
 
   try {
-    await axiosInstance.post('/word-count/create', requestBody);
+    await axiosInstance.post(
+      '/word-count',
+      JSON.stringify({ count_data: requestBody })
+    );
   } catch (error) {
     console.log(error);
   }
@@ -1369,7 +1372,10 @@ const walkApiReferenceFile = async dirpath => {
   }
   console.log('APIReference word count---', requestBody);
   try {
-    await axiosInstance.post('/word-count/create', requestBody);
+    await axiosInstance.post(
+      '/word-count',
+      JSON.stringify({ count_data: requestBody })
+    );
   } catch (error) {
     console.log(error);
   }

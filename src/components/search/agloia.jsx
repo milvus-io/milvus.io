@@ -4,8 +4,8 @@ import "@docsearch/css";
 import "instantsearch.css/themes/reset.css";
 import "./agloia.less";
 
-export const AlgoliaSearch = (props) => {
-  const { locale, version } = props;
+export const AlgoliaSearch = props => {
+  const { locale, version, trans } = props;
   return (
     <div className="DocSearchWrapper">
       <DocSearch
@@ -18,6 +18,12 @@ export const AlgoliaSearch = (props) => {
             `version:${version}`,
           ],
         }}
+        placeholder={
+          trans ? trans("v3trans.algolia.button.buttonText") : "search"
+        }
+        translations={
+          trans && trans("v3trans.algolia", { returnObjects: true })
+        }
       />
     </div>
   );

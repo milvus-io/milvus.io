@@ -807,6 +807,45 @@
     "copyBtn": {
       "copyLabel": "复制",
       "copiedLabel": "已复制!"
+    },
+    "algolia": {
+      "button": {
+        "buttonText":  "搜索",
+        "buttonAriaLabel": "搜索"
+      },
+      "modal": {
+        "searchBox": {
+          "resetButtonTitle": "清除查询",
+          "resetButtonAriaLabel": "清除查询",
+          "cancelButtonText": "取消",
+          "cancelButtonAriaLabel": "取消"
+        },
+        "startScreen": {
+          "recentSearchesTitle": "最近",
+          "noRecentSearchesText": "没有最近搜索",
+          "saveRecentSearchButtonTitle": "保存这个搜索",
+          "removeRecentSearchButtonTitle": "清除这条搜索记录",
+          "favoriteSearchesTitle": "收藏",
+          "removeFavoriteSearchButtonTitle":
+            "从收藏中删除这条搜索记录"
+        },
+        "errorScreen": {
+          "titleText": "无法取得搜索结果",
+          "helpText": "你可能需要检查你都网络。"
+        },
+        "footer": {
+          "selectText": "选择",
+          "navigateText": "导航",
+          "closeText": "关闭",
+          "searchByText": "搜索"
+        },
+        "noResultsScreen": {
+          "noResultsText": "没有结果",
+          "suggestedQueryText": "尝试搜索",
+          "openIssueText": "这条搜索应该返回结果？",
+          "openIssueLinkText": "让我们知道"
+        }
+      }
     }
   }
 }

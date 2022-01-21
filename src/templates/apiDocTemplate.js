@@ -145,6 +145,7 @@ export default function Template({ data, pageContext }) {
           mdId={name}
           isMobile={isMobile}
           pageType="api"
+          trans={t}
         />
         <div className="doc-right-container">
           <div

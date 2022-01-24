@@ -198,7 +198,7 @@ export function useGetFaq(relatedKey) {
 const getCurrentSize = () => {
   if (typeof window !== "undefined") {
     const desktop1920 = window.matchMedia("(min-width: 1920px)");
-    const desktop1440 = window.matchMedia("(min-width: 1440px)");
+    const desktop1440 = window.matchMedia("(min-width: 1439px)");
     const desktop1024 = window.matchMedia("(min-width: 1024px)");
     const desktop744 = window.matchMedia("(min-width: 744px)");
 

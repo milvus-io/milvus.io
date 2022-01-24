@@ -119,7 +119,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
     <Layout t={t}>
       <div className="bootcamp-wrapper">
         <Seo title={SeoTitle} lang={locale} description={desc} />
-        <main className="mainContainer">
+        <main className="mainContainer col-4 col-8 col-12">
           {isHomePage ? (
             <section className="content bootcamp">
               <div className="container">

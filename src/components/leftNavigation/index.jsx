@@ -33,6 +33,7 @@ const LeftNav = props => {
     version,
     showHome = false,
     group,
+    trans,
   } = props;
 
   const nodeId = group || mdId;
@@ -158,14 +159,18 @@ const LeftNav = props => {
         }}
         className={styles.drawer}
       >
-        {showSearch && <AlgoliaSearch locale={locale} version={version} />}
+        {showSearch && (
+          <AlgoliaSearch trans={trans} locale={locale} version={version} />
+        )}
 
         {generateContent()}
       </Drawer>
     </>
   ) : (
     <aside className={clsx(className, "left-nav", styles.aside)}>
-      {showSearch && <AlgoliaSearch locale={locale} version={version} />}
+      {showSearch && (
+        <AlgoliaSearch trans={trans} locale={language} version={version} />
+      )}
       {generateContent()}
     </aside>
   );

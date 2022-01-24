@@ -4,7 +4,7 @@
   align-items: center;
   background-color: transparent;
   // make header height = 80px
-  padding: 18px 40px;
+  padding: 18px 0;
   position: absolute;
   top: 0;
   width: 100%;
@@ -18,10 +18,6 @@
     border-bottom: 1px solid #ededed;
 
     .logoSection {
-      span {
-        border-color: @color-primary;
-      }
-
       .lfaiLogo {
         background-image: url("../../images/lf_logo_light.svg");
       }
@@ -138,6 +134,8 @@
 
 .logoSection {
   height: 30px;
+  display: flex;
+  align-content: center;
 
   img {
     height: 30px;
@@ -164,21 +162,6 @@
     @media @phone {
       width: 37px;
       height: 20px;
-    }
-  }
-
-  .logoSplit {
-    margin: 0 13px;
-    opacity: 0.3;
-
-    @media @tablet, @desktop1024 {
-      margin: 0 10px;
-      border-left: 0;
-    }
-
-    @media @phone {
-      margin: 0 6px;
-      border-left: 0;
     }
   }
 

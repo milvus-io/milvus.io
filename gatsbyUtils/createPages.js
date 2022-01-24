@@ -12,7 +12,7 @@ console.log("create instance", process.env.MSERVICE_URL);
 const axiosInstance = process.env.MSERVICE_URL
   ? axios.create({
       baseURL: process.env.MSERVICE_URL,
-      timeout: 30000,
+      timeout: 10000,
     })
   : null;
 

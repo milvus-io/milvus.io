@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import * as styles from "./blogTemplate.module.less";
@@ -48,6 +48,24 @@ export default function Template({ data, pageContext }) {
   const handleTagClick = (tag) => {
     navigate(`/blog?page=1#${tag}`);
   };
+
+  useEffect(() => {
+    const imgs = Array.from(document.querySelectorAll("img"));
+    const reg = /(https|http)(\S*)(jpg|jpeg|png)/;
+    imgs.forEach(img => {
+      const srcAttr = img.getAttribute("src");
+      if (reg.test(srcAttr)) {
+        const parentNode = img.parentNode;
+        parentNode.style.margin = '20px auto';
+        const title = img.getAttribute("title") || img.getAttribute("alt");
+        const captionEle = document.createElement('figcaption');
+        captionEle.className = 'gatsby-resp-image-figcaption';
+        captionEle.innerText = title;
+        parentNode.appendChild(captionEle);
+      };
+    });
+  }, []);
+
   return (
     <Layout t={t}>
       <Seo title={title} lang={language} description={desc} />

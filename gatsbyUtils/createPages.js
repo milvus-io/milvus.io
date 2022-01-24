@@ -1255,8 +1255,9 @@ const generateAllDocPages = (
     }
 
     axiosInstance.post("/word-count", { count_data: requestBody }).catch((error) => {
-      console.log(error);
+      console.log(error)
     });
+  }
 };
 
 const generateBlogArticlePage = (
@@ -1423,9 +1424,11 @@ const walkApiReferenceFile = async dirpath => {
       });
     });
   }
+
   axiosInstance.post("/word-count", { count_data: requestBody }).catch((error) => {
-    console.log(error);
+    console.log(error)
   });
+};
 
 module.exports = {
   query,

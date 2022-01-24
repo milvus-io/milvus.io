@@ -8,12 +8,12 @@ const wordCount = require("html-word-count");
 const axios = require("axios");
 const allowDocVersion = ["v1.1.1", "v2.0.0"];
 
-const isLocalEnv = !process.env.MSERVICE_URL;
-
-const axiosInstance = axios.create({
-  baseURL: process.env.MSERVICE_URL,
-  timeout: 10000,
-});
+const axiosInstance = process.env.MSERVICE_URL
+  ? axios.create({
+      baseURL: process.env.MSERVICE_URL,
+      timeout: 10000,
+    })
+  : null;
 
 // const env = 'preview';
 
@@ -1166,7 +1166,8 @@ const generateAllDocPages = (
       ["bootcamp", "community", "common", "preview"].every(
         i => !fileAbsolutePath.includes(i)
       ) &&
-      allowDocVersion.includes(version)
+      allowDocVersion.includes(version) &&
+      axiosInstance
     ) {
       let [docWordCount_EN, docWordCount_CN, currentMdWordsCount] = [0, 0, 0];
 
@@ -1240,20 +1241,18 @@ const generateAllDocPages = (
       }, // additional data can be passed via context
     });
   });
+  if (axiosInstance) {
+    const requestBody = [];
+    for (let v in statisticsResult) {
+      const { en, cn } = statisticsResult[v];
+      requestBody.push({
+        version: v,
+        count_en: en,
+        count_cn: cn,
+        type: "doc",
+      });
+    }
 
-  const requestBody = [];
-
-  for (let v in statisticsResult) {
-    const { en, cn } = statisticsResult[v];
-    console.log(v + "----" + `en:${en},cn:${cn}`);
-    requestBody.push({
-      version: v,
-      count_en: en,
-      count_cn: cn,
-      type: "doc",
-    });
-  }
-  if (!isLocalEnv) {
     try {
       axiosInstance.post("/word-count", { count_data: requestBody });
     } catch (error) {
@@ -1389,6 +1388,9 @@ const countAPiWords = (filePath, filePathList) => {
 };
 
 const walkApiReferenceFile = async dirpath => {
+  if (!axiosInstance) {
+    return;
+  }
   const dirStructure = {};
   const languageList = fs.readdirSync(dirpath);
 
@@ -1423,13 +1425,10 @@ const walkApiReferenceFile = async dirpath => {
       });
     });
   }
-  console.log("APIReference word count---", requestBody);
-  if (!isLocalEnv) {
-    try {
-      axiosInstance.post("/word-count", { count_data: requestBody });
-    } catch (error) {
-      console.log(error);
-    }
+  try {
+    axiosInstance.post("/word-count", { count_data: requestBody });
+  } catch (error) {
+    console.log(error);
   }
 };
 

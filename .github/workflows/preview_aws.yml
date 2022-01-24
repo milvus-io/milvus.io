@@ -51,7 +51,7 @@ jobs:
         run: yarn install
 
       - name: Building Gatsby site
-        run: yarn build --log-pages
+        run: yarn build
         env:
           MSERVICE_URL: ${{ secrets.MSERVICE_URL }}
       #         env:

@@ -1254,13 +1254,9 @@ const generateAllDocPages = (
       });
     }
 
-    try {
-      console.log("all doc axios", axiosInstance);
-      axiosInstance.post("/word-count", { count_data: requestBody });
-    } catch (error) {
+    axiosInstance.post("/word-count", { count_data: requestBody }).catch((error) => {
       console.log(error);
-    }
-  }
+    });
 };
 
 const generateBlogArticlePage = (
@@ -1427,13 +1423,9 @@ const walkApiReferenceFile = async dirpath => {
       });
     });
   }
-  try {
-    console.log("api reference axios", axiosInstance);
-    axiosInstance.post("/word-count", { count_data: requestBody });
-  } catch (error) {
+  axiosInstance.post("/word-count", { count_data: requestBody }).catch((error) => {
     console.log(error);
-  }
-};
+  });
 
 module.exports = {
   query,

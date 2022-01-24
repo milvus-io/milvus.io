@@ -9,7 +9,21 @@ const Signup = ({ callback, t }) => {
   const inputRef = useRef(null);
   const source = useSubscribeSrouce();
 
-  const handleSubmitEmail = async () => {
+  const throttle = (fn, delay) => {
+    let flag = true;
+    return function () {
+      const context = this;
+      if (flag) {
+        flag = false;
+        fn.call(context);
+        setTimeout(() => {
+          flag = true;
+        }, delay);
+      }
+    };
+  };
+
+  const handleSubmitEmail = throttle(async () => {
     const regx =
       /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$/;
 
@@ -46,7 +60,7 @@ const Signup = ({ callback, t }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, 5000);
 
   return (
     <section className={styles.subscribe}>

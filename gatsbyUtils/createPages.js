@@ -8,10 +8,11 @@ const wordCount = require("html-word-count");
 const axios = require("axios");
 const allowDocVersion = ["v1.1.1", "v2.0.0"];
 
+console.log("create instance", process.env.MSERVICE_URL);
 const axiosInstance = process.env.MSERVICE_URL
   ? axios.create({
       baseURL: process.env.MSERVICE_URL,
-      timeout: 10000,
+      timeout: 30000,
     })
   : null;
 
@@ -1254,6 +1255,7 @@ const generateAllDocPages = (
     }
 
     try {
+      console.log("all doc axios", axiosInstance);
       axiosInstance.post("/word-count", { count_data: requestBody });
     } catch (error) {
       console.log(error);
@@ -1426,6 +1428,7 @@ const walkApiReferenceFile = async dirpath => {
     });
   }
   try {
+    console.log("api reference axios", axiosInstance);
     axiosInstance.post("/word-count", { count_data: requestBody });
   } catch (error) {
     console.log(error);

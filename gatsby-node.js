@@ -203,6 +203,7 @@ exports.createPages = async ({ actions, graphql }) => {
     generateBlogArticlePage,
     filterMDwidthBlog,
     filterHomeMdWithVersion,
+    walkApiReferenceFile,
   } = createPagesUtils;
 
   const { createPage } = actions;
@@ -299,6 +300,8 @@ exports.createPages = async ({ actions, graphql }) => {
       allMenus,
       allApiMenus,
     });
+
+    walkApiReferenceFile("src/pages/docs/versions/master/APIReference");
   });
 };
 

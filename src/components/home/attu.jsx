@@ -49,9 +49,9 @@ const Attu = props => {
           {t("v3trans.home.attu.title")} with{" "}
           <span style={{ color: "#4fc4f9" }}>Attu</span>
         </Typography>
-        {/* <Typography component="p" variant="h5">
+        <Typography component="p" classes={{ root: 'subtitle' }}>
           {t("v3trans.home.attu.desc")}
-        </Typography> */}
+        </Typography>
       </div>
       <section className="section3 col-12 col-8 col-4 attu-section">
         <div className="example-wrapper">
@@ -101,7 +101,7 @@ const Attu = props => {
                 {t("v3trans.home.attu.download")}
               </CustomIconLink>
 
-              <Link to="/docs/attu.md">
+              <Link target="_blank" rel="noreference" to="https://github.com/zilliztech/attu">
                 <button className={`secondaryBtnSm`}>
                   {t("v3trans.home.attu.learn")}
                 </button>

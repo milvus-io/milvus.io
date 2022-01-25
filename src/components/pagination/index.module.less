@@ -1,22 +1,30 @@
-@import '../../css/variables/color.less';
+@import "../../css/variables/color.less";
+@import "../../css/variables/responsive.less";
 
 .pageinationWrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 60px 0;
-
+  @media @tablet, @phone {
+    margin: 30px 0;
+  }
   .iconWrapper {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-    line-height: 32px;
-    text-align: center;
+    display: flex;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
     cursor: pointer;
-    margin: 0 5px;
-    border-radius: 50%;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.03);
+    color: #000;
+    margin: 0 20px;
+    &:first-child {
+      margin-left: 0;
+    }
+    @media @tablet, @phone {
+      font-size: 12px;
+      line-height: 20px;
+      margin: 0 10px;
     }
 
     &.disabled {
@@ -35,22 +43,24 @@
     align-items: center;
 
     .pagesItem {
-      width: 32px;
-      height: 32px;
       font-size: 16px;
-      line-height: 32px;
       cursor: pointer;
-      margin: 0 5px;
+      margin: 0 8px;
       border-radius: 50%;
       text-align: center;
       display: block;
 
+      @media @tablet, @phone {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
       &:hover {
-        background: rgba(0, 0, 0, 0.03);
+        color: @color-text;
       }
 
       &.active {
-        background-color: rgba(0, 0, 0, 0.08);
+        color: @color-text;
       }
     }
 

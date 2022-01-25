@@ -1,5 +1,5 @@
-import React from 'react';
-import * as styles from './index.module.less';
+import React from "react";
+import * as styles from "./index.module.less";
 
 const formateList = (list, idx) => {
   const len = list.length;
@@ -7,16 +7,16 @@ const formateList = (list, idx) => {
   if (len <= 7) return list;
 
   if (idx === 1 || idx === 2) {
-    res = [].concat(list.slice(0, 3), '...', list[len - 1]);
+    res = [].concat(list.slice(0, 3), "...", list[len - 1]);
   } else if (idx === 3) {
-    res = [].concat(list.slice(0, 4), '...', list[len - 1]);
+    res = [].concat(list.slice(0, 4), "...", list[len - 1]);
   } else if (idx > 3 && idx < len - 2) {
     let temp = list.slice(idx - 2, idx + 1);
-    res = [].concat(1, '...', temp, '...', list[len - 1]);
+    res = [].concat(1, "...", temp, "...", list[len - 1]);
   } else if (idx === len - 2) {
-    res = [].concat(1, '...', list.slice(len - 4, len));
+    res = [].concat(1, "...", list.slice(len - 4, len));
   } else {
-    res = [].concat(1, '...', list.slice(len - 3, len));
+    res = [].concat(1, "...", list.slice(len - 3, len));
   }
   return res;
 };
@@ -33,7 +33,7 @@ const generateArray = (count, size) => {
 };
 
 const Pagination = ({
-  className = '',
+  className = "",
   total = 0,
   pageSize,
   handlePageIndexChange,
@@ -42,17 +42,19 @@ const Pagination = ({
   const tempList = generateArray(total, pageSize);
   const navList = formateList(tempList, pageIndex);
 
-  const handleChoosePage = idx => {
+  const handleChoosePage = (idx) => {
+    if (idx === "...") return;
     let value = 0;
     switch (idx) {
-      case 'prev':
+      case "prev":
         if (pageIndex === 1) return;
         value = pageIndex - 1;
         break;
-      case 'next':
+      case "next":
         if (pageIndex === navList.length) return;
         value = pageIndex + 1;
         break;
+
       default:
         value = idx;
         break;
@@ -62,22 +64,20 @@ const Pagination = ({
 
   return (
     <div
-      className={`${styles.pageinationWrapper} ${className ? className : ''}`}
+      className={`${styles.pageinationWrapper} ${className ? className : ""}`}
     >
       <span
         role="button"
         tabIndex="-1"
         className={`${styles.iconWrapper} ${
-          pageIndex === 1 ? styles.disabled : ''
+          pageIndex === 1 ? styles.disabled : ""
         }`}
         onClick={() => {
-          handleChoosePage('prev');
-        }}
-        onKeyDown={() => {
-          handleChoosePage('prev');
+          handleChoosePage("prev");
         }}
       >
-        <i className="fas fa-chevron-left"></i>
+        <span>&lt;</span>
+        <span>Previous</span>
       </span>
 
       <ul className={styles.pagesList}>
@@ -87,10 +87,9 @@ const Pagination = ({
               role="button"
               tabIndex="-1"
               className={`${
-                typeof item !== 'number' ? styles.ellipsis : styles.pagesItem
-              } ${item === pageIndex ? styles.active : ''} `}
+                typeof item !== "number" ? styles.ellipsis : styles.pagesItem
+              } ${item === pageIndex ? styles.active : ""} `}
               onClick={() => handleChoosePage(item)}
-              onKeyDown={() => handleChoosePage(item)}
             >
               {item}
             </span>
@@ -102,16 +101,14 @@ const Pagination = ({
         role="button"
         tabIndex="-1"
         className={`${styles.iconWrapper} ${
-          pageIndex === tempList.length ? styles.disabled : ''
+          pageIndex === tempList.length ? styles.disabled : ""
         }`}
         onClick={() => {
-          handleChoosePage('next');
-        }}
-        onKeyDown={() => {
-          handleChoosePage('next');
+          handleChoosePage("next");
         }}
       >
-        <i className="fas fa-chevron-right"></i>
+        <span>&gt;</span>
+        <span>Next</span>
       </span>
     </div>
   );

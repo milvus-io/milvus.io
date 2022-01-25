@@ -1,0 +1,164 @@
+@import "../css/variables/main.less";
+
+.customer {
+  margin: 160px auto;
+
+  @media @desktop1024 {
+    margin: 130px auto;
+  }
+
+  @media @tablet {
+    margin: 100px auto;
+  }
+
+  @media @phone {
+    margin: 80px auto;
+  }
+}
+
+.community {
+  margin: 0 auto;
+  border-radius: 12px;
+  background-color: #16246f;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 250px;
+  margin-top: 160px;
+
+  @media @desktop1024 {
+    margin-top: 130px;
+  }
+
+  @media @tablet {
+    margin-top: 100px;
+  }
+
+  @media @phone {
+    margin-top: 80px;
+  }
+
+  @media @tablet, @phone {
+    flex-direction: column;
+    height: 350px;
+    align-items: flex-start;
+  }
+}
+
+.communityTitle {
+  color: white;
+  font-size: 40px;
+  line-height: 50px;
+  font-weight: bold;
+  padding: 60px 0 60px 100px;
+
+  @media @tablet, @phone {
+    padding: 60px 70px 0 70px;
+    font-size: 24px;
+  }
+
+  @media @phone {
+    padding: 60px 20px 0 20px;
+  }
+}
+
+.communityLinkTitle {
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+  margin-bottom: 32px;
+
+  @media @tablet, @phone {
+    font-size: 12px;
+  }
+}
+
+.communityLinkContainer {
+  background-image: url("../images/index/community.svg");
+  height: 90%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: 65px 150px;
+
+  @media @desktop1024, @tablet, @phone {
+    padding: 60px 70px;
+  }
+
+  @media @phone {
+    padding: 60px 20px;
+  }
+}
+
+.communityLinks {
+  .spaceBetween;
+  align-self: center;
+
+  .communityLink {
+    color: white;
+    font-size: 32px;
+    line-height: 42px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+
+    @media @tablet, @desktop1024 {
+      font-size: 24px;
+    }
+
+    @media @phone {
+      font-size: 18px;
+    }
+
+    &:hover svg {
+      transform: translateX(8px);
+      transition: all 0.5s;
+    }
+
+    span {
+      display: flex;
+    }
+  }
+}
+
+.customerTitle {
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 58px;
+  margin-bottom: 60px;
+  text-align: center;
+
+  @media @desktop1024, @tablet, @phone {
+    font-size: 24px;
+  }
+}
+
+.brands {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(3, 69px);
+  grid-gap: 20px;
+  justify-items: center;
+
+  a {
+    display: inline-block;
+    line-height: 0;
+  }
+
+  img {
+    max-width: 133px;
+  }
+
+  @media @desktop1024 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 69px);
+  }
+
+  @media @phone, @tablet {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 48px);
+  }
+}

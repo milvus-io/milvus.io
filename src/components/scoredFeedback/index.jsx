@@ -1,112 +1,151 @@
-import React, { useState, useEffect } from 'react';
-import { globalHistory } from '@reach/router';
-import { readStatisData, writeStatisData } from '../../http/http';
-import { LikeSvg } from './svgComponent';
-import { DislikeSvg } from './svgComponent';
-import * as styles from './index.module.less';
+import React, { useState, useEffect } from "react";
+import { globalHistory } from "@reach/router";
 
-const FEEDBACK_INFO = 'feedback_info';
-let feedbackInfo = {};
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import clsx from "clsx";
+import * as styles from "./scoredFeedback.module.less";
+import { readStatisData, writeStatisData } from "../../http";
 
-const ScoredFeedback = ({ old, feedbackText }) => {
+export default function ScoredFeedback(props) {
+  const { pageId, trans } = props;
+
+  const [score, setScore] = useState("");
+
+  const scoreQuestion = trans("v3trans.docs.scoreQuestion");
+  const scoreThanks = trans("v3trans.docs.scoreThanks");
+
   const { pathname } = globalHistory.location;
 
-  const [feedback, setFeedback] = useState('');
-  const [isShowOption, setIsShowOption] = useState(true);
+  const getLocalStorageItem = (itemName = "feedback_info", keyName) => {
+    const infoString = window.localStorage.getItem(itemName);
+    const info = infoString ? JSON.parse(infoString) : {};
+    const detail = info[keyName];
+    return detail;
+  };
 
-  const handleUpdateStatisData = async value => {
+  const setLocalStorageItem = (itemName = "feedback_info", keyName, value) => {
+    const infoString = window.localStorage.getItem(itemName);
+    const info = infoString ? JSON.parse(infoString) : {};
+    const newInfo = { ...info, [keyName]: value };
+    window.localStorage.setItem(itemName, JSON.stringify(newInfo));
+  };
+
+  const cleanScore = () => {
+    setLocalStorageItem("feedback_info", pageId, "");
+    setScore("");
+  };
+
+  /**
+   *
+   * @param {string} value Target 'like' or 'dislike' count that will be increased.
+   * @param {bool} isIncrease Default is True. Set to false then target count will be decreased.
+   * @param {string} swapValue Target count will increase and another will decrease at the same time.
+   */
+  const handleUpdateStatisData = async (
+    value,
+    isIncrease = true,
+    swapValue = ""
+  ) => {
     const { statistic, sha } = await readStatisData();
     const info = statistic[value];
+    let content = {};
 
-    const pathnameCount = pathname in info ? info[pathname] + 1 : 1;
-    const content = {
-      ...statistic,
-      [value]: { ...info, [pathname]: pathnameCount },
-    };
+    if (swapValue) {
+      const swapInfo = statistic[swapValue];
+      const currentCount = pathname in info ? info[pathname] + 1 : 1;
+      const currentSwapCount =
+        pathname in swapInfo ? swapInfo[pathname] - 1 : 0;
+      content = {
+        ...statistic,
+        [value]: { ...info, [pathname]: currentCount },
+        [swapValue]: { ...swapInfo, [pathname]: currentSwapCount },
+      };
+    } else {
+      const currentPathnameCount = pathname in info ? info[pathname] : 1;
+      const newPathnameCount = isIncrease
+        ? currentPathnameCount + 1
+        : currentPathnameCount - 1;
+      content = {
+        ...statistic,
+        [value]: { ...info, [pathname]: newPathnameCount },
+      };
+    }
 
     writeStatisData({
       sha,
       content: window.btoa(JSON.stringify(content)),
-      message: 'update statistic data',
+      message: "update statistic data",
     });
-  };
-
-  const handleFeedback = val => {
-    if (val === feedback) {
-      return;
-    }
-    // feedbackInfo: {'a-path': 'like','b-path':'dislike'}
-    Object.assign(feedbackInfo, { [old]: val });
-
-    setIsShowOption(false);
-    setTimeout(() => {
-      setIsShowOption(true);
-    }, 3000);
-    window.localStorage.setItem(FEEDBACK_INFO, JSON.stringify(feedbackInfo));
-    setFeedback(val);
-    handleUpdateStatisData(val);
   };
 
   useEffect(() => {
     try {
-      // make sure whether this doc has been feedbacked
-      const feedbackInfoString = window.localStorage.getItem(FEEDBACK_INFO);
-      feedbackInfo = feedbackInfoString ? JSON.parse(feedbackInfoString) : {};
-      const feedbackDetail = feedbackInfo[old];
-      if (feedbackDetail) {
-        setFeedback(feedbackDetail);
-      }
+      const feedbackDetail = getLocalStorageItem("feedback_info", pageId);
+      feedbackDetail && setScore(feedbackDetail);
     } catch (error) {
       console.log(error);
     }
-  }, [old]);
+  }, [pageId]);
+
+  const handleScoreBtnClick = (value) => {
+    if (score === value) {
+      handleUpdateStatisData(value, false);
+      cleanScore();
+      return;
+    }
+    if (score && score !== value) {
+      setLocalStorageItem("feedback_info", pageId, value);
+      handleUpdateStatisData(value, true, score);
+      setScore(value);
+      return;
+    }
+    setLocalStorageItem("feedback_info", pageId, value);
+    setScore(value);
+    handleUpdateStatisData(value);
+  };
 
   return (
-    <div className={styles.feedbackWrapper}>
-      <div
-        className={`${styles.feedbackOptions} ${
-          !isShowOption ? styles.hideOption : ''
-        }`}
-      >
-        <span className={`${styles.text}`}>{feedbackText.text1}</span>
-        <span
-          className={`${styles.iconWrapper} ${styles.hoverLike}`}
-          role="button"
-          tabIndex={0}
-          onClick={() => handleFeedback('like')}
-          onKeyDown={() => handleFeedback('like')}
-        >
-          <LikeSvg color={feedback === 'like' ? '#4fc4f9' : '#545454'} />
-        </span>
-        <span
-          className={`${styles.iconWrapper} ${styles.hoverDislike}`}
-          role="button"
-          tabIndex={0}
-          onClick={() => handleFeedback('dislike')}
-          onKeyDown={() => handleFeedback('dislike')}
-        >
-          <DislikeSvg color={feedback === 'dislike' ? '#f25c05' : '#445454'} />
-        </span>
-      </div>
+    <div className={styles.container}>
+      <div className={styles.title}>{score ? scoreThanks : scoreQuestion}</div>
+      <BtnGroups
+        trans={trans}
+        score={score}
+        onScoreBtnClick={handleScoreBtnClick}
+      />
+    </div>
+  );
+}
 
-      <div
-        className={`${styles.islikeWrapper} ${
-          !isShowOption ? styles.showResult : ''
-        }`}
+const BtnGroups = (props) => {
+  const { score, onScoreBtnClick, trans } = props;
+
+  return (
+    <div className={styles.btnGroup}>
+      <button
+        className={clsx(styles.btn, {
+          primaryBtnSm: score === "like",
+          secondaryBtnSm: score !== "like",
+        })}
+        onClick={() => {
+          onScoreBtnClick("like");
+        }}
       >
-        {feedback === 'like' ? (
-          <span className={`${styles.iconWrapper} ${styles.like}`}>
-            <LikeSvg />
-          </span>
-        ) : (
-          <span className={`${styles.iconWrapper} ${styles.dislike}`}>
-            <DislikeSvg />
-          </span>
-        )}
-        <span className={`${styles.text}`}>{feedbackText.text2}</span>
-      </div>
+        <ThumbUpOffAltIcon />
+        {trans("v3trans.docs.yes")}
+      </button>
+      <button
+        className={clsx(styles.btn, {
+          primaryBtnSm: score === "dislike",
+          secondaryBtnSm: score !== "dislike",
+        })}
+        onClick={() => {
+          onScoreBtnClick("dislike");
+        }}
+      >
+        <ThumbDownOffAltIcon />
+        {trans("v3trans.docs.no")}
+      </button>
     </div>
   );
 };
-
-export default ScoredFeedback;

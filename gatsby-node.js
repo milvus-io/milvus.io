@@ -1,28 +1,28 @@
-const path = require('path');
-const fs = require('fs');
-const ReadVersionJson = require('./walkFile');
-const locales = require('./src/constants/locales');
-const express = require('express');
-const createPagesUtils = require('./gatsbyUtils/createPages');
-const sourceNodesUtils = require('./gatsbyUtils/sourceNodes');
+const path = require("path");
+const fs = require("fs");
+const ReadVersionJson = require("./walkFile");
+const locales = require("./src/consts/locales");
+const express = require("express");
+const createPagesUtils = require("./gatsbyUtils/createPages");
+const sourceNodesUtils = require("./gatsbyUtils/sourceNodes");
 
 const env = process.env.IS_PREVIEW;
 // const env = 'preview';
-console.log('========env IS_PREVIEW========', env);
-console.log('========env GITHUB_TOKEN========', process.env.GITHUB_TOKEN);
+console.log("========env IS_PREVIEW========", env);
+console.log("========env GITHUB_TOKEN========", process.env.GITHUB_TOKEN);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
     v =>
-      v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
+      v !== "master" && (versionInfo[v].released === "yes" || env === "preview")
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur
       .substring(1)
-      .split('.')
+      .split(".")
       .map(v => Number(v));
     const preVersion = pre
       .substring(1)
-      .split('.')
+      .split(".")
       .map(v => Number(v));
 
     if (curVersion[0] !== preVersion[0]) {
@@ -36,26 +36,26 @@ const getNewestVersion = versionInfo => {
     }
 
     return pre;
-  }, 'v0.0.0');
+  }, "v0.0.0");
 };
 exports.onCreateDevServer = ({ app }) => {
-  app.use(express.static('public'));
+  app.use(express.static("public"));
 };
 
 // the version is same for different lang, so we only need one
-const DOC_ROOT = 'src/pages/docs/versions';
+const DOC_ROOT = "src/pages/docs/versions";
 const versionInfo = ReadVersionJson(DOC_ROOT);
 const newestVersion = getNewestVersion(versionInfo);
 const versions = [];
 
 versionInfo.preview = {
   ...versionInfo.preview,
-  version: 'preview',
-  released: env === 'preview' ? 'yes' : 'no',
+  version: "preview",
+  released: env === "preview" ? "yes" : "no",
 };
 
 Object.keys(versionInfo).forEach(v => {
-  if (versionInfo[v].released === 'yes') {
+  if (versionInfo[v].released === "yes") {
     versions.push(v);
   }
 });
@@ -70,34 +70,58 @@ fs.writeFile(
 );
 
 /* create static pages from page folder */
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions;
-  return new Promise(resolve => {
-    deletePage(page);
-    Object.keys(locales).map(lang => {
-      let localizedPath = locales[lang].default
-        ? page.path
-        : locales[lang].path + page.path;
-      if (page.path.includes('tool') && !page.path.includes('.md')) {
-        let toolName = page.path.split('-')[1];
-        toolName = toolName.substring(0, toolName.length - 1);
-        localizedPath = locales[lang].default
-          ? `/tools/${toolName}`
-          : `${locales[lang].path}/tools/${toolName}`;
-      }
+// exports.onCreatePage = ({ page, actions }) => {
+//   const { createPage, deletePage } = actions;
+//   return new Promise((resolve) => {
+//     deletePage(page);
+//     Object.keys(locales).map((lang) => {
+//       let localizedPath = locales[lang].default
+//         ? page.path
+//         : locales[lang].path + page.path;
+//       if (page.path.includes("tool") && !page.path.includes(".md")) {
+//         let toolName = page.path.split("-")[1];
+//         toolName = toolName.substring(0, toolName.length - 1);
+//         localizedPath = locales[lang].default
+//           ? `/tools/${toolName}`
+//           : `${locales[lang].path}/tools/${toolName}`;
+//       }
 
-      return createPage({
-        ...page,
-        path: localizedPath,
-        context: {
-          locale: lang,
-          newestVersion,
-          versions,
-        },
-      });
-    });
-    resolve();
-  });
+//       return createPage({
+//         ...page,
+//         path: localizedPath,
+//         context: {
+//           locale: lang,
+//           newestVersion,
+//           versions,
+//         },
+//       });
+//     });
+//     resolve();
+//   });
+// };
+
+// create cunstom schema for frontmatter
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+    type MarkdownRemark implements Node {
+      frontmatter: Frontmatter
+    }
+    type Frontmatter {
+      id: String
+      date: String
+      tag: String
+      title: String
+      desc: String
+      cover: String
+      origin: String
+      isPublish: Boolean
+      author: String
+      recommend: Boolean
+      group: String
+    }
+  `;
+  createTypes(typeDefs);
 };
 
 // APIReference page: generate source for api reference html
@@ -120,27 +144,27 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     const path = `${dirPath}/${category}`;
     const versions = fs.readdirSync(path);
     switch (category) {
-      case 'pymilvus':
+      case "pymilvus":
         for (let version of versions) {
           // Pymilvus-orm was merged into pymilvus in 2.0
-          if (version >= 'v2.0.0') {
+          if (version >= "v2.0.0") {
             handlePyFilesWithOrm(path, version, nodes);
           } else {
             handlePyFiles(path, version, nodes);
           }
         }
         break;
-      case 'milvus-sdk-go':
+      case "milvus-sdk-go":
         for (let version of versions) {
           handleGoFiles(path, version, nodes);
         }
         break;
-      case 'milvus-sdk-java':
+      case "milvus-sdk-java":
         for (let version of versions) {
           handleJavaFiles(path, version, nodes);
         }
         break;
-      case 'milvus-sdk-node':
+      case "milvus-sdk-node":
         for (let version of versions) {
           handleNodeFiles(path, version, nodes);
         }
@@ -186,9 +210,10 @@ exports.createPages = async ({ actions, graphql }) => {
 
   // templates
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
-  const communityTemplate = path.resolve(`src/templates/community.jsx`);
+  const communityTemplate = path.resolve(`src/templates/communityTemplate.jsx`);
   const bootcampTemplate = path.resolve(`src/templates/bootcamp.jsx`);
-  const blogTemplate = path.resolve('src/templates/blogTemplate.jsx');
+  const blogTemplate = path.resolve("src/templates/blogTemplate.jsx");
+  const blogListTemplate = path.resolve("src/templates/blogListTemplate.jsx");
 
   return graphql(query).then(result => {
     if (result.errors) {
@@ -213,7 +238,7 @@ exports.createPages = async ({ actions, graphql }) => {
       result.data.allFile.edges
     );
 
-    initGlobalSearch(legalMd, newestVersion, __dirname);
+    // initGlobalSearch(legalMd, newestVersion, __dirname);
 
     generateCommunityPages(createPage, {
       nodes: communityMd,
@@ -252,6 +277,7 @@ exports.createPages = async ({ actions, graphql }) => {
     generateBlogArticlePage(createPage, {
       nodes: blogMD,
       template: blogTemplate,
+      listTemplate: blogListTemplate,
     });
 
     generateDocHomeWidthMd(createPage, {
@@ -275,18 +301,30 @@ exports.createPages = async ({ actions, graphql }) => {
       allApiMenus,
     });
 
-    walkApiReferenceFile('src/pages/docs/versions/master/APIReference');
+    walkApiReferenceFile("src/pages/docs/versions/master/APIReference");
   });
 };
 
 exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
   const config = getConfig();
   const miniCssExtractPlugin = config.plugins.find(
-    plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
+    plugin => plugin.constructor.name === "MiniCssExtractPlugin"
   );
   if (miniCssExtractPlugin) {
     miniCssExtractPlugin.options.ignoreOrder = true;
   }
 
+  const cssMinimizerPlugin = config.optimization?.minimizer?.find(plugin => {
+    return plugin.constructor.name === "CssMinimizerPlugin";
+  });
+  if (cssMinimizerPlugin) {
+    // const preset = cssMinimizerPlugin.options?.minimizerOptions?.preset;
+    cssMinimizerPlugin.options.minimizerOptions = {
+      //! Fix me if there is better config
+      // refert to https://github.com/webpack-contrib/css-minimizer-webpack-plugin/blob/master/README.md
+      // and https://cssnano.co/docs/optimisations/
+      preset: require.resolve("cssnano-preset-lite"),
+    };
+  }
   actions.replaceWebpackConfig(config);
 };

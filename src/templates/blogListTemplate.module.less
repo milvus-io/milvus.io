@@ -1,0 +1,168 @@
+@import "../css/variables/responsive.less";
+@font-size-normal: 18px;
+
+@font-size-title-normal: 32px;
+@font-size-title-large: 40px;
+
+@primary-color: #1493cc;
+.listWrapper {
+  margin: 0 auto;
+  width: 100%;
+  max-width: @screen-desktop1440;
+  padding: 64px 0;
+
+  @media @tablet {
+    padding: 32px 0;
+  }
+
+  @media @phone {
+    padding: 32px 0;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: @font-size-title-normal;
+    line-height: 50px;
+    color: #000;
+
+    @media @desktop1440, @desktop1920 {
+      font-size: @font-size-title-normal;
+      line-height: 40px;
+    }
+  }
+
+  .featuredBlog {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    @media @desktop1440, @desktop1920 {
+      gap: 160px;
+    }
+    @media (max-width: 1200px) {
+      display: none;
+    }
+
+    .featuredImg {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      height: 300px;
+      width: 460px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+      }
+    }
+
+    .featuredBlogContent {
+      flex: 1;
+
+      .tag {
+        text-transform: uppercase;
+        color: @primary-color;
+        font-size: @font-size-normal;
+        margin-bottom: 20px;
+        font-weight: bold;
+      }
+
+      .desc {
+        margin-top: 12px;
+        font-size: @font-size-normal;
+        color: #4c5a67;
+      }
+    }
+  }
+  .mobileFeatured {
+    display: none;
+
+    @media (max-width: 1200px) {
+      display: block;
+    }
+  }
+
+  .blogList {
+    margin-top: 110px;
+    @media @tablet, @phone {
+      margin-top: 54px;
+    }
+
+    .title {
+      margin-bottom: 24px;
+    }
+    ul {
+      padding: 0;
+      li {
+        list-style: none;
+        text-transform: capitalize;
+      }
+    }
+    .tagsWrapper {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      gap: 14px;
+
+      li {
+        padding: 11px 20px;
+        cursor: pointer;
+        @media @tablet, @phone {
+          padding: 6px 10px;
+        }
+      }
+
+      .active {
+        background: #eff9fe;
+        border-radius: 100px;
+        color: @primary-color;
+      }
+
+      @media @tablet, @phone {
+        font-size: 12px;
+      }
+    }
+    .blogCards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 80px;
+      row-gap: 64px;
+      @media @desktop1024 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media @tablet, @phone {
+        grid-template-columns: repeat(1, 100%);
+        row-gap: 40px;
+      }
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 100px auto 120px auto;
+    }
+    .cardItem {
+      position: absolute;
+      top: -1000px;
+      opacity: 0;
+    }
+    .fadeInup {
+      position: relative;
+      top: 0;
+      animation: fadeInUp 0.3s ease-out;
+      animation-fill-mode: both;
+    }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      transform: translate3d(0, 4rem, 0);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+}

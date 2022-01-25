@@ -1,0 +1,140 @@
+@import "../../css/variables/color.less";
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/main.less";
+
+.demoCard {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  @media @tablet {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  @media @phone {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .coverWrapper {
+    width: 735px;
+    background-color: #fafafa;
+    filter: drop-shadow(0px 20px 45px rgba(0, 43, 125, 0.25));
+    border-radius: 6px;
+    text-align: center;
+    margin-right: 24px;
+
+    @media @tablet {
+      margin-bottom: 48px;
+      max-width: 80%;
+      margin-right: 0;
+    }
+
+    @media @phone {
+      margin-bottom: 24px;
+      max-width: 100%;
+      height: fit-content;
+      margin-right: 0;
+    }
+
+    img {
+      width: 100%;
+
+      @media @tablet {
+        max-width: 100%;
+      }
+
+      @media @phone {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .contentWrapper {
+    width: 400px;
+
+    @media @phone {
+      max-width: 100%;
+    }
+
+    @media @tablet {
+      text-align: center;
+    }
+
+    @media @phone {
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 32px;
+      line-height: 42px;
+      font-weight: 700;
+      margin-bottom: 24px;
+
+      @media @phone {
+        font-size: 20px;
+        line-height: 24px;
+      }
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+
+      @media @phone {
+        font-size: 14px;
+        line-height: 24px;
+      }
+    }
+
+    .btnGroup {
+      margin-top: 40px;
+      font-family: Roboto;
+      display: flex;
+      align-items: center;
+
+      @media @tablet {
+        justify-content: center;
+      }
+
+      @media @phone {
+        margin-top: 24px;
+        justify-content: center;
+      }
+
+      .tryBtn {
+        text-transform: capitalize;
+        margin-right: 10px;
+        color: #fff;
+      }
+
+      .watchBtn {
+        text-transform: capitalize;
+        display: flex;
+        align-items: center;
+        border-radius: 19px;
+
+        &:hover {
+          color: #00a1ea;
+          svg {
+            path {
+              fill: #00a1ea;
+            }
+          }
+        }
+
+        svg {
+          margin-left: 10px;
+
+          path {
+            fill: #000;
+          }
+        }
+      }
+    }
+  }
+}

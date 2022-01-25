@@ -1,115 +1,79 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import Layout from '../components/docLayout';
-import Seo from '../components/seo';
-import { graphql } from 'gatsby';
-import 'highlight.js/styles/stackoverflow-light.css';
-import './docTemplate.less';
-import useAlgolia from '../hooks/use-algolia';
-import QueryModal from '../components/query-modal/query-modal';
-import { sortVersions } from '../utils/docTemplate.util';
-import { NOT_SUPPORTED_VERSION } from '../config';
-import HomeTemplate from '../components/homeTemplate/homeTemplate';
-import RelatedQuestion from '../components/relatedQuestion';
+import React, { useEffect, useMemo, useState } from "react";
+import { useI18next } from "gatsby-plugin-react-i18next";
+import Layout from "../components/layout";
+import LeftNav from "../components/leftNavigation";
+import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
+import { graphql } from "gatsby";
+import "highlight.js/styles/stackoverflow-light.css";
+import "./docTemplate.less";
+import "./commonDocTemplate.less";
+import Typography from "@mui/material/Typography";
+import RelatedQuestion from "../components/relatedQuestion";
+import ScoredFeedback from "../components/scoredFeedback";
+import clsx from "clsx";
+import { useWindowSize } from "../http/hooks";
+import Aside from "../components/aside";
+import Seo from "../components/seo";
+import Footer from "../components/footer";
+import "../css/variables/main.less";
 import {
-  useEmPanel,
-  useFilter,
   useCodeCopy,
   useMultipleCodeFilter,
-} from '../hooks/doc-dom-operation';
-import { useFormatAnchor, useGenAnchor } from '../hooks/doc-anchor';
-import ScoredFeedback from '../components/scoredFeedback';
-import { getGithubCommits } from '../http/http';
-import dayjs from 'dayjs';
-export default function Template({
-  data,
-  pageContext, // this prop will be injected by the GraphQL query below.
-}) {
-  let {
+  useFilter,
+} from "../hooks/doc-dom-operation";
+import { useGenAnchor } from "../hooks/doc-anchor";
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          data
+          language
+          ns
+        }
+      }
+    }
+  }
+`;
+
+export default function Template({ data, pageContext }) {
+  const {
     locale,
     version,
     versions,
     headings = [],
     allMenus,
     isBlog,
-    isBenchmark = false,
+    // isBenchmark = false,
     editPath,
-    newHtml,
+    newHtml: mdHtml,
     homeData,
     allApiMenus,
     newestVersion,
     relatedKey,
-    old, // id of markdown
+    old: mdId,
     summary,
+    group,
     newestBlog,
-    homePath, // for home page to generate absolute link.
   } = pageContext;
-  versions = versions.sort(sortVersions);
-  useEffect(() => {
-    window?.localStorage?.setItem('docVersion', version);
-  }, [version]);
-  const [showBack, setShowBack] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
-  const [commitInfo, setCommitInfo] = useState({
-    message: '',
-    date: '',
-    commitUrl: '',
-    source: '',
-  });
 
-  const docRef = useRef(null);
-  const commitPath = useMemo(() => {
-    return locale === 'en' ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
-  }, [locale, editPath]);
+  const [windowSize, setWindowSize] = useState();
+
+  const currentWindowSize = useWindowSize();
 
   useEffect(() => {
-    if (isBenchmark || isBlog) return;
+    setWindowSize(currentWindowSize);
+  }, [currentWindowSize]);
 
-    const fetchData = async () => {
-      const res = await getGithubCommits(commitPath, version);
-      if (res.status === 200 && res.data.length) {
-        const lastCommit = res.data[0];
-        const message = lastCommit.commit.message.split('\n')[0];
-        const date = lastCommit.commit.committer.date;
-        const commitUrl = lastCommit.html_url;
-        const formatDate = dayjs(date).format('YYYY-MM-DD HH:mm:ss');
-        const source = `https://github.com/milvus-io/milvus-docs/blob/${version}/${commitPath}`;
-        setCommitInfo({ commitUrl, date: formatDate, source, message });
-      }
-    };
-    fetchData();
-  }, [commitPath, version, isBenchmark, isBlog]);
+  const isMobile = ["phone", "tablet"].includes(windowSize);
+  const isPhone = ["phone"].includes(windowSize);
+  const desktop1024 = ["desktop1024"].includes(windowSize);
 
-  useEmPanel(setShowModal);
-  useGenAnchor(version, editPath);
-  useFilter();
-  useFormatAnchor();
-  useCodeCopy(locale);
-  useMultipleCodeFilter();
-
-  useEffect(() => {
-    const isLowVersion =
-      sortVersions(version, NOT_SUPPORTED_VERSION) > -1 &&
-      typeof window !== 'undefined' &&
-      !window.location.pathname.includes('data_migration');
-    setShowWarning(isLowVersion);
-  }, [version]);
-
-  const docsearchMeta = useAlgolia(locale, version, !isBlog);
-
-  if (!data.allFile.edges[0]) {
-    return null;
-  }
-
-  const layout = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node
-    .childI18N.layout;
-
-  const {
-    feedback,
-    commit: commitTrans,
-    docHome: docHomeText,
-  } = data.allFile.edges.filter(edge => edge.node.childI18N)[0].node.childI18N
-    .v2;
+  const { language, t } = useI18next();
+  const hljsCfg = {
+    languages: ["java", "go", "python", "javascript"],
+  };
 
   const menuList = allMenus.find(
     v =>
@@ -117,71 +81,84 @@ export default function Template({
       isBlog === v.isBlog &&
       locale === v.lang
   );
-
-  const { markdownRemark } = data; // data.markdownRemark holds our post data
-
-  let { frontmatter } = markdownRemark || {};
-
-  const nav = {
-    current: 'doc',
+  const id = "home";
+  const menuConfig = menuList && {
+    menuList: [
+      {
+        lang: menuList.lang,
+        menuList: menuList.menuList,
+      },
+    ],
+    activePost: id.split("-")[0],
+    isBlog: menuList.isBlog,
+    formatVersion: version === "master" ? newestVersion : version,
   };
-  const iframeUrl = isBenchmark
-    ? `/benchmarks/${frontmatter.id.split('_')[1]}/index.html`
-    : '';
-  const idRegex = /id=".*?"/g;
-  if (locale === 'cn') {
-    if (newHtml) {
-      newHtml = newHtml.replace(idRegex, match =>
-        // eslint-disable-next-line
-        match.replace(/[？|、|，]/g, '')
-      );
+  const versionConfig = {
+    homeTitle: "Docs Home",
+    version,
+    // filter master version
+    versions: versions.filter(v => v !== "master"),
+  };
+  const leftNavMenus =
+    menuConfig?.menuList?.find(menu => menu.lang === locale)?.menuList || [];
+  const leftNavHomeUrl =
+    version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
+
+  // const commitPath = useMemo(() => {
+  //   return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
+  // }, [locale, editPath]);
+  // const isDoc = !(isBlog || isBenchmark);
+  // const commitInfo = useGithubCommits({
+  //   commitPath,
+  //   version,
+  //   isDoc,
+  // });
+  //! TO REMOVE
+  const commitInfo = {
+    commitUrl:
+      "https://github.com/milvus-io/milvus-docs/commit/f0e455fd80e4585d7bacdf30e35c3938a8e8ba49",
+    date: "2021-12-24 07:31:25",
+    source:
+      "https://github.com/milvus-io/milvus-docs/blob/v2.0.0/site/en/about/overview.md",
+    message: "Update overview.md",
+  };
+
+  const docsearchMeta = useMemo(() => {
+    if (
+      typeof window === "undefined" ||
+      !window.location.pathname.includes(version)
+    ) {
+      return [];
     }
-  }
+    return [
+      {
+        name: "docsearch:language",
+        content: locale === "cn" ? "zh-cn" : locale,
+      },
+      {
+        name: "docsearch:version",
+        content: version || "",
+      },
+    ];
+  }, [locale, version]);
 
-  const ifrmLoad = () => {
-    const ifrmContainer = document.querySelector('.iframe-container');
-    const ifrm = document.querySelector('#benchmarkIframe');
-    // const size = ifrm.contentWindow.document.body.getBoundingClientRect();
-    ifrm.style.height = '100%';
-    ifrmContainer.style.height = '100%';
-    setShowBack(!/index\.html/.test(ifrm.contentWindow.location.href));
-  };
-  const handleRefresh = () => {
-    const ifrm = document.querySelector('#benchmarkIframe');
-    if (ifrm) {
-      ifrm.contentWindow.location.href = ifrm.src;
-    }
-  };
+  const title =
+    mdHtml === null
+      ? `Milvus documentation`
+      : `${headings[0] && headings[0].value}`;
 
-  const title = isBenchmark
-    ? `Milvus benchmark`
-    : newHtml === null
-    ? `Milvus documentation`
-    : `${headings[0] && headings[0].value}`;
-
-  const onOverlayClick = () => setShowModal(false);
-
+  useCodeCopy(
+    {
+      copy: t("v3trans.copyBtn.copyLabel"),
+      copied: t("v3trans.copyBtn.copiedLabel"),
+    },
+    hljsCfg
+  );
+  useMultipleCodeFilter();
+  useGenAnchor(version, editPath);
+  useFilter();
   return (
-    <Layout
-      language={layout}
-      locale={locale}
-      nav={nav}
-      current="doc"
-      pageContext={pageContext}
-      menuList={menuList}
-      version={version}
-      headings={headings.filter((h, i) => i > 0)}
-      mdTitle={title}
-      versions={versions}
-      newestVersion={newestVersion}
-      id={frontmatter ? frontmatter.id : 'home'}
-      isBenchMark={isBenchmark}
-      showDoc={false}
-      isBlog={isBlog}
-      isHome={newHtml === null}
-      editPath={editPath}
-      allApiMenus={allApiMenus}
-    >
+    <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo
         title={title}
         lang={locale}
@@ -189,263 +166,164 @@ export default function Template({
         meta={docsearchMeta}
         description={summary}
       />
-      {isBenchmark ? (
-        <div className="iframe-container">
-          {showBack && (
-            <i
-              tabIndex={0}
-              onKeyDown={handleRefresh}
-              role="button"
-              aria-label="Back"
-              className="fas iframe-icon fa-arrow-left"
-              onClick={handleRefresh}
-            ></i>
-          )}
-          <iframe
-            id="benchmarkIframe"
-            title="test"
-            width="100%"
-            src={iframeUrl}
-            onLoad={ifrmLoad}
-          ></iframe>
-        </div>
-      ) : (
-        <>
-          {homeData ? (
-            <HomeTemplate
-              data={homeData}
-              version={version}
-              locale={locale}
-              newestBlog={newestBlog}
-              homePath={homePath}
-              text={docHomeText}
-            />
-          ) : (
-            <div className="doc-post-container">
-              <>
-                {showWarning && (
-                  <div className="alert warning">
-                    {locale === 'en'
-                      ? 'This version is no longer supported. For more information about migrating your data, see'
-                      : '该版本不再维护。如需进行数据迁移，请先参考'}
-                    <a
-                      href={
-                        locale === 'en'
-                          ? `/docs/migrate_overview.md`
-                          : `/cn/docs/migrate_overview.md`
-                      }
-                      alt="sign up milvus"
-                      rel="noreferrer noopener"
-                      style={{
-                        margin: '0 6px',
-                      }}
-                    >
-                      {locale === 'en'
-                        ? 'Compatibility Information.'
-                        : '兼容性信息。'}
-                    </a>
-                  </div>
-                )}
-                <div className="doc-post">
-                  {/* <a
-                    className="alert survey"
-                    href={locale === 'en' ? 'https://milvus.typeform.com/to/EgMCxy2T' : 'https://milvus.typeform.com/to/GM5f8HOe'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>some words</span>
-                  </a> */}
-                  <div
-                    className="doc-post-content"
-                    ref={docRef}
-                    dangerouslySetInnerHTML={{ __html: newHtml }}
-                  />
-                  <RelatedQuestion relatedKey={relatedKey} layout={layout} />
-                </div>
-                {commitInfo.message && (
-                  <div className="commit-info-wrapper">
-                    <>
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={commitInfo.source}
-                      >
-                        {old}
-                      </a>
-                      <span>
-                        {commitTrans} {commitInfo.date}:{' '}
-                      </span>
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={commitInfo.commitUrl}
-                      >
-                        {commitInfo.message}
-                      </a>
-                    </>
-                  </div>
-                )}
-
-                <ScoredFeedback feedbackText={feedback} old={old} />
-              </>
-            </div>
-          )}
-        </>
-      )}
-
-      {showModal ? (
-        <div>
+      <div
+        className={clsx("doc-temp-container", {
+          [`is-desktop1024`]: desktop1024,
+          [`is-mobile`]: isMobile,
+          [`is-phone`]: isPhone,
+          [`home`]: homeData,
+          [`loading`]: !windowSize,
+        })}
+      >
+        <LeftNav
+          homeUrl={leftNavHomeUrl}
+          homeLabel={t("v3trans.docs.homeTitle")}
+          menus={leftNavMenus}
+          apiMenus={allApiMenus}
+          pageType="doc"
+          currentVersion={version}
+          locale={locale}
+          docVersions={versionConfig.versions}
+          mdId={mdId}
+          isMobile={isMobile}
+          language={language}
+          trans={t}
+          version={version}
+          group={group}
+        />
+        <div className="doc-right-container">
           <div
-            className="overlay"
-            tabIndex="0"
-            role="button"
-            aria-label="close dialog"
-            onKeyDown={onOverlayClick}
-            onClick={onOverlayClick}
-          ></div>
-          <QueryModal locale={locale} setShowModal={setShowModal} />
+            className={clsx("doc-content-container", {
+              [`doc-home`]: homeData,
+              [`is-mobile`]: isMobile,
+            })}
+          >
+            {homeData ? (
+              <HomeContent
+                homeData={homeData}
+                newestBlog={newestBlog}
+                trans={t}
+              />
+            ) : (
+              <DocContent
+                htmlContent={mdHtml}
+                commitInfo={commitInfo}
+                mdId={mdId}
+                relatedKey={relatedKey}
+                isMobile={isMobile}
+                trans={t}
+              />
+            )}
+            {!isPhone && (
+              <div className="doc-toc-container">
+                <Aside
+                  locale={locale}
+                  version={version}
+                  editPath={editPath}
+                  mdTitle={headings[0]}
+                  category="doc"
+                  isHome={!!homeData}
+                  items={headings}
+                  title={t("v3trans.docs.tocTitle")}
+                />
+              </div>
+            )}
+          </div>
+          <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>
-      ) : null}
+      </div>
     </Layout>
   );
 }
 
-export const pageQuery = graphql`
-  query ($locale: String, $old: String, $fileAbsolutePath: String) {
-    markdownRemark(
-      fileAbsolutePath: { eq: $fileAbsolutePath }
-      frontmatter: { id: { eq: $old } }
-    ) {
-      frontmatter {
-        id
-        title
-      }
-    }
-    allFile(
-      filter: {
-        name: { eq: $locale }
-        relativeDirectory: { regex: "/(?:layout)/" }
-      }
-    ) {
-      edges {
-        node {
-          relativeDirectory
+const HomeContent = props => {
+  const { homeData, newestBlog = [], trans } = props;
+  return (
+    <>
+      <div
+        className="doc-home-html-Wrapper"
+        dangerouslySetInnerHTML={{ __html: homeData }}
+      />
+      <Typography component="section" className="doc-home-blog">
+        <Typography variant="h2" component="h2">
+          {trans("v3trans.docs.blogTitle")}
+        </Typography>
+        <HorizontalBlogCard blogData={newestBlog[0]} />
+      </Typography>
+    </>
+  );
+};
 
-          childI18N {
-            layout {
-              header {
-                quick
-                benchmarks
-                why
-                gui
-                tutorials
-                solution
-                about
-                doc
-                blog
-                try
-                loading
-                noresult
-                tutorial
-                search
-                bootcamp
-              }
-              footer {
-                faq {
-                  contact {
-                    slack {
-                      label
-                      link
-                    }
-                    github {
-                      label
-                      link
-                    }
-                    follow {
-                      label
-                    }
-                    dialog {
-                      desc
-                      placeholder1
-                      placeholder2
-                      submit
-                      title
-                      invalid
-                    }
-                    title
-                  }
-                  question {
-                    title
-                  }
-                }
-                editBtn {
-                  label
-                }
-                questionBtn {
-                  label
-                  link
-                }
-                issueBtn {
-                  label
-                  docLabel
-                }
-                docIssueBtn {
-                  label
-                  docLabel
-                }
-                product {
-                  title
-                  txt1
-                  txt2
-                }
-                doc {
-                  title
-                  txt1
-                  txt2
-                  txt3
-                }
-                tool {
-                  title
-                  txt1
-                }
-                resource {
-                  title
-                  txt1
-                  txt2
-                  txt3
-                  txt4
-                }
-                contact {
-                  title
-                  wechat
-                }
-                content
-              }
-              selectMenu {
-                comment
-                github
-                sendBtn
-                cancelBtn
-                placeholder
-              }
-              menu {
-                home
-              }
-            }
-            v2 {
-              feedback {
-                text1
-                text2
-              }
-              commit
-              docHome {
-                title
-                btnLabel
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+const GitCommitInfo = props => {
+  const { commitInfo = {}, mdId, commitTrans = "was last updated at" } = props;
+  return (
+    <div className="commit-info-wrapper">
+      <a target="_blank" rel="noreferrer" href={commitInfo.source}>
+        {mdId}
+      </a>
+      <span>{` ${commitTrans} ${commitInfo.date}: `}</span>
+      <a target="_blank" rel="noreferrer" href={commitInfo.commitUrl}>
+        {commitInfo.message}
+      </a>
+    </div>
+  );
+};
+
+const DocContent = props => {
+  const { htmlContent, commitInfo, mdId, relatedKey, isMobile, trans } = props;
+  //! TO REMOVE
+  const faqMock = {
+    contact: {
+      slack: {
+        label: "Discuss on Slack",
+        link: "https://slack.milvus.io/",
+      },
+      github: {
+        label: "Discuss on GitHub",
+        link: "https://github.com/milvus-io/milvus/issues/",
+      },
+      follow: {
+        label: "Follow up with me",
+      },
+      dialog: {
+        desc: "Please leave your question here and we will be in touch.",
+        placeholder1: "Your Email*",
+        placeholder2: "Your Question*",
+        submit: "Submit",
+        title: "We will follow up on your question",
+        invalid: "please input valid email and your question",
+      },
+      title: "Didn't find what you need?",
+    },
+    question: {
+      title: "You may also want to know",
+    },
+  };
+  return (
+    <>
+      <div className="doc-post-wrapper">
+        <div
+          className="doc-post-content"
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
+        />
+        {faqMock && (
+          <RelatedQuestion
+            title={trans("v3trans.docs.faqTitle")}
+            contact={faqMock.contact}
+            relatedKey={relatedKey}
+            isMobile={isMobile}
+            trans={trans}
+          />
+        )}
+        {commitInfo?.message && (
+          <GitCommitInfo
+            commitInfo={commitInfo}
+            mdId={mdId}
+            commitTrans={trans("v3trans.docs.commitTrans")}
+          />
+        )}
+        <ScoredFeedback trans={trans} pageId={mdId} />
+      </div>
+    </>
+  );
+};

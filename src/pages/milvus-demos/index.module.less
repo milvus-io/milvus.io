@@ -1,62 +1,244 @@
-@import '../../css/variables/responsive.less';
+@import "../../css/variables/color.less";
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/main.less";
 
-.container {
-  padding: 80px 80px 40px 80px;
+.main {
   font-family: Inter;
+}
+
+.banner {
+  background: url("../../images/demos/demo-banner.svg") center center no-repeat;
+  background-size: contain;
+  background-color: #000;
+  width: 100%;
+  height: 480px;
   position: relative;
 
+  .bannerContent {
+    position: absolute;
+    bottom: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    @media @phone {
+      width: 100%;
+      padding: 32px;
+    }
+  }
+
+  h2 {
+    font-size: 40px;
+    line-height: 50px;
+    background: linear-gradient(to bottom, #679ede, #c4c7ff);
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0;
+    margin-bottom: 28px;
+    text-align: center;
+    font-weight: 700;
+
+    @media @phone {
+      font-size: 24px;
+      line-height: 28px;
+    }
+  }
+
+  p {
+    text-align: center;
+    font-size: 18px;
+    line-height: 26px;
+    color: #fff;
+    margin: 0;
+
+    @media @phone {
+      font-size: 14px;
+      line-height: 24px;
+    }
+  }
+}
+
+.content {
+  max-width: 1440px;
+  margin: 0 auto;
+  margin-bottom: 120px;
+
   @media @tablet {
-    padding: 60px 32px;
+    margin-bottom: 80px;
   }
 
   @media @phone {
-    padding: 60px 16px;
+    margin-bottom: 48px;
   }
 
-  margin-top: 90px;
-  background-color: #fafafa;
+  .demoList {
+    list-style: none;
+    padding: 120px 0 227px;
 
-  .titleContainer {
-    max-width: 1600px;
-    margin: 28px auto;
+    li:not(:last-child) {
+      margin-bottom: 160px;
 
-    .desc {
-      font-size: 26px;
-      font-weight: 400;
-      line-height: 42px;
-      margin: -20px 0 0 0;
-      /* text-align: center; */
-      color: #333;
+      @media @tablet {
+        margin-bottom: 80px;
+      }
+
+      @media @phone {
+        margin-bottom: 48px;
+      }
     }
-    .title {
-      margin-top: 28px;
-      font-size: 24px;
-      font-family: system-ui;
-      font-weight: bold;
-      color: #333;
+
+    @media @tablet {
+      padding: 120px 64px;
     }
-  }
-
-  .demoCardWrapper {
-    max-width: 1600px;
-    margin: 0 auto;
-    // padding-top: 60px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    row-gap: 40px;
-    column-gap: 40px;
-  }
-
-  .floatBord {
-    position: static;
-    box-shadow: none;
-    background-color: transparent;
-    border: none;
-    margin-top: 40px;
 
     @media @phone {
-      margin-top: 60px;
+      padding: 60px 32px;
+    }
+  }
+
+  .milvusCommunity {
+    display: flex;
+    overflow: hidden;
+    padding: 0 90px;
+    position: relative;
+
+    .drawWrapper {
+      background: url("../../images/demos/arc.svg") top left no-repeat;
+      background-size: contain;
+      width: 90px;
+      height: 200px;
+      position: absolute;
+      left: 0;
+
+      @media @tablet {
+        height: 150px;
+      }
+
+      @media @phone {
+        height: 100px;
+      }
+    }
+
+    @media @tablet {
+      flex-direction: column;
+      padding: 0 64px;
+    }
+
+    @media @phone {
+      flex-direction: column;
+      padding: 0 32px;
+    }
+
+    .leftPart {
+      text-align: center;
+      flex: 1;
+
+      @media @tablet {
+        margin-bottom: 48px;
+      }
+
+      @media @phone {
+        margin-bottom: 24px;
+      }
+
+      .join {
+        text-align: left;
+        @media @tablet {
+          text-align: center;
+        }
+
+        @media @phone {
+          text-align: center;
+        }
+
+        h2 {
+          font-weight: 700;
+          font-size: 40px;
+          line-height: 50px;
+          margin-bottom: 20px;
+
+          @media @phone {
+            font-size: 24px;
+            line-height: 28px;
+          }
+        }
+
+        p {
+          font-size: 16px;
+          line-height: 24px;
+
+          @media @phone {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+
+    .rightPart {
+      display: flex;
+      flex: 1;
+      justify-content: flex-start;
+
+      .socialMedia {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 0 16px;
+
+        @media @tablet {
+          align-items: center;
+        }
+
+        @media @phone {
+          align-items: center;
+        }
+
+        .logo {
+          display: flex;
+          align-items: center;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 34px;
+          margin-bottom: 24px;
+
+          @media @phone {
+            font-size: 18px;
+            line-height: 26px;
+          }
+
+          span {
+            margin-left: 23px;
+
+            @media @phone {
+              margin-left: 12px;
+            }
+          }
+        }
+
+        p {
+          font-size: 16px;
+          line-height: 24px;
+          margin-bottom: 30px;
+
+          @media @phone {
+            font-size: 14px;
+            line-height: 20px;
+            text-align: center;
+          }
+        }
+
+        .mediaLink {
+          display: inline-block;
+          border: 1px solid #000;
+          color: #000;
+          padding: 10px 20px;
+          font-size: 14px;
+          line-height: 18px;
+          border-radius: 19px;
+        }
+      }
     }
   }
 }

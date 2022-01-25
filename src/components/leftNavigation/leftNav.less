@@ -1,0 +1,58 @@
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
+
+.left-nav {
+  .mv3-tree-view {
+    .Mui-focused {
+      background-color: inherit;
+    }
+    .Mui-selected {
+      background: inherit;
+    }
+    .MuiTreeItem-content {
+      &:hover {
+        background-color: #f5f8fb;
+      }
+      .MuiTreeItem-label {
+        font-size: 14px;
+        a {
+          font-size: 14px;
+        }
+        @media @desktop1440, @desktop1920 {
+          font-size: 16px;
+
+          a {
+            font-size: 16px;
+          }
+        }
+      }
+
+      .MuiTreeItem-iconContainer {
+        svg {
+          opacity: 0.3;
+        }
+      }
+    }
+  }
+}
+
+.doc-temp-container {
+  .doc-menu-icon {
+    background-color: @color-grey-04;
+    position: fixed;
+    right: 20px;
+    bottom: 16px;
+
+    // header layout is 100
+    z-index: 80;
+  }
+}
+
+.selector-container {
+  .selector {
+    .MuiSelect-select {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+}

@@ -1,5 +1,3 @@
-@import './fontStyle.less';
-
 @color-primary: #1493cc;
 @color-list-blue: #4fc4f9;
 @pre-bg-color: #f9f9f9;
@@ -13,37 +11,17 @@
 @color-caution: #f25c05;
 @color-warning: #d51f00;
 @main-text-color: #191919;
+@color-gray: #9ca6b2;
 
 .articleContent,
-.doc-post-container {
+.doc-post-wrapper,
+.doc-home-html-Wrapper,
+.community-home-html-wrapper,
+.api-reference-wrapper {
   color: @main-text-color;
 
   details {
     margin-bottom: 24px;
-  }
-
-  a,
-  p,
-  li,
-  .alert,
-  .note,
-  .info,
-  .warning,
-  table,
-  tr,
-  td,
-  th,
-  h1,
-  h2,
-  h3,
-  h4 {
-    .fontSwitch();
-  }
-
-  h1,
-  h2,
-  h3 {
-    .fontMedi();
   }
 
   h1 {
@@ -52,65 +30,72 @@
     margin-bottom: 24px;
     margin-top: 32px;
 
+    & > code {
+      font-size: 36px;
+      line-height: 40px;
+    }
+
     @media @tablet {
       margin-top: 0px;
     }
   }
 
   h2 {
-    font-size: 24px;
-    line-height: 32px;
-    margin-bottom: 16px;
-    margin-top: 32px;
+    font-size: 32px;
+    line-height: 42px;
+    margin-bottom: 20px;
+    margin-top: 50px;
+
+    & > code {
+      font-size: 32px;
+      line-height: 42px;
+    }
   }
 
   h3 {
-    font-size: 18px;
-    line-height: 24px;
-    margin-bottom: 8px;
-    margin-top: 24px;
+    font-size: 24px;
+    line-height: 34px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+
+    & > code {
+      font-size: 24px;
+      line-height: 34px;
+    }
   }
 
   h4 {
     font-size: 16px;
     line-height: 20px;
-    margin-bottom: 8px;
-    margin-top: 16px;
-    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 30px;
+
+    & > code {
+      font-size: 16px;
+      line-height: 20px;
+    }
   }
 
   p {
     font-size: 16px;
-    line-height: 1.4em;
-    margin-bottom: 8px;
+    line-height: 24px;
+    margin-bottom: 20px;
 
     @media @tablet {
       font-size: 14px;
       line-height: 24px;
-      margin-bottom: 8px;
-      // margin-top: 8px;
-    }
-  }
-
-  img {
-    max-width: 90%;
-    margin: 32px auto;
-    display: block;
-
-    @media @tablet {
-      margin: 24px auto;
     }
   }
 
   code {
     font-size: 14px;
     line-height: 1.4rem;
-    font-family: 'Source Code Pro' !important;
+    font-family: "Source Code Pro" !important;
     background-color: @code-bg-color;
     border: 1px solid #e2e2e2;
     border-radius: 4px;
     padding: 0px 8px;
-    color: @color-doc-primary;
+    color: @color-primary;
     display: inline-block;
     font-weight: 600;
 
@@ -133,9 +118,9 @@
     code {
       color: #454545;
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       line-height: 20px;
-      font-family: 'Source Code Pro' !important;
+      font-family: "Source Code Pro" !important;
       border: none;
       padding: 12px;
       background-color: transparent;
@@ -145,7 +130,7 @@
     }
   }
 
-  a {
+  a:not(.secondaryBtnSm) {
     font-size: 16px;
     color: @link-color;
 
@@ -156,16 +141,20 @@
       font-size: 0;
       vertical-align: middle;
     }
+
+    &:hover {
+      color: #0279ae;
+    }
   }
 
   li {
     //styleName: Body/Body2.Small;
     font-size: 16px;
-    line-height: 1.4em;
+    line-height: 24px;
     text-align: left;
     color: #000;
     position: relative;
-    margin-bottom: 4px;
+    margin-bottom: 10px;
 
     & > ul {
       list-style-type: circle;
@@ -197,7 +186,7 @@
   }
 
   // External link image
-  img[src^='http'] {
+  img[src^="http"] {
     max-width: 100%;
     height: auto;
   }
@@ -221,7 +210,7 @@
 
       &::before {
         position: absolute;
-        content: 'WARNING';
+        content: "WARNING";
         line-height: 20px;
         color: @color-warning;
         left: 21px;
@@ -237,7 +226,7 @@
 
       &::before {
         position: absolute;
-        content: 'CAUTION';
+        content: "CAUTION";
         line-height: 20px;
         color: @color-caution;
         left: 21px;
@@ -254,7 +243,7 @@
       &::before {
         color: @link-color;
         position: absolute;
-        content: 'NOTE';
+        content: "NOTE";
         line-height: 20px;
         left: 21px;
         top: 12px;
@@ -269,7 +258,7 @@
 
       &::before {
         position: absolute;
-        content: 'INFO';
+        content: "INFO";
         line-height: 20px;
         left: 21px;
         top: 12px;
@@ -286,7 +275,7 @@
 
       &::before {
         position: absolute;
-        content: 'Milvus 2021 survey!';
+        content: "Milvus 2021 survey!";
         line-height: 20px;
         left: 21px;
         top: 12px;
@@ -302,7 +291,7 @@
 
       &::before {
         position: absolute;
-        content: 'QUOTE';
+        content: "QUOTE";
         line-height: 20px;
         left: 21px;
         top: 12px;
@@ -366,7 +355,7 @@
     thead {
       padding: 12px;
       border-bottom: 1px solid #eee;
-      font-size: 12px;
+      font-size: 16px;
       line-height: 22px;
       text-align: left;
       background-color: #e8e8e8;
@@ -416,8 +405,8 @@
     }
 
     th {
-      font-size: 12px;
-      line-height: 22px;
+      font-size: 16px;
+      line-height: 1.5;
       padding: 12px;
       font-weight: 600;
     }
@@ -481,8 +470,14 @@
 
   .filter,
   .tab-wrapper {
-    padding: 8px 0;
+    padding: 16px 0;
     margin-bottom: 8px;
+    white-space: nowrap;
+    overflow-x: auto;
+
+    @media @tablet, @phone {
+      padding: 8px 0;
+    }
 
     a {
       padding: 6px 40px;
@@ -491,6 +486,10 @@
       line-height: 1.4em;
 
       @media @tablet {
+        padding: 6px 16px;
+      }
+
+      @media @phone {
         padding: 6px 8px;
       }
     }
@@ -520,6 +519,20 @@
       list-style: none;
     }
   }
+  .gatsby-resp-image-figure {
+    margin: 1em 0;
+  }
+  figcaption {
+    margin-top: 8px;
+    line-height: 1.5;
+    font-size: 12px;
+    text-align: center;
+    color: #4c5a67;
+  }
+}
+
+.api-reference-wrapper {
+  padding-top: 16px;
 }
 
 details {
@@ -589,7 +602,7 @@ i {
       background-color: #fff;
 
       &::after {
-        content: '';
+        content: "";
         display: inline-block;
         position: absolute;
         width: 26px;
@@ -608,16 +621,6 @@ i {
   background-color: #f6f6f6;
   border-radius: 4px;
   font-size: 14px;
-}
-
-.gatsby-resp-image-wrapper {
-  min-width: 22px;
-  height: auto;
-  width: 90%;
-
-  @media @tablet {
-    margin: 24px auto;
-  }
 }
 
 // pre {

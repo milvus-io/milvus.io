@@ -1,12 +1,9 @@
-
-[submodule "static/benchmarks"]
-	path = static/benchmarks
-	url = https://github.com/milvus-io/benchmarks.git
-	branch = 0.10.0
 [submodule "src/pages/blogs/versions/master"]
 	path = src/pages/blogs/versions/master
 	url = https://github.com/milvus-io/community.git
-	branch = master
 [submodule "src/pages/docs/versions/master"]
 	path = src/pages/docs/versions/master
 	url = https://github.com/milvus-io/web-content.git
+[submodule "static/benchmarks"]
+	path = static/benchmarks
+	url = https://github.com/milvus-io/benchmarks.git

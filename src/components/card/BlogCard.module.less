@@ -1,0 +1,78 @@
+@import "../../css//variables/responsive.less";
+@import "../../css//variables/color.less";
+
+.BlogCardWrapper {
+  display: block;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .coverWrapper {
+    height: 220px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 6px;
+
+    @media @tablet {
+      width: 100%;
+      height: 305px;
+    }
+
+    @media @phone {
+      width: 100%;
+      height: 250px;
+    }
+  }
+
+  .descWrapper {
+    .title {
+      margin-top: 0;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 28px;
+      color: #000;
+      margin-bottom: 14px;
+    }
+
+    .desc {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      color: #000;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .bottomWrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .tags {
+        display: flex;
+        margin: 18px 0 8px 0;
+        list-style: none;
+        padding: 0;
+        text-transform: uppercase;
+        li {
+          color: @color-text;
+          font-weight: bold;
+          font-size: 14px;
+        }
+        li + li {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

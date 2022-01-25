@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import FeedbackModal from '../feedbackModal';
-import iconBird from '../../images/v2/icon_bird.svg';
-import * as styles from './index.module.less';
+import React, { useState } from "react";
+// import FeedbackModal from '../feedbackModal';
+import iconBird from "../../images/milmil_logo.svg";
+import * as styles from "./index.module.less";
+import FeedbackDialog from "../dialog/FeedbackDialog";
 
 const ChatItem = ({ chat = {} }) => {
   const [title, content, isLink] = chat;
@@ -44,20 +45,14 @@ const ChatItem = ({ chat = {} }) => {
   );
 };
 
-const AnswerBlock = ({ chat = [], setCurrent = () => {}, index = 0 }) => {
+const AnswerBlock = ({
+  chat = [],
+  setCurrent = () => {},
+  index = 0,
+  trans,
+}) => {
   const [expandBlock, setExpandBlock] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const contact = {
-    dialog: {
-      title: 'We will follow up on your question',
-      desc: 'Please leave your question here and we will be in touch.',
-      placeholder1: 'Your Email*',
-      placeholder2: 'Your Question*',
-      submit: 'Submit',
-      invalid: 'please input valid email and your question',
-    },
-  };
 
   const expandAnswers = () => {
     setExpandBlock(true);
@@ -79,7 +74,12 @@ const AnswerBlock = ({ chat = [], setCurrent = () => {}, index = 0 }) => {
               Put in your feedback here.
             </button>
             {showModal && (
-              <FeedbackModal setShowModal={setShowModal} contact={contact} />
+              <FeedbackDialog
+                open={showModal}
+                handleCancel={() => {}}
+                handleSubmit={() => {}}
+                trans={trans}
+              />
             )}
           </div>
         </div>

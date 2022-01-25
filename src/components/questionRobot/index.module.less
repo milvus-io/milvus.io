@@ -1,79 +1,74 @@
-@import '../../css/variables/responsive.less';
-@import '../../css/variables/color.less';
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
 
 .robot {
   bottom: 64px;
   position: fixed;
-  right: 90px;
+  right: 20px;
+  z-index: 90;
 
-  @media (min-width: @screen-lg-max) {
-    right: calc(50vw - 710px);
+  @media @desktop1920 {
+    right: calc(50vw - ((100vw - 340px) / 3 + 110px));
   }
+  @media @desktop1440, @desktop1024 {
+    right: calc(50vw - ((100vw - 260px) / 7 * 3 + 110px));
+  }
+  @media (min-width: 1200px) {
+    right: 40px;
+  }
+  // @media @tablet {
+  //   right: calc(50vw - ((100vw - 180px) / 5 * 2 + 70px));
+  // }
 
-  @media @tablet {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    right: 16px;
-    width: 90%;
+  .openBtn,
+  .openBtnIcon {
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    fill: @color-white;
+
+    @media @phone, @tablet {
+      height: 40px;
+      width: 40px;
+    }
   }
 
   .openBtn {
-    background-color: #fff;
-    background-image: url(../../images/v2/icon_bird.svg);
-    background-size: cover;
-    border: 0;
-    bottom: 0;
-    cursor: pointer;
-    height: 64px;
-    position: absolute;
-    right: 0;
-    width: 64px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
-
-    @media @tablet {
-      height: 40px;
-      width: 40px;
-      z-index: 1000;
-      cursor: initial;
-    }
-
-    &.close {
-      background-image: url(../../images/v2/vector.svg);
-      border: 1px solid #eeeeee;
-      border-radius: 50%;
-      background-repeat: no-repeat;
-      background-size: 50%;
-      background-position: center;
-
-      @media @tablet {
-        background-image: url(../../images/v2/close_mobile.svg);
-        background-size: 100%;
-      }
-    }
+    box-shadow: 0px 8px 36px rgba(0, 0, 0, 0.15);
   }
 }
 
 .dialog {
-  bottom: 84px;
+  bottom: 150px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   height: calc(80vh - 130px);
   max-height: 600px;
   position: absolute;
-  right: 0;
+  right: 20px;
   width: 400px;
   background: #f9f9f9;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 
-  @media @tablet {
-    bottom: 48px;
+  @media @phone {
+    bottom: 110px;
     max-width: 400px;
-    width: 100%;
-    z-index: 1000;
+    width: calc(100vw - 40px);
   }
+
+  @media @desktop1920 {
+    right: calc(50vw - ((100vw - 340px) / 3 + 110px));
+  }
+  @media @desktop1440, @desktop1024 {
+    right: calc(50vw - ((100vw - 260px) / 7 * 3 + 110px));
+  }
+  @media (min-width: 1200px) {
+    right: 40px;
+  }
+  // @media @tablet {
+  //   right: calc(50vw - ((100vw - 180px) / 5 * 2 + 70px));
+  // }
 
   .logo {
     filter: brightness(0) saturate(100%) invert(100%) sepia(11%) saturate(8%)
@@ -87,7 +82,7 @@
     background-color: @color-primary;
     border-radius: 8px 8px 0 0;
     color: white;
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-size: 12px;
     font-weight: bold;
@@ -104,7 +99,7 @@
     flex-grow: 1;
     padding: 15px;
     overflow-y: auto;
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -157,7 +152,7 @@
         color: @color-primary;
         cursor: pointer;
         display: flex;
-        font-family: 'Inter';
+        font-family: "Inter";
         font-size: 12px;
         font-weight: bold;
         margin-top: 8px;
@@ -218,7 +213,7 @@
 
     button {
       background: transparent;
-      background-image: url(../../images/v2/icon_send.svg);
+      background-image: url(../../images/icon_send.svg);
       background-size: cover;
       border: 0;
       height: 22px;
@@ -231,24 +226,10 @@
     input::placeholder {
       color: #afafaf;
       opacity: 1;
-      font-family: 'Inter';
+      font-family: "Inter";
       font-style: normal;
       font-weight: 500;
       font-size: 14px;
     }
-  }
-}
-
-.mask {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 9;
-
-  @media (min-width: @screen-md-max) {
-    display: none;
   }
 }

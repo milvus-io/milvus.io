@@ -1,0 +1,43 @@
+@import "../../css/variables/responsive.less";
+@import "../../css/variables/color.less";
+
+.mv3-tree-view {
+  .MuiTreeItem-content {
+    padding-top: 6px;
+    padding-bottom: 6px;
+
+    .MuiTreeItem-label,
+    a {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+
+      color: @color-grey-01;
+    }
+  }
+
+  .Mui-selected {
+    .mv3-item-link,
+    .MuiTreeItem-label {
+      font-weight: bold;
+
+      color: @text-blue;
+    }
+  }
+}
+
+.mv3-item-link {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  svg {
+    margin-right: 8px;
+  }
+}

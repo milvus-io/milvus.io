@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Image } from 'gestalt';
 import PreviewItem from './previewItem';
-import blackSearch from '../../../images/milvus-demos/search-black.svg';
+import blackSearch from '../../../images/demos/search-black.svg';
 import * as styles from './item.module.less';
 
 const Item = props => {

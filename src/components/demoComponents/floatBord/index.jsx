@@ -1,10 +1,10 @@
-import React from 'react';
-import * as styles from './index.module.less';
-import github from '../../../images/milvus-demos/github.png';
-import forum from '../../../images/milvus-demos/forum.png';
-import Button from '../../button';
+import React from "react";
+import * as styles from "./index.module.less";
+import github from "../../../images/demos/github.svg";
+import Button from "../button";
+import { Forum } from "../item/searchIcon";
 
-const FloatBord = ({ className = '' }) => {
+const FloatBord = ({ className = "" }) => {
   return (
     <div className={`${styles.floatBordContainer} ${className}`}>
       <div className={styles.linkItem}>
@@ -33,7 +33,7 @@ const FloatBord = ({ className = '' }) => {
           variant="contained"
           children={
             <div className={styles.content}>
-              <img src={forum} alt="forum" />
+              <Forum />
               <span>Forum</span>
               <i className="fas fa-chevron-right"></i>
             </div>

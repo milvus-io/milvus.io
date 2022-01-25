@@ -1,0 +1,387 @@
+@import "../../css/variables/main.less";
+
+.header {
+  align-items: center;
+  background-color: transparent;
+  // make header height = 80px
+  padding: 18px 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  .flexcenter;
+
+  &.light {
+    background-color: white;
+    position: sticky;
+    width: 100%;
+    border-bottom: 1px solid #ededed;
+
+    .logoSection {
+      .lfaiLogo {
+        background-image: url("../../images/lf_logo_light.svg");
+      }
+    }
+
+    .global {
+      path {
+        fill: black;
+      }
+    }
+
+    .globalText {
+      color: black;
+    }
+
+    .menuItem {
+      color: black;
+    }
+
+    .startBtn {
+      color: white;
+      background: unset;
+      background: @color-primary;
+
+      &:hover {
+        background: @text-blue;
+      }
+    }
+  }
+
+  .headerContainer {
+    .col-4;
+    .col-8;
+    .col-12;
+    .spaceBetween;
+    align-items: center;
+  }
+
+  @media @phone, @tablet {
+    .light;
+  }
+
+  .leftSection {
+    .flexstart;
+    align-items: center;
+  }
+
+  .rightSection {
+    .flexend;
+    align-items: center;
+    gap: 20px;
+
+    .startBtn {
+      width: fit-content;
+      position: static;
+    }
+  }
+}
+
+.desktopHeaderBar {
+  flex: 1;
+  .spaceBetween;
+
+  @media @phone, @tablet {
+    display: none;
+  }
+}
+
+.actionBar {
+  .flexend;
+  align-items: center;
+
+  @media @tablet {
+    padding: 0 16px;
+    margin-top: 24px;
+    justify-content: space-between;
+  }
+
+  @media @phone {
+    margin-top: 24px;
+    padding: 0 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gitBtnsWrapper {
+    .flexend;
+
+    @media @desktop1024 {
+      display: none;
+    }
+
+    @media @phone {
+      margin-bottom: 24px;
+    }
+  }
+
+  .langSelect {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    .hover;
+
+    & > div {
+      padding-right: 14px;
+    }
+
+    & > svg {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}
+
+.logoSection {
+  height: 30px;
+  display: flex;
+  align-content: center;
+
+  img {
+    height: 30px;
+    .hover;
+
+    @media @phone {
+      height: 20px;
+    }
+  }
+
+  .lfaiLogo {
+    background-image: url("../../images/lf_logo_dark.svg");
+    background-size: contain;
+    display: block;
+    height: 30px;
+    transition: none;
+    width: 55px;
+    .hover;
+
+    @media @phone, @tablet {
+      background-image: url("../../images/lf_logo_light.svg");
+    }
+
+    @media @phone {
+      width: 37px;
+      height: 20px;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    height: 30px;
+  }
+
+  @media @phone {
+    height: 20px;
+  }
+}
+
+.startBtn {
+  background: linear-gradient(90.14deg, #ffffff 0.15%, #669dde 104.21%);
+  .buttonSm;
+  .hover;
+
+  @media @phone, @tablet {
+    background: unset;
+    .primaryBtnSm;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+
+    height: 42px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  height: 42px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.mobileHead {
+  display: flex;
+  justify-content: center;
+  padding: 25px 0;
+
+  position: sticky;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  z-index: 100;
+
+  @media @phone {
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .global {
+    path {
+      fill: black;
+    }
+  }
+
+  .globalText {
+    color: black;
+  }
+
+  .menuItem {
+    color: black;
+  }
+}
+
+.hamburg {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  height: 30px;
+  position: relative;
+  width: 35px;
+  display: none;
+
+  @media @phone, @tablet {
+    display: block;
+  }
+
+  @media @phone {
+    height: 20px;
+    width: 25px;
+  }
+
+  span {
+    background: black;
+    border: none;
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: all 0.25s ease;
+    width: 100%;
+  }
+
+  & span:nth-of-type(2) {
+    top: 11px;
+
+    @media @phone {
+      top: 7px;
+    }
+  }
+  & span:nth-of-type(3) {
+    top: 22px;
+
+    @media @phone {
+      top: 14px;
+    }
+  }
+
+  &.active {
+    background-color: white;
+
+    span {
+      background: black;
+    }
+
+    .top {
+      transform: translateY(11px) translateX(0) rotate(45deg);
+
+      @media @phone {
+        transform: translateY(7px) translateX(0) rotate(45deg);
+      }
+    }
+
+    .middle {
+      opacity: 0;
+    }
+
+    .bottom {
+      transform: translateY(-11px) translateX(0) rotate(-45deg);
+
+      @media @phone {
+        transform: translateY(-7px) translateX(0) rotate(-45deg);
+      }
+    }
+  }
+}
+
+.overlay {
+  background: white;
+  height: 0;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  transition: all 0.25s;
+  width: 100%;
+  z-index: -1;
+  .flexcenter;
+
+  &.open {
+    height: 100vh;
+  }
+}
+
+.nav {
+  margin-top: 120px;
+  position: relative;
+
+  @media @phone {
+    margin-top: 66px;
+  }
+}
+
+.global {
+  width: 24px;
+  path {
+    fill: white;
+  }
+}
+
+.globalText {
+  color: white;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.menu {
+  margin: 0;
+
+  li {
+    display: block;
+    margin-left: 40px;
+  }
+}
+
+.menuItem {
+  background: transparent;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-family: Inter;
+  font-size: 14px;
+  line-height: 40px;
+  padding: 0;
+  text-decoration: none;
+  .hover;
+}
+
+.menuLink {
+  .menuItem;
+  color: black;
+}
+
+.mobileMenuLink {
+  font-size: 14px;
+  color: black;
+  padding: 20px;
+  .hover;
+
+  @media @phone {
+    display: block;
+    padding: 8px 20px;
+
+    margin-bottom: 8px;
+  }
+}
+
+.turnLeft {
+  transform: rotate(-90deg);
+}

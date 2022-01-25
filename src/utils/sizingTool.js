@@ -117,7 +117,6 @@ export const formatSize = size => {
     : (status = 'KB');
 
   size = Math.ceil(size);
-
   return `${size} ${status}`;
 };
 

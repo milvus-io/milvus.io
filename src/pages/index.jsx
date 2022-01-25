@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { graphql } from "gatsby";
-import { useI18next } from "gatsby-plugin-react-i18next";
+import { useI18next, Link } from "gatsby-plugin-react-i18next";
 import "./index.less";
 import * as styles from "./index.module.less";
 import Layout from "../components/layout";
@@ -10,70 +10,118 @@ import HomeFeatures from "../components/home/features";
 import HomeCode from "../components/home/code";
 import Attu from "../components/home/attu";
 import { CustomizedSnackbars } from "../components/snackBar";
-import cmb from "../images/brands/cmb.png";
+import tencent from "../images/brands/tencent.png";
 import ebay from "../images/brands/ebay.png";
 import ikea from "../images/brands/ikea.png";
 import intuit from "../images/brands/intuit.png";
 import kuaishou from "../images/brands/kuaishou.png";
 import line from "../images/brands/line.png";
-import pingan from "../images/brands/pingan.png";
+import baidu from "../images/brands/baidu.png";
 import shopee from "../images/brands/shopee.png";
 import smartnews from "../images/brands/smartnews.png";
-import vivo from "../images/brands/vivo.png";
+import shutterstock from "../images/brands/shutterstock.png";
 import walmart from "../images/brands/walmart.png";
 import xiaomi from "../images/brands/xiaomi.png";
+import hunt from "../images/brands/hunt.png";
+import micro from "../images/brands/micro.png";
+import mobileye from "../images/brands/mobileye.png";
+import moj from "../images/brands/moj.png";
+import compass from "../images/brands/compass.png";
+import tokopedia from "../images/brands/tokopedia.png";
 import CustomIconLink from "../components/customIconLink";
 import Seo from "../components/seo";
 import SvgIcon from "@mui/material/SvgIcon";
 
 const brands = [
   {
-    name: "cmb",
-    icon: cmb,
+    name: "Tencent",
+    icon: tencent,
+    link: 'https://www.tencent.com/'
   },
   {
-    name: "ebay",
+    name: "Ebay",
     icon: ebay,
+    link: 'https://www.ebay.com/'
   },
   {
-    name: "ikea",
+    name: "Ikea",
     icon: ikea,
+    link: 'https://www.ikea.com/'
   },
   {
-    name: "intuit",
+    name: "Intuit",
     icon: intuit,
+    link: 'https://www.intuit.com/'
   },
   {
-    name: "kuaishou",
+    name: "Kuaishou",
     icon: kuaishou,
+    link: 'https://www.kuaishou.com/'
   },
   {
-    name: "line",
+    name: "Line",
     icon: line,
+    link: 'https://line.me/'
   },
   {
-    name: "pingan",
-    icon: pingan,
+    name: "Baidu",
+    icon: baidu,
+    link: 'https://www.baidu.com/'
   },
   {
-    name: "shopee",
+    name: "Shopee",
     icon: shopee,
+    link: 'https://shopee.com/'
   },
   {
-    name: "smartnews",
+    name: "Smartnews",
     icon: smartnews,
+    link: 'https://www.smartnews.com/'
   },
   {
-    name: "vivo",
-    icon: vivo,
+    name: "shutterstock",
+    icon: shutterstock,
+    link: 'https://www.shutterstock.com/'
   },
   {
-    name: "walmart",
+    name: "Walmart",
     icon: walmart,
+    link: 'https://www.walmart.com/'
   },
   {
-    name: "xiaomi",
+    name: "Xiaomi",
     icon: xiaomi,
+    link: 'https://www.mi.com/'
+  },
+  {
+    name: "Dailyhunt",
+    icon: hunt,
+    link: 'https://www.dailyhunt.in/'
+  },
+  {
+    name: "Trend micro",
+    icon: micro,
+    link: 'https://www.trendmicro.com/'
+  },
+  {
+    name: "Mobileye",
+    icon: mobileye,
+    link: 'https://www.mobileye.com/'
+  },
+  {
+    name: "Moj",
+    icon: moj,
+    link: 'https://mojapp.in/'
+  },
+  {
+    name: "Compass",
+    icon: compass,
+    link: 'https://www.compass.com/'
+  },
+  {
+    name: "Tokopedia",
+    icon: tokopedia,
+    link: 'https://www.tokopedia.com/'
   },
 ];
 const DESC =
@@ -132,6 +180,16 @@ const IndexPage = () => {
         <Seo title="Milvus" lang={language} description={DESC} />
         {/* all css about banner in banner.less */}
         <HomeBanner t={t} />
+        <section className={`${styles.customer} col-4 col-8 col-12`}>
+          <p className={styles.customerTitle}>{t("v3trans.main.customer")}</p>
+          <div className={styles.brands}>
+            {brands.map(b => (
+              <Link to={b.link} target="_blank" rel="noreference">
+                <img src={b.icon} alt={b.name} key={b.name} />
+              </Link>
+            ))}
+          </div>
+        </section>
         {/* all these sections about banner in banner.less */}
 
         <HomeFeatures t={t} />
@@ -160,15 +218,6 @@ const IndexPage = () => {
                 );
               })}
             </div>
-          </div>
-        </section>
-
-        <section className={`${styles.customer} col-4 col-8 col-12`}>
-          <p className={styles.customerTitle}>{t("v3trans.main.customer")}</p>
-          <div className={styles.brands}>
-            {brands.map(b => (
-              <img src={b.icon} alt={b.name} key={b.name} />
-            ))}
           </div>
         </section>
 

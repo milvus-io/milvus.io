@@ -1,6 +1,6 @@
-const fs = require('fs');
-const HTMLParser = require('node-html-parser');
-const path = require('path');
+const fs = require("fs");
+const HTMLParser = require("node-html-parser");
+const path = require("path");
 
 /**
  * Use api version to find target doc versions.
@@ -43,7 +43,7 @@ const getAllFilesAbsolutePath = (dirPath, pathList = []) => {
  * @param {string} path File path to parse.
  * @returns The file name.
  */
-const getFileName = (path = '') => path.split('/').pop();
+const getFileName = (path = "") => path.split("/").pop();
 
 /**
  * Get relative path from absolute path.
@@ -83,7 +83,7 @@ const generateNodes = (
       doc,
       id: createNodeId(`APIfile-${category}-${version}-${name}`),
       internal: {
-        type: 'APIfile',
+        type: "APIfile",
         contentDigest: createContentDigest(file),
       },
       version,
@@ -119,12 +119,20 @@ const handleApiFiles = (
     // Level: api_reference(root directory) > 2nd level directory > 3rd level directory.
     const thridLevelDirectories = {};
     // Get all HTML files under dirPath.
-    const htmlFiles = filesList.filter(i => i.endsWith('.html'));
+    const htmlFiles = filesList.filter(i => i.endsWith(".html"));
     // If this dirPath has only one page or not, regardless how many directories.
     const isSinglePage = htmlFiles.length === 1;
     for (let i = 0; i < htmlFiles.length; i++) {
       let filePath = htmlFiles[i];
-      let doc = HTMLParser.parse(fs.readFileSync(filePath));
+      let originDocStr = fs.readFileSync(filePath, "utf-8");
+      // Replace return type str in java doc such as: <Int> <Float>
+      if (category === "java") {
+        const regExp = /<([A-Z].*?)>/g;
+        originDocStr = originDocStr
+          .replace(/<[A-Z].*?<\/[A-Z].*?>/g, "") // remove <String></String>
+          .replace(regExp, "&lt;$1&gt;");
+      }
+      let doc = HTMLParser.parse(originDocStr);
       // Use custom doc2html function to generate docHTML and other data.
       const {
         docHTML,
@@ -133,10 +141,10 @@ const handleApiFiles = (
         parentMenu = {},
       } = doc2html(doc);
       // docOrder may be 0.
-      const order = typeof docOrder === 'undefined' ? null : docOrder;
+      const order = typeof docOrder === "undefined" ? null : docOrder;
       const title = docTitle;
       const relativePath = getFileRelativePath(filePath, version);
-      const parentPath = relativePath.split('/').slice(0, -1).join('/');
+      const parentPath = relativePath.split("/").slice(0, -1).join("/");
       // Record the parentPath as a thrid level directory.
       parentPath && (thridLevelDirectories[parentPath] = parentMenu);
       parentPath
@@ -151,9 +159,9 @@ const handleApiFiles = (
             title,
             order,
             labels: [
-              'api_reference',
-              isSinglePage ? '' : category.replace('-', '_'),
-              isSinglePage ? '' : parentPath.replace('-', '_'),
+              "api_reference",
+              isSinglePage ? "" : category.replace("-", "_"),
+              isSinglePage ? "" : parentPath.replace("-", "_"),
             ],
           })
         : apiFiles.push({
@@ -165,8 +173,8 @@ const handleApiFiles = (
             title,
             order,
             labels: [
-              'api_reference',
-              isSinglePage ? '' : category.replace('-', '_'),
+              "api_reference",
+              isSinglePage ? "" : category.replace("-", "_"),
             ],
           });
     }
@@ -174,27 +182,27 @@ const handleApiFiles = (
     // Add 3rd level directory menu. Should ignore if single page.
     !isSinglePage &&
       apiFiles.push({
-        doc: '',
-        name: category.replace('-', '_'),
+        doc: "",
+        name: category.replace("-", "_"),
         abspath: dirPath,
         version,
         category,
-        labels: ['api_reference'],
+        labels: ["api_reference"],
         isDirectory: true,
-        order: category.includes('pymilvus') ? -1 : null,
+        order: category.includes("pymilvus") ? -1 : null,
       }) &&
       Object.keys(thridLevelDirectories).forEach(f => {
         const { name: dirName, order: dirOrder } = thridLevelDirectories[f];
         apiFiles.push({
-          doc: '',
-          name: f.replace('-', '_'),
+          doc: "",
+          name: f.replace("-", "_"),
           abspath: `${dirPath}/${f}`,
           version,
           category,
-          labels: ['api_reference', category.replace('-', '_')],
+          labels: ["api_reference", category.replace("-", "_")],
           isDirectory: true,
           order: dirOrder,
-          title: dirName || f.replace('-', '_'),
+          title: dirName || f.replace("-", "_"),
         });
       });
   } catch (e) {
@@ -217,40 +225,40 @@ const handlePyFiles = (parentPath, version, apiFiles) => {
    */
   const calculateOrder = toctree => {
     for (let i = 0; i < toctree.length; i++) {
-      const isCurrent = toctree[i]?.getAttribute('class')?.includes('current');
+      const isCurrent = toctree[i]?.getAttribute("class")?.includes("current");
       if (isCurrent) return i;
     }
     return toctree.length;
   };
   const doc2html = doc => {
     // remove useless link
-    [...doc.querySelectorAll('.reference.internal .viewcode-link')].forEach(
+    [...doc.querySelectorAll(".reference.internal .viewcode-link")].forEach(
       node => {
         node.parentNode.parentNode.removeChild(node.parentNode);
       }
     );
-    const leftNav = doc.querySelectorAll('.toctree-l1');
-    const title = doc?.querySelector('h1')?.textContent?.slice(0, -1);
+    const leftNav = doc.querySelectorAll(".toctree-l1");
+    const title = doc?.querySelector("h1")?.textContent?.slice(0, -1);
     const order = calculateOrder([...leftNav]);
     // Add <code> for <pre> content.
-    [...doc.querySelectorAll('pre')].forEach(node => {
+    [...doc.querySelectorAll("pre")].forEach(node => {
       const preNode = HTMLParser.parse(node.innerHTML);
       // Remove all unescaped HTML, here's <span>, which cause highlight warning.
       // https://github.com/highlightjs/highlight.js/issues/2886
-      [...preNode.querySelectorAll('span')].forEach(span => {
+      [...preNode.querySelectorAll("span")].forEach(span => {
         const spanText = span.textContent;
         span.replaceWith(spanText);
       });
       node.innerHTML = `<code>${preNode.outerHTML}</code>`;
     });
     // only need article body html
-    doc = doc.querySelector('[itemprop=articleBody] > div').innerHTML;
+    doc = doc.querySelector("[itemprop=articleBody] > div").innerHTML;
     return { docHTML: doc, title, order };
   };
   handleApiFiles(doc2html, apiFiles, {
     parentPath,
     version,
-    category: 'pymilvus',
+    category: "pymilvus",
   });
 };
 
@@ -276,12 +284,12 @@ const handlePyFilesWithOrm = (parentPath, version, apiFiles) => {
     let order = -1;
     const toctree = element?.querySelectorAll(className);
     for (let i = 0; i < toctree.length; i++) {
-      const isCurrent = toctree[i]?.getAttribute('class')?.includes('current');
+      const isCurrent = toctree[i]?.getAttribute("class")?.includes("current");
       if (!isCurrent) continue;
-      if (className === '.toctree-l2') return i;
-      const result = calculateOrder(toctree[i], '.toctree-l2');
+      if (className === ".toctree-l2") return i;
+      const result = calculateOrder(toctree[i], ".toctree-l2");
       if (result !== -1) {
-        const eleName = toctree[i]?.querySelector('a')?.textContent;
+        const eleName = toctree[i]?.querySelector("a")?.textContent;
         parentMenu.name = eleName;
         parentMenu.order = i;
         return result;
@@ -292,25 +300,25 @@ const handlePyFilesWithOrm = (parentPath, version, apiFiles) => {
   };
   const doc2html = doc => {
     // const leftNav = doc.querySelectorAll('.toctree-l1');
-    const title = doc?.querySelector('h1')?.textContent?.slice(0, -1);
+    const title = doc?.querySelector("h1")?.textContent?.slice(0, -1);
     const parentMenu = {};
     const order = calculateOrder(
-      doc.querySelector('.wy-menu ul'),
-      '.toctree-l1',
+      doc.querySelector(".wy-menu ul"),
+      ".toctree-l1",
       parentMenu
     );
     // remove useless link
-    [...doc.querySelectorAll('.reference.internal .viewcode-link')].forEach(
+    [...doc.querySelectorAll(".reference.internal .viewcode-link")].forEach(
       node => {
         node.parentNode.parentNode.removeChild(node.parentNode);
       }
     );
     // Add <code> for <pre> content.
-    [...doc.querySelectorAll('pre')].forEach(node => {
+    [...doc.querySelectorAll("pre")].forEach(node => {
       const preNode = HTMLParser.parse(node.innerHTML);
       // Remove all unescaped HTML, here's <span>, which cause highlight warning.
       // https://github.com/highlightjs/highlight.js/issues/2886
-      [...preNode.querySelectorAll('span')].forEach(span => {
+      [...preNode.querySelectorAll("span")].forEach(span => {
         const spanText = span.textContent;
         span.replaceWith(spanText);
       });
@@ -319,15 +327,15 @@ const handlePyFilesWithOrm = (parentPath, version, apiFiles) => {
     // only need article body html
     // <=rc7 use "section", >=rc8 use ".section"
     const docContent =
-      doc.querySelector('[itemprop=articleBody] > section') ||
-      doc.querySelector('[itemprop=articleBody] > .section');
+      doc.querySelector("[itemprop=articleBody] > section") ||
+      doc.querySelector("[itemprop=articleBody] > .section");
     doc = docContent?.innerHTML;
     return { docHTML: doc, title, order, parentMenu };
   };
   handleApiFiles(doc2html, apiFiles, {
     parentPath,
     version,
-    category: 'pymilvus',
+    category: "pymilvus",
   });
 };
 
@@ -341,55 +349,55 @@ const handlePyFilesWithOrm = (parentPath, version, apiFiles) => {
 const handleGoFiles = (parentPath, version, apiFiles) => {
   const doc2html = doc => {
     // get content
-    doc = doc.querySelector('#page');
+    doc = doc.querySelector("#page");
     // remove useless content
-    doc.querySelector('#nav')?.remove();
-    [...doc.querySelectorAll('script')].forEach(node =>
+    doc.querySelector("#nav")?.remove();
+    [...doc.querySelectorAll("script")].forEach(node =>
       node.parentNode.removeChild(node)
     );
-    doc.querySelector('#short-nav')?.remove();
-    [...doc.querySelectorAll('.collapsed')].forEach(node =>
+    doc.querySelector("#short-nav")?.remove();
+    [...doc.querySelectorAll(".collapsed")].forEach(node =>
       node.parentNode.removeChild(node)
     );
-    doc.querySelector('#pkg-subdirectories')?.remove();
-    doc.querySelector('.pkg-dir')?.remove();
-    doc.querySelector('#footer')?.remove();
+    doc.querySelector("#pkg-subdirectories")?.remove();
+    doc.querySelector(".pkg-dir")?.remove();
+    doc.querySelector("#footer")?.remove();
     // Add <code> for <pre> content.
-    [...doc.querySelectorAll('pre')].forEach(node => {
+    [...doc.querySelectorAll("pre")].forEach(node => {
       const preNode = HTMLParser.parse(node.innerHTML);
       // replace <a> tag with text
-      [...preNode.querySelectorAll('a')].forEach(e => {
+      [...preNode.querySelectorAll("a")].forEach(e => {
         const textContent = e.textContent;
         textContent && e.replaceWith(textContent);
       });
-      [...preNode.querySelectorAll('span')].forEach(span => {
+      [...preNode.querySelectorAll("span")].forEach(span => {
         const spanText = span.textContent;
         span.replaceWith(spanText);
       });
       node.innerHTML = `<code>${preNode.outerHTML}</code>`;
     });
     const removableAhrefs = [
-      ...doc.querySelectorAll('h2'),
-      ...doc.querySelectorAll('h3'),
+      ...doc.querySelectorAll("h2"),
+      ...doc.querySelectorAll("h3"),
     ];
     removableAhrefs.forEach(node => {
-      const ele = node.querySelector('a');
+      const ele = node.querySelector("a");
       const textContent = ele?.textContent;
       textContent && ele.replaceWith(textContent);
     });
-    doc.querySelector('#pkg-index h3')?.remove();
-    doc.querySelector('#pkg-index p')?.remove();
-    [...doc.querySelectorAll('h2[title]')].forEach(node => {
+    doc.querySelector("#pkg-index h3")?.remove();
+    doc.querySelector("#pkg-index p")?.remove();
+    [...doc.querySelectorAll("h2[title]")].forEach(node => {
       const textContent = node.textContent?.slice(0, -2);
       textContent && node.replaceWith(`<h2>${textContent}</h2>`);
     });
-    doc = doc.querySelector('div.container').innerHTML;
+    doc = doc.querySelector("div.container").innerHTML;
     return { docHTML: doc };
   };
   handleApiFiles(doc2html, apiFiles, {
     parentPath,
     version,
-    category: 'go',
+    category: "go",
   });
 };
 
@@ -403,49 +411,49 @@ const handleGoFiles = (parentPath, version, apiFiles) => {
 const handleJavaFiles = (parentPath, version, apiFiles) => {
   const doc2html = doc => {
     // remove see also
-    doc.querySelector('.contentContainer .description dl:last-child')?.remove();
-    [...doc.querySelectorAll('table')].forEach(element => {
-      element.querySelector('caption')?.remove();
+    doc.querySelector(".contentContainer .description dl:last-child")?.remove();
+    [...doc.querySelectorAll("table")].forEach(element => {
+      element.querySelector("caption")?.remove();
     });
     // Add <code> for <pre> content.
-    [...doc.querySelectorAll('pre')].forEach(node => {
+    [...doc.querySelectorAll("pre")].forEach(node => {
       const preNode = HTMLParser.parse(node.innerHTML);
       // replace <a> tag with text
-      [...preNode.querySelectorAll('a')].forEach(e => {
+      [...preNode.querySelectorAll("a")].forEach(e => {
         const textContent = e.textContent;
         textContent && e.replaceWith(textContent);
       });
-      [...preNode.querySelectorAll('span')].forEach(span => {
+      [...preNode.querySelectorAll("span")].forEach(span => {
         const spanText = span.textContent;
         span.replaceWith(spanText);
       });
       node.innerHTML = `<code>${preNode.outerHTML}</code>`;
     });
-    [...doc.querySelectorAll('a')].forEach(node => {
-      !node.textContent.split('\n').join('') && node?.remove();
+    [...doc.querySelectorAll("a")].forEach(node => {
+      !node.textContent.split("\n").join("") && node?.remove();
     });
-    const title = doc.querySelector('.header .title');
+    const title = doc.querySelector(".header .title");
     title &&
       doc
-        .querySelector('.header')
+        .querySelector(".header")
         ?.replaceWith(`<h1 class="title">${title.textContent}</h1>`);
     const packageHierarchyLabel = doc.querySelector(
-      '.header .packageHierarchyLabel'
+      ".header .packageHierarchyLabel"
     );
     // remove packageHierarchyLabel and it's description if exists
     if (packageHierarchyLabel) {
-      doc.querySelector('.header span')?.remove();
-      doc.querySelector('.header ul')?.remove();
+      doc.querySelector(".header span")?.remove();
+      doc.querySelector(".header ul")?.remove();
       packageHierarchyLabel.remove();
     }
     // only need article body html
-    doc = doc.querySelector('body > main').innerHTML;
+    doc = doc.querySelector("body > main").innerHTML;
     return { docHTML: doc };
   };
   handleApiFiles(doc2html, apiFiles, {
     parentPath,
     version,
-    category: 'java',
+    category: "java",
   });
 };
 
@@ -459,52 +467,52 @@ const handleJavaFiles = (parentPath, version, apiFiles) => {
 const handleNodeFiles = (parentPath, version, apiFiles) => {
   const doc2html = doc => {
     // Format <pre> content for highlight.js
-    [...doc.querySelectorAll('pre')].forEach(node => {
+    [...doc.querySelectorAll("pre")].forEach(node => {
       const preNode = HTMLParser.parse(node.innerHTML);
-      [...preNode.querySelectorAll('a')].forEach(e => {
+      [...preNode.querySelectorAll("a")].forEach(e => {
         const textContent = e.textContent;
         textContent && e.replaceWith(textContent);
       });
-      [...preNode.querySelectorAll('span')].forEach(span => {
+      [...preNode.querySelectorAll("span")].forEach(span => {
         const spanText = span.textContent;
         span.replaceWith(spanText);
       });
       node.innerHTML = preNode.outerHTML;
     });
     // Remove hierarchy
-    doc.querySelector('.tsd-hierarchy')?.remove();
+    doc.querySelector(".tsd-hierarchy")?.remove();
     // Remove useless sections
-    const sections = doc.querySelectorAll('.col-content > section');
+    const sections = doc.querySelectorAll(".col-content > section");
     [...sections].forEach((node, index) => {
-      const isIndex = node?.getAttribute('class')?.includes('tsd-index');
+      const isIndex = node?.getAttribute("class")?.includes("tsd-index");
       const isLastChild = sections?.length === index + 1;
       const isValid = isIndex || isLastChild;
       if (!isValid) node?.remove();
       if (isIndex) {
         // Remove toc title "index"
-        node.querySelector('h2')?.remove();
+        node.querySelector("h2")?.remove();
       }
       if (isLastChild) {
         // Remove source code link and desc elements
         const lastChild = HTMLParser.parse(node.innerHTML);
-        [...lastChild.querySelectorAll('ul.tsd-signatures')].forEach(i =>
+        [...lastChild.querySelectorAll("ul.tsd-signatures")].forEach(i =>
           i.remove()
         );
-        [...lastChild.querySelectorAll('aside.tsd-sources')].forEach(i =>
+        [...lastChild.querySelectorAll("aside.tsd-sources")].forEach(i =>
           i.remove()
         );
         node.innerHTML = lastChild.outerHTML;
       }
     });
-    [...doc.querySelectorAll('.tsd-index-section')].forEach(node => {
+    [...doc.querySelectorAll(".tsd-index-section")].forEach(node => {
       const sectionNode = HTMLParser.parse(node.innerHTML);
-      const title = sectionNode.querySelector('h3');
-      if (title?.textContent === 'Methods') {
+      const title = sectionNode.querySelector("h3");
+      if (title?.textContent === "Methods") {
         title?.remove();
-        [...sectionNode.querySelectorAll('a')].forEach(aNode => {
-          const ahref = aNode?.getAttribute('href')?.split('#')?.pop();
+        [...sectionNode.querySelectorAll("a")].forEach(aNode => {
+          const ahref = aNode?.getAttribute("href")?.split("#")?.pop();
           const newHref = `#${ahref}`;
-          aNode.setAttribute('href', newHref);
+          aNode.setAttribute("href", newHref);
         });
       } else {
         node.remove();
@@ -512,18 +520,18 @@ const handleNodeFiles = (parentPath, version, apiFiles) => {
       node.innerHTML = sectionNode.outerHTML;
     });
     // only need article title & body html
-    doc.querySelector('.tsd-panel.tsd-typography p')?.remove();
-    const isDupTitle = doc.querySelectorAll('h1')?.length > 1;
-    const docTitleHTML = isDupTitle ? '' : doc.querySelector('h1').outerHTML;
+    doc.querySelector(".tsd-panel.tsd-typography p")?.remove();
+    const isDupTitle = doc.querySelectorAll("h1")?.length > 1;
+    const docTitleHTML = isDupTitle ? "" : doc.querySelector("h1").outerHTML;
     doc =
       docTitleHTML +
-      doc.querySelector('.container-main .col-content').innerHTML;
+      doc.querySelector(".container-main .col-content").innerHTML;
     return { docHTML: doc };
   };
   handleApiFiles(doc2html, apiFiles, {
     parentPath,
     version,
-    category: 'node',
+    category: "node",
   });
 };
 

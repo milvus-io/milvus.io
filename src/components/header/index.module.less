@@ -56,7 +56,7 @@
     align-items: center;
   }
 
-  @media @phone, @tablet, @desktop1024 {
+  @media @phone, @tablet {
     .light;
   }
 
@@ -73,10 +73,6 @@
     .startBtn {
       width: fit-content;
       position: static;
-      // margin-left: 34px;
-
-      @media @phone, @tablet, @desktop1024 {
-      }
     }
   }
 }
@@ -85,7 +81,7 @@
   flex: 1;
   .spaceBetween;
 
-  @media @phone, @tablet, @desktop1024 {
+  @media @phone, @tablet {
     display: none;
   }
 }
@@ -94,7 +90,7 @@
   .flexend;
   align-items: center;
 
-  @media @tablet, (max-width: 1200px) {
+  @media @tablet {
     padding: 0 16px;
     margin-top: 24px;
     justify-content: space-between;
@@ -109,6 +105,10 @@
 
   .gitBtnsWrapper {
     .flexend;
+
+    @media @desktop1024 {
+      display: none;
+    }
 
     @media @phone {
       margin-bottom: 24px;
@@ -155,7 +155,7 @@
     width: 55px;
     .hover;
 
-    @media @phone, @tablet, @desktop1024 {
+    @media @phone, @tablet {
       background-image: url("../../images/lf_logo_light.svg");
     }
 
@@ -179,7 +179,7 @@
   .buttonSm;
   .hover;
 
-  @media @phone, @tablet, @desktop1024 {
+  @media @phone, @tablet {
     background: unset;
     .primaryBtnSm;
     position: absolute;
@@ -237,7 +237,7 @@
   width: 35px;
   display: none;
 
-  @media @phone, @tablet, @desktop1024 {
+  @media @phone, @tablet {
     display: block;
   }
 

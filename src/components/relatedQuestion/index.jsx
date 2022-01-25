@@ -31,9 +31,11 @@ export default function RelatedQuestion(props) {
 
   return (
     <>
-      <Typography variant="h2" component="h2" className={styles.title}>
-        {title}
-      </Typography>
+      {relatedQuestions && (
+        <Typography variant="h2" component="h2" className={styles.title}>
+          {title}
+        </Typography>
+      )}
       <ul className={styles.container}>
         {relatedQuestions?.map(question => {
           const [, content, isLink] = question;

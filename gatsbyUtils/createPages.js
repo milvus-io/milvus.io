@@ -469,37 +469,14 @@ const filterHomeMdWithVersion = edges => {
     return !!mdVersion;
   };
 
-  // return edges.reduce((acc, cur) => {
-  //   const {
-  //     node: { fileAbsolutePath, frontmatter, html },
-  //   } = cur;
-
-  //   if (filterVersion(fileAbsolutePath) && frontmatter.id === "home.md") {
-  //     const version = findVersion(fileAbsolutePath) || "master";
-  //     const fileLang = findLang(fileAbsolutePath);
-  //     acc.push({
-  //       language: fileLang,
-  //       html,
-  //       path: fileAbsolutePath,
-  //       version,
-  //     });
-  //   }
-  //   return acc;
-  // }, []);
-
-  // ! TO REMOVE: use home_v3.md temporarily for preview
-  // ! Do remember remove home_v3.md in web-content reppo
   return edges.reduce((acc, cur) => {
     const {
       node: { fileAbsolutePath, frontmatter, html },
     } = cur;
-    if (
-      filterVersion(fileAbsolutePath) &&
-      (frontmatter.id === "home_v3.md" || frontmatter.id === "home.md")
-    ) {
+
+    if (filterVersion(fileAbsolutePath) && frontmatter.id === "home.md") {
       const version = findVersion(fileAbsolutePath) || "master";
       const fileLang = findLang(fileAbsolutePath);
-      if (version === "v2.0.0" && frontmatter.id === "home.md") return acc;
       acc.push({
         language: fileLang,
         html,
@@ -1254,9 +1231,11 @@ const generateAllDocPages = (
       });
     }
 
-    axiosInstance.post("/word-count", { count_data: requestBody }).catch((error) => {
-      console.log(error)
-    });
+    axiosInstance
+      .post("/word-count", { count_data: requestBody })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 
@@ -1425,9 +1404,11 @@ const walkApiReferenceFile = async dirpath => {
     });
   }
 
-  axiosInstance.post("/word-count", { count_data: requestBody }).catch((error) => {
-    console.log(error)
-  });
+  axiosInstance
+    .post("/word-count", { count_data: requestBody })
+    .catch(error => {
+      console.log(error);
+    });
 };
 
 module.exports = {

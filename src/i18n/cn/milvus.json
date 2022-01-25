@@ -689,7 +689,7 @@
         "cloud-desc": "云原生架构有助于实现突破性的效率和敏捷性。",
         "search": "向量相似性搜索",
         "search-desc": "矢量搜索与属性过滤相结合，以利用各种数据类型的协同作用",
-        "devfirst": "开发者有限",
+        "devfirst": "开发者优先",
         "devfirst-desc": "Milvus 为您的机器学习应用提供全面的多语言 SDK。"
       },
       "code": {

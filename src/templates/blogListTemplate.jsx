@@ -33,7 +33,7 @@ const BlogTemplate = ({ data, pageContext }) => {
     let isDetectRecommend = false;
     blogList.forEach(i => {
       if (i.isRecommend && !isDetectRecommend) {
-        // bloglist is sorted by time, 
+        // bloglist is sorted by time,
         // if there is more than one recommended blog, take the newest one
         featuredBlog = i;
         isDetectRecommend = true;
@@ -49,7 +49,7 @@ const BlogTemplate = ({ data, pageContext }) => {
 
     return {
       featuredBlog,
-      restBlogs
+      restBlogs,
     };
   }, [blogList]);
 
@@ -120,12 +120,9 @@ const BlogTemplate = ({ data, pageContext }) => {
     };
   }, [filteredBlogs, scrollIndex, isMobile]);
 
-  const filterByTag = useCallback(
-    tag => {
-      setCurrentTag(tag);
-    },
-    []
-  );
+  const filterByTag = useCallback(tag => {
+    setCurrentTag(tag);
+  }, []);
 
   const handleFilter = useCallback(
     (tag, isRestore = true) => {
@@ -187,23 +184,25 @@ const BlogTemplate = ({ data, pageContext }) => {
               return (
                 <li
                   key={index}
-                  className={`${index < SCROLL_SIZE * scrollIndex
-                    ? styles.fadeInup
-                    : styles.cardItem
-                    }`}
-                >
-                  <BlogCard
-                    className={`${index < SCROLL_SIZE * scrollIndex
+                  className={`${
+                    index < SCROLL_SIZE * scrollIndex
                       ? styles.fadeInup
                       : styles.cardItem
-                      }`}
+                  }`}
+                >
+                  <BlogCard
+                    className={`${
+                      index < SCROLL_SIZE * scrollIndex
+                        ? styles.fadeInup
+                        : styles.cardItem
+                    }`}
                     locale={language}
                     title={title}
                     date={date}
                     cover={`https://${cover}`}
                     desc={desc}
                     tags={tags}
-                    path={`${id}?#${currentTag}`}
+                    path={id}
                   />
                 </li>
               );

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { submitInfoForm } from "../../http/submitEmail";
 import * as styles from "./index.module.less";
 import { useSubscribeSrouce } from '../../hooks';
@@ -8,6 +8,7 @@ const UNIQUE_EMAIL_ID = "UNIQUE_EMAIL_ID";
 const Signup = ({ callback, t }) => {
   const inputRef = useRef(null);
   const source = useSubscribeSrouce();
+  const [disabled, setDisabled] = useState(false);
 
   const handleSubmitEmail = async () => {
     const regx =
@@ -23,6 +24,7 @@ const Signup = ({ callback, t }) => {
     }
 
     try {
+      setDisabled(true);
       const { statusCode, unique_email_id } = await submitInfoForm({
         email: value,
         form: {
@@ -33,7 +35,7 @@ const Signup = ({ callback, t }) => {
         window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
         callback({
           type: "success",
-          message: t("v3trans.signup.emailerror"),
+          message: t("v3trans.signup.thankyou"),
         });
         //
       } else {
@@ -44,7 +46,14 @@ const Signup = ({ callback, t }) => {
         window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
       }
     } catch (error) {
+      callback({
+        type: "warning",
+        message: t("v3trans.signup.subscribed"),
+      });
+      window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
       console.log(error);
+    } finally {
+      setDisabled(false);
     }
   };
 
@@ -65,6 +74,7 @@ const Signup = ({ callback, t }) => {
           <button
             className={`customButton containedBtn ${styles.subscribeBtn}`}
             onClick={handleSubmitEmail}
+            disabled={disabled}
           >
             {t("v3trans.signup.subscribe")}
           </button>

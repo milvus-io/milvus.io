@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import RelatedQuestion from "../components/relatedQuestion";
 import ScoredFeedback from "../components/scoredFeedback";
 import clsx from "clsx";
-import { useWindowSize } from "../http/hooks";
+import { useWindowSize, useGithubCommits } from "../http/hooks";
 import Aside from "../components/aside";
 import Seo from "../components/seo";
 import Footer from "../components/footer";
@@ -45,7 +45,7 @@ export default function Template({ data, pageContext }) {
     headings = [],
     allMenus,
     isBlog,
-    // isBenchmark = false,
+    isBenchmark = false,
     editPath,
     newHtml: mdHtml,
     homeData,
@@ -104,24 +104,15 @@ export default function Template({ data, pageContext }) {
   const leftNavHomeUrl =
     version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
 
-  // const commitPath = useMemo(() => {
-  //   return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
-  // }, [locale, editPath]);
-  // const isDoc = !(isBlog || isBenchmark);
-  // const commitInfo = useGithubCommits({
-  //   commitPath,
-  //   version,
-  //   isDoc,
-  // });
-  //! TO REMOVE
-  const commitInfo = {
-    commitUrl:
-      "https://github.com/milvus-io/milvus-docs/commit/f0e455fd80e4585d7bacdf30e35c3938a8e8ba49",
-    date: "2021-12-24 07:31:25",
-    source:
-      "https://github.com/milvus-io/milvus-docs/blob/v2.0.0/site/en/about/overview.md",
-    message: "Update overview.md",
-  };
+  const commitPath = useMemo(() => {
+    return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
+  }, [locale, editPath]);
+  const isDoc = !(isBlog || isBenchmark);
+  const commitInfo = useGithubCommits({
+    commitPath,
+    version,
+    isDoc,
+  });
 
   const docsearchMeta = useMemo(() => {
     if (
@@ -271,33 +262,27 @@ const GitCommitInfo = props => {
 
 const DocContent = props => {
   const { htmlContent, commitInfo, mdId, relatedKey, isMobile, trans } = props;
-  //! TO REMOVE
-  const faqMock = {
-    contact: {
-      slack: {
-        label: "Discuss on Slack",
-        link: "https://slack.milvus.io/",
-      },
-      github: {
-        label: "Discuss on GitHub",
-        link: "https://github.com/milvus-io/milvus/issues/",
-      },
-      follow: {
-        label: "Follow up with me",
-      },
-      dialog: {
-        desc: "Please leave your question here and we will be in touch.",
-        placeholder1: "Your Email*",
-        placeholder2: "Your Question*",
-        submit: "Submit",
-        title: "We will follow up on your question",
-        invalid: "please input valid email and your question",
-      },
-      title: "Didn't find what you need?",
+  const contact = {
+    slack: {
+      label: "Discuss on Slack",
+      link: "https://slack.milvus.io/",
     },
-    question: {
-      title: "You may also want to know",
+    github: {
+      label: "Discuss on GitHub",
+      link: "https://github.com/milvus-io/milvus/issues/",
     },
+    follow: {
+      label: "Follow up with me",
+    },
+    dialog: {
+      desc: "Please leave your question here and we will be in touch.",
+      placeholder1: "Your Email*",
+      placeholder2: "Your Question*",
+      submit: "Submit",
+      title: "We will follow up on your question",
+      invalid: "please input valid email and your question",
+    },
+    title: "Didn't find what you need?",
   };
   return (
     <>
@@ -306,10 +291,10 @@ const DocContent = props => {
           className="doc-post-content"
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
-        {faqMock && (
+        {relatedKey && (
           <RelatedQuestion
             title={trans("v3trans.docs.faqTitle")}
-            contact={faqMock.contact}
+            contact={contact}
             relatedKey={relatedKey}
             isMobile={isMobile}
             trans={trans}

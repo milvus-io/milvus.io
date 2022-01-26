@@ -4,15 +4,18 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { MANAGE_DATA, VECTOR_SEARCH, INSTALL_MILVUS } from "./code-example";
 import clsx from "clsx";
-import hljs from 'highlight.js';
+import hljs from "highlight.js";
 import { Link } from "gatsby-plugin-react-i18next";
 import "highlight.js/styles/stackoverflow-light.css";
 
 const HighlightBlock = ({ content }) => {
-  const highlightCode = hljs.highlight(content, { language: 'python' });
+  const highlightCode = hljs.highlight(content, { language: "python" });
   return (
     <pre>
-      <code className="hljs home-code-block" dangerouslySetInnerHTML={{ __html: highlightCode.value }}></code>
+      <code
+        className="hljs home-code-block"
+        dangerouslySetInnerHTML={{ __html: highlightCode.value }}
+      ></code>
     </pre>
   );
 };
@@ -58,7 +61,7 @@ let timeId = null;
 let keyIndex = 0;
 
 const Code = props => {
-  const { t = () => { } } = props;
+  const { t = () => {} } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.install);
 
@@ -108,7 +111,7 @@ const Code = props => {
       case EXAMPLES.search:
         return {
           tabs: ["Vector search", "hybrid search", "Time travel"],
-          learnMoreLink: "/docs/install_cluster-helm.md",
+          learnMoreLink: "/docs/search.md",
         };
       case EXAMPLES.manage:
         return {
@@ -119,7 +122,7 @@ const Code = props => {
       default:
         return {
           tabs: ["Ubuntu", "CentOS", "Kubernetes"],
-          learnMoreLink: "/docs/search.md",
+          learnMoreLink: "/docs/install_cluster-helm.md",
         };
     }
   }, [activeExample]);

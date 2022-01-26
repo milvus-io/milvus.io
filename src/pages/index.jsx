@@ -184,9 +184,9 @@ const IndexPage = () => {
           <p className={styles.customerTitle}>{t("v3trans.main.customer")}</p>
           <div className={styles.brands}>
             {brands.map(b => (
-              <Link to={b.link} target="_blank" rel="noreference">
-                <img src={b.icon} alt={b.name} key={b.name} />
-              </Link>
+              <a href={b.link} target="_blank" rel="noreference" key={b.name}>
+                <img src={b.icon} alt={b.name} />
+              </a>
             ))}
           </div>
         </section>

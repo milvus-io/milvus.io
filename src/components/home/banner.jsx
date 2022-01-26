@@ -567,7 +567,8 @@ const HomeBanner = props => {
             </defs>
           </svg>
         </div>
-        <div className="stats col-3 col-8">
+        {/* https://zilliz.atlassian.net/browse/UED-1133 */}
+        {/* <div className="stats col-3 col-8">
           <div className="stats-detail">
             <p className="name"> {t("v3trans.home.banner.star")}</p>
             <p className="num">9k+</p>
@@ -584,7 +585,7 @@ const HomeBanner = props => {
             <p className="name">{t("v3trans.home.banner.users")}</p>
             <p className="num">1000+</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

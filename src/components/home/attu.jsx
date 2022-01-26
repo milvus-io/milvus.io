@@ -101,15 +101,15 @@ const Attu = props => {
                 {t("v3trans.home.attu.download")}
               </CustomIconLink>
 
-              <Link
+              <a
                 target="_blank"
                 rel="noreference"
-                to="https://github.com/zilliztech/attu"
+                href="https://github.com/zilliztech/attu"
               >
                 <button className={`secondaryBtnSm`}>
                   {t("v3trans.home.attu.learn")}
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
 

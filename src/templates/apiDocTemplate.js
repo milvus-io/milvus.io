@@ -11,6 +11,7 @@ import Aside from "../components/aside";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
+import Seo from "../components/seo";
 
 export const query = graphql`
   query ($language: String!) {
@@ -126,6 +127,11 @@ export default function Template({ data, pageContext }) {
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
+      <Seo
+        title={`API Reference: ${category}`}
+        lang={locale}
+        version={version}
+      />
       <div
         className={clsx("doc-temp-container", {
           [`is-desktop1024`]: desktop1024,

@@ -36,92 +36,92 @@ const brands = [
   {
     name: "Tencent",
     icon: tencent,
-    link: 'https://www.tencent.com/'
+    link: "https://www.tencent.com/",
   },
   {
     name: "Ebay",
     icon: ebay,
-    link: 'https://www.ebay.com/'
+    link: "https://www.ebay.com/",
   },
   {
     name: "Ikea",
     icon: ikea,
-    link: 'https://www.ikea.com/'
+    link: "https://www.ikea.com/",
   },
   {
     name: "Intuit",
     icon: intuit,
-    link: 'https://www.intuit.com/'
+    link: "https://www.intuit.com/",
   },
   {
     name: "Kuaishou",
     icon: kuaishou,
-    link: 'https://www.kuaishou.com/'
+    link: "https://www.kuaishou.com/",
   },
   {
     name: "Line",
     icon: line,
-    link: 'https://line.me/'
+    link: "https://line.me/",
   },
   {
     name: "Baidu",
     icon: baidu,
-    link: 'https://www.baidu.com/'
+    link: "https://www.baidu.com/",
   },
   {
     name: "Shopee",
     icon: shopee,
-    link: 'https://shopee.com/'
+    link: "https://shopee.com/",
   },
   {
     name: "Smartnews",
     icon: smartnews,
-    link: 'https://www.smartnews.com/'
+    link: "https://www.smartnews.com/",
   },
   {
     name: "shutterstock",
     icon: shutterstock,
-    link: 'https://www.shutterstock.com/'
+    link: "https://www.shutterstock.com/",
   },
   {
     name: "Walmart",
     icon: walmart,
-    link: 'https://www.walmart.com/'
+    link: "https://www.walmart.com/",
   },
   {
     name: "Xiaomi",
     icon: xiaomi,
-    link: 'https://www.mi.com/'
+    link: "https://www.mi.com/",
   },
   {
     name: "Dailyhunt",
     icon: hunt,
-    link: 'https://www.dailyhunt.in/'
+    link: "https://www.dailyhunt.in/",
   },
   {
     name: "Trend micro",
     icon: micro,
-    link: 'https://www.trendmicro.com/'
+    link: "https://www.trendmicro.com/",
   },
   {
     name: "Mobileye",
     icon: mobileye,
-    link: 'https://www.mobileye.com/'
+    link: "https://www.mobileye.com/",
   },
   {
     name: "Moj",
     icon: moj,
-    link: 'https://mojapp.in/'
+    link: "https://mojapp.in/",
   },
   {
     name: "Compass",
     icon: compass,
-    link: 'https://www.compass.com/'
+    link: "https://www.compass.com/",
   },
   {
     name: "Tokopedia",
     icon: tokopedia,
-    link: 'https://www.tokopedia.com/'
+    link: "https://www.tokopedia.com/",
   },
 ];
 const DESC =
@@ -184,9 +184,9 @@ const IndexPage = () => {
           <p className={styles.customerTitle}>{t("v3trans.main.customer")}</p>
           <div className={styles.brands}>
             {brands.map(b => (
-              <Link to={b.link} target="_blank" rel="noreference">
-                <img src={b.icon} alt={b.name} key={b.name} />
-              </Link>
+              <a href={b.link} target="_blank" rel="noreference" key={b.name}>
+                <img src={b.icon} alt={b.name} />
+              </a>
             ))}
           </div>
         </section>

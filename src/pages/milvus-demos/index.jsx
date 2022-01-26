@@ -145,7 +145,7 @@ const DemoPage = () => {
               <div className={styles.socialMedia}>
                 <div className={styles.logo}>
                   <img src={Github} alt="" />
-                  <span>Github</span>
+                  <span>GitHub</span>
                 </div>
 
                 <p>Dive into the source code.</p>
@@ -164,7 +164,7 @@ const DemoPage = () => {
                   <span>Forum</span>
                 </div>
 
-                <p>Dive into the source code.</p>
+                <p>Ask questions and share ideas.</p>
                 <a
                   className="customButton outlinedBtn"
                   href="https://bit.ly/3H7KOuu"

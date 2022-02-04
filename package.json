@@ -41,6 +41,7 @@
     "gatsby-plugin-zopfli": "^2.0.0",
     "gatsby-remark-autolink-headers": "^5.4.0",
     "gatsby-remark-copy-linked-files": "^5.4.0",
+    "gatsby-remark-external-links": "^0.0.4",
     "gatsby-remark-images": "^6.4.0",
     "gatsby-source-filesystem": "^4.4.0",
     "gatsby-transformer-json": "^4.4.0",
@@ -73,7 +74,7 @@
     "dev": "gatsby clean && gatsby develop -H 0.0.0.0",
     "format": "prettier --write src/**/*.{js,jsx}",
     "play": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
-    "start": "npm run clean && npm run develop",
+    "start": "npm run clean && npm run dev",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
     "clean": "gatsby clean"

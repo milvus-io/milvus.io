@@ -152,6 +152,13 @@ let gatsbyConfigs = {
             },
           },
           {
+            resolve: "gatsby-remark-external-links",
+            options: {
+              target: "_blank",
+              rel: "noreferrer",
+            },
+          },
+          {
             resolve: "gatsby-remark-autolink-headers",
             options: {
               offsetY: `100`,

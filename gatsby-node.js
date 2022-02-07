@@ -127,16 +127,9 @@ exports.createSchemaCustomization = ({ actions }) => {
 // APIReference page: generate source for api reference html
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions;
-  const {
-    generateNodes,
-    handlePyFiles,
-    handlePyFilesWithOrm,
-    handleGoFiles,
-    handleJavaFiles,
-    handleNodeFiles,
-  } = sourceNodesUtils;
+  const { generateNodes, handleApiFiles } = sourceNodesUtils;
 
-  const dirPath = `src/pages/docs/versions/master/APIReference`;
+  const dirPath = `src/pages/docs/versions/master/API_Reference`;
   // read categories, such as pymilvus and pymilvus-orm
   const categories = fs.readdirSync(dirPath);
   const nodes = [];
@@ -146,27 +139,38 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     switch (category) {
       case "pymilvus":
         for (let version of versions) {
-          // Pymilvus-orm was merged into pymilvus in 2.0
-          if (version >= "v2.0.0") {
-            handlePyFilesWithOrm(path, version, nodes);
-          } else {
-            handlePyFiles(path, version, nodes);
-          }
+          handleApiFiles(nodes, {
+            parentPath: path,
+            version,
+            category: "pymilvus",
+          });
         }
         break;
       case "milvus-sdk-go":
         for (let version of versions) {
-          handleGoFiles(path, version, nodes);
+          handleApiFiles(nodes, {
+            parentPath: path,
+            version,
+            category: "go",
+          });
         }
         break;
       case "milvus-sdk-java":
         for (let version of versions) {
-          handleJavaFiles(path, version, nodes);
+          handleApiFiles(nodes, {
+            parentPath: path,
+            version,
+            category: "java",
+          });
         }
         break;
       case "milvus-sdk-node":
         for (let version of versions) {
-          handleNodeFiles(path, version, nodes);
+          handleApiFiles(nodes, {
+            parentPath: path,
+            version,
+            category: "node",
+          });
         }
         break;
       default:

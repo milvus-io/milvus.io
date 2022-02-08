@@ -128,7 +128,6 @@ export const useFilter = () => {
       if (windowHash) {
         clickEventHandler(windowHash);
       }
-      window.history.pushState(null, null, windowHash);
 
       window.addEventListener(
         "hashchange",

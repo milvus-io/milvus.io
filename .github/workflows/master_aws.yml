@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_OPTIONS: "--max_old_space_size=4096"
+  NODE_OPTIONS: "--max_old_space_size=8196"
 
 jobs:
   build:

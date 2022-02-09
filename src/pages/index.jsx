@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { graphql } from "gatsby";
-import { useI18next, Link } from "gatsby-plugin-react-i18next";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import "./index.less";
 import * as styles from "./index.module.less";
 import Layout from "../components/layout";
@@ -184,7 +184,7 @@ const IndexPage = () => {
           <p className={styles.customerTitle}>{t("v3trans.main.customer")}</p>
           <div className={styles.brands}>
             {brands.map(b => (
-              <a href={b.link} target="_blank" rel="noreference" key={b.name}>
+              <a href={b.link} target="_blank" rel="noreferrer" key={b.name}>
                 <img src={b.icon} alt={b.name} />
               </a>
             ))}

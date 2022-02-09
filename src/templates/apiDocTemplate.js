@@ -142,7 +142,7 @@ export default function Template({ data, pageContext }) {
       >
         <LeftNav
           homeUrl={leftNavHomeUrl}
-          homeLabel={"Docs Home"}
+          homeLabel={t("v3trans.docs.homeTitle")}
           menus={menuList.menuList}
           apiMenus={allApiMenus}
           currentVersion={targetDocVersion}

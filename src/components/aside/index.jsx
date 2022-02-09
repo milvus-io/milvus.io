@@ -54,42 +54,41 @@ const Aside = props => {
     discussBtnConf,
     commonJoinBtnConf,
   ] = [
-    {
-      label: t("v3trans.docs.btnGroup.editBtn"),
-      icon: faPencilAlt,
-    },
-    {
-      label: t("v3trans.docs.btnGroup.issueBtn"),
-      icon: faBug,
-    },
-    {
-      label: t("v3trans.docs.btnGroup.bugBtn"),
-      icon: faBug,
-    },
-    {
-      label: t("v3trans.docs.btnGroup.suggestBtn"),
-      icon: faLightbulb,
-    },
-    {
-      label: t("v3trans.docs.btnGroup.discussBtn"),
-      icon: faGithub,
-    },
-    {
-      label: t("v3trans.docs.btnGroup.joinBtn"),
-      icon: faHashtag,
-    },
-  ];
+      {
+        label: t("v3trans.docs.btnGroup.editBtn"),
+        icon: faPencilAlt,
+      },
+      {
+        label: t("v3trans.docs.btnGroup.issueBtn"),
+        icon: faBug,
+      },
+      {
+        label: t("v3trans.docs.btnGroup.bugBtn"),
+        icon: faBug,
+      },
+      {
+        label: t("v3trans.docs.btnGroup.suggestBtn"),
+        icon: faLightbulb,
+      },
+      {
+        label: t("v3trans.docs.btnGroup.discussBtn"),
+        icon: faGithub,
+      },
+      {
+        label: t("v3trans.docs.btnGroup.joinBtn"),
+        icon: faHashtag,
+      },
+    ];
   const btnConfiguration = {
     doc: ({ locale, version, editPath, mdTitle }) => {
       const name = editPath && editPath.split("/").pop();
-      const title = `${version} ${mdTitle} (${name}) Doc Update`;
+      const title = `${version} ${mdTitle.value} (${name}) Doc Update`;
 
       return [
         {
           label: commonEditBtnConf.label,
-          link: `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${
-            locale === "en" ? "en" : "zh-CN"
-          }/${editPath}`,
+          link: `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${locale === "en" ? "en" : "zh-CN"
+            }/${editPath}`,
           icon: commonEditBtnConf.icon,
         },
         {
@@ -133,9 +132,8 @@ const Aside = props => {
     community: ({ locale, editPath, id }) => [
       {
         label: commonEditBtnConf.label,
-        link: `https://github.com/milvus-io/web-content/edit/master/community/site/${
-          locale === "en" ? "en" : "zh-CN"
-        }/${editPath}`,
+        link: `https://github.com/milvus-io/web-content/edit/master/community/site/${locale === "en" ? "en" : "zh-CN"
+          }/${editPath}`,
         icon: commonEditBtnConf.icon,
       },
       {

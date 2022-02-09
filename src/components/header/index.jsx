@@ -279,7 +279,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                 </a>
               </MenuItem>
               <MenuItem onClick={handleMenuLinkClick}>
-                <Link to="/tool-sizing" className={styles.menuLink}>
+                <Link to="/sizing-tool" className={styles.menuLink}>
                   Sizing Tool
                 </Link>
               </MenuItem>
@@ -395,7 +395,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                       >
                         Milvus_CLI
                       </a>
-                      <Link to="/tool-sizing" className={styles.mobileMenuLink}>
+                      <Link to="/sizing-tool" className={styles.mobileMenuLink}>
                         Sizing Tool
                       </Link>
                     </>

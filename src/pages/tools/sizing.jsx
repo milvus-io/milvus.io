@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Seo from "../components/seo";
+import Seo from "../../components/seo";
 import * as styles from "./common-layout.module.less";
-import sizingToolLogo from "../images/sizing-tool/milvusSizingTool.svg";
-import TextFiled from "../components/textField";
-import CustomTable from "../components/customTable";
-import TableColumn from "../components/customTable/tableColumn";
+import sizingToolLogo from "../../images/sizing-tool/milvusSizingTool.svg";
+import TextFiled from "../../components/textField";
+import CustomTable from "../../components/customTable";
+import TableColumn from "../../components/customTable/tableColumn";
 
 import { graphql } from "gatsby";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 
 import {
   computMilvusRecommonds,
   formatSize,
   formatVectors,
-} from "../utils/sizingTool";
+} from "../../utils/sizingTool";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 
 const [TITLE, DESCRIPTION] = [

@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { useIntervalWhen } from "rooks";
 import Typography from "@mui/material/Typography";
 import CustomIconLink from "../customIconLink";
-import { Link } from "gatsby-plugin-react-i18next";
 
 const Attu = props => {
   const { t = v => v } = props;
@@ -103,7 +102,7 @@ const Attu = props => {
 
               <a
                 target="_blank"
-                rel="noreference"
+                rel="noreferrer"
                 href="https://github.com/zilliztech/attu"
               >
                 <button className={`secondaryBtnSm`}>

@@ -27,13 +27,27 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const isLangOpen = Boolean(anchorEl);
   const toolRef = useRef(null);
   const tutRef = useRef(null);
+  const headerRef = useRef(null);
 
   useEffect(() => {
     if (!darkMode) {
       return;
     }
     const onScroll = e => {
-      setIsLightHeader(e.target.documentElement.scrollTop > 78);
+      const scrollTop = e.target.documentElement.scrollTop;
+      setIsLightHeader(scrollTop > 90);
+      if (scrollTop < 78) {
+        headerRef.current.classList.remove(styles.hideHeader);
+        headerRef.current.classList.remove(styles.posFixed);
+        headerRef.current.classList.remove(styles.showHeader);
+      }
+      if (scrollTop > 78 && scrollTop < 90) {
+        headerRef.current.classList.add(styles.hideHeader);
+      }
+      if (scrollTop > 90) {
+        headerRef.current.classList.add(styles.posFixed);
+        headerRef.current.classList.add(styles.showHeader);
+      }
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -154,9 +168,9 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
   const header = (
     <header
-      className={`${styles.header} ${
-        isLightHeader ? styles.light : ""
-      } ${className}`}
+      className={`${styles.header} ${isLightHeader ? styles.light : ""
+        } ${className} ${!darkMode ? styles.posSticky : ''}`}
+      ref={headerRef}
     >
       <div className={`${styles.headerContainer} headerContainer`}>
         {logoSection}

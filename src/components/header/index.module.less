@@ -9,11 +9,25 @@
   top: 0;
   width: 100%;
   z-index: 100;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  will-change: opacity, transform;
   .flexcenter;
+
+  &.posSticky {
+    position: sticky;
+  }
+
+  &.posFixed {
+    position: fixed;
+
+    @media @phone, @tablet {
+      position: sticky;
+    }
+  }
 
   &.light {
     background-color: white;
-    position: sticky;
+
     width: 100%;
     border-bottom: 1px solid #ededed;
 
@@ -59,6 +73,7 @@
 
   @media @phone, @tablet {
     .light;
+    position: sticky;
   }
 
   .leftSection {
@@ -385,4 +400,13 @@
 
 .turnLeft {
   transform: rotate(-90deg);
+}
+
+.hideHeader {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+.showHeader {
+  opacity: 1;
+  transform: translateY(0%);
 }

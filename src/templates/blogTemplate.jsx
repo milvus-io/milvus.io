@@ -86,9 +86,8 @@ export default function Template({ data, pageContext }) {
           onClick={handleTagClick}
         />
 
-        <section className={`${styles.desc} col-8`}>
+        <section className={`${styles.desctop} col-8`}>
           <span className={styles.line}></span>
-          <span>{desc}</span>
           <Share
             url={shareUrl}
             quote={title}
@@ -97,6 +96,11 @@ export default function Template({ data, pageContext }) {
             wrapperClass={styles.share}
             vertical={true}
           />
+        </section>
+
+        <section className={`${styles.desc} col-8`}>
+          <span className={styles.line}></span>
+          <span>{desc}</span>
         </section>
 
         <div

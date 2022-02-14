@@ -31,13 +31,9 @@ const AdjustableMenu = props => {
       return;
     }
     if (size === 'collapse') {
-      // content.classList.add(styles.collapseTransition);
-      // content.classList.remove(styles.expandTransition);
       wrapper.style.width = `${MINIMUM_WIDTH}px`;
 
     } else if (size === 'expand') {
-      // content.classList.add(styles.expandTransition);
-      // content.classList.remove(styles.collapseTransition);
       wrapper.style.width = `${DEFAULT_WIDTH}px`;
 
     } else {

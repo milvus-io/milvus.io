@@ -1,0 +1,111 @@
+@import "../../css/variables/color.less";
+
+.collapsibleMenuContainer {
+  width: fit-content;
+  height: 100vh;
+  min-width: 44px;
+  position: relative;
+
+  .floatContainer {
+    display: flex;
+    justify-content: flex-start;
+    height: 100%;
+    width: 282px;
+    // transition: width 0.2s ease-in-out;
+    will-change: width;
+    overflow: hidden;
+
+    &.float {
+      position: absolute;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: auto;
+      transition: width 0.2s ease-in-out;
+      will-change: width;
+    }
+  }
+
+  .floatMenuContent {
+    // transition: width 0.2s ease-in-out;
+    will-change: width;
+    &.hideContent {
+      opacity: 0;
+    }
+  }
+
+  .content {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+    background: #fafafa;
+  }
+
+  .lineWrapper {
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 24px;
+    background-color: #fff;
+    position: relative;
+    text-align: left;
+
+    &.canBeHover {
+      cursor: ew-resize;
+      &:focus,
+      &:hover {
+        .dragLine {
+          background-color: @color-text;
+        }
+      }
+    }
+
+    &:focus,
+    &:hover {
+      .invisibleIcon {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    .iconWrapper {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      background-color: #fff;
+      color: @color-text;
+      position: absolute;
+      left: -12px;
+      top: 150px;
+
+      svg {
+        pointer-events: none;
+      }
+
+      &:hover {
+        background-color: @color-text;
+        color: #fff;
+      }
+    }
+
+    .dragLine {
+      height: 100%;
+      display: inline-block;
+      width: 2px;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+    .show {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

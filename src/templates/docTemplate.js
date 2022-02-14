@@ -59,6 +59,7 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const [windowSize, setWindowSize] = useState();
+  const [isCollapse, setIsCollapse] = useState(false);
 
   const currentWindowSize = useWindowSize();
 
@@ -113,6 +114,14 @@ export default function Template({ data, pageContext }) {
     version,
     isDoc,
   });
+
+  const docMarginLeft = useMemo(() => {
+    if (isMobile) {
+      return 0;
+    } else {
+      return isCollapse ? "24px" : "300px";
+    }
+  }, [isMobile, isCollapse]);
 
   const docsearchMeta = useMemo(() => {
     if (
@@ -181,8 +190,12 @@ export default function Template({ data, pageContext }) {
           trans={t}
           version={version}
           group={group}
+          setIsCollapse={setIsCollapse}
         />
-        <div className="doc-right-container">
+        <div
+          className="doc-right-container"
+          style={{ marginLeft: docMarginLeft }}
+        >
           <div
             className={clsx("doc-content-container", {
               [`doc-home`]: homeData,

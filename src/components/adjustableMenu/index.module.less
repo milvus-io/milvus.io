@@ -1,37 +1,36 @@
 @import "../../css/variables/color.less";
 
-.collapsibleMenuContainer {
+.adjustableMenuContainer {
   width: fit-content;
-  height: 100vh;
   min-width: 44px;
-  position: relative;
+  background-color: #fff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 80px;
+  z-index: 99;
 
   .floatContainer {
     display: flex;
     justify-content: flex-start;
     height: 100%;
-    width: 282px;
-    // transition: width 0.2s ease-in-out;
-    will-change: width;
     overflow: hidden;
+
+    &:hover {
+      .invisibleIcon {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
 
     &.float {
       position: absolute;
-      z-index: 100;
       left: 0;
       top: 0;
       bottom: 0;
       right: auto;
-      transition: width 0.2s ease-in-out;
+      transition: width 0.3s linear;
       will-change: width;
-    }
-  }
-
-  .floatMenuContent {
-    // transition: width 0.2s ease-in-out;
-    will-change: width;
-    &.hideContent {
-      opacity: 0;
     }
   }
 
@@ -41,6 +40,21 @@
     overflow: hidden;
     height: 100%;
     background: #fafafa;
+    padding-top: 16px;
+
+    &.expandTransition {
+      transition: max-width 0.3s linear, opacity 0.3s linear;
+      will-change: max-width, opacity;
+      opacity: 1;
+      max-width: 1000px;
+    }
+
+    &.collapseTransition {
+      transition: max-width 0.3s linear, opacity 0.3s linear;
+      will-change: max-width, opacity;
+      opacity: 0;
+      max-width: 20px;
+    }
   }
 
   .lineWrapper {
@@ -50,12 +64,12 @@
     margin: 0;
     height: 100%;
     width: 24px;
-    background-color: #fff;
+    background-color: transparent;
     position: relative;
     text-align: left;
 
     &.canBeHover {
-      cursor: ew-resize;
+      // cursor: ew-resize;
       &:focus,
       &:hover {
         .dragLine {
@@ -100,7 +114,7 @@
     .dragLine {
       height: 100%;
       display: inline-block;
-      width: 2px;
+      width: 1px;
       background-color: rgba(0, 0, 0, 0.2);
     }
     .show {

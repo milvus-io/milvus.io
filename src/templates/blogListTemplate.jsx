@@ -15,8 +15,8 @@ import Seo from "../components/seo";
 import { useWindowSize } from "../http/hooks";
 
 const SCROLL_SIZE = 6;
-const TITLE = "MIlvus Blogs";
-const DESC = "MIlvus Blogs";
+const TITLE = "MIlvus Blog";
+const DESC = "MIlvus Blog";
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { blogList } = pageContext;
@@ -184,18 +184,16 @@ const BlogTemplate = ({ data, pageContext }) => {
               return (
                 <li
                   key={index}
-                  className={`${
-                    index < SCROLL_SIZE * scrollIndex
+                  className={`${index < SCROLL_SIZE * scrollIndex
                       ? styles.fadeInup
                       : styles.cardItem
-                  }`}
+                    }`}
                 >
                   <BlogCard
-                    className={`${
-                      index < SCROLL_SIZE * scrollIndex
+                    className={`${index < SCROLL_SIZE * scrollIndex
                         ? styles.fadeInup
                         : styles.cardItem
-                    }`}
+                      }`}
                     locale={language}
                     title={title}
                     date={date}

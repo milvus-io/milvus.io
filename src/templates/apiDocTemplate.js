@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
@@ -52,6 +52,14 @@ export default function Template({ data, pageContext }) {
   const isPhone = ["phone"].includes(windowSize);
   const desktop1024 = ["desktop1024"].includes(windowSize);
   const { t } = useI18next();
+  const [isCollapse, setIsCollapse] = useState(false);
+  const docMarginLeft = useMemo(() => {
+    if (isMobile) {
+      return 0;
+    } else {
+      return isCollapse ? "44px" : "324px";
+    }
+  }, [isMobile, isCollapse]);
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
@@ -152,8 +160,12 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           pageType="api"
           trans={t}
+          setIsCollapse={setIsCollapse}
         />
-        <div className="doc-right-container">
+        <div
+          className="doc-right-container"
+          style={{ marginLeft: docMarginLeft }}
+        >
           <div
             className={clsx("doc-content-container", {
               [`is-mobile`]: isMobile,

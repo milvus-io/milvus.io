@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
@@ -41,6 +41,7 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const [windowSize, setWindowSize] = useState();
+  const [isCollapse, setIsCollapse] = useState(false);
 
   const currentWindowSize = useWindowSize();
 
@@ -51,6 +52,14 @@ export default function Template({ data, pageContext }) {
   const isMobile = ["phone", "tablet"].includes(windowSize);
   const isPhone = ["phone"].includes(windowSize);
   const desktop1024 = ["desktop1024"].includes(windowSize);
+
+  const docMarginLeft = useMemo(() => {
+    if (isMobile) {
+      return 0;
+    } else {
+      return isCollapse ? "44px" : "324px";
+    }
+  }, [isMobile, isCollapse]);
 
   const { language, t } = useI18next();
 
@@ -85,8 +94,9 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           language={language}
           trans={t}
+          setIsCollapse={setIsCollapse}
         />
-        <div className="doc-right-container">
+        <div className="doc-right-container" style={{ marginLeft: docMarginLeft }}>
           <div
             className={clsx("doc-content-container", {
               [`community-home`]: isHomePage,

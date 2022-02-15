@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import * as styles from "./index.module.less";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -6,20 +6,30 @@ import clsx from "clsx";
 
 const LINE_BUTTON_WIDTH = 24;
 const MINIMUM_CONTENT_WIDTH = 20;
-const DEFAULT_WIDTH = 324; // 300 + 24
+const DEFAULT_WIDTH = 306; // 282 + 24
 const MINIMUM_WIDTH = MINIMUM_CONTENT_WIDTH + LINE_BUTTON_WIDTH; // 44
+export const IS_COLLAPSE = "@@is_collapse";
+
 
 const AdjustableMenu = props => {
+  const { adjustableMenuClassName = '' } = props;
+  const isMenuCollapse =
+    window.sessionStorage.getItem(IS_COLLAPSE) === 'true';
   const dragLine = useRef(null);
-  // in the case of minimum width, content_width = MINIMUM_CONTENT_WIDTH; conentWrapper_width = MINIMUM_WIDTH
-  // in the case of normal width, conentWrapper_width = fit-content
-  // in the case of maximum width, content_max_width = MAXIMUM_CONTENT_WIDTH; conentWrapper_width = MAXIMUM_WIDTH
+
   const contentRef = useRef(null);
   const contentWrapperRef = useRef(null);
   const collapseIcon = useRef(null);
-
   // collapse status
-  const [isMinimumWidth, setIsMinimumWidth] = useState(false);
+  const [isMinimumWidth, setIsMinimumWidth] = useState(isMenuCollapse);
+
+  const storeCollapseStatus = (bool) => {
+    window.sessionStorage.setItem(IS_COLLAPSE, bool);
+  };
+  // const deleteCollapseStatus = () => {
+
+  //   window.sessionStorage.removeItem(IS_COLLAPSE);
+  // };
 
   const adjustContent = (size) => {
     const content = contentRef?.current;
@@ -33,34 +43,39 @@ const AdjustableMenu = props => {
 
     } else if (size === 'expand') {
       wrapper.style.width = `${DEFAULT_WIDTH}px`;
-
     }
   };
 
   const handleCollapse = () => {
     // make button lose focus, turn drag_line to normal 
-    dragLine.current.blur();
     adjustContent('collapse');
+    storeCollapseStatus(true);
     setIsMinimumWidth(true);
     props.setIsCollapse(true);
   };
   const handleExpand = () => {
     adjustContent('expand');
+    storeCollapseStatus(false);
     setIsMinimumWidth(false);
     props.setIsCollapse(false);
   };
 
   const handleHoverMenuToCollapseOrExpand = (e, size) => {
     e.stopPropagation();
-    e.cancelBubble = true;
     if (!isMinimumWidth) {
       return;
     }
     adjustContent(size);
   };
 
+  useEffect(() => {
+    window.addEventListener('popstate', (e) => {
+      console.log(e);
+    });
+
+  }, []);
   return (
-    <section className={`${styles.adjustableMenuContainer} ${props.adjustableMenuClassName}`}>
+    <section className={`${styles.adjustableMenuContainer} ${adjustableMenuClassName}`}>
       <div
         className={clsx(styles.floatContainer, {
           [styles.float]: isMinimumWidth

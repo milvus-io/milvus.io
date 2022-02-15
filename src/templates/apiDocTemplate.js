@@ -12,6 +12,7 @@ import Footer from "../components/footer";
 import "../css/variables/main.less";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
+import { IS_COLLAPSE } from "../components/adjustableMenu";
 
 export const query = graphql`
   query ($language: String!) {
@@ -40,8 +41,10 @@ export default function Template({ data, pageContext }) {
     category,
     // newestVersion,
   } = pageContext;
+  const isMenuCollapse = window.sessionStorage.getItem(IS_COLLAPSE) === "true";
   const [targetDocVersion, setTargetDocVersion] = useState();
   const [windowSize, setWindowSize] = useState();
+  const [isCollapse, setIsCollapse] = useState(isMenuCollapse);
 
   const currentWindowSize = useWindowSize();
   useEffect(() => {
@@ -52,12 +55,12 @@ export default function Template({ data, pageContext }) {
   const isPhone = ["phone"].includes(windowSize);
   const desktop1024 = ["desktop1024"].includes(windowSize);
   const { t } = useI18next();
-  const [isCollapse, setIsCollapse] = useState(false);
+
   const docMarginLeft = useMemo(() => {
     if (isMobile) {
       return 0;
     } else {
-      return isCollapse ? "44px" : "324px";
+      return isCollapse ? "44px" : "306px";
     }
   }, [isMobile, isCollapse]);
 

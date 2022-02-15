@@ -3,7 +3,7 @@
 .adjustableMenuContainer {
   width: fit-content;
   min-width: 44px;
-  background-color: #fff;
+
   position: fixed;
   left: 0;
   bottom: 0;
@@ -35,11 +35,10 @@
   }
 
   .content {
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
     flex: 1;
     overflow: hidden;
     height: 100%;
-    background: #fafafa;
+    background-color: #fff;
     padding-top: 16px;
     transition: width 0.3s linear, opacity 0.3s linear;
     will-change: width, opacity;
@@ -65,6 +64,7 @@
     background-color: transparent;
     position: relative;
     text-align: left;
+    border-left: 1px solid @color-grey-04;
 
     .iconWrapper {
       display: flex;
@@ -76,17 +76,17 @@
       opacity: 0;
       visibility: hidden;
       background-color: #fff;
-      color: @color-text;
+      color: #00a1ea;
       position: absolute;
       left: -12px;
-      top: 150px;
+      top: 40px;
 
       svg {
         pointer-events: none;
       }
 
       &:hover {
-        background-color: @color-text;
+        background-color: #00a1ea;
         color: #fff;
       }
     }

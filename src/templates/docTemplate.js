@@ -121,7 +121,7 @@ export default function Template({ data, pageContext }) {
     if (isMobile) {
       return 0;
     } else {
-      return isCollapse ? "24px" : "306px";
+      return isCollapse ? "20px" : "282px";
     }
   }, [isMobile, isCollapse]);
 

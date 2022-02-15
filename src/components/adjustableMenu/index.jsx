@@ -4,11 +4,9 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import clsx from "clsx";
 
-const MAXIMUM_DETECT_WIDTH = 500; // when width > 1000; width = 1000
 const LINE_BUTTON_WIDTH = 24;
 const MINIMUM_CONTENT_WIDTH = 20;
 const DEFAULT_WIDTH = 324; // 300 + 24
-const MAXIMUM_WIDTH = MAXIMUM_DETECT_WIDTH;
 const MINIMUM_WIDTH = MINIMUM_CONTENT_WIDTH + LINE_BUTTON_WIDTH; // 44
 
 const AdjustableMenu = props => {
@@ -36,10 +34,6 @@ const AdjustableMenu = props => {
     } else if (size === 'expand') {
       wrapper.style.width = `${DEFAULT_WIDTH}px`;
 
-    } else {
-      // maxumum
-      wrapper.style.width = `${MAXIMUM_WIDTH}px`;
-      content.style.width = `${DEFAULT_WIDTH - LINE_BUTTON_WIDTH}px`;
     }
   };
 
@@ -62,11 +56,7 @@ const AdjustableMenu = props => {
     if (!isMinimumWidth) {
       return;
     }
-    if (size === "collapse") {
-      adjustContent('collapse');
-    } else if (size === "expand") {
-      adjustContent('expand');
-    }
+    adjustContent(size);
   };
 
   return (

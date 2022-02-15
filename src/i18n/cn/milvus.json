@@ -736,6 +736,7 @@
         "issueBtn": "提交 issue",
         "bugBtn": "提交 bug",
         "suggestBtn": "内容建议",
+        "pdfBtn": "下载PDF文档",
         "joinBtn": "加入 Slack",
         "discussBtn": "在 GitHub 讨论"
       }

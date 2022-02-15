@@ -6,6 +6,7 @@ import {
   faBug,
   faHashtag,
   faLightbulb,
+  faFilePdf,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useI18next } from "gatsby-plugin-react-i18next";
@@ -51,44 +52,49 @@ const Aside = props => {
     issueBtnConf,
     bugBtnConf,
     suggestBtnConf,
+    pdfBtnConf,
     discussBtnConf,
     commonJoinBtnConf,
   ] = [
-      {
-        label: t("v3trans.docs.btnGroup.editBtn"),
-        icon: faPencilAlt,
-      },
-      {
-        label: t("v3trans.docs.btnGroup.issueBtn"),
-        icon: faBug,
-      },
-      {
-        label: t("v3trans.docs.btnGroup.bugBtn"),
-        icon: faBug,
-      },
-      {
-        label: t("v3trans.docs.btnGroup.suggestBtn"),
-        icon: faLightbulb,
-      },
-      {
-        label: t("v3trans.docs.btnGroup.discussBtn"),
-        icon: faGithub,
-      },
-      {
-        label: t("v3trans.docs.btnGroup.joinBtn"),
-        icon: faHashtag,
-      },
-    ];
+    {
+      label: t("v3trans.docs.btnGroup.editBtn"),
+      icon: faPencilAlt,
+    },
+    {
+      label: t("v3trans.docs.btnGroup.issueBtn"),
+      icon: faBug,
+    },
+    {
+      label: t("v3trans.docs.btnGroup.bugBtn"),
+      icon: faBug,
+    },
+    {
+      label: t("v3trans.docs.btnGroup.suggestBtn"),
+      icon: faLightbulb,
+    },
+    {
+      label: t("v3trans.docs.btnGroup.pdfBtn"),
+      icon: faFilePdf,
+    },
+    {
+      label: t("v3trans.docs.btnGroup.discussBtn"),
+      icon: faGithub,
+    },
+    {
+      label: t("v3trans.docs.btnGroup.joinBtn"),
+      icon: faHashtag,
+    },
+  ];
+
   const btnConfiguration = {
     doc: ({ locale, version, editPath, mdTitle }) => {
       const name = editPath && editPath.split("/").pop();
       const title = `${version} ${mdTitle.value} (${name}) Doc Update`;
-
+      const localePath = locale === "en" ? "en" : "zh-CN";
       return [
         {
           label: commonEditBtnConf.label,
-          link: `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${locale === "en" ? "en" : "zh-CN"
-            }/${editPath}`,
+          link: `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${localePath}/${editPath}`,
           icon: commonEditBtnConf.icon,
         },
         {
@@ -100,6 +106,11 @@ const Aside = props => {
           label: suggestBtnConf.label,
           link: "https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--new-content-proposal.yaml&title=New Doc Proposal",
           icon: suggestBtnConf.icon,
+        },
+        {
+          label: pdfBtnConf.label,
+          link: `https://github.com/milvus-io/web-content/tree/master/export_pdf/doc_milvus_${version}_${localePath}.pdf`,
+          icon: pdfBtnConf.icon,
         },
       ];
     },
@@ -129,24 +140,26 @@ const Aside = props => {
         },
       ];
     },
-    community: ({ locale, editPath, id }) => [
-      {
-        label: commonEditBtnConf.label,
-        link: `https://github.com/milvus-io/web-content/edit/master/community/site/${locale === "en" ? "en" : "zh-CN"
-          }/${editPath}`,
-        icon: commonEditBtnConf.icon,
-      },
-      {
-        label: bugBtnConf.label,
-        link: "https://github.com/milvus-io/web-content/discussions/new",
-        icon: bugBtnConf.icon,
-      },
-      {
-        label: commonJoinBtnConf.label,
-        link: "https://slack.milvus.io",
-        icon: commonJoinBtnConf.icon,
-      },
-    ],
+    community: ({ locale, editPath, id }) => {
+      const localePath = locale === "en" ? "en" : "zh-CN";
+      return [
+        {
+          label: commonEditBtnConf.label,
+          link: `https://github.com/milvus-io/web-content/edit/master/community/site/${localePath}/${editPath}`,
+          icon: commonEditBtnConf.icon,
+        },
+        {
+          label: bugBtnConf.label,
+          link: "https://github.com/milvus-io/web-content/discussions/new",
+          icon: bugBtnConf.icon,
+        },
+        {
+          label: commonJoinBtnConf.label,
+          link: "https://slack.milvus.io",
+          icon: commonJoinBtnConf.icon,
+        },
+      ];
+    },
   };
 
   const generateBtnroup = (category, props, styles) => {

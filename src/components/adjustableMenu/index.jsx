@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import * as styles from "./index.module.less";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -26,10 +26,6 @@ const AdjustableMenu = props => {
   const storeCollapseStatus = (bool) => {
     window.sessionStorage.setItem(IS_COLLAPSE, bool);
   };
-  // const deleteCollapseStatus = () => {
-
-  //   window.sessionStorage.removeItem(IS_COLLAPSE);
-  // };
 
   const adjustContent = (size) => {
     const content = contentRef?.current;
@@ -67,13 +63,6 @@ const AdjustableMenu = props => {
     }
     adjustContent(size);
   };
-
-  useEffect(() => {
-    window.addEventListener('popstate', (e) => {
-      console.log(e);
-    });
-
-  }, []);
   return (
     <section className={`${styles.adjustableMenuContainer} ${adjustableMenuClassName}`}>
       <div

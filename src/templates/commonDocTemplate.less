@@ -7,10 +7,9 @@
   position: relative;
 
   .left-nav {
-    position: fixed;
-    width: 282px;
+    width: 300px;
     bottom: 0;
-    top: 100px;
+    height: 100%;
   }
 
   .left-nav,
@@ -44,12 +43,11 @@
 }
 
 .doc-right-container {
+  transition: margin-left 0.3s linear;
+  will-change: margin-left;
   display: flex;
   flex-direction: column;
   gap: 100px;
-
-  margin-left: 282px;
-  border-left: 1px solid @color-grey-04;
 }
 
 .doc-right-footer {

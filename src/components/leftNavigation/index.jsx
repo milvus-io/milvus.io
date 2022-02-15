@@ -15,6 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import { sortVersions } from "../../utils/index";
+import AdjustableMenu from '../adjustableMenu';
 
 const LeftNav = props => {
   const {
@@ -34,6 +35,7 @@ const LeftNav = props => {
     showHome = false,
     group,
     trans,
+    setIsCollapse
   } = props;
 
   const nodeId = group || mdId;
@@ -167,12 +169,14 @@ const LeftNav = props => {
       </Drawer>
     </>
   ) : (
-    <aside className={clsx(className, "left-nav", styles.aside)}>
-      {showSearch && (
-        <AlgoliaSearch trans={trans} locale={language} version={version} />
-      )}
-      {generateContent()}
-    </aside>
+    <AdjustableMenu setIsCollapse={setIsCollapse}>
+      <aside className={clsx(className, "left-nav", styles.aside)}>
+        {showSearch && (
+          <AlgoliaSearch trans={trans} locale={language} version={version} />
+        )}
+        {generateContent()}
+      </aside>
+    </AdjustableMenu>
   );
 };
 

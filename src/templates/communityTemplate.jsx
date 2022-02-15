@@ -13,6 +13,7 @@ import Aside from "../components/aside";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
 import Seo from "../components/seo";
+import { IS_COLLAPSE } from "../components/adjustableMenu";
 
 export const query = graphql`
   query ($language: String!) {
@@ -39,9 +40,10 @@ export default function Template({ data, pageContext }) {
     editPath,
     // isCommunity,
   } = pageContext;
-
+  const isMenuCollapse =
+    window.sessionStorage.getItem(IS_COLLAPSE) === 'true';
   const [windowSize, setWindowSize] = useState();
-  const [isCollapse, setIsCollapse] = useState(false);
+  const [isCollapse, setIsCollapse] = useState(isMenuCollapse);
 
   const currentWindowSize = useWindowSize();
 
@@ -57,7 +59,7 @@ export default function Template({ data, pageContext }) {
     if (isMobile) {
       return 0;
     } else {
-      return isCollapse ? "44px" : "324px";
+      return isCollapse ? "44px" : "306px";
     }
   }, [isMobile, isCollapse]);
 

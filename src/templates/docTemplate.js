@@ -22,7 +22,7 @@ import {
   useFilter,
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
-import { IS_COLLAPSE } from "../components/adjustableMenu";
+import { useCollapseStatus } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -59,9 +59,9 @@ export default function Template({ data, pageContext }) {
     newestBlog,
   } = pageContext;
 
-  const isMenuCollapse = window.sessionStorage.getItem(IS_COLLAPSE) === "true";
   const [windowSize, setWindowSize] = useState();
-  const [isCollapse, setIsCollapse] = useState(isMenuCollapse);
+  const [isCollapse, setIsCollapse] = useState(false);
+  useCollapseStatus(setIsCollapse);
 
   const currentWindowSize = useWindowSize();
 

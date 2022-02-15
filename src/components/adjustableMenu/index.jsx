@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import * as styles from "./index.module.less";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import clsx from "clsx";
+import { useCollapseStatus } from '../../hooks';
 
 const LINE_BUTTON_WIDTH = 24;
 const MINIMUM_CONTENT_WIDTH = 20;
@@ -13,15 +14,14 @@ export const IS_COLLAPSE = "@@is_collapse";
 
 const AdjustableMenu = props => {
   const { adjustableMenuClassName = '' } = props;
-  const isMenuCollapse =
-    window.sessionStorage.getItem(IS_COLLAPSE) === 'true';
   const dragLine = useRef(null);
 
   const contentRef = useRef(null);
   const contentWrapperRef = useRef(null);
   const collapseIcon = useRef(null);
   // collapse status
-  const [isMinimumWidth, setIsMinimumWidth] = useState(isMenuCollapse);
+  const [isMinimumWidth, setIsMinimumWidth] = useState(false);
+  useCollapseStatus(setIsMinimumWidth);
 
   const storeCollapseStatus = (bool) => {
     window.sessionStorage.setItem(IS_COLLAPSE, bool);
@@ -63,6 +63,11 @@ const AdjustableMenu = props => {
     }
     adjustContent(size);
   };
+
+  useEffect(() => {
+    isMinimumWidth && adjustContent('collapse');
+  }, [isMinimumWidth]);
+
   return (
     <section className={`${styles.adjustableMenuContainer} ${adjustableMenuClassName}`}>
       <div

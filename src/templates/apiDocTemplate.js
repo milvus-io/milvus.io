@@ -65,6 +65,17 @@ export default function Template({ data, pageContext }) {
     }
   }, [isMobile, isCollapse]);
 
+  const docMaxWidth = useMemo(() => {
+    if (isMobile) {
+      return "100%";
+    } else {
+      // original max_width: 950
+      // menu_width: 282
+      // gap: 20, when menu collapse
+      return isCollapse ? `${950 + 282 - 20}px` : "950px";
+    }
+  }, [isMobile, isCollapse]);
+
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
   const hljsCfg = {
@@ -175,7 +186,7 @@ export default function Template({ data, pageContext }) {
               [`is-mobile`]: isMobile,
             })}
           >
-            <div className="doc-post-wrapper">
+            <div className="doc-post-wrapper" style={{ maxWidth: docMaxWidth }}>
               <div
                 className={`api-reference-wrapper doc-post-container ${category}`}
                 dangerouslySetInnerHTML={{ __html: doc }}

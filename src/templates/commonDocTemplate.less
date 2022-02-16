@@ -19,6 +19,8 @@
 
   .doc-content-container {
     display: flex;
+    transition: max-width 0.3s linear;
+    will-change: max-width;
 
     h1 {
       margin-top: 8px;
@@ -29,6 +31,8 @@
       padding: 0 32px;
       width: calc(100vw - 514px);
       box-sizing: border-box;
+      transition: max-width 0.3s linear;
+      will-change: max-width;
     }
   }
 

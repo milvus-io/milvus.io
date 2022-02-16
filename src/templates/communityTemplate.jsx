@@ -63,6 +63,17 @@ export default function Template({ data, pageContext }) {
     }
   }, [isMobile, isCollapse]);
 
+  const docMaxWidth = useMemo(() => {
+    if (isMobile) {
+      return "100%";
+    } else {
+      // original max_width: 950
+      // menu_width: 282
+      // gap: 20, when menu collapse
+      return isCollapse ? `${950 + 282 - 20}px` : "950px";
+    }
+  }, [isMobile, isCollapse]);
+
   const { language, t } = useI18next();
 
   const isHomePage = activePost === "home.md";
@@ -71,6 +82,22 @@ export default function Template({ data, pageContext }) {
 
   const leftNavMenus =
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
+
+  useEffect(() => {
+    const banner = document.querySelector('.community-h1-wrapper');
+    if (!banner) {
+      return;
+    }
+    if (isMobile) {
+      banner.style.width = '100vw';
+      return;
+    }
+    // original width: calc(100vw - 286px);
+    const originalWidth = 'calc(100vw - 286px)';
+    const expandedWidth = 'calc(100vw - 20px)';
+    const width = isCollapse ? expandedWidth : originalWidth;
+    banner.style.width = width;
+  }, [isCollapse, isMobile]);
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
@@ -104,8 +131,11 @@ export default function Template({ data, pageContext }) {
               [`community-home`]: isHomePage,
               [`is-mobile`]: isMobile,
             })}
+            style={{ maxWidth: docMaxWidth }}
           >
-            <div className={clsx({ "doc-post-wrapper": !isHomePage })}>
+            <div className={clsx({ "doc-post-wrapper": !isHomePage })}
+              style={{ maxWidth: docMaxWidth }}
+            >
               <div
                 className={clsx({
                   [`community-home-html-wrapper`]: isHomePage,

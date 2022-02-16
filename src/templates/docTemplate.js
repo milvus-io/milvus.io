@@ -125,6 +125,17 @@ export default function Template({ data, pageContext }) {
     }
   }, [isMobile, isCollapse]);
 
+  const docMaxWidth = useMemo(() => {
+    if (isMobile) {
+      return "100%";
+    } else {
+      // original max_width: 950
+      // menu_width: 282
+      // gap: 20, when menu collapse
+      return isCollapse ? `${950 + 282 - 20}px` : "950px";
+    }
+  }, [isMobile, isCollapse]);
+
   const docsearchMeta = useMemo(() => {
     if (
       typeof window === "undefined" ||
@@ -203,12 +214,15 @@ export default function Template({ data, pageContext }) {
               [`doc-home`]: homeData,
               [`is-mobile`]: isMobile,
             })}
+            style={{ maxWidth: docMaxWidth }}
           >
             {homeData ? (
               <HomeContent
                 homeData={homeData}
                 newestBlog={newestBlog}
                 trans={t}
+                isMobile={isMobile}
+                isCollapse={isCollapse}
               />
             ) : (
               <DocContent
@@ -218,6 +232,7 @@ export default function Template({ data, pageContext }) {
                 relatedKey={relatedKey}
                 isMobile={isMobile}
                 trans={t}
+                docMaxWidth={docMaxWidth}
               />
             )}
             {!isPhone && (
@@ -243,7 +258,22 @@ export default function Template({ data, pageContext }) {
 }
 
 const HomeContent = props => {
-  const { homeData, newestBlog = [], trans } = props;
+  const { homeData, newestBlog = [], trans, isMobile, isCollapse } = props;
+  useEffect(() => {
+    const banner = document.querySelector(".doc-h1-wrapper");
+    if (!banner) {
+      return;
+    }
+    if (isMobile) {
+      banner.style.width = "100vw";
+      return;
+    }
+    // original width: calc(100vw - 286px);
+    const originalWidth = "calc(100vw - 286px)";
+    const expandedWidth = "calc(100vw - 20px)";
+    const width = isCollapse ? expandedWidth : originalWidth;
+    banner.style.width = width;
+  }, [isCollapse, isMobile]);
   return (
     <>
       <div
@@ -276,7 +306,15 @@ const GitCommitInfo = props => {
 };
 
 const DocContent = props => {
-  const { htmlContent, commitInfo, mdId, relatedKey, isMobile, trans } = props;
+  const {
+    htmlContent,
+    commitInfo,
+    mdId,
+    relatedKey,
+    isMobile,
+    trans,
+    docMaxWidth,
+  } = props;
   const contact = {
     slack: {
       label: "Discuss on Slack",
@@ -301,7 +339,12 @@ const DocContent = props => {
   };
   return (
     <>
-      <div className="doc-post-wrapper">
+      <div
+        className="doc-post-wrapper"
+        style={{
+          maxWidth: docMaxWidth,
+        }}
+      >
         <div
           className="doc-post-content"
           dangerouslySetInnerHTML={{ __html: htmlContent }}

@@ -31,7 +31,7 @@ const DemoCard = ({
     } else {
       handleOpenSnackbar({
         type: "warning",
-        message: "This email is already subscribed!",
+        message: "One second! We're taking you there...",
       });
       window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
     }
@@ -44,8 +44,8 @@ const DemoCard = ({
       innerWidth < 800
         ? 260
         : innerWidth < 1200
-        ? innerWidth * 0.8
-        : 1200 * 0.8;
+          ? innerWidth * 0.8
+          : 1200 * 0.8;
     const content = () => (
       <VideoPlayer videoSrc={videoSrc} clientWidth={clientWidth} />
     );

@@ -745,6 +745,7 @@
         "issueBtn": "Report doc issue",
         "bugBtn": "Report a bug",
         "suggestBtn": "Suggest new content",
+        "pdfBtn": "Download PDF Doc",
         "joinBtn": "Join Slack channel",
         "discussBtn": "Discuss it on GitHub"
       }

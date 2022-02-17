@@ -86,8 +86,7 @@ export default function Template({ data, pageContext }) {
           onClick={handleTagClick}
         />
 
-        <section className={`${styles.desctop} col-8`}>
-          <span className={styles.line}></span>
+        <section className={`${styles.shareContainer} col-8`}>
           <Share
             url={shareUrl}
             quote={title}

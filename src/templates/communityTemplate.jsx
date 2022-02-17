@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
@@ -13,6 +13,7 @@ import Aside from "../components/aside";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
 import Seo from "../components/seo";
+import { useCollapseStatus } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -41,6 +42,8 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const [windowSize, setWindowSize] = useState();
+  const [isCollapse, setIsCollapse] = useState(false);
+  useCollapseStatus(setIsCollapse);
 
   const currentWindowSize = useWindowSize();
 
@@ -52,6 +55,25 @@ export default function Template({ data, pageContext }) {
   const isPhone = ["phone"].includes(windowSize);
   const desktop1024 = ["desktop1024"].includes(windowSize);
 
+  const docMarginLeft = useMemo(() => {
+    if (isMobile) {
+      return 0;
+    } else {
+      return isCollapse ? "20px" : "282px";
+    }
+  }, [isMobile, isCollapse]);
+
+  const docMaxWidth = useMemo(() => {
+    if (isMobile) {
+      return "100%";
+    } else {
+      // original max_width: 950
+      // menu_width: 282
+      // gap: 20, when menu collapse
+      return isCollapse ? `${950 + 282 - 20}px` : "950px";
+    }
+  }, [isMobile, isCollapse]);
+
   const { language, t } = useI18next();
 
   const isHomePage = activePost === "home.md";
@@ -60,6 +82,22 @@ export default function Template({ data, pageContext }) {
 
   const leftNavMenus =
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
+
+  useEffect(() => {
+    const banner = document.querySelector('.community-h1-wrapper');
+    if (!banner) {
+      return;
+    }
+    if (isMobile) {
+      banner.style.width = '100vw';
+      return;
+    }
+    // original width: calc(100vw - 286px);
+    const originalWidth = 'calc(100vw - 286px)';
+    const expandedWidth = 'calc(100vw - 20px)';
+    const width = isCollapse ? expandedWidth : originalWidth;
+    banner.style.width = width;
+  }, [isCollapse, isMobile]);
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
@@ -85,15 +123,19 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           language={language}
           trans={t}
+          setIsCollapse={setIsCollapse}
         />
-        <div className="doc-right-container">
+        <div className="doc-right-container" style={{ marginLeft: docMarginLeft }}>
           <div
             className={clsx("doc-content-container", {
               [`community-home`]: isHomePage,
               [`is-mobile`]: isMobile,
             })}
+            style={{ maxWidth: docMaxWidth }}
           >
-            <div className={clsx({ "doc-post-wrapper": !isHomePage })}>
+            <div className={clsx({ "doc-post-wrapper": !isHomePage })}
+              style={{ maxWidth: docMaxWidth }}
+            >
               <div
                 className={clsx({
                   [`community-home-html-wrapper`]: isHomePage,

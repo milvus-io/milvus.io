@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
@@ -12,6 +12,7 @@ import Footer from "../components/footer";
 import "../css/variables/main.less";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
+import { useCollapseStatus } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -40,8 +41,11 @@ export default function Template({ data, pageContext }) {
     category,
     // newestVersion,
   } = pageContext;
+
   const [targetDocVersion, setTargetDocVersion] = useState();
   const [windowSize, setWindowSize] = useState();
+  const [isCollapse, setIsCollapse] = useState(false);
+  useCollapseStatus(setIsCollapse);
 
   const currentWindowSize = useWindowSize();
   useEffect(() => {
@@ -52,6 +56,25 @@ export default function Template({ data, pageContext }) {
   const isPhone = ["phone"].includes(windowSize);
   const desktop1024 = ["desktop1024"].includes(windowSize);
   const { t } = useI18next();
+
+  const docMarginLeft = useMemo(() => {
+    if (isMobile) {
+      return 0;
+    } else {
+      return isCollapse ? "20px" : "282px";
+    }
+  }, [isMobile, isCollapse]);
+
+  const docMaxWidth = useMemo(() => {
+    if (isMobile) {
+      return "100%";
+    } else {
+      // original max_width: 950
+      // menu_width: 282
+      // gap: 20, when menu collapse
+      return isCollapse ? `${950 + 282 - 20}px` : "950px";
+    }
+  }, [isMobile, isCollapse]);
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
@@ -152,14 +175,18 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           pageType="api"
           trans={t}
+          setIsCollapse={setIsCollapse}
         />
-        <div className="doc-right-container">
+        <div
+          className="doc-right-container"
+          style={{ marginLeft: docMarginLeft }}
+        >
           <div
             className={clsx("doc-content-container", {
               [`is-mobile`]: isMobile,
             })}
           >
-            <div className="doc-post-wrapper">
+            <div className="doc-post-wrapper" style={{ maxWidth: docMaxWidth }}>
               <div
                 className={`api-reference-wrapper doc-post-container ${category}`}
                 dangerouslySetInnerHTML={{ __html: doc }}

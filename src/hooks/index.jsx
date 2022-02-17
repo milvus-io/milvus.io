@@ -1,5 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { sourceMap } from '../consts/newsletterSource';
+import { IS_COLLAPSE } from '../components/adjustableMenu';
+
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
   useEffect(() => {
@@ -68,4 +70,15 @@ export const useSubscribeSrouce = () => {
 
   }, []);
   return source;
+};
+
+export const useCollapseStatus = (cb) => {
+  useEffect(() => {
+    if (typeof cb !== 'function') {
+      return;
+    }
+    const isMenuCollapse =
+      window.sessionStorage.getItem(IS_COLLAPSE) === 'true';
+    cb(isMenuCollapse);
+  }, []);
 };

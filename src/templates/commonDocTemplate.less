@@ -7,10 +7,9 @@
   position: relative;
 
   .left-nav {
-    position: fixed;
     width: 282px;
     bottom: 0;
-    top: 100px;
+    height: 100%;
   }
 
   .left-nav,
@@ -20,6 +19,8 @@
 
   .doc-content-container {
     display: flex;
+    transition: max-width 0.3s linear;
+    will-change: max-width;
 
     h1 {
       margin-top: 8px;
@@ -30,6 +31,8 @@
       padding: 0 32px;
       width: calc(100vw - 514px);
       box-sizing: border-box;
+      transition: max-width 0.3s linear;
+      will-change: max-width;
     }
   }
 
@@ -44,12 +47,11 @@
 }
 
 .doc-right-container {
+  transition: margin-left 0.3s linear;
+  will-change: margin-left;
   display: flex;
   flex-direction: column;
   gap: 100px;
-
-  margin-left: 282px;
-  border-left: 1px solid @color-grey-04;
 }
 
 .doc-right-footer {

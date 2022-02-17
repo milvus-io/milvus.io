@@ -17,16 +17,22 @@ const InfoSubmitter = ({
   };
 
   const handleSubmit = async () => {
+    let [statusCode, unique_email_id] = [null, null];
     try {
-      const { statusCode, unique_email_id } = await submitInfoForm({
+      const res = await submitInfoForm({
         email: value,
         form: {
           SOURCE: source,
         },
       });
-      submitCb(statusCode, unique_email_id, href);
+      statusCode = res.statusCode;
+      unique_email_id = res.unique_email_id;
     } catch (error) {
+      statusCode = 400;
+      unique_email_id = 0;
       console.log(error);
+    } finally {
+      submitCb(statusCode, unique_email_id, href);
     }
   };
   return (

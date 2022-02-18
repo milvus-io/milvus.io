@@ -11,6 +11,7 @@ const InfoSubmitter = ({
   const regx =
     /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$/;
   const [value, setValue] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = e => {
     setValue(e.target.value);
@@ -18,6 +19,7 @@ const InfoSubmitter = ({
 
   const handleSubmit = async () => {
     let [statusCode, unique_email_id] = [null, null];
+    setLoading(true);
     try {
       const res = await submitInfoForm({
         email: value,
@@ -29,9 +31,10 @@ const InfoSubmitter = ({
       unique_email_id = res.unique_email_id;
     } catch (error) {
       statusCode = 400;
-      unique_email_id = 0;
+      unique_email_id = true;
       console.log(error);
     } finally {
+      setLoading(false);
       submitCb(statusCode, unique_email_id, href);
     }
   };
@@ -59,9 +62,9 @@ const InfoSubmitter = ({
       <div className={styles.btnWrapper}>
         <button
           className={styles.submitBtn}
-          disabled={!regx.test(value)}
+          disabled={!regx.test(value) || loading}
           onClick={handleSubmit}
-        >Submit</button>
+        >{loading ? 'Loading...' : 'Submit'}</button>
       </div>
     </div>
   );

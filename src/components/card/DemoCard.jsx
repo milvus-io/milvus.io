@@ -57,9 +57,13 @@ const DemoCard = ({
     const source = ["utm_source", "utm_medium", "utm_campaign"].every(v =>
       search.includes(v)
     )
-      ? "Ads：Reddit"
-      : "Milvus：demo";
-
+      ? "Ads: Reddit"
+      : "Milvus: demo";
+    const isSubscribed = window.localStorage.getItem(UNIQUE_EMAIL_ID) || false;
+    if (isSubscribed) {
+      window.location.href = href;
+      return;
+    }
     const content = () => (
       <InfoSubmitter source={source} href={href} submitCb={submitCallback} />
     );

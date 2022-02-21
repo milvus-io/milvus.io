@@ -56,29 +56,6 @@ export default function Template({ data, pageContext }) {
   const desktop1024 = ["desktop1024"].includes(windowSize);
 
   const docContainerFlexibleStyle = useDocContainerFlexibleStyle(isMobile, isCollapse);
-  const docCotentFlexibleStyle = useMemo(() => {
-    if (isMobile) {
-      return {
-        marginLeft: 0,
-        maxWidth: '100%',
-        width: "100%"
-      };
-    }
-    // original maxwidth 950px
-    // original margin-left 282
-    // anchor width: 232px
-    // original width: 100vw - 514px
-    // gap: 20, when menu collapse
-    return isCollapse ? {
-      marginLeft: '20px',
-      width: 'calc(100vw - 255px)',
-      maxWidth: `${950 + 282 - 20}px`
-    } : {
-      marginLeft: '282px',
-      width: 'calc(100vw - 514px)',
-      maxWidth: '950px'
-    };
-  }, [isMobile, isCollapse]);
 
   const { language, t } = useI18next();
 

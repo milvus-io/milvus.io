@@ -22,7 +22,7 @@ import {
   useFilter,
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
-import { useCollapseStatus } from "../hooks";
+import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -117,24 +117,10 @@ export default function Template({ data, pageContext }) {
     isDoc,
   });
 
-  const docMarginLeft = useMemo(() => {
-    if (isMobile) {
-      return 0;
-    } else {
-      return isCollapse ? "20px" : "282px";
-    }
-  }, [isMobile, isCollapse]);
-
-  const docMaxWidth = useMemo(() => {
-    if (isMobile) {
-      return "100%";
-    } else {
-      // original max_width: 950
-      // menu_width: 282
-      // gap: 20, when menu collapse
-      return isCollapse ? `${950 + 282 - 20}px` : "950px";
-    }
-  }, [isMobile, isCollapse]);
+  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
+    isMobile,
+    isCollapse
+  );
 
   const docsearchMeta = useMemo(() => {
     if (
@@ -207,14 +193,13 @@ export default function Template({ data, pageContext }) {
         />
         <div
           className="doc-right-container"
-          style={{ marginLeft: docMarginLeft }}
+          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
         >
           <div
             className={clsx("doc-content-container", {
               [`doc-home`]: homeData,
               [`is-mobile`]: isMobile,
             })}
-            style={{ maxWidth: docMaxWidth }}
           >
             {homeData ? (
               <HomeContent
@@ -232,7 +217,7 @@ export default function Template({ data, pageContext }) {
                 relatedKey={relatedKey}
                 isMobile={isMobile}
                 trans={t}
-                docMaxWidth={docMaxWidth}
+                docContainerFlexibleStyle={docContainerFlexibleStyle}
               />
             )}
             {!isPhone && (
@@ -313,7 +298,7 @@ const DocContent = props => {
     relatedKey,
     isMobile,
     trans,
-    docMaxWidth,
+    docContainerFlexibleStyle,
   } = props;
   const contact = {
     slack: {
@@ -342,7 +327,8 @@ const DocContent = props => {
       <div
         className="doc-post-wrapper"
         style={{
-          maxWidth: docMaxWidth,
+          maxWidth: docContainerFlexibleStyle.maxWidth,
+          width: docContainerFlexibleStyle.width,
         }}
       >
         <div

@@ -12,7 +12,7 @@ import Footer from "../components/footer";
 import "../css/variables/main.less";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
-import { useCollapseStatus } from "../hooks";
+import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -57,24 +57,10 @@ export default function Template({ data, pageContext }) {
   const desktop1024 = ["desktop1024"].includes(windowSize);
   const { t } = useI18next();
 
-  const docMarginLeft = useMemo(() => {
-    if (isMobile) {
-      return 0;
-    } else {
-      return isCollapse ? "20px" : "282px";
-    }
-  }, [isMobile, isCollapse]);
-
-  const docMaxWidth = useMemo(() => {
-    if (isMobile) {
-      return "100%";
-    } else {
-      // original max_width: 950
-      // menu_width: 282
-      // gap: 20, when menu collapse
-      return isCollapse ? `${950 + 282 - 20}px` : "950px";
-    }
-  }, [isMobile, isCollapse]);
+  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
+    isMobile,
+    isCollapse
+  );
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
@@ -179,14 +165,20 @@ export default function Template({ data, pageContext }) {
         />
         <div
           className="doc-right-container"
-          style={{ marginLeft: docMarginLeft }}
+          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
         >
           <div
             className={clsx("doc-content-container", {
               [`is-mobile`]: isMobile,
             })}
           >
-            <div className="doc-post-wrapper" style={{ maxWidth: docMaxWidth }}>
+            <div
+              className="doc-post-wrapper"
+              style={{
+                maxWidth: docContainerFlexibleStyle.maxWidth,
+                width: docContainerFlexibleStyle.width,
+              }}
+            >
               <div
                 className={`api-reference-wrapper doc-post-container ${category}`}
                 dangerouslySetInnerHTML={{ __html: doc }}

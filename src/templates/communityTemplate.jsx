@@ -13,7 +13,7 @@ import Aside from "../components/aside";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
 import Seo from "../components/seo";
-import { useCollapseStatus } from "../hooks";
+import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -55,23 +55,29 @@ export default function Template({ data, pageContext }) {
   const isPhone = ["phone"].includes(windowSize);
   const desktop1024 = ["desktop1024"].includes(windowSize);
 
-  const docMarginLeft = useMemo(() => {
+  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(isMobile, isCollapse);
+  const docCotentFlexibleStyle = useMemo(() => {
     if (isMobile) {
-      return 0;
-    } else {
-      return isCollapse ? "20px" : "282px";
+      return {
+        marginLeft: 0,
+        maxWidth: '100%',
+        width: "100%"
+      };
     }
-  }, [isMobile, isCollapse]);
-
-  const docMaxWidth = useMemo(() => {
-    if (isMobile) {
-      return "100%";
-    } else {
-      // original max_width: 950
-      // menu_width: 282
-      // gap: 20, when menu collapse
-      return isCollapse ? `${950 + 282 - 20}px` : "950px";
-    }
+    // original maxwidth 950px
+    // original margin-left 282
+    // anchor width: 232px
+    // original width: 100vw - 514px
+    // gap: 20, when menu collapse
+    return isCollapse ? {
+      marginLeft: '20px',
+      width: 'calc(100vw - 255px)',
+      maxWidth: `${950 + 282 - 20}px`
+    } : {
+      marginLeft: '282px',
+      width: 'calc(100vw - 514px)',
+      maxWidth: '950px'
+    };
   }, [isMobile, isCollapse]);
 
   const { language, t } = useI18next();
@@ -125,16 +131,20 @@ export default function Template({ data, pageContext }) {
           trans={t}
           setIsCollapse={setIsCollapse}
         />
-        <div className="doc-right-container" style={{ marginLeft: docMarginLeft }}>
+        <div className="doc-right-container" style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}>
           <div
             className={clsx("doc-content-container", {
               [`community-home`]: isHomePage,
               [`is-mobile`]: isMobile,
             })}
-            style={{ maxWidth: docMaxWidth }}
+
           >
-            <div className={clsx({ "doc-post-wrapper": !isHomePage })}
-              style={{ maxWidth: docMaxWidth }}
+            <div
+              className={clsx({ "doc-post-wrapper": !isHomePage })}
+              style={{
+                maxWidth: docContainerFlexibleStyle.maxWidth,
+                width: docContainerFlexibleStyle.width
+              }}
             >
               <div
                 className={clsx({

@@ -28,6 +28,7 @@
     "d3-format": "^3.1.0",
     "dayjs": "^1.10.7",
     "gatsby": "^4.4.0",
+    "gatsby-plugin-gdpr-cookies": "^2.0.8",
     "gatsby-plugin-google-tagmanager": "^4.4.0",
     "gatsby-plugin-less": "^6.4.0",
     "gatsby-plugin-manifest": "^4.4.0",

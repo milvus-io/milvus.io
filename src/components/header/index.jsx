@@ -14,6 +14,7 @@ import milvusLogo from "../../images/milvus_logo.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import QuestionRobot from "../questionRobot";
+import MilvusCookieConsent from "../milvusCookieConsent";
 
 const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const { language, languages, originalPath } = useI18next();
@@ -445,6 +446,10 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     <>
       {header}
       <QuestionRobot trans={t} />
+      <MilvusCookieConsent trans={t} />
+
+
+      {/* cookie 也像这样放在 header 下面，通过 cookie 来判断是否后续显示 */}
     </>
   );
 };

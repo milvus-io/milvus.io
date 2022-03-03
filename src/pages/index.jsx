@@ -24,7 +24,7 @@ import walmart from "../images/brands/walmart.png";
 import xiaomi from "../images/brands/xiaomi.png";
 import hunt from "../images/brands/hunt.png";
 import micro from "../images/brands/micro.png";
-import mobileye from "../images/brands/mobileye.png";
+import nvidia from "../images/brands/nvidia.png";
 import moj from "../images/brands/moj.png";
 import compass from "../images/brands/compass.png";
 import tokopedia from "../images/brands/tokopedia.png";
@@ -104,9 +104,9 @@ const brands = [
     link: "https://www.trendmicro.com/",
   },
   {
-    name: "Mobileye",
-    icon: mobileye,
-    link: "https://www.mobileye.com/",
+    name: "Nvidia",
+    icon: nvidia,
+    link: "https://www.nvidia.com/",
   },
   {
     name: "Moj",

@@ -27,54 +27,6 @@ let gatsbyConfigs = {
         ],
       },
     },
-    {
-      resolve: "gatsby-plugin-sitemap",
-      options: {
-        output: "/",
-        query: `{
-          allSitePage {
-            nodes {
-              path
-            }
-          }
-          allSite {
-            edges {
-              node {
-                siteMetadata {
-                  siteUrl
-                }
-              }
-            }
-          }
-          allVersion {
-            nodes {
-              released
-              version
-            }
-          }
-        }`,
-        resolveSiteUrl: ({ allSite }) => {
-          return allSite.edges[0].node.siteMetadata.siteUrl;
-        },
-        resolvePages: ({
-          allSitePage: { nodes: allPages },
-          allVersion: { nodes: versions },
-        }) => {
-          const res = allPages.reduce((acc, cur) => {
-            // filter out docs with version info with released value is no
-            const path = cur.path;
-            if (versions.every(ver => path.indexOf(ver.version) === -1)) {
-              if (path.endsWith("/") && path.length > 1) {
-                cur.path = path.slice(0, path.length - 1);
-              }
-              acc.push(cur);
-            }
-            return acc;
-          }, []);
-          return res;
-        },
-      },
-    },
     `gatsby-plugin-react-helmet`,
     "gatsby-plugin-less",
     {
@@ -195,9 +147,6 @@ let gatsbyConfigs = {
         icon: `src/images/favicon.png`, // This path is relative to the root of the site.
       },
     },
-    {
-      resolve: "gatsby-plugin-zopfli",
-    },
     `gatsby-plugin-remove-fingerprints`,
     {
       resolve: `gatsby-plugin-react-i18next`,
@@ -254,7 +203,14 @@ if (process.env.NODE_ENV == "development") {
     options: {
       name: `docs`,
       path: `${__dirname}/src/pages/docs/versions`,
-      ignore: [`**/v0.6*`, `**/v0.7*`, `**/v0.8*`, `**/v0.9*`, `**/v0.1*`],
+      ignore: [
+        `**/v0.6*`,
+        `**/v0.7*`,
+        `**/v0.8*`,
+        `**/v0.9*`,
+        `**/v0.1*`,
+        `**/v0.2.0`,
+      ],
     },
   });
 } else {
@@ -293,6 +249,57 @@ if (process.env.NODE_ENV == "development") {
       options: {
         dsn: "https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477",
         sampleRate: 0.7,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-zopfli",
+    },
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        output: "/",
+        query: `{
+          allSitePage {
+            nodes {
+              path
+            }
+          }
+          allSite {
+            edges {
+              node {
+                siteMetadata {
+                  siteUrl
+                }
+              }
+            }
+          }
+          allVersion {
+            nodes {
+              released
+              version
+            }
+          }
+        }`,
+        resolveSiteUrl: ({ allSite }) => {
+          return allSite.edges[0].node.siteMetadata.siteUrl;
+        },
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+          allVersion: { nodes: versions },
+        }) => {
+          const res = allPages.reduce((acc, cur) => {
+            // filter out docs with version info with released value is no
+            const path = cur.path;
+            if (versions.every(ver => path.indexOf(ver.version) === -1)) {
+              if (path.endsWith("/") && path.length > 1) {
+                cur.path = path.slice(0, path.length - 1);
+              }
+              acc.push(cur);
+            }
+            return acc;
+          }, []);
+          return res;
+        },
       },
     }
   );

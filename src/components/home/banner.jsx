@@ -17,7 +17,7 @@ const HomeBanner = props => {
         <div className="btn-group">
           <Link
             className="btn-start"
-            to="/docs/v2.0.0/install_standalone-docker.md"
+            to="/docs/install_standalone-docker.md"
           >
             {t("v3trans.home.banner.getstart")}
           </Link>

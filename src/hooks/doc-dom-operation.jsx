@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import Code from "../components/code/code";
 import hljs from "highlight.js";
 import ReactDOM from "react-dom";
+import { drawZChart } from "@zilliz/zui";
+// import "@zilliz/zui/ZChart.css";
 
 /**
  * connect to local enterprise manager
@@ -243,3 +245,81 @@ export const useCodeCopy = (tooltip, cfgs) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
+
+/**
+ * Support ZChart
+ */
+export const useZChart = ref => {
+  useEffect(() => {
+    const width = ref && ref.current.offsetWidth;
+    if (width <= 0) return;
+    drawZCharts(width);
+
+    const resizeHandler = () => {
+      const { width } = document
+        .querySelector(".doc-post-content")
+        .getBoundingClientRect();
+      drawZCharts(width);
+    };
+    window.addEventListener("resize", resizeHandler);
+
+    return () => window.removeEventListener("resize", resizeHandler);
+  }, [ref.current]);
+};
+
+const drawZCharts = width => {
+  const divs = document.querySelectorAll(".zchart-container");
+  [].forEach.call(divs, div => {
+    try {
+      const id = div.id;
+
+      const chartTypeTemplate = [].find.call(
+        div.children,
+        div => div.id === "chart-type"
+      );
+      if (!chartTypeTemplate) {
+        console.warn("ZChart - Invalid chart type.");
+        return;
+      }
+      const chartType = eval(chartTypeTemplate.innerHTML);
+
+      const dataTemplate = [].find.call(div.children, div => div.id === "data");
+      if (!dataTemplate) {
+        console.warn("ZChart - Invalid data.");
+        return;
+      }
+      const data = JSON.parse(dataTemplate.innerHTML);
+
+      const configTemplate = [].find.call(
+        div.children,
+        div => div.id === "config"
+      );
+      if (!configTemplate) {
+        console.warn("ZChart - Invalid config.");
+        return;
+      }
+      const config = JSON.parse(decodeEntity(configTemplate.innerHTML));
+      config.width = width;
+
+
+      [].filter
+        .call(div.children, div => div.tagName === "svg")
+        .forEach(svg => svg.remove());
+
+      drawZChart({
+        domSelector: `#${id}`,
+        chartType,
+        data,
+        config,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+};
+
+function decodeEntity(inputStr) {
+  var textarea = document.createElement("textarea");
+  textarea.innerHTML = inputStr;
+  return textarea.value;
+}

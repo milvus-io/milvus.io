@@ -256,16 +256,14 @@ export const useZChart = ref => {
     drawZCharts(width);
 
     const resizeHandler = () => {
-      console.log("resize !!");
       const { width } = document
         .querySelector(".doc-post-content")
         .getBoundingClientRect();
-      // console.log(width, ref.current.offsetWidth);
       drawZCharts(width);
     };
     window.addEventListener("resize", resizeHandler);
 
-    // return window.removeEventListener("resize", resizeHandler);
+    return () => window.removeEventListener("resize", resizeHandler);
   }, [ref.current]);
 };
 
@@ -280,14 +278,14 @@ const drawZCharts = width => {
         div => div.id === "chart-type"
       );
       if (!chartTypeTemplate) {
-        console.log("ZChart - Invalid chart type.");
+        console.warn("ZChart - Invalid chart type.");
         return;
       }
       const chartType = eval(chartTypeTemplate.innerHTML);
 
       const dataTemplate = [].find.call(div.children, div => div.id === "data");
       if (!dataTemplate) {
-        console.log("ZChart - Invalid data.");
+        console.warn("ZChart - Invalid data.");
         return;
       }
       const data = JSON.parse(dataTemplate.innerHTML);
@@ -297,18 +295,12 @@ const drawZCharts = width => {
         div => div.id === "config"
       );
       if (!configTemplate) {
-        console.log("ZChart - Invalid config.");
+        console.warn("ZChart - Invalid config.");
         return;
       }
-      // console.log(configTemplate.innerHTML);
-      // const config = JSON.parse(
-      //   configTemplate.innerHTML.replaceAll("&gt;", ">")
-      // );
-      // console.log(decodeEntity(configTemplate.innerHTML));
       const config = JSON.parse(decodeEntity(configTemplate.innerHTML));
       config.width = width;
 
-      // console.log(id, chartType, data, config, width);
 
       [].filter
         .call(div.children, div => div.tagName === "svg")

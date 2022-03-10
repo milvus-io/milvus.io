@@ -604,7 +604,7 @@
           "desc": "Improve, extend or add Milvus documentation. ",
           "icon": "../../images/hackathon/doc.svg",
           "issueHref": "https://github.com/milvus-io/milvus-docs/issues?q=is%3Aopen+is%3Aissue+label%3Ahacktoberfest",
-          "guideHref": "https://github.com/milvus-io/milvus-docs/blob/v2.0.0/CONTRIBUTING.md"
+          "guideHref": "https://github.com/milvus-io/milvus-docs/blob/v2.0.x/CONTRIBUTING.md"
         },
         {
           "cate": "Milvus Golang API reference",

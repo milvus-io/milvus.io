@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
@@ -16,10 +16,12 @@ import Aside from "../components/aside";
 import Seo from "../components/seo";
 import Footer from "../components/footer";
 import "../css/variables/main.less";
+import "@zilliz/zui/dist/ZChart.css";
 import {
   useCodeCopy,
   useMultipleCodeFilter,
   useFilter,
+  useZChart,
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
 import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
@@ -322,6 +324,9 @@ const DocContent = props => {
     },
     title: "Didn't find what you need?",
   };
+  const docContentRef = useRef();
+  useZChart(docContentRef);
+
   return (
     <>
       <div
@@ -332,6 +337,7 @@ const DocContent = props => {
         }}
       >
         <div
+          ref={docContentRef}
           className="doc-post-content"
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />

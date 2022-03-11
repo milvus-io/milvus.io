@@ -92,9 +92,7 @@ const AdjustableMenu = props => {
         </div>
         {/* line */}
         <button
-          className={clsx(styles.lineWrapper, {
-            [styles.canBeHover]: !isMinimumWidth,
-          })}
+          className={clsx(styles.lineWrapper)}
           ref={dragLine}
         >
           <span className={styles.dragLine}></span>

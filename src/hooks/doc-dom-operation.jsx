@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import Code from "../components/code/code";
 import hljs from "highlight.js";
 import ReactDOM from "react-dom";
@@ -264,6 +264,7 @@ export const useZChart = ref => {
     window.addEventListener("resize", resizeHandler);
 
     return () => window.removeEventListener("resize", resizeHandler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref.current]);
 };
 
@@ -281,6 +282,7 @@ const drawZCharts = width => {
         console.warn("ZChart - Invalid chart type.");
         return;
       }
+      // eslint-disable-next-line
       const chartType = eval(chartTypeTemplate.innerHTML);
 
       const dataTemplate = [].find.call(div.children, div => div.id === "data");
@@ -300,7 +302,6 @@ const drawZCharts = width => {
       }
       const config = JSON.parse(decodeEntity(configTemplate.innerHTML));
       config.width = width;
-
 
       [].filter
         .call(div.children, div => div.tagName === "svg")

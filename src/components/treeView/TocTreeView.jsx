@@ -58,7 +58,11 @@ const TocTreeView = props => {
     return { result, allLegalIds };
   };
 
-  const nestedItemsMemo = useMemo(() => parseItems(items), [items]);
+  const nestedItemsMemo = useMemo(
+    () => parseItems(items),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [items]
+  );
   const expandedItemsIdList = nestedItemsMemo.allLegalIds;
 
   const generateLink = (originUrl, label, linkClassName = "") => {

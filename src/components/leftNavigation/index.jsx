@@ -15,7 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import { sortVersions } from "../../utils/index";
-import AdjustableMenu from '../adjustableMenu';
+import AdjustableMenu from "../adjustableMenu";
 
 const LeftNav = props => {
   const {
@@ -35,7 +35,7 @@ const LeftNav = props => {
     showHome = false,
     group,
     trans,
-    setIsCollapse
+    setIsCollapse,
   } = props;
 
   const nodeId = group || mdId;
@@ -67,6 +67,7 @@ const LeftNav = props => {
       formatedApiMenuList
     );
     setTreeItems(mergedMenuList);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docMenus]);
 
   const handleVersionChange = event => {

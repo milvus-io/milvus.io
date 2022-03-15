@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";

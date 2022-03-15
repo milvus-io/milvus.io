@@ -8,8 +8,6 @@ const sourceNodesUtils = require("./gatsbyUtils/sourceNodes");
 
 const env = process.env.IS_PREVIEW;
 // const env = 'preview';
-console.log("========env IS_PREVIEW========", env);
-console.log("========env GITHUB_TOKEN========", process.env.GITHUB_TOKEN);
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
     v =>

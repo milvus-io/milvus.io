@@ -1,41 +1,79 @@
-// import '../styles/components/milvusCookieConsent.scss'
 import React from "react";
 import CookieConsent from "react-cookie-consent";
-import "./index.module.less";
+import * as styles from "./milvusCookieConsent.module.less";
+import { useLocation } from "@reach/router";
+import { initializeAndTrack } from "gatsby-plugin-gdpr-cookies";
 
+function isBrowser() {
+  return typeof window !== "undefined";
+}
+
+function getValue(key, defaultValue) {
+  return isBrowser() && window.localStorage.getItem(key)
+    ? JSON.parse(window.localStorage.getItem(key))
+    : defaultValue;
+}
+
+function setValue(key, value) {
+  window.localStorage.setItem(key, JSON.stringify(value));
+}
+
+function useStickyState(defaultValue, key) {
+  const [value, setter] = React.useState(() => {
+    return getValue(key, defaultValue);
+  });
+
+  React.useEffect(() => {
+    setValue(key, value);
+  }, [key, value]);
+
+  return [value, setter];
+}
 
 const MilvusCookieConsent = () => {
-    return (
-        <section className="milvus-Cookie-Consent">
-            <CookieConsent
-                location="bottom"
-                buttonText="Accept"
-                enableDeclineButton
-                declineButtonText="Decline"
-                containerClasses="CookieConsent"
-                contentClasses="content"
-                buttonWrapperClasses="button-wrapper"
-                cookieName="gatsby-gdpr-google-analytics"
-                buttonClasses="accept-button"
-                declineButtonClasses="decline-button"
-                expires={150}
-            >
-                <p>
-                    This website stores cookies on your computer. These cookies are used
-                    to collect information about how you interact with our website and
-                    allow us to remember you. We use this information in order to improve
-                    and customize your browsing experience and for analytics and metrics
-                    about our visitors both on this website and other media. To find out
-                    more about the cookies we use, see our Cookie Policy.
-                </p>
-                <p>
-                    If you decline, your information won’t be tracked when you visit this
-                    website. In this case, a single cookie will be used in your browser to
-                    remember your preference.
-                </p>
-            </CookieConsent>
-        </section>
-    )
-}
+  const location = useLocation();
+  if (isBrowser()) {
+    initializeAndTrack(location);
+  }
+
+  const [bannerHidden, setBannerHidden] = useStickyState(
+    false,
+    "consentCookieHidden"
+  );
+
+  const EnableAnalytics = () => {
+    document.cookie = "gatsby-gdpr-google-analytics=true";
+    setBannerHidden(true);
+  };
+
+  return (
+    <>
+      {!bannerHidden && (
+        <CookieConsent
+          buttonText="Accept"
+          disableStyles
+          containerClasses={styles.cookieContainer}
+          buttonClasses={styles.button}
+          buttonWrapperClasses={styles.buttonWrapper}
+          expires={150}
+          onAccept={() => {
+            // alert("consent accepted");
+            EnableAnalytics();
+          }}
+        >
+          <div className={styles.textContainer}>
+            <p className={styles.headerContent}>How we use cookies</p>
+            <p className={styles.textContent}>
+              By continuing to browse or by clicking ‘Accept’, you agree to the
+              storing of cookies on your device to enhance your site experience
+              and for analytical purposes. To learn more about how we use the
+              cookies, please see our cookies policy.
+            </p>
+          </div>
+        </CookieConsent>
+      )}
+    </>
+  );
+};
 
 export default MilvusCookieConsent;

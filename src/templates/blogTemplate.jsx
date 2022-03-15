@@ -69,10 +69,6 @@ export default function Template({ data, pageContext }) {
   return (
     <Layout t={t}>
       <Seo title={title} lang={language} description={desc} />
-      <div
-        className={styles.blogImg}
-        style={{ backgroundImage: `url("https://${cover}")` }}
-      ></div>
       <section className={`${styles.blogWrapper} col-12 col-8 col-4`}>
         <p className={`${styles.authorDate} `}>
           <span>{dateTime}</span>

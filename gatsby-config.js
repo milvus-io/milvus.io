@@ -7,17 +7,6 @@ let gatsbyConfigs = {
   },
   plugins: [
     {
-      resolve: `gatsby-plugin-gdpr-cookies`,
-      options: {
-        googleTagManager: {
-          trackingId: "GTM-MXCV5ZM", // leave empty if you want to disable the tracker
-          cookieName: "gatsby-gdpr-google-tagmanager", // default
-          dataLayerName: "dataLayer", // default
-        },
-        environments: ["production", "development"],
-      },
-    },
-    {
       resolve: "gatsby-plugin-robots-txt",
       options: {
         host: "https://milvus.io",

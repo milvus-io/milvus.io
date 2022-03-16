@@ -810,7 +810,7 @@
         },
         "errorScreen": {
           "titleText": "无法取得搜索结果",
-          "helpText": "你可能需要检查你都网络。"
+          "helpText": "你可能需要检查你的网络。"
         },
         "footer": {
           "selectText": "选择",

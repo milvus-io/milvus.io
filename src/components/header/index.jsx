@@ -30,6 +30,10 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const tutRef = useRef(null);
   const headerRef = useRef(null);
 
+ 
+  console.log("languag",useI18next().language);
+
+
   useEffect(() => {
     if (!darkMode) {
       return;
@@ -446,7 +450,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     <>
       {header}
       <QuestionRobot trans={t} />
-      <MilvusCookieConsent trans={t} />
+      {language !== 'cn' && <MilvusCookieConsent />}
     </>
   );
 };

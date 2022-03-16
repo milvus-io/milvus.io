@@ -14,6 +14,7 @@ import milvusLogo from "../../images/milvus_logo.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import QuestionRobot from "../questionRobot";
+import MilvusCookieConsent from "../milvusCookieConsent";
 
 const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const { language, languages, originalPath } = useI18next();
@@ -28,6 +29,10 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const toolRef = useRef(null);
   const tutRef = useRef(null);
   const headerRef = useRef(null);
+
+ 
+  console.log("languag",useI18next().language);
+
 
   useEffect(() => {
     if (!darkMode) {
@@ -445,6 +450,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     <>
       {header}
       <QuestionRobot trans={t} />
+      {language !== 'cn' && <MilvusCookieConsent />}
     </>
   );
 };

@@ -14,6 +14,7 @@ import milvusLogo from "../../images/milvus_logo.svg";
 import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import QuestionRobot from "../questionRobot";
+import MilvusCookieConsent from "../milvusCookieConsent";
 
 const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const { language, languages, originalPath } = useI18next();
@@ -168,8 +169,9 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
   const header = (
     <header
-      className={`${styles.header} ${isLightHeader ? styles.light : ""
-        } ${className} ${!darkMode ? styles.posSticky : ''}`}
+      className={`${styles.header} ${
+        isLightHeader ? styles.light : ""
+      } ${className} ${!darkMode ? styles.posSticky : ""}`}
       ref={headerRef}
     >
       <div className={`${styles.headerContainer} headerContainer`}>
@@ -395,7 +397,10 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                       >
                         Milvus_CLI
                       </a>
-                      <Link to="/tools/sizing" className={styles.mobileMenuLink}>
+                      <Link
+                        to="/tools/sizing"
+                        className={styles.mobileMenuLink}
+                      >
                         Sizing Tool
                       </Link>
                     </>
@@ -445,6 +450,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
     <>
       {header}
       <QuestionRobot trans={t} />
+      {language !== "cn" && <MilvusCookieConsent />}
     </>
   );
 };

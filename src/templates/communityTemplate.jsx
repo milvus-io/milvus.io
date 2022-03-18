@@ -41,7 +41,7 @@ export default function Template({ data, pageContext }) {
     // isCommunity,
   } = pageContext;
 
-  const [windowSize, setWindowSize] = useState();
+  const [windowSize, setWindowSize] = useState("desktop1440");
   const [isCollapse, setIsCollapse] = useState(false);
   useCollapseStatus(setIsCollapse);
 
@@ -55,7 +55,10 @@ export default function Template({ data, pageContext }) {
   const isPhone = ["phone"].includes(windowSize);
   const desktop1024 = ["desktop1024"].includes(windowSize);
 
-  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(isMobile, isCollapse);
+  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
+    isMobile,
+    isCollapse
+  );
 
   const { language, t } = useI18next();
 
@@ -67,17 +70,17 @@ export default function Template({ data, pageContext }) {
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
 
   useEffect(() => {
-    const banner = document.querySelector('.community-h1-wrapper');
+    const banner = document.querySelector(".community-h1-wrapper");
     if (!banner) {
       return;
     }
     if (isMobile) {
-      banner.style.width = '100vw';
+      banner.style.width = "100vw";
       return;
     }
     // original width: calc(100vw - 286px);
-    const originalWidth = 'calc(100vw - 286px)';
-    const expandedWidth = 'calc(100vw - 20px)';
+    const originalWidth = "calc(100vw - 286px)";
+    const expandedWidth = "calc(100vw - 20px)";
     const width = isCollapse ? expandedWidth : originalWidth;
     banner.style.width = width;
   }, [isCollapse, isMobile]);
@@ -108,19 +111,21 @@ export default function Template({ data, pageContext }) {
           trans={t}
           setIsCollapse={setIsCollapse}
         />
-        <div className="doc-right-container" style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}>
+        <div
+          className="doc-right-container"
+          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
+        >
           <div
             className={clsx("doc-content-container", {
               [`community-home`]: isHomePage,
               [`is-mobile`]: isMobile,
             })}
-
           >
             <div
               className={clsx({ "doc-post-wrapper": !isHomePage })}
               style={{
                 maxWidth: docContainerFlexibleStyle.maxWidth,
-                width: docContainerFlexibleStyle.width
+                width: docContainerFlexibleStyle.width,
               }}
             >
               <div

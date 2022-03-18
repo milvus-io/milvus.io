@@ -39,36 +39,28 @@ const LeftNav = props => {
   } = props;
 
   const nodeId = group || mdId;
-  const [treeItems, setTreeItems] = useState([]);
   const [selectedVersion, setSelectedVersion] = useState(currentVersion);
   const [openDrawer, setOpenDrawer] = useState(false);
   const showSearch = useMemo(() => {
     return pageType === "doc" || pageType === "api";
   }, [pageType]);
 
-  useEffect(() => {
-    const generateMdMenuList = mdMenuListFactory(
-      docMenus,
-      pageType,
-      currentVersion,
-      locale
-    );
-    const formatedMdMenuList = generateMdMenuList();
-    const filteredApiMenus = filterApiMenus(apiMenus, currentVersion);
-    const generateApiMenuList = mdMenuListFactory(
-      filteredApiMenus,
-      pageType,
-      currentVersion,
-      locale
-    );
-    const formatedApiMenuList = generateApiMenuList();
-    const mergedMenuList = mergeMenuList(
-      formatedMdMenuList,
-      formatedApiMenuList
-    );
-    setTreeItems(mergedMenuList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [docMenus]);
+  const generateMdMenuList = mdMenuListFactory(
+    docMenus,
+    pageType,
+    currentVersion,
+    locale
+  );
+  const formatedMdMenuList = generateMdMenuList();
+  const filteredApiMenus = filterApiMenus(apiMenus, currentVersion);
+  const generateApiMenuList = mdMenuListFactory(
+    filteredApiMenus,
+    pageType,
+    currentVersion,
+    locale
+  );
+  const formatedApiMenuList = generateApiMenuList();
+  const treeItems = mergeMenuList(formatedMdMenuList, formatedApiMenuList);
 
   const handleVersionChange = event => {
     const v = event.target.value;

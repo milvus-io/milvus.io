@@ -86,6 +86,13 @@ let gatsbyConfigs = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `api-docs`,
+        path: `${__dirname}/src/pages/api-doc`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: `blogs`,
         path: `${__dirname}/src/pages/blogs/versions`,
       },

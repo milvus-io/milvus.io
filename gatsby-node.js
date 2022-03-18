@@ -184,7 +184,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
 };
 
 /* create pages dynamically from submodule data */
-exports.createPages = async ({ actions, graphql }) => {
+exports.createPages =  ({ actions, graphql }) => {
   const {
     query,
     generateAllMenus,

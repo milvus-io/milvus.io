@@ -43,7 +43,7 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const [targetDocVersion, setTargetDocVersion] = useState();
-  const [windowSize, setWindowSize] = useState();
+  const [windowSize, setWindowSize] = useState("desktop1440");
   const [isCollapse, setIsCollapse] = useState(false);
   useCollapseStatus(setIsCollapse);
 

@@ -61,7 +61,7 @@ export default function Template({ data, pageContext }) {
     newestBlog,
   } = pageContext;
 
-  const [windowSize, setWindowSize] = useState();
+  const [windowSize, setWindowSize] = useState("desktop1440");
   const [isCollapse, setIsCollapse] = useState(false);
   useCollapseStatus(setIsCollapse);
 

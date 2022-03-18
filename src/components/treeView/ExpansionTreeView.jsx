@@ -8,6 +8,22 @@ import "./ExpansionTreeView.less";
 
 const SCROLL_TOP = "@@scroll|menu";
 
+const filterExpandedItems = (targetId, items = []) => {
+  const ids = [];
+  const treeForEach = (tree, func, parent = {}) => {
+    tree.forEach(data => {
+      data.children && treeForEach(data.children, func, data);
+      func(parent, data);
+    });
+  };
+  treeForEach(items, (parent, data) => {
+    if (data?.id === targetId || ids.includes(data?.id)) {
+      parent.id && ids.push(parent.id);
+    }
+  });
+  return ids;
+};
+
 const ExpansionTreeView = props => {
   // https://mui.com/components/tree-view/
   // itemList = [ { id='', children = [], label='', link='' }, ...]
@@ -23,23 +39,10 @@ const ExpansionTreeView = props => {
     language: lng,
     ...others
   } = props;
-  const [expandedIds, setExpandedIds] = useState([]);
 
-  const filterExpandedItems = (targetId, items = []) => {
-    const ids = [];
-    const treeForEach = (tree, func, parent = {}) => {
-      tree.forEach(data => {
-        data.children && treeForEach(data.children, func, data);
-        func(parent, data);
-      });
-    };
-    treeForEach(items, (parent, data) => {
-      if (data?.id === targetId || ids.includes(data?.id)) {
-        parent.id && ids.push(parent.id);
-      }
-    });
-    return ids;
-  };
+  const [expandedIds, setExpandedIds] = useState(
+    filterExpandedItems(currentMdId, itemList)
+  );
 
   const handleClickMenuLink = () => {
     const menuTree = document.querySelector(".mv3-tree-view");

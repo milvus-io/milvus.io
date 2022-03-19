@@ -1,30 +1,27 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
-import HorizontalBlogCard from "../components/card/HorizontalBlogCard";
 import { graphql } from "gatsby";
-import "highlight.js/styles/stackoverflow-light.css";
-import "./docTemplate.less";
-import "./commonDocTemplate.less";
-import Typography from "@mui/material/Typography";
-import RelatedQuestion from "../components/relatedQuestion";
-import ScoredFeedback from "../components/scoredFeedback";
 import clsx from "clsx";
-import { useWindowSize, useGithubCommits } from "../http/hooks";
 import Aside from "../components/aside";
 import Seo from "../components/seo";
 import Footer from "../components/footer";
-import "../css/variables/main.less";
-import "@zilliz/zui/dist/ZChart.css";
 import {
   useCodeCopy,
   useMultipleCodeFilter,
   useFilter,
-  useZChart,
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
 import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
+import { getCurrentSize, useWindowSize } from "../http/hooks";
+import DocContent from "./parts/DocContent.jsx";
+import HomeContent from "./parts/HomeContent.jsx";
+import "../css/variables/main.less";
+import "@zilliz/zui/dist/ZChart.css";
+import "./docTemplate.less";
+import "./commonDocTemplate.less";
+import "highlight.js/styles/stackoverflow-light.css";
 
 export const query = graphql`
   query ($language: String!) {
@@ -60,17 +57,14 @@ export default function Template({ data, pageContext }) {
     group,
     newestBlog,
   } = pageContext;
-
-  const [windowSize, setWindowSize] = useState("desktop1440");
+  const [windowSize, setWindowSize] = useState('desktop1440');
   const [isCollapse, setIsCollapse] = useState(false);
   useCollapseStatus(setIsCollapse);
 
   const currentWindowSize = useWindowSize();
 
   useEffect(() => {
-    if (currentWindowSize !== windowSize) {
-      setWindowSize(currentWindowSize);
-    }
+    setWindowSize(currentWindowSize);
   }, [currentWindowSize]);
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
@@ -115,11 +109,6 @@ export default function Template({ data, pageContext }) {
     return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
   }, [locale, editPath]);
   const isDoc = !(isBlog || isBenchmark);
-  const commitInfo = useGithubCommits({
-    commitPath,
-    version,
-    isDoc,
-  });
 
   const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
     isMobile,
@@ -221,8 +210,10 @@ export default function Template({ data, pageContext }) {
             ) : (
               <DocContent
                 htmlContent={mdHtml}
-                commitInfo={commitInfo}
+                commitPath={commitPath}
+                isDoc={isDoc}
                 mdId={mdId}
+                version={version}
                 relatedKey={relatedKey}
                 isMobile={isMobile}
                 trans={t}
@@ -250,122 +241,3 @@ export default function Template({ data, pageContext }) {
     </Layout>
   );
 }
-
-const HomeContent = props => {
-  const { homeData, newestBlog = [], trans, isMobile, isCollapse } = props;
-  useEffect(() => {
-    const banner = document.querySelector(".doc-h1-wrapper");
-    if (!banner) {
-      return;
-    }
-    if (isMobile) {
-      banner.style.width = "100vw";
-      return;
-    }
-    // original width: calc(100vw - 286px);
-    const originalWidth = "calc(100vw - 286px)";
-    const expandedWidth = "calc(100vw - 20px)";
-    const width = isCollapse ? expandedWidth : originalWidth;
-    banner.style.width = width;
-  }, [isCollapse, isMobile]);
-  return (
-    <>
-      <div
-        className="doc-home-html-Wrapper"
-        dangerouslySetInnerHTML={{ __html: homeData }}
-      />
-      <Typography component="section" className="doc-home-blog">
-        <Typography variant="h2" component="h2">
-          {trans("v3trans.docs.blogTitle")}
-        </Typography>
-        <HorizontalBlogCard blogData={newestBlog[0]} />
-      </Typography>
-    </>
-  );
-};
-
-const GitCommitInfo = props => {
-  const { commitInfo = {}, mdId, commitTrans = "was last updated at" } = props;
-  return (
-    <div className="commit-info-wrapper">
-      <a target="_blank" rel="noreferrer" href={commitInfo.source}>
-        {mdId}
-      </a>
-      <span>{` ${commitTrans} ${commitInfo.date}: `}</span>
-      <a target="_blank" rel="noreferrer" href={commitInfo.commitUrl}>
-        {commitInfo.message}
-      </a>
-    </div>
-  );
-};
-
-const DocContent = props => {
-  const {
-    htmlContent,
-    commitInfo,
-    mdId,
-    relatedKey,
-    isMobile,
-    trans,
-    docContainerFlexibleStyle,
-  } = props;
-  const contact = {
-    slack: {
-      label: "Discuss on Slack",
-      link: "https://slack.milvus.io/",
-    },
-    github: {
-      label: "Discuss on GitHub",
-      link: "https://github.com/milvus-io/milvus/issues/",
-    },
-    follow: {
-      label: "Follow up with me",
-    },
-    dialog: {
-      desc: "Please leave your question here and we will be in touch.",
-      placeholder1: "Your Email*",
-      placeholder2: "Your Question*",
-      submit: "Submit",
-      title: "We will follow up on your question",
-      invalid: "please input valid email and your question",
-    },
-    title: "Didn't find what you need?",
-  };
-  const docContentRef = useRef();
-  useZChart(docContentRef);
-
-  return (
-    <>
-      <div
-        className="doc-post-wrapper"
-        style={{
-          maxWidth: docContainerFlexibleStyle.maxWidth,
-          width: docContainerFlexibleStyle.width,
-        }}
-      >
-        <div
-          ref={docContentRef}
-          className="doc-post-content"
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
-        />
-        {relatedKey && (
-          <RelatedQuestion
-            title={trans("v3trans.docs.faqTitle")}
-            contact={contact}
-            relatedKey={relatedKey}
-            isMobile={isMobile}
-            trans={trans}
-          />
-        )}
-        {commitInfo?.message && (
-          <GitCommitInfo
-            commitInfo={commitInfo}
-            mdId={mdId}
-            commitTrans={trans("v3trans.docs.commitTrans")}
-          />
-        )}
-        <ScoredFeedback trans={trans} pageId={mdId} />
-      </div>
-    </>
-  );
-};

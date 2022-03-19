@@ -14,7 +14,7 @@ import {
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
 import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
-import { getCurrentSize, useWindowSize } from "../http/hooks";
+import { useWindowSize } from "../http/hooks";
 import DocContent from "./parts/DocContent.jsx";
 import HomeContent from "./parts/HomeContent.jsx";
 import "../css/variables/main.less";
@@ -57,7 +57,7 @@ export default function Template({ data, pageContext }) {
     group,
     newestBlog,
   } = pageContext;
-  const [windowSize, setWindowSize] = useState('desktop1440');
+  const [windowSize, setWindowSize] = useState("desktop1440");
   const [isCollapse, setIsCollapse] = useState(false);
   useCollapseStatus(setIsCollapse);
 

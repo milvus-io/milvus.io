@@ -1,7 +1,6 @@
 const path = require("path");
 const fs = require("fs");
 const ReadVersionJson = require("./walkFile");
-const locales = require("./src/consts/locales");
 const express = require("express");
 const createPagesUtils = require("./gatsbyUtils/createPages");
 const sourceNodesUtils = require("./gatsbyUtils/sourceNodes");
@@ -131,12 +130,12 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   // read categories, such as pymilvus and pymilvus-orm
   const categories = fs.readdirSync(dirPath);
   const nodes = [];
-  for (let category of categories) {
+  for (const category of categories) {
     const path = `${dirPath}/${category}`;
     const versions = fs.readdirSync(path);
     switch (category) {
       case "pymilvus":
-        for (let version of versions) {
+        for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,
             version,
@@ -145,7 +144,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
         }
         break;
       case "milvus-sdk-go":
-        for (let version of versions) {
+        for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,
             version,
@@ -154,7 +153,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
         }
         break;
       case "milvus-sdk-java":
-        for (let version of versions) {
+        for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,
             version,
@@ -163,7 +162,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
         }
         break;
       case "milvus-sdk-node":
-        for (let version of versions) {
+        for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,
             version,
@@ -191,7 +190,6 @@ exports.createPages =  ({ actions, graphql }) => {
     generateHomeData,
     filterMdWithVersion,
     handleCommunityData,
-    initGlobalSearch,
     generateCommunityPages,
     generateCommunityHome,
     generateApiMenus,

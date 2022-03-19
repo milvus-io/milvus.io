@@ -2,8 +2,8 @@
   "name": "mivlus.io",
   "private": true,
   "description": "Milvus.io website",
-  "version": "0.1.5",
-  "author": "zizhao.chen@zilliz.com",
+  "version": "3.0",
+  "author": "ued@zilliz.com",
   "dependencies": {
     "@docsearch/react": "^3.0.0",
     "@emotion/react": "^11.7.1",

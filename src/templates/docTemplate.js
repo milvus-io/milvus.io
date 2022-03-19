@@ -68,7 +68,9 @@ export default function Template({ data, pageContext }) {
   const currentWindowSize = useWindowSize();
 
   useEffect(() => {
-    setWindowSize(currentWindowSize);
+    if (currentWindowSize !== windowSize) {
+      setWindowSize(currentWindowSize);
+    }
   }, [currentWindowSize]);
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
@@ -159,7 +161,12 @@ export default function Template({ data, pageContext }) {
   useGenAnchor(version, editPath);
   useFilter();
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader">
+    <Layout
+      t={t}
+      windowSize={currentWindowSize}
+      showFooter={false}
+      headerClassName="docHeader"
+    >
       <Seo
         title={title}
         lang={locale}

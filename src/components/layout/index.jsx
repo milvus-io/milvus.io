@@ -6,13 +6,19 @@ import Footer from "../footer";
 const Layout = ({
   darkMode,
   children,
+  windowSize = "desktop1440",
   showFooter = true,
   t,
   headerClassName,
 }) => {
   return (
     <>
-      <Header darkMode={darkMode} t={t} className={headerClassName} />
+      <Header
+        windowSize={windowSize}
+        darkMode={darkMode}
+        t={t}
+        className={headerClassName}
+      />
       {children}
       {showFooter && <Footer t={t} />}
     </>

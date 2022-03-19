@@ -1,34 +1,32 @@
 @import "../../css/variables/responsive.less";
-@import "../../css/variables/color.less";
-
 
 .cookieContainer {
-    left: 0;
-    bottom: 0;
-    position: fixed;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  z-index: 999;
+  margin: 0;
+  padding: 20px 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: space-between;
+
+  @media @phone {
+    height: auto;
+  }
+
+  @media @tablet {
+    height: auto;
+    flex-direction: row;
+  }
+
+  @media @desktop1024, @desktop1440, @desktop1920 {
+    max-height: 100px;
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    z-index: 999;
-    margin: 0;
-    padding: 20px 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    flex-direction: row;
     justify-content: space-between;
-  
-    @media @phone {
-      height: auto;
-    }
-
-    @media @tablet {
-      height: auto;
-      flex-direction: row;
-    }
-
-    @media @desktop1024, @desktop1440, @desktop1920 {
-      max-height:100px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
   }
 }
 
@@ -46,23 +44,22 @@
     align-items: flex-start;
     margin-left: 104px;
   }
-
 }
 
 .headerContent {
-    color: @color-white;
-    font-weight: 700;
-    margin: 0;
-    font-size: 12px;
-    line-height: 20px;
+  color: var(--color-white);
+  font-weight: 700;
+  margin: 0;
+  font-size: 12px;
+  line-height: 20px;
 
-    @media @phone {
-      padding: 0 54px;
-    }    
+  @media @phone {
+    padding: 0 54px;
+  }
 }
 
 .textContent {
-  color: @color-white;
+  color: var(--color-white);
   font-weight: 400;
   font-size: 12px;
   margin: 8px 0 0 0;
@@ -88,8 +85,8 @@
 }
 
 .button {
-  color: @color-white;
-  border: 1px solid @color-white;
+  color: var(--color-white);
+  border: 1px solid var(--color-white);
   border-radius: 40px;
   cursor: pointer;
   display: flex;

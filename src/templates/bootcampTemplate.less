@@ -1,5 +1,4 @@
 @import "../css/variables/responsive.less";
-@import "../css/variables/color.less";
 
 // local variables
 @sidebar-width: 250px;
@@ -76,7 +75,7 @@
       width: @anchor-width;
       font-size: 14px;
       padding-right: 24px;
-    
+
       @media @tablet {
         display: none;
       }
@@ -94,7 +93,7 @@
           margin-bottom: 24px;
 
           font-size: 16px;
-          color: @color-default-link;
+          color: var(--color-default-link);
           line-height: 18px;
           font-weight: 500;
         }
@@ -120,11 +119,9 @@
           text-overflow: ellipsis;
           color: #60606f;
 
-          &:hover {
-            color: @color-doc-primary;
-          }
+          &:hover,
           .active {
-            color: @color-doc-primary;
+            color: var(--color-doc-primary);
           }
         }
       }
@@ -150,7 +147,7 @@
       z-index: 1000;
 
       &:hover {
-        color: @color-highlight;
+        color: var(--color-highlight);
       }
 
       @media @tablet {
@@ -171,7 +168,7 @@
     font-size: 12px;
     line-height: 16px;
     font-weight: 600;
-    color: @color-default-link;
+    color: var(--color-default-link);
 
     @media @tablet {
       text-align: start;
@@ -187,9 +184,9 @@
       display: inline-block;
       margin-left: 40px;
 
-      color: @color-default-link;
+      color: var(--color-default-link);
       text-decoration: underline;
-      text-decoration-color: @color-primary;
+      text-decoration-color: var(--color-primary);
 
       @media @tablet {
         margin-left: 0;
@@ -209,7 +206,7 @@
   }
 
   .card {
-    border: 1px solid @color-card-border;
+    border: 1px solid var(--color-card-border);
     border-radius: 4px;
     transition: all 0.2s;
 
@@ -261,7 +258,7 @@
     grid-auto-rows: auto;
 
     & .link-card:hover {
-      color: @color-doc-primary;
+      color: var(--color-doc-primary);
     }
 
     @media @tablet {

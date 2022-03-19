@@ -1,5 +1,4 @@
 @import "../../css/variables/responsive.less";
-@import "../../css/variables/color.less";
 
 .root {
   display: flex;
@@ -48,7 +47,7 @@
   font-size: 14px;
   line-height: 20px;
 
-  color: @text-blue;
+  color: var(--color-text-blue);
 }
 
 .title {
@@ -57,7 +56,7 @@
   line-height: 34px;
   height: 100%;
 
-  color: @color-black;
+  color: var(--color-black);
 
   @media @phone {
     font-size: 18px;
@@ -69,5 +68,5 @@
   font-size: 14px;
   line-height: 20px;
 
-  color: @color-grey-01;
+  color: var(--color-grey-01);
 }

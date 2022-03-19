@@ -1,5 +1,4 @@
 @import "../../css/variables/responsive.less";
-@import "../../css/variables/color.less";
 
 .selectorItem {
   font-style: normal;
@@ -8,7 +7,7 @@
   line-height: 14px;
   letter-spacing: 0.02em;
 
-  color: @color-black;
+  color: var(--color-black);
 
   width: 100%;
 }
@@ -18,8 +17,6 @@
 
   display: flex;
   flex-direction: column;
-
-  // border-right: 1px solid @color-grey-04;
 }
 
 .tree {
@@ -47,7 +44,7 @@
 
 .treeItem,
 .treeItemLink {
-  color: @color-grey-01;
+  color: var(--color-grey-01);
 }
 
 .mobile {
@@ -73,12 +70,12 @@
     font-size: 16px;
     line-height: 24px;
 
-    color: @color-grey-01;
+    color: var(--color-grey-01);
 
     &.selected {
       font-weight: bold;
 
-      color: @text-blue;
+      color: var(--color-text-blue);
     }
   }
 }

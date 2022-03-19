@@ -1,5 +1,4 @@
 @import "../../css/variables/responsive.less";
-@import "../../css/variables/color.less";
 
 .robot {
   bottom: 64px;
@@ -25,7 +24,7 @@
     width: 64px;
     height: 64px;
     padding: 0;
-    fill: @color-white;
+    fill: var(--color-white);
 
     @media @phone, @tablet {
       height: 40px;
@@ -83,7 +82,7 @@ cookieBanner
   }
 
   .dialogHeader {
-    background-color: @color-primary;
+    background-color: var(--color-primary);
     border-radius: 8px 8px 0 0;
     color: white;
     font-style: normal;
@@ -108,7 +107,7 @@ cookieBanner
 
     .myChat {
       align-self: flex-end;
-      background-color: @color-primary;
+      background-color: var(--color-primary);
       border-radius: 4px;
       color: white;
       font-size: 14px;
@@ -151,7 +150,7 @@ cookieBanner
       button {
         background: transparent;
         border: 0;
-        color: @color-primary;
+        color: var(--color-primary);
         cursor: pointer;
         display: flex;
         font-size: 12px;
@@ -187,7 +186,7 @@ cookieBanner
         }
 
         a {
-          color: @color-primary;
+          color: var(--color-primary);
           font-size: 12px;
           font-weight: bold;
           margin-top: 8px;

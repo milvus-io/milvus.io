@@ -1,5 +1,4 @@
 @import "./responsive.less";
-@import "./color.less";
 
 * {
   box-sizing: border-box;
@@ -12,7 +11,7 @@ body {
 
 a {
   text-decoration: none;
-  color: @text-blue;
+  color: var(--color-text-blue);
 }
 
 .button {
@@ -53,42 +52,42 @@ a {
 }
 
 .primaryBtn {
-  background-color: @color-primary;
+  background-color: var(--color-primary);
   color: white;
   .button;
   &:hover {
-    background-color: @text-blue;
+    background-color: var(--color-text-blue);
   }
 }
 
 .primaryBtnSm {
-  background-color: @color-primary;
+  background-color: var(--color-primary);
   color: white;
   .buttonSm;
   &:hover {
-    background-color: @text-blue;
+    background-color: var(--color-text-blue);
   }
 }
 
 .secondaryBtn {
   background: transparent;
-  color: @color-black;
+  color: var(--color-black);
   .button;
-  border: 1px solid @color-black;
+  border: 1px solid var(--color-black);
   &:hover {
-    border-color: @btn-blue;
-    color: @btn-blue;
+    border-color: var(--color-btn-blue);
+    color: var(--color-btn-blue);
   }
 }
 
 .secondaryBtnSm {
   background: transparent;
-  color: @color-black;
+  color: var(--color-black);
   .buttonSm;
-  border: 1px solid @color-black;
+  border: 1px solid var(--color-black);
   &:hover {
-    border-color: @btn-blue;
-    color: @btn-blue;
+    border-color: var(--color-btn-blue);
+    color: var(--color-btn-blue);
   }
 }
 
@@ -122,11 +121,11 @@ a {
   background-color: transparent;
 
   &.containedBtn {
-    background-color: @color-primary;
+    background-color: var(--color-primary);
     color: #fff;
 
     &:hover {
-      background-color: @color-text;
+      background-color: var(--color-text);
     }
 
     &:disabled {
@@ -139,7 +138,7 @@ a {
     color: #000;
 
     &:hover {
-      background-color: @color-primary;
+      background-color: var(--color-primary);
       color: #fff;
     }
 
@@ -157,8 +156,8 @@ a {
     color: #000;
 
     &:hover {
-      color: @color-primary;
-      border-color: @color-primary;
+      color: var(--color-primary);
+      border-color: var(--color-primary);
     }
 
     &:disabled {

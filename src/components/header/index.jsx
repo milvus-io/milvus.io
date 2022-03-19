@@ -36,9 +36,13 @@ const Header = ({
   const toolRef = useRef(null);
   const tutRef = useRef(null);
   const headerRef = useRef(null);
-  const isMobile = ["phone", "tablet"].includes(windowSize);
-  const isPhone = ["phone"].includes(windowSize);
-  const isDesktop = !isPhone && !isMobile;
+  let isDesktop = true;
+  if (typeof navigator !== "undefined") {
+    isDesktop =
+      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
+        navigator.userAgent
+      );
+  }
 
   useEffect(() => {
     (async function getData() {

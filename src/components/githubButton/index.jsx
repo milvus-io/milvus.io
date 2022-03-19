@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Divider from "@mui/material/Divider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCodeBranch } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { getGithubStatis } from "../../http";
 import * as styles from "./index.module.less";
 
 const GitHubButton = ({
@@ -11,29 +10,12 @@ const GitHubButton = ({
   href,
   className = "",
   children,
+  stat
 }) => {
   const isStar = type === "star";
   const iconClass = isStar ? faGithub : faCodeBranch;
   const link = isStar ? href : `${href}/fork`;
   const sublink = isStar ? `${href}/stargazers` : `${href}/network/members`;
-  const [stat, setStat] = useState({
-    star: 0,
-    forks: 0,
-  });
-
-  useEffect(() => {
-    (async function getData() {
-      try {
-        const { forks_count, stargazers_count } = await getGithubStatis();
-        setStat({
-          star: stargazers_count,
-          forks: forks_count,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
 
   return (
     <div className={`${styles.gitBtnWrapper} ${className}`}>

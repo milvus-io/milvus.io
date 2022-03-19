@@ -15,8 +15,14 @@ import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import QuestionRobot from "../questionRobot";
 import MilvusCookieConsent from "../milvusCookieConsent";
+import { getGithubStatis } from "../../http";
 
-const Header = ({ darkMode = false, t = v => v, className = "" }) => {
+const Header = ({
+  windowSize,
+  darkMode = false,
+  t = v => v,
+  className = "",
+}) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,10 +31,25 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const [isDesktopTutOpen, setIsDesktopTutOpen] = useState(false);
   const [isDesktopToolOpen, setIsDesktopToolOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [stat, setStat] = useState({ star: 0, forks: 0 });
   const isLangOpen = Boolean(anchorEl);
   const toolRef = useRef(null);
   const tutRef = useRef(null);
   const headerRef = useRef(null);
+  const isMobile = ["phone", "tablet"].includes(windowSize);
+  const isPhone = ["phone"].includes(windowSize);
+  const isDesktop = !isPhone && !isMobile;
+
+  useEffect(() => {
+    (async function getData() {
+      try {
+        const { forks_count, stargazers_count } = await getGithubStatis();
+        setStat({ star: stargazers_count, forks: forks_count });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (!darkMode) {
@@ -122,11 +143,19 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const actionBar = (
     <div className={styles.actionBar}>
       <div className={styles.gitBtnsWrapper}>
-        <GitHubButton type="star" href="https://github.com/milvus-io/milvus">
+        <GitHubButton
+          stat={stat}
+          type="star"
+          href="https://github.com/milvus-io/milvus"
+        >
           Star
         </GitHubButton>
 
-        <GitHubButton type="fork" href="https://github.com/milvus-io/milvus">
+        <GitHubButton
+          stat={stat}
+          type="fork"
+          href="https://github.com/milvus-io/milvus"
+        >
           Forks
         </GitHubButton>
       </div>
@@ -289,7 +318,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
           </div>
 
           <div className={styles.rightSection}>
-            {actionBar}
+            {isDesktop && actionBar}
             <Link to="/docs/example_code.md" className={styles.startBtn}>
               {t("v3trans.main.nav.getstarted")}
             </Link>
@@ -304,145 +333,147 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
           <span className={styles.bottom}></span>
         </button>
       </div>
-      <div className={`${styles.overlay}  ${isMenuOpen ? styles.open : ""}`}>
-        <nav className={`${styles.nav} col-4 col-8 col-12`}>
-          <List
-            sx={{ width: "100%" }}
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-          >
-            <Link to="/docs" className={styles.menuLink}>
-              <ListItemButton>
-                <ListItemText primary={t("v3trans.main.nav.docs")} />
-                <ExpandMore className={styles.turnLeft} />
-              </ListItemButton>
-            </Link>
-
-            <Divider variant="middle" />
-
-            <ListItemButton
-              onClick={() => {
-                openTutorial(!isTutOpen);
-              }}
+      {!isDesktop && (
+        <div className={`${styles.overlay}  ${isMenuOpen ? styles.open : ""}`}>
+          <nav className={`${styles.nav} col-4 col-8 col-12`}>
+            <List
+              sx={{ width: "100%" }}
+              component="nav"
+              aria-labelledby="nested-list-subheader"
             >
-              <ListItemText primary={t("v3trans.main.nav.tutorials")} />
-              {isTutOpen ? (
-                <ExpandMore />
-              ) : (
-                <ExpandMore className={styles.turnLeft} />
-              )}
-            </ListItemButton>
+              <Link to="/docs" className={styles.menuLink}>
+                <ListItemButton>
+                  <ListItemText primary={t("v3trans.main.nav.docs")} />
+                  <ExpandMore className={styles.turnLeft} />
+                </ListItemButton>
+              </Link>
 
-            <Collapse in={isTutOpen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemText
-                  primary={
-                    <>
-                      <Link to="/bootcamp" className={styles.mobileMenuLink}>
-                        {t("v3trans.main.nav.bootcamp")}
-                      </Link>
-                      <Link
-                        to="/milvus-demos"
-                        className={styles.mobileMenuLink}
-                      >
-                        {t("v3trans.main.nav.demo")}
-                      </Link>
-                      <a
-                        href="https://www.youtube.com/zillizchannel"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.mobileMenuLink}
-                      >
-                        {t("v3trans.main.nav.video")}
-                      </a>
-                    </>
-                  }
-                />
-              </List>
-            </Collapse>
+              <Divider variant="middle" />
 
-            <Divider variant="middle" />
-
-            <ListItemButton
-              onClick={() => {
-                openTool(!isToolOpen);
-              }}
-            >
-              <ListItemText primary={t("v3trans.main.nav.tools")} />
-              {isToolOpen ? (
-                <ExpandMore />
-              ) : (
-                <ExpandMore className={styles.turnLeft} />
-              )}
-            </ListItemButton>
-
-            <Collapse in={isToolOpen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemText
-                  primary={
-                    <>
-                      <a
-                        href="https://github.com/zilliztech/attu"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.mobileMenuLink}
-                      >
-                        Attu
-                      </a>
-                      <a
-                        href="https://github.com/zilliztech/milvus_cli"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.mobileMenuLink}
-                      >
-                        Milvus_CLI
-                      </a>
-                      <Link
-                        to="/tools/sizing"
-                        className={styles.mobileMenuLink}
-                      >
-                        Sizing Tool
-                      </Link>
-                    </>
-                  }
-                />
-              </List>
-            </Collapse>
-
-            <Divider variant="middle" />
-
-            <Link to="/blog" className={styles.menuLink}>
-              <ListItemButton>
-                <ListItemText primary={t("v3trans.main.nav.blog")} />
-                <ExpandMore className={styles.turnLeft} />
+              <ListItemButton
+                onClick={() => {
+                  openTutorial(!isTutOpen);
+                }}
+              >
+                <ListItemText primary={t("v3trans.main.nav.tutorials")} />
+                {isTutOpen ? (
+                  <ExpandMore />
+                ) : (
+                  <ExpandMore className={styles.turnLeft} />
+                )}
               </ListItemButton>
-            </Link>
 
-            <Divider variant="middle" />
+              <Collapse in={isTutOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemText
+                    primary={
+                      <>
+                        <Link to="/bootcamp" className={styles.mobileMenuLink}>
+                          {t("v3trans.main.nav.bootcamp")}
+                        </Link>
+                        <Link
+                          to="/milvus-demos"
+                          className={styles.mobileMenuLink}
+                        >
+                          {t("v3trans.main.nav.demo")}
+                        </Link>
+                        <a
+                          href="https://www.youtube.com/zillizchannel"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.mobileMenuLink}
+                        >
+                          {t("v3trans.main.nav.video")}
+                        </a>
+                      </>
+                    }
+                  />
+                </List>
+              </Collapse>
 
-            <Link to="/community" className={styles.menuLink}>
-              <ListItemButton>
-                <ListItemText primary={t("v3trans.main.nav.community")} />
-                <ExpandMore className={styles.turnLeft} />
+              <Divider variant="middle" />
+
+              <ListItemButton
+                onClick={() => {
+                  openTool(!isToolOpen);
+                }}
+              >
+                <ListItemText primary={t("v3trans.main.nav.tools")} />
+                {isToolOpen ? (
+                  <ExpandMore />
+                ) : (
+                  <ExpandMore className={styles.turnLeft} />
+                )}
               </ListItemButton>
+
+              <Collapse in={isToolOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemText
+                    primary={
+                      <>
+                        <a
+                          href="https://github.com/zilliztech/attu"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.mobileMenuLink}
+                        >
+                          Attu
+                        </a>
+                        <a
+                          href="https://github.com/zilliztech/milvus_cli"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.mobileMenuLink}
+                        >
+                          Milvus_CLI
+                        </a>
+                        <Link
+                          to="/tools/sizing"
+                          className={styles.mobileMenuLink}
+                        >
+                          Sizing Tool
+                        </Link>
+                      </>
+                    }
+                  />
+                </List>
+              </Collapse>
+
+              <Divider variant="middle" />
+
+              <Link to="/blog" className={styles.menuLink}>
+                <ListItemButton>
+                  <ListItemText primary={t("v3trans.main.nav.blog")} />
+                  <ExpandMore className={styles.turnLeft} />
+                </ListItemButton>
+              </Link>
+
+              <Divider variant="middle" />
+
+              <Link to="/community" className={styles.menuLink}>
+                <ListItemButton>
+                  <ListItemText primary={t("v3trans.main.nav.community")} />
+                  <ExpandMore className={styles.turnLeft} />
+                </ListItemButton>
+              </Link>
+
+              <Divider variant="middle" />
+            </List>
+
+            {actionBar}
+
+            <Divider
+              variant="fullwidth"
+              sx={{ position: "absolute", bottom: "78px", width: "100%" }}
+            />
+            <Link to="/docs/install_standalone-docker.md">
+              <button className={styles.startBtn}>
+                {t("v3trans.main.nav.getstarted")}
+              </button>
             </Link>
-
-            <Divider variant="middle" />
-          </List>
-
-          {actionBar}
-
-          <Divider
-            variant="fullwidth"
-            sx={{ position: "absolute", bottom: "78px", width: "100%" }}
-          />
-          <Link to="/docs/install_standalone-docker.md">
-            <button className={styles.startBtn}>
-              {t("v3trans.main.nav.getstarted")}
-            </button>
-          </Link>
-        </nav>
-      </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 

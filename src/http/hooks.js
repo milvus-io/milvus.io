@@ -62,7 +62,7 @@ export function useGetFaq(relatedKey) {
   return relatedQuestions;
 }
 
-const getCurrentSize = () => {
+export function getCurrentSize() {
   if (typeof window !== "undefined") {
     const desktop1920 = window.matchMedia("(min-width: 1920px)");
     const desktop1440 = window.matchMedia("(min-width: 1439px)");
@@ -81,7 +81,7 @@ const getCurrentSize = () => {
     return "phone";
   }
   return "";
-};
+}
 
 export function useWindowSize() {
   const [size, setSize] = useState(() => {

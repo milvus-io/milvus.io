@@ -1,4 +1,4 @@
-let gatsbyConfigs = {
+const gatsbyConfigs = {
   siteMetadata: {
     siteUrl: `https://milvus.io`,
     title: `· Open Source Vector Database built for scalable similarity search`,
@@ -38,6 +38,7 @@ let gatsbyConfigs = {
               if (node.relativePath.includes("menuStructure")) {
                 return `menu`;
               }
+              break;
             case "docs":
               if (
                 node.relativePath.includes("versionInfo") ||

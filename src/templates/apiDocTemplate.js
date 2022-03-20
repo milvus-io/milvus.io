@@ -9,7 +9,6 @@ import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
-import "../css/variables/main.less";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
 import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";

@@ -184,16 +184,18 @@ const BlogTemplate = ({ data, pageContext }) => {
               return (
                 <li
                   key={index}
-                  className={`${index < SCROLL_SIZE * scrollIndex
+                  className={`${
+                    index < SCROLL_SIZE * scrollIndex
                       ? styles.fadeInup
                       : styles.cardItem
-                    }`}
+                  }`}
                 >
                   <BlogCard
-                    className={`${index < SCROLL_SIZE * scrollIndex
+                    className={`${
+                      index < SCROLL_SIZE * scrollIndex
                         ? styles.fadeInup
                         : styles.cardItem
-                      }`}
+                    }`}
                     locale={language}
                     title={title}
                     date={date}

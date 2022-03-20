@@ -1,8 +1,6 @@
-@import "../css/variables/responsive.less";
 @import "../css/variables/docsStyle.less";
 @import "../css/variables/main.less";
 
-@gray: #9ca6b2;
 @font-size-normal: 18px;
 
 .blogImg {
@@ -30,7 +28,7 @@
 
   .authorDate {
     margin-top: 60px;
-    color: @gray;
+    color: var(--color-grey-02);
     font-size: @font-size-normal;
     span:first-child {
       margin-right: 20px;
@@ -87,7 +85,7 @@
     text-align: left;
     font-size: 16px;
     line-height: 26px;
-    color: @gray;
+    color: var(--color-grey-02);
     padding-left: 20px;
 
     .line {

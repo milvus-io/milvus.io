@@ -1,5 +1,3 @@
-@color-primary: #1493cc;
-@color-list-blue: #4fc4f9;
 @pre-bg-color: #f9f9f9;
 @pre-bg-color-dark: #242a35;
 @code-bg-color: #eee;
@@ -7,18 +5,13 @@
 @caution-bg-color: rgba(242, 92, 5, 0.1);
 @warning-bg-color: #fce8e5;
 @faq-disc-color: #06aff2;
-@link-color: #1493cc;
-@color-caution: #f25c05;
-@color-warning: #d51f00;
-@main-text-color: #191919;
-@color-gray: #9ca6b2;
 
 .articleContent,
 .doc-post-wrapper,
 .doc-home-html-Wrapper,
 .community-home-html-wrapper,
 .api-reference-wrapper {
-  color: @main-text-color;
+  color: var(--color-default-text);
 
   details {
     margin-bottom: 24px;
@@ -95,7 +88,7 @@
     border: 1px solid #e2e2e2;
     border-radius: 4px;
     padding: 0px 8px;
-    color: @color-primary;
+    color: var(--color-text-primary);
     display: inline-block;
     font-weight: 600;
 
@@ -132,7 +125,6 @@
 
   a:not(.secondaryBtnSm) {
     font-size: 16px;
-    color: @link-color;
 
     &.icon-wrapper {
       width: 20px;
@@ -205,14 +197,14 @@
 
     &.warning {
       background-color: @warning-bg-color;
-      border-left: 2px solid @color-warning;
+      border-left: 2px solid var(--color-warning);
       border-radius: 4px;
 
       &::before {
         position: absolute;
         content: "WARNING";
         line-height: 20px;
-        color: @color-warning;
+        color: var(--color-warning);
         left: 21px;
         top: 12px;
         font-weight: 600;
@@ -221,14 +213,14 @@
 
     &.caution {
       background-color: @caution-bg-color;
-      border-left: 2px solid @color-caution;
+      border-left: 2px solid var(--color-caution);
       border-radius: 4px;
 
       &::before {
         position: absolute;
         content: "CAUTION";
         line-height: 20px;
-        color: @color-caution;
+        color: var(--color-caution);
         left: 21px;
         top: 12px;
         font-weight: 600;
@@ -237,11 +229,11 @@
 
     &.note {
       background-color: @note-bg-color;
-      border-left: 2px solid @link-color;
+      border-left: 2px solid var(--color-doc-primary);
       border-radius: 4px;
 
       &::before {
-        color: @link-color;
+        color: var(--color-doc-primary);
         position: absolute;
         content: "NOTE";
         line-height: 20px;
@@ -253,7 +245,7 @@
 
     &.info {
       background-color: @note-bg-color;
-      border-left: 2px solid @color-list-blue;
+      border-left: 2px solid var(--color-highlight);
       border-radius: 4px;
 
       &::before {
@@ -263,13 +255,13 @@
         left: 21px;
         top: 12px;
         font-weight: 600;
-        color: @color-list-blue;
+        color: var(--color-highlight);
       }
     }
 
     &.survey {
       background-color: @warning-bg-color;
-      border-left: 2px solid @color-warning;
+      border-left: 2px solid var(--color-warning);
       border-radius: 4px;
       display: block;
 
@@ -280,7 +272,7 @@
         left: 21px;
         top: 12px;
         font-weight: 600;
-        color: @color-warning;
+        color: var(--color-warning);
       }
     }
 
@@ -313,11 +305,11 @@
     &.danger {
       background-color: @warning-bg-color;
       padding: 14px 21px;
-      border-left: 2px solid @color-warning;
+      border-left: 2px solid var(--color-warning);
       border-radius: 4px;
 
       .admonition-title {
-        color: @color-warning;
+        color: var(--color-warning);
         padding: 0;
         font-weight: 600;
         margin-bottom: 8px;
@@ -327,14 +319,14 @@
     &.note {
       background-color: @note-bg-color;
       padding: 14px 21px;
-      border-left: 2px solid @link-color;
+      border-left: 2px solid var(--color-doc-primary);
       border-radius: 4px;
 
       .admonition-title {
         padding: 0;
         font-weight: 600;
         margin-bottom: 8px;
-        color: @link-color;
+        color: var(--color-doc-primary);
       }
     }
   }
@@ -501,15 +493,15 @@
     }
 
     & .active {
-      border-bottom: 1px solid @color-primary;
-      color: @color-primary;
+      border-bottom: 1px solid var(--color-primary);
+      color: var(--color-text-primary);
     }
   }
 
   .tab-wrapper {
     & .active {
-      border-bottom: 2px solid @color-primary;
-      color: @color-primary;
+      border-bottom: 2px solid var(--color-primary);
+      color: var(--color-text-primary);
     }
   }
 
@@ -548,7 +540,7 @@ details {
   summary {
     cursor: pointer;
 
-    color: @link-color;
+    color: var(--color-doc-primary);
     margin-bottom: 8px;
 
     &::marker {
@@ -563,7 +555,7 @@ details {
 }
 
 blockquote {
-  border-left: 0.2rem solid @color-gray;
+  border-left: 0.2rem solid var(--color-grey-02);
   padding: 0 0.8rem;
   margin: 0.8rem 0;
 }
@@ -598,7 +590,7 @@ i {
     }
 
     &.active {
-      color: @color-primary;
+      color: var(--color-text-primary);
       background-color: #fff;
 
       &::after {
@@ -607,7 +599,7 @@ i {
         position: absolute;
         width: 26px;
         height: 1px;
-        background-color: @color-primary;
+        background-color: var(--color-primary);
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);

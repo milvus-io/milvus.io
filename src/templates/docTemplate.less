@@ -1,7 +1,6 @@
 @import "../css/variables/main.less";
 @import "../css/variables/docsStyle.less";
 
-// ---old----
 html {
   // header height = 80px
   scroll-padding-top: 80px;
@@ -14,7 +13,6 @@ html {
   // max-width: calc(100% - 280px);
   overflow: hidden;
   position: relative;
-
   padding-top: 16px;
 
   @media @tablet {
@@ -68,300 +66,6 @@ html {
     margin: 0 4px;
     cursor: default;
   }
-
-  .faq-header {
-    display: block;
-
-    font-weight: bold;
-    line-height: 1.1;
-
-    padding: 16px 0 0 0;
-    color: var(--color-primary);
-    border-top: 1px solid var(--color-lightgray);
-    font-size: 1.5rem;
-    margin: 4rem 0 1rem;
-    text-rendering: optimizeLegibility;
-
-    @media @tablet {
-      font-size: 1rem;
-    }
-  }
-
-  .query-button {
-    border: none;
-    outline: none;
-    color: #fff;
-    background-color: transparent;
-    text-decoration: underline;
-    cursor: pointer;
-
-    &:active {
-      outline: none;
-    }
-
-    &-panel {
-      display: flex;
-      justify-content: flex-end;
-      border-top: 1px solid #535966;
-      border-radius: 0 0 3px 3px;
-      padding: 8px 16px 8px 0;
-      background-color: #343741;
-    }
-
-    &-code {
-      margin-bottom: 0;
-      border-radius: 3px 3px 0 0;
-    }
-  }
-
-  .md-tooltip {
-    line-height: 1.8;
-    max-width: 800px;
-    background-color: #fff;
-    color: #333;
-    font-size: 14px;
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3);
-    padding: 1.5rem;
-    opacity: 1;
-
-    @media @tablet {
-      width: 100%;
-      left: 0 !important;
-    }
-  }
-
-  // .commit-info-wrapper {
-  //   margin-top: 4rem;
-  //   padding: 1rem;
-  //   background-color: #fafafa;
-  //   line-height: 1.8;
-  //   min-height: 60px;
-
-  //   span {
-  //     margin-left: 4px;
-  //   }
-  // }
-
-  article,
-  aside,
-  details,
-  figcaption,
-  figure,
-  header,
-  main,
-  menu,
-  nav {
-    display: block;
-  }
-
-  audio,
-  canvas,
-  progress,
-  video {
-    display: inline-block;
-  }
-
-  audio:not([controls]) {
-    display: none;
-    height: 0;
-  }
-
-  progress {
-    vertical-align: baseline;
-  }
-
-  [hidden],
-  template {
-    display: none;
-  }
-
-  abbr[title] {
-    border-bottom: none;
-    text-decoration: underline;
-    text-decoration: underline dotted;
-  }
-
-  b,
-  strong {
-    font-weight: bolder;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  dfn {
-    font-style: italic;
-  }
-
-  mark {
-    background-color: #ff0;
-    color: #000;
-  }
-
-  small {
-    font-size: 80%;
-  }
-
-  sub,
-  sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-  }
-
-  sub {
-    bottom: -0.25em;
-  }
-
-  sup {
-    top: -0.5em;
-  }
-
-  img {
-    border-style: none;
-  }
-
-  svg:not(:root) {
-    overflow: hidden;
-  }
-
-  figure {
-    margin: 1em 40px;
-  }
-
-  hr {
-    box-sizing: content-box;
-    height: 0;
-    overflow: visible;
-  }
-
-  button,
-  input,
-  optgroup,
-  select,
-  textarea {
-    font: inherit;
-    margin: 0;
-  }
-
-  optgroup {
-    font-weight: 700;
-  }
-
-  button,
-  input {
-    overflow: visible;
-  }
-
-  button,
-  select {
-    text-transform: none;
-  }
-
-  [type="reset"],
-  [type="submit"],
-  button,
-  html [type="button"] {
-    -webkit-appearance: button;
-  }
-
-  [type="button"]::-moz-focus-inner,
-  [type="reset"]::-moz-focus-inner,
-  [type="submit"]::-moz-focus-inner,
-  button::-moz-focus-inner {
-    border-style: none;
-    padding: 0;
-  }
-
-  [type="button"]:-moz-focusring,
-  [type="reset"]:-moz-focusring,
-  [type="submit"]:-moz-focusring,
-  button:-moz-focusring {
-    outline: 1px dotted ButtonText;
-  }
-
-  fieldset {
-    border: 1px solid silver;
-    margin: 0 2px;
-    padding: 0.35em 0.625em 0.75em;
-  }
-
-  legend {
-    box-sizing: border-box;
-    color: inherit;
-    display: table;
-    max-width: 100%;
-    padding: 0;
-    white-space: normal;
-  }
-
-  textarea {
-    overflow: auto;
-  }
-
-  [type="checkbox"],
-  [type="radio"] {
-    box-sizing: border-box;
-    padding: 0;
-  }
-
-  [type="number"]::-webkit-inner-spin-button,
-  [type="number"]::-webkit-outer-spin-button {
-    height: auto;
-  }
-
-  [type="search"] {
-    -webkit-appearance: textfield;
-    outline-offset: -2px;
-  }
-
-  [type="search"]::-webkit-search-cancel-button,
-  [type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none;
-  }
-
-  ::-webkit-input-placeholder {
-    color: inherit;
-    opacity: 0.54;
-  }
-
-  ::-webkit-file-upload-button {
-    -webkit-appearance: button;
-    font: inherit;
-  }
-
-  html {
-    font: 112.5%/1.45em georgia, serif;
-    box-sizing: border-box;
-    overflow-y: scroll;
-  }
-
-  * {
-    box-sizing: inherit;
-  }
-
-  *:before {
-    box-sizing: inherit;
-  }
-
-  *:after {
-    box-sizing: inherit;
-  }
-
-  body {
-    color: #fafafa;
-    word-wrap: break-word;
-    font-kerning: normal;
-    -moz-font-feature-settings: "kern", "liga", "clig", "calt";
-    -ms-font-feature-settings: "kern", "liga", "clig", "calt";
-    -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
-    font-feature-settings: "kern", "liga", "clig", "calt";
-  }
-
-  .words-prompt {
-    padding-top: 4px;
-    font-size: 12px;
-    line-height: 16px;
-  }
 }
 
 .node {
@@ -377,7 +81,6 @@ html {
 }
 
 // ---new----
-
 .commit-info-wrapper {
   border-left: 4px solid var(--color-grey-04);
   padding-left: 16px;
@@ -562,11 +265,11 @@ html {
       }
 
       li {
-        color: var(--color-text-blue);
+        color: var(--color-text-primary);
 
         a {
           text-decoration: none;
-          color: var(--color-text-blue);
+          color: var(--color-text-primary);
           font-style: normal;
           font-weight: normal;
           font-size: 16px;
@@ -583,7 +286,7 @@ html {
 
   .doc-home-what-is-new {
     background: var(--color-bg-blue);
-    border-left: 4px solid var(--color-icon-blue);
+    border-left: 4px solid var(--color-highlight);
     padding: 26px 30px;
     margin-top: 60px;
 

@@ -1,10 +1,8 @@
 @import "../css/variables/responsive.less";
 @font-size-normal: 18px;
-
 @font-size-title-normal: 32px;
 @font-size-title-large: 40px;
 
-@primary-color: #1493cc;
 .listWrapper {
   margin: 0 auto;
   width: 100%;
@@ -61,7 +59,7 @@
 
       .tag {
         text-transform: uppercase;
-        color: @primary-color;
+        color: var(--color-primary);
         font-size: @font-size-normal;
         margin-bottom: 20px;
         font-weight: bold;
@@ -116,7 +114,7 @@
       .active {
         background: #eff9fe;
         border-radius: 100px;
-        color: @primary-color;
+        color: var(--color-primary);
       }
 
       @media @tablet, @phone {

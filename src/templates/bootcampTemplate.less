@@ -6,13 +6,12 @@
 @header-height: 90px;
 @footer-height: 48px;
 @anchor-width: 280px;
-@color-primary: #1493cc;
 
 .bootcamp-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: #191919;
+  color: var(--color-default-text);
 
   main {
     display: flex;
@@ -93,7 +92,7 @@
           margin-bottom: 24px;
 
           font-size: 16px;
-          color: var(--color-default-link);
+          color: var(--color-default-text);
           line-height: 18px;
           font-weight: 500;
         }
@@ -168,7 +167,7 @@
     font-size: 12px;
     line-height: 16px;
     font-weight: 600;
-    color: var(--color-default-link);
+    color: var(--color-default-text);
 
     @media @tablet {
       text-align: start;
@@ -184,7 +183,7 @@
       display: inline-block;
       margin-left: 40px;
 
-      color: var(--color-default-link);
+      color: var(--color-default-text);
       text-decoration: underline;
       text-decoration-color: var(--color-primary);
 

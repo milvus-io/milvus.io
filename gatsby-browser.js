@@ -1,6 +1,7 @@
 import "@fontsource/roboto-mono";
 import "@fontsource/inter";
 import "@fontsource/source-code-pro";
+import "./src/css/reset/index.css";
 import "./src/css/variables/color.css";
 
 let nextRoute = '';

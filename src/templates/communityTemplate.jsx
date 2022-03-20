@@ -126,10 +126,13 @@ export default function Template({ data, pageContext }) {
               }}
             >
               <div
-                className={clsx({
-                  [`community-home-html-wrapper`]: isHomePage,
-                  [`doc-post-content`]: !isHomePage,
-                })}
+                className={clsx(
+                  {
+                    [`community-home-html-wrapper`]: isHomePage,
+                    [`doc-post-content`]: !isHomePage,
+                  },
+                  `doc-style`
+                )}
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             </div>

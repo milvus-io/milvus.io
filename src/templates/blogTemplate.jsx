@@ -99,7 +99,7 @@ export default function Template({ data, pageContext }) {
         </section>
 
         <div
-          className={`${styles.articleContent} col-8`}
+          className={`${styles.articleContent} doc-style col-8`}
           dangerouslySetInnerHTML={{ __html: html }}
         ></div>
       </section>

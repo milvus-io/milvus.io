@@ -32,7 +32,6 @@
     "gatsby-plugin-gdpr-cookies": "^2.0.8",
     "gatsby-plugin-google-analytics": "^3.6.0",
     "gatsby-plugin-google-tagmanager": "^3.6.0",
-    "gatsby-plugin-gtag": "^1.0.13",
     "gatsby-plugin-i18n": "^1.0.1",
     "gatsby-plugin-less": "^5.4.0",
     "gatsby-plugin-manifest": "^3.0.0",

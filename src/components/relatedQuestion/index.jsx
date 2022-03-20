@@ -4,9 +4,8 @@ import { useGetFaq } from "../../http/hooks";
 import CustomIconLink from "../customIconLink";
 import { CustomizedDialogs } from "../dialog/Dialog";
 import FeedbackDialog from "../dialog/FeedbackDialog";
-import * as styles from "./relatedQuestion.module.less";
 import clsx from "clsx";
-import "../../css/variables/main.less";
+import * as styles from "./relatedQuestion.module.less";
 
 export default function RelatedQuestion(props) {
   const { title, contact, relatedKey, isMobile, trans } = props;

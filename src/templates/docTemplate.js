@@ -17,7 +17,6 @@ import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
 import { useWindowSize } from "../http/hooks";
 import DocContent from "./parts/DocContent.jsx";
 import HomeContent from "./parts/HomeContent.jsx";
-import "../css/variables/main.less";
 import "@zilliz/zui/dist/ZChart.css";
 import "./docTemplate.less";
 import "./commonDocTemplate.less";

@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
-// import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
-import "./communityTemplate.less";
-import "./commonDocTemplate.less";
 import LeftNav from "../components/leftNavigation";
-// import TocTreeView from "../components/treeView/TocTreeView";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
-import "../css/variables/main.less";
 import Seo from "../components/seo";
 import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
+import "./communityTemplate.less";
+import "./commonDocTemplate.less";
 
 export const query = graphql`
   query ($language: String!) {

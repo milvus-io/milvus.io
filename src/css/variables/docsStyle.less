@@ -1,12 +1,12 @@
-@pre-bg-color: #f9f9f9;
-@pre-bg-color-dark: #242a35;
-@code-bg-color: #eee;
-@note-bg-color: #f0f4f9;
-@caution-bg-color: rgba(242, 92, 5, 0.1);
-@warning-bg-color: #fce8e5;
-@faq-disc-color: #06aff2;
-
 .doc-style {
+  --pre-bg-color: #f9f9f9;
+  --pre-bg-color-dark: #242a35;
+  --code-bg-color: #eee;
+  --note-bg-color: #f0f4f9;
+  --caution-bg-color: rgba(242, 92, 5, 0.1);
+  --warning-bg-color: #fce8e5;
+  --faq-disc-color: #06aff2;
+
   color: var(--color-default-text);
 
   details {
@@ -80,7 +80,7 @@
     font-size: 14px;
     line-height: 1.4rem;
     font-family: "Source Code Pro" !important;
-    background-color: @code-bg-color;
+    background-color: var(--code-bg-color);
     border: 1px solid #e2e2e2;
     border-radius: 4px;
     padding: 0px 8px;
@@ -192,7 +192,7 @@
     }
 
     &.warning {
-      background-color: @warning-bg-color;
+      background-color: var(--warning-bg-color);
       border-left: 2px solid var(--color-warning);
       border-radius: 4px;
 
@@ -208,7 +208,7 @@
     }
 
     &.caution {
-      background-color: @caution-bg-color;
+      background-color: var(--caution-bg-color);
       border-left: 2px solid var(--color-caution);
       border-radius: 4px;
 
@@ -224,7 +224,7 @@
     }
 
     &.note {
-      background-color: @note-bg-color;
+      background-color: var(--note-bg-color);
       border-left: 2px solid var(--color-doc-primary);
       border-radius: 4px;
 
@@ -240,7 +240,7 @@
     }
 
     &.info {
-      background-color: @note-bg-color;
+      background-color: var(--note-bg-color);
       border-left: 2px solid var(--color-highlight);
       border-radius: 4px;
 
@@ -256,7 +256,7 @@
     }
 
     &.survey {
-      background-color: @warning-bg-color;
+      background-color: var(--warning-bg-color);
       border-left: 2px solid var(--color-warning);
       border-radius: 4px;
       display: block;
@@ -299,7 +299,7 @@
     }
 
     &.danger {
-      background-color: @warning-bg-color;
+      background-color: var(--warning-bg-color);
       padding: 14px 21px;
       border-left: 2px solid var(--color-warning);
       border-radius: 4px;
@@ -313,7 +313,7 @@
     }
 
     &.note {
-      background-color: @note-bg-color;
+      background-color: var(--note-bg-color);
       padding: 14px 21px;
       border-left: 2px solid var(--color-doc-primary);
       border-radius: 4px;
@@ -329,7 +329,7 @@
 
   table {
     margin-bottom: 24px;
-    background-color: @pre-bg-color;
+    background-color: var(--pre-bg-color);
     overflow-x: auto;
     width: 100%;
     border-radius: 4px;
@@ -540,7 +540,7 @@ details {
     margin-bottom: 8px;
 
     &::marker {
-      color: @pre-bg-color-dark;
+      color: var(--pre-bg-color-dark);
       font-size: 0.8em;
     }
   }

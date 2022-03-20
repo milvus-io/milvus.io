@@ -179,7 +179,7 @@ export default function Template({ data, pageContext }) {
               }}
             >
               <div
-                className={`api-reference-wrapper doc-style doc-post-container ${category}`}
+                className={`api-reference-wrapper doc-style ${category}`}
                 dangerouslySetInnerHTML={{ __html: doc }}
               ></div>
             </div>

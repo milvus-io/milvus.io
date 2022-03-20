@@ -191,7 +191,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
               <section className="content articles doc-post">
                 {html && (
                   <section
-                    className="doc-post-container articles-container"
+                    className="articles-container"
                     dangerouslySetInnerHTML={{ __html: html }}
                   ></section>
                 )}

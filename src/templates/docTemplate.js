@@ -19,7 +19,6 @@ import DocContent from "./parts/DocContent.jsx";
 import HomeContent from "./parts/HomeContent.jsx";
 import "@zilliz/zui/dist/ZChart.css";
 import "./docTemplate.less";
-import "./commonDocTemplate.less";
 import "highlight.js/styles/stackoverflow-light.css";
 
 export const query = graphql`

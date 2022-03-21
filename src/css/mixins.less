@@ -1,4 +1,5 @@
-@import "./responsive.less";
+/* all less fragments here */
+@import (reference) "./responsive.less";
 
 .button {
   border-radius: 40px;
@@ -10,7 +11,9 @@
   line-height: 18px;
   border: 0;
 
-  @media @phone, @tablet, @desktop1024 {
+  @media @phone,
+  @tablet,
+  @desktop1024 {
     height: 38px;
     padding: 10px 20px;
     font-size: 14px;
@@ -30,6 +33,7 @@
 
 .hover {
   transition: all 0.5s;
+
   &:hover {
     opacity: 0.8;
   }
@@ -39,6 +43,7 @@
   background-color: var(--color-primary);
   color: white;
   .button;
+
   &:hover {
     background-color: var(--color-text-primary);
   }
@@ -48,6 +53,7 @@
   background-color: var(--color-primary);
   color: white;
   .buttonSm;
+
   &:hover {
     background-color: var(--color-text-primary);
   }
@@ -58,6 +64,7 @@
   color: var(--color-black);
   .button;
   border: 1px solid var(--color-black);
+
   &:hover {
     border-color: var(--color-primary);
     color: var(--color-text-primary);
@@ -69,6 +76,7 @@
   color: var(--color-black);
   .buttonSm;
   border: 1px solid var(--color-black);
+
   &:hover {
     border-color: var(--color-primary);
     color: var(--color-text-primary);
@@ -147,16 +155,6 @@
     &:disabled {
       color: #8ac9e5;
       border-color: #8ac9e5;
-    }
-  }
-}
-
-.docHeader {
-  .headerContainer {
-    padding: 0 40px;
-    width: 100%;
-    @media @phone, @tablet {
-      padding: 0 20px;
     }
   }
 }

@@ -1,6 +1,5 @@
-@import "../css/variables/responsive.less";
+@import (reference) "../css/responsive.less";
 
-// ---new----
 .doc-temp-container {
   position: relative;
 
@@ -27,7 +26,6 @@
       padding: 0 32px;
       width: calc(100vw - 514px);
       box-sizing: border-box;
-      // transition: max-width 0.3s linear, width 0.3s linear;
       will-change: max-width, width;
 
       @media @tablet {
@@ -48,7 +46,6 @@
 }
 
 .doc-right-container {
-  // transition: margin-left 0.3s linear;
   will-change: margin-left;
   display: flex;
   flex-direction: column;
@@ -64,8 +61,6 @@
   padding-left: 48px;
   padding-right: 48px;
 }
-
-// ---responsive----
 
 .is-mobile.doc-temp-container {
   // padding-top: 16px;
@@ -87,8 +82,3 @@
     width: 100%;
   }
 }
-
-// ---element-style----
-// .doc-post-content {
-
-// }

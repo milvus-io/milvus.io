@@ -611,10 +611,12 @@ i {
   font-size: 14px;
 }
 
-// pre {
-//   margin-bottom: 0;
-
-//   & + pre {
-//     margin-top: 16px;
-//   }
-// }
+.docHeader {
+  .headerContainer {
+    padding: 0 40px;
+    width: 100%;
+    @media @phone, @tablet {
+      padding: 0 20px;
+    }
+  }
+}

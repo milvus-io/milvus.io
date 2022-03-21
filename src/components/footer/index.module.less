@@ -1,4 +1,4 @@
-@import "../../css/variables/main.less";
+@import (reference) "../../css/mixins.less";
 
 .footer {
   width: 100%;
@@ -41,6 +41,7 @@
 }
 
 .footContentWrapper {
+  .flexstart;
   @media @phone {
     display: grid;
     grid-template-columns: 1fr 1fr;

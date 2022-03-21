@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { submitInfoForm } from "../../http/submitEmail";
 import * as styles from "./index.module.less";
-import { useSubscribeSrouce } from '../../hooks';
+import { useSubscribeSrouce } from "../../hooks";
 
 const UNIQUE_EMAIL_ID = "UNIQUE_EMAIL_ID";
 

@@ -11,11 +11,11 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import milvusLogo from "../../images/milvus_logo.svg";
-import * as styles from "./index.module.less";
 import GitHubButton from "../githubButton";
 import QuestionRobot from "../questionRobot";
 import MilvusCookieConsent from "../milvusCookieConsent";
 import { getGithubStatis } from "../../http";
+import * as styles from "./index.module.less";
 
 const Header = ({
   windowSize,
@@ -211,7 +211,7 @@ const Header = ({
         {logoSection}
         <div className={styles.desktopHeaderBar}>
           <div className={styles.leftSection}>
-            <ul className={`${styles.flexstart} ${styles.menu}`}>
+            <ul className={`${styles.menu}`}>
               <li>
                 <Link to="/docs" className={styles.menuItem}>
                   {t("v3trans.main.nav.docs")}

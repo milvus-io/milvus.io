@@ -1,15 +1,13 @@
 import React, { useMemo, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
-import * as styles from "./blogTemplate.module.less";
-// import Seo from '../components/seo';
-// import Footer from '../components/footer/v2';
 import Layout from "../components/layout";
 import Tags from "../components/tags";
 import BlogCard from "../components/card/BlogCard";
 import dayjs from "dayjs";
 import Share from "../components/share";
-import Seo from '../components/seo';
+import Seo from "../components/seo";
+import * as styles from "./blogTemplate.module.less";
 
 export default function Template({ data, pageContext }) {
   const {
@@ -33,7 +31,7 @@ export default function Template({ data, pageContext }) {
   const moreBlogs = useMemo(
     () =>
       blogList
-        .filter((v) => v.tags.some((tag) => tags.includes(tag) && v.id !== id))
+        .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
         .slice(0, 3),
     [blogList, id, tags]
   );
@@ -45,7 +43,7 @@ export default function Template({ data, pageContext }) {
   //     }
   //   : {};
 
-  const handleTagClick = (tag) => {
+  const handleTagClick = tag => {
     navigate(`/blog?page=1#${tag}`);
   };
 
@@ -56,13 +54,13 @@ export default function Template({ data, pageContext }) {
       const srcAttr = img.getAttribute("src");
       if (reg.test(srcAttr)) {
         const parentNode = img.parentNode;
-        parentNode.style.margin = '20px auto';
+        parentNode.style.margin = "20px auto";
         const title = img.getAttribute("title") || img.getAttribute("alt");
-        const captionEle = document.createElement('figcaption');
-        captionEle.className = 'gatsby-resp-image-figcaption';
+        const captionEle = document.createElement("figcaption");
+        captionEle.className = "gatsby-resp-image-figcaption";
         captionEle.innerText = title;
         parentNode.appendChild(captionEle);
-      };
+      }
     });
   }, []);
 

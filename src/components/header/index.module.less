@@ -1,4 +1,4 @@
-@import "../../css/variables/main.less";
+@import (reference) "../../css/mixins.less";
 
 .header {
   align-items: center;
@@ -357,6 +357,7 @@
 
 .menu {
   margin: 0;
+  .flexstart;
 
   li {
     display: block;

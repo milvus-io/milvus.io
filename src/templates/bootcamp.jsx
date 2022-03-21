@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
-
 import BannerCard from "../components/card/bannerCard";
 import LinkCard from "../components/card/linkCard";
 import SolutionCard from "../components/card/solutionCard";
@@ -191,7 +190,7 @@ const BootcampTemplate = ({ data, pageContext }) => {
               <section className="content articles doc-post">
                 {html && (
                   <section
-                    className="doc-post-container articles-container"
+                    className="articles-container"
                     dangerouslySetInnerHTML={{ __html: html }}
                   ></section>
                 )}

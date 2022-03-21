@@ -1,18 +1,15 @@
-@import "../css/variables/responsive.less";
-
-// local variables
-@sidebar-width: 250px;
-@sidebar-left-margin: 40px;
-@header-height: 90px;
-@footer-height: 48px;
-@anchor-width: 280px;
-@color-primary: #1493cc;
+@import (reference) "../css/responsive.less";
 
 .bootcamp-wrapper {
+  --sidebar-width: 250px;
+  --sidebar-left-margin: 40px;
+  --header-height: 90px;
+  --footer-height: 48px;
+  --anchor-width: 280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: #191919;
+  color: var(--color-default-text);
 
   main {
     display: flex;
@@ -20,22 +17,6 @@
     flex-grow: 1;
     margin: 0 auto;
     max-width: @screen-desktop1920;
-
-    .sidebar {
-      position: fixed;
-      bottom: @footer-height;
-      top: @header-height;
-      width: @sidebar-width;
-      margin-left: @sidebar-left-margin;
-
-      @media @tablet {
-        bottom: 136px;
-        left: 25px;
-        width: 70vw;
-        z-index: 1000;
-        margin-left: 0;
-      }
-    }
 
     .content {
       margin-top: 32px;
@@ -54,7 +35,9 @@
     }
 
     .articles {
-      max-width: calc(100% - @anchor-width - @sidebar-width - 32px - 40px);
+      max-width: calc(
+        100% - var(--anchor-width) - var(--sidebar-width) - 32px - 40px
+      );
 
       @media @tablet {
         max-width: 100%;
@@ -72,7 +55,7 @@
     }
 
     .anchors-wrapper {
-      width: @anchor-width;
+      width: var(--anchor-width);
       font-size: 14px;
       padding-right: 24px;
 
@@ -83,7 +66,7 @@
       .anchors {
         position: sticky;
         position: -webkit-sticky;
-        top: @header-height;
+        top: var(--header-height);
         max-height: 100%;
         overflow: auto;
 
@@ -93,7 +76,7 @@
           margin-bottom: 24px;
 
           font-size: 16px;
-          color: var(--color-default-link);
+          color: var(--color-default-text);
           line-height: 18px;
           font-weight: 500;
         }
@@ -168,7 +151,7 @@
     font-size: 12px;
     line-height: 16px;
     font-weight: 600;
-    color: var(--color-default-link);
+    color: var(--color-default-text);
 
     @media @tablet {
       text-align: start;
@@ -184,7 +167,7 @@
       display: inline-block;
       margin-left: 40px;
 
-      color: var(--color-default-link);
+      color: var(--color-default-text);
       text-decoration: underline;
       text-decoration-color: var(--color-primary);
 

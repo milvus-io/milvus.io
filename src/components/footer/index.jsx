@@ -92,7 +92,7 @@ const Footer = ({ darkMode = true, t, className }) => {
       <div
         className={clsx(styles.container, { [`col-4 col-8 col-12`]: darkMode })}
       >
-        <div className={styles.footContentWrapper}>
+        <div className={`${styles.footContentWrapper} `}>
           {footerJson.map(f => (
             <div key={f.title} className={`${styles.footerItem} col-2`}>
               <span className={styles.itemTitle}>

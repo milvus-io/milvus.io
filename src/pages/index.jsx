@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
-import "./index.less";
-import * as styles from "./index.module.less";
 import Layout from "../components/layout";
 import Signup from "../components/signup";
 import HomeBanner from "../components/home/banner";
@@ -31,6 +29,10 @@ import tokopedia from "../images/brands/tokopedia.png";
 import CustomIconLink from "../components/customIconLink";
 import Seo from "../components/seo";
 import SvgIcon from "@mui/material/SvgIcon";
+// css entry, all site's styles are loaded from this file
+import "./index.less";
+// local css module
+import * as styles from "./index.module.less";
 
 const brands = [
   {

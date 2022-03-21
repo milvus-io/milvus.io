@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
-import * as styles from "./blogListTemplate.module.less";
 // import Seo from "../components/seo";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import { FILTER_TAG } from "../consts/index";
 import BlogCard from "../components/card/BlogCard";
-
 import Tags from "../components/tags";
 import { globalHistory } from "@reach/router";
 import Signup from "../components/signup";
 import { CustomizedSnackbars } from "../components/snackBar";
 import Seo from "../components/seo";
 import { useWindowSize } from "../http/hooks";
+import * as styles from "./blogListTemplate.module.less";
 
 const SCROLL_SIZE = 6;
 const TITLE = "MIlvus Blog";
@@ -110,7 +109,7 @@ const BlogTemplate = ({ data, pageContext }) => {
       const scrolllBtmHeight = contentHeight - scrollHeight - viewHeight;
       const maxScrollIndex = Math.ceil(filteredBlogs.length / SCROLL_SIZE);
       if (scrolllBtmHeight < FOOT_HEIGHT + FOOT_DISTANCE) {
-        console.log("---set---", scrollIndex);
+        // console.log("---set---", scrollIndex);
         setScrollIndex(v => (v < maxScrollIndex ? (v += 1) : v));
       }
     };
@@ -184,16 +183,18 @@ const BlogTemplate = ({ data, pageContext }) => {
               return (
                 <li
                   key={index}
-                  className={`${index < SCROLL_SIZE * scrollIndex
+                  className={`${
+                    index < SCROLL_SIZE * scrollIndex
                       ? styles.fadeInup
                       : styles.cardItem
-                    }`}
+                  }`}
                 >
                   <BlogCard
-                    className={`${index < SCROLL_SIZE * scrollIndex
+                    className={`${
+                      index < SCROLL_SIZE * scrollIndex
                         ? styles.fadeInup
                         : styles.cardItem
-                      }`}
+                    }`}
                     locale={language}
                     title={title}
                     date={date}

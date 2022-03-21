@@ -22,7 +22,7 @@ export default function HomeContent(props) {
   return (
     <>
       <div
-        className="doc-home-html-Wrapper"
+        className="doc-home-html-Wrapper doc-style"
         dangerouslySetInnerHTML={{ __html: homeData }}
       />
       <Typography component="section" className="doc-home-blog">

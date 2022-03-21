@@ -9,7 +9,6 @@ import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
-import "../css/variables/main.less";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
 import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
@@ -173,14 +172,14 @@ export default function Template({ data, pageContext }) {
             })}
           >
             <div
-              className="doc-post-wrapper"
+              className="doc-post-wrapper doc-style"
               style={{
                 maxWidth: docContainerFlexibleStyle.maxWidth,
                 width: docContainerFlexibleStyle.width,
               }}
             >
               <div
-                className={`api-reference-wrapper doc-post-container ${category}`}
+                className={`api-reference-wrapper doc-style ${category}`}
                 dangerouslySetInnerHTML={{ __html: doc }}
               ></div>
             </div>

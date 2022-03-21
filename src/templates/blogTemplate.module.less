@@ -1,9 +1,4 @@
-@import "../css/variables/responsive.less";
-@import "../css/variables/docsStyle.less";
-@import "../css/variables/main.less";
-
-@gray: #9ca6b2;
-@font-size-normal: 18px;
+@import (reference) "../css/mixins.less";
 
 .blogImg {
   position: relative;
@@ -30,8 +25,8 @@
 
   .authorDate {
     margin-top: 60px;
-    color: @gray;
-    font-size: @font-size-normal;
+    color: var(--color-grey-02);
+    font-size: 18px;
     span:first-child {
       margin-right: 20px;
     }
@@ -52,7 +47,7 @@
     justify-content: center;
 
     li {
-      color: var(--color-text);
+      color: var(--color-text-primary);
       text-transform: uppercase;
       cursor: pointer;
       font-weight: bold;
@@ -87,7 +82,7 @@
     text-align: left;
     font-size: 16px;
     line-height: 26px;
-    color: @gray;
+    color: var(--color-grey-02);
     padding-left: 20px;
 
     .line {
@@ -131,7 +126,7 @@
 }
 
 .moreBlog {
-  margin: 100px auto 100px auto;
+  margin: 100px auto;
   h2 {
     font-weight: bold;
     font-size: 40px;

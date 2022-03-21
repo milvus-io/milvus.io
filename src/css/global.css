@@ -1,0 +1,69 @@
+// global css
+h1 {
+  /* H1/bold */
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 70px;
+  /* identical to box height, or 117% */
+
+  color: #000000;
+}
+
+h2 {
+  /* H2/Regular */
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 50px;
+  /* identical to box height, or 125% */
+
+  color: #000000;
+}
+
+h3 {
+  /* H3/Bold */
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 42px;
+  /* identical to box height, or 131% */
+
+  color: #000000;
+}
+
+h4 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height, or 131% */
+
+  color: #000000;
+}
+
+a,
+p,
+li,
+table,
+tr,
+td,
+th {
+  /* H6/Regular */
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  /* or 150% */
+
+  color: #000000;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text-primary);
+}

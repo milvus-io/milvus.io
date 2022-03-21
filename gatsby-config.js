@@ -28,7 +28,7 @@ const gatsbyConfigs = {
       },
     },
     `gatsby-plugin-react-helmet`,
-    "gatsby-plugin-less",
+    `gatsby-plugin-less`,
     {
       resolve: `gatsby-transformer-json`,
       options: {

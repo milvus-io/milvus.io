@@ -1,3 +1,9 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 html,
 body,
 div,
@@ -105,17 +111,12 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
 body {
   line-height: 1;
   min-height: 100vh;
   color: #000;
   background: #fff;
+  font-family: Inter;
   -webkit-font-smoothing: antialiased;
   overflow-y: overlay;
 }
@@ -137,9 +138,3 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-// some global css
-.text-center {
-  text-align: center;
-}
-

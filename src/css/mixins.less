@@ -1,18 +1,5 @@
-@import "./responsive.less";
-
-* {
-  box-sizing: border-box;
-  font-family: Inter;
-}
-
-body {
-  margin: 0;
-}
-
-a {
-  text-decoration: none;
-  color: var(--color-text-blue);
-}
+/* all less fragments here */
+@import (reference) "./responsive.less";
 
 .button {
   border-radius: 40px;
@@ -24,13 +11,13 @@ a {
   line-height: 18px;
   border: 0;
 
-  @media @phone, @tablet, @desktop1024 {
+  @media @phone,
+  @tablet,
+  @desktop1024 {
     height: 38px;
     padding: 10px 20px;
     font-size: 14px;
   }
-
-  // .hover;
 }
 
 .buttonSm {
@@ -46,6 +33,7 @@ a {
 
 .hover {
   transition: all 0.5s;
+
   &:hover {
     opacity: 0.8;
   }
@@ -55,8 +43,9 @@ a {
   background-color: var(--color-primary);
   color: white;
   .button;
+
   &:hover {
-    background-color: var(--color-text-blue);
+    background-color: var(--color-text-primary);
   }
 }
 
@@ -64,8 +53,9 @@ a {
   background-color: var(--color-primary);
   color: white;
   .buttonSm;
+
   &:hover {
-    background-color: var(--color-text-blue);
+    background-color: var(--color-text-primary);
   }
 }
 
@@ -74,9 +64,10 @@ a {
   color: var(--color-black);
   .button;
   border: 1px solid var(--color-black);
+
   &:hover {
-    border-color: var(--color-btn-blue);
-    color: var(--color-btn-blue);
+    border-color: var(--color-primary);
+    color: var(--color-text-primary);
   }
 }
 
@@ -85,9 +76,10 @@ a {
   color: var(--color-black);
   .buttonSm;
   border: 1px solid var(--color-black);
+
   &:hover {
-    border-color: var(--color-btn-blue);
-    color: var(--color-btn-blue);
+    border-color: var(--color-primary);
+    color: var(--color-text-primary);
   }
 }
 
@@ -125,7 +117,7 @@ a {
     color: #fff;
 
     &:hover {
-      background-color: var(--color-text);
+      background-color: var(--color-text-primary);
     }
 
     &:disabled {
@@ -156,7 +148,7 @@ a {
     color: #000;
 
     &:hover {
-      color: var(--color-primary);
+      color: var(--color-text-primary);
       border-color: var(--color-primary);
     }
 
@@ -164,76 +156,5 @@ a {
       color: #8ac9e5;
       border-color: #8ac9e5;
     }
-  }
-}
-
-h1 {
-  /* H1/bold */
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 60px;
-  line-height: 70px;
-  /* identical to box height, or 117% */
-
-  color: #000000;
-}
-
-h2 {
-  /* H2/Regular */
-
-  font-style: normal;
-  font-weight: bold;
-  font-size: 40px;
-  line-height: 50px;
-  /* identical to box height, or 125% */
-
-  color: #000000;
-}
-
-h3 {
-  /* H3/Bold */
-
-  font-style: normal;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 42px;
-  /* identical to box height, or 131% */
-
-  color: #000000;
-}
-
-h4 {
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 20px;
-  /* identical to box height, or 131% */
-
-  color: #000000;
-}
-
-a,
-p,
-li,
-table,
-tr,
-td,
-th {
-  /* H6/Regular */
-
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 24px;
-  /* or 150% */
-
-  color: #000000;
-}
-
-.docHeader {
-  .headerContainer {
-    padding: 0 40px;
-    width: 100%;
   }
 }

@@ -1,21 +1,22 @@
-@import "../css/variables/main.less";
-
-@header-height: 89px;
-@header-mobile-height: 87px;
-@footer-height: 60px;
+@import (reference) "../css/mixins.less";
 
 .notfound-container {
+  --header-height: 89px;
+  --header-mobile-height: 87px;
+  --footer-height: 60px;
   width: 100%;
-  min-height: calc(100vh - @header-height - @footer-height);
-  padding-top: @header-height;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  padding-top: var(--header-height);
   box-sizing: border-box;
   text-align: center;
   display: flex;
   align-items: center;
 
   @media @phone {
-    min-height: calc(100vh - @header-mobile-height - @footer-height);
-    padding-top: @header-mobile-height;
+    min-height: calc(
+      100vh - var(--header-mobile-height) - var(--footer-height)
+    );
+    padding-top: var(--header-mobile-height);
   }
 
   .notfount-center-wrapper {
@@ -47,7 +48,6 @@
     }
 
     .notfound-title {
-      font-family: Brinnan Bold;
       font-size: 40px;
       line-height: 32px;
       margin-right: 24px;

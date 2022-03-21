@@ -253,9 +253,6 @@ if (process.env.NODE_ENV == "development") {
       },
     },
     {
-      resolve: "gatsby-plugin-zopfli",
-    },
-    {
       resolve: "gatsby-plugin-sitemap",
       options: {
         output: "/",

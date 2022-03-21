@@ -70,7 +70,7 @@ export default function RelatedQuestion(props) {
         </Typography>
         <div className={styles.btnGroups}>
           <button
-            className={clsx("primaryBtnSm")}
+            className={styles.pBtn}
             onClick={() => {
               handleClickFollowUp();
             }}
@@ -78,7 +78,7 @@ export default function RelatedQuestion(props) {
             {trans("v3trans.docs.contactFollow")}
           </button>
           <a
-            className={clsx("secondaryBtnSm", styles.sBtn)}
+            className={styles.sBtn}
             href={contact.slack.link}
             target="_blank"
             rel="noopener noreferrer"
@@ -86,7 +86,7 @@ export default function RelatedQuestion(props) {
             {trans("v3trans.docs.contactSlack")}
           </a>
           <a
-            className={clsx("secondaryBtnSm", styles.sBtn)}
+            className={styles.sBtn}
             href={contact.github.link}
             target="_blank"
             rel="noopener noreferrer"

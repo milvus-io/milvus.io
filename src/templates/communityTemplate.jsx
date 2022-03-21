@@ -119,7 +119,7 @@ export default function Template({ data, pageContext }) {
             })}
           >
             <div
-              className={clsx({ "doc-post-wrapper": !isHomePage })}
+              className={clsx({ "doc-post-wrapper": !isHomePage }, `doc-style`)}
               style={{
                 maxWidth: docContainerFlexibleStyle.maxWidth,
                 width: docContainerFlexibleStyle.width,

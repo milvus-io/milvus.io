@@ -172,7 +172,7 @@ export default function Template({ data, pageContext }) {
             })}
           >
             <div
-              className="doc-post-wrapper"
+              className="doc-post-wrapper doc-style"
               style={{
                 maxWidth: docContainerFlexibleStyle.maxWidth,
                 width: docContainerFlexibleStyle.width,

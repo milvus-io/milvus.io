@@ -88,7 +88,7 @@ export default function ScoredFeedback(props) {
     }
   }, [pageId]);
 
-  const handleScoreBtnClick = (value) => {
+  const handleScoreBtnClick = value => {
     if (score === value) {
       handleUpdateStatisData(value, false);
       cleanScore();
@@ -117,15 +117,15 @@ export default function ScoredFeedback(props) {
   );
 }
 
-const BtnGroups = (props) => {
+const BtnGroups = props => {
   const { score, onScoreBtnClick, trans } = props;
 
   return (
     <div className={styles.btnGroup}>
       <button
         className={clsx(styles.btn, {
-          primaryBtnSm: score === "like",
-          secondaryBtnSm: score !== "like",
+          [styles.pBtn]: score === "like",
+          [styles.sBtn]: score !== "like",
         })}
         onClick={() => {
           onScoreBtnClick("like");
@@ -136,8 +136,8 @@ const BtnGroups = (props) => {
       </button>
       <button
         className={clsx(styles.btn, {
-          primaryBtnSm: score === "dislike",
-          secondaryBtnSm: score !== "dislike",
+          [styles.pBtn]: score === "dislike",
+          [styles.sBtn]: score !== "dislike",
         })}
         onClick={() => {
           onScoreBtnClick("dislike");

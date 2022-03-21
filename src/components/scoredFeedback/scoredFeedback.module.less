@@ -1,4 +1,4 @@
-@import (reference) "../../css/responsive.less";
+@import (reference) "../../css/mixins.less";
 
 .container {
   display: flex;
@@ -21,6 +21,12 @@
   svg {
     height: 18px;
     width: 18px;
+  }
+  &.pBtn {
+    .primaryBtnSm;
+  }
+  &.sBtn {
+    .secondaryBtnSm;
   }
 }
 

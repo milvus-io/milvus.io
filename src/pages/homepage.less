@@ -1,3 +1,5 @@
+@import (reference) "../css/mixins.less";
+
 .homepage {
   .section2 {
     text-align: center;
@@ -182,7 +184,7 @@
         }
         .shooting-title {
           padding: 20px 0;
-          border-top: 1px solid#EFF9FE;
+          border-top: 1px solid #EFF9FE;
           font-size: 32px;
           line-height: 42px;
           color: #c5ccd6;
@@ -296,7 +298,7 @@
       font-weight: bold;
       font-size: 16px;
       line-height: 24px;
-      border-top: 1px solid#EFF9FE;
+      border-top: 1px solid #EFF9FE;
       color: var(--color-grey-03);
 
       width: 400px;
@@ -319,6 +321,13 @@
       display: flex;
       gap: 10px;
       padding-top: 34px;
+
+      .pBtn {
+        .primaryBtnSm;
+      }
+      .sBtn {
+        .secondaryBtnSm;
+      }
 
       @media @tablet, @phone {
         justify-content: center;

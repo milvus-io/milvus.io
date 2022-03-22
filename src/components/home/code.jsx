@@ -180,7 +180,7 @@ const Code = props => {
             <span className="horizontal_shooting_star" />
           </div>
           <Link to={learnMoreLink}>
-            <button className="secondaryBtnSm learn-more">
+            <button className="sBtn learn-more">
               {t("v3trans.home.code.learn")}
             </button>
           </Link>

@@ -1,4 +1,5 @@
 @import (reference) "../../css/responsive.less";
+@import (reference) "../../css/mixins.less";
 
 .subscribe {
   height: 306px;
@@ -102,6 +103,8 @@
       }
 
       .subscribeBtn {
+        .customButton;
+        .containedBtn;
         display: inline-block;
         font-size: 16px;
         line-height: 18px;

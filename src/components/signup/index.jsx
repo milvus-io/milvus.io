@@ -72,7 +72,7 @@ const Signup = ({ callback, t }) => {
             ref={inputRef}
           />
           <button
-            className={`customButton containedBtn ${styles.subscribeBtn}`}
+            className={`${styles.subscribeBtn}`}
             onClick={handleSubmitEmail}
             disabled={disabled}
           >

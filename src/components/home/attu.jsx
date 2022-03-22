@@ -94,7 +94,7 @@ const Attu = props => {
             <div className="btn-groups">
               <CustomIconLink
                 to="https://github.com/zilliztech/attu/releases"
-                className={`primaryBtnSm download-attu`}
+                className={`pBtn download-attu`}
                 showIcon={false}
               >
                 {t("v3trans.home.attu.download")}
@@ -105,7 +105,7 @@ const Attu = props => {
                 rel="noreferrer"
                 href="https://github.com/zilliztech/attu"
               >
-                <button className={`secondaryBtnSm`}>
+                <button className={"sBtn"}>
                   {t("v3trans.home.attu.learn")}
                 </button>
               </a>

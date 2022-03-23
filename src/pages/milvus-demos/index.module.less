@@ -1,4 +1,5 @@
 @import (reference) "../../css/responsive.less";
+@import (reference) "../../css/mixins.less";
 
 .banner {
   background: url("../../images/demos/demo-banner.svg") center center no-repeat;
@@ -172,6 +173,10 @@
       display: flex;
       flex: 1;
       justify-content: flex-start;
+      .cBtn {
+        .customButton;
+        .outlinedBtn;
+      }
 
       .socialMedia {
         width: 50%;

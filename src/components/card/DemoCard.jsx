@@ -79,14 +79,14 @@ const DemoCard = ({
             <p>{desc}</p>
             <div className={styles.btnGroup}>
               <button
-                className={`customButton containedBtn ${styles.tryBtn}`}
+                className={`${styles.tryBtn}`}
                 onClick={handleSubmitEmail}
               >
                 Try Demo
               </button>
 
               <button
-                className={` customButton ${styles.watchBtn}`}
+                className={`${styles.watchBtn}`}
                 onClick={handleWatchVideo}
               >
                 Watch Demo

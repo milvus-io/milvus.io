@@ -97,7 +97,7 @@ const DemoPage = () => {
   };
 
   return (
-    <main className={styles.main}>
+    <main>
       {/* use for seo */}
       <h1 style={{ display: "none" }}>Milvus Demos</h1>
       <Layout darkMode={true} t={t}>
@@ -134,7 +134,7 @@ const DemoPage = () => {
               <div className={styles.join}>
                 <h2>Join Milvus{!isMobile && <br />} community</h2>
                 <p>
-                  We appreciate and encourage you to join the Milvus{" "}
+                  We appreciate and encourage you to join the Milvus
                   {!isMobile && <br />} community and make contributions
                   altogether.
                 </p>
@@ -150,7 +150,7 @@ const DemoPage = () => {
 
                 <p>Dive into the source code.</p>
                 <a
-                  className="customButton outlinedBtn"
+                  className={styles.rightPart.cBtn}
                   href="https://bit.ly/3Ct2dKo"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -166,7 +166,7 @@ const DemoPage = () => {
 
                 <p>Ask questions and share ideas.</p>
                 <a
-                  className="customButton outlinedBtn"
+                  className={styles.rightPart.cBtn}
                   href="https://bit.ly/3H7KOuu"
                   target="_blank"
                   rel="noopener noreferrer"

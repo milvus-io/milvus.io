@@ -8,7 +8,7 @@ import clsx from "clsx";
 import * as styles from "./relatedQuestion.module.less";
 
 export default function RelatedQuestion(props) {
-  const { title, contact, relatedKey, isMobile, trans } = props;
+  const { title, contact, relatedKey, trans } = props;
   const [showModal, setShowModal] = useState(false);
   const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState({});
@@ -64,7 +64,7 @@ export default function RelatedQuestion(props) {
           );
         })}
       </ul>
-      <div className={clsx(styles.faqLinks, { [styles.isMobile]: isMobile })}>
+      <div className={clsx(styles.faqLinks)}>
         <Typography variant="h6" component="h3" className={styles.subTitle}>
           {trans("v3trans.docs.faqBtnGroupTitle")}
         </Typography>

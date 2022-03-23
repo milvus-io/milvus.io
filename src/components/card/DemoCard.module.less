@@ -21,6 +21,10 @@
   &.even {
     .coverWrapper {
       order: 1;
+
+      @media @phone {
+        order: 0;
+      }
     }
   }
 

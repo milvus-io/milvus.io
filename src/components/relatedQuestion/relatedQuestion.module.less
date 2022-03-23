@@ -1,4 +1,5 @@
 @import (reference) "../../css/mixins.less";
+@import (reference) "../../css/responsive.less";
 
 h2.title {
   /* H3/Bold */
@@ -44,6 +45,10 @@ h2.title {
   gap: 10px;
   padding: 20px 0;
 
+  @media @tablet, @phone {
+    flex-direction: column;
+  }
+
   .pBtn {
     .primaryBtnSm;
   }
@@ -54,12 +59,6 @@ h2.title {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-}
-
-.isMobile {
-  .btnGroups {
-    flex-direction: column;
   }
 }
 

@@ -13,7 +13,6 @@ import molecular from "../images/docs/molecular.svg";
 import questionAnswering from "../images/docs/question_answering.svg";
 import recommend from "../images/docs/recommend.svg";
 import videoSearch from "../images/docs/video-search.svg";
-import { useMobileScreen } from "../hooks/index";
 import { useCodeCopy, useFilter } from "../hooks/doc-dom-operation";
 import "./bootcampTemplate.less";
 import { useFormatAnchor } from "../hooks/doc-anchor";
@@ -113,7 +112,6 @@ const BootcampTemplate = ({ data, pageContext }) => {
     });
   };
 
-  const { isMobile } = useMobileScreen();
   return (
     <Layout t={t}>
       <div className="bootcamp-wrapper">
@@ -126,7 +124,6 @@ const BootcampTemplate = ({ data, pageContext }) => {
                   content={description}
                   title={title}
                   img={banner.img.publicURL}
-                  isMobile={isMobile}
                 />
               </div>
 

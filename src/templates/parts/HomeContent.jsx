@@ -1,24 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Typography from "@mui/material/Typography";
 import HorizontalBlogCard from "../../components/card/HorizontalBlogCard";
 
 export default function HomeContent(props) {
-  const { homeData, newestBlog = [], trans, isMobile, isCollapse } = props;
-  useEffect(() => {
-    const banner = document.querySelector(".doc-h1-wrapper");
-    if (!banner) {
-      return;
-    }
-    if (isMobile) {
-      banner.style.width = "100vw";
-      return;
-    }
-    // original width: calc(100vw - 286px);
-    const originalWidth = "calc(100vw - 286px)";
-    const expandedWidth = "calc(100vw - 20px)";
-    const width = isCollapse ? expandedWidth : originalWidth;
-    banner.style.width = width;
-  }, [isCollapse, isMobile]);
+  const { homeData, newestBlog = [], trans } = props;
+
   return (
     <>
       <div
@@ -33,4 +19,4 @@ export default function HomeContent(props) {
       </Typography>
     </>
   );
-};
+}

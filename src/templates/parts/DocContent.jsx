@@ -13,7 +13,6 @@ export default function DocContent(props) {
     htmlContent,
     mdId,
     relatedKey,
-    isMobile,
     trans,
     docContainerFlexibleStyle,
   } = props;
@@ -67,7 +66,6 @@ export default function DocContent(props) {
             title={trans("v3trans.docs.faqTitle")}
             contact={contact}
             relatedKey={relatedKey}
-            isMobile={isMobile}
             trans={trans}
           />
         )}

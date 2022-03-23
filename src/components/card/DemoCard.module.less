@@ -18,7 +18,14 @@
     align-items: center;
   }
 
+  &.even {
+    .coverWrapper {
+      order: 1;
+    }
+  }
+
   .coverWrapper {
+    order: 0;
     width: 735px;
     background-color: #fafafa;
     filter: drop-shadow(0px 20px 45px rgba(0, 43, 125, 0.25));
@@ -54,6 +61,8 @@
   }
 
   .contentWrapper {
+    order: 1;
+
     width: 400px;
 
     @media @phone {

@@ -202,8 +202,6 @@ export default function Template({ data, pageContext }) {
                 homeData={homeData}
                 newestBlog={newestBlog}
                 trans={t}
-                isMobile={isMobile}
-                isCollapse={isCollapse}
               />
             ) : (
               <DocContent

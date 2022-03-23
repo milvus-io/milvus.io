@@ -6,7 +6,6 @@ import {
   RedditShareButton,
 } from "react-share";
 import HackerNewsShareButton from "./hackerNewsShareButton";
-
 import { Helmet } from "react-helmet";
 import * as styles from "./index.module.less";
 import twitterIcon from "../../images/blog/twitter.svg";
@@ -49,7 +48,6 @@ const Share = props => {
       <RedditShareButton url={url} quote={quote}>
         <img src={redditIcon} alt="reddit" className={styles.icon} />
       </RedditShareButton>
-
       <HackerNewsShareButton url={url} title={quote}>
         <img src={hackernewsIcon} alt="hackernews" className={styles.icon} />
       </HackerNewsShareButton>

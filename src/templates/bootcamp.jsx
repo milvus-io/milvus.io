@@ -131,23 +131,6 @@ const BootcampTemplate = ({ data, pageContext }) => {
               </div>
 
               <div className="container">
-                <h1 className="title">{section1.title}</h1>
-                <ul className="solutionsWrapper">
-                  {section1.content.map(item => {
-                    const { title, link } = item;
-                    return (
-                      <li key={title}>
-                        <LinkCard
-                          label={title}
-                          href={link}
-                          className="link-card"
-                        />
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-              <div className="container">
                 <h1 className="title">{section3.title}</h1>
                 <ul className="solutionsWrapper">
                   {section3.content.map(item => {
@@ -160,6 +143,24 @@ const BootcampTemplate = ({ data, pageContext }) => {
                           img={Icons[iconType]}
                           href={link}
                           liveDemo={liveDemo}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+
+              <div className="container">
+                <h1 className="title">{section1.title}</h1>
+                <ul className="solutionsWrapper">
+                  {section1.content.map(item => {
+                    const { title, link } = item;
+                    return (
+                      <li key={title}>
+                        <LinkCard
+                          label={title}
+                          href={link}
+                          className="link-card"
                         />
                       </li>
                     );

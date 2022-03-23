@@ -3,19 +3,19 @@
 .notfound-container {
   --header-height: 89px;
   --header-mobile-height: 87px;
-  --footer-height: 60px;
+  --footer-height: 390px;
   width: 100%;
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
-  padding-top: var(--header-height);
   box-sizing: border-box;
   text-align: center;
   display: flex;
   align-items: center;
+  background: url("../images/404/404.svg") no-repeat center 120px;
 
   @media @phone {
-    min-height: calc(
-      100vh - var(--header-mobile-height) - var(--footer-height)
-    );
+    background: url("../images/404/404-mobile.svg") no-repeat center 120px;
+
+    min-height: calc(100vh - var(--header-mobile-height) - 30px;);
     padding-top: var(--header-mobile-height);
   }
 
@@ -26,6 +26,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 50px;
+    background-size: 400px;
 
     @media @tablet {
       padding: 0 32px;
@@ -38,13 +39,28 @@
 
   .notfound-titlebar {
     display: flex;
-    margin-top: 80px;
+    margin-top: 220px;
     margin-bottom: 24px;
     justify-content: center;
     align-items: flex-end;
 
+    &:after {
+      content: "";
+      display: inline-block;
+      width: 64px;
+      height: 64px;
+      position: relative;
+      top: 10px;
+      background: url("../images/404/bird.svg") no-repeat center center;
+      background-size: 48px;
+    }
+
     @media @phone {
       margin-top: 24px;
+      &:after {
+        background: url("../images/404/bird-mobile.svg") no-repeat center center;
+        background-size: 24px;
+      }
     }
 
     .notfound-title {
@@ -61,7 +77,7 @@
 
   .notfound-content {
     font-size: 16px;
-    line-height: 32px;
+    line-height: 24px;
 
     @media @phone {
       font-size: 14px;
@@ -75,7 +91,7 @@
     span {
       margin-left: 16px;
       font-size: 14px;
-      line-height: 24px;
+      line-height: 16px;
       font-weight: 700;
     }
   }

@@ -5,10 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Seo from "../components/seo";
 import Layout from "../components/layout/index";
-import notFound from "../images/404/404.svg";
-import notFound_mobile from "../images/404/404-mobile.svg";
-import bird from "../images/404/bird.svg";
-import bird_mobile from "../images/404/bird-mobile.svg";
 import "./404.less";
 
 const NotFoundPage = () => {

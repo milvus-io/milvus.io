@@ -52,7 +52,6 @@ const Aside = props => {
     issueBtnConf,
     bugBtnConf,
     suggestBtnConf,
-    pdfBtnConf,
     discussBtnConf,
     commonJoinBtnConf,
   ] = [
@@ -106,11 +105,6 @@ const Aside = props => {
           label: suggestBtnConf.label,
           link: "https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--new-content-proposal.yaml&title=New Doc Proposal",
           icon: suggestBtnConf.icon,
-        },
-        {
-          label: pdfBtnConf.label,
-          link: `https://github.com/milvus-io/web-content/tree/master/export_pdf/doc_milvus_${version}_${localePath}.pdf`,
-          icon: pdfBtnConf.icon,
         },
       ];
     },

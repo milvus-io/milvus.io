@@ -10,13 +10,14 @@
 
   .contentWrapper {
     margin-right: 70px;
-    width: 33.33%;
     display: flex;
     flex-direction: column;
+    order: 0;
 
     @media @tablet, @phone {
       width: 100%;
       margin-right: 0;
+      order: 1;
     }
   }
 

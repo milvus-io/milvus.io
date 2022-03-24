@@ -95,58 +95,9 @@ html {
       display: block;
     }
   }
-
-  // image in docs
-  .gatsby-resp-image-wrapper {
-    min-width: 32px;
-    height: auto;
-    width: 100%;
-
-    @media @tablet {
-      margin: 24px auto;
-    }
-  }
-
-  .language-javascript,
-  .language-python,
-  .language-go,
-  .language-java,
-  .language-cli,
-  .language-shell,
-  .language-cpp {
-    display: none;
-
-    &.active {
-      display: block;
-
-      @media @phone {
-        margin-top: 16px;
-        margin-bottom: 16px;
-      }
-    }
-  }
-
-  .tip {
-    background-color: rgba(79, 196, 249, 0.25);
-    padding: 4px 8px;
-    margin: 0 4px;
-    cursor: default;
-  }
 }
 
-.node {
-  .tsd-member-group {
-    ul {
-      list-style-type: none;
-    }
-  }
-
-  h5 {
-    font-weight: unset;
-  }
-}
-
-// ---new----
+// ---commit-info-wrapper----
 .commit-info-wrapper {
   border-left: 4px solid var(--color-grey-04);
   padding-left: 16px;
@@ -166,6 +117,11 @@ html {
 
 // home
 .doc-home.doc-content-container {
+  display: block;
+  margin-right: 0;
+  max-width: 950px;
+  padding: 0;
+
   .doc-h1-wrapper {
     background-image: url(../images/docs/home_banner.svg);
     background-position: 500px center;
@@ -407,19 +363,4 @@ html {
       margin: 0;
     }
   }
-}
-
-.doc-temp-container .doc-home.doc-content-container {
-  display: block;
-  margin-right: 0;
-  max-width: 950px;
-  padding: 0;
-}
-
-.loading {
-  display: none;
-}
-
-.blockList dd {
-  overflow-x: auto;
 }

@@ -517,6 +517,59 @@
     text-align: center;
     color: #4c5a67;
   }
+
+  // image in docs
+  .gatsby-resp-image-wrapper {
+    min-width: 32px;
+    height: auto;
+    width: 100%;
+
+    @media @tablet {
+      margin: 24px auto;
+    }
+  }
+
+  .language-javascript,
+  .language-python,
+  .language-go,
+  .language-java,
+  .language-cli,
+  .language-shell,
+  .language-cpp {
+    display: none;
+
+    &.active {
+      display: block;
+
+      @media @phone {
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .tip {
+    background-color: rgba(79, 196, 249, 0.25);
+    padding: 4px 8px;
+    margin: 0 4px;
+    cursor: default;
+  }
+
+  .blockList dd {
+    overflow-x: auto;
+  }
+
+  .node {
+    .tsd-member-group {
+      ul {
+        list-style-type: none;
+      }
+    }
+
+    h5 {
+      font-weight: unset;
+    }
+  }
 }
 
 .api-reference-wrapper {

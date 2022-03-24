@@ -189,7 +189,6 @@ export default function Template({ data, pageContext }) {
           <div
             className={clsx("doc-content-container", {
               [`doc-home`]: homeData,
-              [`is-mobile`]: isMobile,
             })}
           >
             {homeData ? (
@@ -206,7 +205,6 @@ export default function Template({ data, pageContext }) {
                 mdId={mdId}
                 version={version}
                 relatedKey={relatedKey}
-                isMobile={isMobile}
                 trans={t}
                 docContainerFlexibleStyle={docContainerFlexibleStyle}
               />

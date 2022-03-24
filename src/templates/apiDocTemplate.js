@@ -5,7 +5,6 @@ import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
 import "highlight.js/styles/stackoverflow-light.css";
 import "./docTemplate.less";
-import clsx from "clsx";
 import { useWindowSize } from "../http/hooks";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
@@ -53,7 +52,6 @@ export default function Template({ data, pageContext }) {
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
   const isPhone = ["phone"].includes(windowSize);
-  const desktop1024 = ["desktop1024"].includes(windowSize);
   const { t } = useI18next();
 
   const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
@@ -140,13 +138,7 @@ export default function Template({ data, pageContext }) {
         lang={locale}
         version={version}
       />
-      <div
-        className={clsx("doc-temp-container", {
-          [`is-desktop1024`]: desktop1024,
-          [`is-mobile`]: isMobile,
-          [`is-phone`]: isPhone,
-        })}
-      >
+      <div className={"doc-temp-container"}>
         <LeftNav
           homeUrl={leftNavHomeUrl}
           homeLabel={t("v3trans.docs.homeTitle")}
@@ -165,11 +157,7 @@ export default function Template({ data, pageContext }) {
           className="doc-right-container"
           style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
         >
-          <div
-            className={clsx("doc-content-container", {
-              [`is-mobile`]: isMobile,
-            })}
-          >
+          <div className={"doc-content-container"}>
             <div
               className="doc-post-wrapper doc-style"
               style={{

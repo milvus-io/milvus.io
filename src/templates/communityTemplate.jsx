@@ -10,7 +10,6 @@ import Footer from "../components/footer";
 import Seo from "../components/seo";
 import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
 import "./communityTemplate.less";
-import "./commonDocTemplate.less";
 
 export const query = graphql`
   query ($language: String!) {
@@ -50,7 +49,6 @@ export default function Template({ data, pageContext }) {
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
   const isPhone = ["phone"].includes(windowSize);
-  const desktop1024 = ["desktop1024"].includes(windowSize);
 
   const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
     isMobile,
@@ -66,30 +64,11 @@ export default function Template({ data, pageContext }) {
   const leftNavMenus =
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
 
-  useEffect(() => {
-    const banner = document.querySelector(".community-h1-wrapper");
-    if (!banner) {
-      return;
-    }
-    if (isMobile) {
-      banner.style.width = "100vw";
-      return;
-    }
-    // original width: calc(100vw - 286px);
-    const originalWidth = "calc(100vw - 286px)";
-    const expandedWidth = "calc(100vw - 20px)";
-    const width = isCollapse ? expandedWidth : originalWidth;
-    banner.style.width = width;
-  }, [isCollapse, isMobile]);
-
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo title={TITLE} lang={language} description={DESC} />
       <div
         className={clsx("doc-temp-container", {
-          [`is-desktop1024`]: desktop1024,
-          [`is-mobile`]: isMobile,
-          [`is-phone`]: isPhone,
           [`home`]: isHomePage,
         })}
       >
@@ -125,13 +104,10 @@ export default function Template({ data, pageContext }) {
               }}
             >
               <div
-                className={clsx(
-                  {
-                    [`community-home-html-wrapper`]: isHomePage,
-                    [`doc-post-content`]: !isHomePage,
-                  },
-                  `doc-style`
-                )}
+                className={clsx({
+                  [`community-home-html-wrapper`]: isHomePage,
+                  [`doc-post-content`]: !isHomePage,
+                })}
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             </div>

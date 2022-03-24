@@ -79,7 +79,7 @@
   code {
     font-size: 14px;
     line-height: 1.4rem;
-    font-family: "Source Code Pro" !important;
+    font-family: "Source Code Pro";
     background-color: var(--code-bg-color);
     border: 1px solid #e2e2e2;
     border-radius: 4px;
@@ -109,7 +109,7 @@
       display: block;
       font-size: 14px;
       line-height: 20px;
-      font-family: "Source Code Pro" !important;
+      font-family: "Source Code Pro";
       border: none;
       padding: 12px;
       background-color: transparent;
@@ -120,8 +120,6 @@
   }
 
   a:not(.secondaryBtnSm) {
-    font-size: 16px;
-
     &.icon-wrapper {
       width: 20px;
       height: 20px;
@@ -516,6 +514,59 @@
     font-size: 12px;
     text-align: center;
     color: #4c5a67;
+  }
+
+  // image in docs
+  .gatsby-resp-image-wrapper {
+    min-width: 32px;
+    height: auto;
+    width: 100%;
+
+    @media @tablet {
+      margin: 24px auto;
+    }
+  }
+
+  .language-javascript,
+  .language-python,
+  .language-go,
+  .language-java,
+  .language-cli,
+  .language-shell,
+  .language-cpp {
+    display: none;
+
+    &.active {
+      display: block;
+
+      @media @phone {
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .tip {
+    background-color: rgba(79, 196, 249, 0.25);
+    padding: 4px 8px;
+    margin: 0 4px;
+    cursor: default;
+  }
+
+  .blockList dd {
+    overflow-x: auto;
+  }
+
+  .node {
+    .tsd-member-group {
+      ul {
+        list-style-type: none;
+      }
+    }
+
+    h5 {
+      font-weight: unset;
+    }
   }
 }
 

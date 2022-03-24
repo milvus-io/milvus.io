@@ -1,11 +1,8 @@
 @import (reference) "../css/responsive.less";
-
 html {
   // header height = 80px
   scroll-padding-top: 102px;
 }
-
-@import (reference) "../css/responsive.less";
 
 .doc-temp-container {
   position: relative;
@@ -38,6 +35,10 @@ html {
       @media @tablet {
         transition: none;
         will-change: none;
+        width: calc(100vw - 232px);
+      }
+      @media @phone {
+        width: 100%;
       }
     }
   }
@@ -61,33 +62,14 @@ html {
   @media @tablet {
     transition: none;
     will-change: none;
+    margin-left: 0;
+    border-left: none;
   }
 }
 
 .doc-right-footer {
   padding-left: 48px;
   padding-right: 48px;
-}
-
-.is-mobile.doc-temp-container {
-  // padding-top: 16px;
-
-  .doc-right-container {
-    margin-left: 0;
-    border-left: none;
-  }
-
-  .doc-post-wrapper {
-    width: calc(100vw - 232px);
-  }
-}
-
-.is-phone.doc-temp-container {
-  // padding-top: 16px;
-
-  .doc-post-wrapper {
-    width: 100%;
-  }
 }
 
 .doc-post-content {

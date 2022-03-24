@@ -64,7 +64,6 @@ export default function Template({ data, pageContext }) {
   const leftNavMenus =
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
 
-
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo title={TITLE} lang={language} description={DESC} />

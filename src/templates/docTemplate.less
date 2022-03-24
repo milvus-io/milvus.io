@@ -28,7 +28,7 @@ html {
     .doc-post-wrapper {
       max-width: 950px;
       padding: 0 32px;
-      width: calc(100vw - 514px);
+      width: calc(100vw - 255px);
       box-sizing: border-box;
       will-change: max-width, width;
 
@@ -64,8 +64,9 @@ html {
 
   &.is-collapse {
     margin-left: 20px;
-    width: calc(100vw - 255px);
-    max-width: calc(950px + 282px - 20px);
+    .doc-post-wrapper {
+      max-width: calc(950px + 282px - 20px);
+    }
   }
 
   @media @tablet {

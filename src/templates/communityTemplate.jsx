@@ -93,7 +93,6 @@ export default function Template({ data, pageContext }) {
           <div
             className={clsx("doc-content-container", {
               [`community-home`]: isHomePage,
-              [`is-mobile`]: isMobile,
             })}
           >
             <div

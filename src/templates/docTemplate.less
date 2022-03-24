@@ -59,11 +59,27 @@ html {
   flex-direction: column;
   gap: 100px;
 
+  margin-left: 282px;
+  width: calc(100vw - 514px);
+  max-width: 950px;
+
+  &.is-collapse {
+    margin-left: 20px;
+    width: calc(100vw - 255px);
+    max-width: calc(950px + 282px - 20px);
+  }
+
   @media @tablet {
     transition: none;
     will-change: none;
     margin-left: 0;
     border-left: none;
+  }
+
+  @media @tablet, @phone {
+    margin-left: 0;
+    max-width: 100%;
+    width: auto;
   }
 }
 

@@ -82,31 +82,3 @@ export const useCollapseStatus = cb => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
-
-export const useDocContainerFlexibleStyle = (isMobile, isCollapse) => {
-  return useMemo(() => {
-    if (isMobile) {
-      return {
-        marginLeft: 0,
-        maxWidth: "100%",
-        width: "auto",
-      };
-    }
-    // original maxwidth 950px
-    // original margin-left 282
-    // anchor width: 232px
-    // original width: 100vw - 514px
-    // gap: 20, when menu collapse
-    return isCollapse
-      ? {
-          marginLeft: "20px",
-          width: "calc(100vw - 255px)",
-          maxWidth: `${950 + 282 - 20}px`,
-        }
-      : {
-          marginLeft: "282px",
-          width: "calc(100vw - 514px)",
-          maxWidth: "950px",
-        };
-  }, [isMobile, isCollapse]);
-};

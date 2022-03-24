@@ -6,16 +6,8 @@ import { useGithubCommits } from "../../http/hooks";
 import { useZChart } from "../../hooks/doc-dom-operation";
 
 export default function DocContent(props) {
-  const {
-    commitPath,
-    version,
-    isDoc,
-    htmlContent,
-    mdId,
-    relatedKey,
-    trans,
-    docContainerFlexibleStyle,
-  } = props;
+  const { commitPath, version, isDoc, htmlContent, mdId, relatedKey, trans } =
+    props;
   const contact = {
     slack: {
       label: "Discuss on Slack",
@@ -49,13 +41,7 @@ export default function DocContent(props) {
 
   return (
     <>
-      <div
-        className="doc-post-wrapper doc-style"
-        style={{
-          maxWidth: docContainerFlexibleStyle.maxWidth,
-          width: docContainerFlexibleStyle.width,
-        }}
-      >
+      <div className="doc-post-wrapper doc-style">
         <div
           ref={docContentRef}
           className="doc-post-content"

@@ -8,7 +8,7 @@ import LeftNav from "../components/leftNavigation";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
 import Seo from "../components/seo";
-import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
+import { useCollapseStatus } from "../hooks";
 import "./communityTemplate.less";
 
 export const query = graphql`
@@ -49,11 +49,6 @@ export default function Template({ data, pageContext }) {
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
 
-  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
-    isMobile,
-    isCollapse
-  );
-
   const { language, t } = useI18next();
 
   const isHomePage = activePost === "home.md";
@@ -86,8 +81,9 @@ export default function Template({ data, pageContext }) {
           setIsCollapse={setIsCollapse}
         />
         <div
-          className="doc-right-container"
-          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
+          className={clsx("doc-right-container", {
+            [`is-collapse`]: isCollapse,
+          })}
         >
           <div
             className={clsx("doc-content-container", {
@@ -96,10 +92,6 @@ export default function Template({ data, pageContext }) {
           >
             <div
               className={clsx({ "doc-post-wrapper": !isHomePage }, `doc-style`)}
-              style={{
-                maxWidth: docContainerFlexibleStyle.maxWidth,
-                width: docContainerFlexibleStyle.width,
-              }}
             >
               <div
                 className={clsx({

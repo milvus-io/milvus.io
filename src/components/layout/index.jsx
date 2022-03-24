@@ -6,7 +6,6 @@ import Footer from "../footer";
 const Layout = ({
   darkMode,
   children,
-  windowSize = "desktop1440",
   showFooter = true,
   t,
   headerClassName,
@@ -14,7 +13,6 @@ const Layout = ({
   return (
     <>
       <Header
-        windowSize={windowSize}
         darkMode={darkMode}
         t={t}
         className={headerClassName}

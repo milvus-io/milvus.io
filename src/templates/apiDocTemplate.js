@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
+import clsx from "clsx";
 import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
 import "highlight.js/styles/stackoverflow-light.css";
@@ -10,7 +11,7 @@ import Aside from "../components/aside";
 import Footer from "../components/footer";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
-import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
+import { useCollapseStatus } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -52,11 +53,6 @@ export default function Template({ data, pageContext }) {
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
   const { t } = useI18next();
-
-  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
-    isMobile,
-    isCollapse
-  );
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
@@ -153,17 +149,12 @@ export default function Template({ data, pageContext }) {
           setIsCollapse={setIsCollapse}
         />
         <div
-          className="doc-right-container"
-          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
+          className={clsx("doc-right-container", {
+            [`is-collapse`]: isCollapse,
+          })}
         >
           <div className={"doc-content-container"}>
-            <div
-              className="doc-post-wrapper doc-style"
-              style={{
-                maxWidth: docContainerFlexibleStyle.maxWidth,
-                width: docContainerFlexibleStyle.width,
-              }}
-            >
+            <div className="doc-post-wrapper doc-style">
               <div
                 className={`api-reference-wrapper doc-style ${category}`}
                 dangerouslySetInnerHTML={{ __html: doc }}

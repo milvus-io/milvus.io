@@ -18,7 +18,6 @@ import { getGithubStatis } from "../../http";
 import * as styles from "./index.module.less";
 
 const Header = ({
-  windowSize,
   darkMode = false,
   t = v => v,
   className = "",

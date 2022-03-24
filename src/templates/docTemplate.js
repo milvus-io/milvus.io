@@ -13,7 +13,7 @@ import {
   useFilter,
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
-import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
+import { useCollapseStatus } from "../hooks";
 import { useWindowSize } from "../http/hooks";
 import DocContent from "./parts/DocContent.jsx";
 import HomeContent from "./parts/HomeContent.jsx";
@@ -106,11 +106,6 @@ export default function Template({ data, pageContext }) {
   }, [locale, editPath]);
   const isDoc = !(isBlog || isBenchmark);
 
-  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
-    isMobile,
-    isCollapse
-  );
-
   const docsearchMeta = useMemo(() => {
     if (
       typeof window === "undefined" ||
@@ -146,12 +141,7 @@ export default function Template({ data, pageContext }) {
   useGenAnchor(version, editPath);
   useFilter();
   return (
-    <Layout
-      t={t}
-      windowSize={currentWindowSize}
-      showFooter={false}
-      headerClassName="docHeader"
-    >
+    <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo
         title={title}
         lang={locale}
@@ -182,8 +172,9 @@ export default function Template({ data, pageContext }) {
           setIsCollapse={setIsCollapse}
         />
         <div
-          className="doc-right-container"
-          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
+          className={clsx("doc-right-container", {
+            [`is-collapse`]: isCollapse,
+          })}
         >
           <div
             className={clsx("doc-content-container", {
@@ -205,7 +196,6 @@ export default function Template({ data, pageContext }) {
                 version={version}
                 relatedKey={relatedKey}
                 trans={t}
-                docContainerFlexibleStyle={docContainerFlexibleStyle}
               />
             )}
             <div className="doc-toc-container">

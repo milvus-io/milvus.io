@@ -91,7 +91,6 @@ export default function Template({ data, pageContext }) {
           [`is-mobile`]: isMobile,
           [`is-phone`]: isPhone,
           [`home`]: isHomePage,
-          [`loading`]: !windowSize,
         })}
       >
         {/* TODO: "id": "#community_resources", #community_partners should be updated */}

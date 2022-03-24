@@ -275,7 +275,7 @@ const Header = ({
               </MenuItem>
               <MenuItem onClick={handleMenuLinkClick}>
                 <a
-                  href="https://www.youtube.com/zillizchannel"
+                  href="https://www.youtube.com/c/MilvusVectorDatabase"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.menuLink}
@@ -382,7 +382,7 @@ const Header = ({
                           {t("v3trans.main.nav.demo")}
                         </Link>
                         <a
-                          href="https://www.youtube.com/zillizchannel"
+                          href="https://www.youtube.com/c/MilvusVectorDatabase"
                           target="_blank"
                           rel="noopener noreferrer"
                           className={styles.mobileMenuLink}

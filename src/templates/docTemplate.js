@@ -167,7 +167,6 @@ export default function Template({ data, pageContext }) {
           [`is-mobile`]: isMobile,
           [`is-phone`]: isPhone,
           [`home`]: homeData,
-          [`loading`]: !windowSize,
         })}
       >
         <LeftNav

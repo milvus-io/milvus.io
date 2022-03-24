@@ -31,7 +31,7 @@ const footerJson = [
       {
         name: "video",
         trans: true,
-        to: "https://www.youtube.com/zillizchannel",
+        to: "https://www.youtube.com/c/MilvusVectorDatabase",
       },
     ],
   },

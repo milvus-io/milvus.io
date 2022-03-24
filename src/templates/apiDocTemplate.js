@@ -51,7 +51,6 @@ export default function Template({ data, pageContext }) {
   }, [currentWindowSize]);
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
-  const isPhone = ["phone"].includes(windowSize);
   const { t } = useI18next();
 
   const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
@@ -170,15 +169,13 @@ export default function Template({ data, pageContext }) {
                 dangerouslySetInnerHTML={{ __html: doc }}
               ></div>
             </div>
-            {!isPhone && (
-              <div className="doc-toc-container">
-                <Aside
-                  apiReferenceData={apiReferenceData}
-                  category="api"
-                  isHome={false}
-                />
-              </div>
-            )}
+            <div className="doc-toc-container">
+              <Aside
+                apiReferenceData={apiReferenceData}
+                category="api"
+                isHome={false}
+              />
+            </div>
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>

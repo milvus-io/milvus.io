@@ -97,6 +97,13 @@ html {
   }
 }
 
+/* hide toc on mobile */
+.doc-toc-container {
+  @media @phone, @tablet {
+    display: none;
+  }
+}
+
 // ---commit-info-wrapper----
 .commit-info-wrapper {
   border-left: 4px solid var(--color-grey-04);
@@ -113,6 +120,20 @@ html {
 
     color: var(--color-grey-02);
   }
+}
+
+.docHeader {
+  .headerContainer {
+    padding: 0 40px;
+    width: 100%;
+    @media @phone, @tablet {
+      padding: 0 20px;
+    }
+  }
+}
+
+.api-reference-wrapper {
+  padding-top: 16px;
 }
 
 // home

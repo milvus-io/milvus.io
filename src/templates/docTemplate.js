@@ -66,7 +66,6 @@ export default function Template({ data, pageContext }) {
   }, [currentWindowSize]);
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
-  const isPhone = ["phone"].includes(windowSize);
 
   const { language, t } = useI18next();
   const hljsCfg = {
@@ -209,20 +208,18 @@ export default function Template({ data, pageContext }) {
                 docContainerFlexibleStyle={docContainerFlexibleStyle}
               />
             )}
-            {!isPhone && (
-              <div className="doc-toc-container">
-                <Aside
-                  locale={locale}
-                  version={version}
-                  editPath={editPath}
-                  mdTitle={headings[0]}
-                  category="doc"
-                  isHome={!!homeData}
-                  items={headings}
-                  title={t("v3trans.docs.tocTitle")}
-                />
-              </div>
-            )}
+            <div className="doc-toc-container">
+              <Aside
+                locale={locale}
+                version={version}
+                editPath={editPath}
+                mdTitle={headings[0]}
+                category="doc"
+                isHome={!!homeData}
+                items={headings}
+                title={t("v3trans.docs.tocTitle")}
+              />
+            </div>
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>

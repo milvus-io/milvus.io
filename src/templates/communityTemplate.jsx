@@ -48,7 +48,6 @@ export default function Template({ data, pageContext }) {
   }, [currentWindowSize]);
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
-  const isPhone = ["phone"].includes(windowSize);
 
   const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
     isMobile,
@@ -110,20 +109,18 @@ export default function Template({ data, pageContext }) {
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             </div>
-            {!isPhone && !!headings?.length && (
-              <div className="doc-toc-container">
-                <Aside
-                  locale={locale}
-                  // version={version}
-                  editPath={editPath}
-                  mdTitle={headings[0]}
-                  category="doc"
-                  isHome={isHomePage}
-                  items={headings}
-                  title={t("v3trans.docs.tocTitle")}
-                />
-              </div>
-            )}
+            <div className="doc-toc-container">
+              <Aside
+                locale={locale}
+                // version={version}
+                editPath={editPath}
+                mdTitle={headings[0]}
+                category="doc"
+                isHome={isHomePage}
+                items={headings}
+                title={t("v3trans.docs.tocTitle")}
+              />
+            </div>
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>

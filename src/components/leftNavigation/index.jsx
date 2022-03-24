@@ -76,11 +76,7 @@ const LeftNav = props => {
   const generateContent = () => (
     <>
       {selectedVersion && (
-        <div
-          className={clsx("selector-container", styles.selectorContainer, {
-            [styles.mobile]: isMobile,
-          })}
-        >
+        <div className={clsx("selector-container", styles.selectorContainer)}>
           <Link
             to={homeUrl}
             className={clsx(styles.homeBtn, {
@@ -92,9 +88,7 @@ const LeftNav = props => {
           <FormControl
             fullWidth
             size="small"
-            className={clsx("selector", styles.selector, {
-              [styles.mobile]: isMobile,
-            })}
+            className={clsx("selector", styles.selector)}
           >
             <Select
               labelId="demo-simple-select-label"
@@ -119,7 +113,7 @@ const LeftNav = props => {
       <ExpansionTreeView
         itemList={treeItems}
         // treeClassName={styles.tree}
-        treeClassName={clsx(styles.tree, { [styles.mobile]: isMobile })}
+        treeClassName={styles.tree}
         itemClassName={styles.treeItem}
         linkClassName={styles.treeItemLink}
         defaultCollapseIcon={<ExpandMoreIcon />}

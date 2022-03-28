@@ -28,7 +28,7 @@ html {
     .doc-post-wrapper {
       max-width: 950px;
       padding: 0 32px;
-      width: calc(100vw - 255px);
+      width: calc(100vw - 514px);
       box-sizing: border-box;
       will-change: max-width, width;
 
@@ -51,34 +51,48 @@ html {
     max-height: calc(100vh - 120px);
     overflow: auto;
   }
-}
 
-.doc-right-container {
-  will-change: margin-left;
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
+  .doc-right-container {
+    will-change: margin-left;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
 
-  margin-left: 282px;
+    margin-left: 282px;
 
-  &.is-collapse {
-    margin-left: 20px;
-    .doc-post-wrapper {
-      max-width: calc(950px + 282px - 20px);
+    @media @tablet {
+      transition: none;
+      will-change: none;
+      border-left: none;
+    }
+
+    @media @tablet, @phone {
+      width: calc(100vw - 10px);
+      margin-left: 10px;
+    }
+
+    &.is-opened {
+      /* closed on desktop */
+      margin-left: 20px;
+      .doc-h1-wrapper, .community-h1-wrapper {
+        width: 100vw;
+      }
+      .doc-post-wrapper {
+        max-width: 1212px;
+      }
+      @media @tablet, @phone {
+        margin-left: 10px;
+      }
     }
   }
 
-  @media @tablet {
-    transition: none;
-    will-change: none;
-    margin-left: 0;
-    border-left: none;
-  }
-
-  @media @tablet, @phone {
-    margin-left: 0;
-    max-width: 100%;
-    width: auto;
+  &.home {
+    .doc-right-container {
+      @media @tablet, @phone {
+        width: 100vw;
+        margin-left: 0px;
+      }
+    }
   }
 }
 

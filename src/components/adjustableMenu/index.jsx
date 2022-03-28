@@ -1,120 +1,72 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as styles from "./index.module.less";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import clsx from "clsx";
-import { useCollapseStatus } from "../../hooks";
 
-const LINE_BUTTON_WIDTH = 24;
-const MINIMUM_CONTENT_WIDTH = 20;
-const DEFAULT_WIDTH = 306; // 282 + 24
-const MINIMUM_WIDTH = MINIMUM_CONTENT_WIDTH + LINE_BUTTON_WIDTH; // 44
-export const IS_COLLAPSE = "@@is_collapse";
+export const IS_OPENED = "@@is_opened";
 
 const AdjustableMenu = props => {
-  const { adjustableMenuClassName = "" } = props;
-  const dragLine = useRef(null);
+  const { adjustableMenuClassName = "", isOpened = false } = props;
+  const [expanded, setExpanded] = useState(false);
 
-  const contentRef = useRef(null);
-  const contentWrapperRef = useRef(null);
-  const collapseIcon = useRef(null);
-  // collapse status
-  const [isMinimumWidth, setIsMinimumWidth] = useState(false);
-  useCollapseStatus(setIsMinimumWidth);
-
-  const storeCollapseStatus = bool => {
-    window.sessionStorage.setItem(IS_COLLAPSE, bool);
-  };
-
-  const adjustContent = size => {
-    const content = contentRef?.current;
-    const wrapper = contentWrapperRef?.current;
-
-    if (!content || !wrapper) {
-      return;
-    }
-    if (size === "collapse") {
-      wrapper.style.width = `${MINIMUM_WIDTH}px`;
-    } else if (size === "expand") {
-      wrapper.style.width = `${DEFAULT_WIDTH}px`;
-    }
+  const storeOpenedState = bool => {
+    window.sessionStorage.setItem(IS_OPENED, bool);
   };
 
   const handleCollapse = () => {
     // make button lose focus, turn drag_line to normal
-    adjustContent("collapse");
-    storeCollapseStatus(true);
-    setIsMinimumWidth(true);
-    props.setIsCollapse(true);
-  };
-  const handleExpand = () => {
-    adjustContent("expand");
-    storeCollapseStatus(false);
-    setIsMinimumWidth(false);
-    props.setIsCollapse(false);
+    const newState = !isOpened;
+    storeOpenedState(newState);
+    props.onMenuCollapseUpdate(newState);
   };
 
-  const handleHoverMenuToCollapseOrExpand = (e, size) => {
-    e.stopPropagation();
-    if (!isMinimumWidth) {
-      return;
+  const expand = () => {
+    if (isOpened) {
+      setExpanded(true);
     }
-    adjustContent(size);
   };
 
-  useEffect(() => {
-    isMinimumWidth && adjustContent("collapse");
-  }, [isMinimumWidth]);
+  const shrink = () => {
+    if (isOpened) {
+      setExpanded(false);
+    }
+  };
 
   return (
     <section
-      className={`${styles.adjustableMenuContainer} ${adjustableMenuClassName}`}
+      className={clsx(styles.adjustableMenuContainer, adjustableMenuClassName, {
+        [styles.expanded]: expanded,
+      })}
     >
       <div
         className={clsx(styles.floatContainer, {
-          [styles.float]: isMinimumWidth,
+          [styles.opened]: isOpened,
         })}
         role="menu"
-        style={{ width: `${DEFAULT_WIDTH}px` }}
         tabIndex="0"
-        onMouseLeave={e => handleHoverMenuToCollapseOrExpand(e, "collapse")}
-        ref={contentWrapperRef}
+        onMouseLeave={shrink}
       >
         {/* content */}
         <div
           className={styles.content}
           role="menu"
           tabIndex="0"
-          onMouseEnter={e => handleHoverMenuToCollapseOrExpand(e, "expand")}
-          ref={contentRef}
+          onMouseEnter={expand}
         >
           {props.children}
         </div>
         {/* line */}
-        <button className={clsx(styles.lineWrapper)} ref={dragLine}>
+        <button className={clsx(styles.lineWrapper)}>
           <span className={styles.dragLine}></span>
-          {!isMinimumWidth ? (
-            <span
-              className={`${styles.iconWrapper} ${styles.invisibleIcon}`}
-              role="menu"
-              tabIndex="0"
-              onClick={handleCollapse}
-              onKeyDown={handleCollapse}
-              ref={collapseIcon}
-            >
-              <KeyboardArrowLeftIcon />
-            </span>
-          ) : (
-            <span
-              className={`${styles.iconWrapper} ${styles.show}`}
-              role="menu"
-              tabIndex="0"
-              onClick={handleExpand}
-              onKeyDown={handleExpand}
-            >
-              <KeyboardArrowRightIcon />
-            </span>
-          )}
+          <span
+            className={`${styles.iconWrapper}`}
+            role="menu"
+            tabIndex="0"
+            onClick={handleCollapse}
+            onKeyDown={handleCollapse}
+          >
+            <KeyboardArrowRightIcon />
+          </span>
         </button>
       </div>
     </section>

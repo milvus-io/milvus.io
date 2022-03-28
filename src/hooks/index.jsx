@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { sourceMap } from "../consts/newsletterSource";
-import { IS_COLLAPSE } from "../components/adjustableMenu";
+import { IS_OPENED } from "../components/adjustableMenu";
+import { getCurrentSize } from "../http/hooks";
 
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
@@ -71,14 +72,15 @@ export const useSubscribeSrouce = () => {
   return source;
 };
 
-export const useCollapseStatus = cb => {
+export const useOpenedStatus = cb => {
   useEffect(() => {
-    if (typeof cb !== "function") {
+    const device = getCurrentSize();
+    if (typeof cb !== "function" || device === "phone" || device === "tablet") {
       return;
     }
-    const isMenuCollapse =
-      window.sessionStorage.getItem(IS_COLLAPSE) === "true";
-    cb(isMenuCollapse);
+    const isMenuOpened = window.sessionStorage.getItem(IS_OPENED) === "true";
+
+    cb(isMenuOpened);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };

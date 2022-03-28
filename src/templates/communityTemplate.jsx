@@ -8,7 +8,7 @@ import LeftNav from "../components/leftNavigation";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
 import Seo from "../components/seo";
-import { useCollapseStatus } from "../hooks";
+import { useOpenedStatus } from "../hooks";
 import "./communityTemplate.less";
 
 export const query = graphql`
@@ -38,8 +38,9 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const [windowSize, setWindowSize] = useState("desktop1440");
-  const [isCollapse, setIsCollapse] = useState(false);
-  useCollapseStatus(setIsCollapse);
+  const [isOpened, setIsOpened] = useState(false);
+
+  useOpenedStatus(setIsOpened);
 
   const currentWindowSize = useWindowSize();
 
@@ -78,11 +79,12 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           language={language}
           trans={t}
-          setIsCollapse={setIsCollapse}
+          isOpened={isOpened}
+          onMenuCollapseUpdate={setIsOpened}
         />
         <div
           className={clsx("doc-right-container", {
-            [`is-collapse`]: isCollapse,
+            [`is-opened`]: isOpened,
           })}
         >
           <div

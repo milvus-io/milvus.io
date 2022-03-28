@@ -11,7 +11,7 @@ import Aside from "../components/aside";
 import Footer from "../components/footer";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
-import { useCollapseStatus } from "../hooks";
+import { useOpenedStatus } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -43,8 +43,8 @@ export default function Template({ data, pageContext }) {
 
   const [targetDocVersion, setTargetDocVersion] = useState();
   const [windowSize, setWindowSize] = useState("desktop1440");
-  const [isCollapse, setIsCollapse] = useState(false);
-  useCollapseStatus(setIsCollapse);
+  const [isOpened, setIsOpened] = useState(false);
+  useOpenedStatus(setIsOpened);
 
   const currentWindowSize = useWindowSize();
   useEffect(() => {
@@ -146,11 +146,12 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           pageType="api"
           trans={t}
-          setIsCollapse={setIsCollapse}
+          isOpened={isOpened}
+          onMenuCollapseUpdate={setIsOpened}
         />
         <div
           className={clsx("doc-right-container", {
-            [`is-collapse`]: isCollapse,
+            [`is-opened`]: isOpened,
           })}
         >
           <div className={"doc-content-container"}>

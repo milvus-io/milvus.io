@@ -13,7 +13,7 @@ import {
   useFilter,
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
-import { useCollapseStatus } from "../hooks";
+import { useOpenedStatus } from "../hooks";
 import { useWindowSize } from "../http/hooks";
 import DocContent from "./parts/DocContent.jsx";
 import HomeContent from "./parts/HomeContent.jsx";
@@ -56,8 +56,8 @@ export default function Template({ data, pageContext }) {
     newestBlog,
   } = pageContext;
   const [windowSize, setWindowSize] = useState("desktop1440");
-  const [isCollapse, setIsCollapse] = useState(false);
-  useCollapseStatus(setIsCollapse);
+  const [isOpened, setIsOpened] = useState(false);
+  useOpenedStatus(setIsOpened);
 
   const currentWindowSize = useWindowSize();
 
@@ -169,11 +169,12 @@ export default function Template({ data, pageContext }) {
           trans={t}
           version={version}
           group={group}
-          setIsCollapse={setIsCollapse}
+          isOpened={isOpened}
+          onMenuCollapseUpdate={setIsOpened}
         />
         <div
           className={clsx("doc-right-container", {
-            [`is-collapse`]: isCollapse,
+            [`is-opened`]: isOpened,
           })}
         >
           <div

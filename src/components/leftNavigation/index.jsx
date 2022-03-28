@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "gatsby-plugin-react-i18next";
 import * as styles from "./leftNav.module.less";
 import "./leftNav.less";
@@ -11,9 +11,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ExpansionTreeView from "../treeView/ExpansionTreeView";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Drawer from "@mui/material/Drawer";
 import { sortVersions } from "../../utils/index";
 import AdjustableMenu from "../adjustableMenu";
 
@@ -29,22 +26,18 @@ const LeftNav = props => {
     docVersions = [],
     className = "",
     mdId = "home",
-    isMobile = false,
     language,
     version,
     showHome = false,
     group,
     trans,
-    setIsCollapse,
+    isOpened,
+    onMenuCollapseUpdate,
   } = props;
 
   const nodeId = group || mdId;
   const [selectedVersion, setSelectedVersion] = useState(currentVersion);
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const showSearch = useMemo(() => {
-    return pageType === "doc" || pageType === "api";
-  }, [pageType]);
-
+  const showSearch = pageType === "doc" || pageType === "api";
   const generateMdMenuList = mdMenuListFactory(
     docMenus,
     pageType,
@@ -127,36 +120,11 @@ const LeftNav = props => {
     </>
   );
 
-  return isMobile ? (
-    <>
-      <IconButton
-        aria-label="open menu"
-        onClick={() => {
-          setOpenDrawer(true);
-        }}
-        className="doc-menu-icon"
-        color="primary"
-      >
-        <MenuIcon />
-      </IconButton>
-
-      <Drawer
-        // anchor={anchor}
-        open={openDrawer}
-        onClose={() => {
-          setOpenDrawer(false);
-        }}
-        className={styles.drawer}
-      >
-        {showSearch && (
-          <AlgoliaSearch trans={trans} locale={locale} version={version} />
-        )}
-
-        {generateContent()}
-      </Drawer>
-    </>
-  ) : (
-    <AdjustableMenu setIsCollapse={setIsCollapse}>
+  return (
+    <AdjustableMenu
+      isOpened={isOpened}
+      onMenuCollapseUpdate={onMenuCollapseUpdate}
+    >
       <aside className={clsx(className, "left-nav", styles.aside)}>
         {showSearch && (
           <AlgoliaSearch trans={trans} locale={language} version={version} />

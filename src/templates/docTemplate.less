@@ -35,7 +35,7 @@ html {
       @media @tablet {
         transition: none;
         will-change: none;
-        width: calc(100vw - 232px);
+        width: 100vw;
       }
       @media @phone {
         width: 100%;
@@ -60,13 +60,10 @@ html {
 
     margin-left: 282px;
 
-    @media @tablet {
+    @media @tablet, @phone {
       transition: none;
       will-change: none;
       border-left: none;
-    }
-
-    @media @tablet, @phone {
       width: calc(100vw - 10px);
       margin-left: 10px;
     }
@@ -74,7 +71,8 @@ html {
     &.is-opened {
       /* closed on desktop */
       margin-left: 20px;
-      .doc-h1-wrapper, .community-h1-wrapper {
+      .doc-h1-wrapper,
+      .community-h1-wrapper {
         width: 100vw;
       }
       .doc-post-wrapper {

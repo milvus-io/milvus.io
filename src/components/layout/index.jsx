@@ -12,11 +12,7 @@ const Layout = ({
 }) => {
   return (
     <>
-      <Header
-        darkMode={darkMode}
-        t={t}
-        className={headerClassName}
-      />
+      <Header darkMode={darkMode} t={t} className={headerClassName} />
       {children}
       {showFooter && <Footer t={t} />}
     </>

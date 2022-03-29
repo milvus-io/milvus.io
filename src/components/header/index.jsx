@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import milvusLogo from "../../images/milvus_logo.svg";
 import GitHubButton from "../githubButton";
-import QuestionRobot from "../questionRobot";
 import MilvusCookieConsent from "../milvusCookieConsent";
 import { getGithubStatis } from "../../http";
 import * as styles from "./index.module.less";
@@ -483,7 +482,6 @@ const Header = ({
   return (
     <>
       {header}
-      <QuestionRobot trans={t} />
       {language !== "cn" && <MilvusCookieConsent />}
     </>
   );

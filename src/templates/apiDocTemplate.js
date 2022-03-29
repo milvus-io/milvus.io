@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
+import clsx from "clsx";
 import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
 import "highlight.js/styles/stackoverflow-light.css";
@@ -10,7 +11,7 @@ import Aside from "../components/aside";
 import Footer from "../components/footer";
 import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
-import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
+import { useOpenedStatus } from "../hooks";
 
 export const query = graphql`
   query ($language: String!) {
@@ -42,8 +43,8 @@ export default function Template({ data, pageContext }) {
 
   const [targetDocVersion, setTargetDocVersion] = useState();
   const [windowSize, setWindowSize] = useState("desktop1440");
-  const [isCollapse, setIsCollapse] = useState(false);
-  useCollapseStatus(setIsCollapse);
+  const [isOpened, setIsOpened] = useState(false);
+  useOpenedStatus(setIsOpened);
 
   const currentWindowSize = useWindowSize();
   useEffect(() => {
@@ -51,13 +52,7 @@ export default function Template({ data, pageContext }) {
   }, [currentWindowSize]);
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
-  const isPhone = ["phone"].includes(windowSize);
   const { t } = useI18next();
-
-  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
-    isMobile,
-    isCollapse
-  );
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
@@ -151,34 +146,28 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           pageType="api"
           trans={t}
-          setIsCollapse={setIsCollapse}
+          isOpened={isOpened}
+          onMenuCollapseUpdate={setIsOpened}
         />
         <div
-          className="doc-right-container"
-          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
+          className={clsx("doc-right-container", {
+            [`is-opened`]: isOpened,
+          })}
         >
           <div className={"doc-content-container"}>
-            <div
-              className="doc-post-wrapper doc-style"
-              style={{
-                maxWidth: docContainerFlexibleStyle.maxWidth,
-                width: docContainerFlexibleStyle.width,
-              }}
-            >
+            <div className="doc-post-wrapper doc-style">
               <div
                 className={`api-reference-wrapper doc-style ${category}`}
                 dangerouslySetInnerHTML={{ __html: doc }}
               ></div>
             </div>
-            {!isPhone && (
-              <div className="doc-toc-container">
-                <Aside
-                  apiReferenceData={apiReferenceData}
-                  category="api"
-                  isHome={false}
-                />
-              </div>
-            )}
+            <div className="doc-toc-container">
+              <Aside
+                apiReferenceData={apiReferenceData}
+                category="api"
+                isHome={false}
+              />
+            </div>
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>

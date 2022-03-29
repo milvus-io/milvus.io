@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { sourceMap } from "../consts/newsletterSource";
-import { IS_COLLAPSE } from "../components/adjustableMenu";
+import { IS_OPENED } from "../components/adjustableMenu";
+import { getCurrentSize } from "../http/hooks";
 
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
@@ -71,42 +72,15 @@ export const useSubscribeSrouce = () => {
   return source;
 };
 
-export const useCollapseStatus = cb => {
+export const useOpenedStatus = cb => {
   useEffect(() => {
-    if (typeof cb !== "function") {
+    const device = getCurrentSize();
+    if (typeof cb !== "function" || device === "phone" || device === "tablet") {
       return;
     }
-    const isMenuCollapse =
-      window.sessionStorage.getItem(IS_COLLAPSE) === "true";
-    cb(isMenuCollapse);
+    const isMenuOpened = window.sessionStorage.getItem(IS_OPENED) === "true";
+
+    cb(isMenuOpened);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-};
-
-export const useDocContainerFlexibleStyle = (isMobile, isCollapse) => {
-  return useMemo(() => {
-    if (isMobile) {
-      return {
-        marginLeft: 0,
-        maxWidth: "100%",
-        width: "auto",
-      };
-    }
-    // original maxwidth 950px
-    // original margin-left 282
-    // anchor width: 232px
-    // original width: 100vw - 514px
-    // gap: 20, when menu collapse
-    return isCollapse
-      ? {
-          marginLeft: "20px",
-          width: "calc(100vw - 255px)",
-          maxWidth: `${950 + 282 - 20}px`,
-        }
-      : {
-          marginLeft: "282px",
-          width: "calc(100vw - 514px)",
-          maxWidth: "950px",
-        };
-  }, [isMobile, isCollapse]);
 };

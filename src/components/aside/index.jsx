@@ -86,9 +86,11 @@ const Aside = props => {
   ];
 
   const btnConfiguration = {
-    doc: ({ locale, version, editPath, mdTitle }) => {
+    doc: ({ locale, version = "", editPath, mdTitle = { value: "" } }) => {
       const name = editPath && editPath.split("/").pop();
-      const title = `${version} ${mdTitle.value} (${name}) Doc Update`;
+      const title = `${version} ${
+        mdTitle && mdTitle.value
+      } (${name}) Doc Update`;
       const localePath = locale === "en" ? "en" : "zh-CN";
       return [
         {

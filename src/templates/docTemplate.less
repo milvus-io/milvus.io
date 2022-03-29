@@ -51,19 +51,48 @@ html {
     max-height: calc(100vh - 120px);
     overflow: auto;
   }
-}
 
-.doc-right-container {
-  will-change: margin-left;
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
+  .doc-right-container {
+    will-change: margin-left;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
 
-  @media @tablet {
-    transition: none;
-    will-change: none;
-    margin-left: 0;
-    border-left: none;
+    margin-left: 282px;
+
+    @media @tablet {
+      transition: none;
+      will-change: none;
+      border-left: none;
+    }
+
+    @media @tablet, @phone {
+      width: calc(100vw - 10px);
+      margin-left: 10px;
+    }
+
+    &.is-opened {
+      /* closed on desktop */
+      margin-left: 20px;
+      .doc-h1-wrapper, .community-h1-wrapper {
+        width: 100vw;
+      }
+      .doc-post-wrapper {
+        max-width: 1212px;
+      }
+      @media @tablet, @phone {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  &.home {
+    .doc-right-container {
+      @media @tablet, @phone {
+        width: 100vw;
+        margin-left: 0px;
+      }
+    }
   }
 }
 
@@ -97,6 +126,13 @@ html {
   }
 }
 
+/* hide toc on mobile */
+.doc-toc-container {
+  @media @phone, @tablet {
+    display: none;
+  }
+}
+
 // ---commit-info-wrapper----
 .commit-info-wrapper {
   border-left: 4px solid var(--color-grey-04);
@@ -113,6 +149,20 @@ html {
 
     color: var(--color-grey-02);
   }
+}
+
+.docHeader {
+  .headerContainer {
+    padding: 0 40px;
+    width: 100%;
+    @media @phone, @tablet {
+      padding: 0 20px;
+    }
+  }
+}
+
+.api-reference-wrapper {
+  padding-top: 16px;
 }
 
 // home
@@ -246,27 +296,28 @@ html {
   }
 
   .milmi-tip {
-    background-color: var(--color-grey-05);
-    padding: 24px 100px 24px 30px;
-    position: relative;
-    margin-top: 54px;
+    display: none;
+    // background-color: var(--color-grey-05);
+    // padding: 24px 100px 24px 30px;
+    // position: relative;
+    // margin-top: 54px;
 
-    p {
-      margin: 0;
-      /* H6/Regular */
+    // p {
+    //   margin: 0;
+    //   /* H6/Regular */
 
-      font-style: normal;
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 24px;
-    }
+    //   font-style: normal;
+    //   font-weight: normal;
+    //   font-size: 16px;
+    //   line-height: 24px;
+    // }
 
-    img {
-      position: absolute;
-      margin: 0;
-      right: 20px;
-      top: -20px;
-    }
+    // img {
+    //   position: absolute;
+    //   margin: 0;
+    //   right: 20px;
+    //   top: -20px;
+    // }
   }
 
   .doc-home-recommend-section {

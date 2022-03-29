@@ -13,7 +13,7 @@ import {
   useFilter,
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
-import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
+import { useOpenedStatus } from "../hooks";
 import { useWindowSize } from "../http/hooks";
 import DocContent from "./parts/DocContent.jsx";
 import HomeContent from "./parts/HomeContent.jsx";
@@ -56,8 +56,8 @@ export default function Template({ data, pageContext }) {
     newestBlog,
   } = pageContext;
   const [windowSize, setWindowSize] = useState("desktop1440");
-  const [isCollapse, setIsCollapse] = useState(false);
-  useCollapseStatus(setIsCollapse);
+  const [isOpened, setIsOpened] = useState(false);
+  useOpenedStatus(setIsOpened);
 
   const currentWindowSize = useWindowSize();
 
@@ -66,7 +66,6 @@ export default function Template({ data, pageContext }) {
   }, [currentWindowSize]);
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
-  const isPhone = ["phone"].includes(windowSize);
 
   const { language, t } = useI18next();
   const hljsCfg = {
@@ -107,11 +106,6 @@ export default function Template({ data, pageContext }) {
   }, [locale, editPath]);
   const isDoc = !(isBlog || isBenchmark);
 
-  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
-    isMobile,
-    isCollapse
-  );
-
   const docsearchMeta = useMemo(() => {
     if (
       typeof window === "undefined" ||
@@ -147,12 +141,7 @@ export default function Template({ data, pageContext }) {
   useGenAnchor(version, editPath);
   useFilter();
   return (
-    <Layout
-      t={t}
-      windowSize={currentWindowSize}
-      showFooter={false}
-      headerClassName="docHeader"
-    >
+    <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo
         title={title}
         lang={locale}
@@ -180,11 +169,13 @@ export default function Template({ data, pageContext }) {
           trans={t}
           version={version}
           group={group}
-          setIsCollapse={setIsCollapse}
+          isOpened={isOpened}
+          onMenuCollapseUpdate={setIsOpened}
         />
         <div
-          className="doc-right-container"
-          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
+          className={clsx("doc-right-container", {
+            [`is-opened`]: isOpened,
+          })}
         >
           <div
             className={clsx("doc-content-container", {
@@ -206,23 +197,20 @@ export default function Template({ data, pageContext }) {
                 version={version}
                 relatedKey={relatedKey}
                 trans={t}
-                docContainerFlexibleStyle={docContainerFlexibleStyle}
               />
             )}
-            {!isPhone && (
-              <div className="doc-toc-container">
-                <Aside
-                  locale={locale}
-                  version={version}
-                  editPath={editPath}
-                  mdTitle={headings[0]}
-                  category="doc"
-                  isHome={!!homeData}
-                  items={headings}
-                  title={t("v3trans.docs.tocTitle")}
-                />
-              </div>
-            )}
+            <div className="doc-toc-container">
+              <Aside
+                locale={locale}
+                version={version}
+                editPath={editPath}
+                mdTitle={headings[0]}
+                category="doc"
+                isHome={!!homeData}
+                items={headings}
+                title={t("v3trans.docs.tocTitle")}
+              />
+            </div>
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>

@@ -8,7 +8,7 @@ import LeftNav from "../components/leftNavigation";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
 import Seo from "../components/seo";
-import { useCollapseStatus, useDocContainerFlexibleStyle } from "../hooks";
+import { useOpenedStatus } from "../hooks";
 import "./communityTemplate.less";
 
 export const query = graphql`
@@ -38,8 +38,9 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const [windowSize, setWindowSize] = useState("desktop1440");
-  const [isCollapse, setIsCollapse] = useState(false);
-  useCollapseStatus(setIsCollapse);
+  const [isOpened, setIsOpened] = useState(false);
+
+  useOpenedStatus(setIsOpened);
 
   const currentWindowSize = useWindowSize();
 
@@ -48,12 +49,6 @@ export default function Template({ data, pageContext }) {
   }, [currentWindowSize]);
 
   const isMobile = ["phone", "tablet"].includes(windowSize);
-  const isPhone = ["phone"].includes(windowSize);
-
-  const docContainerFlexibleStyle = useDocContainerFlexibleStyle(
-    isMobile,
-    isCollapse
-  );
 
   const { language, t } = useI18next();
 
@@ -84,24 +79,21 @@ export default function Template({ data, pageContext }) {
           isMobile={isMobile}
           language={language}
           trans={t}
-          setIsCollapse={setIsCollapse}
+          isOpened={isOpened}
+          onMenuCollapseUpdate={setIsOpened}
         />
         <div
-          className="doc-right-container"
-          style={{ marginLeft: docContainerFlexibleStyle.marginLeft }}
+          className={clsx("doc-right-container", {
+            [`is-opened`]: isOpened,
+          })}
         >
           <div
             className={clsx("doc-content-container", {
               [`community-home`]: isHomePage,
-              [`is-mobile`]: isMobile,
             })}
           >
             <div
               className={clsx({ "doc-post-wrapper": !isHomePage }, `doc-style`)}
-              style={{
-                maxWidth: docContainerFlexibleStyle.maxWidth,
-                width: docContainerFlexibleStyle.width,
-              }}
             >
               <div
                 className={clsx({
@@ -111,20 +103,18 @@ export default function Template({ data, pageContext }) {
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             </div>
-            {!isPhone && !!headings?.length && (
-              <div className="doc-toc-container">
-                <Aside
-                  locale={locale}
-                  // version={version}
-                  editPath={editPath}
-                  mdTitle={headings[0]}
-                  category="doc"
-                  isHome={isHomePage}
-                  items={headings}
-                  title={t("v3trans.docs.tocTitle")}
-                />
-              </div>
-            )}
+            <div className="doc-toc-container">
+              <Aside
+                locale={locale}
+                // version={version}
+                editPath={editPath}
+                mdTitle={headings[0]}
+                category="doc"
+                isHome={isHomePage}
+                items={headings}
+                title={t("v3trans.docs.tocTitle")}
+              />
+            </div>
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>

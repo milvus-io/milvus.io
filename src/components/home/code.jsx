@@ -8,8 +8,8 @@ import hljs from "highlight.js";
 import { Link } from "gatsby-plugin-react-i18next";
 import "highlight.js/styles/stackoverflow-light.css";
 
-const HighlightBlock = ({ content }) => {
-  const highlightCode = hljs.highlight(content, { language: "python" });
+const HighlightBlock = ({ content, language = "bash" }) => {
+  const highlightCode = hljs.highlight(content, { language });
   return (
     <pre>
       <code
@@ -24,8 +24,8 @@ function TabPanel(props) {
   const { children, value, index, codeExample, ...other } = props;
 
   const codeType = useMemo(() => {
-    return Object.keys(codeExample)[index];
-  }, [index, codeExample]);
+    return Object.keys(codeExample.code)[index];
+  }, [index, codeExample.code]);
 
   return (
     <div
@@ -37,8 +37,10 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }} style={{ paddingTop: 0 }}>
-          {/* <HightLight className="python">{codeExample[codeType]}</HightLight> */}
-          <HighlightBlock content={codeExample[codeType]} />
+          <HighlightBlock
+            content={codeExample.code[codeType]}
+            lang={codeExample.language}
+          />
         </Box>
       )}
     </div>
@@ -83,13 +85,13 @@ const Code = props => {
   const codeExample = useMemo(() => {
     switch (activeExample) {
       case EXAMPLES.manage:
-        return MANAGE_DATA;
+        return { code: MANAGE_DATA, language: "bash" };
       case EXAMPLES.search:
-        return VECTOR_SEARCH;
+        return { code: VECTOR_SEARCH, language: "python" };
       case EXAMPLES.install:
-        return INSTALL_MILVUS;
+        return { code: INSTALL_MILVUS, language: "bash" };
       default:
-        return INSTALL_MILVUS;
+        return { code: INSTALL_MILVUS, language: "bash" };
     }
   }, [activeExample]);
 
@@ -110,7 +112,7 @@ const Code = props => {
     switch (activeExample) {
       case EXAMPLES.search:
         return {
-          tabs: ["Vector search", "hybrid search", "Time travel"],
+          tabs: ["Vector search", "Hybrid search", "Time travel"],
           learnMoreLink: "/docs/search.md",
         };
       case EXAMPLES.manage:

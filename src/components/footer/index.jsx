@@ -44,7 +44,7 @@ const footerJson = [
         trans: false,
         to: "https://github.com/zilliztech/milvus_cli",
       },
-      { name: "Sizing Tool", trans: false, to: "/tool-sizing" },
+      { name: "Sizing Tool", trans: false, to: "/tools/sizing" },
     ],
   },
   {

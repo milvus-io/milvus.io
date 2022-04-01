@@ -34,9 +34,10 @@ milvusClient.closeConnection();
 ```
 
 <br><!-- Do not remove start of hero-bot --><br>
-<img src="https://img.shields.io/badge/all--contributors-11-orange"><br>
+<img src="https://img.shields.io/badge/all--contributors-12-orange"><br>
 <a href="https://github.com/ThyeeZz"><img src="https://avatars.githubusercontent.com/u/41352919?v=4" width="30px" /></a>
 <a href="https://github.com/Tumao727"><img src="https://avatars.githubusercontent.com/u/20420181?v=4" width="30px" /></a>
+<a href="https://github.com/alwayslove2013"><img src="https://avatars.githubusercontent.com/u/22510720?v=4" width="30px" /></a>
 <a href="https://github.com/codenoid"><img src="https://avatars.githubusercontent.com/u/14269809?v=4" width="30px" /></a>
 <a href="https://github.com/cxie"><img src="https://avatars.githubusercontent.com/u/653101?v=4" width="30px" /></a>
 <a href="https://github.com/czhen-zilliz"><img src="https://avatars.githubusercontent.com/u/83751452?v=4" width="30px" /></a>

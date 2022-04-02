@@ -741,7 +741,7 @@
       "submit": "Submit",
       "tocTitle": "On this page",
       "btnGroup": {
-        "editBtn": "Edit this page.",
+        "editBtn": "Edit this page",
         "issueBtn": "Report doc issue",
         "bugBtn": "Report a bug",
         "suggestBtn": "Suggest new content",

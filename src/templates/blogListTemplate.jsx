@@ -141,7 +141,12 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   return (
     <Layout t={t}>
-      <Seo title={TITLE} lang={language} description={DESC} />
+      <Seo
+        title={TITLE}
+        lang={language}
+        titleTemplate="%s"
+        description={DESC}
+      />
       <div className={`${styles.listWrapper} col-12 col-8 col-4`}>
         {/* screen > 1024  */}
         <section className={`${styles.featuredBlog} `}>

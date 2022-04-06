@@ -660,7 +660,7 @@ const generateCommunityPages = (
         locale: fileLang,
         fileAbsolutePath,
         html,
-        headings: node.headings.filter(v => v.depth < 4 && v.depth > 1),
+        headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
         menuList: communityMenu,
         homeData: null,
         activePost: fileId,

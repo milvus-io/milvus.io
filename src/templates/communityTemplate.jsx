@@ -53,15 +53,26 @@ export default function Template({ data, pageContext }) {
   const { language, t } = useI18next();
 
   const isHomePage = activePost === "home.md";
-  const TITLE = "Milvus Community";
+
+  console.log("activePost", headings);
+  const TITLE = isHomePage
+    ? `Milvus Community`
+    : `${headings[0] && headings[0].value}`;
   const DESC = "Join Milvus Community";
+
+  const titleTemplate = isHomePage ? "%s" : "%s - Milvus Community";
 
   const leftNavMenus =
     menuList?.find(menu => menu.lang === locale)?.menuList || [];
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
-      <Seo title={TITLE} lang={language} description={DESC} />
+      <Seo
+        title={TITLE}
+        titleTemplate={titleTemplate}
+        lang={language}
+        description={DESC}
+      />
       <div
         className={clsx("doc-temp-container", {
           [`home`]: isHomePage,

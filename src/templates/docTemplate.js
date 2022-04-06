@@ -130,6 +130,8 @@ export default function Template({ data, pageContext }) {
       ? `Milvus documentation`
       : `${headings[0] && headings[0].value}`;
 
+  const titleTemplate = mdHtml === null ? `%s` : `%s - Milvus documentation`;
+
   useCodeCopy(
     {
       copy: t("v3trans.copyBtn.copyLabel"),
@@ -144,6 +146,7 @@ export default function Template({ data, pageContext }) {
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo
         title={title}
+        titleTemplate={titleTemplate}
         lang={locale}
         version={version}
         meta={docsearchMeta}

@@ -25,7 +25,7 @@ export default function Template({ data, pageContext }) {
 
   const { language, t, navigate } = useI18next();
   const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ""), [newHtml]);
-  const shareUrl = useMemo(() => `https://www.milvus.io/blog/${id}`, [id]);
+  const shareUrl = useMemo(() => `https://milvus.io/blog/${id}`, [id]);
 
   const dateTime = useMemo(() => dayjs(date).format("MMMM DD, YYYY"), [date]);
   const moreBlogs = useMemo(
@@ -66,7 +66,12 @@ export default function Template({ data, pageContext }) {
 
   return (
     <Layout t={t}>
-      <Seo title={title} lang={language} description={desc} />
+      <Seo
+        title={title}
+        titleTemplate="%s"
+        lang={language}
+        description={desc}
+      />
       <section className={`${styles.blogWrapper} col-12 col-8 col-4`}>
         <p className={`${styles.authorDate} `}>
           <span>{dateTime}</span>

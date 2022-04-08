@@ -36,39 +36,9 @@ import * as styles from "./index.module.less";
 
 const brands = [
   {
-    name: "Tencent",
-    icon: tencent,
-    link: "https://www.tencent.com/",
-  },
-  {
     name: "Ebay",
     icon: ebay,
     link: "https://www.ebay.com/",
-  },
-  {
-    name: "Ikea",
-    icon: ikea,
-    link: "https://www.ikea.com/",
-  },
-  {
-    name: "Intuit",
-    icon: intuit,
-    link: "https://www.intuit.com/",
-  },
-  {
-    name: "Kuaishou",
-    icon: kuaishou,
-    link: "https://www.kuaishou.com/",
-  },
-  {
-    name: "Line",
-    icon: line,
-    link: "https://line.me/",
-  },
-  {
-    name: "Baidu",
-    icon: baidu,
-    link: "https://www.baidu.com/",
   },
   {
     name: "Shopee",
@@ -76,14 +46,14 @@ const brands = [
     link: "https://shopee.com/",
   },
   {
-    name: "Smartnews",
-    icon: smartnews,
-    link: "https://www.smartnews.com/",
+    name: "Line",
+    icon: line,
+    link: "https://line.me/",
   },
   {
-    name: "shutterstock",
-    icon: shutterstock,
-    link: "https://www.shutterstock.com/",
+    name: "Ikea",
+    icon: ikea,
+    link: "https://www.ikea.com/",
   },
   {
     name: "Walmart",
@@ -91,19 +61,19 @@ const brands = [
     link: "https://www.walmart.com/",
   },
   {
-    name: "Xiaomi",
-    icon: xiaomi,
-    link: "https://www.mi.com/",
+    name: "Intuit",
+    icon: intuit,
+    link: "https://www.intuit.com/",
   },
   {
-    name: "Dailyhunt",
-    icon: hunt,
-    link: "https://www.dailyhunt.in/",
+    name: "Smartnews",
+    icon: smartnews,
+    link: "https://www.smartnews.com/",
   },
   {
-    name: "Trend micro",
-    icon: micro,
-    link: "https://www.trendmicro.com/",
+    name: "Tokopedia",
+    icon: tokopedia,
+    link: "https://www.tokopedia.com/",
   },
   {
     name: "Nvidia",
@@ -111,9 +81,19 @@ const brands = [
     link: "https://www.nvidia.com/",
   },
   {
-    name: "Moj",
-    icon: moj,
-    link: "https://mojapp.in/",
+    name: "Kuaishou",
+    icon: kuaishou,
+    link: "https://www.kuaishou.com/",
+  },
+  {
+    name: "Trend micro",
+    icon: micro,
+    link: "https://www.trendmicro.com/",
+  },
+  {
+    name: "Xiaomi",
+    icon: xiaomi,
+    link: "https://www.mi.com/",
   },
   {
     name: "Compass",
@@ -121,9 +101,30 @@ const brands = [
     link: "https://www.compass.com/",
   },
   {
-    name: "Tokopedia",
-    icon: tokopedia,
-    link: "https://www.tokopedia.com/",
+    name: "Tencent",
+    icon: tencent,
+    link: "https://www.tencent.com/",
+  },
+  {
+    name: "shutterstock",
+    icon: shutterstock,
+    link: "https://www.shutterstock.com/",
+  },
+  {
+    name: "Moj",
+    icon: moj,
+    link: "https://mojapp.in/",
+  },
+
+  {
+    name: "Baidu",
+    icon: baidu,
+    link: "https://www.baidu.com/",
+  },
+  {
+    name: "Dailyhunt",
+    icon: hunt,
+    link: "https://www.dailyhunt.in/",
   },
 ];
 const DESC =

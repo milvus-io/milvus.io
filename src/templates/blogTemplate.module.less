@@ -32,11 +32,15 @@
     }
   }
   .title {
-    margin: 20px 0;
+    margin: 20px auto;
     font-weight: 700;
-    font-size: 60px;
-    line-height: 70px;
+    font-size: 42px;
+    line-height: 1.5;
+    max-width: 80%;
     text-align: center;
+    @media @tablet, @phone {
+      font-size: 32px;
+    }
   }
 
   .tags {

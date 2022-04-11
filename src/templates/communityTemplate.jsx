@@ -54,7 +54,6 @@ export default function Template({ data, pageContext }) {
 
   const isHomePage = activePost === "home.md";
 
-  console.log("activePost", headings);
   const TITLE = isHomePage
     ? `Milvus Community`
     : `${headings[0] && headings[0].value}`;

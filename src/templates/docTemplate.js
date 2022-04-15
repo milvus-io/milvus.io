@@ -78,7 +78,6 @@ export default function Template({ data, pageContext }) {
       },
     ],
     activePost: id.split("-")[0],
-    isBlog: menuList.isBlog,
     formatVersion: version === "master" ? newestVersion : version,
   };
   const versionConfig = {
@@ -133,7 +132,6 @@ export default function Template({ data, pageContext }) {
     });
   }
 
-
   // only merge api menus if menus.lenth > 0 and version > 1
   if (APIs.children.length > 0 && version[1] * 1 > 1) {
     menus.push(APIs);
@@ -143,7 +141,6 @@ export default function Template({ data, pageContext }) {
   const commitPath = useMemo(() => {
     return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
   }, [locale, editPath]);
-  const isDoc = !isBlog;
 
   // doc search meta
   const docsearchMeta = useMemo(() => {
@@ -233,7 +230,6 @@ export default function Template({ data, pageContext }) {
               <DocContent
                 htmlContent={mdHtml}
                 commitPath={commitPath}
-                isDoc={isDoc}
                 mdId={mdId}
                 version={version}
                 relatedKey={relatedKey}

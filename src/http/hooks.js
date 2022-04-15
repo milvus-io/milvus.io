@@ -27,8 +27,8 @@ export function useGithubCommits({ commitPath, version, isDoc = false }) {
         console.error(error);
       }
     };
-    isDoc && fetchData();
-  }, [commitPath, version, isDoc]);
+    fetchData();
+  }, [commitPath, version]);
 
   return commitInfo;
 }

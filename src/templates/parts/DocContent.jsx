@@ -6,7 +6,7 @@ import { useGithubCommits } from "../../http/hooks";
 import { useZChart } from "../../hooks/doc-dom-operation";
 
 export default function DocContent(props) {
-  const { commitPath, version, isDoc, htmlContent, mdId, relatedKey, trans } =
+  const { commitPath, version, htmlContent, mdId, relatedKey, trans } =
     props;
   const contact = {
     slack: {
@@ -35,7 +35,6 @@ export default function DocContent(props) {
   const commitInfo = useGithubCommits({
     commitPath,
     version,
-    isDoc,
   });
   useZChart(docContentRef);
 

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { graphql } from "gatsby";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import clsx from "clsx";
 import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
-import "highlight.js/styles/stackoverflow-light.css";
-import "./docTemplate.less";
-import { useWindowSize } from "../http/hooks";
+import { mdMenuListFactory } from "../components/leftNavigation/utils";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
-import { useCodeCopy } from "../hooks/doc-dom-operation";
 import Seo from "../components/seo";
+import { useCodeCopy } from "../hooks/doc-dom-operation";
 import { useOpenedStatus } from "../hooks";
+import "highlight.js/styles/stackoverflow-light.css";
+import "./docTemplate.less";
 
 export const query = graphql`
   query ($language: String!) {
@@ -27,31 +27,18 @@ export const query = graphql`
   }
 `;
 
+function capitalizeFirstLetter(string) {
+  return string[0].toUpperCase() + string.slice(1);
+}
+
 export default function Template({ data, pageContext }) {
-  const {
-    doc,
-    name,
-    allApiMenus,
-    allMenus,
-    version,
-    locale,
-    docVersions,
-    docVersion,
-    category,
-    // newestVersion,
-  } = pageContext;
+  const { doc, name, allApiMenus, version, locale, category } = pageContext;
 
-  const [targetDocVersion, setTargetDocVersion] = useState();
-  const [windowSize, setWindowSize] = useState("desktop1440");
+  // left nav toggle state
   const [isOpened, setIsOpened] = useState(false);
+  // recover state
   useOpenedStatus(setIsOpened);
-
-  const currentWindowSize = useWindowSize();
-  useEffect(() => {
-    setWindowSize(currentWindowSize);
-  }, [currentWindowSize]);
-
-  const isMobile = ["phone", "tablet"].includes(windowSize);
+  // i18n
   const { t } = useI18next();
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
@@ -59,19 +46,6 @@ export default function Template({ data, pageContext }) {
   const hljsCfg = {
     languages: ["java", "go", "python", "javascript"],
   };
-
-  useEffect(() => {
-    // Get docVersion from local stroage, to keep the doc verison consistent.
-    const localStorageDocVer = window?.localStorage?.getItem("docVersion");
-    // To judge if docVersion includes local storage doc verion or not.
-    // Reset to the latest doc version if not including.
-    const ver =
-      (docVersion.includes(localStorageDocVer)
-        ? localStorageDocVer
-        : docVersion[0]) || "master";
-    setTargetDocVersion(ver);
-    window?.localStorage?.setItem("docVersion", ver);
-  }, [docVersion]);
 
   useCodeCopy(
     {
@@ -81,13 +55,24 @@ export default function Template({ data, pageContext }) {
     hljsCfg
   );
 
+  // get all versions of the current API
+  const versions = Object.keys(allApiMenus[category]);
+  // get current version's menu of the current API
+  const currentApiMenu = allApiMenus[category][version];
+  // generate menus
+  const menus = mdMenuListFactory(currentApiMenu, "api", version, locale)();
+
+  // get version links on version change
+  const getApiVersionLink = version => {
+    return `/api-reference/${category}/${version}/${pageContext.pId}`;
+  };
+
+  // Generate apiReferenceData.sourceUrl for final page's Edit Button.
   const apiReferenceData = {
     projName: category,
     relativePath: name,
     apiVersion: version,
   };
-
-  // Generate apiReferenceData.sourceUrl for final page's Edit Button.
   switch (category) {
     case "pymilvus":
       const path = name?.split("pymilvus_")?.[1]?.replace(".html", ".rst");
@@ -119,35 +104,27 @@ export default function Template({ data, pageContext }) {
       break;
   }
 
-  // For left nav
-  const leftNavHomeUrl = `/docs/${targetDocVersion}`;
-  const menuList =
-    allMenus.find(
-      v => v.absolutePath.includes(targetDocVersion) && v.lang === locale
-    ) || [];
-
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo
-        title={`API Reference: ${category}`}
+        title={`${capitalizeFirstLetter(category)} SDK ${version} for Milvus: `}
         lang={locale}
         version={version}
       />
       <div className={"doc-temp-container"}>
         <LeftNav
-          homeUrl={leftNavHomeUrl}
-          homeLabel={t("v3trans.docs.homeTitle")}
-          menus={menuList.menuList}
-          apiMenus={allApiMenus}
-          currentVersion={targetDocVersion}
+          homeUrl={"/docs"}
+          homeLabel={"< Docs"}
+          menus={menus}
           locale={locale}
-          docVersions={docVersions}
+          versions={versions}
+          version={version}
+          getVersionLink={getApiVersionLink}
           mdId={name}
-          isMobile={isMobile}
-          pageType="api"
           trans={t}
           isOpened={isOpened}
           onMenuCollapseUpdate={setIsOpened}
+          showSearch={false}
         />
         <div
           className={clsx("doc-right-container", {

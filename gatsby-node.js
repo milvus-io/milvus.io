@@ -271,7 +271,6 @@ exports.createPages = ({ actions, graphql }) => {
       allApiMenus,
       versions,
       newestVersion,
-      versionsWithHome,
     });
     generateBlogArticlePage(createPage, {
       nodes: blogMD,
@@ -298,6 +297,7 @@ exports.createPages = ({ actions, graphql }) => {
       versions,
       allMenus,
       allApiMenus,
+      versionInfo,
     });
   });
 };

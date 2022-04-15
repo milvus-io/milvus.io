@@ -6,7 +6,6 @@ import {
   faBug,
   faHashtag,
   faLightbulb,
-  faFilePdf,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useI18next } from "gatsby-plugin-react-i18next";
@@ -70,10 +69,6 @@ const Aside = props => {
     {
       label: t("v3trans.docs.btnGroup.suggestBtn"),
       icon: faLightbulb,
-    },
-    {
-      label: t("v3trans.docs.btnGroup.pdfBtn"),
-      icon: faFilePdf,
     },
     {
       label: t("v3trans.docs.btnGroup.discussBtn"),

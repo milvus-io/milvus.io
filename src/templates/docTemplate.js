@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import Layout from "../components/layout";
 import LeftNav from "../components/leftNavigation";
+import { mdMenuListFactory } from "../components/leftNavigation/utils";
 import { graphql } from "gatsby";
 import clsx from "clsx";
 import Aside from "../components/aside";
@@ -14,7 +15,6 @@ import {
 } from "../hooks/doc-dom-operation";
 import { useGenAnchor } from "../hooks/doc-anchor";
 import { useOpenedStatus } from "../hooks";
-import { useWindowSize } from "../http/hooks";
 import DocContent from "./parts/DocContent.jsx";
 import HomeContent from "./parts/HomeContent.jsx";
 import "@zilliz/zui/dist/ZChart.css";
@@ -43,29 +43,19 @@ export default function Template({ data, pageContext }) {
     headings = [],
     allMenus,
     isBlog,
-    isBenchmark = false,
     editPath,
     newHtml: mdHtml,
     homeData,
-    allApiMenus,
     newestVersion,
     relatedKey,
     old: mdId,
     summary,
     group,
     newestBlog,
+    versionInfo,
   } = pageContext;
-  const [windowSize, setWindowSize] = useState("desktop1440");
   const [isOpened, setIsOpened] = useState(false);
   useOpenedStatus(setIsOpened);
-
-  const currentWindowSize = useWindowSize();
-
-  useEffect(() => {
-    setWindowSize(currentWindowSize);
-  }, [currentWindowSize]);
-
-  const isMobile = ["phone", "tablet"].includes(windowSize);
 
   const { language, t } = useI18next();
   const hljsCfg = {
@@ -79,6 +69,7 @@ export default function Template({ data, pageContext }) {
       locale === v.lang
   );
   const id = "home";
+  const isHome = mdHtml === null;
   const menuConfig = menuList && {
     menuList: [
       {
@@ -101,11 +92,60 @@ export default function Template({ data, pageContext }) {
   const leftNavHomeUrl =
     version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
 
+  // generate menu
+  const menus = mdMenuListFactory(leftNavMenus, "doc", version, locale)();
+  // push API links if no home
+
+  const APIs = {
+    id: "API",
+    label: "API reference",
+    children: [],
+  };
+  if (versionInfo[version].pymilvus) {
+    APIs.children.push({
+      id: "pymilvus",
+      label: "Python",
+      link: `/api-reference/pymilvus/${versionInfo[version].pymilvus}/install.html`,
+    });
+  }
+
+  if (versionInfo[version].java) {
+    APIs.children.push({
+      id: "java",
+      label: "Java",
+      link: `/api-reference/java/${versionInfo[version].java}/index.html`,
+    });
+  }
+
+  if (versionInfo[version].node) {
+    APIs.children.push({
+      id: "node",
+      label: "Node",
+      link: `/api-reference/node/${versionInfo[version].node}/tutorial.html`,
+    });
+  }
+
+  if (versionInfo[version].go) {
+    APIs.children.push({
+      id: "go",
+      label: "Go",
+      link: `https://github.com/milvus-io/milvus-sdk-go`,
+    });
+  }
+
+
+  // only merge api menus if menus.lenth > 0 and version > 1
+  if (APIs.children.length > 0 && version[1] * 1 > 1) {
+    menus.push(APIs);
+  }
+
+  // generate commit path
   const commitPath = useMemo(() => {
     return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
   }, [locale, editPath]);
-  const isDoc = !(isBlog || isBenchmark);
+  const isDoc = !isBlog;
 
+  // doc search meta
   const docsearchMeta = useMemo(() => {
     if (
       typeof window === "undefined" ||
@@ -125,12 +165,13 @@ export default function Template({ data, pageContext }) {
     ];
   }, [locale, version]);
 
-  const title =
-    mdHtml === null
-      ? `Milvus documentation`
-      : `${headings[0] && headings[0].value}`;
+  // page title
+  const title = isHome
+    ? `Milvus documentation`
+    : `${headings[0] && headings[0].value}`;
 
-  const titleTemplate = mdHtml === null ? `%s` : `%s - Milvus documentation`;
+  // page title template
+  const titleTemplate = isHome ? `%s` : `%s - Milvus documentation`;
 
   useCodeCopy(
     {
@@ -160,17 +201,14 @@ export default function Template({ data, pageContext }) {
         <LeftNav
           homeUrl={leftNavHomeUrl}
           homeLabel={t("v3trans.docs.homeTitle")}
-          menus={leftNavMenus}
-          apiMenus={allApiMenus}
+          menus={menus}
           pageType="doc"
-          currentVersion={version}
           locale={locale}
-          docVersions={versionConfig.versions}
+          versions={versionConfig.versions}
+          version={version}
           mdId={mdId}
-          isMobile={isMobile}
           language={language}
           trans={t}
-          version={version}
           group={group}
           isOpened={isOpened}
           onMenuCollapseUpdate={setIsOpened}

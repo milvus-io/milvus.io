@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
 import clsx from "clsx";
-import { useWindowSize } from "../http/hooks";
 import LeftNav from "../components/leftNavigation";
+import { mdMenuListFactory } from "../components/leftNavigation/utils";
 import Aside from "../components/aside";
 import Footer from "../components/footer";
 import Seo from "../components/seo";
@@ -37,32 +37,28 @@ export default function Template({ data, pageContext }) {
     // isCommunity,
   } = pageContext;
 
-  const [windowSize, setWindowSize] = useState("desktop1440");
   const [isOpened, setIsOpened] = useState(false);
-
-  useOpenedStatus(setIsOpened);
-
-  const currentWindowSize = useWindowSize();
-
-  useEffect(() => {
-    setWindowSize(currentWindowSize);
-  }, [currentWindowSize]);
-
-  const isMobile = ["phone", "tablet"].includes(windowSize);
-
   const { language, t } = useI18next();
+  useOpenedStatus(setIsOpened);
 
   const isHomePage = activePost === "home.md";
 
+  // title
   const TITLE = isHomePage
     ? `Milvus Community`
     : `${headings[0] && headings[0].value}`;
+  // meta description
   const DESC = "Join Milvus Community";
-
+  // title template
   const titleTemplate = isHomePage ? "%s" : "%s - Milvus Community";
 
-  const leftNavMenus =
-    menuList?.find(menu => menu.lang === locale)?.menuList || [];
+  // generate menu
+  const menus = mdMenuListFactory(
+    menuList?.find(menu => menu.lang === locale)?.menuList || [],
+    "community",
+    "",
+    locale
+  )();
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
@@ -79,17 +75,17 @@ export default function Template({ data, pageContext }) {
       >
         {/* TODO: "id": "#community_resources", #community_partners should be updated */}
         <LeftNav
-          menus={leftNavMenus}
+          menus={menus}
           apiMenus={[]}
           pageType="community"
-          currentVersion={""}
+          version={""}
           locale={locale}
-          docVersions={[]}
+          versions={[]}
           mdId={isHomePage ? "community" : activePost}
-          isMobile={isMobile}
           language={language}
           trans={t}
           isOpened={isOpened}
+          showSearch={false}
           onMenuCollapseUpdate={setIsOpened}
         />
         <div

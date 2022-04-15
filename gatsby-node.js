@@ -2,7 +2,36 @@ const path = require("path");
 const fs = require("fs");
 const ReadVersionJson = require("./walkFile");
 const express = require("express");
-const createPagesUtils = require("./gatsbyUtils/createPages");
+const {
+  query,
+  generateAllMenus,
+  filterMdWithVersion,
+  filterHomeMdWithVersion,
+} = require("./gatsbyUtils/createPages");
+const {
+  generateAllDocPages,
+  generateDocHomeWidthMd,
+  generateHomeData,
+  getVersionsWithHome,
+} = require("./gatsbyUtils/docs");
+const {
+  generateCommunityPages,
+  handleCommunityData,
+  generateCommunityHome,
+} = require("./gatsbyUtils/community");
+const {
+  handleBootcampData,
+  generateBootcampHome,
+  generateBootcampPages,
+} = require("./gatsbyUtils/bootcamp");
+const {
+  generateApiMenus,
+  generateApiReferencePages,
+} = require("./gatsbyUtils/api");
+const {
+  generateBlogArticlePage,
+  filterMDwidthBlog,
+} = require("./gatsbyUtils/blog");
 const sourceNodesUtils = require("./gatsbyUtils/sourceNodes");
 
 const env = process.env.IS_PREVIEW;
@@ -184,27 +213,6 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
 
 /* create pages dynamically from submodule data */
 exports.createPages = ({ actions, graphql }) => {
-  const {
-    query,
-    generateAllMenus,
-    generateHomeData,
-    filterMdWithVersion,
-    handleCommunityData,
-    generateCommunityPages,
-    generateCommunityHome,
-    generateApiMenus,
-    generateApiReferencePages,
-    generateDocHomeWidthMd,
-    generateAllDocPages,
-    getVersionsWithHome,
-    generateBootcampHome,
-    generateBootcampPages,
-    handleBootcampData,
-    generateBlogArticlePage,
-    filterMDwidthBlog,
-    filterHomeMdWithVersion,
-  } = createPagesUtils;
-
   const { createPage } = actions;
 
   // templates
@@ -236,8 +244,6 @@ exports.createPages = ({ actions, graphql }) => {
       result.data.allMarkdownRemark.edges,
       result.data.allFile.edges
     );
-
-    // initGlobalSearch(legalMd, newestVersion, __dirname);
 
     generateCommunityPages(createPage, {
       nodes: communityMd,

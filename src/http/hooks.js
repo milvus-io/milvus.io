@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getGithubCommits, getFaq } from "./index";
 import dayjs from "dayjs";
 
-export function useGithubCommits({ commitPath, version, isDoc = false }) {
+export function useGithubCommits({ commitPath, version }) {
   const [commitInfo, setCommitInfo] = useState({
     message: "",
     date: "",

@@ -42,7 +42,6 @@ export default function Template({ data, pageContext }) {
     versions,
     headings = [],
     allMenus,
-    isBlog,
     editPath,
     newHtml: mdHtml,
     homeData,
@@ -63,10 +62,7 @@ export default function Template({ data, pageContext }) {
   };
 
   const menuList = allMenus.find(
-    v =>
-      v.absolutePath.includes(version) &&
-      isBlog === v.isBlog &&
-      locale === v.lang
+    v => v.absolutePath.includes(version) && locale === v.lang
   );
   const id = "home";
   const isHome = mdHtml === null;

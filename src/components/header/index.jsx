@@ -229,7 +229,11 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                   {t("v3trans.main.nav.tools")}
                 </button>
               </li>
-
+              <li>
+                <Link to="/blog" className={styles.menuItem}>
+                  {t("v3trans.main.nav.blog")}
+                </Link>
+              </li>
               <li>
                 <Link to="/community" className={styles.menuItem}>
                   {t("v3trans.main.nav.community")}

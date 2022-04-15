@@ -20,12 +20,12 @@ const findDocVersion = (info, category, apiVersion) =>
  * @returns A list of initial results and calculated path of all files under the dirPath.
  */
 const getAllFilesAbsolutePath = (dirPath, pathList = []) => {
-  let filesList = fs.readdirSync(dirPath);
+  const filesList = fs.readdirSync(dirPath);
   for (let i = 0; i < filesList.length; i++) {
     // concat current file path: ${parent_path}/${current_file_name}
-    let filePath = path.join(dirPath, filesList[i]);
+    const filePath = path.join(dirPath, filesList[i]);
     // get file info by filePath, return a fs.Stats object
-    let stats = fs.statSync(filePath);
+    const stats = fs.statSync(filePath);
     if (stats.isDirectory()) {
       // recursion call
       getAllFilesAbsolutePath(filePath, pathList);
@@ -112,6 +112,7 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
     isMetaFileExist &&
     fs.readFileSync(`${dirPath}/api_reference_meta.json`, "utf8");
   const metaData = isMetaFileExist ? JSON.parse(metaDataStr) : {};
+  const cat = category.replace("-", "_");
   try {
     const filesList = getAllFilesAbsolutePath(dirPath);
     // Level: api_reference(root directory) > 2nd level directory > 3rd level directory.
@@ -134,7 +135,6 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
       // docOrder may be 0.
       const order = typeof docOrder === "undefined" ? null : docOrder;
       const title = docTitle;
-      // const relativePath = getFileRelativePath(filePath, version);
       const parentPath = relativePath.split("/").slice(0, -1).join("/");
       // Record the parentPath as a thrid level directory.
       parentPath && (thridLevelDirectories[parentPath] = parentMenu);
@@ -143,17 +143,13 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
           // Need to remove label2/3 if it's a single page.
           apiFiles.push({
             doc: docHTML,
-            name: getFileRelativePath(filePath, version),
+            name: relativePath,
             abspath: filePath,
             version,
             category,
             title,
             order,
-            labels: [
-              "api_reference",
-              isSinglePage ? "" : category.replace("-", "_"),
-              isSinglePage ? "" : parentPath.replace("-", "_"),
-            ],
+            labels: [cat, isSinglePage ? "" : parentPath.replace("-", "_")],
           })
         : apiFiles.push({
             doc: docHTML,
@@ -163,10 +159,7 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
             category,
             title,
             order,
-            labels: [
-              "api_reference",
-              isSinglePage ? "" : category.replace("-", "_"),
-            ],
+            labels: [cat, isSinglePage ? "" : ""],
           });
     }
     // Deduplicate.
@@ -174,11 +167,11 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
     !isSinglePage &&
       apiFiles.push({
         doc: "",
-        name: category.replace("-", "_"),
+        name: cat,
         abspath: dirPath,
         version,
         category,
-        labels: ["api_reference"],
+        labels: [],
         isDirectory: true,
         order: category.includes("pymilvus") ? -1 : null,
       }) &&
@@ -190,7 +183,7 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
           abspath: `${dirPath}/${f}`,
           version,
           category,
-          labels: ["api_reference", category.replace("-", "_")],
+          labels: [cat],
           isDirectory: true,
           order: dirOrder,
           title: dirName || f.replace("-", "_"),

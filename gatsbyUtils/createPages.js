@@ -1,251 +1,7 @@
+const query = require("./PageQuery.js");
 const locales = require("../src/consts/locales");
 const fs = require("fs");
 const env = process.env.IS_PREVIEW;
-
-// createPages: graphql query
-const query = `
-{
-  allMarkdownRemark(
-    filter: {
-      fileAbsolutePath: { regex: "/(?:site|blog|communityArticles|bootcampArticles)/" }
-    }
-  ) {
-    edges {
-      node {
-        headings {
-          value
-          depth
-        }
-        frontmatter {
-          related_key
-          summary
-          date
-          author
-          tag
-          title
-          origin
-          cover
-          desc
-          isPublish
-          id
-          group
-          recommend
-        }
-        fileAbsolutePath
-        html
-      }
-    }
-  }
-  allApIfile {
-    nodes {
-      abspath
-      name
-      doc
-      version
-      category
-      docVersion
-      labels
-      isDirectory
-      title
-      order
-    }
-  }
-  allFile(
-    filter: {
-      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp)/" }
-      extension: { eq: "json" }
-    }
-  ) {
-    edges {
-      node {
-        absolutePath
-        childCommunity {
-          menuList {
-            id
-            isMenu
-            label1
-            label2
-            label3
-            order
-            title
-          }
-          banner {
-            img {
-              publicURL
-            }
-            alt
-            href
-          }
-          mailingSection {
-            title
-            list {
-              link
-              title
-            }
-          }
-          joinSection {
-            list {
-              img {
-                publicURL
-              }
-              label
-              link
-            }
-            title
-          }
-          contributorSection {
-            title,
-            list {
-              avatar {
-                publicURL
-              }
-              name
-              company
-              jobTitle
-            }
-          }
-          partnerSection {
-            list {
-              alt
-              img {
-                publicURL
-              }
-            }
-            title
-          }
-          recommendSection {
-            ambassador {
-              desc
-              introBtn {
-                label
-                link
-              }
-              joinBtn {
-                label
-                link
-              }
-              title
-              img {
-                publicURL
-              }
-            }
-            deploy {
-              list {
-                label
-                link
-              }
-              title
-            }
-            develop {
-              list {
-                label
-                link
-              }
-              title
-            }
-            start {
-              list {
-                label
-                link
-              }
-              title
-            }
-            test {
-              list {
-                label
-                link
-              }
-              title
-            }
-            title
-          }
-          resourceSection {
-            list {
-              desc
-              iconType
-              label
-              link
-              title
-            }
-            title
-          }
-          aboutSection {
-            content
-            title
-            list {
-              desc
-              iconType
-              title
-            }
-          }
-        }
-        childMenu {
-          menuList {
-            id
-            isMenu
-            label1
-            label2
-            label3
-            order
-            outLink
-            title
-          }
-        }
-        
-        childBootcamp {
-          menuList {
-            isMenu
-            id
-            label1
-            label2
-            label3
-            order
-            title
-          }
-          description
-          banner {
-            img {
-              publicURL
-            }
-            alt
-          }
-          section1 {
-            title
-            content {
-              id
-              link
-              title
-            }
-          }
-          section3 {
-            content {
-              desc
-              iconType
-              id
-              link
-              title
-              liveDemo
-            }
-            title
-          }
-          section4 {
-            content {
-              desc
-              id
-              link
-              title
-              iconType
-            }
-            title
-          }
-          title
-        }
-      }
-    }
-  }
-}
-`;
-
 const DOC_LANG_FOLDERS = ["/en/", "/zh-CN/"];
 
 /*
@@ -275,8 +31,6 @@ const findLang = path => {
 
 const checkIsblog = path => path.includes("blog");
 
-const checkIsBenchmark = path => path.includes("benchmarks");
-
 const getDefaultLang = () =>
   Object.keys(locales).find(lang => locales[lang].default);
 
@@ -295,18 +49,8 @@ const getBootcampPath = (fileId, fileLang) => {
 };
 
 // we generate path by menu structure
-const generatePath = (
-  id,
-  lang,
-  version,
-  isBlog,
-  needLocal = true,
-  isBenchmark
-) => {
+const generatePath = (id, lang, version, isBlog, needLocal = true) => {
   const defaultLang = getDefaultLang();
-  if (isBenchmark) {
-    return lang === defaultLang ? `/docs/${id}` : `${lang}/docs/${id}`;
-  }
   if (isBlog) {
     if (!needLocal) return `/blog/${id}`;
     return lang === defaultLang ? `/blog/${id}` : `/${lang}/blog/${id}`;
@@ -363,7 +107,7 @@ const generateAllMenus = edges => {
   return edges
     .filter(({ node: { childMenu } }) => childMenu !== null)
     .map(({ node: { absolutePath, childMenu } }) => {
-      let lang = absolutePath.includes("/en/") ? "en" : "cn";
+      const lang = absolutePath.includes("/en/") ? "en" : "cn";
       const isBlog = absolutePath.includes("blog");
       const version = findVersion(absolutePath) || "master";
       const menuStructureList = (childMenu && [...childMenu.menuList]) || [];
@@ -595,7 +339,6 @@ const initGlobalSearch = (markdown, newestVersion, rootDirName) => {
         const version = findVersion(fileAbsolutePath) || "master";
         const headingVals = headings.map(v => v.value);
         const isBlog = checkIsblog(fileAbsolutePath);
-        const isBenchmark = checkIsBenchmark(fileAbsolutePath);
         const keywords = frontmatter.keywords
           ? frontmatter.keywords.split(",")
           : [];
@@ -606,14 +349,7 @@ const initGlobalSearch = (markdown, newestVersion, rootDirName) => {
           ...frontmatter,
           fileLang,
           version,
-          path: generatePath(
-            frontmatter.id,
-            fileLang,
-            version,
-            isBlog,
-            false,
-            isBenchmark
-          ),
+          path: generatePath(frontmatter.id, fileLang, version, isBlog, false),
           // the value we need compare with search query
           values: [...headingVals, frontmatter.id, ...keywords],
         };
@@ -794,7 +530,7 @@ const generateTitle = ({
   const [, label2 = ""] = labels;
   // Return name if the menu is a 3rd level menu(such as: API => java => exception)
   // Return category name if the menu is a 1st or 2nd level menu(such as: API, API => java)
-  let prettierCategory = label2
+  const prettierCategory = label2
     ? capitalize(name)
     : titleMapping[category] || capitalize(category);
   // return prettier category name if directory
@@ -829,62 +565,53 @@ const generateApiMenus = nodes => {
     if (category === "java" && name.includes("package-")) return -1;
     return order;
   };
-  return nodes.reduce(
-    (prev, item) => {
-      const {
-        name,
-        category,
-        version,
-        docVersion,
-        labels,
-        isDirectory,
-        title,
-        order,
-      } = item;
-      const [label1 = "api_reference", label2 = "", label3 = ""] = labels;
-      const menuItem = {
-        // Use "_" instead of "-" in both api menu's id and api page's name.
-        // Due to a search algorithm use the word splited by "-".
-        // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
-        // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
-        // "id" should be same with "name" in generateApiReferencePages
-        id: isDirectory
-          ? name.replace("-", "_")
-          : `${category.replace("-", "_")}_${name.replace("-", "_")}`,
-        title: generateTitle({ title, name, category, isDirectory, labels }),
-        lang: null,
-        label1,
-        label2,
-        label3,
-        order: calculateOrder({ category, name, order }),
-        isMenu: isDirectory,
-        outLink: null,
-        isApiReference: true,
-        url: `/api-reference/${category}/${version}/${name}`,
-        category,
-        apiVersion: version,
-        docVersion,
-      };
-      return [...prev, menuItem];
-    },
-    // initial item is the first level menu: api_reference
-    [
-      {
-        id: "api_reference",
-        title: "API Reference",
-        lang: null,
-        label1: "",
-        label2: "",
-        label3: "",
-        order: -1,
-        isMenu: true,
-        outLink: null,
-        i18n: {
-          title: { en: "API Reference", cn: "API 参考" },
-        },
-      },
-    ]
-  );
+
+  // menus
+  const menus = {};
+  nodes.forEach(item => {
+    const {
+      name,
+      category,
+      version,
+      docVersion,
+      labels,
+      isDirectory,
+      title,
+      order,
+    } = item;
+    // create category
+    menus[category] = menus[category] || {};
+    // create version
+    menus[category][version] = menus[category][version] || [];
+
+    const [label1 = "", label2 = "", label3 = ""] = labels;
+    const menuItem = {
+      // Use "_" instead of "-" in both api menu's id and api page's name.
+      // Due to a search algorithm use the word splited by "-".
+      // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
+      // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
+      // "id" should be same with "name" in generateApiReferencePages
+      id: isDirectory
+        ? name.replace("-", "_")
+        : `${category.replace("-", "_")}_${name.replace("-", "_")}`,
+      title: generateTitle({ title, name, category, isDirectory, labels }),
+      lang: null,
+      label1,
+      label2,
+      label3,
+      order: calculateOrder({ category, name, order }),
+      isMenu: isDirectory,
+      outLink: null,
+      isApiReference: true,
+      url: `/api-reference/${category}/${version}/${name}`,
+      category,
+      apiVersion: version,
+      docVersion,
+    };
+    menus[category][version].push(menuItem);
+  });
+
+  return menus;
 };
 
 /**
@@ -901,7 +628,6 @@ const generateApiReferencePages = (
     allApiMenus,
     versions,
     newestVersion,
-    versionsWithHome,
   }
 ) => {
   const filteredVersions = Array.from(versions).filter(
@@ -912,6 +638,15 @@ const generateApiReferencePages = (
       // Should ignore if the node is a directory.
       if (isDirectory) return;
       // Create default language page.
+      // Use "_" instead of "-" in both api menu's id and api page's name.
+      // Due to a search algorithm use the word splited by "-".
+      // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
+      // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
+      // "name" should be same with "id" in generateApiMenus
+      const pageName = `${category.replace("-", "_")}_${name.replace(
+        "-",
+        "_"
+      )}`;
       createPage({
         path: `/api-reference/${category}/${version}/${name}`,
         component: apiDocTemplate,
@@ -919,12 +654,8 @@ const generateApiReferencePages = (
           locale: "en",
           abspath,
           doc,
-          // Use "_" instead of "-" in both api menu's id and api page's name.
-          // Due to a search algorithm use the word splited by "-".
-          // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
-          // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
-          // "name" should be same with "id" in generateApiMenus
-          name: `${category.replace("-", "_")}_${name.replace("-", "_")}`,
+          name: pageName,
+          pId: name,
           allApiMenus,
           allMenus,
           version,
@@ -932,7 +663,6 @@ const generateApiReferencePages = (
           docVersions: filteredVersions,
           category,
           newestVersion,
-          isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
         },
       });
       // Temporarily create cn page.
@@ -943,7 +673,8 @@ const generateApiReferencePages = (
           locale: "cn",
           abspath,
           doc,
-          name: `${category.replace("-", "_")}_${name.replace("-", "_")}`,
+          name: pageName,
+          pId: name,
           allApiMenus,
           allMenus,
           version,
@@ -951,7 +682,6 @@ const generateApiReferencePages = (
           docVersions: filteredVersions,
           category,
           newestVersion,
-          isVersionWithHome: versionsWithHome.includes(docVersion?.[0]),
         },
       });
     }
@@ -976,7 +706,7 @@ const generateDocHomeWidthMd = (
     const fileAbsolutePath = node.fileAbsolutePath;
     const fileLang = findLang(fileAbsolutePath);
 
-    let [date, tag = "", title, desc, id, cover] = [
+    const [date, tag = "", title, desc, id, cover] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.title,
@@ -1004,9 +734,9 @@ const generateDocHomeWidthMd = (
       .slice(0, 2);
   };
 
-  const formatDocHomeHtml = (html, homePath, version) => {
+  const formatDocHomeHtml = (html, homePath) => {
     const regex = /\<a (\S*)\>/g;
-    let newHtml = html.replace(regex, link => {
+    const newHtml = html.replace(regex, link => {
       const [start, originPath, end] = link.split('"');
       const formatPath =
         originPath.charAt(0) === "#" ||
@@ -1044,6 +774,7 @@ const generateDocHomeWidthMd = (
           isVersionWithHome: true,
           newestBlog: getTwoNewestBlog(language),
           homePath,
+          versionInfo,
         },
       });
     }
@@ -1068,6 +799,7 @@ const generateDocHomeWidthMd = (
         isVersionWithHome: true,
         newestBlog: getTwoNewestBlog(language),
         homePath,
+        versionInfo,
       },
     });
   });
@@ -1088,6 +820,7 @@ const generateAllDocPages = (
     versionsWithHome,
     allMenus,
     allApiMenus,
+    versionInfo,
   }
 ) => {
   legalMd.forEach(({ node }) => {
@@ -1097,30 +830,25 @@ const generateAllDocPages = (
     const relatedKey = node.frontmatter.related_key;
     const summary = node.frontmatter.summary || "";
     const group = node.frontmatter.group || "";
-    let version = findVersion(fileAbsolutePath) || "master";
+    const version = findVersion(fileAbsolutePath) || "master";
 
     const fileLang = findLang(fileAbsolutePath);
     const editPath = fileAbsolutePath.split(
       fileLang === "en" ? "/en/" : "/zh-CN/"
     )[1];
-    const isBenchmark = checkIsBenchmark(fileAbsolutePath);
-    const localizedPath = generatePath(
-      fileId,
-      fileLang,
-      version,
-      isBlog,
-      true,
-      isBenchmark
-    );
+    const localizedPath = generatePath(fileId, fileLang, version, isBlog, true);
 
     const newHtml = node.html;
 
     // the newest doc version is master so we need to make route without version.
     // for easy link to the newest doc
     if (version === newestVersion) {
-      const masterPath = isBenchmark
-        ? `/docs/$${fileId}`
-        : generatePath(fileId, fileLang, isBlog ? false : "master", isBlog);
+      const masterPath = generatePath(
+        fileId,
+        fileLang,
+        isBlog ? false : "master",
+        isBlog
+      );
       createPage({
         path: masterPath,
         component: docTemplate,
@@ -1143,6 +871,7 @@ const generateAllDocPages = (
           relatedKey,
           summary,
           group,
+          versionInfo,
         }, // additional data can be passed via context
       });
     }
@@ -1153,7 +882,7 @@ const generateAllDocPages = (
       component: docTemplate,
       context: {
         locale: fileLang,
-        version: isBenchmark ? newestVersion : version,
+        version: version,
         versions: Array.from(versions),
         old: fileId,
         headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
@@ -1163,7 +892,6 @@ const generateAllDocPages = (
         isBlog,
         editPath,
         allMenus,
-        isBenchmark,
         newHtml,
         homeData: null,
         isVersionWithHome: versionsWithHome.includes(version),
@@ -1171,6 +899,7 @@ const generateAllDocPages = (
         relatedKey,
         summary,
         group,
+        versionInfo,
       }, // additional data can be passed via context
     });
   });
@@ -1220,7 +949,7 @@ const generateBlogArticlePage = (
     cn: filterAndSortBlogs(list, "cn"),
     en: filterAndSortBlogs(list, "en"),
   };
-  for (let key in allBlogsList) {
+  for (const key in allBlogsList) {
     createPage({
       path: key === "cn" ? `/${key}/blog` : `/blog`,
       component: blogListTemplate,
@@ -1237,15 +966,7 @@ const generateBlogArticlePage = (
     const isBlog = checkIsblog(fileAbsolutePath);
     const fileId = node.frontmatter.id;
     const fileLang = findLang(fileAbsolutePath);
-    const isBenchmark = checkIsBenchmark(fileAbsolutePath);
-    const localizedPath = generatePath(
-      fileId,
-      fileLang,
-      null,
-      isBlog,
-      true,
-      isBenchmark
-    );
+    const localizedPath = generatePath(fileId, fileLang, null, isBlog, true);
     const newHtml = node.html;
     let [date, tag = "", origin, author, title, id, desc, cover] = [
       node.frontmatter.date,

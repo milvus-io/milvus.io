@@ -16,11 +16,7 @@ import MilvusCookieConsent from "../milvusCookieConsent";
 import { getGithubStatis } from "../../http";
 import * as styles from "./index.module.less";
 
-const Header = ({
-  darkMode = false,
-  t = v => v,
-  className = "",
-}) => {
+const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -233,11 +229,7 @@ const Header = ({
                   {t("v3trans.main.nav.tools")}
                 </button>
               </li>
-              <li>
-                <Link to="/blog" className={styles.menuItem}>
-                  {t("v3trans.main.nav.blog")}
-                </Link>
-              </li>
+
               <li>
                 <Link to="/community" className={styles.menuItem}>
                   {t("v3trans.main.nav.community")}

@@ -159,10 +159,6 @@ html {
   }
 }
 
-.api-reference-wrapper {
-  padding-top: 16px;
-}
-
 // home
 .doc-home.doc-content-container {
   display: block;
@@ -410,6 +406,46 @@ html {
 
     img {
       margin: 0;
+    }
+  }
+}
+
+/* API */
+.api-reference-wrapper {
+  padding-top: 16px;
+  .language-javascript,
+  .language-python,
+  .language-go,
+  .language-java,
+  .language-cli,
+  .language-shell,
+  .language-cpp {
+    display: block;
+  }
+
+  &.java {
+    ul {
+      margin: 0;
+      list-style: none;
+      &.inheritance {
+        padding-left: 8px;
+      }
+      &:not(.inheritance) {
+        padding: 0;
+      }
+    }
+    table,
+    dl,
+    .block {
+      code {
+        border: none;
+        background: none;
+      }
+    }
+    dt,
+    dd,
+    .block {
+      margin-bottom: 8px;
     }
   }
 }

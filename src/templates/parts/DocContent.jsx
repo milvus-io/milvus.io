@@ -1,13 +1,11 @@
 import React, { useRef } from "react";
-import RelatedQuestion from "../../components/relatedQuestion";
 import ScoredFeedback from "../../components/scoredFeedback";
 import GitCommitInfo from "./GitCommitInfo.jsx";
 import { useGithubCommits } from "../../http/hooks";
 import { useZChart } from "../../hooks/doc-dom-operation";
 
 export default function DocContent(props) {
-  const { commitPath, version, htmlContent, mdId, relatedKey, trans } =
-    props;
+  const { commitPath, version, htmlContent, mdId, relatedKey, trans } = props;
   const contact = {
     slack: {
       label: "Discuss on Slack",
@@ -46,14 +44,6 @@ export default function DocContent(props) {
           className="doc-post-content"
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
-        {relatedKey && (
-          <RelatedQuestion
-            title={trans("v3trans.docs.faqTitle")}
-            contact={contact}
-            relatedKey={relatedKey}
-            trans={trans}
-          />
-        )}
         {commitInfo?.message && (
           <GitCommitInfo
             commitInfo={commitInfo}

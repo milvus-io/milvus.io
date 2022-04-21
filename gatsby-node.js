@@ -20,11 +20,6 @@ const {
   generateCommunityHome,
 } = require("./gatsbyUtils/community");
 const {
-  handleBootcampData,
-  generateBootcampHome,
-  generateBootcampPages,
-} = require("./gatsbyUtils/bootcamp");
-const {
   generateApiMenus,
   generateApiReferencePages,
 } = require("./gatsbyUtils/api");
@@ -218,7 +213,6 @@ exports.createPages = ({ actions, graphql }) => {
   // templates
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
   const communityTemplate = path.resolve(`src/templates/communityTemplate.jsx`);
-  const bootcampTemplate = path.resolve(`src/templates/bootcamp.jsx`);
   const blogTemplate = path.resolve(`src/templates/blogTemplate.jsx`);
   const blogListTemplate = path.resolve(`src/templates/blogListTemplate.jsx`);
 
@@ -230,10 +224,10 @@ exports.createPages = ({ actions, graphql }) => {
     const allMenus = generateAllMenus(result.data.allFile.edges);
     // get new doc index page data
     const homeData = generateHomeData(result.data.allFile.edges);
-    const { bootcampHome, bootcampMenu, bootcampMd } = handleBootcampData(
-      result.data.allMarkdownRemark.edges,
-      result.data.allFile.edges
-    );
+    // const { bootcampHome } = handleBootcampData(
+    //   result.data.allMarkdownRemark.edges,
+    //   result.data.allFile.edges
+    // );
     const versionsWithHome = getVersionsWithHome(homeData);
     // filter useless md file blog has't version
     const legalMd = filterMdWithVersion(result.data.allMarkdownRemark.edges);
@@ -254,18 +248,6 @@ exports.createPages = ({ actions, graphql }) => {
       nodes: communityHome,
       template: communityTemplate,
       menu: communityMenu,
-    });
-
-    generateBootcampPages(createPage, {
-      nodes: bootcampMd,
-      template: bootcampTemplate,
-      menu: bootcampMenu,
-    });
-
-    generateBootcampHome(createPage, {
-      nodes: bootcampHome,
-      template: bootcampTemplate,
-      menu: bootcampMenu,
     });
 
     const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);

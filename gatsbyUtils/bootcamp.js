@@ -1,3 +1,4 @@
+// This file is deprecated and will be removed soon
 const { findLang, getDefaultLang } = require("./utils");
 
 const getBootcampPath = (fileId, fileLang) => {
@@ -86,19 +87,17 @@ const handleBootcampData = (allMarkdownRemark, allFile) => {
 
 const generateBootcampHome = (
   createPage,
-  { nodes: bootcampHome, template: bootcampTemplate, menu: bootcampMenu }
+  { nodes: bootcampHome, template: bootcampTemplate }
 ) => {
-  bootcampHome.forEach(({ language, data, path }) => {
+  bootcampHome.forEach(({ language, path }) => {
     createPage({
       path: language === "en" ? "/bootcamp" : `/${language}/bootcamp`,
       component: bootcampTemplate,
       context: {
-        bootcampData: data,
         locale: language,
         old: "home",
         fileAbsolutePath: path,
         newHtml: null,
-        menuList: bootcampMenu,
         isVersionWithHome: false,
         activePost: "bootcamp",
       },

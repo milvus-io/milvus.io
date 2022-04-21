@@ -5,7 +5,7 @@ module.exports = `
 {
   allMarkdownRemark(
     filter: {
-      fileAbsolutePath: { regex: "/(?:site|blog|communityArticles|bootcampArticles)/" }
+      fileAbsolutePath: { regex: "/(?:site|blog|communityArticles)/" }
     }
   ) {
     edges {
@@ -50,7 +50,7 @@ module.exports = `
   }
   allFile(
     filter: {
-      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp)/" }
+      relativeDirectory: { regex: "/(?:menuStructure|home|community)/" }
       extension: { eq: "json" }
     }
   ) {
@@ -188,55 +188,6 @@ module.exports = `
             outLink
             title
           }
-        }
-        
-        childBootcamp {
-          menuList {
-            isMenu
-            id
-            label1
-            label2
-            label3
-            order
-            title
-          }
-          description
-          banner {
-            img {
-              publicURL
-            }
-            alt
-          }
-          section1 {
-            title
-            content {
-              id
-              link
-              title
-            }
-          }
-          section3 {
-            content {
-              desc
-              iconType
-              id
-              link
-              title
-              liveDemo
-            }
-            title
-          }
-          section4 {
-            content {
-              desc
-              id
-              link
-              title
-              iconType
-            }
-            title
-          }
-          title
         }
       }
     }

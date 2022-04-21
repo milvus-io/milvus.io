@@ -25,7 +25,7 @@ export const query = graphql`
   }
 `;
 
-export default function Template({ data, pageContext }) {
+export default function Template({ pageContext }) {
   const {
     locale,
     // fileAbsolutePath,

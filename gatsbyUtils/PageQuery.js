@@ -50,7 +50,7 @@ module.exports = `
   }
   allFile(
     filter: {
-      relativeDirectory: { regex: "/(?:menuStructure|home|community)/" }
+      relativeDirectory: { regex: "/(?:menuStructure|community)/" }
       extension: { eq: "json" }
     }
   ) {
@@ -66,115 +66,6 @@ module.exports = `
             label3
             order
             title
-          }
-          banner {
-            img {
-              publicURL
-            }
-            alt
-            href
-          }
-          mailingSection {
-            title
-            list {
-              link
-              title
-            }
-          }
-          joinSection {
-            list {
-              img {
-                publicURL
-              }
-              label
-              link
-            }
-            title
-          }
-          contributorSection {
-            title,
-            list {
-              avatar {
-                publicURL
-              }
-              name
-              company
-              jobTitle
-            }
-          }
-          partnerSection {
-            list {
-              alt
-              img {
-                publicURL
-              }
-            }
-            title
-          }
-          recommendSection {
-            ambassador {
-              desc
-              introBtn {
-                label
-                link
-              }
-              joinBtn {
-                label
-                link
-              }
-              title
-              img {
-                publicURL
-              }
-            }
-            deploy {
-              list {
-                label
-                link
-              }
-              title
-            }
-            develop {
-              list {
-                label
-                link
-              }
-              title
-            }
-            start {
-              list {
-                label
-                link
-              }
-              title
-            }
-            test {
-              list {
-                label
-                link
-              }
-              title
-            }
-            title
-          }
-          resourceSection {
-            list {
-              desc
-              iconType
-              label
-              link
-              title
-            }
-            title
-          }
-          aboutSection {
-            content
-            title
-            list {
-              desc
-              iconType
-              title
-            }
           }
         }
         childMenu {

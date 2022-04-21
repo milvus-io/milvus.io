@@ -34,11 +34,6 @@ const gatsbyConfigs = {
       options: {
         typeName: ({ node }) => {
           switch (node.sourceInstanceName) {
-            case "blogs":
-              if (node.relativePath.includes("menuStructure")) {
-                return `menu`;
-              }
-              break;
             case "docs":
               if (
                 node.relativePath.includes("versionInfo") ||
@@ -57,9 +52,6 @@ const gatsbyConfigs = {
               }
               if (node.relativePath.includes("bootcamp")) {
                 return `bootcamp`;
-              }
-              if (node.relativePath.includes("users")) {
-                return `users`;
               }
               return `json`;
             default:

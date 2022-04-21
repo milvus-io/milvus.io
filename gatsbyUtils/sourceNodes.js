@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-
+const { Remarkable } = require("remarkable");
 /**
  * Use api version to find target doc versions.
  * @param {object} info Version info from walkFile output.
@@ -98,14 +98,14 @@ const generateNodes = (
 };
 
 /**
- * Generate apiFile object adding to apiFiles.
- * @param {array} apiFiles Pages under `${parentPath}/${version}` will be formatted and pushed to apiFiles
+ * Generate apiFile object adding to nodes.
+ * @param {array} nodes Pages under `${parentPath}/${version}` will be formatted and pushed to nodes
  * @param {object} param2 { parentPath, version, category }
  * parentPath: api category dir path, such as "src/pages/APIReference/pymilvus"
  * version: api version, such as "v1.0.1"
  * category: categoty name, such as "pymilvus", "pymilvus-orm" and "go"
  */
-const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
+const handleApiFiles = (nodes, { parentPath, version, category }) => {
   const dirPath = `${parentPath}/${version}`;
   const isMetaFileExist = fs.existsSync(`${dirPath}/api_reference_meta.json`);
   const metaDataStr =
@@ -118,15 +118,22 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
     // Level: api_reference(root directory) > 2nd level directory > 3rd level directory.
     const thridLevelDirectories = {};
     // Get all HTML files under dirPath.
-    const htmlFiles = filesList.filter(i => i.endsWith(".html"));
+    const apiFiles = filesList.filter(
+      i => i.endsWith(".html") || i.endsWith(".md")
+    );
     // If this dirPath has only one page or not, regardless how many directories.
-    const isSinglePage = htmlFiles.length === 1;
-    for (let i = 0; i < htmlFiles.length; i++) {
-      const filePath = htmlFiles[i];
+    const isSinglePage = apiFiles.length === 1;
+    const converter = new Remarkable();
+
+    for (let i = 0; i < apiFiles.length; i++) {
+      const filePath = apiFiles[i];
       const relativePath = getFileRelativePath(filePath, version);
 
-      // let doc = HTMLParser.parse(fs.readFileSync(filePath));
-      const docHTML = fs.readFileSync(filePath, "utf8");
+      let doc = fs.readFileSync(filePath, "utf8");
+      // if markdown, parse to html
+      if (filePath.endsWith("md")) {
+        doc = converter.render(doc);
+      }
       const {
         title: docTitle,
         order: docOrder,
@@ -141,8 +148,8 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
       parentPath
         ? // Handle the pages those have a 3rd level directory and dd a label2/3.
           // Need to remove label2/3 if it's a single page.
-          apiFiles.push({
-            doc: docHTML,
+          nodes.push({
+            doc: doc,
             name: relativePath,
             abspath: filePath,
             version,
@@ -151,8 +158,8 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
             order,
             labels: [cat, isSinglePage ? "" : parentPath.replace("-", "_")],
           })
-        : apiFiles.push({
-            doc: docHTML,
+        : nodes.push({
+            doc: doc,
             name: getFileName(filePath),
             abspath: filePath,
             version,
@@ -165,7 +172,7 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
     // Deduplicate.
     // Add 3rd level directory menu. Should ignore if single page.
     !isSinglePage &&
-      apiFiles.push({
+      nodes.push({
         doc: "",
         name: cat,
         abspath: dirPath,
@@ -177,7 +184,7 @@ const handleApiFiles = (apiFiles, { parentPath, version, category }) => {
       }) &&
       Object.keys(thridLevelDirectories).forEach(f => {
         const { name: dirName, order: dirOrder } = thridLevelDirectories[f];
-        apiFiles.push({
+        nodes.push({
           doc: "",
           name: f.replace("-", "_"),
           abspath: `${dirPath}/${f}`,

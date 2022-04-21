@@ -219,8 +219,8 @@ exports.createPages = ({ actions, graphql }) => {
   const docTemplate = path.resolve(`src/templates/docTemplate.js`);
   const communityTemplate = path.resolve(`src/templates/communityTemplate.jsx`);
   const bootcampTemplate = path.resolve(`src/templates/bootcamp.jsx`);
-  const blogTemplate = path.resolve("src/templates/blogTemplate.jsx");
-  const blogListTemplate = path.resolve("src/templates/blogListTemplate.jsx");
+  const blogTemplate = path.resolve(`src/templates/blogTemplate.jsx`);
+  const blogListTemplate = path.resolve(`src/templates/blogListTemplate.jsx`);
 
   return graphql(query).then(result => {
     if (result.errors) {

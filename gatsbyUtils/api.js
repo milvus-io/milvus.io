@@ -19,8 +19,7 @@ const generateTitle = ({
    */
   const capitalize = s => {
     if (typeof s !== "string") return "";
-    const result = s.split("/").pop();
-    const resultList = result
+    const resultList = s
       .split(" ")
       .map(i => i.charAt(0).toUpperCase() + i.slice(1));
     return resultList.join(" ");
@@ -41,13 +40,18 @@ const generateTitle = ({
     : titleMapping[category] || capitalize(category);
   // return prettier category name if directory
   if (isDirectory) return prettierCategory;
+  // handle new md api
+  const _name = name.endsWith(".md")
+    ? name.split(".md")[0]?.split(".")?.pop()
+    : name.split(".htm")[0]?.split(".")?.pop();
+
   switch (category) {
     // return prettier category name if single page
     // case 'pymilvus':
     case "go":
       return prettierCategory;
     case "node":
-      return capitalize(name.split(".htm")[0]?.split(".")?.pop());
+      return _name.split("/").pop();
     // return 3rd level items prettier name
     default:
       return capitalize(name.split(".htm")[0]);

@@ -31,7 +31,7 @@ function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
 }
 
-export default function Template({ data, pageContext }) {
+export default function Template({ pageContext }) {
   const { doc, name, allApiMenus, version, locale, category } = pageContext;
 
   // left nav toggle state
@@ -64,7 +64,14 @@ export default function Template({ data, pageContext }) {
 
   // get version links on version change
   const getApiVersionLink = version => {
-    return `/api-reference/${category}/${version}/${pageContext.pId}`;
+    const currentApiMenu = allApiMenus[category][version];
+    const hasSamePage = Object.entries(currentApiMenu).includes(
+      m => m.id === pageContext.pId
+    );
+
+    return hasSamePage
+      ? `/api-reference/${category}/${version}/${pageContext.pId}`
+      : `/docs`;
   };
 
   // Generate apiReferenceData.sourceUrl for final page's Edit Button.
@@ -80,25 +87,61 @@ export default function Template({ data, pageContext }) {
         1
       )}/docs/source/${path}`;
       apiReferenceData.sourceUrl = url;
+
+      if (name.endsWith(".md")) {
+        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/pymilvus/${version}/${name.replace(
+          "pymilvus_",
+          ""
+        )}`;
+      }
       break;
+
+    case "java":
+      if (name.endsWith(".md")) {
+        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-java/${version}/${name.replace(
+          "java_",
+          ""
+        )}`;
+      }
+      break;
+
+    case "go":
+      if (name.endsWith(".md")) {
+        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-go/${version}/${name.replace(
+          "go_",
+          ""
+        )}`;
+      }
+      break;
+
     case "node":
-      const relativePath = name
-        ?.split("node_")?.[1]
-        ?.replace(".html", ".ts")
-        ?.split("/")
-        ?.pop();
-      const transformName = (originName = "") => {
-        if (originName === "index.ts") return "MilvusIndex.ts";
-        return originName.charAt(0).toUpperCase() + originName.slice(1);
-      };
-      if (name.includes("api reference")) {
-        const fileName = transformName(relativePath);
-        apiReferenceData.sourceUrl = `https://github.com/milvus-io/milvus-sdk-node/edit/main/milvus/${fileName}`;
+      if (name.endsWith(".html")) {
+        const relativePath = name
+          ?.split("node_")?.[1]
+          ?.replace(".html", ".ts")
+          ?.split("/")
+          ?.pop();
+        const transformName = (originName = "") => {
+          if (originName === "index.ts") return "MilvusIndex.ts";
+          return originName.charAt(0).toUpperCase() + originName.slice(1);
+        };
+        if (name.includes("api reference")) {
+          const fileName = transformName(relativePath);
+          apiReferenceData.sourceUrl = `https://github.com/milvus-io/milvus-sdk-node/edit/main/milvus/${fileName}`;
+        }
+        if (name.includes("tutorial")) {
+          apiReferenceData.sourceUrl =
+            "https://github.com/milvus-io/milvus-sdk-node/edit/main/README.md";
+        }
       }
-      if (name.includes("tutorial")) {
-        apiReferenceData.sourceUrl =
-          "https://github.com/milvus-io/milvus-sdk-node/edit/main/README.md";
+
+      if (name.endsWith(".md")) {
+        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-node/${version}/${name.replace(
+          "node_",
+          ""
+        )}`;
       }
+
       break;
     default:
       break;

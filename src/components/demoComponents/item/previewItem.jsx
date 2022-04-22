@@ -1,12 +1,12 @@
-import React from "react";
-import { useWindowSize } from "../../../http/hooks";
-import { SearchIcon } from "./searchIcon";
-import * as styles from "./preview.module.less";
+import React from 'react';
+import { useWindowSize } from '../../../http/hooks';
+import { SearchIcon } from './searchIcon';
+import * as styles from './preview.module.less';
 
 const PreviewItem = ({ src, distance, handleSearch }) => {
   const currentSize = useWindowSize();
 
-  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
+  const isMobile = ['phone', 'tablet', 'desktop1024'].includes(currentSize);
 
   return (
     <div className={styles.previewContainer}>

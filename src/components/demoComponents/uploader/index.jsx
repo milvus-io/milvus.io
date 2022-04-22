@@ -5,8 +5,8 @@ import { getImgUrl } from '../../../utils/demo-helper';
 import { FileDrop } from 'react-file-drop';
 import Cropper from '../cropper';
 import { useWindowSize } from '../../../http/hooks';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 const UploaderHeader = ({
@@ -18,7 +18,7 @@ const UploaderHeader = ({
   duration,
 }) => {
   const currentSize = useWindowSize();
-  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
+  const isMobile = ['phone', 'tablet', 'desktop1024'].includes(currentSize);
   const inputRef = useRef(null);
   const uploadSection = useRef(null);
 
@@ -131,13 +131,19 @@ const UploaderHeader = ({
                     link="https://github.com/milvus-io/milvus"
                     className={styles.linkBtn}
                   >
-                    <FontAwesomeIcon className={styles.global} icon={faGithub} />
+                    <FontAwesomeIcon
+                      className={styles.global}
+                      icon={faGithub}
+                    />
                   </Button>
                   <Button
                     link="mailto:info@milvus.com"
                     className={styles.linkBtn}
                   >
-                    <FontAwesomeIcon className={styles.global} icon={faEnvelope} />
+                    <FontAwesomeIcon
+                      className={styles.global}
+                      icon={faEnvelope}
+                    />
                   </Button>
 
                   {/* <IconButton type="button" onClick={toggleIsShowCode}>
@@ -153,10 +159,11 @@ const UploaderHeader = ({
                     <p className={styles.text}>Duration: {duration}</p>
                   </div>
                   <div className={styles.iconWrapper}>
-                    <Button
-                      link="https://github.com/milvus-io/milvus"
-                    >
-                      <FontAwesomeIcon className={styles.global} icon={faGithub} />
+                    <Button link="https://github.com/milvus-io/milvus">
+                      <FontAwesomeIcon
+                        className={styles.global}
+                        icon={faGithub}
+                      />
                     </Button>
                   </div>
                 </div>

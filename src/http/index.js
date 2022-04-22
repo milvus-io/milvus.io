@@ -1,14 +1,14 @@
-import axios from "axios";
-import { Octokit } from "@octokit/core";
+import axios from 'axios';
+import { Octokit } from '@octokit/core';
 
 const userToken = `Z2hwX2ZYUWQwTVNBa3dudTB4UkJjWGhxNUZXVmZGYVdWWjIzQnVnSA==`;
-const org = "zilliz-bootcamp";
-const repo = "record_user_question";
+const org = 'zilliz-bootcamp';
+const repo = 'record_user_question';
 
 const feedbackToken =
-  "Z2hwX0k4ZmNWQnlrQlAzUWlRaTJjbXdzWXBEWFhPeDdmbDJLeG5IMA==";
-const feedbackOrg = "milvus-io";
-const feedbackRepo = "milvus.io.feedback";
+  'Z2hwX0k4ZmNWQnlrQlAzUWlRaTJjbXdzWXBEWFhPeDdmbDJLeG5IMA==';
+const feedbackOrg = 'milvus-io';
+const feedbackRepo = 'milvus.io.feedback';
 
 const axiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}`,
@@ -25,35 +25,35 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-export const getFaq = async (config) => {
+export const getFaq = async config => {
   const res = await axios.get(`https://demos.zilliz.com/faq/search`, config);
   return res;
 };
 
-export const sendQuestion = ({ quest = "", email = "" }) => {
+export const sendQuestion = ({ quest = '', email = '' }) => {
   let auth;
   if (atob) {
     auth = atob(userToken);
   }
   if (!quest || !email) {
-    console.log("no email or question");
+    console.log('no email or question');
     return;
   }
   const octokit = new Octokit({
     auth,
   });
   octokit
-    .request("POST /repos/{owner}/{repo}/issues", {
+    .request('POST /repos/{owner}/{repo}/issues', {
       owner: org,
       repo,
       title: quest,
       body: `user ${email} left a question: ${quest}`,
     })
-    .then((res) => {
-      console.log("user submit question success", res);
+    .then(res => {
+      console.log('user submit question success', res);
     })
-    .catch((err) => {
-      console.log("user submit question error", err);
+    .catch(err => {
+      console.log('user submit question error', err);
     });
 };
 
@@ -68,21 +68,21 @@ export const readStatisData = async () => {
 
   try {
     const res = await octokit.request(
-      "GET /repos/{owner}/{repo}/contents/{path}",
+      'GET /repos/{owner}/{repo}/contents/{path}',
       {
         owner: feedbackOrg,
         repo: feedbackRepo,
-        path: "statistics/index.json",
+        path: 'statistics/index.json',
       }
     );
     const { content, sha } = res.data;
-    const statistic = JSON.parse(window.atob(content.replaceAll("\n", "")));
+    const statistic = JSON.parse(window.atob(content.replaceAll('\n', '')));
     return {
       statistic,
       sha,
     };
   } catch (error) {
-    console.log("error:", error);
+    console.log('error:', error);
   }
 };
 
@@ -96,11 +96,11 @@ export const writeStatisData = async ({ sha, content, message }) => {
   });
   try {
     const { status } = await octokit.request(
-      "PUT /repos/{owner}/{repo}/contents/{path}",
+      'PUT /repos/{owner}/{repo}/contents/{path}',
       {
         owner: feedbackOrg,
         repo: feedbackRepo,
-        path: "statistics/index.json",
+        path: 'statistics/index.json',
         message,
         sha,
         content,
@@ -110,7 +110,7 @@ export const writeStatisData = async ({ sha, content, message }) => {
       // score succesfully!
     }
   } catch (error) {
-    console.log("error:", error);
+    console.log('error:', error);
   }
 };
 
@@ -130,9 +130,9 @@ export const getGithubStatis = async () => {
     auth,
   });
   try {
-    const res = await octokit.request("GET /repos/{owner}/{repo}", {
+    const res = await octokit.request('GET /repos/{owner}/{repo}', {
       owner: feedbackOrg,
-      repo: "milvus",
+      repo: 'milvus',
     });
     return res.data;
   } catch (error) {

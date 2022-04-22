@@ -1,5 +1,5 @@
-const { checkIsblog, generateDefaultBlogCover } = require("./blog");
-const { findVersion, findLang, generatePath } = require("./utils");
+const { checkIsblog, generateDefaultBlogCover } = require('./blog');
+const { findVersion, findLang, generatePath } = require('./utils');
 
 const getNewestVersionHomePath = locale => {
   const map = {
@@ -35,7 +35,7 @@ const generateDocHomeWidthMd = (
     const fileAbsolutePath = node.fileAbsolutePath;
     const fileLang = findLang(fileAbsolutePath);
 
-    const [date, tag = "", title, desc, id, cover] = [
+    const [date, tag = '', title, desc, id, cover] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.title,
@@ -46,8 +46,8 @@ const generateDocHomeWidthMd = (
 
     return {
       date,
-      tags: tag ? tag.split(",") : [],
-      desc: desc || "",
+      tags: tag ? tag.split(',') : [],
+      desc: desc || '',
       title,
       id,
       cover: cover || generateDefaultBlogCover(date),
@@ -68,9 +68,9 @@ const generateDocHomeWidthMd = (
     const newHtml = html.replace(regex, link => {
       const [start, originPath, end] = link.split('"');
       const formatPath =
-        originPath.charAt(0) === "#" ||
-        originPath.charAt(0) === "/" ||
-        originPath.includes("http")
+        originPath.charAt(0) === '#' ||
+        originPath.charAt(0) === '/' ||
+        originPath.includes('http')
           ? originPath
           : `${homePath}/${originPath}`;
       return [start, formatPath, end].join('"');
@@ -80,7 +80,7 @@ const generateDocHomeWidthMd = (
 
   nodes.forEach(({ language, html, path, version }) => {
     const isBlog = checkIsblog(path);
-    const editPath = path.split(language === "en" ? "/en/" : "/zh-CN/")[1];
+    const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
 
     if (version === newestVersion) {
       const homePath = getNewestVersionHomePath(language);
@@ -93,7 +93,7 @@ const generateDocHomeWidthMd = (
           versions: Array.from(versions),
           newestVersion,
           version: newestVersion,
-          old: "home",
+          old: 'home',
           fileAbsolutePath: path,
           isBlog,
           editPath,
@@ -118,7 +118,7 @@ const generateDocHomeWidthMd = (
         versions: Array.from(versions),
         newestVersion,
         version,
-        old: "home",
+        old: 'home',
         fileAbsolutePath: path,
         isBlog,
         editPath,
@@ -157,13 +157,13 @@ const generateAllDocPages = (
     const isBlog = checkIsblog(fileAbsolutePath);
     const fileId = node.frontmatter?.id;
     const relatedKey = node.frontmatter.related_key;
-    const summary = node.frontmatter.summary || "";
-    const group = node.frontmatter.group || "";
-    const version = findVersion(fileAbsolutePath) || "master";
+    const summary = node.frontmatter.summary || '';
+    const group = node.frontmatter.group || '';
+    const version = findVersion(fileAbsolutePath) || 'master';
 
     const fileLang = findLang(fileAbsolutePath);
     const editPath = fileAbsolutePath.split(
-      fileLang === "en" ? "/en/" : "/zh-CN/"
+      fileLang === 'en' ? '/en/' : '/zh-CN/'
     )[1];
     const localizedPath = generatePath(fileId, fileLang, version, isBlog, true);
 
@@ -175,7 +175,7 @@ const generateAllDocPages = (
       const masterPath = generatePath(
         fileId,
         fileLang,
-        isBlog ? false : "master",
+        isBlog ? false : 'master',
         isBlog
       );
       createPage({
@@ -243,8 +243,8 @@ const generateHomeData = edges => {
   return edges
     .filter(({ node: { childDocHome } }) => childDocHome !== null)
     .map(({ node: { absolutePath, childDocHome } }) => {
-      const language = absolutePath.includes("/en") ? "en" : "cn";
-      const version = findVersion(absolutePath) || "master";
+      const language = absolutePath.includes('/en') ? 'en' : 'cn';
+      const version = findVersion(absolutePath) || 'master';
 
       const data = childDocHome;
       return {

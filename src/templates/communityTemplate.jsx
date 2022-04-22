@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useI18next } from "gatsby-plugin-react-i18next";
-import { graphql } from "gatsby";
-import Layout from "../components/layout";
-import clsx from "clsx";
-import LeftNav from "../components/leftNavigation";
-import { mdMenuListFactory } from "../components/leftNavigation/utils";
-import Aside from "../components/aside";
-import Footer from "../components/footer";
-import Seo from "../components/seo";
-import { useOpenedStatus } from "../hooks";
-import "./communityTemplate.less";
+import React, { useState } from 'react';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import { graphql } from 'gatsby';
+import Layout from '../components/layout';
+import clsx from 'clsx';
+import LeftNav from '../components/leftNavigation';
+import { mdMenuListFactory } from '../components/leftNavigation/utils';
+import Aside from '../components/aside';
+import Footer from '../components/footer';
+import Seo from '../components/seo';
+import { useOpenedStatus } from '../hooks';
+import './communityTemplate.less';
 
 export const query = graphql`
   query ($language: String!) {
@@ -41,22 +41,22 @@ export default function Template({ pageContext }) {
   const { language, t } = useI18next();
   useOpenedStatus(setIsOpened);
 
-  const isHomePage = activePost === "home.md";
+  const isHomePage = activePost === 'home.md';
 
   // title
   const TITLE = isHomePage
     ? `Milvus Community`
     : `${headings[0] && headings[0].value}`;
   // meta description
-  const DESC = "Join Milvus Community";
+  const DESC = 'Join Milvus Community';
   // title template
-  const titleTemplate = isHomePage ? "%s" : "%s - Milvus Community";
+  const titleTemplate = isHomePage ? '%s' : '%s - Milvus Community';
 
   // generate menu
   const menus = mdMenuListFactory(
     menuList?.find(menu => menu.lang === locale)?.menuList || [],
-    "community",
-    "",
+    'community',
+    '',
     locale
   )();
 
@@ -69,7 +69,7 @@ export default function Template({ pageContext }) {
         description={DESC}
       />
       <div
-        className={clsx("doc-temp-container", {
+        className={clsx('doc-temp-container', {
           [`home`]: isHomePage,
         })}
       >
@@ -78,10 +78,10 @@ export default function Template({ pageContext }) {
           menus={menus}
           apiMenus={[]}
           pageType="community"
-          version={""}
+          version={''}
           locale={locale}
           versions={[]}
-          mdId={isHomePage ? "community" : activePost}
+          mdId={isHomePage ? 'community' : activePost}
           language={language}
           trans={t}
           isOpened={isOpened}
@@ -89,17 +89,17 @@ export default function Template({ pageContext }) {
           onMenuCollapseUpdate={setIsOpened}
         />
         <div
-          className={clsx("doc-right-container", {
+          className={clsx('doc-right-container', {
             [`is-opened`]: isOpened,
           })}
         >
           <div
-            className={clsx("doc-content-container", {
+            className={clsx('doc-content-container', {
               [`community-home`]: isHomePage,
             })}
           >
             <div
-              className={clsx({ "doc-post-wrapper": !isHomePage }, `doc-style`)}
+              className={clsx({ 'doc-post-wrapper': !isHomePage }, `doc-style`)}
             >
               <div
                 className={clsx({
@@ -118,7 +118,7 @@ export default function Template({ pageContext }) {
                 category="doc"
                 isHome={isHomePage}
                 items={headings}
-                title={t("v3trans.docs.tocTitle")}
+                title={t('v3trans.docs.tocTitle')}
               />
             </div>
           </div>

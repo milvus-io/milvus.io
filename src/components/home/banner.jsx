@@ -1,6 +1,6 @@
-import React from "react";
-import "./banner.less";
-import { Link } from "gatsby-plugin-react-i18next";
+import React from 'react';
+import './banner.less';
+import { Link } from 'gatsby-plugin-react-i18next';
 const HomeBanner = props => {
   const { t = v => v } = props;
   return (
@@ -12,14 +12,11 @@ const HomeBanner = props => {
         <div className="shooting_star"></div>
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
-        <p className="title">{t("v3trans.home.banner.title")}</p>
-        <p className="subtitle">{t("v3trans.home.banner.desc")}</p>
+        <p className="title">{t('v3trans.home.banner.title')}</p>
+        <p className="subtitle">{t('v3trans.home.banner.desc')}</p>
         <div className="btn-group">
-          <Link
-            className="btn-start"
-            to="/docs/install_standalone-docker.md"
-          >
-            {t("v3trans.home.banner.getstart")}
+          <Link className="btn-start" to="/docs/install_standalone-docker.md">
+            {t('v3trans.home.banner.getstart')}
           </Link>
           <a
             className="btn-watch"
@@ -27,7 +24,7 @@ const HomeBanner = props => {
             target="_blank"
             rel="noreferrer noopener"
           >
-            {t("v3trans.home.banner.watch")}
+            {t('v3trans.home.banner.watch')}
 
             <svg
               xmlns="http://www.w3.org/2000/svg"

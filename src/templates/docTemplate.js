@@ -1,25 +1,25 @@
-import React, { useMemo, useState } from "react";
-import { useI18next } from "gatsby-plugin-react-i18next";
-import Layout from "../components/layout";
-import LeftNav from "../components/leftNavigation";
-import { mdMenuListFactory } from "../components/leftNavigation/utils";
-import { graphql } from "gatsby";
-import clsx from "clsx";
-import Aside from "../components/aside";
-import Seo from "../components/seo";
-import Footer from "../components/footer";
+import React, { useMemo, useState } from 'react';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import Layout from '../components/layout';
+import LeftNav from '../components/leftNavigation';
+import { mdMenuListFactory } from '../components/leftNavigation/utils';
+import { graphql } from 'gatsby';
+import clsx from 'clsx';
+import Aside from '../components/aside';
+import Seo from '../components/seo';
+import Footer from '../components/footer';
 import {
   useCodeCopy,
   useMultipleCodeFilter,
   useFilter,
-} from "../hooks/doc-dom-operation";
-import { useGenAnchor } from "../hooks/doc-anchor";
-import { useOpenedStatus } from "../hooks";
-import DocContent from "./parts/DocContent.jsx";
-import HomeContent from "./parts/HomeContent.jsx";
-import "@zilliz/zui/dist/ZChart.css";
-import "./docTemplate.less";
-import "highlight.js/styles/stackoverflow-light.css";
+} from '../hooks/doc-dom-operation';
+import { useGenAnchor } from '../hooks/doc-anchor';
+import { useOpenedStatus } from '../hooks';
+import DocContent from './parts/DocContent.jsx';
+import HomeContent from './parts/HomeContent.jsx';
+import '@zilliz/zui/dist/ZChart.css';
+import './docTemplate.less';
+import 'highlight.js/styles/stackoverflow-light.css';
 
 export const query = graphql`
   query ($language: String!) {
@@ -58,13 +58,13 @@ export default function Template({ data, pageContext }) {
 
   const { language, t } = useI18next();
   const hljsCfg = {
-    languages: ["java", "go", "python", "javascript"],
+    languages: ['java', 'go', 'python', 'javascript'],
   };
 
   const menuList = allMenus.find(
     v => v.absolutePath.includes(version) && locale === v.lang
   );
-  const id = "home";
+  const id = 'home';
   const isHome = mdHtml === null;
   const menuConfig = menuList && {
     menuList: [
@@ -73,14 +73,14 @@ export default function Template({ data, pageContext }) {
         menuList: menuList.menuList,
       },
     ],
-    activePost: id.split("-")[0],
-    formatVersion: version === "master" ? newestVersion : version,
+    activePost: id.split('-')[0],
+    formatVersion: version === 'master' ? newestVersion : version,
   };
   const versionConfig = {
-    homeTitle: "Docs Home",
+    homeTitle: 'Docs Home',
     version,
     // filter master version
-    versions: versions.filter(v => v !== "master"),
+    versions: versions.filter(v => v !== 'master'),
   };
   const leftNavMenus =
     menuConfig?.menuList?.find(menu => menu.lang === locale)?.menuList || [];
@@ -88,42 +88,42 @@ export default function Template({ data, pageContext }) {
     version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
 
   // generate menu
-  const menus = mdMenuListFactory(leftNavMenus, "doc", version, locale)();
+  const menus = mdMenuListFactory(leftNavMenus, 'doc', version, locale)();
   // push API links if no home
 
   const APIs = {
-    id: "API",
-    label: "API reference",
+    id: 'API',
+    label: 'API reference',
     children: [],
   };
   if (versionInfo[version].pymilvus) {
     APIs.children.push({
-      id: "pymilvus",
-      label: "Python",
+      id: 'pymilvus',
+      label: 'Python',
       link: `/api-reference/pymilvus/${versionInfo[version].pymilvus}/install.html`,
     });
   }
 
   if (versionInfo[version].java) {
     APIs.children.push({
-      id: "java",
-      label: "Java",
+      id: 'java',
+      label: 'Java',
       link: `/api-reference/java/${versionInfo[version].java}/index.html`,
     });
   }
 
   if (versionInfo[version].node) {
     APIs.children.push({
-      id: "node",
-      label: "Node",
+      id: 'node',
+      label: 'Node',
       link: `/api-reference/node/${versionInfo[version].node}/tutorial.html`,
     });
   }
 
   if (versionInfo[version].go) {
     APIs.children.push({
-      id: "go",
-      label: "Go",
+      id: 'go',
+      label: 'Go',
       link: `https://github.com/milvus-io/milvus-sdk-go`,
     });
   }
@@ -135,25 +135,25 @@ export default function Template({ data, pageContext }) {
 
   // generate commit path
   const commitPath = useMemo(() => {
-    return locale === "en" ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
+    return locale === 'en' ? `site/en/${editPath}` : `site/zh-CN/${editPath}`;
   }, [locale, editPath]);
 
   // doc search meta
   const docsearchMeta = useMemo(() => {
     if (
-      typeof window === "undefined" ||
+      typeof window === 'undefined' ||
       !window.location.pathname.includes(version)
     ) {
       return [];
     }
     return [
       {
-        name: "docsearch:language",
-        content: locale === "cn" ? "zh-cn" : locale,
+        name: 'docsearch:language',
+        content: locale === 'cn' ? 'zh-cn' : locale,
       },
       {
-        name: "docsearch:version",
-        content: version || "",
+        name: 'docsearch:version',
+        content: version || '',
       },
     ];
   }, [locale, version]);
@@ -168,8 +168,8 @@ export default function Template({ data, pageContext }) {
 
   useCodeCopy(
     {
-      copy: t("v3trans.copyBtn.copyLabel"),
-      copied: t("v3trans.copyBtn.copiedLabel"),
+      copy: t('v3trans.copyBtn.copyLabel'),
+      copied: t('v3trans.copyBtn.copiedLabel'),
     },
     hljsCfg
   );
@@ -187,13 +187,13 @@ export default function Template({ data, pageContext }) {
         description={summary}
       />
       <div
-        className={clsx("doc-temp-container", {
+        className={clsx('doc-temp-container', {
           [`home`]: homeData,
         })}
       >
         <LeftNav
           homeUrl={leftNavHomeUrl}
-          homeLabel={t("v3trans.docs.homeTitle")}
+          homeLabel={t('v3trans.docs.homeTitle')}
           menus={menus}
           pageType="doc"
           locale={locale}
@@ -207,12 +207,12 @@ export default function Template({ data, pageContext }) {
           onMenuCollapseUpdate={setIsOpened}
         />
         <div
-          className={clsx("doc-right-container", {
+          className={clsx('doc-right-container', {
             [`is-opened`]: isOpened,
           })}
         >
           <div
-            className={clsx("doc-content-container", {
+            className={clsx('doc-content-container', {
               [`doc-home`]: homeData,
             })}
           >
@@ -241,7 +241,7 @@ export default function Template({ data, pageContext }) {
                 category="doc"
                 isHome={!!homeData}
                 items={headings}
-                title={t("v3trans.docs.tocTitle")}
+                title={t('v3trans.docs.tocTitle')}
               />
             </div>
           </div>

@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
-import { sourceMap } from "../consts/newsletterSource";
-import { IS_OPENED } from "../components/adjustableMenu";
-import { getCurrentSize } from "../http/hooks";
+import { useEffect, useState, useMemo } from 'react';
+import { sourceMap } from '../consts/newsletterSource';
+import { IS_OPENED } from '../components/adjustableMenu';
+import { getCurrentSize } from '../http/hooks';
 
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
@@ -10,10 +10,10 @@ export const useMobileScreen = () => {
       setScreenWidth(document.body.clientWidth);
     };
     cb();
-    window.addEventListener("resize", cb);
+    window.addEventListener('resize', cb);
 
     return () => {
-      window.removeEventListener("resize", cb);
+      window.removeEventListener('resize', cb);
     };
   }, []);
 
@@ -46,23 +46,23 @@ export const useClickOutside = (ref, handler, events) => {
 };
 
 export const useSubscribeSrouce = () => {
-  const [source, setSource] = useState("");
+  const [source, setSource] = useState('');
 
   useEffect(() => {
-    const path = window ? window.location.pathname : "";
+    const path = window ? window.location.pathname : '';
     if (!path) {
       return;
     }
-    const pathname = path === "/" ? "/" : path.replaceAll("/", "");
+    const pathname = path === '/' ? '/' : path.replaceAll('/', '');
     const pageSource = sourceMap[pathname];
 
-    if (pageSource === "Milvus: demo") {
+    if (pageSource === 'Milvus: demo') {
       const { search = [] } = window && window.location;
-      const source = ["utm_source", "utm_medium", "utm_campaign"].every(v =>
+      const source = ['utm_source', 'utm_medium', 'utm_campaign'].every(v =>
         search.includes(v)
       )
-        ? "Ads: Reddit"
-        : "Milvus: demo";
+        ? 'Ads: Reddit'
+        : 'Milvus: demo';
 
       setSource(source);
     } else {
@@ -75,10 +75,10 @@ export const useSubscribeSrouce = () => {
 export const useOpenedStatus = cb => {
   useEffect(() => {
     const device = getCurrentSize();
-    if (typeof cb !== "function" || device === "phone" || device === "tablet") {
+    if (typeof cb !== 'function' || device === 'phone' || device === 'tablet') {
       return;
     }
-    const isMenuOpened = window.sessionStorage.getItem(IS_OPENED) === "true";
+    const isMenuOpened = window.sessionStorage.getItem(IS_OPENED) === 'true';
 
     cb(isMenuOpened);
     // eslint-disable-next-line react-hooks/exhaustive-deps

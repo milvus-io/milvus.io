@@ -1,14 +1,14 @@
-import React, { useMemo, useEffect } from "react";
-import Giscus from "@giscus/react";
-import { graphql } from "gatsby";
-import { useI18next } from "gatsby-plugin-react-i18next";
-import Layout from "../components/layout";
-import Tags from "../components/tags";
-import BlogCard from "../components/card/BlogCard";
-import dayjs from "dayjs";
-import Share from "../components/share";
-import Seo from "../components/seo";
-import * as styles from "./blogTemplate.module.less";
+import React, { useMemo, useEffect } from 'react';
+import Giscus from '@giscus/react';
+import { graphql } from 'gatsby';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import Layout from '../components/layout';
+import Tags from '../components/tags';
+import BlogCard from '../components/card/BlogCard';
+import dayjs from 'dayjs';
+import Share from '../components/share';
+import Seo from '../components/seo';
+import * as styles from './blogTemplate.module.less';
 
 export default function Template({ data, pageContext }) {
   const {
@@ -25,10 +25,10 @@ export default function Template({ data, pageContext }) {
   } = pageContext;
 
   const { language, t, navigate } = useI18next();
-  const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ""), [newHtml]);
+  const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ''), [newHtml]);
   const shareUrl = useMemo(() => `https://milvus.io/blog/${id}`, [id]);
 
-  const dateTime = useMemo(() => dayjs(date).format("MMMM DD, YYYY"), [date]);
+  const dateTime = useMemo(() => dayjs(date).format('MMMM DD, YYYY'), [date]);
   const moreBlogs = useMemo(
     () =>
       blogList
@@ -49,16 +49,16 @@ export default function Template({ data, pageContext }) {
   };
 
   useEffect(() => {
-    const imgs = Array.from(document.querySelectorAll("img"));
+    const imgs = Array.from(document.querySelectorAll('img'));
     const reg = /(https|http)(\S*)(jpg|jpeg|png)/;
     imgs.forEach(img => {
-      const srcAttr = img.getAttribute("src");
+      const srcAttr = img.getAttribute('src');
       if (reg.test(srcAttr)) {
         const parentNode = img.parentNode;
-        parentNode.style.margin = "20px auto";
-        const title = img.getAttribute("title") || img.getAttribute("alt");
-        const captionEle = document.createElement("figcaption");
-        captionEle.className = "gatsby-resp-image-figcaption";
+        parentNode.style.margin = '20px auto';
+        const title = img.getAttribute('title') || img.getAttribute('alt');
+        const captionEle = document.createElement('figcaption');
+        captionEle.className = 'gatsby-resp-image-figcaption';
         captionEle.innerText = title;
         parentNode.appendChild(captionEle);
       }

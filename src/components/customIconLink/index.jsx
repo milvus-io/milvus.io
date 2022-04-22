@@ -1,11 +1,11 @@
-import React from "react";
-import clsx from "clsx";
-import * as styles from "./CustomIconLink.module.less";
+import React from 'react';
+import clsx from 'clsx';
+import * as styles from './CustomIconLink.module.less';
 
 export default function CustomIconLink(props) {
   const {
     to,
-    className = "",
+    className = '',
     showIcon = true,
     children,
     customIcon: Icon,

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import Code from "../components/code/code";
-import hljs from "highlight.js";
-import ReactDOM from "react-dom";
-import { drawZChart } from "@zilliz/zui";
+import React, { useEffect } from 'react';
+import Code from '../components/code/code';
+import hljs from 'highlight.js';
+import ReactDOM from 'react-dom';
+import { drawZChart } from '@zilliz/zui';
 // import "@zilliz/zui/ZChart.css";
 
 /**
@@ -20,9 +20,9 @@ import { drawZChart } from "@zilliz/zui";
  */
 export const useEmPanel = setShowModal => {
   const getRequestAsCURL = code => {
-    const [header, ...data] = code.split("\n");
-    const [method, url] = header.split(" ");
-    const queryBody = data.join("\n");
+    const [header, ...data] = code.split('\n');
+    const [method, url] = header.split(' ');
+    const queryBody = data.join('\n');
 
     return `curl -X ${method} "http://localhost:8000${url}" -H 'Content-Type: application/json' -d'\n${queryBody}'`;
   };
@@ -44,27 +44,27 @@ export const useEmPanel = setShowModal => {
   };
 
   const handleOpenConsole = () => {
-    console.log("open console");
+    console.log('open console');
   };
 
   const handleSetting = () => setShowModal(true);
 
   useEffect(() => {
-    document.querySelectorAll(".query-button-panel").forEach(panel => {
+    document.querySelectorAll('.query-button-panel').forEach(panel => {
       const codeWrapper = panel.previousElementSibling;
-      codeWrapper.classList.add("query-button-code");
+      codeWrapper.classList.add('query-button-code');
 
-      const querySnippet = codeWrapper.querySelector("code").textContent;
+      const querySnippet = codeWrapper.querySelector('code').textContent;
       const formatCode = getRequestAsCURL(querySnippet);
 
-      panel.addEventListener("click", e => {
+      panel.addEventListener('click', e => {
         const funcMap = {
           copy: handleCopy,
           console: handleOpenConsole,
           // setting wrapper
           setting: handleSetting,
           // setting icon
-          "fa-cog": handleSetting,
+          'fa-cog': handleSetting,
         };
 
         const classList = e.target.classList;
@@ -89,11 +89,11 @@ export const useEmPanel = setShowModal => {
 
 export const useFilter = () => {
   useEffect(() => {
-    const filterWrappers = document.querySelectorAll(".filter");
+    const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];
-    let firstHash = "";
+    let firstHash = '';
     filterWrappers.forEach(fw => {
-      const fs = fw.querySelectorAll("a");
+      const fs = fw.querySelectorAll('a');
 
       fs.forEach(f => {
         if (!firstHash) {
@@ -109,17 +109,17 @@ export const useFilter = () => {
     const clickEventHandler = targetHash => {
       const hash = targetHash;
       const currentFilters = allFilters.filter(f => f.hash === hash);
-      allFilters.forEach(f => f.classList.toggle("active", false));
-      currentFilters.forEach(cf => cf.classList.toggle("active", true));
-      allContents.forEach(c => c.classList.toggle("active", false));
+      allFilters.forEach(f => f.classList.toggle('active', false));
+      currentFilters.forEach(cf => cf.classList.toggle('active', true));
+      allContents.forEach(c => c.classList.toggle('active', false));
       const contents = document.querySelectorAll(
-        `.filter-${hash.replace("#", "").replace(/%/g, "")}`
+        `.filter-${hash.replace('#', '').replace(/%/g, '')}`
       );
-      contents.forEach(c => c.classList.toggle("active", true));
+      contents.forEach(c => c.classList.toggle('active', true));
     };
     filterWrappers.forEach(w => {
-      w.addEventListener("click", e => {
-        if (e.target.tagName === "A") {
+      w.addEventListener('click', e => {
+        if (e.target.tagName === 'A') {
           clickEventHandler(e.target.hash);
         }
       });
@@ -132,7 +132,7 @@ export const useFilter = () => {
       }
 
       window.addEventListener(
-        "hashchange",
+        'hashchange',
         () => {
           clickEventHandler(window.location.hash);
         },
@@ -143,19 +143,19 @@ export const useFilter = () => {
 };
 
 export const useMultipleCodeFilter = () => {
-  const SEARCH = "search";
+  const SEARCH = 'search';
   useEffect(() => {
     const setSearch = val => window.localStorage.setItem(SEARCH, val);
     const getSearch = () => {
       return window.localStorage.getItem(SEARCH);
     };
 
-    const filterWrappers = document.querySelectorAll(".multipleCode");
+    const filterWrappers = document.querySelectorAll('.multipleCode');
 
     const allFilters = [];
-    let firstSearch = "";
+    let firstSearch = '';
     filterWrappers.forEach(fw => {
-      const fs = fw.querySelectorAll("a");
+      const fs = fw.querySelectorAll('a');
 
       fs.forEach(f => {
         if (!firstSearch) {
@@ -168,33 +168,33 @@ export const useMultipleCodeFilter = () => {
     const allContents = document.querySelectorAll(`[class*="language-"]`);
     if (!allContents.length) return;
     if (!filterWrappers.length) {
-      allContents.forEach(c => c.classList.toggle("active", true));
+      allContents.forEach(c => c.classList.toggle('active', true));
       return;
     }
     // the language options of current code block
     // we must make sure options are same on single page
     const languageList = Array.prototype.map.call(
       filterWrappers[0].children,
-      item => item.getAttribute("href")
+      item => item.getAttribute('href')
     );
     const clickEventHandler = targetSearch => {
       const search = targetSearch;
       setSearch(search);
       const currentFilters = allFilters.filter(f => f.search === search);
-      allFilters.forEach(f => f.classList.toggle("active", false));
-      currentFilters.forEach(cf => cf.classList.toggle("active", true));
-      allContents.forEach(c => c.classList.toggle("active", false));
+      allFilters.forEach(f => f.classList.toggle('active', false));
+      currentFilters.forEach(cf => cf.classList.toggle('active', true));
+      allContents.forEach(c => c.classList.toggle('active', false));
       const contents = document.querySelectorAll(
-        `.language-${search.replace("?", "").replace(/%/g, "")}`
+        `.language-${search.replace('?', '').replace(/%/g, '')}`
       );
 
-      contents.forEach(c => c.classList.toggle("active", true));
+      contents.forEach(c => c.classList.toggle('active', true));
     };
 
     filterWrappers.forEach(w => {
-      w.addEventListener("click", e => {
+      w.addEventListener('click', e => {
         e.preventDefault();
-        if (e.target.tagName === "A") {
+        if (e.target.tagName === 'A') {
           clickEventHandler(e.target.search);
         }
       });
@@ -222,7 +222,7 @@ export const useMultipleCodeFilter = () => {
  */
 export const useCodeCopy = (tooltip, cfgs) => {
   useEffect(() => {
-    const elements = document.querySelectorAll("pre code");
+    const elements = document.querySelectorAll('pre code');
     if (!!elements.length) {
       cfgs && hljs.configure(cfgs);
       elements.forEach(block => {
@@ -257,54 +257,54 @@ export const useZChart = ref => {
 
     const resizeHandler = () => {
       const { width } = document
-        .querySelector(".doc-post-content")
+        .querySelector('.doc-post-content')
         .getBoundingClientRect();
       drawZCharts(width);
     };
-    window.addEventListener("resize", resizeHandler);
+    window.addEventListener('resize', resizeHandler);
 
-    return () => window.removeEventListener("resize", resizeHandler);
+    return () => window.removeEventListener('resize', resizeHandler);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref.current]);
 };
 
 const drawZCharts = width => {
-  const divs = document.querySelectorAll(".zchart-container");
+  const divs = document.querySelectorAll('.zchart-container');
   [].forEach.call(divs, div => {
     try {
       const id = div.id;
 
       const chartTypeTemplate = [].find.call(
         div.children,
-        div => div.id === "chart-type"
+        div => div.id === 'chart-type'
       );
       if (!chartTypeTemplate) {
-        console.warn("ZChart - Invalid chart type.");
+        console.warn('ZChart - Invalid chart type.');
         return;
       }
       // eslint-disable-next-line
       const chartType = eval(chartTypeTemplate.innerHTML);
 
-      const dataTemplate = [].find.call(div.children, div => div.id === "data");
+      const dataTemplate = [].find.call(div.children, div => div.id === 'data');
       if (!dataTemplate) {
-        console.warn("ZChart - Invalid data.");
+        console.warn('ZChart - Invalid data.');
         return;
       }
       const data = JSON.parse(dataTemplate.innerHTML);
 
       const configTemplate = [].find.call(
         div.children,
-        div => div.id === "config"
+        div => div.id === 'config'
       );
       if (!configTemplate) {
-        console.warn("ZChart - Invalid config.");
+        console.warn('ZChart - Invalid config.');
         return;
       }
       const config = JSON.parse(decodeEntity(configTemplate.innerHTML));
       config.width = width;
 
       [].filter
-        .call(div.children, div => div.tagName === "svg")
+        .call(div.children, div => div.tagName === 'svg')
         .forEach(svg => svg.remove());
 
       drawZChart({
@@ -320,7 +320,7 @@ const drawZCharts = width => {
 };
 
 function decodeEntity(inputStr) {
-  var textarea = document.createElement("textarea");
+  var textarea = document.createElement('textarea');
   textarea.innerHTML = inputStr;
   return textarea.value;
 }

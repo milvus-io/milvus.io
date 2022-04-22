@@ -1,10 +1,10 @@
-import React from "react";
-import * as styles from "./index.module.less";
-import github from "../../../images/demos/github.svg";
-import Button from "../button";
-import { Forum } from "../item/searchIcon";
+import React from 'react';
+import * as styles from './index.module.less';
+import github from '../../../images/demos/github.svg';
+import Button from '../button';
+import { Forum } from '../item/searchIcon';
 
-const FloatBord = ({ className = "" }) => {
+const FloatBord = ({ className = '' }) => {
   return (
     <div className={`${styles.floatBordContainer} ${className}`}>
       <div className={styles.linkItem}>

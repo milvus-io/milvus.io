@@ -1,22 +1,22 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
-import milvusLogo from "../../images/milvus_logo.svg";
-import GitHubButton from "../githubButton";
-import MilvusCookieConsent from "../milvusCookieConsent";
-import { getGithubStatis } from "../../http";
-import * as styles from "./index.module.less";
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, useI18next } from 'gatsby-plugin-react-i18next';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import milvusLogo from '../../images/milvus_logo.svg';
+import GitHubButton from '../githubButton';
+import MilvusCookieConsent from '../milvusCookieConsent';
+import { getGithubStatis } from '../../http';
+import * as styles from './index.module.less';
 
-const Header = ({ darkMode = false, t = v => v, className = "" }) => {
+const Header = ({ darkMode = false, t = v => v, className = '' }) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const tutRef = useRef(null);
   const headerRef = useRef(null);
   let isDesktop = true;
-  if (typeof navigator !== "undefined") {
+  if (typeof navigator !== 'undefined') {
     isDesktop =
       !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
         navigator.userAgent
@@ -69,8 +69,8 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
         headerRef.current.classList.add(styles.showHeader);
       }
     };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, [isLightHeader, darkMode]);
 
   const handleLangClick = event => {
@@ -98,7 +98,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
   const handleMenuLinkClick = e => {
     const link = e.target?.children[0];
-    if (link && link.tagName.toLowerCase() === "a") {
+    if (link && link.tagName.toLowerCase() === 'a') {
       e.preventDefault();
       e.stopPropagation();
       link.click();
@@ -114,15 +114,15 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       <Divider
         variant="middle"
         sx={{
-          margin: "0 13px",
-          opacity: "0.3",
-          border: "1px solid #d1d1d1",
-          transform: "scaleX(0.5)",
-          "@media(max-width: 1024px)": {
-            margin: "0 10px",
+          margin: '0 13px',
+          opacity: '0.3',
+          border: '1px solid #d1d1d1',
+          transform: 'scaleX(0.5)',
+          '@media(max-width: 1024px)': {
+            margin: '0 10px',
           },
-          "@media(max-width: 744px)": {
-            margin: "0 6px",
+          '@media(max-width: 744px)': {
+            margin: '0 6px',
           },
         }}
       />
@@ -131,7 +131,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
         href="https://lfaidata.foundation/projects/"
         target="_blank"
         rel="noopener noreferrer"
-        style={{ display: "inline-block", lineHeight: 0 }}
+        style={{ display: 'inline-block', lineHeight: 0 }}
       >
         <span className={styles.lfaiLogo} />
       </a>
@@ -159,9 +159,9 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
       </div>
       <button
         className={styles.langSelect}
-        aria-controls={isLangOpen ? "basic-menu" : undefined}
+        aria-controls={isLangOpen ? 'basic-menu' : undefined}
         aria-haspopup="true"
-        aria-expanded={isLangOpen ? "true" : undefined}
+        aria-expanded={isLangOpen ? 'true' : undefined}
         onClick={handleLangClick}
       >
         <>
@@ -174,7 +174,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
         open={isLangOpen}
         onClose={handleLangClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          'aria-labelledby': 'basic-button',
         }}
       >
         {languages.map(lng => {
@@ -185,7 +185,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                 to={originalPath}
                 language={lng}
               >
-                {lng === "en" ? "English" : "中文"}
+                {lng === 'en' ? 'English' : '中文'}
               </Link>
             </MenuItem>
           );
@@ -197,8 +197,8 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   const header = (
     <header
       className={`${styles.header} ${
-        isLightHeader ? styles.light : ""
-      } ${className} ${!darkMode ? styles.posSticky : ""}`}
+        isLightHeader ? styles.light : ''
+      } ${className} ${!darkMode ? styles.posSticky : ''}`}
       ref={headerRef}
     >
       <div className={`${styles.headerContainer} headerContainer`}>
@@ -208,7 +208,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
             <ul className={`${styles.menu}`}>
               <li>
                 <Link to="/docs" className={styles.menuItem}>
-                  {t("v3trans.main.nav.docs")}
+                  {t('v3trans.main.nav.docs')}
                 </Link>
               </li>
               <li>
@@ -217,7 +217,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                   className={styles.menuItem}
                   onClick={() => setIsDesktopTutOpen(true)}
                 >
-                  {t("v3trans.main.nav.tutorials")}
+                  {t('v3trans.main.nav.tutorials')}
                 </button>
               </li>
               <li>
@@ -226,17 +226,17 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                   className={styles.menuItem}
                   onClick={() => setIsDesktopToolOpen(true)}
                 >
-                  {t("v3trans.main.nav.tools")}
+                  {t('v3trans.main.nav.tools')}
                 </button>
               </li>
               <li>
                 <Link to="/blog" className={styles.menuItem}>
-                  {t("v3trans.main.nav.blog")}
+                  {t('v3trans.main.nav.blog')}
                 </Link>
               </li>
               <li>
                 <Link to="/community" className={styles.menuItem}>
-                  {t("v3trans.main.nav.community")}
+                  {t('v3trans.main.nav.community')}
                 </Link>
               </li>
             </ul>
@@ -249,22 +249,22 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                 setIsDesktopTutOpen(false);
               }}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
             >
               <MenuItem onClick={handleMenuLinkClick}>
                 <Link to="/bootcamp" className={styles.menuLink}>
-                  {t("v3trans.main.nav.bootcamp")}
+                  {t('v3trans.main.nav.bootcamp')}
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleMenuLinkClick}>
                 <Link to="/milvus-demos" className={styles.menuLink}>
-                  {t("v3trans.main.nav.demo")}
+                  {t('v3trans.main.nav.demo')}
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleMenuLinkClick}>
@@ -274,7 +274,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                   rel="noopener noreferrer"
                   className={styles.menuLink}
                 >
-                  {t("v3trans.main.nav.video")}
+                  {t('v3trans.main.nav.video')}
                 </a>
               </MenuItem>
             </Menu>
@@ -318,13 +318,13 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
           <div className={styles.rightSection}>
             {isDesktop && actionBar}
             <Link to="/docs/example_code.md" className={styles.startBtn}>
-              {t("v3trans.main.nav.getstarted")}
+              {t('v3trans.main.nav.getstarted')}
             </Link>
           </div>
         </div>
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`${styles.hamburg} ${isMenuOpen ? styles.active : ""}`}
+          className={`${styles.hamburg} ${isMenuOpen ? styles.active : ''}`}
         >
           <span className={styles.top}></span>
           <span className={styles.middle}></span>
@@ -332,16 +332,16 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
         </button>
       </div>
       {!isDesktop && (
-        <div className={`${styles.overlay}  ${isMenuOpen ? styles.open : ""}`}>
+        <div className={`${styles.overlay}  ${isMenuOpen ? styles.open : ''}`}>
           <nav className={`${styles.nav} col-4 col-8 col-12`}>
             <List
-              sx={{ width: "100%" }}
+              sx={{ width: '100%' }}
               component="nav"
               aria-labelledby="nested-list-subheader"
             >
               <Link to="/docs" className={styles.menuLink}>
                 <ListItemButton>
-                  <ListItemText primary={t("v3trans.main.nav.docs")} />
+                  <ListItemText primary={t('v3trans.main.nav.docs')} />
                   <ExpandMore className={styles.turnLeft} />
                 </ListItemButton>
               </Link>
@@ -353,7 +353,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                   openTutorial(!isTutOpen);
                 }}
               >
-                <ListItemText primary={t("v3trans.main.nav.tutorials")} />
+                <ListItemText primary={t('v3trans.main.nav.tutorials')} />
                 {isTutOpen ? (
                   <ExpandMore />
                 ) : (
@@ -367,13 +367,13 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                     primary={
                       <>
                         <Link to="/bootcamp" className={styles.mobileMenuLink}>
-                          {t("v3trans.main.nav.bootcamp")}
+                          {t('v3trans.main.nav.bootcamp')}
                         </Link>
                         <Link
                           to="/milvus-demos"
                           className={styles.mobileMenuLink}
                         >
-                          {t("v3trans.main.nav.demo")}
+                          {t('v3trans.main.nav.demo')}
                         </Link>
                         <a
                           href="https://www.youtube.com/c/MilvusVectorDatabase"
@@ -381,7 +381,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                           rel="noopener noreferrer"
                           className={styles.mobileMenuLink}
                         >
-                          {t("v3trans.main.nav.video")}
+                          {t('v3trans.main.nav.video')}
                         </a>
                       </>
                     }
@@ -396,7 +396,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
                   openTool(!isToolOpen);
                 }}
               >
-                <ListItemText primary={t("v3trans.main.nav.tools")} />
+                <ListItemText primary={t('v3trans.main.nav.tools')} />
                 {isToolOpen ? (
                   <ExpandMore />
                 ) : (
@@ -441,7 +441,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
               <Link to="/blog" className={styles.menuLink}>
                 <ListItemButton>
-                  <ListItemText primary={t("v3trans.main.nav.blog")} />
+                  <ListItemText primary={t('v3trans.main.nav.blog')} />
                   <ExpandMore className={styles.turnLeft} />
                 </ListItemButton>
               </Link>
@@ -450,7 +450,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
               <Link to="/community" className={styles.menuLink}>
                 <ListItemButton>
-                  <ListItemText primary={t("v3trans.main.nav.community")} />
+                  <ListItemText primary={t('v3trans.main.nav.community')} />
                   <ExpandMore className={styles.turnLeft} />
                 </ListItemButton>
               </Link>
@@ -462,11 +462,11 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
 
             <Divider
               variant="fullwidth"
-              sx={{ position: "absolute", bottom: "78px", width: "100%" }}
+              sx={{ position: 'absolute', bottom: '78px', width: '100%' }}
             />
             <Link to="/docs/install_standalone-docker.md">
               <button className={styles.startBtn}>
-                {t("v3trans.main.nav.getstarted")}
+                {t('v3trans.main.nav.getstarted')}
               </button>
             </Link>
           </nav>
@@ -478,7 +478,7 @@ const Header = ({ darkMode = false, t = v => v, className = "" }) => {
   return (
     <>
       {header}
-      {language !== "cn" && <MilvusCookieConsent />}
+      {language !== 'cn' && <MilvusCookieConsent />}
     </>
   );
 };

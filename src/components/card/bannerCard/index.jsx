@@ -1,7 +1,7 @@
-import React from "react";
-import * as styles from "./index.module.less";
+import React from 'react';
+import * as styles from './index.module.less';
 
-const BannerCard = ({ content = [], title = "", className = "" }) => {
+const BannerCard = ({ content = [], title = '', className = '' }) => {
   return (
     <div className={`${styles.bannerCard} ${className}`}>
       <div className={styles.contentWrapper}>

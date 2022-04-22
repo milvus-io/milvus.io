@@ -1,9 +1,9 @@
-import React from "react";
-import * as styles from "./DemoCard.module.less";
-import VideoPlayer from "../videoPlayer";
-import InfoSubmitter from "../infoSubmitter";
+import React from 'react';
+import * as styles from './DemoCard.module.less';
+import VideoPlayer from '../videoPlayer';
+import InfoSubmitter from '../infoSubmitter';
 
-const UNIQUE_EMAIL_ID = "UNIQUE_EMAIL_ID";
+const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
 const DemoCard = ({
   href,
@@ -19,13 +19,13 @@ const DemoCard = ({
     if (statusCode === 200) {
       window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
       handleOpenSnackbar({
-        type: "success",
-        message: "Thank you, you have been added to our mailing list!",
+        type: 'success',
+        message: 'Thank you, you have been added to our mailing list!',
       });
       //
     } else {
       handleOpenSnackbar({
-        type: "warning",
+        type: 'warning',
         message: "One second! We're taking you there...",
       });
       window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
@@ -49,11 +49,11 @@ const DemoCard = ({
 
   const handleSubmitEmail = () => {
     const { search } = window.location;
-    const source = ["utm_source", "utm_medium", "utm_campaign"].every(v =>
+    const source = ['utm_source', 'utm_medium', 'utm_campaign'].every(v =>
       search.includes(v)
     )
-      ? "Ads: Reddit"
-      : "Milvus: demo";
+      ? 'Ads: Reddit'
+      : 'Milvus: demo';
     const isSubscribed = window.localStorage.getItem(UNIQUE_EMAIL_ID) || false;
     if (isSubscribed) {
       window.location.href = href;
@@ -62,11 +62,11 @@ const DemoCard = ({
     const content = () => (
       <InfoSubmitter source={source} href={href} submitCb={submitCallback} />
     );
-    handelOpenDialog(content, "Before you go...");
+    handelOpenDialog(content, 'Before you go...');
   };
 
   return (
-    <div className={`${styles.demoCard} ${index % 2 === 1 ? styles.even : ""}`}>
+    <div className={`${styles.demoCard} ${index % 2 === 1 ? styles.even : ''}`}>
       <div className={styles.contentWrapper}>
         <h3>{name}</h3>
         <p>{desc}</p>

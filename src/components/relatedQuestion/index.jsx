@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Typography from "@mui/material/Typography";
-import { useGetFaq } from "../../http/hooks";
-import CustomIconLink from "../customIconLink";
-import { CustomizedDialogs } from "../dialog/Dialog";
-import FeedbackDialog from "../dialog/FeedbackDialog";
-import clsx from "clsx";
-import * as styles from "./relatedQuestion.module.less";
+import React, { useState } from 'react';
+import Typography from '@mui/material/Typography';
+import { useGetFaq } from '../../http/hooks';
+import CustomIconLink from '../customIconLink';
+import { CustomizedDialogs } from '../dialog/Dialog';
+import FeedbackDialog from '../dialog/FeedbackDialog';
+import clsx from 'clsx';
+import * as styles from './relatedQuestion.module.less';
 
 export default function RelatedQuestion(props) {
   const { title, contact, relatedKey, trans } = props;
@@ -66,7 +66,7 @@ export default function RelatedQuestion(props) {
       </ul>
       <div className={clsx(styles.faqLinks)}>
         <Typography variant="h6" component="h3" className={styles.subTitle}>
-          {trans("v3trans.docs.faqBtnGroupTitle")}
+          {trans('v3trans.docs.faqBtnGroupTitle')}
         </Typography>
         <div className={styles.btnGroups}>
           <button
@@ -75,7 +75,7 @@ export default function RelatedQuestion(props) {
               handleClickFollowUp();
             }}
           >
-            {trans("v3trans.docs.contactFollow")}
+            {trans('v3trans.docs.contactFollow')}
           </button>
           <a
             className={styles.sBtn}
@@ -83,7 +83,7 @@ export default function RelatedQuestion(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {trans("v3trans.docs.contactSlack")}
+            {trans('v3trans.docs.contactSlack')}
           </a>
           <a
             className={styles.sBtn}
@@ -91,7 +91,7 @@ export default function RelatedQuestion(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {trans("v3trans.docs.contactGithub")}
+            {trans('v3trans.docs.contactGithub')}
           </a>
         </div>
         {showFeedbackDialog && (

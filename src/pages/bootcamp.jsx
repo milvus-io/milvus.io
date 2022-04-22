@@ -1,21 +1,21 @@
-import React from "react";
-import { graphql } from "gatsby";
-import { useI18next } from "gatsby-plugin-react-i18next";
-import Layout from "../components/layout";
-import BannerCard from "../components/card/bannerCard";
-import SolutionCard from "../components/card/solutionCard";
-import Seo from "../components/seo";
-import imageSearch from "../images/docs/image_search.svg";
-import audioSearch from "../images/docs/audio-search.svg";
-import hybrid from "../images/docs/hybrid.svg";
-import molecular from "../images/docs/molecular.svg";
-import questionAnswering from "../images/docs/question_answering.svg";
-import recommend from "../images/docs/recommend.svg";
-import videoSearch from "../images/docs/video-search.svg";
-import { useCodeCopy, useFilter } from "../hooks/doc-dom-operation";
-import "./bootcampTemplate.less";
-import { useFormatAnchor } from "../hooks/doc-anchor";
-import bootcamp from "../pages/docs/versions/master/bootcamp/site/en/bootcampHome/index.json";
+import React from 'react';
+import { graphql } from 'gatsby';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import Layout from '../components/layout';
+import BannerCard from '../components/card/bannerCard';
+import SolutionCard from '../components/card/solutionCard';
+import Seo from '../components/seo';
+import imageSearch from '../images/docs/image_search.svg';
+import audioSearch from '../images/docs/audio-search.svg';
+import hybrid from '../images/docs/hybrid.svg';
+import molecular from '../images/docs/molecular.svg';
+import questionAnswering from '../images/docs/question_answering.svg';
+import recommend from '../images/docs/recommend.svg';
+import videoSearch from '../images/docs/video-search.svg';
+import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
+import './bootcampTemplate.less';
+import { useFormatAnchor } from '../hooks/doc-anchor';
+import bootcamp from '../pages/docs/versions/master/bootcamp/site/en/bootcampHome/index.json';
 
 const Icons = {
   IMAGE_SEARCH: imageSearch,
@@ -32,14 +32,14 @@ const BootcampTemplate = ({ pageContext }) => {
   const { locale } = pageContext;
   const { banner, title, description, section3, section4 } = bootcamp;
 
-  const SeoTitle = "Milvus Bootcamp";
-  const desc = "Join Milvus Bootcamp";
+  const SeoTitle = 'Milvus Bootcamp';
+  const desc = 'Join Milvus Bootcamp';
 
   // add hooks used by doc template
   useFilter();
   useCodeCopy({
-    copy: t("v3trans.copyBtn.copyLabel"),
-    copied: t("v3trans.copyBtn.copiedLabel"),
+    copy: t('v3trans.copyBtn.copyLabel'),
+    copied: t('v3trans.copyBtn.copiedLabel'),
   });
   useFormatAnchor();
 

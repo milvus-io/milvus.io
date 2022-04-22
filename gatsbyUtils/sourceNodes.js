@@ -1,6 +1,6 @@
-const fs = require("fs");
-const path = require("path");
-const { Remarkable } = require("remarkable");
+const fs = require('fs');
+const path = require('path');
+const { Remarkable } = require('remarkable');
 /**
  * Use api version to find target doc versions.
  * @param {object} info Version info from walkFile output.
@@ -42,7 +42,7 @@ const getAllFilesAbsolutePath = (dirPath, pathList = []) => {
  * @param {string} path File path to parse.
  * @returns The file name.
  */
-const getFileName = (path = "") => path.split("/").pop();
+const getFileName = (path = '') => path.split('/').pop();
 
 /**
  * Get relative path from absolute path.
@@ -82,7 +82,7 @@ const generateNodes = (
       doc,
       id: createNodeId(`APIfile-${category}-${version}-${name}`),
       internal: {
-        type: "APIfile",
+        type: 'APIfile',
         contentDigest: createContentDigest(file),
       },
       version,
@@ -110,16 +110,16 @@ const handleApiFiles = (nodes, { parentPath, version, category }) => {
   const isMetaFileExist = fs.existsSync(`${dirPath}/api_reference_meta.json`);
   const metaDataStr =
     isMetaFileExist &&
-    fs.readFileSync(`${dirPath}/api_reference_meta.json`, "utf8");
+    fs.readFileSync(`${dirPath}/api_reference_meta.json`, 'utf8');
   const metaData = isMetaFileExist ? JSON.parse(metaDataStr) : {};
-  const cat = category.replace("-", "_");
+  const cat = category.replace('-', '_');
   try {
     const filesList = getAllFilesAbsolutePath(dirPath);
     // Level: api_reference(root directory) > 2nd level directory > 3rd level directory.
     const thridLevelDirectories = {};
     // Get all HTML files under dirPath.
     const apiFiles = filesList.filter(
-      i => i.endsWith(".html") || i.endsWith(".md")
+      i => i.endsWith('.html') || i.endsWith('.md')
     );
     // If this dirPath has only one page or not, regardless how many directories.
     const isSinglePage = apiFiles.length === 1;
@@ -129,9 +129,9 @@ const handleApiFiles = (nodes, { parentPath, version, category }) => {
       const filePath = apiFiles[i];
       const relativePath = getFileRelativePath(filePath, version);
 
-      let doc = fs.readFileSync(filePath, "utf8");
+      let doc = fs.readFileSync(filePath, 'utf8');
       // if markdown, parse to html
-      if (filePath.endsWith("md")) {
+      if (filePath.endsWith('md')) {
         doc = converter.render(doc);
       }
       const {
@@ -140,9 +140,9 @@ const handleApiFiles = (nodes, { parentPath, version, category }) => {
         parentMenu = {},
       } = metaData[relativePath] || {};
       // docOrder may be 0.
-      const order = typeof docOrder === "undefined" ? null : docOrder;
+      const order = typeof docOrder === 'undefined' ? null : docOrder;
       const title = docTitle;
-      const parentPath = relativePath.split("/").slice(0, -1).join("/");
+      const parentPath = relativePath.split('/').slice(0, -1).join('/');
       // Record the parentPath as a thrid level directory.
       parentPath && (thridLevelDirectories[parentPath] = parentMenu);
       parentPath
@@ -156,7 +156,7 @@ const handleApiFiles = (nodes, { parentPath, version, category }) => {
             category,
             title,
             order,
-            labels: [cat, isSinglePage ? "" : parentPath.replace("-", "_")],
+            labels: [cat, isSinglePage ? '' : parentPath.replace('-', '_')],
           })
         : nodes.push({
             doc: doc,
@@ -166,34 +166,34 @@ const handleApiFiles = (nodes, { parentPath, version, category }) => {
             category,
             title,
             order,
-            labels: [cat, isSinglePage ? "" : ""],
+            labels: [cat, isSinglePage ? '' : ''],
           });
     }
     // Deduplicate.
     // Add 3rd level directory menu. Should ignore if single page.
     !isSinglePage &&
       nodes.push({
-        doc: "",
+        doc: '',
         name: cat,
         abspath: dirPath,
         version,
         category,
         labels: [],
         isDirectory: true,
-        order: category.includes("pymilvus") ? -1 : null,
+        order: category.includes('pymilvus') ? -1 : null,
       }) &&
       Object.keys(thridLevelDirectories).forEach(f => {
         const { name: dirName, order: dirOrder } = thridLevelDirectories[f];
         nodes.push({
-          doc: "",
-          name: f.replace("-", "_"),
+          doc: '',
+          name: f.replace('-', '_'),
           abspath: `${dirPath}/${f}`,
           version,
           category,
           labels: [cat],
           isDirectory: true,
           order: dirOrder,
-          title: dirName || f.replace("-", "_"),
+          title: dirName || f.replace('-', '_'),
         });
       });
   } catch (e) {

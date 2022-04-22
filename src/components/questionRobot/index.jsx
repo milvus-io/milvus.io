@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
-import Modal from "@mui/material/Modal";
-import IconButton from "@mui/material/IconButton";
-import SvgIcon from "@mui/material/SvgIcon";
-import clsx from "clsx";
-import * as styles from "./index.module.less";
-import "./index.less";
-import milvus from "../../images/milvus_logo.svg";
-import { getFaq } from "../../http";
-import WelcomBlock from "./welcomBlock";
-import AnswerBlock from "./answerBlock";
+import React, { useEffect, useState, useRef } from 'react';
+import Modal from '@mui/material/Modal';
+import IconButton from '@mui/material/IconButton';
+import SvgIcon from '@mui/material/SvgIcon';
+import clsx from 'clsx';
+import * as styles from './index.module.less';
+import './index.less';
+import milvus from '../../images/milvus_logo.svg';
+import { getFaq } from '../../http';
+import WelcomBlock from './welcomBlock';
+import AnswerBlock from './answerBlock';
 
 const BirdIcon = props => {
   return (
@@ -58,7 +58,7 @@ const QuestionRobot = props => {
   const [locked, setLocked] = useState(0);
   const [version, setVersion] = useState(2);
   const [currentExpand, setCurrentExpand] = useState(0);
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState('');
 
   const inputEl = useRef(null);
   const containerEl = useRef(null);
@@ -67,15 +67,15 @@ const QuestionRobot = props => {
 
   const keyPress = e => {
     const v = inputEl.current.value;
-    if ((e.key === "Enter" || e.target.tagName === "BUTTON") && v && !locked) {
+    if ((e.key === 'Enter' || e.target.tagName === 'BUTTON') && v && !locked) {
       setQuestion(v);
     }
   };
 
   // check if doc version changed
   useEffect(() => {
-    const hrefs = window.location.href.split("docs/v");
-    if (hrefs[1] && (hrefs[1].startsWith("0") || hrefs[1].startsWith("1"))) {
+    const hrefs = window.location.href.split('docs/v');
+    if (hrefs[1] && (hrefs[1].startsWith('0') || hrefs[1].startsWith('1'))) {
       setVersion(1);
     } else {
       setVersion(2);
@@ -104,11 +104,11 @@ const QuestionRobot = props => {
           setLocked(false);
         })
         .catch(err => {
-          console.log("err", err);
+          console.log('err', err);
           setLocked(false);
         });
       if (inputEl && inputEl.current) {
-        inputEl.current.value = "";
+        inputEl.current.value = '';
       }
     }
   }, [question, version]);
@@ -143,14 +143,14 @@ const QuestionRobot = props => {
         onClick={handleOpen}
         disableFocusRipple
         disableRipple
-        className={clsx("milmil_btn", styles.openBtn)}
+        className={clsx('milmil_btn', styles.openBtn)}
       >
         <BirdIcon className={styles.openBtnIcon} />
       </IconButton>
       <Modal open={open} onClose={handleClose}>
         <div className={styles.dialog}>
           <div className={styles.dialogHeader}>
-            Search engine powerd by{" "}
+            Search engine powerd by{' '}
             <img src={milvus} className={styles.logo} alt="logo" />
           </div>
           <div ref={containerEl} className={styles.dialogContent}>
@@ -192,7 +192,7 @@ const QuestionRobot = props => {
               placeholder="Ask MilMil Anything..."
               onKeyPress={keyPress}
             />
-            <button onClick={keyPress}>{""}</button>
+            <button onClick={keyPress}>{''}</button>
           </div>
         </div>
       </Modal>

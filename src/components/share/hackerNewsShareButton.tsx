@@ -1,28 +1,36 @@
 import React, { Ref, forwardRef } from 'react';
-import ShareButton, { Props as ShareButtonProps } from 'react-share/lib/ShareButton';
+import ShareButton, {
+  Props as ShareButtonProps,
+} from 'react-share/lib/ShareButton';
 
-function objectToGetParams (object: {
+function objectToGetParams(object: {
   [key: string]: string | number | undefined | null;
 }) {
   const params = Object.entries(object)
     .filter(([, value]) => value !== undefined && value !== null)
-    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`
+    );
 
   return params.length > 0 ? `?${params.join('&')}` : '';
 }
 
-function createShareButton<OptionProps extends Record<string, any>, LinkOptions = OptionProps>(
+function createShareButton<
+  OptionProps extends Record<string, any>,
+  LinkOptions = OptionProps
+>(
   networkName: string,
   link: (url: string, options: LinkOptions) => string,
   optsMap: (props: OptionProps) => LinkOptions,
-  defaultProps: Partial<ShareButtonProps<LinkOptions> & OptionProps>,
+  defaultProps: Partial<ShareButtonProps<LinkOptions> & OptionProps>
 ) {
   type Props = Omit<
     ShareButtonProps<LinkOptions>,
     'forwardedRef' | 'networkName' | 'networkLink' | 'opts'
   > &
     OptionProps;
-  
+
   function CreatedButton(props: Props, ref: Ref<HTMLButtonElement>) {
     const opts = optsMap(props);
     const passedProps = { ...props };
@@ -57,9 +65,8 @@ function hackerNewsLink(
     via,
     hashtags = [],
     related = [],
-  }: { title?: string; via?: string; hashtags?: string[]; related?: string[] },
+  }: { title?: string; via?: string; hashtags?: string[]; related?: string[] }
 ) {
-
   return (
     'https://news.ycombinator.com/submitlink' +
     objectToGetParams({
@@ -86,7 +93,7 @@ const hackerNewsShareButton = createShareButton<{
   {
     windowWidth: 550,
     windowHeight: 400,
-  },
+  }
 );
 
 export default hackerNewsShareButton;

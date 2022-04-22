@@ -1,15 +1,15 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 // import { Link } from "gatsby-plugin-react-i18next";
-import clsx from "clsx";
-import TreeView from "@mui/lab/TreeView";
-import TreeItem from "@mui/lab/TreeItem";
-import { Typography } from "@mui/material";
-import * as styles from "./TocTreeView.module.less";
-import "./TocTreeView.less";
+import clsx from 'clsx';
+import TreeView from '@mui/lab/TreeView';
+import TreeItem from '@mui/lab/TreeItem';
+import { Typography } from '@mui/material';
+import * as styles from './TocTreeView.module.less';
+import './TocTreeView.less';
 
-const title2hash = (title = "") => {
-  const normalVal = title.replace(/[.｜,｜/｜'｜?｜？｜、|，|(|)|:]/g, "");
-  const anchor = normalVal.split(" ").join("-");
+const title2hash = (title = '') => {
+  const normalVal = title.replace(/[.｜,｜/｜'｜?｜？｜、|，|(|)|:]/g, '');
+  const anchor = normalVal.split(' ').join('-');
   return anchor;
 };
 
@@ -65,12 +65,12 @@ const TocTreeView = props => {
   );
   const expandedItemsIdList = nestedItemsMemo.allLegalIds;
 
-  const generateLink = (originUrl, label, linkClassName = "") => {
+  const generateLink = (originUrl, label, linkClassName = '') => {
     return (
       <a
         key={`${originUrl}-${label}`}
         href={originUrl}
-        className={clsx("mv3-toc-link", {
+        className={clsx('mv3-toc-link', {
           [linkClassName]: linkClassName,
         })}
       >
@@ -99,7 +99,7 @@ const TocTreeView = props => {
 
   return (
     <div
-      className={clsx("mv3-toc-container", styles.container, {
+      className={clsx('mv3-toc-container', styles.container, {
         [className]: className,
       })}
     >
@@ -109,7 +109,7 @@ const TocTreeView = props => {
         </Typography>
       )}
       <TreeView
-        className={clsx("mv3-toc-tree")}
+        className={clsx('mv3-toc-tree')}
         // selected={selectedId}
         expanded={expandedItemsIdList}
       >

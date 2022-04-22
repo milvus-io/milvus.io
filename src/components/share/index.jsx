@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 import {
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton,
   RedditShareButton,
-} from "react-share";
-import HackerNewsShareButton from "./hackerNewsShareButton";
-import { Helmet } from "react-helmet";
-import * as styles from "./index.module.less";
-import twitterIcon from "../../images/blog/twitter.svg";
-import linkedinIcon from "../../images/blog/linkedin.svg";
-import facebookIcon from "../../images/blog/facebook.svg";
-import redditIcon from "../../images/blog/reddit.svg";
-import hackernewsIcon from "../../images/blog/hackernews.svg";
+} from 'react-share';
+import HackerNewsShareButton from './hackerNewsShareButton';
+import { Helmet } from 'react-helmet';
+import * as styles from './index.module.less';
+import twitterIcon from '../../images/blog/twitter.svg';
+import linkedinIcon from '../../images/blog/linkedin.svg';
+import facebookIcon from '../../images/blog/facebook.svg';
+import redditIcon from '../../images/blog/reddit.svg';
+import hackernewsIcon from '../../images/blog/hackernews.svg';
 
 const Share = props => {
   const { url, quote, desc, image, wrapperClass, vertical = false } = props;
@@ -20,7 +20,7 @@ const Share = props => {
   return (
     <div
       className={`${wrapperClass} ${styles.share}`}
-      style={{ flexDirection: vertical ? "column" : "row" }}
+      style={{ flexDirection: vertical ? 'column' : 'row' }}
     >
       <Helmet>
         <meta name="description" content={desc} />
@@ -34,7 +34,6 @@ const Share = props => {
         <meta name="twitter:title" content={quote} />
         <meta name="twitter:description" content={desc} />
         <meta name="twitter:image" content={image} />
-        
       </Helmet>
       <LinkedinShareButton url={url} title={quote}>
         <img src={linkedinIcon} alt="linkedin" className={styles.icon} />

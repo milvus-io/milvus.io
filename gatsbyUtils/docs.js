@@ -20,7 +20,7 @@ const getNormalVersionHomePath = (version, locale) => {
 const generateDocHomeWidthMd = (
   createPage,
   {
-    nodes: homeMd,
+    nodes,
     blogs: blogMD,
     template: docTemplate,
     allMenus,
@@ -78,7 +78,7 @@ const generateDocHomeWidthMd = (
     return newHtml;
   };
 
-  homeMd.forEach(({ language, html, path, version }) => {
+  nodes.forEach(({ language, html, path, version }) => {
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === "en" ? "/en/" : "/zh-CN/")[1];
 

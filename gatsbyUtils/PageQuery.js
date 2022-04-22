@@ -15,7 +15,6 @@ module.exports = `
           depth
         }
         frontmatter {
-          related_key
           summary
           date
           author

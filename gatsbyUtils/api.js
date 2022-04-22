@@ -198,7 +198,27 @@ const generateApiReferencePages = (
   );
 };
 
+const API_QUERY = `
+{
+  allApIfile {
+    nodes {
+      abspath
+      name
+      doc
+      version
+      category
+      docVersion
+      labels
+      isDirectory
+      title
+      order
+    }
+  }
+}
+`;
+
 module.exports = {
+  API_QUERY,
   generateApiMenus,
   generateApiReferencePages,
 };

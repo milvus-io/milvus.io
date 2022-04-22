@@ -77,7 +77,7 @@
   "scripts": {
     "build": "gatsby clean && gatsby build",
     "dev": "gatsby clean && gatsby develop -H 0.0.0.0",
-    "format": "prettier --write src/**/*.{js,jsx}",
+    "format": "prettier --write src/**/*.{js,jsx，ts,tsx}",
     "play": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "npm run clean && npm run dev",
     "serve": "gatsby serve",

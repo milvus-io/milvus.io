@@ -90,37 +90,6 @@ fs.writeFile(
   }
 );
 
-/* create static pages from page folder */
-// exports.onCreatePage = ({ page, actions }) => {
-//   const { createPage, deletePage } = actions;
-//   return new Promise((resolve) => {
-//     deletePage(page);
-//     Object.keys(locales).map((lang) => {
-//       let localizedPath = locales[lang].default
-//         ? page.path
-//         : locales[lang].path + page.path;
-//       if (page.path.includes("tool") && !page.path.includes(".md")) {
-//         let toolName = page.path.split("-")[1];
-//         toolName = toolName.substring(0, toolName.length - 1);
-//         localizedPath = locales[lang].default
-//           ? `/tools/${toolName}`
-//           : `${locales[lang].path}/tools/${toolName}`;
-//       }
-
-//       return createPage({
-//         ...page,
-//         path: localizedPath,
-//         context: {
-//           locale: lang,
-//           newestVersion,
-//           versions,
-//         },
-//       });
-//     });
-//     resolve();
-//   });
-// };
-
 // create cunstom schema for frontmatter
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
@@ -215,32 +184,40 @@ exports.createPages = ({ actions, graphql }) => {
   const communityTemplate = path.resolve(`src/templates/communityTemplate.jsx`);
   const blogTemplate = path.resolve(`src/templates/blogTemplate.jsx`);
   const blogListTemplate = path.resolve(`src/templates/blogListTemplate.jsx`);
+  const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
 
+  console.time("gql time");
   return graphql(query).then(result => {
+    console.timeEnd("gql time");
+
     if (result.errors) {
       return Promise.reject(result.errors);
     }
+    // prepare data
     // get all menuStructures
     const allMenus = generateAllMenus(result.data.allFile.edges);
     // get new doc index page data
     const homeData = generateHomeData(result.data.allFile.edges);
-    // const { bootcampHome } = handleBootcampData(
-    //   result.data.allMarkdownRemark.edges,
-    //   result.data.allFile.edges
-    // );
+    // get api menus
+    const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);
+    // get version with home
     const versionsWithHome = getVersionsWithHome(homeData);
     // filter useless md file blog has't version
-    const legalMd = filterMdWithVersion(result.data.allMarkdownRemark.edges);
-    const blogMD = filterMDwidthBlog(result.data.allMarkdownRemark.edges);
-    const homeMd = filterHomeMdWithVersion(result.data.allMarkdownRemark.edges);
-    // get community page data: articles md, menu and home json
-    const { communityMd, communityMenu, communityHome } = handleCommunityData(
-      result.data.allMarkdownRemark.edges,
-      result.data.allFile.edges
+    const docNodes = filterMdWithVersion(result.data.allMarkdownRemark.edges);
+    const blogNodes = filterMDwidthBlog(result.data.allMarkdownRemark.edges);
+    const homeNodes = filterHomeMdWithVersion(
+      result.data.allMarkdownRemark.edges
     );
+    // get community page data: articles md, menu and home json
+    const { communityNodes, communityMenu, communityHome } =
+      handleCommunityData(
+        result.data.allMarkdownRemark.edges,
+        result.data.allFile.edges
+      );
 
+    // generate pages
     generateCommunityPages(createPage, {
-      nodes: communityMd,
+      nodes: communityNodes,
       template: communityTemplate,
       menu: communityMenu,
     });
@@ -249,9 +226,6 @@ exports.createPages = ({ actions, graphql }) => {
       template: communityTemplate,
       menu: communityMenu,
     });
-
-    const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);
-    const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
     generateApiReferencePages(createPage, {
       nodes: result.data.allApIfile.nodes,
       template: apiDocTemplate,
@@ -261,14 +235,13 @@ exports.createPages = ({ actions, graphql }) => {
       newestVersion,
     });
     generateBlogArticlePage(createPage, {
-      nodes: blogMD,
+      nodes: blogNodes,
       template: blogTemplate,
       listTemplate: blogListTemplate,
     });
-
     generateDocHomeWidthMd(createPage, {
-      nodes: homeMd,
-      blogs: blogMD,
+      nodes: homeNodes,
+      blogs: blogNodes,
       template: docTemplate,
       allMenus,
       allApiMenus,
@@ -276,9 +249,8 @@ exports.createPages = ({ actions, graphql }) => {
       newestVersion,
       versionInfo,
     });
-
     generateAllDocPages(createPage, {
-      nodes: legalMd,
+      nodes: docNodes,
       template: docTemplate,
       newestVersion,
       versionsWithHome,

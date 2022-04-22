@@ -62,10 +62,10 @@ const filterCommunityHome = edges => {
  * @returns {object} { communityMd, communityMenu, communityHome }
  */
 const handleCommunityData = (allMarkdownRemark, allFile) => {
-  const communityMd = filterCommunityMd(allMarkdownRemark);
+  const communityNodes = filterCommunityMd(allMarkdownRemark);
   const communityMenu = filterCommunityMenus(allFile);
   const communityHome = filterCommunityHome(allMarkdownRemark);
-  return { communityMd, communityMenu, communityHome };
+  return { communityNodes, communityMenu, communityHome };
 };
 
 /**

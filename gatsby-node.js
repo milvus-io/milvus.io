@@ -186,10 +186,7 @@ exports.createPages = ({ actions, graphql }) => {
   const blogListTemplate = path.resolve(`src/templates/blogListTemplate.jsx`);
   const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
 
-  console.time("gql time");
   return graphql(query).then(result => {
-    console.timeEnd("gql time");
-
     if (result.errors) {
       return Promise.reject(result.errors);
     }

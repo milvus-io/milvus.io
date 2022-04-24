@@ -100,7 +100,7 @@ export default function Template({ data, pageContext }) {
     APIs.children.push({
       id: 'pymilvus',
       label: 'Python',
-      link: `/api-reference/pymilvus/${versionInfo[version].pymilvus}/README.md`,
+      link: `/api-reference/pymilvus/${versionInfo[version].pymilvus}/About.md`,
     });
   }
 
@@ -116,7 +116,7 @@ export default function Template({ data, pageContext }) {
     APIs.children.push({
       id: 'go',
       label: 'Go',
-      link: `/api-reference/go/${versionInfo[version].go}/README.md`,
+      link: `/api-reference/go/${versionInfo[version].go}/About.md`,
     });
   }
 
@@ -124,7 +124,7 @@ export default function Template({ data, pageContext }) {
     APIs.children.push({
       id: 'node',
       label: 'Node',
-      link: `/api-reference/node/${versionInfo[version].node}/tutorial.html`,
+      link: `/api-reference/node/${versionInfo[version].node}/About.md`,
     });
   }
 

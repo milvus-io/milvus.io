@@ -123,7 +123,9 @@ const handleApiFiles = (nodes, { parentPath, version, category }) => {
     );
     // If this dirPath has only one page or not, regardless how many directories.
     const isSinglePage = apiFiles.length === 1;
-    const converter = new Remarkable();
+    const converter = new Remarkable({
+      html: true
+    });
 
     for (let i = 0; i < apiFiles.length; i++) {
       const filePath = apiFiles[i];

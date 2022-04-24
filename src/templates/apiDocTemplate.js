@@ -150,7 +150,8 @@ export default function Template({ pageContext }) {
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo
-        title={`${capitalizeFirstLetter(category)} SDK ${version} for Milvus: `}
+        title={`${capitalizeFirstLetter(category)} SDK ${version} for Milvus`}
+        titleTemplate="%s"
         lang={locale}
         version={version}
       />

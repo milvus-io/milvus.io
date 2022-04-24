@@ -49,12 +49,14 @@ const generateTitle = ({
     // return prettier category name if single page
     // case 'pymilvus':
     case 'go':
-      return prettierCategory;
+      return name.endsWith('.htm') ? prettierCategory : _name.split('/').pop();
     case 'node':
       return _name.split('/').pop();
     // return 3rd level items prettier name
     default:
-      return capitalize(name.split('.htm')[0]);
+      return name.endsWith('.htm')
+        ? capitalize(name.split('.htm')[0])
+        : _name.split('/').pop();
   }
 };
 

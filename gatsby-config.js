@@ -7,28 +7,33 @@ const gatsbyConfigs = {
   },
   plugins: [
     {
-      resolve: 'gatsby-plugin-robots-txt',
+      resolve: `gatsby-source-filesystem`,
       options: {
-        host: 'https://milvus.io',
-        sitemap: 'https://milvus.io/sitemap-index.xml',
-        policy: [
-          {
-            userAgent: '*',
-            allow: '/',
-            disallow: [
-              '/cn/404',
-              '/cn/blogs/',
-              '/docs/Changelog',
-              '/docs/v0*.md$',
-              '/gui',
-              '/tools/sizing',
-            ],
-          },
+        name: `docs`,
+        path: `${__dirname}/src/pages/docs/versions`,
+        ignore: [
+          `**/v0.6*`,
+          `**/v0.7*`,
+          `**/v0.8*`,
+          `**/v0.9*`,
+          `**/v0.1*`,
+          `**/v2.0.0`,
+          `**/bootcamp`,
+          `**/API_Reference`,
+          `**/export_pdf`,
+          `**/\.*`,
+          `.*`,
         ],
       },
     },
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-less`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `blogs`,
+        path: `${__dirname}/src/pages/blogs/versions`,
+        ignore: [`**/communication`, `**/meetup`, `**/Events`, `**/\.*`, `.*`],
+      },
+    },
     {
       resolve: `gatsby-transformer-json`,
       options: {
@@ -61,6 +66,29 @@ const gatsbyConfigs = {
         ignore: [`${__dirname}/src/i18n/*`],
       },
     },
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://milvus.io',
+        sitemap: 'https://milvus.io/sitemap-index.xml',
+        policy: [
+          {
+            userAgent: '*',
+            allow: '/',
+            disallow: [
+              '/cn/404',
+              '/cn/blogs/',
+              '/docs/Changelog',
+              '/docs/v0*.md$',
+              '/gui',
+              '/tools/sizing',
+            ],
+          },
+        ],
+      },
+    },
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-less`,
     // i18n json data
     {
       resolve: `gatsby-source-filesystem`,
@@ -76,13 +104,7 @@ const gatsbyConfigs = {
         path: `${__dirname}/src/images`,
       },
     },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `blogs`,
-        path: `${__dirname}/src/pages/blogs/versions`,
-      },
-    },
+
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -190,25 +212,7 @@ const gatsbyConfigs = {
 };
 
 // ignore some versions will make building faster in dev.
-if (process.env.NODE_ENV == 'development') {
-  gatsbyConfigs.plugins.push({
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `docs`,
-      path: `${__dirname}/src/pages/docs/versions`,
-      ignore: [
-        `**/v0.6*`,
-        `**/v0.7*`,
-        `**/v0.8*`,
-        `**/v0.9*`,
-        `**/v0.1*`,
-        `**/v2.0.0`,
-        `**/export_pdf`,
-        `**/\.*`,
-      ],
-    },
-  });
-} else {
+if (process.env.NODE_ENV !== 'development') {
   gatsbyConfigs.plugins.push(
     // {
     //   resolve: "gatsby-plugin-google-analytics",

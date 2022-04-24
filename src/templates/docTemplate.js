@@ -100,7 +100,7 @@ export default function Template({ data, pageContext }) {
     APIs.children.push({
       id: 'pymilvus',
       label: 'Python',
-      link: `/api-reference/pymilvus/${versionInfo[version].pymilvus}/install.html`,
+      link: `/api-reference/pymilvus/${versionInfo[version].pymilvus}/README.md`,
     });
   }
 
@@ -112,19 +112,19 @@ export default function Template({ data, pageContext }) {
     });
   }
 
+  if (versionInfo[version].go) {
+    APIs.children.push({
+      id: 'go',
+      label: 'Go',
+      link: `/api-reference/go/${versionInfo[version].go}/README.md`,
+    });
+  }
+
   if (versionInfo[version].node) {
     APIs.children.push({
       id: 'node',
       label: 'Node',
       link: `/api-reference/node/${versionInfo[version].node}/tutorial.html`,
-    });
-  }
-
-  if (versionInfo[version].go) {
-    APIs.children.push({
-      id: 'go',
-      label: 'Go',
-      link: `https://github.com/milvus-io/milvus-sdk-go`,
     });
   }
 

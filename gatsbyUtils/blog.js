@@ -1,13 +1,13 @@
-const { findLang, generatePath } = require("./utils");
+const { findLang, generatePath } = require('./utils');
 
 // check is blog
-const checkIsblog = path => path.includes("blog");
+const checkIsblog = path => path.includes('blog');
 
 // generate default blog cover according to blog's date
 const generateDefaultBlogCover = (date, coverList = []) => {
   const coverImgList = [
-    "zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_2_9e3f35962c.jpg",
-    "zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_8ed7696269.jpg",
+    'zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_2_9e3f35962c.jpg',
+    'zilliz-cms.s3.us-west-2.amazonaws.com/pc_blog_8ed7696269.jpg',
   ].concat(coverList);
   const day = new Date(date).getDay();
   return day % 2 === 0 ? coverImgList[0] : coverImgList[1];
@@ -16,7 +16,7 @@ const generateDefaultBlogCover = (date, coverList = []) => {
 const filterMDwidthBlog = edges => {
   return edges.filter(({ node }) => {
     const isBlog = node.fileAbsolutePath.includes(
-      "/blogs/versions/master/blog"
+      '/blogs/versions/master/blog'
     );
     // only when the value of isPublish is false it will be filtered
     const isPublish = node.frontmatter.isPublish !== false;
@@ -36,14 +36,14 @@ const generateBlogArticlePage = (
 ) => {
   const generateTags = tag => {
     if (!tag) return [];
-    return tag.split(",").map(i => i && i.trim() && i.trim().toLowerCase());
+    return tag.split(',').map(i => i && i.trim() && i.trim().toLowerCase());
   };
   // get blogs list data, create blogs list page
   const list = blogMD.map(({ node }) => {
     const fileAbsolutePath = node.fileAbsolutePath;
     const fileLang = findLang(fileAbsolutePath);
 
-    const [date, tag = "", title, desc, id, cover, isRecommend = false] = [
+    const [date, tag = '', title, desc, id, cover, isRecommend = false] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.title,
@@ -56,7 +56,7 @@ const generateBlogArticlePage = (
     return {
       date,
       tags: generateTags(tag),
-      desc: desc || "",
+      desc: desc || '',
       title,
       id,
       cover: cover || generateDefaultBlogCover(date),
@@ -66,12 +66,12 @@ const generateBlogArticlePage = (
   });
 
   const allBlogsList = {
-    cn: filterAndSortBlogs(list, "cn"),
-    en: filterAndSortBlogs(list, "en"),
+    cn: filterAndSortBlogs(list, 'cn'),
+    en: filterAndSortBlogs(list, 'en'),
   };
   for (const key in allBlogsList) {
     createPage({
-      path: key === "cn" ? `/${key}/blog` : `/blog`,
+      path: key === 'cn' ? `/${key}/blog` : `/blog`,
       component: blogListTemplate,
       context: {
         locale: key,
@@ -88,7 +88,7 @@ const generateBlogArticlePage = (
     const fileLang = findLang(fileAbsolutePath);
     const localizedPath = generatePath(fileId, fileLang, null, isBlog, true);
     const newHtml = node.html;
-    const [date, tag = "", origin, author, title, id, desc, cover] = [
+    const [date, tag = '', origin, author, title, id, desc, cover] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.origin,

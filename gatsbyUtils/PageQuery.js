@@ -5,7 +5,7 @@ module.exports = `
 {
   allMarkdownRemark(
     filter: {
-      fileAbsolutePath: { regex: "/(?:site|blog|communityArticles|bootcampArticles)/" }
+      fileAbsolutePath: { regex: "/(?:site|blog|communityArticles)/" }
     }
   ) {
     edges {
@@ -15,7 +15,6 @@ module.exports = `
           depth
         }
         frontmatter {
-          related_key
           summary
           date
           author
@@ -50,7 +49,7 @@ module.exports = `
   }
   allFile(
     filter: {
-      relativeDirectory: { regex: "/(?:menuStructure|home|community|bootcamp)/" }
+      relativeDirectory: { regex: "/(?:menuStructure|community)/" }
       extension: { eq: "json" }
     }
   ) {
@@ -67,115 +66,6 @@ module.exports = `
             order
             title
           }
-          banner {
-            img {
-              publicURL
-            }
-            alt
-            href
-          }
-          mailingSection {
-            title
-            list {
-              link
-              title
-            }
-          }
-          joinSection {
-            list {
-              img {
-                publicURL
-              }
-              label
-              link
-            }
-            title
-          }
-          contributorSection {
-            title,
-            list {
-              avatar {
-                publicURL
-              }
-              name
-              company
-              jobTitle
-            }
-          }
-          partnerSection {
-            list {
-              alt
-              img {
-                publicURL
-              }
-            }
-            title
-          }
-          recommendSection {
-            ambassador {
-              desc
-              introBtn {
-                label
-                link
-              }
-              joinBtn {
-                label
-                link
-              }
-              title
-              img {
-                publicURL
-              }
-            }
-            deploy {
-              list {
-                label
-                link
-              }
-              title
-            }
-            develop {
-              list {
-                label
-                link
-              }
-              title
-            }
-            start {
-              list {
-                label
-                link
-              }
-              title
-            }
-            test {
-              list {
-                label
-                link
-              }
-              title
-            }
-            title
-          }
-          resourceSection {
-            list {
-              desc
-              iconType
-              label
-              link
-              title
-            }
-            title
-          }
-          aboutSection {
-            content
-            title
-            list {
-              desc
-              iconType
-              title
-            }
-          }
         }
         childMenu {
           menuList {
@@ -188,55 +78,6 @@ module.exports = `
             outLink
             title
           }
-        }
-        
-        childBootcamp {
-          menuList {
-            isMenu
-            id
-            label1
-            label2
-            label3
-            order
-            title
-          }
-          description
-          banner {
-            img {
-              publicURL
-            }
-            alt
-          }
-          section1 {
-            title
-            content {
-              id
-              link
-              title
-            }
-          }
-          section3 {
-            content {
-              desc
-              iconType
-              id
-              link
-              title
-              liveDemo
-            }
-            title
-          }
-          section4 {
-            content {
-              desc
-              id
-              link
-              title
-              iconType
-            }
-            title
-          }
-          title
         }
       }
     }

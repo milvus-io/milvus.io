@@ -1,12 +1,12 @@
-import React from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
+import React from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
 
-export const BootstrapDialogTitle = (props) => {
+export const BootstrapDialogTitle = props => {
   const { children, onClose, ...other } = props;
 
   return (
@@ -17,10 +17,10 @@ export const BootstrapDialogTitle = (props) => {
           aria-label="close"
           onClick={onClose}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            color: theme => theme.palette.grey[500],
           }}
         >
           <CloseIcon />
@@ -30,7 +30,7 @@ export const BootstrapDialogTitle = (props) => {
   );
 };
 
-export const CustomizedDialogs = (props) => {
+export const CustomizedDialogs = props => {
   const { open, handleClose, title, content } = props;
 
   return (
@@ -47,7 +47,7 @@ export const CustomizedDialogs = (props) => {
   );
 };
 
-export const CustomizedContentDialogs = (props) => {
+export const CustomizedContentDialogs = props => {
   const { open, handleClose, title } = props;
   return (
     <>

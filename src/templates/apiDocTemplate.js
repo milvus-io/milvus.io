@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { graphql } from "gatsby";
-import { useI18next } from "gatsby-plugin-react-i18next";
-import clsx from "clsx";
-import Layout from "../components/layout";
-import LeftNav from "../components/leftNavigation";
-import { mdMenuListFactory } from "../components/leftNavigation/utils";
-import Aside from "../components/aside";
-import Footer from "../components/footer";
-import Seo from "../components/seo";
-import { useCodeCopy } from "../hooks/doc-dom-operation";
-import { useOpenedStatus } from "../hooks";
-import "highlight.js/styles/stackoverflow-light.css";
-import "./docTemplate.less";
+import React, { useState } from 'react';
+import { graphql } from 'gatsby';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import clsx from 'clsx';
+import Layout from '../components/layout';
+import LeftNav from '../components/leftNavigation';
+import { mdMenuListFactory } from '../components/leftNavigation/utils';
+import Aside from '../components/aside';
+import Footer from '../components/footer';
+import Seo from '../components/seo';
+import { useCodeCopy } from '../hooks/doc-dom-operation';
+import { useOpenedStatus } from '../hooks';
+import 'highlight.js/styles/stackoverflow-light.css';
+import './docTemplate.less';
 
 export const query = graphql`
   query ($language: String!) {
@@ -44,13 +44,13 @@ export default function Template({ pageContext }) {
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
   const hljsCfg = {
-    languages: ["java", "go", "python", "javascript"],
+    languages: ['java', 'go', 'python', 'javascript'],
   };
 
   useCodeCopy(
     {
-      copy: t("v3trans.copyBtn.copyLabel"),
-      copied: t("v3trans.copyBtn.copiedLabel"),
+      copy: t('v3trans.copyBtn.copyLabel'),
+      copied: t('v3trans.copyBtn.copiedLabel'),
     },
     hljsCfg
   );
@@ -60,7 +60,7 @@ export default function Template({ pageContext }) {
   // get current version's menu of the current API
   const currentApiMenu = allApiMenus[category][version];
   // generate menus
-  const menus = mdMenuListFactory(currentApiMenu, "api", version, locale)();
+  const menus = mdMenuListFactory(currentApiMenu, 'api', version, locale)();
 
   // get version links on version change
   const getApiVersionLink = version => {
@@ -81,64 +81,64 @@ export default function Template({ pageContext }) {
     apiVersion: version,
   };
   switch (category) {
-    case "pymilvus":
-      const path = name?.split("pymilvus_")?.[1]?.replace(".html", ".rst");
+    case 'pymilvus':
+      const path = name?.split('pymilvus_')?.[1]?.replace('.html', '.rst');
       const url = `https://github.com/milvus-io/pymilvus/edit/${version.slice(
         1
       )}/docs/source/${path}`;
       apiReferenceData.sourceUrl = url;
 
-      if (name.endsWith(".md")) {
+      if (name.endsWith('.md')) {
         apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/pymilvus/${version}/${name.replace(
-          "pymilvus_",
-          ""
+          'pymilvus_',
+          ''
         )}`;
       }
       break;
 
-    case "java":
-      if (name.endsWith(".md")) {
+    case 'java':
+      if (name.endsWith('.md')) {
         apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-java/${version}/${name.replace(
-          "java_",
-          ""
+          'java_',
+          ''
         )}`;
       }
       break;
 
-    case "go":
-      if (name.endsWith(".md")) {
+    case 'go':
+      if (name.endsWith('.md')) {
         apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-go/${version}/${name.replace(
-          "go_",
-          ""
+          'go_',
+          ''
         )}`;
       }
       break;
 
-    case "node":
-      if (name.endsWith(".html")) {
+    case 'node':
+      if (name.endsWith('.html')) {
         const relativePath = name
-          ?.split("node_")?.[1]
-          ?.replace(".html", ".ts")
-          ?.split("/")
+          ?.split('node_')?.[1]
+          ?.replace('.html', '.ts')
+          ?.split('/')
           ?.pop();
-        const transformName = (originName = "") => {
-          if (originName === "index.ts") return "MilvusIndex.ts";
+        const transformName = (originName = '') => {
+          if (originName === 'index.ts') return 'MilvusIndex.ts';
           return originName.charAt(0).toUpperCase() + originName.slice(1);
         };
-        if (name.includes("api reference")) {
+        if (name.includes('api reference')) {
           const fileName = transformName(relativePath);
           apiReferenceData.sourceUrl = `https://github.com/milvus-io/milvus-sdk-node/edit/main/milvus/${fileName}`;
         }
-        if (name.includes("tutorial")) {
+        if (name.includes('tutorial')) {
           apiReferenceData.sourceUrl =
-            "https://github.com/milvus-io/milvus-sdk-node/edit/main/README.md";
+            'https://github.com/milvus-io/milvus-sdk-node/edit/main/README.md';
         }
       }
 
-      if (name.endsWith(".md")) {
+      if (name.endsWith('.md')) {
         apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-node/${version}/${name.replace(
-          "node_",
-          ""
+          'node_',
+          ''
         )}`;
       }
 
@@ -154,10 +154,10 @@ export default function Template({ pageContext }) {
         lang={locale}
         version={version}
       />
-      <div className={"doc-temp-container"}>
+      <div className={'doc-temp-container'}>
         <LeftNav
-          homeUrl={"/docs"}
-          homeLabel={"< Docs"}
+          homeUrl={'/docs'}
+          homeLabel={'< Docs'}
           menus={menus}
           locale={locale}
           versions={versions}
@@ -170,11 +170,11 @@ export default function Template({ pageContext }) {
           showSearch={false}
         />
         <div
-          className={clsx("doc-right-container", {
+          className={clsx('doc-right-container', {
             [`is-opened`]: isOpened,
           })}
         >
-          <div className={"doc-content-container"}>
+          <div className={'doc-content-container'}>
             <div className="doc-post-wrapper doc-style">
               <div
                 className={`api-reference-wrapper doc-style ${category}`}

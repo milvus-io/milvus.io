@@ -3,11 +3,7 @@ import * as styles from './index.module.less';
 import { TextField } from '@mui/material';
 import { submitInfoForm } from '../../http/submitEmail';
 
-const InfoSubmitter = ({
-  submitCb = () => { },
-  source,
-  href = '',
-}) => {
+const InfoSubmitter = ({ submitCb = () => {}, source, href = '' }) => {
   const regx =
     /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$/;
   const [value, setValue] = useState('');
@@ -51,20 +47,20 @@ const InfoSubmitter = ({
           label="EMAIL"
           value={value}
           onChange={handleChange}
-
         />
         <span className={styles.prompt}>
           *We will never share your email or spam you
         </span>
       </div>
 
-
       <div className={styles.btnWrapper}>
         <button
           className={styles.submitBtn}
           disabled={!regx.test(value) || loading}
           onClick={handleSubmit}
-        >{loading ? 'Loading...' : 'Submit'}</button>
+        >
+          {loading ? 'Loading...' : 'Submit'}
+        </button>
       </div>
     </div>
   );

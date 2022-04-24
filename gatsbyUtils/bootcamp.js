@@ -1,4 +1,5 @@
-const { findLang, getDefaultLang } = require("./utils");
+// This file is deprecated and will be removed soon
+const { findLang, getDefaultLang } = require('./utils');
 
 const getBootcampPath = (fileId, fileLang) => {
   const defaultLang = getDefaultLang();
@@ -11,10 +12,10 @@ const filterBootcampHome = edges => {
   return edges
     .filter(
       ({ node: { childBootcamp, absolutePath } }) =>
-        childBootcamp !== null && absolutePath.includes("bootcampHome")
+        childBootcamp !== null && absolutePath.includes('bootcampHome')
     )
     .map(({ node: { absolutePath, childBootcamp } }) => {
-      const language = absolutePath.includes("/en") ? "en" : "cn";
+      const language = absolutePath.includes('/en') ? 'en' : 'cn';
       const data = childBootcamp;
       return {
         language,
@@ -31,7 +32,7 @@ const filterBootcampMenus = edges => {
         childBootcamp !== null && childBootcamp.menuList !== null
     )
     .map(({ node: { absolutePath, childBootcamp } }) => {
-      const lang = absolutePath.includes("/en/") ? "en" : "cn";
+      const lang = absolutePath.includes('/en/') ? 'en' : 'cn';
       const menuList = childBootcamp.menuList || [];
       return {
         lang,
@@ -43,7 +44,7 @@ const filterBootcampMenus = edges => {
 const filterBootcampMd = edges => {
   return edges.filter(
     ({ node: { fileAbsolutePath, frontmatter } }) =>
-      fileAbsolutePath.includes("bootcampArticles") && frontmatter.id
+      fileAbsolutePath.includes('bootcampArticles') && frontmatter.id
   );
 };
 
@@ -86,21 +87,19 @@ const handleBootcampData = (allMarkdownRemark, allFile) => {
 
 const generateBootcampHome = (
   createPage,
-  { nodes: bootcampHome, template: bootcampTemplate, menu: bootcampMenu }
+  { nodes: bootcampHome, template: bootcampTemplate }
 ) => {
-  bootcampHome.forEach(({ language, data, path }) => {
+  bootcampHome.forEach(({ language, path }) => {
     createPage({
-      path: language === "en" ? "/bootcamp" : `/${language}/bootcamp`,
+      path: language === 'en' ? '/bootcamp' : `/${language}/bootcamp`,
       component: bootcampTemplate,
       context: {
-        bootcampData: data,
         locale: language,
-        old: "home",
+        old: 'home',
         fileAbsolutePath: path,
         newHtml: null,
-        menuList: bootcampMenu,
         isVersionWithHome: false,
-        activePost: "bootcamp",
+        activePost: 'bootcamp',
       },
     });
   });

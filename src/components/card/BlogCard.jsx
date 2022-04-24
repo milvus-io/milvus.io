@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "gatsby-plugin-react-i18next";
-import * as styles from "./BlogCard.module.less";
-import Tags from "../tags";
+import React from 'react';
+import { Link } from 'gatsby-plugin-react-i18next';
+import * as styles from './BlogCard.module.less';
+import Tags from '../tags';
 const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
   const to = `/blog/${path}`;
 

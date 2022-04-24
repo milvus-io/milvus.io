@@ -1,8 +1,8 @@
-import React from "react";
-import { DocSearch } from "@docsearch/react";
-import "@docsearch/css";
-import "instantsearch.css/themes/reset.css";
-import "./agloia.less";
+import React from 'react';
+import { DocSearch } from '@docsearch/react';
+import '@docsearch/css';
+import 'instantsearch.css/themes/reset.css';
+import './agloia.less';
 
 export const AlgoliaSearch = props => {
   const { locale, version, trans } = props;
@@ -14,15 +14,15 @@ export const AlgoliaSearch = props => {
         indexName="milvus"
         searchParameters={{
           facetFilters: [
-            `language:${locale === "cn" ? "zh-cn" : "en"}`,
+            `language:${locale === 'cn' ? 'zh-cn' : 'en'}`,
             `version:${version}`,
           ],
         }}
         placeholder={
-          trans ? trans("v3trans.algolia.button.buttonText") : "search"
+          trans ? trans('v3trans.algolia.button.buttonText') : 'search'
         }
         translations={
-          trans && trans("v3trans.algolia", { returnObjects: true })
+          trans && trans('v3trans.algolia', { returnObjects: true })
         }
       />
     </div>

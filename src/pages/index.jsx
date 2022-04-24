@@ -1,130 +1,130 @@
-import React, { useState } from "react";
-import { graphql } from "gatsby";
-import { useI18next } from "gatsby-plugin-react-i18next";
-import Layout from "../components/layout";
-import Signup from "../components/signup";
-import HomeBanner from "../components/home/banner";
-import HomeFeatures from "../components/home/features";
-import HomeCode from "../components/home/code";
-import Attu from "../components/home/attu";
-import { CustomizedSnackbars } from "../components/snackBar";
-import tencent from "../images/brands/tencent.png";
-import ebay from "../images/brands/ebay.png";
-import ikea from "../images/brands/ikea.png";
-import intuit from "../images/brands/intuit.png";
-import kuaishou from "../images/brands/kuaishou.png";
-import line from "../images/brands/line.png";
-import baidu from "../images/brands/baidu.png";
-import shopee from "../images/brands/shopee.png";
-import smartnews from "../images/brands/smartnews.png";
-import shutterstock from "../images/brands/shutterstock.png";
-import walmart from "../images/brands/walmart.png";
-import xiaomi from "../images/brands/xiaomi.png";
-import hunt from "../images/brands/hunt.png";
-import micro from "../images/brands/micro.png";
-import nvidia from "../images/brands/nvidia.png";
-import moj from "../images/brands/moj.png";
-import compass from "../images/brands/compass.png";
-import tokopedia from "../images/brands/tokopedia.png";
-import CustomIconLink from "../components/customIconLink";
-import Seo from "../components/seo";
-import SvgIcon from "@mui/material/SvgIcon";
+import React, { useState } from 'react';
+import { graphql } from 'gatsby';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import Layout from '../components/layout';
+import Signup from '../components/signup';
+import HomeBanner from '../components/home/banner';
+import HomeFeatures from '../components/home/features';
+import HomeCode from '../components/home/code';
+import Attu from '../components/home/attu';
+import { CustomizedSnackbars } from '../components/snackBar';
+import tencent from '../images/brands/tencent.png';
+import ebay from '../images/brands/ebay.png';
+import ikea from '../images/brands/ikea.png';
+import intuit from '../images/brands/intuit.png';
+import kuaishou from '../images/brands/kuaishou.png';
+import line from '../images/brands/line.png';
+import baidu from '../images/brands/baidu.png';
+import shopee from '../images/brands/shopee.png';
+import smartnews from '../images/brands/smartnews.png';
+import shutterstock from '../images/brands/shutterstock.png';
+import walmart from '../images/brands/walmart.png';
+import xiaomi from '../images/brands/xiaomi.png';
+import hunt from '../images/brands/hunt.png';
+import micro from '../images/brands/micro.png';
+import nvidia from '../images/brands/nvidia.png';
+import moj from '../images/brands/moj.png';
+import compass from '../images/brands/compass.png';
+import tokopedia from '../images/brands/tokopedia.png';
+import CustomIconLink from '../components/customIconLink';
+import Seo from '../components/seo';
+import SvgIcon from '@mui/material/SvgIcon';
 // css entry, all site's styles are loaded from this file
-import "./index.less";
+import './index.less';
 // local css module
-import * as styles from "./index.module.less";
+import * as styles from './index.module.less';
 
 const brands = [
   {
-    name: "Ebay",
+    name: 'Ebay',
     icon: ebay,
-    link: "https://www.ebay.com/",
+    link: 'https://www.ebay.com/',
   },
   {
-    name: "Shopee",
+    name: 'Shopee',
     icon: shopee,
-    link: "https://shopee.com/",
+    link: 'https://shopee.com/',
   },
   {
-    name: "Line",
+    name: 'Line',
     icon: line,
-    link: "https://line.me/",
+    link: 'https://line.me/',
   },
   {
-    name: "Ikea",
+    name: 'Ikea',
     icon: ikea,
-    link: "https://www.ikea.com/",
+    link: 'https://www.ikea.com/',
   },
   {
-    name: "Walmart",
+    name: 'Walmart',
     icon: walmart,
-    link: "https://www.walmart.com/",
+    link: 'https://www.walmart.com/',
   },
   {
-    name: "Intuit",
+    name: 'Intuit',
     icon: intuit,
-    link: "https://www.intuit.com/",
+    link: 'https://www.intuit.com/',
   },
   {
-    name: "Smartnews",
+    name: 'Smartnews',
     icon: smartnews,
-    link: "https://www.smartnews.com/",
+    link: 'https://www.smartnews.com/',
   },
   {
-    name: "Tokopedia",
+    name: 'Tokopedia',
     icon: tokopedia,
-    link: "https://www.tokopedia.com/",
+    link: 'https://www.tokopedia.com/',
   },
   {
-    name: "Nvidia",
+    name: 'Nvidia',
     icon: nvidia,
-    link: "https://www.nvidia.com/",
+    link: 'https://www.nvidia.com/',
   },
   {
-    name: "Kuaishou",
+    name: 'Kuaishou',
     icon: kuaishou,
-    link: "https://www.kuaishou.com/",
+    link: 'https://www.kuaishou.com/',
   },
   {
-    name: "Trend micro",
+    name: 'Trend micro',
     icon: micro,
-    link: "https://www.trendmicro.com/",
+    link: 'https://www.trendmicro.com/',
   },
   {
-    name: "Xiaomi",
+    name: 'Xiaomi',
     icon: xiaomi,
-    link: "https://www.mi.com/",
+    link: 'https://www.mi.com/',
   },
   {
-    name: "Compass",
+    name: 'Compass',
     icon: compass,
-    link: "https://www.compass.com/",
+    link: 'https://www.compass.com/',
   },
   {
-    name: "Tencent",
+    name: 'Tencent',
     icon: tencent,
-    link: "https://www.tencent.com/",
+    link: 'https://www.tencent.com/',
   },
   {
-    name: "shutterstock",
+    name: 'shutterstock',
     icon: shutterstock,
-    link: "https://www.shutterstock.com/",
+    link: 'https://www.shutterstock.com/',
   },
   {
-    name: "Moj",
+    name: 'Moj',
     icon: moj,
-    link: "https://mojapp.in/",
+    link: 'https://mojapp.in/',
   },
 
   {
-    name: "Baidu",
+    name: 'Baidu',
     icon: baidu,
-    link: "https://www.baidu.com/",
+    link: 'https://www.baidu.com/',
   },
   {
-    name: "Dailyhunt",
+    name: 'Dailyhunt',
     icon: hunt,
-    link: "https://www.dailyhunt.in/",
+    link: 'https://www.dailyhunt.in/',
   },
 ];
 const DESC =
@@ -134,8 +134,8 @@ const IndexPage = () => {
   const { language, t } = useI18next();
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
-    type: "info",
-    message: "",
+    type: 'info',
+    message: '',
   });
 
   const handleOpenSnackbar = ({ message, type }) => {
@@ -149,22 +149,22 @@ const IndexPage = () => {
   const handleCloseSnackbar = () => {
     setSnackbarConfig({
       open: false,
-      type: "info",
-      message: "",
+      type: 'info',
+      message: '',
     });
   };
 
   const communityLinks = [
-    { name: "Slack", to: "https://slack.milvus.io" },
-    { name: "Github", to: "https://github.com/milvus-io/milvus" },
-    { name: "Forum", to: "https://discuss.milvus.io/" },
+    { name: 'Slack', to: 'https://slack.milvus.io' },
+    { name: 'Github', to: 'https://github.com/milvus-io/milvus' },
+    { name: 'Forum', to: 'https://discuss.milvus.io/' },
   ];
 
   const ExternalLinkIcon = props => {
     return (
       <SvgIcon
         viewBox="0 0 12 12"
-        style={{ width: "15px", height: "15px" }}
+        style={{ width: '15px', height: '15px' }}
         {...props}
       >
         <path
@@ -184,7 +184,7 @@ const IndexPage = () => {
         {/* all css about banner in banner.less */}
         <HomeBanner t={t} />
         <section className={`${styles.customer} col-4 col-8 col-12`}>
-          <p className={styles.customerTitle}>{t("v3trans.main.customer")}</p>
+          <p className={styles.customerTitle}>{t('v3trans.main.customer')}</p>
           <div className={styles.brands}>
             {brands.map(b => (
               <a href={b.link} target="_blank" rel="noreferrer" key={b.name}>
@@ -201,11 +201,11 @@ const IndexPage = () => {
 
         <section className={`${styles.community} col-4 col-8 col-12`}>
           <p className={styles.communityTitle}>
-            {t("v3trans.main.communitytitle")}
+            {t('v3trans.main.communitytitle')}
           </p>
           <div className={styles.communityLinkContainer}>
             <p className={styles.communityLinkTitle}>
-              {t("v3trans.main.communitydesc")}
+              {t('v3trans.main.communitydesc')}
             </p>
             <div className={styles.communityLinks}>
               {communityLinks.map(co => {

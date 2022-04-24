@@ -1,16 +1,16 @@
-import React from "react";
-import TocTreeView from "../treeView/TocTreeView";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import TocTreeView from '../treeView/TocTreeView';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPencilAlt,
   faBug,
   faHashtag,
   faLightbulb,
-} from "@fortawesome/free-solid-svg-icons";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { useI18next } from "gatsby-plugin-react-i18next";
-import * as styles from "./index.module.less";
-import clsx from "clsx";
+} from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import * as styles from './index.module.less';
+import clsx from 'clsx';
 
 // const result = {
 //   doc: {},
@@ -36,13 +36,13 @@ import clsx from "clsx";
 
 const Aside = props => {
   const {
-    category = "doc",
+    category = 'doc',
     items,
     title,
-    className = "",
+    className = '',
     version,
     isHome,
-    isShowBtnGroup = "true",
+    isShowBtnGroup = 'true',
   } = props;
   const { t } = useI18next();
   // editBtn issueBtn; bugBtn; suggestBtn; joinBtn
@@ -55,38 +55,38 @@ const Aside = props => {
     commonJoinBtnConf,
   ] = [
     {
-      label: t("v3trans.docs.btnGroup.editBtn"),
+      label: t('v3trans.docs.btnGroup.editBtn'),
       icon: faPencilAlt,
     },
     {
-      label: t("v3trans.docs.btnGroup.issueBtn"),
+      label: t('v3trans.docs.btnGroup.issueBtn'),
       icon: faBug,
     },
     {
-      label: t("v3trans.docs.btnGroup.bugBtn"),
+      label: t('v3trans.docs.btnGroup.bugBtn'),
       icon: faBug,
     },
     {
-      label: t("v3trans.docs.btnGroup.suggestBtn"),
+      label: t('v3trans.docs.btnGroup.suggestBtn'),
       icon: faLightbulb,
     },
     {
-      label: t("v3trans.docs.btnGroup.discussBtn"),
+      label: t('v3trans.docs.btnGroup.discussBtn'),
       icon: faGithub,
     },
     {
-      label: t("v3trans.docs.btnGroup.joinBtn"),
+      label: t('v3trans.docs.btnGroup.joinBtn'),
       icon: faHashtag,
     },
   ];
 
   const btnConfiguration = {
-    doc: ({ locale, version = "", editPath, mdTitle = { value: "" } }) => {
-      const name = editPath && editPath.split("/").pop();
+    doc: ({ locale, version = '', editPath, mdTitle = { value: '' } }) => {
+      const name = editPath && editPath.split('/').pop();
       const title = `${version} ${
         mdTitle && mdTitle.value
       } (${name}) Doc Update`;
-      const localePath = locale === "en" ? "en" : "zh-CN";
+      const localePath = locale === 'en' ? 'en' : 'zh-CN';
       return [
         {
           label: commonEditBtnConf.label,
@@ -100,7 +100,7 @@ const Aside = props => {
         },
         {
           label: suggestBtnConf.label,
-          link: "https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--new-content-proposal.yaml&title=New Doc Proposal",
+          link: 'https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--new-content-proposal.yaml&title=New Doc Proposal',
           icon: suggestBtnConf.icon,
         },
       ];
@@ -116,7 +116,7 @@ const Aside = props => {
         },
         {
           label: discussBtnConf.label,
-          link: "https://github.com/milvus-io/milvus/discussions/new",
+          link: 'https://github.com/milvus-io/milvus/discussions/new',
           icon: discussBtnConf.icon,
         },
         {
@@ -126,13 +126,13 @@ const Aside = props => {
         },
         {
           label: commonJoinBtnConf.label,
-          link: "https://slack.milvus.io",
+          link: 'https://slack.milvus.io',
           icon: commonJoinBtnConf.icon,
         },
       ];
     },
     community: ({ locale, editPath, id }) => {
-      const localePath = locale === "en" ? "en" : "zh-CN";
+      const localePath = locale === 'en' ? 'en' : 'zh-CN';
       return [
         {
           label: commonEditBtnConf.label,
@@ -141,12 +141,12 @@ const Aside = props => {
         },
         {
           label: bugBtnConf.label,
-          link: "https://github.com/milvus-io/web-content/discussions/new",
+          link: 'https://github.com/milvus-io/web-content/discussions/new',
           icon: bugBtnConf.icon,
         },
         {
           label: commonJoinBtnConf.label,
-          link: "https://slack.milvus.io",
+          link: 'https://slack.milvus.io',
           icon: commonJoinBtnConf.icon,
         },
       ];
@@ -176,7 +176,7 @@ const Aside = props => {
     );
   };
   return (
-    <section className={clsx("right-nav", styles.rightNavWrapper)}>
+    <section className={clsx('right-nav', styles.rightNavWrapper)}>
       {!isHome && (
         <>
           {isShowBtnGroup && (
@@ -184,7 +184,7 @@ const Aside = props => {
               {generateBtnroup(category, props, styles)}
             </ul>
           )}
-          {category === "doc" && (
+          {category === 'doc' && (
             <TocTreeView
               items={items}
               title={title}

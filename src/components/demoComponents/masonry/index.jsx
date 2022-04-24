@@ -15,15 +15,15 @@ function Main({
   setModal,
   scrollContainer,
 }) {
-
   const currentSize = useWindowSize();
-  const isMobile = ["phone", "tablet", "desktop1024"].includes(currentSize);
+  const isMobile = ['phone', 'tablet', 'desktop1024'].includes(currentSize);
 
   return useMemo(
     () => (
       <div
-        className={`${styles.scrollContainer} ${isShowCode ? styles.openCode : ''
-          }`}
+        className={`${styles.scrollContainer} ${
+          isShowCode ? styles.openCode : ''
+        }`}
       >
         <div className={`${styles.toopTip} ${isSelected ? styles.open : ''}`}>
           <p>Sorted by Similarity metric</p>

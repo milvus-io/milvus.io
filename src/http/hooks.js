@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { getGithubCommits, getFaq } from "./index";
-import dayjs from "dayjs";
+import { useState, useEffect } from 'react';
+import { getGithubCommits, getFaq } from './index';
+import dayjs from 'dayjs';
 
 export function useGithubCommits({ commitPath, version }) {
   const [commitInfo, setCommitInfo] = useState({
-    message: "",
-    date: "",
-    commitUrl: "",
-    source: "",
+    message: '',
+    date: '',
+    commitUrl: '',
+    source: '',
   });
 
   useEffect(() => {
@@ -16,10 +16,10 @@ export function useGithubCommits({ commitPath, version }) {
         const res = await getGithubCommits(commitPath, version);
         if (res.status === 200 && res.data.length) {
           const lastCommit = res.data[0];
-          const message = lastCommit.commit.message.split("\n")[0];
+          const message = lastCommit.commit.message.split('\n')[0];
           const date = lastCommit.commit.committer.date;
           const commitUrl = lastCommit.html_url;
-          const formatDate = dayjs(date).format("YYYY-MM-DD HH:mm:ss");
+          const formatDate = dayjs(date).format('YYYY-MM-DD HH:mm:ss');
           const source = `https://github.com/milvus-io/milvus-docs/blob/${version}/${commitPath}`;
           setCommitInfo({ commitUrl, date: formatDate, source, message });
         }
@@ -63,24 +63,24 @@ export function useGetFaq(relatedKey) {
 }
 
 export function getCurrentSize() {
-  if (typeof window !== "undefined") {
-    const desktop1920 = window.matchMedia("(min-width: 1920px)");
-    const desktop1440 = window.matchMedia("(min-width: 1439px)");
-    const desktop1024 = window.matchMedia("(min-width: 1024px)");
-    const desktop744 = window.matchMedia("(min-width: 744px)");
+  if (typeof window !== 'undefined') {
+    const desktop1920 = window.matchMedia('(min-width: 1920px)');
+    const desktop1440 = window.matchMedia('(min-width: 1439px)');
+    const desktop1024 = window.matchMedia('(min-width: 1024px)');
+    const desktop744 = window.matchMedia('(min-width: 744px)');
 
     if (desktop1920.matches) {
-      return "desktop1920";
+      return 'desktop1920';
     } else if (desktop1440.matches) {
-      return "desktop1440";
+      return 'desktop1440';
     } else if (desktop1024.matches) {
-      return "desktop1024";
+      return 'desktop1024';
     } else if (desktop744.matches) {
-      return "tablet";
+      return 'tablet';
     }
-    return "phone";
+    return 'phone';
   }
-  return "";
+  return '';
 }
 
 export function useWindowSize() {
@@ -93,8 +93,8 @@ export function useWindowSize() {
       const cur = getCurrentSize();
       setSize(cur);
     };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   });
 
   useEffect(() => {

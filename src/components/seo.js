@@ -5,17 +5,17 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react";
-import PropTypes from "prop-types";
-import Helmet from "react-helmet";
-import { useStaticQuery, graphql } from "gatsby";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+import { useStaticQuery, graphql } from 'gatsby';
 
 function SEO({
   description,
   lang,
   meta,
   title,
-  titleTemplate = "",
+  titleTemplate = '',
   version,
   link,
 }) {
@@ -39,7 +39,7 @@ function SEO({
   return (
     <Helmet
       htmlAttributes={{
-        lang: lang === "cn" ? "zh-cn" : lang,
+        lang: lang === 'cn' ? 'zh-cn' : lang,
       }}
       title={title}
       titleTemplate={_titleTemplate}

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "gatsby-plugin-react-i18next";
-import clsx from "clsx";
-import TreeView from "@mui/lab/TreeView";
-import TreeItem from "@mui/lab/TreeItem";
-import CustomIconLink from "../customIconLink";
-import "./ExpansionTreeView.less";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'gatsby-plugin-react-i18next';
+import clsx from 'clsx';
+import TreeView from '@mui/lab/TreeView';
+import TreeItem from '@mui/lab/TreeItem';
+import CustomIconLink from '../customIconLink';
+import './ExpansionTreeView.less';
 
-const SCROLL_TOP = "@@scroll|menu";
+const SCROLL_TOP = '@@scroll|menu';
 
 const filterExpandedItems = (targetId, items = []) => {
   const ids = [];
@@ -29,9 +29,9 @@ const ExpansionTreeView = props => {
   // itemList = [ { id='', children = [], label='', link='' }, ...]
   const {
     itemList = [],
-    treeClassName = "",
-    itemClassName = "",
-    linkClassName = "",
+    treeClassName = '',
+    itemClassName = '',
+    linkClassName = '',
     homeUrl,
     homeLabel,
     showHome = false,
@@ -45,7 +45,7 @@ const ExpansionTreeView = props => {
   );
 
   const handleClickMenuLink = () => {
-    const menuTree = document.querySelector(".mv3-tree-view");
+    const menuTree = document.querySelector('.mv3-tree-view');
     window.sessionStorage.setItem(SCROLL_TOP, menuTree.scrollTop);
   };
 
@@ -55,7 +55,7 @@ const ExpansionTreeView = props => {
   }, [itemList, currentMdId]);
 
   useEffect(() => {
-    const menuTree = document.querySelector(".mv3-tree-view");
+    const menuTree = document.querySelector('.mv3-tree-view');
     const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
 
     // mutationObserver can't be disconnected,it leads to container scrolls as long as menu item be clicked
@@ -64,7 +64,7 @@ const ExpansionTreeView = props => {
       if (menuTree) {
         menuTree.scrollTo({
           top: scrollTop,
-          behavior: "smooth",
+          behavior: 'smooth',
         });
       }
     });
@@ -87,7 +87,7 @@ const ExpansionTreeView = props => {
     return isExternal ? (
       <CustomIconLink
         to={originUrl}
-        className={clsx("mv3-item-link", {
+        className={clsx('mv3-item-link', {
           [linkClassName]: linkClassName,
         })}
         isDoc={true}
@@ -97,7 +97,7 @@ const ExpansionTreeView = props => {
     ) : (
       <Link
         to={originUrl}
-        className={clsx("mv3-item-link", {
+        className={clsx('mv3-item-link', {
           [linkClassName]: linkClassName,
         })}
       >
@@ -135,8 +135,8 @@ const ExpansionTreeView = props => {
 
   return (
     <TreeView
-      className={clsx("mv3-tree-view", { [treeClassName]: treeClassName })}
-      selected={currentMdId === "home" ? `home-${homeLabel}` : currentMdId}
+      className={clsx('mv3-tree-view', { [treeClassName]: treeClassName })}
+      selected={currentMdId === 'home' ? `home-${homeLabel}` : currentMdId}
       expanded={expandedIds}
       {...others}
       onClick={handleClickMenuLink}
@@ -148,7 +148,7 @@ const ExpansionTreeView = props => {
           label={
             <Link
               to={homeUrl}
-              className={clsx("mv3-item-link", {
+              className={clsx('mv3-item-link', {
                 [linkClassName]: linkClassName,
               })}
               language={lng}

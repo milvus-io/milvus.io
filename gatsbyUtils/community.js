@@ -1,4 +1,4 @@
-const { findLang, getDefaultLang } = require("./utils");
+const { findLang, getDefaultLang } = require('./utils');
 
 const getCommunityPath = (fileId, fileLang) => {
   const defaultLang = getDefaultLang();
@@ -16,7 +16,7 @@ const getCommunityPath = (fileId, fileLang) => {
 const filterCommunityMd = edges => {
   return edges.filter(
     ({ node: { fileAbsolutePath, frontmatter } }) =>
-      fileAbsolutePath.includes("communityArticles") && frontmatter.id
+      fileAbsolutePath.includes('communityArticles') && frontmatter.id
   );
 };
 
@@ -33,7 +33,7 @@ const filterCommunityMenus = edges => {
         childCommunity !== null && childCommunity.menuList !== null
     )
     .map(({ node: { absolutePath, childCommunity } }) => {
-      const lang = absolutePath.includes("/en/") ? "en" : "cn";
+      const lang = absolutePath.includes('/en/') ? 'en' : 'cn';
       const menuList = childCommunity.menuList || [];
       return {
         lang,
@@ -51,7 +51,7 @@ const filterCommunityMenus = edges => {
 const filterCommunityHome = edges => {
   return edges.filter(
     ({ node: { fileAbsolutePath, frontmatter } }) =>
-      frontmatter.id && fileAbsolutePath.includes("communityHome")
+      frontmatter.id && fileAbsolutePath.includes('communityHome')
   );
 };
 
@@ -62,10 +62,10 @@ const filterCommunityHome = edges => {
  * @returns {object} { communityMd, communityMenu, communityHome }
  */
 const handleCommunityData = (allMarkdownRemark, allFile) => {
-  const communityMd = filterCommunityMd(allMarkdownRemark);
+  const communityNodes = filterCommunityMd(allMarkdownRemark);
   const communityMenu = filterCommunityMenus(allFile);
   const communityHome = filterCommunityHome(allMarkdownRemark);
-  return { communityMd, communityMenu, communityHome };
+  return { communityNodes, communityMenu, communityHome };
 };
 
 /**
@@ -87,7 +87,7 @@ const generateCommunityPages = (
     const fileLang = findLang(fileAbsolutePath);
     const path = getCommunityPath(fileId, fileLang);
     const editPath = fileAbsolutePath.split(
-      fileLang === "en" ? "/en/" : "/zh-CN/"
+      fileLang === 'en' ? '/en/' : '/zh-CN/'
     )[1];
 
     createPage({
@@ -125,7 +125,7 @@ const generateCommunityHome = (
     } = node;
     const fileLang = findLang(fileAbsolutePath);
     createPage({
-      path: fileLang === "en" ? "/community" : `/${fileLang}/community`,
+      path: fileLang === 'en' ? '/community' : `/${fileLang}/community`,
       component: communityTemplate,
       context: {
         locale: fileLang,

@@ -15,7 +15,9 @@ const VideoPlayer = ({ clientWidth, videoSrc }) => {
       className={styles.playerContainer}
     >
       <div className={styles.playerWrapper}>
-        {!ready && <span className={`${styles.loadingIcon} fas fa-spinner`}></span>}
+        {!ready && (
+          <span className={`${styles.loadingIcon} fas fa-spinner`}></span>
+        )}
         <ReactPlayer
           controls={true}
           url={videoSrc}

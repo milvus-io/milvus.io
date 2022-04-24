@@ -1,63 +1,63 @@
-import React, { useState } from "react";
-import Layout from "../../components/layout";
-import { graphql } from "gatsby";
-import { useI18next } from "gatsby-plugin-react-i18next";
-import DemoCard from "../../components/card/DemoCard";
-import * as styles from "./index.module.less";
-import imageSearch from "../../images/demos/image-search.png";
-import chemical from "../../images/demos/chemical-search.svg";
-import chatBot from "../../images/demos/chat-bots.svg";
-import Github from "../../images/demos/github.svg";
-import Forum from "../../images/demos/forum.svg";
-import { CustomizedContentDialogs } from "../../components/dialog/Dialog";
-import { CustomizedSnackbars } from "../../components/snackBar";
-import Signup from "../../components/signup";
-import Seo from "../../components/seo";
+import React, { useState } from 'react';
+import Layout from '../../components/layout';
+import { graphql } from 'gatsby';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import DemoCard from '../../components/card/DemoCard';
+import * as styles from './index.module.less';
+import imageSearch from '../../images/demos/image-search.png';
+import chemical from '../../images/demos/chemical-search.svg';
+import chatBot from '../../images/demos/chat-bots.svg';
+import Github from '../../images/demos/github.svg';
+import Forum from '../../images/demos/forum.svg';
+import { CustomizedContentDialogs } from '../../components/dialog/Dialog';
+import { CustomizedSnackbars } from '../../components/snackBar';
+import Signup from '../../components/signup';
+import Seo from '../../components/seo';
 
 const DEMOS = [
   {
-    name: "Image Search",
-    desc: "Images made searchable. Instantaneously return the most similar images from a massive database.",
+    name: 'Image Search',
+    desc: 'Images made searchable. Instantaneously return the most similar images from a massive database.',
     // link: 'http://35.166.123.214:8004/#/',
-    href: "/milvus-demos/reverse-image-search",
+    href: '/milvus-demos/reverse-image-search',
     cover: imageSearch,
-    videoSrc: "https://www.youtube.com/watch?v=hkU9hJnhGsU",
-    lowerCaseName: "image search",
+    videoSrc: 'https://www.youtube.com/watch?v=hkU9hJnhGsU',
+    lowerCaseName: 'image search',
   },
   {
-    name: "Chatbots",
-    desc: "Interactive digital customer service that saves users time and businesses money.",
-    href: "http://35.166.123.214:8005/",
+    name: 'Chatbots',
+    desc: 'Interactive digital customer service that saves users time and businesses money.',
+    href: 'http://35.166.123.214:8005/',
     cover: chatBot,
-    videoSrc: "https://www.youtube.com/watch?v=UvhL2vVZ-f4",
-    lowerCaseName: "chatbots",
+    videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
+    lowerCaseName: 'chatbots',
   },
   {
-    name: "Chemical Structure Search",
-    desc: "Blazing fast similarity search, substructure search, or superstructure search for a specified molecule.",
-    href: "http://35.166.123.214:8002/",
+    name: 'Chemical Structure Search',
+    desc: 'Blazing fast similarity search, substructure search, or superstructure search for a specified molecule.',
+    href: 'http://35.166.123.214:8002/',
     cover: chemical,
-    videoSrc: "https://www.youtube.com/watch?v=4u_RZeMBTNI",
-    lowerCaseName: "chemical",
+    videoSrc: 'https://www.youtube.com/watch?v=4u_RZeMBTNI',
+    lowerCaseName: 'chemical',
   },
 ];
-const TITLE = "Milvus Demos";
+const TITLE = 'Milvus Demos';
 const DESC =
-  "With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.";
+  'With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.';
 
 const DemoPage = () => {
   const { language, t } = useI18next();
 
   const [dialogConfig, setDialogConfig] = useState({
     open: false,
-    title: "",
+    title: '',
     content: () => <></>,
   });
 
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
-    type: "info",
-    message: "",
+    type: 'info',
+    message: '',
   });
 
   const handelOpenDialog = (content, title) => {
@@ -71,7 +71,7 @@ const DemoPage = () => {
   const handleCloseDialog = () => {
     setDialogConfig({
       open: false,
-      title: "",
+      title: '',
       content: () => <></>,
     });
   };
@@ -87,15 +87,15 @@ const DemoPage = () => {
   const handleCloseSnackbar = () => {
     setSnackbarConfig({
       open: false,
-      type: "info",
-      message: "",
+      type: 'info',
+      message: '',
     });
   };
 
   return (
     <main>
       {/* use for seo */}
-      <h1 style={{ display: "none" }}>Milvus Demos</h1>
+      <h1 style={{ display: 'none' }}>Milvus Demos</h1>
       <Layout darkMode={true} t={t}>
         <Seo title={TITLE} lang={language} description={DESC} />
         <section className={styles.banner}>

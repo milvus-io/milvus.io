@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 const Tags = props => {
   const {
-    tagsClass = "",
+    tagsClass = '',
     list,
     onClick = () => {},
     genTagClass = () => {},

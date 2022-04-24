@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
-import clsx from "clsx";
-import { useIntervalWhen } from "rooks";
-import Typography from "@mui/material/Typography";
-import CustomIconLink from "../customIconLink";
+import React, { useState, useRef } from 'react';
+import clsx from 'clsx';
+import { useIntervalWhen } from 'rooks';
+import Typography from '@mui/material/Typography';
+import CustomIconLink from '../customIconLink';
 
 const Attu = props => {
   const { t = v => v } = props;
@@ -45,18 +45,18 @@ const Attu = props => {
     <>
       <div className="attu-desc col-12 col-8 col-4">
         <Typography component="h2" variant="h2">
-          {t("v3trans.home.attu.title")} with{" "}
-          <span style={{ color: "#4fc4f9" }}>Attu</span>
+          {t('v3trans.home.attu.title')} with{' '}
+          <span style={{ color: '#4fc4f9' }}>Attu</span>
         </Typography>
-        <Typography component="p" classes={{ root: "subtitle" }}>
-          {t("v3trans.home.attu.desc")}
+        <Typography component="p" classes={{ root: 'subtitle' }}>
+          {t('v3trans.home.attu.desc')}
         </Typography>
       </div>
       <section className="section3 col-12 col-8 col-4 attu-section">
         <div className="example-wrapper">
           <div className="milvus-feature attu-feature">
             <div
-              className={clsx("shooting-title", {
+              className={clsx('shooting-title', {
                 active: activeExample === 0,
               })}
               role="button"
@@ -64,11 +64,11 @@ const Attu = props => {
               onKeyDown={() => handleActiveClick(0)}
               tabIndex={0}
             >
-              {t("v3trans.home.attu.statistics")}
+              {t('v3trans.home.attu.statistics')}
               <span className="horizontal_shooting_star" />
             </div>
             <div
-              className={clsx("shooting-title", {
+              className={clsx('shooting-title', {
                 active: activeExample === 1,
               })}
               role="button"
@@ -76,11 +76,11 @@ const Attu = props => {
               onKeyDown={() => handleActiveClick(1)}
               tabIndex={0}
             >
-              {t("v3trans.home.attu.manage")}
+              {t('v3trans.home.attu.manage')}
               <span className="horizontal_shooting_star" />
             </div>
             <div
-              className={clsx("shooting-title", {
+              className={clsx('shooting-title', {
                 active: activeExample === 2,
               })}
               role="button"
@@ -88,7 +88,7 @@ const Attu = props => {
               onKeyDown={() => handleActiveClick(2)}
               tabIndex={0}
             >
-              {t("v3trans.home.attu.operation")}
+              {t('v3trans.home.attu.operation')}
               <span className="horizontal_shooting_star" />
             </div>
             <div className="btn-groups">
@@ -97,7 +97,7 @@ const Attu = props => {
                 className={`pBtn download-attu`}
                 showIcon={false}
               >
-                {t("v3trans.home.attu.download")}
+                {t('v3trans.home.attu.download')}
               </CustomIconLink>
 
               <a
@@ -105,15 +105,15 @@ const Attu = props => {
                 rel="noreferrer"
                 href="https://github.com/zilliztech/attu"
               >
-                <button className={"sBtn"}>
-                  {t("v3trans.home.attu.learn")}
+                <button className={'sBtn'}>
+                  {t('v3trans.home.attu.learn')}
                 </button>
               </a>
             </div>
           </div>
 
           <div
-            className={clsx("attu-example", {
+            className={clsx('attu-example', {
               [`attu-example-0`]: activeExample === 0,
               [`attu-example-1`]: activeExample === 1,
               [`attu-example-2`]: activeExample === 2,

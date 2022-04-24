@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { globalHistory } from "@reach/router";
+import React, { useState, useEffect } from 'react';
+import { globalHistory } from '@reach/router';
 
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import clsx from "clsx";
-import * as styles from "./scoredFeedback.module.less";
-import { readStatisData, writeStatisData } from "../../http";
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import clsx from 'clsx';
+import * as styles from './scoredFeedback.module.less';
+import { readStatisData, writeStatisData } from '../../http';
 
 export default function ScoredFeedback(props) {
   const { pageId, trans } = props;
 
-  const [score, setScore] = useState("");
+  const [score, setScore] = useState('');
 
-  const scoreQuestion = trans("v3trans.docs.scoreQuestion");
-  const scoreThanks = trans("v3trans.docs.scoreThanks");
+  const scoreQuestion = trans('v3trans.docs.scoreQuestion');
+  const scoreThanks = trans('v3trans.docs.scoreThanks');
 
   const { pathname } = globalHistory.location;
 
-  const getLocalStorageItem = (itemName = "feedback_info", keyName) => {
+  const getLocalStorageItem = (itemName = 'feedback_info', keyName) => {
     const infoString = window.localStorage.getItem(itemName);
     const info = infoString ? JSON.parse(infoString) : {};
     const detail = info[keyName];
     return detail;
   };
 
-  const setLocalStorageItem = (itemName = "feedback_info", keyName, value) => {
+  const setLocalStorageItem = (itemName = 'feedback_info', keyName, value) => {
     const infoString = window.localStorage.getItem(itemName);
     const info = infoString ? JSON.parse(infoString) : {};
     const newInfo = { ...info, [keyName]: value };
@@ -32,8 +32,8 @@ export default function ScoredFeedback(props) {
   };
 
   const cleanScore = () => {
-    setLocalStorageItem("feedback_info", pageId, "");
-    setScore("");
+    setLocalStorageItem('feedback_info', pageId, '');
+    setScore('');
   };
 
   /**
@@ -45,7 +45,7 @@ export default function ScoredFeedback(props) {
   const handleUpdateStatisData = async (
     value,
     isIncrease = true,
-    swapValue = ""
+    swapValue = ''
   ) => {
     const { statistic, sha } = await readStatisData();
     const info = statistic[value];
@@ -75,13 +75,13 @@ export default function ScoredFeedback(props) {
     writeStatisData({
       sha,
       content: window.btoa(JSON.stringify(content)),
-      message: "update statistic data",
+      message: 'update statistic data',
     });
   };
 
   useEffect(() => {
     try {
-      const feedbackDetail = getLocalStorageItem("feedback_info", pageId);
+      const feedbackDetail = getLocalStorageItem('feedback_info', pageId);
       feedbackDetail && setScore(feedbackDetail);
     } catch (error) {
       console.log(error);
@@ -95,12 +95,12 @@ export default function ScoredFeedback(props) {
       return;
     }
     if (score && score !== value) {
-      setLocalStorageItem("feedback_info", pageId, value);
+      setLocalStorageItem('feedback_info', pageId, value);
       handleUpdateStatisData(value, true, score);
       setScore(value);
       return;
     }
-    setLocalStorageItem("feedback_info", pageId, value);
+    setLocalStorageItem('feedback_info', pageId, value);
     setScore(value);
     handleUpdateStatisData(value);
   };
@@ -124,27 +124,27 @@ const BtnGroups = props => {
     <div className={styles.btnGroup}>
       <button
         className={clsx(styles.btn, {
-          [styles.pBtn]: score === "like",
-          [styles.sBtn]: score !== "like",
+          [styles.pBtn]: score === 'like',
+          [styles.sBtn]: score !== 'like',
         })}
         onClick={() => {
-          onScoreBtnClick("like");
+          onScoreBtnClick('like');
         }}
       >
         <ThumbUpOffAltIcon />
-        {trans("v3trans.docs.yes")}
+        {trans('v3trans.docs.yes')}
       </button>
       <button
         className={clsx(styles.btn, {
-          [styles.pBtn]: score === "dislike",
-          [styles.sBtn]: score !== "dislike",
+          [styles.pBtn]: score === 'dislike',
+          [styles.sBtn]: score !== 'dislike',
         })}
         onClick={() => {
-          onScoreBtnClick("dislike");
+          onScoreBtnClick('dislike');
         }}
       >
         <ThumbDownOffAltIcon />
-        {trans("v3trans.docs.no")}
+        {trans('v3trans.docs.no')}
       </button>
     </div>
   );

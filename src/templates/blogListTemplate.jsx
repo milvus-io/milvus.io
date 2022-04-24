@@ -1,30 +1,30 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Link, useI18next } from 'gatsby-plugin-react-i18next';
 // import Seo from "../components/seo";
-import { graphql } from "gatsby";
-import Layout from "../components/layout";
-import { FILTER_TAG } from "../consts/index";
-import BlogCard from "../components/card/BlogCard";
-import Tags from "../components/tags";
-import { globalHistory } from "@reach/router";
-import Signup from "../components/signup";
-import { CustomizedSnackbars } from "../components/snackBar";
-import Seo from "../components/seo";
-import { useWindowSize } from "../http/hooks";
-import * as styles from "./blogListTemplate.module.less";
+import { graphql } from 'gatsby';
+import Layout from '../components/layout';
+import { FILTER_TAG } from '../consts/index';
+import BlogCard from '../components/card/BlogCard';
+import Tags from '../components/tags';
+import { globalHistory } from '@reach/router';
+import Signup from '../components/signup';
+import { CustomizedSnackbars } from '../components/snackBar';
+import Seo from '../components/seo';
+import { useWindowSize } from '../http/hooks';
+import * as styles from './blogListTemplate.module.less';
 
 const SCROLL_SIZE = 6;
-const TITLE = "MIlvus Blog";
-const DESC = "MIlvus Blog";
+const TITLE = 'MIlvus Blog';
+const DESC = 'MIlvus Blog';
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { blogList } = pageContext;
   const { language, t, navigate, originalPath } = useI18next();
-  const [currentTag, setCurrentTag] = useState("all");
+  const [currentTag, setCurrentTag] = useState('all');
   const [scrollIndex, setScrollIndex] = useState(1);
   const currentSize = useWindowSize();
 
-  const isMobile = ["phone"].includes(currentSize);
+  const isMobile = ['phone'].includes(currentSize);
 
   const { featuredBlog, restBlogs } = useMemo(() => {
     let [restBlogs, featuredBlog] = [[], null];
@@ -54,8 +54,8 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
-    type: "info",
-    message: "",
+    type: 'info',
+    message: '',
   });
 
   const handleOpenSnackbar = ({ message, type }) => {
@@ -69,14 +69,14 @@ const BlogTemplate = ({ data, pageContext }) => {
   const handleCloseSnackbar = () => {
     setSnackbarConfig({
       open: false,
-      type: "info",
-      message: "",
+      type: 'info',
+      message: '',
     });
   };
   // list of tags
   const tagList = useMemo(() => {
     const resObj = {
-      all: "all",
+      all: 'all',
     };
     blogList.forEach(item => {
       const { tags } = item;
@@ -88,7 +88,7 @@ const BlogTemplate = ({ data, pageContext }) => {
   }, [blogList]);
 
   const filteredBlogs = useMemo(() => {
-    return currentTag === "all"
+    return currentTag === 'all'
       ? restBlogs
       : restBlogs.filter(v => v.tags.includes(currentTag));
   }, [currentTag, restBlogs]);
@@ -113,9 +113,9 @@ const BlogTemplate = ({ data, pageContext }) => {
         setScrollIndex(v => (v < maxScrollIndex ? (v += 1) : v));
       }
     };
-    window.addEventListener("scroll", cb);
+    window.addEventListener('scroll', cb);
     return () => {
-      window.removeEventListener("scroll", cb);
+      window.removeEventListener('scroll', cb);
     };
   }, [filteredBlogs, scrollIndex, isMobile]);
 
@@ -134,7 +134,7 @@ const BlogTemplate = ({ data, pageContext }) => {
 
   useEffect(() => {
     const { hash } = globalHistory.location;
-    const tag = hash.replace(/#/g, "") || "all";
+    const tag = hash.replace(/#/g, '') || 'all';
 
     setCurrentTag(tag);
   }, []);
@@ -154,7 +154,7 @@ const BlogTemplate = ({ data, pageContext }) => {
             <img src={`https://${featuredBlog.cover}`} alt="blog cover" />
           </div>
           <div className={`${styles.featuredBlogContent} col-7`}>
-            <p className={styles.tag}>{featuredBlog.tags.join(" ")}</p>
+            <p className={styles.tag}>{featuredBlog.tags.join(' ')}</p>
             <Link to={`/blog/${featuredBlog.id}`}>
               <p className={styles.title}>{featuredBlog.title}</p>
             </Link>
@@ -178,7 +178,7 @@ const BlogTemplate = ({ data, pageContext }) => {
           <Tags
             list={tagList}
             tagsClass={styles.tagsWrapper}
-            genTagClass={tag => (currentTag === tag ? styles.active : "")}
+            genTagClass={tag => (currentTag === tag ? styles.active : '')}
             onClick={handleFilter}
           />
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "gatsby-plugin-react-i18next";
+import { Link } from 'gatsby-plugin-react-i18next';
 import * as styles from './index.module.less';
 
 // type = 'link' || 'button'
@@ -11,7 +11,7 @@ const Button = ({
   className = '',
   children,
   locale = null,
-  onClick = () => { },
+  onClick = () => {},
   disabled = false,
   target = '_self',
 }) => {
@@ -38,8 +38,9 @@ const Button = ({
         )
       ) : (
         <button
-          className={`${styles[variant]} ${styles.button} ${disabled ? styles.disabled : ''
-            } `}
+          className={`${styles[variant]} ${styles.button} ${
+            disabled ? styles.disabled : ''
+          } `}
           onClick={onClick}
           disabled={disabled}
         >

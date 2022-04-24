@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import Seo from "../../components/seo";
-import * as styles from "./common-layout.module.less";
-import sizingToolLogo from "../../images/sizing-tool/milvusSizingTool.svg";
-import TextFiled from "../../components/textField";
-import CustomTable from "../../components/customTable";
-import TableColumn from "../../components/customTable/tableColumn";
+import React, { useState, useEffect } from 'react';
+import Seo from '../../components/seo';
+import * as styles from './common-layout.module.less';
+import sizingToolLogo from '../../images/sizing-tool/milvusSizingTool.svg';
+import TextFiled from '../../components/textField';
+import CustomTable from '../../components/customTable';
+import TableColumn from '../../components/customTable/tableColumn';
 
-import { graphql } from "gatsby";
-import Layout from "../../components/layout";
+import { graphql } from 'gatsby';
+import Layout from '../../components/layout';
 
 import {
   computMilvusRecommonds,
   formatSize,
   formatVectors,
-} from "../../utils/sizingTool";
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+} from '../../utils/sizingTool';
+import { Link, useI18next } from 'gatsby-plugin-react-i18next';
 
 const [TITLE, DESCRIPTION] = [
-  "Milvus Sizing Tool",
-  "Discover the ideal vector indexing type for your application.",
+  'Milvus Sizing Tool',
+  'Discover the ideal vector indexing type for your application.',
 ];
 
 const SizingTool = () => {
@@ -31,9 +31,9 @@ const SizingTool = () => {
       </p>
       <br />
       <p>
-        <strong>GPU enabled:</strong> Milvus: m ∈{"{"}1, 2, 3, 4, 8, 12, 16, 20,
-        24, 28, 32, 40, 48, 56, 64, 96{"}"}, and (dimension / m) ∈{"{"}1, 2, 3,
-        4, 6, 8, 10, 12, 16, 20, 24, 28, 32{"}"}.
+        <strong>GPU enabled:</strong> Milvus: m ∈{'{'}1, 2, 3, 4, 8, 12, 16, 20,
+        24, 28, 32, 40, 48, 56, 64, 96{'}'}, and (dimension / m) ∈{'{'}1, 2, 3,
+        4, 6, 8, 10, 12, 16, 20, 24, 28, 32{'}'}.
         <br />
         (m x 1024) ≥<code> MaxSharedMemPerBlock</code> of your graphics card.
       </p>
@@ -41,39 +41,39 @@ const SizingTool = () => {
   );
 
   const [vectors, setVectors] = useState({
-    value: "",
+    value: '',
     showError: false,
   });
   const [dimensions, setDimensions] = useState({
-    value: "",
+    value: '',
     showError: false,
   });
   const [nlist, setNlist] = useState({
-    value: "",
+    value: '',
     showError: false,
   });
   const [m, setM] = useState({
-    value: "",
+    value: '',
     showError: false,
   });
   const [segmetFileSize, setsegmetFileSize] = useState({
-    value: "",
+    value: '',
     showError: false,
   });
   const [isInit, setIsInit] = useState(true);
 
   const [firstTBody, setFirstTBody] = useState([
     {
-      indexType: "FLAT",
-      rowFileSize: ". . .",
-      memorySize: ". . .",
-      stableDiskSize: ". . .",
+      indexType: 'FLAT',
+      rowFileSize: '. . .',
+      memorySize: '. . .',
+      stableDiskSize: '. . .',
     },
     {
-      indexType: "IVF_FLAT",
-      rowFileSize: ". . .",
-      memorySize: ". . .",
-      stableDiskSize: ". . .",
+      indexType: 'IVF_FLAT',
+      rowFileSize: '. . .',
+      memorySize: '. . .',
+      stableDiskSize: '. . .',
     },
     {
       indexType: (
@@ -83,34 +83,34 @@ const SizingTool = () => {
           IVF_SQ8h
         </>
       ),
-      rowFileSize: ". . .",
-      memorySize: ". . .",
-      stableDiskSize: ". . .",
+      rowFileSize: '. . .',
+      memorySize: '. . .',
+      stableDiskSize: '. . .',
     },
     {
-      indexType: "IVF_PQ",
-      rowFileSize: ". . .",
-      memorySize: ". . .",
-      stableDiskSize: ". . .",
+      indexType: 'IVF_PQ',
+      rowFileSize: '. . .',
+      memorySize: '. . .',
+      stableDiskSize: '. . .',
     },
   ]);
 
   const [secondTBody, setSecondTBody] = useState([
     {
-      indexType: "FLAT",
-      rowFileSize: ". . .",
-      memorySize: ". . .",
-      stableDiskSize: ". . .",
+      indexType: 'FLAT',
+      rowFileSize: '. . .',
+      memorySize: '. . .',
+      stableDiskSize: '. . .',
     },
     {
-      indexType: "IVF_FLAT",
-      rowFileSize: ". . .",
-      memorySize: ". . .",
-      stableDiskSize: ". . .",
+      indexType: 'IVF_FLAT',
+      rowFileSize: '. . .',
+      memorySize: '. . .',
+      stableDiskSize: '. . .',
     },
   ]);
 
-  const onVectorChange = (event) => {
+  const onVectorChange = event => {
     setIsInit(false);
 
     const value = event.target.value;
@@ -123,7 +123,7 @@ const SizingTool = () => {
     });
   };
 
-  const onDimensionsChange = (event) => {
+  const onDimensionsChange = event => {
     setIsInit(false);
 
     const value = event.target.value;
@@ -136,7 +136,7 @@ const SizingTool = () => {
     });
   };
 
-  const onNlistChange = (event) => {
+  const onNlistChange = event => {
     setIsInit(false);
 
     const value = event.target.value;
@@ -148,7 +148,7 @@ const SizingTool = () => {
     });
   };
 
-  const onMChange = (event) => {
+  const onMChange = event => {
     setIsInit(false);
 
     const value = event.target.value;
@@ -173,7 +173,7 @@ const SizingTool = () => {
     });
   };
 
-  const onFileSizeChange = (e) => {
+  const onFileSizeChange = e => {
     const value = e.target.value;
     const showError = value < 0 || value > 131072;
     setsegmetFileSize({
@@ -182,9 +182,9 @@ const SizingTool = () => {
     });
   };
 
-  const getTableCellContent = (value) => {
+  const getTableCellContent = value => {
     if (isInit) {
-      return ". . .";
+      return '. . .';
     }
 
     if (isNaN(value)) {
@@ -199,7 +199,7 @@ const SizingTool = () => {
     const vectorNumber = formatVectors(value).toUpperCase();
     return Number(value) === 1 ? (
       <span>
-        for <span>1</span> vector{" "}
+        for <span>1</span> vector{' '}
       </span>
     ) : (
       <span>
@@ -228,21 +228,21 @@ const SizingTool = () => {
 
         setFirstTBody([
           {
-            indexType: "FLAT",
+            indexType: 'FLAT',
             rowFileSize: getTableCellContent(milvusRecommends.rawFileSize.flat),
             memorySize: getTableCellContent(milvusRecommends.memorySize.flat),
             stableDiskSize: getTableCellContent(milvusRecommends.diskSize.flat),
           },
           {
-            indexType: "IVF_FLAT",
+            indexType: 'IVF_FLAT',
             rowFileSize: getTableCellContent(
-              milvusRecommends.rawFileSize["ivf_flat"]
+              milvusRecommends.rawFileSize['ivf_flat']
             ),
             memorySize: getTableCellContent(
-              milvusRecommends.memorySize["ivf_flat"]
+              milvusRecommends.memorySize['ivf_flat']
             ),
             stableDiskSize: getTableCellContent(
-              milvusRecommends.diskSize["ivf_flat"]
+              milvusRecommends.diskSize['ivf_flat']
             ),
           },
           {
@@ -254,32 +254,32 @@ const SizingTool = () => {
               </>
             ),
             rowFileSize: getTableCellContent(
-              milvusRecommends.rawFileSize["ivf_sq8"]
+              milvusRecommends.rawFileSize['ivf_sq8']
             ),
             memorySize: getTableCellContent(
-              milvusRecommends.memorySize["ivf_sq8"]
+              milvusRecommends.memorySize['ivf_sq8']
             ),
             stableDiskSize: getTableCellContent(
-              milvusRecommends.diskSize["ivf_sq8"]
+              milvusRecommends.diskSize['ivf_sq8']
             ),
           },
           {
-            indexType: "IVF_PQ",
+            indexType: 'IVF_PQ',
             rowFileSize: getTableCellContent(
-              milvusRecommends.rawFileSize["ivf_pq"]
+              milvusRecommends.rawFileSize['ivf_pq']
             ),
             memorySize: getTableCellContent(
-              milvusRecommends.memorySize["ivf_pq"]
+              milvusRecommends.memorySize['ivf_pq']
             ),
             stableDiskSize: getTableCellContent(
-              milvusRecommends.diskSize["ivf_pq"]
+              milvusRecommends.diskSize['ivf_pq']
             ),
           },
         ]);
 
         setSecondTBody([
           {
-            indexType: "FLAT",
+            indexType: 'FLAT',
             rowFileSize: getTableCellContent(
               milvusRecommends.byteRawFileSize.flat
             ),
@@ -291,15 +291,15 @@ const SizingTool = () => {
             ),
           },
           {
-            indexType: "IVF_FLAT",
+            indexType: 'IVF_FLAT',
             rowFileSize: getTableCellContent(
-              milvusRecommends.byteRawFileSize["ivf_flat"]
+              milvusRecommends.byteRawFileSize['ivf_flat']
             ),
             memorySize: getTableCellContent(
-              milvusRecommends.byteMemorySize["ivf_flat"]
+              milvusRecommends.byteMemorySize['ivf_flat']
             ),
             stableDiskSize: getTableCellContent(
-              milvusRecommends.byteDiskSize["ivf_flat"]
+              milvusRecommends.byteDiskSize['ivf_flat']
             ),
           },
         ]);
@@ -401,7 +401,7 @@ const SizingTool = () => {
           </div>
 
           <div className={styles.rightSection}>
-            <h2>Recommendation {vectors.value !== "" && getVectorTitle()}</h2>
+            <h2>Recommendation {vectors.value !== '' && getVectorTitle()}</h2>
 
             <div className={styles.tableWrapper}>
               <h2>Float</h2>

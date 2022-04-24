@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "gatsby-plugin-react-i18next";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import * as styles from "./HorizontalBlogCard.module.less";
-import Skeleton from "@mui/material/Skeleton";
-import clsx from "clsx";
+import React, { useState } from 'react';
+import { Link } from 'gatsby-plugin-react-i18next';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import * as styles from './HorizontalBlogCard.module.less';
+import Skeleton from '@mui/material/Skeleton';
+import clsx from 'clsx';
 
 export default function HorizontalBlogCard(props) {
   const { blogData = {} } = props;
@@ -30,7 +30,7 @@ export default function HorizontalBlogCard(props) {
         {imgLoading && (
           <Skeleton variant="rectangular" width={250} height={160} />
         )}
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardContent classes={{ root: styles.cardContent }}>
             {tags?.length && (
               <Typography component="div" variant="h7" className={styles.tag}>

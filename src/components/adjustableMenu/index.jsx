@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import * as styles from "./index.module.less";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import clsx from "clsx";
+import React, { useState } from 'react';
+import * as styles from './index.module.less';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import clsx from 'clsx';
 
-export const IS_OPENED = "@@is_opened";
+export const IS_OPENED = '@@is_opened';
 
 const AdjustableMenu = props => {
-  const { adjustableMenuClassName = "", isOpened = false } = props;
+  const { adjustableMenuClassName = '', isOpened = false } = props;
   const [expanded, setExpanded] = useState(false);
 
   const storeOpenedState = bool => {

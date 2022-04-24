@@ -1,17 +1,17 @@
-import React from "react";
-import { Link } from "gatsby-plugin-react-i18next";
-import * as styles from "./leftNav.module.less";
-import "./leftNav.less";
-import { AlgoliaSearch } from "../search/agloia";
-import clsx from "clsx";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import ExpansionTreeView from "../treeView/ExpansionTreeView";
-import { sortVersions } from "../../utils/index";
-import AdjustableMenu from "../adjustableMenu";
+import React from 'react';
+import { Link } from 'gatsby-plugin-react-i18next';
+import * as styles from './leftNav.module.less';
+import './leftNav.less';
+import { AlgoliaSearch } from '../search/agloia';
+import clsx from 'clsx';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import ExpansionTreeView from '../treeView/ExpansionTreeView';
+import { sortVersions } from '../../utils/index';
+import AdjustableMenu from '../adjustableMenu';
 
 const LeftNav = props => {
   const {
@@ -20,8 +20,8 @@ const LeftNav = props => {
     menus = [],
     versions = [],
     version,
-    className = "",
-    mdId = "home",
+    className = '',
+    mdId = 'home',
     language,
     group,
     trans,
@@ -29,7 +29,7 @@ const LeftNav = props => {
     showHome = false,
     showSearch = true,
     getVersionLink = i =>
-      i === "v0.x" ? `/docs/${i}/overview.md` : `/docs/${i}`,
+      i === 'v0.x' ? `/docs/${i}/overview.md` : `/docs/${i}`,
     onMenuCollapseUpdate,
   } = props;
 
@@ -39,11 +39,11 @@ const LeftNav = props => {
   const generateContent = () => (
     <>
       {version && (
-        <div className={clsx("selector-container", styles.selectorContainer)}>
+        <div className={clsx('selector-container', styles.selectorContainer)}>
           <Link
             to={homeUrl}
             className={clsx(styles.homeBtn, {
-              [styles.selected]: mdId === "home",
+              [styles.selected]: mdId === 'home',
             })}
           >
             {homeLabel}
@@ -51,7 +51,7 @@ const LeftNav = props => {
           <FormControl
             fullWidth
             size="small"
-            className={clsx("selector", styles.selector)}
+            className={clsx('selector', styles.selector)}
           >
             <Select
               labelId="version-select-label"
@@ -91,7 +91,7 @@ const LeftNav = props => {
       isOpened={isOpened}
       onMenuCollapseUpdate={onMenuCollapseUpdate}
     >
-      <aside className={clsx(className, "left-nav", styles.aside)}>
+      <aside className={clsx(className, 'left-nav', styles.aside)}>
         {showSearch && (
           <AlgoliaSearch trans={trans} locale={language} version={version} />
         )}

@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
-import ScoredFeedback from "../../components/scoredFeedback";
-import GitCommitInfo from "./GitCommitInfo.jsx";
-import { useGithubCommits } from "../../http/hooks";
-import { useZChart } from "../../hooks/doc-dom-operation";
+import React, { useRef } from 'react';
+import ScoredFeedback from '../../components/scoredFeedback';
+import GitCommitInfo from './GitCommitInfo.jsx';
+import { useGithubCommits } from '../../http/hooks';
+import { useZChart } from '../../hooks/doc-dom-operation';
 
 export default function DocContent(props) {
   const { commitPath, version, htmlContent, mdId, trans } = props;
@@ -48,7 +48,7 @@ export default function DocContent(props) {
           <GitCommitInfo
             commitInfo={commitInfo}
             mdId={mdId}
-            commitTrans={trans("v3trans.docs.commitTrans")}
+            commitTrans={trans('v3trans.docs.commitTrans')}
           />
         )}
         <ScoredFeedback trans={trans} pageId={mdId} />

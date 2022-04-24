@@ -1,14 +1,14 @@
-import React, { useMemo, useState, useEffect } from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import { MANAGE_DATA, VECTOR_SEARCH, INSTALL_MILVUS } from "./code-example";
-import clsx from "clsx";
-import hljs from "highlight.js";
-import { Link } from "gatsby-plugin-react-i18next";
-import "highlight.js/styles/stackoverflow-light.css";
+import React, { useMemo, useState, useEffect } from 'react';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { MANAGE_DATA, VECTOR_SEARCH, INSTALL_MILVUS } from './code-example';
+import clsx from 'clsx';
+import hljs from 'highlight.js';
+import { Link } from 'gatsby-plugin-react-i18next';
+import 'highlight.js/styles/stackoverflow-light.css';
 
-const HighlightBlock = ({ content, language = "bash" }) => {
+const HighlightBlock = ({ content, language = 'bash' }) => {
   const highlightCode = hljs.highlight(content, { language });
   return (
     <pre>
@@ -50,14 +50,14 @@ function TabPanel(props) {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
   };
 }
 
 const EXAMPLES = {
-  manage: "manage",
-  search: "search",
-  install: "install",
+  manage: 'manage',
+  search: 'search',
+  install: 'install',
 };
 let timeId = null;
 let keyIndex = 0;
@@ -85,13 +85,13 @@ const Code = props => {
   const codeExample = useMemo(() => {
     switch (activeExample) {
       case EXAMPLES.manage:
-        return { code: MANAGE_DATA, language: "bash" };
+        return { code: MANAGE_DATA, language: 'bash' };
       case EXAMPLES.search:
-        return { code: VECTOR_SEARCH, language: "python" };
+        return { code: VECTOR_SEARCH, language: 'python' };
       case EXAMPLES.install:
-        return { code: INSTALL_MILVUS, language: "bash" };
+        return { code: INSTALL_MILVUS, language: 'bash' };
       default:
-        return { code: INSTALL_MILVUS, language: "bash" };
+        return { code: INSTALL_MILVUS, language: 'bash' };
     }
   }, [activeExample]);
 
@@ -112,26 +112,26 @@ const Code = props => {
     switch (activeExample) {
       case EXAMPLES.search:
         return {
-          tabs: ["Vector search", "Hybrid search", "Time travel"],
-          learnMoreLink: "/docs/search.md",
+          tabs: ['Vector search', 'Hybrid search', 'Time travel'],
+          learnMoreLink: '/docs/search.md',
         };
       case EXAMPLES.manage:
         return {
-          tabs: ["Create collection", "Create index", "Insert data"],
-          learnMoreLink: "/docs/create_collection.md",
+          tabs: ['Create collection', 'Create index', 'Insert data'],
+          learnMoreLink: '/docs/create_collection.md',
         };
       case EXAMPLES.install:
       default:
         return {
-          tabs: ["Ubuntu", "CentOS", "Kubernetes"],
-          learnMoreLink: "/docs/install_cluster-helm.md",
+          tabs: ['Ubuntu', 'CentOS', 'Kubernetes'],
+          learnMoreLink: '/docs/install_cluster-helm.md',
         };
     }
   }, [activeExample]);
 
   return (
     <section className="section3 col-12 col-8 col-4">
-      <Box sx={{ borderColor: "divider" }} className={`code-example-tab`}>
+      <Box sx={{ borderColor: 'divider' }} className={`code-example-tab`}>
         <Tabs value={value} onChange={handleChange} aria-label="code tab">
           {tabs.map((v, i) => (
             <Tab disableRipple key={v} label={v} {...a11yProps(i)} />
@@ -146,7 +146,7 @@ const Code = props => {
         </div>
         <div className="milvus-feature">
           <div
-            className={clsx("shooting-title", {
+            className={clsx('shooting-title', {
               active: activeExample === EXAMPLES.install,
             })}
             role="button"
@@ -154,11 +154,11 @@ const Code = props => {
             onKeyDown={() => handleActiveClick(EXAMPLES.install)}
             tabIndex={0}
           >
-            {t("v3trans.home.code.install")}
+            {t('v3trans.home.code.install')}
             <span className="horizontal_shooting_star" />
           </div>
           <div
-            className={clsx("shooting-title", {
+            className={clsx('shooting-title', {
               active: activeExample === EXAMPLES.manage,
             })}
             role="button"
@@ -166,11 +166,11 @@ const Code = props => {
             tabIndex={0}
             onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
           >
-            {t("v3trans.home.code.manage")}
+            {t('v3trans.home.code.manage')}
             <span className="horizontal_shooting_star" />
           </div>
           <div
-            className={clsx("shooting-title", {
+            className={clsx('shooting-title', {
               active: activeExample === EXAMPLES.search,
             })}
             role="button"
@@ -178,12 +178,12 @@ const Code = props => {
             tabIndex={0}
             onKeyDown={() => handleActiveClick(EXAMPLES.search)}
           >
-            {t("v3trans.home.code.search")}
+            {t('v3trans.home.code.search')}
             <span className="horizontal_shooting_star" />
           </div>
           <Link to={learnMoreLink}>
             <button className="sBtn learn-more">
-              {t("v3trans.home.code.learn")}
+              {t('v3trans.home.code.learn')}
             </button>
           </Link>
         </div>

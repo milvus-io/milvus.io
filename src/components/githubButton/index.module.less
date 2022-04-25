@@ -1,4 +1,4 @@
-@import (reference) "../../css/mixins.less";
+@import (reference) '../../css/mixins.less';
 
 .gitBtnWrapper {
   color: #000;
@@ -25,12 +25,18 @@
       margin-right: 8px;
     }
 
+    .iconText {
+      @media @desktop1024, @tablet {
+        display: none;
+      }
+    }
+
     line-height: 18px;
     font-size: 14px;
   }
 
   .num {
-    font-family: "Roboto Mono";
+    font-family: 'Roboto Mono';
     font-weight: bold;
     justify-content: center;
 

@@ -26,7 +26,7 @@ const GitHubButton = ({
         rel="noopener noreferrer"
       >
         <FontAwesomeIcon className={styles.iconWrapper} icon={iconClass} />
-        <span className={styles.stat}>{children}</span>
+        <span className={styles.iconText}>{children}</span>
       </a>
       <Divider orientation="vertical" variant="middle" flexItem />
       <a

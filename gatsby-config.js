@@ -212,23 +212,7 @@ if (process.env.NODE_ENV !== 'development') {
     //     trackingId: "UA-142992812-1",
     //   },
     // },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `docs`,
-        path: `${__dirname}/src/pages/docs/versions`,
-        ignore: [
-          `**/v0.6*`,
-          `**/v0.7*`,
-          `**/v0.8*`,
-          `**/v0.9*`,
-          `**/v0.1*`,
-          `**/v2.0.0`,
-          `**/export_pdf`,
-          `**/\.*`,
-        ],
-      },
-    },
+    
     {
       resolve: 'gatsby-plugin-google-tagmanager',
       options: {

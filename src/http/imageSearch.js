@@ -2,7 +2,7 @@ import axios from 'axios';
 
 let hasError = false;
 
-const baseURL = 'https://demos.zilliz.com';
+const baseURL = 'https://demos.milvus.io';
 
 const instance = axios.create({
   baseURL,
@@ -54,7 +54,7 @@ instance.interceptors.response.use(
 );
 
 export const search = async (formData, isCn = false) => {
-  const url = `${isCn ? 'cn' : 'en'}_img_serh/api/v1/search`;
+  const url = `api/v1/search`;
   const res = await instance.post(url, formData);
   return res.data;
 };

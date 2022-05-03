@@ -14,8 +14,8 @@ import { useWindowSize } from '../http/hooks';
 import * as styles from './blogListTemplate.module.less';
 
 const SCROLL_SIZE = 6;
-const TITLE = 'MIlvus Blog';
-const DESC = 'MIlvus Blog';
+const TITLE = 'Milvus Blog';
+const DESC = 'Milvus Blog';
 
 const BlogTemplate = ({ data, pageContext }) => {
   const { blogList } = pageContext;

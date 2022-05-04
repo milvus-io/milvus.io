@@ -95,19 +95,18 @@ const Aside = props => {
         },
         {
           label: issueBtnConf.label,
-          link: `https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--error-report.yaml&title=${title}`,
+          link: `https://github.com/milvus-io/milvus/issues/new?assignees=yanliang567&labels=kind%2Fbug%2Cneeds-triage&template=bug_report.yaml&title=[Bug]%3A+`,
           icon: issueBtnConf.icon,
         },
         {
           label: suggestBtnConf.label,
-          link: 'https://github.com/milvus-io/milvus-docs/issues/new?assignees=&labels=&template=--new-content-proposal.yaml&title=New Doc Proposal',
+          link: 'https://github.com/milvus-io/milvus-docs/issues/new/choose',
           icon: suggestBtnConf.icon,
         },
       ];
     },
     api: ({ apiReferenceData }) => {
-      const { projName, relativePath, sourceUrl } = apiReferenceData;
-      const title = `${projName},${version},${relativePath}`;
+      const { sourceUrl } = apiReferenceData;
       return [
         {
           label: commonEditBtnConf.label,
@@ -121,7 +120,7 @@ const Aside = props => {
         },
         {
           label: bugBtnConf.label,
-          link: `https://github.com/milvus-io/milvus/issues/new?assignees=&labels=&template=bug_report.md&title=${title}`,
+          link: `https://github.com/milvus-io/milvus/issues/new?assignees=yanliang567&labels=kind%2Fbug%2Cneeds-triage&template=bug_report.yaml&title=[Bug]%3A+`,
           icon: bugBtnConf.icon,
         },
         {

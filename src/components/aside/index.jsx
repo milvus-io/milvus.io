@@ -40,7 +40,6 @@ const Aside = props => {
     items,
     title,
     className = '',
-    version,
     isHome,
     isShowBtnGroup = 'true',
   } = props;
@@ -48,7 +47,6 @@ const Aside = props => {
   // editBtn issueBtn; bugBtn; suggestBtn; joinBtn
   const [
     commonEditBtnConf,
-    issueBtnConf,
     bugBtnConf,
     suggestBtnConf,
     discussBtnConf,
@@ -57,10 +55,6 @@ const Aside = props => {
     {
       label: t('v3trans.docs.btnGroup.editBtn'),
       icon: faPencilAlt,
-    },
-    {
-      label: t('v3trans.docs.btnGroup.issueBtn'),
-      icon: faBug,
     },
     {
       label: t('v3trans.docs.btnGroup.bugBtn'),
@@ -81,11 +75,7 @@ const Aside = props => {
   ];
 
   const btnConfiguration = {
-    doc: ({ locale, version = '', editPath, mdTitle = { value: '' } }) => {
-      const name = editPath && editPath.split('/').pop();
-      const title = `${version} ${
-        mdTitle && mdTitle.value
-      } (${name}) Doc Update`;
+    doc: ({ locale, version = '', editPath }) => {
       const localePath = locale === 'en' ? 'en' : 'zh-CN';
       return [
         {
@@ -94,9 +84,9 @@ const Aside = props => {
           icon: commonEditBtnConf.icon,
         },
         {
-          label: issueBtnConf.label,
+          label: bugBtnConf.label,
           link: `https://github.com/milvus-io/milvus/issues/new?assignees=yanliang567&labels=kind%2Fbug%2Cneeds-triage&template=bug_report.yaml&title=[Bug]%3A+`,
-          icon: issueBtnConf.icon,
+          icon: bugBtnConf.icon,
         },
         {
           label: suggestBtnConf.label,

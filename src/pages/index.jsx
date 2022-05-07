@@ -17,7 +17,7 @@ import line from '../images/brands/line.png';
 import baidu from '../images/brands/baidu.png';
 import shopee from '../images/brands/shopee.png';
 import smartnews from '../images/brands/smartnews.png';
-import shutterstock from '../images/brands/shutterstock.png';
+import bigolive from '../images/brands/bigolive.png';
 import walmart from '../images/brands/walmart.png';
 import xiaomi from '../images/brands/xiaomi.png';
 import hunt from '../images/brands/hunt.png';
@@ -106,9 +106,9 @@ const brands = [
     link: 'https://www.tencent.com/',
   },
   {
-    name: 'shutterstock',
-    icon: shutterstock,
-    link: 'https://www.shutterstock.com/',
+    name: 'bigolive',
+    icon: bigolive,
+    link: 'https://www.bigo.tv/',
   },
   {
     name: 'Moj',

@@ -8,8 +8,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import milvusLogo from '../../images/milvus_logo.svg';
 import GitHubButton from '../githubButton';
 import MilvusCookieConsent from '../milvusCookieConsent';
@@ -73,9 +71,9 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, [isLightHeader, darkMode]);
 
-  const handleLangClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleLangClick = event => {
+  //   setAnchorEl(event.currentTarget);
+  // };
   const handleLangClose = () => {
     setAnchorEl(null);
   };
@@ -157,18 +155,6 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
           Forks
         </GitHubButton>
       </div>
-      <button
-        className={styles.langSelect}
-        aria-controls={isLangOpen ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={isLangOpen ? 'true' : undefined}
-        onClick={handleLangClick}
-      >
-        <>
-          <FontAwesomeIcon className={styles.global} icon={faGlobe} />
-          <span className={styles.globalText}>{language}</span>
-        </>
-      </button>
       <Menu
         anchorEl={anchorEl}
         open={isLangOpen}

@@ -141,7 +141,13 @@ export default function Template({ pageContext }) {
           ''
         )}`;
       }
+      break;
 
+    case 'restful':
+      apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-restful/${version}/${name.replace(
+        'restful_',
+        ''
+      )}`;
       break;
     default:
       break;

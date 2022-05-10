@@ -164,6 +164,15 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
           });
         }
         break;
+      case 'milvus-sdk-restful':
+        for (const version of versions) {
+          handleApiFiles(nodes, {
+            parentPath: path,
+            version,
+            category: 'restful',
+          });
+        }
+        break;
       default:
         break;
     }

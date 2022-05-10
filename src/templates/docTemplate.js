@@ -128,6 +128,14 @@ export default function Template({ data, pageContext }) {
     });
   }
 
+  if (versionInfo[version].restful) {
+    APIs.children.push({
+      id: 'restful',
+      label: 'RESTful',
+      link: `/api-reference/restful/${versionInfo[version].restful}/About.md`,
+    });
+  }
+
   // only merge api menus if menus.lenth > 0 and version > 1
   if (APIs.children.length > 0 && version[1] * 1 > 1) {
     menus.push(APIs);

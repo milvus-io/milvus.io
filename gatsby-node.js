@@ -1,49 +1,50 @@
-const path = require("path");
-const fs = require("fs");
-const ReadVersionJson = require("./walkFile");
-const express = require("express");
+const path = require('path');
+const fs = require('fs');
+const ReadVersionJson = require('./walkFile');
+const express = require('express');
 const {
   query,
   generateAllMenus,
   filterMdWithVersion,
   filterHomeMdWithVersion,
-} = require("./gatsbyUtils/createPages");
+} = require('./gatsbyUtils/createPages');
 const {
   generateAllDocPages,
   generateDocHomeWidthMd,
   generateHomeData,
   getVersionsWithHome,
-} = require("./gatsbyUtils/docs");
+} = require('./gatsbyUtils/docs');
 const {
   generateCommunityPages,
   handleCommunityData,
   generateCommunityHome,
-} = require("./gatsbyUtils/community");
+} = require('./gatsbyUtils/community');
 const {
+  handleApiFiles,
   generateApiMenus,
   generateApiReferencePages,
-} = require("./gatsbyUtils/api");
+} = require('./gatsbyUtils/api');
 const {
   generateBlogArticlePage,
   filterMDwidthBlog,
-} = require("./gatsbyUtils/blog");
-const sourceNodesUtils = require("./gatsbyUtils/sourceNodes");
+} = require('./gatsbyUtils/blog');
+const sourceNodesUtils = require('./gatsbyUtils/sourceNodes');
 
 const env = process.env.IS_PREVIEW;
 // const env = 'preview';
 const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
     v =>
-      v !== "master" && (versionInfo[v].released === "yes" || env === "preview")
+      v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
   );
   return keys.reduce((pre, cur) => {
     const curVersion = cur
       .substring(1)
-      .split(".")
+      .split('.')
       .map(v => Number(v));
     const preVersion = pre
       .substring(1)
-      .split(".")
+      .split('.')
       .map(v => Number(v));
 
     if (curVersion[0] !== preVersion[0]) {
@@ -57,26 +58,26 @@ const getNewestVersion = versionInfo => {
     }
 
     return pre;
-  }, "v0.0.0");
+  }, 'v0.0.0');
 };
 exports.onCreateDevServer = ({ app }) => {
-  app.use(express.static("public"));
+  app.use(express.static('public'));
 };
 
 // the version is same for different lang, so we only need one
-const DOC_ROOT = "src/pages/docs/versions";
+const DOC_ROOT = 'src/pages/docs/versions';
 const versionInfo = ReadVersionJson(DOC_ROOT);
 const newestVersion = getNewestVersion(versionInfo);
 const versions = [];
 
 versionInfo.preview = {
   ...versionInfo.preview,
-  version: "preview",
-  released: env === "preview" ? "yes" : "no",
+  version: 'preview',
+  released: env === 'preview' ? 'yes' : 'no',
 };
 
 Object.keys(versionInfo).forEach(v => {
-  if (versionInfo[v].released === "yes") {
+  if (versionInfo[v].released === 'yes') {
     versions.push(v);
   }
 });
@@ -117,7 +118,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 // APIReference page: generate source for api reference html
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions;
-  const { generateNodes, handleApiFiles } = sourceNodesUtils;
+  const { generateNodes } = sourceNodesUtils;
 
   const dirPath = `src/pages/docs/versions/master/API_Reference`;
   // read categories, such as pymilvus and pymilvus-orm
@@ -127,39 +128,39 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     const path = `${dirPath}/${category}`;
     const versions = fs.readdirSync(path);
     switch (category) {
-      case "pymilvus":
+      case 'pymilvus':
         for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,
             version,
-            category: "pymilvus",
+            category: 'pymilvus',
           });
         }
         break;
-      case "milvus-sdk-go":
+      case 'milvus-sdk-go':
         for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,
             version,
-            category: "go",
+            category: 'go',
           });
         }
         break;
-      case "milvus-sdk-java":
+      case 'milvus-sdk-java':
         for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,
             version,
-            category: "java",
+            category: 'java',
           });
         }
         break;
-      case "milvus-sdk-node":
+      case 'milvus-sdk-node':
         for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,
             version,
-            category: "node",
+            category: 'node',
           });
         }
         break;
@@ -262,14 +263,14 @@ exports.createPages = ({ actions, graphql }) => {
 exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
   const config = getConfig();
   const miniCssExtractPlugin = config.plugins.find(
-    plugin => plugin.constructor.name === "MiniCssExtractPlugin"
+    plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
   );
   if (miniCssExtractPlugin) {
     miniCssExtractPlugin.options.ignoreOrder = true;
   }
 
   const cssMinimizerPlugin = config.optimization?.minimizer?.find(plugin => {
-    return plugin.constructor.name === "CssMinimizerPlugin";
+    return plugin.constructor.name === 'CssMinimizerPlugin';
   });
   if (cssMinimizerPlugin) {
     // const preset = cssMinimizerPlugin.options?.minimizerOptions?.preset;
@@ -277,7 +278,7 @@ exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
       //! Fix me if there is better config
       // refert to https://github.com/webpack-contrib/css-minimizer-webpack-plugin/blob/master/README.md
       // and https://cssnano.co/docs/optimisations/
-      preset: require.resolve("cssnano-preset-lite"),
+      preset: require.resolve('cssnano-preset-lite'),
     };
   }
   actions.replaceWebpackConfig(config);

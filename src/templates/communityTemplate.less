@@ -1,4 +1,5 @@
-@import (reference) "../css/responsive.less";
+@import (reference) '../css/responsive.less';
+@import (reference) '../css/mixins.less';
 
 .community-home.doc-content-container {
   > div {
@@ -297,6 +298,9 @@
       font-size: 16px;
       line-height: 26px;
     }
+    a {
+      .secondaryBtnSm;
+    }
   }
 
   .resource-wrapper {
@@ -429,6 +433,7 @@
       align-items: center;
       width: fit-content;
       flex-shrink: 0;
+      .secondaryBtnSm;
 
       &:hover img {
         filter: invert(54%) sepia(53%) saturate(4664%) hue-rotate(169deg)

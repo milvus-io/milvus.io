@@ -188,7 +188,7 @@ const IndexPage = () => {
           <div className={styles.brands}>
             {brands.map(b => (
               <a href={b.link} target="_blank" rel="noreferrer" key={b.name}>
-                <img src={b.icon} alt={b.name} />
+                <img src={b.icon} width="133" height="65" alt={b.name} />
               </a>
             ))}
           </div>

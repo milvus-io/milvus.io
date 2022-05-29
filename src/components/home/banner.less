@@ -146,6 +146,15 @@
     padding-bottom: 26px;
     padding-top: 32px;
     grid-area: title;
+    @media @phone {
+      min-height: unset;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 10px;
+      text-align: center;
+      font-size: 32px;
+      line-height: 42px;
+    }
   }
   h2.subtitle {
     font-size: 24px;
@@ -155,6 +164,12 @@
     line-break: auto;
     padding-bottom: 50px;
     grid-area: subtitle;
+    @media @phone {
+      text-align: center;
+      font-size: 14px;
+      line-heght: 20px;
+      width: 75%;
+    }
   }
   .btn-group {
     grid-area: btns;

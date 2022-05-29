@@ -1,9 +1,8 @@
-@import (reference) "../../css/mixins.less";
+@import (reference) '../../css/mixins.less';
 
 .header {
   align-items: center;
   background-color: transparent;
-  // make header height = 80px
   padding: 18px 0;
   position: absolute;
   top: 0;
@@ -32,7 +31,7 @@
 
     .logoSection {
       .lfaiLogo {
-        background-image: url("../../images/lf_logo_light.svg");
+        background-image: url('../../images/lf_logo_light.svg');
       }
     }
 
@@ -71,7 +70,6 @@
   }
 
   @media @phone, @tablet {
-    .light;
     position: sticky;
   }
 
@@ -157,7 +155,7 @@
   }
 
   .lfaiLogo {
-    background-image: url("../../images/lf_logo_dark.svg");
+    background-image: url('../../images/lf_logo_dark.svg');
     background-size: contain;
     display: block;
     height: 30px;
@@ -165,7 +163,7 @@
     width: 55px;
 
     @media @phone, @tablet {
-      background-image: url("../../images/lf_logo_light.svg");
+      background-image: url('../../images/lf_logo_light.svg');
     }
 
     @media @phone {

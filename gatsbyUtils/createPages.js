@@ -1,7 +1,7 @@
 const query = require('./PageQuery.js');
 const { findVersion, findLang } = require('./utils');
 const env = process.env.IS_PREVIEW;
-
+console.log('--- is preview ---', env)
 /**
  * generate all menus nodes from allFile
  * @param {array} edges allFile.edges from graphql query response

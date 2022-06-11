@@ -13,7 +13,7 @@ const HomeBanner = props => {
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
         <h1 className="title">{t('v3trans.home.banner.title')}</h1>
-        <h2 className="subtitle">{t('v3trans.home.banner.desc')}</h2>
+        <p className="subtitle">{t('v3trans.home.banner.desc')}</p>
         <div className="btn-group">
           <Link className="btn-start" to="/docs/install_standalone-docker.md">
             {t('v3trans.home.banner.getstart')}

@@ -244,6 +244,11 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
               }}
             >
               <MenuItem onClick={handleMenuLinkClick}>
+                <Link to="https://codelabs.milvus.io/" className={styles.menuLink}>
+                  codelabs
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleMenuLinkClick}>
                 <Link to="/bootcamp" className={styles.menuLink}>
                   {t('v3trans.main.nav.bootcamp')}
                 </Link>

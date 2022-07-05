@@ -180,7 +180,7 @@ const IndexPage = () => {
   return (
     <main className="homepage">
       <Layout darkMode={true} t={t}>
-        <Seo title="Milvus" lang={language} description={DESC} />
+        <Seo title="Vector database - Milvus" titleTemplate="%s" lang={language} description={DESC} />
         {/* all css about banner in banner.less */}
         <HomeBanner t={t} />
         <section className={`${styles.customer} col-4 col-8 col-12`}>

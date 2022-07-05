@@ -174,7 +174,7 @@ const BlogTemplate = ({ data, pageContext }) => {
         />
 
         <section className={styles.blogList}>
-          <p className={styles.title}>More Articles</p>
+          <p className={styles.title}>More Blogs</p>
           <Tags
             list={tagList}
             tagsClass={styles.tagsWrapper}

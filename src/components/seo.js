@@ -49,6 +49,11 @@ function SEO({
           content: metaDescription,
         },
         {
+          name: `image`,
+          property: 'og:image',
+          content: 'https://assets.zilliz.com/meta_image_milvus_d6510e10e0.png',
+        },
+        {
           property: `og:title`,
           content: title,
         },

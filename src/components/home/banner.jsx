@@ -20,7 +20,7 @@ const HomeBanner = props => {
           </Link>
           <a
             className="btn-watch"
-            href="https://www.youtube.com/watch?v=nQkmgCtVz5k&t=7s"
+            href="https://www.youtube.com/watch?v=nQkmgCtVz5k"
             target="_blank"
             rel="noreferrer noopener"
           >

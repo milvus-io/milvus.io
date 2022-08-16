@@ -65,8 +65,10 @@ export default function Template({ pageContext }) {
   // get version links on version change
   const getApiVersionLink = version => {
     const currentApiMenu = allApiMenus[category][version];
-    const hasSamePage = Object.entries(currentApiMenu).includes(
-      m => m.id === pageContext.pId
+    const hasSamePage = currentApiMenu.some(
+      v =>
+        // pId: some.md  v.id: language_some.id
+        v.id === `${category}_${pageContext.pId}`
     );
 
     return hasSamePage

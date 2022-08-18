@@ -1,7 +1,10 @@
 import React from 'react';
 import CloudIcon from '../../images/home/cloud.svg';
-import CommandIcon from '../../images/home/command.svg';
-import SearchIcon from '../../images/home/search.svg';
+import RichIcon from '../../images/home/rich.svg';
+import EasyIcon from '../../images/home/easy.svg';
+import ScaleIcon from '../../images/home/scale.svg';
+import CostIcon from '../../images/home/cost.svg';
+import FastIcon from '../../images/home/fast.svg';
 
 const HomeBanner = props => {
   const { t = v => v } = props;
@@ -12,19 +15,34 @@ const HomeBanner = props => {
       <h5>{t('v3trans.home.feature.desc')}</h5>
       <ul className="features">
         <li>
-          <img src={CloudIcon} alt="cloud" />
+          <img src={EasyIcon} alt={t('v3trans.home.feature.easy')} />
+          <h4>{t('v3trans.home.feature.easy')}</h4>
+          <p>{t('v3trans.home.feature.easy-desc')}</p>
+        </li>
+        <li>
+          <img src={FastIcon} alt={t('v3trans.home.feature.fast')} />
+          <h4>{t('v3trans.home.feature.fast')}</h4>
+          <p>{t('v3trans.home.feature.fast-desc')}</p>
+        </li>
+        <li>
+          <img src={ScaleIcon} alt={t('v3trans.home.feature.scale')} />
+          <h4>{t('v3trans.home.feature.scale')}</h4>
+          <p>{t('v3trans.home.feature.scale-desc')}</p>
+        </li>
+        <li>
+          <img src={CloudIcon} alt={t('v3trans.home.feature.cloud')} />
           <h4>{t('v3trans.home.feature.cloud')}</h4>
           <p>{t('v3trans.home.feature.cloud-desc')}</p>
         </li>
         <li>
-          <img src={SearchIcon} alt="search" />
-          <h4>{t('v3trans.home.feature.search')}</h4>
-          <p>{t('v3trans.home.feature.search-desc')}</p>
+          <img src={CostIcon} alt={t('v3trans.home.feature.cost')} />
+          <h4>{t('v3trans.home.feature.cost')}</h4>
+          <p>{t('v3trans.home.feature.cost-desc')}</p>
         </li>
         <li>
-          <img src={CommandIcon} alt="command" />
-          <h4>{t('v3trans.home.feature.devfirst')}</h4>
-          <p>{t('v3trans.home.feature.devfirst-desc')}</p>
+          <img src={RichIcon} alt={t('v3trans.home.feature.rich')} />
+          <h4>{t('v3trans.home.feature.rich')}</h4>
+          <p>{t('v3trans.home.feature.rich-desc')}</p>
         </li>
       </ul>
     </section>

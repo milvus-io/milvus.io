@@ -700,7 +700,7 @@
         "search-desc": "Take advantage of data synergy by combing search with attribute filtering.",
         "devfirst": "Developer first",
         "devfirst-desc": "Milvus provides comprehensive multi-language SDKs for your ML applications.",
-        "easy": "Easy of Use",
+        "easy": "Easy to Use",
         "easy-desc": "No experience required. You can easily establish a large scale similarity search service in minutes. SDK available in any popular languages.",
         "fast": "Blazing Fast",
         "fast-desc": "Exceeds all other vector database management systems. Hardware efficient, makes your retrieval 10x faster.",

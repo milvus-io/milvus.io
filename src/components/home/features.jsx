@@ -16,33 +16,34 @@ const HomeBanner = props => {
       <ul className="features">
         <li>
           <img src={EasyIcon} alt={t('v3trans.home.feature.easy')} />
-          <h4>{t('v3trans.home.feature.easy')}</h4>
-          <p>{t('v3trans.home.feature.easy-desc')}</p>
+          <h4>{t('v3trans.home.feature.easy.title')}</h4>
+          <p>{t('v3trans.home.feature.easy.desc')}</p>
         </li>
         <li>
           <img src={FastIcon} alt={t('v3trans.home.feature.fast')} />
-          <h4>{t('v3trans.home.feature.fast')}</h4>
-          <p>{t('v3trans.home.feature.fast-desc')}</p>
+          <h4>{t('v3trans.home.feature.fast.title')}</h4>
+          <p>{t('v3trans.home.feature.fast.desc')}</p>
         </li>
         <li>
           <img src={ScaleIcon} alt={t('v3trans.home.feature.scale')} />
-          <h4>{t('v3trans.home.feature.scale')}</h4>
-          <p>{t('v3trans.home.feature.scale-desc')}</p>
-        </li>
-        <li>
-          <img src={CloudIcon} alt={t('v3trans.home.feature.cloud')} />
-          <h4>{t('v3trans.home.feature.cloud')}</h4>
-          <p>{t('v3trans.home.feature.cloud-desc')}</p>
+          <h4>{t('v3trans.home.feature.available.title')}</h4>
+          <p>{t('v3trans.home.feature.available.desc')}</p>
         </li>
         <li>
           <img src={CostIcon} alt={t('v3trans.home.feature.cost')} />
-          <h4>{t('v3trans.home.feature.cost')}</h4>
-          <p>{t('v3trans.home.feature.cost-desc')}</p>
+          <h4>{t('v3trans.home.feature.scalable.title')}</h4>
+          <p>{t('v3trans.home.feature.scalable.desc')}</p>
         </li>
         <li>
+          <img src={CloudIcon} alt={t('v3trans.home.feature.cloud')} />
+          <h4>{t('v3trans.home.feature.cloud.title')}</h4>
+          <p>{t('v3trans.home.feature.cloud.desc')}</p>
+        </li>
+
+        <li>
           <img src={RichIcon} alt={t('v3trans.home.feature.rich')} />
-          <h4>{t('v3trans.home.feature.rich')}</h4>
-          <p>{t('v3trans.home.feature.rich-desc')}</p>
+          <h4>{t('v3trans.home.feature.rich.title')}</h4>
+          <p>{t('v3trans.home.feature.rich.desc')}</p>
         </li>
       </ul>
     </section>

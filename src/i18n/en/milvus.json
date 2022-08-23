@@ -713,7 +713,7 @@
           "desc": "Milvus adopts a systemic approach to cloud-nativity, separating compute from storage and allowing you to scale both up and out."
         },
         "rich": {
-          "title": "Feature-rich:",
+          "title": "Feature-rich",
           "desc": "Support for various data types, enhanced vector search with attribute filtering, UDF support, configurable consistency level, time travel, and more."
         },
         "title": "Fuel your machine learning deployment",

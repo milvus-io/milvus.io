@@ -215,7 +215,7 @@ if (process.env.NODE_ENV !== 'development') {
     {
       resolve: 'gatsby-plugin-google-tagmanager',
       options: {
-        id: 'GTM-MXCV5ZM',
+        id: 'G-V1G3KQ048M',
 
         // Include GTM in development.
         // Defaults to false meaning GTM will only be loaded in production.

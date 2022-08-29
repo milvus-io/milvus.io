@@ -108,7 +108,7 @@ export default function Template({ data, pageContext }) {
     APIs.children.push({
       id: 'java',
       label: 'Java',
-      link: `/api-reference/java/${versionInfo[version].java}/index.html`,
+      link: `/api-reference/java/${versionInfo[version].java}/About.md`,
     });
   }
 

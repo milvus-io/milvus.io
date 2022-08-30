@@ -1,0 +1,70 @@
+@import (reference) '../../styles/responsive.less';
+
+.pageinationWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px 0;
+  @media @tablet, @phone {
+    margin: 30px 0;
+  }
+  .iconWrapper {
+    display: flex;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    cursor: pointer;
+    color: #000;
+    margin: 0 20px;
+    &:first-child {
+      margin-left: 0;
+    }
+    @media @tablet, @phone {
+      font-size: 12px;
+      line-height: 20px;
+      margin: 0 10px;
+    }
+
+    &.disabled {
+      cursor: unset;
+      color: #ccc;
+
+      &:hover {
+        background: #fff;
+      }
+    }
+  }
+
+  .pagesList {
+    list-style: none;
+    display: flex;
+    align-items: center;
+
+    .pagesItem {
+      font-size: 16px;
+      cursor: pointer;
+      margin: 0 8px;
+      border-radius: 50%;
+      text-align: center;
+      display: block;
+
+      @media @tablet, @phone {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      &:hover {
+        color: var(--color-text-primary);
+      }
+
+      &.active {
+        color: var(--color-text-primary);
+      }
+    }
+
+    .ellipsis {
+      user-select: none;
+    }
+  }
+}

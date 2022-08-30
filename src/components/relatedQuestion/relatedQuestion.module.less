@@ -1,0 +1,72 @@
+@import (reference) '../../styles/mixins.less';
+@import (reference) '../../styles/responsive.less';
+
+h2.title {
+  /* H3/Bold */
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 42px;
+
+  color: var(--color-black);
+}
+
+.faqLinks {
+  h3.subTitle {
+    /* H6/Regular */
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: -color-black;
+  }
+}
+
+.container {
+  width: fit-content;
+
+  .item,
+  .link {
+    cursor: pointer;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: var(--color-text-primary);
+  }
+}
+
+.btnGroups {
+  display: flex;
+  gap: 10px;
+  padding: 20px 0;
+
+  @media @tablet, @phone {
+    flex-direction: column;
+  }
+
+  .pBtn {
+    .primaryBtnSm;
+  }
+
+  .sBtn {
+    .secondaryBtnSm;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.link {
+  display: inline-block;
+
+  svg {
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+}

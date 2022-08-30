@@ -1,0 +1,25 @@
+:root {
+  /* color */
+  --color-primary: #00a1ea;
+  --color-secondary: #65f8c3;
+  --color-default-text: #191919;
+  --color-text-primary: #1493cc;
+  --color-overlay: rgba(0, 0, 0, 0.12);
+  --color-dark: #010e29;
+  --color-highlight: #4fc4f9;
+  --color-btn-hover: #0077ad;
+  --color-btn-press: #009ade;
+  --color-card-border: #e9e9ed;
+  --color-gray: #999;
+  --color-tag-gray: #afafaf;
+  --color-grey-01: #4c5a67;
+  --color-grey-02: #9ca6b2;
+  --color-grey-03: #c5ccd6;
+  --color-grey-04: #eaeef2;
+  --color-grey-05: #f5f8fb;
+  --color-caution: #f25c05;
+  --color-warning: #d51f00;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  /* size */
+}

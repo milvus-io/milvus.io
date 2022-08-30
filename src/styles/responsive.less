@@ -1,0 +1,249 @@
+/* RESPONSIVE */
+@screen-tablet: 744px;
+@screen-desktop1024: 1024px;
+@screen-desktop1440: 1439px;
+@screen-desktop1920: 1920px;
+
+@phone: ~"only screen and (max-width: @{screen-tablet})";
+@tablet: ~"only screen and (max-width: @{screen-desktop1024})  and (min-width: @{screen-tablet})";
+@desktop1024: ~"only screen and (max-width: @{screen-desktop1440})  and (min-width: @{screen-desktop1024})";
+@desktop1440: ~"only screen and (max-width: @{screen-desktop1920})  and (min-width: @{screen-desktop1440})";
+@desktop1920: ~"only screen and (min-width: @{screen-desktop1920})";
+
+.col-1 {
+  @media @phone {
+    width: calc((100vw - 100px) / 4);
+  }
+
+  @media @tablet {
+    width: calc((100vw - 180px) / 10);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18);
+  }
+}
+
+.col-2 {
+  @media @phone {
+    width: calc((100vw - 100px) / 2 + 20px);
+  }
+
+  @media @tablet {
+    width: calc((100vw - 180px) / 5 + 20px);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 7 + 20px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 9 + 20px);
+  }
+}
+
+.col-3 {
+  @media @phone {
+    width: calc((100vw - 100px) / 4 * 3 + 40px);
+  }
+
+  @media @tablet {
+    width: calc((100vw - 180px) / 10 * 3 + 40px);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 3 + 40px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 6 + 40px);
+  }
+}
+
+.col-4 {
+  @media @phone {
+    width: calc(100vw - 40px);
+  }
+
+  @media @tablet {
+    width: calc((100vw - 180px) / 10 * 4 + 60px);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 4 + 60px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 4 + 60px);
+  }
+}
+
+.col-5 {
+  @media @tablet {
+    width: calc((100vw - 180px) / 10 * 5 + 80px);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 5 + 80px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 5 + 80px);
+  }
+}
+
+.col-6 {
+  @media @tablet {
+    width: calc((100vw - 180px) / 10 * 6 + 100px);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 6 + 100px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 6 + 100px);
+  }
+}
+
+.col-7 {
+  @media @tablet {
+    width: calc((100vw - 180px) / 10 * 7 + 120px);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 7 + 120px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 7 + 120px);
+  }
+}
+
+.col-8 {
+  @media @tablet {
+    width: calc((100vw - 180px) / 10 * 8 + 140px);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 8 + 140px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 8 + 140px);
+  }
+}
+
+.col-9 {
+  @media @tablet {
+    width: calc((100vw - 180px) / 10 * 9 + 160px);
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 9 + 160px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 9 + 160px);
+  }
+}
+
+.col-10 {
+  @media @tablet {
+    width: 100vw;
+  }
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 10 + 180px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 10 + 180px);
+  }
+}
+
+.col-11 {
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 11 + 200px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 11 + 200px);
+  }
+}
+
+.col-12 {
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 12 + 220px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 12 + 220px);
+  }
+}
+
+.col-13 {
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: calc((100vw - 260px) / 14 * 13 + 240px);
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 13 + 240px);
+  }
+}
+
+.col-14 {
+
+  @media @desktop1024,
+  @desktop1440 {
+    width: 100vw;
+  }
+
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 14 + 2600px);
+  }
+}
+
+.col-15 {
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 15 + 280px);
+  }
+}
+
+.col-16 {
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 16 + 300px);
+  }
+}
+
+.col-17 {
+  @media @desktop1920 {
+    width: calc((100vw - 340px) / 18 * 17 + 320px);
+  }
+}
+
+.col-18 {
+  @media @desktop1920 {
+    width: 100vw;
+  }
+}

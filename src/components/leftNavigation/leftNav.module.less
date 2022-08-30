@@ -1,0 +1,74 @@
+.selectorItem {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.02em;
+
+  color: var(--color-black);
+
+  width: 100%;
+}
+
+.aside {
+  min-width: 196px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.tree {
+  overflow: auto;
+}
+
+.treeItemLink {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  > svg {
+    height: 16px;
+    width: 16px;
+  }
+}
+.drawer {
+  padding-top: 10px;
+}
+
+.treeItem,
+.treeItemLink {
+  color: var(--color-grey-01);
+}
+
+.selectorContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 250px;
+  padding: 0 8px 0 31px;
+  margin-bottom: 8px;
+
+  .selector {
+    width: 90px;
+  }
+
+  .homeBtn {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+
+    color: var(--color-grey-01);
+
+    &.selected {
+      font-weight: bold;
+
+      color: var(--color-text-primary);
+    }
+  }
+}

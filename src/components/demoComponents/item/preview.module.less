@@ -1,0 +1,75 @@
+@import (reference) '../../../styles/responsive.less';
+
+.previewContainer {
+  text-align: right;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 30%;
+  min-height: 30%;
+
+  font-size: 16px;
+  line-height: 22px;
+
+  .iconWrapper {
+    width: 24px;
+    height: 24px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 24px;
+
+    & > svg > path,
+    & > svg > rect {
+      stroke: #fff;
+    }
+  }
+}
+
+.imgContent {
+  max-height: 60%;
+  max-width: 60%;
+  border-radius: 16px;
+  overflow: hidden;
+
+  font-size: 0;
+  position: relative;
+
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+
+.descSection {
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  height: 34px;
+  width: 100%;
+  margin-top: 16px;
+  box-sizing: border-box;
+
+  @media @phone {
+    margin-top: 8px;
+  }
+
+  .text {
+    font-weight: 700;
+    color: #fff;
+    text-align: left;
+  }
+
+  .searchBtnWrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .distance {
+    display: flex;
+    align-items: center;
+  }
+}

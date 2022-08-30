@@ -1,0 +1,130 @@
+@import (reference) '../../styles/responsive.less';
+@import (reference) '../../styles/mixins.less';
+
+.subscribe {
+  height: 306px;
+  display: flex;
+  align-items: center;
+  background: url('/images/demos/subscribe-bg.png') top left no-repeat;
+  background-size: cover;
+
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+
+    @media @tablet {
+      padding: 0 64px;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+    }
+
+    @media @phone {
+      flex-direction: column;
+    }
+
+    .section {
+      width: 45%;
+      text-align: left;
+
+      @media @tablet {
+        width: 100%;
+        &:first-child {
+          margin-bottom: 48px;
+        }
+      }
+
+      @media @phone {
+        width: 100%;
+        &:first-child {
+          margin-bottom: 36px;
+        }
+      }
+
+      h2 {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 50px;
+        margin-bottom: 10px;
+
+        @media @phone {
+          font-size: 24px;
+          line-height: 28px;
+        }
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 20px;
+
+        @media @phone {
+          font-size: 12px;
+          line-height: 18px;
+        }
+      }
+    }
+
+    .inputWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      @media @phone {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .input {
+        display: inline-block;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 19px 30px;
+        border-radius: 29px;
+        margin-right: 20px;
+        max-width: 440px;
+        border: none;
+        outline: none;
+        width: calc(100% - 200px);
+
+        @media @phone {
+          width: 100%;
+          padding: 14px 15px;
+          margin-bottom: 16px;
+          font-size: 12px;
+          border-radius: 32px;
+          margin-right: 0;
+          max-width: 100%;
+        }
+
+        &:focus {
+          outline: var(--color-primary) auto 1px;
+        }
+      }
+
+      .subscribeBtn {
+        .customButton;
+        .containedBtn;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 18px;
+        padding: 20px 40px;
+        border-radius: 29px;
+        border: none;
+        color: #fff;
+
+        &:disabled {
+          cursor: not-allowed;
+        }
+
+        @media @phone {
+          width: 100%;
+          padding: 14px 20px;
+          border-radius: 19px;
+          font-size: 12px;
+          border-radius: 32px;
+        }
+      }
+    }
+  }
+}

@@ -55,7 +55,7 @@ export default function Docs(props) {
   const [menuTree, setMenuTree] = useState(menus);
   const pageHref = useRef('');
 
-  const handleSearch = (value) => {
+  const handleSearch = value => {
     if (!value) return;
     // close mask when search
     if (isOpenMobileMenu) {
@@ -68,17 +68,13 @@ export default function Docs(props) {
     setIsOpenMobileMenu(v => !v);
   };
 
-  const handleCloseMask = (e) => {
+  const handleCloseMask = e => {
     if (e.target === e.currentTarget) {
       setIsOpenMobileMenu(false);
     }
   };
 
-  const handleNodeClick = (
-    nodeId,
-    parentIds,
-    isPage
-  ) => {
+  const handleNodeClick = (nodeId, parentIds, isPage) => {
     const updatedTree = recursionUpdateTree(
       menuTree,
       nodeId,
@@ -187,7 +183,7 @@ export default function Docs(props) {
           <div className={classes.contentContainer}>
             <div
               dangerouslySetInnerHTML={{ __html: content }}
-              className="docContainer"
+              className="doc-style"
             ></div>
           </div>
           <div className={classes.anchorContainer}>

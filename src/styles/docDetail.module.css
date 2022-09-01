@@ -52,7 +52,7 @@
         padding: 25px;
       }
 
-      p {
+      & > p {
         @include zilliz-body3-regular;
       }
 

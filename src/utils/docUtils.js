@@ -1,11 +1,10 @@
-
 /**
  * remove .md in filename
  * @date 2022-06-20
  * @param {any} fileName:string
  * @returns {any}
  */
-export const formatFileName = (fileName) => {
+export const formatFileName = fileName => {
   if (!fileName) {
     return '';
   }
@@ -14,7 +13,7 @@ export const formatFileName = (fileName) => {
 };
 
 export const getMenuInfoById = (menus, id) => {
-  const flattened = (list) => {
+  const flattened = list => {
     return list.reduce((pre, cur) => {
       const { children } = cur;
       if (children.length) {
@@ -30,11 +29,7 @@ export const getMenuInfoById = (menus, id) => {
   return target;
 };
 
-export const handleClickMenuPageItem = (
-  list,
-  activeId,
-  parentIds
-)=> {
+export const handleClickMenuPageItem = (list, activeId, parentIds) => {
   const activeIds = [...parentIds, activeId];
   return list.map(v => {
     const { children = [], isOpen, id } = v;
@@ -60,7 +55,7 @@ export const handleClickPureMenuItem = (
   activeId,
   parentIds,
   isCloseSubMenus
-)=> {
+) => {
   const activeIds = [...parentIds, activeId];
   return list.map(v => {
     const { children = [], isOpen, id, isActive } = v;
@@ -101,10 +96,7 @@ export const recursionUpdateTree = (
   }
 };
 
-export const formatMenus = (
-  menus,
-  ids
-) => {
+export const formatMenus = (menus, ids) => {
   const parents = ids || [];
   const menuList = menus.map(m => {
     const commomProps = {

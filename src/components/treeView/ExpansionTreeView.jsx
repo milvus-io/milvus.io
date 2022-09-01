@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'gatsby-plugin-react-i18next';
+import Link from 'next/link';
 import clsx from 'clsx';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
 import CustomIconLink from '../customIconLink';
-import './ExpansionTreeView.less';
+import * as styles from './ExpansionTreeView.module.less';
 
 const SCROLL_TOP = '@@scroll|menu';
 
@@ -95,13 +95,14 @@ const ExpansionTreeView = props => {
         {label}
       </CustomIconLink>
     ) : (
-      <Link
-        to={originUrl}
-        className={clsx('mv3-item-link', {
-          [linkClassName]: linkClassName,
-        })}
-      >
-        {label}
+      <Link href={originUrl}>
+        <a
+          className={clsx('mv3-item-link', {
+            [linkClassName]: linkClassName,
+          })}
+        >
+          {label}
+        </a>
       </Link>
     );
   };
@@ -135,7 +136,9 @@ const ExpansionTreeView = props => {
 
   return (
     <TreeView
-      className={clsx('mv3-tree-view', { [treeClassName]: treeClassName })}
+      className={clsx(styles.mv3TreeView, {
+        [treeClassName]: treeClassName,
+      })}
       selected={currentMdId === 'home' ? `home-${homeLabel}` : currentMdId}
       expanded={expandedIds}
       {...others}

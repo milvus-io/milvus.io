@@ -1,8 +1,7 @@
 import React from 'react';
 import { DocSearch } from '@docsearch/react';
-import '@docsearch/css';
-import 'instantsearch.css/themes/reset.css';
-import './agloia.less';
+
+// import './agloia.less';
 
 export const AlgoliaSearch = props => {
   const { locale, version, trans } = props;

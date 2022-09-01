@@ -1,4 +1,4 @@
-import classes from '../../../styles/docDetail.module.css';
+// import classes from '../../../styles/docDetail.module.css';
 import clsx from 'clsx';
 import {
   generateAllVersionPaths,
@@ -200,6 +200,8 @@ export const getStaticPaths = () => {
 
   // const paths = generateAllDocPaths();
 
+  console.log('paths--', paths);
+
   return {
     paths,
     fallback: false,
@@ -207,6 +209,7 @@ export const getStaticPaths = () => {
 };
 
 export const getStaticProps = async ({ params }) => {
+  console.log('params--', params);
   const { slug, version } = params;
 
   const menus = generateCurVersionMenuList('en', version);

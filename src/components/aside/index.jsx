@@ -8,7 +8,7 @@ import {
   faLightbulb,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { useI18next } from 'gatsby-plugin-react-i18next';
+import { useTranslation } from 'react-i18next';
 import * as styles from './index.module.less';
 import clsx from 'clsx';
 
@@ -43,7 +43,7 @@ const Aside = props => {
     isHome,
     isShowBtnGroup = 'true',
   } = props;
-  const { t } = useI18next();
+  const { t } = useTranslation('common');
   // editBtn issueBtn; bugBtn; suggestBtn; joinBtn
   const [
     commonEditBtnConf,

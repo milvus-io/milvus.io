@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { formatFileName, formatMenus } from './docUtils';
 
 // constants
-const VDC_DOC_DIR = join(process.cwd(), 'src/docs/vectordb');
+const VDC_DOC_DIR = join(process.cwd(), 'src/docs');
 const VERSION_REGEX = /^v[0-9].*/;
 const IGNORE_FILES = [
   'index.md',
@@ -23,12 +23,7 @@ const IGNORE_FILES = [
  * @param version
  * @returns
  */
-const getDirByType = (
-  basePath,
-  lang = 'en',
-  type,
-  version
-) => {
+const getDirByType = (basePath, lang = 'en', type, version) => {
   const versionDirectories = fs
     .readdirSync(basePath)
     .filter(v => VERSION_REGEX.test(v));
@@ -41,7 +36,7 @@ const getDirByType = (
   return join(basePath, filePathMap[type]);
 };
 
-const generateMenu = (dir) => {
+const generateMenu = dir => {
   try {
     const { menuList } = JSON.parse(fs.readFileSync(dir, 'utf-8'));
 
@@ -51,7 +46,7 @@ const generateMenu = (dir) => {
   }
 };
 
-const generateDocs = (dirPath) => {
+const generateDocs = dirPath => {
   const subDirPaths = fs
     .readdirSync(dirPath)
     .filter(v => !IGNORE_FILES.includes(v))
@@ -93,10 +88,7 @@ export const generateAllDocPaths = (lang = 'en', version) => {
   return paths;
 };
 
-export const generateCurVersionMenuList = (
-  lang = 'en',
-  version
-) => {
+export const generateCurVersionMenuList = (lang = 'en', version) => {
   const menuDir = getDirByType(VDC_DOC_DIR, lang, DIR_TYPE_ENUM.MENU, version);
   const menus = generateMenu(menuDir);
   return menus;
@@ -106,11 +98,20 @@ export const getCurrentDoc = (id, lang = 'en', version) => {
   const docDir = getDirByType(VDC_DOC_DIR, lang, DIR_TYPE_ENUM.DOC, version);
   const docs = generateDocs(docDir);
   // TODO: remove formatFileName to let TC remove md in id in every doc frontmatter
-  const doc = docs.find((v) => formatFileName(v.id) === id) || {
+  const doc = docs.find(v => formatFileName(v.id) === id) || {
     id: null,
     content: null,
     summary: null,
   };
 
   return doc;
+};
+
+// target: doc | bootcamp | cummunity | api_reference
+export const generateAvailableVersions = target => {
+  const docDir = VDC_DOC_DIR;
+
+  const versions = fs.readdirSync(docDir);
+
+  console.log('versions--', versions);
 };

@@ -1,9 +1,9 @@
-[submodule "src/pages/blogs/versions/master"]
-	path = src/pages/blogs/versions/master
+[submodule "src/blogs"]
+	path = src/blogs
 	url = https://github.com/milvus-io/community.git
-[submodule "src/pages/docs/versions/master"]
-	path = src/pages/docs/versions/master
+[submodule "src/docs"]
+	path = src/docs
 	url = https://github.com/milvus-io/web-content.git
-[submodule "static/benchmarks"]
-	path = static/benchmarks
+[submodule "src/benchmarks"]
+	path = src/benchmarks
 	url = https://github.com/milvus-io/benchmarks.git

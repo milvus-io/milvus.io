@@ -1,8 +1,9 @@
 import {
-  generateAvailableVersions,
+  generateAvailableDocVersions,
   getCurVersionHomeMd,
   generateApiData,
   generateDocsData,
+  generateCurVersionMenu,
 } from '../../../utils/milvus';
 import HomeContent from '../../../parts/docs/homeContent';
 import DocContent from '../../../parts/docs/DocContent';
@@ -23,16 +24,42 @@ import {
 } from '../../../hooks/doc-dom-operation';
 import { useGenAnchor } from '../../../hooks/doc-anchor';
 import { useOpenedStatus } from '../../../hooks';
+import { recursionUpdateTree } from '../../../utils/docUtils';
+import MenuTree from '../../../components/tree';
+import classes from '../../../styles/docHome.module.less';
 
 export default function DocHomePage(props) {
-  const { homeData, blogs = [] } = props;
+  const { homeData, blogs = [], menus, version } = props;
+  console.log('version--', version);
+
   const { t } = useTranslation('common');
 
   const [isOpened, setIsOpened] = useState(false);
+  const [menuTree, setMenuTree] = useState(menus);
 
   const newestBlog = useMemo(() => {
     return blogs[0];
   }, [blogs]);
+
+  const components = {
+    img: props => (
+      // height and width are part of the props, so they get automatically passed here with {...props}
+      <Image {...props} layout="responsive" loading="lazy" />
+    ),
+  };
+
+  const handleNodeClick = (nodeId, parentIds, isPage = false) => {
+    // const updatedTree = isPage
+    //   ? handleClickMenuPageItem(menus, nodeId, parentIds)
+    //   : handleClickPureMenuItem(menus, nodeId, parentIds);
+    const updatedTree = recursionUpdateTree(
+      menuTree,
+      nodeId,
+      parentIds,
+      isPage
+    );
+    setMenuTree(updatedTree);
+  };
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
@@ -41,22 +68,12 @@ export default function DocHomePage(props) {
           [`home`]: homeData,
         })}
       >
-        {/* <LeftNav
-          homeUrl={leftNavHomeUrl}
-          homeLabel={t('v3trans.docs.homeTitle')}
-          menus={menus}
-          pageType="doc"
-          locale={locale}
-          versions={versionConfig.versions}
+        <MenuTree
+          tree={menuTree}
+          onNodeClick={handleNodeClick}
+          className={classes.menuContainer}
           version={version}
-          mdId={mdId}
-          language={language}
-          trans={t}
-          group={group}
-          isOpened={isOpened}
-          onMenuCollapseUpdate={setIsOpened}
-        /> */}
-        <p>Menus</p>
+        />
         <div
           className={clsx('doc-right-container', {
             [`is-opened`]: isOpened,
@@ -72,6 +89,7 @@ export default function DocHomePage(props) {
               newestBlog={newestBlog}
               trans={t}
             />
+
             <div className="doc-toc-container">
               {/* <Aside
                 locale={locale}
@@ -94,11 +112,12 @@ export default function DocHomePage(props) {
 }
 
 export const getStaticPaths = () => {
-  const versions = generateAvailableVersions();
+  const { versions } = generateAvailableDocVersions();
 
   const paths = versions.map(v => ({
     params: { version: v },
   }));
+
   return {
     paths,
     fallback: false,
@@ -111,11 +130,15 @@ export const getStaticProps = async context => {
     locale,
   } = context;
 
-  const versions = generateAvailableVersions();
+  const { versions } = generateAvailableDocVersions();
   const md = getCurVersionHomeMd(version, locale);
   const apiMenus = generateApiData('pymilvus');
+  const docMenus = generateCurVersionMenu(version, locale);
   const data = generateDocsData();
-  const { tree } = await markdownToHtml(md);
+  const { tree } = await markdownToHtml(md, {
+    showAnchor: false,
+    version,
+  });
 
   return {
     props: {
@@ -124,7 +147,7 @@ export const getStaticProps = async context => {
       locale,
       versions,
       blogs: [],
-      menus: [],
+      menus: docMenus,
     },
   };
 };

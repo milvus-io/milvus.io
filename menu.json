@@ -1,0 +1,4667 @@
+{
+  "v1.0.0": {
+    "cn": [
+      {
+        "id": "about_milvus",
+        "label": "关于 Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "Milvus 是什么"
+          },
+          {
+            "id": "milvus_distributions-cpu.md",
+            "label": "发行版本"
+          },
+          {
+            "id": "announcement.md",
+            "label": "v1.0 发布公告"
+          },
+          {
+            "id": "data_migration.md",
+            "label": "Milvus 数据迁移指南"
+          }
+        ]
+      },
+      {
+        "id": "milvus_basics",
+        "label": "基本概念",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "vector.md",
+            "label": "特征向量"
+          },
+          {
+            "id": "index.md",
+            "label": "向量索引"
+          },
+          {
+            "id": "storage_concept.md",
+            "label": "存储相关"
+          },
+          {
+            "id": "storage_operation.md",
+            "label": "存储操作"
+          },
+          {
+            "id": "metric.md",
+            "label": "相似度计算方式"
+          },
+          {
+            "id": "write_ahead_log.md",
+            "label": "预写式日志"
+          },
+          {
+            "id": "terms.md",
+            "label": "Milvus 术语"
+          }
+        ]
+      },
+      {
+        "id": "quick_start",
+        "label": "快速开始",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "install_milvus.md",
+            "label": "安装概述"
+          },
+          {
+            "id": "milvus_docker-cpu.md",
+            "label": "安装、启动 Milvus 服务"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          },
+          {
+            "id": "connect_milvus_python.md",
+            "label": "连接服务端"
+          },
+          {
+            "id": "create_drop_collection_python.md",
+            "label": "创建、删除集合"
+          },
+          {
+            "id": "create_drop_partition_python.md",
+            "label": "创建、删除分区"
+          },
+          {
+            "id": "insert_delete_vector_python.md",
+            "label": "插入、删除向量"
+          },
+          {
+            "id": "create_drop_index_python.md",
+            "label": "创建、删除索引"
+          },
+          {
+            "id": "search_vector_python.md",
+            "label": "查询向量"
+          },
+          {
+            "id": "flush_python.md",
+            "label": "数据落盘"
+          },
+          {
+            "id": "compact_python.md",
+            "label": "数据段整理"
+          },
+          {
+            "id": "close_client_python.md",
+            "label": "关闭客户端"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "参考手册",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_config.md",
+            "label": "服务端配置"
+          },
+          {
+            "id": "data_manage.md",
+            "label": "使用 MySQL 管理元数据"
+          },
+          {
+            "id": "monitor",
+            "label": "监控与报警",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor.md",
+                "label": "监控与报警方案概述"
+              },
+              {
+                "id": "setup_prometheus.md",
+                "label": "配置、启动 Prometheus"
+              },
+              {
+                "id": "setup_grafana.md",
+                "label": "使用 Grafana 展示监控指标"
+              },
+              {
+                "id": "milvus_metrics.md",
+                "label": "Milvus 监控指标"
+              }
+            ]
+          },
+          {
+            "id": "tuning.md",
+            "label": "性能调优"
+          },
+          {
+            "id": "mishards.md",
+            "label": "Mishards: 集群分片中间件"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "常见问题",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "性能优化问题"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "产品问题"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "部署运维问题"
+          },
+          {
+            "id": "troubleshoot.md",
+            "label": "故障诊断"
+          }
+        ]
+      },
+      {
+        "id": "API",
+        "label": "API 参考",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "Python",
+            "label": "Python",
+
+            "externalLink": "https://github.com/milvus-io/pymilvus/tree/1.0"
+          },
+          {
+            "id": "Java",
+            "label": "Java",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-java/tree/1.0"
+          },
+          {
+            "id": "Go",
+            "label": "Go",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-go/tree/1.0"
+          },
+          {
+            "id": "RESTful",
+            "label": "RESTful",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.0/core/src/server/web_impl"
+          },
+          {
+            "id": "C++",
+            "label": "C++",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.0/sdk"
+          }
+        ]
+      },
+      {
+        "id": "developer_tools",
+        "label": "开发工具",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "dt_overview.md",
+            "label": "概述"
+          },
+          {
+            "id": "milvusdm.md",
+            "label": "MilvusDM 数据迁移工具"
+          },
+          {
+            "id": "em",
+            "label": "Milvus Enterprise Manager",
+
+            "externalLink": "https://zilliz.com/products/em"
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "release_notes.md",
+        "label": "发版说明"
+      }
+    ],
+    "en": [
+      {
+        "id": "about_milvus",
+        "label": "About Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "What is Milvus"
+          },
+          {
+            "id": "milvus_distributions-cpu.md",
+            "label": "Milvus Distributions"
+          },
+          {
+            "id": "announcement.md",
+            "label": "Announcement Letter"
+          },
+          {
+            "id": "data_migration.md",
+            "label": "Milvus Data Migration Guide"
+          }
+        ]
+      },
+      {
+        "id": "milvus_basics",
+        "label": "Concepts",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "vector.md",
+            "label": "Embedding Vector"
+          },
+          {
+            "id": "index.md",
+            "label": "Vector Index"
+          },
+          {
+            "id": "storage_concept.md",
+            "label": "Storage Concepts"
+          },
+          {
+            "id": "storage_operation.md",
+            "label": "Storage Operations"
+          },
+          {
+            "id": "metric.md",
+            "label": "Similarity Metrics"
+          },
+          {
+            "id": "write_ahead_log.md",
+            "label": "Write Ahead Log"
+          },
+          {
+            "id": "terms.md",
+            "label": "Milvus Terms"
+          }
+        ]
+      },
+      {
+        "id": "quick_start",
+        "label": "Quick Start",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "install_milvus.md",
+            "label": "Installation Overview"
+          },
+          {
+            "id": "milvus_docker-cpu.md",
+            "label": "Install and Start Milvus"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          },
+          {
+            "id": "connect_milvus_python.md",
+            "label": "Connect to the Server"
+          },
+          {
+            "id": "create_drop_collection_python.md",
+            "label": "Create/Drop a Collection"
+          },
+          {
+            "id": "create_drop_partition_python.md",
+            "label": "Create/Drop a Partition"
+          },
+          {
+            "id": "insert_delete_vector_python.md",
+            "label": "Insert/Delete Vectors"
+          },
+          {
+            "id": "create_drop_index_python.md",
+            "label": "Create/Drop an Index"
+          },
+          {
+            "id": "search_vector_python.md",
+            "label": "Conduct a vector search"
+          },
+          {
+            "id": "flush_python.md",
+            "label": "Data Flushing"
+          },
+          {
+            "id": "compact_python.md",
+            "label": "Compact Segments"
+          },
+          {
+            "id": "close_client_python.md",
+            "label": "Close the Client"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "Reference",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_config.md",
+            "label": "Milvus Server Configuration"
+          },
+          {
+            "id": "data_manage.md",
+            "label": "Manage metadata with MySQL"
+          },
+          {
+            "id": "monitor",
+            "label": "Monitoring and Alerting",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor.md",
+                "label": "Overview"
+              },
+              {
+                "id": "setup_prometheus.md",
+                "label": "Start up Prometheus"
+              },
+              {
+                "id": "setup_grafana.md",
+                "label": "Visualize Metrics in Grafana"
+              },
+              {
+                "id": "milvus_metrics.md",
+                "label": "Milvus Metrics"
+              }
+            ]
+          },
+          {
+            "id": "tuning.md",
+            "label": "Performance Tuning"
+          },
+          {
+            "id": "mishards.md",
+            "label": "Mishards: Cluster Sharding Middleware"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "Performance FAQ"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "Product FAQ"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "Operational FAQ"
+          },
+          {
+            "id": "troubleshoot.md",
+            "label": "Troubleshooting"
+          }
+        ]
+      },
+      {
+        "id": "API",
+        "label": "API Reference",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "Python",
+            "label": "Python",
+
+            "externalLink": "https://github.com/milvus-io/pymilvus/tree/1.0"
+          },
+          {
+            "id": "Java",
+            "label": "Java",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-java/tree/1.0"
+          },
+          {
+            "id": "Go",
+            "label": "Go",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-go/tree/1.0"
+          },
+          {
+            "id": "RESTful",
+            "label": "RESTful",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.0/core/src/server/web_impl"
+          },
+          {
+            "id": "C++",
+            "label": "C++",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.0/sdk"
+          }
+        ]
+      },
+      {
+        "id": "developer_tools",
+        "label": "Tools",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "dt_overview.md",
+            "label": "Overview"
+          },
+          {
+            "id": "milvusdm.md",
+            "label": "MilvusDM"
+          },
+          {
+            "id": "em",
+            "label": "Milvus Enterprise Manager",
+
+            "externalLink": "https://zilliz.com/products/em"
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "release_notes.md",
+        "label": "Release Notes"
+      },
+      {
+        "id": "milvus_community_charters",
+        "label": "Milvus Community Charters",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_community_charters.md",
+            "label": "Milvus Community Charters"
+          },
+          {
+            "id": "sigs",
+            "label": "Special Interest Groups (SIGs)",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "sig_anns.md",
+                "label": "The ANNS SIG"
+              },
+              {
+                "id": "sig_engine.md",
+                "label": "The Engine SIG"
+              },
+              {
+                "id": "sig_testing.md",
+                "label": "The Testing SIG"
+              },
+              {
+                "id": "sig_tool.md",
+                "label": "The Toolchain SIG"
+              }
+            ]
+          },
+          {
+            "id": "wgs",
+            "label": "Working Groups (WGs)",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "wg_release.md",
+                "label": "The Release WG"
+              },
+              {
+                "id": "wg_devrel.md",
+                "label": "The DevRel WG"
+              },
+              {
+                "id": "wg_grad.md",
+                "label": "The Graduation WG"
+              }
+            ]
+          },
+          {
+            "id": "project_guidelines",
+            "label": "Project Guidelines",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "milvus_release_guideline.md",
+                "label": "The Milvus Release Guideline"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "v1.1.0": {
+    "cn": [
+      {
+        "id": "about_milvus",
+        "label": "关于 Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "Milvus 是什么"
+          },
+          {
+            "id": "milvus_distributions-cpu.md",
+            "label": "发行版本"
+          },
+          {
+            "id": "announcement.md",
+            "label": "v1.0 发布公告"
+          },
+          {
+            "id": "data_migration.md",
+            "label": "Milvus 数据迁移指南"
+          }
+        ]
+      },
+      {
+        "id": "milvus_basics",
+        "label": "基本概念",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "vector.md",
+            "label": "特征向量"
+          },
+          {
+            "id": "index.md",
+            "label": "向量索引"
+          },
+          {
+            "id": "storage_concept.md",
+            "label": "存储相关"
+          },
+          {
+            "id": "storage_operation.md",
+            "label": "存储操作"
+          },
+          {
+            "id": "metric.md",
+            "label": "相似度计算方式"
+          },
+          {
+            "id": "write_ahead_log.md",
+            "label": "预写式日志"
+          },
+          {
+            "id": "terms.md",
+            "label": "Milvus 术语"
+          }
+        ]
+      },
+      {
+        "id": "quick_start",
+        "label": "快速开始",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "install_milvus.md",
+            "label": "安装概述"
+          },
+          {
+            "id": "milvus_docker-cpu.md",
+            "label": "安装、启动 Milvus 服务"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          },
+          {
+            "id": "connect_milvus_python.md",
+            "label": "连接服务端"
+          },
+          {
+            "id": "create_drop_collection_python.md",
+            "label": "创建、删除集合"
+          },
+          {
+            "id": "create_drop_partition_python.md",
+            "label": "创建、删除分区"
+          },
+          {
+            "id": "insert_delete_vector_python.md",
+            "label": "插入、删除向量"
+          },
+          {
+            "id": "create_drop_index_python.md",
+            "label": "创建、删除索引"
+          },
+          {
+            "id": "search_vector_python.md",
+            "label": "查询向量"
+          },
+          {
+            "id": "flush_python.md",
+            "label": "数据落盘"
+          },
+          {
+            "id": "compact_python.md",
+            "label": "数据段整理"
+          },
+          {
+            "id": "close_client_python.md",
+            "label": "关闭客户端"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "参考手册",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_config.md",
+            "label": "服务端配置"
+          },
+          {
+            "id": "data_manage.md",
+            "label": "使用 MySQL 管理元数据"
+          },
+          {
+            "id": "monitor",
+            "label": "监控与报警",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor.md",
+                "label": "监控与报警方案概述"
+              },
+              {
+                "id": "setup_prometheus.md",
+                "label": "配置、启动 Prometheus"
+              },
+              {
+                "id": "setup_grafana.md",
+                "label": "使用 Grafana 展示监控指标"
+              },
+              {
+                "id": "milvus_metrics.md",
+                "label": "Milvus 监控指标"
+              }
+            ]
+          },
+          {
+            "id": "tuning.md",
+            "label": "性能调优"
+          },
+          {
+            "id": "mishards.md",
+            "label": "Mishards: 集群分片中间件"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "常见问题",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "性能优化问题"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "产品问题"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "部署运维问题"
+          },
+          {
+            "id": "troubleshoot.md",
+            "label": "故障诊断"
+          }
+        ]
+      },
+      {
+        "id": "API",
+        "label": "API 参考",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "Python",
+            "label": "Python",
+
+            "externalLink": "https://github.com/milvus-io/pymilvus/tree/1.1"
+          },
+          {
+            "id": "Java",
+            "label": "Java",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-java/tree/1.1"
+          },
+          {
+            "id": "Go",
+            "label": "Go",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-go/tree/v1.1.0"
+          },
+          {
+            "id": "RESTful",
+            "label": "RESTful",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.1/core/src/server/web_impl"
+          },
+          {
+            "id": "C++",
+            "label": "C++",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.1/sdk"
+          }
+        ]
+      },
+      {
+        "id": "developer_tools",
+        "label": "开发工具",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "dt_overview.md",
+            "label": "概述"
+          },
+          {
+            "id": "milvusdm.md",
+            "label": "MilvusDM 数据迁移工具"
+          },
+          {
+            "id": "em",
+            "label": "Milvus Enterprise Manager",
+
+            "externalLink": "https://zilliz.com/products/em"
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "release_notes.md",
+        "label": "发版说明"
+      }
+    ],
+    "en": [
+      {
+        "id": "about_milvus",
+        "label": "About Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "What is Milvus"
+          },
+          {
+            "id": "milvus_distributions-cpu.md",
+            "label": "Milvus Distributions"
+          },
+          {
+            "id": "announcement.md",
+            "label": "Announcement Letter"
+          },
+          {
+            "id": "data_migration.md",
+            "label": "Milvus Data Migration Guide"
+          }
+        ]
+      },
+      {
+        "id": "milvus_basics",
+        "label": "Concepts",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "vector.md",
+            "label": "Embedding Vector"
+          },
+          {
+            "id": "index.md",
+            "label": "Vector Index"
+          },
+          {
+            "id": "storage_concept.md",
+            "label": "Storage Concepts"
+          },
+          {
+            "id": "storage_operation.md",
+            "label": "Storage Operations"
+          },
+          {
+            "id": "metric.md",
+            "label": "Similarity Metrics"
+          },
+          {
+            "id": "write_ahead_log.md",
+            "label": "Write Ahead Log"
+          },
+          {
+            "id": "terms.md",
+            "label": "Milvus Terms"
+          }
+        ]
+      },
+      {
+        "id": "quick_start",
+        "label": "Quick Start",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "install_milvus.md",
+            "label": "Installation Overview"
+          },
+          {
+            "id": "milvus_docker-cpu.md",
+            "label": "Install and Start Milvus"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          },
+          {
+            "id": "connect_milvus_python.md",
+            "label": "Connect to the Server"
+          },
+          {
+            "id": "create_drop_collection_python.md",
+            "label": "Create/Drop a Collection"
+          },
+          {
+            "id": "create_drop_partition_python.md",
+            "label": "Create/Drop a Partition"
+          },
+          {
+            "id": "insert_delete_vector_python.md",
+            "label": "Insert/Delete Vectors"
+          },
+          {
+            "id": "create_drop_index_python.md",
+            "label": "Create/Drop an Index"
+          },
+          {
+            "id": "search_vector_python.md",
+            "label": "Conduct a vector search"
+          },
+          {
+            "id": "flush_python.md",
+            "label": "Data Flushing"
+          },
+          {
+            "id": "compact_python.md",
+            "label": "Compact Segments"
+          },
+          {
+            "id": "close_client_python.md",
+            "label": "Close the Client"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "Reference",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_config.md",
+            "label": "Milvus Server Configuration"
+          },
+          {
+            "id": "data_manage.md",
+            "label": "Manage metadata with MySQL"
+          },
+          {
+            "id": "monitor",
+            "label": "Monitoring and Alerting",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor.md",
+                "label": "Overview"
+              },
+              {
+                "id": "setup_prometheus.md",
+                "label": "Start up Prometheus"
+              },
+              {
+                "id": "setup_grafana.md",
+                "label": "Visualize Metrics in Grafana"
+              },
+              {
+                "id": "milvus_metrics.md",
+                "label": "Milvus Metrics"
+              }
+            ]
+          },
+          {
+            "id": "tuning.md",
+            "label": "Performance Tuning"
+          },
+          {
+            "id": "mishards.md",
+            "label": "Mishards: Cluster Sharding Middleware"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "Performance FAQ"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "Product FAQ"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "Operational FAQ"
+          },
+          {
+            "id": "troubleshoot.md",
+            "label": "Troubleshooting"
+          }
+        ]
+      },
+      {
+        "id": "API",
+        "label": "API Reference",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "Python",
+            "label": "Python",
+
+            "externalLink": "https://github.com/milvus-io/pymilvus/tree/1.1"
+          },
+          {
+            "id": "Java",
+            "label": "Java",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-java/tree/1.1"
+          },
+          {
+            "id": "Go",
+            "label": "Go",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-go/tree/v1.1.0"
+          },
+          {
+            "id": "RESTful",
+            "label": "RESTful",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.1/core/src/server/web_impl"
+          },
+          {
+            "id": "C++",
+            "label": "C++",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.1/sdk"
+          }
+        ]
+      },
+      {
+        "id": "developer_tools",
+        "label": "Tools",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "dt_overview.md",
+            "label": "Overview"
+          },
+          {
+            "id": "milvusdm.md",
+            "label": "MilvusDM"
+          },
+          {
+            "id": "em",
+            "label": "Milvus Enterprise Manager",
+
+            "externalLink": "https://zilliz.com/products/em"
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "release_notes.md",
+        "label": "Release Notes"
+      },
+      {
+        "id": "milvus_community_charters",
+        "label": "Milvus Community Charters",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_community_charters.md",
+            "label": "Milvus Community Charters"
+          },
+          {
+            "id": "sigs",
+            "label": "Special Interest Groups (SIGs)",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "sig_anns.md",
+                "label": "The ANNS SIG"
+              },
+              {
+                "id": "sig_engine.md",
+                "label": "The Engine SIG"
+              },
+              {
+                "id": "sig_testing.md",
+                "label": "The Testing SIG"
+              },
+              {
+                "id": "sig_tool.md",
+                "label": "The Toolchain SIG"
+              }
+            ]
+          },
+          {
+            "id": "wgs",
+            "label": "Working Groups (WGs)",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "wg_release.md",
+                "label": "The Release WG"
+              },
+              {
+                "id": "wg_devrel.md",
+                "label": "The DevRel WG"
+              },
+              {
+                "id": "wg_grad.md",
+                "label": "The Graduation WG"
+              }
+            ]
+          },
+          {
+            "id": "project_guidelines",
+            "label": "Project Guidelines",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "milvus_release_guideline.md",
+                "label": "The Milvus Release Guideline"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "v1.1.1": {
+    "cn": [
+      {
+        "id": "about_milvus",
+        "label": "关于 Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "Milvus 是什么"
+          },
+          {
+            "id": "milvus_distributions-cpu.md",
+            "label": "发行版本"
+          },
+          {
+            "id": "announcement.md",
+            "label": "v1.0 发布公告"
+          },
+          {
+            "id": "data_migration.md",
+            "label": "Milvus 数据迁移指南"
+          }
+        ]
+      },
+      {
+        "id": "milvus_basics",
+        "label": "基本概念",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "vector.md",
+            "label": "特征向量"
+          },
+          {
+            "id": "index.md",
+            "label": "向量索引"
+          },
+          {
+            "id": "storage_concept.md",
+            "label": "存储相关"
+          },
+          {
+            "id": "storage_operation.md",
+            "label": "存储操作"
+          },
+          {
+            "id": "metric.md",
+            "label": "相似度计算方式"
+          },
+          {
+            "id": "write_ahead_log.md",
+            "label": "预写式日志"
+          },
+          {
+            "id": "terms.md",
+            "label": "Milvus 术语"
+          }
+        ]
+      },
+      {
+        "id": "quick_start",
+        "label": "快速开始",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "install_milvus.md",
+            "label": "安装概述"
+          },
+          {
+            "id": "milvus_docker-cpu.md",
+            "label": "安装、启动 Milvus 服务"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          },
+          {
+            "id": "connect_milvus_python.md",
+            "label": "连接服务端"
+          },
+          {
+            "id": "create_drop_collection_python.md",
+            "label": "创建、删除集合"
+          },
+          {
+            "id": "create_drop_partition_python.md",
+            "label": "创建、删除分区"
+          },
+          {
+            "id": "insert_delete_vector_python.md",
+            "label": "插入、删除向量"
+          },
+          {
+            "id": "create_drop_index_python.md",
+            "label": "创建、删除索引"
+          },
+          {
+            "id": "search_vector_python.md",
+            "label": "查询向量"
+          },
+          {
+            "id": "flush_python.md",
+            "label": "数据落盘"
+          },
+          {
+            "id": "compact_python.md",
+            "label": "数据段整理"
+          },
+          {
+            "id": "close_client_python.md",
+            "label": "关闭客户端"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "参考手册",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_config.md",
+            "label": "服务端配置"
+          },
+          {
+            "id": "data_manage.md",
+            "label": "使用 MySQL 管理元数据"
+          },
+          {
+            "id": "monitor",
+            "label": "监控与报警",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor.md",
+                "label": "监控与报警方案概述"
+              },
+              {
+                "id": "setup_prometheus.md",
+                "label": "配置、启动 Prometheus"
+              },
+              {
+                "id": "setup_grafana.md",
+                "label": "使用 Grafana 展示监控指标"
+              },
+              {
+                "id": "milvus_metrics.md",
+                "label": "Milvus 监控指标"
+              }
+            ]
+          },
+          {
+            "id": "tuning.md",
+            "label": "性能调优"
+          },
+          {
+            "id": "mishards.md",
+            "label": "Mishards: 集群分片中间件"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "常见问题",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "性能优化问题"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "产品问题"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "部署运维问题"
+          },
+          {
+            "id": "troubleshoot.md",
+            "label": "故障诊断"
+          }
+        ]
+      },
+      {
+        "id": "API",
+        "label": "API 参考",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "Python",
+            "label": "Python",
+
+            "externalLink": "https://github.com/milvus-io/pymilvus/tree/1.1"
+          },
+          {
+            "id": "Java",
+            "label": "Java",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-java/tree/1.1"
+          },
+          {
+            "id": "Go",
+            "label": "Go",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-go/tree/v1.1.0"
+          },
+          {
+            "id": "RESTful",
+            "label": "RESTful",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.1/core/src/server/web_impl"
+          },
+          {
+            "id": "C++",
+            "label": "C++",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.1/sdk"
+          }
+        ]
+      },
+      {
+        "id": "developer_tools",
+        "label": "开发工具",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "dt_overview.md",
+            "label": "概述"
+          },
+          {
+            "id": "milvusdm.md",
+            "label": "MilvusDM 数据迁移工具"
+          },
+          {
+            "id": "em",
+            "label": "Milvus Enterprise Manager",
+
+            "externalLink": "https://zilliz.com/products/em"
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "release_notes.md",
+        "label": "发版说明"
+      }
+    ],
+    "en": [
+      {
+        "id": "about_milvus",
+        "label": "About Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "What is Milvus"
+          },
+          {
+            "id": "milvus_distributions-cpu.md",
+            "label": "Milvus Distributions"
+          },
+          {
+            "id": "announcement.md",
+            "label": "Announcement Letter"
+          },
+          {
+            "id": "data_migration.md",
+            "label": "Milvus Data Migration Guide"
+          }
+        ]
+      },
+      {
+        "id": "milvus_basics",
+        "label": "Concepts",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "vector.md",
+            "label": "Embedding Vector"
+          },
+          {
+            "id": "index.md",
+            "label": "Vector Index"
+          },
+          {
+            "id": "storage_concept.md",
+            "label": "Storage Concepts"
+          },
+          {
+            "id": "storage_operation.md",
+            "label": "Storage Operations"
+          },
+          {
+            "id": "metric.md",
+            "label": "Similarity Metrics"
+          },
+          {
+            "id": "write_ahead_log.md",
+            "label": "Write Ahead Log"
+          },
+          {
+            "id": "terms.md",
+            "label": "Milvus Terms"
+          }
+        ]
+      },
+      {
+        "id": "quick_start",
+        "label": "Quick Start",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "install_milvus.md",
+            "label": "Installation Overview"
+          },
+          {
+            "id": "milvus_docker-cpu.md",
+            "label": "Install and Start Milvus"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          },
+          {
+            "id": "connect_milvus_python.md",
+            "label": "Connect to the Server"
+          },
+          {
+            "id": "create_drop_collection_python.md",
+            "label": "Create/Drop a Collection"
+          },
+          {
+            "id": "create_drop_partition_python.md",
+            "label": "Create/Drop a Partition"
+          },
+          {
+            "id": "insert_delete_vector_python.md",
+            "label": "Insert/Delete Vectors"
+          },
+          {
+            "id": "create_drop_index_python.md",
+            "label": "Create/Drop an Index"
+          },
+          {
+            "id": "search_vector_python.md",
+            "label": "Conduct a vector search"
+          },
+          {
+            "id": "flush_python.md",
+            "label": "Data Flushing"
+          },
+          {
+            "id": "compact_python.md",
+            "label": "Compact Segments"
+          },
+          {
+            "id": "close_client_python.md",
+            "label": "Close the Client"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "Reference",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_config.md",
+            "label": "Milvus Server Configuration"
+          },
+          {
+            "id": "data_manage.md",
+            "label": "Manage metadata with MySQL"
+          },
+          {
+            "id": "monitor",
+            "label": "Monitoring and Alerting",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor.md",
+                "label": "Overview"
+              },
+              {
+                "id": "setup_prometheus.md",
+                "label": "Start up Prometheus"
+              },
+              {
+                "id": "setup_grafana.md",
+                "label": "Visualize Metrics in Grafana"
+              },
+              {
+                "id": "milvus_metrics.md",
+                "label": "Milvus Metrics"
+              }
+            ]
+          },
+          {
+            "id": "tuning.md",
+            "label": "Performance Tuning"
+          },
+          {
+            "id": "mishards.md",
+            "label": "Mishards: Cluster Sharding Middleware"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "Performance FAQ"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "Product FAQ"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "Operational FAQ"
+          },
+          {
+            "id": "troubleshoot.md",
+            "label": "Troubleshooting"
+          }
+        ]
+      },
+      {
+        "id": "API",
+        "label": "API Reference",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "Python",
+            "label": "Python",
+
+            "externalLink": "https://github.com/milvus-io/pymilvus/tree/1.1"
+          },
+          {
+            "id": "Java",
+            "label": "Java",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-java/tree/1.1"
+          },
+          {
+            "id": "Go",
+            "label": "Go",
+
+            "externalLink": "https://github.com/milvus-io/milvus-sdk-go/tree/v1.1.0"
+          },
+          {
+            "id": "RESTful",
+            "label": "RESTful",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.1/core/src/server/web_impl"
+          },
+          {
+            "id": "C++",
+            "label": "C++",
+
+            "externalLink": "https://github.com/milvus-io/milvus/tree/1.1/sdk"
+          }
+        ]
+      },
+      {
+        "id": "developer_tools",
+        "label": "Tools",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "dt_overview.md",
+            "label": "Overview"
+          },
+          {
+            "id": "milvusdm.md",
+            "label": "MilvusDM"
+          },
+          {
+            "id": "em",
+            "label": "Milvus Enterprise Manager",
+
+            "externalLink": "https://zilliz.com/products/em"
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "release_notes.md",
+        "label": "Release Notes"
+      },
+      {
+        "id": "milvus_community_charters",
+        "label": "Milvus Community Charters",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "milvus_community_charters.md",
+            "label": "Milvus Community Charters"
+          },
+          {
+            "id": "sigs",
+            "label": "Special Interest Groups (SIGs)",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "sig_anns.md",
+                "label": "The ANNS SIG"
+              },
+              {
+                "id": "sig_engine.md",
+                "label": "The Engine SIG"
+              },
+              {
+                "id": "sig_testing.md",
+                "label": "The Testing SIG"
+              },
+              {
+                "id": "sig_tool.md",
+                "label": "The Toolchain SIG"
+              }
+            ]
+          },
+          {
+            "id": "wgs",
+            "label": "Working Groups (WGs)",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "wg_release.md",
+                "label": "The Release WG"
+              },
+              {
+                "id": "wg_devrel.md",
+                "label": "The DevRel WG"
+              },
+              {
+                "id": "wg_grad.md",
+                "label": "The Graduation WG"
+              }
+            ]
+          },
+          {
+            "id": "project_guidelines",
+            "label": "Project Guidelines",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "milvus_release_guideline.md",
+                "label": "The Milvus Release Guideline"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "v2.0.0": {
+    "cn": [
+      {
+        "id": "about",
+        "label": "关于 Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "Milvus 是什么"
+          },
+          {
+            "id": "comparison.md",
+            "label": "版本比较"
+          },
+          {
+            "id": "milvus_adopters.md",
+            "label": "Milvus 用户"
+          },
+          {
+            "id": "roadmap",
+            "label": "产品路线图",
+
+            "externalLink": "https://wiki.lfaidata.foundation/display/MIL/Milvus+2.X+Roadmap+and+Time+schedule"
+          },
+          {
+            "id": "limitations.md",
+            "label": "Milvus 使用限制"
+          },
+          {
+            "id": "release_notes.md",
+            "label": "发版说明"
+          },
+          {
+            "id": "enhancementproposals",
+            "label": "增强提案",
+
+            "externalLink": "https://wiki.lfaidata.foundation/pages/viewpage.action?pageId=43287103"
+          },
+          {
+            "id": "bootcamp_about",
+            "label": "训练营",
+
+            "externalLink": "https://milvus.io/cn/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "getstarted",
+        "label": "快速开始",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "prerequisite-docker.md",
+            "label": "安装前提"
+          },
+          {
+            "id": "installmilvus",
+            "label": "安装 Milvus",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "install_standalone-docker.md",
+                "label": "安装单机版 Milvus"
+              },
+              {
+                "id": "install_cluster-docker.md",
+                "label": "安装分布式版 Milvus"
+              },
+              {
+                "id": "install_offline-docker.md",
+                "label": "离线安装"
+              }
+            ]
+          },
+          {
+            "id": "install-pymilvus.md",
+            "label": "安装 SDK"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          }
+        ]
+      },
+      {
+        "id": "userguide",
+        "label": "操作指南",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "manage_connection.md",
+            "label": "管理 Milvus 连接"
+          },
+          {
+            "id": "manage_collection",
+            "label": "管理 Collection",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_collection.md",
+                "label": "创建 Collection"
+              },
+              {
+                "id": "check_collection.md",
+                "label": "查看 Collection 信息"
+              },
+              {
+                "id": "drop_collection.md",
+                "label": "删除 Collection"
+              },
+              {
+                "id": "collection_alias.md",
+                "label": "管理 Collection 别名"
+              },
+              {
+                "id": "load_collection.md",
+                "label": "加载 Collection"
+              },
+              {
+                "id": "release_collection.md",
+                "label": "释放 Collection"
+              }
+            ]
+          },
+          {
+            "id": "manage_partition",
+            "label": "管理 Partition",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_partition.md",
+                "label": "创建 Partition"
+              },
+              {
+                "id": "check_partition.md",
+                "label": "查看 Partition 信息"
+              },
+              {
+                "id": "drop_partition.md",
+                "label": "删除 Partition"
+              },
+              {
+                "id": "load_partition.md",
+                "label": "加载 Partition"
+              },
+              {
+                "id": "release_partition.md",
+                "label": "释放 Partition"
+              }
+            ]
+          },
+          {
+            "id": "manage_data",
+            "label": "管理数据",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "insert_data.md",
+                "label": "插入数据"
+              },
+              {
+                "id": "delete_data.md",
+                "label": "删除数据"
+              },
+              {
+                "id": "compact_data.md",
+                "label": "清理数据"
+              }
+            ]
+          },
+          {
+            "id": "manage_index",
+            "label": "管理索引",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "build_index.md",
+                "label": "创建索引"
+              },
+              {
+                "id": "drop_index.md",
+                "label": "删除索引"
+              }
+            ]
+          },
+          {
+            "id": "search",
+            "label": "搜索与结构化匹配",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "search.md",
+                "label": "向量搜索"
+              },
+              {
+                "id": "hybridsearch.md",
+                "label": "混合搜索"
+              },
+              {
+                "id": "query.md",
+                "label": "结构化匹配"
+              },
+              {
+                "id": "timetravel.md",
+                "label": "使用 Time Travel 搜索"
+              }
+            ]
+          },
+          {
+            "id": "load_balance.md",
+            "label": "负载平衡"
+          },
+          {
+            "id": "bootcamp_userguide",
+            "label": "训练营",
+
+            "externalLink": "https://milvus.io/cn/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "admin_guide",
+        "label": "部署与运维",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "configure-docker.md",
+            "label": "配置 Milvus"
+          },
+          {
+            "id": "allocate.md",
+            "label": "配置集群资源"
+          },
+          {
+            "id": "cloud",
+            "label": "云端部署",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "aws",
+                "label": "AWS 部署",
+                "isMenu": true,
+
+                "children": [
+                  {
+                    "id": "aws.md",
+                    "label": "Amazon EC2"
+                  },
+                  {
+                    "id": "eks.md",
+                    "label": "Amazon EKS"
+                  }
+                ]
+              },
+              {
+                "id": "gcp.md",
+                "label": "GCP 部署"
+              },
+              {
+                "id": "azure.md",
+                "label": "Azure 部署"
+              }
+            ]
+          },
+          {
+            "id": "deploy_s3.md",
+            "label": "配置 S3 存储"
+          },
+          {
+            "id": "operator.md",
+            "label": "配置依赖"
+          },
+          {
+            "id": "scaleout.md",
+            "label": "扩缩容"
+          },
+          {
+            "id": "upgrade.md",
+            "label": "升级 Milvus 2.0"
+          },
+          {
+            "id": "monitor",
+            "label": "监控与报警",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor_overview.md",
+                "label": "监控框架概述"
+              },
+              {
+                "id": "monitor.md",
+                "label": "部署监控"
+              },
+              {
+                "id": "visualize.md",
+                "label": "可视化监控指标"
+              },
+              {
+                "id": "alert.md",
+                "label": "创建报警"
+              }
+            ]
+          },
+          {
+            "id": "migrate",
+            "label": "数据迁移",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "h2m.md",
+                "label": "HDF5 至 Milvus"
+              },
+              {
+                "id": "f2m.md",
+                "label": "Faiss 至 Milvus"
+              },
+              {
+                "id": "m2m.md",
+                "label": "Milvus 1.x 至 2.0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "tools",
+        "label": "开发工具",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "cli",
+            "label": "Milvus CLI",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "cli_overview.md",
+                "label": "简介"
+              },
+              {
+                "id": "install_cli.md",
+                "label": "安装"
+              },
+              {
+                "id": "cli_commands.md",
+                "label": "命令"
+              }
+            ]
+          },
+          {
+            "id": "milvusdm",
+            "label": "MilvusDM",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "migrate_overview.md",
+                "label": "MilvusDM 简介"
+              },
+              {
+                "id": "milvusdm_install.md",
+                "label": "安装 MilvusDM"
+              }
+            ]
+          },
+          {
+            "id": "milvus_attu",
+            "label": "Attu",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "attu.md",
+                "label": "简介"
+              },
+              {
+                "id": "attu_install-docker.md",
+                "label": "安装 Attu"
+              },
+              {
+                "id": "attu_overview.md",
+                "label": "Attu Overview 页面"
+              },
+              {
+                "id": "attu_collection.md",
+                "label": "管理 Collection"
+              },
+              {
+                "id": "attu_partition.md",
+                "label": "管理 Partition"
+              },
+              {
+                "id": "attu_data.md",
+                "label": "管理数据"
+              },
+              {
+                "id": "attu_index.md",
+                "label": "管理索引"
+              },
+              {
+                "id": "attu_query.md",
+                "label": "结构化匹配"
+              },
+              {
+                "id": "attu_search.md",
+                "label": "搜索数据"
+              },
+              {
+                "id": "attu_system.md",
+                "label": "系统状态"
+              },
+              {
+                "id": "attu_faq.md",
+                "label": "Attu FAQ"
+              }
+            ]
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "参考手册",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "architecture",
+            "label": "系统架构",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "architecture_overview.md",
+                "label": "概述"
+              },
+              {
+                "id": "four_layers.md",
+                "label": "存储计算分离"
+              },
+              {
+                "id": "main_components.md",
+                "label": "主要组件"
+              },
+              {
+                "id": "data_processing.md",
+                "label": "关键路径"
+              }
+            ]
+          },
+          {
+            "id": "system_configuration.md",
+            "label": "系统配置"
+          },
+          {
+            "id": "metric.md",
+            "label": "距离计算方式"
+          },
+          {
+            "id": "index.md",
+            "label": "索引概述"
+          },
+          {
+            "id": "schema",
+            "label": "Schema",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "field_schema.md",
+                "label": "Field Schema"
+              },
+              {
+                "id": "collection_schema.md",
+                "label": "Collection Schema"
+              }
+            ]
+          },
+          {
+            "id": "boolean.md",
+            "label": "布尔表达式语法规则"
+          },
+          {
+            "id": "timetravel_ref.md",
+            "label": "Time Travel"
+          },
+          {
+            "id": "glossary.md",
+            "label": "Milvus 术语"
+          }
+        ]
+      },
+      {
+        "id": "tutorials",
+        "label": "Milvus 系统搭建教程",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "image_similarity_search.md",
+            "label": "图片检索系统"
+          },
+          {
+            "id": "question_answering_system.md",
+            "label": "智能问答机器人"
+          },
+          {
+            "id": "recommendation_system.md",
+            "label": "推荐系统"
+          },
+          {
+            "id": "video_similarity_search.md",
+            "label": "视频检索系统"
+          },
+          {
+            "id": "audio_similarity_search.md",
+            "label": "音频检索系统"
+          },
+          {
+            "id": "molecular_similarity_search.md",
+            "label": "分子式检索系统"
+          },
+          {
+            "id": "dna_sequence_classification.md",
+            "label": "DNA 序列分类模型"
+          },
+          {
+            "id": "text_search_engine.md",
+            "label": "文本搜索引擎"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "FAQs",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "性能调优"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "产品问题"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "运维问题"
+          },
+          {
+            "id": "troubleshooting.md",
+            "label": "故障诊断"
+          }
+        ]
+      }
+    ],
+    "en": [
+      {
+        "id": "about",
+        "label": "About Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "What is Milvus"
+          },
+          {
+            "id": "comparison.md",
+            "label": "Release Comparison"
+          },
+          {
+            "id": "milvus_adopters.md",
+            "label": "Milvus Adopters"
+          },
+          {
+            "id": "roadmap",
+            "label": "Milvus Roadmap",
+
+            "externalLink": "https://wiki.lfaidata.foundation/display/MIL/Milvus+2.X+Roadmap+and+Time+schedule"
+          },
+          {
+            "id": "limitations.md",
+            "label": "Milvus Limits"
+          },
+          {
+            "id": "release_notes.md",
+            "label": "Releases"
+          },
+          {
+            "id": "enhancementproposals",
+            "label": "Enhancement Proposals",
+
+            "externalLink": "https://wiki.lfaidata.foundation/pages/viewpage.action?pageId=43287103"
+          },
+          {
+            "id": "bootcamp_about",
+            "label": "Bootcamp",
+
+            "externalLink": "https://milvus.io/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "getstarted",
+        "label": "Get Started",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "prerequisite-docker.md",
+            "label": "Prerequisites"
+          },
+          {
+            "id": "installmilvus",
+            "label": "Install Milvus",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "install_standalone-docker.md",
+                "label": "Milvus Standalone"
+              },
+              {
+                "id": "install_cluster-docker.md",
+                "label": "Milvus Cluster"
+              },
+              {
+                "id": "install_offline-docker.md",
+                "label": "Install Offline"
+              }
+            ]
+          },
+          {
+            "id": "install-pymilvus.md",
+            "label": "Install SDKs"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          }
+        ]
+      },
+      {
+        "id": "userguide",
+        "label": "User Guide",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "manage_connection.md",
+            "label": "Manage Milvus Connections"
+          },
+          {
+            "id": "manage_collection",
+            "label": "Manage Collections",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_collection.md",
+                "label": "Create a Collection"
+              },
+              {
+                "id": "check_collection.md",
+                "label": "Check Collection Information"
+              },
+              {
+                "id": "drop_collection.md",
+                "label": "Drop a Collection"
+              },
+              {
+                "id": "collection_alias.md",
+                "label": "Manage Collection Alias"
+              },
+              {
+                "id": "load_collection.md",
+                "label": "Load Collection"
+              },
+              {
+                "id": "release_collection.md",
+                "label": "Release Collection"
+              }
+            ]
+          },
+          {
+            "id": "manage_partition",
+            "label": "Manage Partitions",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_partition.md",
+                "label": "Create a Partition"
+              },
+              {
+                "id": "check_partition.md",
+                "label": "Check Partition Information"
+              },
+              {
+                "id": "drop_partition.md",
+                "label": "Drop a Partition"
+              },
+              {
+                "id": "load_partition.md",
+                "label": "Load a Partition"
+              },
+              {
+                "id": "release_partition.md",
+                "label": "Release a Partition"
+              }
+            ]
+          },
+          {
+            "id": "manage_data",
+            "label": "Manage Data",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "insert_data.md",
+                "label": "Insert Data"
+              },
+              {
+                "id": "delete_data.md",
+                "label": "Delete Entities"
+              },
+              {
+                "id": "compact_data.md",
+                "label": "Compact Data"
+              }
+            ]
+          },
+          {
+            "id": "manage_index",
+            "label": "Manage Indexes",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "build_index.md",
+                "label": "Build an Index"
+              },
+              {
+                "id": "drop_index.md",
+                "label": "Drop an Index"
+              }
+            ]
+          },
+          {
+            "id": "search",
+            "label": "Search and Query",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "search.md",
+                "label": "Search"
+              },
+              {
+                "id": "hybridsearch.md",
+                "label": "Hybrid Search"
+              },
+              {
+                "id": "query.md",
+                "label": "Query"
+              },
+              {
+                "id": "timetravel.md",
+                "label": "Search with Time Travel"
+              }
+            ]
+          },
+          {
+            "id": "load_balance.md",
+            "label": "Load Balance"
+          },
+          {
+            "id": "bootcamp_userguide",
+            "label": "Bootcamp",
+
+            "externalLink": "https://milvus.io/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "admin_guide",
+        "label": "Administration Guide",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "configure-docker.md",
+            "label": "Configure Milvus"
+          },
+          {
+            "id": "allocate.md",
+            "label": "Allocate Resources"
+          },
+          {
+            "id": "cloud",
+            "label": "Deploy on Clouds",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "aws",
+                "label": "AWS",
+                "isMenu": true,
+
+                "children": [
+                  {
+                    "id": "aws.md",
+                    "label": "Amazon EC2"
+                  },
+                  {
+                    "id": "eks.md",
+                    "label": "Amazon EKS"
+                  }
+                ]
+              },
+              {
+                "id": "gcp.md",
+                "label": "GCP"
+              },
+              {
+                "id": "azure.md",
+                "label": "Azure"
+              }
+            ]
+          },
+          {
+            "id": "deploy_s3.md",
+            "label": "Storage"
+          },
+          {
+            "id": "operator.md",
+            "label": "Configure Dependencies"
+          },
+          {
+            "id": "scaleout.md",
+            "label": "Scale a Milvus Cluster"
+          },
+          {
+            "id": "upgrade.md",
+            "label": "Upgrade"
+          },
+          {
+            "id": "monitor",
+            "label": "Monitor and Alert",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor_overview.md",
+                "label": "Monitoring Architecture"
+              },
+              {
+                "id": "monitor.md",
+                "label": "Deploy Monitoring Services"
+              },
+              {
+                "id": "visualize.md",
+                "label": "Visualize Milvus Metrics"
+              },
+              {
+                "id": "alert.md",
+                "label": "Create an Alert"
+              }
+            ]
+          },
+          {
+            "id": "migrate",
+            "label": "Migrate",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "h2m.md",
+                "label": "HDF5 to Milvus"
+              },
+              {
+                "id": "f2m.md",
+                "label": "Faiss to Milvus "
+              },
+              {
+                "id": "m2m.md",
+                "label": "Milvus 1.x to 2.0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "tools",
+        "label": "Tools",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "cli",
+            "label": "Milvus CLI",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "cli_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "install_cli.md",
+                "label": "Installation"
+              },
+              {
+                "id": "cli_commands.md",
+                "label": "Commands"
+              }
+            ]
+          },
+          {
+            "id": "milvusdm",
+            "label": "MilvusDM",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "migrate_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "milvusdm_install.md",
+                "label": "Installation"
+              }
+            ]
+          },
+          {
+            "id": "milvus_attu",
+            "label": "Attu",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "attu.md",
+                "label": "Overview"
+              },
+              {
+                "id": "attu_install-docker.md",
+                "label": "Installation"
+              },
+              {
+                "id": "attu_overview.md",
+                "label": "Attu Overview Page"
+              },
+              {
+                "id": "attu_collection.md",
+                "label": "Manage Collections"
+              },
+              {
+                "id": "attu_partition.md",
+                "label": "Manage Partitions"
+              },
+              {
+                "id": "attu_data.md",
+                "label": "Manage Data"
+              },
+              {
+                "id": "attu_index.md",
+                "label": "Manage Index"
+              },
+              {
+                "id": "attu_query.md",
+                "label": "Query Data"
+              },
+              {
+                "id": "attu_search.md",
+                "label": "Search Data"
+              },
+              {
+                "id": "attu_system.md",
+                "label": "System Status"
+              },
+              {
+                "id": "attu_faq.md",
+                "label": "Attu FAQ"
+              }
+            ]
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "Reference",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "architecture",
+            "label": "Architecture",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "architecture_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "four_layers.md",
+                "label": "Storage/Computing"
+              },
+              {
+                "id": "main_components.md",
+                "label": "Main Components"
+              },
+              {
+                "id": "data_processing.md",
+                "label": "Data Processing"
+              }
+            ]
+          },
+          {
+            "id": "system_configuration.md",
+            "label": "System Configurations"
+          },
+          {
+            "id": "metric.md",
+            "label": "Similarity Metrics"
+          },
+          {
+            "id": "index.md",
+            "label": "Vector Index"
+          },
+          {
+            "id": "schema",
+            "label": "Schema",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "field_schema.md",
+                "label": "Field Schema"
+              },
+              {
+                "id": "collection_schema.md",
+                "label": "Collection Schema"
+              }
+            ]
+          },
+          {
+            "id": "boolean.md",
+            "label": "Boolean Expression Rules"
+          },
+          {
+            "id": "timetravel_ref.md",
+            "label": "Time Travel"
+          },
+          {
+            "id": "glossary.md",
+            "label": "Glossary"
+          }
+        ]
+      },
+      {
+        "id": "tutorials",
+        "label": "Example Applications",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "image_similarity_search.md",
+            "label": "Image Similarity Search"
+          },
+          {
+            "id": "question_answering_system.md",
+            "label": "Question Answering System"
+          },
+          {
+            "id": "recommendation_system.md",
+            "label": "Recommender System"
+          },
+          {
+            "id": "video_similarity_search.md",
+            "label": "Video Similarity Search"
+          },
+          {
+            "id": "audio_similarity_search.md",
+            "label": "Audio Similarity Search"
+          },
+          {
+            "id": "molecular_similarity_search.md",
+            "label": "Molecular Similarity Search"
+          },
+          {
+            "id": "dna_sequence_classification.md",
+            "label": "DNA Sequence Classification"
+          },
+          {
+            "id": "text_search_engine.md",
+            "label": "Text Search Engine"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "FAQs",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "Performance FAQs"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "Product FAQs"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "Operational FAQs"
+          },
+          {
+            "id": "troubleshooting.md",
+            "label": "Troubleshooting"
+          }
+        ]
+      }
+    ]
+  },
+  "v2.0.x": {
+    "cn": [
+      {
+        "id": "about",
+        "label": "关于 Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "Milvus 是什么"
+          },
+          {
+            "id": "comparison.md",
+            "label": "版本比较"
+          },
+          {
+            "id": "milvus_adopters.md",
+            "label": "Milvus 用户"
+          },
+          {
+            "id": "roadmap",
+            "label": "产品路线图",
+
+            "externalLink": "https://wiki.lfaidata.foundation/display/MIL/Milvus+2.X+Roadmap+and+Time+schedule"
+          },
+          {
+            "id": "limitations.md",
+            "label": "Milvus 使用限制"
+          },
+          {
+            "id": "release_notes.md",
+            "label": "发版说明"
+          },
+          {
+            "id": "enhancementproposals",
+            "label": "增强提案",
+
+            "externalLink": "https://wiki.lfaidata.foundation/pages/viewpage.action?pageId=43287103"
+          },
+          {
+            "id": "bootcamp_about",
+            "label": "训练营",
+
+            "externalLink": "https://milvus.io/cn/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "getstarted",
+        "label": "快速开始",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "prerequisite-docker.md",
+            "label": "安装前提"
+          },
+          {
+            "id": "installmilvus",
+            "label": "安装 Milvus",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "install_standalone-docker.md",
+                "label": "安装单机版 Milvus"
+              },
+              {
+                "id": "install_cluster-docker.md",
+                "label": "安装分布式版 Milvus"
+              },
+              {
+                "id": "install_offline-docker.md",
+                "label": "离线安装"
+              }
+            ]
+          },
+          {
+            "id": "install-pymilvus.md",
+            "label": "安装 SDK"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          }
+        ]
+      },
+      {
+        "id": "userguide",
+        "label": "操作指南",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "manage_connection.md",
+            "label": "管理 Milvus 连接"
+          },
+          {
+            "id": "manage_collection",
+            "label": "管理 Collection",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_collection.md",
+                "label": "创建 Collection"
+              },
+              {
+                "id": "check_collection.md",
+                "label": "查看 Collection 信息"
+              },
+              {
+                "id": "drop_collection.md",
+                "label": "删除 Collection"
+              },
+              {
+                "id": "collection_alias.md",
+                "label": "管理 Collection 别名"
+              },
+              {
+                "id": "load_collection.md",
+                "label": "加载 Collection"
+              },
+              {
+                "id": "release_collection.md",
+                "label": "释放 Collection"
+              }
+            ]
+          },
+          {
+            "id": "manage_partition",
+            "label": "管理 Partition",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_partition.md",
+                "label": "创建 Partition"
+              },
+              {
+                "id": "check_partition.md",
+                "label": "查看 Partition 信息"
+              },
+              {
+                "id": "drop_partition.md",
+                "label": "删除 Partition"
+              },
+              {
+                "id": "load_partition.md",
+                "label": "加载 Partition"
+              },
+              {
+                "id": "release_partition.md",
+                "label": "释放 Partition"
+              }
+            ]
+          },
+          {
+            "id": "manage_data",
+            "label": "管理数据",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "insert_data.md",
+                "label": "插入数据"
+              },
+              {
+                "id": "delete_data.md",
+                "label": "删除数据"
+              },
+              {
+                "id": "compact_data.md",
+                "label": "清理数据"
+              }
+            ]
+          },
+          {
+            "id": "manage_index",
+            "label": "管理索引",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "build_index.md",
+                "label": "创建索引"
+              },
+              {
+                "id": "drop_index.md",
+                "label": "删除索引"
+              }
+            ]
+          },
+          {
+            "id": "search",
+            "label": "搜索与结构化匹配",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "search.md",
+                "label": "向量搜索"
+              },
+              {
+                "id": "hybridsearch.md",
+                "label": "混合搜索"
+              },
+              {
+                "id": "query.md",
+                "label": "结构化匹配"
+              },
+              {
+                "id": "timetravel.md",
+                "label": "使用 Time Travel 搜索"
+              }
+            ]
+          },
+          {
+            "id": "calculate_distance.md",
+            "label": "计算向量距离"
+          },
+          {
+            "id": "bootcamp_userguide",
+            "label": "训练营",
+
+            "externalLink": "https://milvus.io/cn/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "admin_guide",
+        "label": "部署与运维",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "configure-docker.md",
+            "label": "配置 Milvus"
+          },
+          {
+            "id": "allocate.md",
+            "label": "配置集群资源"
+          },
+          {
+            "id": "cloud",
+            "label": "云端部署",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "aws",
+                "label": "AWS 部署",
+                "isMenu": true,
+
+                "children": [
+                  {
+                    "id": "aws.md",
+                    "label": "Amazon EC2"
+                  },
+                  {
+                    "id": "eks.md",
+                    "label": "Amazon EKS"
+                  }
+                ]
+              },
+              {
+                "id": "gcp.md",
+                "label": "GCP 部署"
+              },
+              {
+                "id": "azure.md",
+                "label": "Azure 部署"
+              }
+            ]
+          },
+          {
+            "id": "deploy_s3.md",
+            "label": "配置 S3 存储"
+          },
+          {
+            "id": "operator.md",
+            "label": "配置依赖"
+          },
+          {
+            "id": "scaleout.md",
+            "label": "扩缩容"
+          },
+          {
+            "id": "upgrade.md",
+            "label": "升级 Milvus 2.0"
+          },
+          {
+            "id": "monitor",
+            "label": "监控与报警",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor_overview.md",
+                "label": "监控框架概述"
+              },
+              {
+                "id": "monitor.md",
+                "label": "部署监控"
+              },
+              {
+                "id": "visualize.md",
+                "label": "可视化监控指标"
+              },
+              {
+                "id": "alert.md",
+                "label": "创建报警"
+              }
+            ]
+          },
+          {
+            "id": "migrate",
+            "label": "数据迁移",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "h2m.md",
+                "label": "HDF5 至 Milvus"
+              },
+              {
+                "id": "f2m.md",
+                "label": "Faiss 至 Milvus"
+              },
+              {
+                "id": "m2m.md",
+                "label": "Milvus 1.x 至 2.0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "tools",
+        "label": "开发工具",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "cli",
+            "label": "Milvus CLI",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "cli_overview.md",
+                "label": "简介"
+              },
+              {
+                "id": "install_cli.md",
+                "label": "安装"
+              },
+              {
+                "id": "cli_commands.md",
+                "label": "命令"
+              }
+            ]
+          },
+          {
+            "id": "milvusdm",
+            "label": "MilvusDM",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "migrate_overview.md",
+                "label": "MilvusDM 简介"
+              },
+              {
+                "id": "milvusdm_install.md",
+                "label": "安装 MilvusDM"
+              }
+            ]
+          },
+          {
+            "id": "milvus_attu",
+            "label": "Attu",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "attu.md",
+                "label": "简介"
+              },
+              {
+                "id": "attu_install-docker.md",
+                "label": "安装 Attu"
+              },
+              {
+                "id": "attu_overview.md",
+                "label": "Attu Overview 页面"
+              },
+              {
+                "id": "attu_collection.md",
+                "label": "管理 Collection"
+              },
+              {
+                "id": "attu_partition.md",
+                "label": "管理 Partition"
+              },
+              {
+                "id": "attu_data.md",
+                "label": "管理数据"
+              },
+              {
+                "id": "attu_index.md",
+                "label": "管理索引"
+              },
+              {
+                "id": "attu_query.md",
+                "label": "结构化匹配"
+              },
+              {
+                "id": "attu_search.md",
+                "label": "搜索数据"
+              },
+              {
+                "id": "attu_system.md",
+                "label": "系统状态"
+              },
+              {
+                "id": "attu_faq.md",
+                "label": "Attu FAQ"
+              }
+            ]
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "reference",
+        "label": "参考手册",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "architecture",
+            "label": "系统架构",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "architecture_overview.md",
+                "label": "概述"
+              },
+              {
+                "id": "four_layers.md",
+                "label": "存储计算分离"
+              },
+              {
+                "id": "main_components.md",
+                "label": "主要组件"
+              },
+              {
+                "id": "data_processing.md",
+                "label": "关键路径"
+              }
+            ]
+          },
+          {
+            "id": "system_configuration.md",
+            "label": "系统配置"
+          },
+          {
+            "id": "metric.md",
+            "label": "距离计算方式"
+          },
+          {
+            "id": "index.md",
+            "label": "索引概述"
+          },
+          {
+            "id": "schema.md",
+            "label": "Schema"
+          },
+          {
+            "id": "boolean.md",
+            "label": "布尔表达式语法规则"
+          },
+          {
+            "id": "timetravel_ref.md",
+            "label": "Time Travel"
+          },
+          {
+            "id": "glossary.md",
+            "label": "Milvus 术语"
+          },
+          {
+            "id": "benchmark.md",
+            "label": "性能测试报告"
+          }
+        ]
+      },
+      {
+        "id": "tutorials",
+        "label": "Milvus 系统搭建教程",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "image_similarity_search.md",
+            "label": "图片检索系统"
+          },
+          {
+            "id": "question_answering_system.md",
+            "label": "智能问答机器人"
+          },
+          {
+            "id": "recommendation_system.md",
+            "label": "推荐系统"
+          },
+          {
+            "id": "video_similarity_search.md",
+            "label": "视频检索系统"
+          },
+          {
+            "id": "audio_similarity_search.md",
+            "label": "音频检索系统"
+          },
+          {
+            "id": "molecular_similarity_search.md",
+            "label": "分子式检索系统"
+          },
+          {
+            "id": "dna_sequence_classification.md",
+            "label": "DNA 序列分类模型"
+          },
+          {
+            "id": "text_search_engine.md",
+            "label": "文本搜索引擎"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "FAQs",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "性能调优"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "产品问题"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "运维问题"
+          },
+          {
+            "id": "troubleshooting.md",
+            "label": "故障诊断"
+          }
+        ]
+      }
+    ],
+    "en": [
+      {
+        "id": "about_milvus.md",
+        "label": "About Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "What is Milvus"
+          },
+          {
+            "id": "comparison.md",
+            "label": "Release Comparison"
+          },
+          {
+            "id": "milvus_adopters.md",
+            "label": "Milvus Adopters"
+          },
+          {
+            "id": "roadmap",
+            "label": "Milvus Roadmap",
+
+            "externalLink": "https://wiki.lfaidata.foundation/display/MIL/Milvus+2.X+Roadmap+and+Time+schedule"
+          },
+          {
+            "id": "limitations.md",
+            "label": "Milvus Limits"
+          },
+          {
+            "id": "release_notes.md",
+            "label": "Releases"
+          },
+          {
+            "id": "enhancementproposals",
+            "label": "Enhancement Proposals",
+
+            "externalLink": "https://wiki.lfaidata.foundation/pages/viewpage.action?pageId=43287103"
+          },
+          {
+            "id": "bootcamp_about",
+            "label": "Bootcamp",
+
+            "externalLink": "https://milvus.io/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "get_started.md",
+        "label": "Get Started",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "prerequisite-docker.md",
+            "label": "Prerequisites"
+          },
+          {
+            "id": "install_milvus.md",
+            "label": "Install Milvus",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "install_standalone-docker.md",
+                "label": "Milvus Standalone"
+              },
+              {
+                "id": "install_cluster-docker.md",
+                "label": "Milvus Cluster"
+              },
+              {
+                "id": "install_offline-docker.md",
+                "label": "Install Offline"
+              }
+            ]
+          },
+          {
+            "id": "install-pymilvus.md",
+            "label": "Install SDKs"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          }
+        ]
+      },
+      {
+        "id": "user_guide.md",
+        "label": "User Guide",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "manage_connection.md",
+            "label": "Manage Milvus Connections"
+          },
+          {
+            "id": "manage_collections.md",
+            "label": "Manage Collections",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_collection.md",
+                "label": "Create a Collection"
+              },
+              {
+                "id": "check_collection.md",
+                "label": "Check Collection Information"
+              },
+              {
+                "id": "drop_collection.md",
+                "label": "Drop a Collection"
+              },
+              {
+                "id": "collection_alias.md",
+                "label": "Manage Collection Alias"
+              },
+              {
+                "id": "load_collection.md",
+                "label": "Load Collection"
+              },
+              {
+                "id": "release_collection.md",
+                "label": "Release Collection"
+              }
+            ]
+          },
+          {
+            "id": "manage_partitions.md",
+            "label": "Manage Partitions",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_partition.md",
+                "label": "Create a Partition"
+              },
+              {
+                "id": "check_partition.md",
+                "label": "Check Partition Information"
+              },
+              {
+                "id": "drop_partition.md",
+                "label": "Drop a Partition"
+              },
+              {
+                "id": "load_partition.md",
+                "label": "Load a Partition"
+              },
+              {
+                "id": "release_partition.md",
+                "label": "Release a Partition"
+              }
+            ]
+          },
+          {
+            "id": "manage_data.md",
+            "label": "Manage Data",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "insert_data.md",
+                "label": "Insert Data"
+              },
+              {
+                "id": "delete_data.md",
+                "label": "Delete Entities"
+              },
+              {
+                "id": "compact_data.md",
+                "label": "Compact Data"
+              }
+            ]
+          },
+          {
+            "id": "manage_indexes.md",
+            "label": "Manage Indexes",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "build_index.md",
+                "label": "Build an Index"
+              },
+              {
+                "id": "drop_index.md",
+                "label": "Drop an Index"
+              }
+            ]
+          },
+          {
+            "id": "search_and_query.md",
+            "label": "Search and Query",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "search.md",
+                "label": "Search"
+              },
+              {
+                "id": "hybridsearch.md",
+                "label": "Hybrid Search"
+              },
+              {
+                "id": "query.md",
+                "label": "Query"
+              }
+            ]
+          },
+          {
+            "id": "timetravel.md",
+            "label": "Search with Time Travel"
+          },
+          {
+            "id": "calculate_distance.md",
+            "label": "Calculate Distance"
+          },
+          {
+            "id": "bootcamp_userguide",
+            "label": "Bootcamp",
+
+            "externalLink": "https://milvus.io/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "administration_guide.md",
+        "label": "Administration Guide",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "configure-docker.md",
+            "label": "Configure Milvus"
+          },
+          {
+            "id": "allocate.md",
+            "label": "Allocate Resources"
+          },
+          {
+            "id": "deploy_on_clouds.md",
+            "label": "Deploy on Clouds",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "aws",
+                "label": "AWS",
+                "isMenu": true,
+
+                "children": [
+                  {
+                    "id": "aws.md",
+                    "label": "Amazon EC2"
+                  },
+                  {
+                    "id": "eks.md",
+                    "label": "Amazon EKS"
+                  }
+                ]
+              },
+              {
+                "id": "gcp.md",
+                "label": "GCP"
+              },
+              {
+                "id": "azure.md",
+                "label": "Azure"
+              }
+            ]
+          },
+          {
+            "id": "deploy_s3.md",
+            "label": "Storage"
+          },
+          {
+            "id": "operator.md",
+            "label": "Configure Dependencies"
+          },
+          {
+            "id": "scaleout.md",
+            "label": "Scale a Milvus Cluster"
+          },
+          {
+            "id": "upgrade.md",
+            "label": "Upgrade"
+          },
+          {
+            "id": "monitor_and_alert.md",
+            "label": "Monitor and Alert",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor_overview.md",
+                "label": "Monitoring Architecture"
+              },
+              {
+                "id": "monitor.md",
+                "label": "Deploy Monitoring Services"
+              },
+              {
+                "id": "visualize.md",
+                "label": "Visualize Milvus Metrics"
+              },
+              {
+                "id": "alert.md",
+                "label": "Create an Alert"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "tools.md",
+        "label": "Tools",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "cli",
+            "label": "Milvus CLI",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "cli_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "install_cli.md",
+                "label": "Installation"
+              },
+              {
+                "id": "cli_commands.md",
+                "label": "Commands"
+              }
+            ]
+          },
+          {
+            "id": "milvusdm",
+            "label": "MilvusDM",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "migrate_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "milvusdm_install.md",
+                "label": "Installation"
+              }
+            ]
+          },
+          {
+            "id": "milvus_attu",
+            "label": "Attu",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "attu.md",
+                "label": "Overview"
+              },
+              {
+                "id": "attu_install-docker.md",
+                "label": "Installation"
+              },
+              {
+                "id": "attu_collection.md",
+                "label": "Manage Collections"
+              },
+              {
+                "id": "attu_partition.md",
+                "label": "Manage Partitions"
+              },
+              {
+                "id": "attu_data.md",
+                "label": "Manage Data"
+              },
+              {
+                "id": "attu_index.md",
+                "label": "Manage Index"
+              },
+              {
+                "id": "attu_query.md",
+                "label": "Query Data"
+              },
+              {
+                "id": "attu_search.md",
+                "label": "Search Data"
+              },
+              {
+                "id": "attu_system.md",
+                "label": "System Status"
+              },
+              {
+                "id": "attu_faq.md",
+                "label": "Attu FAQ"
+              }
+            ]
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "references.md",
+        "label": "References",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "architecture.md",
+            "label": "Architecture",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "architecture_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "four_layers.md",
+                "label": "Storage/Computing"
+              },
+              {
+                "id": "main_components.md",
+                "label": "Main Components"
+              },
+              {
+                "id": "data_processing.md",
+                "label": "Data Processing"
+              }
+            ]
+          },
+          {
+            "id": "system_configuration.md",
+            "label": "System Configurations"
+          },
+          {
+            "id": "metric.md",
+            "label": "Similarity Metrics"
+          },
+          {
+            "id": "index.md",
+            "label": "Vector Index"
+          },
+          {
+            "id": "schema.md",
+            "label": "Schema"
+          },
+          {
+            "id": "boolean.md",
+            "label": "Boolean Expression Rules"
+          },
+          {
+            "id": "timetravel_ref.md",
+            "label": "Time Travel"
+          },
+          {
+            "id": "glossary.md",
+            "label": "Glossary"
+          },
+          {
+            "id": "benchmark.md",
+            "label": "Benchmarks"
+          }
+        ]
+      },
+      {
+        "id": "example_applications.md",
+        "label": "Example Applications",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "image_similarity_search.md",
+            "label": "Image Similarity Search"
+          },
+          {
+            "id": "question_answering_system.md",
+            "label": "Question Answering System"
+          },
+          {
+            "id": "recommendation_system.md",
+            "label": "Recommender System"
+          },
+          {
+            "id": "video_similarity_search.md",
+            "label": "Video Similarity Search"
+          },
+          {
+            "id": "audio_similarity_search.md",
+            "label": "Audio Similarity Search"
+          },
+          {
+            "id": "molecular_similarity_search.md",
+            "label": "Molecular Similarity Search"
+          },
+          {
+            "id": "dna_sequence_classification.md",
+            "label": "DNA Sequence Classification"
+          },
+          {
+            "id": "text_search_engine.md",
+            "label": "Text Search Engine"
+          }
+        ]
+      },
+      {
+        "id": "faq.md",
+        "label": "FAQs",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "Performance FAQs"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "Product FAQs"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "Operational FAQs"
+          },
+          {
+            "id": "troubleshooting.md",
+            "label": "Troubleshooting"
+          }
+        ]
+      }
+    ]
+  },
+  "v2.1.x": {
+    "cn": [],
+    "en": [
+      {
+        "id": "about_milvus.md",
+        "label": "About Milvus",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "overview.md",
+            "label": "What is Milvus"
+          },
+          {
+            "id": "milvus_adopters.md",
+            "label": "Milvus Adopters"
+          },
+          {
+            "id": "roadmap",
+            "label": "Milvus Roadmap",
+
+            "externalLink": "https://wiki.lfaidata.foundation/display/MIL/Milvus+2.X+Roadmap+and+Time+schedule"
+          },
+          {
+            "id": "limitations.md",
+            "label": "Milvus Limits"
+          },
+          {
+            "id": "release_notes.md",
+            "label": "Releases"
+          },
+          {
+            "id": "enhancementproposals",
+            "label": "Enhancement Proposals",
+
+            "externalLink": "https://wiki.lfaidata.foundation/pages/viewpage.action?pageId=43287103"
+          },
+          {
+            "id": "bootcamp_about",
+            "label": "Bootcamp",
+
+            "externalLink": "https://milvus.io/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "get_started.md",
+        "label": "Get Started",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "prerequisite-docker.md",
+            "label": "Prerequisites"
+          },
+          {
+            "id": "install_milvus.md",
+            "label": "Install Milvus",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "install_standalone-docker.md",
+                "label": "Milvus Standalone"
+              },
+              {
+                "id": "install_cluster-docker.md",
+                "label": "Milvus Cluster"
+              },
+              {
+                "id": "install_offline-docker.md",
+                "label": "Install Offline"
+              },
+              {
+                "id": "install_embedded_milvus.md",
+                "label": "Install Embedded Milvus"
+              }
+            ]
+          },
+          {
+            "id": "install-pymilvus.md",
+            "label": "Install SDKs"
+          },
+          {
+            "id": "example_code.md",
+            "label": "Hello Milvus"
+          }
+        ]
+      },
+      {
+        "id": "user_guide.md",
+        "label": "User Guide",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "manage_connection.md",
+            "label": "Manage Milvus Connections"
+          },
+          {
+            "id": "manage_collections.md",
+            "label": "Manage Collections",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_collection.md",
+                "label": "Create a Collection"
+              },
+              {
+                "id": "check_collection.md",
+                "label": "Check Collection Information"
+              },
+              {
+                "id": "drop_collection.md",
+                "label": "Drop a Collection"
+              },
+              {
+                "id": "collection_alias.md",
+                "label": "Manage Collection Alias"
+              },
+              {
+                "id": "load_collection.md",
+                "label": "Load Collection"
+              },
+              {
+                "id": "release_collection.md",
+                "label": "Release Collection"
+              }
+            ]
+          },
+          {
+            "id": "manage_partitions.md",
+            "label": "Manage Partitions",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "create_partition.md",
+                "label": "Create a Partition"
+              },
+              {
+                "id": "check_partition.md",
+                "label": "Check Partition Information"
+              },
+              {
+                "id": "drop_partition.md",
+                "label": "Drop a Partition"
+              },
+              {
+                "id": "load_partition.md",
+                "label": "Load a Partition"
+              },
+              {
+                "id": "release_partition.md",
+                "label": "Release a Partition"
+              }
+            ]
+          },
+          {
+            "id": "manage_data.md",
+            "label": "Manage Data",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "insert_data.md",
+                "label": "Insert Data"
+              },
+              {
+                "id": "delete_data.md",
+                "label": "Delete Entities"
+              },
+              {
+                "id": "compact_data.md",
+                "label": "Compact Data"
+              }
+            ]
+          },
+          {
+            "id": "manage_indexes.md",
+            "label": "Manage Indexes",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "build_index.md",
+                "label": "Build an Index"
+              },
+              {
+                "id": "drop_index.md",
+                "label": "Drop an Index"
+              }
+            ]
+          },
+          {
+            "id": "search_and_query.md",
+            "label": "Search and Query",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "search.md",
+                "label": "Search"
+              },
+              {
+                "id": "hybridsearch.md",
+                "label": "Hybrid Search"
+              },
+              {
+                "id": "query.md",
+                "label": "Query"
+              }
+            ]
+          },
+          {
+            "id": "timetravel.md",
+            "label": "Search with Time Travel"
+          },
+          {
+            "id": "calculate_distance.md",
+            "label": "Calculate Distance"
+          },
+          {
+            "id": "bootcamp_userguide",
+            "label": "Bootcamp",
+
+            "externalLink": "https://milvus.io/bootcamp"
+          }
+        ]
+      },
+      {
+        "id": "administration_guide.md",
+        "label": "Administration Guide",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "configure_milvus.md",
+            "label": "Configure Milvus",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "configure-docker.md",
+                "label": "With Docker or Helm"
+              },
+              {
+                "id": "configure_operator.md",
+                "label": "With Milvus Operator"
+              }
+            ]
+          },
+          {
+            "id": "manage_dependencies.md",
+            "label": "Manage Dependencies",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "docker_helm_dependencies",
+                "label": "With Docker or Helm",
+                "isMenu": true,
+
+                "children": [
+                  {
+                    "id": "deploy_s3.md",
+                    "label": "Object Storage"
+                  },
+                  {
+                    "id": "deploy_etcd.md",
+                    "label": "Meta Storage"
+                  },
+                  {
+                    "id": "deploy_pulsar.md",
+                    "label": "Message Storage"
+                  }
+                ]
+              },
+              {
+                "id": "milvus_operator_dependencies",
+                "label": "With Milvus Operator",
+                "isMenu": true,
+
+                "children": [
+                  {
+                    "id": "object_storage_operator.md",
+                    "label": "Object Storage"
+                  },
+                  {
+                    "id": "meta_storage_operator.md",
+                    "label": "Meta Storage"
+                  },
+                  {
+                    "id": "message_storage_operator.md",
+                    "label": "Message Storage"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "allocate.md",
+            "label": "Allocate Resources"
+          },
+          {
+            "id": "deploy_on_clouds.md",
+            "label": "Deploy on Clouds",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "aws",
+                "label": "AWS",
+                "isMenu": true,
+
+                "children": [
+                  {
+                    "id": "aws.md",
+                    "label": "Amazon EC2"
+                  },
+                  {
+                    "id": "eks.md",
+                    "label": "Amazon EKS"
+                  }
+                ]
+              },
+              {
+                "id": "gcp.md",
+                "label": "GCP"
+              },
+              {
+                "id": "azure.md",
+                "label": "Azure"
+              }
+            ]
+          },
+          {
+            "id": "scaleout.md",
+            "label": "Scale a Milvus Cluster"
+          },
+          {
+            "id": "upgrade.md",
+            "label": "Upgrade"
+          },
+          {
+            "id": "monitor_and_alert.md",
+            "label": "Monitor and Alert",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "monitor_overview.md",
+                "label": "Monitoring Architecture"
+              },
+              {
+                "id": "monitor.md",
+                "label": "Deploy Monitoring Services"
+              },
+              {
+                "id": "visualize.md",
+                "label": "Visualize Milvus Metrics"
+              },
+              {
+                "id": "metrics_dashboard.md",
+                "label": "Milvus Metrics Dashboard"
+              },
+              {
+                "id": "alert.md",
+                "label": "Create an Alert"
+              }
+            ]
+          },
+          {
+            "id": "security.md",
+            "label": "Security",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "authenticate.md",
+                "label": "Enable Authentication"
+              },
+              {
+                "id": "tls.md",
+                "label": "Encryption in Transit"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "tools.md",
+        "label": "Tools",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "cli",
+            "label": "Milvus CLI",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "cli_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "install_cli.md",
+                "label": "Installation"
+              },
+              {
+                "id": "cli_commands.md",
+                "label": "Commands"
+              }
+            ]
+          },
+          {
+            "id": "milvusdm",
+            "label": "MilvusDM",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "migrate_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "milvusdm_install.md",
+                "label": "Installation"
+              }
+            ]
+          },
+          {
+            "id": "milvus_attu",
+            "label": "Attu",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "attu.md",
+                "label": "Overview"
+              },
+              {
+                "id": "attu_install-docker.md",
+                "label": "Installation"
+              },
+              {
+                "id": "attu_collection.md",
+                "label": "Manage Collections"
+              },
+              {
+                "id": "attu_partition.md",
+                "label": "Manage Partitions"
+              },
+              {
+                "id": "attu_data.md",
+                "label": "Manage Data"
+              },
+              {
+                "id": "attu_index.md",
+                "label": "Manage Index"
+              },
+              {
+                "id": "attu_query.md",
+                "label": "Query Data"
+              },
+              {
+                "id": "attu_search.md",
+                "label": "Search Data"
+              },
+              {
+                "id": "attu_system.md",
+                "label": "System Status"
+              },
+              {
+                "id": "attu_faq.md",
+                "label": "Attu FAQ"
+              }
+            ]
+          },
+          {
+            "id": "sizing",
+            "label": "Milvus Sizing Tool",
+
+            "externalLink": "https://milvus.io/tools/sizing/"
+          }
+        ]
+      },
+      {
+        "id": "references.md",
+        "label": "References",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "architecture.md",
+            "label": "Architecture",
+            "isMenu": true,
+
+            "children": [
+              {
+                "id": "architecture_overview.md",
+                "label": "Overview"
+              },
+              {
+                "id": "four_layers.md",
+                "label": "Storage/Computing"
+              },
+              {
+                "id": "main_components.md",
+                "label": "Main Components"
+              },
+              {
+                "id": "data_processing.md",
+                "label": "Data Processing"
+              }
+            ]
+          },
+          {
+            "id": "benchmark.md",
+            "label": "Benchmarks"
+          },
+          {
+            "id": "boolean.md",
+            "label": "Boolean Expression Rules"
+          },
+          {
+            "id": "consistency.md",
+            "label": "Consistency"
+          },
+          {
+            "id": "glossary.md",
+            "label": "Glossary"
+          },
+          {
+            "id": "replica.md",
+            "label": "In-memory Replica"
+          },
+          {
+            "id": "schema.md",
+            "label": "Schema"
+          },
+          {
+            "id": "metric.md",
+            "label": "Similarity Metrics"
+          },
+          {
+            "id": "system_configuration.md",
+            "label": "System Configurations"
+          },
+          {
+            "id": "timetravel_ref.md",
+            "label": "Time Travel"
+          },
+          {
+            "id": "index.md",
+            "label": "Vector Index"
+          }
+        ]
+      },
+      {
+        "id": "example_applications.md",
+        "label": "Example Applications",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "image_similarity_search.md",
+            "label": "Image Similarity Search"
+          },
+          {
+            "id": "question_answering_system.md",
+            "label": "Question Answering System"
+          },
+          {
+            "id": "recommendation_system.md",
+            "label": "Recommender System"
+          },
+          {
+            "id": "video_similarity_search.md",
+            "label": "Video Similarity Search"
+          },
+          {
+            "id": "audio_similarity_search.md",
+            "label": "Audio Similarity Search"
+          },
+          {
+            "id": "molecular_similarity_search.md",
+            "label": "Molecular Similarity Search"
+          },
+          {
+            "id": "dna_sequence_classification.md",
+            "label": "DNA Sequence Classification"
+          },
+          {
+            "id": "text_search_engine.md",
+            "label": "Text Search Engine"
+          }
+        ]
+      },
+      {
+        "id": "faq.md",
+        "label": "FAQs",
+        "isMenu": true,
+
+        "children": [
+          {
+            "id": "performance_faq.md",
+            "label": "Performance FAQs"
+          },
+          {
+            "id": "product_faq.md",
+            "label": "Product FAQs"
+          },
+          {
+            "id": "operational_faq.md",
+            "label": "Operational FAQs"
+          },
+          {
+            "id": "troubleshooting.md",
+            "label": "Troubleshooting"
+          }
+        ]
+      }
+    ]
+  }
+}

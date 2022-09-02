@@ -1,4 +1,4 @@
-// import classes from '../../../styles/docDetail.module.css';
+import classes from '../../../styles/docDetail.module.less';
 import clsx from 'clsx';
 import {
   generateAllVersionPaths,
@@ -136,7 +136,7 @@ export default function Docs(props) {
   return (
     <main>
       <Head>
-        <title>{headingContent} - Zilliz Vector database doc</title>
+        <title>Milvus doc</title>
         <meta name="description" content={summary} />
       </Head>
       <div className={classes.container}>
@@ -198,25 +198,20 @@ export default function Docs(props) {
 export const getStaticPaths = () => {
   const paths = generateAllVersionPaths();
 
-  // const paths = generateAllDocPaths();
-
-  console.log('paths--', paths);
-
   return {
     paths,
     fallback: false,
   };
 };
 
-export const getStaticProps = async ({ params }) => {
-  console.log('params--', params);
-  const { slug, version } = params;
+export const getStaticProps = async ({ locale, params }) => {
+  const { slug, version = 'v2.1.x' } = params;
 
   const menus = generateCurVersionMenuList('en', version);
-  const docInfo = generateCurDocInfo(slug, version, 'en');
+  const { content, summary } = generateCurDocInfo(slug, version, locale);
 
   const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
-    docInfo.content
+    content
   );
 
   return {
@@ -224,11 +219,11 @@ export const getStaticProps = async ({ params }) => {
       content: tree,
       codeList,
       headingContent,
-      summary: docInfo.summary,
+      summary: summary,
       id: slug,
       version,
-      menus,
-      anchorList,
+      menus: [],
+      anchorList: [],
     },
   };
 };

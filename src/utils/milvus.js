@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { formatFileName, formatMenus, getMenuInfoById } from './docUtils';
 
 // constants
-const VDC_DOC_DIR = join(process.cwd(), 'src/docs');
+const DOC_DIR = join(process.cwd(), 'src/docs');
 const VERSION_REGEX = /^v[0-9].*/;
 const IGNORE_FILES = [
   'index.md',
@@ -83,98 +83,139 @@ const generateDocsInfo = (dirPath, version, lang, widthContent = false) => {
     .flat(Infinity);
 };
 
-//
-export const generateCurDocInfo = (id, version, lang = 'en') => {
-  const prifixPath = getDirByType(
-    VDC_DOC_DIR,
-    'en',
-    DIR_TYPE_ENUM.DOC,
-    version
-  );
-
-  const curVersionDocs = generateDocsInfo(prifixPath, version, lang, true);
-  const doc = curVersionDocs
-    .flat(Infinity)
-    .filter(v => !!v)
-    .find(v => {
-      return v.id === id;
-    }) || {
-    summary: 'No Data',
-    content: 'No Data',
-    id: formatFileName(id),
-    version,
-    lang,
-  };
-
-  // console.log(doc);
-
-  return doc;
-};
-
-export const generateCurVersionMenuList = (lang = 'en', version = 'v2.0.x') => {
-  const menuDir = getDirByType(VDC_DOC_DIR, lang, DIR_TYPE_ENUM.MENU, version);
+export const generateCurVersionMenuList = (lang = 'en', version = 'v2.1.x') => {
+  const menuDir = getDirByType(DOC_DIR, lang, DIR_TYPE_ENUM.MENU, version);
   const menus = generateMenu(menuDir);
   return menus;
 };
 
-export const generateAllVersionPaths = () => {
-  const docDirs = [];
-  const versionsDocsDirs = fs
-    .readdirSync(VDC_DOC_DIR)
-    .filter(v => VERSION_REGEX.test(v));
-  versionsDocsDirs.forEach(version => {
-    docDirs.push({
-      lang: 'en',
-      version,
-      path: join(VDC_DOC_DIR, `/${version}/site/en`),
+export const generateAllVersionPaths = (widthContent = false) => {
+  const { versions, newestVersion } = generateAvailableDocVersions();
+  const paths = versions.map(v => ({
+    version: v,
+    enPath: join(DOC_DIR, `/${v}/site/en`),
+    cnPath: join(DOC_DIR, `/${v}/site/zh-CN`),
+    cnList: [],
+    enList: [],
+  }));
+  const ignorePaths = [
+    'home',
+    'template',
+    'json',
+    '.DS_Store',
+    'menuStructure',
+  ];
+  const docPaths = paths.map(v => {
+    const { version, enPath, cnPath, cnList, enList } = v;
+    walkFiels(enPath, ignorePaths, enList);
+    walkFiels(cnPath, ignorePaths, cnList);
+    const cnDocPaths = cnList.map(v => {
+      return widthContent
+        ? {
+            params: {
+              slug: v.id,
+              locale: 'cn',
+              version,
+              content: v.content,
+              summary: v.summary,
+            },
+          }
+        : {
+            params: {
+              slug: v.id,
+              locale: 'cn',
+              version,
+            },
+          };
     });
+    const enDocPaths = enList.map(v => {
+      return widthContent
+        ? {
+            params: {
+              slug: v.id,
+              locale: 'en',
+              version,
+              content: v.content,
+              summary: v.summary,
+            },
+          }
+        : {
+            params: {
+              slug: v.id,
+              locale: 'en',
+              version,
+            },
+          };
+    });
+    return [...cnDocPaths, ...enDocPaths];
   });
 
-  let docs = [];
-  docDirs.forEach(v => {
-    docs = docs.concat(generateDocsInfo(v.path, v.version, v.lang, false));
-  });
-
-  const paths = docs
-    .flat(2)
-    // every doc must have id in frontmatter, otherwise it won't be shown in website
-    .filter(doc => doc && !!doc?.id)
-    .map(d => ({
-      params: { slug: d.id, version: d.version },
-    }));
-  return paths;
+  return docPaths.flat();
 };
 
-// target: doc | bootcamp | cummunity | api_reference
-export const generateAvailableVersions = target => {
-  const docDir = VDC_DOC_DIR;
+export const generateCurDocInfo = (id, version, lang = 'en') => {
+  const docs = generateAllVersionPaths(true);
+  const target = docs.find(
+    ({ params }) =>
+      params.slug === id && params.version === version && params.locale === lang
+  );
+  return (
+    {
+      summary: target?.params?.summary,
+      content: target?.params?.content,
+    } || { summary: 'No Data', content: 'No Date' }
+  );
+};
 
-  const ignorePaths = [
-    'git',
-    'md',
-    'json',
-    'lock',
-    'LICENSE',
-    'export_pdf',
-    'v0.',
-  ];
-  const versions = fs.readdirSync(docDir).filter(v => {
-    return !ignorePaths.some(name => v.includes(name));
+export const generateCurVersionMenu = (version, lang) => {
+  const language = lang === 'cn' ? 'zh-CN' : 'en';
+  const path = join(
+    DOC_DIR,
+    `/${version}/site/${language}/menuStructure/${lang}.json`
+  );
+
+  try {
+    const { menuList } = JSON.parse(fs.readFileSync(path, 'utf-8'));
+
+    return formatMenus(menuList);
+  } catch (err) {
+    throw err;
+  }
+};
+
+// use to generate doc home paths
+export const generateAvailableDocVersions = () => {
+  const docDir = DOC_DIR;
+  const availabelVersions = ['v0.x', 'v1', 'v2'];
+
+  const docVersions = fs.readdirSync(docDir).filter(v => {
+    return availabelVersions.some(name => v.includes(name));
   });
 
-  return versions;
+  const newestVersion = docVersions.slice().reverse().shift();
+
+  return {
+    versions: docVersions,
+    newestVersion,
+  };
 };
 
 // get home page mkd content of current verison
 export const getCurVersionHomeMd = (version, lang) => {
   const langFolderName = lang === 'en' ? 'en' : 'zh_CN';
-  const path = join(
-    VDC_DOC_DIR,
-    `${version}/site/${langFolderName}/home/home.md`
-  );
+  let path = join(DOC_DIR, `${version}/site/${langFolderName}/home/home.md`);
+
+  // v0.x has no home.md but overview.md
+  const isExist = fs.existsSync(path);
+  if (!isExist) {
+    path = join(
+      DOC_DIR,
+      `${version}/site/${langFolderName}/about_milvus/overview.md`
+    );
+  }
 
   const fileContents = fs.readFileSync(path, 'utf8');
-  const { data, content } = matter(fileContents);
+  const { content } = matter(fileContents);
   return content;
 };
 
@@ -182,7 +223,7 @@ export const getCurVersionHomeMd = (version, lang) => {
 export const generateApiData = (lang = 'pymilvus', version) => {
   // {id: xxx.md, content: xxxxx}[]
   let contentList = [];
-  const dir = join(VDC_DOC_DIR, 'API_Reference');
+  const dir = join(DOC_DIR, 'API_Reference');
   const paths = fs.readdirSync(dir);
 
   const curLangFolderName = paths.filter(v => v.includes(lang))[0];
@@ -212,15 +253,15 @@ export const generateApiData = (lang = 'pymilvus', version) => {
 export const generateCommunityData = (lang = 'en') => {
   const language = lang === 'en' ? 'en' : 'zh-CN';
   const articlePath = join(
-    VDC_DOC_DIR,
+    DOC_DIR,
     `community/site/${language}/communityArticles`
   );
   const homePath = join(
-    VDC_DOC_DIR,
+    DOC_DIR,
     `community/site/${language}/communityHome/home.md`
   );
   const menuPath = join(
-    VDC_DOC_DIR,
+    DOC_DIR,
     `community/site/${language}/communityArticles/communityMenu/${lang}.json`
   );
 
@@ -247,25 +288,28 @@ export const generateCommunityData = (lang = 'en') => {
 // lang: 'en' | 'cn'; version: start from v1.0.0
 export const generateDocsData = (version, lang = 'en') => {
   const contentList = [];
-  const availabelVerisons = ['v1', 'v2', 'v0.x'];
-  const ignorePaths = ['template', 'git', 'menuStructure'];
+  const { versions, newestVersion } = generateAvailableDocVersions();
+  const ignorePaths = [
+    'home',
+    'template',
+    'json',
+    '.DS_Store',
+    'menuStructure',
+  ];
   const langFolderName = lang === 'en' ? 'en' : 'zh_CN';
 
   const availableVersions = fs
-    .readdirSync(VDC_DOC_DIR)
-    .filter(v => availabelVerisons.some(i => v.includes(i)));
+    .readdirSync(DOC_DIR)
+    .filter(v => versions.some(i => v.includes(i)));
 
   const curVersion = availableVersions.includes(version)
     ? version
-    : availableVersions.reverse().slice(0, 1)[0];
+    : newestVersion;
 
-  const curVerionPath = join(
-    VDC_DOC_DIR,
-    `${curVersion}/site/${langFolderName}`
-  );
+  const curVerionPath = join(DOC_DIR, `${curVersion}/site/${langFolderName}`);
 
   const curVersionMenuPath = join(
-    VDC_DOC_DIR,
+    DOC_DIR,
     `${curVersion}/site/${langFolderName}/menuStructure/${lang}.json`
   );
 
@@ -283,6 +327,7 @@ export const generateDocsData = (version, lang = 'en') => {
     docArticals: contentList,
     versions: availableVersions,
     version: curVersion,
+    newestVersion,
   };
 };
 
@@ -320,14 +365,16 @@ export function walkFiels(path, ignorePaths, list = []) {
     const filePath = join(path, subPath);
     const state = fs.statSync(filePath);
 
-    if (!ignorePaths.includes(filePath)) {
+    if (!ignorePaths.includes(subPath)) {
       if (state.isDirectory()) {
         walkFiels(filePath, ignorePaths, list);
       } else {
         const file = fs.readFileSync(filePath, 'utf-8');
+        const { data, content } = matter(file);
         list.push({
           id: subPath,
-          content: file,
+          content: content,
+          summary: data?.summary || 'No data',
         });
       }
     }

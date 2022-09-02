@@ -2,20 +2,21 @@ import { Remarkable } from 'remarkable';
 import hljs from 'highlight.js';
 
 const convertImgSrc = (version, src) => {
-  const picName = src
+  const path = src
     .split('/')
     .filter(v => v !== '.' && v !== '..')
     .join('/');
-
-  const format = picName.split('.').reverse().slice(0, 1)[0];
-  const picPath = `${VDC_DOC_DIR}/${version}/${picName}`;
-  const base64 = fs.readFileSync(picPath, 'base64');
-
-  const url = `data:image/${format};base64,${base64}`;
-  return url;
+  const imgUrl = `/docs/${version}/${path}`;
+  return imgUrl;
 };
 
-export async function markdownToHtml(markdown, showAnchor = false) {
+export async function markdownToHtml(markdown, options = {}) {
+  const {
+    showAnchor = false,
+    version = 'v2.1.x',
+    needCaption = false,
+  } = options;
+
   const md = new Remarkable({
     html: true,
     highlight: function (str, lang) {
@@ -117,6 +118,21 @@ export async function markdownToHtml(markdown, showAnchor = false) {
       instance
     ) {
       const content = tokens[idx].content;
+
+      if (content.includes('src=')) {
+        const tpl = content.replaceAll(
+          /\.\.(\S*)\.[svg|jpg|jpeg|png]/g,
+          string => {
+            const url = convertImgSrc(version, string);
+            return url;
+          }
+        );
+
+        console.log('tpl--', tpl);
+
+        tokens[idx].content = tpl;
+      }
+
       const isExternalLink = content.includes('https');
 
       if (content.includes('href=') && !isExternalLink) {
@@ -151,12 +167,59 @@ export async function markdownToHtml(markdown, showAnchor = false) {
       const alt = tokens[idx].alt;
       const id = alt.toLocaleLowerCase().replaceAll(/\s/g, '-');
 
+      const url = convertImgSrc(version, src);
+
       return `
       <span class="img-wrapper">
-        <img src="${src}" alt="${alt}" class="doc-image" id="${id}" />
+        <img src="${url}" alt="${alt}" class="doc-image" id="${id}" />
         <span>${alt}</span>
       </span>
     `;
+    };
+  };
+
+  // replace img src in html block like <div><img src='xxx' /><div>
+  const formatHtmlBlockImgPlugin = md => {
+    const rule = md.renderer.rules.htmlblock;
+    md.renderer.rules.htmlblock = function (
+      tokens,
+      idx,
+      options,
+      env,
+      instance
+    ) {
+      const content = tokens[idx].content;
+
+      if (content.includes('src=')) {
+        const tpl = content.replaceAll(
+          /\.\.(\S*)\.[svg|jpg|jpeg|png]/g,
+          string => {
+            const url = convertImgSrc(version, string);
+            return url;
+          }
+        );
+        tokens[idx].content = tpl;
+      }
+
+      return rule(tokens, idx, options, env, instance);
+    };
+  };
+
+  // replace img src in html block like <img src='xxx' />
+  const formatHtmlInlineImgPlugin = md => {
+    const rule = md.renderer.rules.htmltag;
+    md.renderer.rules.htmltag = function (tokens, idx, options, env, instance) {
+      const content = tokens[idx].content;
+
+      if (content.includes('src=')) {
+        const tpl = content.replace(/\.\.(\S*)\.[svg|jpg|jpeg|png]/, string => {
+          const url = convertImgSrc(version, string);
+          return url;
+        });
+        tokens[idx].content = tpl;
+      }
+
+      return rule(tokens, idx, options, env, instance);
     };
   };
 
@@ -179,11 +242,13 @@ export async function markdownToHtml(markdown, showAnchor = false) {
 
   md.use(getCodesPlugin);
   showAnchor && md.use(getAnchorsPlugin);
-  md.use(formatInlineLinkPlugin);
-  md.use(formatHtmlBlockATagPlugin);
-  md.use(formatInlineATagPlugin);
+  // md.use(formatInlineLinkPlugin);
+  // md.use(formatHtmlBlockATagPlugin);
+  // md.use(formatInlineATagPlugin);
   md.use(generateImgCaptionPlugin);
   md.use(getPageTitlePlugin);
+  md.use(formatHtmlBlockImgPlugin);
+  md.use(formatHtmlInlineImgPlugin);
 
   const tree = md.render(markdown);
   return {

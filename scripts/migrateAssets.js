@@ -1,12 +1,12 @@
 const fs = require('fs');
 const { join } = require('path');
 const BASE_DIR = join(process.cwd(), './src/docs');
-const AVAILABLE_VERSIONS = ['v1', 'v2'];
+const VERSION_REGEX = /^v[1-9].*/;
 
 const copyMkdAssetsToPublic = version => {
   const [baseSrcDir, baseTarDir] = [
     join(process.cwd(), `./src/docs/${version}/assets`),
-    join(process.cwd(), `./public/${version}/assets`),
+    join(process.cwd(), `./public/docs/${version}/assets`),
   ];
   const copyPictures = (sourcePath, targetPath) => {
     const isDir = fs.statSync(sourcePath).isDirectory();
@@ -55,8 +55,10 @@ const copyMkdAssetsToPublic = version => {
 
 const availableVersions = fs
   .readdirSync(BASE_DIR)
-  .filter(v => AVAILABLE_VERSIONS.some(i => v.includes(i)));
+  .filter(v => VERSION_REGEX.test(v));
 
 availableVersions.forEach(v => {
+  fs.mkdirSync(join(process.cwd(), `./public/docs/${v}`));
+  fs.mkdirSync(join(process.cwd(), `./public/docs/${v}/assets`));
   copyMkdAssetsToPublic(v);
 });

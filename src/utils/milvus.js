@@ -89,7 +89,8 @@ export const generateCurVersionMenuList = (lang = 'en', version = 'v2.1.x') => {
   return menus;
 };
 
-export const generateAllVersionPaths = (widthContent = false) => {
+// generate all docs paths of available versions
+export const generateAllDocsPaths = (widthContent = false) => {
   const { versions, newestVersion } = generateAvailableDocVersions();
   const paths = versions.map(v => ({
     version: v,
@@ -118,6 +119,8 @@ export const generateAllVersionPaths = (widthContent = false) => {
               version,
               content: v.content,
               summary: v.summary,
+              data: v.data,
+              editPath: `/${version}/site/zh-CN${v.editPath}`,
             },
           }
         : {
@@ -137,6 +140,8 @@ export const generateAllVersionPaths = (widthContent = false) => {
               version,
               content: v.content,
               summary: v.summary,
+              editPath: `/${version}/site/en${v.editPath}`,
+              data: v.data,
             },
           }
         : {
@@ -154,16 +159,23 @@ export const generateAllVersionPaths = (widthContent = false) => {
 };
 
 export const generateCurDocInfo = (id, version, lang = 'en') => {
-  const docs = generateAllVersionPaths(true);
+  const docs = generateAllDocsPaths(true);
   const target = docs.find(
     ({ params }) =>
       params.slug === id && params.version === version && params.locale === lang
   );
   return (
     {
-      summary: target?.params?.summary,
-      content: target?.params?.content,
-    } || { summary: 'No Data', content: 'No Date' }
+      ...target.params,
+    } || {
+      slug: id,
+      locale: lang,
+      version,
+      content: 'No Data',
+      summary: 'No Data',
+      editPath: null,
+      data: null,
+    }
   );
 };
 
@@ -247,6 +259,13 @@ export const generateApiData = (lang = 'pymilvus', version) => {
     menuList: data,
     contentList: contentList,
   };
+};
+
+export const generateApiRouters = () => {
+  const dir = join(DOC_DIR, 'API_Reference');
+  const routers = walkFiles2(dir, [], []);
+  console.log(routers);
+  return routers;
 };
 
 // data used in community pages. lang: 'en' | 'cn'
@@ -371,12 +390,48 @@ export function walkFiels(path, ignorePaths, list = []) {
       } else {
         const file = fs.readFileSync(filePath, 'utf-8');
         const { data, content } = matter(file);
+        const editPath = filePath.includes('en')
+          ? filePath.split('en')[1]
+          : filePath.split('zh-CN')[1];
         list.push({
           id: subPath,
           content: content,
           summary: data?.summary || 'No data',
+          data,
+          editPath,
         });
       }
     }
   });
+}
+
+export function walkFiles2(path, ignorePaths, list = [], withContent = false) {
+  console.log('withContent--', withContent);
+  const paths = fs.readdirSync(path);
+
+  paths.forEach(subPath => {
+    const filePath = join(path, subPath);
+    const state = fs.statSync(filePath);
+
+    if (!ignorePaths.includes(subPath)) {
+      if (state.isDirectory()) {
+        walkFiels(filePath, ignorePaths, list);
+      } else {
+        const file = fs.readFileSync(filePath, 'utf-8');
+        const { content } = matter(file);
+        data = withContent
+          ? {
+              id: subPath,
+            }
+          : {
+              id: subPath,
+            };
+
+        console.log(data);
+        list.push(null);
+      }
+    }
+  });
+
+  return list;
 }

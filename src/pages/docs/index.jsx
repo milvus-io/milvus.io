@@ -4,29 +4,28 @@ import {
   generateApiData,
   generateDocsData,
   generateCurVersionMenu,
-} from '../../../utils/milvus';
-import HomeContent from '../../../parts/docs/homeContent';
-import DocContent from '../../../parts/docs/DocContent';
-import { markdownToHtml } from '../../../utils/common';
+} from '../../utils/milvus';
+import HomeContent from '../../parts/docs/homeContent';
+import DocContent from '../../parts/docs/DocContent';
+import { markdownToHtml } from '../../utils/common';
 
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Layout from '../../../components/layout';
-import LeftNav from '../../../components/leftNavigation';
-import { mdMenuListFactory } from '../../../components/leftNavigation/utils';
+import Layout from '../../components/layout';
+import { mdMenuListFactory } from '../../components/leftNavigation/utils';
 import clsx from 'clsx';
-import Aside from '../../../components/aside';
-import Footer from '../../../components/footer';
+import Aside from '../../components/aside';
+import Footer from '../../components/footer';
 import {
   useCodeCopy,
   useMultipleCodeFilter,
   useFilter,
-} from '../../../hooks/doc-dom-operation';
-import { useGenAnchor } from '../../../hooks/doc-anchor';
-import { useOpenedStatus } from '../../../hooks';
-import { recursionUpdateTree } from '../../../utils/docUtils';
-import MenuTree from '../../../components/tree';
-import classes from '../../../styles/docHome.module.less';
+} from '../../hooks/doc-dom-operation';
+import { useGenAnchor } from '../../hooks/doc-anchor';
+import { useOpenedStatus } from '../../hooks';
+import { recursionUpdateTree } from '../../utils/docUtils';
+import MenuTree from '../../components/tree';
+import classes from '../../styles/docHome.module.less';
 
 export default function DocHomePage(props) {
   const { homeData, blogs = [], menus, version } = props;
@@ -91,6 +90,20 @@ export default function DocHomePage(props) {
               newestBlog={newestBlog}
               trans={t}
             />
+
+            <div className="doc-toc-container">
+              {/* <Aside
+                locale={locale}
+                version={version}
+                editPath={editPath}
+                mdTitle={headings[0]}
+                category="doc"
+                isHome={!!homeData}
+                items={headings}
+                title={t('v3trans.docs.tocTitle')}
+              /> */}
+              <p>Anchors</p>
+            </div>
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>
@@ -99,39 +112,23 @@ export default function DocHomePage(props) {
   );
 }
 
-export const getStaticPaths = () => {
-  const { versions } = generateAvailableDocVersions();
-
-  const paths = versions.map(v => ({
-    params: { version: v },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
 export const getStaticProps = async context => {
-  const {
-    params: { version },
-    locale,
-  } = context;
+  const { locale } = context;
 
-  const { versions } = generateAvailableDocVersions();
-  const md = getCurVersionHomeMd(version, locale);
+  const { versions, newestVersion } = generateAvailableDocVersions();
+  const md = getCurVersionHomeMd(newestVersion, locale);
   const apiMenus = generateApiData('pymilvus');
-  const docMenus = generateCurVersionMenu(version, locale);
+  const docMenus = generateCurVersionMenu(newestVersion, locale);
   const data = generateDocsData();
   const { tree } = await markdownToHtml(md, {
     showAnchor: false,
-    version,
+    newestVersion,
   });
 
   return {
     props: {
       homeData: tree,
-      version,
+      version: newestVersion,
       locale,
       versions,
       blogs: [],

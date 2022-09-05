@@ -10,6 +10,15 @@ const convertImgSrc = (version, src) => {
   return imgUrl;
 };
 
+const getHeadingIdFromToken = token => {
+  // in order to ensure every heading href is unique even when content is same, we use heading content + lines as id
+  const pattern =
+    /[`~!@#_$%^&*()=|{}':;',\\\[\\\].<>/?~!@#￥……&*（）——|{}【】‘；：”“""'。，、？]/g;
+  const content = token.content;
+  const formatText = `${content}`.replaceAll(pattern, '');
+  return formatText.replaceAll(/\s/g, '-');
+};
+
 export async function markdownToHtml(markdown, options = {}) {
   const {
     showAnchor = false,
@@ -127,9 +136,6 @@ export async function markdownToHtml(markdown, options = {}) {
             return url;
           }
         );
-
-        console.log('tpl--', tpl);
-
         tokens[idx].content = tpl;
       }
 

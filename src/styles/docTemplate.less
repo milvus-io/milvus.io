@@ -125,6 +125,42 @@ html {
   }
 }
 
+.common-anchor-header {
+  &:hover {
+    .anchor-icon {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+
+  .anchor-icon {
+    padding: 0;
+    opacity: 0;
+    display: inline-block;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    transition: all 0.3s ease;
+    transform: translateX(-20px);
+
+    vertical-align: middle;
+    color: #55c540;
+
+    .tip {
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    margin-left: 4px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
 /* hide toc on mobile */
 .doc-toc-container {
   @media @phone, @tablet {

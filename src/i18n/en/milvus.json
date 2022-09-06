@@ -694,7 +694,7 @@
       "feature": {
         "easy": {
           "title": "Easy to Use",
-          "desc": "With Milvus, you can create a large scale similarity search service in less than a minute. Simple and intuitive SDKs are also available for a variety of different languages."
+          "desc": "With Milvus vector database, you can create a large scale similarity search service in less than a minute. Simple and intuitive SDKs are also available for a variety of different languages."
         },
         "fast": {
           "title": "Blazing Fast",
@@ -702,7 +702,7 @@
         },
         "available": {
           "title": "Highly Available",
-          "desc": "Milvus has been battle-tested by over a thousand enterprise users in a variety of use cases. With extensive isolation of individual system components, Milvus is highly resilient and reliable."
+          "desc": "Milvus vector database has been battle-tested by over a thousand enterprise users in a variety of use cases. With extensive isolation of individual system components, Milvus is highly resilient and reliable."
         },
         "scalable": {
           "title": "Highly Scalable",
@@ -710,7 +710,7 @@
         },
         "cloud": {
           "title": "Cloud-native",
-          "desc": "Milvus adopts a systemic approach to cloud-nativity, separating compute from storage and allowing you to scale both up and out."
+          "desc": "Milvus vector database adopts a systemic approach to cloud-nativity, separating compute from storage and allowing you to scale both up and out."
         },
         "rich": {
           "title": "Feature-rich",

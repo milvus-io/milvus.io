@@ -32,8 +32,8 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function Template({ pageContext }) {
-  const { doc, name, allApiMenus, version, locale, category } = pageContext;
-
+  const { doc, name, allApiMenus, version, locale, category, docVersion } =
+    pageContext;
   // left nav toggle state
   const [isOpened, setIsOpened] = useState(false);
   // recover state
@@ -170,10 +170,10 @@ export default function Template({ pageContext }) {
       },
       {
         name: 'docsearch:version',
-        content: version || '',
+        content: docVersion || '',
       },
     ];
-  }, [locale, version]);
+  }, [locale, docVersion]);
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">

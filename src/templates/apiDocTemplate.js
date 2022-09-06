@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { graphql } from 'gatsby';
 import { useI18next } from 'gatsby-plugin-react-i18next';
 import clsx from 'clsx';
@@ -32,8 +32,8 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function Template({ pageContext }) {
-  const { doc, name, allApiMenus, version, locale, category } = pageContext;
-
+  const { doc, name, allApiMenus, version, locale, category, docVersion } =
+    pageContext;
   // left nav toggle state
   const [isOpened, setIsOpened] = useState(false);
   // recover state
@@ -155,6 +155,26 @@ export default function Template({ pageContext }) {
       break;
   }
 
+  // doc search meta
+  const docsearchMeta = useMemo(() => {
+    if (
+      typeof window === 'undefined' ||
+      !window.location.pathname.includes(version)
+    ) {
+      return [];
+    }
+    return [
+      {
+        name: 'docsearch:language',
+        content: locale === 'cn' ? 'zh-cn' : locale,
+      },
+      {
+        name: 'docsearch:version',
+        content: docVersion || '',
+      },
+    ];
+  }, [locale, docVersion]);
+
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <Seo
@@ -162,6 +182,7 @@ export default function Template({ pageContext }) {
         titleTemplate="%s"
         lang={locale}
         version={version}
+        meta={docsearchMeta}
       />
       <div className={'doc-temp-container'}>
         <LeftNav
@@ -186,7 +207,7 @@ export default function Template({ pageContext }) {
           <div className={'doc-content-container'}>
             <div className="doc-post-wrapper doc-style">
               <div
-                className={`api-reference-wrapper doc-style ${category}`}
+                className={`api-reference-wrapper doc-post-content doc-style ${category}`}
                 dangerouslySetInnerHTML={{ __html: doc }}
               ></div>
             </div>

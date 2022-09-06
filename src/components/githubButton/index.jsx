@@ -1,9 +1,8 @@
 import React from 'react';
-import Divider from '@mui/material/Divider';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCodeBranch } from '@fortawesome/free-solid-svg-icons';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import * as styles from './index.module.less';
+import { useMemo } from 'react';
+import { Star, Fork } from './icons';
+import clsx from 'clsx';
 
 const GitHubButton = ({
   type = 'star', // star or fork
@@ -13,9 +12,23 @@ const GitHubButton = ({
   stat,
 }) => {
   const isStar = type === 'star';
-  const iconClass = isStar ? faGithub : faCodeBranch;
   const link = isStar ? href : `${href}/fork`;
-  const sublink = isStar ? `${href}/stargazers` : `${href}/network/members`;
+
+  const Icon = isStar ? Star : Fork;
+
+  const formatNum = num => {
+    return num >= 1000 ? `${Math.round(num / 100) / 10}k` : num;
+  };
+
+  const stats = useMemo(() => {
+    const stars = stat.star;
+    const forks = stat.forks;
+
+    return {
+      star: formatNum(stars),
+      fork: formatNum(forks),
+    };
+  }, [stat]);
 
   return (
     <div className={`${styles.gitBtnWrapper} ${className}`}>
@@ -25,17 +38,17 @@ const GitHubButton = ({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <FontAwesomeIcon className={styles.iconWrapper} icon={iconClass} />
+        <span
+          className={clsx(styles.iconWrapper, {
+            [styles.starIcon]: isStar,
+          })}
+        >
+          <Icon />
+        </span>
+
         <span className={styles.iconText}>{children}</span>
-      </a>
-      <Divider orientation="vertical" variant="middle" flexItem />
-      <a
-        href={sublink}
-        className={`${styles.link} ${styles.num} `}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span className={styles.stat}>{isStar ? stat.star : stat.forks}</span>
+
+        <span className={styles.stat}>{isStar ? stats.star : stats.fork}</span>
       </a>
     </div>
   );

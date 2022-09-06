@@ -152,7 +152,7 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
           type="fork"
           href="https://github.com/milvus-io/milvus"
         >
-          Forks
+          Fork
         </GitHubButton>
       </div>
       <Menu
@@ -244,7 +244,10 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
               }}
             >
               <MenuItem onClick={handleMenuLinkClick}>
-                <Link to="https://codelabs.milvus.io/" className={styles.menuLink}>
+                <Link
+                  to="https://codelabs.milvus.io/"
+                  className={styles.menuLink}
+                >
                   codelabs
                 </Link>
               </MenuItem>

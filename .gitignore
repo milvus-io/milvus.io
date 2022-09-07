@@ -69,6 +69,7 @@ yarn-error.log
 # search.json
 search.json
 
+src/pages/docs
 # generated versioninfo
 src/pages/docs/versions/versionInfo.json
 

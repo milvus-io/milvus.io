@@ -1,0 +1,183 @@
+@import (reference) '../../css/responsive.less';
+
+.main {
+  width: 100%;
+  height: 100%;
+  background-color: #f5f8fb;
+  padding: 95px 0 136px 0;
+}
+
+.pageContainer {
+  width: 1274px;
+  margin: 0 auto;
+
+  h1 {
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 70px;
+    margin-bottom: 64px;
+    text-align: center;
+  }
+
+  h2 {
+    display: none;
+  }
+
+  h3 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 34px;
+    margin-bottom: 24px;
+  }
+
+  .note {
+    display: flex;
+    align-items: center;
+    background-color: rgba(224, 242, 252, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 32px;
+
+    .iconWrapper {
+      margin-right: 10px;
+      font-size: 0;
+      line-height: 0;
+    }
+  }
+
+  .contentWrapper {
+    display: flex;
+    gap: 128px;
+
+    .leftPart {
+      width: 519px;
+      padding: 32px 49px 32px 40px;
+      background-color: #fff;
+
+      .dataItem {
+        margin-bottom: 24px;
+
+        .label {
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 26px;
+          margin-bottom: 16px;
+        }
+
+        .shortMargin {
+          margin-bottom: 8px;
+        }
+
+        .interpretation {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 14px;
+          margin-bottom: 24px;
+        }
+
+        .sliderWrapper {
+          height: 40px;
+          padding: 0 10px;
+        }
+      }
+
+      .arrowIcon {
+        display: inline-block;
+        width: 11px;
+        height: 9px;
+        background-color: #000;
+        clip-path: polygon(0 0, 100% 0, 50% 100%, 0 0);
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+
+      .dropdownControler {
+        border-radius: 2em;
+        padding: 19px 52px 19px 34px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: #000;
+      }
+
+      .focusedController {
+        border-color: #00a1ea;
+      }
+
+      .dropdownMenu {
+        margin-top: 8px;
+        background: #ffffff;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+        border-radius: 29px;
+        padding: 8px 0;
+        height: 240px;
+        max-height: 300px;
+
+        & > div {
+          padding: 14px 32px;
+
+          &:hover {
+            background-color: #eff9fe;
+            color: #1493cc;
+          }
+        }
+      }
+    }
+
+    .rightPart {
+      flex: 1;
+
+      .contentClassName {
+        color: #1493cc;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 34px;
+      }
+
+      .capacity {
+        margin-bottom: 64px;
+
+        .cardsWrapper {
+          display: flex;
+          gap: 20px;
+        }
+      }
+
+      .cluster {
+        margin-bottom: 24px;
+
+        .cardsWrapper {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          column-gap: 20px;
+          row-gap: 32px;
+        }
+      }
+
+      .downloadBtn {
+        border: none;
+        outline: none;
+        background-color: #00a1ea;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 10px 0;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        border-radius: 2em;
+        cursor: pointer;
+
+        span {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 18px;
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}

@@ -8,8 +8,17 @@
 }
 
 .pageContainer {
-  width: 1274px;
+  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
+
+  @media (max-width: 1280px) {
+    padding: 32px;
+  }
+
+  @media @phone {
+    padding: 0 16px;
+  }
 
   h1 {
     font-weight: 600;
@@ -20,7 +29,9 @@
   }
 
   h2 {
-    display: none;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
   }
 
   h3 {
@@ -49,13 +60,33 @@
     display: flex;
     gap: 128px;
 
+    @media (max-width: 1280px) {
+      gap: 32px;
+    }
+
+    @media @tablet {
+      gap: 128px;
+      flex-direction: column;
+    }
+
+    @media @phone {
+      gap: 80px;
+    }
+
     .leftPart {
-      width: 519px;
+      flex: 0 1 519px;
       padding: 32px 49px 32px 40px;
       background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
 
-      .dataSize {
-        margin-bottom: 80px;
+      @media @tablet {
+        gap: 64px;
+      }
+
+      @media @phone {
+        gap: 32px;
       }
 
       .dataItem {
@@ -68,10 +99,6 @@
           margin-bottom: 16px;
         }
 
-        .shortMargin {
-          margin-bottom: 8px;
-        }
-
         .interpretation {
           font-weight: 400;
           font-size: 12px;
@@ -82,6 +109,14 @@
         .sliderWrapper {
           height: 40px;
           padding: 0 10px;
+        }
+
+        .shortMargin {
+          margin-bottom: 8px;
+        }
+
+        .largeMargin {
+          margin-bottom: 32px;
         }
       }
 
@@ -127,7 +162,16 @@
     }
 
     .rightPart {
-      flex: 1;
+      flex: 0 1 628px;
+
+      @media @tablet {
+        max-width: 628px;
+      }
+
+      @media @phone {
+        width: 412px;
+        margin: 0 auto;
+      }
 
       .contentClassName {
         color: #1493cc;
@@ -153,6 +197,10 @@
           grid-template-columns: repeat(3, 1fr);
           column-gap: 20px;
           row-gap: 32px;
+
+          @media @phone {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
       }
 

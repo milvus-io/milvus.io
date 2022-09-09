@@ -14,7 +14,7 @@ import TextField from '@mui/material/TextField';
 import {
   memorySizeCalculator,
   rawFileSizeCalculator,
-  unitAny2BYTE,
+  commonCoordCalculator,
   unitBYTE2Any,
   indexNodeCalculator,
   queryNodeCalculator,
@@ -22,6 +22,7 @@ import {
   rootCoordCalculator,
   dataNodeCalculator,
   proxyCalculator,
+  customYmlGenerator,
 } from '../../utils/sizingTool';
 
 const INDEX_TYPE_OPTIONS = [
@@ -58,9 +59,6 @@ const SEGMENT_SIZE_OPTIONS = [
   },
 ];
 
-// collection shard, default value = 2;
-const SHARD = 2;
-
 // one million
 const $1M = Math.pow(10, 6);
 /// one billion
@@ -68,6 +66,8 @@ const $1B = Math.pow(10, 9);
 
 const defaultSizeContent = {
   size: 'Require more data',
+  cpu: 0,
+  memory: 0,
   amount: 0,
 };
 
@@ -77,13 +77,13 @@ export default function SizingTool() {
   const [form, setForm] = useState({
     // number of vectors
     nb: {
-      value: $1M,
+      value: 1,
       showError: false,
       helpText: '',
-      placeholder: `[${$1M} - ${10 * $1B}]`,
+      placeholder: `[1 - 10000]`,
       validation: {
         validate: isBetween,
-        params: { min: $1M, max: $1B },
+        params: { min: 1, max: 10000 },
         errorMsg: 'Out of limit',
       },
     },
@@ -166,24 +166,12 @@ export default function SizingTool() {
     }
   };
 
-  const handleDownloadYamlFile = () => {};
-
   const openArrow = <span className={classes.arrowIcon}></span>;
-
-  const indexTypeValue = useMemo(() => {
-    if (form.indexType.value === 'HNSW') {
-      return 'HNSW';
-    }
-    if (form.indexType.value === 'FLAT') {
-      return 'FLAT';
-    }
-    return 'IVF';
-  }, [form.indexType]);
 
   const calcResult = useMemo(() => {
     const { nb, d, indexType, nlist, m, segmentSize } = form;
 
-    const nbVal = Number(nb.value) || 0;
+    const nbVal = Number(nb.value) * $1M || 0;
     const dVal = Number(d.value) || 0;
     const nlistVal = Number(nlist.value) || 0;
     const mVal = Number(m.value) || 0;
@@ -200,10 +188,11 @@ export default function SizingTool() {
         indexNode: defaultSizeContent,
         proxy: defaultSizeContent,
         queryNode: defaultSizeContent,
+        commonCoord: defaultSizeContent,
       };
     }
 
-    const memorySize = memorySizeCalculator({
+    const { memorySize, theorySize } = memorySizeCalculator({
       nb: nbVal,
       d: dVal,
       nlist: nlistVal,
@@ -217,11 +206,13 @@ export default function SizingTool() {
 
     const dataNode = dataNodeCalculator(nbVal);
 
-    const indexNode = indexNodeCalculator(memorySize, sVal);
+    const indexNode = indexNodeCalculator(theorySize, sVal);
 
     const proxy = proxyCalculator(memorySize);
 
     const queryNode = queryNodeCalculator(memorySize);
+
+    const commonCoord = commonCoordCalculator(memorySize);
 
     return {
       memorySize: unitBYTE2Any(memorySize),
@@ -231,37 +222,54 @@ export default function SizingTool() {
       indexNode,
       proxy,
       queryNode,
+      commonCoord,
     };
   }, [form]);
 
+  const handleDownloadYmlFile = () => {
+    if (typeof window !== 'undefined') {
+      const content = customYmlGenerator({
+        ...calcResult,
+      });
+      const blob = new Blob([content], {
+        type: 'text/plain',
+      });
+
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'customConfig.yml';
+      a.click();
+    }
+  };
+
   return (
     <Layout t={t}>
-      <Seo lang={language} title="Milvus Sizing Tool"></Seo>
+      <Seo lang={language} title={t('v3trans.sizingTool.title')}></Seo>
       <main className={classes.main}>
         <div className={classes.pageContainer}>
-          <h1>Milvus Sizing Tool</h1>
-          <h2></h2>
+          <h1>{t('v3trans.sizingTool.title')}</h1>
           <div className={classes.note}>
             <span className={classes.iconWrapper}>
               <InfoFilled />
             </span>
-            <p>
-              Note: all the recommendations are calculated based our lab data,
-              you should adjust it with your own testing before deploying to
-              production.
-            </p>
+            <h2>{t('v3trans.sizingTool.subTitle')}</h2>
           </div>
           <div className={classes.contentWrapper}>
             <div className={classes.leftPart}>
               <div className={classes.dataSize}>
-                <h3>Choose data size</h3>
+                <h3>{t('v3trans.sizingTool.labels.dataSize')}</h3>
+
                 <div className={classes.dataItem}>
-                  <p className={classes.label}>Number of vectors</p>
+                  <p className={classes.label}>
+                    {t('v3trans.sizingTool.labels.vector')}
+                  </p>
                   <div>
                     <TextField
                       fullWidth
                       error={form.nb.showError}
-                      label="Number of vectors"
+                      label={t('v3trans.sizingTool.labels.vector')}
                       value={form.nb.value}
                       helperText={form.nb.helpText}
                       placeholder={form.nb.placeholder}
@@ -273,12 +281,14 @@ export default function SizingTool() {
                 </div>
 
                 <div className={classes.dataItem}>
-                  <p className={classes.label}>Dimensions</p>
+                  <p className={classes.label}>
+                    {t('v3trans.sizingTool.labels.dimension')}
+                  </p>
                   <div>
                     <TextField
                       fullWidth
                       error={form.d.showError}
-                      label="Dimensions"
+                      label={t('v3trans.sizingTool.labels.dimension')}
                       value={form.d.value}
                       helperText={form.d.helpText}
                       placeholder={form.d.placeholder}
@@ -291,7 +301,8 @@ export default function SizingTool() {
               </div>
 
               <div className={classes.indexType}>
-                <h3>Choose index type</h3>
+                <h3>{t('v3trans.sizingTool.labels.indexType')}</h3>
+
                 <div className={classes.dataItem}>
                   <Dropdown
                     options={INDEX_TYPE_OPTIONS}
@@ -307,12 +318,43 @@ export default function SizingTool() {
                   />
                 </div>
 
-                {indexTypeValue === 'FLAT' && (
-                  <div className={classes.dataItem}>
-                    <p className={clsx(classes.label, classes.shortMargin)}>
-                      Choose index parameters
-                    </p>
-                    {indexTypeValue === 'IVF' && (
+                <div className={classes.dataItem}>
+                  {form.indexType.value === 'FLAT' ? null : form.indexType
+                      .value === 'HNSW' ? (
+                    <>
+                      <p className={clsx(classes.label, classes.shortMargin)}>
+                        {t('v3trans.sizingTool.labels.indexParam')}
+                      </p>
+                      <p
+                        className={clsx(
+                          classes.interpretation,
+                          classes.largeMargin
+                        )}
+                      >
+                        {t('v3trans.sizingTool.labels.m')}
+                      </p>
+                      <div className={classes.sliderWrapper}>
+                        <Slider
+                          value={form.m.value}
+                          step={2}
+                          min={4}
+                          max={64}
+                          valueLabelDisplay="on"
+                          onChange={e => {
+                            handleFormValueChange(e.target.value, 'm');
+                          }}
+                          marks={[
+                            { label: '4', value: 4 },
+                            { label: '64', value: 64 },
+                          ]}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className={classes.interpretation}>
+                        {t('v3trans.sizingTool.labels.m')}
+                      </p>
                       <div>
                         <TextField
                           fullWidth
@@ -326,34 +368,17 @@ export default function SizingTool() {
                           }}
                         />
                       </div>
-                    )}
-                    {indexTypeValue === 'HNSW' && (
-                      <>
-                        <p className={classes.interpretation}>
-                          M (Maximum degree of the node)
-                        </p>
-                        <div className={classes.sliderWrapper}>
-                          <Slider
-                            value={form.m.value}
-                            step={2}
-                            min={4}
-                            max={64}
-                            valueLabelDisplay="auto"
-                            onChange={e => {
-                              handleFormValueChange(e.target.value, 'm');
-                            }}
-                          />
-                        </div>
-                      </>
-                    )}
-                  </div>
-                )}
+                    </>
+                  )}
+                </div>
 
                 <div className={classes.dataItem}>
                   <p className={clsx(classes.label, classes.shortMargin)}>
-                    Choose segment size
+                    {t('v3trans.sizingTool.labels.segmentSize')}
                   </p>
-                  <p className={classes.interpretation}>Segment (MB)</p>
+                  <p className={classes.interpretation}>
+                    {t('v3trans.sizingTool.labels.segment')}
+                  </p>
                   <div>
                     <Dropdown
                       options={SEGMENT_SIZE_OPTIONS}
@@ -373,18 +398,18 @@ export default function SizingTool() {
             </div>
             <div className={classes.rightPart}>
               <div className={classes.capacity}>
-                <h3>Approximate capacity</h3>
+                <h3>{t('v3trans.sizingTool.capacity')}</h3>
 
                 <div className={classes.cardsWrapper}>
                   <SizingToolCard
-                    title="Memory"
+                    title={t('v3trans.sizingTool.memory')}
                     content={`${calcResult.memorySize.size} ${calcResult.memorySize.unit}`}
                     classes={{
                       contentClassName: classes.contentClassName,
                     }}
                   />
                   <SizingToolCard
-                    title="Raw file size"
+                    title={t('v3trans.sizingTool.fileSize')}
                     content={`${calcResult.rawFileSize.size} ${calcResult.rawFileSize.unit}`}
                     classes={{
                       contentClassName: classes.contentClassName,
@@ -394,62 +419,81 @@ export default function SizingTool() {
               </div>
 
               <div className={classes.cluster}>
-                <h3>Minimum Milvus cluster setup</h3>
+                <h3>{t('v3trans.sizingTool.setups.title')}</h3>
 
                 <div className={classes.cardsWrapper}>
                   <SizingToolCard
-                    title="Root Coord"
+                    title={t('v3trans.sizingTool.setups.rootCoord.title')}
                     subTitle={calcResult.rootCoord.size}
                     content={calcResult.rootCoord.amount}
                     showTooltip
-                    tooltip="Root coord handles data definition language (DDL) and data control language (DCL) requests, such as create or delete collections, partitions, or indexes, as well as manage TSO (timestamp Oracle) and time ticker issuing."
+                    tooltip={t('v3trans.sizingTool.setups.rootCoord.tooltip')}
                   />
 
                   <SizingToolCard
-                    title="Proxy"
+                    title={t('v3trans.sizingTool.setups.indexCoord.title')}
+                    tooltip={t('v3trans.sizingTool.setups.indexCoord.tooltip')}
+                    showTooltip
+                    subTitle={calcResult.commonCoord.size}
+                    content={calcResult.commonCoord.amount}
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.queryCoord.title')}
+                    tooltip={t('v3trans.sizingTool.setups.queryCoord.tooltip')}
+                    showTooltip
+                    subTitle={calcResult.commonCoord.size}
+                    content={calcResult.commonCoord.amount}
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.dataCoord.title')}
+                    tooltip={t('v3trans.sizingTool.setups.dataCoord.tooltip')}
+                    showTooltip
+                    subTitle={calcResult.commonCoord.size}
+                    content={calcResult.commonCoord.amount}
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.proxy.title')}
+                    tooltip={t('v3trans.sizingTool.setups.proxy.tooltip')}
                     subTitle={calcResult.proxy.size}
                     content={calcResult.proxy.amount}
                     showTooltip
-                    tooltip="Proxy is the access layer of the system and endpoint to users. It validates client requests and reduces the returned results."
                   />
 
                   <SizingToolCard
-                    title="Index Type"
-                    content={form.indexType.value}
-                  />
-
-                  <SizingToolCard
-                    title="Query Node"
+                    title={t('v3trans.sizingTool.setups.queryNode.title')}
+                    tooltip={t('v3trans.sizingTool.setups.queryNode.tooltip')}
                     subTitle={calcResult.queryNode.size}
                     content={calcResult.queryNode.amount}
                     showTooltip
-                    tooltip="Query node retrieves incremental log data and turn them into growing segments by subscribing to the log broker, loads historical data from the object storage, and runs hybrid search between vector and scalar data."
                   />
 
                   <SizingToolCard
-                    title="Data Node"
+                    title={t('v3trans.sizingTool.setups.dataNode.title')}
+                    tooltip={t('v3trans.sizingTool.setups.dataNode.tooltip')}
                     subTitle={calcResult.dataNode.size}
                     content={calcResult.dataNode.amount}
                     showTooltip
-                    tooltip="Data node retrieves incremental log data by subscribing to the log broker, processes mutation requests, and packs log data into log snapshots and stores them in the object storage."
                   />
 
                   <SizingToolCard
-                    title="Index Node"
+                    title={t('v3trans.sizingTool.setups.indexNode.title')}
+                    tooltip={t('v3trans.sizingTool.setups.indexNode.tooltip')}
                     subTitle={calcResult.indexNode.size}
                     content={calcResult.indexNode.amount}
                     showTooltip
-                    tooltip="Index node builds indexes. Index nodes do not need to be memory resident, and can be implemented with the serverless framework."
                   />
                 </div>
               </div>
 
               <button
                 className={classes.downloadBtn}
-                onClick={handleDownloadYamlFile}
+                onClick={handleDownloadYmlFile}
               >
                 <DownloadIcon />
-                <span>Download helm</span>
+                <span>{t('v3trans.sizingTool.button')}</span>
               </button>
             </div>
           </div>

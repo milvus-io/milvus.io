@@ -65,7 +65,7 @@ export default function SizingToolCard(props) {
           [contentClassName]: contentClassName,
         })}
       >
-        {showTooltip && <span>&times;&nbsp;&nbsp;</span>}
+        {showTooltip && <span>x&nbsp;&nbsp;</span>}
         {content}
       </p>
     </div>

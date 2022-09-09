@@ -11,6 +11,11 @@ import SizingToolCard from '../../components/card/sizingToolCard';
 import clsx from 'clsx';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 import {
   memorySizeCalculator,
   rawFileSizeCalculator,
@@ -24,6 +29,7 @@ import {
   proxyCalculator,
   customYmlGenerator,
 } from '../../utils/sizingTool';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 const INDEX_TYPE_OPTIONS = [
   {
@@ -245,9 +251,13 @@ export default function SizingTool() {
   };
 
   return (
-    <Layout t={t}>
-      <Seo lang={language} title={t('v3trans.sizingTool.title')}></Seo>
-      <main className={classes.main}>
+    <main className={classes.main}>
+      <Layout t={t}>
+        <Seo
+          lang={language}
+          title={t('v3trans.sizingTool.title')}
+          description=""
+        ></Seo>
         <div className={classes.pageContainer}>
           <h1>{t('v3trans.sizingTool.title')}</h1>
           <div className={classes.note}>
@@ -265,38 +275,34 @@ export default function SizingTool() {
                   <p className={classes.label}>
                     {t('v3trans.sizingTool.labels.vector')}
                   </p>
-                  <div>
-                    <TextField
-                      fullWidth
-                      error={form.nb.showError}
-                      label={t('v3trans.sizingTool.labels.vector')}
-                      value={form.nb.value}
-                      helperText={form.nb.helpText}
-                      placeholder={form.nb.placeholder}
-                      onChange={e => {
-                        handleFormValueChange(e.target.value, 'nb');
-                      }}
-                    />
-                  </div>
+                  <TextField
+                    fullWidth
+                    error={form.nb.showError}
+                    label={t('v3trans.sizingTool.labels.vector')}
+                    value={form.nb.value}
+                    helperText={form.nb.helpText}
+                    placeholder={form.nb.placeholder}
+                    onChange={e => {
+                      handleFormValueChange(e.target.value, 'nb');
+                    }}
+                  />
                 </div>
 
                 <div className={classes.dataItem}>
                   <p className={classes.label}>
                     {t('v3trans.sizingTool.labels.dimension')}
                   </p>
-                  <div>
-                    <TextField
-                      fullWidth
-                      error={form.d.showError}
-                      label={t('v3trans.sizingTool.labels.dimension')}
-                      value={form.d.value}
-                      helperText={form.d.helpText}
-                      placeholder={form.d.placeholder}
-                      onChange={e => {
-                        handleFormValueChange(e.target.value, 'd');
-                      }}
-                    />
-                  </div>
+                  <TextField
+                    fullWidth
+                    error={form.d.showError}
+                    label={t('v3trans.sizingTool.labels.dimension')}
+                    value={form.d.value}
+                    helperText={form.d.helpText}
+                    placeholder={form.d.placeholder}
+                    onChange={e => {
+                      handleFormValueChange(e.target.value, 'd');
+                    }}
+                  />
                 </div>
               </div>
 
@@ -304,18 +310,24 @@ export default function SizingTool() {
                 <h3>{t('v3trans.sizingTool.labels.indexType')}</h3>
 
                 <div className={classes.dataItem}>
-                  <Dropdown
-                    options={INDEX_TYPE_OPTIONS}
-                    onChange={data => {
-                      handleFormValueChange(data.value, 'indexType');
-                    }}
-                    value={form.indexType.value}
-                    placeholder={form.indexType.helpText}
-                    controlClassName={classes.dropdownController}
-                    menuClassName={classes.dropdownMenu}
-                    arrowOpen={openArrow}
-                    arrowClosed={openArrow}
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel>
+                      {t('v3trans.sizingTool.labels.index')}
+                    </InputLabel>
+                    <Select
+                      value={form.indexType.value}
+                      label={t('v3trans.sizingTool.labels.index')}
+                      onChange={e => {
+                        handleFormValueChange(e.target.value, 'indexType');
+                      }}
+                    >
+                      {INDEX_TYPE_OPTIONS.map(v => (
+                        <MenuItem value={v.value} key={v.value}>
+                          {v.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
 
                 <div className={classes.dataItem}>
@@ -355,44 +367,43 @@ export default function SizingTool() {
                       <p className={classes.interpretation}>
                         {t('v3trans.sizingTool.labels.m')}
                       </p>
-                      <div>
-                        <TextField
-                          fullWidth
-                          error={form.nlist.showError}
-                          label="nlist"
-                          value={form.nlist.value}
-                          helperText={form.nlist.helpText}
-                          placeholder={form.nlist.placeholder}
-                          onChange={e => {
-                            handleFormValueChange(e.target.value, 'nlist');
-                          }}
-                        />
-                      </div>
+                      <TextField
+                        fullWidth
+                        error={form.nlist.showError}
+                        label="nlist"
+                        value={form.nlist.value}
+                        helperText={form.nlist.helpText}
+                        placeholder={form.nlist.placeholder}
+                        onChange={e => {
+                          handleFormValueChange(e.target.value, 'nlist');
+                        }}
+                      />
                     </>
                   )}
                 </div>
 
                 <div className={classes.dataItem}>
-                  <p className={clsx(classes.label, classes.shortMargin)}>
+                  <p className={classes.label}>
                     {t('v3trans.sizingTool.labels.segmentSize')}
                   </p>
-                  <p className={classes.interpretation}>
-                    {t('v3trans.sizingTool.labels.segment')}
-                  </p>
-                  <div>
-                    <Dropdown
-                      options={SEGMENT_SIZE_OPTIONS}
-                      onChange={data => {
-                        handleFormValueChange(data.value, 'segmentSize');
-                      }}
+                  <FormControl fullWidth>
+                    <InputLabel>
+                      {t('v3trans.sizingTool.labels.segment')}
+                    </InputLabel>
+                    <Select
                       value={form.segmentSize.value}
-                      placeholder="Segement"
-                      controlClassName={classes.dropdownController}
-                      menuClassName={classes.dropdownMenu}
-                      arrowOpen={openArrow}
-                      arrowClosed={openArrow}
-                    />
-                  </div>
+                      label={t('v3trans.sizingTool.labels.segment')}
+                      onChange={d => {
+                        handleFormValueChange(d.target.value, 'segmentSize');
+                      }}
+                    >
+                      {SEGMENT_SIZE_OPTIONS.map(v => (
+                        <MenuItem value={v.value} key={v.value}>
+                          {v.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
               </div>
             </div>
@@ -498,8 +509,8 @@ export default function SizingTool() {
             </div>
           </div>
         </div>
-      </main>
-    </Layout>
+      </Layout>
+    </main>
   );
 }
 

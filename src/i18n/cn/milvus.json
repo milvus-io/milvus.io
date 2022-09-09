@@ -834,6 +834,7 @@
         "dataSize": "Choose data size",
         "vector": "Number of vectors (Million)",
         "dimension": "Dimensions",
+        "index": "Index Type",
         "indexType": "Choose index type",
         "indexParam": "Choose index parameters",
         "m": "M (Maximum degree of the node)",

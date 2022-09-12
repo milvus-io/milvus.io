@@ -5,8 +5,6 @@ import Layout from '../../components/layout';
 import { useI18next } from 'gatsby-plugin-react-i18next';
 import * as classes from './sizingTool.module.less';
 import { InfoFilled, DownloadIcon } from '../../components/icons';
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 import SizingToolCard from '../../components/card/sizingToolCard';
 import clsx from 'clsx';
 import Slider from '@mui/material/Slider';
@@ -29,7 +27,6 @@ import {
   proxyCalculator,
   customYmlGenerator,
 } from '../../utils/sizingTool';
-import { ConstructionOutlined } from '@mui/icons-material';
 
 const INDEX_TYPE_OPTIONS = [
   {
@@ -67,8 +64,6 @@ const SEGMENT_SIZE_OPTIONS = [
 
 // one million
 const $1M = Math.pow(10, 6);
-/// one billion
-const $1B = Math.pow(10, 9);
 
 const defaultSizeContent = {
   size: 'Require more data',
@@ -172,8 +167,6 @@ export default function SizingTool() {
     }
   };
 
-  const openArrow = <span className={classes.arrowIcon}></span>;
-
   const calcResult = useMemo(() => {
     const { nb, d, indexType, nlist, m, segmentSize } = form;
 
@@ -252,12 +245,12 @@ export default function SizingTool() {
 
   return (
     <main className={classes.main}>
-      <Layout t={t}>
-        <Seo
-          lang={language}
-          title={t('v3trans.sizingTool.title')}
-          description=""
-        ></Seo>
+      <Seo
+        lang={language}
+        title={t('v3trans.sizingTool.title')}
+        description=""
+      />
+      <Layout t={t} darkMode={false}>
         <div className={classes.pageContainer}>
           <h1>{t('v3trans.sizingTool.title')}</h1>
           <div className={classes.note}>

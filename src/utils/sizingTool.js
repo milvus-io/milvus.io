@@ -188,11 +188,11 @@ export const queryNodeCalculator = memorySize => {
   }
 
   if (size >= 384) {
-    const scaleOut = Math.ceil(size / 32);
+    const scaleOut = Math.ceil(size / 64);
     return {
-      size: '8 core 32 GB',
+      size: '8 core 64 GB',
       cpu: 8,
-      memory: 32,
+      memory: 64,
       amount: scaleOut,
     };
   }

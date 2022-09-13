@@ -1,443 +1,511 @@
-import React, { useState, useEffect } from 'react';
-import Seo from '../../components/seo';
-import * as styles from './common-layout.module.less';
-import sizingToolLogo from '../../images/sizing-tool/milvusSizingTool.svg';
-import TextFiled from '../../components/textField';
-import CustomTable from '../../components/customTable';
-import TableColumn from '../../components/customTable/tableColumn';
-
+import React, { useState, useMemo } from 'react';
 import { graphql } from 'gatsby';
+import Seo from '../../components/seo';
 import Layout from '../../components/layout';
+import { useI18next } from 'gatsby-plugin-react-i18next';
+import * as classes from './sizingTool.module.less';
+import { InfoFilled, DownloadIcon } from '../../components/icons';
+import SizingToolCard from '../../components/card/sizingToolCard';
+import clsx from 'clsx';
+import Slider from '@mui/material/Slider';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 import {
-  computMilvusRecommonds,
-  formatSize,
-  formatVectors,
+  memorySizeCalculator,
+  rawFileSizeCalculator,
+  commonCoordCalculator,
+  unitBYTE2Any,
+  indexNodeCalculator,
+  queryNodeCalculator,
+  isBetween,
+  rootCoordCalculator,
+  dataNodeCalculator,
+  proxyCalculator,
+  customYmlGenerator,
 } from '../../utils/sizingTool';
-import { Link, useI18next } from 'gatsby-plugin-react-i18next';
 
-const [TITLE, DESCRIPTION] = [
-  'Milvus Sizing Tool',
-  'Discover the ideal vector indexing type for your application.',
+const INDEX_TYPE_OPTIONS = [
+  {
+    label: 'HNSW',
+    value: 'HNSW',
+  },
+  {
+    label: 'FLAT',
+    value: 'FLAT',
+  },
+  {
+    label: 'IVF_FLAT',
+    value: 'IVF_FLAT',
+  },
+  {
+    label: 'IVF_SQ8',
+    value: 'IVF_SQ8',
+  },
 ];
 
-const SizingTool = () => {
+const SEGMENT_SIZE_OPTIONS = [
+  {
+    value: '512',
+    label: '512MB',
+  },
+  {
+    value: '1024',
+    label: '1024MB',
+  },
+  {
+    value: '2048',
+    label: '2048MB',
+  },
+];
+
+// one million
+const $1M = Math.pow(10, 6);
+
+const defaultSizeContent = {
+  size: 'Require more data',
+  cpu: 0,
+  memory: 0,
+  amount: 0,
+};
+
+export default function SizingTool() {
   const { language, t } = useI18next();
 
-  const MHint = (
-    <div className={styles.mHint}>
-      <p>
-        <strong>CPU only:</strong> Milvus: m ≡ dim (mod m);
-      </p>
-      <br />
-      <p>
-        <strong>GPU enabled:</strong> Milvus: m ∈{'{'}1, 2, 3, 4, 8, 12, 16, 20,
-        24, 28, 32, 40, 48, 56, 64, 96{'}'}, and (dimension / m) ∈{'{'}1, 2, 3,
-        4, 6, 8, 10, 12, 16, 20, 24, 28, 32{'}'}.
-        <br />
-        (m x 1024) ≥<code> MaxSharedMemPerBlock</code> of your graphics card.
-      </p>
-    </div>
-  );
-
-  const [vectors, setVectors] = useState({
-    value: '',
-    showError: false,
-  });
-  const [dimensions, setDimensions] = useState({
-    value: '',
-    showError: false,
-  });
-  const [nlist, setNlist] = useState({
-    value: '',
-    showError: false,
-  });
-  const [m, setM] = useState({
-    value: '',
-    showError: false,
-  });
-  const [segmetFileSize, setsegmetFileSize] = useState({
-    value: '',
-    showError: false,
-  });
-  const [isInit, setIsInit] = useState(true);
-
-  const [firstTBody, setFirstTBody] = useState([
-    {
-      indexType: 'FLAT',
-      rowFileSize: '. . .',
-      memorySize: '. . .',
-      stableDiskSize: '. . .',
-    },
-    {
-      indexType: 'IVF_FLAT',
-      rowFileSize: '. . .',
-      memorySize: '. . .',
-      stableDiskSize: '. . .',
-    },
-    {
-      indexType: (
-        <>
-          IVF_SQ8
-          <br />
-          IVF_SQ8h
-        </>
-      ),
-      rowFileSize: '. . .',
-      memorySize: '. . .',
-      stableDiskSize: '. . .',
-    },
-    {
-      indexType: 'IVF_PQ',
-      rowFileSize: '. . .',
-      memorySize: '. . .',
-      stableDiskSize: '. . .',
-    },
-  ]);
-
-  const [secondTBody, setSecondTBody] = useState([
-    {
-      indexType: 'FLAT',
-      rowFileSize: '. . .',
-      memorySize: '. . .',
-      stableDiskSize: '. . .',
-    },
-    {
-      indexType: 'IVF_FLAT',
-      rowFileSize: '. . .',
-      memorySize: '. . .',
-      stableDiskSize: '. . .',
-    },
-  ]);
-
-  const onVectorChange = event => {
-    setIsInit(false);
-
-    const value = event.target.value;
-    const vector = Number(value);
-    const showError = !Number.isInteger(vector) || vector <= 0;
-
-    setVectors({
-      showError,
-      value,
-    });
-  };
-
-  const onDimensionsChange = event => {
-    setIsInit(false);
-
-    const value = event.target.value;
-    const dimension = Number(value);
-    const showError =
-      !Number.isInteger(dimension) || dimension < 0 || dimension > 1073741824;
-    setDimensions({
-      showError,
-      value,
-    });
-  };
-
-  const onNlistChange = event => {
-    setIsInit(false);
-
-    const value = event.target.value;
-    const nlist = Number(value);
-    const showError = !Number.isInteger(nlist) || nlist < 1 || nlist > 65536;
-    setNlist({
-      showError,
-      value,
-    });
-  };
-
-  const onMChange = event => {
-    setIsInit(false);
-
-    const value = event.target.value;
-
-    setM({
-      value,
-      showError: true,
-    });
-  };
-
-  const onMFocus = () => {
-    setM({
-      ...m,
-      showError: true,
-    });
-  };
-
-  const onMBlur = () => {
-    setM({
-      ...m,
+  const [form, setForm] = useState({
+    // number of vectors
+    nb: {
+      value: 1,
       showError: false,
-    });
-  };
-
-  const onFileSizeChange = e => {
-    const value = e.target.value;
-    const showError = value < 0 || value > 131072;
-    setsegmetFileSize({
-      value,
-      showError,
-    });
-  };
-
-  const getTableCellContent = value => {
-    if (isInit) {
-      return '. . .';
-    }
-
-    if (isNaN(value)) {
-      return <span className={styles.hint}>Missing required parameters</span>;
-    }
-
-    return formatSize(value);
-  };
-
-  const getVectorTitle = () => {
-    const value = vectors.value;
-    const vectorNumber = formatVectors(value).toUpperCase();
-    return Number(value) === 1 ? (
-      <span>
-        for <span>1</span> vector{' '}
-      </span>
-    ) : (
-      <span>
-        for <span>{vectorNumber}</span> vectors
-      </span>
-    );
-  };
-
-  useEffect(
-    () => {
-      if (
-        !vectors.showError &&
-        !dimensions.showError &&
-        !nlist.showError &&
-        !segmetFileSize.showError
-      ) {
-        const milvusRecommends = computMilvusRecommonds(
-          vectors.value ? Number(vectors.value) : NaN,
-          dimensions.value ? Number(dimensions.value) : NaN,
-          nlist.value ? Number(nlist.value) : NaN,
-          m.value ? Number(m.value) : NaN,
-          segmetFileSize.value
-            ? Number(segmetFileSize.value) * 1024 * 1024
-            : NaN
-        );
-
-        setFirstTBody([
-          {
-            indexType: 'FLAT',
-            rowFileSize: getTableCellContent(milvusRecommends.rawFileSize.flat),
-            memorySize: getTableCellContent(milvusRecommends.memorySize.flat),
-            stableDiskSize: getTableCellContent(milvusRecommends.diskSize.flat),
-          },
-          {
-            indexType: 'IVF_FLAT',
-            rowFileSize: getTableCellContent(
-              milvusRecommends.rawFileSize['ivf_flat']
-            ),
-            memorySize: getTableCellContent(
-              milvusRecommends.memorySize['ivf_flat']
-            ),
-            stableDiskSize: getTableCellContent(
-              milvusRecommends.diskSize['ivf_flat']
-            ),
-          },
-          {
-            indexType: (
-              <>
-                IVF_SQ8
-                <br />
-                IVF_SQ8h
-              </>
-            ),
-            rowFileSize: getTableCellContent(
-              milvusRecommends.rawFileSize['ivf_sq8']
-            ),
-            memorySize: getTableCellContent(
-              milvusRecommends.memorySize['ivf_sq8']
-            ),
-            stableDiskSize: getTableCellContent(
-              milvusRecommends.diskSize['ivf_sq8']
-            ),
-          },
-          {
-            indexType: 'IVF_PQ',
-            rowFileSize: getTableCellContent(
-              milvusRecommends.rawFileSize['ivf_pq']
-            ),
-            memorySize: getTableCellContent(
-              milvusRecommends.memorySize['ivf_pq']
-            ),
-            stableDiskSize: getTableCellContent(
-              milvusRecommends.diskSize['ivf_pq']
-            ),
-          },
-        ]);
-
-        setSecondTBody([
-          {
-            indexType: 'FLAT',
-            rowFileSize: getTableCellContent(
-              milvusRecommends.byteRawFileSize.flat
-            ),
-            memorySize: getTableCellContent(
-              milvusRecommends.byteMemorySize.flat
-            ),
-            stableDiskSize: getTableCellContent(
-              milvusRecommends.byteDiskSize.flat
-            ),
-          },
-          {
-            indexType: 'IVF_FLAT',
-            rowFileSize: getTableCellContent(
-              milvusRecommends.byteRawFileSize['ivf_flat']
-            ),
-            memorySize: getTableCellContent(
-              milvusRecommends.byteMemorySize['ivf_flat']
-            ),
-            stableDiskSize: getTableCellContent(
-              milvusRecommends.byteDiskSize['ivf_flat']
-            ),
-          },
-        ]);
-      }
+      helpText: '',
+      placeholder: `[1 - 10000]`,
+      validation: {
+        validate: isBetween,
+        params: { min: 1, max: 10000 },
+        errorMsg: 'Out of limit',
+      },
     },
-    // eslint-disable-next-line
-    [
-      vectors.value,
-      dimensions.value,
-      nlist.value,
-      m.value,
-      segmetFileSize.value,
-    ]
-  );
+    // dimensions
+    d: {
+      value: 128,
+      showError: false,
+      helpText: '',
+      placeholder: '[1 - 10000]',
+      validation: {
+        validate: isBetween,
+        params: { min: 1, max: 10000 },
+        errorMsg: 'Out of limit',
+      },
+    },
+    // index type
+    indexType: {
+      value: INDEX_TYPE_OPTIONS[0].value,
+      showError: false,
+    },
+    // index parameters
+    m: {
+      value: 8,
+      showError: false,
+    },
+    // ivf parameters
+    nlist: {
+      value: 1024,
+      showError: false,
+      helpText: '',
+      placeholder: '[1 - 10000]',
+      validation: {
+        validate: isBetween,
+        params: { min: 1, max: 10000 },
+        errorMsg: 'Out of limit',
+      },
+    },
+    // segment size
+    segmentSize: {
+      value: SEGMENT_SIZE_OPTIONS[0].value,
+      showError: false,
+    },
+  });
+
+  const handleFormValueChange = (val, key) => {
+    const { validation } = form[key];
+
+    if (!validation) {
+      setForm(v => ({
+        ...v,
+        [key]: {
+          ...v[key],
+          value: val,
+        },
+      }));
+      return;
+    }
+
+    const isValidated = validation.validate(val, validation.params);
+    if (isValidated) {
+      setForm(v => ({
+        ...v,
+        [key]: {
+          ...v[key],
+          value: val,
+          showError: false,
+          helpText: '',
+        },
+      }));
+    } else {
+      setForm(v => ({
+        ...v,
+        [key]: {
+          ...v[key],
+          value: val,
+          showError: true,
+          helpText: validation.errorMsg,
+        },
+      }));
+    }
+  };
+
+  const calcResult = useMemo(() => {
+    const { nb, d, indexType, nlist, m, segmentSize } = form;
+
+    const nbVal = Number(nb.value) * $1M || 0;
+    const dVal = Number(d.value) || 0;
+    const nlistVal = Number(nlist.value) || 0;
+    const mVal = Number(m.value) || 0;
+    const sVal = Number(segmentSize.value) || 0;
+
+    const isErrorParameters = Object.values(form).some(v => v.showError);
+
+    if (isErrorParameters) {
+      return {
+        memorySize: { size: 0, unit: 'B' },
+        rawFileSize: { size: 0, unit: 'B' },
+        rootCoord: defaultSizeContent,
+        dataNode: defaultSizeContent,
+        indexNode: defaultSizeContent,
+        proxy: defaultSizeContent,
+        queryNode: defaultSizeContent,
+        commonCoord: defaultSizeContent,
+      };
+    }
+
+    const { memorySize, theorySize } = memorySizeCalculator({
+      nb: nbVal,
+      d: dVal,
+      nlist: nlistVal,
+      M: mVal,
+      indexType: indexType.value,
+    });
+
+    const rawFileSize = rawFileSizeCalculator({ d: dVal, nb: nbVal });
+
+    const rootCoord = rootCoordCalculator(nbVal);
+
+    const dataNode = dataNodeCalculator(nbVal);
+
+    const indexNode = indexNodeCalculator(theorySize, sVal);
+
+    const proxy = proxyCalculator(memorySize);
+
+    const queryNode = queryNodeCalculator(memorySize);
+
+    const commonCoord = commonCoordCalculator(memorySize);
+
+    return {
+      memorySize: unitBYTE2Any(memorySize),
+      rawFileSize: unitBYTE2Any(rawFileSize),
+      rootCoord,
+      dataNode,
+      indexNode,
+      proxy,
+      queryNode,
+      commonCoord,
+    };
+  }, [form]);
+
+  const handleDownloadYmlFile = () => {
+    if (typeof window !== 'undefined') {
+      const content = customYmlGenerator({
+        ...calcResult,
+      });
+      const blob = new Blob([content], {
+        type: 'text/plain',
+      });
+
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'customConfig.yml';
+      a.click();
+    }
+  };
 
   return (
-    <Layout t={t}>
-      <Seo title={TITLE} lang={language} description={DESCRIPTION} />
-      <main className={`${styles.pageContainer} ${styles.sizingToolContainer}`}>
-        <section className={styles.header}>
-          <Link to="/">
-            <img src={sizingToolLogo} alt="sizing tool header" />
-          </Link>
-        </section>
-
-        <section className={styles.content}>
-          <div className={styles.leftSection}>
-            <h2>Requirements</h2>
-
-            <form action="" className={styles.form}>
-              {/* Number of vectors */}
-              <TextFiled
-                isRequired={true}
-                label="Number of vectors"
-                value={vectors.value}
-                helpMsg="must > 0"
-                showError={vectors.showError}
-                errorMsg={
-                  <span>
-                    Number of vectors should be an integer greater than 0
-                  </span>
-                }
-                onChange={onVectorChange}
-              />
-              {/* Dimensions */}
-              <TextFiled
-                isRequired={true}
-                label="Dimensions"
-                value={dimensions.value}
-                helpMsg="[0, 1073741824]"
-                showError={dimensions.showError}
-                errorMsg={
-                  <span>
-                    Dimensions should be an integer between [0, 1073741824]
-                  </span>
-                }
-                onChange={onDimensionsChange}
-              />
-
-              {/* nlist */}
-              <TextFiled
-                label="nlist"
-                value={nlist.value}
-                helpMsg="[1, 65536]"
-                showError={nlist.showError}
-                errorMsg={
-                  <span>nList should be an integer between [1, 65536]</span>
-                }
-                onChange={onNlistChange}
-              />
-              {/* M */}
-              <TextFiled
-                type="number"
-                label="m"
-                value={m.value}
-                helpMsg=" "
-                showError={m.showError}
-                errorMsg={MHint}
-                onChange={onMChange}
-                onFocus={onMFocus}
-                onBlur={onMBlur}
-              />
-              {/* Segment file size */}
-              <TextFiled
-                type="number"
-                label="Segment file size"
-                value={segmetFileSize.value}
-                helpMsg="must > 0"
-                showError={segmetFileSize.showError}
-                errorMsg={
-                  <span>
-                    Size of segment file should be greater than 0 and less than
-                    131072 MB
-                  </span>
-                }
-                onChange={onFileSizeChange}
-              />
-            </form>
+    <main className={classes.main}>
+      <Seo
+        lang={language}
+        title={t('v3trans.sizingTool.title')}
+        description=""
+      />
+      <Layout t={t} darkMode={false}>
+        <div className={classes.pageContainer}>
+          <h1>{t('v3trans.sizingTool.title')}</h1>
+          <div className={classes.note}>
+            <span className={classes.iconWrapper}>
+              <InfoFilled />
+            </span>
+            <h2>{t('v3trans.sizingTool.subTitle')}</h2>
           </div>
+          <div className={classes.contentWrapper}>
+            <div className={classes.leftPart}>
+              <div className={classes.dataSize}>
+                <h3>{t('v3trans.sizingTool.labels.dataSize')}</h3>
 
-          <div className={styles.rightSection}>
-            <h2>Recommendation {vectors.value !== '' && getVectorTitle()}</h2>
+                <div className={classes.dataItem}>
+                  <p className={classes.label}>
+                    {t('v3trans.sizingTool.labels.vector')}
+                  </p>
+                  <TextField
+                    fullWidth
+                    error={form.nb.showError}
+                    label={t('v3trans.sizingTool.labels.vector')}
+                    value={form.nb.value}
+                    helperText={form.nb.helpText}
+                    placeholder={form.nb.placeholder}
+                    onChange={e => {
+                      handleFormValueChange(e.target.value, 'nb');
+                    }}
+                  />
+                </div>
 
-            <div className={styles.tableWrapper}>
-              <h2>Float</h2>
-              <CustomTable data={firstTBody}>
-                <TableColumn
-                  prop="indexType"
-                  label={
-                    <a href="https://milvus.io/docs/index.md#CPU">Index Type</a>
-                  }
-                />
-                <TableColumn prop="rowFileSize" label="Raw File Size" />
-                <TableColumn prop="memorySize" label="Memory Size" />
-                <TableColumn prop="stableDiskSize" label="Stable Disk Size" />
-              </CustomTable>
+                <div className={classes.dataItem}>
+                  <p className={classes.label}>
+                    {t('v3trans.sizingTool.labels.dimension')}
+                  </p>
+                  <TextField
+                    fullWidth
+                    error={form.d.showError}
+                    label={t('v3trans.sizingTool.labels.dimension')}
+                    value={form.d.value}
+                    helperText={form.d.helpText}
+                    placeholder={form.d.placeholder}
+                    onChange={e => {
+                      handleFormValueChange(e.target.value, 'd');
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className={classes.indexType}>
+                <h3>{t('v3trans.sizingTool.labels.indexType')}</h3>
+
+                <div className={classes.dataItem}>
+                  <FormControl fullWidth>
+                    <InputLabel>
+                      {t('v3trans.sizingTool.labels.index')}
+                    </InputLabel>
+                    <Select
+                      value={form.indexType.value}
+                      label={t('v3trans.sizingTool.labels.index')}
+                      onChange={e => {
+                        handleFormValueChange(e.target.value, 'indexType');
+                      }}
+                    >
+                      {INDEX_TYPE_OPTIONS.map(v => (
+                        <MenuItem value={v.value} key={v.value}>
+                          {v.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+
+                <div className={classes.dataItem}>
+                  {form.indexType.value === 'FLAT' ? null : form.indexType
+                      .value === 'HNSW' ? (
+                    <>
+                      <p className={clsx(classes.label, classes.shortMargin)}>
+                        {t('v3trans.sizingTool.labels.indexParam')}
+                      </p>
+                      <p
+                        className={clsx(
+                          classes.interpretation,
+                          classes.largeMargin
+                        )}
+                      >
+                        {t('v3trans.sizingTool.labels.m')}
+                      </p>
+                      <div className={classes.sliderWrapper}>
+                        <Slider
+                          value={form.m.value}
+                          step={2}
+                          min={4}
+                          max={64}
+                          valueLabelDisplay="on"
+                          onChange={e => {
+                            handleFormValueChange(e.target.value, 'm');
+                          }}
+                          marks={[
+                            { label: '4', value: 4 },
+                            { label: '64', value: 64 },
+                          ]}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className={classes.interpretation}>
+                        {t('v3trans.sizingTool.labels.m')}
+                      </p>
+                      <TextField
+                        fullWidth
+                        error={form.nlist.showError}
+                        label="nlist"
+                        value={form.nlist.value}
+                        helperText={form.nlist.helpText}
+                        placeholder={form.nlist.placeholder}
+                        onChange={e => {
+                          handleFormValueChange(e.target.value, 'nlist');
+                        }}
+                      />
+                    </>
+                  )}
+                </div>
+
+                <div className={classes.dataItem}>
+                  <p className={classes.label}>
+                    {t('v3trans.sizingTool.labels.segmentSize')}
+                  </p>
+                  <FormControl fullWidth>
+                    <InputLabel>
+                      {t('v3trans.sizingTool.labels.segment')}
+                    </InputLabel>
+                    <Select
+                      value={form.segmentSize.value}
+                      label={t('v3trans.sizingTool.labels.segment')}
+                      onChange={d => {
+                        handleFormValueChange(d.target.value, 'segmentSize');
+                      }}
+                    >
+                      {SEGMENT_SIZE_OPTIONS.map(v => (
+                        <MenuItem value={v.value} key={v.value}>
+                          {v.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
             </div>
+            <div className={classes.rightPart}>
+              <div className={classes.capacity}>
+                <h3>{t('v3trans.sizingTool.capacity')}</h3>
 
-            <div className={styles.tableWrapper}>
-              <h2>Bytes</h2>
-              <CustomTable data={secondTBody}>
-                <TableColumn
-                  prop="indexType"
-                  label={
-                    <a href="https://milvus.io/docs/index.md#CPU">Index Type</a>
-                  }
-                />
-                <TableColumn prop="rowFileSize" label="Raw File Size" />
-                <TableColumn prop="memorySize" label="Memory Size" />
-                <TableColumn prop="stableDiskSize" label="Stable Disk Size" />
-              </CustomTable>
+                <div className={classes.cardsWrapper}>
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.memory')}
+                    content={`${calcResult.memorySize.size} ${calcResult.memorySize.unit}`}
+                    classes={{
+                      contentClassName: classes.contentClassName,
+                    }}
+                  />
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.fileSize')}
+                    content={`${calcResult.rawFileSize.size} ${calcResult.rawFileSize.unit}`}
+                    classes={{
+                      contentClassName: classes.contentClassName,
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className={classes.cluster}>
+                <h3>{t('v3trans.sizingTool.setups.title')}</h3>
+
+                <div className={classes.cardsWrapper}>
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.rootCoord.title')}
+                    subTitle={calcResult.rootCoord.size}
+                    content={calcResult.rootCoord.amount}
+                    showTooltip
+                    tooltip={t('v3trans.sizingTool.setups.rootCoord.tooltip')}
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.indexCoord.title')}
+                    tooltip={t('v3trans.sizingTool.setups.indexCoord.tooltip')}
+                    showTooltip
+                    subTitle={calcResult.commonCoord.size}
+                    content={calcResult.commonCoord.amount}
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.queryCoord.title')}
+                    tooltip={t('v3trans.sizingTool.setups.queryCoord.tooltip')}
+                    showTooltip
+                    subTitle={calcResult.commonCoord.size}
+                    content={calcResult.commonCoord.amount}
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.dataCoord.title')}
+                    tooltip={t('v3trans.sizingTool.setups.dataCoord.tooltip')}
+                    showTooltip
+                    subTitle={calcResult.commonCoord.size}
+                    content={calcResult.commonCoord.amount}
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.proxy.title')}
+                    tooltip={t('v3trans.sizingTool.setups.proxy.tooltip')}
+                    subTitle={calcResult.proxy.size}
+                    content={calcResult.proxy.amount}
+                    showTooltip
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.queryNode.title')}
+                    tooltip={t('v3trans.sizingTool.setups.queryNode.tooltip')}
+                    subTitle={calcResult.queryNode.size}
+                    content={calcResult.queryNode.amount}
+                    showTooltip
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.dataNode.title')}
+                    tooltip={t('v3trans.sizingTool.setups.dataNode.tooltip')}
+                    subTitle={calcResult.dataNode.size}
+                    content={calcResult.dataNode.amount}
+                    showTooltip
+                  />
+
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.indexNode.title')}
+                    tooltip={t('v3trans.sizingTool.setups.indexNode.tooltip')}
+                    subTitle={calcResult.indexNode.size}
+                    content={calcResult.indexNode.amount}
+                    showTooltip
+                  />
+                </div>
+              </div>
+
+              <button
+                className={classes.downloadBtn}
+                onClick={handleDownloadYmlFile}
+              >
+                <DownloadIcon />
+                <span>{t('v3trans.sizingTool.button')}</span>
+              </button>
             </div>
           </div>
-        </section>
-      </main>
-    </Layout>
+        </div>
+      </Layout>
+    </main>
   );
-};
+}
 
 export const query = graphql`
   query ($language: String!) {
@@ -452,5 +520,3 @@ export const query = graphql`
     }
   }
 `;
-
-export default SizingTool;

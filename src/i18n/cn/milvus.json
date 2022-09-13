@@ -828,7 +828,7 @@
     },
     "sizingTool": {
       "title": "Milvus Sizing Tool",
-      "subTitle": "Note: all the recommendations are calculated based our lab data, you should adjust it with your own testing before deploying to production.",
+      "subTitle": "Note: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production.",
 
       "labels": {
         "dataSize": "Choose data size",

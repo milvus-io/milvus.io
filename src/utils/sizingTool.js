@@ -280,7 +280,6 @@ export const commonCoordCalculator = memorySize => {
 };
 
 export const isBetween = (value, { min, max }) => {
-  console.log(value >= min, value <= max);
   return value >= min && value <= max;
 };
 

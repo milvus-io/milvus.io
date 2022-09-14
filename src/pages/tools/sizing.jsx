@@ -81,11 +81,11 @@ export default function SizingTool() {
       value: 1,
       showError: false,
       helpText: '',
-      placeholder: `[1 - 10000]`,
+      placeholder: `[1, 10000]`,
       validation: {
         validate: isBetween,
         params: { min: 1, max: 10000 },
-        errorMsg: 'Out of limit',
+        errorMsg: 'Number of vectors should be an integer between [1, 10000]',
       },
     },
     // dimensions
@@ -93,11 +93,11 @@ export default function SizingTool() {
       value: 128,
       showError: false,
       helpText: '',
-      placeholder: '[1 - 10000]',
+      placeholder: '[1, 10000]',
       validation: {
         validate: isBetween,
         params: { min: 1, max: 10000 },
-        errorMsg: 'Out of limit',
+        errorMsg: 'Dimensions should be an integer between [1, 10000]',
       },
     },
     // index type
@@ -115,11 +115,11 @@ export default function SizingTool() {
       value: 1024,
       showError: false,
       helpText: '',
-      placeholder: '[1 - 10000]',
+      placeholder: '[1, 10000]',
       validation: {
         validate: isBetween,
         params: { min: 1, max: 10000 },
-        errorMsg: 'Out of limit',
+        errorMsg: 'nList should be an integer between [1, 10000]',
       },
     },
     // segment size
@@ -167,6 +167,21 @@ export default function SizingTool() {
     }
   };
 
+  const hanldeRemovePromot = key => {
+    if (!form[key].showError) {
+      return;
+    }
+    setForm(v => ({
+      ...v,
+      [key]: {
+        ...v[key],
+        value: '',
+        showError: false,
+        helpText: '',
+      },
+    }));
+  };
+
   const calcResult = useMemo(() => {
     const { nb, d, indexType, nlist, m, segmentSize } = form;
 
@@ -176,7 +191,9 @@ export default function SizingTool() {
     const mVal = Number(m.value) || 0;
     const sVal = Number(segmentSize.value) || 0;
 
-    const isErrorParameters = Object.values(form).some(v => v.showError);
+    const isErrorParameters = Object.values(form).some(
+      v => v.showError || v.value === ''
+    );
 
     if (isErrorParameters) {
       return {
@@ -275,6 +292,7 @@ export default function SizingTool() {
                     value={form.nb.value}
                     helperText={form.nb.helpText}
                     placeholder={form.nb.placeholder}
+                    onFocus={() => hanldeRemovePromot('nb')}
                     onChange={e => {
                       handleFormValueChange(e.target.value, 'nb');
                     }}
@@ -292,6 +310,7 @@ export default function SizingTool() {
                     value={form.d.value}
                     helperText={form.d.helpText}
                     placeholder={form.d.placeholder}
+                    onFocus={() => hanldeRemovePromot('d')}
                     onChange={e => {
                       handleFormValueChange(e.target.value, 'd');
                     }}
@@ -367,6 +386,7 @@ export default function SizingTool() {
                         value={form.nlist.value}
                         helperText={form.nlist.helpText}
                         placeholder={form.nlist.placeholder}
+                        onFocus={() => hanldeRemovePromot('nlist')}
                         onChange={e => {
                           handleFormValueChange(e.target.value, 'nlist');
                         }}

@@ -108,6 +108,7 @@ export const generateAllDocsPaths = (widthContent = false) => {
   ];
   const docPaths = paths.map(v => {
     const { version, enPath, cnPath, cnList, enList } = v;
+
     walkFiels(enPath, ignorePaths, enList);
     walkFiels(cnPath, ignorePaths, cnList);
     const cnDocPaths = cnList.map(v => {
@@ -231,41 +232,72 @@ export const getCurVersionHomeMd = (version, lang) => {
   return content;
 };
 
-// data used in api pages. lang: 'go' | 'java' | 'node' | 'pymilvus'
-export const generateApiData = (lang = 'pymilvus', version) => {
-  // {id: xxx.md, content: xxxxx}[]
-  let contentList = [];
+export const generateApiData = () => {
   const dir = join(DOC_DIR, 'API_Reference');
-  const paths = fs.readdirSync(dir);
+  const availabelVersionsRegx = /^v2/;
 
-  const curLangFolderName = paths.filter(v => v.includes(lang))[0];
-  const curLangPath = join(dir, curLangFolderName);
+  let dataList = [];
+  let routers = [];
+  let articles = [];
 
-  const versions = fs.readdirSync(curLangPath);
+  fs.readdirSync(dir).forEach(lang => {
+    const versions = fs.readdirSync(join(dir, lang));
+    versions.forEach(version => {
+      const list = [];
 
-  // version param or newest version
-  const curVerison = versions.includes(version)
-    ? version
-    : versions.reverse().slice(0, 1)[0];
+      const filePath = join(dir, `${lang}/${version}`);
+      walkThroughApiFiels(filePath, [], list);
+      dataList.push({
+        language: lang,
+        version: version,
+        docList: list,
+        versions,
+      });
+    });
+  });
 
-  const curVersionPath = join(curLangPath, curVerison);
+  dataList.forEach(v => {
+    const { docList, version, language } = v;
 
-  // data: {id: xxx.md, label: xxx, children: []}[]
-  const data = walkApiFiels(curVersionPath, contentList);
+    docList.forEach(doc => {
+      routers.push({
+        params: {
+          slug: doc.id,
+          version,
+          language,
+        },
+      });
 
+      articles.push({
+        id: doc.id,
+        version,
+        language,
+        content: doc.content,
+        versions: v.versions,
+      });
+    });
+  });
   return {
-    versions,
-    curVerison,
-    menuList: data,
-    contentList: contentList,
+    routers,
+    articles,
   };
 };
 
-export const generateApiRouters = () => {
-  const dir = join(DOC_DIR, 'API_Reference');
-  const routers = walkFiles2(dir, [], []);
-  console.log(routers);
-  return routers;
+const generateApiMenus = (language, version) => {
+  const dir = join(DOC_DIR, `API_Reference/${language}/${version}`);
+  const menus = walkApiFiels(dir);
+
+  return formatMenus(menus);
+};
+
+const generateCurApiDocContent = (language, version, slug) => {
+  const { articles } = generateApiData();
+
+  const article = articles.find(
+    v => v.id === slug && v.language === language && v.version === version
+  );
+
+  return article;
 };
 
 // data used in community pages. lang: 'en' | 'cn'
@@ -405,8 +437,7 @@ export function walkFiels(path, ignorePaths, list = []) {
   });
 }
 
-export function walkFiles2(path, ignorePaths, list = [], withContent = false) {
-  console.log('withContent--', withContent);
+export function walkThroughApiFiels(path, ignorePaths, list = []) {
   const paths = fs.readdirSync(path);
 
   paths.forEach(subPath => {
@@ -419,19 +450,20 @@ export function walkFiles2(path, ignorePaths, list = [], withContent = false) {
       } else {
         const file = fs.readFileSync(filePath, 'utf-8');
         const { content } = matter(file);
-        data = withContent
-          ? {
-              id: subPath,
-            }
-          : {
-              id: subPath,
-            };
 
-        console.log(data);
-        list.push(null);
+        list.push({
+          id: subPath,
+          content,
+          editPath: subPath,
+        });
       }
     }
   });
-
-  return list;
 }
+
+export const api_reference = {
+  availabelVersionsRegx: /^v2/,
+  getContent: generateCurApiDocContent,
+  getMenus: generateApiMenus,
+  getApiData: generateApiData,
+};

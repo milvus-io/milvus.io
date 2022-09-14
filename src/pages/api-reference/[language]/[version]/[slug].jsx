@@ -11,6 +11,7 @@ import Footer from '../../../../components/footer';
 // import { useOpenedStatus } from '../hooks';
 import { markdownToHtml } from '../../../../utils/common';
 import { recursionUpdateTree } from '../../../../utils/docUtils';
+import * as classes from '../../../../styles/docHome.module.less';
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -150,12 +151,14 @@ export default function Template(props) {
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <div className={'doc-temp-container'}>
-        <MenuTree
-          tree={menuTree}
-          onNodeClick={handleNodeClick}
-          className={''}
-          version={version}
-        />
+        <div className={classes.menuContainer}>
+          <MenuTree
+            tree={menuTree}
+            onNodeClick={handleNodeClick}
+            className={classes.docMenu}
+            version={version}
+          />
+        </div>
         <div
           className={clsx('doc-right-container', {
             [`is-opened`]: isOpened,

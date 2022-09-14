@@ -120,7 +120,6 @@ export const getStaticProps = async context => {
 
   const { versions } = generateAvailableDocVersions();
   const md = getCurVersionHomeMd(version, locale);
-  const apiMenus = generateApiData('pymilvus');
   const docMenus = generateCurVersionMenu(version, locale);
   const data = generateDocsData();
   const { tree } = await markdownToHtml(md, {

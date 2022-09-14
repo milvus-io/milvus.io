@@ -20,6 +20,29 @@ const DIR_TYPE_ENUM = {
   DOC: 'doc',
 };
 
+const API_LANGUAGES = [
+  {
+    id: 'pymilvus',
+    label: 'Python',
+    externalLink: '/api-reference/pymilvus/v2.1.1/About.md',
+  },
+  {
+    id: 'milvus-sdk-java',
+    label: 'Java',
+    externalLink: '/api-reference/java/v2.1.0/About.md',
+  },
+  {
+    label: 'Go',
+    id: 'milvus-sdk-go',
+    externalLink: '/api-reference/go/v2.1.1/About.md',
+  },
+  {
+    label: 'Node',
+    id: 'milvus-sdk-node',
+    externalLink: '/api-reference/node/v2.1.2/About.md',
+  },
+];
+
 /**
  * get current version and lang doc directory or menu structure file
  * @param basePath
@@ -39,16 +62,6 @@ const getDirByType = (basePath, lang = 'en', type, version) => {
     [DIR_TYPE_ENUM.MENU]: `${currentVersion}/site/${lang}/menuStructure/${lang}.json`,
   };
   return join(basePath, filePathMap[type]);
-};
-
-const generateMenu = dir => {
-  try {
-    const { menuList } = JSON.parse(fs.readFileSync(dir, 'utf-8'));
-
-    return formatMenus(menuList);
-  } catch (err) {
-    throw err;
-  }
 };
 
 // get list of all doc info without content
@@ -81,12 +94,6 @@ const generateDocsInfo = (dirPath, version, lang, widthContent = false) => {
       }
     })
     .flat(Infinity);
-};
-
-export const generateCurVersionMenuList = (lang = 'en', version = 'v2.1.x') => {
-  const menuDir = getDirByType(DOC_DIR, lang, DIR_TYPE_ENUM.MENU, version);
-  const menus = generateMenu(menuDir);
-  return menus;
 };
 
 // generate all docs paths of available versions
@@ -190,7 +197,15 @@ export const generateCurVersionMenu = (version, lang) => {
   try {
     const { menuList } = JSON.parse(fs.readFileSync(path, 'utf-8'));
 
-    return formatMenus(menuList);
+    return formatMenus([
+      ...menuList,
+      {
+        id: 'api-reference',
+        label: 'Api reference',
+        isMenu: true,
+        children: API_LANGUAGES,
+      },
+    ]);
   } catch (err) {
     throw err;
   }
@@ -200,9 +215,10 @@ export const generateCurVersionMenu = (version, lang) => {
 export const generateAvailableDocVersions = () => {
   const docDir = DOC_DIR;
   const availabelVersions = ['v0.x', 'v1', 'v2'];
+  const versionRegx = /^v\d/;
 
   const docVersions = fs.readdirSync(docDir).filter(v => {
-    return availabelVersions.some(name => v.includes(name));
+    return versionRegx.test(v);
   });
 
   const newestVersion = docVersions.slice().reverse().shift();

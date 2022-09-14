@@ -95,7 +95,7 @@ export default function MenuTreeGroup(props) {
             <Triangle />
           </span>
           {href ? (
-            <Link href={`/doc/${href}`}>
+            <Link href={`/docs/${version}/${href}`}>
               <a>{label}</a>
             </Link>
           ) : (

@@ -169,15 +169,6 @@
     .rightPart {
       flex: 1;
 
-      @media @tablet {
-        max-width: 628px;
-      }
-
-      @media @phone {
-        width: 352px;
-        margin: 0 auto;
-      }
-
       .contentClassName {
         color: #1493cc;
         font-weight: 700;
@@ -202,6 +193,10 @@
           grid-template-columns: repeat(4, 1fr);
           column-gap: 20px;
           row-gap: 20px;
+
+          @media @tablet {
+            grid-template-columns: repeat(3, 1fr);
+          }
 
           @media @phone {
             grid-template-columns: repeat(2, 1fr);

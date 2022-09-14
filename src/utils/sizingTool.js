@@ -187,12 +187,22 @@ export const queryNodeCalculator = memorySize => {
     };
   }
 
-  if (size >= 384) {
+  if (size >= 384 && size < 4000) {
     const scaleOut = Math.ceil(size / 64);
     return {
       size: '8 core 64 GB',
       cpu: 8,
       memory: 64,
+      amount: scaleOut,
+    };
+  }
+
+  if (size >= 4000) {
+    const scaleOut = Math.ceil(size / 128);
+    return {
+      size: '16 core 128 GB',
+      cpu: 16,
+      memory: 128,
       amount: scaleOut,
     };
   }
@@ -214,7 +224,7 @@ export const rootCoordCalculator = nb => {
         size: '2 core 4 GB',
         cpu: 2,
         memory: 4,
-        amount: 2,
+        amount: 1,
       };
 };
 

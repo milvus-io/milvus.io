@@ -12,6 +12,7 @@ import Footer from '../../../../components/footer';
 import { markdownToHtml } from '../../../../utils/common';
 import { recursionUpdateTree } from '../../../../utils/docUtils';
 import * as classes from '../../../../styles/docHome.module.less';
+import VersionSelector from '../../../../components/versionSelector';
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -152,6 +153,12 @@ export default function Template(props) {
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <div className={'doc-temp-container'}>
         <div className={classes.menuContainer}>
+          <VersionSelector
+            versions={versions}
+            curVersion={version}
+            programLang={category}
+            homeLabel="Home"
+          />
           <MenuTree
             tree={menuTree}
             onNodeClick={handleNodeClick}
@@ -199,26 +206,22 @@ export const getStaticProps = async ({
   locale,
   params: { language, version, slug },
 }) => {
+  console.log();
   const menus = api_reference.getMenus(language, version);
   const doc = api_reference.getContent(language, version, slug);
-  let content = '';
+  const { versions } = api_reference.getVersions(language);
 
-  if (slug.includes('.md')) {
-    const { tree } = await markdownToHtml(doc.content);
-    content = tree;
-  } else {
-    content = doc.content;
-  }
+  const { tree } = await markdownToHtml(doc.content);
 
   return {
     props: {
-      doc: content,
+      doc: tree,
       name: slug,
       menus,
       version,
       locale,
       category: language,
-      versions: doc.versions,
+      versions: versions,
     },
   };
 };

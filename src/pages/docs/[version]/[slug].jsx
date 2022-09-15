@@ -1,6 +1,5 @@
 import {
   generateAvailableDocVersions,
-  generateApiData,
   generateCurVersionMenu,
   generateCurDocInfo,
   generateAllDocsPaths,
@@ -145,7 +144,6 @@ export const getStaticProps = async context => {
     editPath,
     data: frontmatter,
   } = generateCurDocInfo(slug, version, locale);
-  const apiMenus = generateApiData('pymilvus');
   const docMenus = generateCurVersionMenu(version, locale);
   const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
     content,

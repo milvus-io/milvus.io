@@ -1,11 +1,17 @@
 import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
-import { formatFileName, formatMenus, getMenuInfoById } from './docUtils';
+import {
+  formatFileName,
+  formatMenus,
+  getMenuInfoById,
+  getNewestVersionTool,
+} from './docUtils';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 // constants
 const DOC_DIR = join(process.cwd(), 'src/docs');
-const VERSION_REGEX = /^v[0-9].*/;
+// const VERSION_REGX = /^v[0-9].*/;
 const IGNORE_FILES = [
   'index.md',
   'README.md',
@@ -20,28 +26,13 @@ const DIR_TYPE_ENUM = {
   DOC: 'doc',
 };
 
-const API_LANGUAGES = [
-  {
-    id: 'pymilvus',
-    label: 'Python',
-    externalLink: '/api-reference/pymilvus/v2.1.1/About.md',
-  },
-  {
-    id: 'milvus-sdk-java',
-    label: 'Java',
-    externalLink: '/api-reference/java/v2.1.0/About.md',
-  },
-  {
-    label: 'Go',
-    id: 'milvus-sdk-go',
-    externalLink: '/api-reference/go/v2.1.1/About.md',
-  },
-  {
-    label: 'Node',
-    id: 'milvus-sdk-node',
-    externalLink: '/api-reference/node/v2.1.2/About.md',
-  },
-];
+const DOCS_MININUM_VERSION = 'v1.0.0';
+const GO_MININUM_VERSION = 'v2.0.0';
+const JAVA_MININUM_VERSION = 'v2.0.4';
+const NODE_MININUM_VERSION = 'v2.0.2';
+const PY_MININUM_VERSION = 'v2.0.2';
+
+const VERSION_REGX = /^v\d/;
 
 /**
  * get current version and lang doc directory or menu structure file
@@ -54,7 +45,7 @@ const API_LANGUAGES = [
 const getDirByType = (basePath, lang = 'en', type, version) => {
   const versionDirectories = fs
     .readdirSync(basePath)
-    .filter(v => VERSION_REGEX.test(v));
+    .filter(v => VERSION_REGX.test(v));
   const [defaultVersion] = versionDirectories;
   const currentVersion = version || defaultVersion;
   const filePathMap = {
@@ -197,6 +188,46 @@ export const generateCurVersionMenu = (version, lang) => {
   try {
     const { menuList } = JSON.parse(fs.readFileSync(path, 'utf-8'));
 
+    const { newestVersion: newestGo } = generateCurLangApiVersions(
+      'milvus-sdk-go',
+      GO_MININUM_VERSION
+    );
+    const { newestVersion: newestJava } = generateCurLangApiVersions(
+      'milvus-sdk-java',
+      JAVA_MININUM_VERSION
+    );
+    const { newestVersion: newestNode } = generateCurLangApiVersions(
+      'milvus-sdk-node',
+      NODE_MININUM_VERSION
+    );
+    const { newestVersion: newestPy } = generateCurLangApiVersions(
+      'pymilvus',
+      PY_MININUM_VERSION
+    );
+
+    const API_LANGUAGES = [
+      {
+        id: 'pymilvus',
+        label: 'Python',
+        externalLink: `/api-reference/pymilvus/${newestPy}/About.md`,
+      },
+      {
+        id: 'milvus-sdk-java',
+        label: 'Java',
+        externalLink: `/api-reference/java/${newestJava}/About.md`,
+      },
+      {
+        label: 'Go',
+        id: 'milvus-sdk-go',
+        externalLink: `/api-reference/go/${newestGo}/About.md`,
+      },
+      {
+        label: 'Node',
+        id: 'milvus-sdk-node',
+        externalLink: `/api-reference/node/${newestNode}/About.md`,
+      },
+    ];
+
     return formatMenus([
       ...menuList,
       {
@@ -214,17 +245,15 @@ export const generateCurVersionMenu = (version, lang) => {
 // use to generate doc home paths
 export const generateAvailableDocVersions = () => {
   const docDir = DOC_DIR;
-  const availabelVersions = ['v0.x', 'v1', 'v2'];
-  const versionRegx = /^v\d/;
 
-  const docVersions = fs.readdirSync(docDir).filter(v => {
-    return versionRegx.test(v);
-  });
-
-  const newestVersion = docVersions.slice().reverse().shift();
+  const docVersions = fs.readdirSync(docDir).filter(v => VERSION_REGX.test(v));
+  const { newestVersion, list } = getNewestVersionTool(
+    docVersions,
+    DOCS_MININUM_VERSION
+  );
 
   return {
-    versions: docVersions,
+    versions: list,
     newestVersion,
   };
 };
@@ -248,9 +277,22 @@ export const getCurVersionHomeMd = (version, lang) => {
   return content;
 };
 
+const generateApiVersions = language => {
+  const { sdk, minVersion } = getSdkLang(language);
+  const curLangDir = join(DOC_DIR, `/API_Reference/${sdk}`);
+
+  const versions = fs.readdirSync(curLangDir).filter(v => VERSION_REGX.test(v));
+
+  const { newestVersion, list } = getNewestVersionTool(versions, minVersion);
+
+  return {
+    newestVersion,
+    versions: list,
+  };
+};
+
 export const generateApiData = () => {
   const dir = join(DOC_DIR, 'API_Reference');
-  const availabelVersionsRegx = /^v2/;
 
   let dataList = [];
   let routers = [];
@@ -264,7 +306,8 @@ export const generateApiData = () => {
       const filePath = join(dir, `${lang}/${version}`);
       walkThroughApiFiels(filePath, [], list);
       dataList.push({
-        language: lang,
+        language: getLangFromSdk(lang),
+        programLang: lang,
         version: version,
         docList: list,
         versions,
@@ -273,8 +316,7 @@ export const generateApiData = () => {
   });
 
   dataList.forEach(v => {
-    const { docList, version, language } = v;
-
+    const { docList, version, language, programLang } = v;
     docList.forEach(doc => {
       routers.push({
         params: {
@@ -290,6 +332,7 @@ export const generateApiData = () => {
         language,
         content: doc.content,
         versions: v.versions,
+        programLang,
       });
     });
   });
@@ -300,11 +343,29 @@ export const generateApiData = () => {
 };
 
 const generateApiMenus = (language, version) => {
-  const dir = join(DOC_DIR, `API_Reference/${language}/${version}`);
+  const { sdk } = getSdkLang(language);
+
+  const dir = join(DOC_DIR, `API_Reference/${sdk}/${version}`);
   const menus = walkApiFiels(dir);
 
   return formatMenus(menus);
 };
+
+function generateCurLangApiVersions(language, minVersion) {
+  const { sdk } = getSdkLang(language);
+  const dir = join(DOC_DIR, `API_Reference/${sdk}`);
+  const availableVersions = fs.readdirSync(dir);
+
+  const { newestVersion, list } = getNewestVersionTool(
+    availableVersions,
+    minVersion
+  );
+
+  return {
+    availableVersions: list,
+    newestVersion,
+  };
+}
 
 const generateCurApiDocContent = (language, version, slug) => {
   const { articles } = generateApiData();
@@ -477,9 +538,53 @@ export function walkThroughApiFiels(path, ignorePaths, list = []) {
   });
 }
 
+export const doc_tools = {
+  getVersions: generateAvailableDocVersions,
+};
+
 export const api_reference = {
   availabelVersionsRegx: /^v2/,
   getContent: generateCurApiDocContent,
   getMenus: generateApiMenus,
   getApiData: generateApiData,
+  getVersions: generateApiVersions,
 };
+
+function getSdkLang(lang) {
+  switch (lang) {
+    case 'go':
+      return {
+        sdk: `milvus-sdk-go`,
+        minVersion: GO_MININUM_VERSION,
+      };
+    case 'java':
+      return {
+        sdk: `milvus-sdk-java`,
+        minVersion: JAVA_MININUM_VERSION,
+      };
+
+    case 'node':
+      return {
+        sdk: `milvus-sdk-node`,
+        minVersion: NODE_MININUM_VERSION,
+      };
+    default:
+      return {
+        sdk: `pymilvus`,
+        minVersion: PY_MININUM_VERSION,
+      };
+  }
+}
+
+function getLangFromSdk(programLang) {
+  switch (programLang) {
+    case 'milvus-sdk-go':
+      return 'go';
+    case 'milvus-sdk-java':
+      return 'java';
+    case 'milvus-sdk-node':
+      return 'node';
+    default:
+      return 'pymilvus';
+  }
+}

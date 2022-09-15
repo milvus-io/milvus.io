@@ -1,7 +1,6 @@
 import {
   generateAvailableDocVersions,
   getCurVersionHomeMd,
-  generateApiData,
   generateDocsData,
   generateCurVersionMenu,
 } from '../../../utils/milvus';

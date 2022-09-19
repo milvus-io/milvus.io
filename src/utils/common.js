@@ -1,14 +1,31 @@
 import { Remarkable } from 'remarkable';
 import hljs from 'highlight.js';
 
-const getHeadingIdFromToken = (token) => {
-  // in order to ensure every heading href is unique even when content is same, we use heading content + lines as id
-  const content = token.content;
-  const linesTxt = token.lines.join('-');
-  return `${content}-${linesTxt}`.replaceAll(/\s/g, '-');
+const convertImgSrc = (version, src) => {
+  const path = src
+    .split('/')
+    .filter(v => v !== '.' && v !== '..')
+    .join('/');
+  const imgUrl = `/docs/${version}/${path}`;
+  return imgUrl;
 };
 
-export async function markdownToHtml(markdown) {
+const getHeadingIdFromToken = token => {
+  // in order to ensure every heading href is unique even when content is same, we use heading content + lines as id
+  const pattern =
+    /[`~!@#_$%^&*()=|{}':;',\\\[\\\].<>/?~!@#￥……&*（）——|{}【】‘；：”“""'。，、？]/g;
+  const content = token.content;
+  const formatText = `${content}`.replaceAll(pattern, '');
+  return formatText.replaceAll(/\s/g, '-');
+};
+
+export async function markdownToHtml(markdown, options = {}) {
+  const {
+    showAnchor = false,
+    version = 'v2.1.x',
+    needCaption = false,
+  } = options;
+
   const md = new Remarkable({
     html: true,
     highlight: function (str, lang) {
@@ -34,22 +51,16 @@ export async function markdownToHtml(markdown) {
   const headingAnchorList = [];
 
   // get code content of code block, used for code copy button
-  const getCodesPlugin = (md) => {
+  const getCodesPlugin = md => {
     const rule = md.renderer.rules.fence;
-    md.renderer.rules.fence = function (
-      tokens,
-      idx,
-      options,
-      env,
-      instance
-    ) {
+    md.renderer.rules.fence = function (tokens, idx, options, env, instance) {
       codeList.push(tokens[idx].content);
       return rule(tokens, idx, options, env, instance);
     };
   };
 
   // add copy link icon after headings
-  const getAnchorsPlugin = (md) => {
+  const getAnchorsPlugin = md => {
     md.renderer.rules.heading_open = function (tokens, idx) {
       const id = getHeadingIdFromToken(tokens[idx + 1]);
 
@@ -86,7 +97,7 @@ export async function markdownToHtml(markdown) {
   };
 
   // remove .md in inline markdown link: [some-link](https://)
-  const formatInlineLinkPlugin = (md) => {
+  const formatInlineLinkPlugin = md => {
     const rule = md.renderer.rules.link_open;
     md.renderer.rules.link_open = function (
       tokens,
@@ -106,7 +117,7 @@ export async function markdownToHtml(markdown) {
   };
 
   // remove .md in <a> under a code block like: <div><a href></a></div>
-  const formatHtmlBlockATagPlugin = (md) => {
+  const formatHtmlBlockATagPlugin = md => {
     const rule = md.renderer.rules.htmlblock;
     md.renderer.rules.htmlblock = function (
       tokens,
@@ -116,6 +127,18 @@ export async function markdownToHtml(markdown) {
       instance
     ) {
       const content = tokens[idx].content;
+
+      if (content.includes('src=')) {
+        const tpl = content.replaceAll(
+          /\.\.(\S*)\.[svg|jpg|jpeg|png]/g,
+          string => {
+            const url = convertImgSrc(version, string);
+            return url;
+          }
+        );
+        tokens[idx].content = tpl;
+      }
+
       const isExternalLink = content.includes('https');
 
       if (content.includes('href=') && !isExternalLink) {
@@ -128,15 +151,9 @@ export async function markdownToHtml(markdown) {
   };
 
   // remove .md in inline html tag like: some content <a></a>
-  const formatInlineATagPlugin = (md) => {
+  const formatInlineATagPlugin = md => {
     const rule = md.renderer.rules.htmltag;
-    md.renderer.rules.htmltag = function (
-      tokens,
-      idx,
-      options,
-      env,
-      instance
-    ) {
+    md.renderer.rules.htmltag = function (tokens, idx, options, env, instance) {
       const content = tokens[idx].content;
       const isExternalLink = content.includes('https');
 
@@ -150,23 +167,69 @@ export async function markdownToHtml(markdown) {
   };
 
   // generate a caption at bottom of image, use alt props as content
-  const generateImgCaptionPlugin = (md) => {
+  const generateImgCaptionPlugin = md => {
     md.renderer.rules.image = function (tokens, idx) {
       const src = tokens[idx].src;
-
       const alt = tokens[idx].alt;
       const id = alt.toLocaleLowerCase().replaceAll(/\s/g, '-');
 
+      const url = convertImgSrc(version, src);
+
       return `
       <span class="img-wrapper">
-        <img src="${src}" alt="${alt}" class="doc-image" id="${id}" />
+        <img src="${url}" alt="${alt}" class="doc-image" id="${id}" />
         <span>${alt}</span>
       </span>
     `;
     };
   };
 
-  const getPageTitlePlugin = (md) => {
+  // replace img src in html block like <div><img src='xxx' /><div>
+  const formatHtmlBlockImgPlugin = md => {
+    const rule = md.renderer.rules.htmlblock;
+    md.renderer.rules.htmlblock = function (
+      tokens,
+      idx,
+      options,
+      env,
+      instance
+    ) {
+      const content = tokens[idx].content;
+
+      if (content.includes('src=')) {
+        const tpl = content.replaceAll(
+          /\.\.(\S*)\.[svg|jpg|jpeg|png]/g,
+          string => {
+            const url = convertImgSrc(version, string);
+            return url;
+          }
+        );
+        tokens[idx].content = tpl;
+      }
+
+      return rule(tokens, idx, options, env, instance);
+    };
+  };
+
+  // replace img src in html block like <img src='xxx' />
+  const formatHtmlInlineImgPlugin = md => {
+    const rule = md.renderer.rules.htmltag;
+    md.renderer.rules.htmltag = function (tokens, idx, options, env, instance) {
+      const content = tokens[idx].content;
+
+      if (content.includes('src=')) {
+        const tpl = content.replace(/\.\.(\S*)\.[svg|jpg|jpeg|png]/, string => {
+          const url = convertImgSrc(version, string);
+          return url;
+        });
+        tokens[idx].content = tpl;
+      }
+
+      return rule(tokens, idx, options, env, instance);
+    };
+  };
+
+  const getPageTitlePlugin = md => {
     const rule = md.renderer.rules.heading_open;
 
     md.renderer.rules.heading_open = function (
@@ -184,12 +247,14 @@ export async function markdownToHtml(markdown) {
   };
 
   md.use(getCodesPlugin);
-  md.use(getAnchorsPlugin);
-  md.use(formatInlineLinkPlugin);
-  md.use(formatHtmlBlockATagPlugin);
-  md.use(formatInlineATagPlugin);
+  showAnchor && md.use(getAnchorsPlugin);
+  // md.use(formatInlineLinkPlugin);
+  // md.use(formatHtmlBlockATagPlugin);
+  // md.use(formatInlineATagPlugin);
   md.use(generateImgCaptionPlugin);
   md.use(getPageTitlePlugin);
+  md.use(formatHtmlBlockImgPlugin);
+  md.use(formatHtmlInlineImgPlugin);
 
   const tree = md.render(markdown);
   return {

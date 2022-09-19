@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'gatsby-plugin-react-i18next';
+import Link from 'next/link';
 import * as styles from './leftNav.module.less';
-import './leftNav.less';
+// import './leftNav.less';
 import { AlgoliaSearch } from '../search/agloia';
 import clsx from 'clsx';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -40,13 +40,14 @@ const LeftNav = props => {
     <>
       {version && (
         <div className={clsx('selector-container', styles.selectorContainer)}>
-          <Link
-            to={homeUrl}
-            className={clsx(styles.homeBtn, {
-              [styles.selected]: mdId === 'home',
-            })}
-          >
-            {homeLabel}
+          <Link href={homeUrl}>
+            <a
+              className={clsx(styles.homeBtn, {
+                [styles.selected]: mdId === 'home',
+              })}
+            >
+              {homeLabel}
+            </a>
           </Link>
           <FormControl
             fullWidth

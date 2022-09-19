@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Code from '../components/code/code';
 import hljs from 'highlight.js';
 import ReactDOM from 'react-dom';
-import { drawZChart } from '@zilliz/zui';
+// import { drawZChart } from '@zilliz/zui';
 // import "@zilliz/zui/ZChart.css";
 
 /**
@@ -249,75 +249,75 @@ export const useCodeCopy = (tooltip, cfgs) => {
 /**
  * Support ZChart
  */
-export const useZChart = ref => {
-  useEffect(() => {
-    const width = ref && ref.current.offsetWidth;
-    if (width <= 0) return;
-    drawZCharts(width);
+// export const useZChart = ref => {
+//   useEffect(() => {
+//     const width = ref && ref.current.offsetWidth;
+//     if (width <= 0) return;
+//     drawZCharts(width);
 
-    const resizeHandler = () => {
-      const { width } = document
-        .querySelector('.doc-post-content')
-        .getBoundingClientRect();
-      drawZCharts(width);
-    };
-    window.addEventListener('resize', resizeHandler);
+//     const resizeHandler = () => {
+//       const { width } = document
+//         .querySelector('.doc-post-content')
+//         .getBoundingClientRect();
+//       drawZCharts(width);
+//     };
+//     window.addEventListener('resize', resizeHandler);
 
-    return () => window.removeEventListener('resize', resizeHandler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref.current]);
-};
+//     return () => window.removeEventListener('resize', resizeHandler);
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [ref.current]);
+// };
 
-const drawZCharts = width => {
-  const divs = document.querySelectorAll('.zchart-container');
-  [].forEach.call(divs, div => {
-    try {
-      const id = div.id;
+// const drawZCharts = width => {
+//   const divs = document.querySelectorAll('.zchart-container');
+//   [].forEach.call(divs, div => {
+//     try {
+//       const id = div.id;
 
-      const chartTypeTemplate = [].find.call(
-        div.children,
-        div => div.id === 'chart-type'
-      );
-      if (!chartTypeTemplate) {
-        console.warn('ZChart - Invalid chart type.');
-        return;
-      }
-      // eslint-disable-next-line
-      const chartType = eval(chartTypeTemplate.innerHTML);
+//       const chartTypeTemplate = [].find.call(
+//         div.children,
+//         div => div.id === 'chart-type'
+//       );
+//       if (!chartTypeTemplate) {
+//         console.warn('ZChart - Invalid chart type.');
+//         return;
+//       }
+//       // eslint-disable-next-line
+//       const chartType = eval(chartTypeTemplate.innerHTML);
 
-      const dataTemplate = [].find.call(div.children, div => div.id === 'data');
-      if (!dataTemplate) {
-        console.warn('ZChart - Invalid data.');
-        return;
-      }
-      const data = JSON.parse(dataTemplate.innerHTML);
+//       const dataTemplate = [].find.call(div.children, div => div.id === 'data');
+//       if (!dataTemplate) {
+//         console.warn('ZChart - Invalid data.');
+//         return;
+//       }
+//       const data = JSON.parse(dataTemplate.innerHTML);
 
-      const configTemplate = [].find.call(
-        div.children,
-        div => div.id === 'config'
-      );
-      if (!configTemplate) {
-        console.warn('ZChart - Invalid config.');
-        return;
-      }
-      const config = JSON.parse(decodeEntity(configTemplate.innerHTML));
-      config.width = width;
+//       const configTemplate = [].find.call(
+//         div.children,
+//         div => div.id === 'config'
+//       );
+//       if (!configTemplate) {
+//         console.warn('ZChart - Invalid config.');
+//         return;
+//       }
+//       const config = JSON.parse(decodeEntity(configTemplate.innerHTML));
+//       config.width = width;
 
-      [].filter
-        .call(div.children, div => div.tagName === 'svg')
-        .forEach(svg => svg.remove());
+//       [].filter
+//         .call(div.children, div => div.tagName === 'svg')
+//         .forEach(svg => svg.remove());
 
-      drawZChart({
-        domSelector: `#${id}`,
-        chartType,
-        data,
-        config,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-};
+//       drawZChart({
+//         domSelector: `#${id}`,
+//         chartType,
+//         data,
+//         config,
+//       });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   });
+// };
 
 function decodeEntity(inputStr) {
   var textarea = document.createElement('textarea');

@@ -1,16 +1,8 @@
 const fs = require('fs');
 const { join } = require('path');
 
-const DOCS_DIR = join(process.cwd(), '/src/docs/vectordb');
-const VERSION_REGEX = /^v[0-9].*/;
-const IGNORE_FILES = [
-  'index.md',
-  'README.md',
-  'Variables.json',
-  '.DS_Store',
-  'fragments',
-  'menuStructure',
-];
+const DOCS_DIR = join(process.cwd(), '/src/docs');
+const VERSION_REGEX = /^v[1-9].*/;
 
 const formatMenuStructure = list => {
   let newList = list.map(v => {
@@ -29,7 +21,7 @@ const formatMenuStructure = list => {
     const level = [label1, label2, label3].filter(v => !!v).length + 1;
 
     return {
-      id: id.replace('.md', ''),
+      id: id,
       label: title,
       isMenu,
       outLink,
@@ -71,7 +63,11 @@ const docDirs = versionsDocsDirs.map(version => {
     join(DOCS_DIR, `/${version}/site/en/menuStructure/en.json`),
     join(DOCS_DIR, `/${version}/site/zh-CN/menuStructure/cn.json`),
   ];
-  return [enDocDir, cnDocDir];
+  return {
+    version,
+    cn: cnDocDir,
+    en: enDocDir,
+  };
 });
 
 // const path =
@@ -86,22 +82,39 @@ const docDirs = versionsDocsDirs.map(version => {
 // fs.writeFileSync(path, JSON.stringify({ menuList: newStructure }), 'utf-8');
 // return;
 
-docDirs.flat(Infinity).forEach(structurePath => {
-  const content = JSON.parse(fs.readFileSync(structurePath, 'utf-8'));
-  const menuList =
-    Object.prototype.toString.call(content) === '[object Array]'
-      ? content
-      : content.menuList;
+docDirs.flat(Infinity).forEach(({ version, cn, en }) => {
+  const cnContent = JSON.parse(fs.readFileSync(cn, 'utf-8'));
+  const enContent = JSON.parse(fs.readFileSync(en, 'utf-8'));
+  const cnMenuList =
+    Object.prototype.toString.call(cnContent) === '[object Array]'
+      ? cnContent
+      : cnContent.menuList;
 
-  const newStructure = formatMenuStructure(menuList);
-  try {
-    fs.writeFileSync(
-      structurePath,
-      JSON.stringify({ menuList: newStructure }),
-      'utf-8'
-    );
-  } catch (error) {
-    console.log(structurePath + '---' + error);
-    console.log('newStructure---', newStructure);
-  }
+  const enMenuList =
+    Object.prototype.toString.call(enContent) === '[object Array]'
+      ? enContent
+      : enContent.menuList;
+
+  const newStructureCn = formatMenuStructure(cnMenuList);
+  const newStructureEn = formatMenuStructure(enMenuList);
+
+  const data = JSON.parse(fs.readFileSync('./menu.json'));
+
+  data[version] = {
+    cn: newStructureCn,
+    en: newStructureEn,
+  };
+
+  fs.writeFileSync('./menu.json', JSON.stringify(data));
+
+  // try {
+  //   fs.writeFileSync(
+  //     structurePath,
+  //     JSON.stringify({ menuList: newStructure }),
+  //     'utf-8'
+  //   );
+  // } catch (error) {
+  //   console.log(structurePath + '---' + error);
+  //   console.log('newStructure---', newStructure);
+  // }
 });

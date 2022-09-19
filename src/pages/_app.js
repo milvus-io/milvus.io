@@ -3,6 +3,9 @@ import '../styles/global.css';
 import '../styles/index.less';
 import '../styles/banner.less';
 import '../i18n';
+import 'highlight.js/styles/stackoverflow-light.css';
+import '@docsearch/css';
+import 'instantsearch.css/themes/reset.css';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;

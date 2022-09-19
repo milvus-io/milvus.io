@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { globalHistory } from '@reach/router';
-
+import { useRouter } from 'next/router';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import clsx from 'clsx';
@@ -15,7 +14,7 @@ export default function ScoredFeedback(props) {
   const scoreQuestion = trans('v3trans.docs.scoreQuestion');
   const scoreThanks = trans('v3trans.docs.scoreThanks');
 
-  const { pathname } = globalHistory.location;
+  const { pathname } = useRouter();
 
   const getLocalStorageItem = (itemName = 'feedback_info', keyName) => {
     const infoString = window.localStorage.getItem(itemName);

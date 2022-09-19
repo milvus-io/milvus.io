@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@docsearch/react": "^3.0.0",
+    "@docsearch/react": "^3.2.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@fontsource/inter": "^4.5.1",

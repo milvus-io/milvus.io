@@ -28,7 +28,7 @@ import MenuTree from '../../../components/tree';
 import classes from '../../../styles/docHome.module.less';
 
 export default function DocHomePage(props) {
-  const { homeData, blogs = [], menus, version } = props;
+  const { homeData, blogs = [], menus, version, versions, locale } = props;
 
   const { t } = useTranslation('common');
 
@@ -72,6 +72,10 @@ export default function DocHomePage(props) {
             onNodeClick={handleNodeClick}
             className={classes.docMenu}
             version={version}
+            versions={versions}
+            linkPrefix={`/docs`}
+            locale={locale}
+            trans={t}
           />
         </div>
 

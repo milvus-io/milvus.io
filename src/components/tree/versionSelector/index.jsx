@@ -2,13 +2,15 @@ import * as classes from './index.module.less';
 import Link from 'next/link';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import { useMemo, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 export default function VersionSelector(props) {
-  const { versions, curVersion, homeLabel, programLang } = props;
-  const router = useRouter();
+  const {
+    versions = [],
+    curVersion,
+    homeLabel = 'Home',
+    linkPrefix,
+    linkSurfix = '',
+  } = props;
 
   return (
     <div className={classes.selectorWrapper}>
@@ -27,7 +29,7 @@ export default function VersionSelector(props) {
       >
         {versions.map(v => (
           <MenuItem value={v} key={v}>
-            <Link href={`/api-reference/${programLang}/${v}/About.md`}>
+            <Link href={`${linkPrefix}/${v}/${linkSurfix}`}>
               <a className={classes.versionLink}>{v}</a>
             </Link>
           </MenuItem>

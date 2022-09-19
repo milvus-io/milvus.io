@@ -205,7 +205,7 @@ export const generateCurVersionMenu = (version, lang) => {
       PY_MININUM_VERSION
     );
 
-    const API_LANGUAGES = [
+    const apis = [
       {
         id: 'pymilvus',
         label: 'Python',
@@ -234,7 +234,7 @@ export const generateCurVersionMenu = (version, lang) => {
         id: 'api-reference',
         label: 'Api reference',
         isMenu: true,
-        children: API_LANGUAGES,
+        children: apis,
       },
     ]);
   } catch (err) {
@@ -351,9 +351,8 @@ const generateApiMenus = (language, version) => {
   return formatMenus(menus);
 };
 
-function generateCurLangApiVersions(language, minVersion) {
-  const { sdk } = getSdkLang(language);
-  const dir = join(DOC_DIR, `API_Reference/${sdk}`);
+function generateCurLangApiVersions(programLang, minVersion) {
+  const dir = join(DOC_DIR, `API_Reference/${programLang}`);
   const availableVersions = fs.readdirSync(dir);
 
   const { newestVersion, list } = getNewestVersionTool(

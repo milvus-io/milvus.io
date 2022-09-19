@@ -1,0 +1,50 @@
+@import (reference) '../../styles/responsive.less';
+
+.DocSearchWrapper {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 24px;
+
+  @media @tablet, @phone {
+    padding-top: 10px;
+  }
+
+  button:global(.DocSearch) {
+    width: 100%;
+    font-size: 14px;
+    padding-left: 20px;
+    background-color: #f5f8fb;
+    border-radius: 4px;
+    margin: 0;
+
+    @media @desktop1024 {
+      margin: 0 10px;
+    }
+
+    @media @tablet, @phone {
+      z-index: 111111;
+      margin: 0 10px;
+    }
+
+    .DocSearch-Search-Icon {
+      width: 14px;
+      height: 14px;
+      margin-right: 10px;
+      color: #9ca6b2;
+    }
+
+    .DocSearch-Button-Keys {
+      display: none;
+    }
+
+    .DocSearch-Button-Placeholder {
+      color: #9ca6b2;
+      @media (max-width: 750px) {
+        display: block;
+      }
+    }
+    .DocSearch-Container * {
+      font-family: Inter;
+    }
+  }
+}

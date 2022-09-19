@@ -12,7 +12,6 @@ import Footer from '../../../../components/footer';
 import { markdownToHtml } from '../../../../utils/common';
 import { recursionUpdateTree } from '../../../../utils/docUtils';
 import * as classes from '../../../../styles/docHome.module.less';
-import VersionSelector from '../../../../components/versionSelector';
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -149,21 +148,22 @@ export default function Template(props) {
       break;
   }
 
+  const versionLinkPrefix = `/api_reference/${category}`;
+
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <div className={'doc-temp-container'}>
         <div className={classes.menuContainer}>
-          <VersionSelector
-            versions={versions}
-            curVersion={version}
-            programLang={category}
-            homeLabel="Home"
-          />
           <MenuTree
             tree={menuTree}
             onNodeClick={handleNodeClick}
             className={classes.docMenu}
             version={version}
+            versions={versions}
+            linkPrefix={versionLinkPrefix}
+            linkSurfix="About.md"
+            locale={locale}
+            trans={t}
           />
         </div>
         <div
@@ -206,7 +206,6 @@ export const getStaticProps = async ({
   locale,
   params: { language, version, slug },
 }) => {
-  console.log();
   const menus = api_reference.getMenus(language, version);
   const doc = api_reference.getContent(language, version, slug);
   const { versions } = api_reference.getVersions(language);

@@ -29,7 +29,7 @@ import classes from '../../../styles/docHome.module.less';
 import AnchorTree from '../../../parts/docs/anchorTree';
 
 export default function DocDetailPage(props) {
-  const { homeData, blogs = [], menus, version, locale, id } = props;
+  const { homeData, blogs = [], menus, version, versions, locale, id } = props;
   const {
     tree,
     codeList,
@@ -82,6 +82,10 @@ export default function DocDetailPage(props) {
             onNodeClick={handleNodeClick}
             className={classes.docMenu}
             version={version}
+            versions={versions}
+            linkPrefix={`/docs`}
+            locale={locale}
+            trans={t}
           />
         </div>
         <div

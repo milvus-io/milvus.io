@@ -13,10 +13,12 @@ export default function MenuTreeItem(props) {
 
   const linkInfo = useMemo(() => {
     const link = externalLink || `/docs/${version}/${href}`;
-    const target = externalLink ? '_blank' : '_self';
+    const isExternalLink = externalLink.includes('http');
+    const target = isExternalLink ? '_blank' : '_self';
     return {
       link,
       target,
+      isExternalLink,
     };
   }, [href, externalLink]);
 
@@ -28,7 +30,7 @@ export default function MenuTreeItem(props) {
     <div
       className={clsx(classes.menuTreeItemWrapper, layerClassName, {
         [classes.activeItem]: isActive,
-        [classes.externalLink]: externalLink,
+        [classes.externalLink]: linkInfo.isExternalLink,
       })}
       style={{
         paddingLeft: `${20 * parentIds.length}px`,
@@ -39,12 +41,12 @@ export default function MenuTreeItem(props) {
         <a
           target={linkInfo.target}
           className={clsx({
-            [classes.externalLink]: externalLink,
+            [classes.externalLink]: linkInfo.isExternalLink,
           })}
         >
           {label}
           <span className={classes.iconWrapper}>
-            {externalLink && <OutLinkIcon />}
+            {linkInfo.isExternalLink && <OutLinkIcon />}
           </span>
         </a>
       </Link>

@@ -3,6 +3,8 @@ import MenuTreeGroup from './treeGroup';
 import MenuTreeItem from './treeItem';
 import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
+import VersionSelector from './versionSelector';
+import { AlgoliaSearch } from '../search/agloia';
 
 const SCROLL_TOP = 'scroll-top';
 const IS_REFRESH = 'is_refresh';
@@ -28,7 +30,17 @@ export const generateMenuGroup = (menulist, clickCb, scrollFunc, version) => {
 };
 
 export default function MenuTree(props) {
-  const { tree, onNodeClick, className: customClassName, version } = props;
+  const {
+    tree,
+    onNodeClick,
+    className: customClassName,
+    version,
+    versions = [],
+    linkPrefix,
+    linkSurfix,
+    trans,
+    locale,
+  } = props;
 
   const menu = useRef(null);
 
@@ -60,12 +72,22 @@ export default function MenuTree(props) {
   }, []);
 
   return (
-    <ul
-      className={clsx(classes.menuWrapper, customClassName)}
-      onClick={handleMenuClick}
-      ref={menu}
+    <div
+      className={clsx(classes.menuContainer, {
+        [customClassName]: customClassName,
+      })}
     >
-      {generateMenuGroup(tree, onNodeClick, autoScroll, version)}
-    </ul>
+      <AlgoliaSearch locale={locale} version={version} trans={trans} />
+      <VersionSelector
+        versions={versions}
+        curVersion={version}
+        homeLabel="Home"
+        linkPrefix={linkPrefix}
+        linkSurfix={linkSurfix}
+      />
+      <ul className={classes.menuWrapper} onClick={handleMenuClick} ref={menu}>
+        {generateMenuGroup(tree, onNodeClick, autoScroll, version)}
+      </ul>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-import { api_reference } from '../../../../utils/milvus';
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import Layout from '../../../../components/layout';
@@ -12,6 +11,7 @@ import Footer from '../../../../components/footer';
 import { markdownToHtml } from '../../../../utils/common';
 import { recursionUpdateTree } from '../../../../utils/docUtils';
 import * as classes from '../../../../styles/docHome.module.less';
+import apiUtils from '../../../../utils/apiReference.utils';
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -75,80 +75,80 @@ export default function Template(props) {
     relativePath: name,
     apiVersion: version,
   };
-  switch (category) {
-    case 'pymilvus':
-      const path = name?.split('pymilvus_')?.[1]?.replace('.html', '.rst');
-      const url = `https://github.com/milvus-io/pymilvus/edit/${version.slice(
-        1
-      )}/docs/source/${path}`;
-      apiReferenceData.sourceUrl = url;
+  // switch (category) {
+  //   case 'pymilvus':
+  //     const path = name?.split('pymilvus_')?.[1]?.replace('.html', '.rst');
+  //     const url = `https://github.com/milvus-io/pymilvus/edit/${version.slice(
+  //       1
+  //     )}/docs/source/${path}`;
+  //     apiReferenceData.sourceUrl = url;
 
-      if (name.endsWith('.md')) {
-        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/pymilvus/${version}/${name.replace(
-          'pymilvus_',
-          ''
-        )}`;
-      }
-      break;
+  //     if (name.endsWith('.md')) {
+  //       apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/pymilvus/${version}/${name.replace(
+  //         'pymilvus_',
+  //         ''
+  //       )}`;
+  //     }
+  //     break;
 
-    case 'java':
-      if (name.endsWith('.md')) {
-        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-java/${version}/${name.replace(
-          'java_',
-          ''
-        )}`;
-      }
-      break;
+  //   case 'java':
+  //     if (name.endsWith('.md')) {
+  //       apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-java/${version}/${name.replace(
+  //         'java_',
+  //         ''
+  //       )}`;
+  //     }
+  //     break;
 
-    case 'go':
-      if (name.endsWith('.md')) {
-        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-go/${version}/${name.replace(
-          'go_',
-          ''
-        )}`;
-      }
-      break;
+  //   case 'go':
+  //     if (name.endsWith('.md')) {
+  //       apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-go/${version}/${name.replace(
+  //         'go_',
+  //         ''
+  //       )}`;
+  //     }
+  //     break;
 
-    case 'node':
-      if (name.endsWith('.html')) {
-        const relativePath = name
-          ?.split('node_')?.[1]
-          ?.replace('.html', '.ts')
-          ?.split('/')
-          ?.pop();
-        const transformName = (originName = '') => {
-          if (originName === 'index.ts') return 'MilvusIndex.ts';
-          return originName.charAt(0).toUpperCase() + originName.slice(1);
-        };
-        if (name.includes('api reference')) {
-          const fileName = transformName(relativePath);
-          apiReferenceData.sourceUrl = `https://github.com/milvus-io/milvus-sdk-node/edit/main/milvus/${fileName}`;
-        }
-        if (name.includes('tutorial')) {
-          apiReferenceData.sourceUrl =
-            'https://github.com/milvus-io/milvus-sdk-node/edit/main/README.md';
-        }
-      }
+  //   case 'node':
+  //     if (name.endsWith('.html')) {
+  //       const relativePath = name
+  //         ?.split('node_')?.[1]
+  //         ?.replace('.html', '.ts')
+  //         ?.split('/')
+  //         ?.pop();
+  //       const transformName = (originName = '') => {
+  //         if (originName === 'index.ts') return 'MilvusIndex.ts';
+  //         return originName.charAt(0).toUpperCase() + originName.slice(1);
+  //       };
+  //       if (name.includes('api reference')) {
+  //         const fileName = transformName(relativePath);
+  //         apiReferenceData.sourceUrl = `https://github.com/milvus-io/milvus-sdk-node/edit/main/milvus/${fileName}`;
+  //       }
+  //       if (name.includes('tutorial')) {
+  //         apiReferenceData.sourceUrl =
+  //           'https://github.com/milvus-io/milvus-sdk-node/edit/main/README.md';
+  //       }
+  //     }
 
-      if (name.endsWith('.md')) {
-        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-node/${version}/${name.replace(
-          'node_',
-          ''
-        )}`;
-      }
-      break;
+  //     if (name.endsWith('.md')) {
+  //       apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-node/${version}/${name.replace(
+  //         'node_',
+  //         ''
+  //       )}`;
+  //     }
+  //     break;
 
-    case 'restful':
-      apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-restful/${version}/${name.replace(
-        'restful_',
-        ''
-      )}`;
-      break;
-    default:
-      break;
-  }
+  //   case 'restful':
+  //     apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-restful/${version}/${name.replace(
+  //       'restful_',
+  //       ''
+  //     )}`;
+  //     break;
+  //   default:
+  //     break;
+  // }
 
-  const versionLinkPrefix = `/api_reference/${category}`;
+  const versionLinkPrefix = `/api-reference/${category}`;
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
@@ -194,21 +194,22 @@ export default function Template(props) {
 }
 
 export const getStaticPaths = () => {
-  const { routers } = api_reference.getApiData();
+  const routerList = apiUtils.getRouter();
 
   return {
-    paths: routers,
+    paths: routerList,
     fallback: false,
   };
 };
 
 export const getStaticProps = async ({
-  locale,
+  locale = 'en',
   params: { language, version, slug },
 }) => {
-  const menus = api_reference.getMenus(language, version);
-  const doc = api_reference.getContent(language, version, slug);
-  const { versions } = api_reference.getVersions(language);
+  const menu = apiUtils.getMenu(language, version);
+  const id = slug instanceof Array ? slug.join('/') : slug;
+  const doc = apiUtils.getDoc(language, version, id);
+  const { versions } = apiUtils.getVersions();
 
   const { tree } = await markdownToHtml(doc.content);
 
@@ -216,7 +217,7 @@ export const getStaticProps = async ({
     props: {
       doc: tree,
       name: slug,
-      menus,
+      menus: menu,
       version,
       locale,
       category: language,

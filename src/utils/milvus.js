@@ -7,7 +7,7 @@ import {
   getMenuInfoById,
   getNewestVersionTool,
 } from './docUtils';
-import { ConstructionOutlined } from '@mui/icons-material';
+import { generateAvailableApiVersions } from './apiReference.utils';
 
 // constants
 const DOC_DIR = join(process.cwd(), 'src/docs');
@@ -55,37 +55,37 @@ const getDirByType = (basePath, lang = 'en', type, version) => {
   return join(basePath, filePathMap[type]);
 };
 
-// get list of all doc info without content
-const generateDocsInfo = (dirPath, version, lang, widthContent = false) => {
-  const subDirPaths = fs
-    .readdirSync(dirPath)
-    .filter(v => !IGNORE_FILES.includes(v))
-    .map(i => join(dirPath, i));
+// // get list of all doc info without content
+// const generateDocsInfo = (dirPath, version, lang, widthContent = false) => {
+//   const subDirPaths = fs
+//     .readdirSync(dirPath)
+//     .filter(v => !IGNORE_FILES.includes(v))
+//     .map(i => join(dirPath, i));
 
-  return subDirPaths
-    .map(path => {
-      let stats = fs.statSync(path);
-      if (stats.isDirectory()) {
-        return generateDocsInfo(path, version, lang, widthContent);
-      } else {
-        if (path.includes('.md') && !IGNORE_FILES.includes(path)) {
-          const fileContents = fs.readFileSync(path, 'utf8');
-          const { data, content } = matter(fileContents);
-          const { summary = '', id } = data;
+//   return subDirPaths
+//     .map(path => {
+//       let stats = fs.statSync(path);
+//       if (stats.isDirectory()) {
+//         return generateDocsInfo(path, version, lang, widthContent);
+//       } else {
+//         if (path.includes('.md') && !IGNORE_FILES.includes(path)) {
+//           const fileContents = fs.readFileSync(path, 'utf8');
+//           const { data, content } = matter(fileContents);
+//           const { summary = '', id } = data;
 
-          return {
-            summary: widthContent ? summary : '',
-            content: widthContent ? content : '',
-            // TODO: remove this to let TC remove md in id in every doc frontmatter
-            id: formatFileName(id),
-            version,
-            lang,
-          };
-        }
-      }
-    })
-    .flat(Infinity);
-};
+//           return {
+//             summary: widthContent ? summary : '',
+//             content: widthContent ? content : '',
+//             // TODO: remove this to let TC remove md in id in every doc frontmatter
+//             id: formatFileName(id),
+//             version,
+//             lang,
+//           };
+//         }
+//       }
+//     })
+//     .flat(Infinity);
+// };
 
 // generate all docs paths of available versions
 export const generateAllDocsPaths = (widthContent = false) => {
@@ -103,6 +103,8 @@ export const generateAllDocsPaths = (widthContent = false) => {
     'json',
     '.DS_Store',
     'menuStructure',
+    'assets',
+    'roadmap.md',
   ];
   const docPaths = paths.map(v => {
     const { version, enPath, cnPath, cnList, enList } = v;
@@ -188,22 +190,11 @@ export const generateCurVersionMenu = (version, lang) => {
   try {
     const { menuList } = JSON.parse(fs.readFileSync(path, 'utf-8'));
 
-    const { newestVersion: newestGo } = generateCurLangApiVersions(
-      'milvus-sdk-go',
-      GO_MININUM_VERSION
-    );
-    const { newestVersion: newestJava } = generateCurLangApiVersions(
-      'milvus-sdk-java',
-      JAVA_MININUM_VERSION
-    );
-    const { newestVersion: newestNode } = generateCurLangApiVersions(
-      'milvus-sdk-node',
-      NODE_MININUM_VERSION
-    );
-    const { newestVersion: newestPy } = generateCurLangApiVersions(
-      'pymilvus',
-      PY_MININUM_VERSION
-    );
+    const { newestVersion: newestGo } = generateAvailableApiVersions('go');
+    const { newestVersion: newestJava } = generateAvailableApiVersions('java');
+    const { newestVersion: newestNode } = generateAvailableApiVersions('node');
+    const { newestVersion: newestPy } =
+      generateAvailableApiVersions('pymilvus');
 
     const apis = [
       {

@@ -11,6 +11,7 @@ export default function MenuTreeGroup(props) {
     onNodeClick,
     autoScroll,
     version,
+    linkPrefix,
   } = props;
 
   const subMenu = useRef(null);
@@ -114,7 +115,13 @@ export default function MenuTreeGroup(props) {
         }}
       >
         <ul ref={subMenu}>
-          {generateMenuGroup(children, onNodeClick, autoScroll, version)}
+          {generateMenuGroup(
+            children,
+            onNodeClick,
+            autoScroll,
+            version,
+            linkPrefix
+          )}
         </ul>
       </div>
     </div>

@@ -1,6 +1,8 @@
+const { consoleSandbox } = require('@sentry/utils');
 const fs = require('fs');
 const { join } = require('path');
-const BASE_DIR = join(process.cwd(), './src/docs');
+const DOC_BASE_DIR = join(process.cwd(), './src/docs');
+const PUBLIC_BASE_DIR = join(process.cwd(), './public/docs');
 const VERSION_REGEX = /^v[1-9].*/;
 
 const copyMkdAssetsToPublic = version => {
@@ -54,11 +56,19 @@ const copyMkdAssetsToPublic = version => {
 };
 
 const availableVersions = fs
-  .readdirSync(BASE_DIR)
+  .readdirSync(DOC_BASE_DIR)
   .filter(v => VERSION_REGEX.test(v));
+
+fs.rmSync(PUBLIC_BASE_DIR, {
+  recursive: true,
+  force: true,
+});
+
+fs.mkdirSync(join(process.cwd(), `./public/docs`));
 
 availableVersions.forEach(v => {
   fs.mkdirSync(join(process.cwd(), `./public/docs/${v}`));
   fs.mkdirSync(join(process.cwd(), `./public/docs/${v}/assets`));
+
   copyMkdAssetsToPublic(v);
 });

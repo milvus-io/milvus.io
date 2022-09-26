@@ -4,36 +4,28 @@ import { useMemo } from 'react';
 import { Star, Fork } from './icons';
 import clsx from 'clsx';
 
+const formatNum = num => {
+  return num >= 1000 ? `${Math.round(num / 100) / 10}k` : num;
+};
+
 const GitHubButton = ({
   type = 'star', // star or fork
   href,
   className = '',
   children,
-  stat,
+  count,
 }) => {
   const isStar = type === 'star';
-  const link = isStar ? href : `${href}/fork`;
-
   const Icon = isStar ? Star : Fork;
 
-  const formatNum = num => {
-    return num >= 1000 ? `${Math.round(num / 100) / 10}k` : num;
-  };
-
-  const stats = useMemo(() => {
-    const stars = stat.star;
-    const forks = stat.forks;
-
-    return {
-      star: formatNum(stars),
-      fork: formatNum(forks),
-    };
-  }, [stat]);
+  const amount = useMemo(() => {
+    return formatNum(count);
+  }, [count]);
 
   return (
     <div className={`${styles.gitBtnWrapper} ${className}`}>
       <a
-        href={link}
+        href={href}
         className={styles.link}
         target="_blank"
         rel="noopener noreferrer"
@@ -48,7 +40,7 @@ const GitHubButton = ({
 
         <span className={styles.iconText}>{children}</span>
 
-        <span className={styles.stat}>{isStar ? stats.star : stats.fork}</span>
+        <span className={styles.stat}>{amount}</span>
       </a>
     </div>
   );

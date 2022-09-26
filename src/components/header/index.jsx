@@ -23,7 +23,16 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
   const [isDesktopTutOpen, setIsDesktopTutOpen] = useState(false);
   const [isDesktopToolOpen, setIsDesktopToolOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [stat, setStat] = useState({ star: 0, forks: 0 });
+  const [stat, setStat] = useState({
+    star: {
+      count: 0,
+      show: true,
+    },
+    fork: {
+      count: 0,
+      show: true,
+    },
+  });
   const isLangOpen = Boolean(anchorEl);
   const toolRef = useRef(null);
   const tutRef = useRef(null);
@@ -37,12 +46,30 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
   }
 
   useEffect(() => {
-    (async function getData() {
+    (async function () {
       try {
         const { forks_count, stargazers_count } = await getGithubStatis();
-        setStat({ star: stargazers_count, forks: forks_count });
+        setStat({
+          star: {
+            count: stargazers_count,
+            show: true,
+          },
+          fork: {
+            count: forks_count,
+            show: true,
+          },
+        });
       } catch (error) {
-        console.log(error);
+        setStat({
+          star: {
+            count: 0,
+            show: false,
+          },
+          fork: {
+            count: 0,
+            show: false,
+          },
+        });
       }
     })();
   }, []);
@@ -139,21 +166,24 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
   const actionBar = (
     <div className={styles.actionBar}>
       <div className={styles.gitBtnsWrapper}>
-        <GitHubButton
-          stat={stat}
-          type="star"
-          href="https://github.com/milvus-io/milvus"
-        >
-          Star
-        </GitHubButton>
-
-        <GitHubButton
-          stat={stat}
-          type="fork"
-          href="https://github.com/milvus-io/milvus"
-        >
-          Fork
-        </GitHubButton>
+        {stat.star.show && (
+          <GitHubButton
+            count={stat.star.count}
+            type="star"
+            href="https://github.com/milvus-io/milvus"
+          >
+            Star
+          </GitHubButton>
+        )}
+        {stat.fork.show && (
+          <GitHubButton
+            count={stat.fork.count}
+            type="fork"
+            href="https://github.com/milvus-io/milvus/fork"
+          >
+            Fork
+          </GitHubButton>
+        )}
       </div>
       <Menu
         anchorEl={anchorEl}

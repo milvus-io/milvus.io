@@ -60,7 +60,6 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
           },
         });
       } catch (error) {
-        console.log(error);
         setStat({
           star: {
             count: 0,

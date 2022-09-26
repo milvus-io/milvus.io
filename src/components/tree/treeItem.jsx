@@ -9,10 +9,11 @@ export default function MenuTreeItem(props) {
     data: { id, label, href, externalLink = '', parentIds, isActive },
     onNodeClick,
     version,
+    linkPrefix,
   } = props;
 
   const linkInfo = useMemo(() => {
-    const link = externalLink || `/docs/${version}/${href}`;
+    const link = externalLink || `${linkPrefix}/${version}/${href}`;
     const isExternalLink = externalLink.includes('http');
     const target = isExternalLink ? '_blank' : '_self';
     return {
@@ -20,7 +21,7 @@ export default function MenuTreeItem(props) {
       target,
       isExternalLink,
     };
-  }, [href, externalLink]);
+  }, [href, externalLink, version]);
 
   const layerClassName = useMemo(() => {
     return parentIds.length === 0 ? classes.outerItem : classes.innerItem;

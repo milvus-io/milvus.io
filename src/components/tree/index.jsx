@@ -9,18 +9,30 @@ import { AlgoliaSearch } from '../search/agloia';
 const SCROLL_TOP = 'scroll-top';
 const IS_REFRESH = 'is_refresh';
 
-export const generateMenuGroup = (menulist, clickCb, scrollFunc, version) => {
+export const generateMenuGroup = (
+  menulist,
+  clickCb,
+  scrollFunc,
+  version,
+  linkPrefix
+) => {
   return menulist.map(v => {
     const { children = [], href, id } = v;
     return children.length === 0 && href ? (
       <li key={id}>
-        <MenuTreeItem data={v} version={version} onNodeClick={clickCb} />
+        <MenuTreeItem
+          data={v}
+          version={version}
+          linkPrefix={linkPrefix}
+          onNodeClick={clickCb}
+        />
       </li>
     ) : (
       <li key={id}>
         <MenuTreeGroup
           tree={v}
           version={version}
+          linkPrefix={linkPrefix}
           onNodeClick={clickCb}
           autoScroll={scrollFunc}
         />
@@ -86,7 +98,7 @@ export default function MenuTree(props) {
         linkSurfix={linkSurfix}
       />
       <ul className={classes.menuWrapper} onClick={handleMenuClick} ref={menu}>
-        {generateMenuGroup(tree, onNodeClick, autoScroll, version)}
+        {generateMenuGroup(tree, onNodeClick, autoScroll, version, linkPrefix)}
       </ul>
     </div>
   );

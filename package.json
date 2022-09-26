@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node scripts/migrateAssets.js && next dev",
+    "build": "node scripts/migrateAssets.js && next build && next export",
+    "start": "next start ./out",
     "lint": "next lint"
   },
   "dependencies": {

@@ -138,7 +138,7 @@ export const getStaticPaths = () => {
 export const getStaticProps = async context => {
   const {
     params: { version, slug },
-    locale,
+    locale = 'en',
   } = context;
 
   const { versions } = generateAvailableDocVersions();

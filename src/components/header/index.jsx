@@ -139,21 +139,24 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
   const actionBar = (
     <div className={styles.actionBar}>
       <div className={styles.gitBtnsWrapper}>
-        <GitHubButton
-          stat={stat}
-          type="star"
-          href="https://github.com/milvus-io/milvus"
-        >
-          Star
-        </GitHubButton>
-
-        <GitHubButton
-          stat={stat}
-          type="fork"
-          href="https://github.com/milvus-io/milvus"
-        >
-          Fork
-        </GitHubButton>
+        {stat.stat && (
+          <GitHubButton
+            stat={stat}
+            type="star"
+            href="https://github.com/milvus-io/milvus"
+          >
+            Star
+          </GitHubButton>
+        )}
+        {stat.forks && (
+          <GitHubButton
+            stat={stat}
+            type="fork"
+            href="https://github.com/milvus-io/milvus"
+          >
+            Fork
+          </GitHubButton>
+        )}
       </div>
       <Menu
         anchorEl={anchorEl}

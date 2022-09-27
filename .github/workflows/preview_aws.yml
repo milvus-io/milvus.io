@@ -9,12 +9,12 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_OPTIONS: "--max_old_space_size=8192"
+  NODE_OPTIONS: '--max_old_space_size=8192'
 
 jobs:
   build:
-    runs-on: "ubuntu-latest"
-    
+    runs-on: 'ubuntu-latest'
+
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: "preview"
+          ref: 'preview'
 
       - name: update submodules
         run: |
@@ -71,4 +71,4 @@ jobs:
           echo ${{ secrets.RSYNC_PASSWORD }} > rsync.pass
           sudo chmod 600 rsync.pass
           sudo chown root rsync.pass
-          sudo rsync --password-file=rsync.pass -rDvpzc --delete public/ rsync://${{secrets.PREVIEW_SITE}}
+          sudo rsync --password-file=rsync.pass -rDvpzc --delete out/ rsync://${{secrets.PREVIEW_SITE}}

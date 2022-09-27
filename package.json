@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node scripts/migrateAssets.js && next dev",
     "build": "node scripts/migrateAssets.js && next build && next export",
-    "start": "next start ./out",
+    "start": "http-server ./out",
     "lint": "next lint"
   },
   "dependencies": {
@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "eslint": "8.19.0",
-    "eslint-config-next": "12.2.2"
+    "eslint-config-next": "12.2.2",
+    "http-server": "^14.1.1"
   }
 }

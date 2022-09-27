@@ -8,7 +8,7 @@ export default function DocHomePage(props) {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace(`/docs/${newestVersion}`);
+    router.replace(`/docs/${newestVersion}/home`);
   }, []);
 
   return (

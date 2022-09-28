@@ -2,47 +2,56 @@
 
 .gitBtnWrapper {
   color: #000;
-  background: linear-gradient(0deg, #f8f8f8, #f8f8f8);
-  border: 1px solid #f2f2f2;
-  border-radius: 4px;
+  background: #fff;
+  border: 1px solid rgba(27, 31, 36, 0.15);
+  border-radius: 6px;
   display: flex;
   height: 30px;
   margin-right: 20px;
+  padding: 3px 12px;
+  display: flex;
+  align-items: center;
 
   .link {
     align-items: center;
     border-radius: 4px;
     color: #000;
     display: flex;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 20px;
-    padding: 10px;
     text-decoration: none;
+
     .hover;
 
     .iconWrapper {
-      font-size: 20px;
       margin-right: 8px;
+      display: inline-block;
+      font-size: 0;
+      line-height: 0;
+    }
+
+    .starIcon > svg > path {
+      fill: #eac54f;
+      // background-color: #eac54f;
     }
 
     .iconText {
+      font-weight: 600;
+
       @media @desktop1024, @tablet {
         display: none;
       }
     }
-
-    line-height: 18px;
-    font-size: 14px;
   }
 
-  .num {
-    font-family: 'Roboto Mono';
-    font-weight: bold;
-    justify-content: center;
-
-    .stat {
-      min-width: 40px;
-      text-align: center;
-    }
+  .stat {
+    font-weight: 600;
+    margin-left: 6px;
+    min-width: 20px;
+    text-align: center;
+    padding: 0 6px;
+    display: inline-block;
+    background: rgba(27, 31, 36, 0.08);
+    border-radius: 2em;
   }
 }

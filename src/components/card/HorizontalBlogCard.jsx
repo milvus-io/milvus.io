@@ -24,8 +24,8 @@ export default function HorizontalBlogCard(props) {
             component="img"
             classes={{ img: styles.cardImg }}
             className={clsx({ [styles.loading]: imgLoading })}
-            src={`https://${cover}`}
-            alt="blog card cover"
+            src={cover}
+            alt={title}
             onLoad={handleImgLoad}
           />
           {imgLoading && (

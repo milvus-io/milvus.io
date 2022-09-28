@@ -144,7 +144,7 @@ export const getNewestVersionTool = (versions, minVersion) => {
   minEdition = minEdition.replaceAll(/v|\./g, '');
 
   const list = versions.map(v => {
-    let edition = v.includes('x') ? v.replace('x', '0') : v;
+    let edition = v.includes('x') ? v.replace('x', '1') : v;
 
     edition = edition.replaceAll(/v|\./g, '');
 

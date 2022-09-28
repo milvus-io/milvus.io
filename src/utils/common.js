@@ -2,12 +2,19 @@ import { Remarkable } from 'remarkable';
 import hljs from 'highlight.js';
 
 const convertImgSrc = (version, src) => {
+  if (src.includes('http')) {
+    return src;
+  }
+
   const path = src
     .split('/')
     .filter(v => v !== '.' && v !== '..')
     .join('/');
-  const imgUrl = `/docs/${version}/${path}`;
-  return imgUrl;
+  if (version === 'blog') {
+    return `/blogs/${path}`;
+  }
+
+  return `/docs/${version}/${path}`;
 };
 
 const getHeadingIdFromToken = token => {

@@ -3,9 +3,7 @@ import ShareButton, {
   Props as ShareButtonProps,
 } from 'react-share/lib/ShareButton';
 
-function objectToGetParams(object: {
-  [key: string]: string | number | undefined | null;
-}) {
+function objectToGetParams(object) {
   const params = Object.entries(object)
     .filter(([, value]) => value !== undefined && value !== null)
     .map(
@@ -16,33 +14,19 @@ function objectToGetParams(object: {
   return params.length > 0 ? `?${params.join('&')}` : '';
 }
 
-function createShareButton<
-  OptionProps extends Record<string, any>,
-  LinkOptions = OptionProps
->(
-  networkName: string,
-  link: (url: string, options: LinkOptions) => string,
-  optsMap: (props: OptionProps) => LinkOptions,
-  defaultProps: Partial<ShareButtonProps<LinkOptions> & OptionProps>
-) {
-  type Props = Omit<
-    ShareButtonProps<LinkOptions>,
-    'forwardedRef' | 'networkName' | 'networkLink' | 'opts'
-  > &
-    OptionProps;
-
-  function CreatedButton(props: Props, ref: Ref<HTMLButtonElement>) {
+function createShareButton(networkName, link, optsMap, defaultProps) {
+  function CreatedButton(props, ref) {
     const opts = optsMap(props);
     const passedProps = { ...props };
 
     // remove keys from passed props that are passed as opts
     const optsKeys = Object.keys(opts);
     optsKeys.forEach(key => {
-      delete (passedProps as any)[key];
+      delete passedProps[key];
     });
 
     return (
-      <ShareButton<LinkOptions>
+      <ShareButton
         {...defaultProps}
         {...passedProps}
         forwardedRef={ref}
@@ -58,15 +42,7 @@ function createShareButton<
   return forwardRef(CreatedButton);
 }
 
-function hackerNewsLink(
-  url: string,
-  {
-    title,
-    via,
-    hashtags = [],
-    related = [],
-  }: { title?: string; via?: string; hashtags?: string[]; related?: string[] }
-) {
+function hackerNewsLink(url, { title, via, hashtags = [], related = [] }) {
   return (
     'https://news.ycombinator.com/submitlink' +
     objectToGetParams({
@@ -76,12 +52,7 @@ function hackerNewsLink(
   );
 }
 
-const hackerNewsShareButton = createShareButton<{
-  title?: string;
-  via?: string;
-  hashtags?: string[];
-  related?: string[];
-}>(
+const hackerNewsShareButton = createShareButton(
   'hackernews',
   hackerNewsLink,
   props => ({

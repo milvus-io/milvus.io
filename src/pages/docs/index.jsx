@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { generateAvailableDocVersions } from '../../utils/milvus';
+import docUtils from '../../utils/docs.utils';
 import { useRouter } from 'next/router';
 
 export default function DocHomePage(props) {
@@ -26,7 +26,7 @@ export default function DocHomePage(props) {
 }
 
 export const getStaticProps = () => {
-  const { newestVersion } = generateAvailableDocVersions();
+  const { newestVersion } = docUtils.getVerion();
 
   return {
     props: {

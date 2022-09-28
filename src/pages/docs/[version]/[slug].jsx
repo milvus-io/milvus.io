@@ -1,9 +1,4 @@
-import {
-  generateAvailableDocVersions,
-  generateCurVersionMenu,
-  generateCurDocInfo,
-  generateAllDocsPaths,
-} from '../../../utils/milvus';
+import docUtils from '../../../utils/docs.utils';
 import HomeContent from '../../../parts/docs/homeContent';
 import DocContent from '../../../parts/docs/DocContent';
 import { markdownToHtml } from '../../../utils/common';
@@ -24,7 +19,7 @@ import {
 import { useGenAnchor } from '../../../hooks/doc-anchor';
 import { useOpenedStatus } from '../../../hooks';
 import { recursionUpdateTree } from '../../../utils/docUtils';
-import MenuTree from '../../../components/tree';
+import LeftNavSection from '../../../parts/docs/leftNavTree';
 import classes from '../../../styles/docHome.module.less';
 import AnchorTree from '../../../parts/docs/anchorTree';
 
@@ -77,15 +72,20 @@ export default function DocDetailPage(props) {
         })}
       >
         <div className={classes.menuContainer}>
-          <MenuTree
+          <LeftNavSection
             tree={menuTree}
             onNodeClick={handleNodeClick}
             className={classes.docMenu}
             version={version}
             versions={versions}
             linkPrefix={`/docs`}
+            linkSurfix="/home"
             locale={locale}
             trans={t}
+            home={{
+              label: 'Home',
+              link: '/docs',
+            }}
           />
         </div>
         <div
@@ -127,7 +127,8 @@ export default function DocDetailPage(props) {
 }
 
 export const getStaticPaths = () => {
-  const paths = generateAllDocsPaths();
+  const { contentList } = docUtils.getAllData();
+  const paths = docUtils.getDocRouter(contentList);
 
   return {
     paths,
@@ -141,14 +142,14 @@ export const getStaticProps = async context => {
     locale = 'en',
   } = context;
 
-  const { versions } = generateAvailableDocVersions();
+  const { versions } = docUtils.getVerion();
+  const { docData, contentList } = docUtils.getAllData();
   const {
     content,
-    summary,
     editPath,
     data: frontmatter,
-  } = generateCurDocInfo(slug, version, locale);
-  const docMenus = generateCurVersionMenu(version, locale);
+  } = docUtils.getDocConent(contentList, version, slug);
+  const docMenus = docUtils.getDocMenu(docData, version);
   const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
     content,
     {
@@ -164,7 +165,7 @@ export const getStaticProps = async context => {
         codeList,
         headingContent,
         anchorList,
-        summary,
+        summary: frontmatter.summary,
         editPath,
         frontmatter,
       },

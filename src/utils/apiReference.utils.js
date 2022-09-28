@@ -67,7 +67,7 @@ const generateAllApiData = () => {
     const { lang, versions } = v;
 
     versions.forEach(version => {
-      const menu = walkApiFiels2({
+      const menu = walkApiFiels({
         basePath: join(API_BASE_DIR, `/${lang}/${version}`),
         sufixPath: '',
         contentList,
@@ -94,13 +94,6 @@ const generateAllApiData = () => {
       },
     };
   });
-
-  // console.log(
-  //   'menuList---',
-  //   menuList.filter(
-  //     v => v.language === 'pymilvus' && v.params.version === 'v2.1.2'
-  //   )[1]
-  // );
 
   return {
     menuList,
@@ -174,45 +167,16 @@ function getLangFromSdk(programLang) {
   }
 }
 
-function walkApiFiels(path, flattenedContentList = [], config = {}) {
-  const paths = fs.readdirSync(path);
-
-  return paths.map(subPath => {
-    const filePath = join(path, subPath);
-    const state = fs.statSync(filePath);
-    if (state.isDirectory()) {
-      return {
-        id: subPath,
-        label: formatFileName(subPath),
-        isMenu: true,
-        children: walkApiFiels(filePath, flattenedContentList, config),
-      };
-    }
-    const file = fs.readFileSync(filePath, 'utf-8');
-
-    flattenedContentList.push({
-      id: subPath,
-      content: file,
-      ...config,
-    });
-    return {
-      id: subPath,
-      label: formatFileName(subPath),
-    };
-  });
-}
-
-const apiUtils = {
-  getVersions: generateAvailableApiVersions,
-  getData: generateAllApiData,
-  getRouter: getApiRoutersOfAllVersions,
-  getMenu: getApiMenuOfCurVersion,
-  getDoc: getApiDocOfCurVersion,
-};
-
-export default apiUtils;
-
-function walkApiFiels2({ basePath, sufixPath: path, contentList, config }) {
+/**
+ * 描述  router name of api is nested，because id may be repeated. so use surfixPath as unique key. fo example: /Collection/collection().md, /Collection/delete().md
+ * @date 2022-09-27
+ * @param {any} {basePath
+ * @param {any} sufixPath path after {language}/{version}/
+ * @param {any} contentList  list contains all api doc contents, it's a flattended list
+ * @param {any} config} includes current program language and version
+ * @returns {any} an nested list use for menu
+ */
+function walkApiFiels({ basePath, sufixPath: path, contentList, config }) {
   const originPath = join(basePath, path);
 
   const paths = fs.readdirSync(originPath);
@@ -228,7 +192,7 @@ function walkApiFiels2({ basePath, sufixPath: path, contentList, config }) {
         label: formatFileName(subPath),
         absolutePath: filePath,
         isMenu: true,
-        children: walkApiFiels2({
+        children: walkApiFiels({
           basePath,
           sufixPath,
           contentList,
@@ -252,3 +216,13 @@ function walkApiFiels2({ basePath, sufixPath: path, contentList, config }) {
     };
   });
 }
+
+const apiUtils = {
+  getVersions: generateAvailableApiVersions,
+  getData: generateAllApiData,
+  getRouter: getApiRoutersOfAllVersions,
+  getMenu: getApiMenuOfCurVersion,
+  getDoc: getApiDocOfCurVersion,
+};
+
+export default apiUtils;

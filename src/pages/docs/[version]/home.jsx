@@ -1,9 +1,4 @@
-import {
-  generateAvailableDocVersions,
-  getCurVersionHomeMd,
-  generateDocsData,
-  generateCurVersionMenu,
-} from '../../../utils/milvus';
+import docUtils from '../../../utils/docs.utils';
 import HomeContent from '../../../parts/docs/homeContent';
 import DocContent from '../../../parts/docs/DocContent';
 import { markdownToHtml } from '../../../utils/common';
@@ -24,7 +19,7 @@ import {
 import { useGenAnchor } from '../../../hooks/doc-anchor';
 import { useOpenedStatus } from '../../../hooks';
 import { recursionUpdateTree } from '../../../utils/docUtils';
-import MenuTree from '../../../components/tree';
+import LeftNavSection from '../../../parts/docs/leftNavTree';
 import classes from '../../../styles/docHome.module.less';
 
 export default function DocHomePage(props) {
@@ -59,6 +54,10 @@ export default function DocHomePage(props) {
     setMenuTree(updatedTree);
   };
 
+  // useMultipleCodeFilter();
+  // useGenAnchor(version, editPath);
+  // useFilter();
+
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <div
@@ -67,15 +66,17 @@ export default function DocHomePage(props) {
         })}
       >
         <div className={classes.menuContainer}>
-          <MenuTree
+          <LeftNavSection
             tree={menuTree}
             onNodeClick={handleNodeClick}
             className={classes.docMenu}
             version={version}
             versions={versions}
             linkPrefix={`/docs`}
+            linkSurfix="/home"
             locale={locale}
             trans={t}
+            home={{ label: 'Home', link: '/docs' }}
           />
         </div>
 
@@ -103,7 +104,7 @@ export default function DocHomePage(props) {
 }
 
 export const getStaticPaths = () => {
-  const { versions } = generateAvailableDocVersions();
+  const { versions } = docUtils.getVerion();
 
   const paths = versions.map(v => ({
     params: { version: v },
@@ -121,11 +122,12 @@ export const getStaticProps = async context => {
     locale = 'en',
   } = context;
 
-  const { versions } = generateAvailableDocVersions();
-  const md = getCurVersionHomeMd(version, locale);
-  const docMenus = generateCurVersionMenu(version, locale);
-  const data = generateDocsData();
-  const { tree } = await markdownToHtml(md, {
+  const { versions } = docUtils.getVerion();
+  const { docData } = docUtils.getAllData();
+  const homeContent = docUtils.getHomeData(docData, version);
+  const menu = docUtils.getDocMenu(docData, version);
+
+  const { tree } = await markdownToHtml(homeContent, {
     showAnchor: false,
     version,
   });
@@ -133,11 +135,12 @@ export const getStaticProps = async context => {
   return {
     props: {
       homeData: tree,
+      isHome: true,
       version,
       locale,
       versions,
       blogs: [],
-      menus: docMenus,
+      menus: menu,
     },
   };
 };

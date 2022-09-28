@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import Layout from '../../../../components/layout';
-import MenuTree from '../../../../components/tree';
+import LeftNavSection from '../../../../parts/docs/leftNavTree';
 import { useTranslation } from 'react-i18next';
 import { mdMenuListFactory } from '../../../../components/leftNavigation/utils';
 import Aside from '../../../../components/aside';
@@ -154,7 +154,7 @@ export default function Template(props) {
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <div className={'doc-temp-container'}>
         <div className={classes.menuContainer}>
-          <MenuTree
+          <LeftNavSection
             tree={menuTree}
             onNodeClick={handleNodeClick}
             className={classes.docMenu}
@@ -164,6 +164,10 @@ export default function Template(props) {
             linkSurfix="About.md"
             locale={locale}
             trans={t}
+            home={{
+              label: 'Doc',
+              link: '/docs',
+            }}
           />
         </div>
         <div

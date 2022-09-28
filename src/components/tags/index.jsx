@@ -10,7 +10,7 @@ const Tags = props => {
   return (
     <ul className={tagsClass}>
       {list.map(tag => (
-        <li>
+        <li key={tag}>
           <div
             key={tag}
             onClick={() => onClick(tag)}

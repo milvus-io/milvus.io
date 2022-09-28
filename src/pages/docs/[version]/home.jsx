@@ -1,4 +1,5 @@
 import docUtils from '../../../utils/docs.utils';
+import blogUtils from '../../../utils/blog.utils';
 import HomeContent from '../../../parts/docs/homeContent';
 import DocContent from '../../../parts/docs/DocContent';
 import { markdownToHtml } from '../../../utils/common';
@@ -127,6 +128,8 @@ export const getStaticProps = async context => {
   const homeContent = docUtils.getHomeData(docData, version);
   const menu = docUtils.getDocMenu(docData, version);
 
+  const blogs = blogUtils.getAllData();
+
   const { tree } = await markdownToHtml(homeContent, {
     showAnchor: false,
     version,
@@ -139,7 +142,7 @@ export const getStaticProps = async context => {
       version,
       locale,
       versions,
-      blogs: [],
+      blogs,
       menus: menu,
     },
   };

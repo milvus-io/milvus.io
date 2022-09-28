@@ -79,7 +79,7 @@ export default function DocDetailPage(props) {
             version={version}
             versions={versions}
             linkPrefix={`/docs`}
-            linkSurfix="/home"
+            linkSurfix="home"
             locale={locale}
             trans={t}
             home={{
@@ -165,7 +165,7 @@ export const getStaticProps = async context => {
         codeList,
         headingContent,
         anchorList,
-        summary: frontmatter.summary,
+        summary: frontmatter.summary || '',
         editPath,
         frontmatter,
       },

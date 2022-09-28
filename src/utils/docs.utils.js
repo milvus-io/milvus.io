@@ -167,8 +167,9 @@ function walkApiFiels({ basePath, sufixPath: path, contentList, config }) {
   const originPath = join(basePath, path);
   const paths = fs.readdirSync(originPath);
 
-  paths.forEach(subPath => {
-    if (!IGNORE_FILES.includes(subPath)) {
+  paths
+    .filter(v => !IGNORE_FILES.includes(v))
+    .forEach(subPath => {
       const sufixPath = `${path}/${subPath}`;
       const filePath = join(basePath, sufixPath);
       const state = fs.statSync(filePath);
@@ -193,8 +194,7 @@ function walkApiFiels({ basePath, sufixPath: path, contentList, config }) {
           ...config,
         });
       }
-    }
-  });
+    });
 }
 
 const docUtils = {

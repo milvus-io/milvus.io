@@ -13,7 +13,10 @@ const copyPictures = (sourcePath, targetPath) => {
       }))
       .filter(v => !v.srcPath.includes('.DS_Store'));
 
-    fs.mkdirSync(targetPath);
+    if (!fs.existsSync(targetPath)) {
+      fs.mkdirSync(targetPath);
+    }
+
     paths.forEach(({ srcPath, tarPath }) => {
       copyPictures(srcPath, tarPath);
     });
@@ -25,8 +28,8 @@ const copyPictures = (sourcePath, targetPath) => {
 
 const copyMkdAssetsToPublic = version => {
   const [baseSrcDir, baseTarDir] = [
-    join(process.cwd(), `./src/docs/${version}/assets`),
-    join(process.cwd(), `./public/docs/${version}/assets`),
+    join(process.cwd(), `/src/docs/${version}/assets`),
+    join(process.cwd(), `/public/docs/${version}/assets`),
   ];
 
   const paths = fs
@@ -53,26 +56,24 @@ const copyMkdAssetsToPublic = version => {
 };
 
 const migrateBlogAssets = () => {
-  const BLOG_BASE_DIR = join(process.cwd(), './src/blogs/blog/assets');
-  const PUBLIC_BLOG_DIR = join(process.cwd(), './public/blogs');
+  const BLOG_BASE_DIR = join(process.cwd(), '/src/blogs/blog/assets');
+  const PUBLIC_BLOG_DIR = join(process.cwd(), '/public/blogs');
 
-  const stats = fs.statSync(PUBLIC_BLOG_DIR);
-
-  if (stats.isDirectory()) {
+  if (fs.existsSync(PUBLIC_BLOG_DIR)) {
     fs.rmSync(PUBLIC_BLOG_DIR, {
       recursive: true,
       force: true,
     });
-  } else {
-    fs.mkdirSync(PUBLIC_BLOG_DIR);
   }
+
+  fs.mkdirSync(PUBLIC_BLOG_DIR);
 
   copyPictures(BLOG_BASE_DIR, PUBLIC_BLOG_DIR);
 };
 
-const migerateDocAssets = () => {
-  const DOC_BASE_DIR = join(process.cwd(), './src/docs');
-  const PUBLIC_BASE_DIR = join(process.cwd(), './public/docs');
+const migrateDocAssets = () => {
+  const DOC_BASE_DIR = join(process.cwd(), '/src/docs');
+  const PUBLIC_BASE_DIR = join(process.cwd(), '/public/docs');
   const VERSION_REGEX = /^v[1-9].*/;
 
   const availableVersions = fs
@@ -84,15 +85,15 @@ const migerateDocAssets = () => {
     force: true,
   });
 
-  fs.mkdirSync(join(process.cwd(), `./public/docs`));
+  fs.mkdirSync(join(process.cwd(), `/public/docs`));
 
   availableVersions.forEach(v => {
-    fs.mkdirSync(join(process.cwd(), `./public/docs/${v}`));
-    fs.mkdirSync(join(process.cwd(), `./public/docs/${v}/assets`));
+    fs.mkdirSync(join(process.cwd(), `/public/docs/${v}`));
+    fs.mkdirSync(join(process.cwd(), `/public/docs/${v}/assets`));
 
     copyMkdAssetsToPublic(v);
   });
 };
 
 migrateBlogAssets();
-migerateDocAssets();
+migrateDocAssets();

@@ -11,6 +11,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useTranslation } from 'react-i18next';
 import * as styles from './index.module.less';
 import clsx from 'clsx';
+import AnchorTree from '../../parts/docs/anchorTree';
 
 // const result = {
 //   doc: {},
@@ -39,11 +40,11 @@ const Aside = props => {
     category = 'doc',
     items,
     title,
-    className = '',
-    isHome,
     isShowBtnGroup = 'true',
+    classes = {},
   } = props;
   const { t } = useTranslation('common');
+  const { root, btnGroup, anchorTree } = classes;
   // editBtn issueBtn; bugBtn; suggestBtn; joinBtn
   const [
     commonEditBtnConf,
@@ -165,24 +166,34 @@ const Aside = props => {
     );
   };
   return (
-    <section className={clsx('right-nav', styles.rightNavWrapper)}>
-      {!isHome && (
-        <>
-          {isShowBtnGroup && (
-            <ul className={styles.btnsGroup}>
-              {generateBtnroup(category, props, styles)}
-            </ul>
-          )}
-          {category === 'doc' && (
-            <TocTreeView
-              items={items}
-              title={title}
-              className={className}
-              maxDepth={2}
-            />
-          )}
-        </>
-      )}
+    <section
+      className={clsx('right-nav', styles.rightNavWrapper, {
+        [root]: root,
+      })}
+    >
+      <>
+        {isShowBtnGroup && (
+          <ul
+            className={clsx(styles.btnsGroup, {
+              [btnGroup]: btnGroup,
+            })}
+          >
+            {generateBtnroup(category, props, styles)}
+          </ul>
+        )}
+        {category === 'doc' && (
+          <AnchorTree
+            list={items}
+            t={t}
+            className={
+              (styles.anchor,
+              {
+                [anchorTree]: anchorTree,
+              })
+            }
+          />
+        )}
+      </>
     </section>
   );
 };

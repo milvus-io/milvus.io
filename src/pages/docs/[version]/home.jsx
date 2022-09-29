@@ -22,6 +22,7 @@ import { useOpenedStatus } from '../../../hooks';
 import { recursionUpdateTree } from '../../../utils/docUtils';
 import LeftNavSection from '../../../parts/docs/leftNavTree';
 import classes from '../../../styles/docHome.module.less';
+import DocLayout from '../../../components/docLayout';
 
 export default function DocHomePage(props) {
   const { homeData, blogs = [], menus, version, versions, locale } = props;
@@ -55,17 +56,59 @@ export default function DocHomePage(props) {
     setMenuTree(updatedTree);
   };
 
-  // useMultipleCodeFilter();
-  // useGenAnchor(version, editPath);
-  // useFilter();
-
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader">
-      <div
-        className={clsx('doc-temp-container', {
-          [`home`]: homeData,
-        })}
-      >
+    // <Layout t={t} showFooter={false} headerClassName="docHeader">
+    //   <div
+    //     className={clsx('doc-temp-container', {
+    //       [`home`]: homeData,
+    //     })}
+    //   >
+    // <div className={classes.menuContainer}>
+    //   <LeftNavSection
+    //     tree={menuTree}
+    //     onNodeClick={handleNodeClick}
+    //     className={classes.docMenu}
+    //     version={version}
+    //     versions={versions}
+    //     linkPrefix={`/docs`}
+    //     linkSurfix="home"
+    //     locale={locale}
+    //     trans={t}
+    //     home={{ label: 'Home', link: '/docs' }}
+    //   />
+    // </div>
+
+    // <div
+    //   className={clsx('doc-right-container', {
+    //     [`is-opened`]: isOpened,
+    //   })}
+    // >
+    //   <div
+    //     className={clsx('doc-content-container', {
+    //       [`doc-home`]: homeData,
+    //     })}
+    //   >
+    //     <HomeContent
+    //       homeData={homeData}
+    //       newestBlog={newestBlog}
+    //       trans={t}
+    //     />
+    //   </div>
+    //   <Footer t={t} darkMode={false} className="doc-right-footer" />
+    // </div>
+    //   </div>
+    // </Layout>
+    <DocLayout
+      isHome
+      classes={{
+        root: 'doc-temp-container home',
+      }}
+      seo={{
+        title: 'Milvus vector database documentation',
+        desc: '',
+        url: 'https://milvus.io/docs',
+      }}
+      left={
         <div className={classes.menuContainer}>
           <LeftNavSection
             tree={menuTree}
@@ -74,13 +117,14 @@ export default function DocHomePage(props) {
             version={version}
             versions={versions}
             linkPrefix={`/docs`}
-            linkSurfix="/home"
+            linkSurfix="home"
             locale={locale}
             trans={t}
             home={{ label: 'Home', link: '/docs' }}
           />
         </div>
-
+      }
+      center={
         <div
           className={clsx('doc-right-container', {
             [`is-opened`]: isOpened,
@@ -99,8 +143,8 @@ export default function DocHomePage(props) {
           </div>
           <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>
-      </div>
-    </Layout>
+      }
+    />
   );
 }
 

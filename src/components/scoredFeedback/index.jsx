@@ -9,7 +9,7 @@ import { readStatisData, writeStatisData } from '../../http';
 export default function ScoredFeedback(props) {
   const { pageId, trans } = props;
 
-  const [score, setScore] = useState('');
+  const [score, setScore] = useState(undefined);
 
   const scoreQuestion = trans('v3trans.docs.scoreQuestion');
   const scoreThanks = trans('v3trans.docs.scoreThanks');
@@ -32,7 +32,7 @@ export default function ScoredFeedback(props) {
 
   const cleanScore = () => {
     setLocalStorageItem('feedback_info', pageId, '');
-    setScore('');
+    setScore(undefined);
   };
 
   /**
@@ -81,7 +81,7 @@ export default function ScoredFeedback(props) {
   useEffect(() => {
     try {
       const feedbackDetail = getLocalStorageItem('feedback_info', pageId);
-      feedbackDetail && setScore(feedbackDetail);
+      setScore(feedbackDetail);
     } catch (error) {
       console.log(error);
     }
@@ -123,8 +123,7 @@ const BtnGroups = props => {
     <div className={styles.btnGroup}>
       <button
         className={clsx(styles.btn, {
-          [styles.pBtn]: score === 'like',
-          [styles.sBtn]: score !== 'like',
+          [styles.active]: score === 'like',
         })}
         onClick={() => {
           onScoreBtnClick('like');
@@ -135,8 +134,7 @@ const BtnGroups = props => {
       </button>
       <button
         className={clsx(styles.btn, {
-          [styles.pBtn]: score === 'dislike',
-          [styles.sBtn]: score !== 'dislike',
+          [styles.active]: score === 'dislike',
         })}
         onClick={() => {
           onScoreBtnClick('dislike');

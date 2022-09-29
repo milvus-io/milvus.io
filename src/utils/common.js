@@ -42,12 +42,26 @@ export async function markdownToHtml(markdown, options = {}) {
             hljs.highlight(lang, str).value +
             `<button class="copy-code-btn"></button>`
           );
-        } catch (err) {}
+        } catch (err) {
+          console.log('error', err);
+        }
+      } else {
+        // no language named curl
+        try {
+          return (
+            hljs.highlight('shell', str).value +
+            `<button class="copy-code-btn"></button>`
+          );
+        } catch (err) {
+          console.log('error', err);
+        }
       }
 
       try {
         return hljs.highlightAuto(str).value;
-      } catch (err) {}
+      } catch (err) {
+        console.log('error', err);
+      }
 
       return ''; // use external default escaping
     },

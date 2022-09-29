@@ -88,10 +88,41 @@
     color: var(--color-text-primary);
     display: inline-block;
     font-weight: 600;
+    position: relative;
+    padding-right: 60px;
 
     @media @phone {
       max-width: calc(100vw - 32px);
       overflow-x: auto;
+    }
+
+    .copy-code-btn {
+      display: flex;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      margin: 0;
+
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        svg > path {
+          stroke: #175fff;
+        }
+      }
     }
   }
 

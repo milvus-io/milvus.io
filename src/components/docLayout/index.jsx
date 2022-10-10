@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import classes from './index.module.less';
 import Head from 'next/head';
 import clsx from 'clsx';
+import FlexibleSectionContainer from '../flexibleSection';
+import { useState, useEffect } from 'react';
+import { getCurrentSize } from '../../http/hooks';
 
 export default function DocLayout(props) {
   const { t } = useTranslation('common');
@@ -30,13 +33,15 @@ export default function DocLayout(props) {
       </Head>
 
       <div className={clsx(classes.docLayout, { [root]: root })}>
-        <div
-          className={clsx(classes.leftContainer, {
-            [menu]: menu,
-          })}
+        <FlexibleSectionContainer
+          minWidth={24}
+          maxWidth={282}
+          classes={{
+            root: classes.flexibleContainer,
+          }}
         >
           {left}
-        </div>
+        </FlexibleSectionContainer>
         <div
           className={clsx(classes.contentContainer, {
             [classes.docHome]: isHome,

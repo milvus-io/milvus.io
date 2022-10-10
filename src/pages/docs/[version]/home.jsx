@@ -7,22 +7,16 @@ import { markdownToHtml } from '../../../utils/common';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '../../../components/layout';
-import LeftNav from '../../../components/leftNavigation';
-import { mdMenuListFactory } from '../../../components/leftNavigation/utils';
 import clsx from 'clsx';
-import Aside from '../../../components/aside';
 import Footer from '../../../components/footer';
-import {
-  useCodeCopy,
-  useMultipleCodeFilter,
-  useFilter,
-} from '../../../hooks/doc-dom-operation';
+
 import { useGenAnchor } from '../../../hooks/doc-anchor';
-import { useOpenedStatus } from '../../../hooks';
 import { recursionUpdateTree } from '../../../utils/docUtils';
 import LeftNavSection from '../../../parts/docs/leftNavTree';
-import classes from '../../../styles/docHome.module.less';
+import classes from '../../../styles/docs.module.less';
 import DocLayout from '../../../components/docLayout';
+
+const TITLE = 'Milvus vector database documentation';
 
 export default function DocHomePage(props) {
   const { homeData, blogs = [], menus, version, versions, locale } = props;
@@ -44,9 +38,6 @@ export default function DocHomePage(props) {
   };
 
   const handleNodeClick = (nodeId, parentIds, isPage = false) => {
-    // const updatedTree = isPage
-    //   ? handleClickMenuPageItem(menus, nodeId, parentIds)
-    //   : handleClickPureMenuItem(menus, nodeId, parentIds);
     const updatedTree = recursionUpdateTree(
       menuTree,
       nodeId,
@@ -57,72 +48,29 @@ export default function DocHomePage(props) {
   };
 
   return (
-    // <Layout t={t} showFooter={false} headerClassName="docHeader">
-    //   <div
-    //     className={clsx('doc-temp-container', {
-    //       [`home`]: homeData,
-    //     })}
-    //   >
-    // <div className={classes.menuContainer}>
-    //   <LeftNavSection
-    //     tree={menuTree}
-    //     onNodeClick={handleNodeClick}
-    //     className={classes.docMenu}
-    //     version={version}
-    //     versions={versions}
-    //     linkPrefix={`/docs`}
-    //     linkSurfix="home"
-    //     locale={locale}
-    //     trans={t}
-    //     home={{ label: 'Home', link: '/docs' }}
-    //   />
-    // </div>
-
-    // <div
-    //   className={clsx('doc-right-container', {
-    //     [`is-opened`]: isOpened,
-    //   })}
-    // >
-    //   <div
-    //     className={clsx('doc-content-container', {
-    //       [`doc-home`]: homeData,
-    //     })}
-    //   >
-    //     <HomeContent
-    //       homeData={homeData}
-    //       newestBlog={newestBlog}
-    //       trans={t}
-    //     />
-    //   </div>
-    //   <Footer t={t} darkMode={false} className="doc-right-footer" />
-    // </div>
-    //   </div>
-    // </Layout>
     <DocLayout
       isHome
       classes={{
-        root: 'doc-temp-container home',
+        root: clsx(classes.docPageContainer, classes.docHomePage),
       }}
       seo={{
-        title: 'Milvus vector database documentation',
+        title: TITLE,
         desc: '',
         url: 'https://milvus.io/docs',
       }}
       left={
-        <div className={classes.menuContainer}>
-          <LeftNavSection
-            tree={menuTree}
-            onNodeClick={handleNodeClick}
-            className={classes.docMenu}
-            version={version}
-            versions={versions}
-            linkPrefix={`/docs`}
-            linkSurfix="home"
-            locale={locale}
-            trans={t}
-            home={{ label: 'Home', link: '/docs' }}
-          />
-        </div>
+        <LeftNavSection
+          tree={menuTree}
+          onNodeClick={handleNodeClick}
+          className={classes.docMenu}
+          version={version}
+          versions={versions}
+          linkPrefix={`/docs`}
+          linkSurfix="home"
+          locale={locale}
+          trans={t}
+          home={{ label: 'Home', link: '/docs' }}
+        />
       }
       center={
         <div

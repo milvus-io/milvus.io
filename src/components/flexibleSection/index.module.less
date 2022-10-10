@@ -1,0 +1,71 @@
+@import (reference) '../../styles/common.module.less';
+
+.flexibleSectionWrapper {
+  // transition: width linear 0.5s;
+  position: relative;
+  // min-width: 24px;
+
+  .flexibleSection {
+    transition: width ease-in 0.2s;
+    will-change: width;
+    background-color: #fff;
+    display: flex;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 999;
+  }
+
+  .contentWrapper {
+    flex: 1;
+    overflow: hidden;
+    visibility: visible;
+    opacity: 1;
+
+    &.hiddenContent {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  .buttonWrapper {
+    flex: 0 0 1px;
+    position: relative;
+    border-right: 1px solid var(--color-grey-04);
+
+    .floatBtn {
+      position: absolute;
+      left: -12px;
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      text-align: center;
+
+      .controller {
+        width: 24px;
+        height: 24px;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        box-shadow: -3px -3px 5px rgb(0 0 0 / 20%);
+        color: #00a1ea;
+        padding: 0;
+        margin: 0;
+        margin-top: 30px;
+        background-color: #fff;
+        transform: rotate(180deg);
+        cursor: pointer;
+
+        &:hover {
+          background-color: #00a1ea;
+          color: #fff;
+        }
+      }
+      .expandIcon {
+        transform: rotate(0);
+        box-shadow: 3px 3px 5px rgb(0 0 0 / 20%);
+      }
+    }
+  }
+}

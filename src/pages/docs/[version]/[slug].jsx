@@ -15,7 +15,6 @@ import {
   useMultipleCodeFilter,
 } from '../../../hooks/enhanceCodeBlock';
 import { useGenAnchor } from '../../../hooks/doc-anchor';
-import { useOpenedStatus } from '../../../hooks';
 import { recursionUpdateTree, getMenuInfoById } from '../../../utils/docUtils';
 import LeftNavSection from '../../../parts/docs/leftNavTree';
 import classes from '../../../styles/docHome.module.less';

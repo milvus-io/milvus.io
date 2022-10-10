@@ -1,25 +1,32 @@
+@import (reference) '../../styles/mixins.less';
+
 .docLayout {
   display: flex;
+  position: relative;
+  width: 100%;
 
-  h1 {
-    margin-top: 8px;
+  .flexibleContainer {
+    position: sticky;
+    top: 79px;
+    height: calc(100vh - 79px);
+    background-color: #fff;
+    z-index: 999;
+    min-width: 24px;
+
+    @media @tablet {
+      top: 67px;
+      height: calc(100vh - 67px);
+    }
+
+    @media @phone {
+      top: 57px;
+      height: calc(100vh - 57px);
+    }
   }
 
   .contentContainer {
-    max-width: 950px;
-    padding: 0 32px;
-    overflow: hidden;
-    width: calc(100vw - 232px);
-    box-sizing: border-box;
-    will-change: max-width, width;
-
-    @media @tablet {
-      transition: none;
-      will-change: none;
-      width: 100vw;
-    }
-    @media @phone {
-      width: 100%;
-    }
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
   }
 }

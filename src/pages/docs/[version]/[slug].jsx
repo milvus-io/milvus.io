@@ -1,30 +1,26 @@
 import docUtils from '../../../utils/docs.utils';
 import HomeContent from '../../../parts/docs/homeContent';
 import DocContent from '../../../parts/docs/DocContent';
-import { markdownToHtml } from '../../../utils/common';
-
-import React, { useMemo, useState } from 'react';
+import { markdownToHtml, copyToCommand } from '../../../utils/common';
+import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '../../../components/layout';
-import LeftNav from '../../../components/leftNavigation';
-import { mdMenuListFactory } from '../../../components/leftNavigation/utils';
+import { linkIconTpl } from '../../../components/icons';
 import clsx from 'clsx';
 import Aside from '../../../components/aside';
 import Footer from '../../../components/footer';
 import {
-  useCodeCopy,
-  useMultipleCodeFilter,
+  useCopyCode,
   useFilter,
-} from '../../../hooks/doc-dom-operation';
+  useMultipleCodeFilter,
+} from '../../../hooks/enhanceCodeBlock';
 import { useGenAnchor } from '../../../hooks/doc-anchor';
-import { useOpenedStatus } from '../../../hooks';
-import { recursionUpdateTree } from '../../../utils/docUtils';
+import { recursionUpdateTree, getMenuInfoById } from '../../../utils/docUtils';
 import LeftNavSection from '../../../parts/docs/leftNavTree';
 import classes from '../../../styles/docHome.module.less';
-import AnchorTree from '../../../parts/docs/anchorTree';
 
 export default function DocDetailPage(props) {
-  const { homeData, blogs = [], menus, version, versions, locale, id } = props;
+  const { homeData, menus, version, versions, locale, id: currentId } = props;
   const {
     tree,
     codeList,
@@ -39,10 +35,8 @@ export default function DocDetailPage(props) {
 
   const [isOpened, setIsOpened] = useState(false);
   const [menuTree, setMenuTree] = useState(menus);
-
-  const newestBlog = useMemo(() => {
-    return blogs[0];
-  }, [blogs]);
+  const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
+  const pageHref = useRef('');
 
   const components = {
     img: props => (
@@ -52,9 +46,6 @@ export default function DocDetailPage(props) {
   };
 
   const handleNodeClick = (nodeId, parentIds, isPage = false) => {
-    // const updatedTree = isPage
-    //   ? handleClickMenuPageItem(menus, nodeId, parentIds)
-    //   : handleClickPureMenuItem(menus, nodeId, parentIds);
     const updatedTree = recursionUpdateTree(
       menuTree,
       nodeId,
@@ -63,6 +54,56 @@ export default function DocDetailPage(props) {
     );
     setMenuTree(updatedTree);
   };
+
+  useEffect(() => {
+    // active initial menu item
+    const currentMenuInfo = getMenuInfoById(menus, currentId);
+    if (!currentMenuInfo) {
+      return;
+    }
+    handleNodeClick(currentId, currentMenuInfo.parentIds, true);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    // add click event handler for copy icon after headings
+    if (window && typeof window !== 'undefined') {
+      const anchors = Array.from(document.querySelectorAll('.anchor-icon'));
+      const baseHref = window.location.href.split('#')[0];
+
+      anchors.forEach(anchor => {
+        anchor.addEventListener(
+          'click',
+          e => {
+            if (!e.currentTarget) {
+              return;
+            }
+            const {
+              dataset: { href },
+            } = e.currentTarget;
+            pageHref.current = `${baseHref}${href}`;
+            copyToCommand(pageHref.current);
+
+            anchor.innerHTML = '<span class="tip">copied</span>';
+
+            setTimeout(() => {
+              anchor.innerHTML = linkIconTpl;
+            }, 3000);
+          },
+          false
+        );
+      });
+    }
+    // close mask when router changed
+    isOpenMobileMenu && setIsOpenMobileMenu(false);
+    // no need to watch 'isOpenMobileMenu'
+    // eslint-disable-next-line
+  }, [currentId]);
+
+  useFilter();
+  useMultipleCodeFilter(currentId);
+  useCopyCode(codeList);
+  useGenAnchor(version, editPath);
 
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
@@ -97,25 +138,22 @@ export default function DocDetailPage(props) {
             <DocContent
               version={version}
               htmlContent={tree}
-              mdI={id}
+              mdId={currentId}
               trans={t}
               commitPath={editPath}
             />
             <div className="doc-toc-container">
-              {/* <Aside
+              <Aside
                 locale={locale}
                 version={version}
-                editPath={''}
-                mdTitle={headingContent}
+                editPath={editPath}
+                mdTitle={frontmatter.title}
                 category="doc"
-                isHome={false}
                 items={anchorList}
                 title={t('v3trans.docs.tocTitle')}
-              /> */}
-              <AnchorTree
-                list={anchorList}
-                t={t}
-                className={classes.docAnchors}
+                classes={{
+                  root: classes.rightAnchorTreeWrapper,
+                }}
               />
             </div>
           </div>
@@ -172,7 +210,6 @@ export const getStaticProps = async context => {
       version,
       locale,
       versions,
-      blogs: [],
       menus: docMenus,
       id: slug,
     },

@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
 import { sourceMap } from '../consts/newsletterSource';
-import { IS_OPENED } from '../components/adjustableMenu';
 import { getCurrentSize } from '../http/hooks';
 
 export const useMobileScreen = () => {
@@ -70,17 +69,4 @@ export const useSubscribeSrouce = () => {
     }
   }, []);
   return source;
-};
-
-export const useOpenedStatus = cb => {
-  useEffect(() => {
-    const device = getCurrentSize();
-    if (typeof cb !== 'function' || device === 'phone' || device === 'tablet') {
-      return;
-    }
-    const isMenuOpened = window.sessionStorage.getItem(IS_OPENED) === 'true';
-
-    cb(isMenuOpened);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 };

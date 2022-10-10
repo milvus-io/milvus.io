@@ -253,29 +253,31 @@ html {
   }
 
   .card-wrapper {
-    display: grid;
-    grid-auto-rows: minmax(230px, auto);
-    grid-template-columns: repeat(auto-fit, 268px);
-    justify-content: space-between;
-    grid-gap: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 25px;
 
     @media @phone {
-      justify-content: center;
+      flex-direction: column;
     }
 
     .start_card_container {
+      max-width: 230px;
+      flex: 1;
       background: var(--color-white);
       border: 1px solid #dee8f1;
       box-sizing: border-box;
       border-radius: 4px;
       padding: 25px;
-      min-width: 185px;
       gap: 5px;
-
-      min-height: 230px;
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      @media @phone {
+        max-width: 100%;
+        width: 100%;
+      }
 
       &:hover {
         border: 1px solid #b8ccde;

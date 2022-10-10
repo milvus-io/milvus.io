@@ -103,3 +103,51 @@ export const Star = () => (
     ></path>
   </svg>
 );
+
+export const checkIconTpl = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path 
+      fill="#000000" 
+      d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"
+    />
+  </svg>
+`;
+
+// copy icon of code block
+export const copyIconTpl = `
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M16 4H6.5C5.11929 4 4 5.11929 4 6.5V16"
+      stroke="#1D2939"
+      strokeWidth="2"
+    />
+    <path
+      d="M19.5 8H8.5C8.22386 8 8 8.22386 8 8.5V19.5C8 19.7761 8.22386 20 8.5 20H19.5C19.7761 20 20 19.7761 20 19.5V8.5C20 8.22386 19.7761 8 19.5 8Z"
+      stroke="#1D2939"
+      strokeWidth="2"
+    />
+  </svg>
+`;
+
+export const linkIconTpl = `
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    height="20"
+    version="1.1"
+    viewBox="0 0 16 16"
+    width="16"
+  >
+    <path
+      fill="#0092E4"
+      fillRule="evenodd"
+      d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"
+    ></path>
+  </svg>
+`;

@@ -13,6 +13,7 @@
     width: 100%;
     font-size: 14px;
     padding-left: 20px;
+    padding-right: 20px;
     background-color: #f5f8fb;
     border-radius: 4px;
     margin: 0;
@@ -26,24 +27,24 @@
       margin: 0 10px;
     }
 
-    .DocSearch-Search-Icon {
+    :global(.DocSearch-Search-Icon) {
       width: 14px;
       height: 14px;
       margin-right: 10px;
       color: #9ca6b2;
     }
 
-    .DocSearch-Button-Keys {
+    span:global(.DocSearch-Button-Keys) {
       display: none;
     }
 
-    .DocSearch-Button-Placeholder {
+    :global(.DocSearch-Button-Placeholder) {
       color: #9ca6b2;
       @media (max-width: 750px) {
         display: block;
       }
     }
-    .DocSearch-Container * {
+    :global(.DocSearch-Container) * {
       font-family: Inter;
     }
   }

@@ -115,7 +115,7 @@ export default function Template({ pageContext }) {
                 // version={version}
                 editPath={editPath}
                 mdTitle={headings[0]}
-                category="doc"
+                category="community"
                 isHome={isHomePage}
                 items={headings}
                 title={t('v3trans.docs.tocTitle')}

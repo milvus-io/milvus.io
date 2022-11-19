@@ -22,6 +22,7 @@ const gatsbyConfigs = {
           `**/export_pdf`,
           `**/\.*`,
           `**/zh-CN`,
+          `**/common`,
         ],
       },
     },
@@ -31,6 +32,13 @@ const gatsbyConfigs = {
         name: `blogs`,
         path: `${__dirname}/src/pages/blogs/versions`,
         ignore: [`**/communication`, `**/meetup`, `**/Events`, `**/\.*`, `.*`],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `i18n`,
+        path: `${__dirname}/src/i18n/`,
       },
     },
     {
@@ -89,13 +97,6 @@ const gatsbyConfigs = {
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-less`,
     // i18n json data
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `i18n`,
-        path: `${__dirname}/src/i18n/`,
-      },
-    },
     {
       resolve: `gatsby-transformer-remark`,
       options: {

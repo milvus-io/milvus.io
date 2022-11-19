@@ -21,7 +21,7 @@ const gatsbyConfigs = {
           `**/API_Reference`,
           `**/export_pdf`,
           `**/\.*`,
-          `.*`,
+          `**/zh-CN`,
         ],
       },
     },

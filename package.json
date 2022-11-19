@@ -74,7 +74,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby clean && gatsby build",
-    "dev": "gatsby clean && gatsby develop -H 0.0.0.0",
+    "dev": "gatsby clean && gatsby develop -H 0.0.0.0 --verbose",
     "format": "prettier --write ./**/*.{js,jsx}",
     "play": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "npm run clean && npm run dev",

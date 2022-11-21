@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import Giscus from '@giscus/react';
+// import Giscus from '@giscus/react';
 import { graphql } from 'gatsby';
 import { useI18next } from 'gatsby-plugin-react-i18next';
 import Layout from '../components/layout';
@@ -106,7 +106,7 @@ export default function Template({ data, pageContext }) {
           className={`${styles.articleContent} doc-style col-8`}
           dangerouslySetInnerHTML={{ __html: html }}
         ></div>
-        <div className={`${styles.articleContent} col-8`}>
+        {/* <div className={`${styles.articleContent} col-8`}>
           <Giscus
             id="comments"
             repo="milvus-io/community"
@@ -122,7 +122,7 @@ export default function Template({ data, pageContext }) {
             lang="en"
             loading="lazy"
           />
-        </div>
+        </div> */}
       </section>
       <section className={`${styles.shareSection} col-8`}>
         <p>Like the article? Spread the word</p>

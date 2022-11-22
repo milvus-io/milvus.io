@@ -92,7 +92,6 @@ export default function Template({ data, pageContext }) {
   switch (category) {
     case 'pymilvus':
       const path = name?.split('pymilvus_')?.[1]?.replace('.html', '.rst');
-      console.log('version', version);
       const v = version === 'v2.0.1' ? '2.0' : '1.x';
       const url = `https://github.com/milvus-io/pymilvus/edit/${v}/docs/source/${path}`;
       apiReferenceData.sourceUrl = url;
@@ -184,9 +183,10 @@ export default function Template({ data, pageContext }) {
 
   const newestVersion = findLatestVersion(allVersion.nodes);
 
-  const page_title = `${
-    doc.match(/<h1[^>]*>([^<]+)<\/h1>/)[1]
-  } - ${capitalizeFirstLetter(category)} ${version} for Milvus `;
+  const matchedH1 = doc && doc.match(/<h1[^>]*>([^<]+)<\/h1>/);
+  const page_title = `${matchedH1 && matchedH1[1]} - ${capitalizeFirstLetter(
+    category
+  )} ${version} for Milvus `;
 
   return (
     <Layout

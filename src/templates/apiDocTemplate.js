@@ -183,7 +183,10 @@ export default function Template({ data, pageContext }) {
   }, [locale, docVersion]);
 
   const newestVersion = findLatestVersion(allVersion.nodes);
-  const title = `${capitalizeFirstLetter(category)} SDK ${version} for Milvus`;
+
+  const page_title = `${
+    doc.match(/<h1[^>]*>([^<]+)<\/h1>/)[1]
+  } - ${capitalizeFirstLetter(category)} ${version} for Milvus `;
 
   return (
     <Layout
@@ -193,12 +196,12 @@ export default function Template({ data, pageContext }) {
       version={newestVersion}
     >
       <Seo
-        title={title}
+        title={page_title}
         titleTemplate="%s"
         lang={locale}
         version={version}
         meta={docsearchMeta}
-        description={title}
+        description={page_title}
       />
       <div className={'doc-temp-container'}>
         <LeftNav

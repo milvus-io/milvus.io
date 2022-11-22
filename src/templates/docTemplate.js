@@ -168,11 +168,11 @@ export default function Template({ data, pageContext }) {
 
   // page title
   const title = isHome
-    ? `Milvus vector database documentation`
+    ? `Milvus ${version} documentation`
     : `${headings[0] && headings[0].value}`;
 
   // page title template
-  const titleTemplate = isHome ? `%s` : `%s - Milvus vector database documentation`;
+  const titleTemplate = isHome ? `%s` : `%s - Milvus ${version}`;
 
   useCodeCopy(
     {

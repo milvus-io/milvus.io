@@ -92,7 +92,9 @@ export default function Template({ data, pageContext }) {
   switch (category) {
     case 'pymilvus':
       const path = name?.split('pymilvus_')?.[1]?.replace('.html', '.rst');
-      const url = `https://github.com/milvus-io/pymilvus/edit/1.x/docs/source/${path}`;
+      console.log('version', version);
+      const v = version === 'v2.0.1' ? '2.0' : '1.x';
+      const url = `https://github.com/milvus-io/pymilvus/edit/${v}/docs/source/${path}`;
       apiReferenceData.sourceUrl = url;
 
       if (name.endsWith('.md')) {

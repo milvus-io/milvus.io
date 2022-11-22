@@ -185,15 +185,21 @@ export default function Template({ data, pageContext }) {
   useGenAnchor(version, editPath);
   useFilter();
 
+  const description = `${summary.replace('.', '')} ${version}.`;
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader" version={version}>
+    <Layout
+      t={t}
+      showFooter={false}
+      headerClassName="docHeader"
+      version={version}
+    >
       <Seo
         title={title}
         titleTemplate={titleTemplate}
         lang={locale}
         version={version}
         meta={docsearchMeta}
-        description={summary}
+        description={description}
       />
       <div
         className={clsx('doc-temp-container', {

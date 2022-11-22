@@ -185,7 +185,10 @@ export default function Template({ data, pageContext }) {
   useGenAnchor(version, editPath);
   useFilter();
 
-  const description = `${summary && summary.replace('.', '')} ${version}.`;
+  let description = summary
+    ? `${summary.replace('.', '')} ${version}.`
+    : `${title} for Milvus ${version}`;
+
   return (
     <Layout
       t={t}

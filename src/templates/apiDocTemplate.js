@@ -92,9 +92,7 @@ export default function Template({ data, pageContext }) {
   switch (category) {
     case 'pymilvus':
       const path = name?.split('pymilvus_')?.[1]?.replace('.html', '.rst');
-      const url = `https://github.com/milvus-io/pymilvus/edit/${version.slice(
-        1
-      )}/docs/source/${path}`;
+      const url = `https://github.com/milvus-io/pymilvus/edit/1.x/docs/source/${path}`;
       apiReferenceData.sourceUrl = url;
 
       if (name.endsWith('.md')) {
@@ -185,7 +183,12 @@ export default function Template({ data, pageContext }) {
   const newestVersion = findLatestVersion(allVersion.nodes);
 
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader" version={newestVersion}>
+    <Layout
+      t={t}
+      showFooter={false}
+      headerClassName="docHeader"
+      version={newestVersion}
+    >
       <Seo
         title={`${capitalizeFirstLetter(category)} SDK ${version} for Milvus`}
         titleTemplate="%s"

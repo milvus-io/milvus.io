@@ -185,7 +185,7 @@ export default function Template({ data, pageContext }) {
   useGenAnchor(version, editPath);
   useFilter();
 
-  const description = `${summary.replace('.', '')} ${version}.`;
+  const description = `${summary && summary.replace('.', '')} ${version}.`;
   return (
     <Layout
       t={t}

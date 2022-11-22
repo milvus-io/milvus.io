@@ -12,12 +12,14 @@ import { CustomizedSnackbars } from '../components/snackBar';
 import Seo from '../components/seo';
 import { useWindowSize } from '../http/hooks';
 import * as styles from './blogListTemplate.module.less';
+import { findLatestVersion } from '../utils';
 
 const SCROLL_SIZE = 6;
 const TITLE = 'Milvus Blog';
 const DESC = 'Milvus Blog';
 
 const BlogTemplate = ({ data, pageContext }) => {
+  const { allVersion } = data;
   const { blogList } = pageContext;
   const { language, t, navigate, originalPath } = useI18next();
   const [currentTag, setCurrentTag] = useState('all');
@@ -139,8 +141,10 @@ const BlogTemplate = ({ data, pageContext }) => {
     setCurrentTag(tag);
   }, []);
 
+  const version = findLatestVersion(allVersion.nodes);
+
   return (
-    <Layout t={t}>
+    <Layout t={t} version={version}>
       <Seo
         title={TITLE}
         lang={language}
@@ -236,6 +240,11 @@ export const query = graphql`
           language
           ns
         }
+      }
+    }
+    allVersion(filter: { released: { eq: "yes" } }) {
+      nodes {
+        version
       }
     }
   }

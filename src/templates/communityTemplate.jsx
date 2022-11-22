@@ -10,6 +10,7 @@ import Footer from '../components/footer';
 import Seo from '../components/seo';
 import { useOpenedStatus } from '../hooks';
 import './communityTemplate.less';
+import { findLatestVersion } from '../utils';
 
 export const query = graphql`
   query ($language: String!) {
@@ -22,10 +23,17 @@ export const query = graphql`
         }
       }
     }
+    allVersion(filter: { released: { eq: "yes" } }) {
+      nodes {
+        version
+      }
+    }
   }
 `;
 
-export default function Template({ pageContext }) {
+export default function Template({data,  pageContext }) {
+  const { allVersion } = data;
+
   const {
     locale,
     // fileAbsolutePath,
@@ -60,8 +68,10 @@ export default function Template({ pageContext }) {
     locale
   )();
 
+  const version = findLatestVersion(allVersion.nodes);
+
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader">
+    <Layout t={t} showFooter={false} headerClassName="docHeader" version={version}>
       <Seo
         title={TITLE}
         titleTemplate={titleTemplate}

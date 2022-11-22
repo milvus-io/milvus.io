@@ -23,3 +23,30 @@ export const sortVersions = (a, b) => {
     }
   }
 };
+
+export const findLatestVersion = allVersion => {
+  return allVersion
+    .map(a => a.version)
+    .reduce((pre, cur) => {
+      const curVersion = cur
+        .substring(1)
+        .split('.')
+        .map(v => Number(v));
+      const preVersion = pre
+        .substring(1)
+        .split('.')
+        .map(v => Number(v));
+
+      if (curVersion[0] !== preVersion[0]) {
+        pre = curVersion[0] < preVersion[0] ? pre : cur;
+      } else if (curVersion[1] !== preVersion[1]) {
+        pre = curVersion[1] < preVersion[1] ? pre : cur;
+      } else if (curVersion[2] !== preVersion[2]) {
+        pre = curVersion[2] < preVersion[2] ? pre : cur;
+      } else {
+        pre = cur;
+      }
+
+      return pre;
+    }, 'v0.0.0');
+};

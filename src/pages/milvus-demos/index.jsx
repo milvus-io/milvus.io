@@ -13,6 +13,7 @@ import { CustomizedContentDialogs } from '../../components/dialog/Dialog';
 import { CustomizedSnackbars } from '../../components/snackBar';
 import Signup from '../../components/signup';
 import Seo from '../../components/seo';
+import { findLatestVersion } from '../../utils';
 
 const DEMOS = [
   {
@@ -45,7 +46,8 @@ const TITLE = 'Milvus Demos';
 const DESC =
   'With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.';
 
-const DemoPage = () => {
+const DemoPage = ({ data }) => {
+  const { allVersion } = data;
   const { language, t } = useI18next();
 
   const [dialogConfig, setDialogConfig] = useState({
@@ -92,11 +94,13 @@ const DemoPage = () => {
     });
   };
 
+  const version = findLatestVersion(allVersion.nodes);
+
   return (
     <main>
       {/* use for seo */}
       <h1 style={{ display: 'none' }}>Milvus Demos</h1>
-      <Layout darkMode={true} t={t}>
+      <Layout darkMode={true} t={t} version={version}>
         <Seo title={TITLE} lang={language} description={DESC} />
         <section className={styles.banner}>
           <div className={styles.bannerContent}>
@@ -202,6 +206,11 @@ export const demoQuery = graphql`
           language
           ns
         }
+      }
+    }
+    allVersion(filter: { released: { eq: "yes" } }) {
+      nodes {
+        version
       }
     }
   }

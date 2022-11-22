@@ -9,8 +9,11 @@ import dayjs from 'dayjs';
 import Share from '../components/share';
 import Seo from '../components/seo';
 import * as styles from './blogTemplate.module.less';
+import { findLatestVersion } from '../utils';
 
 export default function Template({ data, pageContext }) {
+  const { allVersion } = data;
+
   const {
     blogList,
     newHtml,
@@ -65,8 +68,10 @@ export default function Template({ data, pageContext }) {
     });
   }, []);
 
+  const version = findLatestVersion(allVersion.nodes);
+
   return (
-    <Layout t={t}>
+    <Layout t={t} version={version}>
       <Seo
         title={title}
         titleTemplate="%s"
@@ -169,6 +174,11 @@ export const query = graphql`
           language
           ns
         }
+      }
+    }
+    allVersion(filter: { released: { eq: "yes" } }) {
+      nodes {
+        version
       }
     }
   }

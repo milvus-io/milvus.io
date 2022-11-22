@@ -13,6 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { findLatestVersion } from '../../utils';
 
 import {
   memorySizeCalculator,
@@ -72,7 +73,8 @@ const defaultSizeContent = {
   amount: 0,
 };
 
-export default function SizingTool() {
+export default function SizingTool({ data }) {
+  const { allVersion } = data;
   const { language, t } = useI18next();
 
   const [form, setForm] = useState({
@@ -260,6 +262,8 @@ export default function SizingTool() {
     }
   };
 
+  const version = findLatestVersion(allVersion.nodes);
+
   return (
     <main className={classes.main}>
       <Seo
@@ -267,7 +271,7 @@ export default function SizingTool() {
         title={t('v3trans.sizingTool.title')}
         description=""
       />
-      <Layout t={t} darkMode={false}>
+      <Layout t={t} darkMode={false} version={version}>
         <div className={classes.pageContainer}>
           <h1>{t('v3trans.sizingTool.title')}</h1>
           <div className={classes.note}>
@@ -536,6 +540,11 @@ export const query = graphql`
           language
           ns
         }
+      }
+    }
+    allVersion(filter: { released: { eq: "yes" } }) {
+      nodes {
+        version
       }
     }
   }

@@ -184,8 +184,9 @@ export default function Template({ data, pageContext }) {
   useMultipleCodeFilter();
   useGenAnchor(version, editPath);
   useFilter();
+
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader">
+    <Layout t={t} showFooter={false} headerClassName="docHeader" version={version}>
       <Seo
         title={title}
         titleTemplate={titleTemplate}
@@ -226,7 +227,11 @@ export default function Template({ data, pageContext }) {
           >
             {homeData ? (
               <HomeContent
-                homeData={homeData}
+                homeData={
+                  homeData.includes(version)
+                    ? homeData
+                    : homeData.replaceAll(`/docs`, `/docs/${version}`)
+                }
                 newestBlog={newestBlog}
                 trans={t}
               />

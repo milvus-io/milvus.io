@@ -12,6 +12,7 @@ import { useCodeCopy } from '../hooks/doc-dom-operation';
 import { useOpenedStatus } from '../hooks';
 import 'highlight.js/styles/stackoverflow-light.css';
 import './docTemplate.less';
+import { findLatestVersion } from '../utils';
 
 export const query = graphql`
   query ($language: String!) {
@@ -24,6 +25,11 @@ export const query = graphql`
         }
       }
     }
+    allVersion(filter: { released: { eq: "yes" } }) {
+      nodes {
+        version
+      }
+    }
   }
 `;
 
@@ -31,7 +37,8 @@ function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
 }
 
-export default function Template({ pageContext }) {
+export default function Template({ data, pageContext }) {
+  const { allVersion } = data;
   const { doc, name, allApiMenus, version, locale, category, docVersion } =
     pageContext;
   // left nav toggle state
@@ -175,8 +182,10 @@ export default function Template({ pageContext }) {
     ];
   }, [locale, docVersion]);
 
+  const newestVersion = findLatestVersion(allVersion.nodes);
+
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader">
+    <Layout t={t} showFooter={false} headerClassName="docHeader" version={newestVersion}>
       <Seo
         title={`${capitalizeFirstLetter(category)} SDK ${version} for Milvus`}
         titleTemplate="%s"

@@ -169,42 +169,6 @@ const generateAllDocPages = (
 
     const newHtml = node.html;
 
-    // the newest doc version is master so we need to make route without version.
-    // for easy link to the newest doc
-    if (version === newestVersion) {
-      const masterPath = generatePath(
-        fileId,
-        fileLang,
-        isBlog ? false : 'master',
-        isBlog
-      );
-      createPage({
-        path: masterPath,
-        component: docTemplate,
-        context: {
-          locale: fileLang,
-          version: newestVersion, // get master version
-          versions: Array.from(versions),
-          newestVersion,
-          old: fileId,
-          headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
-          fileAbsolutePath,
-          localizedPath,
-          isBlog,
-          editPath,
-          allMenus,
-          newHtml,
-          homeData: null,
-          isVersionWithHome: versionsWithHome.includes(newestVersion),
-          allApiMenus,
-          relatedKey,
-          summary,
-          group,
-          versionInfo,
-        }, // additional data can be passed via context
-      });
-    }
-
     // normal pages
     createPage({
       path: localizedPath,

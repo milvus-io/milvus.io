@@ -14,7 +14,12 @@ import MilvusCookieConsent from '../milvusCookieConsent';
 import { getGithubStatis } from '../../http';
 import * as styles from './index.module.less';
 
-const Header = ({ darkMode = false, t = v => v, className = '' }) => {
+const Header = ({
+  darkMode = false,
+  t = v => v,
+  className = '',
+  version = '',
+}) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -341,7 +346,10 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
 
           <div className={styles.rightSection}>
             {isDesktop && actionBar}
-            <Link to="/docs/example_code.md" className={styles.startBtn}>
+            <Link
+              to={`/docs/${version}/example_code.md`}
+              className={styles.startBtn}
+            >
               {t('v3trans.main.nav.getstarted')}
             </Link>
           </div>
@@ -488,7 +496,7 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
               variant="fullwidth"
               sx={{ position: 'absolute', bottom: '78px', width: '100%' }}
             />
-            <Link to="/docs/install_standalone-docker.md">
+            <Link to={`/docs/${version}/install_standalone-docker.md`}>
               <button className={styles.startBtn}>
                 {t('v3trans.main.nav.getstarted')}
               </button>

@@ -16,6 +16,7 @@ import { useCodeCopy, useFilter } from '../hooks/doc-dom-operation';
 import './bootcampTemplate.less';
 import { useFormatAnchor } from '../hooks/doc-anchor';
 import bootcamp from '../pages/docs/versions/master/bootcamp/site/en/bootcampHome/index.json';
+import { findLatestVersion } from '../utils';
 
 const Icons = {
   IMAGE_SEARCH: imageSearch,
@@ -27,7 +28,8 @@ const Icons = {
   HYBRID: hybrid,
 };
 
-const BootcampTemplate = ({ pageContext }) => {
+const BootcampTemplate = ({ data, pageContext }) => {
+  const { allVersion } = data;
   const { t } = useI18next();
   const { locale } = pageContext;
   const { banner, title, description, section3, section4 } = bootcamp;
@@ -42,9 +44,10 @@ const BootcampTemplate = ({ pageContext }) => {
     copied: t('v3trans.copyBtn.copiedLabel'),
   });
   useFormatAnchor();
+  const version = findLatestVersion(allVersion.nodes);
 
   return (
-    <Layout t={t}>
+    <Layout t={t} version={version}>
       <div className="bootcamp-wrapper">
         <Seo title={SeoTitle} lang={locale} description={desc} />
         <main className="mainContainer col-4 col-8 col-12">
@@ -108,6 +111,11 @@ export const query = graphql`
           language
           ns
         }
+      }
+    }
+    allVersion(filter: { released: { eq: "yes" } }) {
+      nodes {
+        version
       }
     }
   }

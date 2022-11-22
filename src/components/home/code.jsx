@@ -63,7 +63,7 @@ let timeId = null;
 let keyIndex = 0;
 
 const Code = props => {
-  const { t = () => {} } = props;
+  const { t = () => {}, version = '' } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.install);
 
@@ -113,18 +113,18 @@ const Code = props => {
       case EXAMPLES.search:
         return {
           tabs: ['Vector search', 'Hybrid search', 'Time travel'],
-          learnMoreLink: '/docs/search.md',
+          learnMoreLink: `/docs/${version}/search.md`,
         };
       case EXAMPLES.manage:
         return {
           tabs: ['Create collection', 'Create index', 'Insert data'],
-          learnMoreLink: '/docs/create_collection.md',
+          learnMoreLink: `/docs/${version}/create_collection.md`,
         };
       case EXAMPLES.install:
       default:
         return {
           tabs: ['Ubuntu', 'CentOS', 'Kubernetes'],
-          learnMoreLink: '/docs/install_cluster-helm.md',
+          learnMoreLink: `/docs/${version}/install_cluster-helm.md`,
         };
     }
   }, [activeExample]);

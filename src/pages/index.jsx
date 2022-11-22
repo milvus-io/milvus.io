@@ -29,6 +29,7 @@ import tokopedia from '../images/brands/tokopedia.png';
 import CustomIconLink from '../components/customIconLink';
 import Seo from '../components/seo';
 import SvgIcon from '@mui/material/SvgIcon';
+import { findLatestVersion } from '../utils';
 // css entry, all site's styles are loaded from this file
 import './index.less';
 // local css module
@@ -130,7 +131,8 @@ const brands = [
 const DESC =
   "Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications.";
 
-const IndexPage = () => {
+const IndexPage = ({ data, pageContext }) => {
+  const { allVersion } = data;
   const { language, t } = useI18next();
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
@@ -177,12 +179,19 @@ const IndexPage = () => {
     );
   };
 
+  const version = findLatestVersion(allVersion.nodes);
+
   return (
     <main className="homepage">
-      <Layout darkMode={true} t={t}>
-        <Seo title="Vector database - Milvus" titleTemplate="%s" lang={language} description={DESC} />
+      <Layout darkMode={true} t={t} version={version}>
+        <Seo
+          title="Vector database - Milvus"
+          titleTemplate="%s"
+          lang={language}
+          description={DESC}
+        />
         {/* all css about banner in banner.less */}
-        <HomeBanner t={t} />
+        <HomeBanner t={t} version={version} />
         <section className={`${styles.customer} col-4 col-8 col-12`}>
           <p className={styles.customerTitle}>{t('v3trans.main.customer')}</p>
           <div className={styles.brands}>
@@ -202,7 +211,7 @@ const IndexPage = () => {
         {/* all these sections about banner in banner.less */}
 
         <HomeFeatures t={t} />
-        <HomeCode t={t} />
+        <HomeCode t={t} version={version} />
         <Attu t={t} />
 
         <section className={`${styles.community} col-4 col-8 col-12`}>
@@ -251,6 +260,11 @@ export const query = graphql`
           language
           ns
         }
+      }
+    }
+    allVersion(filter: { released: { eq: "yes" } }) {
+      nodes {
+        version
       }
     }
   }

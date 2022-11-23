@@ -160,8 +160,9 @@ export const useMultipleCodeFilter = () => {
       fs.forEach(f => {
         if (!firstSearch) {
           // <a href='?node' >xxx</a>
-          firstSearch = f.search;
+          firstSearch = f.search || f.hash.replace('#', '?');
         }
+        f.key = f.search || f.hash.replace('#', '?');
         allFilters.push(f);
       });
     });
@@ -178,9 +179,9 @@ export const useMultipleCodeFilter = () => {
       item => item.getAttribute('href')
     );
     const clickEventHandler = targetSearch => {
-      const search = targetSearch;
+      const search = targetSearch.replace('#', '?');
       setSearch(search);
-      const currentFilters = allFilters.filter(f => f.search === search);
+      const currentFilters = allFilters.filter(f => f.key === search);
       allFilters.forEach(f => f.classList.toggle('active', false));
       currentFilters.forEach(cf => cf.classList.toggle('active', true));
       allContents.forEach(c => c.classList.toggle('active', false));
@@ -195,7 +196,7 @@ export const useMultipleCodeFilter = () => {
       w.addEventListener('click', e => {
         e.preventDefault();
         if (e.target.tagName === 'A') {
-          clickEventHandler(e.target.search);
+          clickEventHandler(e.target.search || e.target.hash);
         }
       });
     });

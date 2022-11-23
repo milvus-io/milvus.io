@@ -48,7 +48,9 @@ const generatePath = (id, lang, version, isBlog, needLocal = true) => {
     localizedPath = lang === defaultLang ? `/docs/` : `/${lang}/docs/`;
   }
 
-  return needLocal ? `${localizedPath}${id}` : `/${id}`;
+  const finalPath = needLocal ? `${localizedPath}${id}` : `/${id}`;
+
+  return finalPath.replaceAll('//', '/');
 };
 
 module.exports = {

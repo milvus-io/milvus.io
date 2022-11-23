@@ -328,25 +328,25 @@ const generateApiReferencePages = (
           newestVersion,
         },
       });
-      // Temporarily create cn page.
-      createPage({
-        path: `/cn/api-reference/${category}/${version}/${name}`,
-        component: apiDocTemplate,
-        context: {
-          locale: 'cn',
-          abspath,
-          doc,
-          name: pageName,
-          pId: name,
-          allApiMenus,
-          allMenus,
-          version,
-          docVersion,
-          docVersions: filteredVersions,
-          category,
-          newestVersion,
-        },
-      });
+      // // Temporarily create cn page.
+      // createPage({
+      //   path: `/cn/api-reference/${category}/${version}/${name}`,
+      //   component: apiDocTemplate,
+      //   context: {
+      //     locale: 'cn',
+      //     abspath,
+      //     doc,
+      //     name: pageName,
+      //     pId: name,
+      //     allApiMenus,
+      //     allMenus,
+      //     version,
+      //     docVersion,
+      //     docVersions: filteredVersions,
+      //     category,
+      //     newestVersion,
+      //   },
+      // });
     }
   );
 };

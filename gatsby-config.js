@@ -17,6 +17,7 @@ const gatsbyConfigs = {
           `**/v0.8*`,
           `**/v0.9*`,
           `**/v0.1*`,
+          `**/v2.0.0`,
           `**/bootcamp`,
           `**/API_Reference`,
           `**/export_pdf`,

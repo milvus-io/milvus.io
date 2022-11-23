@@ -183,7 +183,9 @@ export default function Template({ data, pageContext }) {
 
   const newestVersion = findLatestVersion(allVersion.nodes);
 
-  const matchedH1 = doc && doc.match(/<h1[^>]*>([^<]+)<\/h1>/);
+  const matchedH1 = doc && doc.match(/<h1[^>]*>([^<]+).*<\/h1>/);
+
+  console.log('doc', doc, matchedH1);
   const page_title = `${matchedH1 && matchedH1[1]} - ${capitalizeFirstLetter(
     category
   )} ${version} for Milvus `;

@@ -179,7 +179,7 @@ export default function Template({ data, pageContext }) {
         content: docVersion || '',
       },
     ];
-  }, [locale, docVersion]);
+  }, [locale, docVersion, version]);
 
   const newestVersion = findLatestVersion(allVersion.nodes);
 

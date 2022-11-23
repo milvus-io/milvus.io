@@ -215,6 +215,7 @@ exports.createPages = ({ actions, graphql }) => {
     const homeNodes = filterHomeMdWithVersion(
       result.data.allMarkdownRemark.edges
     );
+
     // get community page data: articles md, menu and home json
     const { communityNodes, communityMenu, communityHome } =
       handleCommunityData(

@@ -127,7 +127,7 @@ const Code = props => {
           learnMoreLink: `/docs/${version}/install_cluster-helm.md`,
         };
     }
-  }, [activeExample]);
+  }, [activeExample, version]);
 
   return (
     <section className="section3 col-12 col-8 col-4">

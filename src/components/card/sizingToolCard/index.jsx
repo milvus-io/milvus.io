@@ -22,7 +22,7 @@ export default function SizingToolCard(props) {
         [root]: root,
       })}
     >
-      <div className={styles.titleWrapper}>
+      <div>
         <h4
           className={clsx(styles.title, {
             [titleClassName]: titleClassName,

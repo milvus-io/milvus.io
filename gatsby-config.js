@@ -6,6 +6,7 @@ const gatsbyConfigs = {
     author: `@ZILLIZ.com`,
   },
   plugins: [
+    // make sure file system be the first plugin
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -206,6 +207,7 @@ const gatsbyConfigs = {
 
 // ignore some versions will make building faster in dev.
 if (process.env.NODE_ENV !== 'development') {
+  gatsbyConfigs.plugins[0].options.ignore.push(`**/preview`);
   gatsbyConfigs.plugins.push(
     // {
     //   resolve: "gatsby-plugin-google-analytics",

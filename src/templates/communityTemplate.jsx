@@ -56,7 +56,7 @@ export default function Template({data,  pageContext }) {
     ? `Milvus Community`
     : `${headings[0] && headings[0].value}`;
   // meta description
-  const DESC = 'Join Milvus Community';
+  const DESC = TITLE;
   // title template
   const titleTemplate = isHomePage ? '%s' : '%s - Milvus Community';
 

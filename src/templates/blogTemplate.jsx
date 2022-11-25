@@ -69,14 +69,14 @@ export default function Template({ data, pageContext }) {
   }, []);
 
   const version = findLatestVersion(allVersion.nodes);
-
+  const description = desc || title;
   return (
     <Layout t={t} version={version}>
       <Seo
         title={title}
         titleTemplate="%s"
         lang={language}
-        description={desc}
+        description={description}
       />
       <section className={`${styles.blogWrapper} col-12 col-8 col-4`}>
         <p className={`${styles.authorDate} `}>
@@ -95,7 +95,7 @@ export default function Template({ data, pageContext }) {
           <Share
             url={shareUrl}
             quote={title}
-            desc={desc}
+            desc={description}
             image={`https://${cover}`}
             wrapperClass={styles.share}
             vertical={true}
@@ -134,7 +134,7 @@ export default function Template({ data, pageContext }) {
         <Share
           url={shareUrl}
           quote={title}
-          desc={desc}
+          desc={description}
           image={`https://${cover}`}
           wrapperClass={styles.share}
           vertical={false}

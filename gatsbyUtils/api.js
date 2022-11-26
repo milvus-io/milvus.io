@@ -296,59 +296,57 @@ const generateApiReferencePages = (
   const filteredVersions = Array.from(versions).filter(
     i => i && i !== 'master'
   );
-  nodes.forEach(
-    ({ abspath, doc, name, version, category, docVersion, isDirectory }) => {
-      // Should ignore if the node is a directory.
-      if (isDirectory) return;
-      // Create default language page.
-      // Use "_" instead of "-" in both api menu's id and api page's name.
-      // Due to a search algorithm use the word splited by "-".
-      // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
-      // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
-      // "name" should be same with "id" in generateApiMenus
-      const pageName = `${category.replace('-', '_')}_${name.replace(
-        '-',
-        '_'
-      )}`;
-      createPage({
-        path: `/api-reference/${category}/${version}/${name}`,
-        component: apiDocTemplate,
-        context: {
-          locale: 'en',
-          abspath,
-          doc,
-          name: pageName,
-          pId: name,
-          allApiMenus,
-          allMenus,
-          version,
-          docVersion,
-          docVersions: filteredVersions,
-          category,
-          newestVersion,
-        },
-      });
-      // // Temporarily create cn page.
-      // createPage({
-      //   path: `/cn/api-reference/${category}/${version}/${name}`,
-      //   component: apiDocTemplate,
-      //   context: {
-      //     locale: 'cn',
-      //     abspath,
-      //     doc,
-      //     name: pageName,
-      //     pId: name,
-      //     allApiMenus,
-      //     allMenus,
-      //     version,
-      //     docVersion,
-      //     docVersions: filteredVersions,
-      //     category,
-      //     newestVersion,
-      //   },
-      // });
-    }
-  );
+  nodes.forEach(node => {
+    const { abspath, doc, name, version, category, docVersion, isDirectory } =
+      node;
+    // Should ignore if the node is a directory.
+    if (isDirectory) return;
+    // Create default language page.
+    // Use "_" instead of "-" in both api menu's id and api page's name.
+    // Due to a search algorithm use the word splited by "-".
+    // https://github.com/milvus-io/www.milvus.io/blob/4e60f5f08e8e2b3ed02a352c4cc6ea28488b8d33/src/components/menu/index.jsx#L9
+    // https://github.com/milvus-io/www.milvus.io/blob/ef727f7abcfe95c93df139a7f332ddf03eae962d/src/components/docLayout/index.jsx#L116
+    // "name" should be same with "id" in generateApiMenus
+    const pageName = `${category.replace('-', '_')}_${name.replace('-', '_')}`;
+    createPage({
+      path: `/api-reference/${category}/${version}/${name}`,
+      component: apiDocTemplate,
+      ownerNodeId: node.id,
+      context: {
+        locale: 'en',
+        abspath,
+        doc,
+        name: pageName,
+        pId: name,
+        allApiMenus,
+        allMenus,
+        version,
+        docVersion,
+        docVersions: filteredVersions,
+        category,
+        newestVersion,
+      },
+    });
+    // // Temporarily create cn page.
+    // createPage({
+    //   path: `/cn/api-reference/${category}/${version}/${name}`,
+    //   component: apiDocTemplate,
+    //   context: {
+    //     locale: 'cn',
+    //     abspath,
+    //     doc,
+    //     name: pageName,
+    //     pId: name,
+    //     allApiMenus,
+    //     allMenus,
+    //     version,
+    //     docVersion,
+    //     docVersions: filteredVersions,
+    //     category,
+    //     newestVersion,
+    //   },
+    // });
+  });
 };
 
 module.exports = {

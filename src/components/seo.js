@@ -35,7 +35,7 @@ function SEO({
 
   const metaDescription = description || site.siteMetadata.description;
   const _titleTemplate = titleTemplate || `%s ${site.siteMetadata.title}`;
-console.log('metaDescription', metaDescription)
+
   return (
     <Helmet
       htmlAttributes={{

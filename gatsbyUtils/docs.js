@@ -78,7 +78,8 @@ const generateDocHomeWidthMd = (
     return newHtml;
   };
 
-  nodes.forEach(({ language, html, path, version }) => {
+  nodes.forEach(node => {
+    const { language, html, path, version } = node;
     const isBlog = checkIsblog(path);
     const editPath = path.split(language === 'en' ? '/en/' : '/zh-CN/')[1];
 
@@ -87,6 +88,7 @@ const generateDocHomeWidthMd = (
       createPage({
         path: homePath,
         component: docTemplate,
+        ownerNodeId: node.id,
         context: {
           homeData: formatDocHomeHtml(html, homePath, version),
           locale: language,
@@ -112,6 +114,7 @@ const generateDocHomeWidthMd = (
     createPage({
       path: homePath,
       component: docTemplate,
+      ownerNodeId: node.id,
       context: {
         homeData: formatDocHomeHtml(html, homePath, version),
         locale: language,
@@ -181,6 +184,7 @@ const generateAllDocPages = (
       createPage({
         path: masterPath,
         component: docTemplate,
+        ownerNodeId: node.id,
         context: {
           locale: fileLang,
           version: newestVersion, // get master version
@@ -209,6 +213,7 @@ const generateAllDocPages = (
     createPage({
       path: localizedPath,
       component: docTemplate,
+      ownerNodeId: node.id,
       context: {
         locale: fileLang,
         version: version,

@@ -102,6 +102,7 @@ const generateBlogArticlePage = (
     createPage({
       path: localizedPath,
       component: blogTemplate,
+      ownerNodeId: node.id,
       context: {
         cover,
         locale: fileLang,

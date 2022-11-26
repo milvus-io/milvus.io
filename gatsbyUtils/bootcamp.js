@@ -65,6 +65,7 @@ const generateBootcampPages = (
     createPage({
       path,
       component: bootcampTemplate,
+      ownerNodeId: node.id,
       context: {
         locale: fileLang,
         fileAbsolutePath,
@@ -89,10 +90,12 @@ const generateBootcampHome = (
   createPage,
   { nodes: bootcampHome, template: bootcampTemplate }
 ) => {
-  bootcampHome.forEach(({ language, path }) => {
+  bootcampHome.forEach(node => {
+    const { language, path } = node;
     createPage({
       path: language === 'en' ? '/bootcamp' : `/${language}/bootcamp`,
       component: bootcampTemplate,
+      ownerNodeId: node.id,
       context: {
         locale: language,
         old: 'home',

@@ -93,6 +93,7 @@ const generateCommunityPages = (
     createPage({
       path,
       component: communityTemplate,
+      ownerNodeId: node.id,
       context: {
         locale: fileLang,
         fileAbsolutePath,

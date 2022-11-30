@@ -5,7 +5,7 @@ const findItem = (key, value, arr) => {
     // because of tab id like: xxx-cpu
     // we only need string before "-" to compare
     // value already split with "-"
-    const target = v[key].split("-")[0];
+    const target = v[key].split('-')[0];
     if (target === value) {
       find = v;
     } else if (v.children && v.children.length) {
@@ -20,37 +20,39 @@ export const mdMenuListFactory = (menuList, pageType, version, locale) => {
   const labelKeys =
     menuList.length > 0
       ? Object.keys(menuList[0])
-          .filter(v => v.includes("label"))
+          .filter(v => v.includes('label'))
           .sort((a, b) => a[a.length - 1] - b[b.length - 1])
       : [];
   let index = 0;
   return function innerFn(formatMenu = []) {
     const copyMenu = JSON.parse(JSON.stringify(formatMenu));
-    const parentLabel = index ? labelKeys[index - 1] : "";
+    const parentLabel = index ? labelKeys[index - 1] : '';
 
     if (index && !parentLabel) {
       return copyMenu;
     }
     const generatePath = doc => {
-      if (pageType === "community") {
+      if (pageType === 'community') {
         // id community is home page
-        return doc.id === "community" ? `/community` : `/community/${doc.id}`;
+        return doc.id === 'community' ? `/community` : `/community/${doc.id}`;
       }
-      if (pageType === "bootcamp") {
+      if (pageType === 'bootcamp') {
         // id community is home page
-        return doc.id === "bootcamp" ? `/bootcamp` : `/bootcamp/${doc.id}`;
+        return doc.id === 'bootcamp' ? `/bootcamp` : `/bootcamp/${doc.id}`;
       }
-      if (doc.id.includes("benchmarks")) {
+      if (doc.id.includes('benchmarks')) {
         return `/docs/${doc.id}`;
       }
-      if (pageType === "blog") {
+      if (pageType === 'blog') {
         return `/blogs/${doc.id}`;
       }
       if (doc?.isApiReference) {
         return doc?.url;
       }
 
-      return doc?.outLink ? `${doc?.outLink}` : `/docs/${version}/${doc.id}`;
+      return doc?.outLink
+        ? `${doc?.outLink}`
+        : `/docs/${version ? `${version}/` : ''}${doc.id}`;
     };
     // find top menu by current label
     const topMenu = menuList.filter(v => {
@@ -85,7 +87,7 @@ export const mdMenuListFactory = (menuList, pageType, version, locale) => {
       if (index === 0) {
         copyMenu.push(item);
       } else {
-        const parent = findItem("id", v[parentLabel], copyMenu);
+        const parent = findItem('id', v[parentLabel], copyMenu);
         parent && parent.children.push(item);
       }
     });

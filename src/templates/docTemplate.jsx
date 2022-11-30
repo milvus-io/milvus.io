@@ -89,7 +89,12 @@ export default function Template({ data, pageContext }) {
     version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
 
   // generate menu
-  const menus = mdMenuListFactory(leftNavMenus, 'doc', version, locale)();
+  const menus = mdMenuListFactory(
+    leftNavMenus,
+    'doc',
+    version === newestVersion ? '' : version,
+    locale
+  )();
   // push API links if no home
 
   const APIs = {
@@ -218,6 +223,7 @@ export default function Template({ data, pageContext }) {
           locale={locale}
           versions={versionConfig.versions}
           version={version}
+          newestVersion={newestVersion}
           mdId={mdId}
           language={language}
           trans={t}
@@ -237,11 +243,7 @@ export default function Template({ data, pageContext }) {
           >
             {homeData ? (
               <HomeContent
-                homeData={
-                  homeData.includes(version)
-                    ? homeData
-                    : homeData.replaceAll(`/docs`, `/docs/${version}`)
-                }
+                homeData={homeData}
                 newestBlog={newestBlog}
                 trans={t}
               />

@@ -28,8 +28,9 @@ const LeftNav = props => {
     isOpened,
     showHome = false,
     showSearch = true,
+    newestVersion = '',
     getVersionLink = i =>
-      i === 'v0.x' ? `/docs/${i}/overview.md` : `/docs/${i}`,
+      i === 'v0.x' ? `/docs/${i}/overview.md` : `/docs${newestVersion === i ? ``: `/${i}`}`,
     onMenuCollapseUpdate,
   } = props;
 

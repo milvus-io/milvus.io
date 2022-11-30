@@ -43,8 +43,7 @@ const DEMOS = [
   },
 ];
 const TITLE = 'Milvus Demos';
-const DESC =
-  'With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.';
+const DESC = 'Milvus vector search demos';
 
 const DemoPage = ({ data }) => {
   const { allVersion } = data;

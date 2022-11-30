@@ -8,8 +8,9 @@ import BlogCard from '../components/card/BlogCard';
 import dayjs from 'dayjs';
 import Share from '../components/share';
 import Seo from '../components/seo';
-import * as styles from './blogTemplate.module.less';
 import { findLatestVersion } from '../utils';
+import './docsStyle.less';
+import * as styles from './blogTemplate.module.less';
 
 export default function Template({ data, pageContext }) {
   const { allVersion } = data;

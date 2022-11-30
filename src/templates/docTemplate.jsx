@@ -18,6 +18,7 @@ import { useOpenedStatus } from '../hooks';
 import DocContent from './parts/DocContent.jsx';
 import HomeContent from './parts/HomeContent.jsx';
 import '@zilliz/zui/dist/ZChart.css';
+import './docsStyle.less';
 import './docTemplate.less';
 import 'highlight.js/styles/stackoverflow-light.css';
 
@@ -153,12 +154,6 @@ export default function Template({ data, pageContext }) {
 
   // doc search meta
   const docsearchMeta = useMemo(() => {
-    if (
-      typeof window === 'undefined' ||
-      !window.location.pathname.includes(version)
-    ) {
-      return [];
-    }
     return [
       {
         name: 'docsearch:language',

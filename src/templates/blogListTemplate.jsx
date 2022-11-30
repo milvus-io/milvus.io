@@ -11,8 +11,8 @@ import Signup from '../components/signup';
 import { CustomizedSnackbars } from '../components/snackBar';
 import Seo from '../components/seo';
 import { useWindowSize } from '../http/hooks';
-import * as styles from './blogListTemplate.module.less';
 import { findLatestVersion } from '../utils';
+import * as styles from './blogListTemplate.module.less';
 
 const SCROLL_SIZE = 6;
 const TITLE = 'Milvus Blog';

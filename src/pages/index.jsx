@@ -30,7 +30,6 @@ import CustomIconLink from '../components/customIconLink';
 import Seo from '../components/seo';
 import SvgIcon from '@mui/material/SvgIcon';
 import { findLatestVersion } from '../utils';
-// css entry, all site's styles are loaded from this file
 import './index.less';
 // local css module
 import * as styles from './index.module.less';

@@ -9,8 +9,10 @@ import Aside from '../components/aside';
 import Footer from '../components/footer';
 import Seo from '../components/seo';
 import { useOpenedStatus } from '../hooks';
-import './communityTemplate.less';
 import { findLatestVersion } from '../utils';
+import './docsStyle.less';
+import './docTemplate.less';
+import './communityTemplate.less';
 
 export const query = graphql`
   query ($language: String!) {
@@ -31,7 +33,7 @@ export const query = graphql`
   }
 `;
 
-export default function Template({data,  pageContext }) {
+export default function Template({ data, pageContext }) {
   const { allVersion } = data;
 
   const {
@@ -71,7 +73,12 @@ export default function Template({data,  pageContext }) {
   const version = findLatestVersion(allVersion.nodes);
 
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader" version={version}>
+    <Layout
+      t={t}
+      showFooter={false}
+      headerClassName="docHeader"
+      version={version}
+    >
       <Seo
         title={TITLE}
         titleTemplate={titleTemplate}

@@ -2,7 +2,7 @@ import React from 'react';
 import './banner.less';
 import { Link } from 'gatsby-plugin-react-i18next';
 const HomeBanner = props => {
-  const { t = v => v, version = '' } = props;
+  const { t = v => v } = props;
   return (
     <div className="banner">
       <div className="shooting_star_container1">
@@ -15,10 +15,7 @@ const HomeBanner = props => {
         <h1 className="title">{t('v3trans.home.banner.title')}</h1>
         <p className="subtitle">{t('v3trans.home.banner.desc')}</p>
         <div className="btn-group">
-          <Link
-            className="btn-start"
-            to={`/docs/install_standalone-docker.md`}
-          >
+          <Link className="btn-start" to={`/docs/install_standalone-docker.md`}>
             {t('v3trans.home.banner.getstart')}
           </Link>
           <a

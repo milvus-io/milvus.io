@@ -63,7 +63,7 @@ let timeId = null;
 let keyIndex = 0;
 
 const Code = props => {
-  const { t = () => {}, version = '' } = props;
+  const { t = () => {} } = props;
   const [value, setValue] = useState(0);
   const [activeExample, setActivExample] = useState(EXAMPLES.install);
 

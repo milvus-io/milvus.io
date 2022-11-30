@@ -108,6 +108,7 @@ const generateDocHomeWidthMd = (
           versionInfo,
         },
       });
+      return;
     }
 
     const homePath = getNormalVersionHomePath(version, language);
@@ -207,6 +208,7 @@ const generateAllDocPages = (
           versionInfo,
         }, // additional data can be passed via context
       });
+      return;
     }
 
     // normal pages

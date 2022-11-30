@@ -1,7 +1,429 @@
-/*
-  import styles here if not using css modules
-  there styles are global styles, will impact all pages
-*/
-@import "../css/responsive.less";
-@import "./homepage.less";
-@import "./docsStyle.less";
+@import (reference) '../css/mixins.less';
+
+.homepage {
+  .section2 {
+    text-align: center;
+    margin: 0 auto;
+    h2 {
+      font-size: 40px;
+      font-weight: bold;
+      line-height: 50px;
+      margin-bottom: 8px;
+      @media @desktop1440 {
+        font-size: 32px;
+      }
+      @media @desktop1920 {
+        font-size: 40px;
+      }
+    }
+    h5 {
+      color: var(--color-gray);
+      margin: 0 auto 40px auto;
+      line-height: 26px;
+      max-width: 626px;
+      font-size: 18px;
+      font-weight: normal;
+      @media @phone {
+        font-size: 14px;
+        margin-bottom: 40px;
+      }
+    }
+    ul {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10%;
+      li {
+        display: flex;
+        list-style: none;
+        align-items: center;
+        flex-direction: column;
+        max-width: 320px;
+        min-width: 285px;
+        margin-bottom: 30px;
+        h4 {
+          margin-bottom: 8px;
+          font-weight: bold;
+          font-size: 24px;
+          line-height: 34px;
+        }
+        p {
+          color: #9ca6b2;
+          font-size: 14px;
+          line-height: 20px;
+        }
+        img {
+          max-width: 100px;
+        }
+      }
+    }
+  }
+  .section3 {
+    margin: 160px auto;
+    .example-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 124px;
+      margin-top: 32px;
+      @media @tablet, @phone {
+        gap: 40px;
+        align-items: center;
+        flex-direction: column;
+        .code-example {
+          flex: inherit;
+          width: 100%;
+        }
+        .milvus-feature {
+          flex: inherit;
+        }
+      }
+      .code-example {
+        flex: 1;
+        min-width: 300px;
+        overflow: overlay;
+        background: #000;
+        box-shadow: 0px 20px 40px rgba(22, 36, 111, 0.2);
+        border-radius: 12px;
+        height: 394px;
+        overflow-x: auto;
+        pre code.hljs {
+          display: block;
+          overflow-x: auto;
+        }
+        code.hljs {
+          padding: 3px 5px;
+        }
+        .hljs {
+          color: #fff;
+          background: #000;
+        }
+        .hljs-keyword,
+        .hljs-operator,
+        .hljs-pattern-match {
+          color: #27a343;
+        }
+        .hljs-function,
+        .hljs-pattern-match .hljs-constructor {
+          color: #61aeee;
+        }
+        .hljs-function .hljs-params {
+          color: #a6e22e;
+        }
+        .hljs-function .hljs-params .hljs-typing {
+          color: #fd971f;
+        }
+        .hljs-module-access .hljs-module {
+          color: #7e57c2;
+        }
+        .hljs-constructor {
+          color: #e2b93d;
+        }
+        .hljs-constructor .hljs-string {
+          color: #9ccc65;
+        }
+        .hljs-comment,
+        .hljs-quote {
+          color: #999;
+          font-style: italic;
+        }
+        .hljs-doctag,
+        .hljs-formula {
+          color: #c678dd;
+        }
+        .hljs-deletion,
+        .hljs-name,
+        .hljs-section,
+        .hljs-selector-tag,
+        .hljs-subst {
+          color: #e06c75;
+        }
+        .hljs-literal {
+          color: #56b6c2;
+        }
+        .hljs-addition,
+        .hljs-attribute,
+        .hljs-meta .hljs-string,
+        .hljs-regexp,
+        .hljs-string {
+          color: #86df5d;
+        }
+        .hljs-built_in,
+        .hljs-class .hljs-title,
+        .hljs-title.class_ {
+          color: #3bd6ff;
+        }
+        .hljs-attr,
+        .hljs-number,
+        .hljs-selector-attr,
+        .hljs-selector-class,
+        .hljs-selector-pseudo,
+        .hljs-template-variable,
+        .hljs-type,
+        .hljs-variable {
+          color: #ff9fc9;
+        }
+        .hljs-bullet,
+        .hljs-link,
+        .hljs-meta,
+        .hljs-selector-id,
+        .hljs-symbol,
+        .hljs-title {
+          color: #61aeee;
+        }
+        .hljs-emphasis {
+          font-style: italic;
+        }
+        .hljs-strong {
+          font-weight: 700;
+        }
+        .hljs-link {
+          text-decoration: underline;
+        }
+      }
+      .milvus-feature {
+        position: relative;
+        @media @tablet, @phone {
+          flex: inherit;
+        }
+        .shooting-title {
+          padding: 20px 0;
+          border-top: 1px solid #eff9fe;
+          font-size: 32px;
+          line-height: 42px;
+          color: #c5ccd6;
+          cursor: pointer;
+
+          &.active {
+            color: var(--color-highlight);
+            font-weight: bold;
+          }
+          @media @tablet, @phone {
+            font-size: 18px;
+            line-height: 26px;
+
+            width: 300px;
+          }
+        }
+
+        padding: 2px 0; //! for horizontal_shooting_star, do not remove
+        overflow-x: hidden;
+
+        .shooting-title {
+          position: relative;
+        }
+        .shooting-title.active {
+          .horizontal_shooting_star {
+            .customShootingStyle;
+          }
+        }
+
+        .learn-more {
+          .secondaryBtnSm;
+          margin-top: 40px;
+          @media @phone {
+            width: 100%;
+          }
+        }
+      }
+    }
+    pre {
+      code {
+        padding: 0;
+        line-height: 26px;
+        background: #fff;
+      }
+    }
+
+    .code-example-tab {
+      button {
+        text-transform: capitalize !important;
+        color: var(--color-grey-02);
+      }
+
+      button.Mui-selected {
+        color: var(--color-black);
+      }
+
+      .MuiTabs-indicator {
+        background-color: var(--color-black);
+      }
+    }
+  }
+
+  .attu-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0 auto;
+
+    h2 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 40px;
+      line-height: 50px;
+      text-align: center;
+      color: var(--color-black);
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #999;
+    }
+  }
+
+  .attu-section {
+    margin: 80px auto;
+
+    .left-title {
+      height: 118px;
+      padding-bottom: 34px;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 32px;
+      line-height: 42px;
+      color: var(--color-black);
+
+      @media @tablet, @phone {
+        font-size: 24px;
+        line-height: 34px;
+        text-align: center;
+      }
+
+      span {
+        color: var(--color-highlight);
+      }
+    }
+
+    .milvus-feature div.left-li {
+      padding: 10px 0;
+
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 24px;
+      border-top: 1px solid #eff9fe;
+      color: var(--color-grey-03);
+
+      width: 400px;
+
+      &.active {
+        color: var(--color-black);
+      }
+
+      @media @tablet, @phone {
+        font-size: 14px;
+        line-height: 20px;
+
+        padding: 15px 0;
+
+        width: 300px;
+      }
+    }
+
+    .btn-groups {
+      display: flex;
+      gap: 10px;
+      padding-top: 34px;
+
+      .pBtn {
+        .primaryBtnSm;
+      }
+      .sBtn {
+        .secondaryBtnSm;
+      }
+
+      @media @tablet, @phone {
+        justify-content: center;
+        .download-attu {
+          justify-content: center;
+        }
+      }
+
+      @media @phone {
+        flex-direction: column;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+
+    .example-wrapper {
+      flex-wrap: nowrap;
+      align-items: center;
+
+      @media @tablet, @phone {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 40px;
+      }
+    }
+
+    .attu-example {
+      max-width: 710px;
+      min-height: 395px;
+      width: 100%;
+      height: auto;
+      background-image: url(../images/home/attu_1.jpeg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      filter: drop-shadow(0px 20px 40px rgba(0, 43, 125, 0.25));
+      border-radius: 6px;
+      transition: all 0.5s;
+
+      @media @phone {
+        min-height: 240px;
+      }
+
+      &.attu-example-1 {
+        background-image: url(../images/home/attu_2.jpg);
+      }
+      &.attu-example-2 {
+        background-image: url(../images/home/attu_3.jpg);
+      }
+    }
+  }
+}
+
+.customShootingStyle {
+  width: 100px;
+  display: block;
+  position: absolute;
+  animation: custom_shooting 6000ms ease-in-out infinite;
+
+  background: linear-gradient(
+    -45deg,
+    rgba(95, 145, 255, 1),
+    rgba(0, 0, 255, 0)
+  );
+  height: 3px;
+
+  background: linear-gradient(270deg, #00a1ea 2%, rgba(0, 161, 234, 0) 100%);
+  border-radius: 999px;
+  filter: drop-shadow(0 0 6px rgba(66, 255, 210, 1));
+
+  top: -2px;
+
+  @keyframes custom_shooting {
+    0% {
+      left: -100px;
+    }
+
+    50% {
+      left: 100%;
+    }
+
+    100% {
+      left: 100%;
+    }
+  }
+}
+
+.home-code-block {
+  width: fit-content;
+  color: #fff;
+  font-family: 'Source Code Pro';
+}

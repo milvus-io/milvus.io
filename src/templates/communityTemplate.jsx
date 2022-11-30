@@ -9,8 +9,9 @@ import Aside from '../components/aside';
 import Footer from '../components/footer';
 import Seo from '../components/seo';
 import { useOpenedStatus } from '../hooks';
-import './communityTemplate.less';
 import { findLatestVersion } from '../utils';
+import './docsStyle.less';
+import './communityTemplate.less';
 
 export const query = graphql`
   query ($language: String!) {

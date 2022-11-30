@@ -190,11 +190,11 @@ exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
 
   // templates
-  const docTemplate = path.resolve(`src/templates/docTemplate.js`);
+  const docTemplate = path.resolve(`src/templates/docTemplate.jsx`);
   const communityTemplate = path.resolve(`src/templates/communityTemplate.jsx`);
   const blogTemplate = path.resolve(`src/templates/blogTemplate.jsx`);
   const blogListTemplate = path.resolve(`src/templates/blogListTemplate.jsx`);
-  const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.js`);
+  const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.jsx`);
 
   return graphql(query).then(result => {
     if (result.errors) {
@@ -270,7 +270,7 @@ exports.createPages = ({ actions, graphql }) => {
   });
 };
 
-exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
+exports.onCreateWebpackConfig = ({ actions, getConfig, stage }) => {
   const config = getConfig();
   const miniCssExtractPlugin = config.plugins.find(
     plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
@@ -291,5 +291,27 @@ exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
       preset: require.resolve('cssnano-preset-lite'),
     };
   }
+
   actions.replaceWebpackConfig(config);
+
+  if (stage === `build-javascript`) {
+    actions.setWebpackConfig({
+      optimization: {
+        runtimeChunk: {
+          name: `webpack-runtime`,
+        },
+        splitChunks: {
+          name: false,
+          cacheGroups: {
+            styles: {
+              name: `styles`,
+              test: /\.(css|less)$/,
+              chunks: `initial`,
+              enforce: true,
+            },
+          },
+        },
+      },
+    });
+  }
 };

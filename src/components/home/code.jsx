@@ -113,21 +113,21 @@ const Code = props => {
       case EXAMPLES.search:
         return {
           tabs: ['Vector search', 'Hybrid search', 'Time travel'],
-          learnMoreLink: `/docs/${version}/search.md`,
+          learnMoreLink: `/docs/search.md`,
         };
       case EXAMPLES.manage:
         return {
           tabs: ['Create collection', 'Create index', 'Insert data'],
-          learnMoreLink: `/docs/${version}/create_collection.md`,
+          learnMoreLink: `/docs/create_collection.md`,
         };
       case EXAMPLES.install:
       default:
         return {
           tabs: ['Ubuntu', 'CentOS', 'Kubernetes'],
-          learnMoreLink: `/docs/${version}/install_cluster-helm.md`,
+          learnMoreLink: `/docs/install_cluster-helm.md`,
         };
     }
-  }, [activeExample, version]);
+  }, [activeExample]);
 
   return (
     <section className="section3 col-12 col-8 col-4">

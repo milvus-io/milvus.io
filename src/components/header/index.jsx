@@ -347,7 +347,7 @@ const Header = ({
           <div className={styles.rightSection}>
             {isDesktop && actionBar}
             <Link
-              to={`/docs/${version}/example_code.md`}
+              to={`/docs/example_code.md`}
               className={styles.startBtn}
             >
               {t('v3trans.main.nav.getstarted')}
@@ -496,7 +496,7 @@ const Header = ({
               variant="fullwidth"
               sx={{ position: 'absolute', bottom: '78px', width: '100%' }}
             />
-            <Link to={`/docs/${version}/install_standalone-docker.md`}>
+            <Link to={`/docs/install_standalone-docker.md`}>
               <button className={styles.startBtn}>
                 {t('v3trans.main.nav.getstarted')}
               </button>

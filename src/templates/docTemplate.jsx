@@ -154,12 +154,6 @@ export default function Template({ data, pageContext }) {
 
   // doc search meta
   const docsearchMeta = useMemo(() => {
-    if (
-      typeof window === 'undefined' ||
-      !window.location.pathname.includes(version)
-    ) {
-      return [];
-    }
     return [
       {
         name: 'docsearch:language',

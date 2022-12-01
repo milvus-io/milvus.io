@@ -1,6 +1,32 @@
 import React from 'react';
 import './banner.less';
 import { Link } from 'gatsby-plugin-react-i18next';
+import Marquee from 'react-fast-marquee';
+
+const Msg = () => {
+  let isDesktop = true;
+  if (typeof navigator !== 'undefined') {
+    isDesktop =
+      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
+        navigator.userAgent
+      );
+  }
+
+  const msg = (
+    <a href="https://milvus.io/docs/release_notes.md">
+      🔥 Milvus 2.2 is released, up to 200% performance gain!
+    </a>
+  );
+
+  return isDesktop ? (
+    <div className="msg">{msg} &nbsp;</div>
+  ) : (
+    <Marquee gradient={false} pauseOnHover={true} className="msg">
+      {msg} &nbsp;
+    </Marquee>
+  );
+};
+
 const HomeBanner = props => {
   const { t = v => v } = props;
   return (
@@ -12,7 +38,10 @@ const HomeBanner = props => {
         <div className="shooting_star"></div>
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
-        <h1 className="title">{t('v3trans.home.banner.title')}</h1>
+        <h1 className="title">
+          {t('v3trans.home.banner.title')}
+          <Msg />
+        </h1>
         <p className="subtitle">{t('v3trans.home.banner.desc')}</p>
         <div className="btn-group">
           <Link className="btn-start" to={`/docs/install_standalone-docker.md`}>

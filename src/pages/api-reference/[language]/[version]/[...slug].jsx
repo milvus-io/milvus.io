@@ -151,7 +151,7 @@ export default function Template(props) {
   return (
     <Layout t={t} showFooter={false} headerClassName="docHeader">
       <div className={'doc-temp-container'}>
-        <div className={classes.menuContainer}>
+        <div className={classes.menuWrapper}>
           <LeftNavSection
             tree={menuTree}
             onNodeClick={handleNodeClick}

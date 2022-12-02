@@ -112,7 +112,7 @@ export default function DocDetailPage(props) {
           [`home`]: homeData,
         })}
       >
-        <div className={classes.menuContainer}>
+        <div className={classes.menuWrapper}>
           <LeftNavSection
             tree={menuTree}
             onNodeClick={handleNodeClick}

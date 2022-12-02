@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" href="/favicon-32x32.png" />
         <meta
           name="image"
           property="og:image"

@@ -86,7 +86,7 @@ export default function Template({ data, pageContext }) {
   const leftNavMenus =
     menuConfig?.menuList?.find(menu => menu.lang === locale)?.menuList || [];
   const leftNavHomeUrl =
-    version === `v0.x` ? `/docs/v0.x/overview.md` : `/docs/${version}`;
+    version === `v0.x` ? `/docs/v0.x/overview.md` : `${version === newestVersion ? `/docs` : `/docs/${version}`}`;
 
   // generate menu
   const menus = mdMenuListFactory(

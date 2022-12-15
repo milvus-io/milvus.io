@@ -11,6 +11,7 @@ import Seo from '../components/seo';
 import { useCodeCopy } from '../hooks/doc-dom-operation';
 import { useOpenedStatus } from '../hooks';
 import 'highlight.js/styles/stackoverflow-light.css';
+import './docsStyle.less';
 import './docTemplate.less';
 import { findLatestVersion } from '../utils';
 

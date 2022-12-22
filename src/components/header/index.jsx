@@ -346,7 +346,7 @@ const Header = ({
 
           <div className={styles.rightSection}>
             {isDesktop && actionBar}
-            <Link to={`https://cloud.zilliz.com`}>
+            <Link to={`https://zilliz.com/cloud`}>
               <button className={styles.startBtn}>
                 Try Fully-managed Milvus
                 <svg

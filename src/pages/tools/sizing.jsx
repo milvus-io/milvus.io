@@ -6,6 +6,7 @@ import { useI18next } from 'gatsby-plugin-react-i18next';
 import * as classes from './sizingTool.module.less';
 import { InfoFilled, DownloadIcon } from '../../components/icons';
 import SizingToolCard from '../../components/card/sizingToolCard';
+import SizingConfigCard from '../../components/card/sizingToolCard/sizingConfigCard';
 import clsx from 'clsx';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
@@ -13,6 +14,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import { findLatestVersion } from '../../utils';
 
 import {
@@ -27,6 +31,10 @@ import {
   dataNodeCalculator,
   proxyCalculator,
   customYmlGenerator,
+  etcdCalculator,
+  minioCalculator,
+  pulsarCalculator,
+  kafkaCalculator,
 } from '../../utils/sizingTool';
 
 const INDEX_TYPE_OPTIONS = [
@@ -129,6 +137,7 @@ export default function SizingTool({ data }) {
       value: SEGMENT_SIZE_OPTIONS[0].value,
       showError: false,
     },
+    apacheType: 'pulsar',
   });
 
   const handleFormValueChange = (val, key) => {
@@ -184,6 +193,13 @@ export default function SizingTool({ data }) {
     }));
   };
 
+  const handleApacheChange = (e, value) => {
+    setForm(v => ({
+      ...v,
+      apacheType: value,
+    }));
+  };
+
   const calcResult = useMemo(() => {
     const { nb, d, indexType, nlist, m, segmentSize } = form;
 
@@ -232,6 +248,11 @@ export default function SizingTool({ data }) {
 
     const commonCoord = commonCoordCalculator(memorySize);
 
+    const etcdData = etcdCalculator(rawFileSize);
+    const minioData = minioCalculator(rawFileSize, theorySize);
+    const pulsarData = pulsarCalculator(rawFileSize);
+    const kafkaData = kafkaCalculator(rawFileSize);
+
     return {
       memorySize: unitBYTE2Any(memorySize),
       rawFileSize: unitBYTE2Any(rawFileSize),
@@ -241,6 +262,10 @@ export default function SizingTool({ data }) {
       proxy,
       queryNode,
       commonCoord,
+      etcdData,
+      minioData,
+      pulsarData,
+      kafkaData,
     };
   }, [form]);
 
@@ -421,6 +446,25 @@ export default function SizingTool({ data }) {
                       ))}
                     </Select>
                   </FormControl>
+
+                  <FormControl fullWidth>
+                    <RadioGroup
+                      value={form.apacheType}
+                      onChange={handleApacheChange}
+                      className={classes.radioGroup}
+                    >
+                      <FormControlLabel
+                        value="pulsar"
+                        control={<Radio />}
+                        label="Pulsar"
+                      />
+                      <FormControlLabel
+                        value="kafka"
+                        control={<Radio />}
+                        label="Kafka"
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </div>
               </div>
             </div>
@@ -513,6 +557,44 @@ export default function SizingTool({ data }) {
                     content={calcResult.indexNode.amount}
                     showTooltip
                   />
+
+                  {/* etcd */}
+                </div>
+                <div className={classes.line}>
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.etcd.title')}
+                    subTitle={`${calcResult.etcdData.cpu} ${calcResult.etcdData.memory}`}
+                    content={`x ${calcResult.etcdData.podNumber}`}
+                    extraData={{
+                      key: 'Pvc per pod',
+                      value: calcResult.etcdData.pvcPerPod,
+                    }}
+                  />
+                  {/* Minio */}
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.minio.title')}
+                    subTitle={`${calcResult.minioData.cpu} ${calcResult.minioData.memory}`}
+                    content={`x ${calcResult.minioData.podNumber}`}
+                    extraData={{
+                      key: 'Pvc per pod',
+                      value: calcResult.minioData.pvcPerPod,
+                    }}
+                  />
+                </div>
+
+                {/* pulsar or kafka */}
+                <div className={classes.line}>
+                  {form.apacheType === 'pulsar' ? (
+                    <SizingConfigCard
+                      title={t('v3trans.sizingTool.setups.pulsar.title')}
+                      {...calcResult.pulsarData}
+                    />
+                  ) : (
+                    <SizingConfigCard
+                      title={t('v3trans.sizingTool.setups.kafka.title')}
+                      {...calcResult.kafkaData}
+                    />
+                  )}
                 </div>
               </div>
 

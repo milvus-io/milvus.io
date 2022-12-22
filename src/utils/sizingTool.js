@@ -293,6 +293,312 @@ export const isBetween = (value, { min, max }) => {
   return value >= min && value <= max;
 };
 
+export const etcdCalculator = rowFileSize => {
+  let cpu = '';
+  let memory = '';
+  let podNumber = 0;
+  let pvcPerPod = '';
+
+  if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
+    cpu = '2 core';
+    memory = '4 GB';
+    podNumber = 3;
+    pvcPerPod = 'SSD 30GB';
+  } else if (
+    rowFileSize > unitAny2BYTE(50, 'GB') &&
+    rowFileSize <= unitAny2BYTE(500, 'GB')
+  ) {
+    cpu = '4 core';
+    memory = '8 GB';
+    podNumber = 3;
+    pvcPerPod = 'SSD 30GB';
+  } else {
+    cpu = '8 core';
+    memory = '16 GB';
+    podNumber = 3;
+    pvcPerPod = 'SSD 30GB';
+  }
+
+  return {
+    cpu,
+    memory,
+    podNumber,
+    pvcPerPod,
+  };
+};
+
+export const minioCalculator = (rowFileSize, indexSize) => {
+  let cpu = '';
+  let memory = '';
+  let podNumber = 0;
+  let pvcPerPod = '';
+
+  const { size, unit } = unitBYTE2Any(((rowFileSize + indexSize) * 3 * 2) / 4);
+
+  if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
+    cpu = '2 core';
+    memory = '8 GB';
+    podNumber = 4;
+    pvcPerPod = `${size} ${unit}`;
+  } else if (
+    rowFileSize > unitAny2BYTE(50, 'GB') &&
+    rowFileSize <= unitAny2BYTE(500, 'GB')
+  ) {
+    cpu = '4 core';
+    memory = '16 GB';
+    podNumber = 4;
+    pvcPerPod = `${size} ${unit}`;
+  } else {
+    cpu = '8 core';
+    memory = '32 GB';
+    podNumber = 4;
+    pvcPerPod = `${size} ${unit}`;
+  }
+
+  return {
+    cpu,
+    memory,
+    podNumber,
+    pvcPerPod,
+  };
+};
+
+export const pulsarCalculator = rowFileSize => {
+  let bookie = {
+    Cpu: '',
+    Memory: '',
+    'Pod Number': 0,
+    '-Xms': '',
+    '-Xmx': '',
+    '-Xx': '',
+    Journal: '',
+    Ledgers: '',
+  };
+  let broker = {
+    Cpu: '',
+    Memory: '',
+    '-Xms': '',
+    '-Xmx': '',
+    '-Xx': '',
+    'Pod Number': 0,
+  };
+  let proxy = {
+    Cpu: '',
+    Memory: '',
+    '-Xms': '',
+    '-Xmx': '',
+    '-Xx': '',
+    'pod Number': 0,
+  };
+  let zookeeper = {
+    Cpu: '1 core',
+    Memory: '2 GB',
+    '-Xms': '',
+    '-Xmx': '',
+    'Pod Number': 3,
+    'Pvc Per Pod': 'SSD 20GB',
+  };
+
+  if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
+    bookie = {
+      Cpu: '2 core',
+      Memory: '16 GB',
+      '-Xms': '4096 m',
+      '-Xmx': '4096 m',
+      '-Xx': '8192 m',
+      'Pod Number': 3,
+      Journal: '10 GB',
+      Ledgers: 'SSD 25GB',
+    };
+    broker = {
+      Cpu: '2 core',
+      Memory: '18 GB',
+      '-Xms': '4096 m',
+      '-Xmx': '4096 m',
+      '-Xx': '8192 m',
+      'Pod Number': 2,
+    };
+    proxy = {
+      Cpu: '2 core',
+      Memory: '5 GB',
+      '-Xms': '2048 m',
+      '-Xmx': '2048 m',
+      '-Xx': '2048 m',
+      'Pod Number': 2,
+    };
+    zookeeper = {
+      Cpu: '1 core',
+      Memory: '2 GB',
+      '-Xms': '1024 m',
+      '-Xmx': '1024 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': 'SSD 20GB',
+    };
+  } else if (
+    rowFileSize > unitAny2BYTE(50, 'GB') &&
+    rowFileSize <= unitAny2BYTE(500, 'GB')
+  ) {
+    bookie = {
+      Cpu: '4 core',
+      Memory: '32 GB',
+      '-Xms': '8192 m',
+      '-Xmx': '8192 m',
+      '-Xx': '16384 m',
+      'Pod Number': 3,
+      Journal: '100 GB',
+      Ledgers: 'SSD 250GB',
+    };
+    broker = {
+      Cpu: '4 core',
+      Memory: '36 GB',
+      '-Xms': '8192 m',
+      '-Xmx': '8192 m',
+      '-Xx': '16384 m',
+      'Pod Number': 2,
+    };
+    proxy = {
+      Cpu: '4 core',
+      Memory: '9 GB',
+      '-Xms': '4096 m',
+      '-Xmx': '4096 m',
+      '-Xx': '4096 m',
+      'Pod Number': 2,
+    };
+    zookeeper = {
+      Cpu: '4 core',
+      Memory: '4 GB',
+      '-Xms': '2048 m',
+      '-Xmx': '2048 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': 'SSD 20GB',
+    };
+  } else {
+    bookie = {
+      Cpu: '8 core',
+      Memory: '64 GB',
+      '-Xms': '16384 m',
+      '-Xmx': '16384 m',
+      '-Xx': '32768 m',
+      'Pod Number': 3,
+      Journal: '100 GB',
+      Ledgers: 'SSD 250GB',
+    };
+    broker = {
+      Cpu: '8 core',
+      Memory: '72 GB',
+      '-Xms': '16384 m',
+      '-Xmx': '16384 m',
+      '-Xx': '32768 m',
+      'Pod Number': 2,
+    };
+    proxy = {
+      Cpu: '8 core',
+      Memory: '18 GB',
+      '-Xms': '8192 m',
+      '-Xmx': '8192 m',
+      '-Xx': '8192 m',
+      'Pod Number': 2,
+    };
+    zookeeper = {
+      cpu: '8 core',
+      Memory: '8 GB',
+      '-Xms': '4096 m',
+      '-Xmx': '4096 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': 'SSD 20GB',
+    };
+  }
+
+  return {
+    bookie,
+    broker,
+    proxy,
+    zookeeper,
+  };
+};
+
+export const kafkaCalculator = rowFileSize => {
+  let broker = {
+    Cpu: '',
+    Memory: '',
+    '-Xms': '',
+    '-Xmx': '',
+    'Pod Number': 0,
+    'Pvc Per Pod': '',
+  };
+  let zookeeper = {
+    Cpu: '',
+    Memory: '',
+    '-Xms': '',
+    '-Xmx': '',
+    'Pod Number': 0,
+    'Pvc Per Pod': '',
+  };
+
+  const { size, unit } = unitBYTE2Any(rowFileSize);
+
+  if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
+    broker = {
+      Cpu: '2 core',
+      Memory: '16 GB',
+      '-Xms': '4096 m',
+      '-Xmx': '4096 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': `${size} ${unit}`,
+    };
+    zookeeper = {
+      Cpu: '1 core',
+      Memory: '2 GB',
+      '-Xms': '1024 m',
+      '-Xmx': '1024 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': 'SSD 20GB',
+    };
+  } else if (
+    rowFileSize > unitAny2BYTE(50, 'GB') &&
+    rowFileSize <= unitAny2BYTE(500, 'GB')
+  ) {
+    broker = {
+      Cpu: '4 core',
+      Memory: '25 GB',
+      '-Xms': '8192 m',
+      '-Xmx': '8192 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': `${size} ${unit}`,
+    };
+    zookeeper = {
+      Cpu: '2 core',
+      Memory: '4 GB',
+      '-Xms': '2048 m',
+      '-Xmx': '2048 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': 'SSD 20GB',
+    };
+  } else {
+    broker = {
+      Cpu: '8 core',
+      Memory: '50 GB',
+      '-Xms': '16384 m',
+      '-Xmx': '16384 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': rowFileSize,
+    };
+    zookeeper = {
+      Cpu: '4 core',
+      Memory: '8 GB',
+      '-Xms': '4096 m',
+      '-Xmx': '4096 m',
+      'Pod Number': 3,
+      'Pvc Per Pod': 'SSD 20GB',
+    };
+  }
+
+  return {
+    broker,
+    zookeeper,
+  };
+};
+
 export const customYmlGenerator = ({
   rootCoord,
   proxy,

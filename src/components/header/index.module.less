@@ -53,7 +53,11 @@
       color: white;
       background: unset;
       background: var(--color-primary);
-
+      svg {
+        vertical-align: -5px;
+        margin-left: 4px;
+        stroke: #fff !important;
+      }
       &:hover {
         background: var(--color-text-primary);
         opacity: 1;
@@ -86,6 +90,11 @@
     .startBtn {
       width: fit-content;
       position: static;
+      svg {
+        vertical-align: -5px;
+        margin-left: 4px;
+        stroke: #000;
+      }
     }
   }
 }
@@ -181,7 +190,8 @@
   }
 }
 
-.startBtn {
+.startBtn,
+.managedBtn {
   background: linear-gradient(90.14deg, #ffffff 0.15%, #669dde 104.21%);
   .buttonSm;
   .hover;
@@ -202,6 +212,12 @@
   height: 42px;
   padding-top: 12px;
   padding-bottom: 12px;
+}
+
+.managedBtn {
+  @media @phone, @tablet {
+    bottom: 96px;
+  }
 }
 
 .mobileHead {

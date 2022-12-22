@@ -346,11 +346,23 @@ const Header = ({
 
           <div className={styles.rightSection}>
             {isDesktop && actionBar}
-            <Link
-              to={`/docs/example_code.md`}
-              className={styles.startBtn}
-            >
-              {t('v3trans.main.nav.getstarted')}
+            <Link to={`https://cloud.zilliz.com`}>
+              <button className={styles.startBtn}>
+                Try Fully-managed Milvus
+                <svg
+                  width="24"
+                  height="20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 10h22m0 0l-9-9m9 9l-9 9"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
+                </svg>
+              </button>
             </Link>
           </div>
         </div>
@@ -496,9 +508,9 @@ const Header = ({
               variant="fullwidth"
               sx={{ position: 'absolute', bottom: '78px', width: '100%' }}
             />
-            <Link to={`/docs/install_standalone-docker.md`}>
+            <Link to={`https://cloud.zilliz.com`}>
               <button className={styles.startBtn}>
-                {t('v3trans.main.nav.getstarted')}
+                Try Fully-managed Milvus &gt;
               </button>
             </Link>
           </nav>

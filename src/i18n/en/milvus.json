@@ -927,7 +927,10 @@
         "proxyLabel": "Proxy",
         "zookeeper": "Zookeeper"
       },
-      "button": "Download configuration yml"
+      "buttons": {
+        "helm": "Download Helm Chart configuration yml",
+        "operator": "Download Milvus Operator configuration yml"
+      }
     }
   }
 }

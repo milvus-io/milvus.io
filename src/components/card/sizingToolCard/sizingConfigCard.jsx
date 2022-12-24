@@ -20,15 +20,22 @@ export default function SizingConfigCard(props) {
             <Typography component="h5" className={styles.title}>
               component: {t('v3trans.sizingTool.setups.bookie')}
             </Typography>
-            {Object.entries(bookie).map(([key, value]) => (
+            {Object.values(bookie).map(({ key, value, size, unit, isSSD }) => (
               <div key={key} className={styles.cardLine}>
                 <Typography component="span" className={styles.key}>
                   {key}:
                 </Typography>
-                <Typography component="span" className={styles.value}>
-                  {' '}
-                  {value}
-                </Typography>
+                {value && (
+                  <Typography component="span" className={styles.value}>
+                    &nbsp;&nbsp;{value}
+                  </Typography>
+                )}
+                {size && (
+                  <Typography component="span" className={styles.value}>
+                    &nbsp;&nbsp;
+                    {isSSD ? `SSD ${size} ${unit}` : `${size} ${unit}`}
+                  </Typography>
+                )}
               </div>
             ))}
           </div>
@@ -39,15 +46,22 @@ export default function SizingConfigCard(props) {
             <Typography component="h5" className={styles.title}>
               component: {t('v3trans.sizingTool.setups.broker')}
             </Typography>
-            {Object.entries(broker).map(([key, value]) => (
+            {Object.values(broker).map(({ key, value, size, unit, isSSD }) => (
               <div key={key} className={styles.cardLine}>
                 <Typography component="span" className={styles.key}>
                   {key}:
                 </Typography>
-                <Typography component="span" className={styles.value}>
-                  {' '}
-                  {value}
-                </Typography>
+                {value && (
+                  <Typography component="span" className={styles.value}>
+                    &nbsp;&nbsp;{value}
+                  </Typography>
+                )}
+                {size && (
+                  <Typography component="span" className={styles.value}>
+                    &nbsp;&nbsp;
+                    {isSSD ? `SSD ${size} ${unit}` : `${size} ${unit}`}
+                  </Typography>
+                )}
               </div>
             ))}
           </div>
@@ -58,15 +72,22 @@ export default function SizingConfigCard(props) {
             <Typography component="h5" className={styles.title}>
               component: {t('v3trans.sizingTool.setups.proxyLabel')}
             </Typography>
-            {Object.entries(proxy).map(([key, value]) => (
+            {Object.values(proxy).map(({ key, value, size, unit, isSSD }) => (
               <div key={key} className={styles.cardLine}>
                 <Typography component="span" className={styles.key}>
                   {key}:
                 </Typography>
-                <Typography component="span" className={styles.value}>
-                  {' '}
-                  {value}
-                </Typography>
+                {value && (
+                  <Typography component="span" className={styles.value}>
+                    &nbsp;&nbsp;{value}
+                  </Typography>
+                )}
+                {size && (
+                  <Typography component="span" className={styles.value}>
+                    &nbsp;&nbsp;
+                    {isSSD ? `SSD ${size} ${unit}` : `${size} ${unit}`}
+                  </Typography>
+                )}
               </div>
             ))}
           </div>
@@ -77,17 +98,26 @@ export default function SizingConfigCard(props) {
             <Typography component="h5" className={styles.title}>
               component: {t('v3trans.sizingTool.setups.zookeeper')}
             </Typography>
-            {Object.entries(zookeeper).map(([key, value]) => (
-              <div key={key} className={styles.cardLine}>
-                <Typography component="span" className={styles.key}>
-                  {key}:
-                </Typography>
-                <Typography component="span" className={styles.value}>
-                  {' '}
-                  {value}
-                </Typography>
-              </div>
-            ))}
+            {Object.values(zookeeper).map(
+              ({ key, value, size, unit, isSSD }) => (
+                <div key={key} className={styles.cardLine}>
+                  <Typography component="span" className={styles.key}>
+                    {key}:
+                  </Typography>
+                  {value && (
+                    <Typography component="span" className={styles.value}>
+                      &nbsp;&nbsp;{value}
+                    </Typography>
+                  )}
+                  {size && (
+                    <Typography component="span" className={styles.value}>
+                      &nbsp;&nbsp;
+                      {isSSD ? `SSD ${size} ${unit}` : `${size} ${unit}`}
+                    </Typography>
+                  )}
+                </div>
+              )
+            )}
           </div>
         )}
       </div>

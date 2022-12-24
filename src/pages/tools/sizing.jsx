@@ -30,7 +30,8 @@ import {
   rootCoordCalculator,
   dataNodeCalculator,
   proxyCalculator,
-  customYmlGenerator,
+  helmYmlGenerator,
+  operatorYmlGenerator,
   etcdCalculator,
   minioCalculator,
   pulsarCalculator,
@@ -269,11 +270,8 @@ export default function SizingTool({ data }) {
     };
   }, [form]);
 
-  const handleDownloadYmlFile = () => {
+  const handleDownloadYmlFile = (content, fielName) => {
     if (typeof window !== 'undefined') {
-      const content = customYmlGenerator({
-        ...calcResult,
-      });
       const blob = new Blob([content], {
         type: 'text/plain',
       });
@@ -282,11 +280,22 @@ export default function SizingTool({ data }) {
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'customConfig.yml';
+      a.download = `${fielName}.yml`;
       a.click();
     }
   };
 
+  const handleDownloadHelm = () => {
+    const content = helmYmlGenerator({
+      ...calcResult,
+    });
+    handleDownloadYmlFile(content, 'helmConfigYml');
+  };
+
+  const handleDownloadOperator = () => {
+    const content = operatorYmlGenerator(calcResult, form.apacheType);
+    handleDownloadYmlFile(content, 'operatorConfigYml');
+  };
   const version = findLatestVersion(allVersion.nodes);
 
   return (
@@ -563,21 +572,21 @@ export default function SizingTool({ data }) {
                 <div className={classes.line}>
                   <SizingToolCard
                     title={t('v3trans.sizingTool.setups.etcd.title')}
-                    subTitle={`${calcResult.etcdData.cpu} ${calcResult.etcdData.memory}`}
+                    subTitle={`${calcResult.etcdData.cpu} core ${calcResult.etcdData.memory} GB`}
                     content={`x ${calcResult.etcdData.podNumber}`}
                     extraData={{
                       key: 'Pvc per pod',
-                      value: calcResult.etcdData.pvcPerPod,
+                      value: `SSD ${calcResult.etcdData.pvcPerPod} GB`,
                     }}
                   />
                   {/* Minio */}
                   <SizingToolCard
                     title={t('v3trans.sizingTool.setups.minio.title')}
-                    subTitle={`${calcResult.minioData.cpu} ${calcResult.minioData.memory}`}
+                    subTitle={`${calcResult.minioData.cpu} core ${calcResult.minioData.memory} GB`}
                     content={`x ${calcResult.minioData.podNumber}`}
                     extraData={{
                       key: 'Pvc per pod',
-                      value: calcResult.minioData.pvcPerPod,
+                      value: `${calcResult.minioData.pvcPerPodSize} ${calcResult.minioData.pvcPerPodUnit}`,
                     }}
                   />
                 </div>
@@ -598,13 +607,22 @@ export default function SizingTool({ data }) {
                 </div>
               </div>
 
-              <button
-                className={classes.downloadBtn}
-                onClick={handleDownloadYmlFile}
-              >
-                <DownloadIcon />
-                <span>{t('v3trans.sizingTool.button')}</span>
-              </button>
+              <div className={classes.btnsWrapper}>
+                <button
+                  className={classes.downloadBtn}
+                  onClick={handleDownloadHelm}
+                >
+                  <DownloadIcon />
+                  <span>{t('v3trans.sizingTool.buttons.helm')}</span>
+                </button>
+                <button
+                  className={classes.downloadBtn}
+                  onClick={handleDownloadOperator}
+                >
+                  <DownloadIcon />
+                  <span>{t('v3trans.sizingTool.buttons.operator')}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -23,14 +23,14 @@ export const unitBYTE2Any = size => {
   sizeStatus === 1
     ? (unit = 'B')
     : sizeStatus === 2
-    ? (unit = 'KB')
+    ? (unit = 'K')
     : sizeStatus === 3
-    ? (unit = 'MB')
+    ? (unit = 'M')
     : sizeStatus === 4
-    ? (unit = 'GB')
+    ? (unit = 'G')
     : sizeStatus === 5
-    ? (unit = 'TB')
-    : (unit = 'KB');
+    ? (unit = 'T')
+    : (unit = 'K');
 
   size = Math.ceil(size * 10) / 10;
   return {
@@ -294,218 +294,640 @@ export const isBetween = (value, { min, max }) => {
 };
 
 export const etcdCalculator = rowFileSize => {
-  let cpu = '';
-  let memory = '';
+  let cpu = 0;
+  let memory = 0;
   let podNumber = 0;
-  let pvcPerPod = '';
+  let pvcPerPodSize = 0;
+  let pvcPerPodUnit = '';
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-    cpu = '2 core';
-    memory = '4 GB';
+    cpu = 2;
+    memory = 4;
     podNumber = 3;
-    pvcPerPod = 'SSD 30GB';
+    pvcPerPodSize = 30;
+    pvcPerPodUnit = 'G';
   } else if (
     rowFileSize > unitAny2BYTE(50, 'GB') &&
     rowFileSize <= unitAny2BYTE(500, 'GB')
   ) {
-    cpu = '4 core';
-    memory = '8 GB';
+    cpu = 4;
+    memory = 8;
     podNumber = 3;
-    pvcPerPod = 'SSD 30GB';
+    pvcPerPodSize = 30;
+    pvcPerPodUnit = 'G';
   } else {
-    cpu = '8 core';
-    memory = '16 GB';
+    cpu = 8;
+    memory = 16;
     podNumber = 3;
-    pvcPerPod = 'SSD 30GB';
+    pvcPerPodSize = 30;
+    pvcPerPodUnit = 'G';
   }
 
   return {
     cpu,
     memory,
     podNumber,
-    pvcPerPod,
+    pvcPerPodSize,
+    pvcPerPodUnit,
   };
 };
 
 export const minioCalculator = (rowFileSize, indexSize) => {
-  let cpu = '';
-  let memory = '';
+  let cpu = 0;
+  let memory = 0;
   let podNumber = 0;
-  let pvcPerPod = '';
+  let pvcPerPodSize = 0;
+  let pvcPerPodUnit = '';
 
   const { size, unit } = unitBYTE2Any(((rowFileSize + indexSize) * 3 * 2) / 4);
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-    cpu = '2 core';
-    memory = '8 GB';
+    cpu = 2;
+    memory = 8;
     podNumber = 4;
-    pvcPerPod = `${size} ${unit}`;
+    pvcPerPodSize = size;
+    pvcPerPodUnit = unit;
   } else if (
     rowFileSize > unitAny2BYTE(50, 'GB') &&
     rowFileSize <= unitAny2BYTE(500, 'GB')
   ) {
-    cpu = '4 core';
-    memory = '16 GB';
+    cpu = 4;
+    memory = 16;
     podNumber = 4;
-    pvcPerPod = `${size} ${unit}`;
+    pvcPerPodSize = size;
+    pvcPerPodUnit = unit;
   } else {
-    cpu = '8 core';
-    memory = '32 GB';
+    cpu = 8;
+    memory = 32;
     podNumber = 4;
-    pvcPerPod = `${size} ${unit}`;
+    pvcPerPodSize = size;
+    pvcPerPodUnit = unit;
   }
 
   return {
     cpu,
     memory,
     podNumber,
-    pvcPerPod,
+    pvcPerPodSize,
+    pvcPerPodUnit,
   };
 };
 
 export const pulsarCalculator = rowFileSize => {
   let bookie = {
-    Cpu: '',
-    Memory: '',
-    'Pod Number': 0,
-    '-Xms': '',
-    '-Xmx': '',
-    '-Xx': '',
-    Journal: '',
-    Ledgers: '',
+    cpu: {
+      key: 'Cpu',
+      size: 0,
+      unit: '',
+    },
+    memory: {
+      key: 'Memory',
+      size: 0,
+      unit: '',
+    },
+    xms: {
+      key: '-Xms',
+      size: 0,
+      unit: '',
+    },
+    xmx: {
+      key: '-Xmx',
+      size: 0,
+      unit: '',
+    },
+    xx: {
+      key: '-Xx',
+      size: 0,
+      unit: '',
+    },
+    podNum: {
+      key: 'Pod Number',
+      value: 0,
+    },
+    journal: {
+      key: 'Journal',
+      size: 0,
+      unit: '',
+    },
+    ledgers: {
+      key: 'Ledgers',
+      size: 0,
+      unit: '',
+      isSSD: true,
+    },
   };
   let broker = {
-    Cpu: '',
-    Memory: '',
-    '-Xms': '',
-    '-Xmx': '',
-    '-Xx': '',
-    'Pod Number': 0,
+    cpu: {
+      key: 'Cpu',
+      size: 0,
+      unit: '',
+    },
+    memory: {
+      key: 'Memory',
+      size: 0,
+      unit: '',
+    },
+    xms: {
+      key: '-Xms',
+      size: 0,
+      unit: '',
+    },
+    xmx: {
+      key: '-Xmx',
+      size: 0,
+      unit: '',
+    },
+    xx: {
+      key: '-Xx',
+      size: 0,
+      unit: '',
+    },
+    podNum: {
+      key: 'Pod Number',
+      value: 0,
+    },
   };
   let proxy = {
-    Cpu: '',
-    Memory: '',
-    '-Xms': '',
-    '-Xmx': '',
-    '-Xx': '',
-    'pod Number': 0,
+    cpu: {
+      key: 'Cpu',
+      size: 0,
+      unit: '',
+    },
+    memory: {
+      key: 'Memory',
+      size: 0,
+      unit: '',
+    },
+    xms: {
+      key: '-Xms',
+      size: 0,
+      unit: '',
+    },
+    xmx: {
+      key: '-Xmx',
+      size: 0,
+      unit: '',
+    },
+    xx: {
+      key: '-Xx',
+      size: 0,
+      unit: '',
+    },
+    podNum: {
+      key: 'Pod Number',
+      value: 0,
+    },
   };
   let zookeeper = {
-    Cpu: '1 core',
-    Memory: '2 GB',
-    '-Xms': '',
-    '-Xmx': '',
-    'Pod Number': 3,
-    'Pvc Per Pod': 'SSD 20GB',
+    cpu: {
+      key: 'Cpu',
+      size: 0,
+      unit: '',
+    },
+    memory: {
+      key: 'Memory',
+      size: 0,
+      unit: '',
+    },
+    xms: {
+      key: '-Xms',
+      size: 0,
+      unit: '',
+    },
+    xmx: {
+      key: '-Xmx',
+      size: 0,
+      unit: '',
+    },
+
+    podNum: {
+      key: 'Pod Number',
+      value: 0,
+    },
+    pvc: {
+      key: 'Pvc per Pod',
+      size: 0,
+      unit: '',
+      isSSD: true,
+    },
   };
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
     bookie = {
-      Cpu: '2 core',
-      Memory: '16 GB',
-      '-Xms': '4096 m',
-      '-Xmx': '4096 m',
-      '-Xx': '8192 m',
-      'Pod Number': 3,
-      Journal: '10 GB',
-      Ledgers: 'SSD 25GB',
+      cpu: {
+        key: 'Cpu',
+        size: 2,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 16,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 4096,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 4096,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 8192,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      journal: {
+        key: 'Journal',
+        size: 10,
+        unit: 'G',
+      },
+      ledgers: {
+        key: 'Ledgers',
+        size: 25,
+        unit: 'G',
+        isSSD: true,
+      },
     };
     broker = {
-      Cpu: '2 core',
-      Memory: '18 GB',
-      '-Xms': '4096 m',
-      '-Xmx': '4096 m',
-      '-Xx': '8192 m',
-      'Pod Number': 2,
+      cpu: {
+        key: 'Cpu',
+        size: 2,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 18,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 4096,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 4096,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 8192,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 2,
+      },
     };
     proxy = {
-      Cpu: '2 core',
-      Memory: '5 GB',
-      '-Xms': '2048 m',
-      '-Xmx': '2048 m',
-      '-Xx': '2048 m',
-      'Pod Number': 2,
+      cpu: {
+        key: 'Cpu',
+        size: 2,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 5,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 2048,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 2048,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 2048,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 2,
+      },
     };
     zookeeper = {
-      Cpu: '1 core',
-      Memory: '2 GB',
-      '-Xms': '1024 m',
-      '-Xmx': '1024 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': 'SSD 20GB',
+      cpu: {
+        key: 'Cpu',
+        size: 1,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 2,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 1024,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 1024,
+        unit: 'M',
+      },
+
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc per Pod',
+        size: 20,
+        unit: 'G',
+        isSSD: true,
+      },
     };
   } else if (
     rowFileSize > unitAny2BYTE(50, 'GB') &&
     rowFileSize <= unitAny2BYTE(500, 'GB')
   ) {
     bookie = {
-      Cpu: '4 core',
-      Memory: '32 GB',
-      '-Xms': '8192 m',
-      '-Xmx': '8192 m',
-      '-Xx': '16384 m',
-      'Pod Number': 3,
-      Journal: '100 GB',
-      Ledgers: 'SSD 250GB',
+      cpu: {
+        key: 'Cpu',
+        size: 4,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 32,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 8192,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 8192,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 16384,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      journal: {
+        key: 'Journal',
+        size: 100,
+        unit: 'G',
+      },
+      ledgers: {
+        key: 'Ledgers',
+        size: 25,
+        unit: 'G',
+        isSSD: true,
+      },
     };
     broker = {
-      Cpu: '4 core',
-      Memory: '36 GB',
-      '-Xms': '8192 m',
-      '-Xmx': '8192 m',
-      '-Xx': '16384 m',
-      'Pod Number': 2,
+      cpu: {
+        key: 'Cpu',
+        size: 4,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 36,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 8192,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 8192,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 16384,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 2,
+      },
     };
     proxy = {
-      Cpu: '4 core',
-      Memory: '9 GB',
-      '-Xms': '4096 m',
-      '-Xmx': '4096 m',
-      '-Xx': '4096 m',
-      'Pod Number': 2,
+      cpu: {
+        key: 'Cpu',
+        size: 4,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 9,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 4096,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 4096,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 4096,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 2,
+      },
     };
     zookeeper = {
-      Cpu: '4 core',
-      Memory: '4 GB',
-      '-Xms': '2048 m',
-      '-Xmx': '2048 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': 'SSD 20GB',
+      cpu: {
+        key: 'Cpu',
+        size: 2,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 4,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 2048,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 2048,
+        unit: 'M',
+      },
+
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc per Pod',
+        size: 20,
+        unit: 'G',
+        isSSD: true,
+      },
     };
   } else {
     bookie = {
-      Cpu: '8 core',
-      Memory: '64 GB',
-      '-Xms': '16384 m',
-      '-Xmx': '16384 m',
-      '-Xx': '32768 m',
-      'Pod Number': 3,
-      Journal: '100 GB',
-      Ledgers: 'SSD 250GB',
+      cpu: {
+        key: 'Cpu',
+        size: 8,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 64,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 16384,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 16384,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 32768,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      journal: {
+        key: 'Journal',
+        size: 100,
+        unit: 'G',
+      },
+      ledgers: {
+        key: 'Ledgers',
+        size: 25,
+        unit: 'G',
+        isSSD: true,
+      },
     };
     broker = {
-      Cpu: '8 core',
-      Memory: '72 GB',
-      '-Xms': '16384 m',
-      '-Xmx': '16384 m',
-      '-Xx': '32768 m',
-      'Pod Number': 2,
+      cpu: {
+        key: 'Cpu',
+        size: 8,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 72,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 16384,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 16384,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 32768,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 2,
+      },
     };
     proxy = {
-      Cpu: '8 core',
-      Memory: '18 GB',
-      '-Xms': '8192 m',
-      '-Xmx': '8192 m',
-      '-Xx': '8192 m',
-      'Pod Number': 2,
+      cpu: {
+        key: 'Cpu',
+        size: 8,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 18,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 8192,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 8192,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 8192,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 2,
+      },
     };
     zookeeper = {
-      cpu: '8 core',
-      Memory: '8 GB',
-      '-Xms': '4096 m',
-      '-Xmx': '4096 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': 'SSD 20GB',
+      cpu: {
+        key: 'Cpu',
+        size: 4,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 8,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 4096,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 4096,
+        unit: 'M',
+      },
+
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc per Pod',
+        size: 20,
+        unit: 'G',
+        isSSD: true,
+      },
     };
   }
 
@@ -519,77 +941,263 @@ export const pulsarCalculator = rowFileSize => {
 
 export const kafkaCalculator = rowFileSize => {
   let broker = {
-    Cpu: '',
-    Memory: '',
-    '-Xms': '',
-    '-Xmx': '',
-    'Pod Number': 0,
-    'Pvc Per Pod': '',
+    cpu: {
+      key: 'Cpu',
+      size: 0,
+      unit: 'core',
+    },
+    memory: {
+      key: 'Memory',
+      size: 0,
+      unit: 'G',
+    },
+    xms: {
+      key: '-Xms',
+      size: 0,
+      unit: '',
+    },
+    xmx: {
+      key: '-Xmx',
+      size: 0,
+      unit: '',
+    },
+    podNum: {
+      key: 'Pod Number',
+      value: 0,
+    },
+    pvc: {
+      key: 'Pvc Per Pod',
+      size: 0,
+      unit: '',
+    },
   };
   let zookeeper = {
-    Cpu: '',
-    Memory: '',
-    '-Xms': '',
-    '-Xmx': '',
-    'Pod Number': 0,
-    'Pvc Per Pod': '',
+    cpu: {
+      key: 'Cpu',
+      size: 0,
+      unit: 'core',
+    },
+    memory: {
+      key: 'Memory',
+      size: 0,
+      unit: 'G',
+    },
+    xms: {
+      key: '-Xms',
+      size: 0,
+      unit: '',
+    },
+    xmx: {
+      key: '-Xmx',
+      size: 0,
+      unit: '',
+    },
+    podNum: {
+      key: 'Pod Number',
+      value: 0,
+    },
+    pvc: {
+      key: 'Pvc Per Pod',
+      size: 0,
+      unit: '',
+      isSSD: true,
+    },
   };
 
   const { size, unit } = unitBYTE2Any(rowFileSize);
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
     broker = {
-      Cpu: '2 core',
-      Memory: '16 GB',
-      '-Xms': '4096 m',
-      '-Xmx': '4096 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': `${size} ${unit}`,
+      cpu: {
+        key: 'Cpu',
+        size: 2,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 13,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 4096,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 4096,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc Per Pod',
+        size: size,
+        unit: unit,
+      },
     };
     zookeeper = {
-      Cpu: '1 core',
-      Memory: '2 GB',
-      '-Xms': '1024 m',
-      '-Xmx': '1024 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': 'SSD 20GB',
+      cpu: {
+        key: 'Cpu',
+        size: 1,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 2,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 1024,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 1024,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc Per Pod',
+        size: 20,
+        unit: 'GB',
+        isSSD: true,
+      },
     };
   } else if (
     rowFileSize > unitAny2BYTE(50, 'GB') &&
     rowFileSize <= unitAny2BYTE(500, 'GB')
   ) {
     broker = {
-      Cpu: '4 core',
-      Memory: '25 GB',
-      '-Xms': '8192 m',
-      '-Xmx': '8192 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': `${size} ${unit}`,
+      cpu: {
+        key: 'Cpu',
+        size: 4,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 25,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 8192,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 8192,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc Per Pod',
+        size: size,
+        unit: unit,
+      },
     };
     zookeeper = {
-      Cpu: '2 core',
-      Memory: '4 GB',
-      '-Xms': '2048 m',
-      '-Xmx': '2048 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': 'SSD 20GB',
+      cpu: {
+        key: 'Cpu',
+        size: 2,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 4,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 2048,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 2048,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc Per Pod',
+        size: size,
+        unit: unit,
+      },
     };
   } else {
     broker = {
-      Cpu: '8 core',
-      Memory: '50 GB',
-      '-Xms': '16384 m',
-      '-Xmx': '16384 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': rowFileSize,
+      cpu: {
+        key: 'Cpu',
+        size: 8,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 50,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 16384,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 16384,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc Per Pod',
+        size: size,
+        unit: unit,
+      },
     };
     zookeeper = {
-      Cpu: '4 core',
-      Memory: '8 GB',
-      '-Xms': '4096 m',
-      '-Xmx': '4096 m',
-      'Pod Number': 3,
-      'Pvc Per Pod': 'SSD 20GB',
+      cpu: {
+        key: 'Cpu',
+        size: 4,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 8,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 4096,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 4096,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc Per Pod',
+        size: size,
+        unit: unit,
+      },
     };
   }
 
@@ -599,7 +1207,7 @@ export const kafkaCalculator = rowFileSize => {
   };
 };
 
-export const customYmlGenerator = ({
+export const helmYmlGenerator = ({
   rootCoord,
   proxy,
   queryNode,
@@ -656,5 +1264,216 @@ indexNode:
     limits:
       cpu: ${indexNode.cpu}
       memory: ${indexNode.memory}Gi
+  `;
+};
+
+export const operatorYmlGenerator = (
+  {
+    rootCoord,
+    proxy,
+    queryNode,
+    dataNode,
+    indexNode,
+    commonCoord,
+    etcdData,
+    minioData,
+    pulsarData,
+    kafkaData,
+  },
+  apacheType
+) => {
+  const pulsarConfig = `
+pulsar:
+  inCluster:
+    values:
+      proxy:
+        configData:
+          PULSAR_MEM: >
+            -Xms${pulsarData.proxy.xms.size}${pulsarData.proxy.xms.unit}
+            -Xmx${pulsarData.proxy.xmx.size}${pulsarData.proxy.xmx.unit}
+            -XX:MaxDirectMemorySize=${pulsarData.proxy.xx.size}${pulsarData.proxy.xx.unit}
+          httpNumThreads: "100"
+      zookeeper:
+        volumes:
+          persistence: true
+          data:
+            name: data
+            size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i
+            storageClassName:
+        resources:
+          requests:
+            memory: ${pulsarData.zookeeper.memory.size}${pulsarData.zookeeper.memory.unit}i
+            cpu: ${pulsarData.zookeeper.cpu.size}
+        configData:
+          PULSAR_MEM: >
+            -Xms${pulsarData.zookeeper.xms.size}${pulsarData.zookeeper.xms.unit}
+            -Xmx${pulsarData.zookeeper.xmx.size}${pulsarData.zookeeper.xmx.unit}i
+      bookkeeper:
+        volumes:
+          journal:
+            name: journal
+            size: ${pulsarData.bookie.journal.size}${pulsarData.bookie.journal.unit}i
+            storageClassName:
+          ledgers:
+            name: ledgers
+            size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i
+            storageClassName:
+        resources:
+          requests:
+            memory: ${pulsarData.bookie.memory.size}${pulsarData.bookie.memory.unit}i
+            cpu: ${pulsarData.bookie.cpu.size}
+        configData:
+          PULSAR_MEM: >
+            -Xms${pulsarData.bookie.xms.size}${pulsarData.bookie.xms.unit}
+            -Xmx${pulsarData.bookie.xmx.size}${pulsarData.bookie.xmx.unit}
+            -XX:MaxDirectMemorySize=${pulsarData.bookie.xx.size}${pulsarData.bookie.xx.unit}
+      broker:
+        component: broker
+        podMonitor:
+          enabled: false
+        replicaCount: ${pulsarData.broker.podNum.value}
+        resources:
+          requests:
+            memory: ${pulsarData.broker.memory.size}${pulsarData.broker.memory.unit}i
+            cpu: ${pulsarData.broker.cpu.size}
+        configData:
+          PULSAR_MEM: >
+            -Xms${pulsarData.broker.xms.size}${pulsarData.broker.xms.unit}
+            -Xmx${pulsarData.broker.xmx.size}${pulsarData.broker.xmx.unit}
+            -XX:MaxDirectMemorySize=${pulsarData.broker.xx.size}${pulsarData.broker.xx.unit}
+  `;
+
+  const kafkaConfig = `
+kafka:
+  inCluster:
+    values:
+      zookeeper:
+        volumes:
+          persistence: true
+          data:
+            name: data
+            size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i
+            storageClassName:
+        resources:
+          requests:
+            memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
+            cpu: ${kafkaData.zookeeper.cpu.size}
+        configData:
+          KAFKA_MEM: >
+            -Xms${kafkaData.zookeeper.xms.size}${kafkaData.zookeeper.xms.unit}
+            -Xmx${kafkaData.zookeeper.xmx.size}${kafkaData.zookeeper.xmx.unit}
+      broker:
+        component: broker
+        podMonitor:
+          enabled: false
+        replicaCount: ${kafkaData.broker.podNum.value}
+        resources:
+          requests:
+            memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
+            cpu: ${kafkaData.broker.cpu.size}
+        configData:
+          KAFKA_MEM: >
+            -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}
+            -Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit}
+  `;
+
+  const apacheConfig = apacheType === 'pulsar' ? pulsarConfig : kafkaConfig;
+
+  return `
+apiVersion: milvus.io/v1alpha1
+kind: MilvusCluster
+metadata:
+  name: my-release
+  namespace: default
+  labels:
+    app: milvus
+spec:
+  components:
+    dataCoord:
+      resources:
+        limits:
+          cpu: ${commonCoord.cpu}
+    queryCoord:
+      resources:
+        limits:
+          cpu: ${commonCoord.cpu}
+          memory: ${rootCoord.memory}Gi
+    indexCoord:
+      resources:
+        limits:
+          cpu: ${commonCoord.cpu}
+          memory: ${rootCoord.memory}Gi
+    rootCoord:
+      resources:
+        limits:
+          cpu: ${rootCoord.cpu}
+          memory: ${rootCoord.memory}Gi
+    dataNode:
+      replicas:  ${dataNode.amount}
+      resources:
+        limits:
+          cpu: ${dataNode.cpu}
+          memory: ${dataNode.memory}Gi
+    indexNode:
+      replicas: ${indexNode.amount}
+      resources:
+        limits:
+          cpu: ${indexNode.cpu}
+          memory: ${indexNode.memory}Gi
+    queryNode:
+      replicas: ${queryNode.amount}
+      resources:
+        limits:
+          cpu: ${queryNode.cpu}
+          memory: ${queryNode.memory}Gi
+    proxy:
+      serviceType: LoadBalancer
+      replicas: ${proxy.amount}
+      resources:
+        limits:
+          cpu: ${proxy.cpu}
+          memory: ${proxy.memory}Gi
+  config: {}
+  dependencies:
+    etcd:
+      inCluster:
+        values:
+          autoCompactionMode: revision
+          autoCompactionRetention: "1000"
+          extraEnvVars:
+          - name: ETCD_QUOTA_BACKEND_BYTES
+            value: "4294967296"
+          - name: ETCD_HEARTBEAT_INTERVAL
+            value: "200"
+          - name: ETCD_ELECTION_TIMEOUT
+            value: "2000"
+          - name: ETCD_SNAPSHOT_COUNT
+            value: "50000"
+          persistence:
+            accessMode: ReadWriteOnce
+            enabled: true
+            size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i
+            storageClass:
+          replicaCount: ${etcdData.podNumber}
+          resources:
+            limits:
+              cpu: ${etcdData.cpu}
+              memory: ${etcdData.memory}Gi
+            requests:
+              cpu: ${etcdData.cpu}
+              memory: ${etcdData.memory}Gi
+    ${apacheConfig}
+    storage:
+      inCluster:
+        values:
+          resources:
+            limits:
+              cpu: ${minioData.cpu}
+              memory: ${minioData.memory}Gi
+          persistence:
+            storageClass:
+            accessMode: ReadWriteOnce
+            size: ${minioData.pvcPerPodSize}${minioData.pvcPerPodUnit}i
+
   `;
 };

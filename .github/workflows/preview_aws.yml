@@ -21,10 +21,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+         with:
+          ref: 'preview'
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          ref: "preview"
 
       - name: update submodules
         run: |

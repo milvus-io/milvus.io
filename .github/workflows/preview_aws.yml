@@ -20,16 +20,15 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
         with:
-          node-version: 18
           ref: 'preview'
 
       - name: update submodules
         run: |
           git submodule init
           git submodule update --remote
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -43,6 +42,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
             ${{ runner.os }}-yarn-
+
       #       - name: Caching Gatsby
       #         id: gatsby-cache-build
       #         uses: actions/cache@v2

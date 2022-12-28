@@ -576,7 +576,7 @@ export default function SizingTool({ data }) {
                     content={`x ${calcResult.etcdData.podNumber}`}
                     extraData={{
                       key: 'Pvc per pod',
-                      value: `SSD ${calcResult.etcdData.pvcPerPod} GB`,
+                      value: `SSD ${calcResult.etcdData.pvcPerPodSize} GB`,
                     }}
                   />
                   {/* Minio */}

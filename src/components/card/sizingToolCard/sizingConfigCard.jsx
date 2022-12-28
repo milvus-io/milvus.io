@@ -18,7 +18,7 @@ export default function SizingConfigCard(props) {
         {bookie && (
           <div className={styles.component}>
             <Typography component="h5" className={styles.title}>
-              component: {t('v3trans.sizingTool.setups.bookie')}
+              {t('v3trans.sizingTool.setups.bookie')}
             </Typography>
             {Object.values(bookie).map(({ key, value, size, unit, isSSD }) => (
               <div key={key} className={styles.cardLine}>

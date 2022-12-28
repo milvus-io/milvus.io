@@ -374,6 +374,18 @@ export const minioCalculator = (rowFileSize, indexSize) => {
 };
 
 export const pulsarCalculator = rowFileSize => {
+  const minimumJournalSize = unitAny2BYTE(10, 'GB');
+  const minimumLedgersSize = unitAny2BYTE(25, 'GB');
+
+  const journalData =
+    rowFileSize > minimumJournalSize
+      ? unitBYTE2Any(rowFileSize / 5)
+      : { size: 10, unit: 'G' };
+  const ledgersData =
+    rowFileSize > minimumLedgersSize
+      ? unitBYTE2Any(rowFileSize / 2)
+      : { size: 25, unit: 'G' };
+
   let bookie = {
     cpu: {
       key: 'Cpu',
@@ -545,13 +557,13 @@ export const pulsarCalculator = rowFileSize => {
       },
       journal: {
         key: 'Journal',
-        size: 10,
-        unit: 'G',
+        size: journalData.size,
+        unit: journalData.unit,
       },
       ledgers: {
         key: 'Ledgers',
-        size: 25,
-        unit: 'G',
+        size: ledgersData.size,
+        unit: ledgersData.unit,
         isSSD: true,
       },
     };
@@ -686,13 +698,13 @@ export const pulsarCalculator = rowFileSize => {
       },
       journal: {
         key: 'Journal',
-        size: 100,
-        unit: 'G',
+        size: journalData.size,
+        unit: journalData.unit,
       },
       ledgers: {
         key: 'Ledgers',
-        size: 25,
-        unit: 'G',
+        size: ledgersData.size,
+        unit: ledgersData.unit,
         isSSD: true,
       },
     };
@@ -824,13 +836,13 @@ export const pulsarCalculator = rowFileSize => {
       },
       journal: {
         key: 'Journal',
-        size: 100,
-        unit: 'G',
+        size: journalData.size,
+        unit: journalData.unit,
       },
       ledgers: {
         key: 'Ledgers',
-        size: 25,
-        unit: 'G',
+        size: ledgersData.size,
+        unit: ledgersData.unit,
         isSSD: true,
       },
     };

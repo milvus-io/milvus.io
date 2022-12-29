@@ -236,19 +236,12 @@ export default function SizingTool({ data }) {
     });
 
     const rawFileSize = rawFileSizeCalculator({ d: dVal, nb: nbVal });
-
     const rootCoord = rootCoordCalculator(nbVal);
-
     const dataNode = dataNodeCalculator(nbVal);
-
     const indexNode = indexNodeCalculator(theorySize, sVal);
-
     const proxy = proxyCalculator(memorySize);
-
     const queryNode = queryNodeCalculator(memorySize);
-
     const commonCoord = commonCoordCalculator(memorySize);
-
     const etcdData = etcdCalculator(rawFileSize);
     const minioData = minioCalculator(rawFileSize, theorySize);
     const pulsarData = pulsarCalculator(rawFileSize);
@@ -286,9 +279,7 @@ export default function SizingTool({ data }) {
   };
 
   const handleDownloadHelm = () => {
-    const content = helmYmlGenerator({
-      ...calcResult,
-    });
+    const content = helmYmlGenerator(calcResult, form.apacheType);
     handleDownloadYmlFile(content, 'helmConfigYml');
   };
 

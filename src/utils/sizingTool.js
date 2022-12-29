@@ -340,7 +340,7 @@ export const minioCalculator = (rowFileSize, indexSize) => {
   let pvcPerPodUnit = '';
 
   const { size, unit } = unitBYTE2Any(((rowFileSize + indexSize) * 3 * 2) / 4);
-  const intSize = Math.ceil(size);
+  const intSize = Math.ceil(size / 10) * 10;
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
     cpu = 2;
@@ -388,12 +388,12 @@ export const pulsarCalculator = rowFileSize => {
       : { size: 25, unit: 'G' };
 
   const intJournalData = {
-    size: Math.ceil(journalData.size),
+    size: Math.ceil(journalData.size / 10) * 10,
     unit: journalData.unit,
   };
 
   const intLedgersData = {
-    size: Math.ceil(ledgersData.size),
+    size: Math.ceil(ledgersData.size / 10) * 10,
     unit: ledgersData.unit,
   };
 
@@ -1028,7 +1028,7 @@ export const kafkaCalculator = rowFileSize => {
   };
 
   const { size, unit } = unitBYTE2Any(rowFileSize);
-  const intSize = Math.ceil(size);
+  const intSize = Math.ceil(size / 10) * 10;
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
     broker = {
@@ -1263,7 +1263,7 @@ pulsar:
       persistence: true
       data:
         name: data
-        size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i
+        size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i   #SSD Required
         storageClassName:
     resources:
       requests:
@@ -1281,7 +1281,7 @@ pulsar:
         storageClassName:
       ledgers:
         name: ledgers
-        size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i
+        size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i  #SSD Required
         storageClassName:
     resources:
       requests:
@@ -1316,7 +1316,7 @@ pulsar:
         persistence: true
         data:
           name: data
-          size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i
+          size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
           storageClassName:
       resources:
         requests:
@@ -1407,7 +1407,7 @@ etcd:
       persistence:
         accessMode: ReadWriteOnce
         enabled: true
-        size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i
+        size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i  #SSD Required
         storageClass:
       replicaCount: ${etcdData.podNumber}
       resources:
@@ -1461,7 +1461,7 @@ export const operatorYmlGenerator = (
               persistence: true
               data:
                 name: data
-                size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i
+                size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i   #SSD Required
                 storageClassName:
             resources:
               requests:
@@ -1479,7 +1479,7 @@ export const operatorYmlGenerator = (
                 storageClassName:
               ledgers:
                 name: ledgers
-                size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i
+                size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i   #SSD Required
                 storageClassName:
             resources:
               requests:
@@ -1515,7 +1515,7 @@ export const operatorYmlGenerator = (
               persistence: true
               data:
                 name: data
-                size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i
+                size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
                 storageClassName:
             resources:
               requests:
@@ -1614,7 +1614,7 @@ spec:
           persistence:
             accessMode: ReadWriteOnce
             enabled: true
-            size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i
+            size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i   #SSD Required
             storageClass:
           replicaCount: ${etcdData.podNumber}
           resources:

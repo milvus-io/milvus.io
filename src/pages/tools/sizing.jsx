@@ -577,7 +577,7 @@ export default function SizingTool({ data }) {
                     content={`x ${calcResult.minioData.podNumber}`}
                     extraData={{
                       key: 'Pvc per pod',
-                      value: `${calcResult.minioData.pvcPerPodSize} ${calcResult.minioData.pvcPerPodUnit}`,
+                      value: `${calcResult.minioData.pvcPerPodSize} ${calcResult.minioData.pvcPerPodUnit}B`,
                     }}
                   />
                 </div>

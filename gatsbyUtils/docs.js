@@ -1,5 +1,6 @@
 const { checkIsblog, generateDefaultBlogCover } = require('./blog');
-const { findVersion, findLang, generatePath } = require('./utils');
+const { findLang, generatePath } = require('./utils');
+const { findVersion } = require('../gatsbyUtils/version');
 
 const getNewestVersionHomePath = locale => {
   const map = {
@@ -163,15 +164,33 @@ const generateAllDocPages = (
     const relatedKey = node.frontmatter.related_key;
     const summary = node.frontmatter.summary || '';
     const group = node.frontmatter.group || '';
-    const version = findVersion(fileAbsolutePath) || 'master';
-
+    const version = findVersion(fileAbsolutePath);
     const fileLang = findLang(fileAbsolutePath);
     const editPath = fileAbsolutePath.split(
       fileLang === 'en' ? '/en/' : '/zh-CN/'
     )[1];
     const localizedPath = generatePath(fileId, fileLang, version, isBlog, true);
-
-    const newHtml = node.html;
+    const context = {
+      locale: fileLang,
+      version: version,
+      versions: Array.from(versions),
+      newestVersion,
+      old: fileId,
+      headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
+      fileAbsolutePath,
+      localizedPath,
+      isBlog,
+      editPath,
+      allMenus,
+      newHtml: node.html,
+      homeData: null,
+      isVersionWithHome: versionsWithHome.includes(version),
+      allApiMenus,
+      relatedKey,
+      summary,
+      group,
+      versionInfo,
+    }; // additional data can be passed via context
 
     // the newest doc version is master so we need to make route without version.
     // for easy link to the newest doc
@@ -186,27 +205,7 @@ const generateAllDocPages = (
         path: masterPath,
         component: docTemplate,
         ownerNodeId: node.id,
-        context: {
-          locale: fileLang,
-          version: newestVersion, // get master version
-          versions: Array.from(versions),
-          newestVersion,
-          old: fileId,
-          headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
-          fileAbsolutePath,
-          localizedPath,
-          isBlog,
-          editPath,
-          allMenus,
-          newHtml,
-          homeData: null,
-          isVersionWithHome: versionsWithHome.includes(newestVersion),
-          allApiMenus,
-          relatedKey,
-          summary,
-          group,
-          versionInfo,
-        }, // additional data can be passed via context
+        context,
       });
       return;
     }
@@ -216,27 +215,7 @@ const generateAllDocPages = (
       path: localizedPath,
       component: docTemplate,
       ownerNodeId: node.id,
-      context: {
-        locale: fileLang,
-        version: version,
-        versions: Array.from(versions),
-        old: fileId,
-        headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
-        fileAbsolutePath,
-        localizedPath,
-        newestVersion,
-        isBlog,
-        editPath,
-        allMenus,
-        newHtml,
-        homeData: null,
-        isVersionWithHome: versionsWithHome.includes(version),
-        allApiMenus,
-        relatedKey,
-        summary,
-        group,
-        versionInfo,
-      }, // additional data can be passed via context
+      context,
     });
   });
 };
@@ -251,7 +230,7 @@ const generateHomeData = edges => {
     .filter(({ node: { childDocHome } }) => childDocHome !== null)
     .map(({ node: { absolutePath, childDocHome } }) => {
       const language = absolutePath.includes('/en') ? 'en' : 'cn';
-      const version = findVersion(absolutePath) || 'master';
+      const version = findVersion(absolutePath);
 
       const data = childDocHome;
       return {

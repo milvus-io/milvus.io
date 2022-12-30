@@ -1027,7 +1027,13 @@ export const kafkaCalculator = rowFileSize => {
     },
   };
 
-  const { size, unit } = unitBYTE2Any(rowFileSize);
+  const minimumBrokerPvc = unitAny2BYTE(10, 'GB');
+
+  const { size, unit } =
+    minimumBrokerPvc > rowFileSize
+      ? { size: 10, unit: 'G' }
+      : unitBYTE2Any(rowFileSize);
+
   const intSize = Math.ceil(size / 10) * 10;
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
@@ -1309,36 +1315,27 @@ pulsar:
   `;
 
   const kafkaConfig = `
+  pulsar:
+    enabled: false
   kafka:
     enabled: true
+    heapOpts: "-Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit} -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}"
+    persistence:
+      enabled: true
+      storageClass:
+      accessMode: ReadWriteOnce
+      size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}
+
     zookeeper:
-      volumes:
-        persistence: true
-        data:
-          name: data
-          size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
-          storageClassName:
-      resources:
-        requests:
-          memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
-          cpu: ${kafkaData.zookeeper.cpu.size}
-      configData:
-        KAFKA_MEM: >
-          -Xms${kafkaData.zookeeper.xms.size}${kafkaData.zookeeper.xms.unit}
-          -Xmx${kafkaData.zookeeper.xmx.size}${kafkaData.zookeeper.xmx.unit}
-    broker:
-      component: broker
-      podMonitor:
-        enabled: false
-      replicaCount: ${kafkaData.broker.podNum.value}
-      resources:
-        requests:
-          memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
-          cpu: ${kafkaData.broker.cpu.size}
-      configData:
-        KAFKA_MEM: >
-          -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}
-          -Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit}
+      enabled: true
+      replicaCount: ${kafkaData.zookeeper.podNum}
+      heapSize: ${kafkaData.zookeeper.xms.size}${kafkaData.zookeeper.xms.unit}i  # zk heap size in MB
+      persistence:
+        enabled: true
+        storageClass: ""
+        accessModes:
+          - ReadWriteOnce
+        size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
   `;
 
   return `
@@ -1391,32 +1388,31 @@ indexNode:
       cpu: ${indexNode.cpu}
       memory: ${indexNode.memory}Gi
 etcd:
-  inCluster:
-    values:
-      autoCompactionMode: revision
-      autoCompactionRetention: "1000"
-      extraEnvVars:
-      - name: ETCD_QUOTA_BACKEND_BYTES
-        value: "4294967296"
-      - name: ETCD_HEARTBEAT_INTERVAL
-        value: "200"
-      - name: ETCD_ELECTION_TIMEOUT
-        value: "2000"
-      - name: ETCD_SNAPSHOT_COUNT
-        value: "50000"
-      persistence:
-        accessMode: ReadWriteOnce
-        enabled: true
-        size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i  #SSD Required
-        storageClass:
-      replicaCount: ${etcdData.podNumber}
-      resources:
-        limits:
-          cpu: ${etcdData.cpu}
-          memory: ${etcdData.memory}Gi
-        requests:
-          cpu: ${etcdData.cpu}
-          memory: ${etcdData.memory}Gi
+  values:
+    autoCompactionMode: revision
+    autoCompactionRetention: "1000"
+    extraEnvVars:
+    - name: ETCD_QUOTA_BACKEND_BYTES
+      value: "4294967296"
+    - name: ETCD_HEARTBEAT_INTERVAL
+      value: "200"
+    - name: ETCD_ELECTION_TIMEOUT
+      value: "2000"
+    - name: ETCD_SNAPSHOT_COUNT
+      value: "50000"
+    persistence:
+      accessMode: ReadWriteOnce
+      enabled: true
+      size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i  #SSD Required
+      storageClass:
+    replicaCount: ${etcdData.podNumber}
+    resources:
+      limits:
+        cpu: ${etcdData.cpu}
+        memory: ${etcdData.memory}Gi
+      requests:
+        cpu: ${etcdData.cpu}
+        memory: ${etcdData.memory}Gi
 ${apacheType === 'pulsar' ? pulsarConfig : kafkaConfig}
 minio:
   resources:
@@ -1510,34 +1506,23 @@ export const operatorYmlGenerator = (
     kafka:
       inCluster:
         values:
+          heapOpts: "-Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit} -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}"
+          persistence:
+            enabled: true
+            storageClass:
+            accessMode: ReadWriteOnce
+            size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}i
+
           zookeeper:
-            volumes:
-              persistence: true
-              data:
-                name: data
-                size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
-                storageClassName:
-            resources:
-              requests:
-                memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
-                cpu: ${kafkaData.zookeeper.cpu.size}
-            configData:
-              KAFKA_MEM: >
-                -Xms${kafkaData.zookeeper.xms.size}${kafkaData.zookeeper.xms.unit}
-                -Xmx${kafkaData.zookeeper.xmx.size}${kafkaData.zookeeper.xmx.unit}
-          broker:
-            component: broker
-            podMonitor:
-              enabled: false
-            replicaCount: ${kafkaData.broker.podNum.value}
-            resources:
-              requests:
-                memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
-                cpu: ${kafkaData.broker.cpu.size}
-            configData:
-              KAFKA_MEM: >
-                -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}
-                -Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit}
+            enabled: true
+            replicaCount: 3
+            heapSize: ${kafkaData.zookeeper.xms.size}${kafkaData.zookeeper.xms.unit}  # zk heap size in MB
+            persistence:
+              enabled: true
+              storageClass: ""
+              accessModes:
+                - ReadWriteOnce
+              size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i #SSD Required
   `;
 
   const apacheConfig = apacheType === 'pulsar' ? pulsarConfig : kafkaConfig;

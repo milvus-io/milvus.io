@@ -1096,7 +1096,7 @@ export const kafkaCalculator = rowFileSize => {
       pvc: {
         key: 'Pvc Per Pod',
         size: 20,
-        unit: 'GB',
+        unit: 'G',
         isSSD: true,
       },
     };
@@ -1163,7 +1163,7 @@ export const kafkaCalculator = rowFileSize => {
       pvc: {
         key: 'Pvc Per Pod',
         size: 20,
-        unit: 'GB',
+        unit: 'G',
         isSSD: true,
       },
     };
@@ -1227,7 +1227,7 @@ export const kafkaCalculator = rowFileSize => {
       pvc: {
         key: 'Pvc Per Pod',
         size: 20,
-        unit: 'GB',
+        unit: 'G',
         isSSD: true,
       },
     };
@@ -1316,27 +1316,34 @@ pulsar:
   `;
 
   const kafkaConfig = `
-  pulsar:
-    enabled: false
-  kafka:
+pulsar:
+  enabled: false
+kafka:
+  enabled: true
+  heapOpts: "-Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit} -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}"
+  persistence:
     enabled: true
-    heapOpts: "-Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit} -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}"
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}
+  resources:
+    limits:
+      cpu: ${kafkaData.broker.cpu.size}
+      memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
+  zookeeper:
+    enabled: true
+    replicaCount: ${kafkaData.zookeeper.podNum.value}
+    heapSize: ${kafkaData.zookeeper.xms.size}  # zk heap size in MB
     persistence:
       enabled: true
-      storageClass:
-      accessMode: ReadWriteOnce
-      size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}
-
-    zookeeper:
-      enabled: true
-      replicaCount: ${kafkaData.zookeeper.podNum.value}
-      heapSize: ${kafkaData.zookeeper.xms.size}  # zk heap size in MB
-      persistence:
-        enabled: true
-        storageClass: ""
-        accessModes:
-          - ReadWriteOnce
-        size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
+      storageClass: ""
+      accessModes:
+        - ReadWriteOnce
+      size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
+    resources:
+      limits:
+        cpu: ${kafkaData.zookeeper.cpu.size}
+        memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
   `;
 
   return `rootCoordinator:
@@ -1515,7 +1522,10 @@ export const operatorYmlGenerator = (
             storageClass:
             accessMode: ReadWriteOnce
             size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}i
-
+          resources:
+            limits:
+              cpu: ${kafkaData.broker.cpu.size}
+              memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
           zookeeper:
             enabled: true
             replicaCount: ${kafkaData.zookeeper.podNum.value}
@@ -1526,6 +1536,10 @@ export const operatorYmlGenerator = (
               accessModes:
                 - ReadWriteOnce
               size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i #SSD Required
+            resources:
+              limits:
+                cpu: ${kafkaData.zookeeper.cpu.size}
+                memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
   `;
 
   const apacheConfig = apacheType === 'pulsar' ? pulsarConfig : kafkaConfig;

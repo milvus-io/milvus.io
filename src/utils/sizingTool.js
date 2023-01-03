@@ -1349,19 +1349,19 @@ indexCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 queryCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 dataCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 proxy:
   replicas: ${proxy.amount}
@@ -1542,16 +1542,17 @@ spec:
     dataCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
+          memory: ${rootCoord.memory}Gi
     queryCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
           memory: ${rootCoord.memory}Gi
     indexCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
           memory: ${rootCoord.memory}Gi
     rootCoord:
       resources:

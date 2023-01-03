@@ -1399,7 +1399,7 @@ etcd:
     value: "25000"
   - name: ETCD_SNAPSHOT_COUNT
     value: "10000"
-  -- name: ETCD_ENABLE_PPROF
+  - name: ETCD_ENABLE_PPROF
     value: "true"
   persistence:
     accessMode: ReadWriteOnce
@@ -1598,7 +1598,7 @@ spec:
             value: "25000"
           - name: ETCD_SNAPSHOT_COUNT
             value: "10000"
-          -- name: ETCD_ENABLE_PPROF
+          - name: ETCD_ENABLE_PPROF
             value: "true"
           persistence:
             accessMode: ReadWriteOnce

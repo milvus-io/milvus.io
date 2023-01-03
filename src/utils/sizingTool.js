@@ -1544,11 +1544,10 @@ export const operatorYmlGenerator = (
 
   const apacheConfig = apacheType === 'pulsar' ? pulsarConfig : kafkaConfig;
 
-  return `apiVersion: milvus.io/v1alpha1
-kind: MilvusCluster
+  return `apiVersion: milvus.io/v1beta1
+kind: Milvus
 metadata:
   name: my-release
-  namespace: default
   labels:
     app: milvus
 spec:
@@ -1632,8 +1631,9 @@ spec:
     storage:
       inCluster:
         values:
+          mode: distributed
           resources:
-            limits:
+            limits: 
               cpu: ${minioData.cpu}
               memory: ${minioData.memory}Gi
           persistence:

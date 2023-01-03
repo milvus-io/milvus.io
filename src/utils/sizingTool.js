@@ -1328,8 +1328,8 @@ pulsar:
 
     zookeeper:
       enabled: true
-      replicaCount: ${kafkaData.zookeeper.podNum}
-      heapSize: ${kafkaData.zookeeper.xms.size}${kafkaData.zookeeper.xms.unit}i  # zk heap size in MB
+      replicaCount: ${kafkaData.zookeeper.podNum.value}
+      heapSize: ${kafkaData.zookeeper.xms.size}  # zk heap size in MB
       persistence:
         enabled: true
         storageClass: ""
@@ -1388,31 +1388,30 @@ indexNode:
       cpu: ${indexNode.cpu}
       memory: ${indexNode.memory}Gi
 etcd:
-  values:
-    autoCompactionMode: revision
-    autoCompactionRetention: "1000"
-    extraEnvVars:
-    - name: ETCD_QUOTA_BACKEND_BYTES
-      value: "4294967296"
-    - name: ETCD_HEARTBEAT_INTERVAL
-      value: "200"
-    - name: ETCD_ELECTION_TIMEOUT
-      value: "2000"
-    - name: ETCD_SNAPSHOT_COUNT
-      value: "50000"
-    persistence:
-      accessMode: ReadWriteOnce
-      enabled: true
-      size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i  #SSD Required
-      storageClass:
-    replicaCount: ${etcdData.podNumber}
-    resources:
-      limits:
-        cpu: ${etcdData.cpu}
-        memory: ${etcdData.memory}Gi
-      requests:
-        cpu: ${etcdData.cpu}
-        memory: ${etcdData.memory}Gi
+  autoCompactionMode: revision
+  autoCompactionRetention: "1000"
+  extraEnvVars:
+  - name: ETCD_QUOTA_BACKEND_BYTES
+    value: "4294967296"
+  - name: ETCD_HEARTBEAT_INTERVAL
+    value: "200"
+  - name: ETCD_ELECTION_TIMEOUT
+    value: "2000"
+  - name: ETCD_SNAPSHOT_COUNT
+    value: "50000"
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: true
+    size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i  #SSD Required
+    storageClass:
+  replicaCount: ${etcdData.podNumber}
+  resources:
+    limits:
+      cpu: ${etcdData.cpu}
+      memory: ${etcdData.memory}Gi
+    requests:
+      cpu: ${etcdData.cpu}
+      memory: ${etcdData.memory}Gi
 ${apacheType === 'pulsar' ? pulsarConfig : kafkaConfig}
 minio:
   resources:
@@ -1503,6 +1502,7 @@ export const operatorYmlGenerator = (
   `;
 
   const kafkaConfig = `
+    msgStreamType: kafka
     kafka:
       inCluster:
         values:
@@ -1515,8 +1515,8 @@ export const operatorYmlGenerator = (
 
           zookeeper:
             enabled: true
-            replicaCount: 3
-            heapSize: ${kafkaData.zookeeper.xms.size}${kafkaData.zookeeper.xms.unit}  # zk heap size in MB
+            replicaCount: ${kafkaData.zookeeper.podNum.value}
+            heapSize: ${kafkaData.zookeeper.xms.size}  # zk heap size in MB
             persistence:
               enabled: true
               storageClass: ""
@@ -1591,9 +1591,9 @@ spec:
           - name: ETCD_QUOTA_BACKEND_BYTES
             value: "4294967296"
           - name: ETCD_HEARTBEAT_INTERVAL
-            value: "200"
+            value: "500"
           - name: ETCD_ELECTION_TIMEOUT
-            value: "2000"
+            value: "25000"
           - name: ETCD_SNAPSHOT_COUNT
             value: "50000"
           persistence:

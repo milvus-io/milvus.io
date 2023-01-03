@@ -1258,6 +1258,7 @@ export const helmYmlGenerator = (
 pulsar:
   enabled: true
   proxy:
+    replicaCount: ${pulsarData.proxy.podNum.value}
     configData:
       PULSAR_MEM: >
         -Xms${pulsarData.proxy.xms.size}${pulsarData.proxy.xms.unit}
@@ -1338,8 +1339,7 @@ pulsar:
         size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
   `;
 
-  return `
-rootCoordinator:
+  return `rootCoordinator:
   replicas: ${rootCoord.amount}
   resources: 
     limits:
@@ -1394,11 +1394,13 @@ etcd:
   - name: ETCD_QUOTA_BACKEND_BYTES
     value: "4294967296"
   - name: ETCD_HEARTBEAT_INTERVAL
-    value: "200"
+    value: "500"
   - name: ETCD_ELECTION_TIMEOUT
-    value: "2000"
+    value: "25000"
   - name: ETCD_SNAPSHOT_COUNT
-    value: "50000"
+    value: "10000"
+  -- name: ETCD_ENABLE_PPROF
+    value: "true"
   persistence:
     accessMode: ReadWriteOnce
     enabled: true
@@ -1445,6 +1447,7 @@ export const operatorYmlGenerator = (
       inCluster:
         values:
           proxy:
+            replicaCount: ${pulsarData.proxy.podNum.value}
             configData:
               PULSAR_MEM: >
                 -Xms${pulsarData.proxy.xms.size}${pulsarData.proxy.xms.unit}
@@ -1527,8 +1530,7 @@ export const operatorYmlGenerator = (
 
   const apacheConfig = apacheType === 'pulsar' ? pulsarConfig : kafkaConfig;
 
-  return `
-apiVersion: milvus.io/v1alpha1
+  return `apiVersion: milvus.io/v1alpha1
 kind: MilvusCluster
 metadata:
   name: my-release
@@ -1595,7 +1597,9 @@ spec:
           - name: ETCD_ELECTION_TIMEOUT
             value: "25000"
           - name: ETCD_SNAPSHOT_COUNT
-            value: "50000"
+            value: "10000"
+          -- name: ETCD_ENABLE_PPROF
+            value: "true"
           persistence:
             accessMode: ReadWriteOnce
             enabled: true

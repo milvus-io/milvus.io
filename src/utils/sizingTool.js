@@ -1349,19 +1349,19 @@ indexCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 queryCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 dataCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 proxy:
   replicas: ${proxy.amount}
@@ -1399,7 +1399,7 @@ etcd:
     value: "25000"
   - name: ETCD_SNAPSHOT_COUNT
     value: "10000"
-  -- name: ETCD_ENABLE_PPROF
+  - name: ETCD_ENABLE_PPROF
     value: "true"
   persistence:
     accessMode: ReadWriteOnce
@@ -1542,16 +1542,17 @@ spec:
     dataCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
+          memory: ${rootCoord.memory}Gi
     queryCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
           memory: ${rootCoord.memory}Gi
     indexCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
           memory: ${rootCoord.memory}Gi
     rootCoord:
       resources:
@@ -1598,7 +1599,7 @@ spec:
             value: "25000"
           - name: ETCD_SNAPSHOT_COUNT
             value: "10000"
-          -- name: ETCD_ENABLE_PPROF
+          - name: ETCD_ENABLE_PPROF
             value: "true"
           persistence:
             accessMode: ReadWriteOnce

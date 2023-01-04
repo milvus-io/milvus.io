@@ -62,9 +62,7 @@ export default function Template({ data, pageContext }) {
   const hljsCfg = {
     languages: ['java', 'go', 'python', 'javascript'],
   };
-  const menuList = allMenus.find(v => locale === v.lang);
-  console.log('all menu', allMenus, menuList);
-
+  const menuList = allMenus.find(v => locale === v.lang && v.version === version);
   const id = 'home';
   const isHome = mdHtml === null;
   const menuConfig = menuList && {

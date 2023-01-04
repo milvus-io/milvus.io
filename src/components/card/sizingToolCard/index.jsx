@@ -3,6 +3,7 @@ import * as styles from './index.module.less';
 import Tooltip from '@mui/material/Tooltip';
 import clsx from 'clsx';
 import { ToolTipFilled } from '../../icons';
+import { Typography } from '@mui/material';
 
 export default function SizingToolCard(props) {
   const {
@@ -12,8 +13,8 @@ export default function SizingToolCard(props) {
     classes = {},
     showTooltip = false,
     tooltip = '',
+    extraData,
   } = props;
-
   const { root, titleClassName, subTitleClassName, contentClassName } = classes;
 
   return (
@@ -59,6 +60,17 @@ export default function SizingToolCard(props) {
           </h5>
         )}
       </div>
+
+      {extraData && (
+        <div className={styles.extraDataWrapper}>
+          <Typography component="span" className={styles.key}>
+            {extraData.key}:
+          </Typography>
+          <Typography component="span" className={styles.value}>
+            &nbsp;&nbsp;{extraData.value}
+          </Typography>
+        </div>
+      )}
 
       <p
         className={clsx(styles.content, {

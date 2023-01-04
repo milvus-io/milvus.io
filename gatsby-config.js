@@ -12,20 +12,7 @@ const gatsbyConfigs = {
       options: {
         name: `docs`,
         path: `${__dirname}/src/pages/docs/versions`,
-        ignore: [
-          `**/v0.6*`,
-          `**/v0.7*`,
-          `**/v0.8*`,
-          `**/v0.9*`,
-          `**/v0.1*`,
-          `**/v2.0.0`,
-          `**/bootcamp`,
-          `**/API_Reference`,
-          `**/export_pdf`,
-          `**/\.*`,
-          `**/zh-CN`,
-          `**/common`,
-        ],
+        ignore: [],
       },
     },
     {
@@ -289,4 +276,32 @@ if (process.env.NODE_ENV !== 'development') {
   );
 }
 
+gatsbyConfigs.plugins[0].options.ignore =
+  process.env.IS_PREVIEW === 'preview'
+    ? [
+        `**/v0*`,
+        `**/v1*`,
+        `**/v2*`,
+        `**/bootcamp`,
+        `**/API_Reference`,
+        `**/export_pdf`,
+        `**/\.*`,
+        `**/zh-CN`,
+        `**/common`,
+      ]
+    : [
+        `**/v0.6*`,
+        `**/v0.7*`,
+        `**/v0.8*`,
+        `**/v0.9*`,
+        `**/v0.1*`,
+        `**/v2.0.0`,
+        `**/bootcamp`,
+        `**/API_Reference`,
+        `**/export_pdf`,
+        `**/\.*`,
+        `**/zh-CN`,
+        `**/common`,
+        `**/preview`,
+      ];
 module.exports = gatsbyConfigs;

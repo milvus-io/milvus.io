@@ -54,6 +54,7 @@ export default function Template({ data, pageContext }) {
     newestBlog,
     versionInfo,
   } = pageContext;
+
   const [isOpened, setIsOpened] = useState(false);
   useOpenedStatus(setIsOpened);
 
@@ -62,9 +63,7 @@ export default function Template({ data, pageContext }) {
     languages: ['java', 'go', 'python', 'javascript'],
   };
 
-  const menuList = allMenus.find(
-    v => v.absolutePath.includes(version) && locale === v.lang
-  );
+  const menuList = allMenus.find(v => locale === v.lang);
   const id = 'home';
   const isHome = mdHtml === null;
   const menuConfig = menuList && {
@@ -86,7 +85,9 @@ export default function Template({ data, pageContext }) {
   const leftNavMenus =
     menuConfig?.menuList?.find(menu => menu.lang === locale)?.menuList || [];
   const leftNavHomeUrl =
-    version === `v0.x` ? `/docs/v0.x/overview.md` : `${version === newestVersion ? `/docs` : `/docs/${version}`}`;
+    version === `v0.x`
+      ? `/docs/v0.x/overview.md`
+      : `${version === newestVersion ? `/docs` : `/docs/${version}`}`;
 
   // generate menu
   const menus = mdMenuListFactory(
@@ -102,7 +103,8 @@ export default function Template({ data, pageContext }) {
     label: 'API reference',
     children: [],
   };
-  if (versionInfo[version].pymilvus) {
+
+  if (versionInfo[version] && versionInfo[version].pymilvus) {
     APIs.children.push({
       id: 'pymilvus',
       label: 'Python',
@@ -110,7 +112,7 @@ export default function Template({ data, pageContext }) {
     });
   }
 
-  if (versionInfo[version].java) {
+  if (versionInfo[version] && versionInfo[version].java) {
     APIs.children.push({
       id: 'java',
       label: 'Java',
@@ -118,7 +120,7 @@ export default function Template({ data, pageContext }) {
     });
   }
 
-  if (versionInfo[version].go) {
+  if (versionInfo[version] && versionInfo[version].go) {
     APIs.children.push({
       id: 'go',
       label: 'Go',
@@ -126,7 +128,7 @@ export default function Template({ data, pageContext }) {
     });
   }
 
-  if (versionInfo[version].node) {
+  if (versionInfo[version] && versionInfo[version].node) {
     APIs.children.push({
       id: 'node',
       label: 'Node',
@@ -134,7 +136,7 @@ export default function Template({ data, pageContext }) {
     });
   }
 
-  if (versionInfo[version].restful) {
+  if (versionInfo[version] && versionInfo[version].restful) {
     APIs.children.push({
       id: 'restful',
       label: 'RESTful',

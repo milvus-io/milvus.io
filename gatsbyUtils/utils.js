@@ -1,24 +1,10 @@
 /*
  * utils to support generate html page from markdown or json dynamically
  */
-const env = process.env.IS_PREVIEW;
 const locales = require('../src/consts/locales');
 
 const getDefaultLang = () =>
   Object.keys(locales).find(lang => locales[lang].default);
-
-const findVersion = str => {
-  // version: v.1.0.0 | v0.x
-  const regx = /versions\/master\/([v\dx\.]*)/;
-  const match = str.match(regx);
-  return match
-    ? match[1]
-      ? match[1]
-      : env === 'preview' && str.includes('preview')
-      ? 'preview'
-      : match[1]
-    : '';
-};
 
 const findLang = path => {
   const DOC_LANG_FOLDERS = ['/en/', '/zh-CN/'];
@@ -57,5 +43,4 @@ module.exports = {
   generatePath,
   findLang,
   getDefaultLang,
-  findVersion,
 };

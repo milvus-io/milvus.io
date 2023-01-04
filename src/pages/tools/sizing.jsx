@@ -6,6 +6,7 @@ import { useI18next } from 'gatsby-plugin-react-i18next';
 import * as classes from './sizingTool.module.less';
 import { InfoFilled, DownloadIcon } from '../../components/icons';
 import SizingToolCard from '../../components/card/sizingToolCard';
+import SizingConfigCard from '../../components/card/sizingToolCard/sizingConfigCard';
 import clsx from 'clsx';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
@@ -13,6 +14,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import { findLatestVersion } from '../../utils';
 
 import {
@@ -26,8 +30,15 @@ import {
   rootCoordCalculator,
   dataNodeCalculator,
   proxyCalculator,
-  customYmlGenerator,
+  helmYmlGenerator,
+  operatorYmlGenerator,
+  etcdCalculator,
+  minioCalculator,
+  pulsarCalculator,
+  kafkaCalculator,
 } from '../../utils/sizingTool';
+
+const REQUIRE_MORE = 'Require more data';
 
 const INDEX_TYPE_OPTIONS = [
   {
@@ -67,7 +78,7 @@ const SEGMENT_SIZE_OPTIONS = [
 const $1M = Math.pow(10, 6);
 
 const defaultSizeContent = {
-  size: 'Require more data',
+  size: REQUIRE_MORE,
   cpu: 0,
   memory: 0,
   amount: 0,
@@ -129,6 +140,7 @@ export default function SizingTool({ data }) {
       value: SEGMENT_SIZE_OPTIONS[0].value,
       showError: false,
     },
+    apacheType: 'pulsar',
   });
 
   const handleFormValueChange = (val, key) => {
@@ -184,6 +196,13 @@ export default function SizingTool({ data }) {
     }));
   };
 
+  const handleApacheChange = (e, value) => {
+    setForm(v => ({
+      ...v,
+      apacheType: value,
+    }));
+  };
+
   const calcResult = useMemo(() => {
     const { nb, d, indexType, nlist, m, segmentSize } = form;
 
@@ -198,6 +217,10 @@ export default function SizingTool({ data }) {
     );
 
     if (isErrorParameters) {
+      const etcdData = etcdCalculator(rawFileSize);
+      const minioData = minioCalculator(rawFileSize, theorySize);
+      const pulsarData = pulsarCalculator(rawFileSize);
+      const kafkaData = kafkaCalculator(rawFileSize);
       return {
         memorySize: { size: 0, unit: 'B' },
         rawFileSize: { size: 0, unit: 'B' },
@@ -207,6 +230,10 @@ export default function SizingTool({ data }) {
         proxy: defaultSizeContent,
         queryNode: defaultSizeContent,
         commonCoord: defaultSizeContent,
+        etcdData,
+        minioData,
+        pulsarData,
+        kafkaData,
       };
     }
 
@@ -219,19 +246,16 @@ export default function SizingTool({ data }) {
     });
 
     const rawFileSize = rawFileSizeCalculator({ d: dVal, nb: nbVal });
-
     const rootCoord = rootCoordCalculator(nbVal);
-
     const dataNode = dataNodeCalculator(nbVal);
-
     const indexNode = indexNodeCalculator(theorySize, sVal);
-
     const proxy = proxyCalculator(memorySize);
-
     const queryNode = queryNodeCalculator(memorySize);
-
     const commonCoord = commonCoordCalculator(memorySize);
-
+    const etcdData = etcdCalculator(rawFileSize);
+    const minioData = minioCalculator(rawFileSize, theorySize);
+    const pulsarData = pulsarCalculator(rawFileSize);
+    const kafkaData = kafkaCalculator(rawFileSize);
     return {
       memorySize: unitBYTE2Any(memorySize),
       rawFileSize: unitBYTE2Any(rawFileSize),
@@ -241,14 +265,15 @@ export default function SizingTool({ data }) {
       proxy,
       queryNode,
       commonCoord,
+      etcdData,
+      minioData,
+      pulsarData,
+      kafkaData,
     };
   }, [form]);
 
-  const handleDownloadYmlFile = () => {
+  const handleDownloadYmlFile = (content, fielName) => {
     if (typeof window !== 'undefined') {
-      const content = customYmlGenerator({
-        ...calcResult,
-      });
       const blob = new Blob([content], {
         type: 'text/plain',
       });
@@ -257,11 +282,20 @@ export default function SizingTool({ data }) {
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'customConfig.yml';
+      a.download = `${fielName}.yml`;
       a.click();
     }
   };
 
+  const handleDownloadHelm = () => {
+    const content = helmYmlGenerator(calcResult, form.apacheType);
+    handleDownloadYmlFile(content, 'helmConfigYml');
+  };
+
+  const handleDownloadOperator = () => {
+    const content = operatorYmlGenerator(calcResult, form.apacheType);
+    handleDownloadYmlFile(content, 'operatorConfigYml');
+  };
   const version = findLatestVersion(allVersion.nodes);
 
   return (
@@ -421,6 +455,25 @@ export default function SizingTool({ data }) {
                       ))}
                     </Select>
                   </FormControl>
+
+                  <FormControl fullWidth>
+                    <RadioGroup
+                      value={form.apacheType}
+                      onChange={handleApacheChange}
+                      className={classes.radioGroup}
+                    >
+                      <FormControlLabel
+                        value="pulsar"
+                        control={<Radio />}
+                        label="Pulsar"
+                      />
+                      <FormControlLabel
+                        value="kafka"
+                        control={<Radio />}
+                        label="Kafka"
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </div>
               </div>
             </div>
@@ -513,16 +566,87 @@ export default function SizingTool({ data }) {
                     content={calcResult.indexNode.amount}
                     showTooltip
                   />
+
+                  {/* etcd */}
+                </div>
+                <div className={classes.line}>
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.etcd.title')}
+                    subTitle={
+                      calcResult.etcdData.isError
+                        ? REQUIRE_MORE
+                        : `${calcResult.etcdData.cpu} core ${calcResult.etcdData.memory} GB`
+                    }
+                    content={`x ${
+                      calcResult.etcdData.isError
+                        ? 0
+                        : calcResult.etcdData.podNumber
+                    }`}
+                    extraData={
+                      calcResult.etcdData.isError
+                        ? null
+                        : {
+                            key: 'Pvc per pod',
+                            value: `SSD ${calcResult.etcdData.pvcPerPodSize} GB`,
+                          }
+                    }
+                  />
+                  {/* Minio */}
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.minio.title')}
+                    subTitle={
+                      calcResult.minioData.isError
+                        ? REQUIRE_MORE
+                        : `${calcResult.minioData.cpu} core ${calcResult.minioData.memory} GB`
+                    }
+                    content={`x ${
+                      calcResult.minioData.isError
+                        ? 0
+                        : calcResult.minioData.podNumber
+                    }`}
+                    extraData={
+                      calcResult.minioData.isError
+                        ? null
+                        : {
+                            key: 'Pvc per pod',
+                            value: `${calcResult.minioData.pvcPerPodSize} ${calcResult.minioData.pvcPerPodUnit}B`,
+                          }
+                    }
+                  />
+                </div>
+
+                {/* pulsar or kafka */}
+                <div className={classes.line}>
+                  {form.apacheType === 'pulsar' ? (
+                    <SizingConfigCard
+                      title={t('v3trans.sizingTool.setups.pulsar.title')}
+                      {...calcResult.pulsarData}
+                    />
+                  ) : (
+                    <SizingConfigCard
+                      title={t('v3trans.sizingTool.setups.kafka.title')}
+                      {...calcResult.kafkaData}
+                    />
+                  )}
                 </div>
               </div>
 
-              <button
-                className={classes.downloadBtn}
-                onClick={handleDownloadYmlFile}
-              >
-                <DownloadIcon />
-                <span>{t('v3trans.sizingTool.button')}</span>
-              </button>
+              <div className={classes.btnsWrapper}>
+                <button
+                  className={classes.downloadBtn}
+                  onClick={handleDownloadHelm}
+                >
+                  <DownloadIcon />
+                  <span>{t('v3trans.sizingTool.buttons.helm')}</span>
+                </button>
+                <button
+                  className={classes.downloadBtn}
+                  onClick={handleDownloadOperator}
+                >
+                  <DownloadIcon />
+                  <span>{t('v3trans.sizingTool.buttons.operator')}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

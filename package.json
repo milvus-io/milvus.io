@@ -2,7 +2,7 @@
   "name": "mivlus.io",
   "private": true,
   "description": "Milvus.io website",
-  "version": "3.0",
+  "version": "3.1",
   "author": "fed@zilliz.com",
   "dependencies": {
     "@docsearch/react": "^3.0.0",
@@ -74,6 +74,7 @@
   "scripts": {
     "build": "gatsby clean && gatsby build",
     "dev": "gatsby clean && gatsby develop -H 0.0.0.0",
+    "preview": "export IS_PREVIEW=preview && gatsby clean && gatsby develop -H 0.0.0.0",
     "format": "prettier --write ./**/*.{js,jsx}",
     "play": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "npm run clean && npm run dev",

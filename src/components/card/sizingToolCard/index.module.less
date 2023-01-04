@@ -32,6 +32,21 @@
     text-align: left;
   }
 
+  .extraDataWrapper {
+    display: flex;
+
+    .key,
+    .value {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.5em;
+    }
+    .value {
+      color: #1493cc;
+      font-weight: 700;
+    }
+  }
+
   .content {
     font-style: normal;
     font-weight: 400;
@@ -43,4 +58,44 @@
 .tooltip {
   background-color: #000;
   padding: 6px 12px;
+}
+
+.configCard {
+  gap: 8px;
+  min-width: 196px;
+  height: auto;
+
+  .title {
+    margin: 0;
+  }
+
+  .key,
+  .value {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5em;
+  }
+  .value {
+    color: #1493cc;
+    font-weight: 700;
+  }
+
+  .componentsWrapper {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+
+    .component {
+      flex: 1;
+
+      .cardLine {
+        padding-left: 8px;
+
+        &:not(:last-of-type) {
+          margin-bottom: 4px;
+        }
+      }
+    }
+  }
 }

@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const ReadVersionJson = require('./walkFile');
 const express = require('express');
 const {
   query,
@@ -29,58 +28,18 @@ const {
   filterMDwidthBlog,
 } = require('./gatsbyUtils/blog');
 const sourceNodesUtils = require('./gatsbyUtils/sourceNodes');
+const {
+  versionInfo,
+  newestVersion,
+  versions,
+} = require('./gatsbyUtils/version');
 
-const env = process.env.IS_PREVIEW;
-// const env = 'preview';
-const getNewestVersion = versionInfo => {
-  const keys = Object.keys(versionInfo).filter(
-    v =>
-      v !== 'master' && (versionInfo[v].released === 'yes' || env === 'preview')
-  );
-  return keys.reduce((pre, cur) => {
-    const curVersion = cur
-      .substring(1)
-      .split('.')
-      .map(v => Number(v));
-    const preVersion = pre
-      .substring(1)
-      .split('.')
-      .map(v => Number(v));
-
-    if (curVersion[0] !== preVersion[0]) {
-      pre = curVersion[0] < preVersion[0] ? pre : cur;
-    } else if (curVersion[1] !== preVersion[1]) {
-      pre = curVersion[1] < preVersion[1] ? pre : cur;
-    } else if (curVersion[2] !== preVersion[2]) {
-      pre = curVersion[2] < preVersion[2] ? pre : cur;
-    } else {
-      pre = cur;
-    }
-
-    return pre;
-  }, 'v0.0.0');
-};
 exports.onCreateDevServer = ({ app }) => {
   app.use(express.static('public'));
 };
 
 // the version is same for different lang, so we only need one
 const DOC_ROOT = 'src/pages/docs/versions';
-const versionInfo = ReadVersionJson(DOC_ROOT);
-const newestVersion = getNewestVersion(versionInfo);
-const versions = [];
-
-versionInfo.preview = {
-  ...versionInfo.preview,
-  version: 'preview',
-  released: env === 'preview' ? 'yes' : 'no',
-};
-
-Object.keys(versionInfo).forEach(v => {
-  if (versionInfo[v].released === 'yes') {
-    versions.push(v);
-  }
-});
 
 // add versioninfo file for generate sitemap filter option
 fs.writeFile(

@@ -348,19 +348,19 @@ const Header = ({
             {isDesktop && actionBar}
             <Link to={`https://zilliz.com/cloud`}>
               <button className={styles.startBtn}>
-                Try Fully-managed Milvus
+                Try Managed Milvus <span>FREE</span>
                 <svg
-                  width="24"
+                  width="20"
                   height="20"
+                  viewBox="0 0 20 20"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M1 10h22m0 0l-9-9m9 9l-9 9"
+                    d="M12 3.5L18.364 9.86396L12 16.2279"
+                    stroke="white"
                     strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
+                  />
+                  <path d="M18 10H1" stroke="white" strokeWidth="2" />
                 </svg>
               </button>
             </Link>
@@ -510,7 +510,7 @@ const Header = ({
             />
             <Link to={`https://cloud.zilliz.com`}>
               <button className={styles.startBtn}>
-                Try Fully-managed Milvus &gt;
+                Try Managed Milvus <span>FREE</span>
               </button>
             </Link>
           </nav>

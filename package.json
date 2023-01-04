@@ -2,7 +2,7 @@
   "name": "mivlus.io",
   "private": true,
   "description": "Milvus.io website",
-  "version": "3.0",
+  "version": "3.1",
   "author": "fed@zilliz.com",
   "dependencies": {
     "@docsearch/react": "^3.0.0",

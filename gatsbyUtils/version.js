@@ -35,7 +35,7 @@ const getNewestVersion = versionInfo => {
   }, 'v0.0.0');
 };
 
-const newestVersion = 'v2.2.x';
+const newestVersion = getNewestVersion(versionInfo);
 
 let versions = [];
 

@@ -340,12 +340,13 @@ export const minioCalculator = (rowFileSize, indexSize) => {
   let pvcPerPodUnit = '';
 
   const { size, unit } = unitBYTE2Any(((rowFileSize + indexSize) * 3 * 2) / 4);
+  const intSize = Math.ceil(size / 10) * 10;
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
     cpu = 2;
     memory = 8;
     podNumber = 4;
-    pvcPerPodSize = size;
+    pvcPerPodSize = intSize;
     pvcPerPodUnit = unit;
   } else if (
     rowFileSize > unitAny2BYTE(50, 'GB') &&
@@ -354,13 +355,13 @@ export const minioCalculator = (rowFileSize, indexSize) => {
     cpu = 4;
     memory = 16;
     podNumber = 4;
-    pvcPerPodSize = size;
+    pvcPerPodSize = intSize;
     pvcPerPodUnit = unit;
   } else {
     cpu = 8;
     memory = 32;
     podNumber = 4;
-    pvcPerPodSize = size;
+    pvcPerPodSize = intSize;
     pvcPerPodUnit = unit;
   }
 
@@ -385,6 +386,16 @@ export const pulsarCalculator = rowFileSize => {
     rowFileSize > minimumLedgersSize
       ? unitBYTE2Any(rowFileSize / 2)
       : { size: 25, unit: 'G' };
+
+  const intJournalData = {
+    size: Math.ceil(journalData.size / 10) * 10,
+    unit: journalData.unit,
+  };
+
+  const intLedgersData = {
+    size: Math.ceil(ledgersData.size / 10) * 10,
+    unit: ledgersData.unit,
+  };
 
   let bookie = {
     cpu: {
@@ -557,13 +568,13 @@ export const pulsarCalculator = rowFileSize => {
       },
       journal: {
         key: 'Journal',
-        size: journalData.size,
-        unit: journalData.unit,
+        size: intJournalData.size,
+        unit: intJournalData.unit,
       },
       ledgers: {
         key: 'Ledgers',
-        size: ledgersData.size,
-        unit: ledgersData.unit,
+        size: intLedgersData.size,
+        unit: intLedgersData.unit,
         isSSD: true,
       },
     };
@@ -698,13 +709,13 @@ export const pulsarCalculator = rowFileSize => {
       },
       journal: {
         key: 'Journal',
-        size: journalData.size,
-        unit: journalData.unit,
+        size: intJournalData.size,
+        unit: intJournalData.unit,
       },
       ledgers: {
         key: 'Ledgers',
-        size: ledgersData.size,
-        unit: ledgersData.unit,
+        size: intLedgersData.size,
+        unit: intLedgersData.unit,
         isSSD: true,
       },
     };
@@ -836,13 +847,13 @@ export const pulsarCalculator = rowFileSize => {
       },
       journal: {
         key: 'Journal',
-        size: journalData.size,
-        unit: journalData.unit,
+        size: intJournalData.size,
+        unit: intJournalData.unit,
       },
       ledgers: {
         key: 'Ledgers',
-        size: ledgersData.size,
-        unit: ledgersData.unit,
+        size: intLedgersData.size,
+        unit: intLedgersData.unit,
         isSSD: true,
       },
     };
@@ -1016,7 +1027,14 @@ export const kafkaCalculator = rowFileSize => {
     },
   };
 
-  const { size, unit } = unitBYTE2Any(rowFileSize);
+  const minimumBrokerPvc = unitAny2BYTE(10, 'GB');
+
+  const { size, unit } =
+    minimumBrokerPvc > rowFileSize
+      ? { size: 10, unit: 'G' }
+      : unitBYTE2Any(rowFileSize);
+
+  const intSize = Math.ceil(size / 10) * 10;
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
     broker = {
@@ -1046,7 +1064,7 @@ export const kafkaCalculator = rowFileSize => {
       },
       pvc: {
         key: 'Pvc Per Pod',
-        size: size,
+        size: intSize,
         unit: unit,
       },
     };
@@ -1078,7 +1096,7 @@ export const kafkaCalculator = rowFileSize => {
       pvc: {
         key: 'Pvc Per Pod',
         size: 20,
-        unit: 'GB',
+        unit: 'G',
         isSSD: true,
       },
     };
@@ -1113,7 +1131,7 @@ export const kafkaCalculator = rowFileSize => {
       },
       pvc: {
         key: 'Pvc Per Pod',
-        size: size,
+        size: intSize,
         unit: unit,
       },
     };
@@ -1144,8 +1162,9 @@ export const kafkaCalculator = rowFileSize => {
       },
       pvc: {
         key: 'Pvc Per Pod',
-        size: size,
-        unit: unit,
+        size: 20,
+        unit: 'G',
+        isSSD: true,
       },
     };
   } else {
@@ -1176,7 +1195,7 @@ export const kafkaCalculator = rowFileSize => {
       },
       pvc: {
         key: 'Pvc Per Pod',
-        size: size,
+        size: intSize,
         unit: unit,
       },
     };
@@ -1207,8 +1226,9 @@ export const kafkaCalculator = rowFileSize => {
       },
       pvc: {
         key: 'Pvc Per Pod',
-        size: size,
-        unit: unit,
+        size: 20,
+        unit: 'G',
+        isSSD: true,
       },
     };
   }
@@ -1219,16 +1239,114 @@ export const kafkaCalculator = rowFileSize => {
   };
 };
 
-export const helmYmlGenerator = ({
-  rootCoord,
-  proxy,
-  queryNode,
-  dataNode,
-  indexNode,
-  commonCoord,
-}) => {
-  return `
-rootCoordinator:
+export const helmYmlGenerator = (
+  {
+    rootCoord,
+    proxy,
+    queryNode,
+    dataNode,
+    indexNode,
+    commonCoord,
+    etcdData,
+    minioData,
+    pulsarData,
+    kafkaData,
+  },
+  apacheType
+) => {
+  const pulsarConfig = `
+pulsar:
+  enabled: true
+  proxy:
+    replicaCount: ${pulsarData.proxy.podNum.value}
+    configData:
+      PULSAR_MEM: >
+        -Xms${pulsarData.proxy.xms.size}${pulsarData.proxy.xms.unit}
+        -Xmx${pulsarData.proxy.xmx.size}${pulsarData.proxy.xmx.unit}
+        -XX:MaxDirectMemorySize=${pulsarData.proxy.xx.size}${pulsarData.proxy.xx.unit}
+      httpNumThreads: "100"
+  zookeeper:
+    volumes:
+      persistence: true
+      data:
+        name: data
+        size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i   #SSD Required
+        storageClassName:
+    resources:
+      requests:
+        memory: ${pulsarData.zookeeper.memory.size}${pulsarData.zookeeper.memory.unit}i
+        cpu: ${pulsarData.zookeeper.cpu.size}
+    configData:
+      PULSAR_MEM: >
+        -Xms${pulsarData.zookeeper.xms.size}${pulsarData.zookeeper.xms.unit}
+        -Xmx${pulsarData.zookeeper.xmx.size}${pulsarData.zookeeper.xmx.unit}
+  bookkeeper:
+    volumes:
+      journal:
+        name: journal
+        size: ${pulsarData.bookie.journal.size}${pulsarData.bookie.journal.unit}i
+        storageClassName:
+      ledgers:
+        name: ledgers
+        size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i  #SSD Required
+        storageClassName:
+    resources:
+      requests:
+        memory: ${pulsarData.bookie.memory.size}${pulsarData.bookie.memory.unit}i
+        cpu: ${pulsarData.bookie.cpu.size}
+    configData:
+      PULSAR_MEM: >
+        -Xms${pulsarData.bookie.xms.size}${pulsarData.bookie.xms.unit}
+        -Xmx${pulsarData.bookie.xmx.size}${pulsarData.bookie.xmx.unit}
+        -XX:MaxDirectMemorySize=${pulsarData.bookie.xx.size}${pulsarData.bookie.xx.unit}
+  broker:
+    component: broker
+    podMonitor:
+      enabled: false
+    replicaCount: ${pulsarData.broker.podNum.value}
+    resources:
+      requests:
+        memory: ${pulsarData.broker.memory.size}${pulsarData.broker.memory.unit}i
+        cpu: ${pulsarData.broker.cpu.size}
+    configData:
+      PULSAR_MEM: >
+        -Xms${pulsarData.broker.xms.size}${pulsarData.broker.xms.unit}
+        -Xmx${pulsarData.broker.xmx.size}${pulsarData.broker.xmx.unit}
+        -XX:MaxDirectMemorySize=${pulsarData.broker.xx.size}${pulsarData.broker.xx.unit}
+  `;
+
+  const kafkaConfig = `
+pulsar:
+  enabled: false
+kafka:
+  enabled: true
+  heapOpts: "-Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit} -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}"
+  persistence:
+    enabled: true
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}
+  resources:
+    limits:
+      cpu: ${kafkaData.broker.cpu.size}
+      memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
+  zookeeper:
+    enabled: true
+    replicaCount: ${kafkaData.zookeeper.podNum.value}
+    heapSize: ${kafkaData.zookeeper.xms.size}  # zk heap size in MB
+    persistence:
+      enabled: true
+      storageClass: ""
+      accessModes:
+        - ReadWriteOnce
+      size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
+    resources:
+      limits:
+        cpu: ${kafkaData.zookeeper.cpu.size}
+        memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
+  `;
+
+  return `rootCoordinator:
   replicas: ${rootCoord.amount}
   resources: 
     limits:
@@ -1238,19 +1356,19 @@ indexCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 queryCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 dataCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
     limits:
-      cpu: ${commonCoord.cpu}
+      cpu: "${commonCoord.cpu}"
       memory: ${commonCoord.memory}Gi
 proxy:
   replicas: ${proxy.amount}
@@ -1276,6 +1394,43 @@ indexNode:
     limits:
       cpu: ${indexNode.cpu}
       memory: ${indexNode.memory}Gi
+etcd:
+  autoCompactionMode: revision
+  autoCompactionRetention: "1000"
+  extraEnvVars:
+  - name: ETCD_QUOTA_BACKEND_BYTES
+    value: "4294967296"
+  - name: ETCD_HEARTBEAT_INTERVAL
+    value: "500"
+  - name: ETCD_ELECTION_TIMEOUT
+    value: "25000"
+  - name: ETCD_SNAPSHOT_COUNT
+    value: "10000"
+  - name: ETCD_ENABLE_PPROF
+    value: "true"
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: true
+    size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i  #SSD Required
+    storageClass:
+  replicaCount: ${etcdData.podNumber}
+  resources:
+    limits:
+      cpu: ${etcdData.cpu}
+      memory: ${etcdData.memory}Gi
+    requests:
+      cpu: ${etcdData.cpu}
+      memory: ${etcdData.memory}Gi
+${apacheType === 'pulsar' ? pulsarConfig : kafkaConfig}
+minio:
+  resources:
+    limits:
+      cpu: ${minioData.cpu}
+      memory: ${minioData.memory}Gi
+  persistence:
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: ${minioData.pvcPerPodSize}${minioData.pvcPerPodUnit}i
   `;
 };
 
@@ -1295,108 +1450,104 @@ export const operatorYmlGenerator = (
   apacheType
 ) => {
   const pulsarConfig = `
-pulsar:
-  inCluster:
-    values:
-      proxy:
-        configData:
-          PULSAR_MEM: >
-            -Xms${pulsarData.proxy.xms.size}${pulsarData.proxy.xms.unit}
-            -Xmx${pulsarData.proxy.xmx.size}${pulsarData.proxy.xmx.unit}
-            -XX:MaxDirectMemorySize=${pulsarData.proxy.xx.size}${pulsarData.proxy.xx.unit}
-          httpNumThreads: "100"
-      zookeeper:
-        volumes:
-          persistence: true
-          data:
-            name: data
-            size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i
-            storageClassName:
-        resources:
-          requests:
-            memory: ${pulsarData.zookeeper.memory.size}${pulsarData.zookeeper.memory.unit}i
-            cpu: ${pulsarData.zookeeper.cpu.size}
-        configData:
-          PULSAR_MEM: >
-            -Xms${pulsarData.zookeeper.xms.size}${pulsarData.zookeeper.xms.unit}
-            -Xmx${pulsarData.zookeeper.xmx.size}${pulsarData.zookeeper.xmx.unit}i
-      bookkeeper:
-        volumes:
-          journal:
-            name: journal
-            size: ${pulsarData.bookie.journal.size}${pulsarData.bookie.journal.unit}i
-            storageClassName:
-          ledgers:
-            name: ledgers
-            size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i
-            storageClassName:
-        resources:
-          requests:
-            memory: ${pulsarData.bookie.memory.size}${pulsarData.bookie.memory.unit}i
-            cpu: ${pulsarData.bookie.cpu.size}
-        configData:
-          PULSAR_MEM: >
-            -Xms${pulsarData.bookie.xms.size}${pulsarData.bookie.xms.unit}
-            -Xmx${pulsarData.bookie.xmx.size}${pulsarData.bookie.xmx.unit}
-            -XX:MaxDirectMemorySize=${pulsarData.bookie.xx.size}${pulsarData.bookie.xx.unit}
-      broker:
-        component: broker
-        podMonitor:
-          enabled: false
-        replicaCount: ${pulsarData.broker.podNum.value}
-        resources:
-          requests:
-            memory: ${pulsarData.broker.memory.size}${pulsarData.broker.memory.unit}i
-            cpu: ${pulsarData.broker.cpu.size}
-        configData:
-          PULSAR_MEM: >
-            -Xms${pulsarData.broker.xms.size}${pulsarData.broker.xms.unit}
-            -Xmx${pulsarData.broker.xmx.size}${pulsarData.broker.xmx.unit}
-            -XX:MaxDirectMemorySize=${pulsarData.broker.xx.size}${pulsarData.broker.xx.unit}
+    pulsar:
+      inCluster:
+        values:
+          proxy:
+            replicaCount: ${pulsarData.proxy.podNum.value}
+            configData:
+              PULSAR_MEM: >
+                -Xms${pulsarData.proxy.xms.size}${pulsarData.proxy.xms.unit}
+                -Xmx${pulsarData.proxy.xmx.size}${pulsarData.proxy.xmx.unit}
+                -XX:MaxDirectMemorySize=${pulsarData.proxy.xx.size}${pulsarData.proxy.xx.unit}
+              httpNumThreads: "100"
+          zookeeper:
+            volumes:
+              persistence: true
+              data:
+                name: data
+                size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i   #SSD Required
+                storageClassName:
+            resources:
+              requests:
+                memory: ${pulsarData.zookeeper.memory.size}${pulsarData.zookeeper.memory.unit}i
+                cpu: ${pulsarData.zookeeper.cpu.size}
+            configData:
+              PULSAR_MEM: >
+                -Xms${pulsarData.zookeeper.xms.size}${pulsarData.zookeeper.xms.unit}
+                -Xmx${pulsarData.zookeeper.xmx.size}${pulsarData.zookeeper.xmx.unit}
+          bookkeeper:
+            volumes:
+              journal:
+                name: journal
+                size: ${pulsarData.bookie.journal.size}${pulsarData.bookie.journal.unit}i
+                storageClassName:
+              ledgers:
+                name: ledgers
+                size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i   #SSD Required
+                storageClassName:
+            resources:
+              requests:
+                memory: ${pulsarData.bookie.memory.size}${pulsarData.bookie.memory.unit}i
+                cpu: ${pulsarData.bookie.cpu.size}
+            configData:
+              PULSAR_MEM: >
+                -Xms${pulsarData.bookie.xms.size}${pulsarData.bookie.xms.unit}
+                -Xmx${pulsarData.bookie.xmx.size}${pulsarData.bookie.xmx.unit}
+                -XX:MaxDirectMemorySize=${pulsarData.bookie.xx.size}${pulsarData.bookie.xx.unit}
+          broker:
+            component: broker
+            podMonitor:
+              enabled: false
+            replicaCount: ${pulsarData.broker.podNum.value}
+            resources:
+              requests:
+                memory: ${pulsarData.broker.memory.size}${pulsarData.broker.memory.unit}i
+                cpu: ${pulsarData.broker.cpu.size}
+            configData:
+              PULSAR_MEM: >
+                -Xms${pulsarData.broker.xms.size}${pulsarData.broker.xms.unit}
+                -Xmx${pulsarData.broker.xmx.size}${pulsarData.broker.xmx.unit}
+                -XX:MaxDirectMemorySize=${pulsarData.broker.xx.size}${pulsarData.broker.xx.unit}
   `;
 
   const kafkaConfig = `
-kafka:
-  inCluster:
-    values:
-      zookeeper:
-        volumes:
-          persistence: true
-          data:
-            name: data
-            size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i
-            storageClassName:
-        resources:
-          requests:
-            memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
-            cpu: ${kafkaData.zookeeper.cpu.size}
-        configData:
-          KAFKA_MEM: >
-            -Xms${kafkaData.zookeeper.xms.size}${kafkaData.zookeeper.xms.unit}
-            -Xmx${kafkaData.zookeeper.xmx.size}${kafkaData.zookeeper.xmx.unit}
-      broker:
-        component: broker
-        podMonitor:
-          enabled: false
-        replicaCount: ${kafkaData.broker.podNum.value}
-        resources:
-          requests:
-            memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
-            cpu: ${kafkaData.broker.cpu.size}
-        configData:
-          KAFKA_MEM: >
-            -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}
-            -Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit}
+    msgStreamType: kafka
+    kafka:
+      inCluster:
+        values:
+          heapOpts: "-Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit} -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}"
+          persistence:
+            enabled: true
+            storageClass:
+            accessMode: ReadWriteOnce
+            size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}i
+          resources:
+            limits:
+              cpu: ${kafkaData.broker.cpu.size}
+              memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
+          zookeeper:
+            enabled: true
+            replicaCount: ${kafkaData.zookeeper.podNum.value}
+            heapSize: ${kafkaData.zookeeper.xms.size}  # zk heap size in MB
+            persistence:
+              enabled: true
+              storageClass: ""
+              accessModes:
+                - ReadWriteOnce
+              size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i #SSD Required
+            resources:
+              limits:
+                cpu: ${kafkaData.zookeeper.cpu.size}
+                memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
   `;
 
   const apacheConfig = apacheType === 'pulsar' ? pulsarConfig : kafkaConfig;
 
-  return `
-apiVersion: milvus.io/v1alpha1
-kind: MilvusCluster
+  return `apiVersion: milvus.io/v1beta1
+kind: Milvus
 metadata:
   name: my-release
-  namespace: default
   labels:
     app: milvus
 spec:
@@ -1404,16 +1555,17 @@ spec:
     dataCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
+          memory: ${rootCoord.memory}Gi
     queryCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
           memory: ${rootCoord.memory}Gi
     indexCoord:
       resources:
         limits:
-          cpu: ${commonCoord.cpu}
+          cpu: "${commonCoord.cpu}"
           memory: ${rootCoord.memory}Gi
     rootCoord:
       resources:
@@ -1439,7 +1591,6 @@ spec:
           cpu: ${queryNode.cpu}
           memory: ${queryNode.memory}Gi
     proxy:
-      serviceType: LoadBalancer
       replicas: ${proxy.amount}
       resources:
         limits:
@@ -1456,15 +1607,17 @@ spec:
           - name: ETCD_QUOTA_BACKEND_BYTES
             value: "4294967296"
           - name: ETCD_HEARTBEAT_INTERVAL
-            value: "200"
+            value: "500"
           - name: ETCD_ELECTION_TIMEOUT
-            value: "2000"
+            value: "25000"
           - name: ETCD_SNAPSHOT_COUNT
-            value: "50000"
+            value: "10000"
+          - name: ETCD_ENABLE_PPROF
+            value: "true"
           persistence:
             accessMode: ReadWriteOnce
             enabled: true
-            size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i
+            size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i   #SSD Required
             storageClass:
           replicaCount: ${etcdData.podNumber}
           resources:
@@ -1478,8 +1631,9 @@ spec:
     storage:
       inCluster:
         values:
+          mode: distributed
           resources:
-            limits:
+            limits: 
               cpu: ${minioData.cpu}
               memory: ${minioData.memory}Gi
           persistence:

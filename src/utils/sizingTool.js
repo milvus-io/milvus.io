@@ -299,28 +299,33 @@ export const etcdCalculator = rowFileSize => {
   let podNumber = 0;
   let pvcPerPodSize = 0;
   let pvcPerPodUnit = '';
+  let isError = false;
 
-  if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-    cpu = 2;
-    memory = 4;
-    podNumber = 3;
-    pvcPerPodSize = 30;
-    pvcPerPodUnit = 'G';
-  } else if (
-    rowFileSize > unitAny2BYTE(50, 'GB') &&
-    rowFileSize <= unitAny2BYTE(500, 'GB')
-  ) {
-    cpu = 4;
-    memory = 8;
-    podNumber = 3;
-    pvcPerPodSize = 30;
-    pvcPerPodUnit = 'G';
+  if (!rowFileSize) {
+    isError = true;
   } else {
-    cpu = 8;
-    memory = 16;
-    podNumber = 3;
-    pvcPerPodSize = 30;
-    pvcPerPodUnit = 'G';
+    if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
+      cpu = 2;
+      memory = 4;
+      podNumber = 3;
+      pvcPerPodSize = 30;
+      pvcPerPodUnit = 'G';
+    } else if (
+      rowFileSize > unitAny2BYTE(50, 'GB') &&
+      rowFileSize <= unitAny2BYTE(500, 'GB')
+    ) {
+      cpu = 4;
+      memory = 8;
+      podNumber = 3;
+      pvcPerPodSize = 30;
+      pvcPerPodUnit = 'G';
+    } else {
+      cpu = 8;
+      memory = 16;
+      podNumber = 3;
+      pvcPerPodSize = 30;
+      pvcPerPodUnit = 'G';
+    }
   }
 
   return {
@@ -329,6 +334,7 @@ export const etcdCalculator = rowFileSize => {
     podNumber,
     pvcPerPodSize,
     pvcPerPodUnit,
+    isError,
   };
 };
 
@@ -338,31 +344,38 @@ export const minioCalculator = (rowFileSize, indexSize) => {
   let podNumber = 0;
   let pvcPerPodSize = 0;
   let pvcPerPodUnit = '';
+  let isError = false;
 
-  const { size, unit } = unitBYTE2Any(((rowFileSize + indexSize) * 3 * 2) / 4);
-  const intSize = Math.ceil(size / 10) * 10;
-
-  if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-    cpu = 2;
-    memory = 8;
-    podNumber = 4;
-    pvcPerPodSize = intSize;
-    pvcPerPodUnit = unit;
-  } else if (
-    rowFileSize > unitAny2BYTE(50, 'GB') &&
-    rowFileSize <= unitAny2BYTE(500, 'GB')
-  ) {
-    cpu = 4;
-    memory = 16;
-    podNumber = 4;
-    pvcPerPodSize = intSize;
-    pvcPerPodUnit = unit;
+  if (!rowFileSize) {
+    isError = true;
   } else {
-    cpu = 8;
-    memory = 32;
-    podNumber = 4;
-    pvcPerPodSize = intSize;
-    pvcPerPodUnit = unit;
+    const { size, unit } = unitBYTE2Any(
+      ((rowFileSize + indexSize) * 3 * 2) / 4
+    );
+    const intSize = Math.ceil(size / 10) * 10;
+
+    if (rowFileSize <= unitAny2BYTE(50, 'GB') || !rowFileSize) {
+      cpu = 2;
+      memory = 8;
+      podNumber = 4;
+      pvcPerPodSize = intSize;
+      pvcPerPodUnit = unit;
+    } else if (
+      rowFileSize > unitAny2BYTE(50, 'GB') &&
+      rowFileSize <= unitAny2BYTE(500, 'GB')
+    ) {
+      cpu = 4;
+      memory = 16;
+      podNumber = 4;
+      pvcPerPodSize = intSize;
+      pvcPerPodUnit = unit;
+    } else {
+      cpu = 8;
+      memory = 32;
+      podNumber = 4;
+      pvcPerPodSize = intSize;
+      pvcPerPodUnit = unit;
+    }
   }
 
   return {
@@ -371,31 +384,13 @@ export const minioCalculator = (rowFileSize, indexSize) => {
     podNumber,
     pvcPerPodSize,
     pvcPerPodUnit,
+    isError,
   };
 };
 
 export const pulsarCalculator = rowFileSize => {
   const minimumJournalSize = unitAny2BYTE(10, 'GB');
   const minimumLedgersSize = unitAny2BYTE(25, 'GB');
-
-  const journalData =
-    rowFileSize > minimumJournalSize
-      ? unitBYTE2Any(rowFileSize / 5)
-      : { size: 10, unit: 'G' };
-  const ledgersData =
-    rowFileSize > minimumLedgersSize
-      ? unitBYTE2Any(rowFileSize / 2)
-      : { size: 25, unit: 'G' };
-
-  const intJournalData = {
-    size: Math.ceil(journalData.size / 10) * 10,
-    unit: journalData.unit,
-  };
-
-  const intLedgersData = {
-    size: Math.ceil(ledgersData.size / 10) * 10,
-    unit: ledgersData.unit,
-  };
 
   let bookie = {
     cpu: {
@@ -533,6 +528,33 @@ export const pulsarCalculator = rowFileSize => {
       unit: '',
       isSSD: true,
     },
+  };
+  if (!rowFileSize) {
+    return {
+      bookie,
+      broker,
+      proxy,
+      zookeeper,
+    };
+  }
+
+  const journalData =
+    rowFileSize > minimumJournalSize
+      ? unitBYTE2Any(rowFileSize / 5)
+      : { size: 10, unit: 'G' };
+  const ledgersData =
+    rowFileSize > minimumLedgersSize
+      ? unitBYTE2Any(rowFileSize / 2)
+      : { size: 25, unit: 'G' };
+
+  const intJournalData = {
+    size: Math.ceil(journalData.size / 10) * 10,
+    unit: journalData.unit,
+  };
+
+  const intLedgersData = {
+    size: Math.ceil(ledgersData.size / 10) * 10,
+    unit: ledgersData.unit,
   };
 
   if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
@@ -1026,6 +1048,13 @@ export const kafkaCalculator = rowFileSize => {
       isSSD: true,
     },
   };
+
+  if (!rowFileSize) {
+    return {
+      broker,
+      zookeeper,
+    };
+  }
 
   const minimumBrokerPvc = unitAny2BYTE(10, 'GB');
 

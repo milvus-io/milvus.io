@@ -303,27 +303,29 @@ export const etcdCalculator = rowFileSize => {
 
   if (!rowFileSize) {
     isError = true;
-  } else if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-    cpu = 2;
-    memory = 4;
-    podNumber = 3;
-    pvcPerPodSize = 30;
-    pvcPerPodUnit = 'G';
-  } else if (
-    rowFileSize > unitAny2BYTE(50, 'GB') &&
-    rowFileSize <= unitAny2BYTE(500, 'GB')
-  ) {
-    cpu = 4;
-    memory = 8;
-    podNumber = 3;
-    pvcPerPodSize = 30;
-    pvcPerPodUnit = 'G';
   } else {
-    cpu = 8;
-    memory = 16;
-    podNumber = 3;
-    pvcPerPodSize = 30;
-    pvcPerPodUnit = 'G';
+    if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
+      cpu = 2;
+      memory = 4;
+      podNumber = 3;
+      pvcPerPodSize = 30;
+      pvcPerPodUnit = 'G';
+    } else if (
+      rowFileSize > unitAny2BYTE(50, 'GB') &&
+      rowFileSize <= unitAny2BYTE(500, 'GB')
+    ) {
+      cpu = 4;
+      memory = 8;
+      podNumber = 3;
+      pvcPerPodSize = 30;
+      pvcPerPodUnit = 'G';
+    } else {
+      cpu = 8;
+      memory = 16;
+      podNumber = 3;
+      pvcPerPodSize = 30;
+      pvcPerPodUnit = 'G';
+    }
   }
 
   return {

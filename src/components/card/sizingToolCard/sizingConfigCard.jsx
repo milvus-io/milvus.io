@@ -31,12 +31,12 @@ export default function SizingConfigCard(props) {
                   <Typography component="span" className={styles.key}>
                     {key}:
                   </Typography>
-                  {value && (
+                  {value !== undefined && (
                     <Typography component="span" className={styles.value}>
                       &nbsp;&nbsp;{value}
                     </Typography>
                   )}
-                  {size && (
+                  {size !== undefined && (
                     <Typography component="span" className={styles.value}>
                       &nbsp;&nbsp;
                       {isSSD
@@ -62,12 +62,12 @@ export default function SizingConfigCard(props) {
                   <Typography component="span" className={styles.key}>
                     {key}:
                   </Typography>
-                  {value && (
+                  {value !== undefined && (
                     <Typography component="span" className={styles.value}>
                       &nbsp;&nbsp;{value}
                     </Typography>
                   )}
-                  {size && (
+                  {size !== undefined && (
                     <Typography component="span" className={styles.value}>
                       &nbsp;&nbsp;
                       {isSSD
@@ -93,12 +93,12 @@ export default function SizingConfigCard(props) {
                   <Typography component="span" className={styles.key}>
                     {key}:
                   </Typography>
-                  {value && (
+                  {value !== undefined && (
                     <Typography component="span" className={styles.value}>
                       &nbsp;&nbsp;{value}
                     </Typography>
                   )}
-                  {size && (
+                  {size !== undefined && (
                     <Typography component="span" className={styles.value}>
                       &nbsp;&nbsp;
                       {isSSD
@@ -125,12 +125,12 @@ export default function SizingConfigCard(props) {
                     <Typography component="span" className={styles.key}>
                       {key}:
                     </Typography>
-                    {value && (
+                    {value !== undefined && (
                       <Typography component="span" className={styles.value}>
                         &nbsp;&nbsp;{value}
                       </Typography>
                     )}
-                    {size && (
+                    {size !== undefined && (
                       <Typography component="span" className={styles.value}>
                         &nbsp;&nbsp;
                         {isSSD

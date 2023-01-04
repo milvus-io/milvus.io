@@ -38,6 +38,8 @@ import {
   kafkaCalculator,
 } from '../../utils/sizingTool';
 
+const REQUIRE_MORE = 'Require more data';
+
 const INDEX_TYPE_OPTIONS = [
   {
     label: 'HNSW',
@@ -76,7 +78,7 @@ const SEGMENT_SIZE_OPTIONS = [
 const $1M = Math.pow(10, 6);
 
 const defaultSizeContent = {
-  size: 'Require more data',
+  size: REQUIRE_MORE,
   cpu: 0,
   memory: 0,
   amount: 0,
@@ -215,6 +217,10 @@ export default function SizingTool({ data }) {
     );
 
     if (isErrorParameters) {
+      const etcdData = etcdCalculator(rawFileSize);
+      const minioData = minioCalculator(rawFileSize, theorySize);
+      const pulsarData = pulsarCalculator(rawFileSize);
+      const kafkaData = kafkaCalculator(rawFileSize);
       return {
         memorySize: { size: 0, unit: 'B' },
         rawFileSize: { size: 0, unit: 'B' },
@@ -224,6 +230,10 @@ export default function SizingTool({ data }) {
         proxy: defaultSizeContent,
         queryNode: defaultSizeContent,
         commonCoord: defaultSizeContent,
+        etcdData,
+        minioData,
+        pulsarData,
+        kafkaData,
       };
     }
 
@@ -246,7 +256,6 @@ export default function SizingTool({ data }) {
     const minioData = minioCalculator(rawFileSize, theorySize);
     const pulsarData = pulsarCalculator(rawFileSize);
     const kafkaData = kafkaCalculator(rawFileSize);
-
     return {
       memorySize: unitBYTE2Any(memorySize),
       rawFileSize: unitBYTE2Any(rawFileSize),
@@ -563,22 +572,46 @@ export default function SizingTool({ data }) {
                 <div className={classes.line}>
                   <SizingToolCard
                     title={t('v3trans.sizingTool.setups.etcd.title')}
-                    subTitle={`${calcResult.etcdData.cpu} core ${calcResult.etcdData.memory} GB`}
-                    content={`x ${calcResult.etcdData.podNumber}`}
-                    extraData={{
-                      key: 'Pvc per pod',
-                      value: `SSD ${calcResult.etcdData.pvcPerPodSize} GB`,
-                    }}
+                    subTitle={
+                      calcResult.etcdData.isError
+                        ? REQUIRE_MORE
+                        : `${calcResult.etcdData.cpu} core ${calcResult.etcdData.memory} GB`
+                    }
+                    content={`x ${
+                      calcResult.etcdData.isError
+                        ? 0
+                        : calcResult.etcdData.podNumber
+                    }`}
+                    extraData={
+                      calcResult.etcdData.isError
+                        ? null
+                        : {
+                            key: 'Pvc per pod',
+                            value: `SSD ${calcResult.etcdData.pvcPerPodSize} GB`,
+                          }
+                    }
                   />
                   {/* Minio */}
                   <SizingToolCard
                     title={t('v3trans.sizingTool.setups.minio.title')}
-                    subTitle={`${calcResult.minioData.cpu} core ${calcResult.minioData.memory} GB`}
-                    content={`x ${calcResult.minioData.podNumber}`}
-                    extraData={{
-                      key: 'Pvc per pod',
-                      value: `${calcResult.minioData.pvcPerPodSize} ${calcResult.minioData.pvcPerPodUnit}B`,
-                    }}
+                    subTitle={
+                      calcResult.minioData.isError
+                        ? REQUIRE_MORE
+                        : `${calcResult.minioData.cpu} core ${calcResult.minioData.memory} GB`
+                    }
+                    content={`x ${
+                      calcResult.minioData.isError
+                        ? 0
+                        : calcResult.minioData.podNumber
+                    }`}
+                    extraData={
+                      calcResult.minioData.isError
+                        ? null
+                        : {
+                            key: 'Pvc per pod',
+                            value: `${calcResult.minioData.pvcPerPodSize} ${calcResult.minioData.pvcPerPodUnit}B`,
+                          }
+                    }
                   />
                 </div>
 

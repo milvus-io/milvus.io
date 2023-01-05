@@ -217,10 +217,10 @@ export default function SizingTool({ data }) {
     );
 
     if (isErrorParameters) {
-      const etcdData = etcdCalculator(rawFileSize);
-      const minioData = minioCalculator(rawFileSize, theorySize);
-      const pulsarData = pulsarCalculator(rawFileSize);
-      const kafkaData = kafkaCalculator(rawFileSize);
+      const etcdData = etcdCalculator();
+      const minioData = minioCalculator();
+      const pulsarData = pulsarCalculator();
+      const kafkaData = kafkaCalculator();
       return {
         memorySize: { size: 0, unit: 'B' },
         rawFileSize: { size: 0, unit: 'B' },

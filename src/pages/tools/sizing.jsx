@@ -18,7 +18,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { findLatestVersion } from '../../utils';
-import hljs from 'highlight.js';
+
 import {
   memorySizeCalculator,
   rawFileSizeCalculator,
@@ -38,44 +38,14 @@ import {
   kafkaCalculator,
 } from '../../utils/sizingTool';
 import { CustomizedContentDialogs } from '../../components/dialog/Dialog';
-
-const REQUIRE_MORE = 'Require more data';
-const HELM_CONFIG_FILE_NAME = 'helmConfigYml';
-const OPERATOR_CONFIG_FILE_NAME = 'operatorConfigYml';
-
-const INDEX_TYPE_OPTIONS = [
-  {
-    label: 'HNSW',
-    value: 'HNSW',
-  },
-  {
-    label: 'FLAT',
-    value: 'FLAT',
-  },
-  {
-    label: 'IVF_FLAT',
-    value: 'IVF_FLAT',
-  },
-  {
-    label: 'IVF_SQ8',
-    value: 'IVF_SQ8',
-  },
-];
-
-const SEGMENT_SIZE_OPTIONS = [
-  {
-    value: '512',
-    label: '512MB',
-  },
-  {
-    value: '1024',
-    label: '1024MB',
-  },
-  {
-    value: '2048',
-    label: '2048MB',
-  },
-];
+import HighlightBlock from '../../components/card/sizingToolCard/codeBlock';
+import {
+  HELM_CONFIG_FILE_NAME,
+  OPERATOR_CONFIG_FILE_NAME,
+  REQUIRE_MORE,
+  INDEX_TYPE_OPTIONS,
+  SEGMENT_SIZE_OPTIONS,
+} from '../../components/card/sizingToolCard/constants';
 
 // one million
 const $1M = Math.pow(10, 6);
@@ -310,31 +280,6 @@ export default function SizingTool({ data }) {
       ...v,
       open: false,
     }));
-  };
-
-  const HighlightBlock = ({ type }) => {
-    const content =
-      type === 'helm'
-        ? `
-helm repo add milvus https://milvus-io.github.io/milvus-helm/
-helm repo update
-helm install my-release milvus/milvus -f ${HELM_CONFIG_FILE_NAME}.yml
-    `
-        : `
-helm repo add milvus-operator https://milvus-io.github.io/milvus-operator/
-helm repo update milvus-operator
-helm -n milvus-operator upgrade --install milvus-operator milvus-operator/milvus-operator
-kubectl create -f ${OPERATOR_CONFIG_FILE_NAME}.yml
-    `;
-    const highlightCode = hljs.highlight(content, { language: 'yml' });
-    return (
-      <pre>
-        <code
-          className="hljs"
-          dangerouslySetInnerHTML={{ __html: highlightCode.value }}
-        ></code>
-      </pre>
-    );
   };
 
   const handleOpenInstallGuide = type => {

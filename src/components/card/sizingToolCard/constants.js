@@ -1,4 +1,3 @@
-export const RESET_COPIED_TIME = 3000;
 export const HELM_CONFIG_FILE_NAME = 'helmConfigYml';
 export const OPERATOR_CONFIG_FILE_NAME = 'operatorConfigYml';
 export const REQUIRE_MORE = 'Require more data';

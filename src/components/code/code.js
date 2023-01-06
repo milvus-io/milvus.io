@@ -1,58 +1,45 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import * as styles from "./code.module.less";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-regular-svg-icons";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import Tooltip from "@mui/material/Tooltip";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import * as styles from './code.module.less';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from '@mui/material/Tooltip';
+
+const RESET_COPIED_TIME = 3000;
 
 const Code = ({ html, content, tooltip = {} }) => {
-  const [isCopied, setIscopied] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
-  const { copy: copyText = "copy", copied: copiedText = "copied" } = tooltip;
-
-  const handleButtonsContent = e => {
-    if (isCopied) {
-      return;
-    }
-    setIscopied(true);
-    setTimeout(() => {
-      setIscopied(false);
-    }, 2000);
-  };
+  const { copy: copyText = 'copy', copied: copiedText = 'copied' } = tooltip;
 
   const formatContent = content => {
     const code = content
-      .split("\n")
-      .filter(item => item[0] !== "#")
+      .split('\n')
+      .filter(item => item[0] !== '#')
       .map(str => {
-        const invalidItems = ["$", ">>>"];
+        const invalidItems = ['$', '>>>'];
         return str
-          .split(" ")
+          .split(' ')
           .filter(s => !invalidItems.includes(s))
-          .join(" ");
+          .join(' ');
       })
-      .join("\n");
+      .join('\n');
 
     return code;
   };
 
   const onButtonClick = e => {
-    handleButtonsContent(e);
+    if (isCopied || !navigator?.clipboard) {
+      return;
+    }
     const code = formatContent(content);
-    copyToClipboard(code);
-  };
-
-  const copyToClipboard = content => {
-    const el = document.createElement(`textarea`);
-    el.value = content;
-    el.setAttribute(`readonly`, ``);
-    el.style.position = `absolute`;
-    el.style.left = `-9999px`;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand(`copy`);
-    document.body.removeChild(el);
+    navigator.clipboard.writeText(code).then(() => {
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, RESET_COPIED_TIME);
+    });
   };
 
   return (

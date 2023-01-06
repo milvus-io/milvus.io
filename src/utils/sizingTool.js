@@ -346,7 +346,7 @@ export const minioCalculator = (rowFileSize, indexSize) => {
   let pvcPerPodUnit = '';
   let isError = false;
 
-  if (!rowFileSize) {
+  if (!rowFileSize || !indexSize) {
     isError = true;
   } else {
     const { size, unit } = unitBYTE2Any(

@@ -37,42 +37,15 @@ import {
   pulsarCalculator,
   kafkaCalculator,
 } from '../../utils/sizingTool';
-
-const REQUIRE_MORE = 'Require more data';
-
-const INDEX_TYPE_OPTIONS = [
-  {
-    label: 'HNSW',
-    value: 'HNSW',
-  },
-  {
-    label: 'FLAT',
-    value: 'FLAT',
-  },
-  {
-    label: 'IVF_FLAT',
-    value: 'IVF_FLAT',
-  },
-  {
-    label: 'IVF_SQ8',
-    value: 'IVF_SQ8',
-  },
-];
-
-const SEGMENT_SIZE_OPTIONS = [
-  {
-    value: '512',
-    label: '512MB',
-  },
-  {
-    value: '1024',
-    label: '1024MB',
-  },
-  {
-    value: '2048',
-    label: '2048MB',
-  },
-];
+import { CustomizedContentDialogs } from '../../components/dialog/Dialog';
+import HighlightBlock from '../../components/card/sizingToolCard/codeBlock';
+import {
+  HELM_CONFIG_FILE_NAME,
+  OPERATOR_CONFIG_FILE_NAME,
+  REQUIRE_MORE,
+  INDEX_TYPE_OPTIONS,
+  SEGMENT_SIZE_OPTIONS,
+} from '../../components/card/sizingToolCard/constants';
 
 // one million
 const $1M = Math.pow(10, 6);
@@ -88,6 +61,12 @@ export default function SizingTool({ data }) {
   const { allVersion } = data;
   const { language, t } = useI18next();
 
+  const [dialogState, setDialogState] = useState({
+    open: false,
+    title: '',
+    handleClose: () => {},
+    children: <></>,
+  });
   const [form, setForm] = useState({
     // number of vectors
     nb: {
@@ -217,10 +196,10 @@ export default function SizingTool({ data }) {
     );
 
     if (isErrorParameters) {
-      const etcdData = etcdCalculator(rawFileSize);
-      const minioData = minioCalculator(rawFileSize, theorySize);
-      const pulsarData = pulsarCalculator(rawFileSize);
-      const kafkaData = kafkaCalculator(rawFileSize);
+      const etcdData = etcdCalculator();
+      const minioData = minioCalculator();
+      const pulsarData = pulsarCalculator();
+      const kafkaData = kafkaCalculator();
       return {
         memorySize: { size: 0, unit: 'B' },
         rawFileSize: { size: 0, unit: 'B' },
@@ -289,13 +268,34 @@ export default function SizingTool({ data }) {
 
   const handleDownloadHelm = () => {
     const content = helmYmlGenerator(calcResult, form.apacheType);
-    handleDownloadYmlFile(content, 'helmConfigYml');
+    handleDownloadYmlFile(content, HELM_CONFIG_FILE_NAME);
   };
-
   const handleDownloadOperator = () => {
     const content = operatorYmlGenerator(calcResult, form.apacheType);
-    handleDownloadYmlFile(content, 'operatorConfigYml');
+    handleDownloadYmlFile(content, OPERATOR_CONFIG_FILE_NAME);
   };
+
+  const handleCloseDialog = () => {
+    setDialogState(v => ({
+      ...v,
+      open: false,
+    }));
+  };
+
+  const handleOpenInstallGuide = type => {
+    const title =
+      type === 'helm'
+        ? t('v3trans.sizingTool.installGuide.helm')
+        : t('v3trans.sizingTool.installGuide.operator');
+
+    setDialogState({
+      open: true,
+      title,
+      handleClose: handleCloseDialog,
+      children: <HighlightBlock type={type} />,
+    });
+  };
+
   const version = findLatestVersion(allVersion.nodes);
 
   return (
@@ -631,26 +631,43 @@ export default function SizingTool({ data }) {
                 </div>
               </div>
 
-              <div className={classes.btnsWrapper}>
-                <button
-                  className={classes.downloadBtn}
-                  onClick={handleDownloadHelm}
-                >
-                  <DownloadIcon />
-                  <span>{t('v3trans.sizingTool.buttons.helm')}</span>
-                </button>
-                <button
-                  className={classes.downloadBtn}
-                  onClick={handleDownloadOperator}
-                >
-                  <DownloadIcon />
-                  <span>{t('v3trans.sizingTool.buttons.operator')}</span>
-                </button>
+              <div className={classes.btnContainer}>
+                <div className={classes.btnsWrapper}>
+                  <button
+                    className={classes.downloadBtn}
+                    onClick={handleDownloadHelm}
+                  >
+                    <DownloadIcon />
+                    <span>{t('v3trans.sizingTool.buttons.helm')}</span>
+                  </button>
+                  <button
+                    className={classes.guideLink}
+                    onClick={() => handleOpenInstallGuide('helm')}
+                  >
+                    {t('v3trans.sizingTool.buttons.guide')}
+                  </button>
+                </div>
+                <div className={classes.btnsWrapper}>
+                  <button
+                    className={classes.downloadBtn}
+                    onClick={handleDownloadOperator}
+                  >
+                    <DownloadIcon />
+                    <span>{t('v3trans.sizingTool.buttons.operator')}</span>
+                  </button>
+                  <button
+                    className={classes.guideLink}
+                    onClick={() => handleOpenInstallGuide('operator')}
+                  >
+                    {t('v3trans.sizingTool.buttons.guide')}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </Layout>
+      <CustomizedContentDialogs {...dialogState} />
     </main>
   );
 }

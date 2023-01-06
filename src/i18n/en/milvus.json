@@ -929,7 +929,12 @@
       },
       "buttons": {
         "helm": "Download Helm Chart configuration yml",
-        "operator": "Download Milvus Operator configuration yml"
+        "operator": "Download Milvus Operator configuration yml",
+        "guide": "View install guide"
+      },
+      "installGuide": {
+        "helm": "Helm Install Guide",
+        "operator": "Operator Install Guide"
       }
     }
   }

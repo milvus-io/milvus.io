@@ -209,29 +209,49 @@
         }
       }
 
-      .btnsWrapper {
+      .btnContainer {
         display: flex;
         gap: 20px;
 
-        .downloadBtn {
-          border: none;
-          outline: none;
-          background-color: #00a1ea;
+        .btnsWrapper {
+          flex: 1;
           display: flex;
-          align-items: center;
-          width: 100%;
-          padding: 10px 0;
-          align-items: center;
-          justify-content: center;
-          color: #fff;
-          border-radius: 2em;
-          cursor: pointer;
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-start;
 
-          span {
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 18px;
-            margin-left: 8px;
+          .downloadBtn {
+            border: none;
+            outline: none;
+            background-color: #00a1ea;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 10px 0;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border-radius: 2em;
+            cursor: pointer;
+
+            span {
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 18px;
+              margin-left: 8px;
+            }
+          }
+
+          .guideLink {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: #1493cc;
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }

@@ -18,7 +18,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { findLatestVersion } from '../../utils';
-
+import hljs from 'highlight.js';
 import {
   memorySizeCalculator,
   rawFileSizeCalculator,
@@ -37,8 +37,11 @@ import {
   pulsarCalculator,
   kafkaCalculator,
 } from '../../utils/sizingTool';
+import { CustomizedContentDialogs } from '../../components/dialog/Dialog';
 
 const REQUIRE_MORE = 'Require more data';
+const HELM_CONFIG_FILE_NAME = 'helmConfigYml';
+const OPERATOR_CONFIG_FILE_NAME = 'operatorConfigYml';
 
 const INDEX_TYPE_OPTIONS = [
   {
@@ -88,6 +91,12 @@ export default function SizingTool({ data }) {
   const { allVersion } = data;
   const { language, t } = useI18next();
 
+  const [dialogState, setDialogState] = useState({
+    open: false,
+    title: '',
+    handleClose: () => {},
+    children: <></>,
+  });
   const [form, setForm] = useState({
     // number of vectors
     nb: {
@@ -289,13 +298,59 @@ export default function SizingTool({ data }) {
 
   const handleDownloadHelm = () => {
     const content = helmYmlGenerator(calcResult, form.apacheType);
-    handleDownloadYmlFile(content, 'helmConfigYml');
+    handleDownloadYmlFile(content, HELM_CONFIG_FILE_NAME);
   };
-
   const handleDownloadOperator = () => {
     const content = operatorYmlGenerator(calcResult, form.apacheType);
-    handleDownloadYmlFile(content, 'operatorConfigYml');
+    handleDownloadYmlFile(content, OPERATOR_CONFIG_FILE_NAME);
   };
+
+  const handleCloseDialog = () => {
+    setDialogState(v => ({
+      ...v,
+      open: false,
+    }));
+  };
+
+  const HighlightBlock = ({ type }) => {
+    const content =
+      type === 'helm'
+        ? `
+helm repo add milvus https://milvus-io.github.io/milvus-helm/
+helm repo update
+helm install my-release milvus/milvus -f ${HELM_CONFIG_FILE_NAME}.yml
+    `
+        : `
+helm repo add milvus-operator https://milvus-io.github.io/milvus-operator/
+helm repo update milvus-operator
+helm -n milvus-operator upgrade --install milvus-operator milvus-operator/milvus-operator
+kubectl create -f ${OPERATOR_CONFIG_FILE_NAME}.yml
+    `;
+    const highlightCode = hljs.highlight(content, { language: 'yml' });
+    return (
+      <pre>
+        <code
+          className="hljs"
+          dangerouslySetInnerHTML={{ __html: highlightCode.value }}
+        ></code>
+      </pre>
+    );
+  };
+
+  const handleOpenInstallGuide = type => {
+    const title =
+      type === 'helm'
+        ? t('v3trans.sizingTool.installGuide.helm')
+        : t('v3trans.sizingTool.installGuide.operator');
+
+    setDialogState({
+      open: true,
+      title,
+      handleClose: handleCloseDialog,
+      children: <HighlightBlock type={type} />,
+    });
+  };
+
   const version = findLatestVersion(allVersion.nodes);
 
   return (
@@ -631,26 +686,43 @@ export default function SizingTool({ data }) {
                 </div>
               </div>
 
-              <div className={classes.btnsWrapper}>
-                <button
-                  className={classes.downloadBtn}
-                  onClick={handleDownloadHelm}
-                >
-                  <DownloadIcon />
-                  <span>{t('v3trans.sizingTool.buttons.helm')}</span>
-                </button>
-                <button
-                  className={classes.downloadBtn}
-                  onClick={handleDownloadOperator}
-                >
-                  <DownloadIcon />
-                  <span>{t('v3trans.sizingTool.buttons.operator')}</span>
-                </button>
+              <div className={classes.btnContainer}>
+                <div className={classes.btnsWrapper}>
+                  <button
+                    className={classes.downloadBtn}
+                    onClick={handleDownloadHelm}
+                  >
+                    <DownloadIcon />
+                    <span>{t('v3trans.sizingTool.buttons.helm')}</span>
+                  </button>
+                  <button
+                    className={classes.guideLink}
+                    onClick={() => handleOpenInstallGuide('helm')}
+                  >
+                    {t('v3trans.sizingTool.buttons.guide')}
+                  </button>
+                </div>
+                <div className={classes.btnsWrapper}>
+                  <button
+                    className={classes.downloadBtn}
+                    onClick={handleDownloadOperator}
+                  >
+                    <DownloadIcon />
+                    <span>{t('v3trans.sizingTool.buttons.operator')}</span>
+                  </button>
+                  <button
+                    className={classes.guideLink}
+                    onClick={() => handleOpenInstallGuide('operator')}
+                  >
+                    {t('v3trans.sizingTool.buttons.guide')}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </Layout>
+      <CustomizedContentDialogs {...dialogState} />
     </main>
   );
 }

@@ -35,7 +35,7 @@ kubectl create -f ${OPERATOR_CONFIG_FILE_NAME}.yml
   return (
     <pre className={classes.guideWrapper}>
       <code
-        className={clsx('hljs')}
+        className={clsx('hljs', classes.codeWrapper)}
         dangerouslySetInnerHTML={{ __html: highlightCode.value }}
       ></code>
     </pre>

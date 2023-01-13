@@ -180,7 +180,7 @@ export const useMultipleCodeFilter = () => {
     );
     const clickEventHandler = targetSearch => {
       const search = targetSearch.replace('#', '?');
-      setSearch(search);
+      setSearch(targetSearch);
       const currentFilters = allFilters.filter(f => f.key === search);
       allFilters.forEach(f => f.classList.toggle('active', false));
       currentFilters.forEach(cf => cf.classList.toggle('active', true));

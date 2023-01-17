@@ -219,13 +219,6 @@ if (process.env.NODE_ENV !== 'development') {
       },
     },
     {
-      resolve: '@sentry/gatsby',
-      options: {
-        dsn: 'https://36e69bc11fe746ea937f02ebce9cecf6@o474539.ingest.sentry.io/5756477',
-        sampleRate: 0.7,
-      },
-    },
-    {
       resolve: 'gatsby-plugin-sitemap',
       options: {
         output: '/',
@@ -279,9 +272,14 @@ if (process.env.NODE_ENV !== 'development') {
 gatsbyConfigs.plugins[0].options.ignore =
   process.env.IS_PREVIEW === 'preview'
     ? [
-        `**/v0*`,
-        `**/v1*`,
-        `**/v2*`,
+        `**/v0.6*`,
+        `**/v0.7*`,
+        `**/v0.8*`,
+        `**/v0.9*`,
+        `**/v0.1*`,
+        `**/v2.0.0`,
+        `**/v2.1*`,
+        `**/v2.2*`,
         `**/bootcamp`,
         `**/API_Reference`,
         `**/export_pdf`,

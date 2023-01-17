@@ -20,7 +20,6 @@
     "@mui/lab": "^5.0.0-alpha.61",
     "@mui/material": "^5.2.5",
     "@octokit/core": "^3.5.1",
-    "@sentry/gatsby": "^6.16.1",
     "@zilliz/zui": "^0.0.9",
     "axios": "^0.26.0",
     "clsx": "^1.1.1",

@@ -346,15 +346,10 @@ const Header = ({
 
           <div className={styles.rightSection}>
             {isDesktop && actionBar}
-            <Link to={`https://zilliz.com/cloud`}>
+            <Link to={`https://cloud.zilliz.com`}>
               <button className={styles.startBtn}>
                 Try Managed Milvus <span>FREE</span>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path
                     d="M12 3.5L18.364 9.86396L12 16.2279"
                     stroke="white"

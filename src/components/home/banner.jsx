@@ -5,6 +5,7 @@ import Marquee from 'react-fast-marquee';
 
 const Msg = () => {
   let isDesktop = true;
+
   if (typeof navigator !== 'undefined') {
     isDesktop =
       !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
@@ -19,7 +20,7 @@ const Msg = () => {
   );
 
   return isDesktop ? (
-    <div className="msg">{msg} &nbsp;</div>
+    <div className="msg desktop-msg">{msg} &nbsp;</div>
   ) : (
     <Marquee gradient={false} pauseOnHover={true} className="msg">
       {msg} &nbsp;

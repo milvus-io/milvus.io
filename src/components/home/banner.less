@@ -147,6 +147,7 @@
     padding-top: 32px;
     grid-area: title;
     position: relative;
+
     .msg {
       position: absolute;
       z-index: 100;
@@ -174,6 +175,14 @@
         }
       }
     }
+
+    .desktop-msg {
+      @media @tablet {
+        top: -36px;
+        width: 100%;
+      }
+    }
+
     @media @tablet {
       font-size: 36px;
     }

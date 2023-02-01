@@ -35,11 +35,12 @@ const generateAllMenus = edges => {
 const filterMdWithVersion = edges => {
   return edges.filter(({ node: { fileAbsolutePath, frontmatter } }) => {
     const notHome = frontmatter.id && frontmatter.id !== 'home.md';
+    const isDocs = fileAbsolutePath.includes('/docs/');
     if (process.env.IS_PREVIEW === 'preview') {
       const onlyPreview = fileAbsolutePath.includes('/preview/');
       return onlyPreview && notHome;
     }
-    return notHome;
+    return notHome && isDocs;
   });
 };
 

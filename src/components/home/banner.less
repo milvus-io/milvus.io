@@ -121,7 +121,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
-    'title bucket'
+    'title-wrapper bucket'
     'subtitle bucket'
     'btns bucket'
     '. bucket';
@@ -136,58 +136,94 @@
     grid-area: bucket;
   }
 
-  .title {
-    font-size: 56px;
-    font-weight: 600;
-    line-height: 1.3;
-    color: white;
-    line-break: auto;
-    min-height: 210px;
-    padding-bottom: 26px;
-    padding-top: 32px;
-    grid-area: title;
-    position: relative;
+  .title-wrapper {
     .msg {
-      position: absolute;
-      z-index: 100;
-      top: -36px;
-      left: 0;
-      color: #000000;
-      padding: 4px 16px;
-      border-radius: 8px;
-      background-color: #fff;
-      line-height: 1.3;
+      padding: 8px 16px;
+      background-color: #8bdbff;
       height: unset;
-      font-size: 12px;
-      a {
-        font-size: 13px;
-      }
+      border-radius: 34px;
+      margin-bottom: 16px;
+
       @media @tablet {
-        top: -10px;
         width: 100%;
       }
       @media @phone {
         width: 100%;
-        top: -8px;
         a {
           font-size: 12px;
         }
       }
+
+      .news-title {
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 600;
+        font-family: Inter;
+        color: #000;
+
+        @media @phone {
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
+
+      .news-wrapper {
+        @media @phone {
+          display: flex;
+          justify-content: center;
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .news-content {
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 400;
+        color: #000;
+        font-family: Inter;
+
+        @media @phone {
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
     }
-    @media @tablet {
-      font-size: 36px;
+    .desktop-msg {
+      @media @tablet {
+        top: -16px;
+      }
     }
-    @media @phone {
-      min-height: unset;
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-bottom: 10px;
-      padding-top: 40px;
-      text-align: center;
-      font-size: 32px;
-      line-height: 42px;
+
+    .title {
+      font-size: 56px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: white;
+      line-break: auto;
+      min-height: 210px;
+      padding-bottom: 26px;
+      grid-area: title;
+      position: relative;
+
+      @media @tablet {
+        font-size: 36px;
+      }
+      @media @phone {
+        min-height: unset;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        padding-top: 40px;
+        text-align: center;
+        font-size: 32px;
+        line-height: 42px;
+      }
     }
   }
+
   .subtitle {
     font-size: 22px;
     font-weight: 400;

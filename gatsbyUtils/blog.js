@@ -32,7 +32,12 @@ const filterAndSortBlogs = (list, lang) => {
 
 const generateBlogArticlePage = (
   createPage,
-  { nodes: blogMD, template: blogTemplate, listTemplate: blogListTemplate }
+  {
+    nodes: blogMD,
+    template: blogTemplate,
+    listTemplate: blogListTemplate,
+    versions,
+  }
 ) => {
   const generateTags = tag => {
     if (!tag) return [];
@@ -117,6 +122,7 @@ const generateBlogArticlePage = (
         blogList: allBlogsList[fileLang],
         id,
         desc,
+        allVersion: versions,
       },
     });
   });

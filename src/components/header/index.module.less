@@ -123,7 +123,13 @@
   }
 
   .gitBtnsWrapper {
+    // try-cloud button is too long to display this git state
+    @media (max-width: 1200px) {
+      display: none;
+    }
+
     .flexend;
+    gap: 20px;
 
     @media @phone {
       margin-bottom: 24px;
@@ -192,12 +198,12 @@
   background: var(--color-primary);
   .buttonSm;
   .hover;
-  color: #FFF;
-  font-family: "Roboto Mono";
+  color: #fff;
+  font-family: 'Roboto Mono';
   font-weight: 500;
   span {
-    background: #8BDBFF;
-    color: #00A1EA;
+    background: #8bdbff;
+    color: #00a1ea;
     font-size: 12px;
     border-radius: 4px;
     padding: 2px 5px;

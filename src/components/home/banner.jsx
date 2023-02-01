@@ -2,6 +2,7 @@ import React from 'react';
 import './banner.less';
 import { Link } from 'gatsby-plugin-react-i18next';
 import Marquee from 'react-fast-marquee';
+import { Typography } from '@mui/material';
 
 const Msg = () => {
   let isDesktop = true;
@@ -13,16 +14,22 @@ const Msg = () => {
   }
 
   const msg = (
-    <a href="https://milvus.io/docs/release_notes.md">
-      🔥 Milvus 2.2 is released, up to 200% performance gain!
+    <a href="https://milvus.io/docs/release_notes.md" className="news-wrapper">
+      <Typography className="news-title" component="span">
+        News:&nbsp;
+      </Typography>
+      <Typography component="span" className="news-content">
+        🔥 Milvus 2.2 is released, up to 200% performance gain! Learn More
+        &#8594; &nbsp;
+      </Typography>
     </a>
   );
 
   return isDesktop ? (
-    <div className="msg">{msg} &nbsp;</div>
+    <div className="msg desktop-msg">{msg}</div>
   ) : (
     <Marquee gradient={false} pauseOnHover={true} className="msg">
-      {msg} &nbsp;
+      {msg}
     </Marquee>
   );
 };
@@ -38,10 +45,11 @@ const HomeBanner = props => {
         <div className="shooting_star"></div>
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
-        <h1 className="title">
-          {t('v3trans.home.banner.title')}
+        <div className="title-wrapper">
           <Msg />
-        </h1>
+          <h1 className="title">{t('v3trans.home.banner.title')}</h1>
+        </div>
+
         <p className="subtitle">{t('v3trans.home.banner.desc')}</p>
         <div className="btn-group">
           <Link className="btn-start" to={`/docs/install_standalone-docker.md`}>

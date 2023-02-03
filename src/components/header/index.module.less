@@ -52,7 +52,6 @@
     .startBtn {
       svg {
         vertical-align: -5px;
-        margin-left: 4px;
         stroke: #fff !important;
       }
       &:hover {
@@ -89,7 +88,6 @@
       position: static;
       svg {
         vertical-align: -5px;
-        margin-left: 4px;
         stroke: #000;
       }
     }
@@ -130,6 +128,10 @@
 
     .flexend;
     gap: 20px;
+
+    .starText{
+      font-weight: 400;
+    }
 
     @media @phone {
       margin-bottom: 24px;
@@ -193,14 +195,16 @@
   }
 }
 
-.startBtn,
-.managedBtn {
+.startBtn {
   background: var(--color-primary);
   .buttonSm;
   .hover;
+  padding: 16px 20px;
   color: #fff;
   font-family: 'Roboto Mono';
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 14px;
+  height: auto;
   span {
     background: #8bdbff;
     color: #00a1ea;
@@ -208,7 +212,7 @@
     border-radius: 4px;
     padding: 2px 5px;
     margin-left: -4px;
-    margin-right: 5px;
+    margin-right: 8px;
   }
 
   @media @phone, @tablet {
@@ -222,15 +226,9 @@
     padding-top: 12px;
     padding-bottom: 12px;
   }
-  padding-top: 8px;
-  height: auto;
 }
 
-.managedBtn {
-  @media @phone, @tablet {
-    bottom: 96px;
-  }
-}
+
 
 .mobileHead {
   display: flex;

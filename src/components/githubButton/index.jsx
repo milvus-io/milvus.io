@@ -1,7 +1,7 @@
 import React from 'react';
 import * as styles from './index.module.less';
 import { useMemo } from 'react';
-import { Star, Fork } from './icons';
+import { GithubIcon, SlackIcon } from './icons';
 import clsx from 'clsx';
 
 const formatNum = num => {
@@ -9,14 +9,23 @@ const formatNum = num => {
 };
 
 const GitHubButton = ({
-  type = 'star', // star or fork
+  type = 'github', // star or slack
   href,
   className = '',
   children,
   count,
 }) => {
-  const isStar = type === 'star';
-  const Icon = isStar ? Star : Fork;
+  const Icon = useMemo(() => {
+    switch (type) {
+      case 'github':
+        return GithubIcon;
+
+      case 'slack':
+        return SlackIcon;
+      default:
+        return GithubIcon;
+    }
+  }, [type]);
 
   const amount = useMemo(() => {
     return formatNum(count);
@@ -30,17 +39,12 @@ const GitHubButton = ({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span
-          className={clsx(styles.iconWrapper, {
-            [styles.starIcon]: isStar,
-          })}
-        >
+        <span className={clsx(styles.iconWrapper)}>
           <Icon />
         </span>
 
         <span className={styles.iconText}>{children}</span>
-
-        <span className={styles.stat}>{amount}</span>
+        {amount !== undefined && <span className={styles.stat}>{amount}</span>}
       </a>
     </div>
   );

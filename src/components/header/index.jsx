@@ -176,13 +176,12 @@ const Header = ({
             count={stat.star.count}
             type="star"
             href="https://github.com/milvus-io/milvus"
-          >
-            <span className={styles.starText}> Stars</span>
-          </GitHubButton>
+          ></GitHubButton>
         )}
-        <GitHubButton type="slack" href="https://slack.milvus.io">
-          Join Slack
-        </GitHubButton>
+        <GitHubButton
+          type="slack"
+          href="https://slack.milvus.io"
+        ></GitHubButton>
       </div>
       <Menu
         anchorEl={anchorEl}

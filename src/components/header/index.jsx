@@ -42,13 +42,20 @@ const Header = ({
   const toolRef = useRef(null);
   const tutRef = useRef(null);
   const headerRef = useRef(null);
-  let isDesktop = true;
-  if (typeof navigator !== 'undefined') {
-    isDesktop =
-      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone/i.test(
-        navigator.userAgent
-      );
-  }
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  // resizable
+  useEffect(() => {
+    const observer = new ResizeObserver(entries => {
+      const { width } = entries[0].contentRect;
+
+      setIsDesktop(width > 1024);
+    });
+    observer.observe(document.documentElement);
+    return () => {
+      observer.unobserve(document.documentElement);
+    };
+  });
 
   useEffect(() => {
     (async function () {

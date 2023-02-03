@@ -20,7 +20,7 @@ const Msg = () => {
       </Typography>
       <Typography component="span" className="news-content">
         🔥 Milvus 2.2 is released, up to 200% performance gain! Learn More
-        &#8594; &nbsp;
+        &#8594;
       </Typography>
     </a>
   );

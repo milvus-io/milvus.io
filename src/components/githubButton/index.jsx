@@ -42,8 +42,8 @@ const GitHubButton = ({
         <span className={clsx(styles.iconWrapper)}>
           <Icon />
         </span>
+        {children && <span className={styles.iconText}>{children}</span>}
 
-        <span className={styles.iconText}>{children}</span>
         {amount !== undefined && <span className={styles.stat}>{amount}</span>}
       </a>
     </div>

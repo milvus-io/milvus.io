@@ -177,18 +177,12 @@ const Header = ({
             type="star"
             href="https://github.com/milvus-io/milvus"
           >
-            Star
+            <span className={styles.starText}> Stars</span>
           </GitHubButton>
         )}
-        {stat.fork.show && (
-          <GitHubButton
-            count={stat.fork.count}
-            type="fork"
-            href="https://github.com/milvus-io/milvus/fork"
-          >
-            Fork
-          </GitHubButton>
-        )}
+        <GitHubButton type="slack" href="https://slack.milvus.io">
+          Join Slack
+        </GitHubButton>
       </div>
       <Menu
         anchorEl={anchorEl}

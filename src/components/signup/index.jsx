@@ -37,21 +37,21 @@ const Signup = ({ callback, t }) => {
           type: 'success',
           message: t('v3trans.signup.thankyou'),
         });
-        //
+        // Prompt success regardless of whether it is successful or not
       } else {
         callback({
           type: 'warning',
-          message: t('v3trans.signup.subscribed'),
+          message: t('v3trans.signup.thankyou'),
         });
         window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
       }
     } catch (error) {
+      // Prompt success regardless of whether it is successful or not
       callback({
         type: 'warning',
-        message: t('v3trans.signup.subscribed'),
+        message: t('v3trans.signup.thankyou'),
       });
       window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
-      console.log(error);
     } finally {
       setDisabled(false);
     }

@@ -18,6 +18,9 @@
     height: 840px;
     background-repeat: repeat no-repeat;
     z-index: 90;
+    @media @tablet {
+      height: auto;
+    }
   }
 
   .shooting_star_container1 {
@@ -61,11 +64,23 @@
     height: auto;
     width: 100%;
     max-width: 491px;
-    position: relative;
+    position: absolute;
     margin: 0 auto;
+    top: 40px;
+    right: -654px;
 
     @media @phone {
-      width: 80%;
+      transform: scale(0.8);
+      position: relative;
+      top: 0;
+      right: 0;
+      margin-bottom: 16px;
+    }
+    @media @tablet {
+      position: relative;
+      top: 0;
+      right: 0;
+      margin-bottom: 16px;
     }
 
     .ellipse-svg2 {
@@ -118,25 +133,45 @@
 }
 
 .banner-grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    'title-wrapper bucket'
-    'subtitle bucket'
-    'btns bucket'
-    '. bucket';
   height: 100%;
   padding: 190px 0 80px 0;
-  grid-column-gap: 10%;
   // no more than header
   z-index: 10;
 
+  @media @phone {
+    padding: 32px 0 80px 0;
+  }
+  @media @tablet {
+    padding: 32px 0 80px 0;
+  }
+
   .bucket-container {
     aspect-ratio: 1;
-    grid-area: bucket;
   }
 
   .title-wrapper {
+    position: relative;
+    min-width: 566px;
+    width: 566px;
+    display: flex;
+    flex-direction: column;
+
+    @media @desktop1920 {
+      min-width: 760px;
+      width: 760px;
+    }
+
+    @media @phone {
+      min-width: auto;
+      width: auto;
+      flex-direction: column;
+    }
+    @media @tablet {
+      min-width: auto;
+      width: auto;
+      flex-direction: column;
+    }
+
     .msg {
       display: inline-block;
       padding: 8px 16px;
@@ -150,6 +185,7 @@
       }
       @media @phone {
         width: 100%;
+        margin-bottom: 32px;
         a {
           font-size: 12px;
         }
@@ -200,24 +236,24 @@
 
     .title {
       font-size: 56px;
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.3;
       color: white;
       line-break: auto;
       min-height: 210px;
       padding-bottom: 26px;
-      grid-area: title;
       position: relative;
 
       @media @tablet {
         font-size: 36px;
+        text-align: center;
+        min-height: unset;
       }
       @media @phone {
         min-height: unset;
         padding-left: 20px;
         padding-right: 20px;
         padding-bottom: 10px;
-        padding-top: 40px;
         text-align: center;
         font-size: 32px;
         line-height: 42px;
@@ -226,28 +262,36 @@
   }
 
   .subtitle {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 400;
-    line-height: 1.3;
+    line-height: 34px;
     color: white;
     line-break: auto;
     padding-bottom: 50px;
     @media @tablet {
       font-size: 18px;
+      text-align: center;
     }
-    grid-area: subtitle;
     @media @phone {
       text-align: center;
       font-size: 14px;
-      line-heght: 20px;
-      width: 75%;
+      line-height: 20px;
+      width: 60%;
+      margin: 0 auto;
     }
   }
   .btn-group {
-    grid-area: btns;
     width: 100%;
     display: flex;
     gap: 10px;
+
+    @media @phone {
+      flex-direction: column;
+    }
+
+    @media @tablet {
+      flex-direction: column;
+    }
 
     .btn-start,
     .btn-watch {
@@ -298,175 +342,6 @@
         border-color: transparent;
         color: var(--color-white);
       }
-    }
-  }
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-area: stats;
-    align-items: end;
-  }
-  .stats-detail {
-    .name {
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 24px;
-      color: white;
-    }
-    .num {
-      font-family: 'Roboto Mono';
-      font-weight: 400;
-      font-size: 32px;
-      line-height: 42.2px;
-      letter-spacing: 0.2px;
-      color: #8bdbff;
-    }
-  }
-}
-
-@media @desktop1024 {
-  .homepage .banner {
-    height: 720px;
-  }
-
-  .banner-grid-container {
-    padding: 150px 0 80px 0;
-
-    p.title {
-      font-size: 48px;
-      line-height: 58px;
-      min-height: unset;
-    }
-
-    p.subtitle {
-      font-size: 16px;
-    }
-
-    .stats-detail {
-      .name {
-        font-size: 12px;
-        line-height: 14px;
-      }
-      .num {
-        font-size: 24px;
-        line-height: 31.65px;
-      }
-    }
-  }
-}
-
-@media @tablet {
-  .homepage .banner {
-    height: 580px;
-  }
-
-  .banner-grid-container {
-    padding: 80px 0;
-    grid-template-rows: auto 1fr 2fr;
-
-    p.title {
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 42px;
-      min-height: unset;
-    }
-
-    p.subtitle {
-      font-size: 16px;
-      font-weight: 400;
-    }
-
-    .btn-group {
-      flex-direction: column;
-      gap: 17px;
-      max-width: 192px;
-    }
-
-    .stats-detail {
-      .name {
-        font-size: 12px;
-        line-height: 14px;
-      }
-      .num {
-        font-size: 24px;
-        line-height: 31.65px;
-      }
-    }
-  }
-}
-
-@media @phone {
-  .homepage .banner {
-    height: auto;
-    background-position: unset;
-
-    .shooting_star_container1,
-    .shooting_star_container2 {
-      .shooting_star {
-        animation: unset;
-      }
-    }
-  }
-
-  .bucket-container {
-    margin: 50px auto;
-  }
-
-  .banner-grid-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto 2fr;
-    grid-template-areas:
-      'title'
-      'subtitle'
-      'bucket'
-      'btns';
-    justify-items: center;
-    padding: 40px 0;
-
-    .stats {
-      grid-template-rows: repeat(2, 1fr);
-      grid-template-columns: repeat(2, 1fr);
-      justify-items: center;
-    }
-
-    .stats-detail {
-      p {
-        text-align: center;
-      }
-      .name {
-        font-size: 12px;
-        line-height: 14px;
-        letter-spacing: 2%;
-      }
-      .num {
-        font-size: 24px;
-        line-height: 31.65px;
-      }
-    }
-
-    p.title,
-    p.subtitle {
-      text-align: center;
-    }
-
-    p.title {
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 42px;
-      min-height: unset;
-      padding-bottom: 10px;
-    }
-
-    p.subtitle {
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 20px;
-    }
-
-    .btn-group {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
     }
   }
 }

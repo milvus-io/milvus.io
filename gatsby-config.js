@@ -19,8 +19,7 @@ const gatsbyConfigs = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `blogs`,
-        path: `${__dirname}/src/pages/blogs/versions`,
-        ignore: [`**/communication`, `**/meetup`, `**/Events`, `**/\.*`, `.*`],
+        path: `${__dirname}/src/pages/blogs/versions/master/blog`,
       },
     },
     {
@@ -277,9 +276,10 @@ gatsbyConfigs.plugins[0].options.ignore =
         `**/v0.8*`,
         `**/v0.9*`,
         `**/v0.1*`,
-        `**/v2.0.0`,
-        `**/v2.1*`,
-        `**/v2.2*`,
+        `**/v1.1.*`,
+        `**/v2.0.*`,
+        `**/v2.1.x`,
+        `**/v2.2.x`,
         `**/bootcamp`,
         `**/API_Reference`,
         `**/export_pdf`,

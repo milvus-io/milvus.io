@@ -535,26 +535,6 @@
     }
   }
 
-  .language-javascript,
-  .language-python,
-  .language-go,
-  .language-java,
-  .language-cli,
-  .language-shell,
-  .language-cpp,
-  .language-curl {
-    display: none;
-
-    &.active {
-      display: block;
-
-      @media @phone {
-        margin-top: 16px;
-        margin-bottom: 16px;
-      }
-    }
-  }
-
   .tip {
     background-color: rgba(79, 196, 249, 0.25);
     padding: 4px 8px;
@@ -654,6 +634,25 @@
           bottom: 0;
           left: 50%;
           transform: translateX(-50%);
+        }
+      }
+    }
+    ~ pre > code.language-javascript,
+    ~ pre > code.language-python,
+    ~ pre > code.language-go,
+    ~ pre > code.language-java,
+    ~ pre > code.language-cli,
+    ~ pre > code.language-shell,
+    ~ pre > code.language-cpp,
+    ~ pre > code.language-curl {
+      display: none;
+
+      &.active {
+        display: block;
+
+        @media @phone {
+          margin-top: 16px;
+          margin-bottom: 16px;
         }
       }
     }

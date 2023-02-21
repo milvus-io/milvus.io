@@ -329,6 +329,32 @@
     }
   }
 
+  .language-javascript,
+  .language-python,
+  .language-go,
+  .language-java,
+  .language-cli,
+  .language-shell,
+  .language-cpp,
+  .language-curl {
+    display: none;
+
+    &.active {
+      display: block;
+
+      @media @phone {
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .none-filter {
+    pre code {
+      display: block;
+    }
+  }
+
   table {
     margin-bottom: 24px;
     background-color: var(--pre-bg-color);
@@ -634,26 +660,6 @@
           bottom: 0;
           left: 50%;
           transform: translateX(-50%);
-        }
-      }
-    }
-    ~ pre > code.language-javascript,
-    ~ pre > code.language-python,
-    ~ pre > code.language-go,
-    ~ pre > code.language-java,
-    ~ pre > code.language-cli,
-    ~ pre > code.language-shell,
-    ~ pre > code.language-cpp,
-    ~ pre > code.language-curl,
-    .filter-content {
-      display: none;
-
-      &.active {
-        display: block;
-
-        @media @phone {
-          margin-top: 16px;
-          margin-bottom: 16px;
         }
       }
     }

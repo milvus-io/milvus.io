@@ -166,7 +166,7 @@ export const useMultipleCodeFilter = () => {
         allFilters.push(f);
       });
     });
-    const allContents = document.querySelectorAll(`[class*="language-"]`);
+    const allContents = document.querySelectorAll(`.multipleCode ~ pre>code[class*="language-"]`);
     if (!allContents.length) return;
     if (!filterWrappers.length) {
       allContents.forEach(c => c.classList.toggle('active', true));

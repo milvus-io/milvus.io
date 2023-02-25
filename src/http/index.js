@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { Octokit } from '@octokit/core';
 
-const userToken = `Z2hwX2ZYUWQwTVNBa3dudTB4UkJjWGhxNUZXVmZGYVdWWjIzQnVnSA==`;
+const userToken = ``;
 const org = 'zilliz-bootcamp';
 const repo = 'record_user_question';
 
 const feedbackToken =
-  'Z2hwX0k4ZmNWQnlrQlAzUWlRaTJjbXdzWXBEWFhPeDdmbDJLeG5IMA==';
+  '';
 const feedbackOrg = 'milvus-io';
 const feedbackRepo = 'milvus.io.feedback';
 

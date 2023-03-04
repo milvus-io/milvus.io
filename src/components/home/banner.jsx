@@ -15,7 +15,7 @@ const Msg = () => {
   }
 
   const msg = (
-    <a href="https://milvus.io/docs/release_notes.md" className="news-wrapper">
+    <a href="https://zilliz.com/whitepaper" className="news-wrapper">
       <Typography className="news-title" component="span">
         News:&nbsp;
       </Typography>

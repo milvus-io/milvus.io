@@ -54,7 +54,7 @@ const DemoCard = ({
     )
       ? 'Ads: Reddit'
       : 'Milvus: demo';
-    const isSubscribed = window.localStorage.getItem(UNIQUE_EMAIL_ID) || false;
+    const isSubscribed = true; // enabled for now
     if (isSubscribed) {
       window.location.href = href;
       return;

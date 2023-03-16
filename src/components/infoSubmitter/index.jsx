@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as styles from './index.module.less';
 import { TextField } from '@mui/material';
-import { submitInfoForm } from '../../http/submitEmail';
+import { submitHubspotForm } from '../../http/submitEmail';
 
 const InfoSubmitter = ({ submitCb = () => {}, source, href = '' }) => {
   const regx =
@@ -17,7 +17,7 @@ const InfoSubmitter = ({ submitCb = () => {}, source, href = '' }) => {
     let [statusCode, unique_email_id] = [null, null];
     setLoading(true);
     try {
-      const res = await submitInfoForm({
+      const res = await submitHubspotForm({
         email: value,
         form: {
           SOURCE: source,

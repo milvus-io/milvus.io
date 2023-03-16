@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { submitInfoForm } from '../../http/submitEmail';
+import { submitHubspotForm } from '../../http/submitEmail';
 import * as styles from './index.module.less';
 import { useSubscribeSrouce } from '../../hooks';
 
@@ -25,7 +25,7 @@ const Signup = ({ callback, t }) => {
 
     try {
       setDisabled(true);
-      const { statusCode, unique_email_id } = await submitInfoForm({
+      const { statusCode, unique_email_id } = await submitHubspotForm({
         email: value,
         form: {
           SOURCE: source,

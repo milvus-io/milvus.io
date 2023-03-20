@@ -8,6 +8,7 @@ const getNewestVersion = versionInfo => {
   const keys = Object.keys(versionInfo).filter(
     v =>
       v !== 'master' &&
+      !v.includes('beta') &&
       (versionInfo[v].released === 'yes' ||
         process.env.IS_PREVIEW === 'preview')
   );

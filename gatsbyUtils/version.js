@@ -51,19 +51,14 @@ if (process.env.IS_PREVIEW === 'preview') {
 }
 
 const findVersion = str => {
-  // version: v.1.0.0 | v0.x
-  const regx = /versions\/master\/([v\dx\.]*)/;
-  const match = str.match(regx);
-
-  const tag = match
-    ? match[1]
-      ? match[1]
-      : process.env.IS_PREVIEW === 'preview' && str.includes('preview')
+  const tags = str.split('/').filter(part => part.startsWith('v'));
+  const tag =
+    process.env.IS_PREVIEW === 'preview' && str.includes('preview')
       ? 'preview'
-      : match[1]
-    : '';
+      : tags[1];
 
   const result = versionInfo[tag] && versionInfo[tag].version;
+
   return result;
 };
 

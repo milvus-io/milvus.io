@@ -283,7 +283,7 @@ const Header = ({
                   to="https://codelabs.milvus.io/"
                   className={styles.menuLink}
                 >
-                  codelabs
+                  Codelabs
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleMenuLinkClick}>
@@ -293,7 +293,7 @@ const Header = ({
               </MenuItem>
               <MenuItem onClick={handleMenuLinkClick}>
                 <Link to="/milvus-demos" className={styles.menuLink}>
-                  {t('v3trans.main.nav.demo')}
+                  Demos
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleMenuLinkClick}>
@@ -333,13 +333,23 @@ const Header = ({
                   rel="noopener noreferrer"
                   className={styles.menuLink}
                 >
-                  Milvus_CLI
+                  Milvus CLI
                 </a>
               </MenuItem>
               <MenuItem onClick={handleMenuLinkClick}>
                 <Link to="/tools/sizing" className={styles.menuLink}>
                   Sizing Tool
                 </Link>
+              </MenuItem>
+              <MenuItem onClick={handleMenuLinkClick}>
+                <a
+                  href="https://github.com/zilliztech/milvus-backup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.menuLink}
+                >
+                  Milvus Backup
+                </a>
               </MenuItem>
             </Menu>
           </div>

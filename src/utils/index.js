@@ -3,8 +3,9 @@ export const sortVersions = (a, b) => {
   if (a && b) {
     let [v1, s1, m1] = a.split('.');
     let [v2, s2, m2] = b.split('.');
-
+    // eslint-disable-next-line
     let [_1, aBeta] = a.split('-');
+    // eslint-disable-next-line
     let [_2, bBeta] = b.split('-');
 
     // s1 m1 will be 'x' and undefined when version is v0.x or v1.x

@@ -187,7 +187,7 @@ const Header = ({
         )}
         <GitHubButton
           type="slack"
-          href="https://slack.milvus.io"
+          href="https://milvus.slack.com/"
         >Join Slack</GitHubButton>
       </div>
       <Menu

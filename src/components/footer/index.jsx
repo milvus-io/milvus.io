@@ -20,7 +20,11 @@ const footerJson = [
         trans: false,
         to: '/blog',
       },
-      { name: 'Learn', trans: false, to: 'https://zilliz.com/learn' },
+      {
+        name: 'Managed service',
+        trans: false,
+        to: 'https://cloud.zilliz.com/',
+      },
     ],
   },
   {
@@ -40,11 +44,16 @@ const footerJson = [
     children: [
       { name: 'Attu', trans: false, to: 'https://github.com/zilliztech/attu' },
       {
-        name: 'Milvus_CLI',
+        name: 'Milvus CLI',
         trans: false,
         to: 'https://github.com/zilliztech/milvus_cli',
       },
       { name: 'Sizing Tool', trans: false, to: '/tools/sizing' },
+      {
+        name: 'Mivlus backup Tool',
+        trans: false,
+        to: 'https://github.com/zilliztech/milvus-backup',
+      },
     ],
   },
   {
@@ -69,7 +78,7 @@ const socialJson = [
   },
   {
     icon: faSlack,
-    link: 'https://slack.milvus.io/',
+    link: 'https://milvus.slack.com/',
   },
   {
     icon: faTwitter,

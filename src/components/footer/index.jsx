@@ -78,7 +78,7 @@ const socialJson = [
   },
   {
     icon: faSlack,
-    link: 'https://slack.milvus.io/',
+    link: 'https://milvus.slack.com/',
   },
   {
     icon: faTwitter,

@@ -115,7 +115,7 @@ const Aside = props => {
         },
         {
           label: commonJoinBtnConf.label,
-          link: 'https://milvus.slack.com/',
+          link: 'https://milvusio.slack.com/',
           icon: commonJoinBtnConf.icon,
         },
       ];
@@ -135,7 +135,7 @@ const Aside = props => {
         },
         {
           label: commonJoinBtnConf.label,
-          link: 'https://milvus.slack.com/',
+          link: 'https://milvusio.slack.com/',
           icon: commonJoinBtnConf.icon,
         },
       ];

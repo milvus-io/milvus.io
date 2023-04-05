@@ -8,7 +8,7 @@ export default function DocContent(props) {
   // const contact = {
   //   slack: {
   //     label: "Discuss on Slack",
-  //     link: "https://milvus.slack.com/",
+  //     link: "https://milvusio.slack.com/",
   //   },
   //   github: {
   //     label: "Discuss on GitHub",

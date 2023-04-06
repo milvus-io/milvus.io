@@ -28,7 +28,7 @@
           "title": "Didn't find what you need?",
           "slack": {
             "label": "Discuss on Slack",
-            "link": "https://milvusio.slack.com/"
+            "link": "https://milvusio.slack.com/get-started#/createnew"
           },
           "github": {
             "label": "Discuss on GitHub",
@@ -48,7 +48,7 @@
         }
       },
       "questionBtn": {
-        "link": "https://milvusio.slack.com/",
+        "link": "https://milvusio.slack.com/get-started#/createnew",
         "label": "Join Slack channel."
       },
       "issueBtn": {
@@ -486,7 +486,7 @@
               "name": "twitter"
             },
             {
-              "href": "https://milvusio.slack.com/",
+              "href": "https://milvusio.slack.com/get-started#/createnew",
               "name": "slack"
             }
           ]

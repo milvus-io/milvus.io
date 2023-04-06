@@ -156,7 +156,7 @@ const IndexPage = ({ data, pageContext }) => {
   };
 
   const communityLinks = [
-    { name: 'Slack', to: 'https://milvusio.slack.com/' },
+    { name: 'Slack', to: 'https://milvusio.slack.com/get-started#/createnew' },
     { name: 'Github', to: 'https://github.com/milvus-io/milvus' },
     { name: 'Forum', to: 'https://discuss.milvus.io/' },
   ];

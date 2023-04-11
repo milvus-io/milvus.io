@@ -60,7 +60,7 @@ const footerJson = [
     title: 'community',
     children: [
       { name: 'getinvolved', trans: true, to: '/community' },
-      { name: 'Slack', trans: false, to: 'https://milvusio.slack.com/get-started#/createnew' },
+      { name: 'Slack', trans: false, to: 'https://join.slack.com/t/milvusio/shared_invite/zt-1slimkif6-8uWK0XPL8adve6vSD4jSwg' },
       {
         name: 'Github',
         trans: false,
@@ -78,7 +78,7 @@ const socialJson = [
   },
   {
     icon: faSlack,
-    link: 'https://milvusio.slack.com/get-started#/createnew',
+    link: 'https://join.slack.com/t/milvusio/shared_invite/zt-1slimkif6-8uWK0XPL8adve6vSD4jSwg',
   },
   {
     icon: faTwitter,

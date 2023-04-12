@@ -6,7 +6,7 @@ import DemoCard from '../../components/card/DemoCard';
 import * as styles from './index.module.less';
 import imageSearch from '../../images/demos/image-search.png';
 import chemical from '../../images/demos/chemical-search.svg';
-import chatBot from '../../images/demos/chat-bots.svg';
+import ossChat from '../../images/demos/ossChat.png';
 import Github from '../../images/demos/github.svg';
 import Forum from '../../images/demos/forum.svg';
 import { CustomizedContentDialogs } from '../../components/dialog/Dialog';
@@ -28,15 +28,15 @@ const DEMOS = [
   {
     name: 'Chatbots',
     desc: 'Interactive digital customer service that saves users time and businesses money.',
-    href: 'http://chatbot.milvus.io/',
-    cover: chatBot,
-    videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
+    href: 'https://osschat.io/',
+    cover: ossChat,
+    // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
     lowerCaseName: 'chatbots',
   },
   {
     name: 'Chemical Structure Search',
     desc: 'Blazing fast similarity search, substructure search, or superstructure search for a specified molecule.',
-    href: 'http://molsearch.milvus.io/',
+    // href: 'http://molsearch.milvus.io/',
     cover: chemical,
     videoSrc: 'https://www.youtube.com/watch?v=4u_RZeMBTNI',
     lowerCaseName: 'chemical',

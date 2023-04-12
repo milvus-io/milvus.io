@@ -54,7 +54,7 @@ const ImageSearchPage = ({ pageContext }) => {
   const isMobile = ['phone', 'tablet'].includes(currentSize);
   const [modalConfig, setModalConfig] = useState({
     open: false,
-    handleCloseModal: () => { },
+    handleCloseModal: () => {},
     component: () => <></>,
   });
 
@@ -171,15 +171,16 @@ const ImageSearchPage = ({ pageContext }) => {
   //   window && (window.location.href = "/milvus-demos");
   // };
 
-  useEffect(() => {
-    const uniqueId = window.localStorage.getItem('UNIQUE_EMAIL_ID');
-    if (!uniqueId) {
-      window && (window.location.href = "/milvus-demos");
-      return;
-    }
-    handleImgToBlob(DemoImg);
-    // eslint-disable-next-line
-  }, []);
+  // disabled for now
+  // useEffect(() => {
+  //   const uniqueId = window.localStorage.getItem('UNIQUE_EMAIL_ID');
+  //   if (!uniqueId) {
+  //     window && (window.location.href = "/milvus-demos");
+  //     return;
+  //   }
+  //   handleImgToBlob(DemoImg);
+  //   // eslint-disable-next-line
+  // }, []);
   return (
     <>
       <Header t={t} darkMode={true} className={styles.demoHeader} />
@@ -187,8 +188,9 @@ const ImageSearchPage = ({ pageContext }) => {
       <main className={styles.root} ref={scrollContainer}>
         <div className={styles.searchPageContainer}>
           <div
-            className={`${styles.contentContainer} ${isShowCode ? 'shrink' : ''
-              }`}
+            className={`${styles.contentContainer} ${
+              isShowCode ? 'shrink' : ''
+            }`}
           >
             <div>
               <Link to="/milvus-demos" className={styles.backButton}>

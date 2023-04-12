@@ -26,8 +26,8 @@ const DEMOS = [
     lowerCaseName: 'image search',
   },
   {
-    name: 'Chatbots',
-    desc: 'Interactive digital customer service that saves users time and businesses money.',
+    name: 'OSSChat',
+    desc: 'Enhanced ChatGPT with documentation, issues, blog posts, community Q&A as knowledge bases. Built for every community and developer.',
     href: 'https://osschat.io/',
     cover: ossChat,
     // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',

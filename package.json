@@ -36,7 +36,7 @@
     "gatsby-plugin-react-i18next": "^1.2.2",
     "gatsby-plugin-remove-fingerprints": "^0.0.2",
     "gatsby-plugin-robots-txt": "^1.5.5",
-    "gatsby-plugin-sharp": "^3.0.0",
+    "gatsby-plugin-sharp": "^4.25.1",
     "gatsby-plugin-sitemap": "^4.0.0",
     "gatsby-remark-autolink-headers": "^4.3.0",
     "gatsby-remark-copy-linked-files": "^4.3.0",

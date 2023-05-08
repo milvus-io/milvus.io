@@ -13,7 +13,7 @@ import './docsStyle.less';
 import * as styles from './blogTemplate.module.less';
 import BlogAnchorSection from '../components/blogToc';
 
-const pattern = /[\W\s]+/g;
+const pattern = /[!@#$%^&*(),.?":{}|<>~`\[\]\\\/;=+_\-']+/g;
 
 export default function Template({ data, pageContext }) {
   const { allVersion } = data;
@@ -38,7 +38,9 @@ export default function Template({ data, pageContext }) {
       .filter(v => v.depth === 2)
       .map(v => {
         const { value, depth } = v;
-        let href = value ? value.replaceAll(pattern, '-') : '';
+
+        let href = value.replaceAll(pattern, '');
+        href = href.replaceAll(' ', '-');
 
         // remove special symbol in the end of string
         while (href.charAt(href.length - 1) === '-') {

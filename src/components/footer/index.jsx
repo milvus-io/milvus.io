@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as styles from './index.module.less';
+import { SLACK_INVITE_URL } from '../../consts';
 
 const footerJson = [
   {
@@ -60,7 +61,7 @@ const footerJson = [
     title: 'community',
     children: [
       { name: 'getinvolved', trans: true, to: '/community' },
-      { name: 'Slack', trans: false, to: 'https://join.slack.com/t/milvusio/shared_invite/zt-1slimkif6-8uWK0XPL8adve6vSD4jSwg' },
+      { name: 'Slack', trans: false, to: SLACK_INVITE_URL },
       {
         name: 'Github',
         trans: false,
@@ -78,7 +79,7 @@ const socialJson = [
   },
   {
     icon: faSlack,
-    link: 'https://join.slack.com/t/milvusio/shared_invite/zt-1slimkif6-8uWK0XPL8adve6vSD4jSwg',
+    link: SLACK_INVITE_URL,
   },
   {
     icon: faTwitter,

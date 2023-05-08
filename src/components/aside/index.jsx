@@ -11,6 +11,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useI18next } from 'gatsby-plugin-react-i18next';
 import * as styles from './index.module.less';
 import clsx from 'clsx';
+import { SLACK_INVITE_URL } from '../../consts';
 
 // const result = {
 //   doc: {},
@@ -115,7 +116,7 @@ const Aside = props => {
         },
         {
           label: commonJoinBtnConf.label,
-          link: 'https://join.slack.com/t/milvusio/shared_invite/zt-1slimkif6-8uWK0XPL8adve6vSD4jSwg',
+          link: SLACK_INVITE_URL,
           icon: commonJoinBtnConf.icon,
         },
       ];
@@ -135,7 +136,7 @@ const Aside = props => {
         },
         {
           label: commonJoinBtnConf.label,
-          link: 'https://join.slack.com/t/milvusio/shared_invite/zt-1slimkif6-8uWK0XPL8adve6vSD4jSwg',
+          link: SLACK_INVITE_URL,
           icon: commonJoinBtnConf.icon,
         },
       ];

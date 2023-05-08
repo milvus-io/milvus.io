@@ -13,6 +13,7 @@ import GitHubButton from '../githubButton';
 import MilvusCookieConsent from '../milvusCookieConsent';
 import { getGithubStatis } from '../../http';
 import * as styles from './index.module.less';
+import { SLACK_INVITE_URL } from '../../consts';
 
 const Header = ({
   darkMode = false,
@@ -183,12 +184,13 @@ const Header = ({
             count={stat.star.count}
             type="star"
             href="https://github.com/milvus-io/milvus"
-          >Stars</GitHubButton>
+          >
+            Stars
+          </GitHubButton>
         )}
-        <GitHubButton
-          type="slack"
-          href="https://join.slack.com/t/milvusio/shared_invite/zt-1slimkif6-8uWK0XPL8adve6vSD4jSwg"
-        >Join Slack</GitHubButton>
+        <GitHubButton type="slack" href={SLACK_INVITE_URL}>
+          Join Slack
+        </GitHubButton>
       </div>
       <Menu
         anchorEl={anchorEl}

@@ -123,6 +123,7 @@ const generateBlogArticlePage = (
         id,
         desc,
         allVersion: versions,
+        headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
       },
     });
   });

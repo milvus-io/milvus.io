@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 // import Giscus from '@giscus/react';
 import { graphql } from 'gatsby';
 import { useI18next } from 'gatsby-plugin-react-i18next';
@@ -11,6 +11,9 @@ import Seo from '../components/seo';
 import { findLatestVersion } from '../utils';
 import './docsStyle.less';
 import * as styles from './blogTemplate.module.less';
+import BlogAnchorSection from '../components/blogToc';
+
+const pattern = /[\W\s]+/g;
 
 export default function Template({ data, pageContext }) {
   const { allVersion } = data;
@@ -26,8 +29,32 @@ export default function Template({ data, pageContext }) {
     id,
     desc,
     cover,
+    headings,
   } = pageContext;
 
+  // h2 only
+  const tocHeadings = useMemo(() => {
+    return headings
+      .filter(v => v.depth === 2)
+      .map(v => {
+        const { value, depth } = v;
+        let href = value ? value.replaceAll(pattern, '-') : '';
+
+        // remove special symbol in the end of string
+        while (href.charAt(href.length - 1) === '-') {
+          href = href.slice(0, -1);
+        }
+
+        return {
+          label: value,
+          href,
+          isActive: false,
+          depth,
+        };
+      });
+  }, [headings]);
+
+  const docContainer = useRef(null);
   const { language, t, navigate } = useI18next();
   const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ''), [newHtml]);
   const shareUrl = useMemo(() => `https://milvus.io/blog/${id}`, [id]);
@@ -92,26 +119,34 @@ export default function Template({ data, pageContext }) {
           onClick={handleTagClick}
         />
 
-        <section className={`${styles.shareContainer} col-8`}>
-          <Share
-            url={shareUrl}
-            quote={title}
-            desc={description}
-            image={`https://${cover}`}
-            wrapperClass={styles.share}
-            vertical={true}
-          />
-        </section>
-
         <section className={`${styles.desc} col-8`}>
           <span className={styles.line}></span>
           <span>{desc}</span>
         </section>
 
-        <div
-          className={`${styles.articleContent} doc-style col-8`}
-          dangerouslySetInnerHTML={{ __html: html }}
-        ></div>
+        <section className={`${styles.contentContainer} col-8`}>
+          <div className={styles.articleContainer}>
+            <div
+              className={`${styles.articleContent} doc-style`}
+              dangerouslySetInnerHTML={{ __html: html }}
+              ref={docContainer}
+            ></div>
+          </div>
+
+          <BlogAnchorSection
+            anchors={tocHeadings}
+            shareUrl={shareUrl}
+            title={title}
+            description={description}
+            container={docContainer}
+            imgUrl={`https://${cover}`}
+            id={id}
+            classes={{
+              root: styles.anchorContainer,
+            }}
+          />
+        </section>
+
         {/* <div className={`${styles.articleContent} col-8`}>
           <Giscus
             id="comments"

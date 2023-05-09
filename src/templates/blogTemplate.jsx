@@ -127,13 +127,11 @@ export default function Template({ data, pageContext }) {
           )}
 
           <section className={styles.contentContainer}>
-            <div className={styles.articleContainer}>
-              <div
-                className={`${styles.articleContent} doc-style`}
-                dangerouslySetInnerHTML={{ __html: html }}
-                ref={docContainer}
-              ></div>
-            </div>
+            <div
+              className={`${styles.articleContent} doc-style`}
+              dangerouslySetInnerHTML={{ __html: html }}
+              ref={docContainer}
+            ></div>
 
             <BlogAnchorSection
               anchors={tocHeadings}

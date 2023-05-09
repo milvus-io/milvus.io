@@ -72,7 +72,6 @@ export default function BlogAnchorSection(props) {
           desc={description}
           image={imgUrl}
           wrapperClass={classes.share}
-          vertical={true}
         />
       </div>
     </div>

@@ -12,6 +12,7 @@ import { findLatestVersion } from '../utils';
 import './docsStyle.less';
 import * as styles from './blogTemplate.module.less';
 import BlogAnchorSection from '../components/blogToc';
+import clsx from 'clsx';
 
 const pattern = /[!@#$%^&*(),.?":{}|<>~`\[\]\\\/;=+_\-']+/g;
 
@@ -108,48 +109,47 @@ export default function Template({ data, pageContext }) {
         lang={language}
         description={description}
       />
-      <section className={`${styles.blogWrapper} col-12 col-8 col-4`}>
-        <p className={`${styles.authorDate} `}>
-          <span>{dateTime}</span>
-          {author && <span>by {author}</span>}
-        </p>
-        <h1 className={styles.title}>{title}</h1>
+      <main className={clsx(styles.blogDetailContainer, 'col-12')}>
+        <section className={styles.blogWrapper}>
+          <p className={`${styles.authorDate} `}>
+            <span>{dateTime}</span>
+            {author && <span>by {author}</span>}
+          </p>
+          <h1 className={styles.title}>{title}</h1>
 
-        <Tags
-          list={tags}
-          tagsClass={`${styles.tags} col-8`}
-          onClick={handleTagClick}
-        />
+          <Tags list={tags} tagsClass={styles.tags} onClick={handleTagClick} />
 
-        <section className={`${styles.desc} col-8`}>
-          <span className={styles.line}></span>
-          <span>{desc}</span>
-        </section>
+          {desc && (
+            <section className={styles.desc}>
+              <span className={styles.line}></span>
+              <span>{desc}</span>
+            </section>
+          )}
 
-        <section className={`${styles.contentContainer} col-8`}>
-          <div className={styles.articleContainer}>
-            <div
-              className={`${styles.articleContent} doc-style`}
-              dangerouslySetInnerHTML={{ __html: html }}
-              ref={docContainer}
-            ></div>
-          </div>
+          <section className={styles.contentContainer}>
+            <div className={styles.articleContainer}>
+              <div
+                className={`${styles.articleContent} doc-style`}
+                dangerouslySetInnerHTML={{ __html: html }}
+                ref={docContainer}
+              ></div>
+            </div>
 
-          <BlogAnchorSection
-            anchors={tocHeadings}
-            shareUrl={shareUrl}
-            title={title}
-            description={description}
-            container={docContainer}
-            imgUrl={`https://${cover}`}
-            id={id}
-            classes={{
-              root: styles.anchorContainer,
-            }}
-          />
-        </section>
+            <BlogAnchorSection
+              anchors={tocHeadings}
+              shareUrl={shareUrl}
+              title={title}
+              description={description}
+              container={docContainer}
+              imgUrl={`https://${cover}`}
+              id={id}
+              classes={{
+                root: styles.anchorContainer,
+              }}
+            />
+          </section>
 
-        {/* <div className={`${styles.articleContent} col-8`}>
+          {/* <div className={`${styles.articleContent} col-8`}>
           <Giscus
             id="comments"
             repo="milvus-io/community"
@@ -166,39 +166,40 @@ export default function Template({ data, pageContext }) {
             loading="lazy"
           />
         </div> */}
-      </section>
-      <section className={`${styles.shareSection} col-8`}>
-        <p>Like the article? Spread the word</p>
-        <Share
-          url={shareUrl}
-          quote={title}
-          desc={description}
-          image={`https://${cover}`}
-          wrapperClass={styles.share}
-          vertical={false}
-        />
-      </section>
-      <section className={`${styles.moreBlog} col-12 col-8 col-4`}>
-        <h2>Keep Reading</h2>
-        <ul className={styles.blogCards}>
-          {moreBlogs.map((v, index) => {
-            const { desc, cover, date, tags, title, id } = v;
-            return (
-              <li key={index}>
-                <BlogCard
-                  locale={language}
-                  title={title}
-                  date={date}
-                  cover={`https://${cover}`}
-                  desc={desc}
-                  tags={tags}
-                  path={`${id}`}
-                />
-              </li>
-            );
-          })}
-        </ul>
-      </section>
+        </section>
+        <section className={styles.shareSection}>
+          <p>Like the article? Spread the word</p>
+          <Share
+            url={shareUrl}
+            quote={title}
+            desc={description}
+            image={`https://${cover}`}
+            wrapperClass={styles.share}
+            vertical={false}
+          />
+        </section>
+        <section className={styles.moreBlog}>
+          <h2>Keep Reading</h2>
+          <ul className={styles.blogCards}>
+            {moreBlogs.map((v, index) => {
+              const { desc, cover, date, tags, title, id } = v;
+              return (
+                <li key={index}>
+                  <BlogCard
+                    locale={language}
+                    title={title}
+                    date={date}
+                    cover={`https://${cover}`}
+                    desc={desc}
+                    tags={tags}
+                    path={`${id}`}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      </main>
     </Layout>
   );
 }

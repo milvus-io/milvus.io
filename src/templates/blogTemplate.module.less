@@ -151,21 +151,19 @@
 .contentContainer {
   display: flex;
   margin: 0 auto;
-  gap: 114px;
-  justify-content: flex-start;
+  gap: 40px;
+  justify-content: space-between;
+  padding: 0 25px;
+  max-width: 1140px;
 
-  @media (max-width: 1440px) {
-    gap: 36px;
+  @media (max-width: 1280px) {
+    justify-content: center;
   }
 
-  .articleContainer {
-    flex: 1;
-    display: flex;
-
-    .articleContent {
-      width: 100%;
-      text-align: left;
-    }
+  .articleContent {
+    width: 750px;
+    max-width: 100%;
+    text-align: left;
   }
 
   .anchorContainer {

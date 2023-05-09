@@ -31,6 +31,7 @@ import Seo from '../components/seo';
 import SvgIcon from '@mui/material/SvgIcon';
 import { findLatestVersion } from '../utils';
 import './index.less';
+import { SLACK_INVITE_URL } from '../consts';
 // local css module
 import * as styles from './index.module.less';
 
@@ -156,7 +157,7 @@ const IndexPage = ({ data, pageContext }) => {
   };
 
   const communityLinks = [
-    { name: 'Slack', to: 'https://join.slack.com/t/milvusio/shared_invite/zt-1slimkif6-8uWK0XPL8adve6vSD4jSwg' },
+    { name: 'Slack', to: SLACK_INVITE_URL },
     { name: 'Github', to: 'https://github.com/milvus-io/milvus' },
     { name: 'Forum', to: 'https://discuss.milvus.io/' },
   ];

@@ -1,4 +1,4 @@
-@import (reference) "../css/mixins.less";
+@import (reference) '../css/mixins.less';
 
 .blogImg {
   position: relative;
@@ -8,7 +8,7 @@
   background-size: cover;
   background-position: center;
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -108,14 +108,10 @@
       }
     }
   }
-
-  .articleContent {
-    margin: 0 auto;
-    text-align: left;
-  }
 }
 
 .shareSection {
+  display: none;
   margin: 80px auto 110px auto;
   text-align: center;
   p {
@@ -126,6 +122,10 @@
     justify-content: center;
 
     .hover;
+  }
+
+  @media (max-width: 1280px) {
+    display: block;
   }
 }
 
@@ -159,6 +159,32 @@
     }
     li {
       list-style: none;
+    }
+  }
+}
+
+.contentContainer {
+  display: flex;
+  margin: 0 auto;
+  gap: 36px;
+
+  .articleContainer {
+    flex: 1;
+    display: flex;
+
+    .articleContent {
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  .anchorContainer {
+    position: sticky;
+    top: 120px;
+    flex: 0 0 260px;
+
+    @media (max-width: 1280px) {
+      display: none;
     }
   }
 }

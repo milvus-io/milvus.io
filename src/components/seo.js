@@ -18,6 +18,7 @@ function SEO({
   titleTemplate = '',
   version,
   link,
+  script,
 }) {
   const { site } = useStaticQuery(
     graphql`
@@ -83,6 +84,7 @@ function SEO({
         },
       ].concat(meta)}
       link={[].concat(link || {})}
+      script={script}
     ></Helmet>
   );
 }

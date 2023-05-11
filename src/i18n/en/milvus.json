@@ -936,6 +936,10 @@
         "helm": "Helm Install Guide",
         "operator": "Operator Install Guide"
       }
+    },
+    "slack": {
+      "title": "Milvus Slack Community",
+      "desc": "Want to connect with other Milvus users to share ideas, get advice and updates on the latest Milvus releases? Join our Slack community! Fill out the form to request access."
     }
   }
 }

@@ -15,25 +15,24 @@ export default function Slack({ data, pageContext }) {
   const description =
     'Want to connect with other Milvus users to share ideas, get advice and updates on the latest Milvus releases? Join our Slack community! Fill out the form to request access. ';
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initialHubspotForm = () => {
-      window.hbspt.forms.create({
-        region: 'na1',
-        portalId: '24054828',
-        formId: '589ded90-8b81-45df-97ce-eecd5e3ed974',
-        target: '#hubspot-form',
-      });
+    const initialHubspotForm = async () => {
+      if ('hbspt' in window) {
+        await window.hbspt.forms.create({
+          region: 'na1',
+          portalId: '24054828',
+          formId: '589ded90-8b81-45df-97ce-eecd5e3ed974',
+          target: '#hubspot-form',
+        });
+        setLoading(false);
+      } else {
+        setTimeout(initialHubspotForm, 500);
+      }
     };
 
-    setLoading(true);
-    if ('hbspt' in window) {
-      initialHubspotForm();
-      setLoading(false);
-    } else {
-      setTimeout(initialHubspotForm, 500);
-    }
+    initialHubspotForm();
   }, []);
 
   return (
@@ -57,9 +56,8 @@ export default function Slack({ data, pageContext }) {
           <h1>{t('v3trans.slack.title')}</h1>
           <h2>{t('v3trans.slack.desc')}</h2>
           <div className={styles.formWrapper}>
-            <div id="hubspot-form">
-              {loading ? <p className={styles.prompt}>Loading...</p> : null}
-            </div>
+            {loading ? <p className={styles.prompt}>Loading...</p> : null}
+            <div id="hubspot-form"></div>
           </div>
         </div>
       </main>

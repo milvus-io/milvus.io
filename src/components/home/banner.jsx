@@ -47,8 +47,11 @@ const HomeBanner = props => {
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
         <div className="title-wrapper">
-          <Msg />
-          <h1 className="title">Vector database built for scalable <br />similarity search</h1>
+          {/* <Msg /> */}
+          <h1 className="title">
+            Vector database built for scalable <br />
+            similarity search
+          </h1>
           <p className="subtitle">{t('v3trans.home.banner.desc')}</p>
           <div className="bucket bucket-container">
             <Bucket />

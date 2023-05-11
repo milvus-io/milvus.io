@@ -1,4 +1,4 @@
-@import (reference) "../css/mixins.less";
+@import (reference) '../css/mixins.less';
 
 .customer {
   margin: 160px auto;
@@ -78,7 +78,7 @@
 }
 
 .communityLinkContainer {
-  background-image: url("../images/index/community.svg");
+  background-image: url('../images/index/community.svg');
   height: 90%;
   width: 100%;
   background-position: center;
@@ -159,5 +159,58 @@
   @media @phone, @tablet {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 48px);
+  }
+}
+
+.slackContainer {
+  padding: 40px 25px;
+  background-color: var(--color-grey-05);
+  font-family: Inter;
+
+  .contentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 832px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 50px;
+  }
+
+  h2 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    margin-bottom: 24px;
+  }
+
+  .formWrapper {
+    width: 100%;
+    max-width: 580px;
+    min-height: 446px;
+    background-color: #fff;
+    border: 1px solid #e8eaee;
+    border-radius: 6px;
+    padding: 25px;
+  }
+
+  .prompt {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
+    text-align: center;
+    margin: 40px 0;
   }
 }

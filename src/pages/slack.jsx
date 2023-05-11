@@ -19,20 +19,20 @@ export default function Slack({ data, pageContext }) {
 
   useEffect(() => {
     const initialHubspotForm = async () => {
-      await window.hbspt.forms.create({
-        region: 'na1',
-        portalId: '24054828',
-        formId: '589ded90-8b81-45df-97ce-eecd5e3ed974',
-        target: '#hubspot-form',
-      });
-      setLoading(false);
+      if ('hbspt' in window) {
+        await window.hbspt.forms.create({
+          region: 'na1',
+          portalId: '24054828',
+          formId: '589ded90-8b81-45df-97ce-eecd5e3ed974',
+          target: '#hubspot-form',
+        });
+        setLoading(false);
+      } else {
+        setTimeout(initialHubspotForm, 500);
+      }
     };
 
-    if ('hbspt' in window) {
-      initialHubspotForm();
-    } else {
-      setTimeout(initialHubspotForm, 500);
-    }
+    initialHubspotForm();
   }, []);
 
   return (

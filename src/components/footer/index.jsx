@@ -140,16 +140,27 @@ const Footer = ({ darkMode = true, t, className }) => {
           <span>{`Milvus. ${new Date().getFullYear()} All rights reserved.`}</span>
 
           <div className={styles.social}>
-            {socialJson.map(s => (
-              <a
-                key={s.link}
-                href={s.link}
-                target={s.link.includes('http') ? '_blank' : '_self'}
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon className={styles.iconWrapper} icon={s.icon} />
-              </a>
-            ))}
+            {socialJson.map(s => {
+              const target = s.link
+                ? s.link.includes('http')
+                  ? '_blank'
+                  : '_self'
+                : '_self';
+
+              return (
+                <a
+                  key={s.link}
+                  href={s.link}
+                  target={target}
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon
+                    className={styles.iconWrapper}
+                    icon={s.icon}
+                  />
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>

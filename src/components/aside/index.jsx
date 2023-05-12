@@ -147,21 +147,28 @@ const Aside = props => {
     const btns = btnConfiguration[category](props) || [];
     return (
       <>
-        {btns.map(btn => (
-          <li key={btn.label}>
-            <a
-              href={btn.link}
-              target={btn.link.includes('http') ? '_blank' : '_self'}
-              rel="noopener noreferrer"
-              className={styles.link}
-            >
-              <span className={styles.iconWrapper}>
-                <FontAwesomeIcon className={styles.global} icon={btn.icon} />
-              </span>
-              <span className={styles.label}>{btn.label}</span>
-            </a>
-          </li>
-        ))}
+        {btns.map(btn => {
+          const target = btn.link
+            ? btn.link.includes('http')
+              ? '_blank'
+              : '_self'
+            : '_self';
+          return (
+            <li key={btn.label}>
+              <a
+                href={btn.link}
+                target={target}
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                <span className={styles.iconWrapper}>
+                  <FontAwesomeIcon className={styles.global} icon={btn.icon} />
+                </span>
+                <span className={styles.label}>{btn.label}</span>
+              </a>
+            </li>
+          );
+        })}
       </>
     );
   };

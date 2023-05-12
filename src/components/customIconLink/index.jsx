@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import * as styles from './CustomIconLink.module.less';
 
@@ -12,9 +12,13 @@ export default function CustomIconLink(props) {
     isDoc = false,
   } = props;
 
+  const target = useMemo(() => {
+    return to ? (to.includes('http') ? '_blank' : '_self') : '_self';
+  }, [to]);
+
   return (
     <a
-      target={to.includes('http') ? '_blank' : '_self'}
+      target={target}
       href={to}
       rel="noopener noreferrer"
       className={clsx(styles.link, className)}

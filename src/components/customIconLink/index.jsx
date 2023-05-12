@@ -14,7 +14,7 @@ export default function CustomIconLink(props) {
 
   return (
     <a
-      target="_blank"
+      target={to.includes('http') ? '_blank' : '_self'}
       href={to}
       rel="noopener noreferrer"
       className={clsx(styles.link, className)}

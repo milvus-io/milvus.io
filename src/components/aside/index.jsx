@@ -151,7 +151,7 @@ const Aside = props => {
           <li key={btn.label}>
             <a
               href={btn.link}
-              target="_blank"
+              target={btn.link.includes('http') ? '_blank' : '_self'}
               rel="noopener noreferrer"
               className={styles.link}
             >

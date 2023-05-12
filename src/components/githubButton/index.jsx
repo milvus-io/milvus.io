@@ -31,12 +31,16 @@ const GitHubButton = ({
     return formatNum(count);
   }, [count]);
 
+  const target = useMemo(() => {
+    return href.includes('http') ? '_blank' : '_self';
+  }, [href]);
+
   return (
     <div className={`${styles.gitBtnWrapper} ${className}`}>
       <a
         href={href}
         className={styles.link}
-        target="_blank"
+        target={target}
         rel="noopener noreferrer"
       >
         <span className={clsx(styles.iconWrapper)}>

@@ -144,7 +144,7 @@ const Footer = ({ darkMode = true, t, className }) => {
               <a
                 key={s.link}
                 href={s.link}
-                target="_blank"
+                target={s.link.includes('http') ? '_blank' : '_self'}
                 rel="noopener noreferrer"
               >
                 <FontAwesomeIcon className={styles.iconWrapper} icon={s.icon} />

@@ -1,10 +1,22 @@
-import '@fontsource/roboto-mono';
-import '@fontsource/inter';
-import '@fontsource/source-code-pro';
 import './src/css/variables.css';
 import './src/css/reset.css';
 import './src/css/global.css';
 import './src/css/grid.less';
+
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+
+import '@fontsource/source-code-pro/400.css';
+import '@fontsource/source-code-pro/500.css';
+import '@fontsource/source-code-pro/600.css';
+import '@fontsource/source-code-pro/700.css';
+
+import '@fontsource/roboto-mono/400.css';
+import '@fontsource/roboto-mono/500.css';
+import '@fontsource/roboto-mono/600.css';
+import '@fontsource/roboto-mono/700.css';
 
 let nextRoute = '';
 

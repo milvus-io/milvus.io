@@ -49,7 +49,7 @@ const HomeBanner = props => {
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
         <div className="title-wrapper">
-          {/* <Msg /> */}
+          <Msg />
           <h1 className="title">
             Vector database built for scalable <br />
             similarity search

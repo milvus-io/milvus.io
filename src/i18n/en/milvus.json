@@ -874,7 +874,7 @@
       },
 
       "capacity": "Approximate capacity",
-      "memory": "Memory",
+      "memory": "Loading Memory",
       "fileSize": "Raw file size",
       "setups": {
         "title": "Minimum Milvus cluster setup",

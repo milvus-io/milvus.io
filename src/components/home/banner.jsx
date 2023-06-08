@@ -15,13 +15,15 @@ const Msg = () => {
   }
 
   const msg = (
-    <a href="https://zilliz.com/whitepaper" className="news-wrapper">
+    <a
+      href="https://milvus.io/blog/introducing-milvus-lite-lightweight-version-of-milvus.md"
+      className="news-wrapper"
+    >
       <Typography className="news-title" component="span">
         News:&nbsp;
       </Typography>
       <Typography component="span" className="news-content">
-        🔥 Milvus 2.2 is released, up to 200% performance gain! Learn More
-        &#8594;
+        🔥 Accelerate Your AI Apps with the Lightweight Version of Milvus
       </Typography>
     </a>
   );
@@ -47,7 +49,7 @@ const HomeBanner = props => {
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
         <div className="title-wrapper">
-          {/* <Msg /> */}
+          <Msg />
           <h1 className="title">
             Vector database built for scalable <br />
             similarity search

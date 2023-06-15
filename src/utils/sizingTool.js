@@ -1287,6 +1287,10 @@ export const helmYmlGenerator = (
 pulsar:
   enabled: true
   proxy:
+    resource:
+      requests:
+        memory: ${pulsarData.proxy.memory.size}${pulsarData.proxy.memory.unit}i
+        cpu: ${pulsarData.proxy.cpu.size}
     replicaCount: ${pulsarData.proxy.podNum.value}
     configData:
       PULSAR_MEM: >

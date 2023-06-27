@@ -1287,7 +1287,7 @@ export const helmYmlGenerator = (
 pulsar:
   enabled: true
   proxy:
-    resource:
+    resources:
       requests:
         memory: ${pulsarData.proxy.memory.size}${pulsarData.proxy.memory.unit}i
         cpu: ${pulsarData.proxy.cpu.size}

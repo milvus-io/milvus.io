@@ -16,14 +16,14 @@ const Msg = () => {
 
   const msg = (
     <a
-      href="https://milvus.io/blog/introducing-milvus-lite-lightweight-version-of-milvus.md"
+      href="https://milvus.io/blog/milvus-surpasses-20000-github-stars.md"
       className="news-wrapper"
     >
       <Typography className="news-title" component="span">
         News:&nbsp;
       </Typography>
       <Typography component="span" className="news-content">
-        🔥 Accelerate Your AI Apps with the Lightweight Version of Milvus
+        🔥 A Stellar Milestone: Milvus Surpasses 20,000 Stars on GitHub
       </Typography>
     </a>
   );

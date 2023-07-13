@@ -183,16 +183,16 @@ exports.createPages = ({ actions, graphql }) => {
       );
 
     // generate pages
-    generateCommunityPages(createPage, {
-      nodes: communityNodes,
-      template: communityTemplate,
-      menu: communityMenu,
-    });
-    generateCommunityHome(createPage, {
-      nodes: communityHome,
-      template: communityTemplate,
-      menu: communityMenu,
-    });
+    // generateCommunityPages(createPage, {
+    //   nodes: communityNodes,
+    //   template: communityTemplate,
+    //   menu: communityMenu,
+    // });
+    // generateCommunityHome(createPage, {
+    //   nodes: communityHome,
+    //   template: communityTemplate,
+    //   menu: communityMenu,
+    // });
     generateApiReferencePages(createPage, {
       nodes: result.data.allApIfile.nodes,
       template: apiDocTemplate,

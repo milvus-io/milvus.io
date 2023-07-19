@@ -108,15 +108,22 @@ export const useFilter = () => {
 
     const clickEventHandler = targetHash => {
       const hash = targetHash;
-      const currentFilters = allFilters.filter(f => f.hash === hash);
+      let currentFilters = allFilters.filter(f => f.hash === hash);
+      if (!currentFilters.length) {
+        currentFilters = [allFilters[0]];
+      }
       allFilters.forEach(f => f.classList.toggle('active', false));
       currentFilters.forEach(cf => cf.classList.toggle('active', true));
       allContents.forEach(c => c.classList.toggle('active', false));
-      const contents = document.querySelectorAll(
+      let currentContents = document.querySelectorAll(
         `.filter-${hash.replace('#', '').replace(/%/g, '')}`
       );
-      contents.forEach(c => c.classList.toggle('active', true));
+      if (!currentContents.length) {
+        currentContents = [allContents[0]];
+      }
+      currentContents.forEach(c => c.classList.toggle('active', true));
     };
+
     filterWrappers.forEach(w => {
       w.addEventListener('click', e => {
         if (e.target.tagName === 'A') {

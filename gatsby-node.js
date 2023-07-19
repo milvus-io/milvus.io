@@ -123,7 +123,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
           });
         }
         break;
-      case 'milvus-sdk-restful':
+      case 'milvus-restful':
         for (const version of versions) {
           handleApiFiles(nodes, {
             parentPath: path,

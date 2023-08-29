@@ -16,14 +16,16 @@ const Msg = () => {
 
   const msg = (
     <a
-      href="https://milvus.io/blog/milvus-surpasses-20000-github-stars.md"
+      href="/blog/unveiling-milvus-2-3-milestone-release-offering-support-for-gpu-arm64-cdc-and-other-features.md "
       className="news-wrapper"
+      target="_self"
     >
       <Typography className="news-title" component="span">
         News:&nbsp;
       </Typography>
       <Typography component="span" className="news-content">
-        🔥 A Stellar Milestone: Milvus Surpasses 20,000 Stars on GitHub
+        🔥 Milvus 2.3: A Milestone Release with GPU Support, CDC, Upsert, and
+        Other Exciting Features
       </Typography>
     </a>
   );

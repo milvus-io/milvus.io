@@ -8,24 +8,27 @@ import HomeFeatures from '../components/home/features';
 import HomeCode from '../components/home/code';
 import Attu from '../components/home/attu';
 import { CustomizedSnackbars } from '../components/snackBar';
-import tencent from '../images/brands/tencent.png';
 import ebay from '../images/brands/ebay.png';
 import ikea from '../images/brands/ikea.png';
 import intuit from '../images/brands/intuit.png';
-import kuaishou from '../images/brands/kuaishou.png';
 import line from '../images/brands/line.png';
-import baidu from '../images/brands/baidu.png';
 import shopee from '../images/brands/shopee.png';
 import smartnews from '../images/brands/smartnews.png';
-import bigolive from '../images/brands/bigolive.png';
 import walmart from '../images/brands/walmart.png';
-import xiaomi from '../images/brands/xiaomi.png';
 import hunt from '../images/brands/hunt.png';
 import micro from '../images/brands/micro.png';
 import nvidia from '../images/brands/nvidia.png';
 import moj from '../images/brands/moj.png';
 import compass from '../images/brands/compass.png';
 import tokopedia from '../images/brands/tokopedia.png';
+import roblox from '../images/brands/roblox.png';
+import att from '../images/brands/att.png';
+import bosch from '../images/brands/bosch.png';
+import ibm from '../images/brands/ibm.png';
+import omers from '../images/brands/omers.png';
+import shutterstock from '../images/brands/shutterstock.png';
+import zip from '../images/brands/zip.png';
+
 import CustomIconLink from '../components/customIconLink';
 import Seo from '../components/seo';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -36,6 +39,31 @@ import { SLACK_INVITE_URL } from '../consts';
 import * as styles from './index.module.less';
 
 const brands = [
+  {
+    name: 'Nvidia',
+    icon: nvidia,
+    link: 'https://www.nvidia.com/',
+  },
+  {
+    name: 'Roblox',
+    icon: roblox,
+    link: 'https://www.roblox.com/',
+  },
+  {
+    name: 'Att',
+    icon: att,
+    link: 'https://www.att.com/',
+  },
+  {
+    name: 'Bosch',
+    icon: bosch,
+    link: 'https://www.bosch.com/',
+  },
+  {
+    name: 'IBM',
+    icon: ibm,
+    link: 'https://www.ibm.com/',
+  },
   {
     name: 'Ebay',
     icon: ebay,
@@ -62,6 +90,16 @@ const brands = [
     link: 'https://www.walmart.com/',
   },
   {
+    name: 'Omers',
+    icon: omers,
+    link: 'https://www.omers.com/',
+  },
+  {
+    name: 'Ziprecruiter',
+    icon: zip,
+    link: 'https://www.ziprecruiter.com/',
+  },
+  {
     name: 'Intuit',
     icon: intuit,
     link: 'https://www.intuit.com/',
@@ -72,29 +110,21 @@ const brands = [
     link: 'https://www.smartnews.com/',
   },
   {
+    name: 'Shutterstock',
+    icon: shutterstock,
+    link: 'https://www.shutterstock.com/',
+  },
+
+  {
     name: 'Tokopedia',
     icon: tokopedia,
     link: 'https://www.tokopedia.com/',
   },
-  {
-    name: 'Nvidia',
-    icon: nvidia,
-    link: 'https://www.nvidia.com/',
-  },
-  {
-    name: 'Kuaishou',
-    icon: kuaishou,
-    link: 'https://www.kuaishou.com/',
-  },
+
   {
     name: 'Trend micro',
     icon: micro,
     link: 'https://www.trendmicro.com/',
-  },
-  {
-    name: 'Xiaomi',
-    icon: xiaomi,
-    link: 'https://www.mi.com/',
   },
   {
     name: 'Compass',
@@ -102,25 +132,9 @@ const brands = [
     link: 'https://www.compass.com/',
   },
   {
-    name: 'Tencent',
-    icon: tencent,
-    link: 'https://www.tencent.com/',
-  },
-  {
-    name: 'bigolive',
-    icon: bigolive,
-    link: 'https://www.bigo.tv/',
-  },
-  {
     name: 'Moj',
     icon: moj,
     link: 'https://mojapp.in/',
-  },
-
-  {
-    name: 'Baidu',
-    icon: baidu,
-    link: 'https://www.baidu.com/',
   },
   {
     name: 'Dailyhunt',
@@ -200,8 +214,8 @@ const IndexPage = ({ data, pageContext }) => {
               <img
                 key={b.name}
                 src={b.icon}
-                width="133"
-                height="65"
+                width="142"
+                height="69"
                 alt={b.name}
               />
               // </a>

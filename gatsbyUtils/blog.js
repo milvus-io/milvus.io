@@ -93,7 +93,17 @@ const generateBlogArticlePage = (
     const fileLang = findLang(fileAbsolutePath);
     const localizedPath = generatePath(fileId, fileLang, null, isBlog, true);
     const newHtml = node.html;
-    const [date, tag = '', origin, author, title, id, desc, cover] = [
+    const [
+      date,
+      tag = '',
+      origin,
+      author,
+      title,
+      id,
+      desc,
+      cover,
+      canonicalUrl,
+    ] = [
       node.frontmatter.date,
       node.frontmatter.tag,
       node.frontmatter.origin,
@@ -102,6 +112,7 @@ const generateBlogArticlePage = (
       node.frontmatter.id,
       node.frontmatter.desc,
       node.frontmatter.cover,
+      node.frontmatter.canonicalUrl,
     ];
 
     createPage({
@@ -124,6 +135,7 @@ const generateBlogArticlePage = (
         desc,
         allVersion: versions,
         headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
+        canonicalUrl,
       },
     });
   });

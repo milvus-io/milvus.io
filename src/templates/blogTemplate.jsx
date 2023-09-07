@@ -31,6 +31,7 @@ export default function Template({ data, pageContext }) {
     desc,
     cover,
     headings,
+    canonicalUrl,
   } = pageContext;
 
   // h2 only
@@ -70,13 +71,6 @@ export default function Template({ data, pageContext }) {
         .slice(0, 3),
     [blogList, id, tags]
   );
-  // for seo
-  // const canonicalLink = origin
-  //   ? {
-  //       rel: "canonical",
-  //       href: `https://${origin}`,
-  //     }
-  //   : {};
 
   const handleTagClick = tag => {
     navigate(`/blog?page=1#${tag}`);
@@ -108,6 +102,10 @@ export default function Template({ data, pageContext }) {
         titleTemplate="%s"
         lang={language}
         description={description}
+        link={{
+          rel: 'canonical',
+          href: canonicalUrl,
+        }}
       />
       <main className={clsx(styles.blogDetailContainer, 'col-12')}>
         <section className={styles.blogWrapper}>

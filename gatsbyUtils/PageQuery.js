@@ -27,6 +27,7 @@ module.exports = `
           id
           group
           recommend
+          canonicalUrl
         }
         fileAbsolutePath
         html

@@ -135,6 +135,14 @@ export default function Template({ data, pageContext }) {
     });
   }
 
+  if (versionInfo[version] && versionInfo[version].csharp) {
+    APIs.children.push({
+      id: 'csharp',
+      label: 'C#',
+      link: `/api-reference/csharp/${versionInfo[version].csharp}/About.md`,
+    });
+  }
+
   if (versionInfo[version] && versionInfo[version].restful) {
     APIs.children.push({
       id: 'restful',

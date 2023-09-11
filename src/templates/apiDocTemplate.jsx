@@ -114,6 +114,15 @@ export default function Template({ data, pageContext }) {
       }
       break;
 
+    case 'csharp':
+      if (name.endsWith('.md')) {
+        apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-csharp/${version}/${name.replace(
+          'csharp_',
+          ''
+        )}`;
+      }
+      break;
+
     case 'go':
       if (name.endsWith('.md')) {
         apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-go/${version}/${name.replace(

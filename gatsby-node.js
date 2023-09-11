@@ -123,6 +123,15 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
           });
         }
         break;
+      case 'milvus-sdk-csharp':
+        for (const version of versions) {
+          handleApiFiles(nodes, {
+            parentPath: path,
+            version,
+            category: 'csharp',
+          });
+        }
+        break;
       case 'milvus-restful':
         for (const version of versions) {
           handleApiFiles(nodes, {
@@ -132,6 +141,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
           });
         }
         break;
+
       default:
         break;
     }

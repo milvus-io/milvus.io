@@ -173,7 +173,6 @@ const IndexPage = ({ data, pageContext }) => {
   const communityLinks = [
     { name: 'Slack', to: SLACK_INVITE_URL },
     { name: 'Github', to: 'https://github.com/milvus-io/milvus' },
-    { name: 'Forum', to: 'https://discuss.milvus.io/' },
   ];
 
   const ExternalLinkIcon = props => {

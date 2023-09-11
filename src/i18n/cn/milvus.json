@@ -560,13 +560,6 @@
           "href": "https://hackathon-tracker.digitalocean.com/users/oauth/github?success_redirect=https://hacktoberfest.digitalocean.com/register/info&error_redirect=https://hacktoberfest.digitalocean.com/register"
         },
         {
-          "stepNum": 2,
-          "title": "Join Discussion",
-          "content": "Create a Milvus Forum account and interact with other community members.",
-          "iconType": "external",
-          "href": "https://discuss.milvus.io/c/hacktoberfest/9"
-        },
-        {
           "stepNum": 3,
           "title": "Pull Request",
           "content": "Browse the following components and start creating pull requests.",

@@ -67,7 +67,6 @@ const footerJson = [
         trans: false,
         to: 'https://github.com/milvus-io/milvus',
       },
-      { name: 'forum', trans: true, to: 'https://discuss.milvus.io/' },
     ],
   },
 ];

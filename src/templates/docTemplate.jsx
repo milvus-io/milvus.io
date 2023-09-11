@@ -135,8 +135,6 @@ export default function Template({ data, pageContext }) {
     });
   }
 
-  console.log(versionInfo)
-
   if (versionInfo[version] && versionInfo[version].csharp) {
     APIs.children.push({
       id: 'csharp',

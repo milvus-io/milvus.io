@@ -181,6 +181,7 @@ const generateTitle = ({
     'pymilvus-orm': 'Python (ORM)',
     go: 'Go',
     java: 'Java',
+    charp: 'C#',
     node: 'Node',
   };
   const [, label2 = ''] = labels;

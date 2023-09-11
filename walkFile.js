@@ -63,7 +63,11 @@ const handleCfgFile = (fileObj, { dirPath, filePath, isVariables }) => {
       content?.milvus_restful_sdk_version &&
       content?.milvus_restful_sdk_version >= '1.0.14' &&
       `v${content?.milvus_restful_sdk_version}`;
-    result = { pymilvus, go, java, node, restful };
+    const csharp =
+      content?.milvus_csharp_sdk_version &&
+      content?.milvus_csharp_sdk_version >= '1.0.14' &&
+      `v${content?.milvus_csharp_sdk_version}`;
+    result = { pymilvus, go, java, node, restful, csharp };
   }
   fileObj[parent] = fileObj[parent]
     ? { ...fileObj[parent], ...result }

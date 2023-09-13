@@ -52,7 +52,7 @@ export default function Template({ data, pageContext }) {
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
   const hljsCfg = {
-    languages: ['java', 'go', 'python', 'javascript'],
+    languages: ['java', 'go', 'python', 'javascript', 'csharp'],
   };
 
   useCodeCopy(

@@ -17,7 +17,6 @@ import { useGenAnchor } from '../hooks/doc-anchor';
 import { useOpenedStatus } from '../hooks';
 import DocContent from './parts/DocContent.jsx';
 import HomeContent from './parts/HomeContent.jsx';
-import { useLocation } from '@reach/router';
 import '@zilliz/zui/dist/ZChart.css';
 import './docsStyle.less';
 import './docTemplate.less';
@@ -55,28 +54,15 @@ export default function Template({ data, pageContext }) {
     newestBlog,
     versionInfo,
   } = pageContext;
-  const { pathname } = useLocation();
-  console.log('pathname--', pathname);
-
-  const realVersion = useMemo(() => {
-    const regex = /^v\d+/;
-    const versionFromUrl = pathname.split('/')[2];
-    const isVersionFormat = regex.test(versionFromUrl);
-    console.log('versionFromUrl--', versionFromUrl);
-    return isVersionFormat ? versionFromUrl : newestVersion;
-  }, [pathname, newestVersion]);
-
-  console.log('realVersion--', realVersion);
-
   const [isOpened, setIsOpened] = useState(false);
   useOpenedStatus(setIsOpened);
 
   const { language, t } = useI18next();
   const hljsCfg = {
-    languages: ['java', 'go', 'python', 'javascript'],
+    languages: ['java', 'go', 'python', 'javascript', 'csharp'],
   };
   const menuList = allMenus.find(
-    v => locale === v.lang && v.version === realVersion
+    v => locale === v.lang && v.version === version
   );
   const id = 'home';
   const isHome = mdHtml === null;
@@ -88,11 +74,11 @@ export default function Template({ data, pageContext }) {
       },
     ],
     activePost: id.split('-')[0],
-    formatVersion: realVersion === 'master' ? newestVersion : realVersion,
+    formatVersion: version === 'master' ? newestVersion : version,
   };
   const versionConfig = {
     homeTitle: 'Docs Home',
-    version: realVersion,
+    version: version,
     // filter master version
     versions: versions.filter(v => v !== 'master'),
   };
@@ -101,15 +87,15 @@ export default function Template({ data, pageContext }) {
     menuConfig?.menuList?.find(menu => menu.lang === locale)?.menuList || [];
 
   const leftNavHomeUrl =
-    realVersion === `v0.x`
+    version === `v0.x`
       ? `/docs/v0.x/overview.md`
-      : `${realVersion === newestVersion ? `/docs` : `/docs/${realVersion}`}`;
+      : `${version === newestVersion ? `/docs` : `/docs/${version}`}`;
 
   // generate menu
   const menus = mdMenuListFactory(
     leftNavMenus,
     'doc',
-    realVersion === newestVersion ? '' : realVersion,
+    version === newestVersion ? '' : version,
     locale
   )();
 
@@ -137,56 +123,56 @@ export default function Template({ data, pageContext }) {
     children: [],
   };
 
-  if (versionInfo[realVersion] && versionInfo[realVersion].pymilvus) {
+  if (versionInfo[version] && versionInfo[version].pymilvus) {
     APIs.children.push({
       id: 'pymilvus',
       label: 'Python',
-      link: `/api-reference/pymilvus/${versionInfo[realVersion].pymilvus}/About.md`,
+      link: `/api-reference/pymilvus/${versionInfo[version].pymilvus}/About.md`,
     });
   }
 
-  if (versionInfo[realVersion] && versionInfo[realVersion].java) {
+  if (versionInfo[version] && versionInfo[version].java) {
     APIs.children.push({
       id: 'java',
       label: 'Java',
-      link: `/api-reference/java/${versionInfo[realVersion].java}/About.md`,
+      link: `/api-reference/java/${versionInfo[version].java}/About.md`,
     });
   }
 
-  if (versionInfo[realVersion] && versionInfo[realVersion].go) {
+  if (versionInfo[version] && versionInfo[version].go) {
     APIs.children.push({
       id: 'go',
       label: 'Go',
-      link: `/api-reference/go/${versionInfo[realVersion].go}/About.md`,
+      link: `/api-reference/go/${versionInfo[version].go}/About.md`,
     });
   }
 
-  if (versionInfo[realVersion] && versionInfo[realVersion].node) {
+  if (versionInfo[version] && versionInfo[version].node) {
     APIs.children.push({
       id: 'node',
       label: 'Node',
-      link: `/api-reference/node/${versionInfo[realVersion].node}/About.md`,
+      link: `/api-reference/node/${versionInfo[version].node}/About.md`,
     });
   }
 
-  if (versionInfo[realVersion] && versionInfo[realVersion].csharp) {
+  if (versionInfo[version] && versionInfo[version].csharp) {
     APIs.children.push({
       id: 'csharp',
       label: 'C#',
-      link: `/api-reference/csharp/${versionInfo[realVersion].csharp}/About.md`,
+      link: `/api-reference/csharp/${versionInfo[version].csharp}/About.md`,
     });
   }
 
-  if (versionInfo[realVersion] && versionInfo[realVersion].restful) {
+  if (versionInfo[version] && versionInfo[version].restful) {
     APIs.children.push({
       id: 'restful',
       label: 'RESTful',
-      link: `/api-reference/restful/${versionInfo[realVersion].restful}/About.md`,
+      link: `/api-reference/restful/${versionInfo[version].restful}/About.md`,
     });
   }
 
   // only merge api menus if menus.lenth > 0 and version > 1
-  if (APIs.children.length > 0 && realVersion[1] * 1 > 1) {
+  if (APIs.children.length > 0 && version[1] * 1 > 1) {
     menus.push(APIs);
   }
 
@@ -204,17 +190,15 @@ export default function Template({ data, pageContext }) {
       },
       {
         name: 'docsearch:version',
-        content: realVersion || '',
+        content: version || '',
       },
     ];
-  }, [locale, realVersion]);
+  }, [locale, version]);
 
   // page title
   const title = isHome
     ? `Milvus ${
-        realVersion === newestVersion
-          ? `documentation`
-          : `${realVersion} documentation`
+        version === newestVersion ? `documentation` : `${version} documentation`
       }`
     : `${headings[0] && headings[0].value}`;
 
@@ -222,9 +206,7 @@ export default function Template({ data, pageContext }) {
   const titleTemplate = isHome
     ? `%s`
     : `%s Milvus ${
-        realVersion === newestVersion
-          ? `documentation`
-          : `${realVersion} documentation`
+        version === newestVersion ? `documentation` : `${version} documentation`
       }`;
 
   useCodeCopy(
@@ -235,25 +217,25 @@ export default function Template({ data, pageContext }) {
     hljsCfg
   );
   useMultipleCodeFilter();
-  useGenAnchor(realVersion, editPath);
+  useGenAnchor(version, editPath);
   useFilter();
 
   let description = summary
-    ? `${summary.replace('.', '')} ${realVersion}.`
-    : `${title} for Milvus ${realVersion}`;
+    ? `${summary.replace('.', '')} ${version}.`
+    : `${title} for Milvus ${version}`;
 
   return (
     <Layout
       t={t}
       showFooter={false}
       headerClassName="docHeader"
-      version={realVersion}
+      version={version}
     >
       <Seo
         title={title}
         titleTemplate={titleTemplate}
         lang={locale}
-        version={realVersion}
+        version={version}
         meta={docsearchMeta}
         description={description}
       />
@@ -269,7 +251,7 @@ export default function Template({ data, pageContext }) {
           pageType="doc"
           locale={locale}
           versions={versionConfig.versions}
-          version={realVersion}
+          version={version}
           newestVersion={newestVersion}
           getVersionLink={getVersionLink}
           mdId={mdId}
@@ -300,7 +282,7 @@ export default function Template({ data, pageContext }) {
                 htmlContent={mdHtml}
                 commitPath={commitPath}
                 mdId={mdId}
-                version={realVersion}
+                version={version}
                 relatedKey={relatedKey}
                 trans={t}
               />
@@ -308,7 +290,7 @@ export default function Template({ data, pageContext }) {
             <div className="doc-toc-container">
               <Aside
                 locale={locale}
-                version={realVersion}
+                version={version}
                 editPath={editPath}
                 mdTitle={headings[0]}
                 category="doc"

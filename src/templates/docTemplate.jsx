@@ -56,13 +56,17 @@ export default function Template({ data, pageContext }) {
     versionInfo,
   } = pageContext;
   const { pathname } = useLocation();
+  console.log('pathname--', pathname);
 
   const realVersion = useMemo(() => {
     const regex = /^v\d+/;
     const versionFromUrl = pathname.split('/')[2];
     const isVersionFormat = regex.test(versionFromUrl);
+    console.log('versionFromUrl--', versionFromUrl);
     return isVersionFormat ? versionFromUrl : newestVersion;
   }, [pathname, newestVersion]);
+
+  console.log('realVersion--', realVersion);
 
   const [isOpened, setIsOpened] = useState(false);
   useOpenedStatus(setIsOpened);

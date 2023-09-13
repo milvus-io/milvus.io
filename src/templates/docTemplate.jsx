@@ -17,6 +17,7 @@ import { useGenAnchor } from '../hooks/doc-anchor';
 import { useOpenedStatus } from '../hooks';
 import DocContent from './parts/DocContent.jsx';
 import HomeContent from './parts/HomeContent.jsx';
+import { useLocation } from '@reach/router';
 import '@zilliz/zui/dist/ZChart.css';
 import './docsStyle.less';
 import './docTemplate.less';
@@ -54,6 +55,14 @@ export default function Template({ data, pageContext }) {
     newestBlog,
     versionInfo,
   } = pageContext;
+  const { pathname } = useLocation();
+
+  const realVersion = useMemo(() => {
+    const regex = /^v\d+/;
+    const versionFromUrl = pathname.split('/')[2];
+    const isVersionFormat = regex.test(versionFromUrl);
+    return isVersionFormat ? versionFromUrl : newestVersion;
+  }, [pathname, newestVersion]);
 
   const [isOpened, setIsOpened] = useState(false);
   useOpenedStatus(setIsOpened);
@@ -62,7 +71,9 @@ export default function Template({ data, pageContext }) {
   const hljsCfg = {
     languages: ['java', 'go', 'python', 'javascript'],
   };
-  const menuList = allMenus.find(v => locale === v.lang && v.version === version);
+  const menuList = allMenus.find(
+    v => locale === v.lang && v.version === realVersion
+  );
   const id = 'home';
   const isHome = mdHtml === null;
   const menuConfig = menuList && {
@@ -73,86 +84,105 @@ export default function Template({ data, pageContext }) {
       },
     ],
     activePost: id.split('-')[0],
-    formatVersion: version === 'master' ? newestVersion : version,
+    formatVersion: realVersion === 'master' ? newestVersion : realVersion,
   };
   const versionConfig = {
     homeTitle: 'Docs Home',
-    version,
+    version: realVersion,
     // filter master version
     versions: versions.filter(v => v !== 'master'),
   };
+
   const leftNavMenus =
     menuConfig?.menuList?.find(menu => menu.lang === locale)?.menuList || [];
+
   const leftNavHomeUrl =
-    version === `v0.x`
+    realVersion === `v0.x`
       ? `/docs/v0.x/overview.md`
-      : `${version === newestVersion ? `/docs` : `/docs/${version}`}`;
+      : `${realVersion === newestVersion ? `/docs` : `/docs/${realVersion}`}`;
 
   // generate menu
   const menus = mdMenuListFactory(
     leftNavMenus,
     'doc',
-    version === newestVersion ? '' : version,
+    realVersion === newestVersion ? '' : realVersion,
     locale
   )();
-  // push API links if no home
 
+  // get version links on version change
+  const getVersionLink = version => {
+    const curVersionMenus =
+      allMenus.find(v => v.version === version)?.menuList || [];
+    const hasSamePage = curVersionMenus.some(
+      v =>
+        // mdId: some.md  v.id: language_some.id
+        v.id === mdId
+    );
+
+    if (version === newestVersion) {
+      return hasSamePage ? `/docs/${mdId}` : '/docs';
+    } else {
+      return hasSamePage ? `/docs/${version}/${mdId}` : `/docs/${version}`;
+    }
+  };
+
+  // push API links if no home
   const APIs = {
     id: 'API',
     label: 'API reference',
     children: [],
   };
 
-  if (versionInfo[version] && versionInfo[version].pymilvus) {
+  if (versionInfo[realVersion] && versionInfo[realVersion].pymilvus) {
     APIs.children.push({
       id: 'pymilvus',
       label: 'Python',
-      link: `/api-reference/pymilvus/${versionInfo[version].pymilvus}/About.md`,
+      link: `/api-reference/pymilvus/${versionInfo[realVersion].pymilvus}/About.md`,
     });
   }
 
-  if (versionInfo[version] && versionInfo[version].java) {
+  if (versionInfo[realVersion] && versionInfo[realVersion].java) {
     APIs.children.push({
       id: 'java',
       label: 'Java',
-      link: `/api-reference/java/${versionInfo[version].java}/About.md`,
+      link: `/api-reference/java/${versionInfo[realVersion].java}/About.md`,
     });
   }
 
-  if (versionInfo[version] && versionInfo[version].go) {
+  if (versionInfo[realVersion] && versionInfo[realVersion].go) {
     APIs.children.push({
       id: 'go',
       label: 'Go',
-      link: `/api-reference/go/${versionInfo[version].go}/About.md`,
+      link: `/api-reference/go/${versionInfo[realVersion].go}/About.md`,
     });
   }
 
-  if (versionInfo[version] && versionInfo[version].node) {
+  if (versionInfo[realVersion] && versionInfo[realVersion].node) {
     APIs.children.push({
       id: 'node',
       label: 'Node',
-      link: `/api-reference/node/${versionInfo[version].node}/About.md`,
+      link: `/api-reference/node/${versionInfo[realVersion].node}/About.md`,
     });
   }
 
-  if (versionInfo[version] && versionInfo[version].csharp) {
+  if (versionInfo[realVersion] && versionInfo[realVersion].csharp) {
     APIs.children.push({
       id: 'csharp',
       label: 'C#',
-      link: `/api-reference/csharp/${versionInfo[version].csharp}/About.md`,
+      link: `/api-reference/csharp/${versionInfo[realVersion].csharp}/About.md`,
     });
   }
 
-  if (versionInfo[version] && versionInfo[version].restful) {
+  if (versionInfo[realVersion] && versionInfo[realVersion].restful) {
     APIs.children.push({
       id: 'restful',
       label: 'RESTful',
-      link: `/api-reference/restful/${versionInfo[version].restful}/About.md`,
+      link: `/api-reference/restful/${versionInfo[realVersion].restful}/About.md`,
     });
   }
 
   // only merge api menus if menus.lenth > 0 and version > 1
-  if (APIs.children.length > 0 && version[1] * 1 > 1) {
+  if (APIs.children.length > 0 && realVersion[1] * 1 > 1) {
     menus.push(APIs);
   }
 
@@ -170,15 +200,17 @@ export default function Template({ data, pageContext }) {
       },
       {
         name: 'docsearch:version',
-        content: version || '',
+        content: realVersion || '',
       },
     ];
-  }, [locale, version]);
+  }, [locale, realVersion]);
 
   // page title
   const title = isHome
     ? `Milvus ${
-        version === newestVersion ? `documentation` : `${version} documentation`
+        realVersion === newestVersion
+          ? `documentation`
+          : `${realVersion} documentation`
       }`
     : `${headings[0] && headings[0].value}`;
 
@@ -186,7 +218,9 @@ export default function Template({ data, pageContext }) {
   const titleTemplate = isHome
     ? `%s`
     : `%s Milvus ${
-        version === newestVersion ? `documentation` : `${version} documentation`
+        realVersion === newestVersion
+          ? `documentation`
+          : `${realVersion} documentation`
       }`;
 
   useCodeCopy(
@@ -197,25 +231,25 @@ export default function Template({ data, pageContext }) {
     hljsCfg
   );
   useMultipleCodeFilter();
-  useGenAnchor(version, editPath);
+  useGenAnchor(realVersion, editPath);
   useFilter();
 
   let description = summary
-    ? `${summary.replace('.', '')} ${version}.`
-    : `${title} for Milvus ${version}`;
+    ? `${summary.replace('.', '')} ${realVersion}.`
+    : `${title} for Milvus ${realVersion}`;
 
   return (
     <Layout
       t={t}
       showFooter={false}
       headerClassName="docHeader"
-      version={version}
+      version={realVersion}
     >
       <Seo
         title={title}
         titleTemplate={titleTemplate}
         lang={locale}
-        version={version}
+        version={realVersion}
         meta={docsearchMeta}
         description={description}
       />
@@ -231,8 +265,9 @@ export default function Template({ data, pageContext }) {
           pageType="doc"
           locale={locale}
           versions={versionConfig.versions}
-          version={version}
+          version={realVersion}
           newestVersion={newestVersion}
+          getVersionLink={getVersionLink}
           mdId={mdId}
           language={language}
           trans={t}
@@ -261,7 +296,7 @@ export default function Template({ data, pageContext }) {
                 htmlContent={mdHtml}
                 commitPath={commitPath}
                 mdId={mdId}
-                version={version}
+                version={realVersion}
                 relatedKey={relatedKey}
                 trans={t}
               />
@@ -269,7 +304,7 @@ export default function Template({ data, pageContext }) {
             <div className="doc-toc-container">
               <Aside
                 locale={locale}
-                version={version}
+                version={realVersion}
                 editPath={editPath}
                 mdTitle={headings[0]}
                 category="doc"

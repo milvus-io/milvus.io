@@ -67,7 +67,7 @@
     position: absolute;
     margin: 0 auto;
     top: 40px;
-    right: -654px;
+    right: -586px;
 
     @media @phone {
       transform: scale(0.8);
@@ -151,8 +151,8 @@
 
   .title-wrapper {
     position: relative;
-    min-width: 566px;
-    width: 566px;
+    min-width: 724px;
+    width: 724px;
     display: flex;
     flex-direction: column;
 
@@ -294,7 +294,8 @@
     }
 
     .btn-start,
-    .btn-watch {
+    .btn-watch,
+    .btn-primary {
       display: inline-block;
       display: flex;
       flex-direction: row;
@@ -330,6 +331,14 @@
       &:hover {
         background-color: var(--color-white);
       }
+    }
+
+    .btn-primary {
+      .primaryBtn;
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      // higher than bucket svg
+      z-index: 1;
     }
 
     .btn-watch {

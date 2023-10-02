@@ -668,6 +668,7 @@
       "banner": {
         "title": "为可扩展的相似性搜索构建的向量数据库",
         "desc": "开源、高度可扩展且速度极快。",
+        "tryManaged": "Try Managed Milvus",
         "getstart": "快速开始",
         "watch": "浏览视频",
         "star": "GitHub 星数",

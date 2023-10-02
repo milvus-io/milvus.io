@@ -61,12 +61,12 @@ const HomeBanner = props => {
             <Bucket />
           </div>
           <div className="btn-group">
-          <Link
+            <Link
               className="btn-primary"
               to={`https://cloud.zilliz.com/signup`}
               target="_blank"
             >
-              {t('v3trans.home.banner.tryManaged')}
+              Try Managed Milvus
             </Link>
             <Link
               className="btn-start"

@@ -87,7 +87,7 @@ function SEO({
       script={script}
     >
       <script
-        src="https://tag.clearbitscripts.com/v1/pk_9b83069276f2350591e46955085ee5a8/tags.js%22"
+        src="https://tag.clearbitscripts.com/v1/pk_9b83069276f2350591e46955085ee5a8/tags.js"
         referrerpolicy="strict-origin-when-cross-origin"
       ></script>
     </Helmet>

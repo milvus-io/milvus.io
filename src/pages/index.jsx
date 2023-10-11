@@ -28,11 +28,11 @@ import ibm from '../images/brands/ibm.png';
 import omers from '../images/brands/omers.png';
 import shutterstock from '../images/brands/shutterstock.png';
 import zip from '../images/brands/zip.png';
-import paypal from '../images/brands/paypal.svg';
-import shell from '../images/brands/shell.svg';
-import shein from '../images/brands/shein.svg';
-import regeneron from '../images/brands/regeneron.svg';
-import newRelic from '../images/brands/new-relic.svg';
+import paypal from '../images/brands/paypal.png';
+import shell from '../images/brands/shell.png';
+import shein from '../images/brands/shein.png';
+import regeneron from '../images/brands/regeneron.png';
+import newRelic from '../images/brands/new-relic.png';
 
 import CustomIconLink from '../components/customIconLink';
 import Seo from '../components/seo';

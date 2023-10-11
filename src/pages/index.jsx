@@ -28,6 +28,11 @@ import ibm from '../images/brands/ibm.png';
 import omers from '../images/brands/omers.png';
 import shutterstock from '../images/brands/shutterstock.png';
 import zip from '../images/brands/zip.png';
+import paypal from '../images/brands/paypal.svg';
+import shell from '../images/brands/shell.svg';
+import shein from '../images/brands/shein.svg';
+import regeneron from '../images/brands/regeneron.svg';
+import newRelic from '../images/brands/new-relic.svg';
 
 import CustomIconLink from '../components/customIconLink';
 import Seo from '../components/seo';
@@ -140,6 +145,31 @@ const brands = [
     name: 'Dailyhunt',
     icon: hunt,
     link: 'https://www.dailyhunt.in/',
+  },
+  {
+    name: 'PayPal',
+    icon: paypal,
+    link: 'https://www.paypal.com/',
+  },
+  {
+    name: 'Shell',
+    icon: shell,
+    link: 'https://www.shell.com/',
+  },
+  {
+    name: 'SHEIN',
+    icon: shein,
+    link: 'https://us.shein.com/',
+  },
+  {
+    name: 'REGENERON',
+    icon: regeneron,
+    link: 'https://www.regeneron.com/',
+  },
+  {
+    name: 'New Relic',
+    icon: newRelic,
+    link: 'https://www.newrelic.com/',
   },
 ];
 const DESC =

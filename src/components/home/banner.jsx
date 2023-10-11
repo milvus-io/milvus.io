@@ -66,7 +66,7 @@ const HomeBanner = props => {
               to={`https://cloud.zilliz.com/signup`}
               target="_blank"
             >
-              Try Managed Milvus
+              {t('v3trans.home.banner.tryManaged')}
             </Link>
             <Link
               className="btn-start"

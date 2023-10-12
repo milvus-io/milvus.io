@@ -37,18 +37,7 @@ export default function Slack({ data, pageContext }) {
 
   return (
     <Layout t={t} version={allVersion}>
-      <Seo
-        title={title}
-        lang={locale}
-        description={description}
-        script={[
-          {
-            charset: 'utf-8',
-            type: 'text/javascript',
-            src: '//js.hsforms.net/forms/embed/v2.js',
-          },
-        ]}
-      />
+      <Seo title={title} lang={locale} description={description} />
       <main className={styles.slackContainer}>
         <div className={styles.contentContainer}>
           <img src={slackImg} alt="Slack Logo" />

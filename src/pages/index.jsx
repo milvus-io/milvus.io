@@ -256,7 +256,7 @@ const IndexPage = ({ data, pageContext }) => {
         <HomeFeatures t={t} />
         <HomeCode t={t} version={version} />
         <Attu t={t} />
-
+{/* 
         <section className={`${styles.community} col-4 col-8 col-12`}>
           <p className={styles.communityTitle}>
             {t('v3trans.main.communitytitle')}
@@ -280,7 +280,7 @@ const IndexPage = ({ data, pageContext }) => {
               })}
             </div>
           </div>
-        </section>
+        </section> */}
 
         <Signup callback={handleOpenSnackbar} t={t} />
         <CustomizedSnackbars

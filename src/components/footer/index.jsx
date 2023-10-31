@@ -3,13 +3,14 @@ import clsx from 'clsx';
 import { Link } from 'gatsby-plugin-react-i18next';
 import {
   faGithub,
-  faSlack,
   faTwitter,
   faYoutube,
+  faDiscord,
+  faXTwitter
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as styles from './index.module.less';
-import { SLACK_INVITE_URL } from '../../consts';
+import { DISCORD_INVITE_URL } from '../../consts';
 
 const footerJson = [
   {
@@ -51,7 +52,7 @@ const footerJson = [
       },
       { name: 'Sizing Tool', trans: false, to: '/tools/sizing' },
       {
-        name: 'Mivlus backup Tool',
+        name: 'Milvus backup tool',
         trans: false,
         to: 'https://github.com/zilliztech/milvus-backup',
       },
@@ -61,9 +62,9 @@ const footerJson = [
     title: 'community',
     children: [
       { name: 'getinvolved', trans: true, to: '/community' },
-      { name: 'Slack', trans: false, to: SLACK_INVITE_URL },
+      { name: 'Discord', trans: false, to: DISCORD_INVITE_URL },
       {
-        name: 'Github',
+        name: 'GitHub',
         trans: false,
         to: 'https://github.com/milvus-io/milvus',
       },
@@ -77,11 +78,11 @@ const socialJson = [
     link: 'https://github.com/milvus-io/milvus',
   },
   {
-    icon: faSlack,
-    link: SLACK_INVITE_URL,
+    icon: faDiscord,
+    link: DISCORD_INVITE_URL,
   },
   {
-    icon: faTwitter,
+    icon: faXTwitter,
     link: 'https://twitter.com/milvusio',
   },
   {

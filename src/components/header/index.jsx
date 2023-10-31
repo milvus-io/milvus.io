@@ -13,7 +13,6 @@ import GitHubButton from '../githubButton';
 import MilvusCookieConsent from '../milvusCookieConsent';
 import { getGithubStatis } from '../../http';
 import * as styles from './index.module.less';
-import { SLACK_INVITE_URL } from '../../consts';
 
 const Header = ({
   darkMode = false,
@@ -188,9 +187,6 @@ const Header = ({
             Stars
           </GitHubButton>
         )}
-        <GitHubButton type="slack" href={SLACK_INVITE_URL}>
-          Join Slack
-        </GitHubButton>
       </div>
       <Menu
         anchorEl={anchorEl}

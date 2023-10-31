@@ -6,7 +6,7 @@ import { graphql } from 'gatsby';
 import { useI18next } from 'gatsby-plugin-react-i18next';
 import { findLatestVersion } from '../../utils';
 import githubIcon from '../../images/community/socialMedia/github.svg';
-import slackIcon from '../../images/community/socialMedia/slack.svg';
+import discordIcon from '../../images/community/socialMedia/discord.svg';
 import redditIcon from '../../images/community/socialMedia/reddit.svg';
 import twitterIcon from '../../images/community/socialMedia/twitter.svg';
 import clsx from 'clsx';
@@ -19,6 +19,7 @@ import meetingIcon from '../../images/community/icons/meeting.svg';
 import eventIcon from '../../images/community/icons/event.svg';
 import videoIcon from '../../images/community/icons/video.svg';
 import CustomLink from '../../components/customLink';
+import { DISCORD_INVITE_URL } from '../../consts';
 
 const OFFICE_HOUR_REGISTER_LINK =
   'https://us02web.zoom.us/meeting/register/tZ0pcO6vrzsuEtVAuGTpNdb6lGnsPBzGfQ1T#/registration';
@@ -58,9 +59,9 @@ export default function CommunityPage({ data, pageContext }) {
       href: 'https://github.com/milvus-io/milvus/discussions',
     },
     {
-      label: 'Slack',
-      imgUrl: slackIcon,
-      href: '/slack',
+      label: 'Discord',
+      imgUrl: discordIcon,
+      href: DISCORD_INVITE_URL,
     },
     {
       label: 'Reddit',

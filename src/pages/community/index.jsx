@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../../components/layout';
-import SEO from '../../components/seo';
+import Seo from '../../components/seo';
 import * as classes from './index.module.less';
 import { graphql } from 'gatsby';
 import { useI18next } from 'gatsby-plugin-react-i18next';
@@ -21,8 +21,7 @@ import videoIcon from '../../images/community/icons/video.svg';
 import CustomLink from '../../components/customLink';
 import { DISCORD_INVITE_URL } from '../../consts';
 
-const OFFICE_HOUR_REGISTER_LINK =
-  'https://us02web.zoom.us/meeting/register/tZ0pcO6vrzsuEtVAuGTpNdb6lGnsPBzGfQ1T#/registration';
+const OFFICE_HOUR_REGISTER_LINK = 'https://discord.gg/RjNbk8RR4f';
 
 const CalendarIcon = () => (
   <svg
@@ -134,7 +133,7 @@ export default function CommunityPage({ data, pageContext }) {
 
   return (
     <Layout darkMode={false} t={t} version={version}>
-      <SEO
+      <Seo
         title="Milvus Community"
         lang={language}
         description="Milvus Community · Vector Database built for scalable similarity search"
@@ -158,20 +157,20 @@ export default function CommunityPage({ data, pageContext }) {
               <div className={classes.bgWrapper}></div>
             </div>
             <div className={classes.rightPart}>
-              <h2>Milvus Community Office Hours</h2>
+              <h2>Milvus Community Lunch and Learn</h2>
               <p className={classes.desc}>
                 Share your latest Milvus project with the community, hosted by
                 the Zilliz team.
               </p>
               <p className={classes.date}>
                 <CalendarIcon />
-                Every Tuesday 1:30 Pacific Time
+                Every Tuesday from 12-12:30 PM PST
               </p>
               <CustomLink
                 className={classes.registerBtn}
                 href={OFFICE_HOUR_REGISTER_LINK}
               >
-                Register now
+                Join now
                 <ArrowRightAltIcon />
               </CustomLink>
             </div>

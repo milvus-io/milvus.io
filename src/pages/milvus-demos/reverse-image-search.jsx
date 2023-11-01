@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import Header from '../../components/header';
 import Seo from '../../components/seo';
 import {
@@ -7,7 +7,6 @@ import {
 } from '../../utils/demo-helper';
 import Masonry from '../../components/demoComponents/masonry';
 import { search } from '../../http/imageSearch';
-import DemoImg from '../../images/demos/demo.jpg';
 import UploaderHeader from '../../components/demoComponents/uploader';
 import * as styles from './demo.module.less';
 import { Link, useI18next } from 'gatsby-plugin-react-i18next';

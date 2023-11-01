@@ -34,12 +34,9 @@ import shein from '../images/brands/shein.png';
 import regeneron from '../images/brands/regeneron.png';
 import newRelic from '../images/brands/new-relic.png';
 
-import CustomIconLink from '../components/customIconLink';
 import Seo from '../components/seo';
-import SvgIcon from '@mui/material/SvgIcon';
 import { findLatestVersion } from '../utils';
 import './index.less';
-import { SLACK_INVITE_URL } from '../consts';
 // local css module
 import * as styles from './index.module.less';
 
@@ -200,27 +197,27 @@ const IndexPage = ({ data, pageContext }) => {
     });
   };
 
-  const communityLinks = [
-    { name: 'Slack', to: SLACK_INVITE_URL },
-    { name: 'Github', to: 'https://github.com/milvus-io/milvus' },
-  ];
+  // const communityLinks = [
+  //   { name: 'Slack', to: SLACK_INVITE_URL },
+  //   { name: 'Github', to: 'https://github.com/milvus-io/milvus' },
+  // ];
 
-  const ExternalLinkIcon = props => {
-    return (
-      <SvgIcon
-        viewBox="0 0 12 12"
-        style={{ width: '15px', height: '15px' }}
-        {...props}
-      >
-        <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M9.84623 1.30028H1.15384L1.15384 0.300279L11.0533 0.300279L11.5533 0.30028L11.5533 0.800279L11.5533 10.6998L10.5533 10.6998L10.5533 2.00738L0.80029 11.7604L0.0931833 11.0533L9.84623 1.30028Z"
-          fill="white"
-        />
-      </SvgIcon>
-    );
-  };
+  // const ExternalLinkIcon = props => {
+  //   return (
+  //     <SvgIcon
+  //       viewBox="0 0 12 12"
+  //       style={{ width: '15px', height: '15px' }}
+  //       {...props}
+  //     >
+  //       <path
+  //         fillRule="evenodd"
+  //         clipRule="evenodd"
+  //         d="M9.84623 1.30028H1.15384L1.15384 0.300279L11.0533 0.300279L11.5533 0.30028L11.5533 0.800279L11.5533 10.6998L10.5533 10.6998L10.5533 2.00738L0.80029 11.7604L0.0931833 11.0533L9.84623 1.30028Z"
+  //         fill="white"
+  //       />
+  //     </SvgIcon>
+  //   );
+  // };
 
   const version = findLatestVersion(allVersion.nodes);
 
@@ -256,7 +253,7 @@ const IndexPage = ({ data, pageContext }) => {
         <HomeFeatures t={t} />
         <HomeCode t={t} version={version} />
         <Attu t={t} />
-{/* 
+        {/* 
         <section className={`${styles.community} col-4 col-8 col-12`}>
           <p className={styles.communityTitle}>
             {t('v3trans.main.communitytitle')}

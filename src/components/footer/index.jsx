@@ -3,10 +3,9 @@ import clsx from 'clsx';
 import { Link } from 'gatsby-plugin-react-i18next';
 import {
   faGithub,
-  faTwitter,
   faYoutube,
   faDiscord,
-  faXTwitter
+  faXTwitter,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as styles from './index.module.less';

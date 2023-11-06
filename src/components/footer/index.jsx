@@ -24,7 +24,7 @@ const footerJson = [
       {
         name: 'Managed service',
         trans: false,
-        to: 'https://cloud.zilliz.com/',
+        to: 'https://cloud.zilliz.com/signup',
       },
     ],
   },

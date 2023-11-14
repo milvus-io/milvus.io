@@ -1,4 +1,4 @@
-@import (reference) "../../css/responsive.less";
+@import (reference) '../../css/responsive.less';
 
 .BlogCardWrapper {
   display: block;
@@ -13,20 +13,13 @@
   }
 
   .coverWrapper {
-    height: 290px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    width: 100%;
+    aspect-ratio: 350/ 219;
     border-radius: 6px;
+    overflow: hidden;
 
-    @media @tablet {
+    img {
       width: 100%;
-      height: 305px;
-    }
-
-    @media @phone {
-      width: 100%;
-      height: 250px;
     }
   }
 

@@ -21,7 +21,7 @@
     "@mui/material": "^5.2.5",
     "@octokit/core": "^3.5.1",
     "@zilliz/zui": "^0.0.9",
-    "axios": "^0.26.0",
+    "axios": "^1.6.0",
     "clsx": "^1.1.1",
     "cropperjs": "^1.5.12",
     "cssnano-preset-lite": "^2.1.3",

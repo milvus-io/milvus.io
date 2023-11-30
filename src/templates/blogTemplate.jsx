@@ -73,7 +73,7 @@ export default function Template({ data, pageContext }) {
   );
 
   const handleTagClick = tag => {
-    navigate(`/blog?page=1#${tag}`);
+    navigate(`/blog?#${tag}`);
   };
 
   useEffect(() => {

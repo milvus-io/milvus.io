@@ -64,9 +64,10 @@ const Attu = props => {
               onKeyDown={() => handleActiveClick(0)}
               tabIndex={0}
             >
-              {t('v3trans.home.attu.statistics')}
+              {t('v3trans.home.attu.operation')}
               <span className="horizontal_shooting_star" />
             </div>
+
             <div
               className={clsx('shooting-title', {
                 active: activeExample === 1,
@@ -79,6 +80,7 @@ const Attu = props => {
               {t('v3trans.home.attu.manage')}
               <span className="horizontal_shooting_star" />
             </div>
+
             <div
               className={clsx('shooting-title', {
                 active: activeExample === 2,
@@ -88,9 +90,10 @@ const Attu = props => {
               onKeyDown={() => handleActiveClick(2)}
               tabIndex={0}
             >
-              {t('v3trans.home.attu.operation')}
+              {t('v3trans.home.attu.statistics')}
               <span className="horizontal_shooting_star" />
             </div>
+
             <div className="btn-groups">
               <CustomIconLink
                 to="https://github.com/zilliztech/attu/releases"

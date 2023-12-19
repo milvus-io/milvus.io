@@ -112,18 +112,18 @@ const Code = props => {
     switch (activeExample) {
       case EXAMPLES.search:
         return {
-          tabs: ['Vector search', 'Hybrid search', 'Time travel'],
+          tabs: ['Vector search', 'Hybrid search', 'Range Search', 'Iterator'],
           learnMoreLink: `/docs/search.md`,
         };
       case EXAMPLES.manage:
         return {
-          tabs: ['Create collection', 'Create index', 'Insert data'],
+          tabs: ['Create collection', 'Create index', 'Insert data', 'Upsert data'],
           learnMoreLink: `/docs/create_collection.md`,
         };
       case EXAMPLES.install:
       default:
         return {
-          tabs: ['Ubuntu', 'CentOS', 'Kubernetes'],
+          tabs: ['Docker Compose', 'Kubernetes'],
           learnMoreLink: `/docs/install_cluster-helm.md`,
         };
     }
@@ -143,6 +143,7 @@ const Code = props => {
           <TabPanel value={value} index={0} codeExample={codeExample} />
           <TabPanel value={value} index={1} codeExample={codeExample} />
           <TabPanel value={value} index={2} codeExample={codeExample} />
+          <TabPanel value={value} index={3} codeExample={codeExample} />
         </div>
         <div className="milvus-feature">
           <div

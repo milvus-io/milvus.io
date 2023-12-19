@@ -35,6 +35,21 @@ data = [
 collection = Collection("book")
 mr = collection.insert(data)
 `,
+
+  upsert: `
+import random
+from pymilvus import Collection
+# Parepare data
+data = [
+  [i for i in range(2000)],
+  [i for i in range(10000, 12000)],
+  [[random.random() for _ in range(2)] for _ in range(2000)],
+]
+
+# Get an existing collection.
+collection = Collection("book")
+mr = collection.upsert(data)
+`,
 };
 
 export const VECTOR_SEARCH = {
@@ -70,40 +85,52 @@ results = collection.search(
 )
 `,
 
-  timetravel: `
+  rangeSearch: `
 from pymilvus import Collection
-
 # Get an existing collection.
 collection = Collection("book")
-# Vector search with time travel
-search_params = {"metric_type": "L2", "params": {"nprobe": 10}}
+# Conduct a range search
+search_params = {"metric_type": "L2", "params": {"nprobe": 10, "radius": 1, "range_filter": 0.1}}
 results = collection.search(
   data=[[0.1, 0.2]],
-  anns_field="book_intro", 
-  param=search_params, 
+  anns_field="book_intro",
+  param=search_params,
   limit=10,
-  travel_timestamp: 428828271234252802, // Milvus hybrid timestamp
 )
+print(f"range search results: {results}")
+`,
+
+  iterator: `
+from pymilvus import Collection
+# Get an existing collection.
+collection = Collection("book")
+search_params = {"metric_type": "L2", "params": {"nprobe": 10}}
+# create a search iterator
+search_iterator = collection.search_iterator(
+  data=[[0.1, 0.2]],
+  anns_field="book_intro",
+  param=search_params,
+  batch_size=500,
+)
+while True:
+    # turn to the next page
+    res = search_iterator.next()
+    if len(res) == 0:
+        print("search iteration finished, close")
+        # close the iterator
+        search_iterator.close()
+        break
+    for i in range(len(res)):
+        print(res[i])
 `,
 };
 
 export const INSTALL_MILVUS = {
-  unbuntu: `
-# Install via Launchpad PPA on Ubuntu
-sudo apt install software-properties-common
-sudo add-apt-repository ppa:milvusdb/milvus-standalone
-sudo apt update
-sudo apt install milvus
-`,
-
-  centos: `
-# Install Milvus
-sudo yum https://github.com/milvus-io/milvus/releases/download/v2.0.0-pre-ga/milvus-2.0.0-preGA.1.el7.x86_64.rpm
-
-# Check Milvus status
-sudo systemctl status milvus
-sudo systemctl status milvus-etcd
-sudo systemctl status milvus-minio
+  docker: `
+# Download milvus-standalone-docker-compose.yml and save it as docker-compose.yml manually
+wget https://github.com/milvus-io/milvus/releases/download/v2.3.3/milvus-standalone-docker-compose.yml -O docker-compose.yml
+# In the same directory as the docker-compose.yml file, start up Milvus
+sudo docker compose up -d
 `,
 
   kubernetes: `

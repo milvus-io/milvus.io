@@ -75,6 +75,7 @@ const Code = props => {
     timeId = setInterval(() => {
       const keys = Object.keys(EXAMPLES);
       keyIndex === 2 ? (keyIndex = 0) : keyIndex++;
+      setValue(0)
       setActivExample(EXAMPLES[keys[keyIndex]]);
     }, 10000);
     return () => {
@@ -117,7 +118,12 @@ const Code = props => {
         };
       case EXAMPLES.manage:
         return {
-          tabs: ['Create collection', 'Create index', 'Insert data', 'Upsert data'],
+          tabs: [
+            'Create collection',
+            'Create index',
+            'Insert data',
+            'Upsert data',
+          ],
           learnMoreLink: `/docs/create_collection.md`,
         };
       case EXAMPLES.install:

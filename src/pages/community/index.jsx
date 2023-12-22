@@ -164,7 +164,7 @@ export default function CommunityPage({ data, pageContext }) {
               </p>
               <p className={classes.date}>
                 <CalendarIcon />
-                Every Tuesday from 12-12:30 PM PST
+                Bi-weekly Tuesday from 12-12:30 PM PST
               </p>
               <CustomLink
                 className={classes.registerBtn}

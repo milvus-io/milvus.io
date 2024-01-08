@@ -173,7 +173,8 @@ const DESC =
   "Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications.";
 
 const IndexPage = ({ data, pageContext }) => {
-  const { allVersion } = data;
+  const { allVersion, allFile } = data;
+  const homepageData = allFile.edges[0].node.childJson;
   const { language, t } = useI18next();
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
@@ -231,7 +232,7 @@ const IndexPage = ({ data, pageContext }) => {
           description={DESC}
         />
         {/* all css about banner in banner.less */}
-        <HomeBanner t={t} version={version} />
+        <HomeBanner t={t} version={version} bannerData={homepageData} />
         <section className={`${styles.customer} col-4 col-8 col-12`}>
           <p className={styles.customerTitle}>{t('v3trans.main.customer')}</p>
           <div className={styles.brands}>
@@ -305,6 +306,21 @@ export const query = graphql`
     allVersion(filter: { released: { eq: "yes" } }) {
       nodes {
         version
+      }
+    }
+    allFile(
+      filter: {
+        sourceInstanceName: { eq: "homepage" }
+        extension: { eq: "json" }
+      }
+    ) {
+      edges {
+        node {
+          childJson {
+            label
+            link
+          }
+        }
       }
     }
   }

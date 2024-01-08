@@ -5,7 +5,7 @@ import Marquee from 'react-fast-marquee';
 import Bucket from './bucket';
 import { Typography } from '@mui/material';
 
-const Msg = () => {
+const Msg = ({ label, link }) => {
   let isDesktop = true;
   if (typeof navigator !== 'undefined') {
     isDesktop =
@@ -14,21 +14,17 @@ const Msg = () => {
       );
   }
 
-  const msg = (
-    <a
-      href="/blog/unveiling-milvus-2-3-milestone-release-offering-support-for-gpu-arm64-cdc-and-other-features.md "
-      className="news-wrapper"
-      target="_self"
-    >
-      <Typography className="news-title" component="span">
-        News:&nbsp;
-      </Typography>
-      <Typography component="span" className="news-content">
-        🔥 Milvus 2.3: A Milestone Release with GPU Support, CDC, Upsert, and
-        Other Exciting Features
-      </Typography>
-    </a>
-  );
+  const msg =
+    link && label ? (
+      <a href={link} className="news-wrapper" target="_self">
+        <Typography className="news-title" component="span">
+          News:&nbsp;
+        </Typography>
+        <Typography component="span" className="news-content">
+          🔥 {label}
+        </Typography>
+      </a>
+    ) : null;
 
   return isDesktop ? (
     <div className="msg desktop-msg">{msg}</div>
@@ -40,7 +36,8 @@ const Msg = () => {
 };
 
 const HomeBanner = props => {
-  const { t = v => v } = props;
+  const { t = v => v, bannerData } = props;
+  const { label, link } = bannerData || {};
   return (
     <div className="banner">
       <div className="shooting_star_container1">
@@ -51,7 +48,7 @@ const HomeBanner = props => {
       </div>
       <div className="banner-grid-container col-12 col-8 col-4">
         <div className="title-wrapper">
-          <Msg />
+          <Msg label={label} link={link} />
           <h1 className="title">
             Vector database built for scalable <br />
             similarity search

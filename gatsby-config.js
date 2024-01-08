@@ -25,6 +25,13 @@ const gatsbyConfigs = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `homepage`,
+        path: `${__dirname}/src/pages/blogs/versions/master/homepage`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: `i18n`,
         path: `${__dirname}/src/i18n/`,
       },

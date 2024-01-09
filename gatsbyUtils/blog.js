@@ -103,6 +103,7 @@ const generateBlogArticlePage = (
       desc,
       cover,
       canonicalUrl,
+      metaTitle,
     ] = [
       node.frontmatter.date,
       node.frontmatter.tag,
@@ -113,6 +114,7 @@ const generateBlogArticlePage = (
       node.frontmatter.desc,
       node.frontmatter.cover,
       node.frontmatter.canonicalUrl,
+      node.frontmatter.metaTitle,
     ];
 
     createPage({
@@ -136,6 +138,7 @@ const generateBlogArticlePage = (
         allVersion: versions,
         headings: node.headings.filter(v => v.depth < 4 && v.depth >= 1),
         canonicalUrl,
+        metaTitle: metaTitle || title,
       },
     });
   });

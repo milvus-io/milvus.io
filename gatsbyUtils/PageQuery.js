@@ -28,6 +28,7 @@ module.exports = `
           group
           recommend
           canonicalUrl
+          metaTitle
         }
         fileAbsolutePath
         html

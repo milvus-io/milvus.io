@@ -37,6 +37,12 @@
     margin-bottom: 20px;
     margin-top: 50px;
 
+    &:hover {
+      .icon-wrapper {
+        opacity: 1 !important;
+      }
+    }
+
     & > code {
       font-size: 32px;
       line-height: 42px;
@@ -135,9 +141,8 @@
       display: inline-block;
       font-size: 0;
       vertical-align: middle;
-    }
-
-    &:hover {
+      opacity: 0;
+      transition: opacity 0.2s linear;
       color: #0279ae;
     }
   }

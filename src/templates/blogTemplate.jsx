@@ -14,7 +14,7 @@ import * as styles from './blogTemplate.module.less';
 import BlogAnchorSection from '../components/blogToc';
 import clsx from 'clsx';
 
-const pattern = /[!@#$%^&*(),.?":{}|<>~`\[\]\\\/;=+_\-']+/g;
+const pattern = /[!@#$%^&*(),.?":{}|<>~`\[\]\\\/;=+_']+/g;
 
 export default function Template({ data, pageContext }) {
   const { allVersion } = data;
@@ -32,6 +32,7 @@ export default function Template({ data, pageContext }) {
     cover,
     headings,
     canonicalUrl,
+    metaTitle,
   } = pageContext;
 
   // h2 only
@@ -98,7 +99,7 @@ export default function Template({ data, pageContext }) {
   return (
     <Layout t={t} version={version}>
       <Seo
-        title={title}
+        title={metaTitle}
         titleTemplate="%s"
         lang={language}
         description={description}
@@ -117,12 +118,12 @@ export default function Template({ data, pageContext }) {
 
           <Tags list={tags} tagsClass={styles.tags} onClick={handleTagClick} />
 
-          {desc && (
+          {/* {desc && (
             <section className={styles.desc}>
               <span className={styles.line}></span>
               <span>{desc}</span>
             </section>
-          )}
+          )} */}
 
           <section className={styles.contentContainer}>
             <div

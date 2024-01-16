@@ -169,3 +169,53 @@ export const getNewestVersionTool = (versions, minVersion) => {
     list: filteredList.map(v => v.version),
   };
 };
+
+export const formatMenuStructure = list => {
+  let newList = list.map(v => {
+    const {
+      id,
+      title,
+      isMenu = false,
+      outLink = '',
+      label1,
+      label2,
+      label3,
+    } = v;
+
+    const parentId = label3 || label2 || label1 || '';
+    const parentIds = [label1, label2, label3].filter(v => !!v);
+    const level = [label1, label2, label3].filter(v => !!v).length + 1;
+
+    return {
+      id: id,
+      label: title,
+      isMenu,
+      outLink,
+      parentId,
+      parentIds,
+      level,
+      children: [],
+    };
+  });
+
+  newList.sort((x, y) => y.level - x.level);
+
+  const resultList = newList.slice();
+
+  newList.forEach(v => {
+    const { parentId, level, ...rest } = v;
+    const parenetIndex = resultList.findIndex(v => v.id === parentId);
+    if (parenetIndex !== -1) {
+      resultList[parenetIndex].children.push(rest);
+    }
+  });
+
+  return resultList
+    .filter(v => v.level === 1)
+    .map(v => {
+      const { level, parentId, ...rest } = v;
+      return {
+        ...rest,
+      };
+    });
+};

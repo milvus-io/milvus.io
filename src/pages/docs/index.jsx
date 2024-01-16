@@ -17,7 +17,7 @@ export default function DocHomePage(props) {
         position: 'absolute',
         left: '50%',
         top: '50%',
-        transform: 'translate(-50%,-50%',
+        transform: 'translate(-50%,-50%)',
       }}
     >
       Loading...
@@ -26,7 +26,7 @@ export default function DocHomePage(props) {
 }
 
 export const getStaticProps = () => {
-  const { newestVersion } = docUtils.getVerion();
+  const { newestVersion } = docUtils.getVersion();
 
   return {
     props: {

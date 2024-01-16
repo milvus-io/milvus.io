@@ -6,6 +6,7 @@ import {
   formatMenus,
   getMenuInfoById,
   getNewestVersionTool,
+  formatMenuStructure,
 } from './docUtils';
 import { generateAvailableApiVersions } from './apiReference.utils';
 
@@ -57,7 +58,9 @@ const generateAllDocData = () => {
     );
     const homeDir = join(BASE_DOC_DIR, `${version}/site/en/home/home.md`);
 
-    const menu = fs.readFileSync(menuDir, 'utf-8');
+    const originMenu = JSON.parse(fs.readFileSync(menuDir, 'utf-8')).menuList;
+
+    const menu = formatMenuStructure(originMenu);
 
     const homeData = fs.readFileSync(homeDir);
     const { content } = matter(homeData);
@@ -71,7 +74,7 @@ const generateAllDocData = () => {
 
     return {
       version,
-      menu: JSON.parse(menu).menuList,
+      menu: menu,
       homeContent: content,
     };
   });
@@ -139,7 +142,7 @@ const getHomeData = (docData, version) => {
   return homeContent || '';
 };
 
-const getDocConent = (allData, version, id) => {
+const getDocContent = (allData, version, id) => {
   const target = allData.find(v => v.id === id && v.version === version);
 
   if (!target) {
@@ -199,11 +202,11 @@ function walkApiFiels({ basePath, sufixPath: path, contentList, config }) {
 
 const docUtils = {
   getAllData: generateAllDocData,
-  getVerion: generateAvailableDocVersions,
+  getVersion: generateAvailableDocVersions,
   getDocRouter,
   getDocMenu,
   getHomeData,
-  getDocConent,
+  getDocContent,
 };
 
 export default docUtils;

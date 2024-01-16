@@ -61,11 +61,11 @@ const versionsDocsDirs = fs
 const docDirs = versionsDocsDirs.map(version => {
   const [enDocDir, cnDocDir] = [
     join(DOCS_DIR, `/${version}/site/en/menuStructure/en.json`),
-    join(DOCS_DIR, `/${version}/site/zh-CN/menuStructure/cn.json`),
+    // join(DOCS_DIR, `/${version}/site/zh-CN/menuStructure/cn.json`),
   ];
   return {
     version,
-    cn: cnDocDir,
+    // cn: cnDocDir,
     en: enDocDir,
   };
 });
@@ -83,25 +83,25 @@ const docDirs = versionsDocsDirs.map(version => {
 // return;
 
 docDirs.flat(Infinity).forEach(({ version, cn, en }) => {
-  const cnContent = JSON.parse(fs.readFileSync(cn, 'utf-8'));
+  // const cnContent = JSON.parse(fs.readFileSync(cn, 'utf-8'));
   const enContent = JSON.parse(fs.readFileSync(en, 'utf-8'));
-  const cnMenuList =
-    Object.prototype.toString.call(cnContent) === '[object Array]'
-      ? cnContent
-      : cnContent.menuList;
+  // const cnMenuList =
+  //   Object.prototype.toString.call(cnContent) === '[object Array]'
+  //     ? cnContent
+  //     : cnContent.menuList;
 
   const enMenuList =
     Object.prototype.toString.call(enContent) === '[object Array]'
       ? enContent
       : enContent.menuList;
 
-  const newStructureCn = formatMenuStructure(cnMenuList);
+  // const newStructureCn = formatMenuStructure(cnMenuList);
   const newStructureEn = formatMenuStructure(enMenuList);
 
   const data = JSON.parse(fs.readFileSync('./menu.json'));
 
   data[version] = {
-    cn: newStructureCn,
+    // cn: newStructureCn,
     en: newStructureEn,
   };
 

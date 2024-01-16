@@ -36,3 +36,5 @@ yarn-error.log*
 /public/docs/*
 
 /public/blogs/*
+
+/menu.json

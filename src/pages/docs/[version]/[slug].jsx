@@ -180,13 +180,13 @@ export const getStaticProps = async context => {
     locale = 'en',
   } = context;
 
-  const { versions } = docUtils.getVerion();
+  const { versions } = docUtils.getVersion();
   const { docData, contentList } = docUtils.getAllData();
   const {
     content,
     editPath,
     data: frontmatter,
-  } = docUtils.getDocConent(contentList, version, slug);
+  } = docUtils.getDocContent(contentList, version, slug);
   const docMenus = docUtils.getDocMenu(docData, version);
   const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
     content,

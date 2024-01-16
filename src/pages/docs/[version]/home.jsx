@@ -21,6 +21,8 @@ const TITLE = 'Milvus vector database documentation';
 export default function DocHomePage(props) {
   const { homeData, blogs = [], menus, version, versions, locale } = props;
 
+  console.log(menus);
+
   const { t } = useTranslation('common');
 
   const [isOpened, setIsOpened] = useState(false);
@@ -97,7 +99,7 @@ export default function DocHomePage(props) {
 }
 
 export const getStaticPaths = () => {
-  const { versions } = docUtils.getVerion();
+  const { versions } = docUtils.getVersion();
 
   const paths = versions.map(v => ({
     params: { version: v },
@@ -115,7 +117,7 @@ export const getStaticProps = async context => {
     locale = 'en',
   } = context;
 
-  const { versions } = docUtils.getVerion();
+  const { versions } = docUtils.getVersion();
   const { docData } = docUtils.getAllData();
   const homeContent = docUtils.getHomeData(docData, version);
   const menu = docUtils.getDocMenu(docData, version);

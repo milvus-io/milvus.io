@@ -1,0 +1,3 @@
+[submodule "src/blogs"]
+	path = src/blogs
+	url = https://github.com/milvus-io/community.git

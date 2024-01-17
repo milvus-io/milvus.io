@@ -1,4 +1,4 @@
-@import (reference) '../../styles/mixins.less';
+@import (reference) '../../styles/mixin.module.less';
 
 .header {
   align-items: center;
@@ -9,7 +9,7 @@
   width: 100%;
   z-index: 100;
   will-change: opacity, transform;
-  .flexcenter;
+  .flexcenter();
 
   &.posSticky {
     position: sticky;
@@ -23,121 +23,22 @@
     }
   }
 
-  &.light {
-    background-color: white;
-
-    width: 100%;
-    border-bottom: 1px solid #ededed;
-
-    .logoSection {
-      .lfaiLogo {
-        background-image: url('/images/lf_logo_light.svg');
-      }
-    }
-
-    .global {
-      path {
-        fill: black;
-      }
-    }
-
-    .globalText {
-      color: black;
-    }
-
-    .menuItem {
-      color: black;
-    }
-
-    .startBtn {
-      color: white;
-      background: unset;
-      background: var(--color-primary);
-
-      &:hover {
-        background: var(--color-text-primary);
-        opacity: 1;
-      }
-    }
-  }
-
-  .headerContainer {
-    .col-4;
-    .col-8;
-    .col-12;
-    .spaceBetween;
-    align-items: center;
-  }
-
   @media @phone, @tablet {
     position: sticky;
   }
-
-  .leftSection {
-    .flexstart;
-    align-items: center;
-  }
-
-  .rightSection {
-    .flexend;
-    align-items: center;
-    gap: 20px;
-
-    .startBtn {
-      width: fit-content;
-      position: static;
-    }
-  }
 }
 
-.desktopHeaderBar {
-  flex: 1;
-  .spaceBetween;
-
-  @media @phone, @tablet {
-    display: none;
-  }
-}
-
-.actionBar {
-  .flexend;
-  align-items: center;
-
-  @media @tablet {
-    padding: 0 16px;
-    margin-top: 24px;
-    justify-content: space-between;
+.gitBtnWrapper {
+  .starText {
+    font-weight: 400;
   }
 
   @media @phone {
-    margin-top: 24px;
-    padding: 0 16px;
-    flex-direction: column;
-    align-items: flex-start;
+    margin-bottom: 24px;
   }
 
-  .gitBtnsWrapper {
-    .flexend;
-
-    @media @phone {
-      margin-bottom: 24px;
-    }
-  }
-
-  .langSelect {
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    .hover;
-
-    & > div {
-      padding-right: 14px;
-    }
-
-    & > svg {
-      height: 24px;
-      width: 24px;
-    }
+  @media @tablet {
+    display: none;
   }
 }
 
@@ -148,44 +49,34 @@
 
   img {
     height: 30px;
+    width: auto;
 
     @media @phone {
       height: 20px;
     }
-  }
-
-  .lfaiLogo {
-    background-image: url('/images/lf_logo_dark.svg');
-    background-size: contain;
-    display: block;
-    height: 30px;
-    transition: none;
-    width: 55px;
-
-    @media @phone, @tablet {
-      background-image: url('/images/lf_logo_light.svg');
-    }
-
-    @media @phone {
-      width: 37px;
-      height: 20px;
-    }
-  }
-
-  @media (max-width: 1200px) {
-    height: 30px;
-  }
-
-  @media @phone {
-    height: 20px;
   }
 }
 
 .startBtn {
-  background: linear-gradient(90.14deg, #ffffff 0.15%, #669dde 104.21%);
-  .buttonSm;
-  .hover;
-  color: var(--color-black);
+  .buttonSm();
+  .hover();
+  padding: 12px 20px;
+  color: #fff;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 14px;
+  height: auto;
+  background: #00a1ea;
+
+  span {
+    background: #fff;
+    color: #00a1ea;
+    font-size: 12px;
+    border-radius: 4px;
+    padding: 2px 5px;
+    margin-left: 4px;
+    margin-right: 8px;
+  }
 
   @media @phone, @tablet {
     background: unset;
@@ -198,208 +89,227 @@
     padding-top: 12px;
     padding-bottom: 12px;
   }
-
-  height: 42px;
-  padding-top: 12px;
-  padding-bottom: 12px;
 }
 
-.mobileHead {
-  display: flex;
-  justify-content: center;
-  padding: 25px 0;
+.desktopHeader {
+  display: block;
 
-  position: sticky;
-  top: 0;
-  background-color: white;
-  width: 100%;
-  z-index: 100;
-
-  @media @phone {
-    padding: 15px 0;
-    display: flex;
-    justify-content: center;
+  @media @tablet {
+    display: none !important;
   }
 
-  .global {
-    path {
-      fill: black;
+  .spaceBetween();
+  align-items: center;
+  gap: 40px;
+
+  @media (max-width: 1200px) {
+    gap: 24px;
+  }
+
+  .desktopHeaderBar {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+
+    .leftSection {
+      .flexstart();
+      align-items: center;
+
+      .menuList {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        gap: 40px;
+
+        @media (max-width: 1200px) {
+          gap: 24px;
+        }
+
+        .menuItem {
+          color: #fff;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 400;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+
+    .rightSection {
+      .flexend();
+      align-items: center;
+      gap: 12px;
+
+      .startBtn {
+        width: fit-content;
+        position: static;
+        svg {
+          vertical-align: -5px;
+          stroke: #000;
+        }
+      }
     }
   }
+}
 
-  .globalText {
-    color: black;
+.light {
+  background-color: #fff;
+  width: 100%;
+  border-bottom: 1px solid #ededed;
+
+  .desktopHeaderBar .leftSection .menuList .menuItem {
+    color: #000;
   }
 
-  .menuItem {
-    color: black;
+  .startBtn {
+    svg {
+      vertical-align: -5px;
+      stroke: #fff !important;
+    }
+    &:hover {
+      background: var(--color-text-primary);
+      opacity: 1;
+    }
   }
 }
 
-.hamburg {
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
-  height: 30px;
-  position: relative;
-  width: 35px;
+.mobileHeader {
   display: none;
 
-  @media @phone, @tablet {
-    display: block;
+  @media @tablet {
+    display: flex;
+    justify-content: space-between;
   }
 
-  @media @phone {
-    height: 20px;
-    width: 25px;
-  }
-
-  span {
-    background: black;
-    border: none;
-    height: 2px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  & span:nth-of-type(2) {
-    top: 11px;
+  .hamburg {
+    background-color: #fff;
+    border: 0;
+    cursor: pointer;
+    height: 30px;
+    position: relative;
+    width: 35px;
 
     @media @phone {
-      top: 7px;
+      height: 20px;
+      width: 25px;
     }
-  }
-  & span:nth-of-type(3) {
-    top: 22px;
-
-    @media @phone {
-      top: 14px;
-    }
-  }
-
-  &.active {
-    background-color: white;
 
     span {
       background: black;
+      border: none;
+      height: 2px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
     }
 
-    .top {
-      transform: translateY(11px) translateX(0) rotate(45deg);
+    & span:nth-of-type(2) {
+      top: 11px;
 
       @media @phone {
-        transform: translateY(7px) translateX(0) rotate(45deg);
+        top: 7px;
+      }
+    }
+    & span:nth-of-type(3) {
+      top: 22px;
+
+      @media @phone {
+        top: 14px;
       }
     }
 
-    .middle {
-      opacity: 0;
-    }
+    &.active {
+      background-color: white;
 
-    .bottom {
-      transform: translateY(-11px) translateX(0) rotate(-45deg);
+      span {
+        background: black;
+      }
 
-      @media @phone {
-        transform: translateY(-7px) translateX(0) rotate(-45deg);
+      .top {
+        transform: translateY(11px) translateX(0) rotate(45deg);
+
+        @media @phone {
+          transform: translateY(7px) translateX(0) rotate(45deg);
+        }
+      }
+
+      .middle {
+        opacity: 0;
+      }
+
+      .bottom {
+        transform: translateY(-11px) translateX(0) rotate(-45deg);
+
+        @media @phone {
+          transform: translateY(-7px) translateX(0) rotate(-45deg);
+        }
       }
     }
   }
-}
 
-.overlay {
-  background: white;
-  height: 0;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  transition: all 0.25s;
-  width: 100%;
-  z-index: -1;
-  .flexcenter;
-
-  &.open {
-    height: 100vh;
+  .navWrapper {
+    position: absolute;
+    height: 0px;
+    left: 0;
+    right: 0;
+    top: 0px;
+    overflow: hidden;
+    transition: height linear 0.3s, top linear 0.3s;
+    background-color: #fff;
+    z-index: 100;
   }
-}
 
-.nav {
-  margin-top: 120px;
-  position: relative;
-
-  @media @phone {
-    margin-top: 66px;
+  .activeMenu {
+    top: 66px;
+    left: 0;
+    right: 0;
+    height: calc(100vh - @header-height-tablet);
   }
-}
 
-.global {
-  width: 24px;
-  path {
-    fill: white;
+  .listWrapper {
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-}
 
-.globalText {
-  color: white;
-  font-size: 13px;
-  text-transform: capitalize;
-}
+  .mobileStartBtnWrapper {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 24px 0;
 
-.menu {
-  margin: 0;
-  .flexstart;
+    .mobileStartBtn {
+      .buttonSm();
+      .hover();
+      display: block;
+      text-align: center;
+      width: 100%;
+      padding: 12px 20px;
+      color: #fff;
+      font-family: Inter;
+      font-weight: 600;
+      font-size: 14px;
+      height: auto;
+      background: #00a1ea;
 
-  li {
-    display: block;
-    margin-left: 40px;
-    @media @desktop1024, @tablet {
-      margin-left: 16px;
+      span {
+        background: #fff;
+        color: #00a1ea;
+        font-size: 12px;
+        border-radius: 4px;
+        padding: 2px 5px;
+        margin-left: 4px;
+        margin-right: 8px;
+      }
     }
   }
-}
-
-.menuItem {
-  background: transparent;
-  border: 0;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 0;
-  padding-bottom: 5px;
-  text-decoration: none;
-  .hover;
 }
 
 .menuLink {
-  .menuItem;
-  color: black;
-}
-
-.mobileMenuLink {
-  font-size: 14px;
-  color: black;
-  padding: 20px;
-  .hover;
-
-  @media @phone {
-    display: block;
-    padding: 8px 20px;
-
-    margin-bottom: 8px;
-  }
-}
-
-.turnLeft {
-  transform: rotate(-90deg);
-}
-
-.hideHeader {
-  opacity: 0;
-  transform: translateY(-100%);
-}
-.showHeader {
-  opacity: 1;
-  transform: translateY(0%);
+  color: #000;
 }

@@ -21,8 +21,6 @@ const TITLE = 'Milvus vector database documentation';
 export default function DocHomePage(props) {
   const { homeData, blogs = [], menus, version, versions, locale } = props;
 
-  console.log(menus);
-
   const { t } = useTranslation('common');
 
   const [isOpened, setIsOpened] = useState(false);

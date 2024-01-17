@@ -116,7 +116,7 @@ body {
   min-height: 100vh;
   color: #000;
   background: #fff;
-  font-family: Inter;
+  font-family: 'Inter', 'RobotoMono', 'SourceCodePro', serif;
   -webkit-font-smoothing: antialiased;
   overflow-y: overlay;
 }
@@ -141,4 +141,12 @@ table {
 
 a {
   text-decoration: none;
+}
+
+button {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  margin: 0;
+  outline: none;
 }

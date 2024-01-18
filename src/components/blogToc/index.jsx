@@ -32,7 +32,7 @@ export default function BlogAnchorSection(props) {
     if (anchors[0]) {
       handleChooseAnchor(anchors[0].href);
     }
-  }, []);
+  }, [anchors]);
 
   useActivateAnchorWhenScroll({
     articleContainer: container,
@@ -51,8 +51,9 @@ export default function BlogAnchorSection(props) {
           const { label, href } = v;
 
           return (
-            <li key={v.label + idx} onClick={() => handleChooseAnchor(href)}>
+            <li key={v.label + idx}>
               <Link
+                onClick={() => handleChooseAnchor(href)}
                 to={`/blog/${id}/#${href}`}
                 className={clsx(classes.anchorLink, {
                   [classes.activeAnchor]: href === activeAnchor,

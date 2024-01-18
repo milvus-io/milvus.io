@@ -14,7 +14,7 @@ import * as styles from './blogTemplate.module.less';
 import BlogAnchorSection from '../components/blogToc';
 import clsx from 'clsx';
 
-const pattern = /[!@#$%^&*(),.?":{}|<>~`\[\]\\\/;=+_']+/g;
+const pattern = /[!@#$%^&*(),.?":{}|<>~`[\]\\/;=+_']+/g;
 
 export default function Template({ data, pageContext }) {
   const { allVersion } = data;

@@ -1,9 +1,7 @@
 import React from 'react';
 import * as styles from './DemoCard.module.less';
 import VideoPlayer from '../videoPlayer';
-import InfoSubmitter from '../infoSubmitter';
-
-const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
+import { useMemo } from 'react';
 
 const DemoCard = ({
   href,
@@ -15,23 +13,23 @@ const DemoCard = ({
   handelOpenDialog,
   handleOpenSnackbar,
 }) => {
-  const submitCallback = (statusCode, unique_email_id, href) => {
-    if (statusCode === 200) {
-      window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
-      handleOpenSnackbar({
-        type: 'success',
-        message: 'Thank you, you have been added to our mailing list!',
-      });
-      //
-    } else {
-      handleOpenSnackbar({
-        type: 'warning',
-        message: "One second! We're taking you there...",
-      });
-      window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
-    }
-    window.location.href = href;
-  };
+  // const submitCallback = (statusCode, unique_email_id, href) => {
+  //   if (statusCode === 200) {
+  //     window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
+  //     handleOpenSnackbar({
+  //       type: 'success',
+  //       message: 'Thank you, you have been added to our mailing list!',
+  //     });
+  //     //
+  //   } else {
+  //     handleOpenSnackbar({
+  //       type: 'warning',
+  //       message: "One second! We're taking you there...",
+  //     });
+  //     window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
+  //   }
+  //   window.location.href = href;
+  // };
 
   const handleWatchVideo = () => {
     const { innerWidth } = window;
@@ -47,23 +45,36 @@ const DemoCard = ({
     handelOpenDialog(content, name);
   };
 
-  const handleSubmitEmail = () => {
-    const { search } = window.location;
-    const source = ['utm_source', 'utm_medium', 'utm_campaign'].every(v =>
-      search.includes(v)
-    )
-      ? 'Ads: Reddit'
-      : 'Milvus: demo';
-    const isSubscribed = true; // enabled for now
-    if (isSubscribed) {
-      window.location.href = href;
-      return;
-    }
-    const content = () => (
-      <InfoSubmitter source={source} href={href} submitCb={submitCallback} />
-    );
-    handelOpenDialog(content, 'Before you go...');
-  };
+  // const handleSubmitEmail = () => {
+  //   const { search } = window.location;
+  //   const source = ['utm_source', 'utm_medium', 'utm_campaign'].every(v =>
+  //     search.includes(v)
+  //   )
+  //     ? 'Ads: Reddit'
+  //     : 'Milvus: demo';
+  //   const isSubscribed = true; // enabled for now
+  //   if (isSubscribed) {
+  //     window.location.href = href;
+  //     return;
+  //   }
+  //   const content = () => (
+  //     <InfoSubmitter source={source} href={href} submitCb={submitCallback} />
+  //   );
+  //   handelOpenDialog(content, 'Before you go...');
+  // };
+
+  const linkConfig = useMemo(() => {
+    const isExternalLink = href.includes('http');
+    return isExternalLink
+      ? {
+          href,
+          targe: '_blank',
+          rel: 'noreferrer',
+        }
+      : {
+          href,
+        };
+  }, [href]);
 
   return (
     <div className={`${styles.demoCard} ${index % 2 === 1 ? styles.even : ''}`}>
@@ -72,11 +83,7 @@ const DemoCard = ({
         <p>{desc}</p>
         <div className={styles.btnGroup}>
           {href ? (
-            <a
-              className={`${styles.tryBtn}`}
-              href={href}
-              target={href.includes('http') ? '_blank' : '_self'}
-            >
+            <a className={`${styles.tryBtn}`} {...linkConfig}>
               Try Demo
             </a>
           ) : null}

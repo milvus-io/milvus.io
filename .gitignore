@@ -32,8 +32,10 @@ yarn-error.log*
 .vercel
 
 /src/docs/*
+/src/doc/*
 
 /public/docs/*
+/public/doc/*
 
 /public/blogs/*
 

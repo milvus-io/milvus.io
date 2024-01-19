@@ -1,8 +1,5 @@
 @import url('../../../styles/mixin.module.less');
 
-.header {
-  border-color: transparent;
-}
 .banner {
   background-image: url(/images/index/bg.svg);
   display: flex;
@@ -14,72 +11,245 @@
   overflow: hidden;
   margin-bottom: 100px;
   background-color: black;
-  height: 840px;
   background-repeat: repeat no-repeat;
   z-index: 90;
+
+  .shootingStarContainer1 {
+    position: absolute;
+    bottom: 400px;
+    left: 0;
+    transform: rotateZ(30deg);
+    .shootingStar {
+      animation: tail1 6000ms ease-in-out infinite,
+        shooting1 6000ms ease-in-out infinite;
+    }
+  }
+
+  .shootingStarContainer2 {
+    position: absolute;
+    bottom: 200px;
+    left: 1730px;
+    transform: rotateZ(-150deg);
+    .shootingStar {
+      animation: tail2 6000ms ease-in-out infinite,
+        shooting2 6000ms ease-in-out infinite;
+    }
+  }
+
+  .shootingStar {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(
+      -45deg,
+      rgba(66, 255, 210, 1),
+      rgba(0, 0, 255, 0)
+    );
+    border-radius: 999px;
+    filter: drop-shadow(0 0 6px rgba(66, 255, 210, 1));
+  }
+}
+
+.bannerGridContainer {
+  height: 100%;
+  padding: 190px 0 80px 0;
+  // no more than header
+  display: flex;
+  gap: 60px;
+
   @media @tablet {
-    height: auto;
+    padding: 32px 0 80px 0;
+    flex-direction: column;
   }
-}
-
-.shootingStarContainer1 {
-  position: absolute;
-  bottom: 400px;
-  left: 0;
-  transform: rotateZ(30deg);
-  .shootingStar {
-    animation: tail1 6000ms ease-in-out infinite,
-      shooting1 6000ms ease-in-out infinite;
-  }
-}
-
-.shootingStarContainer2 {
-  position: absolute;
-  bottom: 200px;
-  left: 1730px;
-  transform: rotateZ(-150deg);
-  .shootingStar {
-    animation: tail2 6000ms ease-in-out infinite,
-      shooting2 6000ms ease-in-out infinite;
-  }
-}
-
-.shootingStar {
-  position: absolute;
-  height: 2px;
-  background: linear-gradient(
-    -45deg,
-    rgba(66, 255, 210, 1),
-    rgba(0, 0, 255, 0)
-  );
-  border-radius: 999px;
-  filter: drop-shadow(0 0 6px rgba(66, 255, 210, 1));
-}
-
-.bucket {
-  background-image: url(/images/index/bucket.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: auto;
-  width: 100%;
-  max-width: 491px;
-  position: absolute;
-  margin: 0 auto;
-  top: 40px;
-  right: -586px;
 
   @media @phone {
-    transform: scale(0.8);
-    position: relative;
-    top: 0;
-    right: 0;
-    margin-bottom: 16px;
+    padding: 32px 0 80px 0;
+    flex-direction: column;
   }
-  @media @tablet {
+
+  .leftSection {
+    flex: 0 0 724px;
+
+    @media @desktop1920 {
+      min-width: 760px;
+      width: 760px;
+    }
+
+    @media @phone {
+      flex: auto;
+      min-width: auto;
+      width: auto;
+      flex-direction: column;
+      display: flex;
+    }
+    @media @tablet {
+      flex: auto;
+      min-width: auto;
+      width: auto;
+      flex-direction: column;
+      display: flex;
+      height: fit-content;
+    }
+
+    .title {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: white;
+      line-break: auto;
+      min-height: 210px;
+      padding-bottom: 26px;
+      position: relative;
+
+      @media @tablet {
+        font-size: 36px;
+        text-align: center;
+        min-height: unset;
+      }
+      @media @phone {
+        min-height: unset;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        text-align: center;
+        font-size: 32px;
+        line-height: 42px;
+      }
+    }
+
+    .subtitle {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 34px;
+      color: white;
+      line-break: auto;
+      padding-bottom: 50px;
+
+      @media @tablet {
+        font-size: 18px;
+        text-align: center;
+        padding-bottom: 0;
+      }
+      @media @phone {
+        text-align: center;
+        font-size: 14px;
+        line-height: 20px;
+        width: 60%;
+        margin: 0 auto;
+        padding-bottom: 0;
+      }
+    }
+  }
+  .bucketContainer {
+    flex: 1;
+    aspect-ratio: 1;
+    background-image: url(/images/index/bucket.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    height: auto;
+    width: 491px;
+    height: 491px;
+    margin: 0 auto;
     position: relative;
-    top: 0;
-    right: 0;
-    margin-bottom: 16px;
+
+    // @media @phone {
+    //   transform: scale(0.8);
+    // }
+    @media @tablet, @phone {
+      width: 80%;
+    }
+  }
+
+  .btnGroup {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+
+    @media @tablet {
+      height: 0px;
+      display: none;
+    }
+
+    @media @phone {
+      height: 0px;
+      display: none;
+    }
+  }
+
+  .mobileBtnGroup {
+    display: none;
+
+    @media @tablet {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media @phone {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  .btnStart,
+  .btnWatch,
+  .btnPrimary {
+    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 40px;
+    height: 58px;
+    background: #ffffff;
+    border-radius: 100px;
+    border: transparent;
+
+    font-family: 'Roboto Mono';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+
+    @media @phone {
+      width: 100%;
+    }
+
+    .hover();
+  }
+
+  .btnStart {
+    .primaryBtn();
+    background-color: @color-white;
+    color: @color-black;
+    // higher than bucket svg
+    z-index: 1;
+
+    &:hover {
+      background-color: @color-white;
+    }
+  }
+
+  .btnPrimary {
+    .primaryBtn();
+    background-color: @color-primary;
+    color: @color-white;
+    // higher than bucket svg
+    z-index: 1;
+  }
+
+  .btnWatch {
+    .secondaryBtn();
+    // background: #000000;
+    background: transparent;
+    border: 0;
+    color: #ffffff;
+    &:hover {
+      border-color: transparent;
+      color: @color-white;
+    }
   }
 }
 
@@ -142,164 +312,6 @@
 .desktopMsg {
   @media @tablet {
     top: -16px;
-  }
-}
-
-.bannerGridContainer {
-  height: 100%;
-  padding: 190px 0 80px 0;
-  // no more than header
-  display: flex;
-  gap: 60px;
-
-  @media @phone {
-    padding: 32px 0 80px 0;
-  }
-  @media @tablet {
-    padding: 32px 0 80px 0;
-  }
-
-  .leftSection {
-    flex: 0 0 724px;
-    @media @desktop1920 {
-      min-width: 760px;
-      width: 760px;
-    }
-
-    @media @phone {
-      min-width: auto;
-      width: auto;
-      flex-direction: column;
-    }
-    @media @tablet {
-      min-width: auto;
-      width: auto;
-      flex-direction: column;
-    }
-
-    .title {
-      font-size: 56px;
-      font-weight: 700;
-      line-height: 1.3;
-      color: white;
-      line-break: auto;
-      min-height: 210px;
-      padding-bottom: 26px;
-      position: relative;
-
-      @media @tablet {
-        font-size: 36px;
-        text-align: center;
-        min-height: unset;
-      }
-      @media @phone {
-        min-height: unset;
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-bottom: 10px;
-        text-align: center;
-        font-size: 32px;
-        line-height: 42px;
-      }
-    }
-
-    .subtitle {
-      font-size: 24px;
-      font-weight: 400;
-      line-height: 34px;
-      color: white;
-      line-break: auto;
-      padding-bottom: 50px;
-      @media @tablet {
-        font-size: 18px;
-        text-align: center;
-      }
-      @media @phone {
-        text-align: center;
-        font-size: 14px;
-        line-height: 20px;
-        width: 60%;
-        margin: 0 auto;
-      }
-    }
-    .btnGroup {
-      width: 100%;
-      display: flex;
-      gap: 10px;
-
-      @media @phone {
-        flex-direction: column;
-      }
-
-      @media @tablet {
-        flex-direction: column;
-      }
-
-      .btnStart,
-      .btnWatch,
-      .btnPrimary {
-        display: inline-block;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        padding: 20px 40px;
-        height: 58px;
-        background: #ffffff;
-        border-radius: 100px;
-        border: transparent;
-
-        font-family: 'Roboto Mono';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 18px;
-
-        @media @phone {
-          width: 100%;
-        }
-
-        .hover();
-      }
-
-      .btnStart {
-        .primaryBtn();
-        background-color: @color-white;
-        color: @color-black;
-        // higher than bucket svg
-        z-index: 1;
-
-        &:hover {
-          background-color: @color-white;
-        }
-      }
-
-      .btnPrimary {
-        .primaryBtn();
-        background-color: @color-primary;
-        color: @color-white;
-        // higher than bucket svg
-        z-index: 1;
-      }
-
-      .btnWatch {
-        .secondaryBtn();
-        // background: #000000;
-        background: transparent;
-        border: 0;
-        color: #ffffff;
-        &:hover {
-          border-color: transparent;
-          color: @color-white;
-        }
-      }
-    }
-  }
-
-  .bucketContainer {
-    flex: 1;
-    aspect-ratio: 1;
   }
 }
 

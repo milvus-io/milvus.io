@@ -48,14 +48,7 @@ const HomeBanner = props => {
       <div className={classes.shootingStarContainer2}>
         <div className={classes.shootingStar}></div>
       </div>
-      <div
-        className={clsx(
-          pageClasses.col4,
-          pageClasses.col8,
-          pageClasses.col12,
-          classes.bannerGridContainer
-        )}
-      >
+      <div className={clsx(pageClasses.container, classes.bannerGridContainer)}>
         <div className={classes.leftSection}>
           <Msg label={label} link={link} />
           <h1 className={classes.title}>
@@ -100,8 +93,44 @@ const HomeBanner = props => {
             </a>
           </div>
         </div>
-        <div className={clsx(classes.bucket, classes.bucketContainer)}>
+        <div className={classes.bucketContainer}>
           <Bucket />
+        </div>
+
+        <div className={classes.mobileBtnGroup}>
+          <a
+            className={classes.btnPrimary}
+            href="https://cloud.zilliz.com/signup"
+            target="_blank"
+          >
+            Try Managed Milvus
+          </a>
+          <a
+            className={classes.btnStart}
+            href="/docs/install_standalone-docker.md"
+          >
+            Try Open Source
+          </a>
+          <a
+            className={classes.btnWatch}
+            href="https://www.youtube.com/watch?v=nQkmgCtVz5k"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Watch Video
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="m10 16.5 6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                fill="white"
+              ></path>
+            </svg>
+          </a>
         </div>
       </div>
     </div>

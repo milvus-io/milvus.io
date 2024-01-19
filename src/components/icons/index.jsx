@@ -151,3 +151,11 @@ export const linkIconTpl = `
     ></path>
   </svg>
 `;
+
+export const MenuIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24">
+    <rect x="2" y="5" width="20" height="2" fill="black"></rect>
+    <rect x="2" y="11" width="20" height="2" fill="black"></rect>
+    <rect x="2" y="17" width="20" height="2" fill="black"></rect>
+  </svg>
+);

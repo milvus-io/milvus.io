@@ -5,7 +5,7 @@ import clsx from 'clsx';
 export default function HomeFeature() {
   return (
     <section
-      className={clsx(pageClasses.col12, classes.featureSectionContainer)}
+      className={clsx(pageClasses.container, classes.featureSectionContainer)}
     >
       <h2>Fuel your machine learning deployment</h2>
       <h5>
@@ -59,7 +59,7 @@ export default function HomeFeature() {
         </li>
 
         <li>
-          <img src="/images/home/rich.svg'" alt="Feature-rich" />
+          <img src="/images/home/rich.svg" alt="Feature-rich" />
           <h4>Feature-rich</h4>
           <p>
             Support for various data types, enhanced vector search with

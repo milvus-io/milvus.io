@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as styles from './index.module.less';
+import MilvusCookieConsent from '../milvusCookieConsent';
 
 const footerJson = [
   {
@@ -83,7 +84,7 @@ const socialJson = [
 
 const Footer = ({ darkMode = true, t, className }) => {
   return (
-    <div
+    <footer
       className={clsx(styles.footer, {
         [className]: className,
         [styles.dark]: darkMode,
@@ -141,7 +142,8 @@ const Footer = ({ darkMode = true, t, className }) => {
           </div>
         </div>
       </div>
-    </div>
+      <MilvusCookieConsent />
+    </footer>
   );
 };
 

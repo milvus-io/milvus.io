@@ -5,7 +5,7 @@
   display: block;
 }
 
-.customer {
+.customersContainer {
   margin: 160px auto;
 
   @media @desktop1024 {
@@ -18,6 +18,44 @@
 
   @media @phone {
     margin: 80px auto;
+  }
+
+  .customerTitle {
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 58px;
+    margin-bottom: 60px;
+    text-align: center;
+
+    @media @desktop1024, @tablet, @phone {
+      font-size: 24px;
+    }
+  }
+
+  .brandsList {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+    justify-items: center;
+    list-style: none;
+
+    a {
+      display: inline-block;
+      line-height: 0;
+    }
+
+    li {
+      width: 133px;
+      height: 65px;
+
+      img {
+        width: 133px;
+      }
+    }
+
+    @media @phone, @tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }
 
@@ -129,40 +167,5 @@
     span {
       display: flex;
     }
-  }
-}
-
-.customerTitle {
-  font-size: 40px;
-  font-weight: bold;
-  line-height: 58px;
-  margin-bottom: 60px;
-  text-align: center;
-
-  @media @desktop1024, @tablet, @phone {
-    font-size: 24px;
-  }
-}
-
-.brands {
-  align-items: center;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(3, 69px);
-  grid-gap: 20px;
-  justify-items: center;
-
-  a {
-    display: inline-block;
-    line-height: 0;
-  }
-
-  img {
-    max-width: 133px;
-  }
-
-  @media @phone, @tablet {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 48px);
   }
 }

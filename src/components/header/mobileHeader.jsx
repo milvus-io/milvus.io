@@ -4,15 +4,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-
-import classes from './index.module.less';
+import classes from './mobileHeader.module.less';
 import pageClasses from '../../styles/responsive.module.less';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { useState } from 'react';
+import { LogoSection, ActionBar } from './Logos';
+import { MenuIcon } from '../icons';
 
 export default function MobileHeader(props) {
-  const { actionBar, logoSection } = props;
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
 
@@ -35,170 +35,154 @@ export default function MobileHeader(props) {
   };
 
   return (
-    <div
-      className={clsx(pageClasses.col8, classes.mobileHeader, {
-        [classes.open]: isMenuOpen,
-      })}
-    >
-      {logoSection}
-      <nav
-        className={clsx(classes.navWrapper, {
-          [classes.activeMenu]: isMenuOpen,
+    <div className={classes.mobileHeaderContainer}>
+      <div
+        className={clsx(pageClasses.container, classes.mobileHeader, {
+          [classes.open]: isMenuOpen,
         })}
       >
-        <div className={clsx(pageClasses.col8, classes.listWrapper)}>
-          <div>
-            <List
-              sx={{ width: '100%' }}
-              component="nav"
-              aria-labelledby="nested-list-subheader"
-            >
-              <Link href="/docs" className={classes.menuLink}>
-                <ListItemButton>
-                  <ListItemText primary="Docs" />
-                  <ExpandMore className={classes.turnLeft} />
-                </ListItemButton>
-              </Link>
-
-              <Divider variant="middle" />
-
-              <ListItemButton
-                onClick={() => {
-                  openTutorial(!isTutOpen);
-                }}
+        <LogoSection />
+        <nav
+          className={clsx(classes.navWrapper, {
+            [classes.activeMenu]: isMenuOpen,
+          })}
+        >
+          <div className={clsx(pageClasses.container, classes.listWrapper)}>
+            <div>
+              <List
+                sx={{ width: '100%' }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
               >
-                <ListItemText primary="Tutorials" />
-                {isTutOpen ? (
-                  <ExpandMore />
-                ) : (
-                  <ExpandMore className={classes.turnLeft} />
-                )}
-              </ListItemButton>
+                <Link href="/docs" className={classes.menuLink}>
+                  <ListItemButton>
+                    <ListItemText primary="Docs" />
+                  </ListItemButton>
+                </Link>
 
-              <Collapse in={isTutOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemText
-                    primary={
-                      <>
-                        <Link
-                          href="/bootcamp"
-                          className={classes.mobileMenuLink}
-                        >
-                          Bootcamp
-                        </Link>
-                        <Link
-                          href="/milvus-demos"
-                          className={classes.mobileMenuLink}
-                        >
-                          Demo
-                        </Link>
-                        <a
-                          href="https://www.youtube.com/c/MilvusVectorDatabase"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={classes.mobileMenuLink}
-                        >
-                          Video
-                        </a>
-                      </>
-                    }
-                  />
-                </List>
-              </Collapse>
+                <Divider variant="fullWidth" />
 
-              <Divider variant="middle" />
+                <ListItemButton
+                  onClick={() => {
+                    openTutorial(!isTutOpen);
+                  }}
+                >
+                  <ListItemText primary="Tutorials" />
+                  {isTutOpen ? (
+                    <ExpandMore
+                      className={clsx(classes.expendIcon, classes.turnDown)}
+                    />
+                  ) : (
+                    <ExpandMore
+                      className={clsx(classes.expendIcon, classes.static)}
+                    />
+                  )}
+                </ListItemButton>
 
-              <ListItemButton
-                onClick={() => {
-                  openTool(!isToolOpen);
-                }}
+                <Collapse in={isTutOpen} timeout="auto" unmountOnExit>
+                  <List
+                    component="div"
+                    disablePadding
+                    classes={{
+                      root: classes.subMenuList,
+                    }}
+                  >
+                    <Link href="/bootcamp">Bootcamp</Link>
+                    <Link href="/milvus-demos">Demo</Link>
+                    <a
+                      href="https://www.youtube.com/c/MilvusVectorDatabase"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Video
+                    </a>
+                  </List>
+                </Collapse>
+
+                <Divider variant="fullWidth" />
+
+                <ListItemButton
+                  onClick={() => {
+                    openTool(!isToolOpen);
+                  }}
+                >
+                  <ListItemText primary="Tools" />
+                  {isToolOpen ? (
+                    <ExpandMore
+                      className={clsx(classes.expendIcon, classes.turnDown)}
+                    />
+                  ) : (
+                    <ExpandMore
+                      className={clsx(classes.expendIcon, classes.static)}
+                    />
+                  )}
+                </ListItemButton>
+
+                <Collapse in={isToolOpen} timeout="auto" unmountOnExit>
+                  <List
+                    component="div"
+                    disablePadding
+                    classes={{ root: classes.subMenuList }}
+                  >
+                    <a
+                      href="https://github.com/zilliztech/attu"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Attu
+                    </a>
+                    <a
+                      href="https://github.com/zilliztech/milvus_cli"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Milvus_CLI
+                    </a>
+                    <a href="/tools/sizing">Sizing Tool</a>
+                  </List>
+                </Collapse>
+
+                <Divider variant="fullWidth" />
+
+                <Link href="/blog" className={classes.menuLink}>
+                  <ListItemButton>
+                    <ListItemText primary="Blog" />
+                  </ListItemButton>
+                </Link>
+
+                <Divider variant="fullWidth" />
+                <Link href="/community" className={classes.menuLink}>
+                  <ListItemButton>
+                    <ListItemText primary="Community" />
+                  </ListItemButton>
+                </Link>
+
+                <Divider variant="fullWidth" />
+              </List>
+
+              <ActionBar />
+            </div>
+
+            <div className={classes.mobileStartBtnWrapper}>
+              <a
+                href="https://cloud.zilliz.com"
+                className={classes.mobileStartBtn}
               >
-                <ListItemText primary="Tools" />
-                {isToolOpen ? (
-                  <ExpandMore />
-                ) : (
-                  <ExpandMore className={classes.turnLeft} />
-                )}
-              </ListItemButton>
-
-              <Collapse in={isToolOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemText
-                    primary={
-                      <>
-                        <a
-                          href="https://github.com/zilliztech/attu"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={classes.mobileMenuLink}
-                        >
-                          Attu
-                        </a>
-                        <a
-                          href="https://github.com/zilliztech/milvus_cli"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={classes.mobileMenuLink}
-                        >
-                          Milvus_CLI
-                        </a>
-                        <Link
-                          href="/tools/sizing"
-                          className={classes.mobileMenuLink}
-                        >
-                          Sizing Tool
-                        </Link>
-                      </>
-                    }
-                  />
-                </List>
-              </Collapse>
-
-              <Divider variant="middle" />
-
-              <Link href="/blog" className={classes.menuLink}>
-                <ListItemButton>
-                  <ListItemText primary="Blog" />
-                  <ExpandMore className={classes.turnLeft} />
-                </ListItemButton>
-              </Link>
-
-              <Divider variant="middle" />
-
-              <Link href="/community" className={classes.menuLink}>
-                <ListItemButton>
-                  <ListItemText primary="Community" />
-                  <ExpandMore className={classes.turnLeft} />
-                </ListItemButton>
-              </Link>
-
-              <Divider variant="middle" />
-            </List>
-
-            {actionBar}
+                Try Managed Milvus <span>FREE</span>
+              </a>
+            </div>
           </div>
+        </nav>
 
-          <div className={classes.mobileStartBtnWrapper}>
-            <a
-              href="https://cloud.zilliz.com"
-              className={classes.mobileStartBtn}
-            >
-              Try Managed Milvus <span>FREE</span>
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      <button
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        className={clsx(classes.hamburg, {
-          [classes.active]: isMenuOpen,
-        })}
-      >
-        <span className={classes.top}></span>
-        <span className={classes.middle}></span>
-        <span className={classes.bottom}></span>
-      </button>
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className={clsx(classes.hamburg, {
+            [classes.active]: isMenuOpen,
+          })}
+        >
+          <MenuIcon />
+        </button>
+      </div>
     </div>
   );
 }

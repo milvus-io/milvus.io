@@ -7,13 +7,15 @@ import clsx from 'clsx';
 import hljs from 'highlight.js';
 import Link from 'next/link';
 import 'highlight.js/styles/stackoverflow-light.css';
+import classes from './index.module.less';
+import pageClasses from '../../../styles/responsive.module.less';
 
 const HighlightBlock = ({ content, language = 'bash' }) => {
   const highlightCode = hljs.highlight(content, { language });
   return (
     <pre>
       <code
-        className="hljs home-code-block"
+        className={clsx(classes.customHljs, classes.homeCodeBlock)}
         dangerouslySetInnerHTML={{ __html: highlightCode.value }}
       ></code>
     </pre>
@@ -112,41 +114,46 @@ const Code = props => {
     switch (activeExample) {
       case EXAMPLES.search:
         return {
-          tabs: ['Vector search', 'Hybrid search', 'Time travel'],
-          learnMoreLink: '/docs/search.md',
+          tabs: ['Vector search', 'Hybrid search', 'Range Search', 'Iterator'],
+          learnMoreLink: `/docs/search.md`,
         };
       case EXAMPLES.manage:
         return {
-          tabs: ['Create collection', 'Create index', 'Insert data'],
-          learnMoreLink: '/docs/create_collection.md',
+          tabs: [
+            'Create collection',
+            'Create index',
+            'Insert data',
+            'Upsert data',
+          ],
+          learnMoreLink: `/docs/create_collection.md`,
         };
       case EXAMPLES.install:
       default:
         return {
-          tabs: ['Ubuntu', 'CentOS', 'Kubernetes'],
-          learnMoreLink: '/docs/install_cluster-helm.md',
+          tabs: ['Docker Compose', 'Kubernetes'],
+          learnMoreLink: `/docs/install_cluster-helm.md`,
         };
     }
   }, [activeExample]);
 
   return (
-    <section className="section3 col-12 col-8 col-4">
-      <Box sx={{ borderColor: 'divider' }} className={`code-example-tab`}>
+    <section className={clsx(pageClasses.container, classes.codeContainer)}>
+      <Box sx={{ borderColor: 'divider' }} className={classes.codeExampleTab}>
         <Tabs value={value} onChange={handleChange} aria-label="code tab">
           {tabs.map((v, i) => (
             <Tab disableRipple key={v} label={v} {...a11yProps(i)} />
           ))}
         </Tabs>
       </Box>
-      <div className="example-wrapper">
-        <div className="code-example">
+      <div className={classes.exampleWrapper}>
+        <div className={classes.codeExample}>
           <TabPanel value={value} index={0} codeExample={codeExample} />
           <TabPanel value={value} index={1} codeExample={codeExample} />
           <TabPanel value={value} index={2} codeExample={codeExample} />
         </div>
-        <div className="milvus-feature">
+        <div className={classes.milvusFeature}>
           <div
-            className={clsx('shooting-title', {
+            className={clsx(classes.shootingTitle, {
               active: activeExample === EXAMPLES.install,
             })}
             role="button"
@@ -155,10 +162,10 @@ const Code = props => {
             tabIndex={0}
           >
             {t('v3trans.home.code.install')}
-            <span className="horizontal_shooting_star" />
+            <span className={classes.horizontalShootingStar} />
           </div>
           <div
-            className={clsx('shooting-title', {
+            className={clsx(classes.shootingTitle, {
               active: activeExample === EXAMPLES.manage,
             })}
             role="button"
@@ -167,10 +174,10 @@ const Code = props => {
             onKeyDown={() => handleActiveClick(EXAMPLES.manage)}
           >
             {t('v3trans.home.code.manage')}
-            <span className="horizontal_shooting_star" />
+            <span className={classes.horizontalShootingStar} />
           </div>
           <div
-            className={clsx('shooting-title', {
+            className={clsx(classes.shootingTitle, {
               active: activeExample === EXAMPLES.search,
             })}
             role="button"
@@ -179,10 +186,12 @@ const Code = props => {
             onKeyDown={() => handleActiveClick(EXAMPLES.search)}
           >
             {t('v3trans.home.code.search')}
-            <span className="horizontal_shooting_star" />
+            <span className={classes.horizontalShootingStar} />
           </div>
           <Link href={learnMoreLink}>
-            <a className="sBtn learn-more">{t('v3trans.home.code.learn')}</a>
+            <a className={clsx(classes.sBtn, classes.learnMore)}>
+              {t('v3trans.home.code.learn')}
+            </a>
           </Link>
         </div>
       </div>

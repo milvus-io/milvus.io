@@ -3,18 +3,17 @@ import Layout from '../components/layout';
 import Signup from '../components/signup';
 import HomeBanner from '../parts/home/banner';
 import HomeFeature from '../parts/home/homeFeature';
-import HomeCode from '../components/home/code';
-import Attu from '../components/home/attu';
 import { CustomizedSnackbars } from '../components/snackBar';
 import { useState } from 'react';
-import CustomIconLink from '../components/customIconLink';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useTranslation } from 'react-i18next';
 import blogUtils from '@/utils/blog.utils';
 import classes from '../styles/home.module.less';
+import pageClasses from '../styles/responsive.module.less';
 
 // local css module
 import * as styles from '../styles/home.module.less';
+import clsx from 'clsx';
 
 const PATH_SURFIX = '/images/brands/';
 
@@ -107,27 +106,24 @@ const IndexPage = props => {
         </Head>
         {/* all css about banner in banner.less */}
         <HomeBanner bannerData={bannerData} t={t} />
-        <section className={`${styles.customer} col-4 col-8 col-12`}>
-          <p className={styles.customerTitle}>{t('v3trans.main.customer')}</p>
-          <div className={styles.brands}>
+        <section
+          className={clsx(pageClasses.container, classes.customersContainer)}
+        >
+          <h2 className={styles.customerTitle}>
+            The most popular vector database for enterprise users
+          </h2>
+
+          <ul className={styles.brandsList}>
             {brands.map(b => (
-              // <a href={b.link} target="_blank" rel="noreferrer" key={b.name}>
-              <img
-                key={b.name}
-                src={b.icon}
-                width="133"
-                height="65"
-                alt={b.name}
-              />
-              // </a>
+              <li className={classes.listItem} key={b.name}>
+                <img src={b.icon} alt={b.name} />
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
         {/* all these sections about banner in banner.less */}
 
         <HomeFeature />
-        <HomeCode t={t} />
-        <Attu t={t} />
 
         <Signup callback={handleOpenSnackbar} t={t} />
         <CustomizedSnackbars

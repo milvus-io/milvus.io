@@ -7,7 +7,7 @@ import { CustomizedSnackbars } from '../components/snackBar';
 import { useState } from 'react';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useTranslation } from 'react-i18next';
-import blogUtils from '@/utils/blog.utils';
+import blogUtils from '../utils/blog.utils';
 import classes from '../styles/home.module.less';
 import pageClasses from '../styles/responsive.module.less';
 

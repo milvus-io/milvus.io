@@ -57,9 +57,21 @@ const generateBlogRouter = () => {
   return router;
 };
 
+const generateHomepageBannerData = () => {
+  const filePath = join(process.cwd(), 'src/blogs/homepage/index.json');
+  try {
+    const data = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.log('Try to read homepage data json failed', error);
+    return [];
+  }
+};
+
 const blogUtils = {
   getAllData: generateBlogData,
   getRouter: generateBlogRouter,
+  getHomepageData: generateHomepageBannerData,
 };
 
 export default blogUtils;

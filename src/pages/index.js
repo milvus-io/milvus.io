@@ -1,160 +1,57 @@
 import Head from 'next/head';
 import Layout from '../components/layout';
 import Signup from '../components/signup';
-import HomeBanner from '../components/home/banner';
-import HomeFeatures from '../components/home/features';
-import HomeCode from '../components/home/code';
-import Attu from '../components/home/attu';
+import HomeBanner from '../parts/home/banner';
+import HomeFeature from '../parts/home/homeFeature';
 import { CustomizedSnackbars } from '../components/snackBar';
 import { useState } from 'react';
-import CustomIconLink from '../components/customIconLink';
-import Seo from '../components/seo';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useTranslation } from 'react-i18next';
+import blogUtils from '../utils/blog.utils';
+import classes from '../styles/home.module.less';
+import pageClasses from '../styles/responsive.module.less';
 
 // local css module
 import * as styles from '../styles/home.module.less';
+import clsx from 'clsx';
 
 const PATH_SURFIX = '/images/brands/';
 
-const [
-  tencent,
-  ebay,
-  ikea,
-  intuit,
-  kuaishou,
-  line,
-  baidu,
-  shopee,
-  smartnews,
-  bigolive,
-  walmart,
-  xiaomi,
-  hunt,
-  micro,
-  nvidia,
-  moj,
-  compass,
-  tokopedia,
-] = [
-  PATH_SURFIX + 'tencent.png',
-  PATH_SURFIX + 'ebay.png',
-  PATH_SURFIX + 'ikea.png',
-  PATH_SURFIX + 'intuit.png',
-  PATH_SURFIX + 'kuaishou.png',
-  PATH_SURFIX + 'line.png',
-  PATH_SURFIX + 'baidu.png',
-  PATH_SURFIX + 'shopee.png',
-  PATH_SURFIX + 'smartnews.png',
-  PATH_SURFIX + 'bigolive.png',
-  PATH_SURFIX + 'walmart.png',
-  PATH_SURFIX + 'xiaomi.png',
-  PATH_SURFIX + 'hunt.png',
-  PATH_SURFIX + 'micro.png',
-  PATH_SURFIX + 'nvidia.png',
-  PATH_SURFIX + 'moj.png',
-  PATH_SURFIX + 'compass.png',
-  PATH_SURFIX + 'tokopedia.png',
-];
-
 const brands = [
-  {
-    name: 'Ebay',
-    icon: ebay,
-    link: 'https://www.ebay.com/',
-  },
-  {
-    name: 'Shopee',
-    icon: shopee,
-    link: 'https://shopee.com/',
-  },
-  {
-    name: 'Line',
-    icon: line,
-    link: 'https://line.me/',
-  },
-  {
-    name: 'Ikea',
-    icon: ikea,
-    link: 'https://www.ikea.com/',
-  },
-  {
-    name: 'Walmart',
-    icon: walmart,
-    link: 'https://www.walmart.com/',
-  },
-  {
-    name: 'Intuit',
-    icon: intuit,
-    link: 'https://www.intuit.com/',
-  },
-  {
-    name: 'Smartnews',
-    icon: smartnews,
-    link: 'https://www.smartnews.com/',
-  },
-  {
-    name: 'Tokopedia',
-    icon: tokopedia,
-    link: 'https://www.tokopedia.com/',
-  },
-  {
-    name: 'Nvidia',
-    icon: nvidia,
-    link: 'https://www.nvidia.com/',
-  },
-  {
-    name: 'Kuaishou',
-    icon: kuaishou,
-    link: 'https://www.kuaishou.com/',
-  },
-  {
-    name: 'Trend micro',
-    icon: micro,
-    link: 'https://www.trendmicro.com/',
-  },
-  {
-    name: 'Xiaomi',
-    icon: xiaomi,
-    link: 'https://www.mi.com/',
-  },
-  {
-    name: 'Compass',
-    icon: compass,
-    link: 'https://www.compass.com/',
-  },
-  {
-    name: 'Tencent',
-    icon: tencent,
-    link: 'https://www.tencent.com/',
-  },
-  {
-    name: 'bigolive',
-    icon: bigolive,
-    link: 'https://www.bigo.tv/',
-  },
-  {
-    name: 'Moj',
-    icon: moj,
-    link: 'https://mojapp.in/',
-  },
-
-  {
-    name: 'Baidu',
-    icon: baidu,
-    link: 'https://www.baidu.com/',
-  },
-  {
-    name: 'Dailyhunt',
-    icon: hunt,
-    link: 'https://www.dailyhunt.in/',
-  },
+  { name: 'ebay', icon: PATH_SURFIX + 'ebay.png' },
+  { name: 'ikea', icon: PATH_SURFIX + 'ikea.png' },
+  { name: 'intuit', icon: PATH_SURFIX + 'intuit.png' },
+  { name: 'line', icon: PATH_SURFIX + 'line.png' },
+  { name: 'shopee', icon: PATH_SURFIX + 'shopee.png' },
+  { name: 'smartnews', icon: PATH_SURFIX + 'smartnews.png' },
+  { name: 'walmart', icon: PATH_SURFIX + 'walmart.png' },
+  { name: 'hunt', icon: PATH_SURFIX + 'hunt.png' },
+  { name: 'micro', icon: PATH_SURFIX + 'micro.png' },
+  { name: 'nvidia', icon: PATH_SURFIX + 'nvidia.png' },
+  { name: 'moj', icon: PATH_SURFIX + 'moj.png' },
+  { name: 'compass', icon: PATH_SURFIX + 'compass.png' },
+  { name: 'tokopedia', icon: PATH_SURFIX + 'tokopedia.png' },
+  { name: 'roblox', icon: PATH_SURFIX + 'roblox.png' },
+  { name: 'att', icon: PATH_SURFIX + 'att.png' },
+  { name: 'bosch', icon: PATH_SURFIX + 'bosch.png' },
+  { name: 'ibm', icon: PATH_SURFIX + 'ibm.png' },
+  { name: 'omers', icon: PATH_SURFIX + 'omers.png' },
+  { name: 'shutterstock', icon: PATH_SURFIX + 'shutterstock.png' },
+  { name: 'zip', icon: PATH_SURFIX + 'zip.png' },
+  { name: 'paypal', icon: PATH_SURFIX + 'paypal.png' },
+  { name: 'shell', icon: PATH_SURFIX + 'shell.png' },
+  { name: 'shein', icon: PATH_SURFIX + 'shein.png' },
+  { name: 'regeneron', icon: PATH_SURFIX + 'regeneron.png' },
+  { name: 'newRelic', icon: PATH_SURFIX + 'new-relic.png' },
 ];
 const DESC =
   "Milvus is the world's most advanced open-source vector database, built for developing and maintaining AI applications.";
 
-const IndexPage = () => {
+const IndexPage = props => {
   const { t } = useTranslation('common');
+
+  const { bannerData } = props;
+
   const [snackbarConfig, setSnackbarConfig] = useState({
     open: false,
     type: 'info',
@@ -201,62 +98,32 @@ const IndexPage = () => {
   };
 
   return (
-    <main className="homepage">
+    <main className={classes.homepageContainer}>
       <Layout darkMode={true} t={t}>
-        <Seo
-          title="Vector database - Milvus"
-          titleTemplate="%s"
-          lang="en"
-          description={DESC}
-        />
+        <Head>
+          <title>Vector database - Milvus</title>
+          <meta name="description" content={DESC}></meta>
+        </Head>
         {/* all css about banner in banner.less */}
-        <HomeBanner t={t} />
-        <section className={`${styles.customer} col-4 col-8 col-12`}>
-          <p className={styles.customerTitle}>{t('v3trans.main.customer')}</p>
-          <div className={styles.brands}>
+        <HomeBanner bannerData={bannerData} t={t} />
+        <section
+          className={clsx(pageClasses.container, classes.customersContainer)}
+        >
+          <h2 className={styles.customerTitle}>
+            The most popular vector database for enterprise users
+          </h2>
+
+          <ul className={styles.brandsList}>
             {brands.map(b => (
-              // <a href={b.link} target="_blank" rel="noreferrer" key={b.name}>
-              <img
-                key={b.name}
-                src={b.icon}
-                width="133"
-                height="65"
-                alt={b.name}
-              />
-              // </a>
+              <li className={classes.listItem} key={b.name}>
+                <img src={b.icon} alt={b.name} />
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
         {/* all these sections about banner in banner.less */}
 
-        <HomeFeatures t={t} />
-        <HomeCode t={t} />
-        <Attu t={t} />
-
-        <section className={`${styles.community} col-4 col-8 col-12`}>
-          <p className={styles.communityTitle}>
-            {t('v3trans.main.communitytitle')}
-          </p>
-          <div className={styles.communityLinkContainer}>
-            <p className={styles.communityLinkTitle}>
-              {t('v3trans.main.communitydesc')}
-            </p>
-            <div className={styles.communityLinks}>
-              {communityLinks.map(co => {
-                return (
-                  <CustomIconLink
-                    className={styles.communityLink}
-                    to={co.to}
-                    customIcon={ExternalLinkIcon}
-                    key={co.name}
-                  >
-                    {co.name}
-                  </CustomIconLink>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+        <HomeFeature />
 
         <Signup callback={handleOpenSnackbar} t={t} />
         <CustomizedSnackbars
@@ -271,3 +138,12 @@ const IndexPage = () => {
 };
 
 export default IndexPage;
+
+export const getStaticProps = async () => {
+  const bannerData = await blogUtils.getHomepageData();
+  return {
+    props: {
+      bannerData,
+    },
+  };
+};

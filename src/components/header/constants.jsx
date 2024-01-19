@@ -193,11 +193,6 @@ export const NAVLIST_EN = [
     link: '/blog',
     activeKey: '/blog',
   },
-  {
-    label: 'Forum',
-    link: 'https://discuss.milvus.io/',
-    activeKey: 'null',
-  },
 ];
 
 export const NAVLIST_CN = [
@@ -271,10 +266,5 @@ export const NAVLIST_CN = [
     label: '博客',
     link: '/blog',
     activeKey: '/blog',
-  },
-  {
-    label: '论坛',
-    link: 'https://discuss.milvus.io/',
-    activeKey: 'null',
   },
 ];

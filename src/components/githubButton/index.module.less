@@ -1,43 +1,36 @@
-@import (reference) '../../styles/mixins.less';
+@import (reference) '../../styles/mixin.module.less';
 
 .gitBtnWrapper {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  height: 40px;
+
   color: #000;
   background: #fff;
   border: 1px solid rgba(27, 31, 36, 0.15);
   border-radius: 6px;
-  display: flex;
-  height: 30px;
-  margin-right: 20px;
-  padding: 3px 12px;
-  display: flex;
-  align-items: center;
 
   .link {
     align-items: center;
     border-radius: 4px;
     color: #000;
     display: flex;
-    font-size: 12px;
     line-height: 20px;
     text-decoration: none;
 
     .hover;
 
     .iconWrapper {
-      margin-right: 8px;
       display: inline-block;
       font-size: 0;
       line-height: 0;
     }
 
-    .starIcon > svg > path {
-      fill: #eac54f;
-      // background-color: #eac54f;
-    }
-
     .iconText {
       font-weight: 600;
-
+      font-size: 14px;
+      padding-left: 4px;
       @media @desktop1024, @tablet {
         display: none;
       }
@@ -45,13 +38,8 @@
   }
 
   .stat {
-    font-weight: 600;
     margin-left: 6px;
-    min-width: 20px;
-    text-align: center;
-    padding: 0 6px;
-    display: inline-block;
-    background: rgba(27, 31, 36, 0.08);
-    border-radius: 2em;
+    font-weight: 600;
+    font-size: 14px;
   }
 }

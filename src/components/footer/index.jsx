@@ -3,12 +3,16 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import {
   faGithub,
-  faSlack,
-  faTwitter,
   faYoutube,
+  faDiscord,
+  faXTwitter,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as styles from './index.module.less';
+import pageClasses from '../../styles/responsive.module.less';
+
+import { DISCORD_INVITE_URL } from '../../consts';
+import MilvusCookieConsent from '../milvusCookieConsent';
 
 const footerJson = [
   {
@@ -68,11 +72,11 @@ const socialJson = [
     link: 'https://github.com/milvus-io/milvus',
   },
   {
-    icon: faSlack,
-    link: 'https://slack.milvus.io/',
+    icon: faDiscord,
+    link: DISCORD_INVITE_URL,
   },
   {
-    icon: faTwitter,
+    icon: faXTwitter,
     link: 'https://twitter.com/milvusio',
   },
   {
@@ -83,15 +87,13 @@ const socialJson = [
 
 const Footer = ({ darkMode = true, t, className }) => {
   return (
-    <div
-      className={clsx(styles.footer, {
+    <footer
+      className={clsx(styles.footerContainer, {
         [className]: className,
         [styles.dark]: darkMode,
       })}
     >
-      <div
-        className={clsx(styles.container, { [`col-4 col-8 col-12`]: darkMode })}
-      >
+      <div className={clsx(pageClasses.container, styles.contentWrapper)}>
         <div className={`${styles.footContentWrapper} `}>
           {footerJson.map(f => (
             <div key={f.title} className={`${styles.footerItem} col-2`}>
@@ -128,20 +130,32 @@ const Footer = ({ darkMode = true, t, className }) => {
           <span>{`Milvus. ${new Date().getFullYear()} All rights reserved.`}</span>
 
           <div className={styles.social}>
-            {socialJson.map(s => (
-              <a
-                key={s.link}
-                href={s.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon className={styles.iconWrapper} icon={s.icon} />
-              </a>
-            ))}
+            {socialJson.map(s => {
+              const target = s.link
+                ? s.link.includes('http')
+                  ? '_blank'
+                  : '_self'
+                : '_self';
+
+              return (
+                <a
+                  key={s.link}
+                  href={s.link}
+                  target={target}
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon
+                    className={styles.iconWrapper}
+                    icon={s.icon}
+                  />
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
-    </div>
+      <MilvusCookieConsent />
+    </footer>
   );
 };
 

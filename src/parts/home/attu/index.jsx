@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import clsx from 'clsx';
 import { useIntervalWhen } from 'rooks';
 import Typography from '@mui/material/Typography';
-import CustomIconLink from '../customIconLink';
+import CustomIconLink from '../../../components/customIconLink';
 
 const Attu = props => {
   const { t = v => v } = props;

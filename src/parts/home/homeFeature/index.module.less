@@ -1,0 +1,59 @@
+@import url('../../../styles/mixin.module.less');
+
+.featureSectionContainer {
+  text-align: center;
+  margin: 0 auto;
+  h2 {
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 50px;
+    margin-bottom: 8px;
+    @media @desktop1440 {
+      font-size: 32px;
+    }
+    @media @desktop1920 {
+      font-size: 40px;
+    }
+  }
+  h5 {
+    color: @color-gray;
+    margin: 0 auto 40px auto;
+    line-height: 26px;
+    max-width: 626px;
+    font-size: 18px;
+    font-weight: normal;
+    @media @phone {
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+  }
+  ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10%;
+    li {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      flex-direction: column;
+      max-width: 320px;
+      min-width: 285px;
+      margin-bottom: 30px;
+      h4 {
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 34px;
+      }
+      p {
+        color: #9ca6b2;
+        font-size: 14px;
+        line-height: 20px;
+      }
+      img {
+        max-width: 100px;
+      }
+    }
+  }
+}

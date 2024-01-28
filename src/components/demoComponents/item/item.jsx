@@ -80,7 +80,7 @@ const Item = props => {
       </div>
       {isSelected ? (
         <div className={styles.textWrapper}>
-          <p>Similarity Metirc:&nbsp;&nbsp;</p>
+          <p>Similarity Metric:&nbsp;&nbsp;</p>
           <h5>{distance}</h5>
         </div>
       ) : null}

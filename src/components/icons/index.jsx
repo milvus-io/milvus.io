@@ -159,3 +159,20 @@ export const MenuIcon = () => (
     <rect x="2" y="17" width="20" height="2" fill="black"></rect>
   </svg>
 );
+
+export const CloseIcon = () => (
+  <svg
+    width="19"
+    height="19"
+    viewBox="0 0 19 19"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M7.77917 9.19349L0.00210416 16.9706L1.41632 18.3848L9.19339 10.6077L16.9706 18.3849L18.3848 16.9707L10.6076 9.19349L18.3869 1.41421L16.9727 0L9.19339 7.77928L1.41421 0.000103474L0 1.41432L7.77917 9.19349Z"
+      fill="black"
+    />
+  </svg>
+);

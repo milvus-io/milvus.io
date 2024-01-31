@@ -10,7 +10,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { LogoSection, ActionBar } from './Logos';
-import { MenuIcon } from '../icons';
+import { CloseIcon, MenuIcon } from '../icons';
 
 export default function MobileHeader(props) {
   const [isTutOpen, setIsTutOpen] = useState(false);
@@ -176,11 +176,9 @@ export default function MobileHeader(props) {
 
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={clsx(classes.hamburg, {
-            [classes.active]: isMenuOpen,
-          })}
+          className={classes.menuIconBtn}
         >
-          <MenuIcon />
+          {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
       </div>
     </div>

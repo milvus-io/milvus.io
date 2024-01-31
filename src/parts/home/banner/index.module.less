@@ -140,7 +140,7 @@
     }
   }
   .bucketContainer {
-    flex: 1;
+    flex: 0 0 491px;
     aspect-ratio: 1;
     background-image: url(/images/index/bucket.svg);
     background-repeat: no-repeat;
@@ -148,7 +148,6 @@
     background-position: center center;
     height: auto;
     width: 491px;
-    height: 491px;
     margin: 0 auto;
     position: relative;
 
@@ -156,7 +155,9 @@
     //   transform: scale(0.8);
     // }
     @media @tablet, @phone {
+      flex: auto;
       width: 80%;
+      max-width: 491px;
     }
   }
 

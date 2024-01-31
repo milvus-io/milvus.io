@@ -116,10 +116,12 @@ const Footer = ({ darkMode = true, t, className }) => {
                   );
                 }
                 return (
-                  <Link key={`${index}-c.name`} href={c.to}>
-                    <a className={styles.itemEntry}>
-                      {c.trans ? t(`v3trans.main.nav.${c.name}`) : c.name}
-                    </a>
+                  <Link
+                    key={`${index}-c.name`}
+                    href={c.to}
+                    className={styles.itemEntry}
+                  >
+                    {c.trans ? t(`v3trans.main.nav.${c.name}`) : c.name}
                   </Link>
                 );
               })}

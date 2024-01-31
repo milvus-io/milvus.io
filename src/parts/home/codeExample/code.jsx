@@ -188,10 +188,11 @@ const Code = props => {
             {t('v3trans.home.code.search')}
             <span className={classes.horizontalShootingStar} />
           </div>
-          <Link href={learnMoreLink}>
-            <a className={clsx(classes.sBtn, classes.learnMore)}>
-              {t('v3trans.home.code.learn')}
-            </a>
+          <Link
+            href={learnMoreLink}
+            className={clsx(classes.sBtn, classes.learnMore)}
+          >
+            {t('v3trans.home.code.learn')}
           </Link>
         </div>
       </div>

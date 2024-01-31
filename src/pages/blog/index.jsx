@@ -130,8 +130,8 @@ const BlogTemplate = props => {
             </div>
             <div className={clsx('col-7', styles.featuredBlogContent)}>
               <p className={styles.tag}>{featuredBlog.tags.join(' ')}</p>
-              <Link href={featuredBlog.href}>
-                <a className={styles.title}>{featuredBlog.title}</a>
+              <Link href={featuredBlog.href} className={styles.title}>
+                {featuredBlog.title}
               </Link>
               <p className={styles.desc}>{featuredBlog.desc}</p>
             </div>

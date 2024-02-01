@@ -16,8 +16,8 @@ export default function VersionSelector(props) {
 
   return (
     <div className={classes.selectorWrapper}>
-      <Link href={homeLink}>
-        <a className={classes.homeBtn}>{homeLabel}</a>
+      <Link href={homeLink} className={classes.homeBtn}>
+        {homeLabel}
       </Link>
 
       <Select
@@ -31,14 +31,13 @@ export default function VersionSelector(props) {
       >
         {versions.map(v => (
           <MenuItem value={v} key={v}>
-            <Link href={`${linkPrefix}/${v}/${linkSurfix}`}>
-              <a
-                className={clsx(classes.versionLink, {
-                  [classes.disabledLink]: v === curVersion,
-                })}
-              >
-                {v}
-              </a>
+            <Link
+              href={`${linkPrefix}/${v}/${linkSurfix}`}
+              className={clsx(classes.versionLink, {
+                [classes.disabledLink]: v === curVersion,
+              })}
+            >
+              {v}
             </Link>
           </MenuItem>
         ))}

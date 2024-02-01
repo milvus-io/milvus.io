@@ -13,7 +13,7 @@ const Layout = ({
     <>
       <Header darkMode={darkMode} t={t} className={headerClassName} />
       {children}
-      {showFooter && <Footer t={t} />}
+      {showFooter && <Footer />}
     </>
   );
 };

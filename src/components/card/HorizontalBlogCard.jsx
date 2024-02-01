@@ -17,37 +17,35 @@ export default function HorizontalBlogCard(props) {
     setImgLoading(false);
   };
   return (
-    <Link href={`/blog/${id}`}>
-      <a style={{ display: 'block' }}>
-        <Card classes={{ root: styles.root }} sx={{ boxShadow: 0 }}>
-          <CardMedia
-            component="img"
-            classes={{ img: styles.cardImg }}
-            className={clsx({ [styles.loading]: imgLoading })}
-            src={cover}
-            alt={title}
-            onLoad={handleImgLoad}
-          />
-          {imgLoading && (
-            <Skeleton variant="rectangular" width={250} height={160} />
-          )}
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <CardContent classes={{ root: styles.cardContent }}>
-              {tags?.length && (
-                <Typography component="div" variant="h7" className={styles.tag}>
-                  {tags[0]}
-                </Typography>
-              )}
-              <Typography variant="h4" component="div" className={styles.title}>
-                {title}
+    <Link href={`/blog/${id}`} style={{ display: 'block' }}>
+      <Card classes={{ root: styles.root }} sx={{ boxShadow: 0 }}>
+        <CardMedia
+          component="img"
+          classes={{ img: styles.cardImg }}
+          className={clsx({ [styles.loading]: imgLoading })}
+          src={cover}
+          alt={title}
+          onLoad={handleImgLoad}
+        />
+        {imgLoading && (
+          <Skeleton variant="rectangular" width={250} height={160} />
+        )}
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <CardContent classes={{ root: styles.cardContent }}>
+            {tags?.length && (
+              <Typography component="div" variant="h7" className={styles.tag}>
+                {tags[0]}
               </Typography>
-              <Typography component="div" variant="h7" className={styles.desc}>
-                {desc}
-              </Typography>
-            </CardContent>
-          </Box>
-        </Card>
-      </a>
+            )}
+            <Typography variant="h4" component="div" className={styles.title}>
+              {title}
+            </Typography>
+            <Typography component="div" variant="h7" className={styles.desc}>
+              {desc}
+            </Typography>
+          </CardContent>
+        </Box>
+      </Card>
     </Link>
   );
 }

@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { LogoSection, ActionBar } from './Logos';
 
 export default function DesktopHeader(props) {
-  const { darkMode = false } = props;
+  const { darkMode = false, className } = props;
   const theme = darkMode ? 'dark' : 'light';
 
   const toolRef = useRef(null);
@@ -59,152 +59,151 @@ export default function DesktopHeader(props) {
       })}
       ref={headerContainerRef}
     >
-      <div className={clsx(pageClasses.container, classes.desktopHeader)}>
+      <div
+        className={clsx(
+          pageClasses.container,
+          classes.desktopHeader,
+          className
+        )}
+      >
         <LogoSection lightMode={!isDarkLogo} />
         <div className={classes.headerNavBar}>
           <div className={classes.leftSection}>
             <ul className={classes.menuList}>
               <li>
-                <a href="/docs" className={classes.menuItem}>
+                <Link href="/docs" className={classes.menuItem}>
                   Docs
-                </a>
+                </Link>
               </li>
               <li>
-                <button
-                  ref={tutRef}
-                  className={classes.menuItem}
-                  onClick={() => setIsDesktopTutOpen(true)}
-                >
-                  Tutorials
-                </button>
+                <div className={classes.subMenuWrapper}>
+                  <button
+                    ref={tutRef}
+                    className={classes.menuItem}
+                    onClick={() => setIsDesktopTutOpen(true)}
+                  >
+                    Tutorials
+                  </button>
+                  <ul className={classes.subMenuList}>
+                    <li>
+                      <Link
+                        href="https://codelabs.milvus.io/"
+                        className={classes.subMenuLink}
+                        target="_blank"
+                      >
+                        Codelabs
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/bootcamp" className={classes.subMenuLink}>
+                        Bootcamp
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/milvus-demos"
+                        className={classes.subMenuLink}
+                      >
+                        Demos
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        href="https://www.youtube.com/c/MilvusVectorDatabase"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.subMenuLink}
+                      >
+                        Video
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </li>
               <li>
-                <button
-                  ref={toolRef}
-                  className={classes.menuItem}
-                  onClick={() => setIsDesktopToolOpen(true)}
-                >
-                  Tools
-                </button>
+                <div className={classes.subMenuWrapper}>
+                  <button
+                    ref={toolRef}
+                    className={classes.menuItem}
+                    onClick={() => setIsDesktopToolOpen(true)}
+                  >
+                    Tools
+                  </button>
+
+                  <ul className={classes.subMenuList}>
+                    <li>
+                      <Link
+                        href="https://github.com/zilliztech/attu"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.subMenuLink}
+                      >
+                        Attu
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        href="https://github.com/zilliztech/milvus_cli"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.subMenuLink}
+                      >
+                        Milvus CLI
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        href="/tools/sizing"
+                        className={classes.subMenuLink}
+                      >
+                        Sizing Tool
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://github.com/zilliztech/milvus-backup"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.subMenuLink}
+                      >
+                        Milvus Backup
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </li>
               <li>
-                <a href="/blog" className={classes.menuItem}>
+                <Link href="/blog" className={classes.menuItem}>
                   Blog
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/community" className={classes.menuItem}>
+                <Link href="/community" className={classes.menuItem}>
                   Community
-                </a>
+                </Link>
               </li>
             </ul>
-            <Menu
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
-              anchorEl={tutRef.current}
-              open={isDesktopTutOpen}
-              onClose={() => {
-                setIsDesktopTutOpen(false);
-              }}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-            >
-              <MenuItem onClick={handleMenuLinkClick}>
-                <a
-                  href="https://codelabs.milvus.io/"
-                  className={classes.menuLink}
-                >
-                  Codelabs
-                </a>
-              </MenuItem>
-              <MenuItem onClick={handleMenuLinkClick}>
-                <a href="/bootcamp" className={classes.menuLink}>
-                  Bootcamp
-                </a>
-              </MenuItem>
-              <MenuItem onClick={handleMenuLinkClick}>
-                <a href="/milvus-demos" className={classes.menuLink}>
-                  Demos
-                </a>
-              </MenuItem>
-              <MenuItem onClick={handleMenuLinkClick}>
-                <a
-                  href="https://www.youtube.com/c/MilvusVectorDatabase"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={classes.menuLink}
-                >
-                  Video
-                </a>
-              </MenuItem>
-            </Menu>
-            <Menu
-              id="demo-positioned-menu"
-              aria-labelledby="demo-positioned-button"
-              anchorEl={toolRef.current}
-              open={isDesktopToolOpen}
-              onClose={() => {
-                setIsDesktopToolOpen(false);
-              }}
-            >
-              <MenuItem onClick={handleMenuLinkClick}>
-                <a
-                  href="https://github.com/zilliztech/attu"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={classes.menuLink}
-                >
-                  Attu
-                </a>
-              </MenuItem>
-              <MenuItem onClick={handleMenuLinkClick}>
-                <a
-                  href="https://github.com/zilliztech/milvus_cli"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={classes.menuLink}
-                >
-                  Milvus CLI
-                </a>
-              </MenuItem>
-              <MenuItem onClick={handleMenuLinkClick}>
-                <a href="/tools/sizing" className={classes.menuLink}>
-                  Sizing Tool
-                </a>
-              </MenuItem>
-              <MenuItem onClick={handleMenuLinkClick}>
-                <a
-                  href="https://github.com/zilliztech/milvus-backup"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={classes.menuLink}
-                >
-                  Milvus Backup
-                </a>
-              </MenuItem>
-            </Menu>
           </div>
 
           <div className={classes.rightSection}>
             <ActionBar />
-            <Link href={`https://cloud.zilliz.com/signup`} target="_blank">
-              <button className={classes.startBtn}>
-                Try Managed Milvus <span>FREE</span>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path
-                    d="M12 3.5L18.364 9.86396L12 16.2279"
-                    stroke="white"
-                    strokeWidth="2"
-                  />
-                  <path d="M18 10H1" stroke="white" strokeWidth="2" />
-                </svg>
-              </button>
+            <Link
+              href={`https://cloud.zilliz.com/signup`}
+              target="_blank"
+              className={classes.startBtn}
+            >
+              Try Managed Milvus <span>FREE</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M12 3.5L18.364 9.86396L12 16.2279"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+                <path d="M18 10H1" stroke="white" strokeWidth="2" />
+              </svg>
             </Link>
           </div>
         </div>

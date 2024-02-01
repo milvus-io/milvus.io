@@ -1,9 +1,12 @@
-@import (reference) '../../styles/mixins.less';
+@import (reference) '../../../styles/global.module.less';
+@import (reference) '../../../styles/responsive.module.less';
 
-.docLayout {
+div.docHeader {
+  .docContainer();
+}
+
+div.mainContainer {
   display: flex;
-  position: relative;
-  width: 100%;
 
   .flexibleContainer {
     position: sticky;
@@ -12,6 +15,8 @@
     background-color: #fff;
     z-index: 999;
     min-width: 24px;
+    flex-shrink: 0;
+    flex-grow: 0;
 
     @media @tablet {
       top: 67px;
@@ -27,6 +32,14 @@
   .contentContainer {
     flex: 1;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  .centerContainer {
+    margin-bottom: 100px;
+  }
+
+  div.docFooter {
+    width: 100%;
   }
 }

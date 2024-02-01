@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import * as styles from '../components/docLayout/index.module.less';
+import * as styles from '../components/layout/docLayout/index.module.less';
 
 /**
  * This is for user select some text then they can easily create a new issue in github.

@@ -3,16 +3,16 @@ import clsx from 'clsx';
 import DesktopHeader from './descktopHeader';
 import MobileHeader from './mobileHeader';
 
-const Header = ({ darkMode = false, t = v => v, className = '' }) => {
+const Header = ({ darkMode = false, className = '' }) => {
   return (
     <header
-      className={clsx(classes.headerContainer, className, {
+      className={clsx(classes.headerContainer, {
         [classes.stickyHeader]: !darkMode,
         [classes.fixedHeader]: darkMode,
       })}
     >
-      <DesktopHeader darkMode={darkMode} />
-      <MobileHeader />
+      <DesktopHeader darkMode={darkMode} className={className} />
+      <MobileHeader className={className} />
     </header>
   );
 };

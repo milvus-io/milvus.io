@@ -1,20 +1,18 @@
 import docUtils from '../../../utils/docs.utils';
 import blogUtils from '../../../utils/blog.utils';
-import HomeContent from '../../../parts/docs/homeContent';
+import HomeContent from '../../../parts/docs/docHome';
 import DocContent from '../../../parts/docs/DocContent';
 import { markdownToHtml } from '../../../utils/common';
 
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Layout from '../../../components/layout';
 import clsx from 'clsx';
-import Footer from '../../../components/footer';
 
 import { useGenAnchor } from '../../../hooks/doc-anchor';
 import { recursionUpdateTree } from '../../../utils/docUtils';
 import LeftNavSection from '../../../parts/docs/leftNavTree';
 import classes from '../../../styles/docs.module.less';
-import DocLayout from '../../../components/docLayout';
+import DocLayout from '../../../components/layout/docLayout';
 
 const TITLE = 'Milvus vector database documentation';
 
@@ -89,7 +87,6 @@ export default function DocHomePage(props) {
               trans={t}
             />
           </div>
-          <Footer t={t} darkMode={false} className="doc-right-footer" />
         </div>
       }
     />

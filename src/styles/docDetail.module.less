@@ -247,3 +247,33 @@
     }
   }
 }
+
+.docDetailContainer {
+  display: flex;
+  justify-content: flex-start;
+
+  .contentSection {
+    max-width: 950px;
+    padding: 0 32px;
+    overflow: hidden;
+    width: calc(100vw - 232px);
+    box-sizing: border-box;
+    will-change: max-width, width;
+  }
+
+  .asideSection {
+    position: relative;
+
+    @media @phone, @tablet {
+      display: none;
+    }
+
+    .rightAnchorTreeWrapper {
+      width: 232px;
+      position: sticky;
+      top: 120px;
+      max-height: calc(100vh - 120px);
+      overflow: auto;
+    }
+  }
+}

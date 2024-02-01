@@ -95,14 +95,13 @@ const ExpansionTreeView = props => {
         {label}
       </CustomIconLink>
     ) : (
-      <Link href={originUrl}>
-        <a
-          className={clsx('mv3-item-link', {
-            [linkClassName]: linkClassName,
-          })}
-        >
-          {label}
-        </a>
+      <Link
+        href={originUrl}
+        className={clsx('mv3-item-link', {
+          [linkClassName]: linkClassName,
+        })}
+      >
+        {label}
       </Link>
     );
   };

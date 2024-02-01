@@ -49,7 +49,7 @@ export default function DocContent(props) {
             commitTrans={trans('v3trans.docs.commitTrans')}
           />
         )}
-        <ScoredFeedback trans={trans} pageId={mdId} />
+        {/* <ScoredFeedback trans={trans} pageId={mdId} /> */}
       </div>
     </>
   );

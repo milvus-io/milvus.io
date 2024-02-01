@@ -38,18 +38,18 @@ export default function MenuTreeItem(props) {
       }}
       onClick={() => onNodeClick(id, parentIds, true)}
     >
-      <Link href={linkInfo.link} scroll={true}>
-        <a
-          target={linkInfo.target}
-          className={clsx({
-            [classes.externalLink]: linkInfo.isExternalLink,
-          })}
-        >
-          {label}
-          <span className={classes.iconWrapper}>
-            {linkInfo.isExternalLink && <OutLinkIcon />}
-          </span>
-        </a>
+      <Link
+        href={linkInfo.link}
+        scroll={true}
+        target={linkInfo.target}
+        className={clsx({
+          [classes.externalLink]: linkInfo.isExternalLink,
+        })}
+      >
+        {label}
+        <span className={classes.iconWrapper}>
+          {linkInfo.isExternalLink && <OutLinkIcon />}
+        </span>
       </Link>
     </div>
   );

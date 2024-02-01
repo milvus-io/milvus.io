@@ -1,5 +1,5 @@
 import docUtils from '../../../utils/docs.utils';
-import HomeContent from '../../../parts/docs/homeContent';
+import HomeContent from '../../../parts/docs/docHome';
 import DocContent from '../../../parts/docs/DocContent';
 import { markdownToHtml, copyToCommand } from '../../../utils/common';
 import React, { useRef, useState, useEffect } from 'react';
@@ -17,10 +17,14 @@ import {
 import { useGenAnchor } from '../../../hooks/doc-anchor';
 import { recursionUpdateTree, getMenuInfoById } from '../../../utils/docUtils';
 import LeftNavSection from '../../../parts/docs/leftNavTree';
-import classes from '../../../styles/docHome.module.less';
+import DocLayout from '../../../components/layout/docLayout';
+import { ABSOLUTE_BASE_URL } from '@/consts';
+import classes from '../../../styles/docDetail.module.less';
+import { checkIconTpl } from '../../../components/icons';
 
 export default function DocDetailPage(props) {
   const { homeData, menus, version, versions, locale, id: currentId } = props;
+
   const {
     tree,
     codeList,
@@ -32,6 +36,14 @@ export default function DocDetailPage(props) {
   } = homeData;
 
   const { t } = useTranslation('common');
+  const { title = 'Documentations' } = frontmatter;
+  const absoluteUrl = `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`;
+
+  const seoInfo = {
+    title: `${title} | Milvus`,
+    url: absoluteUrl,
+    desc: summary,
+  };
 
   const [isOpened, setIsOpened] = useState(false);
   const [menuTree, setMenuTree] = useState(menus);
@@ -84,7 +96,7 @@ export default function DocDetailPage(props) {
             pageHref.current = `${baseHref}${href}`;
             copyToCommand(pageHref.current);
 
-            anchor.innerHTML = '<span class="tip">copied</span>';
+            anchor.innerHTML = checkIconTpl;
 
             setTimeout(() => {
               anchor.innerHTML = linkIconTpl;
@@ -101,40 +113,33 @@ export default function DocDetailPage(props) {
   }, [currentId]);
 
   useFilter();
-  useMultipleCodeFilter(currentId);
+  useMultipleCodeFilter();
   useCopyCode(codeList);
   useGenAnchor(version, editPath);
 
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader">
-      <div
-        className={clsx('doc-temp-container', {
-          [`home`]: homeData,
-        })}
-      >
-        <div className={classes.menuWrapper}>
-          <LeftNavSection
-            tree={menuTree}
-            onNodeClick={handleNodeClick}
-            className={classes.docMenu}
-            version={version}
-            versions={versions}
-            linkPrefix={`/docs`}
-            linkSurfix="home"
-            locale={locale}
-            trans={t}
-            home={{
-              label: 'Home',
-              link: '/docs',
-            }}
-          />
-        </div>
-        <div
-          className={clsx('doc-right-container', {
-            [`is-opened`]: isOpened,
-          })}
-        >
-          <div className={clsx('doc-content-container')}>
+    <DocLayout
+      seo={seoInfo}
+      left={
+        <LeftNavSection
+          tree={menuTree}
+          onNodeClick={handleNodeClick}
+          className={classes.docMenu}
+          version={version}
+          versions={versions}
+          linkPrefix={`/docs`}
+          linkSurfix="home"
+          locale={locale}
+          trans={t}
+          home={{
+            label: 'Home',
+            link: `/docs/${version}/home`,
+          }}
+        />
+      }
+      center={
+        <section className={classes.docDetailContainer}>
+          <div className={classes.contentSection}>
             <DocContent
               version={version}
               htmlContent={tree}
@@ -142,25 +147,25 @@ export default function DocDetailPage(props) {
               trans={t}
               commitPath={editPath}
             />
-            <div className="doc-toc-container">
-              <Aside
-                locale={locale}
-                version={version}
-                editPath={editPath}
-                mdTitle={frontmatter.title}
-                category="doc"
-                items={anchorList}
-                title={t('v3trans.docs.tocTitle')}
-                classes={{
-                  root: classes.rightAnchorTreeWrapper,
-                }}
-              />
-            </div>
           </div>
-          <Footer t={t} darkMode={false} className="doc-right-footer" />
-        </div>
-      </div>
-    </Layout>
+
+          <div className={classes.asideSection}>
+            <Aside
+              locale={locale}
+              version={version}
+              editPath={editPath}
+              mdTitle={frontmatter.title}
+              category="doc"
+              items={anchorList}
+              title={t('v3trans.docs.tocTitle')}
+              classes={{
+                root: classes.rightAnchorTreeWrapper,
+              }}
+            />
+          </div>
+        </section>
+      }
+    />
   );
 }
 

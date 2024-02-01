@@ -26,7 +26,6 @@
     "@mui/material": "^5.2.5",
     "@octokit/core": "^3.5.1",
     "@sentry/gatsby": "^6.16.1",
-    "@zilliz/zui": "^0.1.32",
     "axios": "^0.26.0",
     "clsx": "^1.2.1",
     "cropperjs": "^1.5.12",

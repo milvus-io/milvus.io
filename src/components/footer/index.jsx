@@ -13,6 +13,7 @@ import pageClasses from '../../styles/responsive.module.less';
 
 import { DISCORD_INVITE_URL } from '../../consts';
 import MilvusCookieConsent from '../milvusCookieConsent';
+import { useTranslation } from 'react-i18next';
 
 const footerJson = [
   {
@@ -85,15 +86,18 @@ const socialJson = [
   },
 ];
 
-const Footer = ({ darkMode = true, t, className }) => {
+const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
+  const { t } = useTranslation();
+
+  const { root = '', content = '' } = customerClasses;
+
   return (
     <footer
-      className={clsx(styles.footerContainer, {
-        [className]: className,
+      className={clsx(styles.footerContainer, root, {
         [styles.dark]: darkMode,
       })}
     >
-      <div className={clsx(pageClasses.container, styles.contentWrapper)}>
+      <div className={clsx(pageClasses.container, content)}>
         <div className={`${styles.footContentWrapper} `}>
           {footerJson.map(f => (
             <div key={f.title} className={`${styles.footerItem} col-2`}>

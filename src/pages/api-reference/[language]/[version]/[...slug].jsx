@@ -188,7 +188,13 @@ export default function Template(props) {
               />
             </div>
           </div>
-          <Footer t={t} darkMode={false} className="doc-right-footer" />
+          <Footer
+            t={t}
+            darkMode={false}
+            classes={{
+              root: 'doc-right-footer',
+            }}
+          />
         </div>
       </div>
     </Layout>

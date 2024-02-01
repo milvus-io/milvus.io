@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { LogoSection, ActionBar } from './Logos';
 
 export default function DesktopHeader(props) {
-  const { darkMode = false } = props;
+  const { darkMode = false, className } = props;
   const theme = darkMode ? 'dark' : 'light';
 
   const toolRef = useRef(null);
@@ -59,7 +59,13 @@ export default function DesktopHeader(props) {
       })}
       ref={headerContainerRef}
     >
-      <div className={clsx(pageClasses.container, classes.desktopHeader)}>
+      <div
+        className={clsx(
+          pageClasses.container,
+          classes.desktopHeader,
+          className
+        )}
+      >
         <LogoSection lightMode={!isDarkLogo} />
         <div className={classes.headerNavBar}>
           <div className={classes.leftSection}>

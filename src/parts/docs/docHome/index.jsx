@@ -1,6 +1,8 @@
 import Typography from '@mui/material/Typography';
-import HorizontalBlogCard from '../../components/card/HorizontalBlogCard';
+import HorizontalBlogCard from '../../../components/card/HorizontalBlogCard';
 import { useTranslation } from 'react-i18next';
+import classes from './index.module.less';
+import clsx from 'clsx';
 
 export default function HomeContent(props) {
   const { homeData, newestBlog = [] } = props;
@@ -10,10 +12,10 @@ export default function HomeContent(props) {
   return (
     <>
       <div
-        className="doc-home-html-Wrapper doc-style"
+        className={clsx('doc-style', classes.docHomeHtmlWrapper)}
         dangerouslySetInnerHTML={{ __html: homeData }}
       />
-      <Typography component="section" className="doc-home-blog">
+      <Typography component="section" className={classes.docHomeBlog}>
         <Typography variant="h2" component="h2">
           {t('v3trans.docs.blogTitle')}
         </Typography>

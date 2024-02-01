@@ -166,11 +166,7 @@ const Aside = props => {
     );
   };
   return (
-    <section
-      className={clsx('right-nav', styles.rightNavWrapper, {
-        [root]: root,
-      })}
-    >
+    <section className={clsx(styles.rightNavWrapper, root)}>
       <>
         {isShowBtnGroup && (
           <ul

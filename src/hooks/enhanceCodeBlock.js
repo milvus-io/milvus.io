@@ -15,6 +15,10 @@ export const useCopyCode = (codeList = []) => {
             btns.forEach((v, i) => {
               if (i === index) {
                 v.innerHTML = checkIconTpl;
+
+                setTimeout(() => {
+                  v.innerHTML = copyIconTpl;
+                }, 3000);
               } else {
                 v.innerHTML = copyIconTpl;
               }
@@ -83,65 +87,66 @@ export const useFilter = () => {
   }, []);
 };
 
-export const useMultipleCodeFilter = path => {
+export const useMultipleCodeFilter = () => {
   const SEARCH = 'search';
   useEffect(() => {
-    if (window && typeof window !== 'undefined') {
-      const setSearch = val => window.localStorage.setItem(SEARCH, val);
-      const getSearch = () => {
-        return window.localStorage.getItem(SEARCH);
-      };
+    const setSearch = val => window.localStorage.setItem(SEARCH, val);
+    const getSearch = () => {
+      return window.localStorage.getItem(SEARCH);
+    };
 
-      const filterWrappers = document.querySelectorAll('.multipleCode');
+    const filterWrappers = document.querySelectorAll('.multipleCode');
 
-      const allFilters = [];
-      let firstSearch = '';
-      filterWrappers.forEach(fw => {
-        const fs = fw.querySelectorAll('a');
+    const allFilters = [];
+    let firstSearch = '';
+    filterWrappers.forEach(fw => {
+      const fs = fw.querySelectorAll('a');
 
-        fs.forEach(f => {
-          if (!firstSearch) {
-            // <a href='?node' >xxx</a>
-            firstSearch = f.search;
-          }
-          allFilters.push(f);
-        });
+      fs.forEach(f => {
+        if (!firstSearch) {
+          // <a href='?node' >xxx</a>
+          firstSearch = f.search || f.hash.replace('#', '?');
+        }
+        f.key = f.search || f.hash.replace('#', '?');
+        allFilters.push(f);
       });
-      const allContents = document.querySelectorAll(`[class*="language-"]`);
-      if (!allContents.length) return;
-      if (!filterWrappers.length) {
-        allContents.forEach(c => c.classList.toggle('active', true));
-        return;
-      }
-      // the language options of current code block
-      // we must make sure options are same on single page
-      const languageList = Array.prototype.map.call(
-        filterWrappers[0].children,
-        item => item.getAttribute('href')
+    });
+    const allContents = document.querySelectorAll(`[class*="language-"]`);
+    if (!allContents.length) return;
+    if (!filterWrappers.length) {
+      allContents.forEach(c => c.classList.toggle('active', true));
+      return;
+    }
+    // the language options of current code block
+    // we must make sure options are same on single page
+    const languageList = Array.prototype.map.call(
+      filterWrappers[0].children,
+      item => item.getAttribute('href')
+    );
+    const clickEventHandler = targetSearch => {
+      const search = targetSearch.replace('#', '?');
+      setSearch(targetSearch);
+      const currentFilters = allFilters.filter(f => f.key === search);
+      allFilters.forEach(f => f.classList.toggle('active', false));
+      currentFilters.forEach(cf => cf.classList.toggle('active', true));
+      allContents.forEach(c => c.classList.toggle('active', false));
+      const contents = document.querySelectorAll(
+        `.language-${search.replace('?', '').replace(/%/g, '')}`
       );
-      const clickEventHandler = targetSearch => {
-        const search = targetSearch;
-        setSearch(search);
-        const currentFilters = allFilters.filter(f => f.search === search);
-        allFilters.forEach(f => f.classList.toggle('active', false));
-        currentFilters.forEach(cf => cf.classList.toggle('active', true));
-        allContents.forEach(c => c.classList.toggle('active', false));
-        const contents = document.querySelectorAll(
-          `.language-${search.replace('?', '').replace(/%/g, '')}`
-        );
 
-        contents.forEach(c => c.classList.toggle('active', true));
-      };
+      contents.forEach(c => c.classList.toggle('active', true));
+    };
 
-      filterWrappers.forEach(w => {
-        w.addEventListener('click', e => {
-          e.preventDefault();
-          if (e.target.tagName === 'A') {
-            clickEventHandler(e.target.search);
-          }
-        });
+    filterWrappers.forEach(w => {
+      w.addEventListener('click', e => {
+        e.preventDefault();
+        if (e.target.tagName === 'A') {
+          clickEventHandler(e.target.search || e.target.hash);
+        }
       });
+    });
 
+    if (window) {
       const cacheSearch = getSearch();
       let localSearch;
       // there may be no recorded language on the current page
@@ -155,5 +160,5 @@ export const useMultipleCodeFilter = path => {
         clickEventHandler(localSearch);
       }
     }
-  }, [path]);
+  }, []);
 };

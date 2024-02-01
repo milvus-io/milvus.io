@@ -13,6 +13,7 @@ import { LogoSection, ActionBar } from './Logos';
 import { CloseIcon, MenuIcon } from '../icons';
 
 export default function MobileHeader(props) {
+  const { className } = props;
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
 
@@ -37,9 +38,14 @@ export default function MobileHeader(props) {
   return (
     <div className={classes.mobileHeaderContainer}>
       <div
-        className={clsx(pageClasses.container, classes.mobileHeader, {
-          [classes.open]: isMenuOpen,
-        })}
+        className={clsx(
+          pageClasses.container,
+          classes.mobileHeader,
+          className,
+          {
+            [classes.open]: isMenuOpen,
+          }
+        )}
       >
         <LogoSection />
         <nav

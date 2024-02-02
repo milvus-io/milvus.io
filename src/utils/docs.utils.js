@@ -101,6 +101,10 @@ const getDocMenu = (docData, version) => {
   const { newestVersion: newestJava } = generateAvailableApiVersions('java');
   const { newestVersion: newestNode } = generateAvailableApiVersions('node');
   const { newestVersion: newestPy } = generateAvailableApiVersions('pymilvus');
+  const { newestVersion: newestRestful } =
+    generateAvailableApiVersions('restful');
+  const { newestVersion: newestCsharp } =
+    generateAvailableApiVersions('csharp');
 
   const apis = [
     {
@@ -122,6 +126,16 @@ const getDocMenu = (docData, version) => {
       label: 'Node',
       id: 'milvus-sdk-node',
       externalLink: `/api-reference/node/${newestNode}/About.md`,
+    },
+    {
+      label: 'RESTful',
+      id: 'milvus-restful',
+      externalLink: `/api-reference/restful/${newestRestful}/About.md`,
+    },
+    {
+      label: 'C#',
+      id: 'milvus-sdk-csharp',
+      externalLink: `/api-reference/csharp/${newestCsharp}/About.md`,
     },
   ];
 

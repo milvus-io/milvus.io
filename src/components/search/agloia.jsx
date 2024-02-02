@@ -1,4 +1,3 @@
-import React from 'react';
 import { DocSearch } from '@docsearch/react';
 
 import * as classes from './agloia.module.less';

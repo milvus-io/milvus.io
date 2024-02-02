@@ -258,6 +258,7 @@
 
 .container {
   margin: 0 auto;
+  max-width: 1440px;
 
   @media @desktop1024, @desktop1440 {
     width: calc((100vw - 260px) / 14 * 12 + 220px);
@@ -279,6 +280,12 @@
 .docContainer {
   width: 100%;
   margin: 0 auto;
+  max-width: 1440px;
   padding-left: 40px !important;
   padding-right: 40px !important;
+
+  @media @phone {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+  }
 }

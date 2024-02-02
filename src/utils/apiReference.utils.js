@@ -11,17 +11,106 @@ import { join } from 'path';
 import { formatFileName, formatMenus, getNewestVersionTool } from './docUtils';
 
 const API_BASE_DIR = join(process.cwd(), '/src/docs/API_Reference');
+const API_REFERENCE_RELATIVE_BASE_URL = '/api-reference';
+const API_REFERENCE_HOMEPAGE_FILE_NAME = '/About.md';
+
+// base config of api reference, please modify this if you need to add or reduce api reference
 
 const DOCS_MININUM_VERSION = 'v1.0.0';
 const GO_MININUM_VERSION = 'v2.0.0';
 const JAVA_MININUM_VERSION = 'v2.0.4';
 const NODE_MININUM_VERSION = 'v2.0.2';
 const PY_MININUM_VERSION = 'v2.0.2';
+const RESTFUL_MININUM_VERSION = 'v2.2.x';
+const CSHARP_MININUM_VERSION = 'v2.2.x';
+
+const API_REFERENCE_BASE_CONFIG = {
+  python: {
+    id: 'pymilvus',
+    folderName: 'pymilvus',
+    label: 'Python',
+    langAlias: 'python',
+    homepageUrl: '',
+    homepageName: API_REFERENCE_HOMEPAGE_FILE_NAME,
+    minVersion: PY_MININUM_VERSION,
+  },
+  java: {
+    id: 'milvus-sdk-java',
+    folderName: 'milvus-sdk-java',
+    label: 'Java',
+    langAlias: 'java',
+    homepageUrl: '',
+    homepageName: API_REFERENCE_HOMEPAGE_FILE_NAME,
+    minVersion: JAVA_MININUM_VERSION,
+  },
+  go: {
+    label: 'Go',
+    langAlias: 'go',
+    id: 'milvus-sdk-go',
+    folderName: 'milvus-sdk-go',
+    homepageUrl: '',
+    homepageName: API_REFERENCE_HOMEPAGE_FILE_NAME,
+    minVersion: GO_MININUM_VERSION,
+  },
+  node: {
+    label: 'Node',
+    langAlias: 'node',
+    id: 'milvus-sdk-node',
+    folderName: 'milvus-sdk-node',
+    homepageUrl: '',
+    homepageName: API_REFERENCE_HOMEPAGE_FILE_NAME,
+    minVersion: NODE_MININUM_VERSION,
+  },
+  restful: {
+    label: 'RESTful',
+    langAlias: 'restful',
+    id: 'milvus-restful',
+    folderName: 'milvus-restful',
+    homepageUrl: '',
+    homepageName: API_REFERENCE_HOMEPAGE_FILE_NAME,
+    minVersion: RESTFUL_MININUM_VERSION,
+  },
+  csharp: {
+    label: 'C#',
+    langAlias: 'csharp',
+    id: 'milvus-sdk-csharp',
+    folderName: 'milvus-sdk-csharp',
+    homepageUrl: '',
+    homepageName: API_REFERENCE_HOMEPAGE_FILE_NAME,
+    minVersion: CSHARP_MININUM_VERSION,
+  },
+};
+
+/**
+ * Generate API reference data for the specified language.
+ *
+ * @param {string} lang - the language for which API reference data is to be generated
+ * @returns {object} {
+ *    newestVersion: string,
+ *    versions: string[],
+ *    apiConfig: object
+ * }
+ */
+const generateApiData = lang => {
+  let apiConfig = API_REFERENCE_BASE_CONFIG[lang];
+  const { folderName, minVersion, langAlias, homepageName } = apiConfig;
+  const filePath = `${API_BASE_DIR}/${folderName}`;
+
+  const versions = fs.readdirSync(filePath);
+  const { newestVersion, list } = getNewestVersionTool(versions, minVersion);
+  apiConfig.homepageUrl = `${API_REFERENCE_RELATIVE_BASE_URL}/${langAlias}/${newestVersion}/${homepageName}`;
+
+  return {
+    newestVersion,
+    versions,
+    apiConfig,
+  };
+};
 
 /**
  * 描述 api refernence verison of current program langugage, without old html versions
  * @date 2022-09-19
- * @param {any} language go | java | node | pymilvus
+ * @param {any} language go | java | node | pymilvus | restful | csharp
  * @returns {any}
  */
 export const generateAvailableApiVersions = language => {
@@ -67,7 +156,7 @@ const generateAllApiData = () => {
     const { lang, versions } = v;
 
     versions.forEach(version => {
-      const menu = walkApiFiels({
+      const menu = walkApiFiles({
         basePath: join(API_BASE_DIR, `/${lang}/${version}`),
         sufixPath: '',
         contentList,
@@ -144,6 +233,16 @@ function getSdkLang(lang) {
         sdk: `milvus-sdk-node`,
         minVersion: NODE_MININUM_VERSION,
       };
+    case 'restful':
+      return {
+        sdk: `milvus-restful`,
+        minVersion: RESTFUL_MININUM_VERSION,
+      };
+    case 'csharp':
+      return {
+        sdk: `milvus-sdk-csharp`,
+        minVersion: CSHARP_MININUM_VERSION,
+      };
     default:
       return {
         sdk: `pymilvus`,
@@ -160,8 +259,10 @@ function getLangFromSdk(programLang) {
       return 'java';
     case 'milvus-sdk-node':
       return 'node';
-    case 'pymilvus':
-      return 'pymilvus';
+    case 'milvus-restful':
+      return 'restful';
+    case 'milvus-sdk-csharp':
+      return 'csharp';
     default:
       return 'pymilvus';
   }
@@ -176,9 +277,10 @@ function getLangFromSdk(programLang) {
  * @param {any} config} includes current program language and version
  * @returns {any} an nested list use for menu
  */
-function walkApiFiels({ basePath, sufixPath: path, contentList, config }) {
+function walkApiFiles({ basePath, sufixPath: path, contentList, config }) {
   const originPath = join(basePath, path);
 
+  debugger;
   const paths = fs.readdirSync(originPath);
 
   return paths.map(subPath => {
@@ -192,7 +294,7 @@ function walkApiFiels({ basePath, sufixPath: path, contentList, config }) {
         label: formatFileName(subPath),
         absolutePath: filePath,
         isMenu: true,
-        children: walkApiFiels({
+        children: walkApiFiles({
           basePath,
           sufixPath,
           contentList,

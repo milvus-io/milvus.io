@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
-import ScoredFeedback from '../../components/scoredFeedback';
-import GitCommitInfo from './GitCommitInfo';
-import { useGithubCommits } from '../../http/hooks';
+import GitCommitInfo from '../GitCommitInfo';
+import { useGithubCommits } from '../../../http/hooks';
 
 export default function DocContent(props) {
   const { commitPath, version, htmlContent, mdId, trans } = props;

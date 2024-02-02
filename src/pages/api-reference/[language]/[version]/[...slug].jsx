@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import Layout from '../../../../components/layout';
 import LeftNavSection from '../../../../parts/docs/leftNavTree';
 import { useTranslation } from 'react-i18next';
 import Aside from '../../../../components/aside';
-import Footer from '../../../../components/footer';
 // import { useCodeCopy } from '../hooks/doc-dom-operation';
 import { markdownToHtml } from '../../../../utils/common';
 import { recursionUpdateTree } from '../../../../utils/docUtils';
-import * as classes from '../../../../styles/docHome.module.less';
+import classes from '../../../../styles/docDetail.module.less';
 import apiUtils from '../../../../utils/apiReference.utils';
+import DocLayout from '../../../../components/layout/docLayout';
+import DocContent from '../../../../parts/docs/DocContent';
+import { useState } from 'react';
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -149,55 +148,43 @@ export default function Template(props) {
   const versionLinkPrefix = `/api-reference/${category}`;
 
   return (
-    <Layout t={t} showFooter={false} headerClassName="docHeader">
-      <div className={'doc-temp-container'}>
-        <div className={classes.menuWrapper}>
-          <LeftNavSection
-            tree={menuTree}
-            onNodeClick={handleNodeClick}
-            className={classes.docMenu}
-            version={version}
-            versions={versions}
-            linkPrefix={versionLinkPrefix}
-            linkSurfix="About.md"
-            locale={locale}
-            trans={t}
-            home={{
-              label: 'Doc',
-              link: '/docs',
-            }}
-          />
-        </div>
-        <div
-          className={clsx('doc-right-container', {
-            [`is-opened`]: isOpened,
-          })}
-        >
-          <div className={'doc-content-container'}>
-            <div className="doc-post-wrapper doc-style">
-              <div
-                className={`api-reference-wrapper doc-style ${category}`}
-                dangerouslySetInnerHTML={{ __html: doc }}
-              ></div>
-            </div>
-            <div className="doc-toc-container">
-              <Aside
-                apiReferenceData={apiReferenceData}
-                category="api"
-                isHome={false}
-              />
-            </div>
+    <DocLayout
+      left={
+        <LeftNavSection
+          tree={menuTree}
+          onNodeClick={handleNodeClick}
+          className={classes.docMenu}
+          version={version}
+          versions={versions}
+          linkPrefix={versionLinkPrefix}
+          linkSurfix="About.md"
+          locale={locale}
+          trans={t}
+          home={{
+            label: 'Doc',
+            link: '/docs',
+          }}
+        />
+      }
+      center={
+        <section className={classes.docDetailContainer}>
+          <div className={classes.contentSection}>
+            <DocContent version={version} htmlContent={doc} mdId={name} />
           </div>
-          <Footer
-            t={t}
-            darkMode={false}
-            classes={{
-              root: 'doc-right-footer',
-            }}
-          />
-        </div>
-      </div>
-    </Layout>
+
+          <div className={classes.asideSection}>
+            <Aside
+              apiReferenceData={apiReferenceData}
+              category="api"
+              isHome={false}
+              classes={{
+                root: classes.rightAnchorTreeWrapper,
+              }}
+            />
+          </div>
+        </section>
+      }
+    />
   );
 }
 

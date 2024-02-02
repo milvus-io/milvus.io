@@ -23,7 +23,6 @@ const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
           <Tags list={tags} tagsClass={styles.tags} />
         </div>
         <h6 className={styles.title}>{title}</h6>
-        <p className={styles.desc}>{desc}</p>
       </div>
     </Link>
   );

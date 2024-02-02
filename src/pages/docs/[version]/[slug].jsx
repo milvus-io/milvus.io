@@ -1,6 +1,5 @@
 import docUtils from '../../../utils/docs.utils';
-import HomeContent from '../../../parts/docs/docHome';
-import DocContent from '../../../parts/docs/DocContent';
+import DocContent from '../../../parts/docs/docContent';
 import { markdownToHtml, copyToCommand } from '../../../utils/common';
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';

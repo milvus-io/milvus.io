@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import Giscus from '@giscus/react';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
@@ -7,10 +7,14 @@ import Tags from '../../components/tags';
 import BlogCard from '../../components/card/BlogCard';
 import dayjs from 'dayjs';
 import Share from '../../components/share';
-import * as styles from '../../styles/blog.module.less';
+import styles from '../../styles/blogDetail.module.less';
 import blogUtils from '../../utils/blog.utils';
 import { markdownToHtml } from '../../utils/common';
 import clsx from 'clsx';
+import BlogAnchorSection from '../../parts/blogs/blogAnchors';
+import pageClasses from '../../styles/responsive.module.less';
+import { ABSOLUTE_BASE_URL } from '@/consts';
+import { useCopyCode } from '../../hooks/enhanceCodeBlock';
 
 export default function Template(props) {
   const {
@@ -24,11 +28,15 @@ export default function Template(props) {
     id,
     desc,
     cover,
+    anchorList,
+    codeList,
   } = props;
 
+  const docContainer = useRef(null);
   const { t } = useTranslation('common');
+
   const html = useMemo(() => newHtml.replace(/<h1.*<\/h1>/, ''), [newHtml]);
-  const shareUrl = useMemo(() => `https://milvus.io/blog/${id}`, [id]);
+  const shareUrl = useMemo(() => `${ABSOLUTE_BASE_URL}/blog/${id}`, [id]);
 
   const dateTime = useMemo(() => dayjs(date).format('MMMM DD, YYYY'), [date]);
   const moreBlogs = useMemo(
@@ -38,6 +46,8 @@ export default function Template(props) {
         .slice(0, 3),
     [blogList, id, tags]
   );
+
+  useCopyCode(codeList);
 
   const handleTagClick = tag => {
     navigate(`/blog?page=1#${tag}`);
@@ -52,71 +62,60 @@ export default function Template(props) {
         <meta property="og:description" content={desc} />
         <meta property="og:url" content={shareUrl} />
       </Head>
-      <main>
-        <section className={clsx('col-12 col-8 col-4', styles.blogWrapper)}>
-          <p className={styles.authorDate}>
-            <span>{dateTime}</span>
-            {author && <span>by {author}</span>}
-          </p>
-          <h1 className={styles.title}>{title}</h1>
+      <div>
+        <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
+          <section className={styles.blogHeader}>
+            <p className={styles.authorDate}>
+              <span>{dateTime}</span>
+              {author && <span>by {author}</span>}
+            </p>
+            <h1 className={styles.title}>{title}</h1>
 
-          <Tags
-            list={tags}
-            tagsClass={clsx('col-8', styles.tags)}
-            onClick={handleTagClick}
-          />
+            <Tags
+              list={tags}
+              tagsClass={styles.tags}
+              onClick={handleTagClick}
+            />
+          </section>
 
-          <section className={clsx('col-8', styles.shareContainer)}>
+          <section className={styles.blogContent}>
+            <div
+              className={clsx('doc-style', styles.articleContainer)}
+              ref={docContainer}
+              dangerouslySetInnerHTML={{ __html: html }}
+            ></div>
+
+            <div className={styles.anchorsContainer}>
+              <BlogAnchorSection
+                anchors={anchorList}
+                shareUrl={shareUrl}
+                title={title}
+                description={desc}
+                container={docContainer}
+                imgUrl={`https://${cover}`}
+                id={id}
+                classes={{
+                  root: styles.anchorContainer,
+                }}
+              />
+            </div>
+          </section>
+
+          <section className={styles.mobileShareSection}>
+            <p>Like the article? Spread the word</p>
             <Share
               url={shareUrl}
               quote={title}
               desc={desc}
               image={cover}
               wrapperClass={styles.share}
-              vertical={true}
+              vertical={false}
             />
           </section>
+        </div>
 
-          <section className={clsx('col-8', styles.desc)}>
-            <span className={styles.line}></span>
-            <span>{desc}</span>
-          </section>
-
-          <div
-            className={clsx('doc-style col-8', styles.articleContent)}
-            dangerouslySetInnerHTML={{ __html: html }}
-          ></div>
-          <div className={clsx('col-8', styles.articleContent)}>
-            <Giscus
-              id="comments"
-              repo="milvus-io/community"
-              repoId="MDEwOlJlcG9zaXRvcnkyMjcwMTEyMDI="
-              category="General"
-              categoryId="DIC_kwDODYfqgs4B_yDj"
-              mapping="title"
-              term="Welcome to Milvus.io"
-              reactionsEnabled="1"
-              emitMetadata="0"
-              inputPosition="top"
-              theme="light"
-              lang="en"
-              loading="lazy"
-            />
-          </div>
-        </section>
-        <section className={clsx('col-8', styles.shareSection)}>
-          <p>Like the article? Spread the word</p>
-          <Share
-            url={shareUrl}
-            quote={title}
-            desc={desc}
-            image={cover}
-            wrapperClass={styles.share}
-            vertical={false}
-          />
-        </section>
-        <section className={clsx('col-12 col-8 col-4', styles.moreBlog)}>
-          <h2>Keep Reading</h2>
+        <section className={clsx(pageClasses.container, styles.bottomLayout)}>
+          <h2 className={styles.title}>Keep Reading</h2>
           <ul className={styles.blogCards}>
             {moreBlogs.map((v, index) => {
               const { desc, cover, date, tags, title, id } = v;
@@ -136,7 +135,7 @@ export default function Template(props) {
             })}
           </ul>
         </section>
-      </main>
+      </div>
     </Layout>
   );
 }
@@ -156,8 +155,8 @@ export const getStaticProps = async ({ locale = 'en', params }) => {
 
   const { content, ...rest } = allData.find(v => v.id === id);
 
-  const { tree } = await markdownToHtml(content, {
-    showAnchor: false,
+  const { tree, codeList, anchorList } = await markdownToHtml(content, {
+    showAnchor: true,
     version: 'blog',
   });
 
@@ -166,6 +165,8 @@ export const getStaticProps = async ({ locale = 'en', params }) => {
       locale,
       blogList: allData,
       newHtml: tree,
+      anchorList,
+      codeList,
       ...rest,
       // author,
       // date,

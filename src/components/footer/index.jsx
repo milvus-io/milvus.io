@@ -97,10 +97,16 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
         [styles.dark]: darkMode,
       })}
     >
-      <div className={clsx(pageClasses.container, content)}>
-        <div className={`${styles.footContentWrapper} `}>
+      <div
+        className={clsx(
+          pageClasses.container,
+          styles.contentContainer,
+          content
+        )}
+      >
+        <div className={styles.topBar}>
           {footerJson.map(f => (
-            <div key={f.title} className={`${styles.footerItem} col-2`}>
+            <div key={f.title} className={styles.footerItem}>
               <span className={styles.itemTitle}>
                 {t(`v3trans.main.nav.${f.title}`)}
               </span>
@@ -132,7 +138,7 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
             </div>
           ))}
         </div>
-        <div className={styles.bottombar}>
+        <div className={styles.bottomBar}>
           <span>{`Milvus. ${new Date().getFullYear()} All rights reserved.`}</span>
 
           <div className={styles.social}>

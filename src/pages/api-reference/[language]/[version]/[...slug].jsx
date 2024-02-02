@@ -7,7 +7,7 @@ import { recursionUpdateTree } from '../../../../utils/docUtils';
 import classes from '../../../../styles/docDetail.module.less';
 import apiUtils from '../../../../utils/apiReference.utils';
 import DocLayout from '../../../../components/layout/docLayout';
-import DocContent from '../../../../parts/docs/DocContent';
+import DocContent from '../../../../parts/docs/docContent';
 import { useState } from 'react';
 
 function capitalizeFirstLetter(string) {

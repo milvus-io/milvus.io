@@ -4,7 +4,6 @@
   min-height: 390px;
   background-color: #f5f8fb;
   box-sizing: border-box;
-  padding: 60px 48px;
 }
 
 .dark {
@@ -31,12 +30,29 @@
   }
 }
 
-.footContentWrapper {
-  .flexstart;
+.contentContainer {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.topBar {
+  display: flex;
+  margin-bottom: 60px;
+
+  .footerItem {
+    flex: 0 0 136px;
+  }
+
+  @media @tablet {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: 40px;
+  }
+
   @media @phone {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 40px;
   }
 }
 
@@ -60,8 +76,7 @@
   .hover;
 }
 
-.bottombar {
-  margin-top: 85px;
+.bottomBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -73,27 +88,12 @@
 }
 
 .social {
-  .spaceBetween;
-  margin-left: 278px;
+  display: flex;
+  margin-left: 0;
 
-  & > a:not(:last-child) {
-    margin-right: 70px;
-
-    @media @phone {
-      margin-right: 0;
-    }
-  }
-
-  @media (max-width: 1240px) {
-    margin-left: 178px;
-  }
-
-  @media @phone {
-    display: flex;
-    margin-left: 0;
-    margin-bottom: 24px;
-    justify-content: space-between;
-  }
+  justify-content: space-between;
+  gap: 70px;
+  align-items: center;
 
   .iconWrapper {
     height: 30px;
@@ -106,6 +106,7 @@
 
   @media @phone {
     width: 100%;
+    margin-bottom: 24px;
   }
 
   a {

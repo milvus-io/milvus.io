@@ -1,5 +1,7 @@
 import React from 'react';
 import * as styles from './index.module.less';
+import Link from 'next/link';
+import clsx from 'clsx';
 
 const SolutionCard = ({
   img,
@@ -9,32 +11,25 @@ const SolutionCard = ({
   className = '',
   liveDemo = '',
 }) => {
-  const handleClick = () => {
-    window.open(href, {
-      target: '_blank',
-      rel: 'noopener noreferrer',
-    });
-  };
   return (
-    <div
+    <Link
+      href={href}
       tabIndex={0}
-      role="button"
-      className={`${styles.solutionCard} ${className}`}
-      onClick={handleClick}
-      onKeyDown={handleClick}
+      className={clsx(styles.solutionCard, className)}
+      target="_blank"
+      rel="noopener noreferrer"
     >
-      <div className={styles.titleBar}>
-        <h3 className={styles.title}>{title}</h3>
-        {img ? <img src={img} alt="icon" className={styles.img} /> : null}
+      <div>
+        <div className={styles.titleBar}>
+          <h3 className={styles.title}>{title}</h3>
+          {img ? <img src={img} alt="icon" className={styles.img} /> : null}
+        </div>
+
+        <p className={styles.content}>{content}</p>
       </div>
 
-      <p className={styles.content}>{content}</p>
-      {liveDemo && (
-        <a href={liveDemo} target="_blank" rel="noopener noreferrer">
-          Live Demo
-        </a>
-      )}
-    </div>
+      {liveDemo && <Link href={liveDemo}>Live Demo</Link>}
+    </Link>
   );
 };
 

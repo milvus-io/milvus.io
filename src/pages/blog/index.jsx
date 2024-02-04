@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import Head from 'next/head';
 import blogUtils from '../../utils/blog.utils';
-import Layout from '../../components/layout';
+import Layout from '../../components/layout/commonLayout';
 import BlogCard from '../../components/card/BlogCard';
 import Tags from '../../components/tags';
 import { useWindowSize } from '../../http/hooks';

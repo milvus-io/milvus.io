@@ -3,7 +3,7 @@ import DocContent from '../../../parts/docs/docContent';
 import { markdownToHtml, copyToCommand } from '../../../utils/common';
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Layout from '../../../components/layout';
+import Layout from '../../../components/layout/commonLayout';
 import { linkIconTpl } from '../../../components/icons';
 import clsx from 'clsx';
 import Aside from '../../../components/aside';

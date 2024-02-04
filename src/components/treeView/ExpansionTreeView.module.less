@@ -1,4 +1,4 @@
-@import (reference) '../../styles/responsive.less';
+@import (reference) '../../styles/global.module.less';
 
 .mv3TreeView {
   .MuiTreeItem-content {
@@ -12,7 +12,7 @@
       font-size: 16px;
       line-height: 24px;
 
-      color: var(--color-grey-01);
+      color: @color-grey-01;
     }
   }
 
@@ -21,7 +21,7 @@
     .MuiTreeItem-label {
       font-weight: bold;
 
-      color: var(--color-text-primary);
+      color: @color-text-primary;
     }
   }
 }

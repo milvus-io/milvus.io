@@ -8,6 +8,7 @@ import BlogCard from '../../components/card/BlogCard';
 import Tags from '../../components/tags';
 import { useWindowSize } from '../../http/hooks';
 import * as styles from '../../styles/blog.module.less';
+import pageClasses from '../../styles/responsive.module.less';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 
@@ -122,7 +123,7 @@ const BlogTemplate = props => {
         <meta property="og:url" content="https://milvus.io/blog" />
       </Head>
       <main>
-        <div className={clsx('col-12 col-8 col-4', styles.listWrapper)}>
+        <div className={clsx(pageClasses.container, styles.listWrapper)}>
           {/* screen > 1024  */}
           <section className={styles.featuredBlog}>
             <div className={clsx('col-6', styles.featuredImg)}>

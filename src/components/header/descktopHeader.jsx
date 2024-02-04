@@ -15,19 +15,7 @@ export default function DesktopHeader(props) {
   const tutRef = useRef(null);
   const headerContainerRef = useRef(null);
 
-  const [isDesktopTutOpen, setIsDesktopTutOpen] = useState(false);
-  const [isDesktopToolOpen, setIsDesktopToolOpen] = useState(false);
   const [isDarkLogo, setIsDarkLogo] = useState(theme === 'dark');
-
-  const handleMenuLinkClick = e => {
-    const link = e.target?.children[0];
-    if (link && link.tagName.toLowerCase() === 'a') {
-      e.preventDefault();
-      e.stopPropagation();
-      link.click();
-      setIsDesktopTutOpen(false);
-    }
-  };
 
   useEffect(() => {
     const target = headerContainerRef.current;
@@ -77,11 +65,7 @@ export default function DesktopHeader(props) {
               </li>
               <li>
                 <div className={classes.subMenuWrapper}>
-                  <button
-                    ref={tutRef}
-                    className={classes.menuItem}
-                    onClick={() => setIsDesktopTutOpen(true)}
-                  >
+                  <button ref={tutRef} className={classes.menuItem}>
                     Tutorials
                   </button>
                   <ul className={classes.subMenuList}>
@@ -123,11 +107,7 @@ export default function DesktopHeader(props) {
               </li>
               <li>
                 <div className={classes.subMenuWrapper}>
-                  <button
-                    ref={toolRef}
-                    className={classes.menuItem}
-                    onClick={() => setIsDesktopToolOpen(true)}
-                  >
+                  <button ref={toolRef} className={classes.menuItem}>
                     Tools
                   </button>
 

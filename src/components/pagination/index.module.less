@@ -1,4 +1,4 @@
-@import (reference) '../../styles/responsive.less';
+@import (reference) '../../styles/global.module.less';
 
 .pageinationWrapper {
   display: flex;
@@ -55,11 +55,11 @@
       }
 
       &:hover {
-        color: var(--color-text-primary);
+        color: @color-text-primary;
       }
 
       &.active {
-        color: var(--color-text-primary);
+        color: @color-text-primary;
       }
     }
 

@@ -1,5 +1,4 @@
-@import (reference) '../../styles/mixins.less';
-@import (reference) '../../styles/responsive.less';
+@import (reference) '../../styles/global.module.less';
 
 h2.title {
   /* H3/Bold */
@@ -8,7 +7,7 @@ h2.title {
   font-size: 32px;
   line-height: 42px;
 
-  color: var(--color-black);
+  color: @color-black;
 }
 
 .faqLinks {
@@ -36,7 +35,7 @@ h2.title {
     font-size: 16px;
     line-height: 24px;
 
-    color: var(--color-text-primary);
+    color: @color-text-primary;
   }
 }
 

@@ -1,11 +1,9 @@
-import '../styles/global.css';
-// css entry, all site's styles are loaded from this file
-import '../styles/index.less';
+import '../styles/common.css';
+import '../styles/docsStyle.less';
 import '../i18n';
 import 'highlight.js/styles/stackoverflow-light.css';
 import '@docsearch/css';
 import 'instantsearch.css/themes/reset.css';
-import '../styles/fonts.css';
 
 import Head from 'next/head';
 

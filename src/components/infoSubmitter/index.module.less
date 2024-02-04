@@ -1,4 +1,4 @@
-@import (reference) '../../styles/responsive.less';
+@import (reference) '../../styles/global.module.less';
 
 .submitterContainer {
   background-color: #fff;
@@ -22,7 +22,7 @@
     }
     .iconWrapper {
       font-size: 20px;
-      color: var(--color-text-primary);
+      color: @color-text-primary;
       cursor: pointer;
     }
   }
@@ -45,7 +45,7 @@
     text-align: right;
 
     .submitBtn {
-      background: var(--color-primary);
+      background: @color-primary;
       padding: 10px 20px;
       font-size: 14px;
       line-height: 18px;
@@ -57,8 +57,8 @@
       cursor: pointer;
 
       &:disabled {
-        background: var(--color-grey-04);
-        color: var(--color-tag-gray);
+        background: @color-grey-04;
+        color: @color-tag-gray;
       }
     }
   }

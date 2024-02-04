@@ -1,4 +1,4 @@
-@import (reference) '../../styles/responsive.less';
+@import (reference) '../../styles/global.module.less';
 
 .container {
   display: flex;
@@ -14,7 +14,7 @@
       background-color: #fff;
       .MuiTreeItem-label {
         a {
-          color: var(--color-text-primary);
+          color: @color-text-primary;
         }
       }
     }
@@ -47,7 +47,7 @@
 
         letter-spacing: 0.02em;
 
-        color: var(--color-grey-01);
+        color: @color-grey-01;
       }
     }
   }
@@ -65,5 +65,5 @@
   font-size: 14px;
   line-height: 20px;
 
-  color: var(--color-black);
+  color: @color-black;
 }

@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import SvgIcon from '@mui/material/SvgIcon';
 import clsx from 'clsx';
 import * as styles from './index.module.less';
-import './index.less';
+
 import milvus from '/images/milvus_logo.svg';
 import { getFaq } from '../../http';
 import WelcomBlock from './welcomBlock';

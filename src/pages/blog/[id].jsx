@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useRef } from 'react';
 import Giscus from '@giscus/react';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
-import Layout from '../../components/layout';
+import Layout from '../../components/layout/commonLayout';
 import Tags from '../../components/tags';
 import BlogCard from '../../components/card/BlogCard';
 import dayjs from 'dayjs';
@@ -54,93 +54,95 @@ export default function Template(props) {
   };
 
   return (
-    <Layout t={t}>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={desc} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={desc} />
-        <meta property="og:url" content={shareUrl} />
-      </Head>
-      <div>
-        <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
-          <section className={styles.blogHeader}>
-            <p className={styles.authorDate}>
-              <span>{dateTime}</span>
-              {author && <span>by {author}</span>}
-            </p>
-            <h1 className={styles.title}>{title}</h1>
+    <main>
+      <Layout t={t}>
+        <Head>
+          <title>{title}</title>
+          <meta name="description" content={desc} />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={desc} />
+          <meta property="og:url" content={shareUrl} />
+        </Head>
+        <div>
+          <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
+            <section className={styles.blogHeader}>
+              <p className={styles.authorDate}>
+                <span>{dateTime}</span>
+                {author && <span>by {author}</span>}
+              </p>
+              <h1 className={styles.title}>{title}</h1>
 
-            <Tags
-              list={tags}
-              tagsClass={styles.tags}
-              onClick={handleTagClick}
-            />
-          </section>
-
-          <section className={styles.blogContent}>
-            <div
-              className={clsx(
-                'doc-style',
-                'scroll-padding',
-                styles.articleContainer
-              )}
-              ref={docContainer}
-              dangerouslySetInnerHTML={{ __html: html }}
-            ></div>
-
-            <div className={styles.anchorsContainer}>
-              <BlogAnchorSection
-                anchors={anchorList}
-                shareUrl={shareUrl}
-                title={title}
-                description={desc}
-                container={docContainer}
-                imgUrl={`https://${cover}`}
-                id={id}
-                classes={{
-                  root: styles.anchorContainer,
-                }}
+              <Tags
+                list={tags}
+                tagsClass={styles.tags}
+                onClick={handleTagClick}
               />
-            </div>
-          </section>
+            </section>
 
-          <section className={styles.mobileShareSection}>
-            <p>Like the article? Spread the word</p>
-            <Share
-              url={shareUrl}
-              quote={title}
-              desc={desc}
-              image={cover}
-              wrapperClass={styles.share}
-              vertical={false}
-            />
+            <section className={styles.blogContent}>
+              <div
+                className={clsx(
+                  'doc-style',
+                  'scroll-padding',
+                  styles.articleContainer
+                )}
+                ref={docContainer}
+                dangerouslySetInnerHTML={{ __html: html }}
+              ></div>
+
+              <div className={styles.anchorsContainer}>
+                <BlogAnchorSection
+                  anchors={anchorList}
+                  shareUrl={shareUrl}
+                  title={title}
+                  description={desc}
+                  container={docContainer}
+                  imgUrl={`https://${cover}`}
+                  id={id}
+                  classes={{
+                    root: styles.anchorContainer,
+                  }}
+                />
+              </div>
+            </section>
+
+            <section className={styles.mobileShareSection}>
+              <p>Like the article? Spread the word</p>
+              <Share
+                url={shareUrl}
+                quote={title}
+                desc={desc}
+                image={cover}
+                wrapperClass={styles.share}
+                vertical={false}
+              />
+            </section>
+          </div>
+
+          <section className={clsx(pageClasses.container, styles.bottomLayout)}>
+            <h2 className={styles.title}>Keep Reading</h2>
+            <ul className={styles.blogCards}>
+              {moreBlogs.map((v, index) => {
+                const { desc, cover, date, tags, title, id } = v;
+                return (
+                  <li key={index}>
+                    <BlogCard
+                      locale={locale}
+                      title={title}
+                      date={date}
+                      cover={cover}
+                      desc={desc}
+                      tags={tags}
+                      path={id}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
           </section>
         </div>
-
-        <section className={clsx(pageClasses.container, styles.bottomLayout)}>
-          <h2 className={styles.title}>Keep Reading</h2>
-          <ul className={styles.blogCards}>
-            {moreBlogs.map((v, index) => {
-              const { desc, cover, date, tags, title, id } = v;
-              return (
-                <li key={index}>
-                  <BlogCard
-                    locale={locale}
-                    title={title}
-                    date={date}
-                    cover={cover}
-                    desc={desc}
-                    tags={tags}
-                    path={id}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      </div>
-    </Layout>
+      </Layout>
+    </main>
   );
 }
 

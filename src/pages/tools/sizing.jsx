@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import Head from 'next/head';
-import Layout from '../../components/layout';
+import Layout from '../../components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
 import * as classes from '../../styles/sizingTool.module.less';
 import { InfoFilled, DownloadIcon } from '../../components/icons';

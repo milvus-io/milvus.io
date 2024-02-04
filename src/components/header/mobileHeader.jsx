@@ -8,9 +8,10 @@ import classes from './mobileHeader.module.less';
 import pageClasses from '../../styles/responsive.module.less';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useState, useEffect, use } from 'react';
 import { LogoSection, ActionBar } from './Logos';
 import { CloseIcon, MenuIcon } from '../icons';
+import { useWindowSize } from '@/http/hooks';
 
 export default function MobileHeader(props) {
   const { className } = props;
@@ -18,6 +19,14 @@ export default function MobileHeader(props) {
   const [isToolOpen, setIsToolOpen] = useState(false);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const size = useWindowSize();
+
+  useEffect(() => {
+    if (!['tablet', 'phone'].includes(size)) {
+      setIsMenuOpen(false);
+    }
+  }, [size]);
 
   const openTutorial = open => {
     let isOpen = open;
@@ -44,6 +53,8 @@ export default function MobileHeader(props) {
           className,
           {
             [classes.open]: isMenuOpen,
+            // stop scrolling when menu is open
+            'lock-scroll': isMenuOpen,
           }
         )}
       >

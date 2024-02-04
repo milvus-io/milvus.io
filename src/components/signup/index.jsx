@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { submitInfoForm } from '../../http/submitEmail';
 import * as styles from './index.module.less';
+import pageClasses from '../../styles/responsive.module.less';
 import { useSubscribeSrouce } from '../../hooks';
+import clsx from 'clsx';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
@@ -59,7 +61,7 @@ const Signup = ({ callback, t }) => {
 
   return (
     <section className={styles.subscribe}>
-      <div className={`${styles.inner} col-4 col-8 col-12`}>
+      <div className={clsx(pageClasses.container, styles.inner)}>
         <div className={styles.section}>
           <h2>{t('v3trans.signup.signup')}</h2>
           <p>{t('v3trans.signup.montyly')}</p>

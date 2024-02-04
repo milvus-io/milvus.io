@@ -19,7 +19,7 @@ export const useActivateAnchorWhenScroll = ({
       // if the distance from top of current h2 is less than 60px , we activate this h2
       for (let anchor of h2List) {
         const id = anchor.getAttribute('id');
-        const top = anchor.getClientRects()[0].top;
+        const top = anchor.getClientRects()[0]?.top || 0;
         if (top < defaultDistance && top > 0) {
           const href = anchorList.find(v => v.href === id)?.href || '';
           activeAnchorCb(href);

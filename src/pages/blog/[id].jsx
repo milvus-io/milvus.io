@@ -80,7 +80,11 @@ export default function Template(props) {
 
           <section className={styles.blogContent}>
             <div
-              className={clsx('doc-style', styles.articleContainer)}
+              className={clsx(
+                'doc-style',
+                'scroll-padding',
+                styles.articleContainer
+              )}
               ref={docContainer}
               dangerouslySetInnerHTML={{ __html: html }}
             ></div>

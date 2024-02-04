@@ -1,4 +1,4 @@
-@import (reference) '../../../styles/responsive.less';
+@import (reference) '../../../styles/global.module.less';
 
 .floatBordContainer {
   position: fixed;
@@ -95,7 +95,7 @@
 
     .whiteBtn {
       a {
-        color: var(--color-text-primary);
+        color: @color-text-primary;
         box-sizing: border-box;
         background-color: transparent;
         filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.2));

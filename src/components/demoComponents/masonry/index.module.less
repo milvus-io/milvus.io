@@ -1,4 +1,4 @@
-@import (reference) '../../../styles/responsive.less';
+@import (reference) '../../../styles/global.module.less';
 
 .scrollContainer {
   height: 100%;
@@ -50,7 +50,7 @@
     justify-content: center;
 
     &:hover {
-      background-color: var(--color-card-border);
+      background-color: @color-card-border;
 
       &::after {
         visibility: visible;

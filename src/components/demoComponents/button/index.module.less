@@ -1,4 +1,4 @@
-@import (reference) '../../../styles/responsive.less';
+@import (reference) '../../../styles/global.module.less';
 
 .btnContainer {
   overflow: hidden;
@@ -16,9 +16,9 @@
     display: inline-block;
     padding: 16px 32px;
 
-    background-color: var(--color-primary);
+    background-color: @color-primary;
     color: #fff;
-    border: 1px solid var(--color-primary);
+    border: 1px solid @color-primary;
     border-radius: 4px;
 
     transition: all 0.3s;
@@ -32,39 +32,39 @@
     }
 
     &:hover {
-      background-color: var(--color-btn-hover);
-      border: 1px solid var(--color-btn-hover);
+      background-color: @color-btn-hover;
+      border: 1px solid @color-btn-hover;
     }
 
     &:active {
-      background-color: var(--color-btn-press);
-      border: 1px solid var(--color-btn-press);
+      background-color: @color-btn-press;
+      border: 1px solid @color-btn-press;
     }
   }
 
   .text {
-    color: var(--color-primary);
+    color: @color-primary;
   }
 
   .outline {
     display: inline-block;
     padding: 16px 32px;
 
-    border: 1px solid var(--color-primary);
+    border: 1px solid @color-primary;
     border-radius: 4px;
-    color: var(--color-primary);
+    color: @color-primary;
     background-color: #fff;
 
     transition: all 0.3s;
 
     &:hover {
-      color: var(--color-btn-hover);
-      border-color: var(--color-btn-hover);
+      color: @color-btn-hover;
+      border-color: @color-btn-hover;
     }
 
     &:active {
-      color: var(--color-btn-press);
-      border-color: var(--color-btn-press);
+      color: @color-btn-press;
+      border-color: @color-btn-press;
 
       svg {
         path {

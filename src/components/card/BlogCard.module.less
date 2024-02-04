@@ -1,4 +1,4 @@
-@import (reference) '../../styles/responsive.less';
+@import (reference) '../../styles/global.module.less';
 
 .BlogCardWrapper {
   display: block;
@@ -64,7 +64,7 @@
         padding: 0;
         text-transform: uppercase;
         li {
-          color: var(--color-text-primary);
+          color: @color-text-primary;
           font-weight: bold;
           font-size: 14px;
         }

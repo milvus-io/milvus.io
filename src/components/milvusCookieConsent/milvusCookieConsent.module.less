@@ -1,4 +1,4 @@
-@import (reference) '../../styles/responsive.less';
+@import (reference) '../../styles/global.module.less';
 
 .cookieContainer {
   left: 0;
@@ -47,7 +47,7 @@
 }
 
 .headerContent {
-  color: var(--color-white);
+  color: @color-white;
   font-weight: 700;
   margin: 0;
   font-size: 12px;
@@ -59,7 +59,7 @@
 }
 
 .textContent {
-  color: var(--color-white);
+  color: @color-white;
   font-weight: 400;
   font-size: 12px;
   margin: 8px 0 0 0;
@@ -85,8 +85,8 @@
 }
 
 .button {
-  color: var(--color-white);
-  border: 1px solid var(--color-white);
+  color: @color-white;
+  border: 1px solid @color-white;
   border-radius: 40px;
   cursor: pointer;
   display: flex;

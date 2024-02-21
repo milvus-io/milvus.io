@@ -2,7 +2,6 @@ import * as styles from './index.module.less';
 import Item from '../item/item';
 import 'gestalt/dist/gestalt.css';
 import clsx from 'clsx';
-import { useRef, useEffect } from 'react';
 import { Masonry } from 'gestalt';
 
 export default function CustomMasonry({

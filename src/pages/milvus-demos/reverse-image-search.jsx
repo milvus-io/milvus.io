@@ -4,10 +4,10 @@ import Layout from '@/components/layout/commonLayout';
 import classes from '@/styles/imgSearch.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useWindowSize } from '@/http/hooks';
 import { convertBase64UrlToBlob, getBase64Image } from '@/utils/demo-helper';
-import Masonry from '@/components/demoComponents/masonry';
+import CustomMasonry from '@/components/demoComponents/masonry';
 import { search } from '@/http/imageSearch';
 import UploaderHeader from '@/components/demoComponents/uploader';
 import Modal from '@/components/demoComponents/modal';
@@ -16,14 +16,11 @@ import FloatBoard from '@/components/demoComponents/floatBoard';
 import Loading from '@/components/demoComponents/loading';
 import { LeftArrow } from '@/components/githubButton/icons';
 import { formatSearchResult } from '@/utils/imgSearch.utils';
-import { useDetectScrollBottom } from '@/hooks/windowMonitor';
 
 const TITLE =
   'Milvus Reverse Image Search - Open-Source Vector Similarity Application Demo';
 const DESC =
   'With Milvus, you can search by image in a few easy steps. Just click the “Upload Image” button and choose an image to see vector similarity search in action.';
-
-const SCROLL_BOTTOM_THRESHOLD = 200;
 
 export default function ReverseImageSearch() {
   const [searchResult, setSearchResult] = useState([]);
@@ -45,9 +42,6 @@ export default function ReverseImageSearch() {
     handleCloseModal: () => {},
     component: () => <></>,
   });
-
-  // prevent continuous loading images
-  const [loadMoreFlag, setLoadMoreFlag] = useState(true);
   const scrollContainerRef = useRef(null);
 
   const handleImgToBlob = (src, reset = false) => {
@@ -131,29 +125,6 @@ export default function ReverseImageSearch() {
     }
   };
 
-  // const scrollBottom = useDetectScrollBottom();
-
-  // useEffect(() => {
-  //   const func = async () => {
-  //     if (scrollBottom < SCROLL_BOTTOM_THRESHOLD && loadMoreFlag) {
-  //       setPartialLoading(true);
-  //       setLoadMoreFlag(false);
-  //       try {
-  //         await handleImgSearch(file, false, pageIndex);
-  //       } catch (error) {
-  //         console.log(error);
-  //       } finally {
-  //         setPartialLoading(false);
-  //       }
-
-  //       setTimeout(() => {
-  //         setLoadMoreFlag(true);
-  //       }, 1000);
-  //     }
-  //   };
-  //   func();
-  // }, [scrollBottom]);
-
   return (
     <main ref={scrollContainerRef} className={classes.outerContainer}>
       <Layout showFooter={false}>
@@ -178,11 +149,9 @@ export default function ReverseImageSearch() {
 
           <div className={classes.layoutSection}>
             {noData ? (
-              <div className="no-data">
-                <p style={{ textAlign: 'center' }}>No More Data.</p>
-              </div>
+              <div className={classes.noDataTip}>No More Data.</div>
             ) : (
-              <Masonry
+              <CustomMasonry
                 images={searchResult}
                 loading={partialLoading}
                 isSelected={selected.isSelected}

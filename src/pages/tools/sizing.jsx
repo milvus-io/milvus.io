@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import Head from 'next/head';
-import Layout from '../../components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
-import * as classes from '../../styles/sizingTool.module.less';
-import { InfoFilled, DownloadIcon } from '../../components/icons';
-import SizingToolCard from '../../components/card/sizingToolCard';
+import Layout from '@/components/layout/commonLayout';
+import classes from '@/styles/sizingTool.module.less';
+import pageClasses from '@/styles/responsive.module.less';
+import { InfoFilled, DownloadIcon } from '@/components/icons';
+import SizingToolCard from '@/components/card/sizingToolCard';
+import SizingConfigCard from '@/components/card/sizingToolCard/sizingConfigCard';
 import clsx from 'clsx';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
@@ -12,6 +13,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Head from 'next/head';
 
 import {
   memorySizeCalculator,
@@ -24,56 +29,42 @@ import {
   rootCoordCalculator,
   dataNodeCalculator,
   proxyCalculator,
-  customYmlGenerator,
-} from '../../utils/sizingTool';
-
-const INDEX_TYPE_OPTIONS = [
-  {
-    label: 'HNSW',
-    value: 'HNSW',
-  },
-  {
-    label: 'FLAT',
-    value: 'FLAT',
-  },
-  {
-    label: 'IVF_FLAT',
-    value: 'IVF_FLAT',
-  },
-  {
-    label: 'IVF_SQ8',
-    value: 'IVF_SQ8',
-  },
-];
-
-const SEGMENT_SIZE_OPTIONS = [
-  {
-    value: '512',
-    label: '512MB',
-  },
-  {
-    value: '1024',
-    label: '1024MB',
-  },
-  {
-    value: '2048',
-    label: '2048MB',
-  },
-];
+  helmYmlGenerator,
+  operatorYmlGenerator,
+  etcdCalculator,
+  minioCalculator,
+  pulsarCalculator,
+  kafkaCalculator,
+} from '@/utils/sizingTool';
+import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
+import HighlightBlock from '@/components/card/sizingToolCard/codeBlock';
+import {
+  HELM_CONFIG_FILE_NAME,
+  OPERATOR_CONFIG_FILE_NAME,
+  REQUIRE_MORE,
+  INDEX_TYPE_OPTIONS,
+  SEGMENT_SIZE_OPTIONS,
+} from '@/components/card/sizingToolCard/constants';
 
 // one million
 const $1M = Math.pow(10, 6);
 
 const defaultSizeContent = {
-  size: 'Require more data',
+  size: REQUIRE_MORE,
   cpu: 0,
   memory: 0,
   amount: 0,
 };
 
-export default function SizingTool(props) {
-  const { t } = useTranslation('common');
+export default function SizingTool() {
+  const { t } = useTranslation();
 
+  const [dialogState, setDialogState] = useState({
+    open: false,
+    title: '',
+    handleClose: () => {},
+    children: <></>,
+  });
   const [form, setForm] = useState({
     // number of vectors
     nb: {
@@ -126,6 +117,7 @@ export default function SizingTool(props) {
       value: SEGMENT_SIZE_OPTIONS[0].value,
       showError: false,
     },
+    apacheType: 'pulsar',
   });
 
   const handleFormValueChange = (val, key) => {
@@ -181,6 +173,13 @@ export default function SizingTool(props) {
     }));
   };
 
+  const handleApacheChange = (e, value) => {
+    setForm(v => ({
+      ...v,
+      apacheType: value,
+    }));
+  };
+
   const calcResult = useMemo(() => {
     const { nb, d, indexType, nlist, m, segmentSize } = form;
 
@@ -195,6 +194,10 @@ export default function SizingTool(props) {
     );
 
     if (isErrorParameters) {
+      const etcdData = etcdCalculator();
+      const minioData = minioCalculator();
+      const pulsarData = pulsarCalculator();
+      const kafkaData = kafkaCalculator();
       return {
         memorySize: { size: 0, unit: 'B' },
         rawFileSize: { size: 0, unit: 'B' },
@@ -204,6 +207,10 @@ export default function SizingTool(props) {
         proxy: defaultSizeContent,
         queryNode: defaultSizeContent,
         commonCoord: defaultSizeContent,
+        etcdData,
+        minioData,
+        pulsarData,
+        kafkaData,
       };
     }
 
@@ -216,19 +223,16 @@ export default function SizingTool(props) {
     });
 
     const rawFileSize = rawFileSizeCalculator({ d: dVal, nb: nbVal });
-
     const rootCoord = rootCoordCalculator(nbVal);
-
     const dataNode = dataNodeCalculator(nbVal);
-
     const indexNode = indexNodeCalculator(theorySize, sVal);
-
     const proxy = proxyCalculator(memorySize);
-
     const queryNode = queryNodeCalculator(memorySize);
-
     const commonCoord = commonCoordCalculator(memorySize);
-
+    const etcdData = etcdCalculator(rawFileSize);
+    const minioData = minioCalculator(rawFileSize, theorySize);
+    const pulsarData = pulsarCalculator(rawFileSize);
+    const kafkaData = kafkaCalculator(rawFileSize);
     return {
       memorySize: unitBYTE2Any(memorySize),
       rawFileSize: unitBYTE2Any(rawFileSize),
@@ -238,14 +242,15 @@ export default function SizingTool(props) {
       proxy,
       queryNode,
       commonCoord,
+      etcdData,
+      minioData,
+      pulsarData,
+      kafkaData,
     };
   }, [form]);
 
-  const handleDownloadYmlFile = () => {
+  const handleDownloadYmlFile = (content, fielName) => {
     if (typeof window !== 'undefined') {
-      const content = customYmlGenerator({
-        ...calcResult,
-      });
       const blob = new Blob([content], {
         type: 'text/plain',
       });
@@ -254,35 +259,61 @@ export default function SizingTool(props) {
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'customConfig.yml';
+      a.download = `${fielName}.yml`;
       a.click();
     }
   };
 
-  const desc = 'Milvus sizing tool';
+  const handleDownloadHelm = () => {
+    const content = helmYmlGenerator(calcResult, form.apacheType);
+    handleDownloadYmlFile(content, HELM_CONFIG_FILE_NAME);
+  };
+  const handleDownloadOperator = () => {
+    const content = operatorYmlGenerator(calcResult, form.apacheType);
+    handleDownloadYmlFile(content, OPERATOR_CONFIG_FILE_NAME);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogState(v => ({
+      ...v,
+      open: false,
+    }));
+  };
+
+  const handleOpenInstallGuide = type => {
+    const title =
+      type === 'helm'
+        ? t('v3trans.sizingTool.installGuide.helm')
+        : t('v3trans.sizingTool.installGuide.operator');
+
+    setDialogState({
+      open: true,
+      title,
+      handleClose: handleCloseDialog,
+      children: <HighlightBlock type={type} />,
+    });
+  };
+
   return (
-    <main className={classes.main}>
-      <Head>
-        <title>{t('v3trans.sizingTool.title')}</title>
-        <meta name="description" content={desc} />
-        <meta
-          property="og:title"
-          content={t('v3trans.sizingTool.title')}
-        ></meta>
-        <meta property="og:description" content={desc} />
-        <meta property="og:url" content="https://milvus.io/tools/sizing" />
-      </Head>
-      <Layout t={t} darkMode={false}>
-        <div className={classes.pageContainer}>
+    <main className={classes.pageContainer}>
+      <Layout darkMode={false}>
+        <Head>
+          <title>
+            Milvus Sizing Tool · Vector Database built for scalable similarity
+            search
+          </title>
+          <meta name="description" content="Sizing tool" />
+        </Head>
+        <div className={clsx(pageClasses.container, classes.container)}>
           <h1>{t('v3trans.sizingTool.title')}</h1>
-          <div className={classes.note}>
+          <section className={classes.note}>
             <span className={classes.iconWrapper}>
               <InfoFilled />
             </span>
             <h2>{t('v3trans.sizingTool.subTitle')}</h2>
-          </div>
+          </section>
           <div className={classes.contentWrapper}>
-            <div className={classes.leftPart}>
+            <section className={classes.leftPart}>
               <div className={classes.dataSize}>
                 <h3>{t('v3trans.sizingTool.labels.dataSize')}</h3>
 
@@ -422,10 +453,29 @@ export default function SizingTool(props) {
                       ))}
                     </Select>
                   </FormControl>
+
+                  <FormControl fullWidth>
+                    <RadioGroup
+                      value={form.apacheType}
+                      onChange={handleApacheChange}
+                      className={classes.radioGroup}
+                    >
+                      <FormControlLabel
+                        value="pulsar"
+                        control={<Radio />}
+                        label="Pulsar"
+                      />
+                      <FormControlLabel
+                        value="kafka"
+                        control={<Radio />}
+                        label="Kafka"
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </div>
               </div>
-            </div>
-            <div className={classes.rightPart}>
+            </section>
+            <section className={classes.rightPart}>
               <div className={classes.capacity}>
                 <h3>{t('v3trans.sizingTool.capacity')}</h3>
 
@@ -514,30 +564,108 @@ export default function SizingTool(props) {
                     content={calcResult.indexNode.amount}
                     showTooltip
                   />
+
+                  {/* etcd */}
+                </div>
+                <div className={classes.line}>
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.etcd.title')}
+                    subTitle={
+                      calcResult.etcdData.isError
+                        ? REQUIRE_MORE
+                        : `${calcResult.etcdData.cpu} core ${calcResult.etcdData.memory} GB`
+                    }
+                    content={`x ${
+                      calcResult.etcdData.isError
+                        ? 0
+                        : calcResult.etcdData.podNumber
+                    }`}
+                    extraData={
+                      calcResult.etcdData.isError
+                        ? null
+                        : {
+                            key: 'Pvc per pod',
+                            value: `SSD ${calcResult.etcdData.pvcPerPodSize} GB`,
+                          }
+                    }
+                  />
+                  {/* Minio */}
+                  <SizingToolCard
+                    title={t('v3trans.sizingTool.setups.minio.title')}
+                    subTitle={
+                      calcResult.minioData.isError
+                        ? REQUIRE_MORE
+                        : `${calcResult.minioData.cpu} core ${calcResult.minioData.memory} GB`
+                    }
+                    content={`x ${
+                      calcResult.minioData.isError
+                        ? 0
+                        : calcResult.minioData.podNumber
+                    }`}
+                    extraData={
+                      calcResult.minioData.isError
+                        ? null
+                        : {
+                            key: 'Pvc per pod',
+                            value: `${calcResult.minioData.pvcPerPodSize} ${calcResult.minioData.pvcPerPodUnit}B`,
+                          }
+                    }
+                  />
+                </div>
+
+                {/* pulsar or kafka */}
+                <div className={classes.line}>
+                  {form.apacheType === 'pulsar' ? (
+                    <SizingConfigCard
+                      title={t('v3trans.sizingTool.setups.pulsar.title')}
+                      {...calcResult.pulsarData}
+                    />
+                  ) : (
+                    <SizingConfigCard
+                      title={t('v3trans.sizingTool.setups.kafka.title')}
+                      {...calcResult.kafkaData}
+                    />
+                  )}
                 </div>
               </div>
 
-              <button
-                className={classes.downloadBtn}
-                onClick={handleDownloadYmlFile}
-              >
-                <DownloadIcon />
-                <span>{t('v3trans.sizingTool.button')}</span>
-              </button>
-            </div>
+              <div className={classes.btnContainer}>
+                <div className={classes.btnsWrapper}>
+                  <button
+                    className={classes.downloadBtn}
+                    onClick={handleDownloadHelm}
+                  >
+                    <DownloadIcon />
+                    <span>{t('v3trans.sizingTool.buttons.helm')}</span>
+                  </button>
+                  <button
+                    className={classes.guideLink}
+                    onClick={() => handleOpenInstallGuide('helm')}
+                  >
+                    {t('v3trans.sizingTool.buttons.guide')}
+                  </button>
+                </div>
+                <div className={classes.btnsWrapper}>
+                  <button
+                    className={classes.downloadBtn}
+                    onClick={handleDownloadOperator}
+                  >
+                    <DownloadIcon />
+                    <span>{t('v3trans.sizingTool.buttons.operator')}</span>
+                  </button>
+                  <button
+                    className={classes.guideLink}
+                    onClick={() => handleOpenInstallGuide('operator')}
+                  >
+                    {t('v3trans.sizingTool.buttons.guide')}
+                  </button>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </Layout>
+      <CustomizedContentDialogs {...dialogState} />
     </main>
   );
 }
-
-export const getStaticProps = context => {
-  const { locale = 'en' } = context;
-
-  return {
-    props: {
-      locale,
-    },
-  };
-};

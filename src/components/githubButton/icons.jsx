@@ -95,3 +95,25 @@ export const SlackIcon = () => {
     </svg>
   );
 };
+
+export const LeftArrow = () => (
+  <svg focusable="false" aria-hidden="true" viewBox="0 0 14 14">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M9.47729 12.4773L10.4319 11.5227L5.90918 7L10.4319 2.4773L9.47729 1.52271L3.99999 7L9.47729 12.4773Z"
+      fill="#1D2939"
+    ></path>
+  </svg>
+);
+
+export const RightArrow = () => (
+  <svg focusable="false" aria-hidden="true" viewBox="0 0 14 14">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M4.95459 12.4773L4 11.5227L8.5227 7L4 2.4773L4.95459 1.52271L10.4319 7L4.95459 12.4773Z"
+      fill="#1D2939"
+    ></path>
+  </svg>
+);

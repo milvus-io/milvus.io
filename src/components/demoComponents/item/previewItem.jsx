@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWindowSize } from '../../../http/hooks';
 import { SearchIcon } from './searchIcon';
-import * as styles from './preview.module.less';
+import styles from './preview.module.less';
 
 const PreviewItem = ({ src, distance, handleSearch }) => {
   const currentSize = useWindowSize();
@@ -21,8 +21,6 @@ const PreviewItem = ({ src, distance, handleSearch }) => {
 
         <div
           className={styles.searchBtnWrapper}
-          role="button"
-          tabIndex="-1"
           onClick={() => handleSearch(src)}
           onKeyDown={() => handleSearch(src)}
         >

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Head from 'next/head';
 import Layout from '../components/layout/commonLayout';
 import { generateBootcampData } from '../utils/bootcamp.utils';
@@ -9,9 +8,8 @@ import clsx from 'clsx';
 
 export default function Bootcamp(props) {
   const { bootcampData } = props;
-  console.log('bootcampData', bootcampData);
 
-  const { banner, title, description, section3, section4 } = bootcampData;
+  const { title, description, section3, section4 } = bootcampData;
 
   const Icons = {
     IMAGE_SEARCH: '/images/bootcamp/image-search.svg',

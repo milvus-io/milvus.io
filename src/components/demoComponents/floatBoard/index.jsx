@@ -1,6 +1,5 @@
 import React from 'react';
-import * as styles from './index.module.less';
-import github from '..//images/demos/github.svg';
+import styles from './index.module.less';
 import Button from '../button';
 import { Forum } from '../item/searchIcon';
 
@@ -16,7 +15,7 @@ const FloatBord = ({ className = '' }) => {
           target="_blank"
           children={
             <div className={styles.content}>
-              <img src={github} alt="github" />
+              <img src="/images/demos/github.svg" alt="github" />
               <span>Github</span>
               <i className="fas fa-chevron-right"></i>
             </div>

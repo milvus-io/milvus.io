@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const withLess = require('next-with-less');
+const path = require('path');
 
 const nextConfig = {
   // reactStrictMode: true,
@@ -13,8 +14,8 @@ const nextConfig = {
 
 module.exports = withLess({
   ...nextConfig,
-
-  lessLoaderOptions: {
-    /* ... */
+  webpack(config) {
+    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
+    return config;
   },
 });

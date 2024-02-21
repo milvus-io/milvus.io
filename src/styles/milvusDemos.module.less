@@ -1,0 +1,73 @@
+@import url('./global.module.less');
+
+.headerSection {
+  padding: calc(80px + @header-height-desktop) 0 80px 0;
+  background: url('/images/demos/demo-banner.svg') center center no-repeat;
+  background-size: contain;
+  background-color: #000;
+
+  .innerSection {
+    color: #fff;
+
+    .title {
+      font-size: 40px;
+      line-height: 50px;
+      background: linear-gradient(to bottom, #679ede, #c4c7ff);
+      -webkit-background-clip: text;
+      color: transparent;
+      margin: 0 auto 24px;
+      text-align: center;
+      font-weight: 700;
+      max-width: 700px;
+
+      @media @phone {
+        font-size: 24px;
+        line-height: 28px;
+      }
+    }
+
+    .desc {
+      text-align: center;
+      font-size: 18px;
+      line-height: 26px;
+      color: #fff;
+      margin: 0 auto;
+      max-width: 700px;
+
+      @media @phone {
+        font-size: 14px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+.demoContainer {
+  padding-top: 120px;
+  padding-bottom: 120px;
+
+  .demoList {
+    list-style: none;
+    padding: 120px 0 0 0;
+
+    li:not(:last-child) {
+      margin-bottom: 160px;
+
+      @media @tablet {
+        margin-bottom: 80px;
+      }
+
+      @media @phone {
+        margin-bottom: 48px;
+      }
+    }
+
+    @media @tablet {
+      padding: 120px 64px;
+    }
+
+    @media @phone {
+      padding: 60px 32px;
+    }
+  }
+}

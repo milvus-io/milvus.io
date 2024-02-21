@@ -4,10 +4,12 @@ import * as styles from './index.module.less';
 import pageClasses from '../../styles/responsive.module.less';
 import { useSubscribeSrouce } from '../../hooks';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
-const Signup = ({ callback, t }) => {
+const Signup = ({ callback }) => {
+  const { t } = useTranslation();
   const inputRef = useRef(null);
   const source = useSubscribeSrouce();
   const [disabled, setDisabled] = useState(false);

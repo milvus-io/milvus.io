@@ -71,9 +71,11 @@ const DemoCard = ({
         <h3>{name}</h3>
         <p>{desc}</p>
         <div className={styles.btnGroup}>
-          <button className={`${styles.tryBtn}`} onClick={handleSubmitEmail}>
-            Try Demo
-          </button>
+          {href && (
+            <button className={`${styles.tryBtn}`} onClick={handleSubmitEmail}>
+              Try Demo
+            </button>
+          )}
 
           <button className={`${styles.watchBtn}`} onClick={handleWatchVideo}>
             Watch Demo

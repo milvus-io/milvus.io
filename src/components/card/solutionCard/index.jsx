@@ -11,25 +11,32 @@ const SolutionCard = ({
   className = '',
   liveDemo = '',
 }) => {
+  const handleTryDemo = link => {
+    window.open(link, '_self');
+  };
+
   return (
-    <Link
-      href={href}
-      tabIndex={0}
-      className={clsx(styles.solutionCard, className)}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <div>
+    <div tabIndex={0} className={clsx(styles.solutionCard, className)}>
+      <Link
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.topSection}
+      >
         <div className={styles.titleBar}>
           <h3 className={styles.title}>{title}</h3>
           {img ? <img src={img} alt="icon" className={styles.img} /> : null}
         </div>
 
         <p className={styles.content}>{content}</p>
-      </div>
+      </Link>
 
-      {liveDemo && <Link href={liveDemo}>Live Demo</Link>}
-    </Link>
+      {liveDemo && (
+        <Link className={styles.demoBtn} href={liveDemo}>
+          Live Demo
+        </Link>
+      )}
+    </div>
   );
 };
 

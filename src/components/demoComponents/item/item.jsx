@@ -1,14 +1,13 @@
 import React from 'react';
 import { Box, Image } from 'gestalt';
 import PreviewItem from './previewItem';
-import blackSearch from '..//images/demos/search-black.svg';
 import * as styles from './item.module.less';
 
 const Item = props => {
   const {
     data: { height, width, src, distance, origin_src },
     isSelected,
-    handleSearch,
+    onSearch,
     setModal,
   } = props;
 
@@ -27,7 +26,7 @@ const Item = props => {
           distance={distance}
           closeCustomDialog={closeCustomDialog}
           handleSearch={() => {
-            handleSearch(src);
+            onSearch(src);
             closeCustomDialog();
           }}
         />
@@ -38,7 +37,7 @@ const Item = props => {
 
   const searchThisPic = (e, src) => {
     e.stopPropagation();
-    handleSearch(src);
+    onSearch(src);
   };
 
   return (
@@ -74,13 +73,13 @@ const Item = props => {
           role="button"
           tabIndex="-1"
         >
-          <img src={blackSearch} alt="search-icon" />
+          <img src="/images/demos/search-black.svg" alt="search-icon" />
         </span>
         {/* </div> */}
       </div>
       {isSelected ? (
         <div className={styles.textWrapper}>
-          <p>Similarity Metirc:&nbsp;&nbsp;</p>
+          <p>Similarity Metirc:</p>
           <h5>{distance}</h5>
         </div>
       ) : null}

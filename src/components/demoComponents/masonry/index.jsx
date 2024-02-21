@@ -1,72 +1,52 @@
-import React, { useMemo } from 'react';
-import { Masonry } from 'gestalt';
 import * as styles from './index.module.less';
 import Item from '../item/item';
 import 'gestalt/dist/gestalt.css';
-import { useWindowSize } from '../../../http/hooks';
+import clsx from 'clsx';
+import { Masonry } from 'gestalt';
 
-function Main({
-  pins,
-  loadItems,
+export default function CustomMasonry({
+  images,
   loading,
   isSelected,
   isShowCode,
-  handleSearch,
+  onSearch,
   setModal,
+  loadMore,
   scrollContainer,
 }) {
-  const currentSize = useWindowSize();
-  const isMobile = ['phone', 'tablet', 'desktop1024'].includes(currentSize);
-
-  return useMemo(
-    () => (
+  return (
+    <div
+      className={clsx(styles.scrollContainer, {
+        [styles.openCode]: isShowCode,
+      })}
+    >
       <div
-        className={`${styles.scrollContainer} ${
-          isShowCode ? styles.openCode : ''
-        }`}
+        className={clsx(styles.toolTip, {
+          [styles.open]: isSelected,
+        })}
       >
-        <div className={`${styles.toopTip} ${isSelected ? styles.open : ''}`}>
-          <p>Sorted by Similarity metric</p>
-          <span className={styles.iconWrapper}>
-            <i className="fas fa-exclamation-circle"></i>
-          </span>
-        </div>
-        <div className={`${styles.imgContainer} ${isShowCode ? '' : ''}`}>
-          {pins.length ? (
-            <Masonry
-              columnWidth={isMobile ? 139 : 290}
-              virtualize={true}
-              comp={({ data }) => (
-                <Item
-                  data={data}
-                  isSelected={isSelected}
-                  handleSearch={handleSearch}
-                  setModal={setModal}
-                />
-              )}
-              items={pins}
-              gutterWidth={16}
-              loadItems={loadItems}
-              scrollContainer={() => scrollContainer.current}
-              minCols={2}
-            ></Masonry>
-          ) : null}
-        </div>
-        {loading ? <div className="loading-wrapper">loading...</div> : null}
+        <p>Sorted by Similarity metric</p>
       </div>
-    ),
-    [
-      pins,
-      loadItems,
-      loading,
-      isSelected,
-      isShowCode,
-      handleSearch,
-      setModal,
-      scrollContainer,
-      isMobile,
-    ]
+
+      <Masonry
+        items={images}
+        renderItem={data => (
+          <Item
+            data={data.data}
+            isSelected={isSelected}
+            onSearch={onSearch}
+            setModal={setModal}
+          />
+        )}
+        gutterWidth={16}
+        layout="flexible"
+        loadItems={loadMore}
+        scrollContainer={scrollContainer}
+        virtualize
+      />
+      {loading ? (
+        <div className={styles.loadingTip}>Loading More...</div>
+      ) : null}
+    </div>
   );
 }
-
-export default Main;

@@ -4,7 +4,7 @@ import 'cropperjs/dist/cropper.css';
 import * as styles from './index.module.less';
 
 let timer = null;
-const CroppeDemo = props => {
+const CropperDemo = props => {
   const imgRef = useRef(null);
   const myCropper = useRef(null);
   const { propSend, src, className, imgClassName } = props;
@@ -42,7 +42,7 @@ const CroppeDemo = props => {
     }
     cropperInstance.getCroppedCanvas().toBlob(
       blob => {
-        propSend(blob);
+        propSend(blob, true);
       } /*, 'image/png' */
     );
   };
@@ -67,4 +67,4 @@ const CroppeDemo = props => {
     </div>
   );
 };
-export default CroppeDemo;
+export default CropperDemo;

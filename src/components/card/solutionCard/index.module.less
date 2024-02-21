@@ -1,3 +1,5 @@
+@import url('@/styles/global.module.less');
+
 .solutionCard {
   display: flex;
   flex-direction: column;
@@ -14,6 +16,11 @@
 
   &:hover {
     box-shadow: 0px 10px 30px rgba(100, 100, 100, 0.1);
+  }
+
+  .topSection {
+    display: block;
+    color: #000;
   }
 
   .titleBar {
@@ -46,9 +53,11 @@
     -webkit-box-orient: vertical;
     color: var(--color-dark);
   }
-  a {
+  .demoBtn {
     color: var(--color-doc-primary);
     font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
 
     &:hover {
       text-decoration: underline;

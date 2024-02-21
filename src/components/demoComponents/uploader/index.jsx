@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
-import * as styles from './index.module.less';
+import styles from './index.module.less';
 import Button from '../button';
-import { getImgUrl } from '../../../utils/demo-helper';
+import { getImgUrl } from '@/utils/demo-helper';
 import { FileDrop } from 'react-file-drop';
 import Cropper from '../cropper';
-import { useWindowSize } from '../../../http/hooks';
+import { useWindowSize } from '@/http/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -23,11 +23,14 @@ const UploaderHeader = ({
   const uploadSection = useRef(null);
 
   const handleUploadImg = () => {
+    if (!inputRef.current) {
+      return;
+    }
     inputRef.current.click();
   };
 
   const handleInputChange = async e => {
-    const file = inputRef.current.files[0] || '';
+    const file = inputRef.current?.files[0] || '';
     if (!file) {
       return;
     }
@@ -67,11 +70,12 @@ const UploaderHeader = ({
           onDragOver={handlerDragEnter}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
+          frame={uploadSection.current}
         >
           <div className={styles.uploadSection} ref={uploadSection}>
             <h4 className={styles.desc}>
               {isMobile ? 'Click ' : 'Drag or click '}‘Browse’ to upload an
-              image to try milvus vector similarity search.
+              image to try Milvus vector similarity search.
             </h4>
             <div className={styles.uploadBtnWrapper}>
               <input

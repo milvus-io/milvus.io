@@ -28,7 +28,7 @@
           "title": "没有找到您想要的问题？",
           "slack": {
             "label": "在 Slack 上讨论",
-            "link": "https://slack.milvus.io/"
+            "link": "/slack"
           },
           "github": {
             "label": "在 GitHub 上讨论",
@@ -48,7 +48,7 @@
         }
       },
       "questionBtn": {
-        "link": "hhttps://slack.milvus.io/",
+        "link": "/slack",
         "label": "加入 Slack"
       },
       "issueBtn": {
@@ -477,7 +477,7 @@
               "name": "twitter"
             },
             {
-              "href": "https://slack.milvus.io/",
+              "href": "/slack",
               "name": "slack"
             }
           ]
@@ -531,16 +531,16 @@
       "firstBanner": {
         "title": "Milvus Hacktoberfest 2021",
         "content": "You know it's that time of the year again. <br />Hacktoberfest is coming! And this year, we are going in and going strong.",
-        "image": "/images/hackathon/banner-image-1.svg",
+        "image": "../../images/hackathon/banner-image-1.svg",
         "alert": "Spoiler alert - our biggest prize is spelled as D-R-O-N-E.",
-        "badge": "/images/hackathon/badge.svg",
+        "badge": "../../images/hackathon/badge.svg",
         "btnLabel": "Quick Start",
         "btnLink": "#quick_start"
       },
       "secondBanner": {
         "title": "What is Hacktoberfest",
         "content": "Hacktoberfest is an annual month-long celebration of open source. It is a great opportunity for everyone, from seasoned developers to students and code newbies, from technical writers to UX designers, to contribute to open source communities and develop your skills, with the perks of winning limited edition swags.",
-        "image": "/images/hackathon/banner-image-2.png"
+        "image": "../../images/hackathon/banner-image-2.png"
       }
     },
     "secondSection": {
@@ -558,13 +558,6 @@
           "content": "Sign-up to Hacktoberfest on the event website.",
           "iconType": "external",
           "href": "https://hackathon-tracker.digitalocean.com/users/oauth/github?success_redirect=https://hacktoberfest.digitalocean.com/register/info&error_redirect=https://hacktoberfest.digitalocean.com/register"
-        },
-        {
-          "stepNum": 2,
-          "title": "Join Discussion",
-          "content": "Create a Milvus Forum account and interact with other community members.",
-          "iconType": "external",
-          "href": "https://discuss.milvus.io/c/hacktoberfest/9"
         },
         {
           "stepNum": 3,
@@ -586,35 +579,35 @@
         {
           "cate": "Milvus Code",
           "desc": "Fix bugs, improve code, or help us make a new feature come true.",
-          "icon": "/images/hackathon/code.svg",
+          "icon": "../../images/hackathon/code.svg",
           "issueHref": "https://github.com/milvus-io/milvus/issues?q=is%3Aopen+is%3Aissue+label%3AHacktoberfest",
           "guideHref": "https://github.com/milvus-io/milvus/blob/master/CONTRIBUTING.md"
         },
         {
           "cate": "Milvus Documentation",
           "desc": "Improve, extend or add Milvus documentation. ",
-          "icon": "/images/hackathon/doc.svg",
+          "icon": "../../images/hackathon/doc.svg",
           "issueHref": "https://github.com/milvus-io/milvus-docs/issues?q=is%3Aopen+is%3Aissue+label%3Ahacktoberfest",
           "guideHref": "https://github.com/milvus-io/milvus-docs/blob/v2.0.x/CONTRIBUTING.md"
         },
         {
           "cate": "Milvus Golang API reference",
           "desc": "Help extend and add more examples to Golang API documentation.",
-          "icon": "/images/hackathon/api.svg",
+          "icon": "../../images/hackathon/api.svg",
           "issueHref": "https://github.com/milvus-io/milvus-sdk-go/issues?q=is%3Aopen+is%3Aissue+label%3AHACKTOBERFEST",
           "guideHref": "https://github.com/milvus-io/milvus-sdk-go/blob/master/CONTRIBUTING.md"
         },
         {
           "cate": "Bootcamp / Tutorials",
           "desc": "Showcase a project you built with Milvus.",
-          "icon": "/images/hackathon/bootcamp.svg",
+          "icon": "../../images/hackathon/bootcamp.svg",
           "issueHref": "",
           "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72#community-content-4"
         },
         {
           "cate": "Other community content",
           "desc": "Write blog posts, create video content, design artwork, share your insight on website design, and more.",
-          "icon": "/images/hackathon/others.svg",
+          "icon": "../../images/hackathon/others.svg",
           "issueHref": "",
           "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72#community-content-4"
         }
@@ -628,20 +621,20 @@
       "tip": "*Prize rules to apply,",
       "tipLabel": "Learn More",
       "tipHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72",
-      "image": "/images/hackathon/prize.jpg",
+      "image": "../../images/hackathon/prize.jpg",
       "label1": "Biggest Prize",
       "label2": "DJI Mavic Air 2",
       "list": [
         {
-          "image": "/images/hackathon/prize-keybord.png",
+          "image": "../../images/hackathon/prize-keybord.png",
           "name": ""
         },
         {
-          "image": "/images/hackathon/prize-sticker.png",
+          "image": "../../images/hackathon/prize-sticker.png",
           "name": "Milvus Sticker Packs"
         },
         {
-          "image": "/images/hackathon/prize-tshirt.png",
+          "image": "../../images/hackathon/prize-tshirt.png",
           "name": "Milvus T-Shirts and Badge"
         }
       ]
@@ -651,19 +644,19 @@
       "content": "Please visit our Milvus Community Forum for resources you might need for Hacktoberfest and the events surrounding Hacktoberfest.",
       "btnLabel": "Explore More",
       "btnLink": "https://discuss.milvus.io/c/hacktoberfest/9",
-      "image": "/images/hackathon/discuss-forum.png"
+      "image": "../../images/hackathon/discuss-forum.png"
     },
     "eighthSection": {
       "title": "Contact Us",
       "list": [
         {
           "href": "https://discuss.milvus.io/",
-          "icon": "/images/hackathon/discourse.png",
+          "icon": "../../images/hackathon/discourse.png",
           "content": "Join in our Discourse Forum"
         },
         {
           "href": "https://join.slack.com/t/milvusio/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
-          "icon": "/images/hackathon/slack.svg",
+          "icon": "../../images/hackathon/slack.svg",
           "content": "Join in our Slack Channel"
         }
       ]
@@ -675,6 +668,7 @@
       "banner": {
         "title": "为可扩展的相似性搜索构建的向量数据库",
         "desc": "开源、高度可扩展且速度极快。",
+        "tryManaged": "Try Managed Milvus",
         "getstart": "快速开始",
         "watch": "浏览视频",
         "star": "GitHub 星数",

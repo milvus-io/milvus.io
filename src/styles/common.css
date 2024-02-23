@@ -9,6 +9,10 @@ html:has(.scroll-padding) {
   scroll-padding-top: 102px;
 }
 
+.DocSearch.DocSearch-Container {
+  z-index: 19999;
+}
+
 /* reduplicative style, to be optimized @jjl */
 :root {
   /* color */

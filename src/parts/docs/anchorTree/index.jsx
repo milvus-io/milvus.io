@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 
 export default function AnchorTree(props) {
-  const { list, t, className: customClasseName = '' } = props;
+  const { list, t, className: customClassName = '' } = props;
 
   // label maybe duplicate, we use href as unique key to show active style
   const [activeAnchor, setActiveAnchor] = useState('');
@@ -21,30 +21,28 @@ export default function AnchorTree(props) {
   };
 
   return (
-    <ul
-      className={clsx(classes.anchorsWrapper, {
-        [customClasseName]: customClasseName,
-      })}
-    >
-      <p className={classes.title}>{t('anchorTitle')}</p>
-      {list.map((v, idx) => {
-        const { label, href, type } = v;
+    <div className={classes.anchorsWrapper}>
+      <p className={classes.title}>On this page</p>
 
-        return (
-          <li
-            style={{
-              paddingLeft: headingLevelList.findIndex(h => h === type) * 20,
-            }}
-            className={clsx(classes.anchorItem, {
-              [classes.activeAnchorItem]: href === activeAnchor,
-            })}
-            key={v.label + idx}
-            onClick={() => handleChooseAnchor(href)}
-          >
-            <Link href={`#${href}`}>{label}</Link>
-          </li>
-        );
-      })}
-    </ul>
+      <ul className={clsx(classes.anchorsList, customClassName)}>
+        {list.map((v, idx) => {
+          const { label, href, type } = v;
+          return (
+            <li
+              style={{
+                paddingLeft: headingLevelList.findIndex(h => h === type) * 17,
+              }}
+              className={clsx(classes.anchorItem, {
+                [classes.activeAnchorItem]: href === activeAnchor,
+              })}
+              key={v.label + idx}
+              onClick={() => handleChooseAnchor(href)}
+            >
+              <Link href={`#${href}`}>{label}</Link>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }

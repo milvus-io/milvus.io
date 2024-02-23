@@ -71,23 +71,7 @@ export default function DocHomePage(props) {
         />
       }
       center={
-        <div
-          className={clsx('doc-right-container', {
-            [`is-opened`]: isOpened,
-          })}
-        >
-          <div
-            className={clsx('doc-content-container', {
-              [`doc-home`]: homeData,
-            })}
-          >
-            <HomeContent
-              homeData={homeData}
-              newestBlog={newestBlog}
-              trans={t}
-            />
-          </div>
-        </div>
+        <HomeContent homeData={homeData} newestBlog={newestBlog} trans={t} />
       }
     />
   );

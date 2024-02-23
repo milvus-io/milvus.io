@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import GitCommitInfo from '../GitCommitInfo';
 import { useGithubCommits } from '../../../http/hooks';
+import classes from './index.module.less';
+import clsx from 'clsx';
 
 export default function DocContent(props) {
   const { commitPath, version, htmlContent, mdId, trans } = props;
@@ -35,7 +37,7 @@ export default function DocContent(props) {
 
   return (
     <>
-      <div className="doc-post-wrapper doc-style">
+      <div className={clsx('doc-style', classes.docPostWrapper)}>
         <div
           ref={docContentRef}
           className="doc-post-content"

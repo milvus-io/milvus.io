@@ -143,7 +143,7 @@ const Aside = props => {
     },
   };
 
-  const generateBtnroup = (category, props, styles) => {
+  const generateBtnGroup = (category, props, styles) => {
     const btns = btnConfiguration[category](props) || [];
     return (
       <>
@@ -174,7 +174,7 @@ const Aside = props => {
               [btnGroup]: btnGroup,
             })}
           >
-            {generateBtnroup(category, props, styles)}
+            {generateBtnGroup(category, props, styles)}
           </ul>
         )}
         {category === 'doc' && (

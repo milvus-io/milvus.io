@@ -23,7 +23,7 @@ jobs:
           # Required
           token: ${{ secrets.SRE_BOT_TOKEN }}
           repos: 'milvus-io/milvus.io'
-          target: 'milvus-io/milvus.io/README.md'
+          target: './README.md'
           # Optional
           isAscend: True
           width: '30px'

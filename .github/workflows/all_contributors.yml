@@ -17,8 +17,13 @@ jobs:
   contributor:
     runs-on: ubuntu-latest
     steps:
-      # Update README.md
-      - uses: milvus-io/hero-bot@1.11
+      - name: checkout code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.SRE_BOT_TOKEN }}
+
+      - name: Update README.md
+        uses: milvus-io/hero-bot@1.11
         with:
           # Required
           token: ${{ secrets.SRE_BOT_TOKEN }}

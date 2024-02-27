@@ -18,18 +18,24 @@ jobs:
   contributor:
     runs-on: ubuntu-latest
     steps:
+      - name: Use Node16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
       - name: checkout code
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.SRE_BOT_TOKEN }}
 
       - name: Update README.md
-        uses: milvus-io/hero-bot@1.11
+        uses: milvus-io/hero-bot@dco-enabled
         with:
           # Required
           token: ${{ secrets.SRE_BOT_TOKEN }}
           repos: 'milvus-io/milvus.io'
-          target: './README.md'
+          targetFile: 'README.md'
           # Optional
           isAscend: True
           width: '30px'
+          workingDir: '/home/runner/work/milvus.io/milvus.io'

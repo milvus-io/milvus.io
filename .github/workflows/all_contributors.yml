@@ -34,7 +34,8 @@ jobs:
           # Required
           token: ${{ secrets.SRE_BOT_TOKEN }}
           repos: 'milvus-io/milvus.io'
-          targetFile: './README.md'
+          targetFile: 'README.md'
           # Optional
           isAscend: True
           width: '30px'
+          workingDir: '/home/runner/work/milvus.io/milvus.io'

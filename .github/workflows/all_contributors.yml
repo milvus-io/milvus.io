@@ -29,12 +29,12 @@ jobs:
           token: ${{ secrets.SRE_BOT_TOKEN }}
 
       - name: Update README.md
-        uses: milvus-io/hero-bot@1.11
+        uses: milvus-io/hero-bot@dco-enabled
         with:
           # Required
           token: ${{ secrets.SRE_BOT_TOKEN }}
           repos: 'milvus-io/milvus.io'
-          target: 'milvus-io/milvus.io/README.md'
+          targetFile: './README.md'
           # Optional
           isAscend: True
           width: '30px'

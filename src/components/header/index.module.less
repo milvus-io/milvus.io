@@ -1,0 +1,53 @@
+@import (reference) '../../styles/mixin.module.less';
+
+.headerContainer {
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+
+.stickyHeader {
+  position: sticky;
+}
+
+.fixedHeader {
+  position: fixed;
+
+  @media @tablet, @phone {
+    position: sticky;
+  }
+}
+
+.logoSection {
+  height: 30px;
+  display: flex;
+  align-content: center;
+
+  img {
+    height: 30px;
+    width: auto;
+
+    @media @phone {
+      height: 20px;
+    }
+  }
+}
+
+.gitBtnWrapper {
+  .starText {
+    font-weight: 400;
+  }
+
+  @media (max-width: 1100px) {
+    display: none;
+  }
+
+  @media @tablet {
+    display: inline-block;
+  }
+
+  @media @phone {
+    margin-bottom: 24px;
+  }
+}

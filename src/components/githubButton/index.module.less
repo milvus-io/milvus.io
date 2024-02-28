@@ -1,0 +1,45 @@
+@import (reference) '../../styles/mixin.module.less';
+
+.gitBtnWrapper {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  height: 40px;
+
+  color: #000;
+  background: #fff;
+  border: 1px solid rgba(27, 31, 36, 0.15);
+  border-radius: 6px;
+
+  .link {
+    align-items: center;
+    border-radius: 4px;
+    color: #000;
+    display: flex;
+    line-height: 20px;
+    text-decoration: none;
+
+    .hover;
+
+    .iconWrapper {
+      display: inline-block;
+      font-size: 0;
+      line-height: 0;
+    }
+
+    .iconText {
+      font-weight: 600;
+      font-size: 14px;
+      padding-left: 4px;
+      @media @desktop1024, @tablet {
+        display: none;
+      }
+    }
+  }
+
+  .stat {
+    margin-left: 6px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+}

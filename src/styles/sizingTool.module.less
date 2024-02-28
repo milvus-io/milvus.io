@@ -1,0 +1,263 @@
+@import url('@/styles/global.module.less');
+
+.pageContainer {
+  background-color: #f5f8fb;
+}
+.container {
+  padding-top: 40px;
+  padding-bottom: 128px;
+
+  h1 {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.5em;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 14px;
+    line-height: 1.5em;
+    font-weight: 400;
+  }
+
+  h3 {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.5em;
+    margin-bottom: 16px;
+  }
+
+  .note {
+    display: flex;
+    align-items: center;
+    background-color: rgba(224, 242, 252, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+
+    .iconWrapper {
+      margin-right: 10px;
+      font-size: 0;
+      line-height: 0;
+    }
+  }
+
+  .contentWrapper {
+    display: flex;
+    gap: 64px;
+
+    @media (max-width: 1280px) {
+      gap: 32px;
+    }
+
+    @media @tablet {
+      gap: 40px;
+      flex-direction: column;
+    }
+
+    @media @phone {
+      gap: 40px;
+      flex-direction: column;
+    }
+
+    .leftPart {
+      flex: 0 1 412px;
+      padding: 32px 49px 32px 40px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+
+      @media @tablet {
+        gap: 64px;
+      }
+
+      @media @phone {
+        gap: 32px;
+      }
+
+      .dataSize,
+      .indexType {
+        width: 100%;
+      }
+
+      .dataItem {
+        margin-bottom: 18px;
+
+        .label {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 1.5em;
+          margin-bottom: 16px;
+        }
+
+        .interpretation {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 1.5em;
+          margin-bottom: 24px;
+        }
+
+        .sliderWrapper {
+          padding: 0 8px;
+        }
+
+        .shortMargin {
+          margin-bottom: 8px;
+        }
+
+        .largeMargin {
+          margin-bottom: 32px;
+        }
+      }
+
+      .arrowIcon {
+        display: inline-block;
+        width: 11px;
+        height: 9px;
+        background-color: #000;
+        clip-path: polygon(0 0, 100% 0, 50% 100%, 0 0);
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+
+      .dropdownController {
+        border-radius: 2em;
+        padding: 19px 52px 19px 34px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: #000;
+      }
+
+      .dropdownMenu {
+        margin-top: 8px;
+        background: #ffffff;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+        border-radius: 29px;
+        padding: 8px 0;
+        max-height: 300px;
+
+        & > div {
+          padding: 14px 32px;
+
+          &:hover {
+            background-color: #eff9fe;
+            color: #1493cc;
+          }
+        }
+      }
+
+      .radioGroup {
+        display: flex;
+        margin-top: 16px;
+      }
+    }
+
+    .rightPart {
+      flex: 1;
+
+      .contentClassName {
+        color: #1493cc;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 34px;
+      }
+
+      .capacity {
+        margin-bottom: 32px;
+
+        .cardsWrapper {
+          display: flex;
+          gap: 20px;
+        }
+      }
+
+      .cluster {
+        margin-bottom: 24px;
+
+        .cardsWrapper {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          column-gap: 20px;
+          row-gap: 20px;
+
+          @media @tablet {
+            grid-template-columns: repeat(3, 1fr);
+          }
+
+          @media @phone {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+      }
+
+      .btnContainer {
+        display: flex;
+        gap: 20px;
+
+        @media (max-width: 800px) {
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .btnsWrapper {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+
+          .downloadBtn {
+            border: none;
+            outline: none;
+            background-color: #00a1ea;
+            display: flex;
+            width: 100%;
+            padding: 10px 0;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border-radius: 2em;
+            cursor: pointer;
+
+            span {
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 18px;
+              margin-left: 8px;
+            }
+          }
+
+          .guideLink {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: #1493cc;
+            cursor: pointer;
+            padding: 10px 0;
+            border: 1px solid #1493cc;
+            border-radius: 2em;
+            width: 100%;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .line {
+        margin-top: 20px;
+        display: flex;
+        gap: 20px;
+        justify-content: space-evenly;
+        align-items: stretch;
+      }
+    }
+  }
+}

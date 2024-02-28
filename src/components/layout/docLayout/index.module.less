@@ -1,0 +1,52 @@
+@import (reference) '../../../styles/global.module.less';
+@import (reference) '../../../styles/responsive.module.less';
+
+div.docHeader {
+  .docContainer();
+}
+
+div.mainContainer {
+  display: flex;
+
+  .flexibleContainer {
+    position: sticky;
+    top: 79px;
+    height: calc(100vh - 79px);
+    background-color: #fff;
+    z-index: 999;
+    min-width: 24px;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    @media @tablet {
+      top: 67px;
+      height: calc(100vh - 67px);
+    }
+
+    @media @phone {
+      top: 57px;
+      height: calc(100vh - 57px);
+    }
+  }
+
+  .contentContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .centerContainer {
+    margin-bottom: 100px;
+  }
+
+  div.docFooter {
+    width: 100%;
+    padding-left: 48px;
+    padding-right: 48px;
+
+    @media @phone {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+  }
+}

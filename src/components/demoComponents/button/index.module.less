@@ -1,0 +1,93 @@
+@import (reference) '../../../styles/global.module.less';
+
+.btnContainer {
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+
+  .button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .contained {
+    display: inline-block;
+    padding: 16px 32px;
+
+    background-color: @color-primary;
+    color: #fff;
+    border: 1px solid @color-primary;
+    border-radius: 4px;
+
+    transition: all 0.3s;
+
+    @media @tablet {
+      padding: 8px 16px;
+    }
+
+    @media @phone {
+      padding: 8px 16px;
+    }
+
+    &:hover {
+      background-color: @color-btn-hover;
+      border: 1px solid @color-btn-hover;
+    }
+
+    &:active {
+      background-color: @color-btn-press;
+      border: 1px solid @color-btn-press;
+    }
+  }
+
+  .text {
+    color: @color-primary;
+  }
+
+  .outline {
+    display: inline-block;
+    padding: 16px 32px;
+
+    border: 1px solid @color-primary;
+    border-radius: 4px;
+    color: @color-primary;
+    background-color: #fff;
+
+    transition: all 0.3s;
+
+    &:hover {
+      color: @color-btn-hover;
+      border-color: @color-btn-hover;
+    }
+
+    &:active {
+      color: @color-btn-press;
+      border-color: @color-btn-press;
+
+      svg {
+        path {
+          stroke: #fff;
+        }
+      }
+    }
+
+    @media @tablet {
+      padding: 8px 24px;
+    }
+  }
+
+  .disabled {
+    background-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.26);
+    border-color: rgba(0, 0, 0, 0.12);
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.12);
+      color: rgba(0, 0, 0, 0.26);
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+  }
+}

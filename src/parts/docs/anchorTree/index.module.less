@@ -1,0 +1,36 @@
+@import url('../../../styles//mixin.module.less');
+
+.anchorsWrapper {
+  .title {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-black);
+    margin-bottom: 20px;
+  }
+
+  .anchorsList {
+    list-style: none;
+
+    .anchorItem > a {
+      font-size: 12px;
+      line-height: 14px;
+      color: var(--color-grey-01);
+      display: block;
+      width: 100%;
+      padding: 5px 0;
+
+      &:hover {
+        color: var(--color-text-primary);
+      }
+    }
+    .activeAnchorItem > a {
+      color: var(--color-text-primary);
+      font-weight: 500;
+
+      // &:hover {
+      //   color: #000;
+      // }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+.rightNavWrapper {
+  padding: 0 16px;
+
+  .btnsGroup {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 60px 0;
+
+    .link {
+      display: inline-block;
+      color: var(--color-black);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      line-height: 24px;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--color-grey-01);
+      }
+    }
+  }
+
+  .anchor {
+    position: sticky;
+    height: calc(100vh - 105px);
+    left: 0;
+    right: 0;
+    top: 105px;
+  }
+}
+
+.iconWrapper {
+  display: inline-block;
+  width: 16px;
+  margin-right: 8px;
+  text-align: center;
+  overflow: hidden;
+
+  svg {
+    width: 100%;
+    height: auto;
+    vertical-align: -0.125em;
+  }
+
+  .global {
+    path {
+      fill: var(--color-black);
+    }
+  }
+}

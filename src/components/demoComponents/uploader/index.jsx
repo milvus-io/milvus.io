@@ -70,12 +70,17 @@ const UploaderHeader = ({
           onDragOver={handlerDragEnter}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          frame={uploadSection.current}
         >
           <div className={styles.uploadSection} ref={uploadSection}>
             <h4 className={styles.desc}>
-              {isMobile ? 'Click ' : 'Drag or click '}‘Browse’ to upload an
-              image to try Milvus vector similarity search.
+              <span className={styles.mobileOnly}>
+                Click ‘Browse’ to upload an image to try Milvus vector
+                similarity search.
+              </span>
+              <span className={styles.desktopOnly}>
+                Drag or click ‘Browse’ to upload an image to try Milvus vector
+                similarity search.
+              </span>
             </h4>
             <div className={styles.uploadBtnWrapper}>
               <input

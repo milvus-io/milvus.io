@@ -23,6 +23,21 @@
     text-align: center;
     margin-bottom: 40px;
 
+    .mobileOnly {
+      display: none;
+
+      @media @tablet, @phone {
+        display: block;
+      }
+    }
+    .desktopOnly {
+      display: block;
+
+      @media @tablet, @phone {
+        display: none;
+      }
+    }
+
     @media @phone {
       padding: 8px;
     }

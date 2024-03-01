@@ -11,7 +11,7 @@ export default function CustomLink(props) {
   return (
     <>
       {isExternalLink ? (
-        <a href={href} target="_blank" {...restProps}>
+        <a href={href} target="_blank" rel="noreferrer" {...restProps}>
           {props.children}
         </a>
       ) : (

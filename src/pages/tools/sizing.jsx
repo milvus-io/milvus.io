@@ -413,23 +413,18 @@ export default function SizingTool({ data }) {
                       </div>
                     </>
                   ) : (
-                    <>
-                      <p className={classes.interpretation}>
-                        {t('v3trans.sizingTool.labels.m')}
-                      </p>
-                      <TextField
-                        fullWidth
-                        error={form.nlist.showError}
-                        label="nlist"
-                        value={form.nlist.value}
-                        helperText={form.nlist.helpText}
-                        placeholder={form.nlist.placeholder}
-                        onFocus={() => hanldeRemovePromot('nlist')}
-                        onChange={e => {
-                          handleFormValueChange(e.target.value, 'nlist');
-                        }}
-                      />
-                    </>
+                    <TextField
+                      fullWidth
+                      error={form.nlist.showError}
+                      label="nlist"
+                      value={form.nlist.value}
+                      helperText={form.nlist.helpText}
+                      placeholder={form.nlist.placeholder}
+                      onFocus={() => hanldeRemovePromot('nlist')}
+                      onChange={e => {
+                        handleFormValueChange(e.target.value, 'nlist');
+                      }}
+                    />
                   )}
                 </div>
 

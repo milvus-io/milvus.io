@@ -59,15 +59,14 @@ export default function DocHomePage(props) {
       left={
         <LeftNavSection
           tree={menuTree}
-          onNodeClick={handleNodeClick}
           className={classes.docMenu}
           version={version}
           versions={versions}
           linkPrefix={`/docs`}
           linkSuffix="home"
           locale={locale}
-          trans={t}
           home={{ label: 'Home', link: '/docs' }}
+          currentMdId="home"
         />
       }
       center={

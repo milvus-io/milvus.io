@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import TreeView from '@mui/lab/TreeView';
@@ -37,15 +37,22 @@ const ExpansionTreeView = props => {
     showHome = false,
     currentMdId,
     language: lng,
+    version,
+    linkPrefix,
     ...others
   } = props;
+
+  console.log('itemList--', itemList);
+
+  const treeView = useRef(null);
 
   const [expandedIds, setExpandedIds] = useState(
     filterExpandedItems(currentMdId, itemList)
   );
 
   const handleClickMenuLink = () => {
-    const menuTree = document.querySelector('.mv3-tree-view');
+    const menuTree = treeView.current;
+    if (!menuTree) return;
     window.sessionStorage.setItem(SCROLL_TOP, menuTree.scrollTop);
   };
 
@@ -55,7 +62,8 @@ const ExpansionTreeView = props => {
   }, [itemList, currentMdId]);
 
   useEffect(() => {
-    const menuTree = document.querySelector('.mv3-tree-view');
+    const menuTree = treeView.current;
+    if (!menuTree) return;
     const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
 
     // mutationObserver can't be disconnected,it leads to container scrolls as long as menu item be clicked
@@ -81,24 +89,31 @@ const ExpansionTreeView = props => {
     }
   };
 
-  const generateLink = (originUrl, label, linkClassName) => {
-    const externalUrlReg = /^(http|https)/;
-    const isExternal = externalUrlReg.test(originUrl);
-    return isExternal ? (
+  const generateLink = ({
+    originUrl,
+    label,
+    onClick,
+    className,
+    version,
+    linkPrefix,
+    externalLink,
+  }) => {
+    return externalLink ? (
       <CustomIconLink
-        to={originUrl}
+        href={externalLink}
         className={clsx('mv3-item-link', {
-          [linkClassName]: linkClassName,
+          className,
         })}
-        isDoc={true}
+        isDoc
+        showIcon
       >
         {label}
       </CustomIconLink>
     ) : (
       <Link
-        href={originUrl}
+        href={`${linkPrefix}/${version}/${originUrl}`}
         className={clsx('mv3-item-link', {
-          [linkClassName]: linkClassName,
+          className,
         })}
       >
         {label}
@@ -106,10 +121,11 @@ const ExpansionTreeView = props => {
     );
   };
 
-  const generateTreeItem = ({ id, label, link, children }) => {
+  const generateTreeItem = props => {
+    const { id, label, href, children, externalLink = '' } = props;
     return children?.length ? (
       <TreeItem
-        key={`parent-${id}-${link}`}
+        key={`parent-${id}-${href}`}
         className={itemClassName}
         nodeId={id}
         label={label}
@@ -121,12 +137,20 @@ const ExpansionTreeView = props => {
       </TreeItem>
     ) : (
       <TreeItem
-        key={`child-${id}-${link}`}
+        key={`child-${id}-${href}`}
         className={itemClassName}
         nodeId={id}
         label={
-          link
-            ? generateLink(link, label, handleClickMenuLink, linkClassName)
+          href
+            ? generateLink({
+                originUrl: href,
+                label,
+                onClick: handleClickMenuLink,
+                className: linkClassName,
+                version,
+                linkPrefix,
+                externalLink,
+              })
             : label
         }
       />
@@ -135,6 +159,7 @@ const ExpansionTreeView = props => {
 
   return (
     <TreeView
+      ref={treeView}
       className={clsx(styles.mv3TreeView, {
         [treeClassName]: treeClassName,
       })}
@@ -143,23 +168,6 @@ const ExpansionTreeView = props => {
       {...others}
       onClick={handleClickMenuLink}
     >
-      {showHome && (
-        <TreeItem
-          nodeId={`home-${homeLabel}`}
-          className={itemClassName}
-          label={
-            <Link
-              to={homeUrl}
-              className={clsx('mv3-item-link', {
-                [linkClassName]: linkClassName,
-              })}
-              language={lng}
-            >
-              {homeLabel}
-            </Link>
-          }
-        />
-      )}
       {itemList.map(i => generateTreeItem(i))}
     </TreeView>
   );

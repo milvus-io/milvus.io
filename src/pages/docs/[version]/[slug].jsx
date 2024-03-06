@@ -122,7 +122,6 @@ export default function DocDetailPage(props) {
       left={
         <LeftNavSection
           tree={menuTree}
-          onNodeClick={handleNodeClick}
           className={classes.docMenu}
           version={version}
           versions={versions}
@@ -134,6 +133,7 @@ export default function DocDetailPage(props) {
             label: 'Home',
             link: `/docs/${version}/home`,
           }}
+          currentMdId={currentId}
         />
       }
       center={

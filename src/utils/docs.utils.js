@@ -19,8 +19,8 @@ import { generateAvailableApiVersions } from './apiReference.utils';
  * */
 
 const BASE_DOC_DIR = join(process.cwd(), 'src/docs');
-const DOCS_MININUM_VERSION = 'v1.0.0';
-const VERSION_REGX = /^v\d/;
+const DOCS_MINIMUM_VERSION = 'v1.0.0';
+const VERSION_REG = /^v\d/;
 const IGNORE_FILES = [
   'index.md',
   'README.md',
@@ -35,10 +35,10 @@ const IGNORE_FILES = [
 const generateAvailableDocVersions = () => {
   const versions = fs
     .readdirSync(BASE_DOC_DIR)
-    .filter(v => VERSION_REGX.test(v));
+    .filter(v => VERSION_REG.test(v));
   const { list, newestVersion } = getNewestVersionTool(
     versions,
-    DOCS_MININUM_VERSION
+    DOCS_MINIMUM_VERSION
   );
 
   return {
@@ -65,9 +65,9 @@ const generateAllDocData = () => {
     const homeData = fs.readFileSync(homeDir);
     const { content } = matter(homeData);
 
-    walkApiFiels({
+    walkFiles({
       basePath: docDir,
-      sufixPath: '',
+      suffixPath: '',
       contentList,
       config: { version },
     });
@@ -170,6 +170,8 @@ const getDocContent = (allData, version, id) => {
     };
   }
 
+  console.log('frontMatter--', target.data);
+
   return {
     id,
     version,
@@ -180,20 +182,20 @@ const getDocContent = (allData, version, id) => {
   };
 };
 
-function walkApiFiels({ basePath, sufixPath: path, contentList, config }) {
+function walkFiles({ basePath, suffixPath: path, contentList, config }) {
   const originPath = join(basePath, path);
   const paths = fs.readdirSync(originPath);
 
   paths
     .filter(v => !IGNORE_FILES.includes(v))
     .forEach(subPath => {
-      const sufixPath = `${path}/${subPath}`;
-      const filePath = join(basePath, sufixPath);
+      const suffixPath = `${path}/${subPath}`;
+      const filePath = join(basePath, suffixPath);
       const state = fs.statSync(filePath);
       if (state.isDirectory()) {
-        walkApiFiels({
+        walkFiles({
           basePath,
-          sufixPath,
+          suffixPath,
           contentList,
           config,
         });
@@ -204,7 +206,7 @@ function walkApiFiels({ basePath, sufixPath: path, contentList, config }) {
 
         contentList.push({
           id: subPath,
-          path: sufixPath.replace('/', ''),
+          path: suffixPath.replace('/', ''),
           absolutePath: filePath,
           data,
           content,

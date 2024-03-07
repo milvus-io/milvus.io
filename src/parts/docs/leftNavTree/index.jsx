@@ -20,6 +20,7 @@ export default function LeftNavSection(props) {
     locale = 'en',
     home: { label, link },
     currentMdId,
+    groupId = '',
   } = props;
 
   return (
@@ -49,6 +50,7 @@ export default function LeftNavSection(props) {
         homeLabel={label}
         showHome={true}
         currentMdId={currentMdId}
+        groupId={groupId}
         language={locale}
         version={version}
         linkPrefix={linkPrefix}

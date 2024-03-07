@@ -102,7 +102,7 @@ export const formatMenus = (menus, ids) => {
     const commonProps = {
       id: m.id,
       label: m.label,
-      href: m.children ? '' : m.id,
+      href: m.id,
       externalLink: m.outLink || '',
       parentIds: [...parents],
     };

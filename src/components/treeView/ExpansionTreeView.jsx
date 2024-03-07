@@ -36,6 +36,7 @@ const ExpansionTreeView = props => {
     homeLabel,
     showHome = false,
     currentMdId,
+    groupId,
     language: lng,
     version,
     linkPrefix,
@@ -47,8 +48,10 @@ const ExpansionTreeView = props => {
   const treeView = useRef(null);
 
   const [expandedIds, setExpandedIds] = useState(
-    filterExpandedItems(currentMdId, itemList)
+    filterExpandedItems(groupId || currentMdId, itemList)
   );
+
+  const [selectedId, setSelectedId] = useState(groupId || currentMdId);
 
   const handleClickMenuLink = () => {
     const menuTree = treeView.current;
@@ -57,9 +60,9 @@ const ExpansionTreeView = props => {
   };
 
   useEffect(() => {
-    const initIds = filterExpandedItems(currentMdId, itemList);
+    const initIds = filterExpandedItems(selectedId, itemList);
     setExpandedIds(initIds);
-  }, [itemList, currentMdId]);
+  }, [itemList, selectedId]);
 
   useEffect(() => {
     const menuTree = treeView.current;
@@ -78,11 +81,11 @@ const ExpansionTreeView = props => {
     });
   }, []);
 
-  const handleClickParentTree = id => {
+  const handleClickParentTree = (id, group) => {
     const currentSelectedIds = [...expandedIds].reverse();
     const idIndex = currentSelectedIds.indexOf(id);
     if (idIndex === -1) {
-      const expandingIds = [id, ...filterExpandedItems(id, itemList)];
+      const expandingIds = [id, ...filterExpandedItems(group || id, itemList)];
       setExpandedIds(expandingIds);
     } else {
       setExpandedIds(currentSelectedIds.slice(0, idIndex).reverse());
@@ -97,6 +100,7 @@ const ExpansionTreeView = props => {
     version,
     linkPrefix,
     externalLink,
+    id,
   }) => {
     return externalLink ? (
       <CustomIconLink
@@ -115,6 +119,9 @@ const ExpansionTreeView = props => {
         className={clsx('mv3-item-link', {
           className,
         })}
+        onClick={() => {
+          setSelectedId(id);
+        }}
       >
         {label}
       </Link>
@@ -150,6 +157,7 @@ const ExpansionTreeView = props => {
                 version,
                 linkPrefix,
                 externalLink,
+                id,
               })
             : label
         }
@@ -163,7 +171,7 @@ const ExpansionTreeView = props => {
       className={clsx(styles.mv3TreeView, {
         [treeClassName]: treeClassName,
       })}
-      selected={currentMdId === 'home' ? `home-${homeLabel}` : currentMdId}
+      selected={currentMdId === 'home' ? `home-${homeLabel}` : selectedId}
       expanded={expandedIds}
       {...others}
       onClick={handleClickMenuLink}

@@ -13,6 +13,9 @@ const nextConfig = {
 };
 
 module.exports = withLess({
+  lessLoaderOptions: {
+    /* ... */
+  },
   ...nextConfig,
   webpack(config) {
     config.resolve.alias['@'] = path.resolve(__dirname, 'src');

@@ -15,7 +15,16 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function Template(props) {
-  const { doc, name, menus, version, locale, category, versions } = props;
+  const {
+    doc,
+    name,
+    menus,
+    version,
+    locale,
+    category,
+    versions,
+    id: currentId,
+  } = props;
   const { t } = useTranslation('common');
 
   // left nav toggle state
@@ -217,6 +226,7 @@ export const getStaticProps = async ({
       locale,
       category: language,
       versions: versions,
+      id: slug,
     },
   };
 };

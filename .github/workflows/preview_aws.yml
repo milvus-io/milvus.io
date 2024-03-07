@@ -5,7 +5,7 @@ on:
     types: dev-deploy
   push:
     branches:
-      - preview
+      - new-preview
   workflow_dispatch:
 
 env:
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: 'preview'
+          ref: 'new-preview'
 
       - name: update submodules
         run: |
@@ -57,7 +57,7 @@ jobs:
       - name: Installing dependencies
         run: yarn install
 
-      - name: Building Gatsby site
+      - name: Building Milvus site
         run: yarn build
         env:
           MSERVICE_URL: ${{ secrets.MSERVICE_URL }}

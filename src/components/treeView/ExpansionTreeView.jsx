@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import TreeView from '@mui/lab/TreeView';
-import TreeItem from '@mui/lab/TreeItem';
+import { TreeView } from '@mui/x-tree-view/TreeView';
+import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import CustomIconLink from '../customIconLink';
 import * as styles from './ExpansionTreeView.module.less';
 

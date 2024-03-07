@@ -16,6 +16,7 @@ export default function DocLayout(props) {
     seo = {},
     classes: customerClasses = {},
     isHome,
+    showFooter = true,
   } = props;
 
   const { title = '', desc = '', url = '' } = seo;
@@ -48,12 +49,14 @@ export default function DocLayout(props) {
         >
           <div className={classes.centerContainer}>{center}</div>
 
-          <Footer
-            darkMode={false}
-            classes={{
-              content: classes.docFooter,
-            }}
-          />
+          {showFooter && (
+            <Footer
+              darkMode={false}
+              classes={{
+                content: classes.docFooter,
+              }}
+            />
+          )}
         </div>
       </div>
     </main>

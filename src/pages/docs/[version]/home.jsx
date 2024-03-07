@@ -18,29 +18,9 @@ export default function DocHomePage(props) {
 
   const { t } = useTranslation('common');
 
-  const [isOpened, setIsOpened] = useState(false);
-  const [menuTree, setMenuTree] = useState(menus);
-
   const newestBlog = useMemo(() => {
     return blogs[0];
   }, [blogs]);
-
-  const components = {
-    img: props => (
-      // height and width are part of the props, so they get automatically passed here with {...props}
-      <Image {...props} layout="responsive" loading="lazy" />
-    ),
-  };
-
-  const handleNodeClick = (nodeId, parentIds, isPage = false) => {
-    const updatedTree = recursionUpdateTree(
-      menuTree,
-      nodeId,
-      parentIds,
-      isPage
-    );
-    setMenuTree(updatedTree);
-  };
 
   return (
     <DocLayout
@@ -55,7 +35,7 @@ export default function DocHomePage(props) {
       }}
       left={
         <LeftNavSection
-          tree={menuTree}
+          tree={menus}
           className={classes.docMenu}
           version={version}
           versions={versions}

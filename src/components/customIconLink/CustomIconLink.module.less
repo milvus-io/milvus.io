@@ -1,11 +1,19 @@
 .link {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   color: var(--color-text-primary);
 
-  svg {
+  .iconWrapper {
     height: 18px;
-    width: 18px;
+    line-height: 18px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    display: inline-block;
+
+    svg {
+      height: 18px;
+      width: 18px;
+    }
   }
 }

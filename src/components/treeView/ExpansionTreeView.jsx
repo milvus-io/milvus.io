@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import TreeView from '@mui/lab/TreeView';
@@ -36,26 +36,37 @@ const ExpansionTreeView = props => {
     homeLabel,
     showHome = false,
     currentMdId,
+    groupId,
     language: lng,
+    version,
+    linkPrefix,
     ...others
   } = props;
 
+  console.log('itemList--', itemList);
+
+  const treeView = useRef(null);
+
   const [expandedIds, setExpandedIds] = useState(
-    filterExpandedItems(currentMdId, itemList)
+    filterExpandedItems(groupId || currentMdId, itemList)
   );
 
+  const [selectedId, setSelectedId] = useState(groupId || currentMdId);
+
   const handleClickMenuLink = () => {
-    const menuTree = document.querySelector('.mv3-tree-view');
+    const menuTree = treeView.current;
+    if (!menuTree) return;
     window.sessionStorage.setItem(SCROLL_TOP, menuTree.scrollTop);
   };
 
   useEffect(() => {
-    const initIds = filterExpandedItems(currentMdId, itemList);
+    const initIds = filterExpandedItems(selectedId, itemList);
     setExpandedIds(initIds);
-  }, [itemList, currentMdId]);
+  }, [itemList, selectedId]);
 
   useEffect(() => {
-    const menuTree = document.querySelector('.mv3-tree-view');
+    const menuTree = treeView.current;
+    if (!menuTree) return;
     const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
 
     // mutationObserver can't be disconnected,it leads to container scrolls as long as menu item be clicked
@@ -70,46 +81,58 @@ const ExpansionTreeView = props => {
     });
   }, []);
 
-  const handleClickParentTree = id => {
+  const handleClickParentTree = (id, group) => {
     const currentSelectedIds = [...expandedIds].reverse();
     const idIndex = currentSelectedIds.indexOf(id);
     if (idIndex === -1) {
-      const expandingIds = [id, ...filterExpandedItems(id, itemList)];
+      const expandingIds = [id, ...filterExpandedItems(group || id, itemList)];
       setExpandedIds(expandingIds);
     } else {
       setExpandedIds(currentSelectedIds.slice(0, idIndex).reverse());
     }
   };
 
-  const generateLink = (originUrl, label, linkClassName) => {
-    const externalUrlReg = /^(http|https)/;
-    const isExternal = externalUrlReg.test(originUrl);
-    return isExternal ? (
+  const generateLink = ({
+    originUrl,
+    label,
+    onClick,
+    className,
+    version,
+    linkPrefix,
+    externalLink,
+    id,
+  }) => {
+    return externalLink ? (
       <CustomIconLink
-        to={originUrl}
+        href={externalLink}
         className={clsx('mv3-item-link', {
-          [linkClassName]: linkClassName,
+          className,
         })}
-        isDoc={true}
+        isDoc
+        showIcon
       >
         {label}
       </CustomIconLink>
     ) : (
       <Link
-        href={originUrl}
+        href={`${linkPrefix}/${version}/${originUrl}`}
         className={clsx('mv3-item-link', {
-          [linkClassName]: linkClassName,
+          className,
         })}
+        onClick={() => {
+          setSelectedId(id);
+        }}
       >
         {label}
       </Link>
     );
   };
 
-  const generateTreeItem = ({ id, label, link, children }) => {
+  const generateTreeItem = props => {
+    const { id, label, href, children, externalLink = '' } = props;
     return children?.length ? (
       <TreeItem
-        key={`parent-${id}-${link}`}
+        key={`parent-${id}-${href}`}
         className={itemClassName}
         nodeId={id}
         label={label}
@@ -121,12 +144,21 @@ const ExpansionTreeView = props => {
       </TreeItem>
     ) : (
       <TreeItem
-        key={`child-${id}-${link}`}
+        key={`child-${id}-${href}`}
         className={itemClassName}
         nodeId={id}
         label={
-          link
-            ? generateLink(link, label, handleClickMenuLink, linkClassName)
+          href
+            ? generateLink({
+                originUrl: href,
+                label,
+                onClick: handleClickMenuLink,
+                className: linkClassName,
+                version,
+                linkPrefix,
+                externalLink,
+                id,
+              })
             : label
         }
       />
@@ -135,31 +167,15 @@ const ExpansionTreeView = props => {
 
   return (
     <TreeView
+      ref={treeView}
       className={clsx(styles.mv3TreeView, {
         [treeClassName]: treeClassName,
       })}
-      selected={currentMdId === 'home' ? `home-${homeLabel}` : currentMdId}
+      selected={currentMdId === 'home' ? `home-${homeLabel}` : selectedId}
       expanded={expandedIds}
       {...others}
       onClick={handleClickMenuLink}
     >
-      {showHome && (
-        <TreeItem
-          nodeId={`home-${homeLabel}`}
-          className={itemClassName}
-          label={
-            <Link
-              to={homeUrl}
-              className={clsx('mv3-item-link', {
-                [linkClassName]: linkClassName,
-              })}
-              language={lng}
-            >
-              {homeLabel}
-            </Link>
-          }
-        />
-      )}
       {itemList.map(i => generateTreeItem(i))}
     </TreeView>
   );

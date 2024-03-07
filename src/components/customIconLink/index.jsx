@@ -1,28 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import * as styles from './CustomIconLink.module.less';
+import Link from 'next/link';
 
 export default function CustomIconLink(props) {
   const {
-    to,
+    href,
     className = '',
     showIcon = true,
     children,
-    customIcon: Icon,
+    customIcon,
     isDoc = false,
   } = props;
 
+  const linkTarget = useMemo(() => {
+    const isExternal = /^(http|https)/.test(href);
+    return isExternal ? '_blank' : '_self';
+  }, [href]);
+
   return (
-    <a
-      target="_blank"
-      href={to}
+    <Link
+      href={href || ''}
+      target={linkTarget}
       rel="noopener noreferrer"
       className={clsx(styles.link, className)}
     >
       {showIcon && (
         <span>
-          {Icon ? (
-            <Icon className="CustomIconLink-icon" />
+          {customIcon ? (
+            { customIcon }
           ) : (
             <svg
               width="24"
@@ -60,6 +66,6 @@ export default function CustomIconLink(props) {
         </span>
       )}
       {children}
-    </a>
+    </Link>
   );
 }

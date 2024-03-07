@@ -99,22 +99,20 @@ export const recursionUpdateTree = (
 export const formatMenus = (menus, ids) => {
   const parents = ids || [];
   const menuList = menus.map(m => {
-    const commomProps = {
+    const commonProps = {
       id: m.id,
       label: m.label,
-      href: m.isMenu ? '' : m.id,
-      externalLink: m.externalLink || '',
-      isActive: false,
-      isOpen: false,
+      href: m.id,
+      externalLink: m.outLink || '',
       parentIds: [...parents],
     };
     return m.children
       ? {
-          ...commomProps,
+          ...commonProps,
           children: [...formatMenus(m.children, [...parents, m.id])],
         }
       : {
-          ...commomProps,
+          ...commonProps,
           children: [],
         };
   });
@@ -204,9 +202,9 @@ export const formatMenuStructure = list => {
 
   newList.forEach(v => {
     const { parentId, level, ...rest } = v;
-    const parenetIndex = resultList.findIndex(v => v.id === parentId);
-    if (parenetIndex !== -1) {
-      resultList[parenetIndex].children.push(rest);
+    const parentIndex = resultList.findIndex(v => v.id === parentId);
+    if (parentIndex !== -1) {
+      resultList[parentIndex].children.push(rest);
     }
   });
 

@@ -31,11 +31,11 @@ export default function DocDetailPage(props) {
     anchorList,
     summary,
     editPath,
-    frontmatter,
+    frontMatter,
   } = homeData;
 
   const { t } = useTranslation('common');
-  const { title = 'Documentations' } = frontmatter;
+  const { title = 'Documentations' } = frontMatter;
   const absoluteUrl = `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`;
 
   const seoInfo = {
@@ -122,7 +122,6 @@ export default function DocDetailPage(props) {
       left={
         <LeftNavSection
           tree={menuTree}
-          onNodeClick={handleNodeClick}
           className={classes.docMenu}
           version={version}
           versions={versions}
@@ -134,6 +133,8 @@ export default function DocDetailPage(props) {
             label: 'Home',
             link: `/docs/${version}/home`,
           }}
+          currentMdId={currentId}
+          groupId={frontMatter.group}
         />
       }
       center={
@@ -153,7 +154,7 @@ export default function DocDetailPage(props) {
               locale={locale}
               version={version}
               editPath={editPath}
-              mdTitle={frontmatter.title}
+              mdTitle={frontMatter.title}
               category="doc"
               items={anchorList}
               title={t('v3trans.docs.tocTitle')}
@@ -189,7 +190,7 @@ export const getStaticProps = async context => {
   const {
     content,
     editPath,
-    data: frontmatter,
+    data: frontMatter,
   } = docUtils.getDocContent(contentList, version, slug);
   const docMenus = docUtils.getDocMenu(docData, version);
   const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
@@ -207,9 +208,9 @@ export const getStaticProps = async context => {
         codeList,
         headingContent,
         anchorList,
-        summary: frontmatter.summary || '',
+        summary: frontMatter.summary || '',
         editPath,
-        frontmatter,
+        frontMatter,
       },
       version,
       locale,

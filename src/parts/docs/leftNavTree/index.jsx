@@ -1,8 +1,11 @@
-import MenuTree from '../../../components/tree';
-import VersionSelector from '../../../components/versionSelector';
-import { AlgoliaSearch } from '../../../components/search/agloia';
+import MenuTree from '@/components/tree';
+import VersionSelector from '@/components/versionSelector';
+import { AlgoliaSearch } from '@/components/search/agloia';
 import clsx from 'clsx';
 import classes from './index.module.less';
+import ExpansionTreeView from '@/components/treeView/ExpansionTreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 export default function LeftNavSection(props) {
   const {
@@ -16,6 +19,8 @@ export default function LeftNavSection(props) {
     trans,
     locale = 'en',
     home: { label, link },
+    currentMdId,
+    groupId = '',
   } = props;
 
   return (
@@ -33,9 +38,20 @@ export default function LeftNavSection(props) {
         linkPrefix={linkPrefix}
         linkSuffix={linkSuffix}
       />
-      <MenuTree
-        tree={tree}
-        onNodeClick={onNodeClick}
+
+      <ExpansionTreeView
+        itemList={tree}
+        treeClassName={classes.tree}
+        itemClassName={classes.treeItem}
+        linkClassName={classes.treeItemLink}
+        defaultCollapseIcon={<ExpandMoreIcon />}
+        defaultExpandIcon={<ChevronRightIcon />}
+        homeUrl={link}
+        homeLabel={label}
+        showHome={true}
+        currentMdId={currentMdId}
+        groupId={groupId}
+        language={locale}
         version={version}
         linkPrefix={linkPrefix}
       />

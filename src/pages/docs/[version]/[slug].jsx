@@ -1,25 +1,22 @@
-import docUtils from '../../../utils/docs.utils';
-import DocContent from '../../../parts/docs/docContent';
-import { markdownToHtml, copyToCommand } from '../../../utils/common';
+import docUtils from '@/utils/docs.utils';
+import DocContent from '@/parts/docs/docContent';
+import { markdownToHtml, copyToCommand } from '@/utils/common';
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Layout from '../../../components/layout/commonLayout';
-import { linkIconTpl } from '../../../components/icons';
-import clsx from 'clsx';
-import Aside from '../../../components/aside';
-import Footer from '../../../components/footer';
+import { linkIconTpl } from '@/components/icons';
+import Aside from '@/components/aside';
 import {
   useCopyCode,
   useFilter,
   useMultipleCodeFilter,
-} from '../../../hooks/enhanceCodeBlock';
-import { useGenAnchor } from '../../../hooks/doc-anchor';
-import { recursionUpdateTree, getMenuInfoById } from '../../../utils/docUtils';
-import LeftNavSection from '../../../parts/docs/leftNavTree';
-import DocLayout from '../../../components/layout/docLayout';
+} from '@/hooks/enhanceCodeBlock';
+import { useGenAnchor } from '@/hooks/doc-anchor';
+import { recursionUpdateTree, getMenuInfoById } from '@/utils/docUtils';
+import LeftNavSection from '@/parts/docs/leftNavTree';
+import DocLayout from '@/components/layout/docLayout';
 import { ABSOLUTE_BASE_URL } from '@/consts';
-import classes from '../../../styles/docDetail.module.less';
-import { checkIconTpl } from '../../../components/icons';
+import classes from '@/styles/docDetail.module.less';
+import { checkIconTpl } from '@/components/icons';
 
 export default function DocDetailPage(props) {
   const { homeData, menus, version, versions, locale, id: currentId } = props;

@@ -1,18 +1,15 @@
-import docUtils from '../../../utils/docs.utils';
-import blogUtils from '../../../utils/blog.utils';
-import HomeContent from '../../../parts/docs/docHome';
-import DocContent from '../../../parts/docs/DocContent';
-import { markdownToHtml } from '../../../utils/common';
-
+import docUtils from '@/utils/docs.utils';
+import blogUtils from '@/utils/blog.utils';
+import HomeContent from '@/parts/docs/docHome';
+import { markdownToHtml } from '@/utils/common';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-
-import { useGenAnchor } from '../../../hooks/doc-anchor';
-import { recursionUpdateTree } from '../../../utils/docUtils';
-import LeftNavSection from '../../../parts/docs/leftNavTree';
-import classes from '../../../styles/docs.module.less';
-import DocLayout from '../../../components/layout/docLayout';
+import { useGenAnchor } from '@/hooks/doc-anchor';
+import { recursionUpdateTree } from '@/utils/docUtils';
+import LeftNavSection from '@/parts/docs/leftNavTree';
+import classes from '@/styles/docs.module.less';
+import DocLayout from '@/components/layout/docLayout';
 
 const TITLE = 'Milvus vector database documentation';
 

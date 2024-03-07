@@ -1,13 +1,13 @@
-import LeftNavSection from '../../../../parts/docs/leftNavTree';
+import LeftNavSection from '@/parts/docs/leftNavTree';
 import { useTranslation } from 'react-i18next';
-import Aside from '../../../../components/aside';
+import Aside from '@/components/aside';
 // import { useCodeCopy } from '../hooks/doc-dom-operation';
-import { markdownToHtml } from '../../../../utils/common';
-import { recursionUpdateTree } from '../../../../utils/docUtils';
-import classes from '../../../../styles/docDetail.module.less';
-import apiUtils from '../../../../utils/apiReference.utils';
-import DocLayout from '../../../../components/layout/docLayout';
-import DocContent from '../../../../parts/docs/docContent';
+import { markdownToHtml } from '@/utils/common';
+import { recursionUpdateTree } from '@/utils/docUtils';
+import classes from '@/styles/docDetail.module.less';
+import apiUtils from '@/utils/apiReference.utils';
+import DocLayout from '@/components/layout/docLayout';
+import DocContent from '@/parts/docs/docContent';
 import { useState } from 'react';
 
 function capitalizeFirstLetter(string) {

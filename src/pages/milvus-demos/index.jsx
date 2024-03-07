@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import DemoCard from '@/components/card/DemoCard';
 import { useState } from 'react';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
-import { CustomizedSnackbars } from '@/components/snackbar';
+import { CustomizedSnackbars } from '@/components/snackBar';
 import Signup from '@/components/signup';
 
 const TITLE = 'Milvus Demos';

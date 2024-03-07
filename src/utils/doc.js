@@ -112,6 +112,4 @@ export const generateAvailableVersions = target => {
   const docDir = VDC_DOC_DIR;
 
   const versions = fs.readdirSync(docDir);
-
-  console.log('versions--', versions);
 };

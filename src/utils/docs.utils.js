@@ -170,8 +170,6 @@ const getDocContent = (allData, version, id) => {
     };
   }
 
-  console.log('frontMatter--', target.data);
-
   return {
     id,
     version,

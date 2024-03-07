@@ -43,8 +43,6 @@ const ExpansionTreeView = props => {
     ...others
   } = props;
 
-  console.log('itemList--', itemList);
-
   const treeView = useRef(null);
 
   const [expandedIds, setExpandedIds] = useState(

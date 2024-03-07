@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { throttle } from '@/utils/imgSearch.utils';
 
 export const useDetectScrollBottom = () => {
   const [scrollBottom, setScrollBottom] = useState(Infinity);
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
+    if (typeof document === 'undefined') {
       return;
     }
 
@@ -16,9 +15,9 @@ export const useDetectScrollBottom = () => {
       setScrollBottom(distanceToBottom);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    document.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

@@ -19,6 +19,9 @@ module.exports = withLess({
   ...nextConfig,
   webpack(config) {
     config.resolve.alias['@'] = path.resolve(__dirname, 'src');
-    return config;
+    return {
+      ...config,
+      mode: 'development',
+    };
   },
 });

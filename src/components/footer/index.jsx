@@ -12,7 +12,6 @@ import * as styles from './index.module.less';
 import pageClasses from '../../styles/responsive.module.less';
 
 import { DISCORD_INVITE_URL } from '../../consts';
-import MilvusCookieConsent from '../milvusCookieConsent';
 import { useTranslation } from 'react-i18next';
 
 const footerJson = [
@@ -166,7 +165,6 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
           </div>
         </div>
       </div>
-      <MilvusCookieConsent />
     </footer>
   );
 };

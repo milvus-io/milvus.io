@@ -21,7 +21,8 @@ module.exports = withLess({
     config.resolve.alias['@'] = path.resolve(__dirname, 'src');
     return {
       ...config,
-      mode: 'development',
+
+      devtool: 'source-map',
     };
   },
 });

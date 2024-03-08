@@ -166,7 +166,6 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
           </div>
         </div>
       </div>
-      <MilvusCookieConsent />
     </footer>
   );
 };

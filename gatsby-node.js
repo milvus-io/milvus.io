@@ -33,6 +33,10 @@ const {
   newestVersion,
   versions,
 } = require('./gatsbyUtils/version');
+const {
+  generateUseCasePages,
+  fetchUseCases,
+} = require('./gatsbyUtils/useCase');
 
 exports.onCreateDevServer = ({ app }) => {
   app.use(express.static('public'));
@@ -164,11 +168,14 @@ exports.createPages = ({ actions, graphql }) => {
   const blogTemplate = path.resolve(`src/templates/blogTemplate.jsx`);
   const blogListTemplate = path.resolve(`src/templates/blogListTemplate.jsx`);
   const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.jsx`);
+  const useCaseTemplate = path.resolve(`src/templates/useCaseTemplate.jsx`);
 
-  return graphql(query).then(result => {
+  const promiseList = [graphql(query), fetchUseCases()];
+  return Promise.all(promiseList).then(([result, useCaseList]) => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
+    console.log('useCaseList--', useCaseList);
     // prepare data
     // get all menuStructures
     const allMenus = generateAllMenus(result.data.allFile.edges);
@@ -235,6 +242,13 @@ exports.createPages = ({ actions, graphql }) => {
       allMenus,
       allApiMenus,
       versionInfo,
+    });
+
+    generateUseCasePages(createPage, {
+      template: useCaseTemplate,
+      newestVersion,
+      versions,
+      useCaseList,
     });
   });
 };

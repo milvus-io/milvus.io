@@ -3,17 +3,19 @@ name: Build and deploy to prod
 on:
   repository_dispatch:
     types: prod-deploy
+    branches:
+      - master
   push:
     branches:
       - master
   workflow_dispatch:
 
 env:
-  NODE_OPTIONS: "--max_old_space_size=8196"
+  NODE_OPTIONS: '--max_old_space_size=8196'
 
 jobs:
   build:
-    runs-on: "ubuntu-latest"
+    runs-on: 'ubuntu-latest'
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}

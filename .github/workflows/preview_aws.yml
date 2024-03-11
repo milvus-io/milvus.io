@@ -3,6 +3,8 @@ name: Build and deploy to preview
 on:
   repository_dispatch:
     types: dev-deploy
+    branches:
+      - preview
   push:
     branches:
       - preview

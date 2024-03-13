@@ -3,9 +3,11 @@ import GitCommitInfo from '../GitCommitInfo';
 import { useGithubCommits } from '../../../http/hooks';
 import classes from './index.module.less';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 export default function DocContent(props) {
-  const { commitPath, version, htmlContent, mdId, trans } = props;
+  const { commitPath, version, htmlContent, mdId } = props;
+  const { t } = useTranslation('common');
   // const contact = {
   //   slack: {
   //     label: "Discuss on Slack",
@@ -47,7 +49,7 @@ export default function DocContent(props) {
           <GitCommitInfo
             commitInfo={commitInfo}
             mdId={mdId}
-            commitTrans={trans('v3trans.docs.commitTrans')}
+            commitTrans={t('v3trans.docs.commitTrans')}
           />
         )}
         {/* <ScoredFeedback trans={trans} pageId={mdId} /> */}

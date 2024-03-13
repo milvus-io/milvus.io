@@ -121,6 +121,28 @@ export const formatMenus = (menus, ids) => {
 };
 
 /**
+ * Converts a version string to a version number.
+ *
+ * @param {string} versionString - The version string to convert.
+ * @returns {version: string, versionNum: number} The converted result.
+ */
+const convertVersionStringToVersionNum = versionString => {
+  const usableVersion = versionString
+    .replace('v', '')
+    .replaceAll('x', 1)
+    .split('-')[0];
+  const [major, minor, patch] = usableVersion.split('.');
+  const patchNum = Number.isNaN(parseInt(patch)) ? 0 : parseInt(patch);
+  const minorNum = Number.isNaN(parseInt(minor)) ? 0 : parseInt(minor) * 10;
+  const majorNum = Number.isNaN(parseInt(major)) ? 0 : parseInt(major) * 1000;
+  const versionNum = patchNum + minorNum + majorNum;
+  return {
+    version: versionString,
+    versionNum,
+  };
+};
+
+/**
  * 描述 filter available versions and get newest version
  * @date 2022-09-15
  * @param {any} versions version list
@@ -135,36 +157,23 @@ export const getNewestVersionTool = (versions, minVersion) => {
     };
   }
 
-  let minEdition = minVersion.includes('x')
-    ? minVersion.replace('x', 0)
-    : minVersion;
+  const { versionNum: minVersionNum } =
+    convertVersionStringToVersionNum(minVersion);
 
-  minEdition = minEdition.replaceAll(/v|\./g, '');
+  const versionInfoList = versions.map(v =>
+    convertVersionStringToVersionNum(v)
+  );
 
-  const list = versions.map(v => {
-    let edition = v.includes('x') ? v.replace('x', '1') : v;
+  const usableVersions = versionInfoList.filter(
+    v => v.versionNum >= minVersionNum
+  );
 
-    edition = edition.replaceAll(/v|\./g, '');
-
-    return {
-      version: v,
-      edition,
-    };
-  });
-
-  const filteredList = list.filter(v => v.edition >= minEdition);
-
-  if (!filteredList.length) {
-    return {
-      newestVersion: null,
-      list: [],
-    };
-  }
-  filteredList.sort((x, y) => y.edition - x.edition);
+  usableVersions.sort((x, y) => y.versionNum - x.versionNum);
+  const newestVersion = usableVersions[0];
 
   return {
-    newestVersion: filteredList[0].version,
-    list: filteredList.map(v => v.version),
+    newestVersion: newestVersion.version,
+    list: usableVersions.map(v => v.version),
   };
 };
 

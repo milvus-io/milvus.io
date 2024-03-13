@@ -13,9 +13,9 @@ import { generateAvailableApiVersions } from './apiReference.utils';
 /**
  * what i need:
  * all available doc versions
- * routers based on available veriosn
- * contents based on available veriosn, folder struecture property
- * menus based on available veriosn
+ * routers based on available version
+ * contents based on available version, folder structure property
+ * menus based on available version
  * */
 
 const BASE_DOC_DIR = join(process.cwd(), 'src/docs');
@@ -83,6 +83,14 @@ const generateAllDocData = () => {
     docData,
     contentList,
   };
+};
+
+const getLatestVersionRouter = contentList => {
+  return contentList.map(v => ({
+    params: {
+      slug: v.id,
+    },
+  }));
 };
 
 const getDocRouter = contentList => {
@@ -218,6 +226,7 @@ const docUtils = {
   getAllData: generateAllDocData,
   getVersion: generateAvailableDocVersions,
   getDocRouter,
+  getLatestVersionRouter,
   getDocMenu,
   getHomeData,
   getDocContent,

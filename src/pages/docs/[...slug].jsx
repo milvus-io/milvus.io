@@ -1,7 +1,8 @@
 import docUtils from '@/utils/docs.utils';
 import DocContent from '@/parts/docs/docContent';
+
 import { markdownToHtml, copyToCommand } from '@/utils/common';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { linkIconTpl } from '@/components/icons';
 import Aside from '@/components/aside';
@@ -19,7 +20,17 @@ import classes from '@/styles/docDetail.module.less';
 import { checkIconTpl } from '@/components/icons';
 
 export default function DocDetailPage(props) {
-  const { homeData, menus, version, versions, locale, id: currentId } = props;
+  const {
+    homeData,
+    isHome,
+    blogs,
+    version,
+    locale,
+    versions,
+    newestVersion,
+    menus,
+    id: currentId,
+  } = props;
 
   const {
     tree,
@@ -32,14 +43,14 @@ export default function DocDetailPage(props) {
   } = homeData;
 
   const { t } = useTranslation('common');
-  const { title = 'Documentations' } = frontMatter;
-  const absoluteUrl = `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`;
 
-  const seoInfo = {
-    title: `${title} | Milvus`,
-    url: absoluteUrl,
-    desc: summary,
-  };
+  const seoInfo = useMemo(() => {
+    return {
+      title: `${frontMatter?.title} | Milvus`,
+      url: `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`,
+      desc: summary,
+    };
+  }, [frontMatter, version, currentId, summary]);
 
   const [isOpened, setIsOpened] = useState(false);
   const [menuTree, setMenuTree] = useState(menus);
@@ -53,25 +64,25 @@ export default function DocDetailPage(props) {
     ),
   };
 
-  const handleNodeClick = (nodeId, parentIds, isPage = false) => {
-    const updatedTree = recursionUpdateTree(
-      menuTree,
-      nodeId,
-      parentIds,
-      isPage
-    );
-    setMenuTree(updatedTree);
-  };
+  // const handleNodeClick = (nodeId, parentIds, isPage = false) => {
+  //   const updatedTree = recursionUpdateTree(
+  //     menuTree,
+  //     nodeId,
+  //     parentIds,
+  //     isPage
+  //   );
+  //   setMenuTree(updatedTree);
+  // };
 
-  useEffect(() => {
-    // active initial menu item
-    const currentMenuInfo = getMenuInfoById(menus, currentId);
-    if (!currentMenuInfo) {
-      return;
-    }
-    handleNodeClick(currentId, currentMenuInfo.parentIds, true);
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   // active initial menu item
+  //   const currentMenuInfo = getMenuInfoById(menus, currentId);
+  //   if (!currentMenuInfo) {
+  //     return;
+  //   }
+  //   handleNodeClick(currentId, currentMenuInfo.parentIds, true);
+  //   // eslint-disable-next-line
+  // }, []);
 
   useEffect(() => {
     // add click event handler for copy icon after headings
@@ -123,15 +134,14 @@ export default function DocDetailPage(props) {
           version={version}
           versions={versions}
           linkPrefix={`/docs`}
-          linkSuffix="home"
           locale={locale}
-          trans={t}
           home={{
             label: 'Home',
-            link: `/docs/${version}/home`,
+            link: `/docs/${version}`,
           }}
           currentMdId={currentId}
           groupId={frontMatter.group}
+          latestVersion={newestVersion}
         />
       }
       center={
@@ -141,7 +151,6 @@ export default function DocDetailPage(props) {
               version={version}
               htmlContent={tree}
               mdId={currentId}
-              trans={t}
               commitPath={editPath}
             />
           </div>
@@ -167,8 +176,16 @@ export default function DocDetailPage(props) {
 }
 
 export const getStaticPaths = () => {
+  const { newestVersion } = docUtils.getVersion();
   const { contentList } = docUtils.getAllData();
-  const paths = docUtils.getDocRouter(contentList);
+  const filteredList = contentList.filter(v => v.version !== newestVersion);
+  // const paths = docUtils.getDocRouter(filteredList);
+
+  const paths = filteredList.map(v => {
+    return {
+      params: { slug: [v.version, v.id] },
+    };
+  });
 
   return {
     paths,
@@ -177,19 +194,21 @@ export const getStaticPaths = () => {
 };
 
 export const getStaticProps = async context => {
-  const {
-    params: { version, slug },
-    locale = 'en',
-  } = context;
+  const { params, locale = 'en' } = context;
 
-  const { versions } = docUtils.getVersion();
+  const [version, id] = params.slug;
+
+  const { versions, newestVersion } = docUtils.getVersion();
+
   const { docData, contentList } = docUtils.getAllData();
+
   const {
     content,
     editPath,
     data: frontMatter,
-  } = docUtils.getDocContent(contentList, version, slug);
+  } = docUtils.getDocContent(contentList, version, id);
   const docMenus = docUtils.getDocMenu(docData, version);
+
   const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
     content,
     {
@@ -209,11 +228,14 @@ export const getStaticProps = async context => {
         editPath,
         frontMatter,
       },
+      isHome: false,
+      blogs: [],
       version,
       locale,
       versions,
+      newestVersion,
       menus: docMenus,
-      id: slug,
+      id,
     },
   };
 };

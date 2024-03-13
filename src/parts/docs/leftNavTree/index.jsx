@@ -21,6 +21,7 @@ export default function LeftNavSection(props) {
     home: { label, link },
     currentMdId,
     groupId = '',
+    latestVersion,
   } = props;
 
   return (
@@ -37,6 +38,8 @@ export default function LeftNavSection(props) {
         homeLink={link}
         linkPrefix={linkPrefix}
         linkSuffix={linkSuffix}
+        latestVersion={latestVersion}
+        currentMdId={currentMdId}
       />
 
       <ExpansionTreeView
@@ -54,6 +57,7 @@ export default function LeftNavSection(props) {
         language={locale}
         version={version}
         linkPrefix={linkPrefix}
+        latestVersion={latestVersion}
       />
     </div>
   );

@@ -1,6 +1,6 @@
-import fs from 'fs';
-import { join } from 'path';
-import matter from 'gray-matter';
+const fs = require('fs');
+const { join } = require('path');
+const matter = require('gray-matter');
 
 const BASE_BLOG_DIR = join(process.cwd(), 'src/blogs/blog/en');
 
@@ -24,15 +24,15 @@ const generateBlogCover = (cover, date) => {
   return `https://${defaultCover}`;
 };
 
-const generateBlogData = () => {
+const generateBlogData = (showContent = true) => {
   const blogsData = fs.readdirSync(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
     const { data, content } = matter(file);
-
     const { tag, date, cover, ...rest } = data;
+
     return {
       id: v,
-      content,
+      content: showContent ? content : '',
       date: new Date(data.date).toJSON(),
       cover: generateBlogCover(cover, new Date(data.date)),
       ...rest,

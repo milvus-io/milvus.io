@@ -113,3 +113,34 @@ export const generateAvailableVersions = target => {
 
   const versions = fs.readdirSync(docDir);
 };
+
+/**
+ * Converts a version string to a version number.
+ *
+ * @param {string} versionString - The version string to convert.
+ * @returns {version: string, versionNum: number} The converted result.
+ */
+const convertVersionStringToVersionNum = versionString => {
+  const usableVersion = versionString.split('-')[0];
+  const [major, minor, patch] = usableVersion.split('.');
+  const patchNum = Number.isNaN(parseInt(patch)) ? 0 : parseInt(patch);
+  const minorNum = Number.isNaN(parseInt(minor)) ? 0 : parseInt(minor) * 10;
+  const majorNum = Number.isNaN(parseInt(major)) ? 0 : parseInt(major) * 100;
+  const versionNum = patchNum + minorNum + majorNum;
+  return {
+    version: v,
+    versionNum,
+  };
+};
+
+/**
+ * Description
+ * @param {string[]} versionsList format ['v1.0.0', 'v2.0.x', 'v2.0.x-Beta']
+ * @returns {string}
+ */
+const getLatestDocVersion = versionList => {
+  const newList = versionList.map(v => convertVersionStringToVersionNum(v));
+
+  const sortedList = newList.sort((a, b) => b.versionNum - a.versionNum);
+  return sortedList[0].version;
+};

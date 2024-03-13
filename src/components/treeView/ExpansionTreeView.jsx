@@ -40,8 +40,11 @@ const ExpansionTreeView = props => {
     language: lng,
     version,
     linkPrefix,
+    latestVersion,
     ...others
   } = props;
+
+  console.log('currentMdId--', currentMdId);
 
   const treeView = useRef(null);
 
@@ -98,8 +101,15 @@ const ExpansionTreeView = props => {
     version,
     linkPrefix,
     externalLink,
+    latestVersion,
     id,
   }) => {
+    console.log('version info--', version, latestVersion);
+    const internalLink =
+      version === latestVersion
+        ? `${linkPrefix}/${originUrl}`
+        : `${linkPrefix}/${version}/${originUrl}`;
+
     return externalLink ? (
       <CustomIconLink
         href={externalLink}
@@ -113,7 +123,7 @@ const ExpansionTreeView = props => {
       </CustomIconLink>
     ) : (
       <Link
-        href={`${linkPrefix}/${version}/${originUrl}`}
+        href={internalLink}
         className={clsx('mv3-item-link', {
           className,
         })}
@@ -155,6 +165,8 @@ const ExpansionTreeView = props => {
                 version,
                 linkPrefix,
                 externalLink,
+                latestVersion,
+                version,
                 id,
               })
             : label

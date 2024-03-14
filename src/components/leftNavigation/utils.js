@@ -96,3 +96,52 @@ export const mdMenuListFactory = (menuList, pageType, version, locale) => {
     return innerFn(copyMenu);
   };
 };
+
+export const refactoryPymilvusMenu = (menuList, category, version) => {
+  if (category !== 'pymilvus') {
+    return menuList;
+  }
+
+  const { children: childList, ...rest } = menuList[0];
+  let newUpLayer = {};
+
+  const illegalChildren = childList.filter(
+    v => v.id.includes('/') && v.label.includes('/')
+  );
+
+  const legalChildren = childList.filter(
+    v => !v.id.includes('/') && !v.label.includes('/')
+  );
+
+  illegalChildren.forEach(v => {
+    const [parentLabel, currentLabel] = v.label.split('/');
+
+    const subLayer = {
+      label: currentLabel,
+      id: `${parentLabel}_${currentLabel}`,
+      link: v.link,
+      children: v.children,
+    };
+
+    if (!newUpLayer[parentLabel]) {
+      newUpLayer[parentLabel] = {
+        label: parentLabel,
+        id: parentLabel,
+        link: `/api-reference/${category}/${version}/${parentLabel}`,
+        children: [subLayer],
+      };
+    } else {
+      newUpLayer[parentLabel].children.push(subLayer);
+    }
+  });
+
+  const newChildList = [...legalChildren, ...Object.values(newUpLayer)];
+  newChildList.sort((x, y) => x.label.charCodeAt() - y.label.charCodeAt());
+
+  return [
+    {
+      ...rest,
+      children: newChildList,
+    },
+  ];
+};

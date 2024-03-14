@@ -79,13 +79,25 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions;
   const { generateNodes } = sourceNodesUtils;
 
+  const IGNORE_FILES = [
+    'README.md',
+    'Variables.json',
+    '.DS_Store',
+    'fragments',
+    '.git',
+  ];
+
   const dirPath = `src/pages/docs/versions/master/API_Reference`;
   // read categories, such as pymilvus and pymilvus-orm
-  const categories = fs.readdirSync(dirPath);
+  const categories = fs
+    .readdirSync(dirPath)
+    .filter(v => !IGNORE_FILES.includes(v));
   const nodes = [];
   for (const category of categories) {
     const path = `${dirPath}/${category}`;
-    const versions = fs.readdirSync(path);
+    const versions = fs
+      .readdirSync(path)
+      .filter(v => !IGNORE_FILES.includes(v));
     switch (category) {
       case 'pymilvus':
         for (const version of versions) {

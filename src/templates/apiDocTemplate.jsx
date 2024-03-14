@@ -4,7 +4,10 @@ import { useI18next } from 'gatsby-plugin-react-i18next';
 import clsx from 'clsx';
 import Layout from '../components/layout';
 import LeftNav from '../components/leftNavigation';
-import { mdMenuListFactory } from '../components/leftNavigation/utils';
+import {
+  mdMenuListFactory,
+  refactoryPymilvusMenu,
+} from '../components/leftNavigation/utils';
 import Aside from '../components/aside';
 import Footer from '../components/footer';
 import Seo from '../components/seo';
@@ -42,6 +45,7 @@ export default function Template({ data, pageContext }) {
   const { allVersion } = data;
   const { doc, name, allApiMenus, version, locale, category, docVersion } =
     pageContext;
+
   // left nav toggle state
   const [isOpened, setIsOpened] = useState(false);
   // recover state
@@ -69,6 +73,8 @@ export default function Template({ data, pageContext }) {
   const currentApiMenu = allApiMenus[category][version];
   // generate menus
   const menus = mdMenuListFactory(currentApiMenu, 'api', version, locale)();
+
+  const realMenu = refactoryPymilvusMenu(menus, category, version);
 
   // get version links on version change
   const getApiVersionLink = version => {
@@ -218,7 +224,7 @@ export default function Template({ data, pageContext }) {
         <LeftNav
           homeUrl={'/docs'}
           homeLabel={'< Docs'}
-          menus={menus}
+          menus={realMenu}
           locale={locale}
           versions={versions}
           version={version}

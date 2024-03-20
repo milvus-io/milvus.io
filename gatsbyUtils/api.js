@@ -149,6 +149,22 @@ const handleApiFiles = (nodes, { parentPath, version, category }) => {
   }
 };
 
+const handleRestfulApiFile = (nodes, { parentPath, category }) => {
+  const filesList = fs.readdirSync(parentPath);
+  const apiFiles = filesList.filter(i => i.endsWith('.json'));
+  const fileName = apiFiles[0];
+  const absolutePath = `${parentPath}/${fileName}`;
+
+  const doc = fs.readFileSync(absolutePath, 'utf-8');
+
+  nodes.push({
+    doc,
+    name: fileName,
+    category: category,
+    abspath: absolutePath,
+  });
+};
+
 /**
  * Generate a prettier title from menu's category or name.
  * @param { object } param0 { category, name, isDirectory = false, labels = [] }
@@ -300,6 +316,7 @@ const generateApiReferencePages = (
   nodes.forEach(node => {
     const { abspath, doc, name, version, category, docVersion, isDirectory } =
       node;
+
     // Should ignore if the node is a directory.
     if (isDirectory) return;
     // Create default language page.
@@ -354,4 +371,5 @@ module.exports = {
   generateApiMenus,
   generateApiReferencePages,
   handleApiFiles,
+  handleRestfulApiFile,
 };

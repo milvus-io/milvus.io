@@ -22,6 +22,7 @@ const {
   handleApiFiles,
   generateApiMenus,
   generateApiReferencePages,
+  handleRestfulApiFile,
 } = require('./gatsbyUtils/api');
 const {
   generateBlogArticlePage,
@@ -145,13 +146,10 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
         }
         break;
       case 'milvus-restful':
-        for (const version of versions) {
-          handleApiFiles(nodes, {
-            parentPath: path,
-            version,
-            category: 'restful',
-          });
-        }
+        handleRestfulApiFile(nodes, {
+          parentPath: path,
+          category: 'restful',
+        });
         break;
 
       default:
@@ -181,13 +179,21 @@ exports.createPages = ({ actions, graphql }) => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
+
+    const restfulApiNodes = result.data.allApIfile.nodes.filter(
+      v => v.category === 'restful'
+    );
+    const othersApiNodes = result.data.allApIfile.nodes.filter(
+      v => v.category !== 'restful'
+    );
+
     // prepare data
     // get all menuStructures
     const allMenus = generateAllMenus(result.data.allFile.edges);
     // get new doc index page data
     const homeData = generateHomeData(result.data.allFile.edges);
     // get api menus
-    const allApiMenus = generateApiMenus(result.data.allApIfile.nodes);
+    const allApiMenus = generateApiMenus(othersApiNodes);
     // get version with home
     const versionsWithHome = getVersionsWithHome(homeData);
     // filter useless md file blog has't version
@@ -223,6 +229,7 @@ exports.createPages = ({ actions, graphql }) => {
       versions,
       newestVersion,
     });
+
     generateBlogArticlePage(createPage, {
       nodes: blogNodes,
       template: blogTemplate,

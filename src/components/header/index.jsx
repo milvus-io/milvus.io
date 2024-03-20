@@ -14,12 +14,7 @@ import MilvusCookieConsent from '../milvusCookieConsent';
 import { getGithubStatis } from '../../http';
 import * as styles from './index.module.less';
 
-const Header = ({
-  darkMode = false,
-  t = v => v,
-  className = '',
-  version = '',
-}) => {
+const Header = ({ darkMode = false, t = v => v, className = '' }) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);

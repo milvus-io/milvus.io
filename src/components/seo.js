@@ -16,7 +16,6 @@ function SEO({
   meta,
   title,
   titleTemplate = '',
-  version,
   link,
   script,
 }) {
@@ -88,7 +87,7 @@ function SEO({
     >
       <script
         src="https://tag.clearbitscripts.com/v1/pk_9b83069276f2350591e46955085ee5a8/tags.js"
-        referrerpolicy="strict-origin-when-cross-origin"
+        referrerPolicy="strict-origin-when-cross-origin"
       ></script>
       <script
         src="//js.hsforms.net/forms/embed/v2.js"

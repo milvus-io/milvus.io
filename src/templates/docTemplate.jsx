@@ -167,7 +167,7 @@ export default function Template({ data, pageContext }) {
     APIs.children.push({
       id: 'restful',
       label: 'RESTful',
-      link: `/api-reference/restful/${versionInfo[version].restful}/About.md`,
+      link: `/api-reference/restful`,
     });
   }
 

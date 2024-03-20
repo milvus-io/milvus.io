@@ -6,6 +6,7 @@ milvus.io Official website
 1. git submodule update --remote
 2. yarn install
 3. yarn start
+4. view your site on http://localhost:8000, and graphQL interface on http://localhost:8000/\_\_\_graphql
 
 We use submodule to update docs pages. So we must update submodules before yarn start.
 

@@ -21,8 +21,6 @@ import videoIcon from '../../images/community/icons/video.svg';
 import CustomLink from '../../components/customLink';
 import { DISCORD_INVITE_URL } from '../../consts';
 
-const OFFICE_HOUR_REGISTER_LINK = 'https://discord.gg/RjNbk8RR4f';
-
 const CalendarIcon = () => (
   <svg
     width="20"
@@ -168,7 +166,7 @@ export default function CommunityPage({ data, pageContext }) {
               </p>
               <CustomLink
                 className={classes.registerBtn}
-                href={OFFICE_HOUR_REGISTER_LINK}
+                href={DISCORD_INVITE_URL}
               >
                 Join now
                 <ArrowRightAltIcon />

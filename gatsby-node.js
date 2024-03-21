@@ -187,7 +187,6 @@ exports.createPages = ({ actions, graphql }) => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
-    console.log('useCaseList--', useCaseList);
     // prepare data
     // get all menuStructures
     const allMenus = generateAllMenus(result.data.allFile.edges);

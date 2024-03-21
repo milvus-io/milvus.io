@@ -8,31 +8,13 @@ import UseCaseCard from './parts/useCaseCard';
 import clsx from 'clsx';
 import { Typography } from '@mui/material';
 import { Masonry } from 'gestalt';
-import json from './mock.json';
 import 'gestalt/dist/gestalt.css';
-
-const MIN = 100;
-const MAX = 380;
-const DESCRIPTION =
-  "Mozart leverages Milvus for Stylepedia's image search system, utilizing its capability for real-time, large-scale vector similarity searches across billions of datasets for garment detection, feature extraction, and refined post-processing, enhancing user experiences with functions like searching for similar clothing items, outfit suggestions, and personalized fashion recommendations.";
 
 export default function UsCasesTemplate({ data, pageContext }) {
   const { useCaseList, newestVersion } = pageContext;
   const { language, t } = useI18next();
 
   const scrollContainer = useRef(null);
-
-  const mockData = json.map(v => {
-    const random = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
-    return {
-      ...v,
-      description: v.description
-        ? v.description
-        : DESCRIPTION.substring(0, random),
-    };
-  });
-
-  console.log(mockData.length);
 
   return (
     <Layout t={t} version={newestVersion}>
@@ -54,16 +36,15 @@ export default function UsCasesTemplate({ data, pageContext }) {
             </Typography>
           </section>
           <div className={styles.listSection}>
-            {mockData.length ? (
+            {useCaseList.length ? (
               <Masonry
+                items={useCaseList}
                 columnWidth={280}
-                virtualize={true}
-                comp={({ data }) => <UseCaseCard useCase={data} />}
-                items={mockData}
+                renderItem={({ data }) => <UseCaseCard useCase={data} />}
                 gutterWidth={30}
-                scrollContainer={() => scrollContainer.current}
-                minCols={2}
-              ></Masonry>
+                scrollContainer={scrollContainer.current}
+                virtualize
+              />
             ) : null}
           </div>
         </div>

@@ -34,22 +34,21 @@ function Main({
         <div className={`${styles.imgContainer} ${isShowCode ? '' : ''}`}>
           {pins.length ? (
             <Masonry
-              columnWidth={isMobile ? 139 : 290}
-              virtualize={true}
-              comp={({ data }) => (
+              items={pins}
+              renderItem={data => (
                 <Item
-                  data={data}
+                  data={data.data}
                   isSelected={isSelected}
                   handleSearch={handleSearch}
                   setModal={setModal}
                 />
               )}
-              items={pins}
               gutterWidth={16}
+              layout="flexible"
               loadItems={loadItems}
               scrollContainer={() => scrollContainer.current}
-              minCols={2}
-            ></Masonry>
+              virtualize
+            />
           ) : null}
         </div>
         {loading ? <div className="loading-wrapper">loading...</div> : null}

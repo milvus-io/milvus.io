@@ -1,0 +1,247 @@
+[
+  {
+    "name": "Sohu",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "Sohu uses Milvus for semantic searches, optimizing news recommendations and classification to boost user experience and content relevance",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "VIPShop",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "VIPShop utilizes Milvus for its recommendation system, transforming product features and user behaviors into vector embeddings for fast, accurate similarity searches, outperforming traditional solutions with features like distributed deployment and multi-language SDKs.",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Mozart",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "Mozart leverages Milvus for Stylepedia's image search system, utilizing its capability for real-time, large-scale vector similarity searches across billions of datasets for garment detection, feature extraction, and refined post-processing, enhancing user experiences with functions like searching for similar clothing items, outfit suggestions, and personalized fashion recommendations.",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Credal AI",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "Credal AI deployed Milvus on Amazon EKS to power semantic search in GenAI-driven workflows, enabling scalable, real-time processing of large datasets across diverse hosting environments, including cloud and on-prem setups.",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Shopee",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Troop",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "TrendMicro",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Tokopedia",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Farfetch",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "SmartNews",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Bigo",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Deepset",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Omers",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Chegg",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Airbnb",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "ZipRecruiter",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Grab",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Line",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Shutterstock",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "VerSe",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Zomato",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Bosch",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Roblox",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Shell",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "The European Patent Office",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Compass",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Paypal",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Walmart",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Otter.ai",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Palo Alto Networks",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Salesforce",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Zigram",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "AT&T",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "IKEA",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  },
+  {
+    "name": "Poshmark",
+    "logo": "https://assets.zilliz.com/Sohu_5aacb5fc44.png",
+    "description": "",
+    "link": "https://zilliz.com/customers/sohu",
+    "cta_label": "Learn more"
+  }
+]

@@ -1,11 +1,11 @@
 const axios = require('axios');
 
-console.log('env--', process.env.NEXT_PUBLIC_API_BASE_URL);
+const cmsUrl = process.env.MSERVICE_URL;
 
 const fetchUseCases = async () => {
   try {
-    const response = await axios.get('http://127.0.0.1:1337/milvus-use-cases');
-    const result = response.data.map(v => ({
+    const response = await axios.get('https://cms.zilliz.cc/milvus-use-cases');
+    const result = response.data[0].use_case_list.map(v => ({
       ...v,
       logo: v.logo.url,
     }));

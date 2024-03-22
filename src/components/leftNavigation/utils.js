@@ -97,10 +97,12 @@ export const mdMenuListFactory = (menuList, pageType, version, locale) => {
   };
 };
 
-export const refactoryPymilvusMenu = (menuList, category, version) => {
+export const refactorPymilvusMenu = (menuList, category, version) => {
   if (category !== 'pymilvus') {
     return menuList;
   }
+
+  console.log('list--', menuList[0]);
 
   const { children: childList, ...rest } = menuList[0];
   let newUpLayer = {};
@@ -116,6 +118,13 @@ export const refactoryPymilvusMenu = (menuList, category, version) => {
   illegalChildren.forEach(v => {
     const [parentLabel, currentLabel] = v.label.split('/');
 
+    const sameParentItem = legalChildren.find(v => v.id === parentLabel);
+    const sameParentIndex = legalChildren.findIndex(v => v.id === parentLabel);
+
+    if (sameParentIndex !== -1) {
+      legalChildren.splice(sameParentIndex, 1);
+    }
+
     const subLayer = {
       label: currentLabel,
       id: `${parentLabel}_${currentLabel}`,
@@ -128,7 +137,10 @@ export const refactoryPymilvusMenu = (menuList, category, version) => {
         label: parentLabel,
         id: parentLabel,
         link: `/api-reference/${category}/${version}/${parentLabel}`,
-        children: [subLayer],
+        children:
+          sameParentIndex === -1
+            ? [subLayer]
+            : [...sameParentItem.children, subLayer],
       };
     } else {
       newUpLayer[parentLabel].children.push(subLayer);

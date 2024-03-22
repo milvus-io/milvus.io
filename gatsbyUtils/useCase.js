@@ -1,10 +1,9 @@
 const axios = require('axios');
-
 const cmsUrl = process.env.MSERVICE_URL;
 
 const fetchCustomers = async () => {
   try {
-    const response = await axios.get('https://cms.zilliz.cc/customer-stories');
+    const response = await axios.get(`${cmsUrl}/customer-stories`);
     const result = response.data.map(v => {
       return {
         name: v.customer_name,
@@ -20,14 +19,12 @@ const fetchCustomers = async () => {
 
 const fetchUseCases = async () => {
   try {
-    const response = await axios.get('https://cms.zilliz.cc/milvus-use-cases');
-    const stories = await fetchCustomers();
+    const response = await axios.get(`${cmsUrl}/milvus-use-cases`);
 
     const result = response.data[0].use_case_list.map(v => {
-      const target = stories.find(s => s.customer_name === v.name);
       return {
         ...v,
-        logo: v.logo?.url || target?.logo || '',
+        logo: v.logo?.url,
       };
     });
     return result;

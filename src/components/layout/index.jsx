@@ -9,12 +9,10 @@ const Layout = ({
   showFooter = true,
   t,
   headerClassName,
-  version=''
 }) => {
-
   return (
     <>
-      <Header darkMode={darkMode} t={t} className={headerClassName} version={version} />
+      <Header darkMode={darkMode} t={t} className={headerClassName} />
       {children}
       {showFooter && <Footer t={t} />}
     </>

@@ -14,19 +14,16 @@ import MilvusCookieConsent from '../milvusCookieConsent';
 import { getGithubStatis } from '../../http';
 import * as styles from './index.module.less';
 
-const Header = ({
-  darkMode = false,
-  t = v => v,
-  className = '',
-  version = '',
-}) => {
+const Header = ({ darkMode = false, t = v => v, className = '' }) => {
   const { language, languages, originalPath } = useI18next();
   const [isLightHeader, setIsLightHeader] = useState(!darkMode);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
+  const [isWhyOpen, setIsWhyOpen] = useState(false);
   const [isDesktopTutOpen, setIsDesktopTutOpen] = useState(false);
   const [isDesktopToolOpen, setIsDesktopToolOpen] = useState(false);
+  const [isDesktopWhyOpen, setIsDesktopWhyOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [stat, setStat] = useState({
     star: {
@@ -41,6 +38,7 @@ const Header = ({
   const isLangOpen = Boolean(anchorEl);
   const toolRef = useRef(null);
   const tutRef = useRef(null);
+  const whyMilvusRef = useRef(null);
   const headerRef = useRef(null);
   const [isDesktop, setIsDesktop] = useState(true);
 
@@ -131,6 +129,14 @@ const Header = ({
       isOpen = !isToolOpen;
     }
     setIsToolOpen(isOpen);
+  };
+
+  const openWhyMilvus = open => {
+    let isOpen = open;
+    if (isOpen === undefined) {
+      isOpen = !isToolOpen;
+    }
+    setIsWhyOpen(isOpen);
   };
 
   const handleMenuLinkClick = e => {
@@ -226,10 +232,20 @@ const Header = ({
           <div className={styles.leftSection}>
             <ul className={`${styles.menu}`}>
               <li>
+                <button
+                  ref={whyMilvusRef}
+                  className={styles.menuItem}
+                  onClick={() => setIsDesktopWhyOpen(true)}
+                >
+                  Why Milvus
+                </button>
+              </li>
+              <li>
                 <Link to="/docs" className={styles.menuItem}>
                   {t('v3trans.main.nav.docs')}
                 </Link>
               </li>
+
               <li>
                 <button
                   ref={tutRef}
@@ -350,6 +366,26 @@ const Header = ({
                 </a>
               </MenuItem>
             </Menu>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={whyMilvusRef.current}
+              open={isDesktopWhyOpen}
+              onClose={() => {
+                setIsDesktopWhyOpen(false);
+              }}
+            >
+              <MenuItem>
+                <Link to="/what-is-milvus" className={styles.menuLink}>
+                  What is Milvus
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/use-cases" className={styles.menuLink}>
+                  Use Cases
+                </Link>
+              </MenuItem>
+            </Menu>
           </div>
 
           <div className={styles.rightSection}>
@@ -386,6 +422,38 @@ const Header = ({
               component="nav"
               aria-labelledby="nested-list-subheader"
             >
+              <ListItemButton
+                onClick={() => {
+                  openWhyMilvus(!isWhyOpen);
+                }}
+              >
+                <ListItemText primary="Why Milvus" />
+                {isWhyOpen ? (
+                  <ExpandMore />
+                ) : (
+                  <ExpandMore className={styles.turnLeft} />
+                )}
+              </ListItemButton>
+              <Collapse in={isWhyOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemText
+                    primary={
+                      <>
+                        <Link
+                          to="/what-is-milvus"
+                          className={styles.mobileMenuLink}
+                        >
+                          What is Milvus
+                        </Link>
+                        <Link to="/use-cases" className={styles.mobileMenuLink}>
+                          Use Cases
+                        </Link>
+                      </>
+                    }
+                  />
+                </List>
+              </Collapse>
+              <Divider variant="middle" />
               <Link to="/docs" className={styles.menuLink}>
                 <ListItemButton>
                   <ListItemText primary={t('v3trans.main.nav.docs')} />

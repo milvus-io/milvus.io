@@ -9,6 +9,8 @@ import clsx from 'clsx';
 import { Typography } from '@mui/material';
 import { Masonry } from 'gestalt';
 import 'gestalt/dist/gestalt.css';
+import { RightArrow } from '../components/icons';
+import { SHARE_YOUR_STORY_URL } from '../consts';
 
 export default function UsCasesTemplate({ data, pageContext }) {
   const { useCaseList, newestVersion } = pageContext;
@@ -44,10 +46,31 @@ export default function UsCasesTemplate({ data, pageContext }) {
                 gutterWidth={30}
                 scrollContainer={scrollContainer.current}
                 virtualize
+                minCols={1}
               />
             ) : null}
           </div>
         </div>
+
+        <section className={styles.shareSection}>
+          <div className={styles.contentWrapper}>
+            <h2>Share Your Story with Us!</h2>
+            <p className={styles.desc}>
+              Have you built something cool using Milvus or Zilliz Cloud? We
+              want to hear all about it. You’ll get a free Zilliz hoody for
+              sharing your project made with Milvus or Zilliz.
+            </p>
+            <a
+              href={SHARE_YOUR_STORY_URL}
+              className={styles.linkBtn}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Submit My Story
+              <RightArrow />
+            </a>
+          </div>
+        </section>
       </div>
     </Layout>
   );

@@ -1,6 +1,4 @@
-import docUtils from '@/utils/docs.utils';
 import DocContent from '@/parts/docs/docContent';
-
 import { markdownToHtml, copyToCommand } from '@/utils/common';
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,22 +10,29 @@ import {
   useMultipleCodeFilter,
 } from '@/hooks/enhanceCodeBlock';
 import { useGenAnchor } from '@/hooks/doc-anchor';
-import { recursionUpdateTree, getMenuInfoById } from '@/utils/docUtils';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import DocLayout from '@/components/layout/docLayout';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import classes from '@/styles/docDetail.module.less';
 import { checkIconTpl } from '@/components/icons';
+import {
+  generateAllContentDataOfSingleVersion,
+  generateContentDataOfSingleFile,
+  generateDocVersionInfo,
+  generateMenuDataOfCurrentVersion,
+} from '@/utils/docs';
+import { GetStaticProps } from 'next';
+import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
+import { DocDetailPageProps } from '@/types/docs';
 
-export default function DocDetailPage(props) {
+export default function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,
-    isHome,
-    blogs,
+
     version,
     locale,
     versions,
-    newestVersion,
+    latestVersion,
     menus,
     id: currentId,
   } = props;
@@ -56,13 +61,6 @@ export default function DocDetailPage(props) {
   const [menuTree, setMenuTree] = useState(menus);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');
-
-  const components = {
-    img: props => (
-      // height and width are part of the props, so they get automatically passed here with {...props}
-      <Image {...props} layout="responsive" loading="lazy" />
-    ),
-  };
 
   // const handleNodeClick = (nodeId, parentIds, isPage = false) => {
   //   const updatedTree = recursionUpdateTree(
@@ -99,7 +97,7 @@ export default function DocDetailPage(props) {
             }
             const {
               dataset: { href },
-            } = e.currentTarget;
+            } = e.currentTarget as HTMLAnchorElement;
             pageHref.current = `${baseHref}${href}`;
             copyToCommand(pageHref.current);
 
@@ -133,7 +131,7 @@ export default function DocDetailPage(props) {
           className={classes.docMenu}
           version={version}
           versions={versions}
-          linkPrefix={`/docs`}
+          linkPrefix="/docs"
           locale={locale}
           home={{
             label: 'Home',
@@ -141,7 +139,7 @@ export default function DocDetailPage(props) {
           }}
           currentMdId={currentId}
           groupId={frontMatter.group}
-          latestVersion={newestVersion}
+          latestVersion={latestVersion}
         />
       }
       center={
@@ -176,16 +174,22 @@ export default function DocDetailPage(props) {
 }
 
 export const getStaticPaths = () => {
-  const { newestVersion } = docUtils.getVersion();
-  const { contentList } = docUtils.getAllData();
-  const filteredList = contentList.filter(v => v.version !== newestVersion);
-  // const paths = docUtils.getDocRouter(filteredList);
+  const { restVersions } = generateDocVersionInfo();
+  const contentList = restVersions.map(v => ({
+    version: v,
+    data: generateAllContentDataOfSingleVersion({ version: v }),
+  }));
 
-  const paths = filteredList.map(v => {
-    return {
-      params: { slug: [v.version, v.id] },
-    };
-  });
+  const paths = contentList.reduce((acc, cur) => {
+    const { version, data } = cur;
+    const paths = data.map(d => {
+      return {
+        params: { slug: [version, d.frontMatter.id] },
+      };
+    });
+    acc = acc.concat(paths);
+    return acc;
+  }, []);
 
   return {
     paths,
@@ -193,24 +197,30 @@ export const getStaticPaths = () => {
   };
 };
 
-export const getStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const { params, locale = 'en' } = context;
-
-  const [version, id] = params.slug;
-
-  const { versions, newestVersion } = docUtils.getVersion();
-
-  const { docData, contentList } = docUtils.getAllData();
-
+  const [version, id] = params.slug as string[];
+  const { versions, latestVersion } = generateDocVersionInfo();
   const {
-    content,
+    content: docDetailContent,
+    frontMatter,
     editPath,
-    data: frontMatter,
-  } = docUtils.getDocContent(contentList, version, id);
-  const docMenus = docUtils.getDocMenu(docData, version);
+  } = generateContentDataOfSingleFile({
+    version,
+    id,
+    withContent: true,
+  });
+
+  const docMenu = generateMenuDataOfCurrentVersion({
+    docVersion: version,
+  });
+  const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
+    docVersion: latestVersion,
+  });
+  const menu = [...docMenu, outerApiMenuItem];
 
   const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
-    content,
+    docDetailContent,
     {
       showAnchor: true,
       version,
@@ -229,12 +239,12 @@ export const getStaticProps = async context => {
         frontMatter,
       },
       isHome: false,
-      blogs: [],
+      blog: null,
       version,
       locale,
       versions,
-      newestVersion,
-      menus: docMenus,
+      latestVersion,
+      menus: menu,
       id,
     },
   };

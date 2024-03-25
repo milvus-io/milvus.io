@@ -1,4 +1,3 @@
-import docUtils from '@/utils/docs.utils';
 import DocContent from '@/parts/docs/docContent';
 import HomeContent from '@/parts/docs/docHome';
 import { markdownToHtml, copyToCommand } from '@/utils/common';
@@ -12,31 +11,37 @@ import {
   useMultipleCodeFilter,
 } from '@/hooks/enhanceCodeBlock';
 import { useGenAnchor } from '@/hooks/doc-anchor';
-import { recursionUpdateTree, getMenuInfoById } from '@/utils/docUtils';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import DocLayout from '@/components/layout/docLayout';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import classes from '@/styles/docDetail.module.less';
 import { checkIconTpl } from '@/components/icons';
-import blogUtils from '@/utils/blog.utils';
 import clsx from 'clsx';
+import {
+  generateDocVersionInfo,
+  generateAllContentDataOfSingleVersion,
+  generateHomePageDataOfSingleVersion,
+  generateMenuDataOfCurrentVersion,
+} from '@/utils/docs';
+import { GetStaticProps } from 'next';
+import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
+import { generateAllBlogContentList } from '@/utils/blogs';
+import { DocDetailPageProps } from '@/types/docs';
 
 const DOC_HOME_TITLE = 'Milvus vector database documentation';
 
-export default function DocDetailPage(props) {
+export default function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,
     isHome,
-    blogs,
+    blog: latestBlog,
     version,
     locale,
     versions,
-    newestVersion,
+    latestVersion,
     menus,
     id: currentId,
   } = props;
-
-  console.log('home detail page version--', version);
 
   const {
     tree,
@@ -63,10 +68,6 @@ export default function DocDetailPage(props) {
       desc,
     };
   }, [isHome, frontMatter, version, currentId, summary]);
-
-  const latestBlog = useMemo(() => {
-    return blogs[0];
-  }, [blogs]);
 
   const [isOpened, setIsOpened] = useState(false);
   const [menuTree, setMenuTree] = useState(menus);
@@ -108,7 +109,7 @@ export default function DocDetailPage(props) {
             }
             const {
               dataset: { href },
-            } = e.currentTarget;
+            } = e.currentTarget as HTMLAnchorElement;
             pageHref.current = `${baseHref}${href}`;
             copyToCommand(pageHref.current);
 
@@ -152,11 +153,11 @@ export default function DocDetailPage(props) {
               locale={locale}
               home={{ label: 'Home', link: `/docs/${version}` }}
               currentMdId="home"
-              latestVersion={newestVersion}
+              latestVersion={latestVersion}
             />
           }
           center={
-            <HomeContent homeData={homeData.tree} newestBlog={latestBlog} />
+            <HomeContent homeData={homeData.tree} latestBlog={latestBlog} />
           }
         />
       ) : (
@@ -214,49 +215,53 @@ export default function DocDetailPage(props) {
   );
 }
 
+// this page combain the detail pages of latest versions and the home page of all versions
+// these two pages has same params
 export const getStaticPaths = () => {
-  const { newestVersion } = docUtils.getVersion();
-  const { contentList } = docUtils.getAllData();
-  const filteredList = contentList.filter(v => v.version === newestVersion);
-  const paths = filteredList.map(v => ({ params: { id: v.id } }));
+  const { latestVersion, restVersions } = generateDocVersionInfo();
+  const latestDocContentList = generateAllContentDataOfSingleVersion({
+    version: latestVersion,
+  });
+
+  const paths = latestDocContentList.map(v => ({
+    params: { id: v.frontMatter.id },
+  }));
 
   // common version home page paths
-  const homePaths = contentList
-    .filter(v => v.version !== newestVersion)
-    .map(v => ({ params: { id: v.version } }));
+  const homePagePaths = restVersions.map(v => ({
+    params: { id: v },
+  }));
 
   return {
-    paths: [...paths, ...homePaths],
+    paths: [...paths, ...homePagePaths],
     fallback: false,
   };
 };
 
-export const getStaticProps = async context => {
-  const {
-    params: { id },
-    locale = 'en',
-  } = context;
-
+export const getStaticProps: GetStaticProps = async context => {
+  const { params, locale = 'en' } = context;
   const VERSION_REG = /^v\d/;
-  const { versions, newestVersion } = docUtils.getVersion();
-  const version = VERSION_REG.test(id) ? id : newestVersion;
-  const { docData, contentList } = docUtils.getAllData();
 
-  const {
-    content,
-    editPath,
-    data: frontMatter,
-  } = docUtils.getDocContent(contentList, version, id);
+  const id = params.id as string;
+  const { versions, latestVersion } = generateDocVersionInfo();
+  const version = VERSION_REG.test(id) ? id : latestVersion;
 
-  const docMenus = docUtils.getDocMenu(docData, version);
+  const docMenu = generateMenuDataOfCurrentVersion({
+    docVersion: version,
+  });
 
-  // home page info which is not the latest version
+  // home page data
   if (VERSION_REG.test(id)) {
-    const homeContent = docUtils.getHomeData(docData, version);
+    const { content: homepageContent, frontMatter } =
+      generateHomePageDataOfSingleVersion({ version });
+    const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
+      docVersion: version,
+    });
+    const menu = [...docMenu, outerApiMenuItem];
+    const { frontMatter: latestBlogData } = generateAllBlogContentList()[0];
 
-    const blogs = blogUtils.getAllData();
     const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
-      homeContent,
+      homepageContent,
       {
         showAnchor: true,
         version,
@@ -271,26 +276,43 @@ export const getStaticProps = async context => {
           headingContent: headingContent || '',
           anchorList: anchorList || [],
           summary: frontMatter?.summary || '',
-          editPath: editPath || '',
-          frontMatter: frontMatter || {},
+          editPath: '',
+          frontMatter: frontMatter,
         },
         isHome: true,
-        blogs,
+        blog: latestBlogData,
         version,
         locale,
         versions,
-        newestVersion,
-        menus: docMenus,
+        latestVersion,
+        menus: menu,
         id: 'home.md',
       },
     };
   }
 
+  // xxx.md of latest version
+  const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
+    docVersion: latestVersion,
+  });
+  const menu = [...docMenu, outerApiMenuItem];
+
+  const docDetailContentList = generateAllContentDataOfSingleVersion({
+    version: latestVersion,
+    withContent: true,
+  });
+
+  const {
+    content: docDetailContent,
+    frontMatter,
+    editPath,
+  } = docDetailContentList.find(v => v.frontMatter.id === id);
+
   const { tree, codeList, headingContent, anchorList } = await markdownToHtml(
-    content,
+    docDetailContent,
     {
       showAnchor: true,
-      newestVersion,
+      newestVersion: latestVersion,
     }
   );
 
@@ -305,12 +327,13 @@ export const getStaticProps = async context => {
         editPath,
         frontMatter,
       },
-      blogs: [],
+      blog: null,
       isHome: false,
-      version: newestVersion,
+      version: latestVersion,
+      latestVersion,
       locale,
       versions,
-      menus: docMenus,
+      menus: menu,
       id,
     },
   };

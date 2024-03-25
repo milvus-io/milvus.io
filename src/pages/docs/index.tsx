@@ -1,5 +1,3 @@
-import docUtils from '@/utils/docs.utils';
-import blogUtils from '@/utils/blog.utils';
 import HomeContent from '@/parts/docs/docHome';
 import { markdownToHtml } from '@/utils/common';
 import React, { useMemo } from 'react';
@@ -8,8 +6,27 @@ import clsx from 'clsx';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import classes from '@/styles/docs.module.less';
 import DocLayout from '@/components/layout/docLayout';
+import {
+  generateDocVersionInfo,
+  generateHomePageDataOfSingleVersion,
+  generateMenuDataOfCurrentVersion,
+} from '@/utils/docs';
+import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
+import { generateAllBlogContentList } from '@/utils/blogs';
+import { FinalMenuStructureType } from '@/types/docs';
+import { BlogFrontMatterType } from '@/types/blogs';
 
 const TITLE = 'Milvus vector database documentation';
+
+interface docHomePageProps {
+  homeData: string;
+  isHome: boolean;
+  version: string;
+  locale: 'en' | 'cn';
+  versions: string;
+  blog: BlogFrontMatterType;
+  menus: FinalMenuStructureType[];
+}
 
 /**
  *  1. 进入docs页面时，淫荡展示最新版本的 homepage
@@ -21,14 +38,10 @@ const TITLE = 'Milvus vector database documentation';
  * */
 
 // this is latest version doc homepage
-export default function LatestVersionDocHomepage(props) {
+export default function LatestVersionDocHomepage(props: docHomePageProps) {
   const { t } = useTranslation('common');
 
-  const { homeData, blogs = [], menus, version, versions, locale } = props;
-
-  const newestBlog = useMemo(() => {
-    return blogs[0];
-  }, [blogs]);
+  const { homeData, blog, menus, version, versions, locale } = props;
 
   return (
     <DocLayout
@@ -54,34 +67,38 @@ export default function LatestVersionDocHomepage(props) {
           latestVersion={version}
         />
       }
-      center={
-        <HomeContent homeData={homeData} newestBlog={newestBlog} trans={t} />
-      }
+      center={<HomeContent homeData={homeData} latestBlog={blog} />}
     />
   );
 }
 
 export const getStaticProps = async () => {
-  const { versions } = docUtils.getVersion();
-  const { newestVersion } = docUtils.getVersion();
-  const { docData } = docUtils.getAllData();
-  const homeContent = docUtils.getHomeData(docData, newestVersion);
-  const blogs = blogUtils.getAllData();
-  const menu = docUtils.getDocMenu(docData, newestVersion);
+  const { versions, latestVersion } = generateDocVersionInfo();
+  const { content: homeContent } = generateHomePageDataOfSingleVersion({
+    version: latestVersion,
+  });
+  const { frontMatter: latestBlogData } = generateAllBlogContentList()[0];
+  const docMenu = generateMenuDataOfCurrentVersion({
+    docVersion: latestVersion,
+  });
+  const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
+    docVersion: latestVersion,
+  });
+  const menu = [...docMenu, outerApiMenuItem];
 
   const { tree } = await markdownToHtml(homeContent, {
     showAnchor: false,
-    newestVersion,
+    latestVersion,
   });
 
   return {
     props: {
       homeData: tree,
       isHome: true,
-      version: newestVersion,
+      version: latestVersion,
       locale: 'en',
       versions,
-      blogs,
+      blog: latestBlogData,
       menus: menu,
     },
   };

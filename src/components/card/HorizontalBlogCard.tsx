@@ -5,14 +5,18 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import * as styles from './HorizontalBlogCard.module.less';
+import styles from './HorizontalBlogCard.module.less';
 import Skeleton from '@mui/material/Skeleton';
 import clsx from 'clsx';
+import { BlogFrontMatterType } from '@/types/blogs';
 
-export default function HorizontalBlogCard(props) {
-  const { blogData = {} } = props;
+export default function HorizontalBlogCard(props: {
+  blogData: BlogFrontMatterType;
+}) {
+  const { blogData } = props;
   const [imgLoading, setImgLoading] = useState(true);
   const { title, desc, tags, cover, id } = blogData;
+
   const handleImgLoad = () => {
     setImgLoading(false);
   };
@@ -23,7 +27,7 @@ export default function HorizontalBlogCard(props) {
           component="img"
           classes={{ img: styles.cardImg }}
           className={clsx({ [styles.loading]: imgLoading })}
-          src={cover}
+          src={`https://${cover}`}
           alt={title}
           onLoad={handleImgLoad}
         />
@@ -33,14 +37,14 @@ export default function HorizontalBlogCard(props) {
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardContent classes={{ root: styles.cardContent }}>
             {tags?.length && (
-              <Typography component="div" variant="h7" className={styles.tag}>
+              <Typography component="div" variant="h6" className={styles.tag}>
                 {tags[0]}
               </Typography>
             )}
             <Typography variant="h4" component="div" className={styles.title}>
               {title}
             </Typography>
-            <Typography component="div" variant="h7" className={styles.desc}>
+            <Typography component="div" variant="h6" className={styles.desc}>
               {desc}
             </Typography>
           </CardContent>

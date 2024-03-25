@@ -20,7 +20,8 @@ export default function VersionSelector(props) {
     currentMdId,
   } = props;
 
-  console.log('currentMdId--', currentMdId);
+  console.log('version selector latest version', latestVersion);
+
   const router = useRouter();
 
   const [detailPageId, setDetailPageId] = useState(currentMdId);
@@ -30,7 +31,6 @@ export default function VersionSelector(props) {
    * 1. query.id === xx.md
    * 2. query.id === v.x.0.x
    * */
-  console.log(router);
 
   const {
     query: { id = '' },

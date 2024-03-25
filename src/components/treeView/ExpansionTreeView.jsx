@@ -44,8 +44,6 @@ const ExpansionTreeView = props => {
     ...others
   } = props;
 
-  console.log('currentMdId--', currentMdId);
-
   const treeView = useRef(null);
 
   const [expandedIds, setExpandedIds] = useState(
@@ -104,7 +102,6 @@ const ExpansionTreeView = props => {
     latestVersion,
     id,
   }) => {
-    console.log('version info--', version, latestVersion);
     const internalLink =
       version === latestVersion
         ? `${linkPrefix}/${originUrl}`

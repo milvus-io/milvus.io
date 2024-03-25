@@ -16,7 +16,6 @@ function SEO({
   meta,
   title,
   titleTemplate = '',
-  version,
   link,
   script,
 }) {

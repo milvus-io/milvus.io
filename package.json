@@ -46,7 +46,7 @@
     "gatsby-transformer-json": "^3.0.0",
     "gatsby-transformer-remark": "^4.3.0",
     "gatsby-transformer-sharp": "^3.0.0",
-    "gestalt": "^45.8.2",
+    "gestalt": "^146.5.4",
     "highlight.js": "^11.4.0",
     "i18next": "^21.6.4",
     "instantsearch.css": "^7.4.5",

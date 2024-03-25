@@ -1,3 +1,7 @@
+// to load env variables
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 const gatsbyConfigs = {
   siteMetadata: {
     siteUrl: `https://milvus.io`,

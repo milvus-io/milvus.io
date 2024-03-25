@@ -54,10 +54,16 @@ export default function WhatIsMilvus({ data, pageContext }) {
   return (
     <Layout t={t}>
       <Seo
-        title="What is Milvus"
+        title="Milvus, a highly performant distributed vector database for AI apps"
         lang={language}
-        description="What is Mulvus"
+        description="All you need to know about vector embedding, vector search, and why Milvus is a purpose-built vector database to ensure high performance, resilience and versatility for production AI apps."
         titleTemplate="%s"
+        meta={[
+          {
+            name: 'keywords',
+            content: 'Milvus, Vector Database, Vector Search',
+          },
+        ]}
       />
       <main>
         <section className={styles.headerSection}>

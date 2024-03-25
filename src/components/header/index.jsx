@@ -376,7 +376,7 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
               }}
             >
               <MenuItem>
-                <Link to="/what-is-milvus" className={styles.menuLink}>
+                <Link to="/intro" className={styles.menuLink}>
                   What is Milvus
                 </Link>
               </MenuItem>
@@ -439,10 +439,7 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
                   <ListItemText
                     primary={
                       <>
-                        <Link
-                          to="/what-is-milvus"
-                          className={styles.mobileMenuLink}
-                        >
+                        <Link to="/intro" className={styles.mobileMenuLink}>
                           What is Milvus
                         </Link>
                         <Link to="/use-cases" className={styles.mobileMenuLink}>

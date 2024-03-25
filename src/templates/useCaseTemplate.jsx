@@ -21,10 +21,16 @@ export default function UsCasesTemplate({ data, pageContext }) {
   return (
     <Layout t={t} version={newestVersion}>
       <Seo
-        title="use case | Milvus"
+        title="Use cases | Milvus"
         lang={language}
         titleTemplate="%s"
-        description="use cases of Milvus"
+        description="Discover Milvus use cases across various industries to unveil the power of purpose-built vector databases.  "
+        meta={[
+          {
+            name: 'keywords',
+            content: 'Milvus, vector search, use cases',
+          },
+        ]}
       />
       <div className={styles.casePageContainer} ref={scrollContainer}>
         <div className={clsx(styles.contentContainer, 'col-4 col-8 col-12')}>

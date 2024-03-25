@@ -63,7 +63,6 @@ function Main({
       handleSearch,
       setModal,
       scrollContainer,
-      isMobile,
     ]
   );
 }

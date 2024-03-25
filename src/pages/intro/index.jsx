@@ -44,12 +44,68 @@ export default function WhatIsMilvus({ data, pageContext }) {
     returnObjects: true,
   });
 
-  const nutShellKeys1 = t('v3trans.whatIsMilvus.workInNutshell.sub2.features', {
-    returnObjects: true,
-  });
-  const nutShellKeys2 = t('v3trans.whatIsMilvus.workInNutshell.sub4.features', {
-    returnObjects: true,
-  });
+  const nutShellKeys1 = [
+    <li key="sub2FeatureF1">
+      <h4>
+        The Root Coordinator:&nbsp;&nbsp;
+        <span className={styles.thinText}>
+          managing data-related tasks and global timestamps
+        </span>
+      </h4>
+    </li>,
+    <li key="sub2FeatureF2">
+      <h4>
+        The Query Coordinator:&nbsp;&nbsp;
+        <span className={styles.thinText}>
+          overseeing query nodes for search operations
+        </span>
+      </h4>
+    </li>,
+    <li key="sub2FeatureF3">
+      <h4>
+        The Data Coordinator:&nbsp;&nbsp;
+        <span className={styles.thinText}>
+          handling data nodes and metadata
+        </span>
+      </h4>
+    </li>,
+    <li key="sub2FeatureF4">
+      <h4>
+        The Index Coordinator:&nbsp;&nbsp;
+        <span className={styles.thinText}>
+          maintaining index nodes and metadata
+        </span>
+      </h4>
+    </li>,
+  ];
+  const nutShellKeys2 = [
+    <li key="sub4FeatureF1">
+      <h4>
+        Meta store:&nbsp;&nbsp;
+        <span className={styles.thinText}>
+          using etcd for metadata snapshots and system health checks
+        </span>
+      </h4>
+    </li>,
+    <li key="sub4FeatureF2">
+      <h4>
+        Log broker:&nbsp;&nbsp;
+        <span className={styles.thinText}>
+          for streaming data persistence and recovery, utilizing Pulsar or
+          RocksDB
+        </span>
+      </h4>
+    </li>,
+    <li key="sub4FeatureF3">
+      <h4>
+        Object storage:&nbsp;&nbsp;
+        <span className={styles.thinText}>
+          storing log snapshots, index files, and query results, with support
+          for services like AWS S3, Azure Blob Storage, and MinIO
+        </span>
+      </h4>
+    </li>,
+  ];
 
   return (
     <Layout t={t}>
@@ -165,13 +221,7 @@ export default function WhatIsMilvus({ data, pageContext }) {
             <p className="">
               {t('v3trans.whatIsMilvus.workInNutshell.sub2.content')}
             </p>
-            <ul className="">
-              {nutShellKeys1.map(v => (
-                <li className="" key={v}>
-                  <h4>{v}</h4>
-                </li>
-              ))}
-            </ul>
+            <ul className="">{nutShellKeys1.map(v => v)}</ul>
 
             <h3 className="">
               {t('v3trans.whatIsMilvus.workInNutshell.sub3.title')}
@@ -186,13 +236,7 @@ export default function WhatIsMilvus({ data, pageContext }) {
             <p className="">
               {t('v3trans.whatIsMilvus.workInNutshell.sub4.content')}
             </p>
-            <ul className="">
-              {nutShellKeys2.map(v => (
-                <li className="" key={v}>
-                  <h4>{v}</h4>
-                </li>
-              ))}
-            </ul>
+            <ul className="">{nutShellKeys2.map(v => v)}</ul>
           </div>
           <div className={styles.imageWrapper}>
             <img src={architecture} alt="Milvus Architecture Overview" />

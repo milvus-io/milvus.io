@@ -102,8 +102,6 @@ export const refactorPymilvusMenu = (menuList, category, version) => {
     return menuList;
   }
 
-  console.log('list--', menuList[0]);
-
   const { children: childList, ...rest } = menuList[0];
   let newUpLayer = {};
 

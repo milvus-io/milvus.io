@@ -183,7 +183,7 @@ export default function WhatIsMilvus({ data, pageContext }) {
               {t('v3trans.whatIsMilvus.milvusIsAVdb.vdbVsVsp.content1')}
             </p>
             <p className="">
-              {t('v3trans.whatIsMilvus.milvusIsAVdb.vdbVsVsp.content1')}
+              {t('v3trans.whatIsMilvus.milvusIsAVdb.vdbVsVsp.content2')}
             </p>
           </div>
 
@@ -246,29 +246,28 @@ export default function WhatIsMilvus({ data, pageContext }) {
             <h2 className="">{t('v3trans.whatIsMilvus.whereToGo.title')}</h2>
             <ul className="">
               <li className="">
-                To get hands-on experience with Milvus, follow the &nbsp;&nbsp;
+                To get hands-on experience with Milvus, follow the &nbsp;
                 <Link to="/blog/how-to-get-started-with-milvus.md">
                   get started guide
                 </Link>
                 .
               </li>
               <li className="">
-                To understand Milvus in more detail, read the&nbsp;&nbsp;
+                To understand Milvus in more detail, read the&nbsp;
                 <Link to="/docs">Documentation</Link>. 
               </li>
               <li className="">
-                Browse through the&nbsp;&nbsp;
-                <Link to="/use-cases">Use Cases</Link>&nbsp;&nbsp;to learn how
-                other users in our worldwide community are getting value from
-                Milvus.
+                Browse through the&nbsp;
+                <Link to="/use-cases">Use Cases</Link>&nbsp;to learn how other
+                users in our worldwide community are getting value from Milvus.
               </li>
             </ul>
             <p className="">
-              Join a local&nbsp;&nbsp;
+              Join a local&nbsp;
               <a href={MEETUP_URL} target="_blank" rel="noreferrer">
                 Unstructured Data
               </a>
-              &nbsp;&nbsp; meetup and our&nbsp;&nbsp;
+              &nbsp; meetup and our&nbsp;
               <a href={DISCORD_INVITE_URL} target="_blank" rel="noreferrer">
                 Discord
               </a>

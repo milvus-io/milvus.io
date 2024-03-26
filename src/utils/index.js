@@ -60,6 +60,12 @@ export const findLatestVersion = allVersion => {
 };
 
 export const convertVersionStringToVersionNum = versionString => {
+  if (!versionString) {
+    return {
+      version: '',
+      versionNum: 0,
+    };
+  }
   const usableVersion = versionString
     .replace('v', '')
     .replaceAll('x', '1')

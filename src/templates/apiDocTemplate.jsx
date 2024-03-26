@@ -77,8 +77,6 @@ export default function Template({ data, pageContext }) {
 
   const realMenu = refactorPymilvusMenu(menus, category, version);
 
-  console.log('realMenu', realMenu);
-
   // get version links on version change
   const getApiVersionLink = version => {
     const currentApiMenu = allApiMenus[category][version];

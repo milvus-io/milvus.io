@@ -189,7 +189,7 @@ export default function Template({ data, pageContext }) {
       return [];
     }
     const currentVersionNum =
-      convertVersionStringToVersionNum(version)?.versionNum || 0;
+      convertVersionStringToVersionNum(version).versionNum;
     const commonMeta = [
       {
         name: 'docsearch:language',

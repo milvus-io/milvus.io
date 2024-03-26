@@ -58,3 +58,19 @@ export const findLatestVersion = allVersion => {
       return pre;
     }, 'v0.0.0');
 };
+
+export const convertVersionStringToVersionNum = versionString => {
+  const usableVersion = versionString
+    .replace('v', '')
+    .replaceAll('x', '1')
+    .split('-')[0];
+  const [major, minor, patch] = usableVersion.split('.');
+  const patchNum = Number.isNaN(parseInt(patch)) ? 0 : parseInt(patch);
+  const minorNum = Number.isNaN(parseInt(minor)) ? 0 : parseInt(minor) * 10;
+  const majorNum = Number.isNaN(parseInt(major)) ? 0 : parseInt(major) * 1000;
+  const versionNum = patchNum + minorNum + majorNum;
+  return {
+    version: versionString,
+    versionNum,
+  };
+};

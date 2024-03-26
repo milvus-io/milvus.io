@@ -21,6 +21,7 @@ import '@zilliz/zui/dist/ZChart.css';
 import './docsStyle.less';
 import './docTemplate.less';
 import 'highlight.js/styles/stackoverflow-light.css';
+import { convertVersionStringToVersionNum } from '../utils';
 
 export const query = graphql`
   query ($language: String!) {
@@ -183,7 +184,9 @@ export default function Template({ data, pageContext }) {
 
   // doc search meta
   const docsearchMeta = useMemo(() => {
-    return [
+    const currentVersionNum =
+      convertVersionStringToVersionNum(version).versionNum;
+    const commonMeta = [
       {
         name: 'docsearch:language',
         content: locale === 'cn' ? 'zh-cn' : locale,
@@ -193,6 +196,13 @@ export default function Template({ data, pageContext }) {
         content: version || '',
       },
     ];
+    if (currentVersionNum < 2000) {
+      commonMeta.push({
+        name: 'robots',
+        content: 'noindex',
+      });
+    }
+    return commonMeta;
   }, [locale, version]);
 
   // page title

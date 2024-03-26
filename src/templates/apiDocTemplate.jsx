@@ -17,6 +17,7 @@ import 'highlight.js/styles/stackoverflow-light.css';
 import './docsStyle.less';
 import './docTemplate.less';
 import { findLatestVersion } from '../utils';
+import { convertVersionStringToVersionNum } from '../utils';
 
 export const query = graphql`
   query ($language: String!) {
@@ -187,7 +188,9 @@ export default function Template({ data, pageContext }) {
     ) {
       return [];
     }
-    return [
+    const currentVersionNum =
+      convertVersionStringToVersionNum(version)?.versionNum || 0;
+    const commonMeta = [
       {
         name: 'docsearch:language',
         content: locale === 'cn' ? 'zh-cn' : locale,
@@ -197,6 +200,14 @@ export default function Template({ data, pageContext }) {
         content: docVersion || '',
       },
     ];
+
+    if (currentVersionNum < 2000) {
+      commonMeta.push({
+        name: 'robots',
+        content: 'noindex',
+      });
+    }
+    return commonMeta;
   }, [locale, docVersion, version]);
 
   const newestVersion = findLatestVersion(allVersion.nodes);

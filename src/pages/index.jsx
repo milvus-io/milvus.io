@@ -62,11 +62,6 @@ const brands = [
     link: 'https://www.bosch.com/',
   },
   {
-    name: 'IBM',
-    icon: ibm,
-    link: 'https://www.ibm.com/',
-  },
-  {
     name: 'Ebay',
     icon: ebay,
     link: 'https://www.ebay.com/',

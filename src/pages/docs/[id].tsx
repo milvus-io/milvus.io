@@ -190,7 +190,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
                   version={version}
                   htmlContent={tree}
                   mdId={currentId}
-                  trans={t}
                   commitPath={editPath}
                   type="doc"
                 />
@@ -198,7 +197,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
 
               <div className={classes.asideSection}>
                 <Aside
-                  locale={locale}
                   version={version}
                   editPath={editPath}
                   mdTitle={frontMatter.title}

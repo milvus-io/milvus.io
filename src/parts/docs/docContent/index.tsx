@@ -5,9 +5,18 @@ import classes from './index.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
-export default function DocContent(props) {
-  const { commitPath, version, htmlContent, mdId, type } = props;
+interface DocContentPropsType {
+  commitPath?: string;
+  version: string;
+  htmlContent: string;
+  mdId: string;
+  type: 'doc' | 'api';
+}
+
+export default function DocContent(props: DocContentPropsType) {
+  const { commitPath = '', version, htmlContent, mdId, type } = props;
   const { t } = useTranslation('common');
+
   // const contact = {
   //   slack: {
   //     label: "Discuss on Slack",
@@ -30,7 +39,6 @@ export default function DocContent(props) {
   //   },
   //   title: "Didn't find what you need?",
   // };
-  const docContentRef = useRef();
 
   const commitInfo = useGithubCommits({
     commitPath,
@@ -38,24 +46,21 @@ export default function DocContent(props) {
   });
 
   return (
-    <>
-      <div className={clsx('doc-style', classes.docPostWrapper)}>
-        <div
-          ref={docContentRef}
-          className={clsx('doc-post-content', {
-            'api-reference-wrapper': type === 'api',
-          })}
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
+    <div className={classes.docPostWrapper}>
+      <div
+        className={clsx('doc-style', 'doc-post-content', {
+          'api-reference-wrapper': type === 'api',
+        })}
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
+      ></div>
+      {commitInfo?.message && (
+        <GitCommitInfo
+          commitInfo={commitInfo}
+          mdId={mdId}
+          commitTrans={t('v3trans.docs.commitTrans')}
         />
-        {commitInfo?.message && (
-          <GitCommitInfo
-            commitInfo={commitInfo}
-            mdId={mdId}
-            commitTrans={t('v3trans.docs.commitTrans')}
-          />
-        )}
-        {/* <ScoredFeedback trans={trans} pageId={mdId} /> */}
-      </div>
-    </>
+      )}
+      {/* <ScoredFeedback trans={trans} pageId={mdId} /> */}
+    </div>
   );
 }

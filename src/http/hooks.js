@@ -20,7 +20,7 @@ export function useGithubCommits({ commitPath, version }) {
           const date = lastCommit.commit.committer.date;
           const commitUrl = lastCommit.html_url;
           const formatDate = dayjs(date).format('YYYY-MM-DD HH:mm:ss');
-          const source = `https://github.com/milvus-io/milvus-docs/blob/${version}/${commitPath}`;
+          const source = `https://github.com/milvus-io/milvus-docs/blob${commitPath}`;
           setCommitInfo({ commitUrl, date: formatDate, source, message });
         }
       } catch (error) {

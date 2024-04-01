@@ -3,7 +3,10 @@ import clsx from 'clsx';
 import DesktopHeader from './descktopHeader';
 import MobileHeader from './mobileHeader';
 
-const Header = ({ darkMode = false, className = '' }) => {
+const Header: React.FC<{
+  darkMode?: Boolean;
+  className?: string;
+}> = ({ darkMode = false, className = '' }) => {
   return (
     <header
       className={clsx(classes.headerContainer, {

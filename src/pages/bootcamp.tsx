@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Layout from '../components/layout/commonLayout';
-import { generateBootcampData } from '../utils/bootcamp.utils';
+import { generateBootCampData } from '../utils/bootcamp';
 import SolutionCard from '../components/card/solutionCard';
 import classes from '../styles/bootcamp.module.less';
 import pageClasses from '../styles/responsive.module.less';
@@ -76,7 +76,7 @@ export default function Bootcamp(props) {
 }
 
 export const getStaticProps = async () => {
-  const bootcampData = generateBootcampData();
+  const bootcampData = generateBootCampData();
   return {
     props: {
       bootcampData,

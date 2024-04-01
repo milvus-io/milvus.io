@@ -3,19 +3,37 @@ import classes from './index.module.less';
 import Head from 'next/head';
 import clsx from 'clsx';
 import FlexibleSectionContainer from '../../flexibleSection';
-import { useState, useEffect } from 'react';
-import { getCurrentSize } from '../../../http/hooks';
 import Header from '../../header';
 import Footer from '../../footer';
 
-export default function DocLayout(props) {
+const MENU_MINIMUM_WIDTH = 24;
+const MENU_MAXIMUM_WIDTH = 282;
+
+interface DocLayoutPropsType {
+  left: React.ReactNode;
+  center: React.ReactNode;
+  seo: {
+    title: string;
+    desc: string;
+    url: string;
+  };
+  classes?: {
+    root?: string;
+    main?: string;
+    content?: string;
+  };
+  isHome?: boolean;
+  showFooter?: boolean;
+}
+
+export default function DocLayout(props: DocLayoutPropsType) {
   const { t } = useTranslation('common');
   const {
     left,
     center,
-    seo = {},
+    seo,
     classes: customerClasses = {},
-    isHome,
+    isHome = false,
     showFooter = true,
   } = props;
 
@@ -26,7 +44,7 @@ export default function DocLayout(props) {
     <main className={clsx(classes.docLayoutContainer, root)}>
       <Head>
         <title>{title}</title>
-        <meta type="description" content={desc}></meta>
+        <meta name="description" content={desc}></meta>
         <meta property="og:title" content={title}></meta>
         <meta property="og:description" content={desc} />
         <meta property="og:url" content={url} />
@@ -34,8 +52,8 @@ export default function DocLayout(props) {
       <Header className={classes.docHeader} />
       <div className={clsx(classes.mainContainer, main)}>
         <FlexibleSectionContainer
-          minWidth={24}
-          maxWidth={282}
+          minWidth={MENU_MINIMUM_WIDTH}
+          maxWidth={MENU_MAXIMUM_WIDTH}
           classes={{
             root: classes.flexibleContainer,
           }}
@@ -47,7 +65,7 @@ export default function DocLayout(props) {
             [classes.docHome]: isHome,
           })}
         >
-          <div className={classes.centerContainer}>{center}</div>
+          {center}
 
           {showFooter && (
             <Footer

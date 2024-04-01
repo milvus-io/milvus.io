@@ -56,7 +56,9 @@ export default function VersionSelector(props: VersionSelectorProps) {
     <div className={classes.selectorWrapper}>
       <Link
         href={homepageConf.link}
-        className={clsx(classes.homeBtn, classes.docHomeButton)}
+        className={clsx(classes.homeBtn, {
+          [classes.docHomeButton]: type === 'doc',
+        })}
       >
         {homepageConf.label}
       </Link>

@@ -1,16 +1,16 @@
 import React from 'react';
-import * as styles from './index.module.less';
+import styles from './index.module.less';
 import Link from 'next/link';
 import clsx from 'clsx';
 
-const SolutionCard = ({
-  img,
-  title,
-  content,
-  href,
-  className = '',
-  liveDemo = '',
-}) => {
+const SolutionCard: React.FC<{
+  img?: string;
+  title: string;
+  content: string;
+  href: string;
+  className?: string;
+  liveDemo?: string;
+}> = ({ img, title, content, href, className = '', liveDemo = '' }) => {
   const handleTryDemo = link => {
     window.open(link, '_self');
   };

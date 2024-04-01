@@ -52,7 +52,6 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     category,
   } = props;
 
-  // deconstruct classes
   const {
     tree: treeClassName,
     item: itemClassName,
@@ -82,6 +81,7 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
       mdId: currentMdId,
       menu: itemList,
     });
+    console.log(initIds);
     setExpandedIds(initIds);
   }, [itemList, currentMdId, groupId]);
 
@@ -110,13 +110,11 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     const { nodeId, groupId = '', parentIds } = params;
     const curNodeId = groupId || nodeId;
     const curExpandNodeIndex = expandedIds.indexOf(curNodeId);
-
     if (curExpandNodeIndex !== -1) {
       // close menu
       setExpandedIds(v => v.slice(0, curExpandNodeIndex));
       return;
     }
-
     setExpandedIds([...parentIds, curNodeId]);
   };
 
@@ -194,7 +192,6 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
         onClick={() => {
           handleClickParentTree({
             nodeId: id,
-            groupId,
             parentIds,
           });
         }}

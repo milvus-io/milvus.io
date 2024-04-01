@@ -1,9 +1,9 @@
 import {
   DocFrontMatterType,
   DocFileDataInfoType,
-  DocVersionInfoType,
   OriginMenuStructureType,
   FinalMenuStructureType,
+  AllMdVersionIdType,
 } from '@/types/docs';
 
 const fs = require('fs');
@@ -77,7 +77,15 @@ export const generateDocVersionInfo = (params?: {
     })
     .sort((a, b) => b.versionNum - a.versionNum);
 
-  const usableVersions = allVersions.filter(v => v.versionNum >= minVersionNum);
+  const releaseInfoPath = join(BASE_DOC_DIR, 'version.json');
+  const releaseNote = JSON.parse(fs.readFileSync(releaseInfoPath, 'utf-8'));
+
+  let usableVersions = allVersions.filter(v => v.versionNum >= minVersionNum);
+  const { version: releaseVersion, released } = releaseNote;
+
+  if (released === 'no') {
+    usableVersions = usableVersions.filter(v => v.version !== releaseVersion);
+  }
 
   const latestVersion = usableVersions[0].version;
 
@@ -104,11 +112,12 @@ export const generateDocVersionInfo = (params?: {
 const readFile = (params: {
   path: string;
   fileDataList: DocFileDataInfoType[];
-
   withContent?: boolean;
 }) => {
   const { path, fileDataList, withContent = false } = params;
   const fileStat = fs.statSync(path);
+
+  const relativePath = path.match(/\/v\d.*$/)?.[0] || '';
 
   if (fileStat.isDirectory()) {
     const subPaths: string[] = fs
@@ -130,7 +139,7 @@ const readFile = (params: {
     fileDataList.push({
       frontMatter: data,
       content: withContent ? content : '',
-      editPath: path,
+      editPath: relativePath,
     });
   }
 };
@@ -171,9 +180,7 @@ export const generateContentDataOfSingleFile = (params: {
   return targetFileData;
 };
 
-export const generateAllContentDataOfAllVersion = (
-  lang?: 'en' | 'cn'
-): DocVersionInfoType[] => {
+export const generateAllContentDataOfAllVersion = (lang?: 'en' | 'cn') => {
   const language = lang || 'en';
   const { versions } = generateDocVersionInfo();
   const allFileDataOfAllVersion = versions.reduce((acc, version) => {
@@ -185,11 +192,11 @@ export const generateAllContentDataOfAllVersion = (
 
     acc.push({
       version,
-      data,
+      mds: data.map(d => d.frontMatter.id),
     });
 
     return acc;
-  }, [] as DocVersionInfoType[]);
+  }, [] as AllMdVersionIdType[]);
   return allFileDataOfAllVersion;
 };
 
@@ -260,10 +267,20 @@ const formatMenuStructure = (
   const resultList = newList.slice();
 
   newList.forEach(v => {
-    const { parentId, level, ...rest } = v;
+    const { parentId } = v;
     const parentIndex = resultList.findIndex(v => v.id === parentId);
     if (parentIndex !== -1) {
-      resultList[parentIndex].children.push(rest);
+      resultList[parentIndex].children.push({
+        label: v.label,
+        id: v.id,
+        isMenu: v.isMenu,
+        externalLink: v.externalLink,
+        href: v.href,
+        children: v.children,
+        parentId: parentId,
+        parentIds: v.parentIds,
+        level: v.level,
+      });
     }
   });
 

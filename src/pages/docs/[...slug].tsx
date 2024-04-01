@@ -16,6 +16,7 @@ import { ABSOLUTE_BASE_URL } from '@/consts';
 import classes from '@/styles/docDetail.module.less';
 import { checkIconTpl } from '@/components/icons';
 import {
+  generateAllContentDataOfAllVersion,
   generateAllContentDataOfSingleVersion,
   generateContentDataOfSingleFile,
   generateDocVersionInfo,
@@ -28,13 +29,13 @@ import { DocDetailPageProps } from '@/types/docs';
 export default function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,
-
     version,
     locale,
     versions,
     latestVersion,
     menus,
     id: currentId,
+    mdListData,
   } = props;
 
   const {
@@ -131,15 +132,15 @@ export default function DocDetailPage(props: DocDetailPageProps) {
           className={classes.docMenu}
           version={version}
           versions={versions}
-          linkPrefix="/docs"
-          locale={locale}
-          home={{
+          homepageConf={{
             label: 'Home',
             link: `/docs/${version}`,
           }}
           currentMdId={currentId}
           groupId={frontMatter.group}
           latestVersion={latestVersion}
+          type="doc"
+          mdListData={mdListData}
         />
       }
       center={
@@ -150,6 +151,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
               htmlContent={tree}
               mdId={currentId}
               commitPath={editPath}
+              type="doc"
             />
           </div>
 
@@ -211,11 +213,14 @@ export const getStaticProps: GetStaticProps = async context => {
     withContent: true,
   });
 
+  // used to detect has same page of current md
+  const mdListData = generateAllContentDataOfAllVersion();
+
   const docMenu = generateMenuDataOfCurrentVersion({
     docVersion: version,
   });
   const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
-    docVersion: latestVersion,
+    docVersion: version,
   });
   const menu = [...docMenu, outerApiMenuItem];
 
@@ -246,6 +251,7 @@ export const getStaticProps: GetStaticProps = async context => {
       latestVersion,
       menus: menu,
       id,
+      mdListData,
     },
   };
 };

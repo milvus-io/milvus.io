@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 export default function DocContent(props) {
-  const { commitPath, version, htmlContent, mdId } = props;
+  const { commitPath, version, htmlContent, mdId, type } = props;
   const { t } = useTranslation('common');
   // const contact = {
   //   slack: {
@@ -42,7 +42,9 @@ export default function DocContent(props) {
       <div className={clsx('doc-style', classes.docPostWrapper)}>
         <div
           ref={docContentRef}
-          className="doc-post-content"
+          className={clsx('doc-post-content', {
+            'api-reference-wrapper': type === 'api',
+          })}
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
         {commitInfo?.message && (

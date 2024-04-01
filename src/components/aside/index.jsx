@@ -81,7 +81,7 @@ const Aside = props => {
       return [
         {
           label: commonEditBtnConf.label,
-          link: `https://github.com/milvus-io/milvus-docs/edit/${version}/site/${localePath}/${editPath}`,
+          link: `https://github.com/milvus-io/milvus-docs/edit${editPath}`,
           icon: commonEditBtnConf.icon,
         },
         {
@@ -97,26 +97,26 @@ const Aside = props => {
       ];
     },
     api: ({ apiReferenceData }) => {
-      const { sourceUrl } = apiReferenceData;
+      const { slack, discussPath, reportPath, editPath } = apiReferenceData;
       return [
         {
           label: commonEditBtnConf.label,
-          link: sourceUrl,
+          link: editPath,
           icon: commonEditBtnConf.icon,
         },
         {
           label: discussBtnConf.label,
-          link: 'https://github.com/milvus-io/milvus/discussions/new',
+          link: discussPath,
           icon: discussBtnConf.icon,
         },
         {
           label: bugBtnConf.label,
-          link: `https://github.com/milvus-io/milvus/issues/new?assignees=yanliang567&labels=kind%2Fbug%2Cneeds-triage&template=bug_report.yaml&title=[Bug]%3A+`,
+          link: reportPath,
           icon: bugBtnConf.icon,
         },
         {
           label: commonJoinBtnConf.label,
-          link: 'https://slack.milvus.io',
+          link: slack,
           icon: commonJoinBtnConf.icon,
         },
       ];

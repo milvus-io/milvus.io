@@ -16,14 +16,14 @@ export interface DocFileDataInfoType {
   editPath: string;
 }
 
-export interface ApiFileDateInfoType {
-  frontMatter: { id: string; parentId: string };
-  content: string;
-}
-
 export interface DocVersionInfoType {
   version: string;
   data: DocFileDataInfoType[];
+}
+
+export interface AllMdVersionIdType {
+  version: string;
+  mds: string[];
 }
 
 export interface OriginMenuStructureType {
@@ -73,6 +73,37 @@ export enum ApiReferenceLabelEnum {
   Python = 'Python',
 }
 
+export enum ApiReferenceRouteEnum {
+  Restful = 'restful',
+  Csharp = 'csharp',
+  Go = 'go',
+  Java = 'java',
+  Node = 'node',
+  Python = 'pymilvus',
+}
+
+export interface ApiContentFrontMatterType {
+  id: string;
+  parentIds: string[];
+  relativePath: string;
+  category: ApiReferenceRouteEnum;
+  version: string;
+}
+export interface ApiFileDateInfoType {
+  frontMatter: ApiContentFrontMatterType;
+  content: string;
+}
+
+export interface ApiRoutesDataType {
+  language: ApiReferenceLanguageEnum;
+  category: ApiReferenceRouteEnum;
+  versions: string[];
+  data: {
+    version: string;
+    menuData: FinalMenuStructureType[];
+    contentList: ApiFileDateInfoType[];
+  }[];
+}
 export interface AsideAnchorType {
   label: string;
   href: string;
@@ -98,4 +129,5 @@ export interface DocDetailPageProps {
   latestVersion: string;
   menus: FinalMenuStructureType[];
   id: string;
+  mdListData: AllMdVersionIdType[];
 }

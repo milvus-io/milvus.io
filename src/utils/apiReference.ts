@@ -2,8 +2,8 @@ import {
   ApiReferenceLanguageEnum,
   ApiReferenceLabelEnum,
   ApiFileDateInfoType,
-  ApiMenuStructureType,
   FinalMenuStructureType,
+  ApiReferenceRouteEnum,
 } from '@/types/docs';
 import {
   BASE_DOC_DIR,
@@ -15,6 +15,9 @@ const fs = require('fs');
 const path = require('path');
 const { join } = path;
 
+const API_REFERENCE_WRAPPER_MENU_ID = 'api-reference';
+const API_REFERENCE_WRAPPER_MENU_LABEL = 'API Reference';
+
 /**
  * api reference system,
  * what I need:
@@ -25,14 +28,30 @@ const { join } = path;
  *
  * */
 
+// remove .md from file name
+const formatMenuLabel = (label: string) => {
+  if (!label.includes('.md')) {
+    return label;
+  }
+  return label.replace('.md', '');
+};
 // file will be html or mkd without front matter
 const readApiFile = (params: {
   filePath: string;
+  category: ApiReferenceRouteEnum;
+  version: string;
   fileDataList: ApiFileDateInfoType[];
   withContent: boolean;
-  parentId?: string;
+  parentIds?: string[];
 }) => {
-  const { filePath, fileDataList, withContent, parentId = '' } = params;
+  const {
+    filePath,
+    category,
+    fileDataList,
+    withContent,
+    parentIds = [],
+    version,
+  } = params;
   const fileStat = fs.statSync(filePath);
 
   if (fileStat.isDirectory()) {
@@ -46,24 +65,41 @@ const readApiFile = (params: {
       .map(subPath =>
         readApiFile({
           filePath: join(filePath, subPath),
+          category,
+          version,
           fileDataList,
           withContent,
-          parentId,
+          parentIds: [...parentIds, parentId],
         })
       );
   } else if (fileStat.isFile()) {
     const content = fs.readFileSync(filePath, 'utf-8');
     const id = path.basename(filePath);
-
+    /**
+     * id: xxx.md,
+     * parentIds: ['MilvusClient', 'Client'],
+     * relativePath: '/v2.4.x/MilvusClient/Client/xxxx.md',
+     * language: 'pymilvus'
+     * */
     fileDataList.push({
-      frontMatter: { id, parentId },
+      frontMatter: {
+        id,
+        parentIds: parentIds.filter(v => !!v),
+        relativePath: filePath.match(/\/v\d.*$/)?.[0] || '',
+        category,
+        version,
+      },
       content: withContent ? content : '',
     });
   }
 };
 
-const generateApiMenuData = (params: { filePath: string; prefix?: string }) => {
-  const { filePath, prefix = '' } = params;
+const generateApiMenuData = (params: {
+  filePath: string;
+  prefix?: string;
+  parentIds?: string[];
+}): FinalMenuStructureType => {
+  const { filePath, prefix = '', parentIds = [] } = params;
 
   const fileStat = fs.statSync(filePath);
   const baseFolderName = path.basename(filePath);
@@ -71,8 +107,9 @@ const generateApiMenuData = (params: { filePath: string; prefix?: string }) => {
   const menuItemId = prefix ? `${prefix}-${fileName}` : `${fileName}`;
 
   if (fileStat.isDirectory()) {
+    const parentNodes = [...parentIds, menuItemId].filter(node => !!node);
     const subPaths: string[] = fs.readdirSync(filePath).map((v: string) => v);
-    const useablePaths = subPaths.filter(
+    const usablePaths = subPaths.filter(
       subPath => !IGNORE_FILES.includes(subPath)
     );
 
@@ -80,78 +117,91 @@ const generateApiMenuData = (params: { filePath: string; prefix?: string }) => {
      * to keep the menu item id unique, sub menu item will be like:
      * {id: 'MilvusClient-Client-MilvusClient().md', label: 'MilvusClient().md', children: []}
      */
-    const children = useablePaths.map(subPath =>
+    const children = usablePaths.map(subPath =>
       generateApiMenuData({
         filePath: join(filePath, subPath),
         prefix: menuItemId,
+        parentIds: parentNodes,
       })
     );
     return {
       id: menuItemId,
-      label: fileName,
+      label: formatMenuLabel(fileName),
+      isMenu: true,
+      externalLink: '',
+      href: '',
       children,
+      parentId: prefix,
+      parentIds: parentIds,
+      level: NaN,
     };
   } else {
     return {
       id: menuItemId,
-      label: fileName,
+      label: formatMenuLabel(fileName),
       children: [],
+      isMenu: false,
+      externalLink: '',
+      href: menuItemId.replaceAll('-', '/'),
+      parentId: prefix,
+      parentIds: parentIds,
+      level: NaN,
     };
   }
 };
 
 // api reference configuration, please modify this if you want to add or reduce a language
 const API_REFERENCE_CONFIG = {
-  [ApiReferenceLanguageEnum.Restful]: {
-    name: ApiReferenceLabelEnum.Restful,
-    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Restful}`,
-    minVersion: undefined,
-  },
-  [ApiReferenceLanguageEnum.Csharp]: {
-    name: ApiReferenceLabelEnum.Csharp,
-    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Csharp}`,
-    minVersion: undefined,
-  },
-  [ApiReferenceLanguageEnum.Go]: {
-    name: ApiReferenceLabelEnum.Go,
-    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Go}`,
-    minVersion: 'v2.0.x',
+  [ApiReferenceLanguageEnum.Python]: {
+    name: ApiReferenceLabelEnum.Python,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Python}`,
+    minVersion: 'v.2.0.x',
+    category: ApiReferenceRouteEnum.Python,
   },
   [ApiReferenceLanguageEnum.Java]: {
     name: ApiReferenceLabelEnum.Java,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Java}`,
     minVersion: 'v.2.0.x',
+    category: ApiReferenceRouteEnum.Java,
+  },
+  [ApiReferenceLanguageEnum.Go]: {
+    name: ApiReferenceLabelEnum.Go,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Go}`,
+    minVersion: 'v2.0.x',
+    category: ApiReferenceRouteEnum.Go,
   },
   [ApiReferenceLanguageEnum.Node]: {
     name: ApiReferenceLabelEnum.Node,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Node}`,
     minVersion: undefined,
+    category: ApiReferenceRouteEnum.Node,
   },
-  [ApiReferenceLanguageEnum.Python]: {
-    name: ApiReferenceLabelEnum.Python,
-    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Python}`,
-    minVersion: 'v.2.0.x',
+  [ApiReferenceLanguageEnum.Csharp]: {
+    name: ApiReferenceLabelEnum.Csharp,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Csharp}`,
+    minVersion: undefined,
+    category: ApiReferenceRouteEnum.Csharp,
+  },
+  [ApiReferenceLanguageEnum.Restful]: {
+    name: ApiReferenceLabelEnum.Restful,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Restful}`,
+    minVersion: undefined,
+    category: ApiReferenceRouteEnum.Restful,
   },
 };
 
 // 1. versions and latest version info of all language
 export const generateApiReferenceVersionsInfo = () => {
-  // if(language){
-  //   const {path, minVersion} = API_REFERENCE_CONFIG[language];
-  //   const { versions, latestVersion } = generateDocVersionInfo({
-  //     filePath: path,
-  //     minVersion: minVersion,
-  //   });
-
-  //   return {
-  //     language,
-  //     label: API_REFERENCE_CONFIG[language].name,
-  //     versions,
-  //     latestVersion,
-  //   }
-  // }
   const apiVersionInfo = Object.entries(API_REFERENCE_CONFIG).map(
-    ([language, config]) => {
+    ([language, config]: [
+      ApiReferenceLanguageEnum,
+      {
+        name: ApiReferenceLabelEnum;
+        path: string;
+        minVersion: string | undefined;
+        category: ApiReferenceRouteEnum;
+      }
+    ]) => {
       const { versions, latestVersion } = generateDocVersionInfo({
         filePath: config.path,
         minVersion: config.minVersion,
@@ -162,6 +212,7 @@ export const generateApiReferenceVersionsInfo = () => {
         label: config.name,
         versions,
         latestVersion,
+        category: config.category,
       };
     }
   );
@@ -177,20 +228,35 @@ export const generateApiMenuAndContentDataOfSingleVersion = (params: {
 }) => {
   const { language, version, withContent = false } = params;
   const path = API_REFERENCE_CONFIG[language].path;
+  const category = API_REFERENCE_CONFIG[language].category;
   const versionPath = `${path}/${version}`;
   const contentList: ApiFileDateInfoType[] = [];
 
   readApiFile({
     filePath: versionPath,
+    category,
+    version,
     fileDataList: contentList,
     withContent,
   });
 
-  const menuData = generateApiMenuData({ filePath: versionPath });
+  const menuData = generateApiMenuData({
+    filePath: versionPath,
+    parentIds: [language],
+  });
 
   return {
     version,
-    menuData,
+    menuData: [
+      {
+        ...menuData,
+        id: language,
+        label: API_REFERENCE_CONFIG[language].name,
+        parentIds: [],
+        parentId: '',
+        level: NaN,
+      },
+    ],
     contentList,
   };
 };
@@ -223,43 +289,40 @@ export const generateApiMenuDataOfCurrentVersion = (params: {
   const versionInfo = generateApiReferenceVersionsInfo();
 
   const apiMenu: FinalMenuStructureType[] = versionInfo.map(v => {
-    const { language, versions, latestVersion, label } = v;
+    const { language, versions, latestVersion, label, category } = v;
     const isContainCurrentDocVersion = versions.includes(params.docVersion);
-    if (isContainCurrentDocVersion) {
-      return {
-        id: language,
-        label,
-        isMenu: false,
-        externalLink: '',
-        href: `/api-reference/${language}/${docVersion}/About.md`,
-        parentId: 'api-reference',
-        parentIds: ['api-reference'],
-        level: 2,
-        children: [],
-      };
-    }
+
     return {
       id: language,
       label,
       isMenu: false,
       externalLink: '',
-      href: `/api-reference/${language}/${latestVersion}/About.md`,
+      href: isContainCurrentDocVersion
+        ? `/api-reference/${category}/${docVersion}/About.md`
+        : `/api-reference/${category}/${latestVersion}/About.md`,
+      children: [],
       parentId: 'api-reference',
       parentIds: ['api-reference'],
       level: 2,
-      children: [],
     };
   });
 
   return {
-    parentId: '',
-    parentIds: [],
-    level: 1,
-    id: 'api-reference',
-    label: 'API Reference',
+    id: API_REFERENCE_WRAPPER_MENU_ID,
+    label: API_REFERENCE_WRAPPER_MENU_LABEL,
     isMenu: true,
     externalLink: '',
     href: '',
     children: apiMenu,
+    parentId: '',
+    parentIds: [],
+    level: 1,
   };
+};
+
+export const generateAllApiFileContent = (params: {
+  widthContent?: boolean;
+}) => {
+  const { widthContent = false } = params;
+  const directoryPath = join(BASE_DOC_DIR, 'API_Reference');
 };

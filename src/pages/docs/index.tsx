@@ -7,13 +7,14 @@ import LeftNavSection from '@/parts/docs/leftNavTree';
 import classes from '@/styles/docs.module.less';
 import DocLayout from '@/components/layout/docLayout';
 import {
+  generateAllContentDataOfAllVersion,
   generateDocVersionInfo,
   generateHomePageDataOfSingleVersion,
   generateMenuDataOfCurrentVersion,
 } from '@/utils/docs';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
 import { generateAllBlogContentList } from '@/utils/blogs';
-import { FinalMenuStructureType } from '@/types/docs';
+import { AllMdVersionIdType, FinalMenuStructureType } from '@/types/docs';
 import { BlogFrontMatterType } from '@/types/blogs';
 
 const TITLE = 'Milvus vector database documentation';
@@ -23,9 +24,10 @@ interface docHomePageProps {
   isHome: boolean;
   version: string;
   locale: 'en' | 'cn';
-  versions: string;
+  versions: string[];
   blog: BlogFrontMatterType;
   menus: FinalMenuStructureType[];
+  mdListData: AllMdVersionIdType[];
 }
 
 /**
@@ -41,7 +43,8 @@ interface docHomePageProps {
 export default function LatestVersionDocHomepage(props: docHomePageProps) {
   const { t } = useTranslation('common');
 
-  const { homeData, blog, menus, version, versions, locale } = props;
+  const { homeData, blog, menus, version, versions, locale, mdListData } =
+    props;
 
   return (
     <DocLayout
@@ -60,11 +63,11 @@ export default function LatestVersionDocHomepage(props: docHomePageProps) {
           className={classes.docMenu}
           version={version}
           versions={versions}
-          linkPrefix="docs"
-          locale={locale}
-          home={{ label: 'Home', link: '/docs' }}
+          type="doc"
+          homepageConf={{ label: 'Home', link: '/docs' }}
           currentMdId="home"
           latestVersion={version}
+          mdListData={mdListData}
         />
       }
       center={<HomeContent homeData={homeData} latestBlog={blog} />}
@@ -91,6 +94,9 @@ export const getStaticProps = async () => {
     latestVersion,
   });
 
+  // used to detect has same page of current md
+  const mdListData = generateAllContentDataOfAllVersion();
+
   return {
     props: {
       homeData: tree,
@@ -100,6 +106,7 @@ export const getStaticProps = async () => {
       versions,
       blog: latestBlogData,
       menus: menu,
+      mdListData,
     },
   };
 };

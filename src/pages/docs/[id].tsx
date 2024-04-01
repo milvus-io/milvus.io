@@ -22,6 +22,7 @@ import {
   generateAllContentDataOfSingleVersion,
   generateHomePageDataOfSingleVersion,
   generateMenuDataOfCurrentVersion,
+  generateAllContentDataOfAllVersion,
 } from '@/utils/docs';
 import { GetStaticProps } from 'next';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
@@ -41,6 +42,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     latestVersion,
     menus,
     id: currentId,
+    mdListData,
   } = props;
 
   const {
@@ -56,7 +58,9 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   const { t } = useTranslation('common');
 
   const seoInfo = useMemo(() => {
-    const title = isHome ? DOC_HOME_TITLE : `${frontMatter?.title} | Milvus`;
+    const title = isHome
+      ? DOC_HOME_TITLE
+      : `${frontMatter?.title} | Milvus Documentation`;
     const url = isHome
       ? `${ABSOLUTE_BASE_URL}/docs/${version}`
       : `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`;
@@ -70,7 +74,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   }, [isHome, frontMatter, version, currentId, summary]);
 
   const [isOpened, setIsOpened] = useState(false);
-  const [menuTree, setMenuTree] = useState(menus);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');
 
@@ -149,11 +152,11 @@ export default function DocDetailPage(props: DocDetailPageProps) {
               className={classes.docMenu}
               version={version}
               versions={versions}
-              linkPrefix={`/docs`}
-              locale={locale}
-              home={{ label: 'Home', link: `/docs/${version}` }}
+              type="doc"
+              homepageConf={{ label: 'Home', link: `/docs/${version}` }}
               currentMdId="home"
               latestVersion={latestVersion}
+              mdListData={mdListData}
             />
           }
           center={
@@ -165,20 +168,19 @@ export default function DocDetailPage(props: DocDetailPageProps) {
           seo={seoInfo}
           left={
             <LeftNavSection
-              tree={menuTree}
+              tree={menus}
               className={classes.docMenu}
               version={version}
               versions={versions}
-              linkPrefix="/docs"
-              locale={locale}
-              trans={t}
-              home={{
+              type="doc"
+              homepageConf={{
                 label: 'Home',
                 link: `/docs`,
               }}
               currentMdId={currentId}
               groupId={frontMatter.group}
               latestVersion={version}
+              mdListData={mdListData}
             />
           }
           center={
@@ -190,6 +192,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
                   mdId={currentId}
                   trans={t}
                   commitPath={editPath}
+                  type="doc"
                 />
               </div>
 
@@ -250,6 +253,9 @@ export const getStaticProps: GetStaticProps = async context => {
     docVersion: version,
   });
 
+  // used to detect has same page of current md
+  const mdListData = generateAllContentDataOfAllVersion();
+
   // home page data
   if (VERSION_REG.test(id)) {
     const { content: homepageContent, frontMatter } =
@@ -287,6 +293,7 @@ export const getStaticProps: GetStaticProps = async context => {
         latestVersion,
         menus: menu,
         id: 'home.md',
+        mdListData,
       },
     };
   }
@@ -335,6 +342,7 @@ export const getStaticProps: GetStaticProps = async context => {
       versions,
       menus: menu,
       id,
+      mdListData,
     },
   };
 };

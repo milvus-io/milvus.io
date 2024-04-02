@@ -11,7 +11,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import milvusLogo from '../../images/milvus_logo.svg';
 import GitHubButton from '../githubButton';
 import MilvusCookieConsent from '../milvusCookieConsent';
-import { getGithubStatis } from '../../http';
+import { getGithubStatics } from '../../http';
 import * as styles from './index.module.less';
 
 const Header = ({ darkMode = false, t = v => v, className = '' }) => {
@@ -58,7 +58,7 @@ const Header = ({ darkMode = false, t = v => v, className = '' }) => {
   useEffect(() => {
     (async function () {
       try {
-        const { forks_count, stargazers_count } = await getGithubStatis();
+        const { forks_count, stargazers_count } = await getGithubStatics();
         setStat({
           star: {
             count: stargazers_count,

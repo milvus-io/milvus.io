@@ -61,7 +61,7 @@ jobs:
         run: yarn build --log-pages
         env:
           MSERVICE_URL: ${{ secrets.MSERVICE_URL }}
-
+          REPO_STATICS_KEY: ${{ secrets.REPO_STATICS_KEY }}
       - name: Sync files
         run: |
           echo ${{ secrets.RSYNC_PASSWORD }} > rsync.pass

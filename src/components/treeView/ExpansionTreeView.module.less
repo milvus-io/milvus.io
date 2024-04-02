@@ -1,10 +1,22 @@
 @import (reference) '../../styles/global.module.less';
 
 .mv3TreeView {
+  div:global(.MuiTreeItem-content.Mui-selected) {
+    background-color: transparent;
+  }
+
+  div:global(.MuiTreeItem-content.Mui-focused) {
+    background-color: transparent;
+  }
+
   div:global(.MuiTreeItem-content) {
     padding-top: 6px;
     padding-bottom: 6px;
     cursor: pointer;
+
+    &:hover {
+      background-color: #f5f8fb;
+    }
 
     :global(.MuiTreeItem-label),
     a {
@@ -16,15 +28,16 @@
       width: 100%;
       height: 100%;
       color: @color-grey-01;
+
+      span {
+        font-size: inherit;
+        line-height: inherit;
+        // display: inline-block;
+        // width: 18px;
+        // height: 18px;
+        // line-height: 18px;
+      }
     }
-  }
-
-  div:global(.MuiTreeItem-content.Mui-selected) {
-    background-color: transparent;
-  }
-
-  div:global(.MuiTreeItem-content.Mui-focused) {
-    background-color: transparent;
   }
 
   :global(.Mui-selected) {
@@ -34,6 +47,20 @@
         font-weight: bold;
         color: @color-text-primary;
       }
+    }
+  }
+
+  div:global(.MuiTreeItem-iconContainer) {
+    svg {
+      opacity: 0.3;
+    }
+  }
+
+  div:global(.MuiTreeItem-label) {
+    svg {
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
     }
   }
 }

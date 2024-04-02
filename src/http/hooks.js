@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getGithubCommits, getFaq } from './index';
+import { getGithubCommits } from '@/http/milvus';
 import dayjs from 'dayjs';
 
 export function useGithubCommits({ commitPath, version }) {
@@ -20,7 +20,7 @@ export function useGithubCommits({ commitPath, version }) {
           const date = lastCommit.commit.committer.date;
           const commitUrl = lastCommit.html_url;
           const formatDate = dayjs(date).format('YYYY-MM-DD HH:mm:ss');
-          const source = `https://github.com/milvus-io/milvus-docs/blob/${version}/${commitPath}`;
+          const source = `https://github.com/milvus-io/milvus-docs/blob${commitPath}`;
           setCommitInfo({ commitUrl, date: formatDate, source, message });
         }
       } catch (error) {
@@ -31,35 +31,6 @@ export function useGithubCommits({ commitPath, version }) {
   }, [commitPath, version]);
 
   return commitInfo;
-}
-
-export function useGetFaq(relatedKey) {
-  const [relatedQuestions, setRelatedQuestions] = useState();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getFaq({
-          params: {
-            question: relatedKey,
-            version: 1,
-          },
-        });
-        if (res?.data?.response) {
-          setRelatedQuestions(res.data.response.slice(0, 6));
-        }
-      } catch (error) {
-        setRelatedQuestions();
-      }
-    };
-    if (relatedKey) {
-      fetchData();
-    } else {
-      setRelatedQuestions();
-    }
-  }, [relatedKey]);
-
-  return relatedQuestions;
 }
 
 export function getCurrentSize() {

@@ -991,3 +991,59 @@
     display: block;
   }
 }
+
+/* API */
+.api-reference-wrapper {
+  padding-top: 16px;
+  [class^='language-'] {
+    display: block;
+  }
+
+  &.java {
+    ul {
+      margin: 0;
+      list-style: none;
+      &.inheritance {
+        padding-left: 8px;
+      }
+      &:not(.inheritance) {
+        padding: 0;
+      }
+    }
+    table,
+    dl,
+    .block {
+      code {
+        border: none;
+        background: none;
+        margin: 0;
+      }
+    }
+    dt,
+    dd,
+    .block {
+      margin-bottom: 8px;
+    }
+    pre {
+      margin: 0;
+    }
+    .methodSignature {
+      code {
+        padding-left: 8px;
+      }
+    }
+    .details ul.blockList ul.blockList > li.blockList {
+      display: flex;
+      flex-direction: column;
+      h4 {
+        order: 1;
+      }
+      .methodSignature {
+        order: 3;
+      }
+      .block {
+        order: 2;
+      }
+    }
+  }
+}

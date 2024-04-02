@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Divider from '@mui/material/Divider';
 import GitHubButton from '../githubButton';
 import { useState, useEffect } from 'react';
+import { getGithubStatics } from '@/http/milvus';
 
 export const LogoSection = props => {
   const { lightMode = true } = props;
@@ -60,7 +61,7 @@ export const ActionBar = props => {
   useEffect(() => {
     (async function () {
       try {
-        const { forks_count, stargazers_count } = await getGithubStatis();
+        const { forks_count, stargazers_count } = await getGithubStatics();
         setStat({
           star: {
             count: stargazers_count,

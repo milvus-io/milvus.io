@@ -6,7 +6,7 @@ import Layout from '../components/layout';
 import LeftNav from '../components/leftNavigation';
 import {
   mdMenuListFactory,
-  refactorPymilvusMenu,
+  refactorApiMenu,
 } from '../components/leftNavigation/utils';
 import Aside from '../components/aside';
 import Footer from '../components/footer';
@@ -75,7 +75,7 @@ export default function Template({ data, pageContext }) {
   // generate menus
   const menus = mdMenuListFactory(currentApiMenu, 'api', version, locale)();
 
-  const realMenu = refactorPymilvusMenu(menus, category, version);
+  const realMenu = refactorApiMenu(menus, category, version);
 
   // get version links on version change
   const getApiVersionLink = version => {

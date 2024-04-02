@@ -97,11 +97,7 @@ export const mdMenuListFactory = (menuList, pageType, version, locale) => {
   };
 };
 
-export const refactorPymilvusMenu = (menuList, category, version) => {
-  if (category !== 'pymilvus') {
-    return menuList;
-  }
-
+export const refactorApiMenu = (menuList, category, version) => {
   const { children: childList, ...rest } = menuList[0];
   let newUpLayer = {};
 

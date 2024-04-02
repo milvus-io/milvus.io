@@ -200,3 +200,20 @@ export const ExternalDocLinkIcon = () => (
     />
   </svg>
 );
+
+export const RightArrow = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M4.15234 1.9999L9.15234 6.9999L4.15234 11.9999L5.00087 12.8484L10.8494 6.9999L5.00087 1.15137L4.15234 1.9999Z"
+      fill="black"
+    />
+  </svg>
+);

@@ -99,8 +99,8 @@ export const mdMenuListFactory = (menuList, pageType, version, locale) => {
 
 export const refactorApiMenu = (menuList, category, version) => {
   if (
-    category !== 'pymilvus' ||
-    category !== 'java' ||
+    category !== 'pymilvus' &&
+    category !== 'java' &&
     category !== 'restful'
   ) {
     return menuList;

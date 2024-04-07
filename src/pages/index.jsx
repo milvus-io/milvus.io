@@ -24,7 +24,6 @@ import tokopedia from '../images/brands/tokopedia.png';
 import roblox from '../images/brands/roblox.png';
 import att from '../images/brands/att.png';
 import bosch from '../images/brands/bosch.png';
-import ibm from '../images/brands/ibm.png';
 import omers from '../images/brands/omers.png';
 import shutterstock from '../images/brands/shutterstock.png';
 import zip from '../images/brands/zip.png';
@@ -33,6 +32,12 @@ import shell from '../images/brands/shell.png';
 import shein from '../images/brands/shein.png';
 import regeneron from '../images/brands/regeneron.png';
 import newRelic from '../images/brands/new-relic.png';
+import dell from '../images/brands/dell.png';
+import ae from '../images/brands/americanExpress.png';
+import ea from '../images/brands/ea.png';
+import ias from '../images/brands/ias.png';
+import poshmark from '../images/brands/poshmark.png';
+import salesforce from '../images/brands/salesforce.png';
 
 import Seo from '../components/seo';
 import { findLatestVersion } from '../utils';
@@ -162,6 +167,39 @@ const brands = [
     name: 'New Relic',
     icon: newRelic,
     link: 'https://www.newrelic.com/',
+  },
+
+  {
+    name: 'Dell',
+    icon: dell,
+    link: 'https://www.dell.com/',
+  },
+
+  {
+    name: 'american express',
+    icon: ae,
+    link: 'https://www.americanexpress.com/',
+  },
+
+  {
+    name: 'EA',
+    icon: ea,
+    link: 'https://www.ea.com/',
+  },
+  {
+    name: 'IAS',
+    icon: ias,
+    link: 'https://integralads.com/',
+  },
+  {
+    name: 'Poshmark',
+    icon: poshmark,
+    link: 'https://poshmark.com/',
+  },
+  {
+    name: 'Salesforce',
+    icon: salesforce,
+    link: 'https://www.salesforce.com/',
   },
 ];
 const DESC =

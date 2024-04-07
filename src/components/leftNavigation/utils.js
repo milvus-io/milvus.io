@@ -106,6 +106,10 @@ export const refactorApiMenu = (menuList, category, version) => {
     return menuList;
   }
 
+  if (!menuList[0]) {
+    return menuList;
+  }
+
   const { children: childList, ...rest } = menuList[0];
   let newUpLayer = {};
 

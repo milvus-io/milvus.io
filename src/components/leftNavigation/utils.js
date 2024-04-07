@@ -117,6 +117,10 @@ export const refactorApiMenu = (menuList, category, version) => {
     v => !v.id.includes('/') && !v.label.includes('/')
   );
 
+  if (illegalChildren.length === 0) {
+    return menuList;
+  }
+
   illegalChildren.forEach(v => {
     const [parentLabel, currentLabel] = v.label.split('/');
 

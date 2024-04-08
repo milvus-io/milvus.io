@@ -94,6 +94,17 @@ function SEO({
         type="text/javascript"
         charset="utf-8"
       ></script>
+      <script
+        async
+        src="https://widget.kapa.ai/kapa-widget.bundle.js"
+        data-website-id="d6d677b7-21a8-41fb-9990-b43e8c8e744f"
+        data-project-name="Milvus"
+        data-project-color="#1493cc"
+        data-project-logo="https://miro.medium.com/v2/resize:fit:2400/1*-VEGyAgcIBD62XtZWavy8w.png"
+        data-modal-disclaimer="This is a custom LLM for Milvus with access to all Milvus docs, Zilliz docs, GitHub Discussions and Issues, and the Zilliz GitHub repository."
+        data-modal-example-questions="How do I create a search pipeline in Zilliz?,Help me insert entities in my Milvus database"
+        data-kapa-branding-hide="true"
+      ></script>
     </Helmet>
   );
 }

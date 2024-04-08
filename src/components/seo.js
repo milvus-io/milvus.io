@@ -105,32 +105,6 @@ function SEO({
         data-modal-example-questions="How do I create a search pipeline in Zilliz?,Help me insert entities in my Milvus database"
         data-kapa-branding-hide="true"
       ></script>
-      {/* <script
-        async
-        src="https://widget.kapa.ai/kapa-widget.bundle.js"
-        data-website-id="d6d677b7-21a8-41fb-9990-b43e8c8e744f"
-        data-project-name="Milvus"
-        data-project-color="#1493cc"
-        data-project-logo="https://miro.medium.com/v2/resize:fit:2400/1*-VEGyAgcIBD62XtZWavy8w.png"
-        data-modal-disclaimer="This is a custom LLM for Milvus with access to all Milvus docs, Zilliz docs, GitHub Discussions and Issues, and the Zilliz GitHub repository."
-        data-modal-example-questions="How do I create a search pipeline in Zilliz?,Help me insert entities in my Milvus database"
-        data-kapa-branding-hide="true"
-        data-modal-example-questions-col-span="12"
-        data-modal-x-offset="0"
-        data-modal-y-offset="0"
-        data-modal-with-overlay="false"
-        data-modal-inner-flex-direction="column"
-        data-modal-inner-justify-content="end"
-        data-modal-inner-max-width="400px"
-        data-modal-inner-position-right="20px"
-        data-modal-inner-position-bottom="calc(2.5rem + 25px)"
-        data-button-height="2.5rem"
-        data-button-width="2.5rem"
-        data-button-text="Ask AI"
-        data-conversation-button-icons-only="true"
-        data-modal-size="80%"
-        data-modal-lock-scroll="false"
-      ></script> */}
     </Helmet>
   );
 }

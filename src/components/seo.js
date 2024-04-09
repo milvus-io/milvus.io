@@ -17,7 +17,7 @@ function SEO({
   title,
   titleTemplate = '',
   link,
-  script,
+  script = [],
 }) {
   const { site } = useStaticQuery(
     graphql`
@@ -83,7 +83,6 @@ function SEO({
         },
       ].concat(meta)}
       link={[].concat(link || {})}
-      script={script}
     >
       <script
         src="https://tag.clearbitscripts.com/v1/pk_9b83069276f2350591e46955085ee5a8/tags.js"
@@ -99,11 +98,24 @@ function SEO({
         src="https://widget.kapa.ai/kapa-widget.bundle.js"
         data-website-id="d6d677b7-21a8-41fb-9990-b43e8c8e744f"
         data-project-name="Milvus"
-        data-project-color="#1493cc"
+        data-project-color="#00a1ea"
         data-project-logo="https://miro.medium.com/v2/resize:fit:2400/1*-VEGyAgcIBD62XtZWavy8w.png"
         data-modal-disclaimer="This is a custom LLM for Milvus with access to all Milvus docs, Zilliz docs, GitHub Discussions and Issues, and the Zilliz GitHub repository."
         data-modal-example-questions="How do I create a search pipeline in Zilliz?,Help me insert entities in my Milvus database"
         data-kapa-branding-hide="true"
+        data-button-text="Ask Milvus AI"
+        data-modal-size="958px"
+        data-font-family="Inter"
+        data-button-image-height="40"
+        data-button-image-width="40"
+        data-button-padding="8px 12px"
+        data-button-border-radius="35px"
+        data-button-width="fit-content"
+        data-button-height="auto"
+        data-button-bg-color="#fff"
+        data-button-border="1px solid #00a1ea"
+        data-button-text-shadow="rgba(0, 0, 0, 0) 0px 0px 0px"
+        data-button-text-color="#00a1ea"
       ></script>
     </Helmet>
   );

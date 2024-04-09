@@ -67,3 +67,7 @@ a {
   text-decoration: none;
   color: var(--color-text-primary);
 }
+
+#kapa-widget-container > .mantine-UnstyledButton-root {
+  display: none;
+}

@@ -45,8 +45,6 @@ exports.onCreateDevServer = ({ app }) => {
 // the version is same for different lang, so we only need one
 const DOC_ROOT = 'src/pages/docs/versions';
 
-console.log('versionInfo--', versionInfo);
-
 // add versioninfo file for generate sitemap filter option
 fs.writeFile(
   `${DOC_ROOT}/versionInfo.json`,

@@ -64,7 +64,6 @@ jobs:
         env:
           MSERVICE_URL: ${{ secrets.MSERVICE_URL }}
           REPO_STATICS_KEY: ${{ secrets.REPO_STATICS_KEY }}
-          IS_PREVIEW: preview
       #         env:
       #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
       #           CI: true

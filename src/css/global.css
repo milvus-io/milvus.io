@@ -69,5 +69,18 @@ a {
 }
 
 #kapa-widget-container > .mantine-UnstyledButton-root {
-  display: none;
+  box-shadow: none !important;
+  max-width: 198px;
+  overflow: hidden;
+
+  .mantine-Stack-root {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    .mantine-Text-root {
+      margin: 0;
+    }
+  }
 }

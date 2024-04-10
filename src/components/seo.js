@@ -100,7 +100,7 @@ function SEO({
         data-project-name="Milvus"
         data-project-color="#00a1ea"
         data-project-logo="https://miro.medium.com/v2/resize:fit:2400/1*-VEGyAgcIBD62XtZWavy8w.png"
-        data-modal-disclaimer="This is an experimental generative AI chatbot trained on public documentation,  github repository, and other contents. Feel free to ask me anything about Milvus and Zilliz Cloud! Notice: the answers that bot provides might not always be accurate or up-to-date. Please use your best judgement when evaluating its responses. Also, please refrain from sharing any personal or private information with the bot."
+        data-modal-disclaimer="This is an experimental generative AI chatbot trained on public documentation,  github repository, and other contents. Feel free to ask me anything about Milvus and Zilliz Cloud! Notice: the answers that bot provides might not always be accurate or up-to-date. \n Please use your best judgement when evaluating its responses. Also, please refrain from sharing any personal or private information with the bot."
         data-modal-example-questions="Get Started with Milvus,What's new in Milvus 2.4?,How to choose embedding model?,How to conduct a search in Milvus?"
         data-kapa-branding-hide="true"
         data-button-text="Ask Milvus AI"

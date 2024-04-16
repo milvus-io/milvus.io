@@ -18,7 +18,7 @@ import walmart from '../images/brands/walmart.png';
 import hunt from '../images/brands/hunt.png';
 import micro from '../images/brands/micro.png';
 import nvidia from '../images/brands/nvidia.png';
-import moj from '../images/brands/moj.png';
+import ibm from '../images/brands/ibm.png';
 import compass from '../images/brands/compass.png';
 import tokopedia from '../images/brands/tokopedia.png';
 import roblox from '../images/brands/roblox.png';
@@ -134,9 +134,9 @@ const brands = [
     link: 'https://www.compass.com/',
   },
   {
-    name: 'Moj',
-    icon: moj,
-    link: 'https://mojapp.in/',
+    name: 'IBM',
+    icon: ibm,
+    link: '',
   },
   {
     name: 'Dailyhunt',

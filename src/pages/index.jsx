@@ -35,7 +35,7 @@ import newRelic from '../images/brands/new-relic.png';
 import dell from '../images/brands/dell.png';
 import ae from '../images/brands/americanExpress.png';
 import ea from '../images/brands/ea.png';
-import ias from '../images/brands/ias.png';
+import netapp from '../images/brands/net-app.png';
 import poshmark from '../images/brands/poshmark.png';
 import salesforce from '../images/brands/salesforce.png';
 
@@ -187,9 +187,9 @@ const brands = [
     link: 'https://www.ea.com/',
   },
   {
-    name: 'IAS',
-    icon: ias,
-    link: 'https://integralads.com/',
+    name: 'Netapp',
+    icon: netapp,
+    link: 'https://www.netapp.com/',
   },
   {
     name: 'Poshmark',

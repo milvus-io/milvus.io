@@ -169,7 +169,7 @@ export default function Template({ data, pageContext }) {
       break;
 
     case 'restful':
-      apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-restful/${version}/${name.replace(
+      apiReferenceData.sourceUrl = `https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-restful/${version}/${name.replace(
         'restful_',
         ''
       )}`;

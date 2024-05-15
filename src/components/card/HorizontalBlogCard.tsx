@@ -36,11 +36,11 @@ export default function HorizontalBlogCard(props: {
         )}
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardContent classes={{ root: styles.cardContent }}>
-            {tags?.length && (
+            {tags?.length ? (
               <Typography component="div" variant="h6" className={styles.tag}>
                 {tags[0]}
               </Typography>
-            )}
+            ) : null}
             <Typography variant="h4" component="div" className={styles.title}>
               {title}
             </Typography>

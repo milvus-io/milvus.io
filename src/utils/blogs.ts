@@ -4,6 +4,7 @@ import {
   BlogDataType,
   OriginBlogFrontMatterType,
 } from '@/types/blogs';
+import dayjs from 'dayjs';
 
 const fs = require('fs');
 const { join } = require('path');
@@ -34,6 +35,7 @@ export const generateAllBlogContentList = (params?: {
     return {
       frontMatter: {
         ...data,
+        date: dayjs(data.date).format('lll'),
         tags: data.tags ? data.tags.split(',').map(t => t.trim()) : [],
       },
       content: withContent ? content : '',

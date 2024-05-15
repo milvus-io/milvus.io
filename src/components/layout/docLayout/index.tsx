@@ -6,8 +6,8 @@ import FlexibleSectionContainer from '../../flexibleSection';
 import Header from '../../header';
 import Footer from '../../footer';
 
-const MENU_MINIMUM_WIDTH = 24;
-const MENU_MAXIMUM_WIDTH = 282;
+const MENU_MINIMUM_WIDTH = 22;
+const MENU_MAXIMUM_WIDTH = 283;
 
 interface DocLayoutPropsType {
   left: React.ReactNode;

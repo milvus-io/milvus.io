@@ -317,7 +317,8 @@ export const getStaticProps: GetStaticProps = async context => {
     docDetailContent,
     {
       showAnchor: true,
-      newestVersion: latestVersion,
+      version: latestVersion,
+      path: '/docs/',
     }
   );
 

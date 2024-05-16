@@ -1,6 +1,18 @@
 import { Remarkable } from 'remarkable';
 import hljs from 'highlight.js';
 
+function addPrefixToHref(htmlString, prefix) {
+  const hrefRegex = /href="([^"]*)"/g;
+  const prefixedHtmlString = htmlString.replace(hrefRegex, (match, href) => {
+    const newHref =
+      href.charAt(0) === '#' || href.charAt(0) === '/' || href.includes('http')
+        ? href
+        : `${prefix}${href}`;
+    return `href="${newHref}"`;
+  });
+  return prefixedHtmlString;
+}
+
 const convertImgSrc = (version, src) => {
   if (src.includes('http')) {
     return src;
@@ -31,6 +43,7 @@ export async function markdownToHtml(markdown, options = {}) {
     showAnchor = false,
     version = 'v2.1.x',
     needCaption = false,
+    path = '',
   } = options;
 
   const md = new Remarkable({
@@ -120,76 +133,6 @@ export async function markdownToHtml(markdown, options = {}) {
     };
   };
 
-  // remove .md in inline markdown link: [some-link](https://)
-  const formatInlineLinkPlugin = md => {
-    const rule = md.renderer.rules.link_open;
-    md.renderer.rules.link_open = function (
-      tokens,
-      idx,
-      options,
-      env,
-      instance
-    ) {
-      const href = tokens[idx].href;
-
-      const isExternalLink = href.includes('https');
-      if (href && href.includes('.md') && !isExternalLink) {
-        tokens[idx].href = href.replace(/\.md/, '');
-      }
-      return rule(tokens, idx, options, env, instance);
-    };
-  };
-
-  // remove .md in <a> under a code block like: <div><a href></a></div>
-  const formatHtmlBlockATagPlugin = md => {
-    const rule = md.renderer.rules.htmlblock;
-    md.renderer.rules.htmlblock = function (
-      tokens,
-      idx,
-      options,
-      env,
-      instance
-    ) {
-      const content = tokens[idx].content;
-
-      if (content.includes('src=')) {
-        const tpl = content.replaceAll(
-          /\.\.(\S*)\.[svg|jpg|jpeg|png]/g,
-          string => {
-            const url = convertImgSrc(version, string);
-            return url;
-          }
-        );
-        tokens[idx].content = tpl;
-      }
-
-      const isExternalLink = content.includes('https');
-
-      if (content.includes('href=') && !isExternalLink) {
-        const tpl = content.replaceAll(/\.md/g, '');
-        tokens[idx].content = tpl;
-      }
-
-      return rule(tokens, idx, options, env, instance);
-    };
-  };
-
-  // remove .md in inline html tag like: some content <a></a>
-  const formatInlineATagPlugin = md => {
-    const rule = md.renderer.rules.htmltag;
-    md.renderer.rules.htmltag = function (tokens, idx, options, env, instance) {
-      const content = tokens[idx].content;
-      const isExternalLink = content.includes('https');
-
-      if (content.includes('href=') && !isExternalLink) {
-        const tpl = tokens[idx].content.replace(/\.md/, '');
-        tokens[idx].content = tpl;
-      }
-
-      return rule(tokens, idx, options, env, instance);
-    };
-  };
-
   // generate a caption at bottom of image, use alt props as content
   const generateImgCaptionPlugin = md => {
     md.renderer.rules.image = function (tokens, idx) {
@@ -272,15 +215,12 @@ export async function markdownToHtml(markdown, options = {}) {
 
   md.use(getCodesPlugin);
   showAnchor && md.use(getAnchorsPlugin);
-  // md.use(formatInlineLinkPlugin);
-  // md.use(formatHtmlBlockATagPlugin);
-  // md.use(formatInlineATagPlugin);
   md.use(generateImgCaptionPlugin);
   md.use(getPageTitlePlugin);
   md.use(formatHtmlBlockImgPlugin);
   md.use(formatHtmlInlineImgPlugin);
 
-  const tree = md.render(markdown);
+  const tree = addPrefixToHref(md.render(markdown), path);
   return {
     tree,
     codeList,

@@ -228,6 +228,7 @@ export const getStaticProps: GetStaticProps = async context => {
     {
       showAnchor: true,
       version,
+      path: '/docs/',
     }
   );
 

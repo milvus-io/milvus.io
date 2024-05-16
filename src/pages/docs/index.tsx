@@ -91,7 +91,8 @@ export const getStaticProps = async () => {
 
   const { tree } = await markdownToHtml(homeContent, {
     showAnchor: false,
-    latestVersion,
+    version: latestVersion,
+    path: '/docs/',
   });
 
   // used to detect has same page of current md

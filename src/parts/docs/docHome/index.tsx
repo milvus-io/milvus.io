@@ -12,7 +12,7 @@ export default function HomeContent(props: HomeContentProps) {
   const { homeData, latestBlog } = props;
 
   return (
-    <>
+    <section>
       <div
         className={clsx('doc-style', classes.docHomeHtmlWrapper)}
         dangerouslySetInnerHTML={{ __html: homeData }}
@@ -23,6 +23,6 @@ export default function HomeContent(props: HomeContentProps) {
         </Typography>
         <HorizontalBlogCard blogData={latestBlog} />
       </Typography>
-    </>
+    </section>
   );
 }

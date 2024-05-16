@@ -24,7 +24,6 @@ export const generateAllBlogContentList = (params?: {
     .readdirSync(directoryPath)
     .filter((v: string) => !IGNORE_FILES.includes(v))
     .map((v: string) => join(directoryPath, v));
-
   const blogList: BlogDataType[] = paths.map((p: string) => {
     const fileData = fs.readFileSync(p, 'utf-8');
     const { data, content } = matter(fileData) as {
@@ -35,13 +34,12 @@ export const generateAllBlogContentList = (params?: {
     return {
       frontMatter: {
         ...data,
-        date: dayjs(data.date).format('lll'),
+        date: `${data.date}`,
         tags: data.tags ? data.tags.split(',').map(t => t.trim()) : [],
       },
       content: withContent ? content : '',
     };
   });
-
   blogList.sort((a, b) => {
     return (
       new Date(b.frontMatter.date).getTime() -

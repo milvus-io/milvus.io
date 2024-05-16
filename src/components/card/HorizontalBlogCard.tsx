@@ -15,7 +15,7 @@ export default function HorizontalBlogCard(props: {
 }) {
   const { blogData } = props;
   const [imgLoading, setImgLoading] = useState(true);
-  const { title, desc, tags, cover, id } = blogData;
+  const { title, desc, tag, cover, id } = blogData;
 
   const handleImgLoad = () => {
     setImgLoading(false);
@@ -36,11 +36,9 @@ export default function HorizontalBlogCard(props: {
         )}
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardContent classes={{ root: styles.cardContent }}>
-            {tags?.length ? (
-              <Typography component="div" variant="h6" className={styles.tag}>
-                {tags[0]}
-              </Typography>
-            ) : null}
+            <Typography component="div" variant="h6" className={styles.tag}>
+              {tag}
+            </Typography>
             <Typography variant="h4" component="div" className={styles.title}>
               {title}
             </Typography>

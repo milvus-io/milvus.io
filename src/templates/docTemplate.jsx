@@ -22,6 +22,7 @@ import './docsStyle.less';
 import './docTemplate.less';
 import 'highlight.js/styles/stackoverflow-light.css';
 import { convertVersionStringToVersionNum } from '../utils';
+import { ChatButton } from '../components/inkeepAI';
 
 export const query = graphql`
   query ($language: String!) {
@@ -254,6 +255,7 @@ export default function Template({ data, pageContext }) {
           [`home`]: homeData,
         })}
       >
+        <ChatButton />
         <LeftNav
           homeUrl={leftNavHomeUrl}
           homeLabel={t('v3trans.docs.homeTitle')}

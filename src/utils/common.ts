@@ -1,7 +1,7 @@
 import { Remarkable } from 'remarkable';
 import hljs from 'highlight.js';
 
-function addPrefixToHref(htmlString, prefix) {
+function addPrefixToHref(htmlString: string, prefix: string) {
   const hrefRegex = /href="([^"]*)"/g;
   const prefixedHtmlString = htmlString.replace(hrefRegex, (match, href) => {
     const newHref =
@@ -13,7 +13,7 @@ function addPrefixToHref(htmlString, prefix) {
   return prefixedHtmlString;
 }
 
-const convertImgSrc = (version, src) => {
+const convertImgSrc = (version: string, src: string) => {
   if (src.includes('http')) {
     return src;
   }
@@ -38,7 +38,15 @@ const getHeadingIdFromToken = token => {
   return formatText.replaceAll(/\s/g, '-');
 };
 
-export async function markdownToHtml(markdown, options = {}) {
+export async function markdownToHtml(
+  markdown: string,
+  options: {
+    showAnchor?: boolean;
+    version?: string;
+    needCaption?: boolean;
+    path?: string;
+  } = {}
+) {
   const {
     showAnchor = false,
     version = 'v2.1.x',
@@ -229,16 +237,9 @@ export async function markdownToHtml(markdown, options = {}) {
   };
 }
 
-export const copyToCommand = (value, cb) => {
-  const input = document.createElement('input');
-  document.body.appendChild(input);
-  input.setAttribute('value', value);
-  input.select();
-  if (document.execCommand('copy')) {
-    document.execCommand('copy');
-    cb && cb();
-  }
-  document.body.removeChild(input);
+export const copyToCommand = async (value: string, callback = () => {}) => {
+  await navigator.clipboard.writeText(value);
+  callback();
 };
 
 export const resetCookie = () => {

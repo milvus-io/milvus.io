@@ -61,9 +61,9 @@ export const exportCsv = (title, data) => {
 
 export function getImgUrl(file) {
   let url = null;
-  if (window.createObjectURL) {
+  if (URL.createObjectURL) {
     // basic
-    url = window.createObjectURL(file);
+    url = URL.createObjectURL(file);
   } else if (window.URL) {
     // mozilla(firefox)
     url = window.URL.createObjectURL(file);

@@ -3,7 +3,6 @@ import {
   ApiReferenceRouteEnum,
   FinalMenuStructureType,
 } from '@/types/docs';
-import path from 'path';
 
 export const sortVersions = (a, b) => {
   if (a && b) {

@@ -1,6 +1,6 @@
-const fs = require('fs');
-const { join } = require('path');
-const matter = require('gray-matter');
+import fs from 'fs';
+import { join } from 'path';
+import matter from 'gray-matter';
 
 const BASE_BLOG_DIR = join(process.cwd(), 'src/blogs/blog/en');
 
@@ -11,7 +11,7 @@ const BASE_BLOG_DIR = join(process.cwd(), 'src/blogs/blog/en');
  * content: map all blogs
  */
 
-const generateBlogCover = (cover, date) => {
+const generateBlogCover = (cover: string, date: Date) => {
   if (cover) {
     return `https://${cover}`;
   }

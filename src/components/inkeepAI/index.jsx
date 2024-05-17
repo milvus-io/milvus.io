@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 
+console.log(process.env);
+console.log(process.env.INKEEP_API_KEY[0]);
+console.log(process.env.INKEEP_INTEGRATION_ID[0]);
+console.log(process.env.INKEEP_ORGANIZATION_ID[0]);
 const baseSettings = {
   apiKey: process.env.INKEEP_API_KEY,
   integrationId: process.env.INKEEP_INTEGRATION_ID,

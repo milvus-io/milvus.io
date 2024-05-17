@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 
 const baseSettings = {
-  apiKey: process.env.INKEEP_API_KEY,
-  integrationId: process.env.INKEEP_INTEGRATION_ID,
-  organizationId: process.env.INKEEP_ORGANIZATION_ID,
+  apiKey: '93b596da0a7c5f8311c1f9b203d679608c1c49b583717223',
+  integrationId: 'clw8uf5c1000qtf8xz54n0202',
+  organizationId: 'org_65QNdLOXbmjSjta4',
   primaryBrandColor: '#4DB7EF',
   chatButtonPillText: 'Ask Milvus AI',
 };

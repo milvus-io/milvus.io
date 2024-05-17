@@ -29,6 +29,7 @@ const generateDocHomeWidthMd = (
     versions,
     newestVersion,
     versionInfo,
+    inkeepConfig,
   }
 ) => {
   // generate newest blog
@@ -107,6 +108,7 @@ const generateDocHomeWidthMd = (
           newestBlog: getTwoNewestBlog(language),
           homePath,
           versionInfo,
+          inkeepConfig,
         },
       });
       return;
@@ -134,6 +136,7 @@ const generateDocHomeWidthMd = (
         newestBlog: getTwoNewestBlog(language),
         homePath,
         versionInfo,
+        inkeepConfig,
       },
     });
   });

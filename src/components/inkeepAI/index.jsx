@@ -6,9 +6,9 @@ export const ChatButton = props => {
 
   useEffect(() => {
     const baseSettings = {
-      apiKey: inkeepConfig.inkeepApiKey,
-      integrationId: inkeepConfig.inkeepIntegrationId,
-      organizationId: inkeepConfig.inkeepOrgId,
+      apiKey: inkeepConfig?.inkeepApiKey,
+      integrationId: inkeepConfig?.inkeepIntegrationId,
+      organizationId: inkeepConfig?.inkeepOrgId,
       primaryBrandColor: '#4DB7EF',
       chatButtonPillText: 'Ask Milvus AI',
     };

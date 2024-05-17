@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import * as inkeepEmbed from '@inkeep/widgets-embed';
 
 const baseSettings = {
   apiKey: '93b596da0a7c5f8311c1f9b203d679608c1c49b583717223',
@@ -35,31 +34,38 @@ const aiChatSettings = {
   ],
 };
 
+
 export const ChatButton = () => {
   const chatButtonRef = useRef(null);
 
   useEffect(() => {
-    const inkeepChatButtonProps = {
-      chatButtonType: 'ICON_TEXT', // default. Alternatives are 'ICON_TEXT_SHORTCUT' and 'ICON'
-      baseSettings: {
-        ...baseSettings,
-      },
-      modalSettings: {
-        // optional typeof InkeepModalSettings
-      },
-      searchSettings: {
-        // optional typeof InkeepSearchSettings
-      },
-      aiChatSettings: aiChatSettings,
+    const loadInkeepEmbed = async () => {
+      const inkeepEmbed = await import('@inkeep/widgets-embed');
+
+      const inkeepChatButtonProps = {
+        chatButtonType: 'ICON_TEXT', // default. Alternatives are 'ICON_TEXT_SHORTCUT' and 'ICON'
+        baseSettings: {
+          ...baseSettings,
+        },
+        modalSettings: {
+          // optional typeof InkeepModalSettings
+        },
+        searchSettings: {
+          // optional typeof InkeepSearchSettings
+        },
+        aiChatSettings: aiChatSettings,
+      };
+
+      const inkeep = inkeepEmbed.Inkeep(baseSettings);
+
+      chatButtonRef.current = inkeep.embed({
+        componentType: 'ChatButton',
+        targetElement: '#chat-button',
+        properties: inkeepChatButtonProps,
+      });
     };
 
-    const inkeep = inkeepEmbed.Inkeep(baseSettings);
-
-    chatButtonRef.current = inkeep.embed({
-      componentType: 'ChatButton',
-      targetElement: '#chat-button',
-      properties: inkeepChatButtonProps,
-    });
+    loadInkeepEmbed();
   }, []);
 
   return <div id="chat-button"></div>;

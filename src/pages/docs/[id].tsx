@@ -269,6 +269,7 @@ export const getStaticProps: GetStaticProps = async context => {
       {
         showAnchor: true,
         version,
+        path: `/docs/${version}/`,
       }
     );
 
@@ -318,7 +319,7 @@ export const getStaticProps: GetStaticProps = async context => {
     {
       showAnchor: true,
       version: latestVersion,
-      path: '/docs/',
+      path: `/docs/`,
     }
   );
 

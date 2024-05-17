@@ -228,7 +228,7 @@ export const getStaticProps: GetStaticProps = async context => {
     {
       showAnchor: true,
       version,
-      path: '/docs/',
+      path: version === latestVersion ? `/docs/` : `/docs/${version}/`,
     }
   );
 

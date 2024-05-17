@@ -26,6 +26,7 @@ interface LeftNavSectionProps {
   groupId?: string;
   mdListData: AllMdVersionIdType[];
   category?: ApiReferenceRouteEnum;
+  disableSearch?: boolean;
 }
 
 export default function LeftNavSection(props: LeftNavSectionProps) {
@@ -41,6 +42,7 @@ export default function LeftNavSection(props: LeftNavSectionProps) {
     groupId = '',
     mdListData,
     category,
+    disableSearch = false,
   } = props;
 
   return (
@@ -49,7 +51,7 @@ export default function LeftNavSection(props: LeftNavSectionProps) {
         [customClassName]: customClassName,
       })}
     >
-      <AlgoliaSearch version={version} />
+      {!disableSearch && <AlgoliaSearch version={version} />}
       <VersionSelector
         versions={versions}
         curVersion={version}

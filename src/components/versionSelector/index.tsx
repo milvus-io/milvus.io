@@ -58,6 +58,7 @@ export default function VersionSelector(props: VersionSelectorProps) {
         href={homepageConf.link}
         className={clsx(classes.homeBtn, {
           [classes.docHomeButton]: type === 'doc',
+          [classes.apiHomeButton]: type === 'api',
         })}
       >
         {homepageConf.label}

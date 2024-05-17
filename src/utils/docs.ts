@@ -12,9 +12,8 @@ const matter = require('gray-matter');
 
 export const BASE_DOC_DIR = join(process.cwd(), 'src/docs');
 const DOCS_MINIMUM_VERSION = 'v1.0.0';
-export const VERSION_REG = /^v\d/;
+export const VERSION_REG = /^v\d\./;
 export const IGNORE_FILES = [
-  'index.md',
   'README.md',
   'Variables.json',
   '.DS_Store',

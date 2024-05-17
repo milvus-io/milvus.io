@@ -135,13 +135,14 @@ export default function Template(props: ApiDetailPageProps) {
           versions={versions}
           type="api"
           homepageConf={{
-            label: 'Doc',
+            label: '< Docs',
             link: '/docs',
           }}
           currentMdId={currentId}
           latestVersion={version}
           mdListData={curCategoryContentData}
           category={category}
+          disableSearch={true}
         />
       }
       center={

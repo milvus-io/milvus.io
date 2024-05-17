@@ -14,10 +14,7 @@ const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
         [className]: className,
       })}
     >
-      <div
-        className={styles.coverWrapper}
-        style={{ backgroundImage: `url(${cover})` }}
-      ></div>
+      <img className={styles.cover} src={cover} alt={title} />
       <div className={styles.descWrapper}>
         <div className={styles.bottomWrapper}>
           <Tags list={tags} tagsClass={styles.tags} />

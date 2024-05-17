@@ -55,6 +55,7 @@ export default function Template({ data, pageContext }) {
     group,
     newestBlog,
     versionInfo,
+    inkeepConfig,
   } = pageContext;
   const [isOpened, setIsOpened] = useState(false);
   useOpenedStatus(setIsOpened);
@@ -255,7 +256,7 @@ export default function Template({ data, pageContext }) {
           [`home`]: homeData,
         })}
       >
-        <ChatButton />
+        <ChatButton inkeepConfig={inkeepConfig} />
         <LeftNav
           homeUrl={leftNavHomeUrl}
           homeLabel={t('v3trans.docs.homeTitle')}

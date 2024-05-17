@@ -182,6 +182,18 @@ exports.createPages = ({ actions, graphql }) => {
   const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.jsx`);
   const useCaseTemplate = path.resolve(`src/templates/useCaseTemplate.jsx`);
 
+  console.log(process.env);
+  console.log(process.env.INKEEP_API_KEY[0]);
+  console.log(process.env.INKEEP_INTEGRATION_ID[0]);
+  console.log(process.env.INKEEP_ORGANIZATION_ID[0]);
+  const inkeepApiKey = process.env.INKEEP_API_KEY;
+  const inkeepIntegrationId = process.env.INKEEP_INTEGRATION_ID;
+  const inkeepOrgId = process.env.INKEEP_ORGANIZATION_ID;
+
+  console.log(inkeepConfig.inkeepApiKey[0]);
+  console.log(inkeepConfig.inkeepIntegrationId[0]);
+  console.log(inkeepConfig.inkeepOrgId[0]);
+
   const promiseList = [graphql(query), fetchUseCases()];
   return Promise.all(promiseList).then(([result, useCaseList]) => {
     if (result.errors) {
@@ -253,6 +265,11 @@ exports.createPages = ({ actions, graphql }) => {
       allMenus,
       allApiMenus,
       versionInfo,
+      inkeepConfig: {
+        inkeepApiKey,
+        inkeepIntegrationId,
+        inkeepOrgId,
+      },
     });
 
     generateUseCasePages(createPage, {

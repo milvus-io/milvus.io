@@ -155,6 +155,7 @@ const generateAllDocPages = (
     allMenus,
     allApiMenus,
     versionInfo,
+    inkeepConfig,
   }
 ) => {
   legalMd.forEach(({ node }) => {
@@ -190,6 +191,7 @@ const generateAllDocPages = (
       summary,
       group,
       versionInfo,
+      inkeepConfig,
     }; // additional data can be passed via context
 
     // the newest doc version is master so we need to make route without version.

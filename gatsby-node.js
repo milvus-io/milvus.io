@@ -182,10 +182,6 @@ exports.createPages = ({ actions, graphql }) => {
   const apiDocTemplate = path.resolve(`src/templates/apiDocTemplate.jsx`);
   const useCaseTemplate = path.resolve(`src/templates/useCaseTemplate.jsx`);
 
-  const inkeepApiKey = process.env.INKEEP_API_KEY || '';
-  const inkeepIntegrationId = process.env.INKEEP_INTEGRATION_ID || '';
-  const inkeepOrgId = process.env.INKEEP_ORGANIZATION_ID || '';
-
   const promiseList = [graphql(query), fetchUseCases()];
   return Promise.all(promiseList).then(([result, useCaseList]) => {
     if (result.errors) {

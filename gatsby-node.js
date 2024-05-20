@@ -247,11 +247,6 @@ exports.createPages = ({ actions, graphql }) => {
       versions,
       newestVersion,
       versionInfo,
-      inkeepConfig: {
-        inkeepApiKey,
-        inkeepIntegrationId,
-        inkeepOrgId,
-      },
     });
     generateAllDocPages(createPage, {
       nodes: docNodes,
@@ -262,11 +257,6 @@ exports.createPages = ({ actions, graphql }) => {
       allMenus,
       allApiMenus,
       versionInfo,
-      inkeepConfig: {
-        inkeepApiKey,
-        inkeepIntegrationId,
-        inkeepOrgId,
-      },
     });
 
     generateUseCasePages(createPage, {

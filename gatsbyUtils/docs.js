@@ -29,7 +29,6 @@ const generateDocHomeWidthMd = (
     versions,
     newestVersion,
     versionInfo,
-    inkeepConfig,
   }
 ) => {
   // generate newest blog
@@ -108,7 +107,6 @@ const generateDocHomeWidthMd = (
           newestBlog: getTwoNewestBlog(language),
           homePath,
           versionInfo,
-          inkeepConfig,
         },
       });
       return;
@@ -136,7 +134,6 @@ const generateDocHomeWidthMd = (
         newestBlog: getTwoNewestBlog(language),
         homePath,
         versionInfo,
-        inkeepConfig,
       },
     });
   });
@@ -158,7 +155,6 @@ const generateAllDocPages = (
     allMenus,
     allApiMenus,
     versionInfo,
-    inkeepConfig,
   }
 ) => {
   legalMd.forEach(({ node }) => {
@@ -194,7 +190,6 @@ const generateAllDocPages = (
       summary,
       group,
       versionInfo,
-      inkeepConfig,
     }; // additional data can be passed via context
 
     // the newest doc version is master so we need to make route without version.

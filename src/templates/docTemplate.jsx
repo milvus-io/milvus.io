@@ -22,7 +22,6 @@ import './docsStyle.less';
 import './docTemplate.less';
 import 'highlight.js/styles/stackoverflow-light.css';
 import { convertVersionStringToVersionNum } from '../utils';
-import { ChatButton } from '../components/inkeepAI';
 
 export const query = graphql`
   query ($language: String!) {
@@ -55,7 +54,6 @@ export default function Template({ data, pageContext }) {
     group,
     newestBlog,
     versionInfo,
-    inkeepConfig,
   } = pageContext;
   const [isOpened, setIsOpened] = useState(false);
   useOpenedStatus(setIsOpened);
@@ -256,7 +254,6 @@ export default function Template({ data, pageContext }) {
           [`home`]: homeData,
         })}
       >
-        <ChatButton inkeepConfig={inkeepConfig} />
         <LeftNav
           homeUrl={leftNavHomeUrl}
           homeLabel={t('v3trans.docs.homeTitle')}

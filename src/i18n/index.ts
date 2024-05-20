@@ -7,17 +7,21 @@ import useCaseEn from './en/useCase.json';
 import useCaseCn from './cn/useCase.json';
 import introEn from './en/intro.json';
 import introCn from './cn/intro.json';
+import headerEn from './en/header.json';
+import headerCn from './cn/header.json';
 
 export const resources = {
   en: {
     common: commonEn,
     useCase: useCaseEn,
     intro: introEn,
+    header: headerEn,
   },
   cn: {
     common: commonCn,
     useCase: useCaseCn,
     intro: introCn,
+    header: headerCn,
   },
 };
 

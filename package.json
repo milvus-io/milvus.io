@@ -29,7 +29,7 @@
     "cssnano-preset-lite": "^2.0.2",
     "d3-format": "^3.1.0",
     "dayjs": "^1.10.7",
-    "gestalt": "^142.5.0",
+    "gestalt": "^146.5.4",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.6.0",
     "i18next": "^21.9.1",

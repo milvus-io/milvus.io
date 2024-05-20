@@ -1,0 +1,26 @@
+{
+  "intro": {
+    "label": "Why Milvus",
+    "definition": "What is Milvus",
+    "cases": "Use Cases"
+  },
+  "docs": "Docs",
+  "tutorials": {
+    "label": "Tutorials",
+    "codelabs": "Codelabs",
+    "bootcamp": "Bootcamp",
+    "demo": "Demos",
+    "video": "Video"
+  },
+  "tools": {
+    "label": "Tools",
+    "attu": "Attu",
+    "cli": "Milvus CLI",
+    "sizing": "Sizing Tool",
+    "backup": "Milvus Backup"
+  },
+  "blog": "Blog",
+  "community": "Community",
+  "try": "Try Managed Milvus <0>{{price}}</0>",
+  "free": "FREE"
+}

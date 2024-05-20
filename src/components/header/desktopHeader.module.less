@@ -30,11 +30,14 @@
           display: flex;
           align-items: center;
           list-style: none;
-
-          gap: 24px;
+          gap: 16px;
 
           @media (max-width: 1200px) {
             gap: 24px;
+          }
+
+          & > li {
+            flex-shrink: 0;
           }
 
           .menuItem {
@@ -107,6 +110,7 @@
         gap: 12px;
 
         .startBtn {
+          flex-shrink: 0;
           svg {
             vertical-align: -5px;
             stroke: #fff !important;

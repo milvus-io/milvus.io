@@ -3,8 +3,6 @@ import { UseCaseType, FinalUserCaseType } from '../types/useCase';
 
 const cmsUrl = process.env.MSERVICE_URL || process.env.NEXT_PUBLIC_MSERVICE_URL;
 
-console.log('cmsUrl--', cmsUrl);
-
 const fetchCustomers = async () => {
   try {
     const response = await axios.get(`${cmsUrl}/customer-stories`);

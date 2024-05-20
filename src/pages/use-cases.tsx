@@ -15,7 +15,7 @@ import { GetStaticProps } from 'next';
 import { fetchUseCases } from '@/http/useCase';
 import { FinalUserCaseType } from '@/types/useCase';
 
-export default function UsCasesTemplate(props: {
+export default function UseCasesTemplate(props: {
   useCaseList: FinalUserCaseType[];
 }) {
   const { useCaseList } = props;

@@ -69,8 +69,8 @@ importers:
         specifier: ^1.10.7
         version: 1.10.7
       gestalt:
-        specifier: ^142.5.0
-        version: 142.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^146.5.4
+        version: 146.13.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -4052,8 +4052,8 @@ packages:
     peerDependencies:
       gestalt: '>0.0.0'
 
-  gestalt@142.5.0:
-    resolution: {integrity: sha512-vDl1tqGRk+x0Cs1B5c1JsxrvwGJv7w7JnEqVNYkI6X3JedN5w1uFBxKNgbTrOn2ZfKB4WoxORMj1ct0cb8DYzQ==}
+  gestalt@146.13.3:
+    resolution: {integrity: sha512-28U1sqViqFJ85FNUCBUkUighlRvqEDvUnhIV3OiMyWp6QtZF3tzzuzrZnrh5BJM8viVrtx/NIzf9bCtJaEoujQ==}
     peerDependencies:
       react: ^18.0
       react-dom: ^18.0
@@ -12564,15 +12564,15 @@ snapshots:
 
   gensync@1.0.0-beta.2: {}
 
-  gestalt-design-tokens@142.5.0(gestalt@142.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
+  gestalt-design-tokens@142.5.0(gestalt@146.13.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
     dependencies:
-      gestalt: 142.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      gestalt: 146.13.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
-  gestalt@142.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  gestalt@146.13.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@floating-ui/react': 0.25.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       classnames: 2.5.1
-      gestalt-design-tokens: 142.5.0(gestalt@142.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
+      gestalt-design-tokens: 142.5.0(gestalt@146.13.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 

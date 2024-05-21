@@ -10,16 +10,16 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import {
   DISCORD_INVITE_URL,
-  ZILLIZ_LEARN_LINK,
   MILVUS_VIDEO_LINK,
   GITHUB_ATTU_LINK,
   GITHUB_MILVUS_CLI_LINK,
-  MILVUS_SLACK_LINK,
   GITHUB_MILVUS_LINK,
-  MILVUS_FORUM_LINK,
   MILVUS_TWITTER_LINK,
   MILVUS_YOUTUBE_CHANNEL_LINK,
+  CLOUD_SIGNUP_LINK,
+  GITHUB_MILVUS_BACKUP_LINK,
 } from '@/consts/links';
+import { RightTopArrowIcon } from '@/components/icons';
 
 import styles from './index.module.less';
 
@@ -29,7 +29,12 @@ const footerJson = [
     children: [
       { name: 'Docs', trans: false, to: '/docs' },
       { name: 'Blog', trans: false, to: '/blog' },
-      { name: 'Learn', trans: false, to: ZILLIZ_LEARN_LINK },
+      {
+        name: 'Managed service',
+        trans: false,
+        to: CLOUD_SIGNUP_LINK,
+        isExternal: true,
+      },
     ],
   },
   {
@@ -46,15 +51,29 @@ const footerJson = [
       { name: 'Attu', trans: false, to: GITHUB_ATTU_LINK },
       { name: 'Milvus CLI', trans: false, to: GITHUB_MILVUS_CLI_LINK },
       { name: 'Sizing Tool', trans: false, to: '/tools/sizing' },
+      {
+        name: 'Milvus backup tool',
+        trans: false,
+        to: GITHUB_MILVUS_BACKUP_LINK,
+      },
     ],
   },
   {
     title: 'community',
     children: [
       { name: 'getinvolved', trans: true, to: '/community' },
-      { name: 'Slack', trans: false, to: MILVUS_SLACK_LINK },
-      { name: 'Github', trans: false, to: GITHUB_MILVUS_LINK },
-      { name: 'forum', trans: true, to: MILVUS_FORUM_LINK },
+      {
+        name: 'Discord',
+        trans: false,
+        to: DISCORD_INVITE_URL,
+        isExternal: true,
+      },
+      {
+        name: 'Github',
+        trans: false,
+        to: GITHUB_MILVUS_LINK,
+        isExternal: true,
+      },
     ],
   },
 ];
@@ -66,16 +85,14 @@ const socialJson = [
   { icon: faYoutube, link: MILVUS_YOUTUBE_CHANNEL_LINK },
 ];
 
-const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
+const Footer = () => {
   const { t } = useTranslation();
 
-  const { root = '', content = '' } = customerClasses as Record<string, string>;
-
   return (
-    <footer className="min-h-[390px] box-border border-t-[1px] border-[#D0D7DC] border-solid">
-      <div className="px-[135px] py-[80px]">
+    <footer className="min-h-[390px] box-border border-t-[1px] border-[#D0D7DC] border-solid bg-[#FAFAFA]">
+      <div className="px-[48px] py-[80px] md:px-[135px] lg:px-[80px] xl:px-[135px]">
         <div className="flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0 lg:space-x-16">
-          <div className="flex flex-col items-center sm:items-start lg:items-start">
+          <div className="flex flex-col items-center sm:items-start lg:items-start shrink-0">
             <img
               alt="Milvus logo"
               height="30"
@@ -86,7 +103,7 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
                 objectFit: 'cover',
               }}
             />
-            <div className="flex mt-6 space-x-[12px]">
+            <div className="flex mt-[40px] space-x-[12px]">
               <div className="flex items-center justify-between gap-[12px]">
                 {socialJson.map(s => {
                   const target = s.link
@@ -101,6 +118,7 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
                       href={s.link}
                       target={target}
                       rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center w-[40px] h-[40px] rounded-[12px] border-[1px] border-solid border-[#D0D7DC] cursor-pointer"
                     >
                       <FontAwesomeIcon
                         className={styles.iconWrapper}
@@ -111,14 +129,14 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
                 })}
               </div>
             </div>
-            <p className="mt-4 text-sm text-gray-500">
+            <p className="mt-3 text-sm text-gray-500">
               {`Copyright © Milvus. ${new Date().getFullYear()} All rights reserved.`}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-8 text-sm sm:gap-0">
+          <div className="grid grid-cols-2 gap-8 text-sm sm:gap-x-0">
             {footerJson.map(item => {
               return (
-                <div key={item.title} className="w-[260px] sm:w-[150px]">
+                <div key={item.title} className="w-[200px] xl:w-[260px] ">
                   <h3 className="text-[16px] font-[500] leading-[24px]">
                     {t(`v3trans.main.nav.${item.title}`)}
                   </h3>
@@ -129,7 +147,7 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
                           <li key={index} className="list-none">
                             <a
                               key={`${index}-c.name`}
-                              className="text-[14px] font-[400] leading-[21px] text-black"
+                              className="inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black"
                               href={child.to}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -137,6 +155,7 @@ const Footer = ({ darkMode = true, classes: customerClasses = {} }) => {
                               {child.trans
                                 ? t(`v3trans.main.nav.${child.name}`)
                                 : child.name}
+                              {child.isExternal && <RightTopArrowIcon />}
                             </a>
                           </li>
                         );

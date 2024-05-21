@@ -68,12 +68,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
           {center}
 
           {showFooter && (
-            <Footer
-              darkMode={false}
-              classes={{
-                content: classes.docFooter,
-              }}
-            />
+            <Footer />
           )}
         </div>
       </div>

@@ -1,3 +1,5 @@
+export * from './RightTopArrow';
+
 export const Triangle = () => (
   <svg
     width="6"

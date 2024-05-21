@@ -90,7 +90,7 @@ const Footer = () => {
 
   return (
     <footer className="min-h-[390px] box-border border-t-[1px] border-[#D0D7DC] border-solid bg-[#FAFAFA]">
-      <div className="px-[48px] py-[80px] md:px-[135px] lg:px-[80px] xl:px-[135px]">
+      <div className="max-w-[1440px] mx-auto px-[48px] py-[80px] md:px-[135px] lg:px-[80px] xl:px-[135px]">
         <div className="flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0 lg:space-x-16">
           <div className="flex flex-col items-center sm:items-start lg:items-start shrink-0">
             <img

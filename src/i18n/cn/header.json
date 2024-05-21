@@ -21,6 +21,5 @@
   },
   "blog": "Blog",
   "community": "Community",
-  "try": "Try Managed Milvus <0>{{price}}</0>",
-  "free": "FREE"
+  "start": "Get Started"
 }

@@ -56,6 +56,16 @@ const defaultSizeContent = {
   amount: 0,
 };
 
+enum FromKeysEnum {
+  Nb = 'nb',
+  D = 'd',
+  IndexType = 'indexType',
+  M = 'm',
+  Nlist = 'nlist',
+  SegmentSize = 'segmentSize',
+  aApacheType = 'apacheType',
+}
+
 export default function SizingTool() {
   const { t } = useTranslation('sizingTool');
 
@@ -65,7 +75,7 @@ export default function SizingTool() {
     handleClose: () => {},
     children: <></>,
   });
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{ [key in FromKeysEnum]: any }>({
     // number of vectors
     nb: {
       value: 1,
@@ -120,7 +130,7 @@ export default function SizingTool() {
     apacheType: 'pulsar',
   });
 
-  const handleFormValueChange = (val, key) => {
+  const handleFormValueChange = (val: any, key: FromKeysEnum) => {
     const { validation } = form[key];
 
     if (!validation) {
@@ -454,7 +464,7 @@ export default function SizingTool() {
                     placeholder={form.nb.placeholder}
                     onFocus={() => hanldeRemovePromot('nb')}
                     onChange={e => {
-                      handleFormValueChange(e.target.value, 'nb');
+                      handleFormValueChange(e.target.value, FromKeysEnum.Nb);
                     }}
                   />
                 </div>
@@ -470,7 +480,7 @@ export default function SizingTool() {
                     placeholder={form.d.placeholder}
                     onFocus={() => hanldeRemovePromot('d')}
                     onChange={e => {
-                      handleFormValueChange(e.target.value, 'd');
+                      handleFormValueChange(e.target.value, FromKeysEnum.D);
                     }}
                   />
                 </div>
@@ -486,7 +496,10 @@ export default function SizingTool() {
                       value={form.indexType.value}
                       label={t('labels.index')}
                       onChange={e => {
-                        handleFormValueChange(e.target.value, 'indexType');
+                        handleFormValueChange(
+                          e.target.value,
+                          FromKeysEnum.Nlist
+                        );
                       }}
                     >
                       {INDEX_TYPE_OPTIONS.map(v => (
@@ -520,8 +533,8 @@ export default function SizingTool() {
                           min={4}
                           max={64}
                           valueLabelDisplay="on"
-                          onChange={e => {
-                            handleFormValueChange(e.target.value, 'm');
+                          onChange={(e, value) => {
+                            handleFormValueChange(value, FromKeysEnum.M);
                           }}
                           marks={[
                             { label: '4', value: 4 },
@@ -542,7 +555,10 @@ export default function SizingTool() {
                         placeholder={form.nlist.placeholder}
                         onFocus={() => hanldeRemovePromot('nlist')}
                         onChange={e => {
-                          handleFormValueChange(e.target.value, 'nlist');
+                          handleFormValueChange(
+                            e.target.value,
+                            FromKeysEnum.Nlist
+                          );
                         }}
                       />
                     </>
@@ -557,7 +573,10 @@ export default function SizingTool() {
                       value={form.segmentSize.value}
                       label={t('labels.segment')}
                       onChange={d => {
-                        handleFormValueChange(d.target.value, 'segmentSize');
+                        handleFormValueChange(
+                          d.target.value,
+                          FromKeysEnum.SegmentSize
+                        );
                       }}
                     >
                       {SEGMENT_SIZE_OPTIONS.map(v => (

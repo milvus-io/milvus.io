@@ -9,6 +9,8 @@ import introEn from './en/intro.json';
 import introCn from './cn/intro.json';
 import headerEn from './en/header.json';
 import headerCn from './cn/header.json';
+import sizingToolEn from './en/sizingTool.json';
+import sizingToolCn from './cn/sizingTool.json';
 
 export const resources = {
   en: {
@@ -16,12 +18,14 @@ export const resources = {
     useCase: useCaseEn,
     intro: introEn,
     header: headerEn,
+    sizingTool: sizingToolEn,
   },
   cn: {
     common: commonCn,
     useCase: useCaseCn,
     intro: introCn,
     header: headerCn,
+    sizingTool: sizingToolCn,
   },
 };
 

@@ -1,3 +1,22 @@
+type DataSizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
+type DataNode = {
+  size: string;
+  cpu: number;
+  memory: number;
+  amount: number;
+};
+
+type MilvusDataType = {
+  cpu: number;
+  memory: number;
+  podNumber: number;
+  pvcPerPodSize: number;
+  pvcPerPodUnit: string;
+  isError: boolean;
+};
+
+type ApacheType = 'pulsar' | 'kafka';
+
 const defaultSizeContent = {
   size: 'Require more data',
   cpu: 0,
@@ -13,7 +32,7 @@ const $1B = Math.pow(10, 9);
 // collection shard, default value = 2;
 const SHARD = 2;
 
-export const unitBYTE2Any = size => {
+export const unitBYTE2Any = (size: number) => {
   let sizeStatus = 1;
   let unit = 'BYTE';
   while (sizeStatus < 4 && size > 1024) {
@@ -39,7 +58,7 @@ export const unitBYTE2Any = size => {
   };
 };
 
-export const unitAny2BYTE = (size, unit) => {
+export const unitAny2BYTE = (size: number, unit: DataSizeUnit) => {
   const charts = [
     {
       label: 'B',
@@ -66,7 +85,16 @@ export const unitAny2BYTE = (size, unit) => {
   return Math.pow(1024, value) * size;
 };
 
-export const memorySizeCalculator = ({ nb, d, nlist, M, indexType }) => {
+export const memorySizeCalculator: (params: {
+  nb: number;
+  d: number;
+  nlist: number;
+  M: number;
+  indexType: string;
+}) => {
+  theorySize: number;
+  memorySize: number;
+} = ({ nb, d, nlist, M, indexType }) => {
   let theorySize = 0;
   let expandingRate = 0;
   switch (indexType) {
@@ -105,12 +133,18 @@ export const memorySizeCalculator = ({ nb, d, nlist, M, indexType }) => {
   }
 };
 
-export const rawFileSizeCalculator = ({ d, nb }) => {
+export const rawFileSizeCalculator: (params: {
+  d: number;
+  nb: number;
+}) => number = ({ d, nb }) => {
   const sizeOfFloat = 4;
   return d * sizeOfFloat * nb;
 };
 
-export const indexNodeCalculator = (theorySize, segmentSize) => {
+export const indexNodeCalculator = (
+  theorySize: number,
+  segmentSize: number
+) => {
   const scale = segmentSize / 512;
 
   const size = Math.ceil((theorySize * 10) / 1024 / 1024 / 1024) / 10;
@@ -153,7 +187,7 @@ export const indexNodeCalculator = (theorySize, segmentSize) => {
   return defaultSizeContent;
 };
 
-export const queryNodeCalculator = memorySize => {
+export const queryNodeCalculator = (memorySize: number) => {
   const size = Math.ceil((memorySize * 10) / 1024 / 1024 / 1024) / 10;
 
   if (size > 0 && size < 16) {
@@ -210,7 +244,7 @@ export const queryNodeCalculator = memorySize => {
   return defaultSizeContent;
 };
 
-export const rootCoordCalculator = nb => {
+export const rootCoordCalculator = (nb: number) => {
   return nb === 0
     ? defaultSizeContent
     : nb < $1B
@@ -228,7 +262,7 @@ export const rootCoordCalculator = nb => {
       };
 };
 
-export const dataNodeCalculator = nb => {
+export const dataNodeCalculator = (nb: number) => {
   return nb === 0
     ? defaultSizeContent
     : nb < $1M * 40
@@ -253,7 +287,7 @@ export const dataNodeCalculator = nb => {
       };
 };
 
-export const proxyCalculator = memorySize => {
+export const proxyCalculator = (memorySize: number) => {
   return memorySize === 0
     ? defaultSizeContent
     : memorySize < unitAny2BYTE(384, 'GB')
@@ -271,7 +305,7 @@ export const proxyCalculator = memorySize => {
       };
 };
 
-export const commonCoordCalculator = memorySize => {
+export const commonCoordCalculator = (memorySize: number) => {
   const $1TB = unitAny2BYTE(1, 'TB');
 
   return memorySize < $1TB
@@ -289,11 +323,17 @@ export const commonCoordCalculator = memorySize => {
       };
 };
 
-export const isBetween = (value, { min, max }) => {
+export const isBetween: (
+  value: number,
+  option: {
+    min: number;
+    max: number;
+  }
+) => boolean = (value, { min, max }) => {
   return value >= min && value <= max;
 };
 
-export const etcdCalculator = rowFileSize => {
+export const etcdCalculator = (rowFileSize?: number) => {
   let cpu = 0;
   let memory = 0;
   let podNumber = 0;
@@ -338,7 +378,7 @@ export const etcdCalculator = rowFileSize => {
   };
 };
 
-export const minioCalculator = (rowFileSize, indexSize) => {
+export const minioCalculator = (rowFileSize?: number, indexSize?: number) => {
   let cpu = 0;
   let memory = 0;
   let podNumber = 0;
@@ -388,7 +428,7 @@ export const minioCalculator = (rowFileSize, indexSize) => {
   };
 };
 
-export const pulsarCalculator = rowFileSize => {
+export const pulsarCalculator = (rowFileSize?: number) => {
   const minimumJournalSize = unitAny2BYTE(10, 'GB');
   const minimumLedgersSize = unitAny2BYTE(25, 'GB');
 
@@ -984,7 +1024,7 @@ export const pulsarCalculator = rowFileSize => {
   };
 };
 
-export const kafkaCalculator = rowFileSize => {
+export const kafkaCalculator = (rowFileSize?: number) => {
   let broker = {
     cpu: {
       key: 'Cpu',
@@ -1014,6 +1054,7 @@ export const kafkaCalculator = rowFileSize => {
       key: 'Pvc Per Pod',
       size: 0,
       unit: '',
+      isSSD: false,
     },
   };
   let zookeeper = {
@@ -1095,6 +1136,7 @@ export const kafkaCalculator = rowFileSize => {
         key: 'Pvc Per Pod',
         size: intSize,
         unit: unit,
+        isSSD: false,
       },
     };
     zookeeper = {
@@ -1162,6 +1204,7 @@ export const kafkaCalculator = rowFileSize => {
         key: 'Pvc Per Pod',
         size: intSize,
         unit: unit,
+        isSSD: false,
       },
     };
     zookeeper = {
@@ -1226,6 +1269,7 @@ export const kafkaCalculator = rowFileSize => {
         key: 'Pvc Per Pod',
         size: intSize,
         unit: unit,
+        isSSD: false,
       },
     };
     zookeeper = {
@@ -1268,7 +1312,21 @@ export const kafkaCalculator = rowFileSize => {
   };
 };
 
-export const helmYmlGenerator = (
+export const helmYmlGenerator: (
+  params: {
+    rootCoord: DataNode;
+    proxy: DataNode;
+    queryNode: DataNode;
+    dataNode: DataNode;
+    indexNode: DataNode;
+    commonCoord: DataNode;
+    etcdData: MilvusDataType;
+    minioData: MilvusDataType;
+    pulsarData: any;
+    kafkaData: any;
+  },
+  apacheType: ApacheType
+) => any = (
   {
     rootCoord,
     proxy,
@@ -1385,12 +1443,6 @@ kafka:
     limits:
       cpu: ${rootCoord.cpu}
       memory: ${rootCoord.memory}Gi
-indexCoordinator:
-  replicas: ${commonCoord.amount}
-  resources: 
-    limits:
-      cpu: "${commonCoord.cpu}"
-      memory: ${commonCoord.memory}Gi
 queryCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
@@ -1467,7 +1519,21 @@ minio:
   `;
 };
 
-export const operatorYmlGenerator = (
+export const operatorYmlGenerator: (
+  params: {
+    rootCoord: DataNode;
+    proxy: DataNode;
+    queryNode: DataNode;
+    dataNode: DataNode;
+    indexNode: DataNode;
+    commonCoord: DataNode;
+    etcdData: MilvusDataType;
+    minioData: MilvusDataType;
+    pulsarData: any;
+    kafkaData: any;
+  },
+  apacheType: ApacheType
+) => any = (
   {
     rootCoord,
     proxy,
@@ -1591,11 +1657,6 @@ spec:
           cpu: "${commonCoord.cpu}"
           memory: ${rootCoord.memory}Gi
     queryCoord:
-      resources:
-        limits:
-          cpu: "${commonCoord.cpu}"
-          memory: ${rootCoord.memory}Gi
-    indexCoord:
       resources:
         limits:
           cpu: "${commonCoord.cpu}"

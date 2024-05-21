@@ -8,6 +8,7 @@ import {
   GITHUB_MILVUS_BACKUP_LINK,
   CLOUD_SIGNUP_LINK,
 } from '@/consts/links';
+import { DownArrowIcon } from '@/components/icons';
 
 import { LogoSection } from './Logos';
 
@@ -74,8 +75,9 @@ export default function DesktopHeader(props: Props) {
               return (
                 <li key={config.label} className="shrink-0">
                   <div className="group relative">
-                    <button className="block text-[14px] leading-[21px] font-[500] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer">
+                    <button className="flex items-center text-[14px] leading-[21px] font-[500] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer">
                       {config.label}
+                      <DownArrowIcon size={16} />
                     </button>
                     <ul className="flex flex-col items-stretch gap-[4px] bg-white py-[8px] absolute invisible -z-10 opacity-0 rounded-[4px] list-none shadow-nav-menu transition group-hover:visible group-hover:z-10 group-hover:opacity-100">
                       {config.list.map(item => (

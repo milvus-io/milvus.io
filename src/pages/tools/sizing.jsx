@@ -57,7 +57,7 @@ const defaultSizeContent = {
 };
 
 export default function SizingTool() {
-  const { t } = useTranslation();
+  const { t } = useTranslation('sizingTool');
 
   const [dialogState, setDialogState] = useState({
     open: false,
@@ -248,6 +248,135 @@ export default function SizingTool() {
       kafkaData,
     };
   }, [form]);
+  const { milvusData, dependencyData, totalData } = useMemo(() => {
+    const calculateList = [
+      calcResult.rootCoord,
+      calcResult.commonCoord,
+      calcResult.commonCoord,
+      calcResult.proxy,
+      calcResult.queryNode,
+      calcResult.dataNode,
+      calcResult.indexNode,
+    ];
+
+    const milvusData = {
+      core: calculateList.reduce((acc, cur) => {
+        acc += cur.cpu * cur.amount;
+        return acc;
+      }, 0),
+      memory: calculateList.reduce((acc, cur) => {
+        acc += cur.memory * cur.amount;
+        return acc;
+      }, 0),
+    };
+
+    const secondPartData = {
+      core:
+        calcResult.etcdData.cpu * calcResult.etcdData.podNumber +
+        calcResult.minioData.cpu * calcResult.minioData.podNumber,
+      memory:
+        calcResult.etcdData.memory * calcResult.etcdData.podNumber +
+        calcResult.minioData.memory * calcResult.minioData.podNumber,
+      ssd:
+        calcResult.etcdData.pvcPerPodUnit === 'G'
+          ? calcResult.etcdData.pvcPerPodSize * calcResult.etcdData.podNumber
+          : (calcResult.etcdData.pvcPerPodSize *
+              calcResult.etcdData.podNumber) /
+            1024,
+      disk:
+        calcResult.minioData.pvcPerPodUnit === 'G'
+          ? calcResult.minioData.pvcPerPodSize * calcResult.minioData.podNumber
+          : (calcResult.minioData.pvcPerPodSize *
+              calcResult.minioData.podNumber) /
+            1024,
+    };
+
+    const pulsarBookieData =
+      calcResult.pulsarData.bookie.ledgers.unit === 'G'
+        ? calcResult.pulsarData.bookie.ledgers.size *
+          calcResult.pulsarData.bookie.podNum.value
+        : (calcResult.pulsarData.bookie.ledgers.size *
+            calcResult.pulsarData.bookie.podNum.value) /
+          1024;
+    const pulsarZookeeperData =
+      calcResult.pulsarData.zookeeper.pvc.unit === 'G'
+        ? calcResult.pulsarData.zookeeper.pvc.size *
+          calcResult.pulsarData.zookeeper.podNum.value
+        : (calcResult.pulsarData.zookeeper.pvc.size *
+            calcResult.pulsarData.zookeeper.podNum.value) /
+          1024;
+    const pulsarData = {
+      core: Object.values(calcResult.pulsarData).reduce((acc, cur) => {
+        acc += cur.cpu.size * cur.podNum.value;
+        return acc;
+      }, 0),
+      memory: Object.values(calcResult.pulsarData).reduce((acc, cur) => {
+        acc += cur.memory.size * cur.podNum.value;
+        return acc;
+      }, 0),
+      ssd: pulsarBookieData + pulsarZookeeperData,
+      disk:
+        calcResult.pulsarData.bookie.journal.unit === 'G'
+          ? calcResult.pulsarData.bookie.journal.size *
+            calcResult.pulsarData.bookie.podNum.value
+          : (calcResult.pulsarData.bookie.journal.size *
+              calcResult.pulsarData.bookie.podNum.value) /
+            1024,
+    };
+
+    const kafkaData = {
+      core: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
+        acc += cur.cpu.size * cur.podNum.value;
+        return acc;
+      }, 0),
+      memory: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
+        acc += cur.memory.size * cur.podNum.value;
+        return acc;
+      }, 0),
+      ssd: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
+        if (cur.pvc?.isSSD) {
+          if (cur.pvc.unit === 'G') {
+            acc += cur.pvc.size * cur.podNum.value;
+          } else {
+            acc += (cur.pvc.size * cur.podNum.value) / 1024;
+          }
+        }
+        return acc;
+      }, 0),
+      disk: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
+        if (!cur.pvc?.isSSD) {
+          if (cur.pvc.unit === 'G') {
+            acc += cur.pvc.size * cur.podNum.value;
+          } else {
+            acc += (cur.pvc.size * cur.podNum.value) / 1024;
+          }
+        }
+        return acc;
+      }, 0),
+    };
+
+    const thirdPartData = form.apacheType === 'pulsar' ? pulsarData : kafkaData;
+
+    const totalData = {
+      core: milvusData.core + secondPartData.core + thirdPartData.core,
+      memory: milvusData.memory + secondPartData.memory + thirdPartData.memory,
+      ssd: Math.ceil(secondPartData.ssd + thirdPartData.ssd),
+      disk: Math.ceil(secondPartData.disk + thirdPartData.disk),
+    };
+
+    const dependencyData = {
+      core: secondPartData.core + thirdPartData.core,
+      memory: secondPartData.memory + thirdPartData.memory,
+      ssd: Math.ceil(secondPartData.ssd + thirdPartData.ssd),
+      disk: Math.ceil(secondPartData.disk + thirdPartData.disk),
+    };
+
+    return {
+      milvusData,
+      dependencyData,
+      totalData,
+    };
+  }, [calcResult, form.apacheType]);
 
   const handleDownloadYmlFile = (content, fielName) => {
     if (typeof window !== 'undefined') {
@@ -281,10 +410,7 @@ export default function SizingTool() {
   };
 
   const handleOpenInstallGuide = type => {
-    const title =
-      type === 'helm'
-        ? t('v3trans.sizingTool.installGuide.helm')
-        : t('v3trans.sizingTool.installGuide.operator');
+    const title = type === 'helm' ? t('buttons.helm') : t('buttons.operator');
 
     setDialogState({
       open: true,
@@ -305,26 +431,24 @@ export default function SizingTool() {
           <meta name="description" content="Sizing tool" />
         </Head>
         <div className={clsx(pageClasses.container, classes.container)}>
-          <h1>{t('v3trans.sizingTool.title')}</h1>
+          <h1>{t('title')}</h1>
           <section className={classes.note}>
             <span className={classes.iconWrapper}>
               <InfoFilled />
             </span>
-            <h2>{t('v3trans.sizingTool.subTitle')}</h2>
+            <h2>{t('subTitle')}</h2>
           </section>
           <div className={classes.contentWrapper}>
             <section className={classes.leftPart}>
               <div className={classes.dataSize}>
-                <h3>{t('v3trans.sizingTool.labels.dataSize')}</h3>
+                <h3>{t('labels.dataSize')}</h3>
 
                 <div className={classes.dataItem}>
-                  <p className={classes.label}>
-                    {t('v3trans.sizingTool.labels.vector')}
-                  </p>
+                  <p className={classes.label}>{t('labels.vector')}</p>
                   <TextField
                     fullWidth
                     error={form.nb.showError}
-                    label={t('v3trans.sizingTool.labels.vector')}
+                    label={t('labels.vector')}
                     value={form.nb.value}
                     helperText={form.nb.helpText}
                     placeholder={form.nb.placeholder}
@@ -336,13 +460,11 @@ export default function SizingTool() {
                 </div>
 
                 <div className={classes.dataItem}>
-                  <p className={classes.label}>
-                    {t('v3trans.sizingTool.labels.dimension')}
-                  </p>
+                  <p className={classes.label}>{t('labels.dimension')}</p>
                   <TextField
                     fullWidth
                     error={form.d.showError}
-                    label={t('v3trans.sizingTool.labels.dimension')}
+                    label={t('labels.dimension')}
                     value={form.d.value}
                     helperText={form.d.helpText}
                     placeholder={form.d.placeholder}
@@ -355,16 +477,14 @@ export default function SizingTool() {
               </div>
 
               <div className={classes.indexType}>
-                <h3>{t('v3trans.sizingTool.labels.indexType')}</h3>
+                <h3>{t('labels.indexType')}</h3>
 
                 <div className={classes.dataItem}>
                   <FormControl fullWidth>
-                    <InputLabel>
-                      {t('v3trans.sizingTool.labels.index')}
-                    </InputLabel>
+                    <InputLabel>{t('labels.index')}</InputLabel>
                     <Select
                       value={form.indexType.value}
-                      label={t('v3trans.sizingTool.labels.index')}
+                      label={t('labels.index')}
                       onChange={e => {
                         handleFormValueChange(e.target.value, 'indexType');
                       }}
@@ -383,7 +503,7 @@ export default function SizingTool() {
                       .value === 'HNSW' ? (
                     <>
                       <p className={clsx(classes.label, classes.shortMargin)}>
-                        {t('v3trans.sizingTool.labels.indexParam')}
+                        {t('labels.indexParam')}
                       </p>
                       <p
                         className={clsx(
@@ -391,7 +511,7 @@ export default function SizingTool() {
                           classes.largeMargin
                         )}
                       >
-                        {t('v3trans.sizingTool.labels.m')}
+                        {t('labels.m')}
                       </p>
                       <div className={classes.sliderWrapper}>
                         <Slider
@@ -412,9 +532,7 @@ export default function SizingTool() {
                     </>
                   ) : (
                     <>
-                      <p className={classes.interpretation}>
-                        {t('v3trans.sizingTool.labels.m')}
-                      </p>
+                      <p className={classes.interpretation}>{t('labels.m')}</p>
                       <TextField
                         fullWidth
                         error={form.nlist.showError}
@@ -432,16 +550,12 @@ export default function SizingTool() {
                 </div>
 
                 <div className={classes.dataItem}>
-                  <p className={classes.label}>
-                    {t('v3trans.sizingTool.labels.segmentSize')}
-                  </p>
+                  <p className={classes.label}>{t('labels.segmentSize')}</p>
                   <FormControl fullWidth>
-                    <InputLabel>
-                      {t('v3trans.sizingTool.labels.segment')}
-                    </InputLabel>
+                    <InputLabel>{t('labels.segment')}</InputLabel>
                     <Select
                       value={form.segmentSize.value}
-                      label={t('v3trans.sizingTool.labels.segment')}
+                      label={t('labels.segment')}
                       onChange={d => {
                         handleFormValueChange(d.target.value, 'segmentSize');
                       }}
@@ -477,18 +591,18 @@ export default function SizingTool() {
             </section>
             <section className={classes.rightPart}>
               <div className={classes.capacity}>
-                <h3>{t('v3trans.sizingTool.capacity')}</h3>
+                <h3>{t('capacity')}</h3>
 
                 <div className={classes.cardsWrapper}>
                   <SizingToolCard
-                    title={t('v3trans.sizingTool.memory')}
+                    title={t('memory')}
                     content={`${calcResult.memorySize.size} ${calcResult.memorySize.unit}`}
                     classes={{
                       contentClassName: classes.contentClassName,
                     }}
                   />
                   <SizingToolCard
-                    title={t('v3trans.sizingTool.fileSize')}
+                    title={t('fileSize')}
                     content={`${calcResult.rawFileSize.size} ${calcResult.rawFileSize.unit}`}
                     classes={{
                       contentClassName: classes.contentClassName,
@@ -498,78 +612,132 @@ export default function SizingTool() {
               </div>
 
               <div className={classes.cluster}>
-                <h3>{t('v3trans.sizingTool.setups.title')}</h3>
+                <h3>{t('setups.title')}</h3>
+
+                <div className={classes.singleRowCard}>
+                  <div className={classes.totalWrapper}>
+                    <div className={classes.singlePart}>
+                      <p className={classes.label}>Total</p>
+                      <p
+                        className={classes.value}
+                      >{`${totalData.core}core${totalData.memory}GB`}</p>
+                    </div>
+                  </div>
+                  <div className={classes.totalWrapper}>
+                    <div className={classes.singlePart}>
+                      <p className={classes.label}>SSD</p>
+                      <p className={classes.value}>{totalData.ssd}GB</p>
+                    </div>
+                    <div className={classes.singlePart}>
+                      <p className={classes.label}>Disk</p>
+                      <p className={classes.value}>{totalData.disk}GB</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={classes.cluster}>
+                <div className={classes.titleRow}>
+                  <h3 className={classes.title}>{t('milvus')}</h3>
+                  <div className={classes.detailWrapper}>
+                    <div className={classes.detailInfo}>
+                      <p className={classes.label}>{t('total')}:&nbsp;</p>
+                      <p className={classes.value}>
+                        {t('coreInfo', {
+                          core: milvusData.core,
+                          memory: milvusData.memory,
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
                 <div className={classes.cardsWrapper}>
                   <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.rootCoord.title')}
-                    subTitle={calcResult.rootCoord.size}
-                    content={calcResult.rootCoord.amount}
-                    showTooltip
-                    tooltip={t('v3trans.sizingTool.setups.rootCoord.tooltip')}
-                  />
-
-                  <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.indexCoord.title')}
-                    tooltip={t('v3trans.sizingTool.setups.indexCoord.tooltip')}
-                    showTooltip
-                    subTitle={calcResult.commonCoord.size}
-                    content={calcResult.commonCoord.amount}
-                  />
-
-                  <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.queryCoord.title')}
-                    tooltip={t('v3trans.sizingTool.setups.queryCoord.tooltip')}
-                    showTooltip
-                    subTitle={calcResult.commonCoord.size}
-                    content={calcResult.commonCoord.amount}
-                  />
-
-                  <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.dataCoord.title')}
-                    tooltip={t('v3trans.sizingTool.setups.dataCoord.tooltip')}
-                    showTooltip
-                    subTitle={calcResult.commonCoord.size}
-                    content={calcResult.commonCoord.amount}
-                  />
-
-                  <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.proxy.title')}
-                    tooltip={t('v3trans.sizingTool.setups.proxy.tooltip')}
+                    title={t('setups.proxy.title')}
+                    tooltip={t('setups.proxy.tooltip')}
                     subTitle={calcResult.proxy.size}
                     content={calcResult.proxy.amount}
                     showTooltip
                   />
-
                   <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.queryNode.title')}
-                    tooltip={t('v3trans.sizingTool.setups.queryNode.tooltip')}
-                    subTitle={calcResult.queryNode.size}
-                    content={calcResult.queryNode.amount}
+                    title={t('setups.rootCoord.title')}
+                    subTitle={calcResult.rootCoord.size}
+                    content={calcResult.rootCoord.amount}
                     showTooltip
+                    tooltip={t('setups.rootCoord.tooltip')}
                   />
 
                   <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.dataNode.title')}
-                    tooltip={t('v3trans.sizingTool.setups.dataNode.tooltip')}
+                    title={t('setups.dataCoord.title')}
+                    tooltip={t('setups.dataCoord.tooltip')}
+                    showTooltip
+                    subTitle={calcResult.commonCoord.size}
+                    content={calcResult.commonCoord.amount}
+                  />
+                  <SizingToolCard
+                    title={t('setups.queryCoord.title')}
+                    tooltip={t('setups.queryCoord.tooltip')}
+                    showTooltip
+                    subTitle={calcResult.commonCoord.size}
+                    content={calcResult.commonCoord.amount}
+                  />
+
+                  <SizingToolCard
+                    title={t('setups.dataNode.title')}
+                    tooltip={t('setups.dataNode.tooltip')}
                     subTitle={calcResult.dataNode.size}
                     content={calcResult.dataNode.amount}
                     showTooltip
                   />
 
                   <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.indexNode.title')}
-                    tooltip={t('v3trans.sizingTool.setups.indexNode.tooltip')}
+                    title={t('setups.indexNode.title')}
+                    tooltip={t('setups.indexNode.tooltip')}
                     subTitle={calcResult.indexNode.size}
                     content={calcResult.indexNode.amount}
                     showTooltip
                   />
 
-                  {/* etcd */}
+                  <SizingToolCard
+                    title={t('setups.queryNode.title')}
+                    tooltip={t('setups.queryNode.tooltip')}
+                    subTitle={calcResult.queryNode.size}
+                    content={calcResult.queryNode.amount}
+                    showTooltip
+                  />
                 </div>
+              </div>
+              <div className={classes.cluster}>
+                <div className={classes.titleRow}>
+                  <h3 className={classes.title}>{t('dependency')}</h3>
+                  <div className={classes.detailWrapper}>
+                    <div className={classes.detailInfo}>
+                      <p className={classes.label}>{t('total')}:&nbsp;</p>
+                      <p className={classes.value}>
+                        {t('coreInfo', {
+                          core: dependencyData.core,
+                          memory: dependencyData.memory,
+                        })}
+                      </p>
+                    </div>
+                    <div className={classes.detailInfo}>
+                      <p className={classes.label}>{t('ssd')}:&nbsp;</p>
+                      <p className={classes.value}>
+                        {t('sizeInfo', { size: dependencyData.ssd })}
+                      </p>
+                    </div>
+                    <div className={classes.detailInfo}>
+                      <p className={classes.label}>{t('disk')}:&nbsp;</p>
+                      <p className={classes.value}>
+                        {t('sizeInfo', { size: dependencyData.disk })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <div className={classes.line}>
                   <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.etcd.title')}
+                    title={t('setups.etcd.title')}
                     subTitle={
                       calcResult.etcdData.isError
                         ? REQUIRE_MORE
@@ -591,7 +759,7 @@ export default function SizingTool() {
                   />
                   {/* Minio */}
                   <SizingToolCard
-                    title={t('v3trans.sizingTool.setups.minio.title')}
+                    title={t('setups.minio.title')}
                     subTitle={
                       calcResult.minioData.isError
                         ? REQUIRE_MORE
@@ -617,12 +785,12 @@ export default function SizingTool() {
                 <div className={classes.line}>
                   {form.apacheType === 'pulsar' ? (
                     <SizingConfigCard
-                      title={t('v3trans.sizingTool.setups.pulsar.title')}
+                      title={t('setups.pulsar.title')}
                       {...calcResult.pulsarData}
                     />
                   ) : (
                     <SizingConfigCard
-                      title={t('v3trans.sizingTool.setups.kafka.title')}
+                      title={t('setups.kafka.title')}
                       {...calcResult.kafkaData}
                     />
                   )}
@@ -636,13 +804,13 @@ export default function SizingTool() {
                     onClick={handleDownloadHelm}
                   >
                     <DownloadIcon />
-                    <span>{t('v3trans.sizingTool.buttons.helm')}</span>
+                    <span>{t('buttons.helm')}</span>
                   </button>
                   <button
                     className={classes.guideLink}
                     onClick={() => handleOpenInstallGuide('helm')}
                   >
-                    {t('v3trans.sizingTool.buttons.guide')}
+                    {t('buttons.guide')}
                   </button>
                 </div>
                 <div className={classes.btnsWrapper}>
@@ -651,13 +819,13 @@ export default function SizingTool() {
                     onClick={handleDownloadOperator}
                   >
                     <DownloadIcon />
-                    <span>{t('v3trans.sizingTool.buttons.operator')}</span>
+                    <span>{t('buttons.operator')}</span>
                   </button>
                   <button
                     className={classes.guideLink}
                     onClick={() => handleOpenInstallGuide('operator')}
                   >
-                    {t('v3trans.sizingTool.buttons.guide')}
+                    {t('buttons.guide')}
                   </button>
                 </div>
               </div>

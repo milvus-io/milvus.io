@@ -6,6 +6,7 @@
 .container {
   padding-top: 40px;
   padding-bottom: 128px;
+  font-family: Inter;
 
   h1 {
     font-weight: 600;
@@ -179,6 +180,73 @@
 
       .cluster {
         margin-bottom: 24px;
+
+        .singleRowCard {
+          display: flex;
+          padding: 16px 24px;
+          background-color: #fff;
+          border-radius: 4px;
+          gap: 68px;
+          margin-bottom: 20px;
+
+          .totalWrapper {
+            flex: 1;
+
+            display: flex;
+
+            .singlePart {
+              flex: 1;
+
+              .label {
+                font-size: 18px;
+                line-height: 26px;
+                font-weight: 600;
+                margin-bottom: 4px;
+              }
+
+              .value {
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 34px;
+                color: @color-text-primary;
+              }
+            }
+          }
+        }
+
+        .titleRow {
+          display: flex;
+          justify-content: space-between;
+          gap: 24px;
+          margin-bottom: 12px;
+
+          .title {
+            color: @color-primary;
+            margin-bottom: 0px;
+          }
+
+          .detailWrapper {
+            display: flex;
+            gap: 20px;
+
+            .detailInfo {
+              display: flex;
+
+              .label {
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 1.5em;
+              }
+
+              .value {
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 1.5em;
+                color: @color-primary;
+              }
+            }
+          }
+        }
 
         .cardsWrapper {
           display: grid;

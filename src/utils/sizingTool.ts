@@ -1385,12 +1385,6 @@ kafka:
     limits:
       cpu: ${rootCoord.cpu}
       memory: ${rootCoord.memory}Gi
-indexCoordinator:
-  replicas: ${commonCoord.amount}
-  resources: 
-    limits:
-      cpu: "${commonCoord.cpu}"
-      memory: ${commonCoord.memory}Gi
 queryCoordinator:
   replicas: ${commonCoord.amount}
   resources: 
@@ -1591,11 +1585,6 @@ spec:
           cpu: "${commonCoord.cpu}"
           memory: ${rootCoord.memory}Gi
     queryCoord:
-      resources:
-        limits:
-          cpu: "${commonCoord.cpu}"
-          memory: ${rootCoord.memory}Gi
-    indexCoord:
       resources:
         limits:
           cpu: "${commonCoord.cpu}"

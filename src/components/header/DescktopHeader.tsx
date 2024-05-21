@@ -75,7 +75,7 @@ export default function DesktopHeader(props: Props) {
               return (
                 <li key={config.label} className="shrink-0">
                   <div className="group relative">
-                    <button className="flex items-center text-[14px] leading-[21px] font-[500] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer">
+                    <button className="flex items-center text-[14px] font-[500] font-['Inter'] leading-[21px] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer">
                       {config.label}
                       <DownArrowIcon size={16} />
                     </button>

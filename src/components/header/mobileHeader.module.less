@@ -1,83 +1,74 @@
 @import (reference) '../../styles/mixin.module.less';
 
-.mobileHeaderContainer {
-  background-color: #fff;
-  display: none;
-  border-bottom: 1px solid #ededed;
+.mobileHeader {
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  @media @tablet, @phone {
-    display: block;
+  &.open {
+    background-color: #fff;
   }
 
-  .mobileHeader {
-    padding: 18px 0;
+  .navWrapper {
+    position: absolute;
+    height: 0px;
+    left: 0;
+    right: 0;
+    top: @header-height-tablet;
+    overflow: hidden;
+    transition: height linear 0.3s, top linear 0.3s;
+    background-color: #fff;
+    z-index: 100;
+  }
+
+  .activeMenu {
+    top: @header-height-tablet;
+    left: 0;
+    right: 0;
+    height: calc(100vh - @header-height-tablet);
+  }
+
+  .listWrapper {
+    margin: 0 auto;
+    height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+  }
 
-    &.open {
-      background-color: #fff;
-    }
+  .mobileStartBtnWrapper {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 24px 0;
 
-    .navWrapper {
-      position: absolute;
-      height: 0px;
-      left: 0;
-      right: 0;
-      top: @header-height-tablet;
-      overflow: hidden;
-      transition: height linear 0.3s, top linear 0.3s;
-      background-color: #fff;
-      z-index: 100;
-    }
+    .mobileStartBtn {
+      .buttonSm();
+      .hover();
+      display: block;
+      text-align: center;
+      width: 100%;
+      padding: 12px 20px;
+      color: #fff;
+      font-family: Inter;
+      font-weight: 600;
+      font-size: 14px;
+      height: auto;
+      background: #00a1ea;
 
-    .activeMenu {
-      top: @header-height-tablet;
-      left: 0;
-      right: 0;
-      height: calc(100vh - @header-height-tablet);
-    }
-
-    .listWrapper {
-      margin: 0 auto;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .mobileStartBtnWrapper {
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-      padding: 24px 0;
-
-      .mobileStartBtn {
-        .buttonSm();
-        .hover();
-        display: block;
-        text-align: center;
-        width: 100%;
-        padding: 12px 20px;
-        color: #fff;
-        font-family: Inter;
-        font-weight: 600;
-        font-size: 14px;
-        height: auto;
-        background: #00a1ea;
-
-        span {
-          background: #fff;
-          color: #00a1ea;
-          font-size: 12px;
-          border-radius: 4px;
-          padding: 2px 5px;
-          margin-left: 4px;
-          margin-right: 8px;
-        }
+      span {
+        background: #fff;
+        color: #00a1ea;
+        font-size: 12px;
+        border-radius: 4px;
+        padding: 2px 5px;
+        margin-left: 4px;
+        margin-right: 8px;
       }
     }
+  }
 
-    .menuIconBtn {
-      cursor: pointer;
-    }
+  .menuIconBtn {
+    cursor: pointer;
   }
 }
 

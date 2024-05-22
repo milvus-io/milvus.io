@@ -6,6 +6,8 @@ import FlexibleSectionContainer from '../../flexibleSection';
 import Header from '../../header';
 import Footer from '../../footer';
 
+import { InkeepChatButton } from '@/components/inkeep/InkeepChatButton';
+
 const MENU_MINIMUM_WIDTH = 22;
 const MENU_MAXIMUM_WIDTH = 283;
 
@@ -41,37 +43,38 @@ export default function DocLayout(props: DocLayoutPropsType) {
   const { root = '', main = '', content = '' } = customerClasses;
 
   return (
-    <main className={clsx(classes.docLayoutContainer, root)}>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={desc}></meta>
-        <meta property="og:title" content={title}></meta>
-        <meta property="og:description" content={desc} />
-        <meta property="og:url" content={url} />
-      </Head>
-      <Header className={classes.docHeader} />
-      <div className={clsx(classes.mainContainer, main)}>
-        <FlexibleSectionContainer
-          minWidth={MENU_MINIMUM_WIDTH}
-          maxWidth={MENU_MAXIMUM_WIDTH}
-          classes={{
-            root: classes.flexibleContainer,
-          }}
-        >
-          {left}
-        </FlexibleSectionContainer>
-        <div
-          className={clsx(classes.contentContainer, content, {
-            [classes.docHome]: isHome,
-          })}
-        >
-          {center}
+    <>
+      <main className={clsx(classes.docLayoutContainer, root)}>
+        <Head>
+          <title>{title}</title>
+          <meta name="description" content={desc}></meta>
+          <meta property="og:title" content={title}></meta>
+          <meta property="og:description" content={desc} />
+          <meta property="og:url" content={url} />
+        </Head>
+        <Header className={classes.docHeader} />
+        <div className={clsx(classes.mainContainer, main)}>
+          <FlexibleSectionContainer
+            minWidth={MENU_MINIMUM_WIDTH}
+            maxWidth={MENU_MAXIMUM_WIDTH}
+            classes={{
+              root: classes.flexibleContainer,
+            }}
+          >
+            {left}
+          </FlexibleSectionContainer>
+          <div
+            className={clsx(classes.contentContainer, content, {
+              [classes.docHome]: isHome,
+            })}
+          >
+            {center}
 
-          {showFooter && (
-            <Footer />
-          )}
+            {showFooter && <Footer className={classes.docFooter} />}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+      <InkeepChatButton />
+    </>
   );
 }

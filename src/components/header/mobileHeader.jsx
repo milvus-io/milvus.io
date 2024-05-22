@@ -8,8 +8,8 @@ import classes from './mobileHeader.module.less';
 import pageClasses from '../../styles/responsive.module.less';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { useState, useEffect, use } from 'react';
-import { LogoSection, ActionBar } from './Logos';
+import { useState, useEffect } from 'react';
+import { LogoSection } from './Logos';
 import { CloseIcon, MenuIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
 
@@ -45,7 +45,7 @@ export default function MobileHeader(props) {
   };
 
   return (
-    <div className={classes.mobileHeaderContainer}>
+    <div className="block tablet:hidden bg-white border-b border-solid border-gray-300">
       <div
         className={clsx(
           pageClasses.container,
@@ -176,8 +176,6 @@ export default function MobileHeader(props) {
 
                 <Divider variant="fullWidth" />
               </List>
-
-              <ActionBar />
             </div>
 
             <div className={classes.mobileStartBtnWrapper}>

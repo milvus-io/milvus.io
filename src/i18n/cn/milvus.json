@@ -875,6 +875,10 @@
         }
       },
       "button": "Download configuration yml"
+    },
+    "footnote": {
+      "copyright": "Copyright © Milvus. {{year}} All rights reserved.",
+      "maintainer": "Made with Love <0></0> by the Dev from Zilliz"
     }
   }
 }

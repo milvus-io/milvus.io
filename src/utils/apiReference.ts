@@ -5,11 +5,11 @@ import {
   FinalMenuStructureType,
   ApiReferenceRouteEnum,
 } from '@/types/docs';
+import { VERSION_REG } from '@/consts/regexp';
 import {
   BASE_DOC_DIR,
-  VERSION_REG,
-  IGNORE_FILES,
   generateDocVersionInfo,
+  validationFileFilter,
 } from './docs';
 const fs = require('fs');
 const path = require('path');
@@ -60,18 +60,16 @@ const readApiFile = (params: {
     const parentId = VERSION_REG.test(baseFolderName) ? '' : baseFolderName;
     const subPaths: string[] = fs.readdirSync(filePath).map((v: string) => v);
 
-    return subPaths
-      .filter(subPath => !IGNORE_FILES.includes(subPath))
-      .map(subPath =>
-        readApiFile({
-          filePath: join(filePath, subPath),
-          category,
-          version,
-          fileDataList,
-          withContent,
-          parentIds: [...parentIds, parentId],
-        })
-      );
+    return subPaths.filter(validationFileFilter).map(subPath =>
+      readApiFile({
+        filePath: join(filePath, subPath),
+        category,
+        version,
+        fileDataList,
+        withContent,
+        parentIds: [...parentIds, parentId],
+      })
+    );
   } else if (fileStat.isFile()) {
     const content = fs.readFileSync(filePath, 'utf-8');
     const id = path.basename(filePath);
@@ -109,9 +107,7 @@ const generateApiMenuData = (params: {
   if (fileStat.isDirectory()) {
     const parentNodes = [...parentIds, menuItemId].filter(node => !!node);
     const subPaths: string[] = fs.readdirSync(filePath).map((v: string) => v);
-    const usablePaths = subPaths.filter(
-      subPath => !IGNORE_FILES.includes(subPath)
-    );
+    const usablePaths = subPaths.filter(validationFileFilter);
 
     /**
      * to keep the menu item id unique, sub menu item will be like:

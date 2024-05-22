@@ -16,7 +16,7 @@
   "memory": "Loading Memory",
   "fileSize": "Raw file size",
   "setups": {
-    "title": "Minimum Milvus cluster setup",
+    "title": "Minimum Milvus cluster setup in total",
     "rootCoord": {
       "title": "Root Coord",
       "tooltip": "Root coord handles data definition language (DDL) and data control language (DCL) requests, such as create or delete collections, partitions, or indexes, as well as manage TSO (timestamp Oracle) and time ticker issuing."
@@ -77,8 +77,8 @@
   },
   "milvus": "Milvus",
   "dependency": "Dependencies",
-  "cluster": "Minimum Milvus Cluster Setup",
-  "total": "Total",
+  "cluster": "Minimum Milvus cluster setup in total",
+  "total": "CPU, Memory",
   "ssd": "SSD",
   "disk": "Disk",
   "coreInfo": "{{core}} core, {{memory}} GB",

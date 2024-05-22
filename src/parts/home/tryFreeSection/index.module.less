@@ -1,0 +1,133 @@
+@import url('@/styles/global.module.less');
+
+.sectionContainer {
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  .tryCloudContainer {
+    position: relative;
+    display: flex;
+    padding: 46px 30px;
+    gap: 24px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 120px;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 1;
+
+    @media @tablet, @phone {
+      flex-direction: column;
+    }
+
+    .backgroundContainer {
+      width: 617px;
+      height: 138px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-image: url('/images/home/try-cloud-bg-image.png');
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: -1;
+    }
+
+    .leftPart {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      h3 {
+        max-width: 444px;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 34px;
+
+        @media @phone {
+          text-align: center;
+          font-size: 22px;
+          line-height: 30px;
+        }
+      }
+
+      @media @phone {
+        flex-direction: column;
+      }
+    }
+
+    .linkButton {
+      padding: 14px 32px;
+      background-color: @color-black1;
+      color: #fff;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      @media @tablet, @phone {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      svg {
+        transform: rotate(315deg);
+      }
+    }
+  }
+
+  .toolsContainer {
+    margin-top: 28px;
+
+    .subTitle {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      color: @color-black1;
+      text-align: center;
+      margin-bottom: 24px;
+
+      @media @tablet, @phone {
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+
+    .toolsList {
+      list-style-type: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gird-gap: 24px;
+
+      .toolItem {
+        display: flex;
+        justify-content: center;
+
+        .toolButton {
+          width: 100px;
+          height: 100px;
+          border-radius: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          svg {
+            display: none;
+          }
+
+          &:hover {
+            background-color: #fff;
+            svg {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}

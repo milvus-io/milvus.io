@@ -1,0 +1,129 @@
+@import url('@/styles/global.module.less');
+
+.sectionContainer {
+  padding-top: 120px;
+  padding-bottom: 120px;
+
+  .title {
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 54px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .cardList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+
+    @media @tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media @phone {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cardItem {
+    border-radius: 12px;
+    border: 1px solid #d0d7dc;
+    padding: 20px;
+    a {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .contentWrapper {
+      position: relative;
+      padding-top: 22px;
+      padding-bottom: 22px;
+
+      &::before {
+        content: '“';
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #d0d7dc;
+        font-size: 42px;
+        line-height: 42px;
+        height: 22px;
+      }
+      &::after {
+        content: '“';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color: #d0d7dc;
+        font-size: 42px;
+        line-height: 42px;
+        display: block;
+        height: 22px;
+      }
+
+      .cardContent {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        height: 216px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 9;
+        -webkit-box-orient: vertical;
+        color: @color-black1;
+
+        &:hover {
+          text-decoration-line: underline;
+        }
+
+        @media @tablet, @phone {
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+
+  .authorWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+
+    .detailWrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      img {
+        flex: 0 0 50px;
+        height: 50px;
+      }
+
+      .author {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        color: @color-black1;
+
+        @media @tablet, @phone {
+          font-size: 12px;
+          line-height: 18px;
+        }
+      }
+      .jobTitle {
+        font-size: 12px;
+        line-height: 18px;
+        color: @color-black2;
+      }
+    }
+
+    .mediumLogo {
+      flex: 0 0 20px;
+      height: 20px;
+    }
+  }
+}

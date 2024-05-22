@@ -11,6 +11,7 @@ import headerEn from './en/header.json';
 import headerCn from './cn/header.json';
 import sizingToolEn from './en/sizingTool.json';
 import sizingToolCn from './cn/sizingTool.json';
+import homeEn from './en/home.json';
 
 export const resources = {
   en: {
@@ -19,6 +20,7 @@ export const resources = {
     intro: introEn,
     header: headerEn,
     sizingTool: sizingToolEn,
+    home: homeEn,
   },
   cn: {
     common: commonCn,

@@ -2,7 +2,15 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    extend: {},
+    screens: {
+      tablet: '1024px',
+      phone: '744px',
+    },
+    extend: {
+      colors: {
+        black2: '#667176',
+      },
+    },
   },
   plugins: [],
 };

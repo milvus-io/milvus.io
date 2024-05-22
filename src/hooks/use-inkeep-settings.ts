@@ -12,18 +12,13 @@ type InkeepSharedSettings = {
   modalSettings: InkeepModalSettings;
 };
 
-const {
-  NEXT_PUBLIC_INKEEP_API_KEY,
-  NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
-  NEXT_PUBLIC_INKEEP_ORG_ID,
-} = process.env;
 const INKEEP_PRIMARY_COLOR = '#4DB7EF';
 
 export const useInkeepSettings = (): InkeepSharedSettings => {
   const baseSettings: InkeepWidgetBaseSettings = {
-    apiKey: NEXT_PUBLIC_INKEEP_API_KEY,
-    integrationId: NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
-    organizationId: NEXT_PUBLIC_INKEEP_ORG_ID,
+    apiKey: process.env.NEXT_PUBLIC_INKEEP_API_KEY,
+    integrationId: process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
+    organizationId: process.env.NEXT_PUBLIC_INKEEP_ORG_ID,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
   };
 

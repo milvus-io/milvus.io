@@ -34,6 +34,7 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
     chatSubjectName: 'Milvus',
     botAvatarSrcUrl:
       'https://milvus.io/icons/icon-48x48.png?v=587ea7d315fa8ebc198a8c112e054ef6',
+    botAvatarDarkSrcUrl: '/inkeep/milvus-icon-white.png',
     getHelpCallToActions: [
       {
         name: 'Discord',

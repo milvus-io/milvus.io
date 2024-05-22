@@ -14,7 +14,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        black1: '#1A1A1A',
+        black1: '#00131A',
+        black2: '#667176',
       },
       boxShadow: {
         'nav-menu':

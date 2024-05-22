@@ -637,9 +637,12 @@ export default function SizingTool() {
                   <div className={classes.totalWrapper}>
                     <div className={classes.singlePart}>
                       <p className={classes.label}>Total</p>
-                      <p
-                        className={classes.value}
-                      >{`${totalData.core}core${totalData.memory}GB`}</p>
+                      <p className={classes.value}>
+                        {t('coreInfo', {
+                          core: totalData.core,
+                          memory: totalData.memory,
+                        })}
+                      </p>
                     </div>
                   </div>
                   <div className={classes.totalWrapper}>

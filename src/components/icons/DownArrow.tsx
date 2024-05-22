@@ -1,7 +1,12 @@
-export const DownArrowIcon = (props: { size?: number; color?: string }) => {
-  const { size = 14, color = '#00131A' } = props;
+export const DownArrowIcon = (props: {
+  size?: number;
+  color?: string;
+  className?: string;
+}) => {
+  const { size = 14, color = '#00131A', className } = props;
   return (
     <svg
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}

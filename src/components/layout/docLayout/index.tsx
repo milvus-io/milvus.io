@@ -70,7 +70,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
           >
             {center}
 
-            {showFooter && <Footer />}
+            {showFooter && <Footer className={classes.docFooter} />}
           </div>
         </div>
       </main>

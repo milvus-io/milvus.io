@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
 import { sourceMap } from '../consts/newsletterSource';
-import { getCurrentSize } from '../http/hooks';
 
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);

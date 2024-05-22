@@ -1,3 +1,6 @@
+import fs from 'fs';
+import { join } from 'path';
+
 import {
   DocFrontMatterType,
   DocFileDataInfoType,
@@ -5,14 +8,12 @@ import {
   FinalMenuStructureType,
   AllMdVersionIdType,
 } from '@/types/docs';
+import { JSON_REG, VERSION_REG } from '@/consts/regexp';
 
-const fs = require('fs');
-const { join } = require('path');
 const matter = require('gray-matter');
 
 export const BASE_DOC_DIR = join(process.cwd(), 'src/docs');
 const DOCS_MINIMUM_VERSION = 'v1.0.0';
-export const VERSION_REG = /^v\d\./;
 export const IGNORE_FILES = [
   'README.md',
   'Variables.json',
@@ -26,6 +27,10 @@ export const IGNORE_FILES = [
   'release_notes',
   'Tips.json',
 ];
+
+export const validationFileFilter = (file: string) => {
+  return !IGNORE_FILES.includes(file) && !JSON_REG.test(file);
+};
 
 /**
  * version system

@@ -636,7 +636,7 @@ export default function SizingTool() {
                 <div className={classes.singleRowCard}>
                   <div className={classes.totalWrapper}>
                     <div className={classes.singlePart}>
-                      <p className={classes.label}>Total</p>
+                      <p className={classes.label}>{t('total')}</p>
                       <p className={classes.value}>
                         {t('coreInfo', {
                           core: totalData.core,
@@ -647,12 +647,16 @@ export default function SizingTool() {
                   </div>
                   <div className={classes.totalWrapper}>
                     <div className={classes.singlePart}>
-                      <p className={classes.label}>SSD</p>
-                      <p className={classes.value}>{totalData.ssd}GB</p>
+                      <p className={classes.label}>{t('ssd')}</p>
+                      <p className={classes.value}>
+                        {t('sizeInfo', { size: totalData.ssd })}
+                      </p>
                     </div>
                     <div className={classes.singlePart}>
-                      <p className={classes.label}>Disk</p>
-                      <p className={classes.value}>{totalData.disk}GB</p>
+                      <p className={classes.label}>{t('disk')}</p>
+                      <p className={classes.value}>
+                        {t('sizeInfo', { size: totalData.disk })}
+                      </p>
                     </div>
                   </div>
                 </div>

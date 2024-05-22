@@ -81,6 +81,6 @@
   "total": "Total",
   "ssd": "SSD",
   "disk": "Disk",
-  "coreInfo": "{{core}} core {{memory}} GB",
+  "coreInfo": "{{core}} core, {{memory}} GB",
   "sizeInfo": "{{size}} GB"
 }

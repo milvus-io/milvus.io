@@ -41,3 +41,7 @@ yarn-error.log*
 /public/blogs/*
 
 /menu.json
+
+.env
+.env.development
+.env.development.local

@@ -14,6 +14,11 @@ git submodule update --remote
 pnpm install
 ```
 
+## Generate .env.development file
+```
+cp .env.production .env.development
+```
+
 ## Run the development server
 
 ```bash

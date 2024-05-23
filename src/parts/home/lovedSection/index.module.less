@@ -5,11 +5,10 @@
   padding-bottom: 120px;
 
   .title {
-    font-size: 42px;
-    font-weight: 600;
-    line-height: 54px;
+    .heading2();
+    max-width: 840px;
     text-align: center;
-    margin-bottom: 40px;
+    margin: 0 auto 40px;
   }
 
   .cardList {
@@ -64,9 +63,7 @@
       }
 
       .cardContent {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 24px;
+        .paragraph3();
         height: 216px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -76,11 +73,6 @@
 
         &:hover {
           text-decoration-line: underline;
-        }
-
-        @media @tablet, @phone {
-          font-size: 14px;
-          line-height: 20px;
         }
       }
     }
@@ -104,19 +96,11 @@
       }
 
       .author {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 22px;
+        .paragraph4();
         color: @color-black1;
-
-        @media @tablet, @phone {
-          font-size: 12px;
-          line-height: 18px;
-        }
       }
       .jobTitle {
-        font-size: 12px;
-        line-height: 18px;
+        .paragraph5();
         color: @color-black2;
       }
     }

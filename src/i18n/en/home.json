@@ -6,7 +6,12 @@
     "star": "Star",
     "pipInstall": "pip install pymilvus",
     "start": "Get Started",
-    "tryCloud": "Try Zilliz Cloud Free"
+    "tryCloud": "Try Zilliz Cloud Free",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "tryFree": "Try Free",
+    "rsvp": "RSVP now",
+    "subscribe": "Subscribe"
   },
   "codeSection": {
     "title": "Start running Milvus in seconds",
@@ -23,7 +28,7 @@
     "subTitle": "Plays nicely with all your favorite AI tools"
   },
   "lovedSection": {
-    "title": "Loved by developers who are GenAI trailblazers",
+    "title": "Loved by GenAI developers",
     "cards": {
       "nandula": {
         "content": "Based on our research, Milvus was selected as the vector database of choice (over Chroma and Pinecone). Milvus is an open-source vector database designed specifically for similarity search on massive datasets of high-dimensional vectors.",
@@ -40,6 +45,87 @@
         "author": "Igor Gorbenko",
         "title": "Big Data Architect"
       }
+    }
+  },
+  "vdbSection": {
+    "title": "The vector database that has it all for your GenAI projects",
+    "features": {
+      "setup": {
+        "title": "Easy Setup",
+        "desc": "Pip-install to start coding in a notebook within seconds."
+      },
+      "reusable": {
+        "title": "Reusable Code",
+        "desc": "Write once, and deploy with one line of code into production environment."
+      },
+      "integration": {
+        "title": "Integrations",
+        "desc": "Plug into OpenAI, LangChain, LlamaIndex, and many others."
+      },
+      "featureRich": {
+        "title": "Feature-rich",
+        "desc": "Dense & sparse embeddings, filtering, reranking and more."
+      },
+      "community": {
+        "title": "Vibrant community",
+        "desc": "Fan-favorite vector database with a buzzing, active community."
+      }
+    },
+    "prompt": "Learn more about accelerate AI with Milvus? View our <0>documentation</0>"
+  },
+  "deploySection": {
+    "title": "Deployment Options to Match Your Unique Journey",
+    "lite": {
+      "title": "Milvus Lite",
+      "advantage": "Lightweight, easy to start",
+      "features": [
+        "A vector database that runs in notebooks or laptops",
+        "Best for learning and prototyping"
+      ]
+    },
+    "milvus": {
+      "title": "Milvus for Production",
+      "advantage": "Highly scalable, optimized for performance",
+      "features": [
+        "Options for \"Embedded\" Docker container or distributed K8s",
+        "Proven for mega scale production use cases"
+      ]
+    },
+    "cloud": {
+      "title": "Zilliz Cloud",
+      "advantage": "Fully managed with minimal operations",
+      "features": [
+        "Available in both serverless and dedicated cluster",
+        "SaaS and BYOC options for different security and compliance requirements"
+      ]
+    }
+  },
+  "developSection": {
+    "title": "Start Developing Your GenAI Apps",
+    "subTitle": "With integrations built by us and our community.",
+    "langChain": {
+      "title": "LangChain Starter Guide",
+      "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."
+    },
+    "llamaIndex": {
+      "title": "LlamaIndex Starter Guide",
+      "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."
+    },
+    "dspy": {
+      "title": "DSPy Starter Guide",
+      "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."
+    },
+    "meetup": {
+      "title": "Unstructured Data Meetups",
+      "desc": "Join a Community of Passionate Developers and Engineers Dedicated to Gen AI."
+    }
+  },
+  "subscribeSection": {
+    "title": "Join the <0>25 million+ developers</0> building GenAI apps with Milvus today",
+    "subscribe": {
+      "title": "Subscribe our Newsletter",
+      "desc": "Subscribe to get updates on the latest Milvus releases, tutorials and training from Zilliz, the creator and key maintainer of Milvus.",
+      "email": "Email"
     }
   }
 }

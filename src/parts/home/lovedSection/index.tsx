@@ -40,7 +40,7 @@ export default function LovedSection() {
       <ul className={classes.cardList}>
         {cards.map(v => (
           <li className={classes.cardItem} key={v.author}>
-            <CustomLink href={v.href}>
+            <a href={v.href}>
               <div className={classes.contentWrapper}>
                 <p className={classes.cardContent}>{v.content}</p>
               </div>
@@ -60,7 +60,7 @@ export default function LovedSection() {
                   className={classes.mediumLogo}
                 />
               </div>
-            </CustomLink>
+            </a>
           </li>
         ))}
       </ul>

@@ -221,7 +221,7 @@ export const RightArrow = () => (
   </svg>
 );
 
-export const CopyIcon = () => (
+export const CopyIcon: React.FC<{ color?: string }> = ({ color }) => (
   <svg
     width="18"
     height="18"
@@ -231,13 +231,13 @@ export const CopyIcon = () => (
   >
     <path
       d="M14.55 15H7.2C6.95147 15 6.75 14.7985 6.75 14.55V7.2C6.75 6.95147 6.95147 6.75 7.2 6.75H14.55C14.7985 6.75 15 6.95147 15 7.2V14.55C15 14.7985 14.7985 15 14.55 15Z"
-      stroke="#667176"
+      stroke={color || '#667176'}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M11.25 6.75V3.45C11.25 3.20147 11.0485 3 10.8 3H3.45C3.20147 3 3 3.20147 3 3.45V10.8C3 11.0485 3.20147 11.25 3.45 11.25H6.75"
-      stroke="#667176"
+      stroke={color || '#667176'}
       strokeLinecap="round"
       strokeLinejoin="round"
     />

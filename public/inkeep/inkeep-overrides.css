@@ -1,0 +1,41 @@
+.ikp-ai-chat-footer__footer {
+  align-items: center;
+}
+
+.ikp-tagline {
+  align-items: center;
+  position: relative;
+}
+
+.ikp-tagline > div {
+  display: none;
+}
+
+.ikp-tagline > a > div:before {
+  content: 'By';
+  font-weight: normal;
+}
+
+.ikp-tagline:after {
+  content: '';
+  margin-left: 1.35rem;
+  width: 54px;
+  height: 22px;
+  background: url('/inkeep/zilliz-grayscale.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ikp-tagline:before {
+  content: '&';
+  position: absolute;
+  right: 54px;
+  color: #889096;
+  margin-left: 0.35rem;
+  margin-right: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: translateY(-50%);
+  top: 50%;
+}

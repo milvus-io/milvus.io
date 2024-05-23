@@ -14,6 +14,8 @@ export function InkeepChatButton() {
     useInkeepSettings();
 
   const chatButtonProps: InkeepChatButtonProps = {
+    stylesheetUrls: ['/inkeep/inkeep-overrides.css'],
+    chatButtonBgColor: '#00a1ea',
     baseSettings,
     aiChatSettings,
     searchSettings,

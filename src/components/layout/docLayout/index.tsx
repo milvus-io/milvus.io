@@ -72,9 +72,9 @@ export default function DocLayout(props: DocLayoutPropsType) {
 
             {showFooter && <Footer className={classes.docFooter} />}
           </div>
+          <InkeepChatButton />
         </div>
       </main>
-      <InkeepChatButton />
     </>
   );
 }

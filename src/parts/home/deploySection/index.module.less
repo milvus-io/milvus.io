@@ -1,0 +1,104 @@
+@import url('@/styles/global.module.less');
+
+.deploySection {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  .title {
+    .heading2();
+    color: @color-black1;
+    max-width: 840px;
+    text-align: center;
+    margin: 0 auto 40px;
+  }
+
+  .dbsWrapper {
+    display: flex;
+    gap: 12px;
+
+    @media @tablet, @phone {
+      flex-direction: column;
+    }
+
+    .milvusDbs {
+      flex: 2;
+      display: flex;
+      gap: 30px;
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid @color-black3;
+      background: #fff;
+
+      & > .commonMilvusDb {
+        flex: 1;
+      }
+
+      @media @tablet {
+        flex: auto;
+      }
+
+      @media @phone {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+
+    .commonMilvusDb {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cloud {
+      flex: 1;
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid @color-black3;
+      background: #fff;
+
+      @media @tablet {
+        max-width: calc(50% - 15px);
+        flex: auto;
+      }
+    }
+
+    .dbName {
+      .heading4();
+      padding-bottom: 8px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .dbContent {
+      flex: 1;
+    }
+    .dbAdvantage {
+      .paragraph3();
+      margin-bottom: 12px;
+    }
+
+    .dbFeatures {
+      list-style-type: disc;
+      padding-left: 24px;
+
+      li {
+        .paragraph3-regular();
+        color: @color-black2;
+      }
+    }
+
+    .linkButton {
+      .paragraph4-regular();
+    }
+
+    .liteTitle {
+      border-color: #41d4cb;
+    }
+
+    .milvusTitle {
+      border-color: #6fa0ff;
+    }
+    .cloud > .dbName {
+      border-color: #ae5eff;
+    }
+  }
+}

@@ -2,27 +2,18 @@ import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faGithub,
-  faYoutube,
-  faDiscord,
-  faXTwitter,
-} from '@fortawesome/free-brands-svg-icons';
+
 import {
   DISCORD_INVITE_URL,
   MILVUS_VIDEO_LINK,
   GITHUB_ATTU_LINK,
   GITHUB_MILVUS_CLI_LINK,
   GITHUB_MILVUS_LINK,
-  MILVUS_TWITTER_LINK,
-  MILVUS_YOUTUBE_CHANNEL_LINK,
   CLOUD_SIGNUP_LINK,
   GITHUB_MILVUS_BACKUP_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
-
-import styles from './index.module.less';
+import SocialMedias from '../socialMedias';
 
 const footerJson = [
   {
@@ -79,13 +70,6 @@ const footerJson = [
   },
 ];
 
-const socialJson = [
-  { icon: faXTwitter, link: MILVUS_TWITTER_LINK },
-  { icon: faGithub, link: GITHUB_MILVUS_LINK },
-  { icon: faDiscord, link: DISCORD_INVITE_URL },
-  { icon: faYoutube, link: MILVUS_YOUTUBE_CHANNEL_LINK },
-];
-
 type Props = {
   className?: string;
 };
@@ -129,30 +113,7 @@ const Footer = (props: Props) => {
               />
             </div>
             <div className="flex mt-[40px] space-x-[12px]">
-              <div className="flex items-center justify-between gap-[12px]">
-                {socialJson.map(s => {
-                  const target = s.link
-                    ? s.link.includes('http')
-                      ? '_blank'
-                      : '_self'
-                    : '_self';
-
-                  return (
-                    <a
-                      key={s.link}
-                      href={s.link}
-                      target={target}
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-[40px] h-[40px] rounded-[12px] border-[1px] border-solid border-[#D0D7DC] cursor-pointer"
-                    >
-                      <FontAwesomeIcon
-                        className={styles.iconWrapper}
-                        icon={s.icon}
-                      />
-                    </a>
-                  );
-                })}
-              </div>
+              <SocialMedias />
             </div>
             <p className="mt-3 text-sm text-black1">
               {t('v3trans.footnote.copyright', {

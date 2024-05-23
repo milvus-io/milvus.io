@@ -62,9 +62,15 @@ export default function TryFreeSection() {
           <h3 className="">{t('trySection.title')}</h3>
         </div>
 
-        <CustomLink href={CLOUD_SIGNUP_LINK} className={classes.linkButton}>
+        <CustomLink
+          href={CLOUD_SIGNUP_LINK}
+          className={classes.linkButton}
+          endIcon={<RightWholeArrow color="#fff" />}
+          classes={{
+            icon: classes.linkButtonIcon,
+          }}
+        >
           {t('buttons.tryCloud')}
-          <RightWholeArrow color="#fff" />
         </CustomLink>
 
         <div className={classes.backgroundContainer}></div>
@@ -75,10 +81,10 @@ export default function TryFreeSection() {
         <ul className={classes.toolsList}>
           {tools.map(tool => (
             <li className={classes.toolItem} key={tool.name}>
-              <CustomLink href={tool.href} className={classes.toolButton}>
+              <a href={tool.href} className={classes.toolButton}>
                 <img src={tool.logo} alt={tool.name} />
                 <RightWholeArrow />
-              </CustomLink>
+              </a>
             </li>
           ))}
         </ul>

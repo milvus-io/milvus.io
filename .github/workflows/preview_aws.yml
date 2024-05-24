@@ -74,6 +74,9 @@ jobs:
         env:
           MSERVICE_URL: ${{ secrets.MSERVICE_URL }}
           REPO_STATICS_KEY: ${{ secrets.REPO_STATICS_KEY }}
+          INKEEP_API_KEY: ${{ secrets.INKEEP_API_KEY }}
+          INKEEP_INTEGRATION_ID: ${{ secrets.INKEEP_INTEGRATION_ID }}
+          INKEEP_ORGANIZATION_ID: ${{ secrets.INKEEP_ORGANIZATION_ID }}
           IS_PREVIEW: preview
       #         env:
       #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true

@@ -3,8 +3,9 @@ import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { RightWholeArrow } from '@/components/icons';
-import CustomLink from '@/components/customLink';
+import CustomButton from '@/components/customButton';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
+import { MILVUS_DOCS_OVERVIEW_LINK } from '@/consts/links';
 
 export default function DeploySection() {
   const { t } = useTranslation('home');
@@ -42,7 +43,7 @@ export default function DeploySection() {
               </ul>
             </div>
 
-            <CustomLink
+            <CustomButton
               href=""
               classes={{
                 root: classes.linkButton,
@@ -51,7 +52,7 @@ export default function DeploySection() {
               endIcon={<RightWholeArrow />}
             >
               {t('buttons.getStarted')}
-            </CustomLink>
+            </CustomButton>
           </div>
           <div className={clsx(classes.commonMilvusDb)}>
             <h3 className={clsx(classes.dbName, classes.milvusTitle)}>
@@ -71,8 +72,8 @@ export default function DeploySection() {
               </ul>
             </div>
 
-            <CustomLink
-              href=""
+            <CustomButton
+              href={MILVUS_DOCS_OVERVIEW_LINK}
               classes={{
                 root: classes.linkButton,
               }}
@@ -80,7 +81,7 @@ export default function DeploySection() {
               endIcon={<RightWholeArrow />}
             >
               {t('buttons.learnMore')}
-            </CustomLink>
+            </CustomButton>
           </div>
         </div>
         <div className={clsx(classes.cloud, classes.commonMilvusDb)}>
@@ -99,16 +100,17 @@ export default function DeploySection() {
             </ul>
           </div>
 
-          <CustomLink
+          <CustomButton
             href={CLOUD_SIGNUP_LINK}
             variant="text"
             classes={{
               root: classes.linkButton,
+              icon: classes.linkButtonIcon,
             }}
             endIcon={<RightWholeArrow />}
           >
             {t('buttons.tryFree')}
-          </CustomLink>
+          </CustomButton>
         </div>
       </div>
     </section>

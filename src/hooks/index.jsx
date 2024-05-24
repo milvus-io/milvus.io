@@ -43,7 +43,7 @@ export const useClickOutside = (ref, handler, events) => {
   }, [events, handler, ref]);
 };
 
-export const useSubscribeSrouce = () => {
+export const useSubscribeSource = () => {
   const [source, setSource] = useState('');
 
   useEffect(() => {

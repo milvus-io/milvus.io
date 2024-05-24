@@ -1,0 +1,77 @@
+@import (reference) '../../styles/global.module.less';
+
+.subscribeContainer {
+  display: flex;
+  gap: 100px;
+  justify-content: space-between;
+  padding: 50px;
+  border-radius: 12px;
+  border: 1px solid @color-black3;
+  background: #fff;
+
+  @media @tablet, @phone {
+    flex-direction: column;
+    padding: 30px;
+    gap: 24px;
+  }
+
+  .descriptionSection {
+    flex: 1;
+    h3 {
+      .heading3();
+      margin-bottom: 8px;
+      color: @color-black1;
+    }
+
+    p {
+      .paragraph4-regular();
+      color: @color-black2;
+    }
+  }
+}
+.subscribeSection {
+  flex: 0 0 520px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  @media @tablet, @phone {
+    max-width: 420px;
+    flex: auto;
+  }
+
+  .inputWrapper {
+    width: 100%;
+
+    .errorMessage {
+      .paragraph4-regular();
+      color: @color-warning;
+      margin-top: 8px;
+    }
+  }
+
+  .customInputContainer {
+    border-radius: 10px;
+    border: 1px solid @color-black3;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background-color: #fff;
+
+    .customInput {
+      .paragraph4-regular();
+      border-bottom: none;
+      padding: 0;
+
+      &:focus {
+        border-bottom: none;
+        padding: 0;
+      }
+    }
+  }
+
+  .customScribeButton {
+    padding: 14px 40px;
+  }
+}

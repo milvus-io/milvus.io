@@ -946,5 +946,11 @@
       "copyright": "Copyright © Milvus. {{year}} All rights reserved.",
       "maintainer": "Made with Love <0></0> by the Dev from Zilliz"
     }
+  },
+  "status": {
+    "subscribe": "Subscribe",
+    "wait": "Loading...",
+    "success": "Success",
+    "failed": "Failed"
   }
 }

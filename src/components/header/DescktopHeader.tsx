@@ -123,7 +123,7 @@ export default function DesktopHeader(props: Props) {
         </ul>
 
         <div>
-          <Link href={CLOUD_SIGNUP_LINK} target="_blank">
+          <Link href="/docs" target="_blank">
             <div className="h-9 px-3 py-1.5 rounded-md border border-solid border-gray-300 hover:border-slate-950 justify-start items-center gap-1 inline-flex cursor-pointer transition">
               <div className="text-center text-slate-950 text-sm font-medium leading-[21px]">
                 {t('start')}

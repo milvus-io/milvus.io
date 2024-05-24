@@ -4,13 +4,12 @@ import clsx from 'clsx';
 import { useTranslation, Trans } from 'react-i18next';
 import { CopyIcon } from '@/components/icons';
 import Link from 'next/link';
+import CopyCodeButton from '@/components/copyCodeButton';
+
+const BUTTON_TEXT = 'pip install pymilvus';
 
 export default function VectorDatabaseSection() {
   const { t } = useTranslation('home');
-
-  const handleCopyCode = () => {
-    navigator.clipboard.writeText('pip install pymilvus');
-  };
 
   return (
     <section
@@ -20,13 +19,12 @@ export default function VectorDatabaseSection() {
       <ul className={classes.featuresList}>
         <li className={clsx(classes.featureItem, classes.setup)}>
           <div className={classes.topPart}>
-            {/* code typing when hover */}
-            <div className={classes.codeWrapper}>
-              <span className="">pip install pymilvus|</span>
-              <button className={classes.copyButton} onClick={handleCopyCode}>
-                <CopyIcon color="#00131A" />
-              </button>
-            </div>
+            <CopyCodeButton
+              text={BUTTON_TEXT}
+              classes={{
+                root: classes.customCopyButton,
+              }}
+            />
           </div>
           <div className={classes.descriptionWrapper}>
             <h4 className="">{t('vdbSection.features.setup.title')}</h4>

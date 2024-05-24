@@ -23,3 +23,7 @@ export const CLOUD_SIGNIN_LINK = 'https://cloud.zilliz.com/signin';
 export const ZILLIZ_LEARN_LINK = 'https://zilliz.com/learn';
 
 export const MILVUS_PY_MILVUS = 'https://github.com/milvus-io/pymilvus';
+export const MILVUS_LINKEDIN_URL =
+  'https://www.linkedin.com/company/the-milvus-project/';
+
+export const MILVUS_DOCS_OVERVIEW_LINK = 'https://milvus.io/docs/overview.md';

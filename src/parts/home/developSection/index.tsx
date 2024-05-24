@@ -1,9 +1,10 @@
-import CustomLink from '@/components/customLink';
+import CustomButton from '@/components/customButton';
 import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { RightWholeArrow } from '@/components/icons';
+import { MEETUP_UNSTRUCTURED_DATA_URL } from '@/consts/externalLinks';
 
 export default function DevelopSection() {
   const { t } = useTranslation('home');
@@ -18,8 +19,8 @@ export default function DevelopSection() {
     },
     {
       id: 'llama index',
-      title: t('developSection.langChain.title'),
-      content: t('developSection.langChain.desc'),
+      title: t('developSection.llamaIndex.title'),
+      content: t('developSection.llamaIndex.desc'),
       href: '',
       logo: '/images/home/llama-index-logo.png',
     },
@@ -52,7 +53,7 @@ export default function DevelopSection() {
               <p className={classes.stackDesc}>{v.content}</p>
             </div>
 
-            <CustomLink
+            <CustomButton
               href={v.href}
               variant="text"
               endIcon={<RightWholeArrow />}
@@ -61,7 +62,7 @@ export default function DevelopSection() {
               }}
             >
               {t('buttons.learnMore')}
-            </CustomLink>
+            </CustomButton>
           </li>
         ))}
       </ul>
@@ -80,16 +81,17 @@ export default function DevelopSection() {
           </div>
 
           <div className={classes.linkButtonWrapper}>
-            <CustomLink
-              href=""
+            <CustomButton
+              href={MEETUP_UNSTRUCTURED_DATA_URL}
               endIcon={<RightWholeArrow color="#fff" />}
               variant="contained"
               classes={{
                 root: classes.linkButton,
+                icon: classes.linkButtonIcon,
               }}
             >
               {t('buttons.rsvp')}
-            </CustomLink>
+            </CustomButton>
           </div>
         </div>
       </div>

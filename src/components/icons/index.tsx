@@ -244,6 +244,17 @@ export const CopyIcon: React.FC<{ color?: string }> = ({ color }) => (
   </svg>
 );
 
+export const CheckIcon: React.FC<{ color?: string }> = ({ color }) => (
+  <svg focusable="false" aria-hidden="true" viewBox="0 0 14 14">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12.5496 4.02068L5.52 11.591L1.46967 7.54067L2.53033 6.48001L5.47999 9.42967L11.4504 3L12.5496 4.02068Z"
+      fill={color || '#1D2939'}
+    ></path>
+  </svg>
+);
+
 export const GitHubIcon = () => (
   <svg
     width="14"

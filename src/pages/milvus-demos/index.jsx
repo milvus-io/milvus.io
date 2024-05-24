@@ -7,7 +7,7 @@ import DemoCard from '@/components/card/DemoCard';
 import { useState } from 'react';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { CustomizedSnackbars } from '@/components/snackBar';
-import SubscribeNewsletter from '@/components/signup';
+import SubscribeNewsletter from '@/components/subscribe';
 
 const TITLE = 'Milvus Demos';
 const DESC = 'Milvus vector search demos';

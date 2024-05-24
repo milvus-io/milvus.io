@@ -1,0 +1,31 @@
+@import url('@/styles/global.module.less');
+
+div.container {
+  padding-bottom: 8px;
+
+  .input {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+
+    outline: none;
+    border: none;
+
+    border-bottom: 1px solid #d0d6df;
+    padding-bottom: 6px;
+    border-radius: 0;
+    -webkit-appearance: none;
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid #000;
+    }
+
+    &::placeholder {
+      color: #9ca6b4;
+    }
+  }
+
+  .fullWidth {
+    width: 100%;
+  }
+}

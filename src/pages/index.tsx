@@ -9,9 +9,16 @@ import DeploySection from '@/parts/home/deploySection';
 import DevelopSection from '@/parts/home/developSection';
 import SubscribeSection from '@/parts/home/subscribeSection';
 import Layout from '@/components/layout/commonLayout';
+import { getMilvusStats } from '@/http/home';
 
-export default function Homepage() {
+export default function Homepage(props: {
+  pipInstall: number;
+  milvusStars: number;
+}) {
   const { t } = useTranslation('home');
+
+  // deconstruction props
+  const { pipInstall, milvusStars } = props;
 
   return (
     <Layout>
@@ -24,7 +31,7 @@ export default function Homepage() {
           <title>Vector database - Milvus</title>
           <meta name="description" content="" />
         </Head>
-        <HomePageHeaderSection download={45987} star={27214} />
+        <HomePageHeaderSection download={pipInstall} star={milvusStars} />
         <CodeExampleSection />
         <TryFreeSection />
         <LovedSection />
@@ -36,3 +43,14 @@ export default function Homepage() {
     </Layout>
   );
 }
+
+export const getStaticProps = async () => {
+  const { pipInstall, milvusStars } = await getMilvusStats();
+
+  return {
+    props: {
+      pipInstall,
+      milvusStars,
+    },
+  };
+};

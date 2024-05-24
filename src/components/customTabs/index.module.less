@@ -4,6 +4,7 @@
   list-style-type: none;
   display: flex;
   font-family: Inter;
+  position: relative;
 }
 
 .tabItem {
@@ -19,10 +20,17 @@
   line-height: 18px;
 }
 
-.active {
-  border-color: @color-black1;
-}
-
 .active .itemText {
   color: @color-black1;
+}
+
+.activeBar {
+  position: absolute;
+  left: 0;
+  width: 0;
+  display: block;
+  bottom: 0;
+  height: 2px;
+  background-color: @color-black1;
+  transition: left linear 0.2s;
 }

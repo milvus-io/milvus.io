@@ -2,7 +2,7 @@ import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import CustomLink from '@/components/customLink';
+import CustomButton from '@/components/customButton';
 import { CLOUD_SIGNUP_LINK } from '@/consts/links';
 import { RightWholeArrow } from '@/components/icons';
 
@@ -10,42 +10,42 @@ const tools = [
   {
     name: 'Llama Index',
     logo: '/images/home/llama-index.png',
-    href: '',
+    href: 'https://www.llamaindex.ai/',
   },
   {
     name: 'Lang Chain',
     logo: '/images/home/lang-chain.png',
-    href: '',
+    href: 'https://www.langchain.com/',
   },
   {
     name: 'Haystack',
     logo: '/images/home/hay-stack.png',
-    href: '',
+    href: 'https://haystack.deepset.ai/',
   },
   {
-    name: 'Apache Park',
+    name: 'Apache Spark',
     logo: '/images/home/spark.png',
-    href: '',
+    href: 'https://spark.apache.org/',
   },
   {
     name: 'Hugging face',
     logo: '/images/home/hugging-face.png',
-    href: '',
+    href: 'https://huggingface.co/',
   },
   {
     name: 'Anyscale',
     logo: '/images/home/any-scale.png',
-    href: '',
+    href: 'https://www.anyscale.com/',
   },
   {
     name: 'Cohere',
     logo: '/images/home/cohere.png',
-    href: '',
+    href: 'https://cohere.com/',
   },
   {
     name: 'Open AI',
     logo: '/images/home/open-ai.png',
-    href: '',
+    href: 'https://openai.com/',
   },
 ];
 
@@ -62,7 +62,7 @@ export default function TryFreeSection() {
           <h3 className="">{t('trySection.title')}</h3>
         </div>
 
-        <CustomLink
+        <CustomButton
           href={CLOUD_SIGNUP_LINK}
           className={classes.linkButton}
           endIcon={<RightWholeArrow color="#fff" />}
@@ -71,7 +71,7 @@ export default function TryFreeSection() {
           }}
         >
           {t('buttons.tryCloud')}
-        </CustomLink>
+        </CustomButton>
 
         <div className={classes.backgroundContainer}></div>
       </div>

@@ -1,4 +1,3 @@
-import CustomLink from '@/components/customLink';
 import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
@@ -13,21 +12,21 @@ export default function LovedSection() {
       author: t('lovedSection.cards.nandula.author'),
       jobTitle: t('lovedSection.cards.nandula.title'),
       avatar: '/images/home/nandula.png',
-      href: '',
+      href: 'https://medium.com/@gt.pd/asimov-leveraging-rag-models-for-enhanced-efficiency-in-the-telecommunications-engineering-domain-eee0b2876a18',
     },
     {
       content: t('lovedSection.cards.bhargav.content'),
       author: t('lovedSection.cards.bhargav.author'),
       jobTitle: t('lovedSection.cards.bhargav.title'),
       avatar: '/images/home/bhargav.png',
-      href: '',
+      href: 'https://medium.com/ibm-data-ai/image-retrieval-with-ibm-watsonx-data-f4bdd1ec1824',
     },
     {
       content: t('lovedSection.cards.igor.content'),
       author: t('lovedSection.cards.igor.author'),
       jobTitle: t('lovedSection.cards.igor.title'),
       avatar: '/images/home/igor.png',
-      href: '',
+      href: 'https://python.plainenglish.io/harmony-in-data-the-music-recommendation-system-with-milvus-c9711609ed36',
     },
   ];
 

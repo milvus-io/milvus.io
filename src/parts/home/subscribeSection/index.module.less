@@ -1,5 +1,35 @@
 @import url('@/styles/global.module.less');
 
-.customIconButton {
-  padding: 12px;
+.sectionContainer {
+  padding-top: 40px;
+  padding-bottom: 60px;
+
+  .title {
+    .heading2();
+    max-width: 840px;
+    text-align: center;
+    margin: 0 auto 40px;
+
+    span {
+      color: @color-blue1;
+    }
+  }
+}
+.socialMediasContainer {
+  width: fit-content;
+  margin: 0 auto 40px;
+  gap: 20px;
+
+  @media @tablet, @phone {
+    margin: 0 auto 60px;
+  }
+
+  a.customIconButton {
+    padding: 12px;
+
+    svg {
+      width: 36px;
+      height: 36px;
+    }
+  }
 }

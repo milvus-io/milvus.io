@@ -4,7 +4,8 @@ import clsx from 'clsx';
 import { CopyIcon, GitHubIcon } from '@/components/icons';
 import classes from './index.module.less';
 import { GITHUB_MILVUS_LINK, MILVUS_PY_MILVUS } from '@/consts/links';
-
+import CustomButton from '@/components/customButton';
+import CopyCodeButton from '@/components/copyCodeButton';
 const DownloadIcon = () => (
   <svg
     width="14"
@@ -25,6 +26,8 @@ type HomePageHeaderSectionProps = {
   star: number;
 };
 
+const PIP_INSTALL_TEXT = 'pip install pymilvus';
+
 export default function HomePageHeaderSection(
   props: HomePageHeaderSectionProps
 ) {
@@ -32,7 +35,9 @@ export default function HomePageHeaderSection(
   const { download = 0, star = 0 } = props;
 
   const startNum = `${Math.floor(star / 1000)}K`;
-  const downloadNum = new Intl.NumberFormat('en-US').format(download);
+  const downloadNum = new Intl.NumberFormat('en-US').format(
+    Math.floor(download / 1000)
+  );
 
   return (
     <section
@@ -55,7 +60,7 @@ export default function HomePageHeaderSection(
           >
             <DownloadIcon />
             <span className="text-[12px] font-[500] leading-[18px] text-black">
-              {downloadNum}
+              {downloadNum}K
             </span>
           </a>
           <a
@@ -87,13 +92,15 @@ export default function HomePageHeaderSection(
         </p>
 
         <div className="flex flex-col gap-[12px] items-center">
-          <div className="w-[280px] flex justify-center items-center border-[1px] border-solid border-gray-300 rounded-[10px] px-[20px] py-[16px]">
-            <p className="">{t('buttons.pipInstall')}</p>
-            <CopyIcon />
-          </div>
-          <button className="w-[280px] border-[1px] border-solid border-black rounded-[10px] px-[20px] py-[16px] bg-slate-950 text-white">
+          <CopyCodeButton text={PIP_INSTALL_TEXT} />
+          <CustomButton
+            href="/docs"
+            classes={{
+              root: classes.startButton,
+            }}
+          >
             {t('buttons.start')}
-          </button>
+          </CustomButton>
         </div>
       </div>
     </section>

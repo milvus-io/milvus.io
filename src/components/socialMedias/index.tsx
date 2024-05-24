@@ -1,13 +1,9 @@
 import {
   DISCORD_INVITE_URL,
-  MILVUS_VIDEO_LINK,
-  GITHUB_ATTU_LINK,
-  GITHUB_MILVUS_CLI_LINK,
   GITHUB_MILVUS_LINK,
   MILVUS_TWITTER_LINK,
   MILVUS_YOUTUBE_CHANNEL_LINK,
-  CLOUD_SIGNUP_LINK,
-  GITHUB_MILVUS_BACKUP_LINK,
+  MILVUS_LINKEDIN_URL,
 } from '@/consts/links';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
@@ -17,33 +13,41 @@ import {
   faYoutube,
   faDiscord,
   faXTwitter,
+  faLinkedinIn,
 } from '@fortawesome/free-brands-svg-icons';
 import styles from './index.module.less';
-import CustomLink from '../customLink';
+import CustomButton from '../customButton';
 
 const socialJson = [
-  { icon: faXTwitter, link: MILVUS_TWITTER_LINK },
   { icon: faGithub, link: GITHUB_MILVUS_LINK },
+  { icon: faXTwitter, link: MILVUS_TWITTER_LINK },
   { icon: faDiscord, link: DISCORD_INVITE_URL },
+  { icon: faLinkedinIn, link: MILVUS_LINKEDIN_URL },
   { icon: faYoutube, link: MILVUS_YOUTUBE_CHANNEL_LINK },
 ];
 
-export default function SocialMedias(props: { className?: string }) {
-  const { className = '' } = props;
+export default function SocialMedias(props: {
+  classes?: {
+    root?: string;
+    link?: string;
+  };
+}) {
+  const { classes = {} } = props;
+  const { root = '', link = '' } = classes;
   return (
-    <div className="flex items-center justify-between gap-[12px]">
+    <div className={clsx('flex items-center justify-start gap-[12px]', root)}>
       {socialJson.map(s => {
         return (
-          <CustomLink
+          <CustomButton
             variant="outlined"
             key={s.link}
             href={s.link}
             classes={{
-              root: clsx(styles.iconButton, className),
+              root: clsx(styles.iconButton, link),
             }}
           >
             <FontAwesomeIcon className={styles.iconWrapper} icon={s.icon} />
-          </CustomLink>
+          </CustomButton>
         );
       })}
     </div>

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import classes from './index.module.less';
 import clsx from 'clsx';
 
-type CustomLinkProps = {
-  href: string;
+export interface CustomButtonProps {
+  href?: string;
   target?: string;
   variant?: 'contained' | 'outlined' | 'text';
   color?: 'primary' | 'secondary';
@@ -14,9 +14,9 @@ type CustomLinkProps = {
     icon?: string;
   };
   [key: string]: any;
-};
+}
 
-export default function CustomLink(props: CustomLinkProps) {
+function CustomLink(props: CustomButtonProps) {
   const {
     href,
     target = '_self',
@@ -46,7 +46,7 @@ export default function CustomLink(props: CustomLinkProps) {
             [classes.text]: variant === 'text',
             // [classes.primaryColor]: color === 'primary',
             // [classes.secondaryColor]: color === 'secondary',
-            [classes.disabledLink]: disabled,
+            [classes.disabledButton]: disabled,
           })}
         >
           {children}
@@ -66,7 +66,7 @@ export default function CustomLink(props: CustomLinkProps) {
 
             [classes.primaryColor]: color === 'primary',
             [classes.secondaryColor]: color === 'secondary',
-            [classes.disabledLink]: disabled,
+            [classes.disabledButton]: disabled,
           })}
         >
           {children}
@@ -78,3 +78,47 @@ export default function CustomLink(props: CustomLinkProps) {
     </>
   );
 }
+
+const CustomButton = (props: CustomButtonProps) => {
+  const {
+    href,
+    target,
+    children,
+    variant = 'contained',
+    color = 'primary',
+    endIcon,
+    disabled = false,
+    classes: customClasses = {},
+    ...rest
+  } = props;
+
+  const { root, icon } = customClasses;
+
+  return (
+    <>
+      {href ? (
+        <CustomLink {...props} />
+      ) : (
+        <button
+          {...rest}
+          className={clsx(classes.linkButton, root, {
+            [classes.contained]: variant === 'contained',
+            [classes.outlined]: variant === 'outlined',
+            [classes.text]: variant === 'text',
+
+            [classes.primaryColor]: color === 'primary',
+            [classes.secondaryColor]: color === 'secondary',
+            [classes.disabledButton]: disabled,
+          })}
+        >
+          {children}
+          {endIcon && (
+            <span className={clsx(classes.iconWrapper, icon)}>{endIcon}</span>
+          )}
+        </button>
+      )}
+    </>
+  );
+};
+
+export default CustomButton;

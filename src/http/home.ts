@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_MSERVICE_URL}`,
+  baseURL: `${process.env.MSERVICE_URL}`,
   timeout: 10000,
 });
 

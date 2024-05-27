@@ -105,4 +105,3 @@ jobs:
   #         echo ${{ secrets.kubeconfig }} > config64
   #         base64 -d config64 > kubeconfig
   #         kubectl set image deployment/zilliz-com-dev zilliz-com-dev=zilliz/z2-dev:${{ needs.build.outputs.docker-image-tag }} -n ued --kubeconfig=kubeconfig
-å

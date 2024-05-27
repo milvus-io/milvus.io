@@ -90,7 +90,7 @@ jobs:
           max_attempts: 2
           retry_on: error
           command: |
-            docker build "$GITHUB_WORKSPACE/" -f  "Preview.Dockerfile" -t milvus/milvus-preview:${{ steps.generate-tag-name.outputs.docker_tag }} -e MSERVICE_URL=${{ secrets.MSERVICE_URL }} CMS_BASE_URL=${{ secrets.CMS_BASE_URL }} REPO_STATICS_KEY=${{ secrets.REPO_STATICS_KEY }} INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY }} INKEEP_INTEGRATION_ID=${{ secrets.INKEEP_INTEGRATION_ID }} INKEEP_ORGANIZATION_ID=${{ secrets.INKEEP_ORGANIZATION_ID }} IS_PREVIEW=preview
+            docker build "$GITHUB_WORKSPACE/" -f  "Preview.Dockerfile" -t milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }} -e MSERVICE_URL=${{ secrets.MSERVICE_URL }} CMS_BASE_URL=${{ secrets.CMS_BASE_URL }} REPO_STATICS_KEY=${{ secrets.REPO_STATICS_KEY }} INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY }} INKEEP_INTEGRATION_ID=${{ secrets.INKEEP_INTEGRATION_ID }} INKEEP_ORGANIZATION_ID=${{ secrets.INKEEP_ORGANIZATION_ID }} IS_PREVIEW=preview
             docker push milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
       #         env:
       #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true

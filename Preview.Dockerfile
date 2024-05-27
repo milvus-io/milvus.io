@@ -31,7 +31,7 @@ FROM nginx:1.17-alpine
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
-COPY conf/conf.d /etc/nginx
+COPY conf /etc/nginx
 
 # Static build
 COPY --from=builder /app/out /usr/share/nginx/html/

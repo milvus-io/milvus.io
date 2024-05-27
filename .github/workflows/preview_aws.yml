@@ -16,7 +16,8 @@ env:
 jobs:
   build:
     runs-on: 'ubuntu-latest'
-
+    outputs:
+      docker-image-tag: ${{ steps.generate-tag-name.outputs.docker_tag }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -66,22 +67,42 @@ jobs:
       #           restore-keys: |
       #             ${{ runner.os }}-gatsby-build-preview
 
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME}}
+          password: ${{ secrets.DOCKER_PWD}}
+
+      - name: Generate docker image tag name
+        id: generate-tag-name
+        run: |
+          export tag=${{ github.sha }}-$GITHUB_RUN_NUMBER
+          echo $tag
+          echo "docker_tag=$tag" >> $GITHUB_OUTPUT
+
       - name: Installing dependencies
         run: pnpm install
 
-      - name: Building Milvus site
-        run: pnpm build
-        env:
-          MSERVICE_URL: ${{ secrets.MSERVICE_URL }}
-          REPO_STATICS_KEY: ${{ secrets.REPO_STATICS_KEY }}
-          IS_PREVIEW: preview
+      - name: Building Milvus site and push to docker hub
+        id: build-image
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 60
+          max_attempts: 2
+          retry_on: error
+          command: |
+            docker build "$GITHUB_WORKSPACE/" -f  "Preview.Dockerfile" -t milvus/milvus-preview:${{ steps.generate-tag-name.outputs.docker_tag }} -e MSERVICE_URL=${{ secrets.MSERVICE_URL }} CMS_BASE_URL=${{ secrets.CMS_BASE_URL }} REPO_STATICS_KEY=${{ secrets.REPO_STATICS_KEY }} INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY }} INKEEP_INTEGRATION_ID=${{ secrets.INKEEP_INTEGRATION_ID }} INKEEP_ORGANIZATION_ID=${{ secrets.INKEEP_ORGANIZATION_ID }} IS_PREVIEW=preview
+            docker push milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
       #         env:
       #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
       #           CI: true
 
-      - name: Sync files
-        run: |
-          echo ${{ secrets.RSYNC_PASSWORD }} > rsync.pass
-          sudo chmod 600 rsync.pass
-          sudo chown root rsync.pass
-          sudo rsync --password-file=rsync.pass -rDvpzc --delete out/ rsync://${{secrets.PREVIEW_SITE}}
+  # deploy:
+  #   runs-on: ued-self-hosted
+  #   needs: build
+  #   steps:
+  #     - name: Deploy to cluster
+  #       run: |
+  #         echo ${{ secrets.kubeconfig }} > config64
+  #         base64 -d config64 > kubeconfig
+  #         kubectl set image deployment/zilliz-com-dev zilliz-com-dev=zilliz/z2-dev:${{ needs.build.outputs.docker-image-tag }} -n ued --kubeconfig=kubeconfig
+å

@@ -16,9 +16,13 @@ const INKEEP_PRIMARY_COLOR = '#4DB7EF';
 
 export const useInkeepSettings = (): InkeepSharedSettings => {
   const baseSettings: InkeepWidgetBaseSettings = {
-    apiKey: process.env.INKEEP_API_KEY,
-    integrationId: process.env.INKEEP_INTEGRATION_ID,
-    organizationId: process.env.INKEEP_ORG_ID,
+    apiKey:
+      process.env.INKEEP_API_KEY || process.env.NEXT_PUBLIC_INKEEP_API_KEY,
+    integrationId:
+      process.env.INKEEP_INTEGRATION_ID ||
+      process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
+    organizationId:
+      process.env.INKEEP_ORG_ID || process.env.NEXT_PUBLIC_INKEEP_ORG_ID,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
   };
 

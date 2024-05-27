@@ -18,6 +18,9 @@ ENV INKEEP_INTEGRATION_ID=$INKEEP_INTEGRATION_ID
 ENV INKEEP_ORGANIZATION_ID=$INKEEP_ORGANIZATION_ID
 ENV IS_PREVIEW=$IS_PREVIEW
 
+# install pnpm
+RUN npm install -g pnpm
+
 # install node modules
 RUN pnpm install
 # build nextjs

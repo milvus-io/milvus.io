@@ -2,9 +2,9 @@ FROM node:18 as builder
 WORKDIR /app
 COPY . .
 # install node modules
-RUN yarn
+RUN pnpm install
 # build nextjs
-RUN yarn build-preview
+RUN pnpm build
 
 # => Run container
 FROM nginx:1.17-alpine

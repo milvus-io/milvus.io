@@ -70,10 +70,13 @@ jobs:
       #         env:
       #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
       #           CI: true
+
+  deploy:
+    runs-on: ued-self-hosted
+    needs: build
+    steps:
       - name: Deploy to cluster
-          run: |
-            echo ${{ secrets.kubeconfig }} > config64
-            base64 -d config64 > kubeconfig
-            kubectl set image deployment/milvus-io-dev milvus-io-dev=milvusdb/milvus-io-dev:${{ needs.build.outputs.docker-image-tag }} -n ued --kubeconfig=kubeconfig
-  
-      
+        run: |
+          echo ${{ secrets.kubeconfig }} > config64
+          base64 -d config64 > kubeconfig
+          kubectl set image deployment/milvus-io-dev milvus-io-dev=milvusdb/milvus-io-dev:${{ needs.build.outputs.docker-image-tag }} -n ued --kubeconfig=kubeconfig

@@ -85,9 +85,6 @@ jobs:
           echo $tag
           echo "docker_tag=$tag" >> $GITHUB_OUTPUT
 
-      - name: Installing dependencies
-        run: pnpm install
-
       - name: Building Milvus site and push to docker hub
         id: build-image
         uses: nick-invision/retry@v2

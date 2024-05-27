@@ -4,10 +4,10 @@ on:
   repository_dispatch:
     types: dev-deploy
     branches:
-      - test # stop this action
+      - preview
   push:
     branches:
-      - test # stop this action
+      - preview
   workflow_dispatch:
 
 env:

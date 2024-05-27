@@ -1,10 +1,5 @@
-import { IGNORE_FILES } from './docs';
-import {
-  BlogFrontMatterType,
-  BlogDataType,
-  OriginBlogFrontMatterType,
-} from '@/types/blogs';
-import dayjs from 'dayjs';
+import { validationFileFilter } from './docs';
+import { BlogDataType, OriginBlogFrontMatterType } from '@/types/blogs';
 
 const fs = require('fs');
 const { join } = require('path');
@@ -22,7 +17,7 @@ export const generateAllBlogContentList = (params?: {
 
   const paths = fs
     .readdirSync(directoryPath)
-    .filter((v: string) => !IGNORE_FILES.includes(v))
+    .filter(validationFileFilter)
     .map((v: string) => join(directoryPath, v));
   const blogList: BlogDataType[] = paths.map((p: string) => {
     const fileData = fs.readFileSync(p, 'utf-8');

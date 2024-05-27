@@ -1,0 +1,36 @@
+@import url('@/styles/global.module.less');
+
+.tabsWrapper {
+  list-style-type: none;
+  display: flex;
+  font-family: Inter;
+  position: relative;
+}
+
+.tabItem {
+  padding: 6px 25px;
+  border-bottom: 2px solid #d0d7dc;
+}
+
+.itemText {
+  color: #667176;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.active .itemText {
+  color: @color-black1;
+}
+
+.activeBar {
+  position: absolute;
+  left: 0;
+  width: 0;
+  display: block;
+  bottom: 0;
+  height: 2px;
+  background-color: @color-black1;
+  transition: left linear 0.2s;
+}

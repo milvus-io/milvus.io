@@ -9,7 +9,7 @@
 
 .stickyHeader {
   position: sticky;
-  height: 80px;
+  height: @header-height-desktop;
 }
 
 .fixedHeader {
@@ -28,8 +28,12 @@
   img {
     height: 30px;
     width: auto;
+  }
 
-    @media @phone {
+  @media @phone {
+    height: 20px;
+
+    img {
       height: 20px;
     }
   }

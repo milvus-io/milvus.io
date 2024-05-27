@@ -941,6 +941,16 @@
     "slack": {
       "title": "Milvus Slack Community",
       "desc": "Want to connect with other Milvus users to share ideas, get advice and updates on the latest Milvus releases? Join our Slack community! Fill out the form to request access."
+    },
+    "footnote": {
+      "copyright": "Copyright © Milvus. {{year}} All rights reserved.",
+      "maintainer": "Made with Love <0></0> by the Dev from Zilliz"
     }
+  },
+  "status": {
+    "subscribe": "Subscribe",
+    "wait": "Loading...",
+    "success": "Success",
+    "failed": "Failed"
   }
 }

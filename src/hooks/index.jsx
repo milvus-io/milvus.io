@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
 import { sourceMap } from '../consts/newsletterSource';
-import { getCurrentSize } from '../http/hooks';
 
 export const useMobileScreen = () => {
   const [screenWidth, setScreenWidth] = useState(null);
@@ -44,7 +43,7 @@ export const useClickOutside = (ref, handler, events) => {
   }, [events, handler, ref]);
 };
 
-export const useSubscribeSrouce = () => {
+export const useSubscribeSource = () => {
   const [source, setSource] = useState('');
 
   useEffect(() => {

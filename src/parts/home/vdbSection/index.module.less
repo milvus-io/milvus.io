@@ -1,0 +1,118 @@
+@import url('@/styles/global.module.less');
+
+.sectionContainer {
+  padding-top: 20px;
+  padding-bottom: 60px;
+
+  .sectionTitle {
+    .heading2();
+    max-width: 840px;
+    text-align: center;
+    margin: 0 auto 40px;
+  }
+
+  .featuresList {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+      'setup setup setup reusable reusable reusable'
+      'integrations integrations featureRich featureRich community community';
+    grid-gap: 12px;
+    margin-bottom: 40px;
+
+    @media @tablet {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        'setup reusable'
+        'integrations featureRich'
+        'community .';
+    }
+
+    @media @phone {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'setup'
+        'reusable'
+        'integrations'
+        'featureRich'
+        'community';
+    }
+
+    .featureItem {
+      border-radius: 12px;
+      border: 1px solid @color-black3;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 4px;
+
+      .topPart {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 80px;
+        padding-bottom: 80px;
+
+        .customCopyButton {
+          background-color: #fafafa;
+          border-style: dotted;
+          gap: 40px;
+          padding: 16px 20px;
+          width: auto;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+
+      .descriptionWrapper {
+        padding: 0 30px 30px;
+
+        h4 {
+          .heading4();
+          color: @color-black1;
+        }
+        p {
+          .paragraph4-regular();
+          color: @color-black2;
+        }
+      }
+    }
+
+    .setup {
+      grid-area: setup;
+    }
+    .reusable {
+      grid-area: reusable;
+    }
+    .integration {
+      grid-area: integrations;
+    }
+    .featureRich {
+      grid-area: featureRich;
+    }
+    .community {
+      grid-area: community;
+    }
+  }
+
+  .docPrompt {
+    .paragraph4-regular();
+    width: fit-content;
+    margin: 0 auto;
+    padding: 8px 24px;
+    border-radius: 12px;
+    border: 1px solid @color-black3;
+    background: #fff;
+
+    a {
+      color: @color-blue1;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

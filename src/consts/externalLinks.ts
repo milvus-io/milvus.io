@@ -20,3 +20,6 @@ export const GITHUB_EDIT_API_RESTFUL_URL =
   'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-restful';
 
 export const SLACK_INVITE_URL = '/slack';
+
+export const MEETUP_UNSTRUCTURED_DATA_URL =
+  'https://zilliz.com/community/unstructured-data-meetup';

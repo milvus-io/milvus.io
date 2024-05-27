@@ -1,6 +1,8 @@
 @import (reference) '../../../styles/global.module.less';
 @import (reference) '../../../styles/responsive.module.less';
 
+@top: 76px;
+
 div.docHeader {
   .docContainer();
 }
@@ -10,8 +12,8 @@ div.mainContainer {
 
   .flexibleContainer {
     position: sticky;
-    top: 80px;
-    height: calc(100vh - 80px);
+    top: @top;
+    height: calc(100vh - @top);
     background-color: #fff;
     z-index: 998;
     min-width: 24px;
@@ -38,6 +40,7 @@ div.mainContainer {
 
   div.docFooter {
     width: 100%;
+    max-width: 100%;
     padding-left: 48px;
     padding-right: 48px;
 

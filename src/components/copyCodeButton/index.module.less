@@ -1,0 +1,31 @@
+@import url('@/styles/global.module.less');
+
+.copyButtonContainer {
+  width: 280px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid @color-black3;
+  background: #fff;
+}
+
+.installPy {
+  font-family: RobotoMono;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.copyButton {
+  .resetNativeButton();
+  width: 14px;
+  height: 14px;
+  line-height: 0;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

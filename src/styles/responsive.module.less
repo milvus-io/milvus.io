@@ -33,3 +33,19 @@
     padding-right: 25px !important;
   }
 }
+
+.homeContainer {
+  margin: 0 auto;
+  max-width: calc(@homepage-content-width + 80px);
+  width: 100%;
+  padding: 0 40px;
+
+  @media @tablet {
+    max-width: 100%;
+    padding: 0 40px;
+  }
+
+  @media @phone {
+    padding: 0 25px;
+  }
+}

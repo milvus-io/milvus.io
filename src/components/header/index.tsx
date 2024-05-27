@@ -1,6 +1,6 @@
 import classes from './index.module.less';
 import clsx from 'clsx';
-import DesktopHeader from './descktopHeader';
+import DesktopHeader from './DescktopHeader';
 import MobileHeader from './mobileHeader';
 
 const Header: React.FC<{
@@ -14,7 +14,7 @@ const Header: React.FC<{
         [classes.fixedHeader]: darkMode,
       })}
     >
-      <DesktopHeader darkMode={darkMode} className={className} />
+      <DesktopHeader className={className} />
       <MobileHeader className={className} />
     </header>
   );

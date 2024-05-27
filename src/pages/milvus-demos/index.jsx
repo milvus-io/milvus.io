@@ -7,7 +7,7 @@ import DemoCard from '@/components/card/DemoCard';
 import { useState } from 'react';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { CustomizedSnackbars } from '@/components/snackBar';
-import Signup from '@/components/signup';
+import SubscribeNewsletter from '@/components/subscribe';
 
 const TITLE = 'Milvus Demos';
 const DESC = 'Milvus vector search demos';
@@ -120,7 +120,7 @@ export default function MilvusDemos() {
             ))}
           </ul>
         </section>
-        <Signup callback={handleOpenSnackbar} />
+        <SubscribeNewsletter callback={handleOpenSnackbar} />
       </Layout>
       <CustomizedContentDialogs
         open={dialogConfig.open}

@@ -32,6 +32,10 @@ jobs:
         with:
           node-version: '18'
 
+      - name: update submodules
+        run: |
+          git submodule update --remote
+
       - uses: azure/docker-login@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME}}

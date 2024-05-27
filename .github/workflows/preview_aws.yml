@@ -85,6 +85,7 @@ jobs:
       - name: Building Milvus site and push to docker hub
         id: build-image
         uses: nick-invision/retry@v2
+        with:
           timeout_minutes: 60
           max_attempts: 2
           retry_on: error

@@ -90,7 +90,7 @@ jobs:
           max_attempts: 2
           retry_on: error
           command: |
-            docker build "$GITHUB_WORKSPACE/" -f  "Preview.Dockerfile" \
+            docker build "$GITHUB_WORKSPACE/" -f "Preview.Dockerfile" \
             --build-arg MSERVICE_URL=${{ secrets.MSERVICE_URL }} \
             --build-arg CMS_BASE_URL=${{ secrets.CMS_BASE_URL }} \
             --build-arg REPO_STATICS_KEY=${{ secrets.REPO_STATICS_KEY }} \

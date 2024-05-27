@@ -32,47 +32,6 @@ jobs:
         with:
           node-version: '18'
 
-      # - name: Setup pnpm
-      #   uses: pnpm/action-setup@v3
-      #   with:
-      #     version: 9
-
-      # - name: Check pnpm
-      #   run: pnpm --version
-
-      # - name: Check PATH
-      #   run: echo $PATH
-
-      # - name: update submodules
-      #   run: |
-      #     git submodule init
-      #     git submodule update --remote
-
-      # - name: Get pnpm cache directory path
-      #   id: pnpm-cache-dir-path
-      #   run: echo "dir=$(pnpm get store)" >> $GITHUB_OUTPUT
-
-      # - name: Caching pnpm
-      #   uses: actions/cache@v3
-      #   id: pnpm-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      #   with:
-      #     path: ${{ steps.pnpm-cache-dir-path.outputs.dir }}
-      #     key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pnpm-${{ hashFiles('pnpm.lock') }}
-      #       ${{ runner.os }}-pnpm-
-
-      #       - name: Caching Gatsby
-      #         id: gatsby-cache-build
-      #         uses: actions/cache@v2
-      #         with:
-      #           path: |
-      #             public
-      #             .cache
-      #           key: ${{ runner.os }}-gatsby-build-preview-${{ github.run_id }}
-      #           restore-keys: |
-      #             ${{ runner.os }}-gatsby-build-preview
-
       - uses: azure/docker-login@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME}}

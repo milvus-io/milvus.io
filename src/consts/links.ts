@@ -27,3 +27,20 @@ export const MILVUS_LINKEDIN_URL =
   'https://www.linkedin.com/company/the-milvus-project/';
 
 export const MILVUS_DOCS_OVERVIEW_LINK = 'https://milvus.io/docs/overview.md';
+
+export const MILVUS_INTEGRATION_LANGCHAIN_LINK =
+  'https://milvus.io/docs/integrate_with_langchain.md';
+export const MILVUS_INTEGRATION_LLAMA_INDEX_LINK =
+  'https://milvus.io/docs/integrate_with_llamaindex.md';
+export const MILVUS_INTEGRATION_OPENAI_LINK =
+  'https://milvus.io/docs/integrate_with_openai.md';
+export const MILVUS_INTEGRATION_HUGGING_FACE_LINK =
+  'https://milvus.io/docs/integrate_with_hugging-face.md';
+export const MILVUS_INTEGRATION_DSPY_LINK =
+  'https://milvus.io/docs/integrate_with_dspy.md';
+export const MILVUS_INTEGRATION_HAYSTACK_LINK =
+  'https://milvus.io/docs/integrate_with_haystack.md';
+export const MILVUS_INTEGRATION_RAGAS_LINK =
+  'https://milvus.io/docs/integrate_with_ragas.md';
+export const MILVUS_INTEGRATION_MEMGPT_LINK =
+  'https://milvus.io/docs/integrate_with_memgpt.md';

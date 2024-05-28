@@ -22,16 +22,6 @@ export default function CodeExampleSection() {
 
   const tabs = [
     {
-      label: t('codeSection.tabs.runMilvus'),
-      id: 'runMilvus',
-      code: `from pymilvus import MilvusClient 
-client = MilvusClient("./milvus_demo.db") 
-client.create_collection(
-  collection_name="demo_collection",
-  dimension=5  # The vectors we will use in this demo has 123 dimensions 
-)`,
-    },
-    {
       label: t('codeSection.tabs.createCollection'),
       id: 'createCollection',
       code: CODE_CREATE_COLLECTION,

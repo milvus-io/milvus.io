@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import HomePageHeaderSection from '../parts/home/headerSection';
 import CodeExampleSection from '../parts/home/codeExampleSection';
-import TryFreeSection from '@/parts/home/tryFreeSection';
+import TryFreeSection, { AIToolsSection } from '@/parts/home/tryFreeSection';
 import LovedSection from '@/parts/home/lovedSection';
 import VectorDatabaseSection from '@/parts/home/vdbSection';
 import DeploySection from '@/parts/home/deploySection';
@@ -10,6 +10,7 @@ import DevelopSection from '@/parts/home/developSection';
 import SubscribeSection from '@/parts/home/subscribeSection';
 import Layout from '@/components/layout/commonLayout';
 import { getMilvusStats } from '@/http/home';
+import { ProductionSection } from '@/parts/home/productionSection/ProductionSection';
 
 export default function Homepage(props: {
   pipInstall: number;
@@ -34,9 +35,11 @@ export default function Homepage(props: {
         <HomePageHeaderSection download={pipInstall} star={milvusStars} />
         <CodeExampleSection />
         <TryFreeSection />
-        <LovedSection />
-        <VectorDatabaseSection />
         <DeploySection />
+        <AIToolsSection />
+        <LovedSection />
+        <ProductionSection />
+        <VectorDatabaseSection />
         <DevelopSection />
         <SubscribeSection />
       </main>

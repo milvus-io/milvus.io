@@ -34,7 +34,7 @@ export default function HomePageHeaderSection(
   const { t } = useTranslation('home');
   const { download = 0, star = 0 } = props;
 
-  const startNum = `${Math.floor(star / 1000)}K`;
+  const startNum = `${(star / 1000).toFixed(1)}K`;
   const downloadNum = new Intl.NumberFormat('en-US').format(
     Math.floor(download / 1000)
   );

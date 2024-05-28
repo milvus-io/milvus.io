@@ -3,49 +3,59 @@ import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '@/components/customButton';
-import { CLOUD_SIGNUP_LINK } from '@/consts/links';
 import { RightWholeArrow } from '@/components/icons';
+import {
+  CLOUD_SIGNUP_LINK,
+  MILVUS_INTEGRATION_LANGCHAIN_LINK,
+  MILVUS_INTEGRATION_DSPY_LINK,
+  MILVUS_INTEGRATION_HAYSTACK_LINK,
+  MILVUS_INTEGRATION_HUGGING_FACE_LINK,
+  MILVUS_INTEGRATION_LLAMA_INDEX_LINK,
+  MILVUS_INTEGRATION_MEMGPT_LINK,
+  MILVUS_INTEGRATION_OPENAI_LINK,
+  MILVUS_INTEGRATION_RAGAS_LINK,
+} from '@/consts/links';
 
 const tools = [
   {
-    name: 'Llama Index',
-    logo: '/images/home/llama-index.png',
-    href: 'https://www.llamaindex.ai/',
+    name: 'LangChain',
+    logo: '/images/home/lang-chain.png',
+    href: MILVUS_INTEGRATION_LANGCHAIN_LINK,
   },
   {
-    name: 'Lang Chain',
-    logo: '/images/home/lang-chain.png',
-    href: 'https://www.langchain.com/',
+    name: 'LlamaIndex',
+    logo: '/images/home/llama-index.png',
+    href: MILVUS_INTEGRATION_LLAMA_INDEX_LINK,
+  },
+  {
+    name: 'OpenAI',
+    logo: '/images/home/open-ai.png',
+    href: MILVUS_INTEGRATION_OPENAI_LINK,
+  },
+  {
+    name: 'HuggingFace',
+    logo: '/images/home/hugging-face.png',
+    href: MILVUS_INTEGRATION_HUGGING_FACE_LINK,
+  },
+  {
+    name: 'DSPy',
+    logo: '/images/home/dspy.png',
+    href: MILVUS_INTEGRATION_DSPY_LINK,
   },
   {
     name: 'Haystack',
     logo: '/images/home/hay-stack.png',
-    href: 'https://haystack.deepset.ai/',
+    href: MILVUS_INTEGRATION_HAYSTACK_LINK,
   },
   {
-    name: 'Apache Spark',
-    logo: '/images/home/spark.png',
-    href: 'https://spark.apache.org/',
+    name: 'Ragas',
+    logo: '/images/home/ragas.png',
+    href: MILVUS_INTEGRATION_RAGAS_LINK,
   },
   {
-    name: 'Hugging face',
-    logo: '/images/home/hugging-face.png',
-    href: 'https://huggingface.co/',
-  },
-  {
-    name: 'Anyscale',
-    logo: '/images/home/any-scale.png',
-    href: 'https://www.anyscale.com/',
-  },
-  {
-    name: 'Cohere',
-    logo: '/images/home/cohere.png',
-    href: 'https://cohere.com/',
-  },
-  {
-    name: 'Open AI',
-    logo: '/images/home/open-ai.png',
-    href: 'https://openai.com/',
+    name: 'MemGPT',
+    logo: '/images/home/mem-gpt.png',
+    href: MILVUS_INTEGRATION_MEMGPT_LINK,
   },
 ];
 
@@ -77,15 +87,33 @@ export default function TryFreeSection() {
 
         <div className={classes.backgroundContainer}></div>
       </div>
+    </section>
+  );
+}
 
+export const AIToolsSection = () => {
+  const { t } = useTranslation('home');
+  return (
+    <section
+      className={clsx(pageClasses.homeContainer, classes.sectionContainer)}
+    >
       <div className={classes.toolsContainer}>
         <p className={classes.subTitle}>{t('trySection.subTitle')}</p>
         <ul className={classes.toolsList}>
           {tools.map(tool => (
             <li className={classes.toolItem} key={tool.name}>
-              <a href={tool.href} className={classes.toolButton}>
+              <a
+                href={tool.href}
+                target="_blank"
+                className={clsx(classes.toolButton, 'group')}
+              >
                 <img src={tool.logo} alt={tool.name} />
-                <RightWholeArrow />
+                <div className="inline-flex items-center opacity-0 group-hover:opacity-100 gap-[4px] -mt-[8px] transition-opacity">
+                  <span className="text-black1 text-[14px] font-[500]">
+                    {tool.name}
+                  </span>
+                  <RightWholeArrow />
+                </div>
               </a>
             </li>
           ))}
@@ -93,4 +121,4 @@ export default function TryFreeSection() {
       </div>
     </section>
   );
-}
+};

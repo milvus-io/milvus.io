@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -12,9 +13,11 @@ import { useState, useEffect } from 'react';
 import { LogoSection } from './Logos';
 import { CloseIcon, MenuIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
+import { Button } from '@/components/ui/button';
 
 export default function MobileHeader(props) {
   const { className } = props;
+  const { t } = useTranslation('header');
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
 
@@ -179,12 +182,9 @@ export default function MobileHeader(props) {
             </div>
 
             <div className={classes.mobileStartBtnWrapper}>
-              <a
-                href="https://cloud.zilliz.com"
-                className={classes.mobileStartBtn}
-              >
-                Try Managed Milvus <span>FREE</span>
-              </a>
+              <Link href="/docs">
+                <Button className="w-full">{t('start')}</Button>
+              </Link>
             </div>
           </div>
         </nav>

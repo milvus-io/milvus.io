@@ -41,7 +41,7 @@ export const ProductionSection = () => {
   return (
     <section className={pageClasses.homeContainer}>
       <div className="py-[60px] flex items-start justify-between max-tablet:flex-col max-tablet:items-center">
-        <h2 className="text-[42px] font-[600] w-[300px] mt-[30px]">
+        <h2 className="text-[42px] font-[600] w-[300px] leading-[54px]">
           {t('productionSection.title')}
         </h2>
         <div className="flex flex-wrap justify-center items-center gap-[10px] w-[630px]">

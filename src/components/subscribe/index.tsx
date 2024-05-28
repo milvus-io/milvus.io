@@ -75,8 +75,10 @@ const SubscribeNewsletter = (props: {
         <div className={classes.inputWrapper}>
           <CustomInput
             onChange={handleValueChange}
-            containerClass={classes.customInputContainer}
-            className={classes.customInput}
+            classes={{
+              root: classes.customInputContainer,
+              input: classes.customInput,
+            }}
             placeholder="Email"
             fullWidth
           />

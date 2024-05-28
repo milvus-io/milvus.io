@@ -4,18 +4,18 @@ import classes from './customInput.module.less';
 import { InputProps } from './Types';
 
 const CustomInput: FC<InputProps> = ({
-  containerClass = '',
-  className: customInputClass = '',
+  classes: customClasses = {},
   fullWidth = false,
   ...props
 }) => {
+  const { root, input } = customClasses;
   return (
-    <div className={clsx(classes.container, containerClass)}>
+    <div className={clsx(classes.container, root)}>
       <input
         className={clsx(
           classes.input,
           { [classes.fullWidth]: fullWidth },
-          customInputClass
+          input
         )}
         {...props}
       />

@@ -36,9 +36,16 @@
   align-items: flex-start;
   gap: 12px;
 
-  @media @tablet, @phone {
+  @media @tablet {
     max-width: 420px;
     flex: auto;
+  }
+
+  @media @phone {
+    flex: auto;
+    flex-direction: column;
+    max-width: 100%;
+    gap: 4px;
   }
 
   .inputWrapper {
@@ -60,6 +67,10 @@
     padding-bottom: 14px;
     background-color: #fff;
 
+    &:focus-within {
+      border-color: #000;
+    }
+
     .customInput {
       .paragraph4-regular();
       border-bottom: none;
@@ -74,5 +85,10 @@
 
   .customScribeButton {
     padding: 14px 40px;
+
+    @media @phone {
+      width: 100%;
+      justify-content: center;
+    }
   }
 }

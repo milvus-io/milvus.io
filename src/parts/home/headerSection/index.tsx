@@ -51,8 +51,8 @@ export default function HomePageHeaderSection(
           <a
             href={MILVUS_PY_MILVUS}
             className={clsx(
-              classes.downloadButton,
-              'flex gap-[4px] basis-[75px] items-center flex-shrink-0 flex-grow-0 px-[8px] py-[3px]  rounded'
+              'flex gap-[4px] basis-[75px] items-center flex-shrink-0 flex-grow-0 px-[8px] py-[3px] rounded',
+              classes.downloadButton
             )}
           >
             <DownloadIcon />
@@ -62,7 +62,10 @@ export default function HomePageHeaderSection(
           </a>
           <a
             href={GITHUB_MILVUS_LINK}
-            className="flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] rounded border border-solid border-gray-300 bg-white"
+            className={clsx(
+              'flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] rounded border border-solid',
+              classes.starButton
+            )}
           >
             <GitHubIcon />
             <span className="text-[12px] leading-[18px] ml-[2px] mr-[4px] text-black">

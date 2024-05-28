@@ -72,7 +72,7 @@ jobs:
       #           CI: true
 
   deploy:
-    runs-on: ued-self-hosted
+    runs-on: amazon-linux-2
     needs: build
     steps:
       - name: Deploy to cluster

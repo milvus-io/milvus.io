@@ -8,6 +8,12 @@ import { useTranslation } from 'react-i18next';
 import CustomTabs from '@/components/customTabs';
 import { useMemo, useState } from 'react';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
+import {
+  CODE_CREATE_COLLECTION,
+  CODE_INSERT_DATA,
+  CODE_SEARCH,
+  CODE_DELETE_COLLECTION,
+} from './const';
 
 hljs.registerLanguage('python', python);
 
@@ -28,38 +34,22 @@ client.create_collection(
     {
       label: t('codeSection.tabs.createCollection'),
       id: 'createCollection',
-      code: `from pymilvus import MilvusClient 
-client = MilvusClient("./milvus_demo.db") 
-client.create_collection(
-     collection_name="demo_collection",
-     dimension=5  # The vectors we will use in this demo has 456 dimensions )`,
+      code: CODE_CREATE_COLLECTION,
     },
     {
       label: t('codeSection.tabs.insertData'),
       id: 'insertData',
-      code: `from pymilvus import MilvusClient 
-client = MilvusClient("./milvus_demo.db") 
-client.create_collection(
-     collection_name="demo_collection",
-     dimension=5  # The vectors we will use in this demo has 567 dimensions )`,
+      code: CODE_INSERT_DATA,
     },
     {
       label: t('codeSection.tabs.search'),
       id: 'search',
-      code: `from pymilvus import MilvusClient 
-client = MilvusClient("./milvus_demo.db") 
-client.create_collection(
-     collection_name="demo_collection",
-     dimension=5  # The vectors we will use in this demo has 789 dimensions )`,
+      code: CODE_SEARCH,
     },
     {
       label: t('codeSection.tabs.product'),
       id: 'product',
-      code: `from pymilvus import MilvusClient 
-client = MilvusClient("./milvus_demo.db") 
-client.create_collection(
-     collection_name="demo_collection",
-     dimension=5  # The vectors we will use in this demo has 8910 dimensions )`,
+      code: CODE_DELETE_COLLECTION,
     },
   ];
 

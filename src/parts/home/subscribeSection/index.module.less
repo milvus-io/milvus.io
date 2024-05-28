@@ -17,11 +17,17 @@
 }
 .socialMediasContainer {
   width: fit-content;
-  margin: 0 auto 40px;
+  margin: 0 auto 100px;
   gap: 20px;
 
   @media @tablet, @phone {
     margin: 0 auto 60px;
+    gap: 12px;
+  }
+
+  span.customIconWrapper {
+    width: 36px;
+    height: 36px;
   }
 
   a.customIconButton {
@@ -30,6 +36,10 @@
     svg {
       width: 36px;
       height: 36px;
+    }
+
+    @media @tablet, @phone {
+      padding: 10px;
     }
   }
 }

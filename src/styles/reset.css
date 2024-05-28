@@ -152,8 +152,3 @@ button {
   border-style: solid;
   cursor: pointer;
 }
-
-ul,
-ol {
-  list-style: none;
-}

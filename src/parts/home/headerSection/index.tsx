@@ -42,12 +42,9 @@ export default function HomePageHeaderSection(
   return (
     <section
       className={clsx(
-        'pt-[98px] pb-[68px] max-phone:pt-[48px] relative bg-white transition-bg bg-no-repeat bg-cover bg-center'
+        'pt-[98px] pb-[120px] max-phone:pt-[48px] relative bg-white transition-bg bg-no-repeat bg-cover bg-center flex items-center',
+        classes.headerSectionContainer
       )}
-      style={{
-        backgroundImage: 'url(/images/home/header-background-image.png)',
-        backgroundColor: '#FAFAFA',
-      }}
     >
       <div className={pageClasses.homeContainer}>
         <div className="mb-[12px] flex gap-1 justify-center">
@@ -65,7 +62,7 @@ export default function HomePageHeaderSection(
           </a>
           <a
             href={GITHUB_MILVUS_LINK}
-            className="flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] rounded border border-solid border-gray-300"
+            className="flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] rounded border border-solid border-gray-300 bg-white"
           >
             <GitHubIcon />
             <span className="text-[12px] leading-[18px] ml-[2px] mr-[4px] text-black">

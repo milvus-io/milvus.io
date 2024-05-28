@@ -37,7 +37,6 @@ export default function CustomTabs(props: CustomTabsProps) {
     const index = tabItemInfoList.findIndex(v => v.id === id);
     const width = tabItemInfoList.find(v => v.id === id).width;
 
-    console.log(tabItemInfoList.slice(0, index));
     const translate = tabItemInfoList
       .slice(0, index)
       .reduce((acc, cur) => (acc += cur.width), 0);

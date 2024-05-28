@@ -87,7 +87,7 @@ const Footer = (props: Props) => {
         )}
       >
         <div className="flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0 lg:space-x-16">
-          <div className="flex flex-col items-center sm:items-start lg:items-start shrink-0">
+          <div className="flex  flex-col items-center sm:items-start lg:items-start shrink-0">
             <img
               alt="Milvus logo"
               height="30"
@@ -121,10 +121,10 @@ const Footer = (props: Props) => {
               })}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-8 text-sm sm:gap-x-0">
+          <div className="grid grid-cols-2 gap-8 text-sm sm:gap-x-0 flex-shrink-0 flex-grow-0 flex-[520px] max-tablet:flex-auto">
             {footerJson.map(item => {
               return (
-                <div key={item.title} className="w-[200px] xl:w-[260px] ">
+                <div key={item.title}>
                   <h3 className="text-[16px] font-[500] leading-[24px]">
                     {t(`v3trans.main.nav.${item.title}`)}
                   </h3>
@@ -135,7 +135,7 @@ const Footer = (props: Props) => {
                           <li key={index} className="list-none">
                             <a
                               key={`${index}-c.name`}
-                              className="inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black"
+                              className="inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-[black1]"
                               href={child.to}
                               target="_blank"
                               rel="noopener noreferrer"

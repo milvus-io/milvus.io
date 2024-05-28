@@ -22,7 +22,8 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
       process.env.INKEEP_INTEGRATION_ID ||
       process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
     organizationId:
-      process.env.INKEEP_ORG_ID || process.env.NEXT_PUBLIC_INKEEP_ORG_ID,
+      process.env.INKEEP_ORGANIZATION_ID ||
+      process.env.NEXT_PUBLIC_INKEEP_ORGANIZATION_ID,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
   };
 

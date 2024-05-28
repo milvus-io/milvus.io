@@ -58,7 +58,9 @@ export default function TryFreeSection() {
     >
       <div className={classes.tryCloudContainer}>
         <div className={classes.leftPart}>
-          <img src="/images/home/zilliz-logo.png" alt="Zilliz" />
+          <span className={classes.logoWrapper}>
+            <img src="/images/home/zilliz-logo.png" alt="Zilliz" />
+          </span>
           <h3 className="">{t('trySection.title')}</h3>
         </div>
 

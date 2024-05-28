@@ -1,7 +1,7 @@
 import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/atom-one-light.css';
+import 'highlight.js/styles/atom-one-dark.css';
 import python from 'highlight.js/lib/languages/python';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -21,8 +21,9 @@ export default function CodeExampleSection() {
       code: `from pymilvus import MilvusClient 
 client = MilvusClient("./milvus_demo.db") 
 client.create_collection(
-     collection_name="demo_collection",
-     dimension=5  # The vectors we will use in this demo has 123 dimensions )`,
+  collection_name="demo_collection",
+  dimension=5  # The vectors we will use in this demo has 123 dimensions 
+)`,
     },
     {
       label: t('codeSection.tabs.createCollection'),

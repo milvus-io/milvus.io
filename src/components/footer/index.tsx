@@ -22,7 +22,7 @@ const footerJson = [
       { name: 'Docs', trans: false, to: '/docs' },
       { name: 'Blog', trans: false, to: '/blog' },
       {
-        name: 'Managed service',
+        name: 'Managed Milvus',
         trans: false,
         to: CLOUD_SIGNUP_LINK,
         isExternal: true,
@@ -42,9 +42,9 @@ const footerJson = [
     children: [
       { name: 'Attu', trans: false, to: GITHUB_ATTU_LINK },
       { name: 'Milvus CLI', trans: false, to: GITHUB_MILVUS_CLI_LINK },
-      { name: 'Sizing Tool', trans: false, to: '/tools/sizing' },
+      { name: 'Milvus Sizing Tool', trans: false, to: '/tools/sizing' },
       {
-        name: 'Milvus backup tool',
+        name: 'Milvus backup Tool',
         trans: false,
         to: GITHUB_MILVUS_BACKUP_LINK,
       },

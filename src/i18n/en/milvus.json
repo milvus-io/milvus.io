@@ -776,7 +776,7 @@
         "tools": "Tools",
         "blog": "Blog",
         "community": "Community",
-        "bootcamp": "Bootcamp",
+        "bootcamp": "Bootcamps",
         "demo": "Demo",
         "video": "Video",
         "getstarted": "Get Started",
@@ -944,7 +944,7 @@
     },
     "footnote": {
       "copyright": "Copyright © Milvus. {{year}} All rights reserved.",
-      "maintainer": "Made with Love <0></0> by the Dev from Zilliz"
+      "maintainer": "Made with Love <0></0> by the Devs from Zilliz"
     }
   },
   "status": {

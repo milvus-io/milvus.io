@@ -50,7 +50,6 @@ export default function DevelopSection() {
                 <img src={v.logo} alt={v.id} />
               </span>
               <h3 className={classes.stackTitle}>{v.title}</h3>
-              <p className={classes.stackDesc}>{v.content}</p>
             </div>
 
             <CustomButton

@@ -1,6 +1,6 @@
 {
-  "title": "From Dev to Prod,<0 /><1>AI-powered Search</1> <0 /> Made Easy",
-  "subTitle": "Milvus is an open-source vector database that brings search to GenAI applications. Pip-install on your laptop, use with popular AI dev tools and scale to billions in production.",
+  "title": "From Dev to Prod,<0 /><1>Vector Database</1> <0 /> Made Easy",
+  "subTitle": "Milvus is an open-source vector database that brings search to GenAI applications. Easy to install and seamlessly integrated with popular AI dev tools, it can scale to billions of vectors in production.",
   "buttons": {
     "download": "Download",
     "star": "Star",
@@ -23,7 +23,7 @@
     }
   },
   "trySection": {
-    "title": "Looking for a managed Milvus to minimize ops burden?",
+    "title": "Looking for a managed Milvus to minimize your operational burden?",
     "subTitle": "Plays nicely with all your favorite AI tools"
   },
   "lovedSection": {
@@ -32,7 +32,7 @@
       "nandula": {
         "content": "Based on our research, Milvus was selected as the vector database of choice (over Chroma and Pinecone). Milvus is an open-source vector database designed specifically for similarity search on massive datasets of high-dimensional vectors.",
         "author": "Nandula Asel",
-        "title": "Karunasingha, Senior Data Scientist"
+        "title": "Senior Data Scientist"
       },
       "bhargav": {
         "content": "With its focus on efficient vector similarity search, Milvus empowers you to build robust and scalable image retrieval systems. Whether you’re managing a personal photo library or developing a commercial image search application, Milvus offers a powerful foundation for unlocking the hidden potential within your image collections.",
@@ -47,7 +47,7 @@
     }
   },
   "vdbSection": {
-    "title": "Why developers choose Milvus",
+    "title": "Why developers choose Milvus as the vector database",
     "features": {
       "setup": {
         "title": "Easy Setup",
@@ -59,11 +59,11 @@
       },
       "integration": {
         "title": "Integrations",
-        "desc": "Seamlessly integrated with LangChain, LlamaIndex and many more AI dev tools."
+        "desc": "Seamlessly integrated with LangChain, LlamaIndex and other AI dev tools."
       },
       "featureRich": {
         "title": "Feature-rich",
-        "desc": "Supports advanced features including metadata filtering, hybrid search and multi-vector."
+        "desc": "Metadata filtering, hybrid search, range search, multi-vector and more."
       },
       "community": {
         "title": "Supportive Community",
@@ -73,13 +73,13 @@
     "prompt": "Want to learn more about Milvus? View our <0>documentation</0>"
   },
   "deploySection": {
-    "title": "Pick the size that fits your case",
+    "title": "Pick the size that works for you",
     "lite": {
       "title": "Milvus Lite",
       "advantage": "Lightweight, easy to start",
       "features": [
-        "Get started in seconds",
-        "Runs on laptops, notebooks, mobile and edge devices."
+        "Pip-install in seconds",
+        "A vector database for laptops, Python notebooks, mobile and edge devices"
       ]
     },
     "milvus": {
@@ -87,18 +87,21 @@
       "advantage": "Highly scalable, optimized for performance",
       "features": [
         "Easy to deploy on Docker and Kubernetes",
-        "Scales to billions"
+        "Scales to billions of vectors"
       ]
     },
     "cloud": {
       "title": "Zilliz Cloud",
-      "advantage": "Fully managed with minimal operations",
-      "features": ["Pay-as-you-go without worrying about machines and DevOps."]
+      "advantage": "Fully Managed Milvus",
+      "features": [
+        "Production-ready reliability",
+        "Pay-as-you-go options without the DevOps hassles"
+      ]
     }
   },
   "developSection": {
-    "title": "Start Building Your GenAI Apps",
-    "subTitle": "With integrations built by us and our community.",
+    "title": "Start building your GenAI app now",
+    "subTitle": "With well documented integrations for popular dev tools",
     "langChain": {
       "title": "LangChain Starter Guide",
       "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."
@@ -117,14 +120,14 @@
     }
   },
   "subscribeSection": {
-    "title": "Join the <0>25 million+ developers</0> building GenAI apps with Milvus today",
+    "title": "Join <0>25 million of developers</0> building GenAI apps with Milvus today",
     "subscribe": {
-      "title": "Subscribe our Newsletter",
+      "title": "Stay up to date with Milvus",
       "desc": "Subscribe to get updates on the latest Milvus releases, tutorials and training from Zilliz, the creator and key maintainer of Milvus.",
       "email": "Email"
     }
   },
   "productionSection": {
-    "title": "Trusted for production."
+    "title": "Trusted by the industry for productions at scale"
   }
 }

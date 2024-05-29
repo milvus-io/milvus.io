@@ -33,7 +33,7 @@ const tools = [
     href: MILVUS_INTEGRATION_OPENAI_LINK,
   },
   {
-    name: 'HuggingFace',
+    name: 'Hugging Face',
     logo: '/images/home/hugging-face.png',
     href: MILVUS_INTEGRATION_HUGGING_FACE_LINK,
   },

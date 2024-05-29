@@ -1,10 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { submitHubspotForm } from '@/http/submitEmail';
 import classes from './index.module.less';
-import pageClasses from '@/styles/responsive.module.less';
 import CustomInput from '../customInput/customInput';
 import CustomButton from '../customButton';
-import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
@@ -68,8 +66,8 @@ const SubscribeNewsletter = (props: {
   return (
     <div className={classes.subscribeContainer}>
       <div className={classes.descriptionSection}>
-        <h3 className="">{t('home:subscribeSection.subscribe.title')}</h3>
-        <p className="">{t('home:subscribeSection.subscribe.desc')}</p>
+        <h3>{t('home:subscribeSection.subscribe.title')}</h3>
+        <p>{t('home:subscribeSection.subscribe.desc')}</p>
       </div>
       <div className={classes.subscribeSection}>
         <div className={classes.inputWrapper}>

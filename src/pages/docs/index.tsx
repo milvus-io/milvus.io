@@ -30,15 +30,6 @@ interface docHomePageProps {
   mdListData: AllMdVersionIdType[];
 }
 
-/**
- *  1. 进入docs页面时，淫荡展示最新版本的 homepage
- *  2. 所以 【version] 页面 getStaticPaths 应当移除最新版本的路径，getStaticProps 同理
- *  3. 新增 [slug] 页面，用于展示最新版本的文档
- *  4. [version]/[slug] 页面用于展示指定版本的文档 保持不变
- *  5. 迁移到 ts
- *  6. 优化 utils 代码
- * */
-
 // this is latest version doc homepage
 export default function LatestVersionDocHomepage(props: docHomePageProps) {
   const { t } = useTranslation('common');

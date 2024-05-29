@@ -13,7 +13,8 @@ import { JSON_REG, VERSION_REG } from '@/consts/regexp';
 const matter = require('gray-matter');
 
 export const BASE_DOC_DIR = join(process.cwd(), 'src/docs');
-const DOCS_MINIMUM_VERSION = 'v1.0.0';
+export const DOCS_MINIMUM_VERSION = 'v2.0.0';
+const IGNORE_VERSIONS = ['v2.3.0-beta'];
 export const IGNORE_FILES = [
   'README.md',
   'Variables.json',
@@ -61,8 +62,8 @@ const convertVersionStringToVersionNum = (
 };
 
 export const generateDocVersionInfo = (params?: {
-  filePath: string;
-  minVersion: string;
+  filePath?: string;
+  minVersion?: string;
 }) => {
   const { filePath = BASE_DOC_DIR, minVersion = DOCS_MINIMUM_VERSION } =
     params || {};
@@ -84,7 +85,9 @@ export const generateDocVersionInfo = (params?: {
   const releaseInfoPath = join(BASE_DOC_DIR, 'version.json');
   const releaseNote = JSON.parse(fs.readFileSync(releaseInfoPath, 'utf-8'));
 
-  let usableVersions = allVersions.filter(v => v.versionNum >= minVersionNum);
+  let usableVersions = allVersions.filter(
+    v => v.versionNum >= minVersionNum && !IGNORE_VERSIONS.includes(v.version)
+  );
   const { version: releaseVersion, released } = releaseNote;
 
   if (released === 'no') {

@@ -184,7 +184,9 @@ export default function DocDetailPage(props: DocDetailPageProps) {
             />
           }
           center={
-            <section className={classes.docDetailContainer}>
+            <section
+              className={clsx('scroll-padding', classes.docDetailContainer)}
+            >
               <div className={classes.contentSection}>
                 <DocContent
                   version={version}

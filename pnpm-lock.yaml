@@ -36,8 +36,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@inkeep/widgets':
-        specifier: ^0.2.278
-        version: 0.2.278(@internationalized/date@3.5.4)(@types/react@18.2.65)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.2)
+        specifier: ^0.2.279
+        version: 0.2.279(@internationalized/date@3.5.4)(@types/react@18.2.65)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.2)
       '@mui/icons-material':
         specifier: ^5.2.5
         version: 5.2.5(@mui/material@5.2.5(@emotion/react@11.7.1(@babel/core@7.24.3)(@types/react@18.2.65)(react@18.2.0))(@emotion/styled@11.6.0(@babel/core@7.24.3)(@emotion/react@11.7.1(@babel/core@7.24.3)(@types/react@18.2.65)(react@18.2.0))(@types/react@18.2.65)(react@18.2.0))(@types/react@18.2.65)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.2.65)(react@18.2.0)
@@ -1471,8 +1471,8 @@ packages:
   '@inkeep/styled-system@0.0.42':
     resolution: {integrity: sha512-4eV3h+3nR54ejM+qXP36h0ETSUkopAS6/m8RF6fQ8hY8OdRLZSlsaKT+KeiHvM8LFoTdxu9IHnH9m5Gt/xnKqw==}
 
-  '@inkeep/widgets@0.2.278':
-    resolution: {integrity: sha512-GHQdXlXI8mNr+Nqi/ywmBKcG21K5XWzd56MAJq12JHq9dzqCmQIm+jXHBHFRTsZCNQkKqriArthWSH8NVbCtbg==}
+  '@inkeep/widgets@0.2.279':
+    resolution: {integrity: sha512-lKSH9yB3caFF5ntdCF3nQaiCpriLNcJ+Y1B2ikPCPWG1Ux+mSreonZs87HPuxsOtdjvTrYTqDHQaJsLNY2u4Sg==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -7372,6 +7372,7 @@ packages:
 
   rimraf@2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rimraf@3.0.2:
@@ -10132,7 +10133,7 @@ snapshots:
 
   '@inkeep/styled-system@0.0.42': {}
 
-  '@inkeep/widgets@0.2.278(@internationalized/date@3.5.4)(@types/react@18.2.65)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.2)':
+  '@inkeep/widgets@0.2.279(@internationalized/date@3.5.4)(@types/react@18.2.65)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.2)':
     dependencies:
       '@apollo/client': 3.10.4(@types/react@18.2.65)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@ark-ui/react': 0.15.0(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -10715,7 +10716,7 @@ snapshots:
       look-it-up: 2.1.0
       microdiff: 1.4.0
       outdent: 0.8.0
-      pathe: 1.1.1
+      pathe: 1.1.2
       pkg-types: 1.0.3
       pluralize: 8.0.0
       postcss: 8.4.38
@@ -17215,7 +17216,7 @@ snapshots:
     dependencies:
       jsonc-parser: 3.2.1
       mlly: 1.7.0
-      pathe: 1.1.1
+      pathe: 1.1.2
 
   pkg-types@1.1.1:
     dependencies:

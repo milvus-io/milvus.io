@@ -78,7 +78,7 @@ export default function CodeExampleSection() {
       className={clsx(pageClasses.homeContainer, classes.codeExampleSection)}
     >
       <div className={classes.contentContainer}>
-        <h2 className="">{t('codeSection.title')}</h2>
+        <h2>{t('codeSection.title')}</h2>
         <div className={classes.codeContainer}>
           <CustomTabs
             tabs={tabs}

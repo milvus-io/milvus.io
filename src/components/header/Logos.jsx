@@ -7,12 +7,7 @@ import { useState, useEffect } from 'react';
 import { getGithubStatics } from '@/http/milvus';
 
 export const LogoSection = props => {
-  const { lightMode = true } = props;
-
-  const foundationLogo = lightMode
-    ? '/images/lf_logo_light.svg'
-    : '/images/lf_logo_dark.svg';
-
+  const foundationLogo = '/images/lf_logo.png';
   return (
     <div className={classes.logoSection}>
       <Link href="/">
@@ -38,9 +33,9 @@ export const LogoSection = props => {
         href="https://lfaidata.foundation/projects/"
         target="_blank"
         rel="noopener noreferrer"
-        style={{ display: 'inline-block', lineHeight: 0 }}
+        className="inline-flex items-center justify-center"
       >
-        <img src={foundationLogo} alt="LFAI" />
+        <img src={foundationLogo} height={20} alt="LFAI" />
       </a>
     </div>
   );

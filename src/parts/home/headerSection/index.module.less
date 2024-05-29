@@ -27,4 +27,9 @@
   background-image: url(/images/home/header-background-image.png);
   background-color: #fafafa;
   height: calc(100vh - @header-height-desktop);
+  min-height: 760px;
+
+  @media @phone {
+    height: auto;
+  }
 }

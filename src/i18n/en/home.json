@@ -1,6 +1,6 @@
 {
-  "title": "From Dev to Prod,<0 /><1>Vector Database</1> <0 /> Made Easy",
-  "subTitle": "Milvus is an open-source vector database that brings search to GenAI applications. Easy to install and seamlessly integrated with popular AI dev tools, it can scale to billions of vectors in production.",
+  "title": "From Dev to Prod,<0 /><1>AI-powered Search</1> <0 /> Made Easy",
+  "subTitle": "Milvus is an open-source vector database that brings search to GenAI applications. Pip-install on your laptop, use with popular AI dev tools and scale to billion of vectors.",
   "buttons": {
     "download": "Download",
     "star": "Star",
@@ -23,7 +23,7 @@
     }
   },
   "trySection": {
-    "title": "Looking for a managed Milvus to minimize your operational burden?",
+    "title": "Looking for a managed Milvus to minimize your ops burden?",
     "subTitle": "Plays nicely with all your favorite AI tools"
   },
   "lovedSection": {
@@ -47,7 +47,7 @@
     }
   },
   "vdbSection": {
-    "title": "Why developers choose Milvus as the vector database",
+    "title": "Why Developers Prefer Milvus for Vector Databases",
     "features": {
       "setup": {
         "title": "Easy Setup",
@@ -55,19 +55,19 @@
       },
       "reusable": {
         "title": "Reusable Code",
-        "desc": "Write once, and deploy with one line of code into production environment."
+        "desc": "Write once, and deploy with one line of code into production environments."
       },
       "integration": {
         "title": "Integrations",
-        "desc": "Seamlessly integrated with LangChain, LlamaIndex and other AI dev tools."
+        "desc": "Integrated with LangChain, LlamaIndex and many other AI dev tools."
       },
       "featureRich": {
         "title": "Feature-rich",
-        "desc": "Metadata filtering, hybrid search, range search, multi-vector and more."
+        "desc": "Metadata filtering, hybrid search, multi-vector and more."
       },
       "community": {
         "title": "Supportive Community",
-        "desc": "Open-source community with rich resources and contributors ready to help."
+        "desc": "Fan-favorite vector database with extensive resources and supportive contributors."
       }
     },
     "prompt": "Want to learn more about Milvus? View our <0>documentation</0>"
@@ -78,8 +78,8 @@
       "title": "Milvus Lite",
       "advantage": "Lightweight, easy to start",
       "features": [
-        "Pip-install in seconds",
-        "A vector database for laptops, Python notebooks, mobile and edge devices"
+        "Get started in seconds",
+        "Runs on laptops, notebooks, mobile and edge devices"
       ]
     },
     "milvus": {
@@ -92,7 +92,7 @@
     },
     "cloud": {
       "title": "Zilliz Cloud",
-      "advantage": "Fully Managed Milvus",
+      "advantage": "Fully managed Milvus with minimal ops",
       "features": [
         "Production-ready reliability",
         "Pay-as-you-go options without the DevOps hassles"
@@ -101,7 +101,7 @@
   },
   "developSection": {
     "title": "Start building your GenAI app now",
-    "subTitle": "With well documented integrations for popular dev tools",
+    "subTitle": "With integrations built by us and our community.",
     "langChain": {
       "title": "LangChain Starter Guide",
       "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."
@@ -120,14 +120,14 @@
     }
   },
   "subscribeSection": {
-    "title": "Join <0>25 million of developers</0> building GenAI apps with Milvus today",
+    "title": "Join the community of developers building GenAI apps with Milvus, now with over <0>25 million+ downloads</0>",
     "subscribe": {
-      "title": "Stay up to date with Milvus",
+      "title": "Get Milvus Updates",
       "desc": "Subscribe to get updates on the latest Milvus releases, tutorials and training from Zilliz, the creator and key maintainer of Milvus.",
       "email": "Email"
     }
   },
   "productionSection": {
-    "title": "Trusted by the industry for productions at scale"
+    "title": "Trusted for production workloads"
   }
 }

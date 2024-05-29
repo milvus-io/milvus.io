@@ -42,7 +42,7 @@ export default function HomePageHeaderSection(
   return (
     <section
       className={clsx(
-        'pt-[98px] pb-[120px] max-phone:pt-[48px] relative bg-white transition-bg bg-no-repeat bg-cover bg-center flex items-center',
+        'pt-[98px] pb-[100px] max-phone:pt-[48px] relative bg-white transition-bg bg-no-repeat bg-cover bg-center flex items-center',
         classes.headerSectionContainer
       )}
     >
@@ -77,7 +77,7 @@ export default function HomePageHeaderSection(
           </a>
         </div>
 
-        <h1 className="w-full max-w-[700px] opacity-90 text-center text-slate-950 text-[72px] max-tablet:text-[60px] font-[700] leading-[80px] max-tablet:leading-[68px] mt-[0px] mb-[24px] mx-auto">
+        <h1 className="w-full max-w-[700px] opacity-90 text-center text-slate-950 text-[72px] max-tablet:text-[60px] font-[700] leading-[80px] max-tablet:leading-[68px] mt-[0px] mb-[12px] mx-auto">
           <Trans
             t={t}
             i18nKey="title"
@@ -87,7 +87,7 @@ export default function HomePageHeaderSection(
             ]}
           />
         </h1>
-        <p className="w-full max-w-[756px] text-black2 text-[18px] max-tablet:text-[16px] leading-[26px] max-tablet:leading-[22px] mb-[60px] mx-auto text-center">
+        <p className="w-full max-w-[745px] text-black2 text-[18px] max-tablet:text-[16px] leading-[26px] max-tablet:leading-[22px] mb-[40px] mx-auto text-center">
           {t('subTitle')}
         </p>
 

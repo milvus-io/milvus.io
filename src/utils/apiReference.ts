@@ -10,6 +10,7 @@ import {
   BASE_DOC_DIR,
   generateDocVersionInfo,
   validationFileFilter,
+  DOCS_MINIMUM_VERSION,
 } from './docs';
 const fs = require('fs');
 const path = require('path');
@@ -151,37 +152,37 @@ const API_REFERENCE_CONFIG = {
   [ApiReferenceLanguageEnum.Python]: {
     name: ApiReferenceLabelEnum.Python,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Python}`,
-    minVersion: 'v.2.0.x',
+    minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Python,
   },
   [ApiReferenceLanguageEnum.Java]: {
     name: ApiReferenceLabelEnum.Java,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Java}`,
-    minVersion: 'v.2.0.x',
+    minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Java,
   },
   [ApiReferenceLanguageEnum.Go]: {
     name: ApiReferenceLabelEnum.Go,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Go}`,
-    minVersion: 'v2.0.x',
+    minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Go,
   },
   [ApiReferenceLanguageEnum.Node]: {
     name: ApiReferenceLabelEnum.Node,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Node}`,
-    minVersion: undefined,
+    minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Node,
   },
   [ApiReferenceLanguageEnum.Csharp]: {
     name: ApiReferenceLabelEnum.Csharp,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Csharp}`,
-    minVersion: undefined,
+    minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Csharp,
   },
   [ApiReferenceLanguageEnum.Restful]: {
     name: ApiReferenceLabelEnum.Restful,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Restful}`,
-    minVersion: undefined,
+    minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Restful,
   },
 };

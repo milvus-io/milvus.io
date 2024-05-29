@@ -7,7 +7,6 @@ import {
   GITHUB_ATTU_LINK,
   GITHUB_MILVUS_CLI_LINK,
   GITHUB_MILVUS_BACKUP_LINK,
-  CLOUD_SIGNUP_LINK,
 } from '@/consts/links';
 import { DownArrowIcon } from '@/components/icons';
 
@@ -70,57 +69,59 @@ export default function DesktopHeader(props: Props) {
     <div className="bg-white border-b border-solid border-gray-300">
       <div
         className={clsx(
-          'hidden tablet:flex h-[58px] px-10 items-center justify-between max-w-[1440px] mx-auto',
+          'hidden tablet:flex h-[58px] px-10 items-center justify-between mx-auto',
           className
         )}
       >
-        <LogoSection lightMode={true} />
+        <div className="flex items-center gap-[40px]">
+          <LogoSection lightMode={true} />
 
-        <ul className="flex items-center list-none gap-[16px]">
-          {menuConfigs.map(config => {
-            if (config.list) {
+          <ul className="flex items-center list-none gap-[16px]">
+            {menuConfigs.map(config => {
+              if (config.list) {
+                return (
+                  <li key={config.label} className="shrink-0">
+                    <div className="group relative">
+                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] font-['Inter'] h-[21px] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer">
+                        <span className="inline-block leading-[16px]">
+                          {config.label}
+                        </span>
+                        <DownArrowIcon
+                          size={16}
+                          className="group-hover:rotate-180 transition-transform"
+                        />
+                      </button>
+                      <ul className="flex flex-col items-stretch gap-[4px] bg-white py-[8px] absolute invisible -z-10 opacity-0 rounded-[4px] list-none shadow-nav-menu transition group-hover:visible group-hover:z-10 group-hover:opacity-100">
+                        {config.list.map(item => (
+                          <li key={item.label}>
+                            <Link
+                              href={item.link}
+                              rel={item.rel}
+                              className="block text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04]"
+                              target={item.rel ? '_blank' : undefined}
+                            >
+                              {item.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                );
+              }
               return (
-                <li key={config.label} className="shrink-0">
-                  <div className="group relative">
-                    <button className="group flex items-center gap-[4px] text-[14px] font-[500] font-['Inter'] h-[21px] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer">
-                      <span className="inline-block leading-[16px]">
-                        {config.label}
-                      </span>
-                      <DownArrowIcon
-                        size={16}
-                        className="group-hover:rotate-180 transition-transform"
-                      />
-                    </button>
-                    <ul className="flex flex-col items-stretch gap-[4px] bg-white py-[8px] absolute invisible -z-10 opacity-0 rounded-[4px] list-none shadow-nav-menu transition group-hover:visible group-hover:z-10 group-hover:opacity-100">
-                      {config.list.map(item => (
-                        <li key={item.label}>
-                          <Link
-                            href={item.link}
-                            rel={item.rel}
-                            className="block text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04]"
-                            target={item.rel ? '_blank' : undefined}
-                          >
-                            {item.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <li key={config.label}>
+                  <Link
+                    href={config.link}
+                    className="block text-[14px] leading-[21px] font-[500] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer"
+                  >
+                    {config.label}
+                  </Link>
                 </li>
               );
-            }
-            return (
-              <li key={config.label}>
-                <Link
-                  href={config.link}
-                  className="block text-[14px] leading-[21px] font-[500] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer"
-                >
-                  {config.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+            })}
+          </ul>
+        </div>
 
         <div>
           <Link href="/docs" target="_blank">

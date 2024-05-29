@@ -40,13 +40,16 @@ export const ProductionSection = () => {
   const { t } = useTranslation('home');
   return (
     <section className={pageClasses.homeContainer}>
-      <div className="py-[60px] flex items-start justify-between max-tablet:flex-col max-tablet:items-center">
-        <h2 className="text-[42px] font-[600] max-w-[480px] leading-[54px] max-tablet:text-center">
+      <div className="py-[60px] flex items-center justify-between max-tablet:flex-col gap-[50px]">
+        <h2 className="text-[42px] font-[600] max-w-[480px] leading-[54px] max-tablet:text-center max-tablet:text-[38px] max-tablet:leading-[46px]">
           {t('productionSection.title')}
         </h2>
-        <div className="flex flex-wrap justify-center items-center gap-[10px] max-w-[630px]">
+        <div className="flex flex-wrap justify-center items-center gap-[20px] max-w-[660px]">
           {COMPANY_LIST.map((company, index) => (
-            <div key={index}>
+            <div
+              key={index}
+              className="w-[150px] h-[84px] bg-white rounded-[12px] border-[1px] border-solid border-black3 box-border"
+            >
               <img src={company.logo} width={150} alt={company.name} />
             </div>
           ))}

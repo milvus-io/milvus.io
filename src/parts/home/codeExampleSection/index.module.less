@@ -67,6 +67,19 @@
         color: #fff;
         font-size: 12px;
         line-height: 20px;
+
+        :global(.hljs-keyword) {
+          color: #a856ff;
+        }
+        :global(.hljs-string) {
+          color: #87eeab;
+        }
+        :global(.hljs-number) {
+          color: #fa0;
+        }
+        :global(.hljs-title.class) {
+          color: #6fa0ff;
+        }
       }
 
       &::-webkit-scrollbar {
@@ -85,7 +98,6 @@
     }
 
     .copyButton {
-      // .resetNativeButton();
       position: absolute;
       top: 20px;
       right: 20px;

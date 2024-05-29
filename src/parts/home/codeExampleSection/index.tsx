@@ -2,7 +2,7 @@ import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/atom-one-dark.css';
-import python from 'highlight.js/lib/languages/python';
+import javascript from 'highlight.js/lib/languages/javascript';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import CustomTabs from '@/components/customTabs';
@@ -15,7 +15,7 @@ import {
   CODE_DELETE_COLLECTION,
 } from './const';
 
-hljs.registerLanguage('python', python);
+hljs.registerLanguage('javascript', javascript);
 
 export default function CodeExampleSection() {
   const { t } = useTranslation('home');
@@ -58,7 +58,7 @@ export default function CodeExampleSection() {
     codeList,
   }) => {
     const highlightedCode = hljs.highlight(code, {
-      language: 'python',
+      language: 'javascript',
     }).value;
 
     useCopyCode(codeList);

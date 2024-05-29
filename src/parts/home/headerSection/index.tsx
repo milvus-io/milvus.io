@@ -83,7 +83,7 @@ export default function HomePageHeaderSection(
             i18nKey="title"
             components={[
               <br key="splitter"></br>,
-              <span key="blue-text" className="text-sky-500"></span>,
+              <span key="blue-text" className="text-blue1"></span>,
             ]}
           />
         </h1>

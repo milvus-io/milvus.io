@@ -48,16 +48,23 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     editPath,
     frontMatter,
   } = homeData;
+  console.log('headingContent', headingContent);
 
   const { t } = useTranslation('common');
 
   const seoInfo = useMemo(() => {
+    const title = frontMatter?.title || headingContent;
+
+    const pageTitle =
+      version === latestVersion
+        ? `${title} | Milvus`
+        : `${title} Milvus ${version} documentation`;
     return {
-      title: `${frontMatter?.title} | Milvus`,
+      title: pageTitle,
       url: `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`,
       desc: summary,
     };
-  }, [frontMatter, version, currentId, summary]);
+  }, [frontMatter, version, currentId, summary, headingContent]);
 
   const [isOpened, setIsOpened] = useState(false);
   const [menuTree, setMenuTree] = useState(menus);

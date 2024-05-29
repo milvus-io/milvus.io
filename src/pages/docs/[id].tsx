@@ -55,6 +55,8 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     frontMatter,
   } = homeData;
 
+  console.log('headingContent', headingContent);
+
   const { t } = useTranslation('common');
 
   const seoInfo = useMemo(() => {

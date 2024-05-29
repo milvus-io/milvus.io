@@ -99,20 +99,29 @@
 
     .copyButton {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 15px;
+      right: 15px;
       line-height: 0;
-      width: 14px;
-      height: 14px;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       color: #fff;
+      border-radius: 6px;
+      transition: background-color 0.2s;
 
       svg {
-        width: 100%;
-        height: 100%;
+        width: 14px;
+        height: 14px;
 
         path {
           stroke: #fff;
         }
+      }
+
+      &:hover {
+        background-color: rgba(243, 245, 252, 0.1);
       }
     }
   }

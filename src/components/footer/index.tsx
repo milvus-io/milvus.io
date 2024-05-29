@@ -44,7 +44,7 @@ const footerJson = [
       { name: 'Milvus CLI', trans: false, to: GITHUB_MILVUS_CLI_LINK },
       { name: 'Milvus Sizing Tool', trans: false, to: '/tools/sizing' },
       {
-        name: 'Milvus backup Tool',
+        name: 'Milvus Backup Tool',
         trans: false,
         to: GITHUB_MILVUS_BACKUP_LINK,
       },

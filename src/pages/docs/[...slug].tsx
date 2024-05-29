@@ -48,7 +48,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     editPath,
     frontMatter,
   } = homeData;
-  console.log('headingContent', headingContent);
 
   const { t } = useTranslation('common');
 
@@ -64,7 +63,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
       url: `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`,
       desc: summary,
     };
-  }, [frontMatter, version, currentId, summary, headingContent]);
+  }, [frontMatter, version, latestVersion, currentId, summary, headingContent]);
 
   const [isOpened, setIsOpened] = useState(false);
   const [menuTree, setMenuTree] = useState(menus);

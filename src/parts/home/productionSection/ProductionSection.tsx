@@ -41,10 +41,10 @@ export const ProductionSection = () => {
   return (
     <section className={pageClasses.homeContainer}>
       <div className="py-[60px] flex items-start justify-between max-tablet:flex-col max-tablet:items-center">
-        <h2 className="text-[42px] font-[600] w-[440px] leading-[54px]">
+        <h2 className="text-[42px] font-[600] max-w-[440px] leading-[54px] max-tablet:text-center">
           {t('productionSection.title')}
         </h2>
-        <div className="flex flex-wrap justify-center items-center gap-[10px] w-[630px]">
+        <div className="flex flex-wrap justify-center items-center gap-[10px] max-w-[630px]">
           {COMPANY_LIST.map((company, index) => (
             <div key={index}>
               <img src={company.logo} width={150} alt={company.name} />

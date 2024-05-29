@@ -58,18 +58,26 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   const { t } = useTranslation('common');
 
   const seoInfo = useMemo(() => {
-    const title = frontMatter?.title || headingContent;
+    const title = isHome
+      ? DOC_HOME_TITLE
+      : `${frontMatter?.title || headingContent} | Milvus Documentation`;
 
     const pageTitle =
       version === latestVersion
         ? `${title} | Milvus`
         : `${title} Milvus ${version} documentation`;
+
+    const url = isHome
+      ? `${ABSOLUTE_BASE_URL}/docs/${version}`
+      : `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`;
+    const desc = isHome ? 'Milvus Documentation' : summary;
+
     return {
       title: pageTitle,
-      url: `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`,
-      desc: summary,
+      url,
+      desc,
     };
-  }, [frontMatter, version, latestVersion, currentId, summary, headingContent]);
+  }, [isHome, frontMatter, version, currentId, summary]);
 
   const [isOpened, setIsOpened] = useState(false);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);

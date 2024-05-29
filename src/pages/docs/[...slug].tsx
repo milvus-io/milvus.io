@@ -56,7 +56,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
 
     const pageTitle =
       version === latestVersion
-        ? `${title} | Milvus`
+        ? `${title} | Milvus Documentation`
         : `${title} Milvus ${version} documentation`;
     return {
       title: pageTitle,

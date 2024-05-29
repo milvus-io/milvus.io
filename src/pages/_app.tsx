@@ -13,6 +13,10 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <link rel="icon" href="/favicon-32x32.png" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap"
+          rel="stylesheet"
+        />
         <meta
           name="image"
           property="og:image"

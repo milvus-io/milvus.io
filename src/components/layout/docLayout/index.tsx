@@ -70,7 +70,15 @@ export default function DocLayout(props: DocLayoutPropsType) {
           >
             {center}
 
-            {showFooter && <Footer className={classes.docFooter} />}
+            {showFooter && (
+              <Footer
+                classes={{
+                  root: classes.docFooter,
+                  content: classes.docFooterContent,
+                  nav: classes.docFooterNav,
+                }}
+              />
+            )}
           </div>
           <InkeepChatButton />
         </div>

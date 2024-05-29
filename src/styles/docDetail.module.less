@@ -26,8 +26,8 @@
     .rightAnchorTreeWrapper {
       width: 100%;
       position: sticky;
-      top: 120px;
-      max-height: calc(100vh - 120px);
+      top: calc(@header-height-desktop + 24px);
+      max-height: calc(100vh - @header-height-desktop - 24px);
       overflow: auto;
     }
   }

@@ -36,7 +36,6 @@ div.mainContainer {
     display: flex;
     flex-direction: column;
     gap: 100px;
-    overflow-x: hidden;
   }
 
   div.docFooter {
@@ -48,6 +47,18 @@ div.mainContainer {
     @media @phone {
       padding-left: 25px;
       padding-right: 25px;
+    }
+
+    .docFooterContent {
+      @media (max-width: 1230px) {
+        flex-direction: column;
+        gap: 48px;
+
+        .docFooterNav {
+          flex: auto;
+          margin-left: 0;
+        }
+      }
     }
   }
 }

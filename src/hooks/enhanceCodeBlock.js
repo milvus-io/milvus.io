@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { copyToCommand } from '../utils/common';
 import { checkIconTpl, copyIconTpl } from '../components/icons';
+import { useRouter } from 'next/router';
 
 export const useCopyCode = (codeList = []) => {
   useEffect(() => {
@@ -88,6 +89,7 @@ export const useFilter = () => {
 };
 
 export const useMultipleCodeFilter = () => {
+  const { asPath } = useRouter();
   const SEARCH = 'search';
   useEffect(() => {
     const setSearch = val => window.localStorage.setItem(SEARCH, val);
@@ -96,7 +98,6 @@ export const useMultipleCodeFilter = () => {
     };
 
     const filterWrappers = document.querySelectorAll('.multipleCode');
-
     const allFilters = [];
     let firstSearch = '';
     filterWrappers.forEach(fw => {
@@ -160,5 +161,5 @@ export const useMultipleCodeFilter = () => {
         clickEventHandler(localSearch);
       }
     }
-  }, []);
+  }, [asPath]);
 };

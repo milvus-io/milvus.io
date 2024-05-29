@@ -60,14 +60,20 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   const seoInfo = useMemo(() => {
     const title = isHome
       ? DOC_HOME_TITLE
-      : `${frontMatter?.title} | Milvus Documentation`;
+      : `${frontMatter?.title || headingContent} | Milvus Documentation`;
+
+    const pageTitle =
+      version === latestVersion
+        ? `${title} | Milvus`
+        : `${title} Milvus ${version} documentation`;
+
     const url = isHome
       ? `${ABSOLUTE_BASE_URL}/docs/${version}`
       : `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`;
     const desc = isHome ? 'Milvus Documentation' : summary;
 
     return {
-      title,
+      title: pageTitle,
       url,
       desc,
     };

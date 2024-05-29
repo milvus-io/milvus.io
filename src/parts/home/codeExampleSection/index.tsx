@@ -37,8 +37,8 @@ export default function CodeExampleSection() {
       code: CODE_SEARCH,
     },
     {
-      label: t('codeSection.tabs.product'),
-      id: 'product',
+      label: t('codeSection.tabs.delete'),
+      id: 'delete',
       code: CODE_DELETE_COLLECTION,
     },
   ];

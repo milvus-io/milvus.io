@@ -27,6 +27,13 @@ html:has(.scroll-padding) {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
 
+  --tw-gradient-from-position: ;
+  --tw-gradient-via-position: ;
+  --tw-gradient-to-position: ;
+  --tw-gradient-from: #fff var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+
   /* color */
   --color-primary: #00a1ea;
   --color-secondary: #65f8c3;

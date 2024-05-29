@@ -76,7 +76,7 @@ export default function DesktopHeader(props: Props) {
         <div className="flex items-center gap-[40px]">
           <LogoSection lightMode={true} />
 
-          <ul className="flex items-center list-none gap-[16px]">
+          <ul className="flex items-center list-none gap-[12px]">
             {menuConfigs.map(config => {
               if (config.list) {
                 return (

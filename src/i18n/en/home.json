@@ -16,10 +16,11 @@
   "codeSection": {
     "title": "Start running Milvus in seconds",
     "tabs": {
-      "createCollection": "Create collection",
-      "insertData": "Insert data",
+      "createCollection": "Create Collection",
+      "insertData": "Insert Data",
       "search": "Search",
-      "product": "Production"
+      "product": "Production",
+      "delete": "Delete Data"
     }
   },
   "trySection": {

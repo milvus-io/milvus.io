@@ -97,7 +97,7 @@ const Footer = (props: Props) => {
             content
           )}
         >
-          <div className="flex  flex-col items-center sm:items-start lg:items-start shrink-0">
+          <div className="flex  flex-col items-center max-phone:items-start sm:items-start lg:items-start shrink-0">
             <img
               alt="Milvus logo"
               height="30"

@@ -25,15 +25,9 @@ export default function HorizontalBlogCard(props: {
         />
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardContent classes={{ root: styles.cardContent }}>
-            <Typography component="div" variant="h6" className={styles.tag}>
-              {tag}
-            </Typography>
-            <Typography variant="h4" component="div" className={styles.title}>
-              {title}
-            </Typography>
-            <Typography component="div" variant="h6" className={styles.desc}>
-              {desc}
-            </Typography>
+            <p className={styles.tag}>{tag}</p>
+            <h6 className={styles.title}>{title}</h6>
+            <p className={styles.desc}>{desc}</p>
           </CardContent>
         </Box>
       </Card>

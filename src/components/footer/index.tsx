@@ -71,11 +71,16 @@ const footerJson = [
 ];
 
 type Props = {
-  className?: string;
+  classes?: {
+    root?: string;
+    content?: string;
+    nav?: string;
+  };
 };
 
 const Footer = (props: Props) => {
-  const { className } = props;
+  const { classes: customClasses = {} } = props;
+  const { root = '', content = '', nav } = customClasses;
   const { t } = useTranslation('common');
 
   return (
@@ -83,10 +88,15 @@ const Footer = (props: Props) => {
       <div
         className={clsx(
           'max-w-[1440px] mx-auto px-[48px] py-[80px] md:px-[135px] lg:px-[80px] xl:px-[135px]',
-          className
+          root
         )}
       >
-        <div className="flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0 lg:space-x-16">
+        <div
+          className={clsx(
+            'flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0 lg:space-x-16',
+            content
+          )}
+        >
           <div className="flex  flex-col items-center sm:items-start lg:items-start shrink-0">
             <img
               alt="Milvus logo"
@@ -121,7 +131,12 @@ const Footer = (props: Props) => {
               })}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-8 text-sm sm:gap-x-0 flex-shrink-0 flex-grow-0 flex-[520px] max-tablet:flex-auto">
+          <div
+            className={clsx(
+              'grid grid-cols-2 gap-8 text-sm sm:gap-x-0 flex-shrink-0 flex-grow-0 flex-[520px] max-tablet:flex-auto',
+              nav
+            )}
+          >
             {footerJson.map(item => {
               return (
                 <div key={item.title}>

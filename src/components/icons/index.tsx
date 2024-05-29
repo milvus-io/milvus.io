@@ -279,10 +279,13 @@ export const GitHubIcon = () => (
   </svg>
 );
 
-export const RightWholeArrow: React.FC<{ color?: string }> = ({ color }) => (
+export const RightWholeArrow: React.FC<{ color?: string; size?: number }> = ({
+  color,
+  size = 14,
+}) => (
   <svg
-    width="14"
-    height="14"
+    width={size}
+    height={size}
     viewBox="0 0 14 14"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -292,6 +295,7 @@ export const RightWholeArrow: React.FC<{ color?: string }> = ({ color }) => (
       stroke={color || '#00131A'}
       strokeLinecap="round"
       strokeLinejoin="round"
+      stroke-width="1.5"
     />
   </svg>
 );

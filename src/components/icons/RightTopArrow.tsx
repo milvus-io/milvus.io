@@ -11,7 +11,6 @@ export const RightTopArrowIcon = (props: { size?: number; color?: string }) => {
       <path
         d="M3.5 11L11.0833 3.41669M11.0833 3.41669V10.6967M11.0833 3.41669H3.80333"
         stroke={color}
-        strokeWidth="0.875"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

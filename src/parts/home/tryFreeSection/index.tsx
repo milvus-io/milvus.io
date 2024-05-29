@@ -77,7 +77,7 @@ export default function TryFreeSection() {
         <CustomButton
           href={CLOUD_SIGNUP_LINK}
           className={classes.linkButton}
-          endIcon={<RightWholeArrow color="#fff" />}
+          endIcon={<RightWholeArrow color="#fff" size={18} />}
           classes={{
             icon: classes.linkButtonIcon,
           }}

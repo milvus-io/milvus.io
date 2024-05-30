@@ -1,5 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
-import Giscus from '@giscus/react';
+import React, { useMemo, useLayoutEffect, useRef } from 'react';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import Layout from '../../components/layout/commonLayout';
@@ -48,6 +47,16 @@ export default function Template(props) {
   );
 
   useCopyCode(codeList);
+
+  useLayoutEffect(() => {
+    if (!docContainer.current) {
+      return;
+    }
+    const header = docContainer.current.querySelector('h1');
+    if (header?.innerText === title) {
+      header.remove();
+    }
+  }, []);
 
   const handleTagClick = tag => {
     navigate(`/blog?page=1#${tag}`);
@@ -172,17 +181,9 @@ export const getStaticProps = async ({ locale = 'en', params }) => {
       locale,
       blogList: allData,
       newHtml: tree,
-      anchorList,
+      anchorList: anchorList.filter(item => item.label !== rest.title),
       codeList,
       ...rest,
-      // author,
-      // date,
-      // tags,
-      // // origin,
-      // title,
-      // id,
-      // desc,
-      // cover,
     },
   };
 };

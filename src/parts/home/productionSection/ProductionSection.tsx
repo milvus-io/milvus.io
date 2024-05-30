@@ -45,8 +45,8 @@ export const ProductionSection = () => {
         <h2 className="text-[42px] font-[600] max-w-[480px] leading-[54px] max-tablet:text-center max-tablet:text-[38px] max-tablet:leading-[46px]">
           {t('productionSection.title')}
         </h2>
-        <div className="w-full overflow-x-hidden">
-          <div className="relative max-w-[660px]">
+        <div className="w-full max-w-[660px] overflow-x-hidden">
+          <div className="relative">
             <Marquee pauseOnHover className="[--duration:20s]">
               {COMPANY_LIST.map((company, index) => (
                 <div

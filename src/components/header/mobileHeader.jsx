@@ -14,6 +14,7 @@ import { LogoSection } from './Logos';
 import { CloseIcon, MenuIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
 import { Button } from '@/components/ui/button';
+import { GET_START_LINK } from '@/consts/links';
 
 export default function MobileHeader(props) {
   const { className } = props;
@@ -182,7 +183,7 @@ export default function MobileHeader(props) {
             </div>
 
             <div className={classes.mobileStartBtnWrapper}>
-              <Link href="/docs">
+              <Link href={GET_START_LINK}>
                 <Button className="w-full">{t('start')}</Button>
               </Link>
             </div>

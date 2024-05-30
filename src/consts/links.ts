@@ -44,3 +44,5 @@ export const MILVUS_INTEGRATION_RAGAS_LINK =
   'https://milvus.io/docs/integrate_with_ragas.md';
 export const MILVUS_INTEGRATION_MEMGPT_LINK =
   'https://milvus.io/docs/integrate_with_memgpt.md';
+
+export const GET_START_LINK = '/docs/quickstart.md';

@@ -1,6 +1,6 @@
 {
   "title": "From Dev to Prod,<0 /><1>AI-powered Search</1> <0 /> Made Easy",
-  "subTitle": "Milvus is an open-source vector database that brings search to GenAI applications. Pip-install on your laptop, use with popular AI dev tools and scale to billion of vectors.",
+  "subTitle": "Milvus is an open-source vector database that brings search to GenAI applications. pip-install on your laptop, use with popular AI dev tools and scale to billions of vectors.",
   "buttons": {
     "download": "Download",
     "star": "Star",
@@ -84,7 +84,7 @@
       ]
     },
     "milvus": {
-      "title": "Milvus on Docker or K8S",
+      "title": "Milvus on Docker or K8s",
       "advantage": "Highly scalable, optimized for performance",
       "features": [
         "Easy to deploy on Docker and Kubernetes",
@@ -121,7 +121,7 @@
     }
   },
   "subscribeSection": {
-    "title": "Join the community of developers building GenAI apps with Milvus, now with over <0>25 million+ downloads</0>",
+    "title": "Join the community of developers building GenAI apps with Milvus, now with over <0>25 million downloads</0>",
     "subscribe": {
       "title": "Get Milvus Updates",
       "desc": "Subscribe to get updates on the latest Milvus releases, tutorials and training from Zilliz, the creator and key maintainer of Milvus.",

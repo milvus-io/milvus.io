@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { RightWholeArrow } from '@/components/icons';
 import CustomButton from '@/components/customButton';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
-import { MILVUS_DOCS_OVERVIEW_LINK } from '@/consts/links';
+import { GET_START_LINK, MILVUS_DOCS_OVERVIEW_LINK } from '@/consts/links';
 
 export default function DeploySection() {
   const { t } = useTranslation('home');
@@ -44,7 +44,7 @@ export default function DeploySection() {
             </div>
 
             <CustomButton
-              href=""
+              href={GET_START_LINK}
               classes={{
                 root: classes.linkButton,
               }}

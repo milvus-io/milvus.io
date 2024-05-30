@@ -1,9 +1,13 @@
 import { useTranslation, Trans } from 'react-i18next';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
-import { CopyIcon, GitHubIcon } from '@/components/icons';
+import { GitHubIcon } from '@/components/icons';
 import classes from './index.module.less';
-import { GITHUB_MILVUS_LINK, MILVUS_PY_MILVUS } from '@/consts/links';
+import {
+  GITHUB_MILVUS_LINK,
+  MILVUS_PY_MILVUS,
+  GET_START_LINK,
+} from '@/consts/links';
 import CustomButton from '@/components/customButton';
 import CopyCodeButton from '@/components/copyCodeButton';
 const DownloadIcon = () => (
@@ -77,7 +81,7 @@ export default function HomePageHeaderSection(
           </a>
         </div>
 
-        <h1 className="w-full max-w-[700px] opacity-90 text-center text-slate-950 text-[72px] max-tablet:text-[60px] font-[700] leading-[80px] max-tablet:leading-[68px] mt-[0px] mb-[12px] mx-auto">
+        <h1 className="w-full max-w-[700px] opacity-90 text-center text-slate-950 text-[72px] max-tablet:text-[60px] font-[700] leading-[80px] max-tablet:leading-[68px] max-phone:text-[52px] max-phone:leading-[60px] mt-[0px] mb-[12px] mx-auto">
           <Trans
             t={t}
             i18nKey="title"
@@ -94,7 +98,7 @@ export default function HomePageHeaderSection(
         <div className="flex flex-col gap-[12px] items-center">
           <CopyCodeButton text={PIP_INSTALL_TEXT} />
           <CustomButton
-            href="/docs"
+            href={GET_START_LINK}
             classes={{
               root: classes.startButton,
             }}

@@ -27,45 +27,45 @@ export default function VectorDatabaseSection() {
             />
           </div>
           <div className={classes.descriptionWrapper}>
-            <h4 className="">{t('vdbSection.features.setup.title')}</h4>
-            <p className="">{t('vdbSection.features.setup.desc')}</p>
+            <h4>{t('vdbSection.features.setup.title')}</h4>
+            <p>{t('vdbSection.features.setup.desc')}</p>
           </div>
         </li>
         <li className={clsx(classes.featureItem, classes.reusable)}>
           {/* hover to roll */}
-          <div className="">
+          <div>
             <img src="/images/home/reusable-code.png" alt="" />
           </div>
           <div className={classes.descriptionWrapper}>
-            <h4 className="">{t('vdbSection.features.reusable.title')}</h4>
-            <p className="">{t('vdbSection.features.reusable.desc')}</p>
+            <h4>{t('vdbSection.features.reusable.title')}</h4>
+            <p>{t('vdbSection.features.reusable.desc')}</p>
           </div>
         </li>
         <li className={clsx(classes.featureItem, classes.integration)}>
-          <div className="flex items-center justify-center h-full">
+          <div className="pt-[50px] pb-[30px]">
             <img src="/images/home/integrations.png" alt="" />
           </div>
           <div className={classes.descriptionWrapper}>
-            <h4 className="">{t('vdbSection.features.integration.title')}</h4>
-            <p className="">{t('vdbSection.features.integration.desc')}</p>
+            <h4>{t('vdbSection.features.integration.title')}</h4>
+            <p>{t('vdbSection.features.integration.desc')}</p>
           </div>
         </li>
         <li className={clsx(classes.featureItem, classes.featureRich)}>
-          <div className="flex items-center justify-center h-full">
+          <div>
             <img src="/images/home/feature-rich.png" alt="" />
           </div>
           <div className={classes.descriptionWrapper}>
-            <h4 className="">{t('vdbSection.features.featureRich.title')}</h4>
-            <p className="">{t('vdbSection.features.featureRich.desc')}</p>
+            <h4>{t('vdbSection.features.featureRich.title')}</h4>
+            <p>{t('vdbSection.features.featureRich.desc')}</p>
           </div>
         </li>
         <li className={clsx(classes.featureItem, classes.community)}>
-          <div className="flex items-center justify-center h-full">
+          <div>
             <img src="/images/home/vibrant-community.png" alt="" />
           </div>
           <div className={classes.descriptionWrapper}>
-            <h4 className="">{t('vdbSection.features.community.title')}</h4>
-            <p className="">{t('vdbSection.features.community.desc')}</p>
+            <h4>{t('vdbSection.features.community.title')}</h4>
+            <p>{t('vdbSection.features.community.desc')}</p>
           </div>
         </li>
       </ul>

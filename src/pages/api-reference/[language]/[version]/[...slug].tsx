@@ -33,6 +33,7 @@ import {
   GITHUB_BUG_REPORT_URL,
 } from '@/consts/externalLinks';
 import { formatApiRelativePath } from '@/utils';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 interface ApiDetailPageProps {
   doc: string;
@@ -44,6 +45,8 @@ interface ApiDetailPageProps {
   relativePath: string;
   codeList: string[];
   curCategoryContentData: AllMdVersionIdType[];
+  headingContent: string;
+  languageCategory: string;
 }
 export default function Template(props: ApiDetailPageProps) {
   const {
@@ -56,7 +59,11 @@ export default function Template(props: ApiDetailPageProps) {
     relativePath,
     codeList,
     curCategoryContentData,
+    headingContent,
+    languageCategory,
   } = props;
+
+  console.log('relativePath--', relativePath);
 
   const { t } = useTranslation('common');
 
@@ -120,12 +127,22 @@ export default function Template(props: ApiDetailPageProps) {
     }
   }, [category, relativePath, version]);
 
+  const { pageTitle, absoluteUrl } = useMemo(() => {
+    const pageTitle = `${headingContent} - ${languageCategory} ${version} for Milvus}`;
+    const absoluteUrl = `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${relativePath}`;
+
+    return {
+      pageTitle,
+      absoluteUrl,
+    };
+  }, [headingContent, languageCategory, relativePath, version]);
+
   return (
     <DocLayout
       seo={{
-        title: '',
+        title: pageTitle,
         desc: '',
-        url: '',
+        url: absoluteUrl,
       }}
       left={
         <LeftNavSection
@@ -225,6 +242,7 @@ export const getStaticProps: GetStaticProps = async context => {
   const { version } = context.params;
   const languageCategory: ApiReferenceRouteEnum = context.params
     .language as ApiReferenceRouteEnum;
+
   const slug = context.params.slug as string[];
   const routeCategoryToLanguage: Record<
     ApiReferenceRouteEnum,
@@ -237,6 +255,7 @@ export const getStaticProps: GetStaticProps = async context => {
     [ApiReferenceRouteEnum.Python]: ApiReferenceLanguageEnum.Python,
     [ApiReferenceRouteEnum.Restful]: ApiReferenceLanguageEnum.Restful,
   };
+
   const apiData = generateApiReferenceVersionsInfo();
   const { versions } =
     apiData.find(
@@ -260,7 +279,11 @@ export const getStaticProps: GetStaticProps = async context => {
       return targetSlug === sourceSlug;
     }) || {};
 
-  const { tree: doc, codeList } = await markdownToHtml(apiContent || '');
+  const {
+    tree: doc,
+    codeList,
+    headingContent,
+  } = await markdownToHtml(apiContent || '');
 
   const curCategoryContentDataOfAllVersion =
     generateApiMenuAndContentDataOfAllVersions({
@@ -285,6 +308,8 @@ export const getStaticProps: GetStaticProps = async context => {
       versions: versions,
       relativePath: frontMatter.relativePath,
       curCategoryContentData: curCategoryContentDataOfAllVersion,
+      headingContent,
+      languageCategory,
     },
   };
 };

@@ -9,7 +9,7 @@ const ChatButton = dynamic(
   }
 );
 
-export function InkeepChatButton() {
+function InkeepChatButton() {
   const { baseSettings, aiChatSettings, searchSettings, modalSettings } =
     useInkeepSettings();
 
@@ -23,4 +23,12 @@ export function InkeepChatButton() {
   };
 
   return <ChatButton {...chatButtonProps} />;
+}
+
+export default function InkeepChatButtonContainer() {
+  const displayInkeep =
+    process.env.DISPLAY_INKEEP_WIDGET === 'true' ||
+    process.env.NEXT_PUBLIC_DISPLAY_INKEEP_WIDGET === 'true';
+
+  return <>{displayInkeep ? <InkeepChatButton /> : null}</>;
 }

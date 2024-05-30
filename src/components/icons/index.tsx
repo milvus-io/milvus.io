@@ -295,7 +295,7 @@ export const RightWholeArrow: React.FC<{ color?: string; size?: number }> = ({
       stroke={color || '#00131A'}
       strokeLinecap="round"
       strokeLinejoin="round"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
   </svg>
 );

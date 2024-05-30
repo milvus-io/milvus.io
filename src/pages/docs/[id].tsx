@@ -60,17 +60,17 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   const seoInfo = useMemo(() => {
     const title = isHome
       ? DOC_HOME_TITLE
-      : `${frontMatter?.title || headingContent} | Milvus Documentation`;
+      : `${frontMatter?.title || headingContent}`;
 
     const pageTitle =
       version === latestVersion
-        ? `${title} | Milvus`
+        ? `${title} | Milvus Documentation`
         : `${title} Milvus ${version} documentation`;
 
     const url = isHome
-      ? `${ABSOLUTE_BASE_URL}/docs/${version}`
-      : `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`;
-    const desc = isHome ? 'Milvus Documentation' : summary;
+      ? `${ABSOLUTE_BASE_URL}/docs/`
+      : `${ABSOLUTE_BASE_URL}/docs/${currentId}`;
+    const desc = isHome ? 'Milvus Documentation' : summary || '';
 
     return {
       title: pageTitle,

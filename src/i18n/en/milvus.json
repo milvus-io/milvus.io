@@ -952,5 +952,11 @@
     "wait": "Loading...",
     "success": "Success",
     "failed": "Failed"
+  },
+  "cookie": {
+    "title": "How we use cookies",
+    "consent": "This website stores cookies on your computer. By continuing to browse or by clicking ‘Accept’, you agree to the storing of cookies on your device to enhance your site experience and for analytical purposes.",
+    "accept": "Accept",
+    "reject": "Reject"
   }
 }

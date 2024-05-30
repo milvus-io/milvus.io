@@ -78,4 +78,4 @@ jobs:
         run: |
           echo ${{ secrets.kubeconfig }} > config64
           base64 -d config64 > kubeconfig
-          kubectl set image deployment/milvus-io-dev milvus-io-dev=milvusdb/milvus-io-dev:${{ needs.build.outputs.docker-image-tag }} -n ued --kubeconfig=kubeconfig
+          kubectl set image deployment/milvus-io-prod milvus-io-prod=milvusdb/milvus-io-dev:${{ needs.build.outputs.docker-image-tag }} -n ued --kubeconfig=kubeconfig

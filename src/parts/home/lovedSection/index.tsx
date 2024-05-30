@@ -12,7 +12,7 @@ export default function LovedSection() {
       author: t('lovedSection.cards.nandula.author'),
       jobTitle: t('lovedSection.cards.nandula.title'),
       avatar: '/images/home/nandula.png',
-      href: 'https://medium.com/@gt.pd/asimov-leveraging-rag-models-for-enhanced-efficiency-in-the-telecommunications-engineering-domain-eee0b2876a18',
+      href: 'https://medium.com/@dialoglk/asimov-leveraging-rag-models-for-enhanced-efficiency-in-the-telecommunications-engineering-domain-f220fc405571',
     },
     {
       content: t('lovedSection.cards.bhargav.content'),

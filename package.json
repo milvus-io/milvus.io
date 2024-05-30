@@ -26,7 +26,7 @@
     "@octokit/core": "^3.5.1",
     "@radix-ui/react-slot": "^1.0.2",
     "@sentry/gatsby": "^6.16.1",
-    "axios": "^0.26.0",
+    "axios": "^0.28.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^1.2.1",
     "cropperjs": "^1.5.12",

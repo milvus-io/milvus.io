@@ -42,7 +42,7 @@ export default function VectorDatabaseSection() {
           </div>
         </li>
         <li className={clsx(classes.featureItem, classes.integration)}>
-          <div className="">
+          <div className="flex items-center justify-center h-full">
             <img src="/images/home/integrations.png" alt="" />
           </div>
           <div className={classes.descriptionWrapper}>
@@ -51,7 +51,7 @@ export default function VectorDatabaseSection() {
           </div>
         </li>
         <li className={clsx(classes.featureItem, classes.featureRich)}>
-          <div className="">
+          <div className="flex items-center justify-center h-full">
             <img src="/images/home/feature-rich.png" alt="" />
           </div>
           <div className={classes.descriptionWrapper}>
@@ -60,7 +60,7 @@ export default function VectorDatabaseSection() {
           </div>
         </li>
         <li className={clsx(classes.featureItem, classes.community)}>
-          <div className="">
+          <div className="flex items-center justify-center h-full">
             <img src="/images/home/vibrant-community.png" alt="" />
           </div>
           <div className={classes.descriptionWrapper}>

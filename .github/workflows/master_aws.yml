@@ -1,4 +1,4 @@
-name: Build and deploy to preview
+name: Build and deploy to production
 
 on:
   repository_dispatch:

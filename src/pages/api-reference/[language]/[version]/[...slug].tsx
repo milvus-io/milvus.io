@@ -306,7 +306,7 @@ export const getStaticProps: GetStaticProps = async context => {
       versions: versions,
       relativePath: frontMatter.relativePath,
       curCategoryContentData: curCategoryContentDataOfAllVersion,
-      headingContent,
+      headingContent: headingContent ?? 'Milvus API Reference',
       languageCategory,
     },
   };

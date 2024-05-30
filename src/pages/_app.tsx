@@ -7,6 +7,7 @@ import 'instantsearch.css/themes/reset.css';
 import Script from 'next/script';
 
 import Head from 'next/head';
+import CustomCookieConsent from '@/components/cookieConsent';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -47,6 +48,7 @@ function MyApp({ Component, pageProps }) {
         charSet="utf-8"
         defer
       ></Script>
+      <CustomCookieConsent />
     </>
   );
 }

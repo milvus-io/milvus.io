@@ -58,6 +58,7 @@ export default function HomePageHeaderSection(
               'flex gap-[4px] basis-[75px] items-center flex-shrink-0 flex-grow-0 px-[8px] py-[3px] rounded',
               classes.downloadButton
             )}
+            target="_blank"
           >
             <DownloadIcon />
             <span className="text-[12px] font-[500] leading-[18px] text-black">
@@ -70,6 +71,7 @@ export default function HomePageHeaderSection(
               'flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] rounded border border-solid',
               classes.starButton
             )}
+            target="_blank"
           >
             <GitHubIcon />
             <span className="text-[12px] leading-[18px] ml-[2px] mr-[4px] text-black">

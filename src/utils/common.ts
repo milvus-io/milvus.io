@@ -215,7 +215,7 @@ export async function markdownToHtml(
       instance
     ) {
       if (tokens[idx].hLevel === 1) {
-        titleContent = tokens[idx + 1].content;
+        titleContent = tokens[idx + 1].content ?? null;
       }
       return rule(tokens, idx, options, env, instance);
     };

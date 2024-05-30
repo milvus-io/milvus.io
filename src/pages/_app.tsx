@@ -36,6 +36,17 @@ function MyApp({ Component, pageProps }) {
         id="google-tag-manager"
         defer
       />
+      <Script
+        src="https://tag.clearbitscripts.com/v1/pk_9b83069276f2350591e46955085ee5a8/tags.js"
+        referrerPolicy="strict-origin-when-cross-origin"
+        defer
+      ></Script>
+      <Script
+        src="//js.hsforms.net/forms/embed/v2.js"
+        type="text/javascript"
+        charSet="utf-8"
+        defer
+      ></Script>
     </>
   );
 }

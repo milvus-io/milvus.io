@@ -6,7 +6,7 @@ import FlexibleSectionContainer from '../../flexibleSection';
 import Header from '../../header';
 import Footer from '../../footer';
 
-import { InkeepChatButton } from '@/components/inkeep/InkeepChatButton';
+import InkeepChatButtonContainer from '@/components/inkeep/InkeepChatButton';
 
 const MENU_MINIMUM_WIDTH = 22;
 const MENU_MAXIMUM_WIDTH = 283;
@@ -80,8 +80,8 @@ export default function DocLayout(props: DocLayoutPropsType) {
               />
             )}
           </div>
-          <InkeepChatButton />
         </div>
+        <InkeepChatButtonContainer />
       </main>
     </>
   );

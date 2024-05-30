@@ -63,5 +63,10 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
     ],
   };
 
-  return { baseSettings, aiChatSettings, searchSettings, modalSettings };
+  return {
+    baseSettings,
+    aiChatSettings,
+    searchSettings,
+    modalSettings,
+  };
 };

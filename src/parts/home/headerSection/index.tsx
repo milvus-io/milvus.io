@@ -81,7 +81,7 @@ export default function HomePageHeaderSection(
           </a>
         </div>
 
-        <h1 className="w-full max-w-[700px] opacity-90 text-center text-slate-950 text-[72px] max-tablet:text-[60px] font-[700] leading-[80px] max-tablet:leading-[68px] max-phone:text-[52px] max-phone:leading-[60px] mt-[0px] mb-[12px] mx-auto">
+        <h1 className="w-full max-w-[700px] opacity-90 text-center text-slate-950 text-[72px]  font-[700] leading-[80px] max-tablet:max-w-[600px] max-tablet:text-[60px] max-tablet:leading-[68px] max-phone:text-[52px] max-phone:leading-[60px] mt-[0px] mb-[12px] mx-auto">
           <Trans
             t={t}
             i18nKey="title"

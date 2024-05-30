@@ -83,12 +83,13 @@ export default function DesktopHeader(props: Props) {
                 return (
                   <li key={config.label} className="shrink-0">
                     <div className="group relative">
-                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] font-['Inter'] h-[21px] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer">
+                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] font-['Inter'] h-[21px] px-[6px] text-black1/[0.7] hover:text-black1/[0.9] cursor-pointer">
                         <span className="inline-block leading-[16px]">
                           {config.label}
                         </span>
                         <DownArrowIcon
                           size={16}
+                          color="rgb(0, 19, 26, 0.7)"
                           className="group-hover:rotate-180 transition-transform"
                         />
                       </button>
@@ -114,7 +115,7 @@ export default function DesktopHeader(props: Props) {
                 <li key={config.label}>
                   <Link
                     href={config.link}
-                    className="block text-[14px] leading-[21px] font-[500] px-[6px] text-[#00131A] hover:opacity-70 cursor-pointer"
+                    className="block text-[14px] leading-[21px] font-[500] px-[6px] text-black1/[0.7] hover:text-black1/[0.9] cursor-pointer"
                   >
                     {config.label}
                   </Link>
@@ -127,7 +128,7 @@ export default function DesktopHeader(props: Props) {
         <div>
           <Link href={GET_START_LINK}>
             <div className="h-9 px-3 py-1.5 rounded-md border border-solid border-gray-300 hover:border-slate-950 justify-start items-center gap-1 inline-flex cursor-pointer transition">
-              <div className="text-center text-slate-950 text-sm font-medium leading-[21px]">
+              <div className="text-center text-black1 text-sm font-medium leading-[21px]">
                 {t('start')}
               </div>
             </div>

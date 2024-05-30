@@ -14,7 +14,9 @@ const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
         [className]: className,
       })}
     >
-      <img className={styles.cover} src={cover} alt={title} />
+      <div className="w-full aspect-[1.59817/1] overflow-hidden rounded-[6px]">
+        <img className={styles.cover} src={cover} alt={title} />
+      </div>
       <div className={styles.descWrapper}>
         <div className={styles.bottomWrapper}>
           <Tags list={tags} tagsClass={styles.tags} />

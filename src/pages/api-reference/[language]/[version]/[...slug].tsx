@@ -63,8 +63,6 @@ export default function Template(props: ApiDetailPageProps) {
     languageCategory,
   } = props;
 
-  console.log('relativePath--', relativePath);
-
   const { t } = useTranslation('common');
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md

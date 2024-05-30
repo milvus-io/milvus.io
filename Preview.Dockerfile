@@ -1,6 +1,5 @@
 FROM node:18 as builder
 WORKDIR /app
-COPY . .
 
 ARG MSERVICE_URL
 ARG CMS_BASE_URL
@@ -19,12 +18,13 @@ ENV INKEEP_ORGANIZATION_ID=$INKEEP_ORGANIZATION_ID
 ENV IS_PREVIEW=$IS_PREVIEW
 ENV DISPLAY_INKEEP_WIDGET=true
 
-# install pnpm
+FROM builder AS frontend_deps
+COPY package.json pnpm-lock.yaml .npmrc ./
 RUN npm install -g pnpm
+RUN pnpm install --prefer-offline --frozen-lockfile
 
-# install node modules
-RUN pnpm install
-# build nextjs
+FROM frontend_deps AS frontend_builder
+COPY . .
 RUN pnpm build
 
 # => Run container
@@ -35,7 +35,7 @@ RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
 
 # Static build
-COPY --from=builder /app/out /usr/share/nginx/html/
+COPY --from=frontend_builder /app/out /usr/share/nginx/html/
 
 # Default port exposure
 EXPOSE 80

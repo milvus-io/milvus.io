@@ -26,6 +26,7 @@ function InkeepChatButton() {
 }
 
 export default function InkeepChatButtonContainer() {
+  console.info('DISPLAY_INKEEP_WIDGET', process.env.DISPLAY_INKEEP_WIDGET);
   const displayInkeep =
     process.env.DISPLAY_INKEEP_WIDGET === 'true' ||
     process.env.NEXT_PUBLIC_DISPLAY_INKEEP_WIDGET === 'true';

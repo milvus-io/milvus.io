@@ -1,68 +1,81 @@
-name: Build and deploy to prod
+name: Build and deploy to preview
 
 on:
   repository_dispatch:
-    types: prod-deploy
+    types: pro-deploy
+    branches:
+      - master
   push:
     branches:
       - master
   workflow_dispatch:
 
 env:
-  NODE_OPTIONS: "--max_old_space_size=8196"
+  NODE_OPTIONS: '--max_old_space_size=8192'
 
 jobs:
   build:
-    runs-on: "ubuntu-latest"
-
+    runs-on: 'ubuntu-latest'
+    outputs:
+      docker-image-tag: ${{ steps.generate-tag-name.outputs.docker_tag }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: 'master'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
 
       - name: update submodules
         run: |
           git submodule init
           git submodule update --remote
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - name: Caching yarn
-        uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      - uses: azure/docker-login@v1
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-            ${{ runner.os }}-yarn-
+          username: ${{ secrets.DOCKER_USERNAME}}
+          password: ${{ secrets.DOCKER_PWD}}
 
-      #       - name: Caching Gatsby
-      #         id: gatsby-cache-build
-      #         uses: actions/cache@v2
-      #         with:
-      #           path: |
-      #             public
-      #             .cache
-      #           key: ${{ runner.os }}-gatsby-build-master-${{ github.run_id }}
-      #           restore-keys: |
-      #             ${{ runner.os }}-gatsby-build-master
-
-      - name: Installing dependencies
-        run: yarn install
-
-      - name: Building Gatsby site
-        run: yarn build --log-pages
-        env:
-          MSERVICE_URL: ${{ secrets.MSERVICE_URL }}
-
-      - name: Sync files
+      - name: Generate docker image tag name
+        id: generate-tag-name
         run: |
-          echo ${{ secrets.RSYNC_PASSWORD }} > rsync.pass
-          sudo chmod 600 rsync.pass
-          sudo chown root rsync.pass
-          sudo rsync --password-file=rsync.pass -rDvpzc --delete public/ rsync://${{secrets.PROD_SITE}}
+          export tag=${{ github.sha }}-$GITHUB_RUN_NUMBER
+          echo $tag
+          echo "docker_tag=$tag" >> $GITHUB_OUTPUT
+
+      - name: Building Milvus site and push to docker hub
+        id: build-image
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 60
+          max_attempts: 2
+          retry_on: error
+          command: |
+            docker build "$GITHUB_WORKSPACE/" -f "Builder.Dockerfile" \
+            --build-arg MSERVICE_URL=${{ secrets.MSERVICE_URL }} \
+            --build-arg CMS_BASE_URL=${{ secrets.CMS_BASE_URL }} \
+            --build-arg REPO_STATICS_KEY=${{ secrets.REPO_STATICS_KEY }} \
+            --build-arg INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY }} \
+            --build-arg INKEEP_INTEGRATION_ID=${{ secrets.INKEEP_INTEGRATION_ID }} \
+            --build-arg INKEEP_ORGANIZATION_ID=${{ secrets.INKEEP_ORGANIZATION_ID }} \
+            -t milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
+            docker push milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
+      #         env:
+      #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
+      #           CI: true
+
+  deploy:
+    runs-on: amazon-linux-2
+    needs: build
+    steps:
+      - name: Deploy to cluster
+        run: |
+          echo ${{ secrets.kubeconfig }} > config64
+          base64 -d config64 > kubeconfig
+          kubectl set image deployment/milvus-io-prod milvus-io-prod=milvusdb/milvus-io-dev:${{ needs.build.outputs.docker-image-tag }} -n ued --kubeconfig=kubeconfig

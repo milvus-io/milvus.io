@@ -1,5 +1,5 @@
 import { Remarkable } from 'remarkable';
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/core';
 
 function addPrefixToHref(htmlString: string, prefix: string) {
   const hrefRegex = /href="([^"]*)"/g;

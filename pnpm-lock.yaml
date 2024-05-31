@@ -174,6 +174,9 @@ importers:
       http-server:
         specifier: ^14.1.1
         version: 14.1.1
+      husky:
+        specifier: ^9.0.11
+        version: 9.0.11
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -2566,6 +2569,11 @@ packages:
 
   humps@2.0.1:
     resolution: {integrity: sha512-E0eIbrFWUhwfXJmsbdjRQFQPrl5pTEoKlz163j1mTqqUnU9PgR4AgB8AIITzuB3vLBdxZXyZ9TDIrwB2OASz4g==}
+
+  husky@9.0.11:
+    resolution: {integrity: sha512-AB6lFlbwwyIqMdHYhwPe+kjOC3Oc5P3nThEoW/AaO2BX3vJDjWPFxYLxokUZOo6RNX20He3AaT8sESs9NJcmEw==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   i18next@21.10.0:
     resolution: {integrity: sha512-YeuIBmFsGjUfO3qBmMOc0rQaun4mIpGKET5WDwvu8lU7gvwpcariZLNtL0Fzj+zazcHUrlXHiptcFhBMFaxzfg==}
@@ -7835,6 +7843,8 @@ snapshots:
       - supports-color
 
   humps@2.0.1: {}
+
+  husky@9.0.11: {}
 
   i18next@21.10.0:
     dependencies:

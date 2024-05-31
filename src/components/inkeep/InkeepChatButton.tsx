@@ -30,5 +30,11 @@ export default function InkeepChatButtonContainer() {
     process.env.IS_PREVIEW === 'preview' ||
     process.env.NEXT_PUBLIC_DISPLAY_INKEEP_WIDGET === 'true';
 
+  console.log(
+    'displayInkeep',
+    process.env.IS_PREVIEW,
+    process.env.NEXT_PUBLIC_DISPLAY_INKEEP_WIDGET
+  );
+
   return <>{displayInkeep ? <InkeepChatButton /> : null}</>;
 }

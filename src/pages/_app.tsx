@@ -1,11 +1,9 @@
 import '../styles/common.css';
 import '../styles/docsStyle.less';
 import '../i18n';
-import 'highlight.js/styles/stackoverflow-light.css';
 import '@docsearch/css';
 import 'instantsearch.css/themes/reset.css';
 import Script from 'next/script';
-
 import Head from 'next/head';
 import CustomCookieConsent from '@/components/cookieConsent';
 
@@ -14,10 +12,6 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <link rel="icon" href="/favicon-32x32.png" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap"
-          rel="stylesheet"
-        />
         <meta
           name="image"
           property="og:image"

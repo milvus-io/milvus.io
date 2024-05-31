@@ -64,7 +64,7 @@ jobs:
             --build-arg INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY }} \
             --build-arg INKEEP_INTEGRATION_ID=${{ secrets.INKEEP_INTEGRATION_ID }} \
             --build-arg INKEEP_ORGANIZATION_ID=${{ secrets.INKEEP_ORGANIZATION_ID }} \
-            --build-arg IS_PREVIEW=preview \
+            --build-arg IS_PREVIEW=${{ secrets.PREVIEW_SITE }} \
             -t milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
             docker push milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
       #         env:

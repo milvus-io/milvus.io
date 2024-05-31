@@ -7,7 +7,8 @@
     "build": "node scripts/migrateAssets.js && next build",
     "postbuild": "next-sitemap --config sitemap.config.js",
     "start": "http-server ./out",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky"
   },
   "dependencies": {
     "@docsearch/react": "^3.2.1",
@@ -67,6 +68,7 @@
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.2",
     "http-server": "^14.1.1",
+    "husky": "^9.0.11",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.2"

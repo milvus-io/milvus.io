@@ -16,14 +16,9 @@ const INKEEP_PRIMARY_COLOR = '#4DB7EF';
 
 export const useInkeepSettings = (): InkeepSharedSettings => {
   const baseSettings: InkeepWidgetBaseSettings = {
-    apiKey:
-      process.env.INKEEP_API_KEY || process.env.NEXT_PUBLIC_INKEEP_API_KEY,
-    integrationId:
-      process.env.INKEEP_INTEGRATION_ID ||
-      process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
-    organizationId:
-      process.env.INKEEP_ORGANIZATION_ID ||
-      process.env.NEXT_PUBLIC_INKEEP_ORGANIZATION_ID,
+    apiKey: process.env.NEXT_PUBLIC_INKEEP_API_KEY,
+    integrationId: process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
+    organizationId: process.env.NEXT_PUBLIC_INKEEP_ORGANIZATION_ID,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
   };
 
@@ -57,9 +52,9 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
       },
     ],
     quickQuestions: [
-      'What are some techniques for increasing embedding speeds?',
+      'How to use Milvus lite?',
+      "What's new in Milvus 2.4?",
       'How do I perform hybrid search and how does it work?',
-      'What is re-ranking and are there built in ways to do that?',
     ],
   };
 

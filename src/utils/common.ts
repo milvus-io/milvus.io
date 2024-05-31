@@ -1,5 +1,11 @@
 import { Remarkable } from 'remarkable';
+
 import hljs from 'highlight.js/lib/core';
+import 'highlight.js/styles/base16/atelier-dune-light.css';
+import bash from 'highlight.js/lib/languages/bash';
+
+// no language named shell, use bash instead
+hljs.registerLanguage('shell', bash);
 
 function addPrefixToHref(htmlString: string, prefix: string) {
   const hrefRegex = /href="([^"]*)"/g;
@@ -56,7 +62,7 @@ export async function markdownToHtml(
 
   const md = new Remarkable({
     html: true,
-    highlight: function (str, lang) {
+    highlight: function (str, lang = 'javascript') {
       if (lang && hljs.getLanguage(lang)) {
         try {
           return (

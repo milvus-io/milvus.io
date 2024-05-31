@@ -1,4 +1,4 @@
-import React, { useMemo, useLayoutEffect, useRef } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import Layout from '../../components/layout/commonLayout';
@@ -48,7 +48,7 @@ export default function Template(props) {
 
   useCopyCode(codeList);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!docContainer.current) {
       return;
     }

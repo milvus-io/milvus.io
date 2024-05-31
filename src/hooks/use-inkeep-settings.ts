@@ -27,8 +27,6 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
   };
 
-  console.log('baseSettings--', baseSettings);
-
   const modalSettings: InkeepModalSettings = {
     // optional settings
   };

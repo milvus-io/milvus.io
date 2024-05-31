@@ -30,6 +30,8 @@ export default function InkeepChatButtonContainer() {
     process.env.IS_PREVIEW === 'preview' ||
     process.env.NEXT_PUBLIC_DISPLAY_INKEEP_WIDGET === 'true';
 
+  console.log('inkeep key--', process.env.INKEEP_API_KEY);
+  console.log('test var---', process.env.TEST_VAR, process.env.TEST_VAR2);
   console.log(
     'displayInkeep',
     process.env.IS_PREVIEW,

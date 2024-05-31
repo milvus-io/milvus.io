@@ -18,6 +18,8 @@ interface DocLayoutPropsType {
     title: string;
     desc: string;
     url: string;
+    docSearchLanguage?: string;
+    docSearchVersion?: string;
   };
   classes?: {
     root?: string;
@@ -39,7 +41,13 @@ export default function DocLayout(props: DocLayoutPropsType) {
     showFooter = true,
   } = props;
 
-  const { title = '', desc = '', url = '' } = seo;
+  const {
+    title = '',
+    desc = '',
+    url = '',
+    docSearchLanguage,
+    docSearchVersion,
+  } = seo;
   const { root = '', main = '', content = '' } = customerClasses;
 
   return (
@@ -51,6 +59,12 @@ export default function DocLayout(props: DocLayoutPropsType) {
           <meta property="og:title" content={title}></meta>
           <meta property="og:description" content={desc} />
           <meta property="og:url" content={url} />
+          {docSearchLanguage && (
+            <meta name="docsearch:language" content={docSearchLanguage} />
+          )}
+          {docSearchVersion && (
+            <meta name="docsearch:version" content={docSearchVersion} />
+          )}
         </Head>
         <Header className={classes.docHeader} />
         <div className={clsx(classes.mainContainer, main)}>

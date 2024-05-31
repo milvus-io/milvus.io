@@ -62,7 +62,7 @@ export async function markdownToHtml(
 
   const md = new Remarkable({
     html: true,
-    highlight: function (str, lang = 'javascript') {
+    highlight: function (str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         try {
           return (

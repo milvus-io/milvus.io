@@ -1,7 +1,6 @@
 import '../styles/common.css';
 import '../styles/docsStyle.less';
 import '../i18n';
-import 'highlight.js/styles/stackoverflow-light.css';
 import '@docsearch/css';
 import 'instantsearch.css/themes/reset.css';
 import Script from 'next/script';

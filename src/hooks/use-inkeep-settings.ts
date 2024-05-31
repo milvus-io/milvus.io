@@ -57,9 +57,9 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
       },
     ],
     quickQuestions: [
-      'What are some techniques for increasing embedding speeds?',
+      'How to use Milvus lite?',
+      "What's new in Milvus 2.4?",
       'How do I perform hybrid search and how does it work?',
-      'What is re-ranking and are there built in ways to do that?',
     ],
   };
 

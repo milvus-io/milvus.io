@@ -132,7 +132,11 @@ export default function DocDetailPage(props: DocDetailPageProps) {
 
   return (
     <DocLayout
-      seo={seoInfo}
+      seo={{
+        ...seoInfo,
+        docSearchLanguage: 'en',
+        docSearchVersion: version,
+      }}
       left={
         <LeftNavSection
           tree={menuTree}

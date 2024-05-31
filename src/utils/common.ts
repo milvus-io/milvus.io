@@ -3,9 +3,19 @@ import { Remarkable } from 'remarkable';
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/base16/atelier-dune-light.css';
 import bash from 'highlight.js/lib/languages/bash';
+import python from 'highlight.js/lib/languages/python';
+import javascript from 'highlight.js/lib/languages/javascript';
+import go from 'highlight.js/lib/languages/go';
 
 // no language named shell, use bash instead
 hljs.registerLanguage('shell', bash);
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('go', go);
+
+// hljs.configure({
+//   languages: ['python', 'javascript', 'bash', 'go', 'java'],
+// });
 
 function addPrefixToHref(htmlString: string, prefix: string) {
   const hrefRegex = /href="([^"]*)"/g;
@@ -63,25 +73,19 @@ export async function markdownToHtml(
   const md = new Remarkable({
     html: true,
     highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return (
-            hljs.highlight(lang, str).value +
-            `<button class="copy-code-btn"></button>`
-          );
-        } catch (err) {
-          console.log('error', err);
-        }
-      } else {
-        // no language named curl
-        try {
-          return (
-            hljs.highlight('shell', str).value +
-            `<button class="copy-code-btn"></button>`
-          );
-        } catch (err) {
-          console.log('error', err);
-        }
+      try {
+        return (
+          hljs.highlightAuto(str, [
+            'python',
+            'javascript',
+            'bash',
+            'go',
+            'java',
+            'csharp',
+          ]).value + `<button class="copy-code-btn"></button>`
+        );
+      } catch (err) {
+        console.log('error', err);
       }
 
       try {

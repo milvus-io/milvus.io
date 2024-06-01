@@ -2,7 +2,7 @@ name: Build and deploy to production
 
 on:
   repository_dispatch:
-    types: pro-deploy
+    types: prod-deploy
     branches:
       - master
   push:

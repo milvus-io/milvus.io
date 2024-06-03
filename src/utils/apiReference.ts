@@ -223,39 +223,44 @@ export const generateApiMenuAndContentDataOfSingleVersion = (params: {
   version: string;
   withContent?: boolean;
 }) => {
-  const { language, version, withContent = false } = params;
-  const path = API_REFERENCE_CONFIG[language].path;
-  const category = API_REFERENCE_CONFIG[language].category;
-  const versionPath = `${path}/${version}`;
-  const contentList: ApiFileDateInfoType[] = [];
+  try {
+    console.log('params--', params);
+    const { language, version, withContent = false } = params;
+    const path = API_REFERENCE_CONFIG[language].path;
+    const category = API_REFERENCE_CONFIG[language].category;
+    const versionPath = `${path}/${version}`;
+    const contentList: ApiFileDateInfoType[] = [];
 
-  readApiFile({
-    filePath: versionPath,
-    category,
-    version,
-    fileDataList: contentList,
-    withContent,
-  });
+    readApiFile({
+      filePath: versionPath,
+      category,
+      version,
+      fileDataList: contentList,
+      withContent,
+    });
 
-  const menuData = generateApiMenuData({
-    filePath: versionPath,
-    parentIds: [language],
-  });
+    const menuData = generateApiMenuData({
+      filePath: versionPath,
+      parentIds: [language],
+    });
 
-  return {
-    version,
-    menuData: [
-      {
-        ...menuData,
-        id: language,
-        label: API_REFERENCE_CONFIG[language].name,
-        parentIds: [],
-        parentId: '',
-        level: NaN,
-      },
-    ],
-    contentList,
-  };
+    return {
+      version,
+      menuData: [
+        {
+          ...menuData,
+          id: language,
+          label: API_REFERENCE_CONFIG[language].name,
+          parentIds: [],
+          parentId: '',
+          level: NaN,
+        },
+      ],
+      contentList,
+    };
+  } catch (error) {
+    console.log('error--', error);
+  }
 };
 
 // 4. file data list of each language for all versions to generate dynamic routes

@@ -18,7 +18,7 @@ import { useCopyCode } from '../../hooks/enhanceCodeBlock';
 export default function Template(props) {
   const {
     locale,
-    blogList,
+
     newHtml,
     author,
     date,
@@ -29,6 +29,7 @@ export default function Template(props) {
     cover,
     anchorList,
     codeList,
+    moreBlogs,
   } = props;
 
   const docContainer = useRef(null);
@@ -38,13 +39,6 @@ export default function Template(props) {
   const shareUrl = useMemo(() => `${ABSOLUTE_BASE_URL}/blog/${id}`, [id]);
 
   const dateTime = useMemo(() => dayjs(date).format('MMMM DD, YYYY'), [date]);
-  const moreBlogs = useMemo(
-    () =>
-      blogList
-        .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
-        .slice(0, 3),
-    [blogList, id, tags]
-  );
 
   useCopyCode(codeList);
 
@@ -169,7 +163,7 @@ export const getStaticProps = async ({ locale = 'en', params }) => {
   const { id } = params;
   const allData = blogUtils.getAllData();
 
-  const { content, ...rest } = allData.find(v => v.id === id);
+  const { content, tags, ...rest } = allData.find(v => v.id === id);
 
   const { tree, codeList, anchorList } = await markdownToHtml(content, {
     showAnchor: true,
@@ -179,10 +173,13 @@ export const getStaticProps = async ({ locale = 'en', params }) => {
   return {
     props: {
       locale,
-      blogList: allData,
       newHtml: tree,
       anchorList: anchorList.filter(item => item.label !== rest.title),
       codeList,
+      moreBlogs: allData
+        .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
+        .slice(0, 3),
+      tags,
       ...rest,
     },
   };

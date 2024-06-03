@@ -167,7 +167,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
             />
           }
           center={
-            <HomeContent homeData={homeData.tree} latestBlog={latestBlog} />
+            <HomeContent homeData={homeData?.tree} latestBlog={latestBlog} />
           }
         />
       ) : (

@@ -53,13 +53,13 @@ export default function DocContent(props: DocContentPropsType) {
         })}
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       ></div>
-      {commitInfo?.message && (
+      {/* {commitInfo?.message && (
         <GitCommitInfo
           commitInfo={commitInfo}
           mdId={mdId}
           commitTrans={t('v3trans.docs.commitTrans')}
         />
-      )}
+      )} */}
       {/* <ScoredFeedback trans={trans} pageId={mdId} /> */}
     </div>
   );

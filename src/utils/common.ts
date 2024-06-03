@@ -6,12 +6,14 @@ import bash from 'highlight.js/lib/languages/bash';
 import python from 'highlight.js/lib/languages/python';
 import javascript from 'highlight.js/lib/languages/javascript';
 import go from 'highlight.js/lib/languages/go';
+import csharp from 'highlight.js/lib/languages/csharp';
 
 // no language named shell, use bash instead
 hljs.registerLanguage('shell', bash);
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('go', go);
+hljs.registerLanguage('csharp', csharp);
 
 // hljs.configure({
 //   languages: ['python', 'javascript', 'bash', 'go', 'java'],
@@ -72,7 +74,7 @@ export async function markdownToHtml(
 
   const md = new Remarkable({
     html: true,
-    highlight: function (str, lang) {
+    highlight: function (str: string, lang: string) {
       try {
         return (
           hljs.highlightAuto(str, [
@@ -86,15 +88,8 @@ export async function markdownToHtml(
         );
       } catch (err) {
         console.log('error', err);
+        return ''; // use external default escaping
       }
-
-      try {
-        return hljs.highlightAuto(str).value;
-      } catch (err) {
-        console.log('error', err);
-      }
-
-      return ''; // use external default escaping
     },
   });
 

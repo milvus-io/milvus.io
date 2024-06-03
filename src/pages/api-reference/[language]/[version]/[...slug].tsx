@@ -47,6 +47,7 @@ interface ApiDetailPageProps {
   curCategoryContentData: AllMdVersionIdType[];
   headingContent: string;
   languageCategory: string;
+  latestVersion: string;
 }
 export default function Template(props: ApiDetailPageProps) {
   const {
@@ -61,6 +62,7 @@ export default function Template(props: ApiDetailPageProps) {
     curCategoryContentData,
     headingContent,
     languageCategory,
+    latestVersion,
   } = props;
 
   const { t } = useTranslation('common');
@@ -142,6 +144,8 @@ export default function Template(props: ApiDetailPageProps) {
         desc: '',
         url: absoluteUrl,
       }}
+      version={version}
+      latestVersion={latestVersion}
       left={
         <LeftNavSection
           tree={menus}
@@ -255,7 +259,7 @@ export const getStaticProps: GetStaticProps = async context => {
   };
 
   const apiData = generateApiReferenceVersionsInfo();
-  const { versions } =
+  const { versions, latestVersion } =
     apiData.find(
       v => v.language === routeCategoryToLanguage[languageCategory]
     ) || {};
@@ -301,6 +305,7 @@ export const getStaticProps: GetStaticProps = async context => {
       currentId: slug.join('-'),
       menus: menuData,
       version: version,
+      latestVersion,
       locale: 'en',
       category: languageCategory,
       versions: versions,

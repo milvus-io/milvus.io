@@ -14,6 +14,8 @@ const MENU_MAXIMUM_WIDTH = 283;
 interface DocLayoutPropsType {
   left: React.ReactNode;
   center: React.ReactNode;
+  version: string;
+  latestVersion: string;
   seo: {
     title: string;
     desc: string;
@@ -39,6 +41,8 @@ export default function DocLayout(props: DocLayoutPropsType) {
     classes: customerClasses = {},
     isHome = false,
     showFooter = true,
+    version,
+    latestVersion,
   } = props;
 
   const {
@@ -49,6 +53,8 @@ export default function DocLayout(props: DocLayoutPropsType) {
     docSearchVersion,
   } = seo;
   const { root = '', main = '', content = '' } = customerClasses;
+
+  const isLatestVersion = version === latestVersion;
 
   return (
     <>
@@ -65,6 +71,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
           {docSearchVersion && (
             <meta name="docsearch:version" content={docSearchVersion} />
           )}
+          {!isLatestVersion && <meta name="robots" content="noindex" />}
         </Head>
         <Header className={classes.docHeader} />
         <div className={clsx(classes.mainContainer, main)}>

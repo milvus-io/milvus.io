@@ -498,7 +498,7 @@ export default function SizingTool() {
                       onChange={e => {
                         handleFormValueChange(
                           e.target.value,
-                          FromKeysEnum.Nlist
+                          FromKeysEnum.IndexType
                         );
                       }}
                     >

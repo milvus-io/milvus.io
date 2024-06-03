@@ -34,11 +34,12 @@ interface docHomePageProps {
 export default function LatestVersionDocHomepage(props: docHomePageProps) {
   const { t } = useTranslation('common');
 
-  const { homeData, blog, menus, version, versions, locale, mdListData } =
-    props;
+  const { homeData, blog, menus, version, versions, mdListData } = props;
 
   return (
     <DocLayout
+      version={version}
+      latestVersion={version}
       isHome
       classes={{
         root: clsx(classes.docPageContainer, classes.docHomePage),

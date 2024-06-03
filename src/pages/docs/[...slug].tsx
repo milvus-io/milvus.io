@@ -31,7 +31,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,
     version,
-    locale,
     versions,
     latestVersion,
     menus,
@@ -132,6 +131,8 @@ export default function DocDetailPage(props: DocDetailPageProps) {
 
   return (
     <DocLayout
+      version={version}
+      latestVersion={latestVersion}
       seo={{
         ...seoInfo,
         docSearchLanguage: 'en',

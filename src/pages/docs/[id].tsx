@@ -37,7 +37,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     isHome,
     blog: latestBlog,
     version,
-    locale,
     versions,
     latestVersion,
     menus,
@@ -147,6 +146,8 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     <>
       {isHome ? (
         <DocLayout
+          version={version}
+          latestVersion={latestVersion}
           isHome
           classes={{
             root: clsx(classes.docPageContainer, classes.docHomePage),
@@ -171,6 +172,8 @@ export default function DocDetailPage(props: DocDetailPageProps) {
         />
       ) : (
         <DocLayout
+          version={version}
+          latestVersion={latestVersion}
           seo={{
             ...seoInfo,
             docSearchLanguage: 'en',

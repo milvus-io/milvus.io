@@ -71,7 +71,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
           {docSearchVersion && (
             <meta name="docsearch:version" content={docSearchVersion} />
           )}
-          {!isLatestVersion && <meta name="robots" content="noindex" />}
+          {/* {!isLatestVersion && <meta name="robots" content="noindex" />} */}
         </Head>
         <Header className={classes.docHeader} />
         <div className={clsx(classes.mainContainer, main)}>

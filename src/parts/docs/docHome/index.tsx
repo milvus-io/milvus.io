@@ -9,7 +9,7 @@ interface HomeContentProps {
   homeData: string;
 }
 export default function HomeContent(props: HomeContentProps) {
-  const { homeData, latestBlog } = props;
+  const { homeData = '', latestBlog } = props;
 
   return (
     <section>

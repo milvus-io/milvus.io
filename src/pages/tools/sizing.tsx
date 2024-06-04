@@ -72,7 +72,6 @@ export default function SizingTool() {
   const [dialogState, setDialogState] = useState({
     open: false,
     title: '',
-    handleClose: () => {},
     children: <></>,
   });
   const [form, setForm] = useState<{ [key in FromKeysEnum]: any }>({
@@ -425,7 +424,6 @@ export default function SizingTool() {
     setDialogState({
       open: true,
       title,
-      handleClose: handleCloseDialog,
       children: <HighlightBlock type={type} />,
     });
   };
@@ -859,7 +857,10 @@ export default function SizingTool() {
           </div>
         </div>
       </Layout>
-      <CustomizedContentDialogs {...dialogState} />
+      <CustomizedContentDialogs
+        {...dialogState}
+        handleClose={handleCloseDialog}
+      />
     </main>
   );
 }

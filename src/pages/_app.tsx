@@ -6,10 +6,16 @@ import 'instantsearch.css/themes/reset.css';
 import Script from 'next/script';
 import Head from 'next/head';
 import CustomCookieConsent from '@/components/cookieConsent';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import Error from './error';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
+    <ErrorBoundary
+      errorComponent={({ error, reset }) => (
+        <Error error={error} reset={reset} />
+      )}
+    >
       <Head>
         <link rel="icon" href="/favicon-32x32.png" />
         <meta
@@ -43,7 +49,7 @@ function MyApp({ Component, pageProps }) {
         defer
       ></Script>
       <CustomCookieConsent />
-    </>
+    </ErrorBoundary>
   );
 }
 

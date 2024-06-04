@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Code from '../components/code/code';
 import hljs from 'highlight.js';
 import ReactDOM from 'react-dom';
+import { useRouter } from 'next/router';
 // import { drawZChart } from '@zilliz/zui';
 // import "@zilliz/zui/ZChart.css";
 
@@ -88,6 +89,8 @@ export const useEmPanel = setShowModal => {
  */
 
 export const useFilter = () => {
+  const { asPath } = useRouter();
+  console.log('asPath--', asPath);
   useEffect(() => {
     const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];
@@ -103,6 +106,7 @@ export const useFilter = () => {
       });
     });
     const allContents = document.querySelectorAll(`[class*="filter-"]`);
+    console.log('allContents--', allContents);
 
     if (!allContents.length) return;
 
@@ -112,6 +116,7 @@ export const useFilter = () => {
       allFilters.forEach(f => f.classList.toggle('active', false));
       currentFilters.forEach(cf => cf.classList.toggle('active', true));
       allContents.forEach(c => c.classList.toggle('active', false));
+      console.log('hash--', hash);
       const contents = document.querySelectorAll(
         `.filter-${hash.replace('#', '').replace(/%/g, '')}`
       );
@@ -139,10 +144,11 @@ export const useFilter = () => {
         false
       );
     }
-  }, []);
+  }, [asPath]);
 };
 
 export const useMultipleCodeFilter = () => {
+  const { asPath } = useRouter();
   const SEARCH = 'search';
   useEffect(() => {
     const setSearch = val => window.localStorage.setItem(SEARCH, val);
@@ -214,7 +220,7 @@ export const useMultipleCodeFilter = () => {
         clickEventHandler(localSearch);
       }
     }
-  }, []);
+  }, [asPath]);
 };
 
 /**

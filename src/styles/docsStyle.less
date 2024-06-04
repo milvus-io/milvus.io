@@ -543,6 +543,13 @@
       }
     }
   }
+  [class^='filter-'] {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
 
   .filter {
     a {
@@ -587,14 +594,6 @@
 
     @media @tablet {
       margin: 24px auto;
-    }
-  }
-
-  [class^='filter-'] {
-    display: none;
-
-    &.active {
-      display: block;
     }
   }
 
@@ -720,17 +719,20 @@
   }
 
   .img-wrapper {
-    width: 100%;
+    // width: fit-content;
     text-align: center;
     display: block;
 
     & > span {
       font-size: 12px;
       line-height: 16px;
+      display: block;
     }
 
     .doc-image {
-      width: 100%;
+      max-width: 100%;
+
+      width: auto;
     }
   }
 }

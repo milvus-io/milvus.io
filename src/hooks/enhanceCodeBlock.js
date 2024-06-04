@@ -32,6 +32,7 @@ export const useCopyCode = (codeList = []) => {
 };
 
 export const useFilter = () => {
+  const { asPath } = useRouter();
   useEffect(() => {
     if (window && typeof window !== 'undefined') {
       const filterWrappers = document.querySelectorAll('.filter');
@@ -85,7 +86,7 @@ export const useFilter = () => {
         );
       }
     }
-  }, []);
+  }, [asPath]);
 };
 
 export const useMultipleCodeFilter = () => {

@@ -96,6 +96,7 @@ export async function markdownToHtml(
   const codeList = [];
   let titleContent = '';
   const headingAnchorList = [];
+  const REMOVE_SPECIAL_CHAR = /[`*]/g;
 
   // get code content of code block, used for code copy button
   const getCodesPlugin = md => {
@@ -121,8 +122,10 @@ export async function markdownToHtml(
       if (headingLevel > 2) {
         return `</h${headingLevel}>`;
       }
+
+      const label = tokens[idx - 1].content.replaceAll(REMOVE_SPECIAL_CHAR, '');
       headingAnchorList.push({
-        label: tokens[idx - 1].content,
+        label,
         href,
         type: headingLevel,
         isActive: false,

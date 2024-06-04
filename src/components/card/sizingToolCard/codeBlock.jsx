@@ -3,8 +3,8 @@ import React from 'react';
 import * as classes from './index.module.less';
 import clsx from 'clsx';
 import { HELM_CONFIG_FILE_NAME, OPERATOR_CONFIG_FILE_NAME } from './constants';
-import { useCodeCopy } from '../../../hooks/doc-dom-operation';
 import { useTranslation } from 'react-i18next';
+import { useCopyCode } from '@/hooks/enhanceCodeBlock';
 
 const HighlightBlock = ({ type }) => {
   const content =
@@ -22,15 +22,9 @@ kubectl create -f ${OPERATOR_CONFIG_FILE_NAME}.yml
     `;
 
   const { t } = useTranslation();
-  const highlightCode = hljs.highlight(content, { language: 'yml' });
+  const highlightCode = hljs.highlightAuto(content);
 
-  useCodeCopy(
-    {
-      copy: t('v3trans.copyBtn.copyLabel'),
-      copied: t('v3trans.copyBtn.copiedLabel'),
-    },
-    ['yml']
-  );
+  useCopyCode([content]);
 
   return (
     <pre className={classes.guideWrapper}>
@@ -38,6 +32,8 @@ kubectl create -f ${OPERATOR_CONFIG_FILE_NAME}.yml
         className={clsx('hljs', classes.codeWrapper)}
         dangerouslySetInnerHTML={{ __html: highlightCode.value }}
       ></code>
+
+      <button className={clsx('copy-code-btn', classes.copyButton)}></button>
     </pre>
   );
 };

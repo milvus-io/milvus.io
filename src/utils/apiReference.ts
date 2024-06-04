@@ -224,7 +224,6 @@ export const generateApiMenuAndContentDataOfSingleVersion = (params: {
   withContent?: boolean;
 }) => {
   try {
-    console.log('params--', params);
     const { language, version, withContent = false } = params;
     const path = API_REFERENCE_CONFIG[language].path;
     const category = API_REFERENCE_CONFIG[language].category;

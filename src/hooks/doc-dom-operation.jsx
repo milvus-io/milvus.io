@@ -105,7 +105,6 @@ export const useFilter = () => {
       });
     });
     const allContents = document.querySelectorAll(`[class*="filter-"]`);
-    console.log('allContents--', allContents);
 
     if (!allContents.length) return;
 
@@ -115,7 +114,6 @@ export const useFilter = () => {
       allFilters.forEach(f => f.classList.toggle('active', false));
       currentFilters.forEach(cf => cf.classList.toggle('active', true));
       allContents.forEach(c => c.classList.toggle('active', false));
-      console.log('hash--', hash);
       const contents = document.querySelectorAll(
         `.filter-${hash.replace('#', '').replace(/%/g, '')}`
       );

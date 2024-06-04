@@ -38,7 +38,9 @@ export default function AnchorTree(props) {
               key={v.label + idx}
               onClick={() => handleChooseAnchor(href)}
             >
-              <Link href={`#${href}`}>{label}</Link>
+              <Link href={`#${href}`} prefetch={false}>
+                {label}
+              </Link>
             </li>
           );
         })}

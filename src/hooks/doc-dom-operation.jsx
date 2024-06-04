@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Code from '../components/code/code';
 import hljs from 'highlight.js';
 import ReactDOM from 'react-dom';
+import { useRouter } from 'next/router';
 // import { drawZChart } from '@zilliz/zui';
 // import "@zilliz/zui/ZChart.css";
 
@@ -88,6 +89,7 @@ export const useEmPanel = setShowModal => {
  */
 
 export const useFilter = () => {
+  const { asPath } = useRouter();
   useEffect(() => {
     const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];
@@ -139,10 +141,11 @@ export const useFilter = () => {
         false
       );
     }
-  }, []);
+  }, [asPath]);
 };
 
 export const useMultipleCodeFilter = () => {
+  const { asPath } = useRouter();
   const SEARCH = 'search';
   useEffect(() => {
     const setSearch = val => window.localStorage.setItem(SEARCH, val);
@@ -214,7 +217,7 @@ export const useMultipleCodeFilter = () => {
         clickEventHandler(localSearch);
       }
     }
-  }, []);
+  }, [asPath]);
 };
 
 /**

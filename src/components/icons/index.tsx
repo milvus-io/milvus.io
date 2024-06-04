@@ -299,3 +299,12 @@ export const RightWholeArrow: React.FC<{ color?: string; size?: number }> = ({
     />
   </svg>
 );
+
+export const LoadingIcon = () => (
+  <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+    <path
+      d="M18.861 16.1166C17.4619 18.4433 14.9127 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12H22C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C15.6409 22 18.8274 20.0542 20.5762 17.1457L18.861 16.1166Z"
+      fill="#1D2939"
+    ></path>
+  </svg>
+);

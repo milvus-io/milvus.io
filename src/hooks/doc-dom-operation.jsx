@@ -90,7 +90,6 @@ export const useEmPanel = setShowModal => {
 
 export const useFilter = () => {
   const { asPath } = useRouter();
-  console.log('asPath--', asPath);
   useEffect(() => {
     const filterWrappers = document.querySelectorAll('.filter');
     const allFilters = [];

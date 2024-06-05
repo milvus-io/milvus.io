@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
+import { formatCodeContent } from '@/utils/code';
 
 const RESET_COPIED_TIME = 3000;
 
@@ -13,27 +14,11 @@ const Code = ({ html, content, tooltip = {} }) => {
 
   const { copy: copyText = 'copy', copied: copiedText = 'copied' } = tooltip;
 
-  const formatContent = content => {
-    const code = content
-      .split('\n')
-      .filter(item => item[0] !== '#')
-      .map(str => {
-        const invalidItems = ['$', '>>>'];
-        return str
-          .split(' ')
-          .filter(s => !invalidItems.includes(s))
-          .join(' ');
-      })
-      .join('\n');
-
-    return code;
-  };
-
   const onButtonClick = e => {
     if (isCopied || !navigator?.clipboard) {
       return;
     }
-    const code = formatContent(content);
+    const code = formatCodeContent(content);
     navigator.clipboard.writeText(code).then(() => {
       setIsCopied(true);
       setTimeout(() => {

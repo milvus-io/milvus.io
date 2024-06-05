@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { copyToCommand } from '../utils/common';
 import { checkIconTpl, copyIconTpl } from '../components/icons';
 import { useRouter } from 'next/router';
+import { formatCodeContent } from '@/utils/code';
 
 export const useCopyCode = (codeList = []) => {
   useEffect(() => {
@@ -12,7 +13,8 @@ export const useCopyCode = (codeList = []) => {
         btn.innerHTML = copyIconTpl;
 
         btn.addEventListener('click', () => {
-          copyToCommand(codeList[index], () => {
+          const code = formatCodeContent(codeList[index]);
+          copyToCommand(code, () => {
             btns.forEach((v, i) => {
               if (i === index) {
                 v.innerHTML = checkIconTpl;
@@ -64,8 +66,11 @@ export const useFilter = () => {
         contents.forEach(c => c.classList.toggle('active', true));
       };
       filterWrappers.forEach(w => {
-        w.addEventListener('click', e => {
-          if (e.target.tagName === 'A') {
+        w.addEventListener('click', (e: Event) => {
+          if (
+            e.target instanceof HTMLAnchorElement &&
+            e.target.tagName === 'A'
+          ) {
             clickEventHandler(e.target.hash);
           }
         });
@@ -109,7 +114,7 @@ export const useMultipleCodeFilter = () => {
           // <a href='?node' >xxx</a>
           firstSearch = f.search || f.hash.replace('#', '?');
         }
-        f.key = f.search || f.hash.replace('#', '?');
+        f['key'] = f.search || f.hash.replace('#', '?');
         allFilters.push(f);
       });
     });
@@ -140,9 +145,9 @@ export const useMultipleCodeFilter = () => {
     };
 
     filterWrappers.forEach(w => {
-      w.addEventListener('click', e => {
+      w.addEventListener('click', (e: Event) => {
         e.preventDefault();
-        if (e.target.tagName === 'A') {
+        if (e.target instanceof HTMLAnchorElement && e.target.tagName === 'A') {
           clickEventHandler(e.target.search || e.target.hash);
         }
       });

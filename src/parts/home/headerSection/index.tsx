@@ -40,7 +40,7 @@ export default function HomePageHeaderSection(
 
   const startNum = `${(star / 1000).toFixed(1)}K`;
   const downloadNum = new Intl.NumberFormat('en-US').format(
-    Math.floor(download / 1000)
+    Math.floor(download / 1000 / 100) / 10
   );
 
   return (
@@ -62,7 +62,7 @@ export default function HomePageHeaderSection(
           >
             <DownloadIcon />
             <span className="text-[12px] font-[500] leading-[18px] text-black">
-              {downloadNum}K
+              {downloadNum}M
             </span>
           </a>
           <a

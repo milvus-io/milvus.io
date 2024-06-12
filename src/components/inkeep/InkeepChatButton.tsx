@@ -26,7 +26,5 @@ function InkeepChatButton() {
 }
 
 export default function InkeepChatButtonContainer() {
-  const displayInkeep = process.env.NEXT_PUBLIC_IS_PREVIEW === 'preview';
-
-  return <>{displayInkeep ? <InkeepChatButton /> : null}</>;
+  return <InkeepChatButton />;
 }

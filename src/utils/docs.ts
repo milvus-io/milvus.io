@@ -33,13 +33,7 @@ export const validationFileFilter = (file: string) => {
   return !IGNORE_FILES.includes(file) && !JSON_REG.test(file);
 };
 
-/**
- * version system
- * what I need:
- * 1. version list
- * 2. latest version
- * */
-
+// version system
 const convertVersionStringToVersionNum = (
   versionString: string
 ): {
@@ -107,15 +101,7 @@ export const generateDocVersionInfo = (params?: {
   };
 };
 
-/**
- * file system,
- * what I need:
- * 1. detail data of a file, like front matter info, content or without content
- * 2. data list of NO.1 for one single version.
- * 3. object, key is version, value is data list of NO.2
- * 4. home page data of single version
- * */
-
+// file system
 const readFile = (params: {
   path: string;
   fileDataList: DocFileDataInfoType[];
@@ -229,13 +215,7 @@ export const generateHomePageDataOfSingleVersion = (params: {
   };
 };
 
-/**
- * menu system,
- * what I need:
- * 1. menu data of single version
- * 2. menu data format function
- * */
-
+// menu system
 const formatMenuStructure = (
   list: OriginMenuStructureType[]
 ): FinalMenuStructureType[] => {

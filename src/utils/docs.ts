@@ -322,7 +322,6 @@ export const generateMenuDataOfCurrentVersion = (params: {
   docVersion: string;
   lang?: string;
 }) => {
-  console.log('params--', params.docVersion);
   const { docVersion, lang = 'en' } = params;
   const langFolderName = lang === 'cn' ? 'zh-CN' : 'en';
   const fileName = lang === 'cn' ? 'cn.json' : 'en.json';

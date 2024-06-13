@@ -311,7 +311,7 @@ export const generateMenuDataOfCurrentVersion = (params: {
   );
 
   const fileData = fs.readFileSync(filePath, 'utf-8');
-  const menu = JSON.parse(fileData).menuList;
+  const menu = JSON.parse(fileData);
 
-  return formatMenuStructure(menu);
+  return menu;
 };

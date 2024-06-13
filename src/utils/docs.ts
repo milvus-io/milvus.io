@@ -308,12 +308,10 @@ const formatMenuStructure: (
     return [];
   }
   list.forEach(item => {
-    const { children, id, isMenu } = item;
+    const { children, id } = item;
     item.parentId = parentId;
     item.parentIds = [...parentIds];
-    if (!isMenu) {
-      item.href = id;
-    }
+    item.href = id;
     item.children = formatMenuStructure(children, id, [...parentIds, id]);
   });
 
@@ -324,6 +322,7 @@ export const generateMenuDataOfCurrentVersion = (params: {
   docVersion: string;
   lang?: string;
 }) => {
+  console.log('params--', params.docVersion);
   const { docVersion, lang = 'en' } = params;
   const langFolderName = lang === 'cn' ? 'zh-CN' : 'en';
   const fileName = lang === 'cn' ? 'cn.json' : 'en.json';

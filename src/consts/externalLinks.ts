@@ -17,7 +17,7 @@ export const GITHUB_EDIT_API_NODE_URL =
 export const GITHUB_EDIT_API_CSHARP_URL =
   'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-csharp';
 export const GITHUB_EDIT_API_RESTFUL_URL =
-  'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-restful';
+  'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-restful';
 
 export const SLACK_INVITE_URL = '/slack';
 

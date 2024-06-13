@@ -216,63 +216,63 @@ export const generateHomePageDataOfSingleVersion = (params: {
 };
 
 // menu system
-const formatMenuStructure = (
-  list: OriginMenuStructureType[]
-): FinalMenuStructureType[] => {
-  const newList = list.map(v => {
-    const {
-      id,
-      title,
-      isMenu = false,
-      outLink = '',
-      order = 0,
-      label1,
-      label2,
-      label3,
-    } = v;
+// const formatMenuStructure = (
+//   list: OriginMenuStructureType[]
+// ): FinalMenuStructureType[] => {
+//   const newList = list.map(v => {
+//     const {
+//       id,
+//       title,
+//       isMenu = false,
+//       outLink = '',
+//       order = 0,
+//       label1,
+//       label2,
+//       label3,
+//     } = v;
 
-    const parentId = label3 || label2 || label1 || '';
-    const parentIds = [label1, label2, label3].filter(v => !!v);
-    const level = [label1, label2, label3].filter(v => !!v).length + 1;
+//     const parentId = label3 || label2 || label1 || '';
+//     const parentIds = [label1, label2, label3].filter(v => !!v);
+//     const level = [label1, label2, label3].filter(v => !!v).length + 1;
 
-    return {
-      id: id,
-      label: title,
-      href: id,
-      isMenu,
-      externalLink: outLink,
-      parentId,
-      parentIds,
-      level,
-      order,
-      children: [],
-    };
-  });
+//     return {
+//       id: id,
+//       label: title,
+//       href: id,
+//       isMenu,
+//       externalLink: outLink,
+//       parentId,
+//       parentIds,
+//       level,
+//       order,
+//       children: [],
+//     };
+//   });
 
-  newList.sort((x, y) => y.level - x.level);
+//   newList.sort((x, y) => y.level - x.level);
 
-  const resultList = newList.slice();
+//   const resultList = newList.slice();
 
-  newList.forEach(v => {
-    const { parentId } = v;
-    const parentIndex = resultList.findIndex(v => v.id === parentId);
-    if (parentIndex !== -1) {
-      resultList[parentIndex].children.push({
-        label: v.label,
-        id: v.id,
-        isMenu: v.isMenu,
-        externalLink: v.externalLink,
-        href: v.href,
-        children: v.children,
-        parentId: parentId,
-        parentIds: v.parentIds,
-        level: v.level,
-      });
-    }
-  });
+//   newList.forEach(v => {
+//     const { parentId } = v;
+//     const parentIndex = resultList.findIndex(v => v.id === parentId);
+//     if (parentIndex !== -1) {
+//       resultList[parentIndex].children.push({
+//         label: v.label,
+//         id: v.id,
+//         isMenu: v.isMenu,
+//         externalLink: v.externalLink,
+//         href: v.href,
+//         children: v.children,
+//         parentId: parentId,
+//         parentIds: v.parentIds,
+//         level: v.level,
+//       });
+//     }
+//   });
 
-  return resultList.filter(v => v.level === 1);
-};
+//   return resultList.filter(v => v.level === 1);
+// };
 
 const formatMenus = (menus: FinalMenuStructureType[], ids?: string[]) => {
   const parents = ids || [];
@@ -298,6 +298,26 @@ const formatMenus = (menus: FinalMenuStructureType[], ids?: string[]) => {
   return menuList;
 };
 
+// fill in th missing fields: parentId, parentIds, href,
+const formatMenuStructure: (
+  list: any[],
+  parentId?: string,
+  parentIds?: string[]
+) => any[] = (list, parentId = '', parentIds = []) => {
+  if (!list || !list.length) {
+    return [];
+  }
+  list.forEach(item => {
+    const { children, id } = item;
+    item.parentId = parentId;
+    item.parentIds = [...parentIds];
+    item.href = id;
+    item.children = formatMenuStructure(children, id, [...parentIds, id]);
+  });
+
+  return list;
+};
+
 export const generateMenuDataOfCurrentVersion = (params: {
   docVersion: string;
   lang?: string;
@@ -313,5 +333,5 @@ export const generateMenuDataOfCurrentVersion = (params: {
   const fileData = fs.readFileSync(filePath, 'utf-8');
   const menu = JSON.parse(fileData);
 
-  return menu;
+  return formatMenuStructure(menu);
 };

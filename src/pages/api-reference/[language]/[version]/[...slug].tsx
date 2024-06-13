@@ -121,7 +121,7 @@ export default function Template(props: ApiDetailPageProps) {
         return pyData;
       default:
         const restfulData = Object.assign(commonData, {
-          editPath: `${GITHUB_EDIT_API_RESTFUL_URL}/${relativePath}`,
+          editPath: `${GITHUB_EDIT_API_RESTFUL_URL}${relativePath}`,
         });
         return restfulData;
     }

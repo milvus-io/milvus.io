@@ -308,12 +308,10 @@ const formatMenuStructure: (
     return [];
   }
   list.forEach(item => {
-    const { children, id, isMenu } = item;
+    const { children, id } = item;
     item.parentId = parentId;
     item.parentIds = [...parentIds];
-    if (!isMenu) {
-      item.href = id;
-    }
+    item.href = id;
     item.children = formatMenuStructure(children, id, [...parentIds, id]);
   });
 

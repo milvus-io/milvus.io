@@ -9,6 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ExternalDocLinkIcon } from '@/components/icons';
 import { findActiveMenuItem } from '@/utils';
+import { useRouter } from 'next/router';
 
 const SCROLL_TOP = '@@scroll|menu';
 
@@ -52,6 +53,8 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     category,
   } = props;
 
+  const { asPath } = useRouter();
+
   const {
     tree: treeClassName,
     item: itemClassName,
@@ -81,6 +84,7 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
       mdId: currentMdId,
       menu: itemList,
     });
+    console.log(initIds);
     setExpandedIds(initIds);
   }, [itemList, currentMdId, groupId]);
 
@@ -225,6 +229,11 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
       />
     );
   };
+
+  useEffect(() => {
+    // reset active menu item when route change
+    setSelectedId(currentMdId);
+  }, [asPath]);
 
   return (
     <TreeView

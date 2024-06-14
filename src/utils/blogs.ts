@@ -1,5 +1,6 @@
 import { validationFileFilter } from './docs';
 import { BlogDataType, OriginBlogFrontMatterType } from '@/types/blogs';
+import { getCacheData, setCacheData } from './index';
 
 const fs = require('fs');
 const { join } = require('path');
@@ -7,11 +8,22 @@ const matter = require('gray-matter');
 
 const BASE_PATH = join(process.cwd(), 'src/blogs/blog');
 
+const blogCache = new Map<string, any>();
+
 export const generateAllBlogContentList = (params?: {
   lang?: 'en' | 'cn';
   withContent?: boolean;
 }) => {
   const { lang = 'en', withContent = false } = params || {};
+
+  const cacheKey = `all-blog-${lang}-${withContent}`;
+
+  const cachedData = getCacheData({ cache: blogCache, key: cacheKey });
+
+  if (cachedData) {
+    return cachedData;
+  }
+
   const directoryName = lang === 'en' ? 'en' : 'zh-CN';
   const directoryPath = join(BASE_PATH, directoryName);
 
@@ -42,5 +54,13 @@ export const generateAllBlogContentList = (params?: {
     );
   });
 
+  setCacheData({ cache: blogCache, key: cacheKey, data: blogList });
+
   return blogList;
+};
+
+export const generateLatestBlogInfo = (params: { lang?: 'en' | 'cn' }) => {
+  const { lang = 'en' } = params;
+  const blogList = generateAllBlogContentList({ lang, withContent: false });
+  return blogList[0];
 };

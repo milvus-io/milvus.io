@@ -9,6 +9,7 @@ import {
   AllMdVersionIdType,
 } from '@/types/docs';
 import { JSON_REG, VERSION_REG } from '@/consts/regexp';
+import { setCacheData, getCacheData } from './index';
 
 const matter = require('gray-matter');
 
@@ -32,6 +33,9 @@ export const IGNORE_FILES = [
 export const validationFileFilter = (file: string) => {
   return !IGNORE_FILES.includes(file) && !JSON_REG.test(file);
 };
+
+// if call the same function multiple times, use cache to store the data
+const docCache = new Map<string, any>();
 
 // version system
 const convertVersionStringToVersionNum = (
@@ -144,6 +148,20 @@ export const generateAllContentDataOfSingleVersion = (params: {
   lang?: 'en' | 'cn';
   withContent?: boolean;
 }) => {
+  const { version, lang = 'en', withContent = false } = params;
+
+  // cache key is `content-${version}-${language}-${withContent}`
+  const cacheKey = `content-${version}-${lang}-${withContent}`;
+
+  const cachedData = getCacheData({
+    cache: docCache,
+    key: cacheKey,
+  });
+
+  if (cachedData) {
+    return cachedData;
+  }
+
   const langFolderName = params.lang === 'cn' ? 'zh-CN' : 'en';
   const filePath = join(
     BASE_DOC_DIR,
@@ -153,6 +171,13 @@ export const generateAllContentDataOfSingleVersion = (params: {
   let fileDataList: DocFileDataInfoType[] = [];
 
   readFile({ path: filePath, fileDataList, withContent: params.withContent });
+
+  setCacheData({
+    cache: docCache,
+    key: cacheKey,
+    data: fileDataList,
+  });
+
   return fileDataList;
 };
 
@@ -175,6 +200,13 @@ export const generateContentDataOfSingleFile = (params: {
 
 export const generateAllContentDataOfAllVersion = (lang?: 'en' | 'cn') => {
   const language = lang || 'en';
+  const cacheKey = `all-content-${language}`;
+
+  const cachedData = getCacheData({ cache: docCache, key: cacheKey });
+  if (cachedData) {
+    return cachedData;
+  }
+
   const { versions } = generateDocVersionInfo();
   const allFileDataOfAllVersion = versions.reduce((acc, version) => {
     const data = generateAllContentDataOfSingleVersion({
@@ -190,6 +222,12 @@ export const generateAllContentDataOfAllVersion = (lang?: 'en' | 'cn') => {
 
     return acc;
   }, [] as AllMdVersionIdType[]);
+
+  setCacheData({
+    cache: docCache,
+    key: cacheKey,
+    data: allFileDataOfAllVersion,
+  });
   return allFileDataOfAllVersion;
 };
 
@@ -198,6 +236,18 @@ export const generateHomePageDataOfSingleVersion = (params: {
   lang?: 'en' | 'cn';
 }) => {
   const { version, lang = 'en' } = params;
+
+  // home data cache key is `home-${version}-${lang}`
+  const cacheKey = `home-${version}-${lang}`;
+  const cachedData = getCacheData({
+    cache: docCache,
+    key: cacheKey,
+  });
+
+  if (cachedData) {
+    return cachedData;
+  }
+
   const langFolderName = lang === 'cn' ? 'zh-CN' : 'en';
   const filePath = join(
     BASE_DOC_DIR,
@@ -209,6 +259,15 @@ export const generateHomePageDataOfSingleVersion = (params: {
     content: string;
   };
 
+  setCacheData({
+    cache: docCache,
+    key: cacheKey,
+    data: {
+      frontMatter: data,
+      content,
+    },
+  });
+
   return {
     frontMatter: data,
     content,
@@ -216,88 +275,6 @@ export const generateHomePageDataOfSingleVersion = (params: {
 };
 
 // menu system
-// const formatMenuStructure = (
-//   list: OriginMenuStructureType[]
-// ): FinalMenuStructureType[] => {
-//   const newList = list.map(v => {
-//     const {
-//       id,
-//       title,
-//       isMenu = false,
-//       outLink = '',
-//       order = 0,
-//       label1,
-//       label2,
-//       label3,
-//     } = v;
-
-//     const parentId = label3 || label2 || label1 || '';
-//     const parentIds = [label1, label2, label3].filter(v => !!v);
-//     const level = [label1, label2, label3].filter(v => !!v).length + 1;
-
-//     return {
-//       id: id,
-//       label: title,
-//       href: id,
-//       isMenu,
-//       externalLink: outLink,
-//       parentId,
-//       parentIds,
-//       level,
-//       order,
-//       children: [],
-//     };
-//   });
-
-//   newList.sort((x, y) => y.level - x.level);
-
-//   const resultList = newList.slice();
-
-//   newList.forEach(v => {
-//     const { parentId } = v;
-//     const parentIndex = resultList.findIndex(v => v.id === parentId);
-//     if (parentIndex !== -1) {
-//       resultList[parentIndex].children.push({
-//         label: v.label,
-//         id: v.id,
-//         isMenu: v.isMenu,
-//         externalLink: v.externalLink,
-//         href: v.href,
-//         children: v.children,
-//         parentId: parentId,
-//         parentIds: v.parentIds,
-//         level: v.level,
-//       });
-//     }
-//   });
-
-//   return resultList.filter(v => v.level === 1);
-// };
-
-const formatMenus = (menus: FinalMenuStructureType[], ids?: string[]) => {
-  const parents = ids || [];
-  const menuList = menus.map(m => {
-    const commonProps = {
-      id: m.id,
-      label: m.label,
-      href: m.id,
-      externalLink: m.externalLink,
-      parentIds: [...parents],
-    };
-    return m.children
-      ? {
-          ...commonProps,
-          children: [...formatMenus(m.children, [...parents, m.id])],
-        }
-      : {
-          ...commonProps,
-          children: [],
-        };
-  });
-
-  return menuList;
-};
-
 // fill in th missing fields: parentId, parentIds, href,
 const formatMenuStructure: (
   list: any[],
@@ -323,6 +300,13 @@ export const generateMenuDataOfCurrentVersion = (params: {
   lang?: string;
 }) => {
   const { docVersion, lang = 'en' } = params;
+  const cacheKey = `menu-${docVersion}-${lang}`;
+  const cachedData = getCacheData({ cache: docCache, key: cacheKey });
+
+  if (cachedData) {
+    return cachedData;
+  }
+
   const langFolderName = lang === 'cn' ? 'zh-CN' : 'en';
   const fileName = lang === 'cn' ? 'cn.json' : 'en.json';
   const filePath = join(
@@ -331,7 +315,9 @@ export const generateMenuDataOfCurrentVersion = (params: {
   );
 
   const fileData = fs.readFileSync(filePath, 'utf-8');
-  const menu = JSON.parse(fileData);
+  const menu = formatMenuStructure(JSON.parse(fileData));
 
-  return formatMenuStructure(menu);
+  setCacheData({ cache: docCache, key: cacheKey, data: menu });
+
+  return menu;
 };

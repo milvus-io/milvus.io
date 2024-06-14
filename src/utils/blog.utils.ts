@@ -4,8 +4,6 @@ import matter from 'gray-matter';
 
 const BASE_BLOG_DIR = join(process.cwd(), 'src/blogs/blog/en');
 
-const blogDataCache = new Map();
-
 const generateBlogCover = (cover: string, date: Date) => {
   if (cover) {
     return `https://${cover}`;
@@ -20,10 +18,6 @@ const generateBlogCover = (cover: string, date: Date) => {
 };
 
 const generateBlogData = (showContent = true) => {
-  const cache = blogDataCache.get('blogs');
-  if (cache) {
-    return cache;
-  }
   const blogsData = fs.readdirSync(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
     const { data, content } = matter(file);
@@ -44,7 +38,6 @@ const generateBlogData = (showContent = true) => {
     (x, y) => new Date(y.date).getTime() - new Date(x.date).getTime()
   );
 
-  blogDataCache.set('blogs', blogsData);
   return blogsData;
 };
 

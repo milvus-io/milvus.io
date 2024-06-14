@@ -84,7 +84,6 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
       mdId: currentMdId,
       menu: itemList,
     });
-    console.log(initIds);
     setExpandedIds(initIds);
   }, [itemList, currentMdId, groupId]);
 

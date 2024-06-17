@@ -12,12 +12,16 @@ import {
   validationFileFilter,
   DOCS_MINIMUM_VERSION,
 } from './docs';
+import { getCacheData, setCacheData } from './index';
+
 const fs = require('fs');
 const path = require('path');
 const { join } = path;
 
 const API_REFERENCE_WRAPPER_MENU_ID = 'api-reference';
 const API_REFERENCE_WRAPPER_MENU_LABEL = 'API Reference';
+
+const apiCache = new Map<string, any>();
 
 /**
  * api reference system,
@@ -189,6 +193,11 @@ const API_REFERENCE_CONFIG = {
 
 // 1. versions and latest version info of all language
 export const generateApiReferenceVersionsInfo = () => {
+  const cacheKey = 'api-versions-info';
+  const cachedData = getCacheData({ cache: apiCache, key: cacheKey });
+  if (cachedData) {
+    return cachedData;
+  }
   const apiVersionInfo = Object.entries(API_REFERENCE_CONFIG).map(
     ([language, config]: [
       ApiReferenceLanguageEnum,
@@ -213,6 +222,7 @@ export const generateApiReferenceVersionsInfo = () => {
       };
     }
   );
+  setCacheData({ cache: apiCache, key: cacheKey, data: apiVersionInfo });
 
   return apiVersionInfo;
 };
@@ -225,6 +235,14 @@ export const generateApiMenuAndContentDataOfSingleVersion = (params: {
 }) => {
   try {
     const { language, version, withContent = false } = params;
+    const cacheKey = `api-${language}-${version}-${withContent}`;
+
+    const cachedData = getCacheData({ cache: apiCache, key: cacheKey });
+
+    if (cachedData) {
+      return cachedData;
+    }
+
     const path = API_REFERENCE_CONFIG[language].path;
     const category = API_REFERENCE_CONFIG[language].category;
     const versionPath = `${path}/${version}`;
@@ -243,7 +261,7 @@ export const generateApiMenuAndContentDataOfSingleVersion = (params: {
       parentIds: [language],
     });
 
-    return {
+    const result = {
       version,
       menuData: [
         {
@@ -257,6 +275,10 @@ export const generateApiMenuAndContentDataOfSingleVersion = (params: {
       ],
       contentList,
     };
+
+    setCacheData({ cache: apiCache, key: cacheKey, data: result });
+
+    return result;
   } catch (error) {
     console.log('error--', error);
   }

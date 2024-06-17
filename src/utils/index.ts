@@ -4,6 +4,8 @@ import {
   FinalMenuStructureType,
 } from '@/types/docs';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 export const sortVersions = (a, b) => {
   if (a && b) {
     let [v1, s1, m1] = a.split('.');
@@ -118,4 +120,26 @@ export const generateVersionSelectOptions = (params: {
     });
   }
   return links;
+};
+
+export const setCacheData = (params: {
+  cache: Map<string, any>;
+  key: string;
+  data: any;
+}) => {
+  const { cache, key, data } = params;
+  cache.set(key, data);
+};
+
+export const getCacheData = (params: {
+  cache: Map<string, any>;
+  key: string;
+}) => {
+  // only use cache in production
+  if (isDev) {
+    return null;
+  }
+
+  const { cache, key } = params;
+  return cache.get(key);
 };

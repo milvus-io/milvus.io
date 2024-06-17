@@ -36,8 +36,8 @@ importers:
         specifier: ^2.2.0
         version: 2.4.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@inkeep/widgets':
-        specifier: ^0.2.280
-        version: 0.2.280(@internationalized/date@3.5.4)(@types/react@18.3.3)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
+        specifier: ^0.2.285
+        version: 0.2.285(@internationalized/date@3.5.4)(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
       '@mui/icons-material':
         specifier: ^5.2.5
         version: 5.15.19(@mui/material@5.15.19(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.2.0))(@types/react@18.3.3)(react@18.2.0))(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.3.3)(react@18.2.0)
@@ -629,36 +629,36 @@ packages:
   '@humanwhocodes/object-schema@1.2.1':
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
 
-  '@inkeep/color-mode@0.0.23':
-    resolution: {integrity: sha512-SbI4ubObRx+N/R/uJLQTBZNL/s5Y0h1MAeuZskRmU2A2ThBW0kT4qLC1tStOA1KhtCkFHO7obtzb7NdpNUc93A==}
+  '@inkeep/color-mode@0.0.24':
+    resolution: {integrity: sha512-P/ZqGqeKsSuVRk7vk2tucGZlmadY4XlrCF/BalFTdZ/i6CtRIrXaQWy1723/GVYabzvPAbzhZ89PI3YWXGL4Rw==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
 
-  '@inkeep/components@0.0.23':
-    resolution: {integrity: sha512-JwMdEB2JoMNQwJocYq4ontMOlatYBSkv9AIgPBnxcO9+IkguIQTE5821mrRQJsOtpS58LuFzt+fYcuGX6sqtWw==}
+  '@inkeep/components@0.0.24':
+    resolution: {integrity: sha512-n10+DXRSyq0K/GgUQ4+vbWEbWyE7YyhhQ9jq3YI8ST8BwAm0mDfFodE8nAGbHrvT9c4Hjzp2l5s7WS99oqr5eg==}
     peerDependencies:
       '@ark-ui/react': '>=0.15.0'
       react: ^18.2.0
       react-dom: ^18.2.0
 
-  '@inkeep/preset-chakra@0.0.23':
-    resolution: {integrity: sha512-3RxQPV28mqBmOJliBJAZlL3lemcIGdZvYs7a2jGESjKUfD19ARNnCXZ+NaXjvdONGB/NiwNsFtBUKEn3YixvQg==}
+  '@inkeep/preset-chakra@0.0.24':
+    resolution: {integrity: sha512-kHzJunsKULuT2QrNnrzVdBrFR986LmO+YWZ4XAe5mRBxlNl+ODNyVZ/xWLC4xUcMnRlnVHHUhfIv9lYTrAR2fg==}
 
-  '@inkeep/preset@0.0.23':
-    resolution: {integrity: sha512-LGI6y3PZq/jJawDA8uUpudbmugKnEpJxvBwxBKpDZ1+DsqKeAx+45DUwLHv3Bd0yrPAZPqnhjumBhoD/uIjrgg==}
+  '@inkeep/preset@0.0.24':
+    resolution: {integrity: sha512-9pcnBejUz+gh9IrZLfEQye5hJDRUCOKvrcRzlwpypnx8dFWpUYaTNg+Ja3ySoj3yzr5Keuu/5ZRxzy1WF1CLQg==}
 
-  '@inkeep/shared@0.0.24':
-    resolution: {integrity: sha512-KMlb+b1bCH3YulCVxEnRojZPWgrble6kEv4pjz5H7jJQaEdIg0TdTWWmT6BrOmA8kb2n7GeKU0as+nhiqkyRAw==}
+  '@inkeep/shared@0.0.25':
+    resolution: {integrity: sha512-O4+vIgH12vwnMtD5RIv4y6jrKZTuIXFm7e7TkHtZTWNBRL8jPQuY73URbKCxaaGrcOY9XKKp+J4RZe5Wac07ug==}
 
-  '@inkeep/styled-system@0.0.37':
-    resolution: {integrity: sha512-6Bgnlw/QmNjmfT5y/tDOX5JG3DrroOOCm3gDPX7HOJya/Th8vn1P34pH4rQ6K2gQJ2avew2kB5A7Xi9R2IzVnA==}
+  '@inkeep/styled-system@0.0.44':
+    resolution: {integrity: sha512-dz2OjHGUD4C4ass6Rdzor0lmN1siYjFiboRMR9N7ACtVKbDgN6SYfNnb57K47jykIPFjhDNClg95R7x7ldDlpw==}
 
-  '@inkeep/styled-system@0.0.42':
-    resolution: {integrity: sha512-4eV3h+3nR54ejM+qXP36h0ETSUkopAS6/m8RF6fQ8hY8OdRLZSlsaKT+KeiHvM8LFoTdxu9IHnH9m5Gt/xnKqw==}
+  '@inkeep/styled-system@0.0.46':
+    resolution: {integrity: sha512-nL3jywgLkiDPTbIgi195AEgw7W/JvLGw5FDqTVI+o28syjgqvEohCSSpiIBDYkUEoz1XRZDImva1jNg17qzfXw==}
 
-  '@inkeep/widgets@0.2.280':
-    resolution: {integrity: sha512-kRceUaG47tajmo1+WSs+L1csyGsZiUt+WQCz84yMl+lxzxU/G/qM2UiYL4ly8wm0FQnfbXvpUq6fmknccSfI4A==}
+  '@inkeep/widgets@0.2.285':
+    resolution: {integrity: sha512-9AUV0swbkH5/USmZGuaHp2WncDFo0GB8Q1oxL8wjyFCPCLSmh90Q0+2DTUCfIFJKPK/d5dx9yw0tvfgTUb0ABw==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -3660,13 +3660,6 @@ packages:
   react-property@2.0.0:
     resolution: {integrity: sha512-kzmNjIgU32mO4mmH5+iUyrqlpFQhF8K2k7eZ4fdLSOPFrD1XgEuSBv9LDEgxRXTMBqMd8ppT0x6TIzqE5pdGdw==}
 
-  react-shadow@20.4.0:
-    resolution: {integrity: sha512-sirvAmFja7Ss6MoyQbKWxaQ5IDTAW3Za3Tvegylfr5jXnwKZObHRIyiatefeNlskoGKfuPaZ8DNT052T0SUGcg==}
-    peerDependencies:
-      prop-types: ^15.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
-
   react-share@4.4.1:
     resolution: {integrity: sha512-AJ9m9RiJssqvYg7MoJUc9J0D7b/liWrsfQ99ndKc5vJ4oVHHd4Fy87jBlKEQPibT40oYA3AQ/a9/oQY6/yaigw==}
     engines: {node: '>=6.9.0', npm: '>=5.0.0'}
@@ -4898,18 +4891,18 @@ snapshots:
 
   '@humanwhocodes/object-schema@1.2.1': {}
 
-  '@inkeep/color-mode@0.0.23(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@inkeep/color-mode@0.0.24(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@inkeep/components@0.0.23(@ark-ui/react@0.15.0(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5)':
+  '@inkeep/components@0.0.24(@ark-ui/react@0.15.0(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5)':
     dependencies:
       '@ark-ui/react': 0.15.0(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@inkeep/preset': 0.0.23(@internationalized/date@3.5.4)(typescript@5.4.5)
-      '@inkeep/preset-chakra': 0.0.23(@internationalized/date@3.5.4)(typescript@5.4.5)
-      '@inkeep/shared': 0.0.24
-      '@inkeep/styled-system': 0.0.37
+      '@inkeep/preset': 0.0.24(@internationalized/date@3.5.4)(typescript@5.4.5)
+      '@inkeep/preset-chakra': 0.0.24(@internationalized/date@3.5.4)(typescript@5.4.5)
+      '@inkeep/shared': 0.0.25
+      '@inkeep/styled-system': 0.0.44
       '@pandacss/dev': 0.22.1(typescript@5.4.5)
       framer-motion: 10.18.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
@@ -4919,21 +4912,21 @@ snapshots:
       - jsdom
       - typescript
 
-  '@inkeep/preset-chakra@0.0.23(@internationalized/date@3.5.4)(typescript@5.4.5)':
+  '@inkeep/preset-chakra@0.0.24(@internationalized/date@3.5.4)(typescript@5.4.5)':
     dependencies:
       '@ark-ui/anatomy': 0.1.0(@internationalized/date@3.5.4)
-      '@inkeep/shared': 0.0.24
+      '@inkeep/shared': 0.0.25
       '@pandacss/dev': 0.22.1(typescript@5.4.5)
     transitivePeerDependencies:
       - '@internationalized/date'
       - jsdom
       - typescript
 
-  '@inkeep/preset@0.0.23(@internationalized/date@3.5.4)(typescript@5.4.5)':
+  '@inkeep/preset@0.0.24(@internationalized/date@3.5.4)(typescript@5.4.5)':
     dependencies:
       '@ark-ui/anatomy': 0.1.0(@internationalized/date@3.5.4)
-      '@inkeep/preset-chakra': 0.0.23(@internationalized/date@3.5.4)(typescript@5.4.5)
-      '@inkeep/shared': 0.0.24
+      '@inkeep/preset-chakra': 0.0.24(@internationalized/date@3.5.4)(typescript@5.4.5)
+      '@inkeep/shared': 0.0.25
       '@pandacss/dev': 0.22.1(typescript@5.4.5)
       colorjs.io: 0.4.5
     transitivePeerDependencies:
@@ -4941,26 +4934,27 @@ snapshots:
       - jsdom
       - typescript
 
-  '@inkeep/shared@0.0.24': {}
+  '@inkeep/shared@0.0.25': {}
 
-  '@inkeep/styled-system@0.0.37': {}
+  '@inkeep/styled-system@0.0.44': {}
 
-  '@inkeep/styled-system@0.0.42': {}
+  '@inkeep/styled-system@0.0.46': {}
 
-  '@inkeep/widgets@0.2.280(@internationalized/date@3.5.4)(@types/react@18.3.3)(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5)':
+  '@inkeep/widgets@0.2.285(@internationalized/date@3.5.4)(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5)':
     dependencies:
       '@apollo/client': 3.10.4(@types/react@18.3.3)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@ark-ui/react': 0.15.0(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@inkeep/color-mode': 0.0.23(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@inkeep/components': 0.0.23(@ark-ui/react@0.15.0(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
-      '@inkeep/preset': 0.0.23(@internationalized/date@3.5.4)(typescript@5.4.5)
-      '@inkeep/preset-chakra': 0.0.23(@internationalized/date@3.5.4)(typescript@5.4.5)
-      '@inkeep/shared': 0.0.24
-      '@inkeep/styled-system': 0.0.42
+      '@inkeep/color-mode': 0.0.24(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@inkeep/components': 0.0.24(@ark-ui/react@0.15.0(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@internationalized/date@3.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
+      '@inkeep/preset': 0.0.24(@internationalized/date@3.5.4)(typescript@5.4.5)
+      '@inkeep/preset-chakra': 0.0.24(@internationalized/date@3.5.4)(typescript@5.4.5)
+      '@inkeep/shared': 0.0.25
+      '@inkeep/styled-system': 0.0.46
       '@types/lodash.isequal': 4.5.8
       graphql: 16.8.1
       graphql-ws: 5.16.0(graphql@16.8.1)
       html-react-parser: 3.0.16(react@18.2.0)
+      humps: 2.0.1
       lodash.isequal: 4.5.0
       prism-react-renderer: 2.3.1(react@18.2.0)
       prismjs: 1.29.0
@@ -4971,7 +4965,6 @@ snapshots:
       react-hotkeys-hook: 4.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-icons: 4.12.0(react@18.2.0)
       react-markdown: 8.0.7(@types/react@18.3.3)(react@18.2.0)
-      react-shadow: 20.4.0(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-svg: 16.1.34(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-textarea-autosize: 8.5.3(@types/react@18.3.3)(react@18.2.0)
       rehype-raw: 6.1.1
@@ -4980,7 +4973,6 @@ snapshots:
       - '@internationalized/date'
       - '@types/react'
       - jsdom
-      - prop-types
       - subscriptions-transport-ws
       - supports-color
       - typescript
@@ -5378,7 +5370,7 @@ snapshots:
       look-it-up: 2.1.0
       microdiff: 1.4.0
       outdent: 0.8.0
-      pathe: 1.1.1
+      pathe: 1.1.2
       pkg-types: 1.0.3
       pluralize: 8.0.0
       postcss: 8.4.38
@@ -8834,7 +8826,7 @@ snapshots:
     dependencies:
       jsonc-parser: 3.2.1
       mlly: 1.7.0
-      pathe: 1.1.1
+      pathe: 1.1.2
 
   pkg-types@1.1.1:
     dependencies:
@@ -9083,13 +9075,6 @@ snapshots:
       react-fast-compare: 3.2.2
 
   react-property@2.0.0: {}
-
-  react-shadow@20.4.0(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
-    dependencies:
-      humps: 2.0.1
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
 
   react-share@4.4.1(react@18.2.0):
     dependencies:

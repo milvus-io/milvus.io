@@ -2,6 +2,7 @@ export * from './links';
 
 export const FILTER_TAG = '@@filter_tag';
 export const PAGE_INDEX = '@@page_index';
+export const FILTER_HASH = '@@filter_hash';
 
 export const ABSOLUTE_BASE_URL = 'https://milvus.io';
 

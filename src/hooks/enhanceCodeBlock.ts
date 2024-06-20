@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { copyToCommand } from '../utils/common';
 import { checkIconTpl, copyIconTpl } from '../components/icons';
 import { useRouter } from 'next/router';
 import { formatCodeContent } from '@/utils/code';
-import { FILTER_HASH } from '@/consts';
+import { FILTER_QUERY_KEY } from '@/consts';
+import { formatQueryString } from '@/utils';
 
 export const useCopyCode = (codeList = []) => {
   useEffect(() => {
@@ -34,47 +35,54 @@ export const useCopyCode = (codeList = []) => {
   }, [codeList]);
 };
 
+// docs tab filter, implement this feature using search parameters
 export const useFilter = () => {
-  const [curHash, setCurHash] = useState('');
+  const { asPath } = useRouter();
 
   useEffect(() => {
     if (window && typeof window !== 'undefined') {
-      let localHash = window.localStorage.getItem(FILTER_HASH);
-      if (localHash) {
-        setCurHash(localHash);
-      }
+      const hash = window.location.hash;
+      const searchParams = new URLSearchParams(window.location.search).get(
+        FILTER_QUERY_KEY
+      );
 
       const filterWrappers = Array.from(document.querySelectorAll('.filter'));
-
+      const filterContents = Array.from(
+        document.querySelectorAll(`[class*="filter-"]`)
+      );
       let filterLinks = [];
+      let curTab = searchParams;
 
       filterWrappers.forEach(fw => {
         const fl = fw.querySelectorAll('a');
 
         fl.forEach(link => {
-          if (!localHash) {
-            localHash = link.hash;
-            setCurHash(link.hash);
+          if (!curTab) {
+            curTab = formatQueryString(link.hash);
+            window.history.pushState(
+              null,
+              '',
+              `?${FILTER_QUERY_KEY}=${curTab}${hash}`
+            );
           }
+
           filterLinks.push(link);
         });
       });
 
-      const filterContents = Array.from(
-        document.querySelectorAll(`[class*="filter-"]`)
-      );
-
-      if (!filterContents.length) return;
+      if (!filterContents.length || !filterLinks.length) return;
 
       const filterClickHandler = (params: {
-        curHash: string;
+        query: string;
         filterLinks: HTMLAnchorElement[];
         filterContents: Element[];
       }) => {
-        const { curHash, filterLinks, filterContents } = params;
-        const currentFilters = filterLinks.filter(f => f.hash === curHash);
+        const { query, filterLinks, filterContents } = params;
+        const currentFilters = filterLinks.filter(
+          f => formatQueryString(f.hash) === query
+        );
         const currentContents = document.querySelectorAll(
-          `.filter-${curHash.replace('#', '').replace(/%/g, '')}`
+          `.filter-${query.replace('#', '').replace(/%/g, '')}`
         );
         filterLinks.forEach(fl => fl.classList.toggle('active', false));
         currentFilters.forEach(cf => cf.classList.toggle('active', true));
@@ -83,20 +91,45 @@ export const useFilter = () => {
       };
 
       filterLinks.forEach(a => {
-        const { hash } = a;
+        const queryString = formatQueryString(a.hash);
         a.addEventListener('click', (e: Event) => {
           e.preventDefault();
           e.stopPropagation();
-          window.localStorage.setItem(FILTER_HASH, hash);
-          setCurHash(hash);
-          filterClickHandler({ curHash: hash, filterLinks, filterContents });
+          window.history.pushState(
+            null,
+            '',
+            `?${FILTER_QUERY_KEY}=${queryString}`
+          );
+          filterClickHandler({
+            query: queryString,
+            filterLinks,
+            filterContents,
+          });
         });
       });
 
-      // active first filter if refresh the page
-      filterLinks[0].click();
+      const containCurTab = filterLinks.some(fl => fl.hash === `#${curTab}`);
+
+      if (containCurTab) {
+        for (let fl of filterLinks) {
+          if (fl.hash === `#${curTab}`) {
+            filterClickHandler({
+              query: formatQueryString(fl.hash),
+              filterLinks,
+              filterContents,
+            });
+            break;
+          }
+        }
+      } else {
+        filterClickHandler({
+          query: formatQueryString(filterLinks[0].hash),
+          filterLinks,
+          filterContents,
+        });
+      }
     }
-  }, [curHash]);
+  }, [asPath]);
 };
 
 export const useMultipleCodeFilter = () => {

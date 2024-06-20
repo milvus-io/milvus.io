@@ -3,6 +3,8 @@ import { copyToCommand } from '../utils/common';
 import { checkIconTpl, copyIconTpl } from '../components/icons';
 import { useRouter } from 'next/router';
 import { formatCodeContent } from '@/utils/code';
+import { FILTER_QUERY_KEY } from '@/consts';
+import { formatQueryString } from '@/utils';
 
 export const useCopyCode = (codeList = []) => {
   useEffect(() => {
@@ -33,62 +35,98 @@ export const useCopyCode = (codeList = []) => {
   }, [codeList]);
 };
 
+// docs tab filter, implement this feature using search parameters
 export const useFilter = () => {
   const { asPath } = useRouter();
+
   useEffect(() => {
     if (window && typeof window !== 'undefined') {
-      const filterWrappers = document.querySelectorAll('.filter');
-      const allFilters = [];
-      let firstHash = '';
+      const hash = window.location.hash;
+      const searchParams = new URLSearchParams(window.location.search).get(
+        FILTER_QUERY_KEY
+      );
+
+      const filterWrappers = Array.from(document.querySelectorAll('.filter'));
+      const filterContents = Array.from(
+        document.querySelectorAll(`[class*="filter-"]`)
+      );
+      let filterLinks = [];
+      let curTab = searchParams;
+
       filterWrappers.forEach(fw => {
-        const fs = fw.querySelectorAll('a');
+        const fl = fw.querySelectorAll('a');
 
-        fs.forEach(f => {
-          if (!firstHash) {
-            firstHash = f.hash;
+        fl.forEach(link => {
+          if (!curTab) {
+            curTab = formatQueryString(link.hash);
+            window.history.pushState(
+              null,
+              '',
+              `?${FILTER_QUERY_KEY}=${curTab}${hash}`
+            );
           }
-          allFilters.push(f);
+
+          filterLinks.push(link);
         });
       });
-      const allContents = document.querySelectorAll(`[class*="filter-"]`);
 
-      if (!allContents.length) return;
+      if (!filterContents.length || !filterLinks.length) return;
 
-      const clickEventHandler = targetHash => {
-        const hash = targetHash;
-        const currentFilters = allFilters.filter(f => f.hash === hash);
-        allFilters.forEach(f => f.classList.toggle('active', false));
+      const filterClickHandler = (params: {
+        query: string;
+        filterLinks: HTMLAnchorElement[];
+        filterContents: Element[];
+      }) => {
+        const { query, filterLinks, filterContents } = params;
+        const currentFilters = filterLinks.filter(
+          f => formatQueryString(f.hash) === query
+        );
+        const currentContents = document.querySelectorAll(
+          `.filter-${query.replace('#', '').replace(/%/g, '')}`
+        );
+        filterLinks.forEach(fl => fl.classList.toggle('active', false));
         currentFilters.forEach(cf => cf.classList.toggle('active', true));
-        allContents.forEach(c => c.classList.toggle('active', false));
-        const contents = document.querySelectorAll(
-          `.filter-${hash.replace('#', '').replace(/%/g, '')}`
-        );
-        contents.forEach(c => c.classList.toggle('active', true));
+        filterContents.forEach(fc => fc.classList.toggle('active', false));
+        currentContents.forEach(c => c.classList.toggle('active', true));
       };
-      filterWrappers.forEach(w => {
-        w.addEventListener('click', (e: Event) => {
-          if (
-            e.target instanceof HTMLAnchorElement &&
-            e.target.tagName === 'A'
-          ) {
-            clickEventHandler(e.target.hash);
-          }
+
+      filterLinks.forEach(a => {
+        const queryString = formatQueryString(a.hash);
+        a.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          e.stopPropagation();
+          window.history.pushState(
+            null,
+            '',
+            `?${FILTER_QUERY_KEY}=${queryString}`
+          );
+          filterClickHandler({
+            query: queryString,
+            filterLinks,
+            filterContents,
+          });
         });
       });
 
-      if (window) {
-        const windowHash = window.location.hash || firstHash;
-        if (windowHash) {
-          clickEventHandler(windowHash);
-        }
+      const containCurTab = filterLinks.some(fl => fl.hash === `#${curTab}`);
 
-        window.addEventListener(
-          'hashchange',
-          () => {
-            clickEventHandler(window.location.hash);
-          },
-          false
-        );
+      if (containCurTab) {
+        for (let fl of filterLinks) {
+          if (fl.hash === `#${curTab}`) {
+            filterClickHandler({
+              query: formatQueryString(fl.hash),
+              filterLinks,
+              filterContents,
+            });
+            break;
+          }
+        }
+      } else {
+        filterClickHandler({
+          query: formatQueryString(filterLinks[0].hash),
+          filterLinks,
+          filterContents,
+        });
       }
     }
   }, [asPath]);

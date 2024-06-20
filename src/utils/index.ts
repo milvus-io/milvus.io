@@ -143,3 +143,7 @@ export const getCacheData = (params: {
   const { cache, key } = params;
   return cache.get(key);
 };
+
+export const formatQueryString = (hash: string) => {
+  return hash.replace(/#/g, '');
+};

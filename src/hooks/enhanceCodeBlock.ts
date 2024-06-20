@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { copyToCommand } from '../utils/common';
 import { checkIconTpl, copyIconTpl } from '../components/icons';
 import { useRouter } from 'next/router';
 import { formatCodeContent } from '@/utils/code';
+import { FILTER_HASH } from '@/consts';
 
 export const useCopyCode = (codeList = []) => {
   useEffect(() => {
@@ -34,64 +35,68 @@ export const useCopyCode = (codeList = []) => {
 };
 
 export const useFilter = () => {
-  const { asPath } = useRouter();
+  const [curHash, setCurHash] = useState('');
+
   useEffect(() => {
     if (window && typeof window !== 'undefined') {
-      const filterWrappers = document.querySelectorAll('.filter');
-      const allFilters = [];
-      let firstHash = '';
-      filterWrappers.forEach(fw => {
-        const fs = fw.querySelectorAll('a');
-
-        fs.forEach(f => {
-          if (!firstHash) {
-            firstHash = f.hash;
-          }
-          allFilters.push(f);
-        });
-      });
-      const allContents = document.querySelectorAll(`[class*="filter-"]`);
-
-      if (!allContents.length) return;
-
-      const clickEventHandler = targetHash => {
-        const hash = targetHash;
-        const currentFilters = allFilters.filter(f => f.hash === hash);
-        allFilters.forEach(f => f.classList.toggle('active', false));
-        currentFilters.forEach(cf => cf.classList.toggle('active', true));
-        allContents.forEach(c => c.classList.toggle('active', false));
-        const contents = document.querySelectorAll(
-          `.filter-${hash.replace('#', '').replace(/%/g, '')}`
-        );
-        contents.forEach(c => c.classList.toggle('active', true));
-      };
-      filterWrappers.forEach(w => {
-        w.addEventListener('click', (e: Event) => {
-          if (
-            e.target instanceof HTMLAnchorElement &&
-            e.target.tagName === 'A'
-          ) {
-            clickEventHandler(e.target.hash);
-          }
-        });
-      });
-
-      if (window) {
-        const windowHash = window.location.hash || firstHash;
-        if (windowHash) {
-          clickEventHandler(windowHash);
-        }
-
-        window.addEventListener(
-          'hashchange',
-          () => {
-            clickEventHandler(window.location.hash);
-          },
-          false
-        );
+      let localHash = window.localStorage.getItem(FILTER_HASH);
+      if (localHash) {
+        setCurHash(localHash);
       }
+
+      const filterWrappers = Array.from(document.querySelectorAll('.filter'));
+
+      let filterLinks = [];
+
+      filterWrappers.forEach(fw => {
+        const fl = fw.querySelectorAll('a');
+
+        fl.forEach(link => {
+          if (!localHash) {
+            localHash = link.hash;
+            setCurHash(link.hash);
+          }
+          filterLinks.push(link);
+        });
+      });
+
+      const filterContents = Array.from(
+        document.querySelectorAll(`[class*="filter-"]`)
+      );
+
+      if (!filterContents.length) return;
+
+      const filterClickHandler = (params: {
+        curHash: string;
+        filterLinks: HTMLAnchorElement[];
+        filterContents: Element[];
+      }) => {
+        const { curHash, filterLinks, filterContents } = params;
+        const currentFilters = filterLinks.filter(f => f.hash === curHash);
+        const currentContents = document.querySelectorAll(
+          `.filter-${curHash.replace('#', '').replace(/%/g, '')}`
+        );
+        filterLinks.forEach(fl => fl.classList.toggle('active', false));
+        currentFilters.forEach(cf => cf.classList.toggle('active', true));
+        filterContents.forEach(fc => fc.classList.toggle('active', false));
+        currentContents.forEach(c => c.classList.toggle('active', true));
+      };
+
+      filterLinks.forEach(a => {
+        const { hash } = a;
+        a.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          e.stopPropagation();
+          window.localStorage.setItem(FILTER_HASH, hash);
+          setCurHash(hash);
+          filterClickHandler({ curHash: hash, filterLinks, filterContents });
+        });
+      });
+
+      // active first filter if refresh the page
+      filterLinks[0].click();
     }
-  }, [asPath]);
+  }, [curHash]);
 };
 
 export const useMultipleCodeFilter = () => {

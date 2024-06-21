@@ -9,5 +9,9 @@
       "cancel": "Cancel",
       "send": "Send"
     }
+  },
+  "docAction": {
+    "edit": "Edit this page",
+    "issue": "Create an issue "
   }
 }

@@ -7,6 +7,7 @@ import python from 'highlight.js/lib/languages/python';
 import javascript from 'highlight.js/lib/languages/javascript';
 import go from 'highlight.js/lib/languages/go';
 import csharp from 'highlight.js/lib/languages/csharp';
+import { DocAnchorItemType } from '@/types/docs';
 
 // no language named shell, use bash instead
 hljs.registerLanguage('shell', bash);
@@ -95,7 +96,7 @@ export async function markdownToHtml(
 
   const codeList = [];
   let titleContent = '';
-  const headingAnchorList = [];
+  const headingAnchorList: DocAnchorItemType[] = [];
   const REMOVE_SPECIAL_CHAR = /[`*]/g;
 
   // get code content of code block, used for code copy button

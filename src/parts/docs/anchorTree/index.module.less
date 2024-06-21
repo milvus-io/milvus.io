@@ -1,12 +1,16 @@
 @import url('../../../styles//mixin.module.less');
 
 .anchorsWrapper {
-  .title {
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--color-black);
+  .tocWrapper {
+    display: flex;
+    align-items: center;
     margin-bottom: 20px;
+
+    .tocTitle {
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 
   .anchorsList {
@@ -16,6 +20,7 @@
       font-size: 12px;
       line-height: 14px;
       color: var(--color-grey-01);
+      font-weight: 500;
       display: block;
       width: 100%;
       padding: 5px 0;
@@ -26,7 +31,7 @@
     }
     .activeAnchorItem > a {
       color: var(--color-text-primary);
-      font-weight: 500;
+      font-weight: 600;
 
       // &:hover {
       //   color: #000;

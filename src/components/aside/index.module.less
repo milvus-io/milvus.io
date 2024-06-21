@@ -1,25 +1,44 @@
+@import url('@/styles/global.module.less');
+
 .rightNavWrapper {
   padding: 0 16px;
+  font-family: 'Inter';
 
   .btnsGroup {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 60px 0;
+    padding: 12px 0;
+    border-bottom: 1px solid @color-grey-04;
+    border-top: 1px solid @color-grey-04;
+    list-style-type: none;
+    margin-bottom: 40px;
+    margin-top: 40px;
 
-    .link {
-      display: inline-block;
-      color: var(--color-black);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      line-height: 24px;
+    li {
+      margin-bottom: 12px;
       cursor: pointer;
 
+      &:last-child {
+        margin-bottom: 0;
+      }
+
       &:hover {
-        color: var(--color-grey-01);
+        .link {
+          color: var(--color-grey-01);
+        }
       }
     }
+    .link {
+      color: var(--color-black);
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  .noMarginTop {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
   }
 
   .anchor {
@@ -33,7 +52,7 @@
 
 .iconWrapper {
   display: inline-block;
-  margin-right: 8px;
+  margin-right: 6px;
   text-align: center;
 
   svg {
@@ -46,4 +65,134 @@
       fill: var(--color-black);
     }
   }
+}
+
+.feedbackWrapper {
+  .feedbackTitle {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .feedbackDesc {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0.24px;
+    color: @color-grey-01;
+    margin-bottom: 10px;
+  }
+
+  .feedbackBtnsWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .feedbackBtn {
+      .resetNativeButton();
+
+      background-color: @color-grey-05;
+      padding: 8px;
+      border-radius: 4px;
+      line-height: 0;
+
+      &:hover {
+        background-color: @color-primary;
+
+        svg {
+          path {
+            stroke: #fff;
+          }
+        }
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .feedbackBtn:disabled {
+      cursor: default;
+      background-color: @color-primary;
+
+      svg {
+        path {
+          stroke: #fff;
+        }
+      }
+
+      &:hover {
+        background-color: @color-primary;
+
+        svg {
+          path {
+            stroke: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+div.customRootClass {
+  width: 600px;
+  max-width: 90%;
+
+  .customActionsClass {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 36px;
+    padding: 4px 24px;
+
+    button {
+      .resetNativeButton();
+      background-color: @color-grey-03;
+      padding: 10px 20px;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+
+      &:hover {
+        background-color: @color-primary;
+      }
+    }
+  }
+
+  .customTitleClass {
+    font-family: 'Inter';
+    color: @color-dark;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 42px;
+  }
+}
+
+p.dialogSubTitle {
+  font-family: 'Inter';
+  color: @color-dark;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  margin-bottom: 24px;
+}
+
+label.inputLabel {
+  font-family: 'Inter';
+  color: @color-dark;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.24px;
+  margin-bottom: 8px;
+}
+
+input.customInputField {
+  font-family: 'Inter';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
 }

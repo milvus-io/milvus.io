@@ -89,7 +89,7 @@ export default function Template(props: ApiDetailPageProps) {
   // Generate apiReferenceData.sourceUrl for final page's Edit Button.
   const apiReferenceData = useMemo(() => {
     const commonData = {
-      slack: SLACK_INVITE_URL,
+      slackPath: SLACK_INVITE_URL,
       discussPath: GITHUB_DISCUSSION_URL,
       reportPath: GITHUB_BUG_REPORT_URL,
     };
@@ -179,7 +179,6 @@ export default function Template(props: ApiDetailPageProps) {
             <Aside
               apiReferenceData={apiReferenceData}
               category="api"
-              isHome={false}
               classes={{
                 root: classes.rightAnchorTreeWrapper,
               }}

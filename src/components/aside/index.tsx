@@ -82,7 +82,7 @@ const Aside = (props: AsidePropsType) => {
     docData,
     apiReferenceData,
   } = props;
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('docs');
   const { root, btnGroup, anchorTree } = classes;
 
   const [dialogConfig, setDialogConfig] = useState<DialogPropsType>({
@@ -103,74 +103,30 @@ const Aside = (props: AsidePropsType) => {
     setDialogConfig(params);
   };
 
-  // editBtn issueBtn; bugBtn; suggestBtn; joinBtn
-  const [
-    commonEditBtnConf,
-    bugBtnConf,
-    suggestBtnConf,
-    discussBtnConf,
-    commonJoinBtnConf,
-  ] = [
-    {
-      label: t('v3trans.docs.btnGroup.editBtn'),
-      icon: faPencilAlt,
-    },
-    {
-      label: t('v3trans.docs.btnGroup.bugBtn'),
-      icon: faBug,
-    },
-    {
-      label: t('v3trans.docs.btnGroup.suggestBtn'),
-      icon: faLightbulb,
-    },
-    {
-      label: t('v3trans.docs.btnGroup.discussBtn'),
-      icon: faGithub,
-    },
-    {
-      label: t('v3trans.docs.btnGroup.joinBtn'),
-      icon: faHashtag,
-    },
-  ];
-
   const btnConfiguration = {
     doc: [
       {
-        label: commonEditBtnConf.label,
+        label: t('docAction.edit'),
         link: `https://github.com/milvus-io/milvus-docs/edit${docData?.editPath}`,
-        icon: commonEditBtnConf.icon,
+        icon: faPencilAlt,
       },
+
       {
-        label: bugBtnConf.label,
-        link: `https://github.com/milvus-io/milvus/issues/new?assignees=yanliang567&labels=kind%2Fbug%2Cneeds-triage&template=bug_report.yaml&title=[Bug]%3A+`,
-        icon: bugBtnConf.icon,
-      },
-      {
-        label: suggestBtnConf.label,
+        label: t('docAction.issue'),
         link: 'https://github.com/milvus-io/milvus-docs/issues/new/choose',
-        icon: suggestBtnConf.icon,
+        icon: faGithub,
       },
     ],
     api: [
       {
-        label: commonEditBtnConf.label,
+        label: t('docAction.edit'),
         link: apiReferenceData?.editPath,
-        icon: commonEditBtnConf.icon,
+        icon: faPencilAlt,
       },
       {
-        label: discussBtnConf.label,
-        link: apiReferenceData?.discussPath,
-        icon: discussBtnConf.icon,
-      },
-      {
-        label: bugBtnConf.label,
-        link: apiReferenceData?.reportPath,
-        icon: bugBtnConf.icon,
-      },
-      {
-        label: commonJoinBtnConf.label,
-        link: apiReferenceData?.slackPath,
-        icon: commonJoinBtnConf.icon,
+        label: t('docAction.issue'),
+        link: 'https://github.com/milvus-io/web-content/issues/new/choose',
+        icon: faGithub,
       },
     ],
     // community: ({ locale, editPath, id }) => {
@@ -235,8 +191,8 @@ const Aside = (props: AsidePropsType) => {
         )}
         {isShowBtnGroup && (
           <ul
-            className={clsx(styles.btnsGroup, {
-              [btnGroup]: btnGroup,
+            className={clsx(styles.btnsGroup, btnGroup, {
+              [styles.noMarginTop]: category === 'api',
             })}
           >
             {generateBtnGroup(category, styles)}

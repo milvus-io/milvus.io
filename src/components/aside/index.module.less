@@ -16,6 +16,10 @@
       margin-bottom: 12px;
       cursor: pointer;
 
+      &:last-child {
+        margin-bottom: 0;
+      }
+
       &:hover {
         .link {
           color: var(--color-grey-01);
@@ -31,6 +35,12 @@
     }
   }
 
+  .noMarginTop {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+  }
+
   .anchor {
     position: sticky;
     height: calc(100vh - 105px);
@@ -42,7 +52,7 @@
 
 .iconWrapper {
   display: inline-block;
-  margin-right: 8px;
+  margin-right: 6px;
   text-align: center;
 
   svg {

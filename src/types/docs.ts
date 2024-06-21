@@ -131,3 +131,10 @@ export interface DocDetailPageProps {
   id: string;
   mdListData: AllMdVersionIdType[];
 }
+
+export interface DocAnchorItemType {
+  label: string;
+  href: string;
+  type: number;
+  isActive: boolean;
+}

@@ -170,7 +170,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
           <div className={classes.asideSection}>
             <Aside
               version={version}
-              editPath={editPath}
+              docData={{ editPath }}
               mdTitle={frontMatter.title}
               category="doc"
               items={anchorList}

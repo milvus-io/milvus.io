@@ -5,12 +5,13 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { DialogActions } from '@mui/material';
 
 export const BootstrapDialogTitle = props => {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+    <DialogTitle sx={{ m: 0, p: 2, fontFamily: 'Inter' }} {...other}>
       {children}
       {onClose ? (
         <IconButton
@@ -35,7 +36,13 @@ export const CustomizedDialogs = props => {
 
   return (
     <>
-      <Dialog onClose={handleClose} open={open}>
+      <Dialog
+        onClose={handleClose}
+        open={open}
+        sx={{
+          fontFamily: 'Inter',
+        }}
+      >
         <BootstrapDialogTitle onClose={handleClose}>
           {title}
         </BootstrapDialogTitle>
@@ -48,11 +55,35 @@ export const CustomizedDialogs = props => {
 };
 
 export const CustomizedContentDialogs = props => {
-  const { open, handleClose, title } = props;
+  const { open, handleClose, title, actions, classes = {} } = props;
+
+  const {
+    title: customTitleClass = '',
+    actions: customActionClass = '',
+    root = '',
+  } = classes;
+
   return (
-    <Dialog onClose={handleClose} open={open} maxWidth="xl">
-      <BootstrapDialogTitle onClose={handleClose}>{title}</BootstrapDialogTitle>
-      <DialogContent dividers>{props.children}</DialogContent>
+    <Dialog
+      onClose={handleClose}
+      open={open}
+      maxWidth="xl"
+      classes={{
+        paper: root,
+      }}
+    >
+      <BootstrapDialogTitle
+        onClose={handleClose}
+        classes={{ root: customTitleClass }}
+      >
+        {title}
+      </BootstrapDialogTitle>
+      <DialogContent>{props.children}</DialogContent>
+      {actions && (
+        <DialogActions classes={{ root: customActionClass }}>
+          {actions}
+        </DialogActions>
+      )}
     </Dialog>
   );
 };

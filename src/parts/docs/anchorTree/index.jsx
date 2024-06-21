@@ -2,6 +2,7 @@ import classes from './index.module.less';
 import Link from 'next/link';
 import clsx from 'clsx';
 import React, { useState } from 'react';
+import { TOCIcon } from '@/components/icons';
 
 export default function AnchorTree(props) {
   const { list, t, className: customClassName = '' } = props;
@@ -22,7 +23,10 @@ export default function AnchorTree(props) {
 
   return (
     <div className={classes.anchorsWrapper}>
-      <p className={classes.title}>On this page</p>
+      <h4 className={classes.tocWrapper}>
+        <TOCIcon />
+        <span className={classes.tocTitle}>Table of contents</span>
+      </h4>
 
       <ul className={clsx(classes.anchorsList, customClassName)}>
         {list.map((v, idx) => {

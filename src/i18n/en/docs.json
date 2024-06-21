@@ -1,0 +1,13 @@
+{
+  "feedback": {
+    "title": "Feedback",
+    "prompt": "Was this page helpful?",
+    "comment": {
+      "title": "Send us your feedback",
+      "desc": "Thank you for helping us improve Milvus documentation.",
+      "inputLabel": "Additional comment (optional)",
+      "cancel": "Cancel",
+      "send": "Send"
+    }
+  }
+}

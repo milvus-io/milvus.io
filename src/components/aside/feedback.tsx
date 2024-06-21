@@ -1,9 +1,10 @@
 import styles from './index.module.less';
 import { ThumbUpIcon, ThumbDownIcon } from '../icons';
 import type { DialogPropsType } from './index';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, Typography, InputLabel } from '@mui/material';
+import { useRouter } from 'next/router';
 
 declare global {
   interface Window {
@@ -49,6 +50,7 @@ const FeedbackComment: React.FC<{
 export default function FeedbackSection(props: {
   handleUpdateDialog: (params: DialogPropsType) => void;
 }) {
+  const { asPath } = useRouter();
   const { t } = useTranslation('docs');
   const { handleUpdateDialog } = props;
 
@@ -136,6 +138,14 @@ export default function FeedbackSection(props: {
       ),
     });
   };
+
+  useEffect(() => {
+    // reset feedback status when route changes
+    setFeedbackStatus({
+      like: false,
+      dislike: false,
+    });
+  }, [asPath]);
 
   return (
     <div className={styles.feedbackWrapper}>

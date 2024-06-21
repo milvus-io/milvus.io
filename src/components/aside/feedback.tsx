@@ -65,15 +65,18 @@ export default function FeedbackSection(props: {
   };
 
   const handleLike = () => {
+    window.dataLayer = window.dataLayer || [];
+    const location = window.location.href;
     const data = {
       like: true,
       comment: '',
+      location,
     };
     setFeedbackStatus(v => ({
       ...v,
       like: true,
     }));
-    window.dataLayer = window.dataLayer || [];
+
     window.dataLayer.push({
       event: 'milvus_doc_feedback',
       feedback: JSON.stringify(data),
@@ -85,16 +88,18 @@ export default function FeedbackSection(props: {
     e: React.MouseEvent<HTMLButtonElement>,
     withComment: boolean
   ) => {
+    window.dataLayer = window.dataLayer || [];
+    const location = window.location.href;
     let data = {
       like: false,
       comment: '',
+      location,
     };
 
     if (withComment) {
       data.comment = commentString.current;
     }
 
-    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'milvus_doc_feedback',
       feedback: JSON.stringify(data),

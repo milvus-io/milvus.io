@@ -48,6 +48,10 @@ interface ApiDetailPageProps {
   headingContent: string;
   languageCategory: string;
   latestVersion: string;
+  meta: {
+    title: string;
+    path: string[];
+  };
 }
 export default function Template(props: ApiDetailPageProps) {
   const {
@@ -63,9 +67,11 @@ export default function Template(props: ApiDetailPageProps) {
     headingContent,
     languageCategory,
     latestVersion,
+    meta,
   } = props;
 
   const { t } = useTranslation('common');
+  const { title: metaTitle, path: metaPath } = meta;
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
@@ -127,21 +133,25 @@ export default function Template(props: ApiDetailPageProps) {
     }
   }, [category, relativePath, version]);
 
-  const { pageTitle, absoluteUrl } = useMemo(() => {
-    const pageTitle = `${headingContent} - ${languageCategory} ${version} for Milvus`;
+  const { pageTitle, absoluteUrl, pageDesc } = useMemo(() => {
+    const pageTitle = metaPath
+      ? `${metaTitle} - ${languageCategory} ${version}/${metaPath}`
+      : `${metaTitle} - ${languageCategory} ${version}`;
     const absoluteUrl = `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${relativePath}`;
+    const pageDesc = `${headingContent} | ${version}`;
 
     return {
       pageTitle,
       absoluteUrl,
+      pageDesc,
     };
-  }, [headingContent, languageCategory, relativePath, version]);
+  }, [metaTitle, metaPath, languageCategory, relativePath, version]);
 
   return (
     <DocLayout
       seo={{
         title: pageTitle,
-        desc: '',
+        desc: pageDesc,
         url: absoluteUrl,
       }}
       version={version}
@@ -297,6 +307,10 @@ export const getStaticProps: GetStaticProps = async context => {
       ),
     }));
 
+  const metaPathList = slug.slice();
+  const metaTitle = metaPathList.pop();
+  const metaPath = metaPathList.join('/');
+
   return {
     props: {
       doc,
@@ -312,6 +326,10 @@ export const getStaticProps: GetStaticProps = async context => {
       curCategoryContentData: curCategoryContentDataOfAllVersion,
       headingContent: headingContent ?? 'Milvus API Reference',
       languageCategory,
+      meta: {
+        title: metaTitle,
+        path: metaPath,
+      },
     },
   };
 };

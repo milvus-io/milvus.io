@@ -10,7 +10,7 @@ import {
   useFilter,
   useMultipleCodeFilter,
 } from '@/hooks/enhanceCodeBlock';
-import { useActivateAnchorWhenScroll } from '@/hooks/doc-anchor';
+import { useActivateAnchorWhenScroll, useGenAnchor } from '@/hooks/doc-anchor';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import DocLayout from '@/components/layout/docLayout';
 import { ABSOLUTE_BASE_URL } from '@/consts';
@@ -145,6 +145,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     articleContainer: articleContainer,
     anchorList,
   });
+  useGenAnchor(version, editPath);
 
   return (
     <>

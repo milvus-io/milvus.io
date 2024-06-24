@@ -25,7 +25,7 @@ import { GetStaticProps } from 'next';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
 import { DocDetailPageProps } from '@/types/docs';
 import clsx from 'clsx';
-import { useActivateAnchorWhenScroll } from '@/hooks/doc-anchor';
+import { useActivateAnchorWhenScroll, useGenAnchor } from '@/hooks/doc-anchor';
 
 export default function DocDetailPage(props: DocDetailPageProps) {
   const {
@@ -132,6 +132,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     articleContainer,
     anchorList,
   });
+  useGenAnchor(version, editPath);
 
   return (
     <DocLayout

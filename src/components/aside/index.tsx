@@ -52,7 +52,7 @@ interface AsidePropsType {
   mdTitle?: string;
   apiReferenceData?: ApiReferenceData;
   docData?: DocData;
-  activeAnchor: string;
+  activeAnchor?: string;
 
   classes?: {
     root?: string;
@@ -77,7 +77,7 @@ const Aside = (props: AsidePropsType) => {
     classes = {},
     docData,
     apiReferenceData,
-    activeAnchor,
+    activeAnchor = '',
   } = props;
   const { t } = useTranslation('docs');
   const { root, btnGroup, anchorTree } = classes;

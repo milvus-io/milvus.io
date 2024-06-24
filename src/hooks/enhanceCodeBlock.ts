@@ -136,7 +136,7 @@ export const useMultipleCodeFilter = () => {
   const { asPath } = useRouter();
   const SEARCH = 'search';
   useEffect(() => {
-    const setSearch = val => window.localStorage.setItem(SEARCH, val);
+    const setSearch = (val: string) => window.localStorage.setItem(SEARCH, val);
     const getSearch = () => {
       return window.localStorage.getItem(SEARCH);
     };
@@ -149,13 +149,14 @@ export const useMultipleCodeFilter = () => {
 
       fs.forEach(f => {
         if (!firstSearch) {
-          // <a href='?node' >xxx</a>
-          firstSearch = f.search || f.hash.replace('#', '?');
+          // <a href='#node' >xxx</a>
+          firstSearch = f.hash.replace('#', '?');
         }
-        f['key'] = f.search || f.hash.replace('#', '?');
+        f['key'] = f.hash.replace('#', '?');
         allFilters.push(f);
       });
     });
+
     const allContents = document.querySelectorAll(`[class*="language-"]`);
     if (!allContents.length) return;
     if (!filterWrappers.length) {
@@ -169,7 +170,7 @@ export const useMultipleCodeFilter = () => {
       item => item.getAttribute('href')
     );
     const clickEventHandler = targetSearch => {
-      const search = targetSearch.replace('#', '?');
+      const search = targetSearch;
       setSearch(targetSearch);
       const currentFilters = allFilters.filter(f => f.key === search);
       allFilters.forEach(f => f.classList.toggle('active', false));
@@ -186,7 +187,7 @@ export const useMultipleCodeFilter = () => {
       w.addEventListener('click', (e: Event) => {
         e.preventDefault();
         if (e.target instanceof HTMLAnchorElement && e.target.tagName === 'A') {
-          clickEventHandler(e.target.search || e.target.hash);
+          clickEventHandler(e.target.hash.replace('#', '?'));
         }
       });
     });

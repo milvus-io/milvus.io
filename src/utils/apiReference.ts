@@ -232,56 +232,52 @@ export const generateApiMenuAndContentDataOfSingleVersion = (params: {
   language: ApiReferenceLanguageEnum;
   version: string;
   withContent?: boolean;
-}) => {
-  try {
-    const { language, version, withContent = false } = params;
-    const cacheKey = `api-${language}-${version}-${withContent}`;
+}): {} => {
+  const { language, version, withContent = false } = params;
+  const cacheKey = `api-${language}-${version}-${withContent}`;
 
-    const cachedData = getCacheData({ cache: apiCache, key: cacheKey });
+  const cachedData = getCacheData({ cache: apiCache, key: cacheKey });
 
-    if (cachedData) {
-      return cachedData;
-    }
-
-    const path = API_REFERENCE_CONFIG[language].path;
-    const category = API_REFERENCE_CONFIG[language].category;
-    const versionPath = `${path}/${version}`;
-    const contentList: ApiFileDateInfoType[] = [];
-
-    readApiFile({
-      filePath: versionPath,
-      category,
-      version,
-      fileDataList: contentList,
-      withContent,
-    });
-
-    const menuData = generateApiMenuData({
-      filePath: versionPath,
-      parentIds: [language],
-    });
-
-    const result = {
-      version,
-      menuData: [
-        {
-          ...menuData,
-          id: language,
-          label: API_REFERENCE_CONFIG[language].name,
-          parentIds: [],
-          parentId: '',
-          level: NaN,
-        },
-      ],
-      contentList,
-    };
-
-    setCacheData({ cache: apiCache, key: cacheKey, data: result });
-
-    return result;
-  } catch (error) {
-    console.log('error--', error);
+  if (cachedData) {
+    return cachedData;
   }
+
+  const path = API_REFERENCE_CONFIG[language].path;
+  const category = API_REFERENCE_CONFIG[language].category;
+  const versionPath = `${path}/${version}`;
+  const contentList: ApiFileDateInfoType[] = [];
+
+  readApiFile({
+    filePath: versionPath,
+    category,
+    version,
+    fileDataList: contentList,
+    withContent,
+  });
+
+  const menuData = generateApiMenuData({
+    filePath: versionPath,
+    parentIds: [language],
+  });
+
+  const result = {
+    version,
+    menuData: [
+      {
+        ...menuData,
+        id: language,
+        label: API_REFERENCE_CONFIG[language].name,
+        parentIds: [],
+        parentId: '',
+        level: NaN,
+      },
+    ],
+    contentList,
+  };
+
+  setCacheData({ cache: apiCache, key: cacheKey, data: result });
+
+  return result;
 };
 
 // 4. file data list of each language for all versions to generate dynamic routes
@@ -293,7 +289,7 @@ export const generateApiMenuAndContentDataOfAllVersions = (params: {
   const versionInfo = generateApiReferenceVersionsInfo();
   const versions = versionInfo.find(v => v.language === language)?.versions;
   const path = API_REFERENCE_CONFIG[language].path;
-  const allData = versions.map(version =>
+  const allData = versions.map((version: string) =>
     generateApiMenuAndContentDataOfSingleVersion({
       language,
       version,

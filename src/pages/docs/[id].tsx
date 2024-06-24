@@ -10,7 +10,7 @@ import {
   useFilter,
   useMultipleCodeFilter,
 } from '@/hooks/enhanceCodeBlock';
-import { useGenAnchor } from '@/hooks/doc-anchor';
+import { useActivateAnchorWhenScroll } from '@/hooks/doc-anchor';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import DocLayout from '@/components/layout/docLayout';
 import { ABSOLUTE_BASE_URL } from '@/consts';
@@ -81,6 +81,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   const [isOpened, setIsOpened] = useState(false);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');
+  const articleContainer = useRef<HTMLDivElement>(null);
 
   // const handleNodeClick = (nodeId, parentIds, isPage = false) => {
   //   const updatedTree = recursionUpdateTree(
@@ -140,7 +141,10 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   useFilter();
   useMultipleCodeFilter();
   useCopyCode(codeList);
-  useGenAnchor(version, editPath);
+  const activeAnchor = useActivateAnchorWhenScroll({
+    articleContainer: articleContainer,
+    anchorList,
+  });
 
   return (
     <>
@@ -200,7 +204,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
             <section
               className={clsx('scroll-padding', classes.docDetailContainer)}
             >
-              <div className={classes.contentSection}>
+              <div className={classes.contentSection} ref={articleContainer}>
                 <DocContent
                   version={version}
                   htmlContent={tree}
@@ -221,6 +225,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
                   classes={{
                     root: classes.rightAnchorTreeWrapper,
                   }}
+                  activeAnchor={activeAnchor}
                 />
               </div>
             </section>

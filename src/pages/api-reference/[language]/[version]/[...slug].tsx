@@ -18,6 +18,7 @@ import {
   ApiReferenceRouteEnum,
   FinalMenuStructureType,
   AllMdVersionIdType,
+  ApiReferenceMetaInfoEnum,
 } from '@/types/docs';
 import { GetStaticProps } from 'next';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
@@ -134,9 +135,31 @@ export default function Template(props: ApiDetailPageProps) {
   }, [category, relativePath, version]);
 
   const { pageTitle, absoluteUrl, pageDesc } = useMemo(() => {
+    let suffix = '';
+    switch (languageCategory) {
+      case ApiReferenceRouteEnum.Csharp:
+        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Csharp} sdk ${version}`;
+        break;
+      case ApiReferenceRouteEnum.Go:
+        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Go} sdk ${version}`;
+        break;
+      case ApiReferenceRouteEnum.Java:
+        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Java} sdk ${version}`;
+        break;
+      case ApiReferenceRouteEnum.Node:
+        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Node} sdk ${version}`;
+        break;
+      case ApiReferenceRouteEnum.Python:
+        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Python} sdk ${version}`;
+        break;
+      default:
+        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Restful} sdk ${version}`;
+        break;
+    }
+
     const pageTitle = metaPath
-      ? `${metaTitle} - ${languageCategory} ${version}/${metaPath}`
-      : `${metaTitle} - ${languageCategory} ${version}`;
+      ? `${metaTitle} - ${suffix}/${metaPath}`
+      : `${metaTitle} - ${suffix}`;
     const absoluteUrl = `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${relativePath}`;
     const pageDesc = `${headingContent} | ${version}`;
 

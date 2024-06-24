@@ -32,7 +32,7 @@ interface docHomePageProps {
 
 // this is latest version doc homepage
 export default function LatestVersionDocHomepage(props: docHomePageProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('docs');
 
   const { homeData, blog, menus, version, versions, mdListData } = props;
 
@@ -46,7 +46,7 @@ export default function LatestVersionDocHomepage(props: docHomePageProps) {
       }}
       seo={{
         title: TITLE,
-        desc: '',
+        desc: t('homepageDesc', { version }),
         url: 'https://milvus.io/docs',
       }}
       left={

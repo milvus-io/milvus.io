@@ -72,7 +72,6 @@ const Aside = (props: AsidePropsType) => {
   const {
     category = 'doc',
     items,
-    title,
     isShowBtnGroup = true,
     classes = {},
     docData,

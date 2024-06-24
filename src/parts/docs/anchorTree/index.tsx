@@ -22,10 +22,10 @@ export default function AnchorTree(props: {
 
   return (
     <div className={classes.anchorsWrapper}>
-      <h4 className={classes.tocWrapper}>
+      <h5 className={classes.tocWrapper}>
         <TOCIcon />
         <span className={classes.tocTitle}>{t('anchors.title')}</span>
-      </h4>
+      </h5>
 
       <ul className={clsx(classes.anchorsList, customClassName)}>
         {list.map((v, idx) => {

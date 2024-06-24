@@ -154,7 +154,7 @@ export default function FeedbackSection(props: {
 
   return (
     <div className={styles.feedbackWrapper}>
-      <h4 className={styles.feedbackTitle}>{t('feedback.title')}</h4>
+      <h5 className={styles.feedbackTitle}>{t('feedback.title')}</h5>
       <p className={styles.feedbackDesc}>{t('feedback.prompt')}</p>
 
       <div className={styles.feedbackBtnsWrapper}>

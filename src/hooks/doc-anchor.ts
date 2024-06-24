@@ -55,3 +55,52 @@ export const useActivateAnchorWhenScroll = ({
 
   return activeAnchor;
 };
+
+// generate anchor list on the top of the faq pages
+export const useGenAnchor = (version: string, editPath: string) => {
+  useEffect(() => {
+    const insertAnchors = (anchors: string) => {
+      const firstElement = document.querySelector('h1');
+
+      firstElement.insertAdjacentHTML('afterend', anchors);
+    };
+
+    const getAnchorsFromInfo = (
+      info: {
+        id: string;
+        title: string;
+      }[]
+    ) => {
+      const items = info
+        .map(
+          item =>
+            `<li>
+              <a href=${item.id}>
+                ${item.title}
+              </a>
+            </li>`
+        )
+        .join('\n');
+      const tpl = `
+      <ul id="auto-anchors">
+        ${items}
+      </ul>
+    `;
+      return tpl;
+    };
+
+    if (editPath && editPath.includes('faq')) {
+      const faqHeadersElements = document.querySelectorAll('h4');
+      if (faqHeadersElements.length > 0) {
+        const info = Array.from(faqHeadersElements).map(element => ({
+          id: `#${element.id}`,
+          title: element.innerHTML,
+        }));
+
+        const anchors = getAnchorsFromInfo(info);
+
+        insertAnchors(anchors);
+      }
+    }
+  }, [editPath, version]);
+};

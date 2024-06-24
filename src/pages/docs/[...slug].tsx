@@ -1,7 +1,6 @@
 import DocContent from '@/parts/docs/docContent';
 import { markdownToHtml, copyToCommand } from '@/utils/common';
 import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { linkIconTpl } from '@/components/icons';
 import Aside from '@/components/aside';
 import {
@@ -27,6 +26,7 @@ import { DocDetailPageProps } from '@/types/docs';
 import clsx from 'clsx';
 import { useActivateAnchorWhenScroll, useGenAnchor } from '@/hooks/doc-anchor';
 
+// this is doc detail page which's version is not the latest
 export default function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,
@@ -48,8 +48,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     frontMatter,
   } = homeData;
 
-  const { t } = useTranslation('common');
-
   const seoInfo = useMemo(() => {
     const title = frontMatter?.title || headingContent;
 
@@ -60,35 +58,13 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     return {
       title: pageTitle,
       url: `${ABSOLUTE_BASE_URL}/docs/${version}/${currentId}`,
-      desc: summary,
+      desc: summary ? `${summary} | ${version}` : `${title} | ${version}`,
     };
   }, [frontMatter, version, latestVersion, currentId, summary, headingContent]);
 
-  const [isOpened, setIsOpened] = useState(false);
-  const [menuTree, setMenuTree] = useState(menus);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');
   const articleContainer = useRef<HTMLDivElement>(null);
-
-  // const handleNodeClick = (nodeId, parentIds, isPage = false) => {
-  //   const updatedTree = recursionUpdateTree(
-  //     menuTree,
-  //     nodeId,
-  //     parentIds,
-  //     isPage
-  //   );
-  //   setMenuTree(updatedTree);
-  // };
-
-  // useEffect(() => {
-  //   // active initial menu item
-  //   const currentMenuInfo = getMenuInfoById(menus, currentId);
-  //   if (!currentMenuInfo) {
-  //     return;
-  //   }
-  //   handleNodeClick(currentId, currentMenuInfo.parentIds, true);
-  //   // eslint-disable-next-line
-  // }, []);
 
   useEffect(() => {
     // add click event handler for copy icon after headings
@@ -145,7 +121,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
       }}
       left={
         <LeftNavSection
-          tree={menuTree}
+          tree={menus}
           className={classes.docMenu}
           version={version}
           versions={versions}
@@ -180,7 +156,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
               mdTitle={frontMatter.title}
               category="doc"
               items={anchorList}
-              title={t('v3trans.docs.tocTitle')}
               classes={{
                 root: classes.rightAnchorTreeWrapper,
               }}

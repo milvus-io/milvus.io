@@ -31,6 +31,7 @@ import { DocDetailPageProps } from '@/types/docs';
 
 const DOC_HOME_TITLE = 'Milvus vector database documentation';
 
+// doc detail page of latest version & home page which's version is not the latest
 export default function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,
@@ -54,7 +55,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     frontMatter,
   } = homeData;
 
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('docs');
 
   const seoInfo = useMemo(() => {
     const title = isHome
@@ -69,7 +70,11 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     const url = isHome
       ? `${ABSOLUTE_BASE_URL}/docs/`
       : `${ABSOLUTE_BASE_URL}/docs/${currentId}`;
-    const desc = isHome ? 'Milvus Documentation' : summary || '';
+    const desc = isHome
+      ? t('homepageDesc', { version })
+      : summary
+      ? `${summary} | ${version}`
+      : `${title} | ${version}`;
 
     return {
       title: pageTitle,
@@ -78,30 +83,9 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     };
   }, [isHome, frontMatter, version, currentId, summary]);
 
-  const [isOpened, setIsOpened] = useState(false);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');
   const articleContainer = useRef<HTMLDivElement>(null);
-
-  // const handleNodeClick = (nodeId, parentIds, isPage = false) => {
-  //   const updatedTree = recursionUpdateTree(
-  //     menuTree,
-  //     nodeId,
-  //     parentIds,
-  //     isPage
-  //   );
-  //   setMenuTree(updatedTree);
-  // };
-
-  // useEffect(() => {
-  //   // active initial menu item
-  //   const currentMenuInfo = getMenuInfoById(menus, currentId);
-  //   if (!currentMenuInfo) {
-  //     return;
-  //   }
-  //   handleNodeClick(currentId, currentMenuInfo.parentIds, true);
-  //   // eslint-disable-next-line
-  // }, []);
 
   useEffect(() => {
     // add click event handler for copy icon after headings
@@ -222,7 +206,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
                   mdTitle={frontMatter.title}
                   category="doc"
                   items={anchorList}
-                  title={t('v3trans.docs.tocTitle')}
                   classes={{
                     root: classes.rightAnchorTreeWrapper,
                   }}
@@ -237,7 +220,7 @@ export default function DocDetailPage(props: DocDetailPageProps) {
   );
 }
 
-// this page combain the detail pages of latest versions and the home page of all versions
+// this page combines the detail pages of latest versions and the home page of all versions
 // these two pages has same params
 export const getStaticPaths = () => {
   const { latestVersion, restVersions } = generateDocVersionInfo();

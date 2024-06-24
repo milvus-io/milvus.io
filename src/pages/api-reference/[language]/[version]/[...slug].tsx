@@ -127,13 +127,15 @@ export default function Template(props: ApiDetailPageProps) {
     }
   }, [category, relativePath, version]);
 
-  const { pageTitle, absoluteUrl } = useMemo(() => {
+  const { pageTitle, absoluteUrl, pageDesc } = useMemo(() => {
     const pageTitle = `${headingContent} - ${languageCategory} ${version} for Milvus`;
     const absoluteUrl = `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${relativePath}`;
+    const pageDesc = `${headingContent} | ${version}`;
 
     return {
       pageTitle,
       absoluteUrl,
+      pageDesc,
     };
   }, [headingContent, languageCategory, relativePath, version]);
 
@@ -141,7 +143,7 @@ export default function Template(props: ApiDetailPageProps) {
     <DocLayout
       seo={{
         title: pageTitle,
-        desc: '',
+        desc: pageDesc,
         url: absoluteUrl,
       }}
       version={version}

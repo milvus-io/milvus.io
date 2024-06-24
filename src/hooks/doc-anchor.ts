@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DocAnchorItemType } from '@/types/docs';
 import { useRouter } from 'next/router';
 
@@ -9,7 +9,17 @@ export const useActivateAnchorWhenScroll = ({
   articleContainer: React.MutableRefObject<HTMLDivElement | null>;
   anchorList: DocAnchorItemType[];
 }) => {
+  const { asPath } = useRouter();
   const [activeAnchor, setActiveAnchor] = useState('');
+
+  useEffect(() => {
+    const container = articleContainer.current;
+    if (typeof window === 'undefined' || !window || !container) {
+      return;
+    }
+    const h1Ele = container.querySelector('h1');
+    setActiveAnchor(h1Ele.getAttribute('id'));
+  }, [asPath]);
 
   useEffect(() => {
     const container = articleContainer.current;

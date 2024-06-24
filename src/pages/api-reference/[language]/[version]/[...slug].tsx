@@ -134,7 +134,9 @@ export default function Template(props: ApiDetailPageProps) {
   }, [category, relativePath, version]);
 
   const { pageTitle, absoluteUrl, pageDesc } = useMemo(() => {
-    const pageTitle = `${metaTitle} - ${languageCategory} ${version}/${metaPath}`;
+    const pageTitle = metaPath
+      ? `${metaTitle} - ${languageCategory} ${version}/${metaPath}`
+      : `${metaTitle} - ${languageCategory} ${version}`;
     const absoluteUrl = `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${relativePath}`;
     const pageDesc = `${headingContent} | ${version}`;
 

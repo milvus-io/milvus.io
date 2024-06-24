@@ -82,6 +82,15 @@ export enum ApiReferenceRouteEnum {
   Python = 'pymilvus',
 }
 
+export enum ApiReferenceMetaInfoEnum {
+  Restful = 'restful api',
+  Csharp = 'csharp',
+  Go = 'go',
+  Java = 'java',
+  Node = 'nodejs',
+  Python = 'python(pymilvus)',
+}
+
 export interface ApiContentFrontMatterType {
   id: string;
   parentIds: string[];

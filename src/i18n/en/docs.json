@@ -1,5 +1,5 @@
 {
-  "homepageDesc": "Milvus documentation homepage for version {{version}}",
+  "homepageDesc": "Milvus {{version}} documentation",
   "feedback": {
     "title": "Feedback",
     "prompt": "Was this page helpful?",

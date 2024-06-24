@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import TocTreeView from '../treeView/TocTreeView';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPencilAlt,
-  faBug,
-  faHashtag,
-  faLightbulb,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.less';
@@ -57,6 +52,7 @@ interface AsidePropsType {
   mdTitle?: string;
   apiReferenceData?: ApiReferenceData;
   docData?: DocData;
+  activeAnchor?: string;
 
   classes?: {
     root?: string;
@@ -81,6 +77,7 @@ const Aside = (props: AsidePropsType) => {
     classes = {},
     docData,
     apiReferenceData,
+    activeAnchor = '',
   } = props;
   const { t } = useTranslation('docs');
   const { root, btnGroup, anchorTree } = classes;
@@ -175,18 +172,13 @@ const Aside = (props: AsidePropsType) => {
   };
 
   return (
-    <section className={clsx(styles.rightNavWrapper, root)}>
+    <div className={clsx(styles.rightNavWrapper, root)}>
       <>
         {category === 'doc' && (
           <AnchorTree
             list={items}
-            t={t}
-            className={
-              (styles.anchor,
-              {
-                [anchorTree]: anchorTree,
-              })
-            }
+            activeAnchor={activeAnchor}
+            className={clsx(anchorTree)}
           />
         )}
         {isShowBtnGroup && (
@@ -210,7 +202,8 @@ const Aside = (props: AsidePropsType) => {
           root: styles.customRootClass,
         }}
       />
-    </section>
+    </div>
   );
 };
+
 export default Aside;

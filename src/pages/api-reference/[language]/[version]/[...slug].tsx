@@ -158,8 +158,8 @@ export default function Template(props: ApiDetailPageProps) {
     }
 
     const pageTitle = metaPath
-      ? `${metaTitle} - ${suffix}/${metaPath}`
-      : `${metaTitle} - ${suffix}`;
+      ? `${headingContent} - ${suffix}/${metaPath}`
+      : `${headingContent} - ${suffix}`;
     const absoluteUrl = `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${relativePath}`;
     const pageDesc = `${headingContent} | ${version}`;
 
@@ -168,7 +168,7 @@ export default function Template(props: ApiDetailPageProps) {
       absoluteUrl,
       pageDesc,
     };
-  }, [metaTitle, metaPath, languageCategory, relativePath, version]);
+  }, [headingContent, metaPath, languageCategory, relativePath, version]);
 
   return (
     <DocLayout

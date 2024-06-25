@@ -9,7 +9,7 @@ module.exports = {
       {
         userAgent: '*',
         allow: '*',
-        disallow: '*[id]*',
+        // disallow: '*[id]*',
         host: 'https://milvus.io',
         sitemap: 'https://milvus.io/sitemap.xml',
       },

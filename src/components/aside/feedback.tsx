@@ -55,10 +55,7 @@ export default function FeedbackSection(props: {
   const { handleUpdateDialog } = props;
 
   const commentString = useRef<string>('');
-  const [feedbackStatus, setFeedbackStatus] = useState({
-    like: false,
-    dislike: false,
-  });
+  const [feedbackStatus, setFeedbackStatus] = useState(false);
 
   const updateComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     commentString.current = e.target.value;
@@ -72,10 +69,7 @@ export default function FeedbackSection(props: {
       comment: '',
       location,
     };
-    setFeedbackStatus(v => ({
-      ...v,
-      like: true,
-    }));
+    setFeedbackStatus(true);
 
     window.dataLayer.push({
       event: 'milvus_doc_feedback',
@@ -114,10 +108,7 @@ export default function FeedbackSection(props: {
   };
 
   const handleDisLike = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setFeedbackStatus(v => ({
-      ...v,
-      dislike: true,
-    }));
+    setFeedbackStatus(true);
 
     handleUpdateDialog({
       open: true,
@@ -146,35 +137,38 @@ export default function FeedbackSection(props: {
 
   useEffect(() => {
     // reset feedback status when route changes
-    setFeedbackStatus({
-      like: false,
-      dislike: false,
-    });
+    setFeedbackStatus(false);
   }, [asPath]);
 
   return (
     <div className={styles.feedbackWrapper}>
       <h5 className={styles.feedbackTitle}>{t('feedback.title')}</h5>
-      <p className={styles.feedbackDesc}>{t('feedback.prompt')}</p>
+      {feedbackStatus ? (
+        <p className={styles.thanks}>{t('feedback.thanks')}</p>
+      ) : (
+        <>
+          <p className={styles.feedbackDesc}>{t('feedback.prompt')}</p>
 
-      <div className={styles.feedbackBtnsWrapper}>
-        <button
-          className={styles.feedbackBtn}
-          onClick={handleLike}
-          disabled={feedbackStatus.like}
-        >
-          <ThumbUpIcon />
-        </button>
-        <button
-          className={styles.feedbackBtn}
-          onClick={e => {
-            handleDisLike(e);
-          }}
-          disabled={feedbackStatus.dislike}
-        >
-          <ThumbDownIcon />
-        </button>
-      </div>
+          <div className={styles.feedbackBtnsWrapper}>
+            <button
+              className={styles.feedbackBtn}
+              onClick={handleLike}
+              disabled={feedbackStatus}
+            >
+              <ThumbUpIcon />
+            </button>
+            <button
+              className={styles.feedbackBtn}
+              onClick={e => {
+                handleDisLike(e);
+              }}
+              disabled={feedbackStatus}
+            >
+              <ThumbDownIcon />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

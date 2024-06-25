@@ -9,7 +9,8 @@
       "inputLabel": "Additional comment (optional)",
       "cancel": "Cancel",
       "send": "Send"
-    }
+    },
+    "thanks": "Thanks for your valuable feedback!"
   },
   "docAction": {
     "edit": "Edit this page",

@@ -150,7 +150,7 @@ const BlogTemplate = props => {
           />
 
           <section className={styles.blogList}>
-            <h1 className={styles.title}>More Blogs</h1>
+            <h1 className={styles.title}>Milvus Blogs</h1>
             <Tags
               list={tagList}
               tagsClass={styles.tagsWrapper}

@@ -10,12 +10,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap"
           rel="stylesheet"
         />
-        <link
-          rel="alternate"
-          href="/"
-          hrefLang="en"
-          style={{ display: 'none' }}
-        />
       </Head>
       <body>
         <Main />

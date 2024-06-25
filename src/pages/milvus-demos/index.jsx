@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { CustomizedSnackbars } from '@/components/snackBar';
 import SubscribeNewsletter from '@/components/subscribe';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 const TITLE = 'Milvus Demos';
 const DESC = 'Milvus vector search demos';
@@ -91,6 +92,11 @@ export default function MilvusDemos() {
         <Head>
           <title>{TITLE}</title>
           <meta name="description" content={DESC} />
+          <link
+            rel="alternate"
+            href={`${ABSOLUTE_BASE_URL}/milvus-demos`}
+            hrefLang="en"
+          />
         </Head>
 
         <section className={classes.headerSection}>

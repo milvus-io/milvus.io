@@ -16,6 +16,7 @@ import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
 import { generateAllBlogContentList } from '@/utils/blogs';
 import { AllMdVersionIdType, FinalMenuStructureType } from '@/types/docs';
 import { BlogFrontMatterType } from '@/types/blogs';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 const TITLE = 'Milvus vector database documentation';
 
@@ -47,7 +48,7 @@ export default function LatestVersionDocHomepage(props: docHomePageProps) {
       seo={{
         title: TITLE,
         desc: t('homepageDesc', { version }),
-        url: 'https://milvus.io/docs',
+        url: `${ABSOLUTE_BASE_URL}/docs`,
       }}
       left={
         <LeftNavSection

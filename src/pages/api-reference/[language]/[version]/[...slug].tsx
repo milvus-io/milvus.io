@@ -138,30 +138,32 @@ export default function Template(props: ApiDetailPageProps) {
     let suffix = '';
     switch (languageCategory) {
       case ApiReferenceRouteEnum.Csharp:
-        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Csharp} sdk ${version}`;
+        suffix = `${ApiReferenceMetaInfoEnum.Csharp} sdk ${version}`;
         break;
       case ApiReferenceRouteEnum.Go:
-        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Go} sdk ${version}`;
+        suffix = `${ApiReferenceMetaInfoEnum.Go} sdk ${version}`;
         break;
       case ApiReferenceRouteEnum.Java:
-        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Java} sdk ${version}`;
+        suffix = `${ApiReferenceMetaInfoEnum.Java} sdk ${version}`;
         break;
       case ApiReferenceRouteEnum.Node:
-        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Node} sdk ${version}`;
+        suffix = `${ApiReferenceMetaInfoEnum.Node} sdk ${version}`;
         break;
       case ApiReferenceRouteEnum.Python:
-        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Python} sdk ${version}`;
+        suffix = `${ApiReferenceMetaInfoEnum.Python} sdk ${version}`;
         break;
       default:
-        suffix = `Milvus ${ApiReferenceMetaInfoEnum.Restful} sdk ${version}`;
+        suffix = `${ApiReferenceMetaInfoEnum.Restful} sdk ${version}`;
         break;
     }
 
     const pageTitle = metaPath
-      ? `${headingContent} - ${suffix}/${metaPath}`
-      : `${headingContent} - ${suffix}`;
+      ? `${headingContent} - Milvus ${suffix}/${metaPath}`
+      : `${headingContent} - Milvus ${suffix}`;
     const absoluteUrl = `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${relativePath}`;
-    const pageDesc = `${headingContent} | ${version}`;
+    const pageDesc = metaPath
+      ? `${headingContent} - Milvus Documentation ${suffix}/${metaPath}`
+      : `${headingContent} - Milvus Documentation ${suffix}`;
 
     return {
       pageTitle,

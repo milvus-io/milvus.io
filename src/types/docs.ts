@@ -88,7 +88,7 @@ export enum ApiReferenceMetaInfoEnum {
   Go = 'go',
   Java = 'java',
   Node = 'nodejs',
-  Python = 'python(pymilvus)',
+  Python = 'pymilvus',
 }
 
 export interface ApiContentFrontMatterType {

@@ -45,6 +45,7 @@ import {
   INDEX_TYPE_OPTIONS,
   SEGMENT_SIZE_OPTIONS,
 } from '@/components/card/sizingToolCard/constants';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 // one million
 const $1M = Math.pow(10, 6);
@@ -437,6 +438,11 @@ export default function SizingTool() {
             search
           </title>
           <meta name="description" content="Sizing tool" />
+          <link
+            rel="alternate"
+            href={`${ABSOLUTE_BASE_URL}/tools/sizing`}
+            hrefLang="en"
+          />
         </Head>
         <div className={clsx(pageClasses.container, classes.container)}>
           <h1>{t('title')}</h1>

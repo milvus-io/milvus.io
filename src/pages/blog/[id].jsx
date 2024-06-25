@@ -66,6 +66,7 @@ export default function Template(props) {
           <meta property="og:description" content={desc} />
           <meta property="og:url" content={shareUrl} />
           <meta property="og:image" content={`https://${cover}`} />
+          <link rel="alternate" href={shareUrl} hrefLang="en" />
         </Head>
         <div>
           <div className={clsx(pageClasses.docContainer, styles.upLayout)}>

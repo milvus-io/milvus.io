@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Head from 'next/head';
 import { DISCORD_INVITE_URL, MEETUP_URL } from '@/consts/externalLinks';
 import Link from 'next/link';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 export default function WhatIsMilvus() {
   const { t } = useTranslation('intro');
@@ -102,6 +103,11 @@ export default function WhatIsMilvus() {
         <meta
           name="keywords"
           content="Milvus, Vector Database, Vector Search"
+        />
+        <link
+          rel="alternate"
+          href={`${ABSOLUTE_BASE_URL}/intro`}
+          hrefLang="en"
         />
       </Head>
 

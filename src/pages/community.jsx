@@ -8,6 +8,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import classes from '@/styles/community.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
+import { ABSOLUTE_BASE_UL } from '@/consts';
 
 const OFFICE_HOUR_REGISTER_LINK = 'https://discord.gg/RjNbk8RR4f';
 
@@ -119,8 +120,16 @@ export default function Community() {
     <main>
       <Layout>
         <Head>
-          <title>Community</title>
-          <meta name="description" content="" />
+          <title>Welcome to the Milvus Community of AI Developers </title>
+          <meta
+            name="description"
+            content="Join an open-source community of passionate developers and engineers dedicated to GenAI"
+          />
+          <link
+            rel="alternate"
+            href={`${ABSOLUTE_BASE_UL}/community`}
+            hrefLang="en"
+          />
         </Head>
 
         <section className={clsx(pageClasses.container, classes.headSection)}>

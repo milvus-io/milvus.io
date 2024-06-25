@@ -72,6 +72,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
             <meta name="docsearch:version" content={docSearchVersion} />
           )}
           {/* {!isLatestVersion && <meta name="robots" content="noindex" />} */}
+          <link rel="alternate" href={url} hrefLang="en" />
         </Head>
         <Header className={classes.docHeader} />
         <div className={clsx(classes.mainContainer, main)}>

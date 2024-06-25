@@ -5,6 +5,7 @@ import SolutionCard from '../components/card/solutionCard';
 import classes from '../styles/bootcamp.module.less';
 import pageClasses from '../styles/responsive.module.less';
 import clsx from 'clsx';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 export default function Bootcamp(props) {
   const { bootcampData } = props;
@@ -27,6 +28,11 @@ export default function Bootcamp(props) {
         <Head>
           <title>Milvus Bootcamp</title>
           <meta name="description" content="Join Milvus Bootcamp" />
+          <link
+            rel="alternate"
+            href={`${ABSOLUTE_BASE_URL}/bootcamp`}
+            hrefLang="en"
+          />
         </Head>
 
         <div className={clsx(pageClasses.container, classes.bootcampContainer)}>

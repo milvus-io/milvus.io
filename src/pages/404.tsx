@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
 import Head from 'next/head';
 import styles from '@/styles/404.module.less';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 const NotFoundPage = () => {
   const { t } = useTranslation('common');
@@ -16,6 +17,11 @@ const NotFoundPage = () => {
         <Head>
           <title>404: Not Found</title>
           <meta name="description" content="" />
+          <link
+            rel="alternate"
+            href={`${ABSOLUTE_BASE_URL}/404`}
+            hrefLang="en"
+          />
         </Head>
 
         <div className={styles.notFoundContainer}>

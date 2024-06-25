@@ -14,6 +14,7 @@ import Head from 'next/head';
 import { GetStaticProps } from 'next';
 import { fetchUseCases } from '@/http/useCase';
 import { FinalUserCaseType } from '@/types/useCase';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 export default function UseCasesTemplate(props: {
   useCaseList: FinalUserCaseType[];
@@ -32,6 +33,11 @@ export default function UseCasesTemplate(props: {
           content="Discover Milvus use cases across various industries to unveil the power of purpose-built vector databases. "
         />
         <meta name="keywords" content="Milvus, vector search, use cases" />
+        <link
+          rel="alternate"
+          href={`${ABSOLUTE_BASE_URL}/use-cases`}
+          hrefLang="en"
+        />
       </Head>
       <main>
         <div className={styles.casePageContainer} ref={scrollContainer}>

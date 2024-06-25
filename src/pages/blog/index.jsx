@@ -126,10 +126,10 @@ const BlogTemplate = props => {
         <div className={clsx(pageClasses.container, styles.listWrapper)}>
           {/* screen > 1024  */}
           <section className={styles.featuredBlog}>
-            <div className={clsx('col-6', styles.featuredImg)}>
+            <div className={clsx(styles.featuredImg)}>
               <img src={featuredBlog.cover} alt={featuredBlog.title} />
             </div>
-            <div className={clsx('col-7', styles.featuredBlogContent)}>
+            <div className={clsx(styles.featuredBlogContent)}>
               <p className={styles.tag}>{featuredBlog.tags.join(' ')}</p>
               <Link href={featuredBlog.href} className={styles.title}>
                 {featuredBlog.title}
@@ -150,7 +150,7 @@ const BlogTemplate = props => {
           />
 
           <section className={styles.blogList}>
-            <p className={styles.title}>More Blogs</p>
+            <h1 className={styles.title}>More Blogs</h1>
             <Tags
               list={tagList}
               tagsClass={styles.tagsWrapper}

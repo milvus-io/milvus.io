@@ -7,6 +7,8 @@ import { redirect } from 'next/navigation';
 
 const RELOAD_LIMIT = 3;
 
+// page will arise an error after published if not refresh it.
+// we use an ErrorBoundary to catch the error and try to refresh current page 3 times.
 export default function Error(props: { error: Error; reset: () => void }) {
   const count = useRef(0);
 

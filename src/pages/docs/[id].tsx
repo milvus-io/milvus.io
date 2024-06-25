@@ -68,8 +68,9 @@ export default function DocDetailPage(props: DocDetailPageProps) {
         : `${title} Milvus ${version} documentation`;
 
     const url = isHome
-      ? `${ABSOLUTE_BASE_URL}/docs/`
+      ? `${ABSOLUTE_BASE_URL}/docs/${version}`
       : `${ABSOLUTE_BASE_URL}/docs/${currentId}`;
+
     const desc = isHome
       ? t('homepageDesc', { version })
       : summary
@@ -82,6 +83,8 @@ export default function DocDetailPage(props: DocDetailPageProps) {
       desc,
     };
   }, [isHome, frontMatter, version, currentId, summary]);
+
+  console.log('seoInfo--', seoInfo);
 
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');

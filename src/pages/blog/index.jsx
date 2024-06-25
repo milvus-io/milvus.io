@@ -11,6 +11,7 @@ import * as styles from '../../styles/blog.module.less';
 import pageClasses from '../../styles/responsive.module.less';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 const SCROLL_SIZE = 6;
 const TITLE = 'Milvus Blog';
@@ -86,9 +87,9 @@ const BlogTemplate = props => {
         document.body.scrollHeight,
         document.documentElement.scrollHeight
       );
-      const scrolllBtmHeight = contentHeight - scrollHeight - viewHeight;
+      const scrollBtmHeight = contentHeight - scrollHeight - viewHeight;
       const maxScrollIndex = Math.ceil(filteredBlogs.length / SCROLL_SIZE);
-      if (scrolllBtmHeight < FOOT_HEIGHT + FOOT_DISTANCE) {
+      if (scrollBtmHeight < FOOT_HEIGHT + FOOT_DISTANCE) {
         // console.log("---set---", scrollIndex);
         setScrollIndex(v => (v < maxScrollIndex ? (v += 1) : v));
       }
@@ -108,10 +109,11 @@ const BlogTemplate = props => {
   useEffect(() => {
     const { asPath } = router;
     const queryString = asPath.split('?')[1] ?? '';
-
     const curQueryTag = new URLSearchParams(queryString).get(TAG_QUERY_KEY);
     setCurrentTag(curQueryTag || DEFAULT_TAG);
   }, []);
+
+  const absoluteUrl = `${ABSOLUTE_BASE_URL}/blog`;
 
   return (
     <Layout t={t}>
@@ -120,7 +122,8 @@ const BlogTemplate = props => {
         <meta name="description" content={DESC} />
         <meta property="og:title" content={TITLE}></meta>
         <meta property="og:description" content={DESC} />
-        <meta property="og:url" content="https://milvus.io/blog" />
+        <meta property="og:url" content={absoluteUrl} />
+        <link rel="alternate" href={absoluteUrl} hrefLang="en" />
       </Head>
       <main>
         <div className={clsx(pageClasses.container, styles.listWrapper)}>

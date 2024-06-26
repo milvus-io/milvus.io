@@ -16,7 +16,10 @@ const NotFoundPage = () => {
       <main>
         <Head>
           <title>404: Not Found</title>
-          <meta name="description" content="" />
+          <meta
+            name="description"
+            content="Oops, the page you were looking for doesn't seem to exist!Please check the URL you entered or try navigating back to our homepage."
+          />
           <link
             rel="alternate"
             href={`${ABSOLUTE_BASE_URL}/404`}

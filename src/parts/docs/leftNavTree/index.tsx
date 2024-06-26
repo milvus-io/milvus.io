@@ -1,15 +1,17 @@
-import MenuTree from '@/components/tree';
-import VersionSelector from '@/components/versionSelector';
 import { AlgoliaSearch } from '@/components/search/agloia';
-import clsx from 'clsx';
-import classes from './index.module.less';
 import ExpansionTreeView from '@/components/treeView/ExpansionTreeView';
-
+import VersionSelector from '@/components/versionSelector';
 import {
   AllMdVersionIdType,
   ApiReferenceRouteEnum,
   FinalMenuStructureType,
 } from '@/types/docs';
+import clsx from 'clsx';
+
+import '@docsearch/css';
+import 'instantsearch.css/themes/reset.css';
+
+import classes from './index.module.less';
 
 interface LeftNavSectionProps {
   tree: FinalMenuStructureType[];

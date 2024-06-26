@@ -8,7 +8,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import classes from '@/styles/community.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
-import { ABSOLUTE_BASE_UL } from '@/consts';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 const OFFICE_HOUR_REGISTER_LINK = 'https://discord.gg/RjNbk8RR4f';
 
@@ -127,7 +127,7 @@ export default function Community() {
           />
           <link
             rel="alternate"
-            href={`${ABSOLUTE_BASE_UL}/community`}
+            href={`${ABSOLUTE_BASE_URL}/community`}
             hrefLang="en"
           />
         </Head>

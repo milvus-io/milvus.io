@@ -1,4 +1,5 @@
 import { Remarkable } from 'remarkable';
+import { CUSTOM_H1_TAG } from '@/consts';
 
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/base16/atelier-dune-light.css';
@@ -226,7 +227,23 @@ export async function markdownToHtml(
       if (tokens[idx].hLevel === 1) {
         titleContent = tokens[idx + 1].content ?? null;
       }
+      if (version === 'blog' && tokens[idx].hLevel === 1) {
+        // return a special tag and remove it on client
+        return `<${CUSTOM_H1_TAG}>`;
+      }
       return rule(tokens, idx, options, env, instance);
+    };
+  };
+
+  const removeH1CloseTagFromBlog = md => {
+    const rule = md.renderer.rules.heading_close;
+    md.renderer.rules.heading_close = (tokens, idx, options, env, self) => {
+      if (version === 'blog' && tokens[idx].hLevel === 1) {
+        // return a special tag and remove it on client
+        return `</${CUSTOM_H1_TAG}>`;
+      } else {
+        return rule(tokens, idx, options, env, self);
+      }
     };
   };
 
@@ -236,6 +253,7 @@ export async function markdownToHtml(
   md.use(getPageTitlePlugin);
   md.use(formatHtmlBlockImgPlugin);
   md.use(formatHtmlInlineImgPlugin);
+  md.use(removeH1CloseTagFromBlog);
 
   const tree = addPrefixToHref(md.render(markdown), path);
   return {

@@ -139,6 +139,14 @@ export default function ReverseImageSearch() {
           />
         </Head>
         <div className={clsx(pageClasses.container, classes.pageContainer)}>
+          {/* for seo */}
+          <h1
+            style={{
+              display: 'none',
+            }}
+          >
+            Milvus Reverse Image Search Demo
+          </h1>
           <div className={classes.headerSection}>
             <Link href="/milvus-demos" className={classes.backButton}>
               <LeftArrow />

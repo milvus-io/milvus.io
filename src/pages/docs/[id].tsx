@@ -84,8 +84,6 @@ export default function DocDetailPage(props: DocDetailPageProps) {
     };
   }, [isHome, frontMatter, version, currentId, summary]);
 
-  console.log('seoInfo--', seoInfo);
-
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');
   const articleContainer = useRef<HTMLDivElement>(null);

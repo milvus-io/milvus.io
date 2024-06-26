@@ -134,7 +134,7 @@ export default function ReverseImageSearch() {
           <meta name="description" content={DESC} />
           <link
             rel="alternate"
-            href={`${ABSOLUTE_BASE_URL}/reverse-image-search`}
+            href={`${ABSOLUTE_BASE_URL}/milvus-demos/reverse-image-search`}
             hrefLang="en"
           />
         </Head>

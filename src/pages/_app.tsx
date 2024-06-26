@@ -1,13 +1,12 @@
-import '../styles/common.css';
-import '../styles/docsStyle.less';
-import '../i18n';
-import '@docsearch/css';
-import 'instantsearch.css/themes/reset.css';
-import Script from 'next/script';
-import Head from 'next/head';
 import CustomCookieConsent from '@/components/cookieConsent';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import Head from 'next/head';
+import Script from 'next/script';
 import Error from './error';
+
+import '../i18n';
+import '../styles/common.css';
+import '../styles/docsStyle.less';
 
 function MyApp({ Component, pageProps }) {
   return (

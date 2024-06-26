@@ -18,7 +18,9 @@ export const useActivateAnchorWhenScroll = ({
       return;
     }
     const h1Ele = container.querySelector('h1');
-    setActiveAnchor(h1Ele.getAttribute('id'));
+    const h2List = Array.from(container.querySelectorAll('h2'));
+    const firstLink = h1Ele || h2List[0];
+    setActiveAnchor(firstLink.getAttribute('id'));
   }, [asPath]);
 
   useEffect(() => {
@@ -36,6 +38,7 @@ export const useActivateAnchorWhenScroll = ({
     const handleScroll = () => {
       // if the distance from top of current h2 is less than 60px , we activate this h2
       for (let anchor of anchors) {
+        if (!anchor) continue;
         const id = anchor.getAttribute('id');
         const top = anchor.getClientRects()[0]?.top;
         if (top < defaultDistance && top > 0) {

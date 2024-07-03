@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +11,18 @@ import { ABSOLUTE_BASE_URL } from '@/consts';
 
 const NotFoundPage = () => {
   const { t } = useTranslation('common');
+
+  const router = useRouter();
+  const pagePath = router.asPath;
+
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'page_view_404',
+      page_path: pagePath,
+      referrer: document.referrer
+    });
+  }, [pagePath]);
 
   return (
     <Layout>

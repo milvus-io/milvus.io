@@ -30,7 +30,6 @@ module.exports = async () => {
   };
 
   const result = await fetchMilvusStats();
-  console.log('result--', result);
   fs.writeFileSync('./global-stats.json', JSON.stringify(result), 'utf8');
 
   return withLess({

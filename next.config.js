@@ -18,7 +18,9 @@ const nextConfig = {
 module.exports = async () => {
   const fetchMilvusStats = async () => {
     const result = await axios.get(
-      `${process.env.NEXT_PUBLIC_MSERVICE_URL}/milvus-stats`
+      `${
+        process.env.MSERVICE_URL || process.env.NEXT_PUBLIC_MSERVICE_URL
+      }/milvus-stats`
     );
 
     return {

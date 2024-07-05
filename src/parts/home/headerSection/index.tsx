@@ -49,8 +49,7 @@ export default function HomePageHeaderSection(props: {
           {t('subTitle')}
         </p>
 
-        <div className="flex flex-col gap-[12px] items-center">
-          <CopyCodeButton text={PIP_INSTALL_TEXT} />
+        <div className="flex justify-center items-center">
           <CustomButton
             href={GET_START_LINK}
             classes={{

@@ -13,59 +13,99 @@
   }
 
   .dbsWrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 'lite standalone contributed' 'cloud cloud cloud';
     gap: 12px;
+    list-style: none;
 
-    @media @tablet, @phone {
-      flex-direction: column;
+    @media @tablet {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas: 'lite standalone' 'contributed .' 'cloud cloud';
     }
 
-    .milvusDbs {
-      flex: 2;
+    @media @phone {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-areas: 'lite' 'standalone' 'contributed' 'cloud';
+    }
+
+    .zillizCloud,
+    .commonMilvusDb {
       display: flex;
-      gap: 30px;
-      padding: 30px;
+      gap: 20px;
+      justify-content: space-between;
       border-radius: 12px;
       border: 1px solid @color-black3;
-      background: #fff;
-
-      & > .commonMilvusDb {
-        flex: 1;
-      }
-
-      @media @tablet {
-        flex: auto;
-      }
-
-      @media @phone {
-        flex-direction: column;
-        gap: 20px;
-      }
+      padding: 30px;
     }
 
     .commonMilvusDb {
-      display: flex;
       flex-direction: column;
-      gap: 20px;
     }
 
-    .cloud {
-      flex: 1;
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid @color-black3;
-      background: #fff;
+    .zillizCloud {
+      align-items: center;
 
-      @media @tablet {
-        max-width: calc(50% - 15px);
-        flex: auto;
+      @media @phone {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .liteDb {
+      grid-area: lite;
+
+      .dbName::after {
+        background: #41d4cb;
+      }
+    }
+    .standaloneDb {
+      grid-area: standalone;
+
+      .dbName::after {
+        background: #6fa0ff;
+      }
+    }
+    .contributedDb {
+      grid-area: contributed;
+
+      .dbName::after {
+        background: #ae5eff;
+      }
+    }
+    .cloudDb {
+      grid-area: cloud;
+      margin-top: 30px;
+      margin-bottom: 30px;
+
+      .dbName {
+        max-width: 320px;
+
+        @media @phone {
+          max-width: 100%;
+        }
+
+        &::after {
+          background: linear-gradient(to right, #d083ff 0%, #8eddff 100%);
+        }
       }
     }
 
     .dbName {
       .heading4();
       padding-bottom: 8px;
-      border-bottom: 2px solid transparent;
+      position: relative;
+      margin-bottom: 20px;
+
+      &::after {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        height: 2px;
+      }
     }
 
     .dbContent {
@@ -86,24 +126,36 @@
       }
     }
 
+    .containedLinkButton,
     .linkButton {
       .paragraph4-regular();
       font-weight: 500;
     }
 
+    .containedLinkButton {
+      flex: 0 0 140px;
+
+      @media @phone {
+        flex: auto;
+      }
+    }
+
     .linkButtonIcon {
       transform: rotate(315deg);
-    }
 
-    .liteTitle {
-      border-color: #41d4cb;
+      svg path {
+        stroke: #fff;
+      }
     }
+  }
 
-    .milvusTitle {
-      border-color: #6fa0ff;
-    }
-    .cloud > .dbName {
-      border-color: #ae5eff;
+  .learnMore {
+    .paragraph4-regular();
+    color: @color-black1;
+    text-align: center;
+
+    a {
+      color: @color-blue1;
     }
   }
 }

@@ -1,47 +1,20 @@
 import { useTranslation, Trans } from 'react-i18next';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
-import { GitHubIcon } from '@/components/icons';
 import classes from './index.module.less';
-import {
-  GITHUB_MILVUS_LINK,
-  MILVUS_PY_MILVUS,
-  GET_START_LINK,
-} from '@/consts/links';
+import { GET_START_LINK } from '@/consts/links';
 import CustomButton from '@/components/customButton';
 import CopyCodeButton from '@/components/copyCodeButton';
-const DownloadIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 14 14"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M3 10.5H12V11.5H3V10.5ZM8 5.5H11.5L7.5 9.5L3.5 5.5H7V1.5H8V5.5Z"
-      fill="#00131A"
-    />
-  </svg>
-);
-
-type HomePageHeaderSectionProps = {
-  download: number;
-  star: number;
-};
+import Link from 'next/link';
 
 const PIP_INSTALL_TEXT = 'pip install pymilvus';
 
-export default function HomePageHeaderSection(
-  props: HomePageHeaderSectionProps
-) {
+export default function HomePageHeaderSection(props: {
+  label: string;
+  link: string;
+}) {
   const { t } = useTranslation('home');
-  const { download = 0, star = 0 } = props;
-
-  const startNum = `${(star / 1000).toFixed(1)}K`;
-  const downloadNum = new Intl.NumberFormat('en-US').format(
-    Math.floor(download / 1000 / 100) / 10
-  );
+  const { label, link } = props;
 
   return (
     <section
@@ -51,39 +24,18 @@ export default function HomePageHeaderSection(
       )}
     >
       <div className={pageClasses.homeContainer}>
-        <div className="mb-[12px] flex gap-1 justify-center">
-          <a
-            href={MILVUS_PY_MILVUS}
-            className={clsx(
-              'flex gap-[4px] basis-[75px] items-center flex-shrink-0 flex-grow-0 px-[8px] py-[3px] rounded',
-              classes.downloadButton
-            )}
-            target="_blank"
+        <div className="flex items-center gap-[8px] justify-center mb-[12px]">
+          <p className="px-[8px] py-[2px] box-border border-[1px] rounded-[4px] border-[rgba(0,179,255,0.30)] border-solid bg-[#00B3FF]/[0.15] text-[12px] font-[500] leading-[18px]">
+            {t('news')}
+          </p>
+          <Link
+            className="text-black2 text-[12px] leading-[18px] hover:underline"
+            href={link}
           >
-            <DownloadIcon />
-            <span className="text-[12px] font-[500] leading-[18px] text-black">
-              {downloadNum}M
-            </span>
-          </a>
-          <a
-            href={GITHUB_MILVUS_LINK}
-            className={clsx(
-              'flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] rounded border border-solid',
-              classes.starButton
-            )}
-            target="_blank"
-          >
-            <GitHubIcon />
-            <span className="text-[12px] leading-[18px] ml-[2px] mr-[4px] text-black">
-              {t('buttons.star')}
-            </span>
-            <span className="text-[12px] font-[500] leading-[18px] text-black">
-              {startNum}
-            </span>
-          </a>
+            {label}
+          </Link>
         </div>
-
-        <h1 className="w-full max-w-[700px] opacity-90 text-center text-slate-950 text-[72px]  font-[700] leading-[80px] max-tablet:max-w-[600px] max-tablet:text-[60px] max-tablet:leading-[68px] max-phone:text-[52px] max-phone:leading-[60px] mt-[0px] mb-[12px] mx-auto">
+        <h1 className="w-full max-w-[950px] opacity-90 text-center text-slate-950 text-[72px]  font-[700] leading-[80px] max-tablet:max-w-[600px] max-tablet:text-[60px] max-tablet:leading-[68px] max-phone:text-[52px] max-phone:leading-[60px] mt-[0px] mb-[12px] mx-auto">
           <Trans
             t={t}
             i18nKey="title"

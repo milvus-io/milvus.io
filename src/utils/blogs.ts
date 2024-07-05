@@ -64,3 +64,9 @@ export const generateLatestBlogInfo = (params: { lang?: 'en' | 'cn' }) => {
   const blogList = generateAllBlogContentList({ lang, withContent: false });
   return blogList[0];
 };
+
+export const getHomepageHeadline = () => {
+  const path = join(process.cwd(), 'src/blogs/homepage/index.json');
+  const data = fs.readFileSync(path, 'utf-8');
+  return JSON.parse(data);
+};

@@ -2,6 +2,8 @@
 
 const withLess = require('next-with-less');
 const path = require('path');
+const fs = require('fs');
+const axios = require('axios');
 
 const nextConfig = {
   // reactStrictMode: true,
@@ -13,15 +15,32 @@ const nextConfig = {
   },
 };
 
-module.exports = withLess({
-  lessLoaderOptions: {
-    /* ... */
-  },
-  ...nextConfig,
-  webpack(config) {
-    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
+module.exports = async () => {
+  const fetchMilvusStats = async () => {
+    const result = await axios.get(
+      `${process.env.NEXT_PUBLIC_MSERVICE_URL}/milvus-stats`
+    );
+
     return {
-      ...config,
+      pipInstall: result.data.body?.pipInstall || 0,
+      milvusStars: result.data.body?.milvusStars || 0,
     };
-  },
-});
+  };
+
+  const result = await fetchMilvusStats();
+  console.log('result--', result);
+  fs.writeFileSync('./global-stats.json', JSON.stringify(result), 'utf8');
+
+  return withLess({
+    lessLoaderOptions: {
+      /* ... */
+    },
+    ...nextConfig,
+    webpack(config) {
+      config.resolve.alias['@'] = path.resolve(__dirname, 'src');
+      return {
+        ...config,
+      };
+    },
+  });
+};

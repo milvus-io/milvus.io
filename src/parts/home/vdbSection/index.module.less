@@ -6,7 +6,7 @@
 
   .sectionTitle {
     .heading2();
-    max-width: 840px;
+    max-width: 700px;
     text-align: center;
     margin: 0 auto 40px;
   }
@@ -15,27 +15,27 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-areas:
-      'setup setup setup reusable reusable reusable'
-      'integrations integrations featureRich featureRich community community';
+      'scale scale scale fast fast fast'
+      'reusable reusable community community featureRich featureRich';
     grid-gap: 12px;
     margin-bottom: 20px;
 
     @media @tablet {
       grid-template-columns: repeat(2, 1fr);
       grid-template-areas:
-        'setup reusable'
-        'integrations featureRich'
-        'community .';
+        'scale fast'
+        'reusable community'
+        'featureRich .';
     }
 
     @media @phone {
       grid-template-columns: 1fr;
       grid-template-areas:
-        'setup'
+        'scale'
+        'fast'
         'reusable'
-        'integrations'
-        'featureRich'
-        'community';
+        'community'
+        'featureRich';
     }
 
     .featureItem {
@@ -82,14 +82,14 @@
       }
     }
 
-    .setup {
-      grid-area: setup;
+    .scale {
+      grid-area: scale;
+    }
+    .fast {
+      grid-area: fast;
     }
     .reusable {
       grid-area: reusable;
-    }
-    .integration {
-      grid-area: integrations;
     }
     .featureRich {
       grid-area: featureRich;

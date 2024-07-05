@@ -48,3 +48,5 @@ yarn-error.log*
 .env
 .env.development
 .env.development.local
+
+global-stats.json

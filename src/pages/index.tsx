@@ -11,14 +11,12 @@ import Layout from '@/components/layout/commonLayout';
 import { getMilvusStats } from '@/http/home';
 import { ProductionSection } from '@/parts/home/productionSection/ProductionSection';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import { getHomepageHeadline } from '@/utils/blogs';
 
 export default function Homepage(props: {
-  pipInstall: number;
-  milvusStars: number;
+  headline: { label: string; link: string };
 }) {
-  // deconstruction props
-  const { pipInstall, milvusStars } = props;
-
+  const { headline } = props;
   return (
     <Layout>
       <main
@@ -36,15 +34,15 @@ export default function Homepage(props: {
           />
           <link rel="alternate" href={`${ABSOLUTE_BASE_URL}/`} hrefLang="en" />
         </Head>
-        <HomePageHeaderSection download={pipInstall} star={milvusStars} />
+        <HomePageHeaderSection {...headline} />
         <CodeExampleSection />
-        <TryFreeSection />
+        {/* <TryFreeSection /> */}
         <DeploySection />
         <AIToolsSection />
         <LovedSection />
         <ProductionSection />
-        <VectorDatabaseSection />
         <DevelopSection />
+        <VectorDatabaseSection />
         <SubscribeSection />
       </main>
     </Layout>
@@ -52,12 +50,10 @@ export default function Homepage(props: {
 }
 
 export const getStaticProps = async () => {
-  const { pipInstall, milvusStars } = await getMilvusStats();
-
+  const headline = getHomepageHeadline();
   return {
     props: {
-      pipInstall,
-      milvusStars,
+      headline,
     },
   };
 };

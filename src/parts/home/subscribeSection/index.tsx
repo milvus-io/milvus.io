@@ -13,6 +13,9 @@ export default function SubscribeSection() {
     <section
       className={clsx(pageClasses.homeContainer, classes.sectionContainer)}
     >
+      <div className={classes.milvusWrapper}>
+        <img src="/images/home/milvus-union.svg" alt="Milvus" />
+      </div>
       <h2 className={classes.title}>
         <Trans
           t={t}

@@ -1,6 +1,7 @@
 {
-  "title": "The <1>Vector<0 /> Database</1> Built for<0 /> Developers",
-  "subTitle": "Milvus is an open-source vector database that brings search to GenAI applications. pip-install on your laptop, use with popular AI dev tools and scale to billions of vectors.",
+  "title": "The High-Performance<0 /> <1>Vector Database</1> Built for Scale",
+  "subTitle": "Milvus is an open-source vector database built for GenAI applications. Install with pip, perform high-speed searches, and scale to tens of billions of vectors with minimal performance loss.",
+  "news": "News",
   "buttons": {
     "download": "Download",
     "star": "Star",
@@ -50,55 +51,64 @@
   "vdbSection": {
     "title": "Why Developers Prefer Milvus for Vector Databases",
     "features": {
-      "setup": {
-        "title": "Easy Setup",
-        "desc": "Pip-install to start coding in a notebook within seconds."
+      "scale": {
+        "title": "Scale as needed",
+        "desc": "Scale elastically to support tens of billions of vectors with a fully distributed "
+      },
+      "fast": {
+        "title": "Blazing fast",
+        "desc": "Retrieve data quickly and accurately with Global Index, regardless of scale."
       },
       "reusable": {
         "title": "Reusable Code",
-        "desc": "Write once, and deploy with one line of code into production environments."
+        "desc": "Write once, and deploy with one line of code into the production environment."
       },
-      "integration": {
-        "title": "Integrations",
-        "desc": "Integrated with LangChain, LlamaIndex and many other AI dev tools."
+      "community": {
+        "title": "Supportive Community",
+        "desc": "Fan-favorite vector database with extensive resources and supportive contributors. "
       },
       "featureRich": {
         "title": "Feature-rich",
         "desc": "Metadata filtering, hybrid search, multi-vector and more."
-      },
-      "community": {
-        "title": "Supportive Community",
-        "desc": "Fan-favorite vector database with extensive resources and supportive contributors."
       }
     },
     "prompt": "Want to learn more about Milvus? View our <0>documentation</0>"
   },
   "deploySection": {
-    "title": "Pick the size that works for you",
+    "title": "Deployment Options to Match Your Unique Journey",
     "lite": {
       "title": "Milvus Lite",
       "advantage": "Lightweight, easy to start",
       "features": [
-        "Get started in seconds",
-        "Runs on laptops, notebooks, mobile and edge devices"
+        "VectorDB-as-a-library runs in notebooks/ laptops with a pip install",
+        "Best for learning and prototyping"
       ]
     },
-    "milvus": {
-      "title": "Milvus on Docker or K8s",
-      "advantage": "Highly scalable, optimized for performance",
+    "milvusStandalone": {
+      "title": "Milvus Standalone",
+      "advantage": "Robust, single-machine deployment",
       "features": [
-        "Easy to deploy on Docker and Kubernetes",
-        "Scales to billions of vectors"
+        "Complete vector database for production or testing",
+        "Ideal for datasets with up to millions of vectors"
+      ]
+    },
+    "milvusDistributed": {
+      "title": "Milvus Distributed",
+      "advantage": "Fully managed Milvus with minimal ops",
+      "features": [
+        "Highly reliable and distributed vector database with comprehensive toolkit",
+        "Scale horizontally to handle billions of vectors"
       ]
     },
     "cloud": {
       "title": "Zilliz Cloud",
-      "advantage": "Fully managed Milvus with minimal ops",
+      "advantage": "Fully managed with minimal operations",
       "features": [
-        "Production-ready reliability",
-        "Pay-as-you-go options without the DevOps hassles"
+        "Available in both serverless and dedicated cluster",
+        "SaaS and BYOC options for different security and compliance requirements"
       ]
-    }
+    },
+    "deployModels": "Learn more about different <0>Milvus deployment models</0>"
   },
   "developSection": {
     "title": "Start building your GenAI app now",

@@ -2,14 +2,43 @@ import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation, Trans } from 'react-i18next';
-import { CopyIcon } from '@/components/icons';
 import Link from 'next/link';
-import CopyCodeButton from '@/components/copyCodeButton';
-
-const BUTTON_TEXT = 'pip install pymilvus';
 
 export default function VectorDatabaseSection() {
   const { t } = useTranslation('home');
+
+  const featureList = [
+    {
+      src: '/images/home/scale-as-needed.png',
+      title: t('vdbSection.features.scale.title'),
+      desc: t('vdbSection.features.scale.desc'),
+      class: classes.scale,
+    },
+    {
+      src: '/images/home/blazing-fast.png',
+      title: t('vdbSection.features.fast.title'),
+      desc: t('vdbSection.features.fast.desc'),
+      class: classes.fast,
+    },
+    {
+      src: '/images/home/reusable-code.png',
+      title: t('vdbSection.features.reusable.title'),
+      desc: t('vdbSection.features.reusable.desc'),
+      class: classes.reusable,
+    },
+    {
+      src: '/images/home/vibrant-community.png',
+      title: t('vdbSection.features.community.title'),
+      desc: t('vdbSection.features.community.desc'),
+      class: classes.community,
+    },
+    {
+      src: '/images/home/feature-rich.png',
+      title: t('vdbSection.features.featureRich.title'),
+      desc: t('vdbSection.features.featureRich.desc'),
+      class: classes.featureRich,
+    },
+  ];
 
   return (
     <section
@@ -17,57 +46,20 @@ export default function VectorDatabaseSection() {
     >
       <h2 className={classes.sectionTitle}>{t('vdbSection.title')}</h2>
       <ul className={classes.featuresList}>
-        <li className={clsx(classes.featureItem, classes.setup)}>
-          <div className={classes.topPart}>
-            <CopyCodeButton
-              text={BUTTON_TEXT}
-              classes={{
-                root: classes.customCopyButton,
-              }}
-            />
-          </div>
-          <div className={classes.descriptionWrapper}>
-            <h4>{t('vdbSection.features.setup.title')}</h4>
-            <p>{t('vdbSection.features.setup.desc')}</p>
-          </div>
-        </li>
-        <li className={clsx(classes.featureItem, classes.reusable)}>
-          {/* hover to roll */}
-          <div>
-            <img src="/images/home/reusable-code.png" alt="" />
-          </div>
-          <div className={classes.descriptionWrapper}>
-            <h4>{t('vdbSection.features.reusable.title')}</h4>
-            <p>{t('vdbSection.features.reusable.desc')}</p>
-          </div>
-        </li>
-        <li className={clsx(classes.featureItem, classes.integration)}>
-          <div className="pt-[50px] pb-[30px]">
-            <img src="/images/home/integrations.png" alt="" />
-          </div>
-          <div className={classes.descriptionWrapper}>
-            <h4>{t('vdbSection.features.integration.title')}</h4>
-            <p>{t('vdbSection.features.integration.desc')}</p>
-          </div>
-        </li>
-        <li className={clsx(classes.featureItem, classes.featureRich)}>
-          <div>
-            <img src="/images/home/feature-rich.png" alt="" />
-          </div>
-          <div className={classes.descriptionWrapper}>
-            <h4>{t('vdbSection.features.featureRich.title')}</h4>
-            <p>{t('vdbSection.features.featureRich.desc')}</p>
-          </div>
-        </li>
-        <li className={clsx(classes.featureItem, classes.community)}>
-          <div>
-            <img src="/images/home/vibrant-community.png" alt="" />
-          </div>
-          <div className={classes.descriptionWrapper}>
-            <h4>{t('vdbSection.features.community.title')}</h4>
-            <p>{t('vdbSection.features.community.desc')}</p>
-          </div>
-        </li>
+        {featureList.map(feature => (
+          <li
+            key={feature.title}
+            className={clsx(classes.featureItem, feature.class)}
+          >
+            <div>
+              <img src={feature.src} alt={feature.title} />
+            </div>
+            <div className={classes.descriptionWrapper}>
+              <h4>{feature.title}</h4>
+              <p>{feature.desc}</p>
+            </div>
+          </li>
+        ))}
       </ul>
       <p className={classes.docPrompt}>
         <Trans

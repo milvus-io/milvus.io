@@ -1,118 +1,132 @@
 import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { RightWholeArrow } from '@/components/icons';
 import CustomButton from '@/components/customButton';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
-import { GET_START_LINK, MILVUS_DOCS_OVERVIEW_LINK } from '@/consts/links';
+import Link from 'next/link';
 
 export default function DeploySection() {
   const { t } = useTranslation('home');
 
-  const milvusLiteFeatures: string[] = t('deploySection.lite.features', {
-    returnObjects: true,
-  });
-  const milvusFeatures: string[] = t('deploySection.milvus.features', {
-    returnObjects: true,
-  });
-  const zillzCloudFeatures: string[] = t('deploySection.cloud.features', {
-    returnObjects: true,
-  });
+  const milvusTypes = [
+    {
+      title: t('deploySection.lite.title'),
+      advantage: t('deploySection.lite.title'),
+      features: t('deploySection.lite.features', {
+        returnObjects: true,
+      }),
+      cta: t('buttons.getStarted'),
+      class: classes.liteDb,
+      href: '/docs/milvus_lite.md',
+    },
+    {
+      title: t('deploySection.milvusStandalone.title'),
+      advantage: t('deploySection.milvusStandalone.title'),
+      features: t('deploySection.milvusStandalone.features', {
+        returnObjects: true,
+      }),
+      class: classes.standaloneDb,
+      cta: t('buttons.getStarted'),
+      href: '/docs/prerequisite-docker.md',
+    },
+    {
+      title: t('deploySection.milvusDistributed.title'),
+      advantage: t('deploySection.milvusDistributed.title'),
+      features: t('deploySection.milvusDistributed.features', {
+        returnObjects: true,
+      }),
+      class: classes.contributedDb,
+      cta: t('buttons.getStarted'),
+      href: '/docs/prerequisite-helm.md',
+    },
+  ];
+
+  const cloudConfig = {
+    title: t('deploySection.cloud.title'),
+    advantage: t('deploySection.cloud.title'),
+    features: t('deploySection.cloud.features', {
+      returnObjects: true,
+    }),
+    class: classes.cloudDb,
+    cta: t('buttons.tryFree'),
+    href: CLOUD_SIGNUP_LINK,
+  };
 
   return (
     <section className={clsx(pageClasses.homeContainer, classes.deploySection)}>
       <h2 className={classes.title}>{t('deploySection.title')}</h2>
 
-      <div className={classes.dbsWrapper}>
-        <div className={classes.milvusDbs}>
-          <div className={clsx(classes.commonMilvusDb)}>
-            <h3 className={clsx(classes.dbName, classes.liteTitle)}>
-              {t('deploySection.lite.title')}
-            </h3>
+      <ul className={classes.dbsWrapper}>
+        {milvusTypes.map(type => (
+          <li
+            key={type.title}
+            className={clsx(classes.commonMilvusDb, type.class)}
+          >
+            <div>
+              <h3 className={clsx(classes.dbName)}>{type.title}</h3>
+              <div className={classes.dbContent}>
+                <p className={classes.dbAdvantage}>{type.advantage}</p>
+                <ol className={classes.dbFeatures}>
+                  {type.features.map((v: string) => (
+                    <li className="" key={v}>
+                      {v}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+
+            <CustomButton
+              href={type.href}
+              variant="text"
+              classes={{
+                root: classes.linkButton,
+              }}
+              endIcon={<RightWholeArrow />}
+            >
+              {type.cta}
+            </CustomButton>
+          </li>
+        ))}
+        <li
+          key={cloudConfig.title}
+          className={clsx(classes.zillizCloud, cloudConfig.class)}
+        >
+          <div className="">
+            <h3 className={clsx(classes.dbName)}>{cloudConfig.title}</h3>
             <div className={classes.dbContent}>
-              <p className={classes.dbAdvantage}>
-                {t('deploySection.lite.advantage')}
-              </p>
-              <ul className={classes.dbFeatures}>
-                {milvusLiteFeatures.map(v => (
+              <p className={classes.dbAdvantage}>{cloudConfig.advantage}</p>
+              <ol className={classes.dbFeatures}>
+                {cloudConfig.features.map((v: string) => (
                   <li className="" key={v}>
                     {v}
                   </li>
                 ))}
-              </ul>
+              </ol>
             </div>
-
-            <CustomButton
-              href={GET_START_LINK}
-              classes={{
-                root: classes.linkButton,
-              }}
-              variant="text"
-              endIcon={<RightWholeArrow />}
-            >
-              {t('buttons.getStarted')}
-            </CustomButton>
           </div>
-          <div className={clsx(classes.commonMilvusDb)}>
-            <h3 className={clsx(classes.dbName, classes.milvusTitle)}>
-              {t('deploySection.milvus.title')}
-            </h3>
-
-            <div className={classes.dbContent}>
-              <p className={classes.dbAdvantage}>
-                {t('deploySection.milvus.advantage')}
-              </p>
-              <ul className={classes.dbFeatures}>
-                {milvusFeatures.map(v => (
-                  <li className="" key={v}>
-                    {v}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <CustomButton
-              href={MILVUS_DOCS_OVERVIEW_LINK}
-              classes={{
-                root: classes.linkButton,
-              }}
-              variant="text"
-              endIcon={<RightWholeArrow />}
-            >
-              {t('buttons.learnMore')}
-            </CustomButton>
-          </div>
-        </div>
-        <div className={clsx(classes.cloud, classes.commonMilvusDb)}>
-          <h3 className={classes.dbName}>{t('deploySection.cloud.title')}</h3>
-
-          <div className={classes.dbContent}>
-            <p className={classes.dbAdvantage}>
-              {t('deploySection.cloud.advantage')}
-            </p>
-            <ul className={classes.dbFeatures}>
-              {zillzCloudFeatures.map(v => (
-                <li className="" key={v}>
-                  {v}
-                </li>
-              ))}
-            </ul>
-          </div>
-
           <CustomButton
-            href={CLOUD_SIGNUP_LINK}
-            variant="text"
+            href={cloudConfig.href}
+            variant="contained"
             classes={{
-              root: classes.linkButton,
+              root: classes.containedLinkButton,
               icon: classes.linkButtonIcon,
             }}
             endIcon={<RightWholeArrow />}
           >
-            {t('buttons.tryFree')}
+            {cloudConfig.cta}
           </CustomButton>
-        </div>
-      </div>
+        </li>
+      </ul>
+      <p className={classes.learnMore}>
+        <Trans
+          t={t}
+          i18nKey="deploySection.deployModels"
+          components={[<Link key="doc-link" href="/docs/quickstart.md"></Link>]}
+        />
+      </p>
     </section>
   );
 }

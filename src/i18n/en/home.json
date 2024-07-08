@@ -94,7 +94,7 @@
     },
     "milvusDistributed": {
       "title": "Milvus Distributed",
-      "advantage": "Fully managed Milvus with minimal ops",
+      "advantage": "Scalable, enterprise-grade solution",
       "features": [
         "Highly reliable and distributed vector database with comprehensive toolkit",
         "Scale horizontally to handle billions of vectors"

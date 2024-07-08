@@ -13,7 +13,7 @@ export default function DeploySection() {
   const milvusTypes = [
     {
       title: t('deploySection.lite.title'),
-      advantage: t('deploySection.lite.title'),
+      advantage: t('deploySection.lite.advantage'),
       features: t('deploySection.lite.features', {
         returnObjects: true,
       }),
@@ -23,7 +23,7 @@ export default function DeploySection() {
     },
     {
       title: t('deploySection.milvusStandalone.title'),
-      advantage: t('deploySection.milvusStandalone.title'),
+      advantage: t('deploySection.milvusStandalone.advantage'),
       features: t('deploySection.milvusStandalone.features', {
         returnObjects: true,
       }),
@@ -33,7 +33,7 @@ export default function DeploySection() {
     },
     {
       title: t('deploySection.milvusDistributed.title'),
-      advantage: t('deploySection.milvusDistributed.title'),
+      advantage: t('deploySection.milvusDistributed.advantage'),
       features: t('deploySection.milvusDistributed.features', {
         returnObjects: true,
       }),
@@ -45,7 +45,7 @@ export default function DeploySection() {
 
   const cloudConfig = {
     title: t('deploySection.cloud.title'),
-    advantage: t('deploySection.cloud.title'),
+    advantage: t('deploySection.cloud.advantage'),
     features: t('deploySection.cloud.features', {
       returnObjects: true,
     }),
@@ -123,7 +123,7 @@ export default function DeploySection() {
       <p className={classes.learnMore}>
         <Trans
           t={t}
-          i18nKey="deploySection.deployModels"
+          i18nKey="deploySection.deployModes"
           components={[<Link key="doc-link" href="/docs/quickstart.md"></Link>]}
         />
       </p>

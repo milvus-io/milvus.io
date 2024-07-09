@@ -20,17 +20,6 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
     integrationId: process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
     organizationId: process.env.NEXT_PUBLIC_INKEEP_ORGANIZATION_ID,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
-    customCardSettings: [
-      {
-        filters: {
-          UrlMatch: {
-            ruleType: 'PartialUrl',
-            partialUrl: 'support.zilliz.com',
-          },
-        },
-        searchTabLabel: 'Support',
-      },
-    ],
   };
 
   const modalSettings: InkeepModalSettings = {

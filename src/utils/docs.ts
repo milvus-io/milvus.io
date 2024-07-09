@@ -133,11 +133,14 @@ const readFile = (params: {
       content: string;
     };
 
-    fileDataList.push({
-      frontMatter: data,
-      content: withContent ? content : '',
-      editPath: relativePath,
-    });
+    // ignore docs files that are marked as deprecated
+    if (!data.deprecate) {
+      fileDataList.push({
+        frontMatter: data,
+        content: withContent ? content : '',
+        editPath: relativePath,
+      });
+    }
   }
 };
 

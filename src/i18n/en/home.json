@@ -108,7 +108,7 @@
         "SaaS and BYOC options for different security and compliance requirements"
       ]
     },
-    "deployModes": "Learn more about different <0>Milvus deployment modes</0>"
+    "deployModels": "Learn more about different <0>Milvus deployment models</0>"
   },
   "developSection": {
     "title": "Start building your GenAI app now",

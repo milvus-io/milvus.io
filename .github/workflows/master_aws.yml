@@ -2,9 +2,8 @@ name: Build and deploy to production
 
 on:
   repository_dispatch:
-    types: prod-deploy
-    branches:
-      - master
+    types: [prod-deploy]
+
   push:
     branches:
       - master
@@ -26,6 +25,15 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: 'master'
+
+      - name: Verify Nginx configuration
+        run: |
+          if sudo nginx -t -c $(pwd)/scripts/test.conf; then
+            echo "Nginx configuration is valid."
+          else
+            echo "Nginx configuration is invalid."
+            exit 1
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v2

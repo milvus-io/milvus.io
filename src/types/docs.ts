@@ -8,6 +8,7 @@ export interface DocFrontMatterType {
   label?: string;
   related_key?: string;
   order?: number;
+  deprecate?: boolean;
 }
 
 export interface DocFileDataInfoType {

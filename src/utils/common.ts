@@ -25,7 +25,10 @@ function addPrefixToHref(htmlString: string, prefix: string) {
   const hrefRegex = /href="([^"]*)"/g;
   const prefixedHtmlString = htmlString.replace(hrefRegex, (match, href) => {
     const newHref =
-      href.charAt(0) === '#' || href.charAt(0) === '/' || href.includes('http')
+      href.charAt(0) === '#' ||
+      href.charAt(0) === '/' ||
+      href.includes('http') ||
+      href.includes('mailto:')
         ? href
         : `${prefix}${href}`;
     return `href="${newHref}"`;

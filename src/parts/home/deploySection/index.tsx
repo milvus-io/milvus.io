@@ -123,7 +123,7 @@ export default function DeploySection() {
       <p className={classes.learnMore}>
         <Trans
           t={t}
-          i18nKey="deploySection.deployModes"
+          i18nKey="deploySection.deployModels"
           components={[<Link key="doc-link" href="/docs/quickstart.md"></Link>]}
         />
       </p>

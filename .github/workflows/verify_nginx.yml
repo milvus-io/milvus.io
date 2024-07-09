@@ -1,0 +1,38 @@
+name: Verify Nginx Conf
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check if Nginx is installed
+        id: check-nginx
+        run: |
+          if [ "$(command -v nginx)" ]; then
+            echo "Nginx is already installed."
+            echo "::set-output name=installed::true"
+          else
+            echo "Nginx is not installed."
+            echo "::set-output name=installed::false"
+          fi
+
+      - name: Install Nginx
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx
+        if: steps.check-nginx.outputs.installed == 'false'
+
+      - name: Verify Nginx configuration
+        run: |
+          if sudo nginx -t -c $(pwd)/scripts/test.conf; then
+            echo "Nginx configuration is valid."
+          else
+            echo "Nginx configuration is invalid."
+            exit 1
+          fi
+        if: always()

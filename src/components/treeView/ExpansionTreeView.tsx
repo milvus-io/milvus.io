@@ -231,7 +231,7 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
 
   useEffect(() => {
     // reset active menu item when route change
-    setSelectedId(currentMdId);
+    setSelectedId(groupId || currentMdId);
   }, [asPath]);
 
   return (

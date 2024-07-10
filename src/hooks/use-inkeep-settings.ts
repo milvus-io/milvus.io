@@ -27,7 +27,10 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
   };
 
   const searchSettings: InkeepSearchSettings = {
-    // optional settings
+    tabSettings: {
+      isAllTabEnabled: true,
+      rootBreadcrumbsToUseAsTabs: ['Docs', 'Blog'],
+    },
   };
 
   const aiChatSettings: InkeepAIChatSettings = {

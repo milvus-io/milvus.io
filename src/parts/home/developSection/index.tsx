@@ -79,19 +79,17 @@ export default function DevelopSection() {
             </div>
           </div>
 
-          <div className={classes.linkButtonWrapper}>
-            <CustomButton
-              href={MEETUP_UNSTRUCTURED_DATA_URL}
-              endIcon={<RightWholeArrow color="#fff" />}
-              variant="contained"
-              classes={{
-                root: classes.linkButton,
-                icon: classes.linkButtonIcon,
-              }}
-            >
-              {t('buttons.rsvp')}
-            </CustomButton>
-          </div>
+          <CustomButton
+            href={MEETUP_UNSTRUCTURED_DATA_URL}
+            endIcon={<RightWholeArrow color="#fff" />}
+            variant="contained"
+            classes={{
+              root: classes.rsvpButton,
+              icon: classes.linkButtonIcon,
+            }}
+          >
+            {t('buttons.rsvp')}
+          </CustomButton>
         </div>
       </div>
     </section>

@@ -129,16 +129,13 @@
 
     .containedLinkButton,
     .linkButton {
-      .paragraph4-regular();
+      .paragraph4();
       font-weight: 500;
     }
 
     .containedLinkButton {
-      flex: 0 0 140px;
-
-      @media @phone {
-        flex: auto;
-      }
+      padding: 9px 28px;
+      flex-shrink: 0;
     }
 
     .linkButtonIcon {
@@ -156,7 +153,11 @@
     text-align: center;
 
     a {
-      color: @color-blue1;
+      color: @color-blue2;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

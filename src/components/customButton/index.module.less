@@ -4,7 +4,7 @@
   .resetNativeButton();
   .paragraph3();
   display: flex;
-  gap: 4px;
+  gap: 8px;
   align-items: center;
   padding: 14px 32px;
   border-radius: 10px;
@@ -16,33 +16,42 @@
 }
 
 .contained {
-  background-color: @color-black1;
-  color: #fff;
+  &.primaryColor {
+    background-color: @color-black1;
+    color: #fff;
+    border: 1px solid @color-black1;
 
-  &:hover {
-    color: rgba(255, 255, 255, 0.7);
+    &:hover {
+      color: rgba(255, 255, 255, 0.7);
 
-    .iconWrapper {
-      opacity: 0.7;
+      .iconWrapper {
+        opacity: 0.7;
+      }
     }
   }
 }
 
 .outlined {
-  border: 1px solid @color-black3;
-  color: @color-black1;
+  &.primaryColor {
+    background-color: #fff;
+    border: 1px solid @color-black1;
+    color: @color-black1;
 
-  &:hover {
-    border-color: @color-black1;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 
 .text {
   padding: 0;
-  color: @color-black1;
 
-  &:hover {
-    opacity: 0.7;
+  &.primaryColor {
+    color: @color-black1;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 

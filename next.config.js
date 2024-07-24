@@ -43,5 +43,8 @@ module.exports = async () => {
         ...config,
       };
     },
+    experimental: {
+      scrollRestoration: true,
+    },
   });
 };

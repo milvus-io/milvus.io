@@ -80,7 +80,7 @@ export default function DeploySection() {
 
             <div className={classes.buttonsWrapper}>
               <CustomButton
-                href={type.startLink}
+                href={type.learnMoreLink}
                 variant="outlined"
                 classes={{
                   root: classes.startLinkButton,
@@ -90,7 +90,7 @@ export default function DeploySection() {
               </CustomButton>
 
               <CustomButton
-                href={type.learnMoreLink}
+                href={type.startLink}
                 variant="text"
                 classes={{
                   root: classes.linkButton,

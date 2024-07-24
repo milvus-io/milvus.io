@@ -42,6 +42,12 @@
 
     .commonMilvusDb {
       flex-direction: column;
+
+      .buttonsWrapper {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
     }
 
     .zillizCloud {
@@ -127,14 +133,19 @@
       }
     }
 
+    .startLinkButton,
     .containedLinkButton,
     .linkButton {
       .paragraph4();
       font-weight: 500;
     }
 
+    .startLinkButton {
+      padding: 8px 28px;
+    }
+
     .containedLinkButton {
-      padding: 9px 28px;
+      padding: 8px 28px;
       flex-shrink: 0;
     }
 

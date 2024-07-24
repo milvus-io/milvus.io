@@ -16,7 +16,7 @@ export interface CustomButtonProps {
   [key: string]: any;
 }
 
-function CustomLink(props: CustomButtonProps) {
+function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
   const {
     href,
     target = '_self',
@@ -26,8 +26,10 @@ function CustomLink(props: CustomButtonProps) {
     endIcon,
     disabled = false,
     classes: customClasses = {},
+    computedClasses,
     ...rest
   } = props;
+
   const { root, icon } = customClasses;
 
   const isExternalLink = href.startsWith('http');
@@ -40,14 +42,7 @@ function CustomLink(props: CustomButtonProps) {
           target="_blank"
           rel="noopener noreferrer"
           href={href}
-          className={clsx(classes.linkButton, root, {
-            [classes.contained]: variant === 'contained',
-            [classes.outlined]: variant === 'outlined',
-            [classes.text]: variant === 'text',
-            // [classes.primaryColor]: color === 'primary',
-            // [classes.secondaryColor]: color === 'secondary',
-            [classes.disabledButton]: disabled,
-          })}
+          className={clsx(classes.linkButton, root, computedClasses)}
         >
           {children}
           {endIcon && (
@@ -59,15 +54,7 @@ function CustomLink(props: CustomButtonProps) {
           {...rest}
           href={href}
           target={target}
-          className={clsx(classes.linkButton, root, {
-            [classes.contained]: variant === 'contained',
-            [classes.outlined]: variant === 'outlined',
-            [classes.text]: variant === 'text',
-
-            [classes.primaryColor]: color === 'primary',
-            [classes.secondaryColor]: color === 'secondary',
-            [classes.disabledButton]: disabled,
-          })}
+          className={clsx(classes.linkButton, root, computedClasses)}
         >
           {children}
           {endIcon && (
@@ -94,22 +81,24 @@ const CustomButton = (props: CustomButtonProps) => {
 
   const { root, icon } = customClasses;
 
+  const computedClasses = {
+    [classes.contained]: variant === 'contained',
+    [classes.outlined]: variant === 'outlined',
+    [classes.text]: variant === 'text',
+    [classes.primaryColor]: color === 'primary',
+
+    [classes.secondaryColor]: color === 'secondary',
+    [classes.disabledButton]: disabled,
+  };
+
   return (
     <>
       {href ? (
-        <CustomLink {...props} />
+        <CustomLink {...props} computedClasses={computedClasses} />
       ) : (
         <button
           {...rest}
-          className={clsx(classes.linkButton, root, {
-            [classes.contained]: variant === 'contained',
-            [classes.outlined]: variant === 'outlined',
-            [classes.text]: variant === 'text',
-
-            [classes.primaryColor]: color === 'primary',
-            [classes.secondaryColor]: color === 'secondary',
-            [classes.disabledButton]: disabled,
-          })}
+          className={clsx(classes.linkButton, root, computedClasses)}
         >
           {children}
           {endIcon && (

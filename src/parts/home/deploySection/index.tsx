@@ -17,9 +17,9 @@ export default function DeploySection() {
       features: t('deploySection.lite.features', {
         returnObjects: true,
       }),
-      cta: t('buttons.getStarted'),
       class: classes.liteDb,
-      href: '/docs/milvus_lite.md',
+      learnMoreLink: '/docs/milvus_lite.md',
+      startLink: '/docs/install-overview.md#Milvus-Lite',
     },
     {
       title: t('deploySection.milvusStandalone.title'),
@@ -28,8 +28,8 @@ export default function DeploySection() {
         returnObjects: true,
       }),
       class: classes.standaloneDb,
-      cta: t('buttons.getStarted'),
-      href: '/docs/prerequisite-docker.md',
+      learnMoreLink: '/docs/prerequisite-docker.md',
+      startLink: '/docs/install-overview.md#Milvus-Standalone',
     },
     {
       title: t('deploySection.milvusDistributed.title'),
@@ -38,8 +38,8 @@ export default function DeploySection() {
         returnObjects: true,
       }),
       class: classes.contributedDb,
-      cta: t('buttons.getStarted'),
-      href: '/docs/prerequisite-helm.md',
+      learnMoreLink: '/docs/prerequisite-helm.md',
+      startLink: '/docs/install-overview.md#Milvus-Distributed',
     },
   ];
 
@@ -51,7 +51,7 @@ export default function DeploySection() {
     }),
     class: classes.cloudDb,
     cta: t('buttons.tryFree'),
-    href: CLOUD_SIGNUP_LINK,
+    tryLink: CLOUD_SIGNUP_LINK,
   };
 
   return (
@@ -78,16 +78,28 @@ export default function DeploySection() {
               </div>
             </div>
 
-            <CustomButton
-              href={type.href}
-              variant="text"
-              classes={{
-                root: classes.linkButton,
-              }}
-              endIcon={<RightWholeArrow />}
-            >
-              {type.cta}
-            </CustomButton>
+            <div className={classes.buttonsWrapper}>
+              <CustomButton
+                href={type.learnMoreLink}
+                variant="outlined"
+                classes={{
+                  root: classes.startLinkButton,
+                }}
+              >
+                {t('buttons.getStarted')}
+              </CustomButton>
+
+              <CustomButton
+                href={type.startLink}
+                variant="text"
+                classes={{
+                  root: classes.linkButton,
+                }}
+                endIcon={<RightWholeArrow />}
+              >
+                {t('buttons.learnMore')}
+              </CustomButton>
+            </div>
           </li>
         ))}
         <li
@@ -108,8 +120,7 @@ export default function DeploySection() {
             </div>
           </div>
           <CustomButton
-            href={cloudConfig.href}
-            variant="contained"
+            href={cloudConfig.tryLink}
             classes={{
               root: classes.containedLinkButton,
               icon: classes.linkButtonIcon,
@@ -124,7 +135,9 @@ export default function DeploySection() {
         <Trans
           t={t}
           i18nKey="deploySection.deployModels"
-          components={[<Link key="doc-link" href="/docs/quickstart.md"></Link>]}
+          components={[
+            <Link key="doc-link" href="/docs/install-overview.md"></Link>,
+          ]}
         />
       </p>
     </section>

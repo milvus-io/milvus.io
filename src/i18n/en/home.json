@@ -53,7 +53,7 @@
     "features": {
       "scale": {
         "title": "Scale as needed",
-        "desc": "Scale elastically to support tens of billions of vectors with a fully distributed."
+        "desc": "Elastic scaling to tens of billions of vectors with distributed architecture."
       },
       "fast": {
         "title": "Blazing fast",

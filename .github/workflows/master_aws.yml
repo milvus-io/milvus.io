@@ -26,6 +26,11 @@ jobs:
         with:
           ref: 'master'
 
+      - name: Install GeoIP module
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nginx-plus-module-geoip2
+
       - name: Verify Nginx configuration
         run: |
           if sudo nginx -t -c $(pwd)/scripts/test.conf; then

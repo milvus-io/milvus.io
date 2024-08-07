@@ -28,11 +28,15 @@ jobs:
         if: steps.check-nginx.outputs.installed == 'false'
 
       - name: Verify Nginx configuration
-        run: |
-          if sudo nginx -t -c $(pwd)/scripts/test.conf; then
-            echo "Nginx configuration is valid."
-          else
-            echo "Nginx configuration is invalid."
-            exit 1
-          fi
+        uses: addnab/docker-run-action@v3
+        with:
+          image: zilliz/z2:500969b4fa7d576d81da83ad67caef62b42571db-3981
+          options: -v $(pwd)/scripts/test.conf:/etc/nginx/nginx.conf
+          run: |
+            if sudo nginx -t -c $(pwd)/scripts/test.conf; then
+              echo "Nginx configuration is valid."
+            else
+              echo "Nginx configuration is invalid."
+              exit 1
+            fi
         if: always()

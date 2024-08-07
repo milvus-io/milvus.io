@@ -21,4 +21,5 @@ jobs:
             else
               echo "Nginx configuration is invalid."
               exit 1
+            fi
         if: always()

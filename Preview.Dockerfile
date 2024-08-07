@@ -26,7 +26,7 @@ COPY . .
 RUN pnpm build
 
 # => Run container
-FROM nginx:1.17-alpine
+FROM anroe/nginx-geoip2:1.22.1-alpine-geoip2-3.4
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d

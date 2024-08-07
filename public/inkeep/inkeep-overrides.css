@@ -39,3 +39,7 @@
   transform: translateY(-50%);
   top: 50%;
 }
+
+.ikp-content-parser__text > code {
+  color: #fff !important;
+}

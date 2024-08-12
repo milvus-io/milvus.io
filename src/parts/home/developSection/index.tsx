@@ -10,6 +10,24 @@ export default function DevelopSection() {
   const { t } = useTranslation('home');
 
   const techStacks = [
+    // {
+    //   id: 'rag',
+    //   title: t('developSection.rag'),
+    //   href: '/docs/integrate_with_langchain.md',
+    //   logo: '/images/home/rag.png',
+    // },
+    // {
+    //   id: 'imgSearch',
+    //   title: t('developSection.imgSearch'),
+    //   href: '/docs/integrate_with_llamaindex.md',
+    //   logo: '/images/home/image-search.png',
+    // },
+    // {
+    //   id: 'multimodal',
+    //   title: t('developSection.multimodal'),
+    //   href: '/docs/integrate_with_dspy.md',
+    //   logo: '/images/home/multimodal-search.png',
+    // },
     {
       id: 'lang chain',
       title: t('developSection.langChain.title'),
@@ -47,7 +65,7 @@ export default function DevelopSection() {
           <li className={classes.stackItem} key={v.id}>
             <div>
               <span className={classes.logoWrapper}>
-                <img src={v.logo} alt={v.id} />
+                <img src={v.logo} alt={v.title} />
               </span>
               <h3 className={classes.stackTitle}>{v.title}</h3>
             </div>

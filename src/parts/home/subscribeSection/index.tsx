@@ -28,7 +28,6 @@ export default function SubscribeSection() {
         classes={{
           link: classes.customIconButton,
           root: classes.socialMediasContainer,
-          icon: classes.customIconWrapper,
         }}
       />
 

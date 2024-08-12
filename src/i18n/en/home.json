@@ -12,7 +12,8 @@
     "learnMore": "Learn More",
     "tryFree": "Try Free",
     "rsvp": "RSVP now",
-    "subscribe": "Subscribe"
+    "subscribe": "Subscribe",
+    "tryNow": "Try Now"
   },
   "codeSection": {
     "title": "Start running Milvus in seconds",
@@ -112,7 +113,10 @@
   },
   "developSection": {
     "title": "Start building your GenAI app now",
-    "subTitle": "With integrations built by us and our community.",
+    "subTitle": "Guided with notebooks developed by us and our community",
+    "rag": "RAG",
+    "imgSearch": "Image Search",
+    "multimodal": "Multimodal Search",
     "langChain": {
       "title": "LangChain Starter Guide",
       "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."

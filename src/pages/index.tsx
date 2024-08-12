@@ -12,6 +12,7 @@ import { getMilvusStats } from '@/http/home';
 import { ProductionSection } from '@/parts/home/productionSection/ProductionSection';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { getHomepageHeadline } from '@/utils/blogs';
+import classes from '@/styles/home.module.less';
 
 export default function Homepage(props: {
   headline: { label: string; link: string };
@@ -19,11 +20,7 @@ export default function Homepage(props: {
   const { headline } = props;
   return (
     <Layout>
-      <main
-        style={{
-          backgroundColor: '#FAFAFA',
-        }}
-      >
+      <main className={classes.homepageContainer}>
         <Head>
           <title>
             The High-Performance Vector Database Built for Scale | Milvus

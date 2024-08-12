@@ -1,13 +1,13 @@
 import { Remarkable } from 'remarkable';
 import { CUSTOM_H1_TAG } from '@/consts';
-
 import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/base16/atelier-dune-light.css';
 import bash from 'highlight.js/lib/languages/bash';
 import python from 'highlight.js/lib/languages/python';
 import javascript from 'highlight.js/lib/languages/javascript';
 import go from 'highlight.js/lib/languages/go';
 import csharp from 'highlight.js/lib/languages/csharp';
+import java from 'highlight.js/lib/languages/java';
+import json from 'highlight.js/lib/languages/json';
 import { DocAnchorItemType } from '@/types/docs';
 
 // no language named shell, use bash instead
@@ -16,6 +16,8 @@ hljs.registerLanguage('python', python);
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('go', go);
 hljs.registerLanguage('csharp', csharp);
+hljs.registerLanguage('java', java);
+hljs.registerLanguage('json', json);
 
 // hljs.configure({
 //   languages: ['python', 'javascript', 'bash', 'go', 'java'],
@@ -89,6 +91,7 @@ export async function markdownToHtml(
             'go',
             'java',
             'csharp',
+            'json',
           ]).value + `<button class="copy-code-btn"></button>`
         );
       } catch (err) {

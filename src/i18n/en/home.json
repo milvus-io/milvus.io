@@ -117,18 +117,6 @@
     "rag": "RAG",
     "imgSearch": "Image Search",
     "multimodal": "Multimodal Search",
-    "langChain": {
-      "title": "LangChain Starter Guide",
-      "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."
-    },
-    "llamaIndex": {
-      "title": "LlamaIndex Starter Guide",
-      "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."
-    },
-    "dspy": {
-      "title": "DSPy Starter Guide",
-      "desc": "Dolor accusamus suscipit ut autem harum. Voluptates fugit unde quia aliquid molestiae molestiae. Et rerum consequatur dolor."
-    },
     "meetup": {
       "title": "Unstructured Data Meetups",
       "desc": "Join a Community of Passionate Developers and Engineers Dedicated to Gen AI."

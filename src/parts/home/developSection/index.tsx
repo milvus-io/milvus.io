@@ -10,44 +10,23 @@ export default function DevelopSection() {
   const { t } = useTranslation('home');
 
   const techStacks = [
-    // {
-    //   id: 'rag',
-    //   title: t('developSection.rag'),
-    //   href: '/docs/integrate_with_langchain.md',
-    //   logo: '/images/home/rag.png',
-    // },
-    // {
-    //   id: 'imgSearch',
-    //   title: t('developSection.imgSearch'),
-    //   href: '/docs/integrate_with_llamaindex.md',
-    //   logo: '/images/home/image-search.png',
-    // },
-    // {
-    //   id: 'multimodal',
-    //   title: t('developSection.multimodal'),
-    //   href: '/docs/integrate_with_dspy.md',
-    //   logo: '/images/home/multimodal-search.png',
-    // },
     {
-      id: 'lang chain',
-      title: t('developSection.langChain.title'),
-      content: t('developSection.langChain.desc'),
-      href: '/docs/integrate_with_langchain.md',
-      logo: '/images/home/lang-chain-logo.png',
+      id: 'rag',
+      title: t('developSection.rag'),
+      href: '/docs/build-rag-with-milvus.md',
+      logo: '/images/home/rag.png',
     },
     {
-      id: 'llama index',
-      title: t('developSection.llamaIndex.title'),
-      content: t('developSection.llamaIndex.desc'),
-      href: '/docs/integrate_with_llamaindex.md',
-      logo: '/images/home/llama-index-logo.png',
+      id: 'imgSearch',
+      title: t('developSection.imgSearch'),
+      href: '/docs/image_similarity_search.md',
+      logo: '/images/home/image-search.png',
     },
     {
-      id: 'DSPy',
-      title: t('developSection.dspy.title'),
-      content: t('developSection.dspy.desc'),
-      href: '/docs/integrate_with_dspy.md',
-      logo: '/images/home/DSPy-logo.png',
+      id: 'multimodal',
+      title: t('developSection.multimodal'),
+      href: '/docs/multimodal_rag_with_milvus.md',
+      logo: '/images/home/multimodal-search.png',
     },
   ];
 

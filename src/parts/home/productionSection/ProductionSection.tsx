@@ -148,7 +148,12 @@ export const ProductionSection = () => {
   ];
   return (
     <section className={clsx(pageClasses.homeContainer, '!my-[80px]')}>
-      <ul className="grid grid-cols-12 grid-rows-5 gap-[32px] max-[1022px]:gap-[20px] list-none max-phone:hidden">
+      <ul
+        className={clsx(
+          'grid grid-cols-12 grid-rows-5 gap-[32px] max-[1022px]:gap-[20px] list-none max-phone:hidden',
+          classes.logosWrapper
+        )}
+      >
         {brans.map(item => {
           return (
             <li

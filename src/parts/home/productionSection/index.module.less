@@ -6,3 +6,34 @@
   background: url('/images/home/brands/users.png') no-repeat center center;
   background-size: contain;
 }
+
+.logosWrapper {
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -56px;
+    width: 176px;
+    background: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0),
+      rgba(249, 249, 249, 1)
+    );
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -56px;
+    width: 176px;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(249, 249, 249, 1)
+    );
+  }
+}

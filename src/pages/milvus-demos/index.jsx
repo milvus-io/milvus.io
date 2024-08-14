@@ -126,7 +126,12 @@ export default function MilvusDemos() {
             ))}
           </ul>
         </section>
-        <SubscribeNewsletter callback={handleOpenSnackbar} />
+
+        <section
+          className={clsx(pageClasses.container, classes.subscribeContainer)}
+        >
+          <SubscribeNewsletter callback={handleOpenSnackbar} />
+        </section>
       </Layout>
       <CustomizedContentDialogs
         open={dialogConfig.open}

@@ -86,7 +86,6 @@ const CustomButton = (props: CustomButtonProps) => {
     [classes.outlined]: variant === 'outlined',
     [classes.text]: variant === 'text',
     [classes.primaryColor]: color === 'primary',
-
     [classes.secondaryColor]: color === 'secondary',
     [classes.disabledButton]: disabled,
   };

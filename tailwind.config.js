@@ -17,7 +17,7 @@ module.exports = {
         black1: '#00131A',
         black2: '#667176',
         black3: '#D0D7DC',
-
+        black4: '#ececee',
         blue1: '#00B3FF',
       },
       boxShadow: {

@@ -22,11 +22,17 @@
     border: 1px solid @color-black1;
 
     &:hover {
-      color: rgba(255, 255, 255, 0.7);
+      opacity: 0.7;
+    }
+  }
 
-      .iconWrapper {
-        opacity: 0.7;
-      }
+  &.secondaryColor {
+    background-color: #fff;
+    color: #000;
+
+    &:hover {
+      color: #000;
+      background-color: @color-white1;
     }
   }
 }
@@ -38,7 +44,7 @@
     color: @color-black1;
 
     &:hover {
-      opacity: 0.7;
+      background-color: @color-white1;
     }
   }
 }

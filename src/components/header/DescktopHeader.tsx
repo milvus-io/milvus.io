@@ -72,7 +72,7 @@ export default function DesktopHeader(props: Props) {
   ];
 
   return (
-    <div className="bg-white border-b border-solid border-gray-300">
+    <div className="bg-white border-b-black4 border-b-[1px] border-solid ">
       <div
         className={clsx(
           'hidden tablet:flex h-[58px] px-10 items-center justify-between mx-auto',

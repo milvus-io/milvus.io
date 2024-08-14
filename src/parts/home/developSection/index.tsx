@@ -51,13 +51,13 @@ export default function DevelopSection() {
 
             <CustomButton
               href={v.href}
-              variant="text"
+              variant="outlined"
               endIcon={<RightWholeArrow />}
               classes={{
                 root: classes.linkButton,
               }}
             >
-              {t('buttons.learnMore')}
+              {t('buttons.tryNow')}
             </CustomButton>
           </li>
         ))}

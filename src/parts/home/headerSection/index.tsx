@@ -52,6 +52,7 @@ export default function HomePageHeaderSection(props: {
         <div className="flex justify-center items-center">
           <CustomButton
             href={GET_START_LINK}
+            size="large"
             classes={{
               root: classes.startButton,
             }}

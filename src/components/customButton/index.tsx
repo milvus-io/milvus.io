@@ -9,6 +9,7 @@ export interface CustomButtonProps {
   color?: 'primary' | 'secondary';
   endIcon?: React.ReactNode;
   disabled?: boolean;
+  size?: 'small' | 'medium' | 'large';
   classes?: {
     root?: string;
     icon?: string;
@@ -76,6 +77,7 @@ const CustomButton = (props: CustomButtonProps) => {
     endIcon,
     disabled = false,
     classes: customClasses = {},
+    size = 'medium',
     ...rest
   } = props;
 
@@ -88,6 +90,9 @@ const CustomButton = (props: CustomButtonProps) => {
     [classes.primaryColor]: color === 'primary',
     [classes.secondaryColor]: color === 'secondary',
     [classes.disabledButton]: disabled,
+    [classes.smallSize]: size === 'small',
+    [classes.mediumSize]: size === 'medium',
+    [classes.largeSize]: size === 'large',
   };
 
   return (

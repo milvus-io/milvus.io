@@ -1,8 +1,12 @@
 @import url('@/styles/global.module.less');
 
 .deploySection {
-  padding-top: 60px;
+  padding-top: 120px;
   padding-bottom: 60px;
+
+  @media @tablet {
+    padding-top: 60px;
+  }
 
   .title {
     .heading2();

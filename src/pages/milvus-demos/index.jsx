@@ -132,6 +132,9 @@ export default function MilvusDemos() {
         open={dialogConfig.open}
         handleClose={handleCloseDialog}
         title={dialogConfig.title}
+        classes={{
+          root: classes.dialogRoot,
+        }}
       >
         {dialogConfig.content()}
       </CustomizedContentDialogs>

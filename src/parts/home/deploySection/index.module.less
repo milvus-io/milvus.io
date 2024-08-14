@@ -1,8 +1,12 @@
 @import url('@/styles/global.module.less');
 
 .deploySection {
-  padding-top: 60px;
+  padding-top: 120px;
   padding-bottom: 60px;
+
+  @media @tablet {
+    padding-top: 60px;
+  }
 
   .title {
     .heading2();
@@ -34,8 +38,8 @@
       display: flex;
       gap: 20px;
       justify-content: space-between;
-      border-radius: 12px;
-      border: 1px solid @color-black3;
+      border-radius: 16px;
+      border: 1px solid @color-black4;
       padding: 30px;
       background-color: #fff;
     }
@@ -82,8 +86,7 @@
     }
     .cloudDb {
       grid-area: cloud;
-      margin-top: 30px;
-      margin-bottom: 30px;
+      margin-bottom: 12px;
 
       .dbName {
         max-width: 320px;
@@ -162,6 +165,12 @@
     .paragraph4-regular();
     color: @color-black1;
     text-align: center;
+    padding: 8px 24px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid @color-black4;
+    max-width: 416px;
+    margin: 0 auto;
 
     a {
       color: @color-blue2;

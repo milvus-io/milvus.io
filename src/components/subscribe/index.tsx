@@ -84,6 +84,7 @@ const SubscribeNewsletter = (props: {
         </div>
         <CustomButton
           onClick={handleSubmitInfo}
+          size="large"
           classes={{
             root: classes.customScribeButton,
           }}

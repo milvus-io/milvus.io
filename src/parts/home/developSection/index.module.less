@@ -24,8 +24,8 @@
   .stacksList {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 30px;
-    margin-bottom: 30px;
+    grid-gap: 12px;
+    margin-bottom: 12px;
 
     @media @tablet {
       grid-template-columns: repeat(2, 1fr);
@@ -42,18 +42,18 @@
     gap: 24px;
     justify-content: space-between;
     padding: 30px;
-    border-radius: 12px;
-    border: 1px solid @color-black3;
+    border-radius: 16px;
+    border: 1px solid @color-black4;
     background: #fff;
 
     .logoWrapper {
       display: block;
-      height: 80px;
+      width: 100%;
       margin-bottom: 24px;
       text-align: center;
 
       img {
-        max-height: 100%;
+        width: 100%;
       }
     }
 
@@ -68,10 +68,8 @@
   }
 
   .meetupBgContainer {
-    background: linear-gradient(to right, #d083ff, #8eddff);
-    border-radius: 12px;
-    padding: 2px;
-    box-shadow: 0px 6px 20px 0px rgba(0, 179, 255, 0.1);
+    border: 1px solid @color-black4;
+    border-radius: 16px;
   }
 
   .meetupWrapper {
@@ -81,7 +79,7 @@
     align-items: center;
     padding: 30px;
     background-color: #fff;
-    border-radius: 11px;
+    border-radius: 16px;
 
     @media @phone {
       flex-direction: column;
@@ -121,6 +119,7 @@
 
   a.linkButton {
     font-size: 14px;
+    width: fit-content;
   }
 
   a.rsvpButton {

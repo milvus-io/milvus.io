@@ -13,14 +13,9 @@ export const LogoSection = props => {
         <img src="/images/milvus_logo.svg" height={24} alt="milvus-logo" />
       </Link>
       <div className="w-[1px] h-[20px] bg-black3 mx-[8px]" />
-      <a
-        href="https://lfaidata.foundation/projects/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center justify-center"
-      >
+      <span className="inline-flex items-center justify-center">
         <img src={foundationLogo} height={20} alt="LFAI" />
-      </a>
+      </span>
     </div>
   );
 };

@@ -172,7 +172,13 @@
     margin: 24px 0;
     position: relative;
     padding-right: 42px;
-    &:has(.active) {
+    border: 1px solid @color-grey-04;
+
+    &:has(code[class*='language-']) {
+      border: none;
+    }
+
+    &:has(code[class*='active']) {
       border: 1px solid @color-grey-04;
     }
 
@@ -186,7 +192,6 @@
       padding: 12px;
       background-color: transparent;
       font-weight: 400;
-      margin: 12px 0;
       width: 100%;
       overflow-x: auto;
 

@@ -53,6 +53,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.0.2
         version: 1.0.2(@types/react@18.3.3)(react@18.2.0)
+      '@zilliz/toolkit':
+        specifier: ^0.0.9
+        version: 0.0.9
       axios:
         specifier: ^0.28.0
         version: 0.28.0
@@ -89,6 +92,9 @@ importers:
       instantsearch.css:
         specifier: ^7.4.5
         version: 7.4.5
+      katex:
+        specifier: ^0.16.11
+        version: 0.16.11
       less:
         specifier: ^4.1.3
         version: 4.2.0
@@ -146,6 +152,9 @@ importers:
       remarkable:
         specifier: ^2.0.1
         version: 2.0.1
+      remarkable-katex:
+        specifier: ^1.2.1
+        version: 1.2.1
       rooks:
         specifier: ^5.8.0
         version: 5.14.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1544,6 +1553,9 @@ packages:
   '@zag-js/visually-hidden@0.20.0':
     resolution: {integrity: sha512-TrAoiymPNoBgx1f9pOyaM6j0xlxBgGDX209WZvphJDg4616S8KICUSqmC2u0c6gtahkypxGdYDfyj6I83hVuzQ==}
 
+  '@zilliz/toolkit@0.0.9':
+    resolution: {integrity: sha512-6+NwTS2R94lOOlLx6WyC3vrvSCyYomBDCD+j3kJPyc23+oK223Efk9ASHTE0tAvZafWFExmTf9VPlWKd1hXePg==}
+
   acorn-import-assertions@1.9.0:
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
     peerDependencies:
@@ -1851,6 +1863,10 @@ packages:
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
+
+  commander@8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
+    engines: {node: '>= 12'}
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -2846,6 +2862,10 @@ packages:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
     engines: {node: '>=4.0'}
 
+  katex@0.16.11:
+    resolution: {integrity: sha512-RQrI8rlHY92OLf3rho/Ts8i/XvjgguEjOkO1BEXcU3N8BqPpSzBNwV/G0Ukr+P/l3ivvJUE/Fa/CwbS6HesGNQ==}
+    hasBin: true
+
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
@@ -3744,6 +3764,9 @@ packages:
 
   remark-rehype@10.1.0:
     resolution: {integrity: sha512-EFmR5zppdBp0WQeDVZ/b66CWJipB2q2VLNFMabzDSGR66Z2fQii83G5gTBbgGEnEEA0QRussvrFHxk1HWGJskw==}
+
+  remarkable-katex@1.2.1:
+    resolution: {integrity: sha512-Y1VquJBZnaVsfsVcKW2hmjT+pDL7mp8l5WAVlvuvViltrdok2m1AIKmJv8SsH+mBY84PoMw67t3kTWw1dIm8+g==}
 
   remarkable@2.0.1:
     resolution: {integrity: sha512-YJyMcOH5lrR+kZdmB0aJJ4+93bEojRZ1HGDn9Eagu6ibg7aVZhc3OWbbShRid+Q5eAfsEqWxpe+g5W5nYNfNiA==}
@@ -6552,6 +6575,8 @@ snapshots:
 
   '@zag-js/visually-hidden@0.20.0': {}
 
+  '@zilliz/toolkit@0.0.9': {}
+
   acorn-import-assertions@1.9.0(acorn@8.11.3):
     dependencies:
       acorn: 8.11.3
@@ -6905,6 +6930,8 @@ snapshots:
 
   commander@4.1.1: {}
 
+  commander@8.3.0: {}
+
   concat-map@0.0.1: {}
 
   confbox@0.1.7: {}
@@ -7225,8 +7252,8 @@ snapshots:
       '@typescript-eslint/parser': 5.62.0(eslint@8.19.0)(typescript@5.4.5)
       eslint: 8.19.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.29.1)(eslint@8.19.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1)(eslint@8.19.0)
+      eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0))(eslint@8.19.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.19.0)
       eslint-plugin-react: 7.34.2(eslint@8.19.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.19.0)
@@ -7244,11 +7271,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1)(eslint@8.19.0):
+  eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0):
     dependencies:
       debug: 4.3.4
       eslint: 8.19.0
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1)(eslint@8.19.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0))(eslint@8.19.0)
       glob: 7.2.3
       is-glob: 4.0.3
       resolve: 1.22.8
@@ -7256,18 +7283,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1)(eslint@8.19.0))(eslint@8.19.0):
+  eslint-module-utils@2.8.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0))(eslint@8.19.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@8.19.0)(typescript@5.4.5)
       eslint: 8.19.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.29.1)(eslint@8.19.0)
+      eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1)(eslint@8.19.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0))(eslint@8.19.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
@@ -7277,7 +7304,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.19.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1)(eslint@8.19.0))(eslint@8.19.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0))(eslint@8.19.0)
       hasown: 2.0.2
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -8087,6 +8114,10 @@ snapshots:
       array.prototype.flat: 1.3.2
       object.assign: 4.1.5
       object.values: 1.2.0
+
+  katex@0.16.11:
+    dependencies:
+      commander: 8.3.0
 
   keyv@4.5.4:
     dependencies:
@@ -9190,6 +9221,8 @@ snapshots:
       '@types/mdast': 3.0.15
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
+
+  remarkable-katex@1.2.1: {}
 
   remarkable@2.0.1:
     dependencies:

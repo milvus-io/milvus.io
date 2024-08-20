@@ -10,6 +10,7 @@ import {
 } from '@/types/docs';
 import { JSON_REG, VERSION_REG } from '@/consts/regexp';
 import { setCacheData, getCacheData } from './index';
+import { LanguageEnum } from '@/components/language-selector';
 
 const matter = require('gray-matter');
 
@@ -111,36 +112,42 @@ const readFile = (params: {
   fileDataList: DocFileDataInfoType[];
   withContent?: boolean;
 }) => {
-  const { path, fileDataList, withContent = false } = params;
-  const fileStat = fs.statSync(path);
+  try {
+    const { path, fileDataList, withContent = false } = params;
+    const fileStat = fs.statSync(path);
 
-  const relativePath = path.match(/\/v\d.*$/)?.[0] || '';
+    const relativePath = path.match(/\/v\d.*$/)?.[0] || '';
 
-  if (fileStat.isDirectory()) {
-    const subPaths: string[] = fs
-      .readdirSync(path)
-      .filter((subPath: string) => !IGNORE_FILES.includes(subPath))
-      .map((v: string) => join(path, v));
+    if (fileStat.isDirectory()) {
+      const subPaths: string[] = fs
+        .readdirSync(path)
+        .filter((subPath: string) => !IGNORE_FILES.includes(subPath))
+        .map((v: string) => join(path, v));
 
-    return subPaths.map(subPath =>
-      readFile({ path: subPath, fileDataList, withContent })
-    );
-  } else if (fileStat.isFile()) {
-    const fileData = fs.readFileSync(path, 'utf-8');
+      return subPaths.map(subPath =>
+        readFile({ path: subPath, fileDataList, withContent })
+      );
+    } else if (fileStat.isFile() && path.endsWith('.md')) {
+      const fileData = fs.readFileSync(path, 'utf-8');
+      const propsInfo = fs.readFileSync(path.replace('.md', '.json'), 'utf-8');
 
-    const { data, content } = matter(fileData) as {
-      data: DocFrontMatterType;
-      content: string;
-    };
+      const { data, content } = matter(fileData) as {
+        data: DocFrontMatterType;
+        content: string;
+      };
 
-    // ignore docs files that are marked as deprecated
-    if (!data.deprecate) {
-      fileDataList.push({
-        frontMatter: data,
-        content: withContent ? content : '',
-        editPath: relativePath,
-      });
+      // ignore docs files that are marked as deprecated
+      if (!data.deprecate) {
+        fileDataList.push({
+          frontMatter: data,
+          content: withContent ? content : '',
+          editPath: relativePath,
+          propsInfo: JSON.parse(propsInfo),
+        });
+      }
     }
+  } catch (error) {
+    console.error('readFile error:', error);
   }
 };
 
@@ -148,10 +155,10 @@ const readFile = (params: {
 // without home data
 export const generateAllContentDataOfSingleVersion = (params: {
   version: string;
-  lang?: 'en' | 'cn';
+  lang: LanguageEnum;
   withContent?: boolean;
 }) => {
-  const { version, lang = 'en', withContent = false } = params;
+  const { version, lang = LanguageEnum.ENGLISH, withContent = false } = params;
 
   // cache key is `content-${version}-${language}-${withContent}`
   const cacheKey = `content-${version}-${lang}-${withContent}`;
@@ -165,11 +172,7 @@ export const generateAllContentDataOfSingleVersion = (params: {
     return cachedData;
   }
 
-  const langFolderName = params.lang === 'cn' ? 'zh-CN' : 'en';
-  const filePath = join(
-    BASE_DOC_DIR,
-    `${params.version}/site/${langFolderName}`
-  );
+  const filePath = join(BASE_DOC_DIR, `localization/${params.version}/site/${lang}`);
 
   let fileDataList: DocFileDataInfoType[] = [];
 
@@ -187,10 +190,15 @@ export const generateAllContentDataOfSingleVersion = (params: {
 export const generateContentDataOfSingleFile = (params: {
   version: string;
   id: string;
-  lang?: 'en' | 'cn';
+  lang: LanguageEnum;
   withContent?: boolean;
 }) => {
-  const { version, id, lang = 'en', withContent = false } = params;
+  const {
+    version,
+    id,
+    lang = LanguageEnum.ENGLISH,
+    withContent = false,
+  } = params;
   const fileDataList = generateAllContentDataOfSingleVersion({
     version,
     lang,
@@ -201,8 +209,8 @@ export const generateContentDataOfSingleFile = (params: {
   return targetFileData;
 };
 
-export const generateAllContentDataOfAllVersion = (lang?: 'en' | 'cn') => {
-  const language = lang || 'en';
+export const generateAllContentDataOfAllVersion = (lang?: LanguageEnum) => {
+  const language = lang || LanguageEnum.ENGLISH;
   const cacheKey = `all-content-${language}`;
 
   const cachedData = getCacheData({ cache: docCache, key: cacheKey });
@@ -236,9 +244,9 @@ export const generateAllContentDataOfAllVersion = (lang?: 'en' | 'cn') => {
 
 export const generateHomePageDataOfSingleVersion = (params: {
   version: string;
-  lang?: 'en' | 'cn';
+  lang?: LanguageEnum;
 }) => {
-  const { version, lang = 'en' } = params;
+  const { version, lang = LanguageEnum.ENGLISH } = params;
 
   // home data cache key is `home-${version}-${lang}`
   const cacheKey = `home-${version}-${lang}`;
@@ -251,12 +259,9 @@ export const generateHomePageDataOfSingleVersion = (params: {
     return cachedData;
   }
 
-  const langFolderName = lang === 'cn' ? 'zh-CN' : 'en';
-  const filePath = join(
-    BASE_DOC_DIR,
-    `${version}/site/${langFolderName}/home/home.md`
-  );
+  const filePath = join(BASE_DOC_DIR, `localization/${version}/site/${lang}/home/home.md`);
   const fileInfo = fs.readFileSync(filePath, 'utf-8');
+  const propsInfo = fs.readFileSync(filePath.replace('.md', '.json'), 'utf-8');
   const { data, content } = matter(fileInfo) as {
     data: DocFrontMatterType;
     content: string;
@@ -274,6 +279,8 @@ export const generateHomePageDataOfSingleVersion = (params: {
   return {
     frontMatter: data,
     content,
+    filePath,
+    propsInfo: JSON.parse(propsInfo),
   };
 };
 
@@ -300,9 +307,9 @@ const formatMenuStructure: (
 
 export const generateMenuDataOfCurrentVersion = (params: {
   docVersion: string;
-  lang?: string;
+  lang: LanguageEnum;
 }) => {
-  const { docVersion, lang = 'en' } = params;
+  const { docVersion, lang = LanguageEnum.ENGLISH } = params;
   const cacheKey = `menu-${docVersion}-${lang}`;
   const cachedData = getCacheData({ cache: docCache, key: cacheKey });
 
@@ -310,17 +317,25 @@ export const generateMenuDataOfCurrentVersion = (params: {
     return cachedData;
   }
 
-  const langFolderName = lang === 'cn' ? 'zh-CN' : 'en';
-  const fileName = lang === 'cn' ? 'cn.json' : 'en.json';
-  const filePath = join(
-    BASE_DOC_DIR,
-    `${docVersion}/site/${langFolderName}/menuStructure/${fileName}`
-  );
-
-  const fileData = fs.readFileSync(filePath, 'utf-8');
+  const fileData = getMenuStructureData({ docVersion, lang });
   const menu = formatMenuStructure(JSON.parse(fileData));
-
   setCacheData({ cache: docCache, key: cacheKey, data: menu });
-
   return menu;
 };
+
+const getMenuStructureData = (params: {
+  docVersion: string;
+  lang: LanguageEnum;
+}) => {
+  const { docVersion, lang = LanguageEnum.ENGLISH } = params;
+  try {
+    const filePath = join(
+      BASE_DOC_DIR,
+      `localization/${docVersion}/site/${lang}/menuStructure/${lang}.json`
+    );
+    return fs.readFileSync(filePath, 'utf-8')
+  } catch (error) {
+    // fallback to the en version
+    return fs.readFileSync(join(BASE_DOC_DIR, `${docVersion}/site/en/menuStructure/en.json`), 'utf-8');
+  }
+}

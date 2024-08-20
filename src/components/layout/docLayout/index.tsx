@@ -7,6 +7,7 @@ import Header from '../../header';
 import Footer from '../../footer';
 import InkeepChatButtonContainer from '@/components/inkeep/InkeepChatButton';
 import 'highlight.js/styles/atom-one-light.css';
+import { LanguageEnum } from '@/components/language-selector';
 
 const MENU_MINIMUM_WIDTH = 22;
 const MENU_MAXIMUM_WIDTH = 283;
@@ -22,6 +23,7 @@ interface DocLayoutPropsType {
     url: string;
     docSearchLanguage?: string;
     docSearchVersion?: string;
+    lang?: LanguageEnum;
   };
   classes?: {
     root?: string;
@@ -51,6 +53,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
     url = '',
     docSearchLanguage,
     docSearchVersion,
+    lang,
   } = seo;
   const { root = '', main = '', content = '' } = customerClasses;
 
@@ -72,7 +75,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
             <meta name="docsearch:version" content={docSearchVersion} />
           )}
           {/* {!isLatestVersion && <meta name="robots" content="noindex" />} */}
-          <link rel="alternate" href={url} hrefLang="en" />
+          <link rel="alternate" href={url} hrefLang={lang} />
         </Head>
         <Header className={classes.docHeader} />
         <div className={clsx(classes.mainContainer, main)}>

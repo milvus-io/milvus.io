@@ -1,6 +1,7 @@
 import { AlgoliaSearch } from '@/components/search/agloia';
 import ExpansionTreeView from '@/components/treeView/ExpansionTreeView';
 import VersionSelector from '@/components/versionSelector';
+import { LanguageEnum } from '@/components/language-selector';
 import {
   AllMdVersionIdType,
   ApiReferenceRouteEnum,
@@ -19,6 +20,7 @@ interface LeftNavSectionProps {
   version: string;
   latestVersion: string;
   versions?: string[];
+  lang?: LanguageEnum;
   type: 'doc' | 'api';
   currentMdId: string;
   homepageConf: {
@@ -45,6 +47,7 @@ export default function LeftNavSection(props: LeftNavSectionProps) {
     mdListData,
     category,
     disableSearch = false,
+    lang,
   } = props;
 
   return (
@@ -72,6 +75,7 @@ export default function LeftNavSection(props: LeftNavSectionProps) {
           item: classes.treeItem,
           link: classes.treeItemLink,
         }}
+        lang={lang}
         homepageConf={homepageConf}
         showHomeButton
         currentMdId={currentMdId}

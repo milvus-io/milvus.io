@@ -14,9 +14,12 @@
   },
   "docAction": {
     "edit": "Edit this page",
-    "issue": "Create an issue "
+    "issue": "Create an issue"
   },
   "anchors": {
     "title": "Table of contents"
+  },
+  "navigation": {
+    "title": "Home"
   }
 }

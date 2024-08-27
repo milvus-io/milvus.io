@@ -2,6 +2,7 @@ import React from 'react';
 import * as styles from './DemoCard.module.less';
 import VideoPlayer from '../videoPlayer';
 import InfoSubmitter from '../infoSubmitter';
+import { useTranslation } from 'react-i18next';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
@@ -15,18 +16,19 @@ const DemoCard = ({
   handelOpenDialog,
   handleOpenSnackbar,
 }) => {
+  const { t } = useTranslation('demo');
   const submitCallback = (statusCode, unique_email_id, href) => {
     if (statusCode === 200) {
       window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
       handleOpenSnackbar({
         type: 'success',
-        message: 'Thank you, you have been added to our mailing list!',
+        message: t('prompts.success'),
       });
       //
     } else {
       handleOpenSnackbar({
         type: 'warning',
-        message: "One second! We're taking you there...",
+        message: t('prompts.warning'),
       });
       window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
     }
@@ -62,7 +64,7 @@ const DemoCard = ({
     const content = () => (
       <InfoSubmitter source={source} href={href} submitCb={submitCallback} />
     );
-    handelOpenDialog(content, 'Before you go...');
+    handelOpenDialog(content, t('prompts.waiting'));
   };
 
   return (
@@ -77,21 +79,23 @@ const DemoCard = ({
             </button>
           )}
 
-          <button className={`${styles.watchBtn}`} onClick={handleWatchVideo}>
-            Watch Demo
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="m10 16.5 6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                fill="white"
-              ></path>
-            </svg>
-          </button>
+          {videoSrc && (
+            <button className={`${styles.watchBtn}`} onClick={handleWatchVideo}>
+              Watch Demo
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="m10 16.5 6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                  fill="white"
+                ></path>
+              </svg>
+            </button>
+          )}
         </div>
       </div>
       <div className={styles.coverWrapper}>

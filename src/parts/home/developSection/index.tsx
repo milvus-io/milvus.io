@@ -4,7 +4,10 @@ import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { RightWholeArrow } from '@/components/icons';
-import { MEETUP_UNSTRUCTURED_DATA_URL } from '@/consts/externalLinks';
+import {
+  DEMO_MULTIMODAL_SEARCH_URL,
+  MEETUP_UNSTRUCTURED_DATA_URL,
+} from '@/consts/externalLinks';
 
 export default function DevelopSection() {
   const { t } = useTranslation('home');
@@ -25,7 +28,7 @@ export default function DevelopSection() {
     {
       id: 'multimodal',
       title: t('developSection.multimodal'),
-      href: '/docs/multimodal_rag_with_milvus.md',
+      href: DEMO_MULTIMODAL_SEARCH_URL,
       logo: '/images/home/multimodal-search.png',
     },
   ];

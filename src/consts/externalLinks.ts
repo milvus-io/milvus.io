@@ -25,4 +25,4 @@ export const MEETUP_UNSTRUCTURED_DATA_URL =
   'https://zilliz.com/community/unstructured-data-meetup';
 
 export const DEMO_MULTIMODAL_SEARCH_URL =
-  'https://demos.milvus.io/multimodal-search';
+  'https://multimodal-demo.milvus.io/';

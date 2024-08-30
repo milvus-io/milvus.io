@@ -1,7 +1,7 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document(props) {
-  const lang = props.head?.find(item => item.type === 'html')?.props?.lang ?? 'en';
+  const lang = props.__NEXT_DATA__.props.pageProps.lang || 'en';
   return (
     <Html lang={lang}>
       <Head>

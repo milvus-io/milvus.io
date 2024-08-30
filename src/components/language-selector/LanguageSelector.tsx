@@ -1,5 +1,4 @@
 import { FC, useLayoutEffect } from 'react';
-import Head from 'next/head';
 import { useRouter, usePathname } from 'next/navigation';
 import i18n from 'i18next';
 
@@ -75,34 +74,31 @@ export const LanguageSelector: FC<Props> = props => {
     router.push(newPath);
   };
 
+  if (disabled) {
+    return null;
+  }
+
   return (
-    <>
-      <Head>
-        <html lang={value} />
-      </Head>
-      {!disabled && (
-        <Select defaultValue={value} onValueChange={handleLanguageChange}>
-          <SelectTrigger
-            className={`w-[150px] border-0 pl-0 gap-[4px] justify-start text-black2 ${className}`}
-          >
-            <LanguageIcon />
-            <SelectValue placeholder="Language" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value={LanguageEnum.ENGLISH}>English</SelectItem>
-              <SelectItem value={LanguageEnum.CHINESE}>简体中文</SelectItem>
-              <SelectItem value={LanguageEnum.JAPANESE}>日本語で</SelectItem>
-              <SelectItem value={LanguageEnum.KOREAN}>한국어</SelectItem>
-              <SelectItem value={LanguageEnum.FRANCE}>Français</SelectItem>
-              <SelectItem value={LanguageEnum.GERMAN}>Deutsch</SelectItem>
-              <SelectItem value={LanguageEnum.SPANISH}>Español</SelectItem>
-              <SelectItem value={LanguageEnum.ITALIAN}>Italiano</SelectItem>
-              <SelectItem value={LanguageEnum.PORTUGUESE}>Português</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      )}
-    </>
+    <Select defaultValue={value} onValueChange={handleLanguageChange}>
+      <SelectTrigger
+        className={`w-[150px] border-0 pl-0 gap-[4px] justify-start text-black2 ${className}`}
+      >
+        <LanguageIcon />
+        <SelectValue placeholder="Language" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem value={LanguageEnum.ENGLISH}>English</SelectItem>
+          <SelectItem value={LanguageEnum.CHINESE}>简体中文</SelectItem>
+          <SelectItem value={LanguageEnum.JAPANESE}>日本語で</SelectItem>
+          <SelectItem value={LanguageEnum.KOREAN}>한국어</SelectItem>
+          <SelectItem value={LanguageEnum.FRANCE}>Français</SelectItem>
+          <SelectItem value={LanguageEnum.GERMAN}>Deutsch</SelectItem>
+          <SelectItem value={LanguageEnum.SPANISH}>Español</SelectItem>
+          <SelectItem value={LanguageEnum.ITALIAN}>Italiano</SelectItem>
+          <SelectItem value={LanguageEnum.PORTUGUESE}>Português</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 };

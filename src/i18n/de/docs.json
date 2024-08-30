@@ -1,0 +1,25 @@
+{
+  "homepageDesc": "Milvus {{version}} Dokumentation",
+  "feedback": {
+    "title": "Feedback",
+    "prompt": "War diese Seite hilfreich?",
+    "comment": {
+      "title": "Schicken Sie uns Ihr Feedback",
+      "desc": "Vielen Dank, dass Sie uns dabei geholfen haben, die Milvus-Dokumentation zu verbessern.",
+      "inputLabel": "Zusätzliche Kommentare (optional)",
+      "cancel": "Annullieren",
+      "send": "Senden"
+    },
+    "thanks": "Vielen Dank für Ihr wertvolles Feedback!"
+  },
+  "docAction": {
+    "edit": "Edit diese Seite",
+    "issue": "Schaffen Sie ein Thema"
+  },
+  "anchors": {
+    "title": "Tabelle der Inhalte"
+  },
+  "navigation": {
+    "title": "Home"
+  }
+}

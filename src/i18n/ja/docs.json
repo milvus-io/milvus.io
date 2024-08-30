@@ -1,0 +1,25 @@
+{
+  "homepageDesc": "Milvus {{version}} ドキュメンテーション",
+  "feedback": {
+    "title": "フィードバック",
+    "prompt": "このページは役に立ちましたか ？",
+    "comment": {
+      "title": "フィードバックを送信します",
+      "desc": "Milvus ドキュメンテーションの改善を手伝ってくれてありがとう。",
+      "inputLabel": "追加コメント （ オプション ）",
+      "cancel": "キャンセル",
+      "send": "送信"
+    },
+    "thanks": "貴重なフィードバックありがとうございます！"
+  },
+  "docAction": {
+    "edit": "このページを編集",
+    "issue": "問題の作成"
+  },
+  "anchors": {
+    "title": "目次"
+  },
+  "navigation": {
+    "title": "フロントページへ"
+  }
+}

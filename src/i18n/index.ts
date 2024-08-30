@@ -1,19 +1,29 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import commonEn from './en/milvus.json';
-import commonCn from './cn/milvus.json';
-import useCaseEn from './en/useCase.json';
-import useCaseCn from './cn/useCase.json';
-import introEn from './en/intro.json';
-import introCn from './cn/intro.json';
-import headerEn from './en/header.json';
-import headerCn from './cn/header.json';
-import sizingToolEn from './en/sizingTool.json';
-import sizingToolCn from './cn/sizingTool.json';
-import homeEn from './en/home.json';
-import docsEn from './en/docs.json';
 import demoEn from './en/demo.json';
+import docsEn from './en/docs.json';
+import headerEn from './en/header.json';
+import homeEn from './en/home.json';
+import introEn from './en/intro.json';
+import commonEn from './en/milvus.json';
+import sizingToolEn from './en/sizingTool.json';
+import useCaseEn from './en/useCase.json';
+
+import docsCn from './cn/docs.json';
+import headerCn from './cn/header.json';
+import introCn from './cn/intro.json';
+import commonCn from './cn/milvus.json';
+import sizingToolCn from './cn/sizingTool.json';
+import useCaseCn from './cn/useCase.json';
+
+import docsDe from './de/docs.json';
+import docsEs from './es/docs.json';
+import docsFr from './fr/docs.json';
+import docsIt from './it/docs.json';
+import docsJa from './ja/docs.json';
+import docsKo from './ko/docs.json';
+import docsPt from './pt/docs.json';
 
 export const resources = {
   en: {
@@ -32,6 +42,36 @@ export const resources = {
     intro: introCn,
     header: headerCn,
     sizingTool: sizingToolCn,
+    docs: docsCn,
+  },
+  zh: {
+    common: commonCn,
+    useCase: useCaseCn,
+    intro: introCn,
+    header: headerCn,
+    sizingTool: sizingToolCn,
+    docs: docsCn,
+  },
+  ja: {
+    docs: docsJa,
+  },
+  ko: {
+    docs: docsKo,
+  },
+  fr: {
+    docs: docsFr,
+  },
+  de: {
+    docs: docsDe,
+  },
+  it: {
+    docs: docsIt,
+  },
+  pt: {
+    docs: docsPt,
+  },
+  es: {
+    docs: docsEs,
   },
 };
 

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import GitCommitInfo from '../GitCommitInfo';
 import { useGithubCommits } from '../../../http/hooks';
 import classes from './index.module.less';

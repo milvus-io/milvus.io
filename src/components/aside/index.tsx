@@ -1,38 +1,17 @@
-import React, { useState } from 'react';
-import TocTreeView from '../treeView/TocTreeView';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { useTranslation } from 'react-i18next';
-import styles from './index.module.less';
 import clsx from 'clsx';
-import AnchorTree from '../../parts/docs/anchorTree';
-import { DocAnchorItemType } from '@/types/docs';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
+import { LanguageEnum, LanguageSelector } from '@/components/language-selector';
+import { DocAnchorItemType } from '@/types/docs';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import AnchorTree from '../../parts/docs/anchorTree';
 import FeedbackSection from './feedback';
-
-// const result = {
-//   doc: {},
-//   api: {},
-//   community: {
-//     edit: {
-//       icon: "pencil",
-//       label: "edit this page",
-//       href: "https://github.com/milvus-io/web-content/edit/master/community/site/en/communityArticles/about/why_contributing.md",
-//     },
-//     bug: {
-//       icon: "bug",
-//       label: "report a bug",
-//       link: "https://github.com/milvus-io/web-content/issues/new?assignees=&labels=&template=error-report.md&title=why_contributing.md",
-//     },
-//     join: {
-//       icon: "tag",
-//       label: "join slack channel",
-//       link: "https://milvusio.slack.com/ssb/redirect",
-//     },
-//   },
-// };
+import styles from './index.module.less';
 
 interface DocData {
   editPath: string;
@@ -53,6 +32,8 @@ interface AsidePropsType {
   apiReferenceData?: ApiReferenceData;
   docData?: DocData;
   activeAnchor?: string;
+  lang?: LanguageEnum;
+  disableLanguageSelector?: boolean;
 
   classes?: {
     root?: string;
@@ -77,6 +58,8 @@ const Aside = (props: AsidePropsType) => {
     docData,
     apiReferenceData,
     activeAnchor = '',
+    lang,
+    disableLanguageSelector,
   } = props;
   const { t } = useTranslation('docs');
   const { root, btnGroup, anchorTree } = classes;
@@ -172,6 +155,11 @@ const Aside = (props: AsidePropsType) => {
 
   return (
     <div className={clsx(styles.rightNavWrapper, root)}>
+      <LanguageSelector
+        value={lang}
+        className="mb-[32px]"
+        disabled={disableLanguageSelector}
+      />
       <>
         {category === 'doc' && (
           <AnchorTree

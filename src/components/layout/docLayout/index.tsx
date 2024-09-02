@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import classes from './index.module.less';
 import Head from 'next/head';
 import clsx from 'clsx';
@@ -35,7 +34,6 @@ interface DocLayoutPropsType {
 }
 
 export default function DocLayout(props: DocLayoutPropsType) {
-  const { t } = useTranslation('common');
   const {
     left,
     center,

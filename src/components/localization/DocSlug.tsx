@@ -31,7 +31,7 @@ export function DocSlugPage(props: DocDetailPageProps) {
     mdListData,
     locale,
   } = props;
-  const { t } = useTranslation('docs');
+  const { t } = useTranslation('docs', { lng: locale });
 
   const {
     tree,
@@ -53,14 +53,14 @@ export function DocSlugPage(props: DocDetailPageProps) {
 
     const pageTitle =
       version === latestVersion
-        ? `${title} | Milvus Documentation`
-        : `${title} Milvus ${version} documentation`;
+        ? `${title} | ${t('title')}`
+        : `${title} ${t('homepageDesc', { version })}`;
     return {
       title: pageTitle,
       url: seoUrl,
       desc: summary ? `${summary} | ${version}` : `${title} | ${version}`,
     };
-  }, [frontMatter, version, latestVersion, summary, headingContent, seoUrl]);
+  }, [frontMatter, version, latestVersion, summary, headingContent, seoUrl, t]);
 
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');

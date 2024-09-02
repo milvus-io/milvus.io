@@ -57,7 +57,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
   const seoUrl = isHome ? homeSeoUrl : versionSeoUrl;
   const homePageLink = isEN ? '/docs' : `/docs/${lang}`;
 
-  const { t } = useTranslation('docs');
+  const { t } = useTranslation('docs', { lng: lang });
 
   const seoInfo = useMemo(() => {
     const title = isHome
@@ -66,8 +66,8 @@ export function DocDetailPage(props: DocDetailPageProps) {
 
     const pageTitle =
       version === latestVersion
-        ? `${title} | Milvus Documentation`
-        : `${title} Milvus ${version} documentation`;
+        ? `${title} | ${t('title')}`
+        : `${title} ${t('homepageDesc', { version })}`;
 
     const desc = isHome
       ? t('homepageDesc', { version })
@@ -80,7 +80,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
       url: seoUrl,
       desc,
     };
-  }, [isHome, frontMatter, version, summary, seoUrl]);
+  }, [isHome, frontMatter, version, summary, seoUrl, t]);
 
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');
@@ -218,6 +218,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
                   }}
                   activeAnchor={activeAnchor}
                   lang={lang}
+                  isShowBtnGroup={isEN}
                 />
               </div>
             </section>

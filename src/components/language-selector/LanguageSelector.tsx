@@ -79,7 +79,7 @@ export const LanguageSelector: FC<Props> = props => {
   }
 
   return (
-    <Select defaultValue={value} onValueChange={handleLanguageChange}>
+    <Select value={value} onValueChange={handleLanguageChange}>
       <SelectTrigger
         className={`w-[150px] border-0 pl-0 gap-[4px] justify-start text-black2 ${className}`}
       >

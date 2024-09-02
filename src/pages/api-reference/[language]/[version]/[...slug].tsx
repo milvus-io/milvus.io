@@ -217,6 +217,7 @@ export default function Template(props: ApiDetailPageProps) {
               classes={{
                 root: classes.rightAnchorTreeWrapper,
               }}
+              disableLanguageSelector={true}
             />
           </div>
         </section>

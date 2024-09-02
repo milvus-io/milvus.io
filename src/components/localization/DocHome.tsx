@@ -24,7 +24,7 @@ export interface DocHomePageProps {
 }
 
 export function DocHomepage(props: DocHomePageProps) {
-  const { t } = useTranslation('docs');
+  const { t } = useTranslation('docs', { lng: props.lang });
   const { homeData, blog, menus, version, versions, mdListData, lang } = props;
   const isEN = lang === LanguageEnum.ENGLISH;
 

@@ -61,7 +61,7 @@ const Aside = (props: AsidePropsType) => {
     lang,
     disableLanguageSelector,
   } = props;
-  const { t } = useTranslation('docs');
+  const { t } = useTranslation('docs', { lng: lang });
   const { root, btnGroup, anchorTree } = classes;
 
   const [dialogConfig, setDialogConfig] = useState<DialogPropsType>({

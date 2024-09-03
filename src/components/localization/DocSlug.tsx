@@ -29,7 +29,7 @@ export function DocSlugPage(props: DocDetailPageProps) {
     menus,
     id: currentId,
     mdListData,
-    locale,
+    lang: locale,
   } = props;
   const { t } = useTranslation('docs', { lng: locale });
 

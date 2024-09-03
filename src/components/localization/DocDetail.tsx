@@ -33,7 +33,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
     menus,
     id: currentId,
     mdListData,
-    locale: lang,
+    lang,
   } = props;
 
   const {

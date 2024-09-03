@@ -136,7 +136,7 @@ export interface DocDetailPageProps {
   isHome: boolean;
   blog: BlogFrontMatterType | null;
   version: string;
-  locale: LanguageEnum;
+  lang: LanguageEnum;
   versions: string[];
   latestVersion: string;
   menus: FinalMenuStructureType[];

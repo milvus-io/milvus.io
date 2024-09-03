@@ -17,7 +17,7 @@ export const AlgoliaSearch = (props: {
         indexName="milvus"
         searchParameters={{
           facetFilters: [
-            `language:${locale === 'zh' ? 'zh-cn' : locale}`,
+            `language:${locale}`,
             `version:${version}`,
           ],
         }}

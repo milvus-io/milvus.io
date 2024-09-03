@@ -1,5 +1,6 @@
 {
   "title": "Milvus 문서화",
+  "metaTitle": "Milvus 벡터 데이터베이스 문서",
   "homepageDesc": "Milvus {{version}} 문서",
   "feedback": {
     "title": "피드백",

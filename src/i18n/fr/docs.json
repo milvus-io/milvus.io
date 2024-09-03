@@ -1,5 +1,6 @@
 {
   "title": "Documentation Milvus",
+  "metaTitle": "Documentation de la base de données vectorielle Milvus",
   "homepageDesc": "Documentation Milvus {{version}}",
   "feedback": {
     "title": "Feedback",

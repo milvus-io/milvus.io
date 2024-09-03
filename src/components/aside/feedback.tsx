@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, Typography, InputLabel } from '@mui/material';
 import { useRouter } from 'next/router';
+import { LanguageEnum } from '../language-selector';
 
 declare global {
   interface Window {
@@ -49,10 +50,11 @@ const FeedbackComment: React.FC<{
 
 export default function FeedbackSection(props: {
   handleUpdateDialog: (params: DialogPropsType) => void;
+  lang?: LanguageEnum;
 }) {
   const { asPath } = useRouter();
-  const { t } = useTranslation('docs');
-  const { handleUpdateDialog } = props;
+  const { handleUpdateDialog, lang = LanguageEnum.ENGLISH } = props;
+  const { t } = useTranslation('docs', { lng: lang });
 
   const commentString = useRef<string>('');
   const [feedbackStatus, setFeedbackStatus] = useState(false);

@@ -159,6 +159,7 @@ const Aside = (props: AsidePropsType) => {
         value={lang}
         className="mb-[32px]"
         disabled={disableLanguageSelector}
+        showDeepLogo={lang !== LanguageEnum.ENGLISH}
       />
       <>
         {category === 'doc' && (
@@ -166,6 +167,7 @@ const Aside = (props: AsidePropsType) => {
             list={items}
             activeAnchor={activeAnchor}
             className={clsx(anchorTree)}
+            lang={lang}
           />
         )}
         {isShowBtnGroup && (
@@ -178,7 +180,7 @@ const Aside = (props: AsidePropsType) => {
           </ul>
         )}
 
-        <FeedbackSection handleUpdateDialog={handleUpdateDialog} />
+        <FeedbackSection handleUpdateDialog={handleUpdateDialog} lang={lang} />
       </>
       <CustomizedContentDialogs
         {...dialogConfig}

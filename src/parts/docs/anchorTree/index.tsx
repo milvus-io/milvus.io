@@ -5,14 +5,21 @@ import React, { useState } from 'react';
 import { TOCIcon } from '@/components/icons';
 import { useTranslation } from 'react-i18next';
 import { DocAnchorItemType } from '@/types/docs';
+import { LanguageEnum } from '@/components/language-selector';
 
 export default function AnchorTree(props: {
   list: DocAnchorItemType[];
   activeAnchor: string;
   className?: string;
+  lang?: LanguageEnum;
 }) {
-  const { t } = useTranslation('docs');
-  const { list, activeAnchor, className: customClassName = '' } = props;
+  const {
+    list,
+    activeAnchor,
+    className: customClassName = '',
+    lang = LanguageEnum.ENGLISH,
+  } = props;
+  const { t } = useTranslation('docs', { lng: lang });
 
   // label maybe duplicate, we use href as unique key to show active style
 

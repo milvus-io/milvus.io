@@ -41,8 +41,6 @@ export default function DocLayout(props: DocLayoutPropsType) {
     classes: customerClasses = {},
     isHome = false,
     showFooter = true,
-    version,
-    latestVersion,
   } = props;
 
   const {
@@ -54,8 +52,6 @@ export default function DocLayout(props: DocLayoutPropsType) {
     lang,
   } = seo;
   const { root = '', main = '', content = '' } = customerClasses;
-
-  const isLatestVersion = version === latestVersion;
 
   return (
     <>
@@ -95,6 +91,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
 
             {showFooter && (
               <Footer
+                lang={lang}
                 classes={{
                   root: classes.docFooter,
                   content: classes.docFooterContent,

@@ -22,5 +22,8 @@
   },
   "navigation": {
     "title": "Casa"
+  },
+  "translate": {
+    "by": "Tradotto da"
   }
 }

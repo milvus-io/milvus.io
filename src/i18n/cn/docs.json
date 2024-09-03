@@ -22,5 +22,8 @@
   },
   "navigation": {
     "title": "首页"
+  },
+  "translate": {
+    "by": "翻译自"
   }
 }

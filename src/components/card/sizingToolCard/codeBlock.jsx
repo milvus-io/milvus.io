@@ -10,12 +10,12 @@ const HighlightBlock = ({ type }) => {
   const content =
     type === 'helm'
       ? `
-helm repo add milvus https://milvus-io.github.io/milvus-helm/
+helm repo add milvus https://zilliztech.github.io/milvus-helm/
 helm repo update
 helm install my-release milvus/milvus -f ${HELM_CONFIG_FILE_NAME}.yml
     `
       : `
-helm repo add milvus-operator https://milvus-io.github.io/milvus-operator/
+helm repo add milvus-operator https://zilliztech.github.io/milvus-operator/
 helm repo update milvus-operator
 helm -n milvus-operator upgrade --install milvus-operator milvus-operator/milvus-operator
 kubectl create -f ${OPERATOR_CONFIG_FILE_NAME}.yml

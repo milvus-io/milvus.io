@@ -14,6 +14,7 @@ import {
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
 import SocialMedias from '../socialMedias';
+import { LanguageEnum } from '../language-selector';
 
 const footerJson = [
   {
@@ -76,12 +77,13 @@ type Props = {
     content?: string;
     nav?: string;
   };
+  lang?: LanguageEnum;
 };
 
 const Footer = (props: Props) => {
-  const { classes: customClasses = {} } = props;
+  const { classes: customClasses = {}, lang } = props;
   const { root = '', content = '', nav } = customClasses;
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('common', { lng: lang });
 
   return (
     <footer className="min-h-[390px] box-border bg-[#fff]">

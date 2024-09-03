@@ -56,7 +56,7 @@ export default function LeftNavSection(props: LeftNavSectionProps) {
         [customClassName]: customClassName,
       })}
     >
-      {!disableSearch && <AlgoliaSearch version={version} />}
+      {!disableSearch && <AlgoliaSearch version={version} locale={lang} />}
       <VersionSelector
         versions={versions}
         curVersion={version}

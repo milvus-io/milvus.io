@@ -22,5 +22,8 @@
   },
   "navigation": {
     "title": "홈페이지"
+  },
+  "translate": {
+    "by": "번역"
   }
 }

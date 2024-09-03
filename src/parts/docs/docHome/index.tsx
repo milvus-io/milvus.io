@@ -18,7 +18,11 @@ export default function HomeContent(props: HomeContentProps) {
   return (
     <section className={classes.container}>
       <div className={classes.langSelector}>
-        <LanguageSelector value={lang} disabled={disableLanguageSelector} />
+        <LanguageSelector
+          value={lang}
+          disabled={disableLanguageSelector}
+          showDeepLogo={lang !== LanguageEnum.ENGLISH}
+        />
       </div>
 
       <div

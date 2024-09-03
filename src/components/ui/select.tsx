@@ -27,7 +27,8 @@ const SelectTrigger = React.forwardRef<
     {children as React.ReactNode}
     <SelectPrimitive.Icon asChild>
       <ChevronDown
-        className={cn('h-5 w-5 opacity-50 transition-all', {
+        strokeWidth={1.3}
+        className={cn('h-5 w-5 transition-all', {
           'transform rotate-180': open,
         })}
       />

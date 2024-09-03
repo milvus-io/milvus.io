@@ -10,8 +10,6 @@ import classes from '@/styles/docs.module.less';
 import { BlogFrontMatterType } from '@/types/blogs';
 import { AllMdVersionIdType, FinalMenuStructureType } from '@/types/docs';
 
-const TITLE = 'Milvus vector database documentation';
-
 export interface DocHomePageProps {
   homeData: string;
   isHome: boolean;
@@ -42,10 +40,12 @@ export function DocHomepage(props: DocHomePageProps) {
         root: clsx(classes.docPageContainer, classes.docHomePage),
       }}
       seo={{
-        title: TITLE,
+        title: t('metaTitle'),
         desc: t('homepageDesc', { version }),
         url: seoUrl,
         lang,
+        docSearchLanguage: lang,
+        docSearchVersion: version,
       }}
       left={
         <LeftNavSection

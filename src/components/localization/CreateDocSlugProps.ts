@@ -85,7 +85,7 @@ export const createDocSlugProps = (lang: LanguageEnum) => {
         isHome: false,
         blog: null,
         version,
-        locale: lang,
+        lang,
         versions,
         latestVersion,
         menus: menu,

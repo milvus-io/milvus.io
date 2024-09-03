@@ -46,7 +46,7 @@ export const createDocDetailProps = (lang: LanguageEnum) => {
   };
 
   const getPageStaticProps: GetStaticProps = async context => {
-    const { params, locale = lang } = context;
+    const { params } = context;
     const VERSION_REG = /^v\d/;
 
     const id = params.id as string;
@@ -90,7 +90,7 @@ export const createDocDetailProps = (lang: LanguageEnum) => {
           isHome: true,
           blog: latestBlogData,
           version,
-          locale,
+          lang,
           versions,
           latestVersion,
           menus: menu,
@@ -136,7 +136,7 @@ export const createDocDetailProps = (lang: LanguageEnum) => {
         isHome: false,
         version: latestVersion,
         latestVersion,
-        locale,
+        lang,
         versions,
         menus: menu,
         id,

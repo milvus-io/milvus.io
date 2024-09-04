@@ -1,0 +1,30 @@
+{
+  "title": "Documentação Milvus",
+  "metaTitle": "Documentação da base de dados vetorial Milvus",
+  "homepageDesc": "Documentação da Milvus {{version}}",
+  "feedback": {
+    "title": "Feedback",
+    "prompt": "Esta página foi útil?",
+    "comment": {
+      "title": "Envie-nos o seu feedback",
+      "desc": "Obrigado por nos ajudar a melhorar a documentação da Milvus.",
+      "inputLabel": "Comentário adicional (opcional)",
+      "cancel": "Cancelar",
+      "send": "Enviar"
+    },
+    "thanks": "Obrigado pelo seu valioso feedback!"
+  },
+  "docAction": {
+    "edit": "Editar esta página",
+    "issue": "Criar uma questão"
+  },
+  "anchors": {
+    "title": "Tabela de conteúdos"
+  },
+  "navigation": {
+    "title": "Home"
+  },
+  "translate": {
+    "by": "Traduzido por"
+  }
+}

@@ -10,6 +10,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ExternalDocLinkIcon } from '@/components/icons';
 import { findActiveMenuItem } from '@/utils';
 import { useRouter } from 'next/router';
+import { LanguageEnum } from '@/components/language-selector';
+import { getLinkPrefix } from './utils';
 
 const SCROLL_TOP = '@@scroll|menu';
 
@@ -23,6 +25,7 @@ interface ExpansionTreeViewPropsType {
   latestVersion: string;
   type: 'doc' | 'api';
   version: string;
+  lang?: LanguageEnum;
   groupId?: string;
   classes?: {
     tree?: string;
@@ -47,9 +50,7 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     version,
     groupId = '',
     classes,
-    showHomeButton = false,
-    collapseIcon,
-    expandIcon,
+    lang,
     category,
   } = props;
 
@@ -60,7 +61,7 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     item: itemClassName,
     link: linkClassName,
   } = classes;
-  const linkPrefix = type === 'doc' ? '/docs' : `/api-reference/${category}`;
+  const linkPrefix = getLinkPrefix({ type, lang, category });
   const treeView = useRef(null);
   const [expandedIds, setExpandedIds] = useState<string[]>(
     findActiveMenuItem({

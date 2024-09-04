@@ -1,3 +1,4 @@
+import { LanguageEnum } from '@/components/language-selector';
 import { BlogFrontMatterType } from './blogs';
 
 export interface DocFrontMatterType {
@@ -15,6 +16,7 @@ export interface DocFileDataInfoType {
   frontMatter: DocFrontMatterType;
   content: string;
   editPath: string;
+  propsInfo: object;
 }
 
 export interface DocVersionInfoType {
@@ -134,7 +136,7 @@ export interface DocDetailPageProps {
   isHome: boolean;
   blog: BlogFrontMatterType | null;
   version: string;
-  locale: 'en' | 'cn';
+  lang: LanguageEnum;
   versions: string[];
   latestVersion: string;
   menus: FinalMenuStructureType[];

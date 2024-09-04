@@ -6,8 +6,6 @@ const fs = require('fs');
 const axios = require('axios');
 
 const nextConfig = {
-  // reactStrictMode: true,
-  // swcMinify: true,
   output: 'export',
   images: {
     loader: 'akamai',

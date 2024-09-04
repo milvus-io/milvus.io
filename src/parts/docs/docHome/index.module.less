@@ -1,10 +1,27 @@
 @import url('../../../styles/global.module.less');
 
+.container {
+  position: relative;
+  margin: 0 auto;
+  padding-right: 142px;
+
+  .langSelector {
+    display: inline-block;
+    position: absolute;
+    top: 46px;
+    right: 0;
+
+    @media @tablet, @phone {
+      display: none;
+    }
+  }
+}
+
 .docHomeHtmlWrapper {
   font-family: 'Inter';
   display: block;
   margin-right: 0;
-  max-width: 950px;
+  max-width: calc(@doc-content-width + @doc-aside-width);
   padding: 0 48px;
 
   @media @tablet, @phone {

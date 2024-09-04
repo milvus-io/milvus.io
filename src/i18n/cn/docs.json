@@ -1,0 +1,30 @@
+{
+  "title": "Milvus 文档",
+  "metaTitle": "Milvus 向量数据库文档",
+  "homepageDesc": "Milvus {{version}} 文档",
+  "feedback": {
+    "title": "反馈",
+    "prompt": "此页对您是否有帮助?",
+    "comment": {
+      "title": "向我们发送您的反馈",
+      "desc": "感谢您帮助我们改进 Milvus 文档。",
+      "inputLabel": "附加评论（可选）",
+      "cancel": "取消",
+      "send": "发送"
+    },
+    "thanks": "感谢您的宝贵反馈！"
+  },
+  "docAction": {
+    "edit": "编辑本页",
+    "issue": "创建问题"
+  },
+  "anchors": {
+    "title": "目录"
+  },
+  "navigation": {
+    "title": "首页"
+  },
+  "translate": {
+    "by": "翻译自"
+  }
+}

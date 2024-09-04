@@ -1,13 +1,14 @@
 import { DocSearch } from '@docsearch/react';
 import classes from './agloia.module.less';
 import { useTranslation } from 'react-i18next';
+import { LanguageEnum } from '../language-selector/LanguageSelector';
 
 export const AlgoliaSearch = (props: {
-  locale?: 'en' | 'cn';
+  locale?: LanguageEnum;
   version: string;
 }) => {
   const { locale = 'en', version } = props;
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('common', { lng: locale });
   return (
     <div className={classes.DocSearchWrapper}>
       <DocSearch
@@ -16,7 +17,7 @@ export const AlgoliaSearch = (props: {
         indexName="milvus"
         searchParameters={{
           facetFilters: [
-            `language:${locale === 'cn' ? 'zh-cn' : 'en'}`,
+            `language:${locale}`,
             `version:${version}`,
           ],
         }}

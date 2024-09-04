@@ -1,0 +1,30 @@
+{
+  "title": "Milvus 문서화",
+  "metaTitle": "Milvus 벡터 데이터베이스 문서",
+  "homepageDesc": "Milvus {{version}} 문서",
+  "feedback": {
+    "title": "피드백",
+    "prompt": "이 페이지가 도움이 되었나요?",
+    "comment": {
+      "title": "Feedback 보내주세요",
+      "desc": "Milvus 문서를 개선하는 데 도움을 주셔서 감사합니다.",
+      "inputLabel": "추가 주석 (선택 사항)",
+      "cancel": "취소",
+      "send": "보내기"
+    },
+    "thanks": "당신의 귀중한 피드백에 감사드립니다!"
+  },
+  "docAction": {
+    "edit": "이 페이지 편집",
+    "issue": "문제 만들기"
+  },
+  "anchors": {
+    "title": "목차 목록"
+  },
+  "navigation": {
+    "title": "홈페이지"
+  },
+  "translate": {
+    "by": "번역"
+  }
+}

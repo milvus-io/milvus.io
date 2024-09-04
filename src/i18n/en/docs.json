@@ -1,4 +1,6 @@
 {
+  "title": "Milvus Documentation",
+  "metaTitle": "Milvus vector database documentation",
   "homepageDesc": "Milvus {{version}} documentation",
   "feedback": {
     "title": "Feedback",
@@ -14,9 +16,15 @@
   },
   "docAction": {
     "edit": "Edit this page",
-    "issue": "Create an issue "
+    "issue": "Create an issue"
   },
   "anchors": {
     "title": "Table of contents"
+  },
+  "navigation": {
+    "title": "Home"
+  },
+  "translate": {
+    "by": "Translated by"
   }
 }

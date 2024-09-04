@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import classes from './index.module.less';
 import Head from 'next/head';
 import clsx from 'clsx';
@@ -7,6 +6,7 @@ import Header from '../../header';
 import Footer from '../../footer';
 import InkeepChatButtonContainer from '@/components/inkeep/InkeepChatButton';
 import 'highlight.js/styles/atom-one-light.css';
+import { LanguageEnum } from '@/components/language-selector';
 
 const MENU_MINIMUM_WIDTH = 22;
 const MENU_MAXIMUM_WIDTH = 283;
@@ -22,6 +22,7 @@ interface DocLayoutPropsType {
     url: string;
     docSearchLanguage?: string;
     docSearchVersion?: string;
+    lang?: LanguageEnum;
   };
   classes?: {
     root?: string;
@@ -33,7 +34,6 @@ interface DocLayoutPropsType {
 }
 
 export default function DocLayout(props: DocLayoutPropsType) {
-  const { t } = useTranslation('common');
   const {
     left,
     center,
@@ -41,8 +41,6 @@ export default function DocLayout(props: DocLayoutPropsType) {
     classes: customerClasses = {},
     isHome = false,
     showFooter = true,
-    version,
-    latestVersion,
   } = props;
 
   const {
@@ -51,10 +49,9 @@ export default function DocLayout(props: DocLayoutPropsType) {
     url = '',
     docSearchLanguage,
     docSearchVersion,
+    lang,
   } = seo;
   const { root = '', main = '', content = '' } = customerClasses;
-
-  const isLatestVersion = version === latestVersion;
 
   return (
     <>
@@ -72,7 +69,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
             <meta name="docsearch:version" content={docSearchVersion} />
           )}
           {/* {!isLatestVersion && <meta name="robots" content="noindex" />} */}
-          <link rel="alternate" href={url} hrefLang="en" />
+          <link rel="alternate" href={url} hrefLang={lang} />
         </Head>
         <Header className={classes.docHeader} />
         <div className={clsx(classes.mainContainer, main)}>
@@ -94,6 +91,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
 
             {showFooter && (
               <Footer
+                lang={lang}
                 classes={{
                   root: classes.docFooter,
                   content: classes.docFooterContent,

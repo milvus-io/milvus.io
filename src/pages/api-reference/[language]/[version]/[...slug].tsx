@@ -316,11 +316,11 @@ export const getStaticProps: GetStaticProps = async context => {
       return targetSlug === sourceSlug;
     }) || {};
 
-  const {
-    tree: doc,
-    codeList,
-    headingContent,
-  } = await markdownToHtml(apiContent || '');
+  const { tree: doc, codeList } = markdownToHtml(apiContent || '');
+
+  const headingRegex = /^#\s+(.*)$/m;
+  const match = headingRegex.exec(apiContent);
+  const firstHeading = match ? match[1] : null;
 
   const curCategoryContentDataOfAllVersion =
     generateApiMenuAndContentDataOfAllVersions({
@@ -350,7 +350,7 @@ export const getStaticProps: GetStaticProps = async context => {
       versions: versions,
       relativePath: frontMatter.relativePath,
       curCategoryContentData: curCategoryContentDataOfAllVersion,
-      headingContent: headingContent ?? 'Milvus API Reference',
+      headingContent: firstHeading || 'Milvus API Reference',
       languageCategory,
       meta: {
         title: metaTitle,

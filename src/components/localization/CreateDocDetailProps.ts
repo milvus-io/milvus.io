@@ -74,7 +74,8 @@ export const createDocDetailProps = (lang: LanguageEnum) => {
       const menu = [...docMenu, outerApiMenuItem];
       const { frontMatter: latestBlogData } = generateAllBlogContentList()[0];
 
-      const { codeList, headingContent, anchorList } = propsInfo;
+      const { codeList, anchorList } = propsInfo;
+      const headingContent = anchorList?.[0]?.label;
 
       return {
         props: {
@@ -119,7 +120,8 @@ export const createDocDetailProps = (lang: LanguageEnum) => {
       propsInfo,
     } = docDetailContentList.find(v => v.frontMatter.id === id);
 
-    const { codeList, headingContent, anchorList } = propsInfo;
+    const { codeList, anchorList } = propsInfo;
+    const headingContent = anchorList?.[0]?.label;
 
     return {
       props: {

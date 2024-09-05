@@ -69,7 +69,8 @@ export const createDocSlugProps = (lang: LanguageEnum) => {
     });
     const menu = [...docMenu, outerApiMenuItem];
 
-    const { codeList, headingContent, anchorList } = propsInfo;
+    const { codeList, anchorList } = propsInfo;
+    const headingContent = anchorList?.[0]?.label;
 
     return {
       props: {

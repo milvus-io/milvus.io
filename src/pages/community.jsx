@@ -83,7 +83,7 @@ export default function Community() {
       label: 'Milvus Technical Meeting',
       desc: 'Join our next meeting to be involved in the discussion and decision making of Milvus‘ latest features and development timeline.',
       icon: '/images/community/icons/meeting.svg',
-      href: 'https://wiki.lfaidata.foundation/pages/viewpage.action?pageId=43287098',
+      href: 'https://milvus.io/discord',
       btnLabel: 'Learn more',
     },
     {

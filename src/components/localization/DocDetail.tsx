@@ -20,8 +20,6 @@ import clsx from 'clsx';
 import { DocDetailPageProps } from '@/types/docs';
 import { LanguageEnum } from '@/components/language-selector';
 
-const DOC_HOME_TITLE = 'Milvus vector database documentation';
-
 export function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,
@@ -61,7 +59,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
 
   const seoInfo = useMemo(() => {
     const title = isHome
-      ? DOC_HOME_TITLE
+      ? t('metaTitle')
       : `${frontMatter?.title || headingContent}`;
 
     const pageTitle =

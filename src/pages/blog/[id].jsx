@@ -63,10 +63,6 @@ export default function Template(props) {
         <div>
           <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
             <section className={styles.blogHeader}>
-              <p className={styles.authorDate}>
-                <span>{dateTime}</span>
-                {author && <span>by {author}</span>}
-              </p>
               <h1 className={styles.title}>{title}</h1>
 
               <Tags
@@ -74,6 +70,10 @@ export default function Template(props) {
                 tagsClass={styles.tags}
                 onClick={handleTagClick}
               />
+              <p className={styles.authorDate}>
+                <span>{dateTime}</span>
+                {author && <span>by {author}</span>}
+              </p>
             </section>
 
             <section className={styles.blogContent}>
@@ -117,7 +117,22 @@ export default function Template(props) {
           </div>
 
           <section className={clsx(pageClasses.container, styles.bottomLayout)}>
-            <h2 className={styles.title}>Keep Reading</h2>
+            <p className={styles.breadcrumb}>
+              <svg
+                width="16"
+                height="17"
+                viewBox="0 0 16 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.03277 2.8535C7.59146 2.38217 8.40854 2.38217 8.96723 2.8535L13.4672 6.64986C13.8051 6.93487 14 7.35436 14 7.79636V14.3317C14 14.976 13.4777 15.4983 12.8333 15.4983H10.8333C10.189 15.4983 9.66667 14.976 9.66667 14.3317V10.9983C9.66667 10.7222 9.44281 10.4983 9.16667 10.4983H6.83333C6.55719 10.4983 6.33333 10.7222 6.33333 10.9983V14.3317C6.33333 14.976 5.811 15.4983 5.16667 15.4983H3.16667C2.52233 15.4983 2 14.976 2 14.3317V7.79636C2 7.35436 2.19494 6.93487 2.53277 6.64986L7.03277 2.8535Z"
+                  fill="#00B3FF"
+                />
+              </svg>
+              <a href="/blog">Blog</a> / {title}
+            </p>
+            {/* <h2 className={styles.title}>Keep Reading</h2> */}
             <ul className={styles.blogCards}>
               {moreBlogs.map((v, index) => {
                 const { desc, cover, date, tags, title, id } = v;

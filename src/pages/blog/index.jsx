@@ -137,7 +137,9 @@ const BlogTemplate = props => {
             <div className={clsx(styles.featuredBlogContent)}>
               <div className="">
                 <p className={styles.tag}>{featuredBlog.tags.join(' ')}</p>
-                <h2 className={styles.title}>{featuredBlog.title}</h2>
+                <h2 className={styles.title}>
+                  <a href={featuredBlog.href}>{featuredBlog.title}</a>
+                </h2>
                 <p className={styles.desc}>{featuredBlog.desc}</p>
               </div>
               <CustomButton

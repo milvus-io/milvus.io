@@ -57,10 +57,11 @@
         .heading3();
         .overflowEllipsis3Row();
         color: #000;
-        a {
-          color: #000;
-        }
         margin-bottom: 12px;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
 
       .desc {
@@ -97,6 +98,8 @@
         cursor: pointer;
 
         div {
+          .paragraph3();
+          line-height: 1.5em;
           padding: 6px 16px;
 
           &:hover {

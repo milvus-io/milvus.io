@@ -1,0 +1,47 @@
+{
+  "title": "Join the Community",
+  "officeHours": {
+    "title": "Join the Milvus Discord Community",
+    "content": "Find help, discover solutions, share ideas, and follow discussions. Get notified of upcoming Zilliz events!",
+    "button": "Join the Milvus Discord Server! "
+  },
+  "community": {
+    "title": "Welcome to the Milvus Community",
+    "content": "The Milvus community is comprised of users and open source contributors that share new ideas, collaborate on projects, and promote learning. Our open-source community members contribute code, attend events, advocate for greater adoption of Milvus, and make many other valuable contributions. Read on to learn how you can get involved and become part of this amazing community.",
+    "features": {
+      "learn": {
+        "title": "Learn",
+        "content": "Expand your knowledge and skills in vector database technologies."
+      },
+      "build": {
+        "title": "Build",
+        "content": "Contribute to the development of Milvus through open source collaboration."
+      },
+      "share": {
+        "title": "Share",
+        "content": "Share best practices and lessons learned with the community at large."
+      }
+    }
+  },
+  "resource": "Resources",
+  "mail": {
+    "title": "Mailing Lists",
+    "mailList": {
+      "meeting": {
+        "title": "Milvus Technical Meeting",
+        "content": "Join our next meeting to be involved in the discussion and decision making of Milvus‘ latest features and development timeline.",
+        "cta": "Learn more"
+      },
+      "event": {
+        "title": "Event",
+        "content": "We host events, often. Click to find out the upcoming events near you.",
+        "cta": "More Events"
+      },
+      "video": {
+        "title": "Video",
+        "content": "We upload videos, often. Click to watch the video tutorials，webinar replays and other video contents.",
+        "cta": "More Videos"
+      }
+    }
+  }
+}

@@ -17,7 +17,7 @@ const generateBlogCover = (cover: string, date: Date) => {
   return `https://${defaultCover}`;
 };
 
-const generateBlogData = (showContent = true) => {
+const generateBlogData = () => {
   const blogsData = fs.readdirSync(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
     const { data, content } = matter(file);
@@ -25,7 +25,6 @@ const generateBlogData = (showContent = true) => {
 
     return {
       id: v,
-      content: showContent ? content : '',
       date: new Date(data.date).toJSON(),
       cover: generateBlogCover(cover, new Date(data.date)),
       ...rest,

@@ -1,10 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
-import * as styles from './BlogCard.module.less';
+import styles from './BlogCard.module.less';
 import Tags from '../tags';
 import clsx from 'clsx';
 
-const BlogCard = ({ title, desc, tags, cover, locale, path, className }) => {
+const BlogCard = (props: {
+  title: string;
+  desc: string;
+  tags: string[];
+  cover: string;
+  path: string;
+  className?: string;
+}) => {
+  const { title, desc, tags, cover, path, className } = props;
   const to = `/blog/${path}`;
 
   return (

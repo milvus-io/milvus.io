@@ -22,7 +22,7 @@ const BlogCard = (props: {
         [className]: className,
       })}
     >
-      <div className="w-full aspect-[1.59817/1] overflow-hidden rounded-[6px] mb-[28px]">
+      <div className="w-full aspect-[1.59817/1] overflow-hidden rounded-[12px] mb-[28px]">
         <img className={styles.cover} src={cover} alt={title} />
       </div>
       <div className={styles.descWrapper}>

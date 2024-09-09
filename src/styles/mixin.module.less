@@ -310,8 +310,8 @@
   line-height: 22px;
 
   @media @tablet, @phone {
-    font-size: 12px;
-    line-height: 20px;
+    font-size: 13px;
+    line-height: 21px;
   }
 }
 
@@ -326,9 +326,14 @@
 }
 
 .paragraph5 {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 21px;
+
+  @media @tablet, @phone {
+    font-size: 12px;
+    line-height: 20px;
+  }
 }
 
 .paragraph5-bold {
@@ -338,6 +343,22 @@
 
 .paragraph5-regular {
   .paragraph5();
+  font-weight: 400;
+}
+
+.paragraph6 {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.paragraph6-bold {
+  .paragraph6();
+  font-weight: 600;
+}
+
+.paragraph6-regular {
+  .paragraph6();
   font-weight: 400;
 }
 

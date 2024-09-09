@@ -18,24 +18,15 @@
 
   .descWrapper {
     .title {
+      .paragraph2();
+      .overflowEllipsis3Row();
       margin-top: 0;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 28px;
       color: #000;
-      margin-bottom: 14px;
-    }
+      height: 78px;
 
-    .desc {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 16px;
-      color: #000;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      @media @tablet, @phone {
+        height: 72px;
+      }
     }
 
     .bottomWrapper {
@@ -44,19 +35,14 @@
       align-items: center;
 
       .tags {
+        .paragraph4();
         display: flex;
-        margin: 18px 0 8px 0;
+        gap: 10px;
         list-style: none;
         padding: 0;
         text-transform: uppercase;
-        li {
-          color: @color-text-primary;
-          font-weight: bold;
-          font-size: 14px;
-        }
-        li + li {
-          margin-left: 10px;
-        }
+        color: @color-blue1;
+        margin-bottom: 4px;
       }
     }
   }

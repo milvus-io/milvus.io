@@ -28,6 +28,7 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
     disabled = false,
     classes: customClasses = {},
     computedClasses,
+    className = '',
     ...rest
   } = props;
 
@@ -43,7 +44,7 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
           target="_blank"
           rel="noopener noreferrer"
           href={href}
-          className={clsx(classes.linkButton, root, computedClasses)}
+          className={clsx(classes.linkButton, className, root, computedClasses)}
         >
           {children}
           {endIcon && (
@@ -55,7 +56,7 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
           {...rest}
           href={href}
           target={target}
-          className={clsx(classes.linkButton, root, computedClasses)}
+          className={clsx(classes.linkButton, className, root, computedClasses)}
         >
           {children}
           {endIcon && (
@@ -78,6 +79,7 @@ const CustomButton = (props: CustomButtonProps) => {
     disabled = false,
     classes: customClasses = {},
     size = 'medium',
+    className = '',
     ...rest
   } = props;
 
@@ -102,7 +104,7 @@ const CustomButton = (props: CustomButtonProps) => {
       ) : (
         <button
           {...rest}
-          className={clsx(classes.linkButton, root, computedClasses)}
+          className={clsx(classes.linkButton, className, root, computedClasses)}
         >
           {children}
           {endIcon && (

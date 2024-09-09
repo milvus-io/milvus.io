@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/pagination';
 import { BlogFrontMatterType } from '@/types/blogs';
 import SubscribeNewsletter from '@/components/subscribe';
+import Link from 'next/link';
 
 const PAGE_SIZE = 9;
 const TITLE = 'Learn Milvus: Insights and Innovations in VectorDB Technology';
@@ -226,7 +227,10 @@ const BlogTemplate = (props: {
             <div className={clsx(styles.featuredBlogContent)}>
               <div className="">
                 <p className={styles.tag}>{featuredBlog.tags.join(' ')}</p>
-                <h2 className={styles.title}>{featuredBlog.title}</h2>
+                <Link href={`/blog/${featuredBlog.id}`}>
+                  <h2 className={styles.title}>{featuredBlog.title}</h2>
+                </Link>
+
                 <p className={styles.desc}>{featuredBlog.desc}</p>
               </div>
               <CustomButton

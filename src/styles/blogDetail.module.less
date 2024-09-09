@@ -12,6 +12,8 @@
     flex-direction: column;
     align-items: center;
 
+   
+
     .authorDate {
       color: @color-grey-02;
       font-size: 18px;
@@ -107,6 +109,25 @@
 
 .bottomLayout {
   margin-bottom: 100px;
+  .breadcrumb {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+    color: @color-black2;
+    font-size: 16px;
+
+    a {
+      color: @color-blue1;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    svg {
+      color: @color-grey-02;
+      font-size: 18px;
+    }
+  }
 
   .title {
     font-weight: bold;

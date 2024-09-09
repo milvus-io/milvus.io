@@ -13,6 +13,7 @@ import {
 import { DownArrowIcon, GitHubIcon } from '@/components/icons';
 import { LogoSection } from './Logos';
 import milvusStats from '../../../global-stats.json';
+import { RightTopArrowIcon } from '@/components/icons';
 
 type Props = { className?: string };
 
@@ -104,10 +105,11 @@ export default function DesktopHeader(props: Props) {
                             <Link
                               href={item.link}
                               rel={item.rel}
-                              className="block text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04]"
+                              className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04]"
                               target={item.rel ? '_blank' : undefined}
                             >
                               {item.label}
+                              {item.rel && <RightTopArrowIcon />}
                             </Link>
                           </li>
                         ))}

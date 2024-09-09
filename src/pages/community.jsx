@@ -9,33 +9,12 @@ import classes from '@/styles/community.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import CustomButton from '@/components/customButton';
 
-const OFFICE_HOUR_REGISTER_LINK = 'https://discord.gg/RjNbk8RR4f';
-
-const CalendarIcon = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g clipPath="url(#clip0_5496_5849)">
-      <path
-        d="M17.5 4.99935V16.666C17.5 17.5827 16.75 18.3327 15.8333 18.3327H4.16667C3.24167 18.3327 2.5 17.5827 2.5 16.666L2.50833 4.99935C2.50833 4.08268 3.24167 3.33268 4.16667 3.33268H5V1.66602H6.66667V3.33268H13.3333V1.66602H15V3.33268H15.8333C16.75 3.33268 17.5 4.08268 17.5 4.99935ZM4.16667 6.66602H15.8333V4.99935H4.16667V6.66602ZM15.8333 16.666V8.33268H4.16667V16.666H15.8333Z"
-        fill="#4FC4F9"
-      />
-    </g>
-    <defs>
-      <clipPath id="clip0_5496_5849">
-        <rect width="20" height="20" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
+const OFFICE_HOUR_REGISTER_LINK = 'https://discord.com/invite/8uyFbECzPX';
 
 export default function Community() {
-  const { t } = useTranslation();
+  const { t } = useTranslation('community');
 
   const socialMediaList = [
     {
@@ -62,43 +41,43 @@ export default function Community() {
 
   const featureList = [
     {
-      label: 'Learn',
-      desc: 'Expand your knowledge and skills in vector database technologies.',
+      label: t('community.features.learn.title'),
+      desc: t('community.features.learn.content'),
       icon: '/images/community/icons/learn.svg',
     },
     {
-      label: 'Build',
-      desc: 'Contribute to the development of Milvus through open source collaboration.',
+      label: t('community.features.build.title'),
+      desc: t('community.features.build.content'),
       icon: '/images/community/icons/build.svg',
     },
     {
-      label: 'Share',
-      desc: 'Share best practices and lessons learned with the community at large.',
+      label: t('community.features.share.title'),
+      desc: t('community.features.share.content'),
       icon: '/images/community/icons/share.svg',
     },
   ];
 
   const resourceList = [
     {
-      label: 'Milvus Technical Meeting',
-      desc: 'Join our next meeting to be involved in the discussion and decision making of Milvus‘ latest features and development timeline.',
+      label: t('mail.mailList.meeting.title'),
+      desc: t('mail.mailList.meeting.content'),
       icon: '/images/community/icons/meeting.svg',
       href: 'https://milvus.io/discord',
-      btnLabel: 'Learn more',
+      btnLabel: t('mail.mailList.meeting.cta'),
     },
     {
-      label: 'Event',
-      desc: 'We host events, often. Click to find out the upcoming events near you.',
+      label: t('mail.mailList.event.title'),
+      desc: t('mail.mailList.event.content'),
       icon: '/images/community/icons/event.svg',
       href: 'https://www.meetup.com/milvus-meetup/',
-      btnLabel: 'More Events',
+      btnLabel: t('mail.mailList.event.cta'),
     },
     {
-      label: 'Video',
-      desc: 'We upload videos, often. Click to watch the video tutorials，webinar replays and other video contents.',
+      label: t('mail.mailList.video.title'),
+      desc: t('mail.mailList.video.content'),
       icon: '/images/community/icons/video.svg',
       href: 'https://www.youtube.com/c/MilvusVectorDatabase',
-      btnLabel: 'More Videos',
+      btnLabel: t('mail.mailList.video.cta'),
     },
   ];
 
@@ -133,7 +112,7 @@ export default function Community() {
         </Head>
 
         <section className={clsx(pageClasses.container, classes.headSection)}>
-          <h1 className="">Join the Community</h1>
+          <h1 className="">{t('title')}</h1>
 
           <ul className={classes.mediaWrapper}>
             {socialMediaList.map(v => (
@@ -145,27 +124,22 @@ export default function Community() {
             ))}
           </ul>
 
-          <div className={classes.officeHourWrapper}>
-            <div className={classes.leftPart}>
-              <div className={classes.bgWrapper}></div>
+          <div className={classes.officeHoursContainer}>
+            <div className={classes.imgWrapper}>
+              <img src="/images/community/event-discord.png" alt="Discord" />
             </div>
-            <div className={classes.rightPart}>
-              <h2>Milvus Community Lunch and Learn</h2>
-              <p className={classes.desc}>
-                Share your latest Milvus project with the community, hosted by
-                the Zilliz team.
-              </p>
-              <p className={classes.date}>
-                <CalendarIcon />
-                Bi-weekly Tuesday from 12-12:30 PM PST
-              </p>
-              <Link
-                className={classes.registerBtn}
+            <div className={classes.contentWrapper}>
+              <h2 className={classes.title}>{t('officeHours.title')}</h2>
+              <p className={classes.desc}>{t('officeHours.content')}</p>
+
+              <CustomButton
+                variant="contained"
+                className={classes.linkBtn}
                 href={OFFICE_HOUR_REGISTER_LINK}
+                target="_blank"
               >
-                Join now
-                <ArrowRightAltIcon />
-              </Link>
+                {t('officeHours.button')}
+              </CustomButton>
             </div>
           </div>
         </section>
@@ -173,15 +147,8 @@ export default function Community() {
         <section
           className={clsx(pageClasses.container, classes.contentSection)}
         >
-          <h2>Welcome to the Milvus Community</h2>
-          <h3 className={classes.sectionDesc}>
-            The Milvus community is comprised of users and open source
-            contributors that share new ideas, collaborate on projects, and
-            promote learning. Our open-source community members contribute code,
-            attend events, advocate for greater adoption of Milvus, and make
-            many other valuable contributions. Read on to learn how you can get
-            involved and become part of this amazing community.
-          </h3>
+          <h2>{t('community.title')}</h2>
+          <h3 className={classes.sectionDesc}>{t('community.content')}</h3>
 
           <ul className={classes.featureWrapper}>
             {featureList.map(v => (
@@ -196,7 +163,7 @@ export default function Community() {
 
         <section className={classes.resourceSection}>
           <div className={clsx(pageClasses.container, classes.innerSection)}>
-            <h2>Resources</h2>
+            <h2>{t('resource')}</h2>
             <ul className={classes.resourceList}>
               {resourceList.map(v => (
                 <li key={v.label}>
@@ -219,7 +186,7 @@ export default function Community() {
         <section
           className={clsx(pageClasses.container, classes.mailListSection)}
         >
-          <h2>Mailing Lists</h2>
+          <h2>{t('mail.title')}</h2>
           <div className={classes.mailListWrapper}>
             {mailList.map(v => (
               <Link className={classes.linkBtn} href={v.href}>

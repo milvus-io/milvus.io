@@ -15,6 +15,7 @@ import { CloseIcon, MenuIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
 import { Button } from '@/components/ui/button';
 import { GET_START_LINK } from '@/consts/links';
+import { RightTopArrowIcon } from '../icons';
 
 export default function MobileHeader(props) {
   const { className } = props;
@@ -114,8 +115,10 @@ export default function MobileHeader(props) {
                       href="https://www.youtube.com/c/MilvusVectorDatabase"
                       target="_blank"
                       rel="noopener noreferrer"
+                      className={classes.externalLinkButton}
                     >
                       Video
+                      <RightTopArrowIcon />
                     </a>
                   </List>
                 </Collapse>
@@ -149,17 +152,26 @@ export default function MobileHeader(props) {
                       href="https://github.com/zilliztech/attu"
                       target="_blank"
                       rel="noopener noreferrer"
+                      className={classes.externalLinkButton}
                     >
                       Attu
+                      <RightTopArrowIcon />
                     </a>
                     <a
                       href="https://github.com/zilliztech/milvus_cli"
                       target="_blank"
                       rel="noopener noreferrer"
+                      className={classes.externalLinkButton}
                     >
                       Milvus_CLI
+                      <RightTopArrowIcon />
                     </a>
-                    <a href="/tools/sizing">Sizing Tool</a>
+                    <a
+                      href="/tools/sizing"
+                      className={classes.externalLinkButton}
+                    >
+                      Sizing Tool <RightTopArrowIcon />
+                    </a>
                   </List>
                 </Collapse>
 

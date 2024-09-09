@@ -12,6 +12,8 @@ import pageClasses from '../../styles/responsive.module.less';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import CustomButton from '../../components/customButton';
+import { RightWholeArrow } from '../../components/icons';
 
 const SCROLL_SIZE = 6;
 const TITLE = 'Milvus Blog';
@@ -133,27 +135,26 @@ const BlogTemplate = props => {
               <img src={featuredBlog.cover} alt={featuredBlog.title} />
             </div>
             <div className={clsx(styles.featuredBlogContent)}>
-              <p className={styles.tag}>{featuredBlog.tags.join(' ')}</p>
-              <Link href={featuredBlog.href} className={styles.title}>
-                {featuredBlog.title}
-              </Link>
-              <p className={styles.desc}>{featuredBlog.desc}</p>
+              <div className="">
+                <p className={styles.tag}>{featuredBlog.tags.join(' ')}</p>
+                <h2 className={styles.title}>
+                  <a href={featuredBlog.href}>{featuredBlog.title}</a>
+                </h2>
+                <p className={styles.desc}>{featuredBlog.desc}</p>
+              </div>
+              <CustomButton
+                endIcon={<RightWholeArrow />}
+                variant="text"
+                className={styles.readMoreButton}
+                href={featuredBlog.href}
+              >
+                Read Now
+              </CustomButton>
             </div>
           </section>
-          {/* tablet phone, screen <= 1024  */}
-          <BlogCard
-            className={styles.mobileFeatured}
-            locale={locale}
-            title={featuredBlog.title}
-            date={featuredBlog.date}
-            cover={featuredBlog.cover}
-            desc={featuredBlog.desc}
-            tags={featuredBlog.tags}
-            path={featuredBlog.id}
-          />
 
           <section className={styles.blogList}>
-            <h1 className={styles.title}>Milvus Blogs</h1>
+            <h1 className={styles.hiddenHeading1}>Milvus Blogs</h1>
             <Tags
               list={tagList}
               tagsClass={styles.tagsWrapper}

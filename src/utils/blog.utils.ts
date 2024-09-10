@@ -30,6 +30,7 @@ const generateBlogData = () => {
       ...rest,
       tags: tag ? tag.split(',') : [],
       href: `/blog/${v}`,
+      content,
     };
   });
 

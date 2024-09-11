@@ -12,8 +12,9 @@ import { ABSOLUTE_BASE_URL } from '@/consts';
 import { DEMO_MULTIMODAL_SEARCH_URL } from '@/consts/externalLinks';
 import { useTranslation } from 'react-i18next';
 
-const TITLE = 'Milvus Demos';
-const DESC = 'Milvus vector search demos';
+const TITLE = 'Similarity Search Demos Powered by Milvus';
+const DESC =
+  'Milvus vector database makes it easy to add similarity search to your AI applications. Try demos powered by Milvus and learn how to build them yourself.';
 
 export default function MilvusDemos() {
   const { t } = useTranslation('demo');

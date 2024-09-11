@@ -3,7 +3,7 @@ import styles from './DemoCard.module.less';
 import VideoPlayer from '../videoPlayer';
 import InfoSubmitter from '../infoSubmitter';
 import { useTranslation } from 'react-i18next';
-import CustomButton from '@/components/CustomButton';
+import CustomButton from '@/components/customButton';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 

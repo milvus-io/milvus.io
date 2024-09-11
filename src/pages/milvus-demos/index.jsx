@@ -12,8 +12,9 @@ import { ABSOLUTE_BASE_URL } from '@/consts';
 import { DEMO_MULTIMODAL_SEARCH_URL } from '@/consts/externalLinks';
 import { useTranslation } from 'react-i18next';
 
-const TITLE = 'Milvus Demos';
-const DESC = 'Milvus vector search demos';
+const TITLE = 'Similarity Search Demos Powered by Milvus';
+const DESC =
+  'Milvus vector database makes it easy to add similarity search to your AI applications. Try demos powered by Milvus and learn how to build them yourself.';
 
 export default function MilvusDemos() {
   const { t } = useTranslation('demo');
@@ -23,7 +24,7 @@ export default function MilvusDemos() {
       name: t('demos.multimodal.title'),
       desc: t('demos.multimodal.desc'),
       href: DEMO_MULTIMODAL_SEARCH_URL,
-      cover: '/images/demos/multimodal-image-search.jpeg',
+      cover: '/images/demos/multimodal-image-search.png',
       lowerCaseName: 'multimodal image search',
     },
     {
@@ -36,10 +37,18 @@ export default function MilvusDemos() {
       lowerCaseName: 'image search',
     },
     {
+      name: t('demos.hybridSearch.title'),
+      desc: t('demos.hybridSearch.desc'),
+      href: 'https://demos.milvus.io/hybrid-search/ ',
+      cover: '/images/demos/hybrid-search.png',
+      // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
+      lowerCaseName: 'hybrid search',
+    },
+    {
       name: t('demos.ossChat.title'),
       desc: t('demos.ossChat.desc'),
       href: 'https://osschat.io/',
-      cover: '/images/demos/ossChat.png',
+      cover: '/images/demos/oss-chat.png',
       // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
       lowerCaseName: 'chatbots',
     },
@@ -47,7 +56,7 @@ export default function MilvusDemos() {
       name: t('demos.chemicalSearch.title'),
       desc: t('demos.chemicalSearch.desc'),
       // href: 'http://molsearch.milvus.io/',
-      cover: '/images/demos/chemical-search.svg',
+      cover: '/images/demos/chemical-structure-search.png',
       videoSrc: 'https://www.youtube.com/watch?v=4u_RZeMBTNI',
       lowerCaseName: 'chemical',
     },

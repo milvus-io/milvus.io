@@ -1,8 +1,9 @@
 import React from 'react';
-import * as styles from './DemoCard.module.less';
+import styles from './DemoCard.module.less';
 import VideoPlayer from '../videoPlayer';
 import InfoSubmitter from '../infoSubmitter';
 import { useTranslation } from 'react-i18next';
+import CustomButton from '@/components/customButton';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
@@ -68,38 +69,49 @@ const DemoCard = ({
   };
 
   return (
-    <div className={`${styles.demoCard} ${index % 2 === 1 ? styles.even : ''}`}>
+    <div className={styles.demoCard}>
+      <div className={styles.coverWrapper}>
+        <img src={cover} alt={name} />
+      </div>
       <div className={styles.contentWrapper}>
         <h3>{name}</h3>
         <p>{desc}</p>
         <div className={styles.btnGroup}>
-          {href && (
-            <button className={`${styles.tryBtn}`} onClick={handleSubmitEmail}>
-              Try Demo
-            </button>
-          )}
+          <CustomButton
+            onClick={handleSubmitEmail}
+            className={styles.tryBtn}
+            variant="outlined"
+          >
+            Try Demo
+          </CustomButton>
 
           {videoSrc && (
-            <button className={`${styles.watchBtn}`} onClick={handleWatchVideo}>
+            <CustomButton
+              className={styles.watchBtn}
+              variant="text"
+              onClick={handleWatchVideo}
+              endIcon={
+                <svg
+                  width="14"
+                  height="15"
+                  viewBox="0 0 14 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.4668 6.85159C10.7334 7.05159 10.7334 7.45159 10.4668 7.65159L3.80009 12.6516C3.47047 12.8988 3.00009 12.6636 3.00009 12.2516V2.25159C3.00009 1.83956 3.47047 1.60437 3.80009 1.85159L10.4668 6.85159Z"
+                    stroke="black"
+                    stroke-width="1.3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              }
+            >
               Watch Demo
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="m10 16.5 6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                  fill="white"
-                ></path>
-              </svg>
-            </button>
+            </CustomButton>
           )}
         </div>
-      </div>
-      <div className={styles.coverWrapper}>
-        <img src={cover} alt={name} />
       </div>
     </div>
   );

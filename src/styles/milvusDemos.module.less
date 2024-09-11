@@ -2,37 +2,24 @@
 
 .headerSection {
   padding: calc(80px + @header-height-desktop) 0 80px 0;
-  background: url('/images/demos/demo-banner.svg') center center no-repeat;
-  background-size: contain;
-  background-color: #000;
 
   .innerSection {
     color: #fff;
 
     .title {
-      font-size: 40px;
-      line-height: 50px;
-      background: linear-gradient(to bottom, #679ede, #c4c7ff);
-      -webkit-background-clip: text;
-      color: transparent;
-      margin: 0 auto 24px;
+      .heading2();
+      color: #000;
+      margin: 0 auto 12px;
       text-align: center;
-      font-weight: 700;
-      max-width: 700px;
-
-      @media @phone {
-        font-size: 24px;
-        line-height: 28px;
-      }
+      max-width: 840px;
     }
 
     .desc {
+      .paragraph2-regular();
       text-align: center;
-      font-size: 18px;
-      line-height: 26px;
-      color: #fff;
+      color: @color-black2;
       margin: 0 auto;
-      max-width: 700px;
+      max-width: 900px;
 
       @media @phone {
         font-size: 14px;
@@ -43,31 +30,14 @@
 }
 
 .demoContainer {
-  padding-top: 120px;
-  padding-bottom: 120px;
+  margin-bottom: 60px;
 
   .demoList {
     list-style: none;
-    padding: 120px 0 0 0;
+    padding: 40px 0;
 
-    li:not(:last-child) {
-      margin-bottom: 160px;
-
-      @media @tablet {
-        margin-bottom: 80px;
-      }
-
-      @media @phone {
-        margin-bottom: 48px;
-      }
-    }
-
-    @media @tablet {
-      padding: 120px 64px;
-    }
-
-    @media @phone {
-      padding: 60px 32px;
+    li + li {
+      margin-top: 80px;
     }
   }
 }

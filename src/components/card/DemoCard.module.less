@@ -3,150 +3,56 @@
 .demoCard {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+  border: 1px solid @color-black3;
+  background-color: @color-white1;
+  padding: 30px;
+  border-radius: 16px;
 
-  @media @tablet {
+  @media @tablet, @phone {
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  @media @phone {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  &.even {
-    .coverWrapper {
-      order: 1;
-
-      @media @phone {
-        order: 0;
-      }
-    }
   }
 
   .coverWrapper {
-    order: 0;
-    width: 735px;
-    background-color: #fafafa;
-    filter: drop-shadow(0px 20px 45px rgba(0, 43, 125, 0.25));
-    border-radius: 6px;
+    flex: 1;
+    border-radius: 12px;
     text-align: center;
-    margin-right: 24px;
-
-    @media @tablet {
-      margin-bottom: 48px;
-      max-width: 80%;
-      margin-right: 0;
-    }
-
-    @media @phone {
-      margin-bottom: 24px;
-      max-width: 100%;
-      height: fit-content;
-      margin-right: 0;
-    }
+    overflow: hidden;
+    aspect-ratio: 55 / 27;
 
     img {
       width: 100%;
-
-      @media @tablet {
-        max-width: 100%;
-      }
-
-      @media @phone {
-        width: 100%;
-        height: auto;
-      }
     }
   }
 
   .contentWrapper {
-    order: 1;
-
-    width: 400px;
-
-    @media @phone {
-      max-width: 100%;
-    }
-
-    @media @tablet {
-      text-align: center;
-    }
-
-    @media @phone {
-      text-align: center;
-    }
+    flex: 1;
 
     h3 {
-      font-size: 32px;
-      line-height: 42px;
-      font-weight: 700;
-      margin-bottom: 24px;
-
-      @media @phone {
-        font-size: 20px;
-        line-height: 24px;
-      }
+      .heading3();
+      margin-bottom: 12px;
     }
 
     p {
-      font-size: 16px;
-      line-height: 24px;
-
-      @media @phone {
-        font-size: 14px;
-        line-height: 24px;
-      }
+      .paragraph2-regular();
+      color: @color-black2;
+      margin-bottom: 20px;
     }
 
     .btnGroup {
-      margin-top: 40px;
       display: flex;
       align-items: center;
 
-      @media @tablet {
-        justify-content: center;
-      }
-
-      @media @phone {
-        margin-top: 24px;
-        justify-content: center;
-      }
-
       .tryBtn {
-        text-transform: capitalize;
-        margin-right: 10px;
-        color: #fff;
-        .customButton;
-        .containedBtn;
+        background-color: transparent;
+
+        &:hover {
+          opacity: 0.7;
+        }
       }
 
       .watchBtn {
-        text-transform: capitalize;
-        display: flex;
-        align-items: center;
-        border-radius: 19px;
-        .customButton;
-
-        &:hover {
-          color: #00a1ea;
-          svg {
-            path {
-              fill: #00a1ea;
-            }
-          }
-        }
-
-        svg {
-          margin-left: 10px;
-
-          path {
-            fill: #000;
-          }
-        }
       }
     }
   }

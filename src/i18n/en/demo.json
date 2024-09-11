@@ -10,6 +10,10 @@
       "title": "Image Search",
       "desc": "Images made searchable. Instantaneously return the most similar images from a massive database."
     },
+    "hybridSearch": {
+      "title": "Hybrid Search",
+      "desc": "Experience advanced text search with the BGE-M3 model, delivering precise Dense, Sparse, and Hybrid results for enhanced query relevance."
+    },
     "ossChat": {
       "title": "OSSChat",
       "desc": "Enhanced ChatGPT with documentation, issues, blog posts, community Q&A as knowledge bases. Built for every community and developer."

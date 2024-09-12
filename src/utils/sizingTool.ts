@@ -374,8 +374,8 @@ export const etcdCalculator = (rowFileSize?: number) => {
     isError = true;
   } else {
     if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-      cpu = 2;
-      memory = 4;
+      cpu = 1;
+      memory = 2;
       podNumber = 3;
       pvcPerPodSize = 30;
       pvcPerPodUnit = 'G';
@@ -383,14 +383,14 @@ export const etcdCalculator = (rowFileSize?: number) => {
       rowFileSize > unitAny2BYTE(50, 'GB') &&
       rowFileSize <= unitAny2BYTE(500, 'GB')
     ) {
-      cpu = 4;
-      memory = 8;
+      cpu = 2;
+      memory = 4;
       podNumber = 3;
       pvcPerPodSize = 30;
       pvcPerPodUnit = 'G';
     } else {
-      cpu = 8;
-      memory = 16;
+      cpu = 4;
+      memory = 8;
       podNumber = 3;
       pvcPerPodSize = 30;
       pvcPerPodUnit = 'G';
@@ -424,8 +424,8 @@ export const minioCalculator = (rowFileSize?: number, indexSize?: number) => {
     const intSize = Math.ceil(size / 10) * 10;
 
     if (rowFileSize <= unitAny2BYTE(50, 'GB') || !rowFileSize) {
-      cpu = 2;
-      memory = 8;
+      cpu = 1;
+      memory = 2;
       podNumber = 4;
       pvcPerPodSize = intSize;
       pvcPerPodUnit = unit;
@@ -433,14 +433,14 @@ export const minioCalculator = (rowFileSize?: number, indexSize?: number) => {
       rowFileSize > unitAny2BYTE(50, 'GB') &&
       rowFileSize <= unitAny2BYTE(500, 'GB')
     ) {
-      cpu = 4;
-      memory = 16;
+      cpu = 2;
+      memory = 8;
       podNumber = 4;
       pvcPerPodSize = intSize;
       pvcPerPodUnit = unit;
     } else {
-      cpu = 8;
-      memory = 32;
+      cpu = 4;
+      memory = 16;
       podNumber = 4;
       pvcPerPodSize = intSize;
       pvcPerPodUnit = unit;
@@ -630,6 +630,147 @@ export const pulsarCalculator = (rowFileSize?: number) => {
     bookie = {
       cpu: {
         key: 'Cpu',
+        size: 1,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 8,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 2048,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 2048,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 4096,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      journal: {
+        key: 'Journal',
+        size: intJournalData.size,
+        unit: intJournalData.unit,
+      },
+      ledgers: {
+        key: 'Ledgers',
+        size: intLedgersData.size,
+        unit: intLedgersData.unit,
+        isSSD: true,
+      },
+    };
+    broker = {
+      cpu: {
+        key: 'Cpu',
+        size: 2,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 9,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 2048,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 2048,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 4096,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 2,
+      },
+    };
+    proxy = {
+      cpu: {
+        key: 'Cpu',
+        size: 1,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 3,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 1024,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 1024,
+        unit: 'M',
+      },
+      xx: {
+        key: '-Xx',
+        size: 1024,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 2,
+      },
+    };
+    zookeeper = {
+      cpu: {
+        key: 'Cpu',
+        size: 1,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 1,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 512,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 512,
+        unit: 'M',
+      },
+
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc per Pod',
+        size: 20,
+        unit: 'G',
+        isSSD: true,
+      },
+    };
+  } else if (
+    rowFileSize > unitAny2BYTE(50, 'GB') &&
+    rowFileSize <= unitAny2BYTE(500, 'GB')
+  ) {
+    bookie = {
+      cpu: {
+        key: 'Cpu',
         size: 2,
         unit: 'core',
       },
@@ -764,10 +905,7 @@ export const pulsarCalculator = (rowFileSize?: number) => {
         isSSD: true,
       },
     };
-  } else if (
-    rowFileSize > unitAny2BYTE(50, 'GB') &&
-    rowFileSize <= unitAny2BYTE(500, 'GB')
-  ) {
+  } else {
     bookie = {
       cpu: {
         key: 'Cpu',
@@ -905,144 +1043,6 @@ export const pulsarCalculator = (rowFileSize?: number) => {
         isSSD: true,
       },
     };
-  } else {
-    bookie = {
-      cpu: {
-        key: 'Cpu',
-        size: 8,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 64,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 16384,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 16384,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 32768,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      journal: {
-        key: 'Journal',
-        size: intJournalData.size,
-        unit: intJournalData.unit,
-      },
-      ledgers: {
-        key: 'Ledgers',
-        size: intLedgersData.size,
-        unit: intLedgersData.unit,
-        isSSD: true,
-      },
-    };
-    broker = {
-      cpu: {
-        key: 'Cpu',
-        size: 8,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 72,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 16384,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 16384,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 32768,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 2,
-      },
-    };
-    proxy = {
-      cpu: {
-        key: 'Cpu',
-        size: 8,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 18,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 8192,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 8192,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 8192,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 2,
-      },
-    };
-    zookeeper = {
-      cpu: {
-        key: 'Cpu',
-        size: 4,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 8,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 4096,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 4096,
-        unit: 'M',
-      },
-
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc per Pod',
-        size: 20,
-        unit: 'G',
-        isSSD: true,
-      },
-    };
   }
 
   return {
@@ -1139,6 +1139,74 @@ export const kafkaCalculator = (rowFileSize?: number) => {
     broker = {
       cpu: {
         key: 'Cpu',
+        size: 1,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 7,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 2048,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 2048,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc Per Pod',
+        size: intSize,
+        unit: unit,
+        isSSD: false,
+      },
+    };
+    zookeeper = {
+      cpu: {
+        key: 'Cpu',
+        size: 1,
+        unit: 'core',
+      },
+      memory: {
+        key: 'Memory',
+        size: 1,
+        unit: 'G',
+      },
+      xms: {
+        key: '-Xms',
+        size: 512,
+        unit: 'M',
+      },
+      xmx: {
+        key: '-Xmx',
+        size: 512,
+        unit: 'M',
+      },
+      podNum: {
+        key: 'Pod Number',
+        value: 3,
+      },
+      pvc: {
+        key: 'Pvc Per Pod',
+        size: 20,
+        unit: 'G',
+        isSSD: true,
+      },
+    };
+  } else if (
+    rowFileSize > unitAny2BYTE(50, 'GB') &&
+    rowFileSize <= unitAny2BYTE(500, 'GB')
+  ) {
+    broker = {
+      cpu: {
+        key: 'Cpu',
         size: 2,
         unit: 'core',
       },
@@ -1200,10 +1268,7 @@ export const kafkaCalculator = (rowFileSize?: number) => {
         isSSD: true,
       },
     };
-  } else if (
-    rowFileSize > unitAny2BYTE(50, 'GB') &&
-    rowFileSize <= unitAny2BYTE(500, 'GB')
-  ) {
+  } else {
     broker = {
       cpu: {
         key: 'Cpu',
@@ -1255,71 +1320,6 @@ export const kafkaCalculator = (rowFileSize?: number) => {
       xmx: {
         key: '-Xmx',
         size: 2048,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc Per Pod',
-        size: 20,
-        unit: 'G',
-        isSSD: true,
-      },
-    };
-  } else {
-    broker = {
-      cpu: {
-        key: 'Cpu',
-        size: 8,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 50,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 16384,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 16384,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc Per Pod',
-        size: intSize,
-        unit: unit,
-        isSSD: false,
-      },
-    };
-    zookeeper = {
-      cpu: {
-        key: 'Cpu',
-        size: 4,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 8,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 4096,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 4096,
         unit: 'M',
       },
       podNum: {

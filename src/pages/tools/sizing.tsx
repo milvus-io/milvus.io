@@ -233,11 +233,10 @@ export default function SizingTool() {
     });
 
     const rawFileSize = rawFileSizeCalculator({ d: dVal, nb: nbVal });
-    // const rootCoord = rootCoordCalculator(nbVal);
-    // const dataNode = dataNodeCalculator(nbVal);
+    const dataNode = dataNodeCalculator(nbVal);
     const indexNode = indexNodeCalculator(theorySize, sVal);
     const proxy = proxyCalculator(memorySize);
-    // const queryNode = queryNodeCalculator(memorySize);
+    const queryNode = queryNodeCalculator(memorySize);
     const commonCoord = commonCoordCalculator(memorySize);
     const mixCoord = mixCoordCalculator(nbVal);
     const etcdData = etcdCalculator(rawFileSize);
@@ -249,6 +248,8 @@ export default function SizingTool() {
       rawFileSize: unitBYTE2Any(rawFileSize),
       mixCoord,
       indexNode,
+      dataNode,
+      queryNode,
       proxy,
       commonCoord,
       etcdData,
@@ -259,11 +260,11 @@ export default function SizingTool() {
   }, [form]);
   const { milvusData, dependencyData, totalData } = useMemo(() => {
     const calculateList = [
-      calcResult.mixCoord,
-      calcResult.commonCoord,
-      calcResult.commonCoord,
       calcResult.proxy,
+      calcResult.mixCoord,
       calcResult.indexNode,
+      calcResult.dataNode,
+      calcResult.queryNode,
     ];
 
     const milvusData = {
@@ -698,26 +699,25 @@ export default function SizingTool() {
 
                   <div className={classes.cardsRow}>
                     <SizingToolCard
-                      title={t('setups.dataCoord.title')}
-                      tooltip={t('setups.dataCoord.tooltip')}
+                      title={t('setups.dataNode.title')}
+                      tooltip={t('setups.dataNode.tooltip')}
                       showTooltip
-                      subTitle={calcResult.commonCoord.size}
-                      content={calcResult.commonCoord.amount}
+                      subTitle={calcResult.dataNode.size}
+                      content={calcResult.dataNode.amount}
                     />
-                    <SizingToolCard
-                      title={t('setups.queryCoord.title')}
-                      tooltip={t('setups.queryCoord.tooltip')}
-                      showTooltip
-                      subTitle={calcResult.commonCoord.size}
-                      content={calcResult.commonCoord.amount}
-                    />
-
                     <SizingToolCard
                       title={t('setups.indexNode.title')}
                       tooltip={t('setups.indexNode.tooltip')}
                       subTitle={calcResult.indexNode.size}
                       content={calcResult.indexNode.amount}
                       showTooltip
+                    />
+                    <SizingToolCard
+                      title={t('setups.queryNode.title')}
+                      tooltip={t('setups.queryNode.tooltip')}
+                      showTooltip
+                      subTitle={calcResult.queryNode.size}
+                      content={calcResult.queryNode.amount}
                     />
                   </div>
                 </div>

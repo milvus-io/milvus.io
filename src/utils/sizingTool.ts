@@ -17,6 +17,8 @@ type MilvusDataType = {
 
 type ApacheType = 'pulsar' | 'kafka';
 
+const ONE_MILLION = Math.pow(10, 6);
+
 const defaultSizeContent = {
   size: 'Require more data',
   cpu: 0,
@@ -321,6 +323,33 @@ export const commonCoordCalculator = (memorySize: number) => {
         memory: 1,
         amount: 1,
       };
+};
+
+export const mixCoordCalculator = (nb: number) => {
+  const numberOfVector = nb / ONE_MILLION;
+  // unit is million
+  if (numberOfVector <= 1) {
+    return {
+      size: '1 core 4 GB',
+      cpu: 1,
+      memory: 4,
+      amount: 1,
+    };
+  } else if (numberOfVector > 1 && numberOfVector < 100) {
+    return {
+      size: '2 core 8 GB',
+      cpu: 2,
+      memory: 8,
+      amount: 1,
+    };
+  } else {
+    return {
+      size: '4 core 16 GB',
+      cpu: 4,
+      memory: 16,
+      amount: 1,
+    };
+  }
 };
 
 export const isBetween: (
@@ -1314,10 +1343,8 @@ export const kafkaCalculator = (rowFileSize?: number) => {
 
 export const helmYmlGenerator: (
   params: {
-    rootCoord: DataNode;
     proxy: DataNode;
-    queryNode: DataNode;
-    dataNode: DataNode;
+    mixCoord: DataNode;
     indexNode: DataNode;
     commonCoord: DataNode;
     etcdData: MilvusDataType;
@@ -1328,10 +1355,8 @@ export const helmYmlGenerator: (
   apacheType: ApacheType
 ) => any = (
   {
-    rootCoord,
     proxy,
-    queryNode,
-    dataNode,
+    mixCoord,
     indexNode,
     commonCoord,
     etcdData,
@@ -1437,42 +1462,18 @@ kafka:
         memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
   `;
 
-  return `rootCoordinator:
-  replicas: ${rootCoord.amount}
+  return `mixCoordinator:
+  replicas: ${mixCoord.amount}
   resources: 
     limits:
-      cpu: ${rootCoord.cpu}
-      memory: ${rootCoord.memory}Gi
-queryCoordinator:
-  replicas: ${commonCoord.amount}
-  resources: 
-    limits:
-      cpu: "${commonCoord.cpu}"
-      memory: ${commonCoord.memory}Gi
-dataCoordinator:
-  replicas: ${commonCoord.amount}
-  resources: 
-    limits:
-      cpu: "${commonCoord.cpu}"
-      memory: ${commonCoord.memory}Gi
+      cpu: "${mixCoord.cpu}"
+      memory: ${mixCoord.memory}Gi
 proxy:
   replicas: ${proxy.amount}
   resources: 
     limits:
       cpu: ${proxy.cpu}
       memory: ${proxy.memory}Gi
-queryNode:
-  replicas: ${queryNode.amount}
-  resources: 
-    limits:
-      cpu: ${queryNode.cpu}
-      memory: ${queryNode.memory}Gi
-dataNode:
-  replicas: ${dataNode.amount}
-  resources: 
-    limits:
-      cpu: ${dataNode.cpu}
-      memory: ${dataNode.memory}Gi
 indexNode:
   replicas: ${indexNode.amount}
   resources: 
@@ -1521,10 +1522,8 @@ minio:
 
 export const operatorYmlGenerator: (
   params: {
-    rootCoord: DataNode;
+    mixCoord: DataNode;
     proxy: DataNode;
-    queryNode: DataNode;
-    dataNode: DataNode;
     indexNode: DataNode;
     commonCoord: DataNode;
     etcdData: MilvusDataType;
@@ -1535,10 +1534,8 @@ export const operatorYmlGenerator: (
   apacheType: ApacheType
 ) => any = (
   {
-    rootCoord,
+    mixCoord,
     proxy,
-    queryNode,
-    dataNode,
     indexNode,
     commonCoord,
     etcdData,
@@ -1651,39 +1648,18 @@ metadata:
     app: milvus
 spec:
   components:
-    dataCoord:
+    mixCoord:
+      replicas: ${mixCoord.amount}
       resources:
         limits:
-          cpu: "${commonCoord.cpu}"
-          memory: ${rootCoord.memory}Gi
-    queryCoord:
-      resources:
-        limits:
-          cpu: "${commonCoord.cpu}"
-          memory: ${rootCoord.memory}Gi
-    rootCoord:
-      resources:
-        limits:
-          cpu: ${rootCoord.cpu}
-          memory: ${rootCoord.memory}Gi
-    dataNode:
-      replicas:  ${dataNode.amount}
-      resources:
-        limits:
-          cpu: ${dataNode.cpu}
-          memory: ${dataNode.memory}Gi
+          cpu: ${mixCoord.cpu}
+          memory: ${mixCoord.memory}Gi
     indexNode:
       replicas: ${indexNode.amount}
       resources:
         limits:
           cpu: ${indexNode.cpu}
           memory: ${indexNode.memory}Gi
-    queryNode:
-      replicas: ${queryNode.amount}
-      resources:
-        limits:
-          cpu: ${queryNode.cpu}
-          memory: ${queryNode.memory}Gi
     proxy:
       replicas: ${proxy.amount}
       resources:

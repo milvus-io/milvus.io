@@ -17,6 +17,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Head from 'next/head';
+import CustomButton from '@/components/customButton';
 
 import {
   memorySizeCalculator,
@@ -821,34 +822,36 @@ export default function SizingTool() {
 
               <div className={classes.btnContainer}>
                 <div className={classes.btnsWrapper}>
-                  <button
-                    className={classes.downloadBtn}
+                  <CustomButton
+                    className={classes.ctaButton}
                     onClick={handleDownloadHelm}
+                    endIcon={<DownloadIcon />}
                   >
-                    <DownloadIcon />
-                    <span>{t('buttons.helm')}</span>
-                  </button>
-                  <button
-                    className={classes.guideLink}
+                    {t('buttons.helm')}
+                  </CustomButton>
+                  <CustomButton
+                    className={classes.ctaButton}
                     onClick={() => handleOpenInstallGuide('helm')}
+                    variant="outlined"
                   >
                     {t('buttons.guide')}
-                  </button>
+                  </CustomButton>
                 </div>
                 <div className={classes.btnsWrapper}>
-                  <button
-                    className={classes.downloadBtn}
+                  <CustomButton
+                    className={classes.ctaButton}
                     onClick={handleDownloadOperator}
+                    endIcon={<DownloadIcon />}
                   >
-                    <DownloadIcon />
-                    <span>{t('buttons.operator')}</span>
-                  </button>
-                  <button
-                    className={classes.guideLink}
+                    {t('buttons.operator')}
+                  </CustomButton>
+                  <CustomButton
+                    className={classes.ctaButton}
                     onClick={() => handleOpenInstallGuide('operator')}
+                    variant="outlined"
                   >
                     {t('buttons.guide')}
-                  </button>
+                  </CustomButton>
                 </div>
               </div>
             </section>

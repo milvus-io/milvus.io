@@ -1,8 +1,8 @@
 @import url('@/styles/global.module.less');
 
 .toolCardWrapper {
-  padding: 16px;
-  background-color: #fff;
+  padding: 20px;
+  background-color: @color-white1;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -10,17 +10,18 @@
   min-width: 166px;
   width: 100%;
   height: 126px;
+  border-radius: 12px;
 
   .title {
     font-weight: 700;
     font-size: 16px;
     line-height: 1.5em;
     display: flex;
+    gap: 4px;
     margin-bottom: 8px;
     align-items: center;
 
     .iconWrapper {
-      margin-left: 8px;
       font-size: 0;
       line-height: 0;
     }

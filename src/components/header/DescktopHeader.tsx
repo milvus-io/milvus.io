@@ -37,7 +37,6 @@ export default function DesktopHeader(props: Props) {
     {
       label: t('tutorials.label'),
       list: [
-        { label: t('tutorials.codelabs'), link: MILVUS_CODELAB_LINK },
         { label: t('tutorials.bootcamp'), link: '/bootcamp' },
         { label: t('tutorials.demo'), link: '/milvus-demos' },
         {

@@ -39,6 +39,9 @@ export default function SizingToolCard(props) {
                 disableFocusListener
                 disableTouchListener
                 arrow
+                PopperProps={{
+                  offset: [0, -10],
+                }}
                 classes={{
                   tooltip: styles.tooltip,
                 }}

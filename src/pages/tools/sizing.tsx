@@ -17,6 +17,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Head from 'next/head';
+import CustomButton from '@/components/customButton';
 
 import {
   memorySizeCalculator,
@@ -35,6 +36,7 @@ import {
   minioCalculator,
   pulsarCalculator,
   kafkaCalculator,
+  mixCoordCalculator,
 } from '@/utils/sizingTool';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import HighlightBlock from '@/components/card/sizingToolCard/codeBlock';
@@ -211,11 +213,10 @@ export default function SizingTool() {
       return {
         memorySize: { size: 0, unit: 'B' },
         rawFileSize: { size: 0, unit: 'B' },
-        rootCoord: defaultSizeContent,
-        dataNode: defaultSizeContent,
+
         indexNode: defaultSizeContent,
         proxy: defaultSizeContent,
-        queryNode: defaultSizeContent,
+        mixCoord: defaultSizeContent,
         commonCoord: defaultSizeContent,
         etcdData,
         minioData,
@@ -233,12 +234,12 @@ export default function SizingTool() {
     });
 
     const rawFileSize = rawFileSizeCalculator({ d: dVal, nb: nbVal });
-    const rootCoord = rootCoordCalculator(nbVal);
     const dataNode = dataNodeCalculator(nbVal);
     const indexNode = indexNodeCalculator(theorySize, sVal);
     const proxy = proxyCalculator(memorySize);
     const queryNode = queryNodeCalculator(memorySize);
     const commonCoord = commonCoordCalculator(memorySize);
+    const mixCoord = mixCoordCalculator(nbVal);
     const etcdData = etcdCalculator(rawFileSize);
     const minioData = minioCalculator(rawFileSize, theorySize);
     const pulsarData = pulsarCalculator(rawFileSize);
@@ -246,11 +247,11 @@ export default function SizingTool() {
     return {
       memorySize: unitBYTE2Any(memorySize),
       rawFileSize: unitBYTE2Any(rawFileSize),
-      rootCoord,
-      dataNode,
+      mixCoord,
       indexNode,
-      proxy,
+      dataNode,
       queryNode,
+      proxy,
       commonCoord,
       etcdData,
       minioData,
@@ -260,13 +261,11 @@ export default function SizingTool() {
   }, [form]);
   const { milvusData, dependencyData, totalData } = useMemo(() => {
     const calculateList = [
-      calcResult.rootCoord,
-      calcResult.commonCoord,
-      calcResult.commonCoord,
       calcResult.proxy,
-      calcResult.queryNode,
-      calcResult.dataNode,
+      calcResult.mixCoord,
       calcResult.indexNode,
+      calcResult.dataNode,
+      calcResult.queryNode,
     ];
 
     const milvusData = {
@@ -681,60 +680,47 @@ export default function SizingTool() {
                   </div>
                 </div>
 
-                <div className={classes.cardsWrapper}>
-                  <SizingToolCard
-                    title={t('setups.proxy.title')}
-                    tooltip={t('setups.proxy.tooltip')}
-                    subTitle={calcResult.proxy.size}
-                    content={calcResult.proxy.amount}
-                    showTooltip
-                  />
-                  <SizingToolCard
-                    title={t('setups.rootCoord.title')}
-                    subTitle={calcResult.rootCoord.size}
-                    content={calcResult.rootCoord.amount}
-                    showTooltip
-                    tooltip={t('setups.rootCoord.tooltip')}
-                  />
+                <div className={classes.cardLayoutWrapper}>
+                  <div className={classes.cardsRow}>
+                    <SizingToolCard
+                      title={t('setups.proxy.title')}
+                      tooltip={t('setups.proxy.tooltip')}
+                      subTitle={calcResult.proxy.size}
+                      content={calcResult.proxy.amount}
+                      showTooltip
+                    />
+                    <SizingToolCard
+                      title={t('setups.mixCoord.title')}
+                      tooltip={t('setups.mixCoord.tooltip')}
+                      showTooltip
+                      subTitle={calcResult.mixCoord.size}
+                      content={calcResult.mixCoord.amount}
+                    />
+                  </div>
 
-                  <SizingToolCard
-                    title={t('setups.dataCoord.title')}
-                    tooltip={t('setups.dataCoord.tooltip')}
-                    showTooltip
-                    subTitle={calcResult.commonCoord.size}
-                    content={calcResult.commonCoord.amount}
-                  />
-                  <SizingToolCard
-                    title={t('setups.queryCoord.title')}
-                    tooltip={t('setups.queryCoord.tooltip')}
-                    showTooltip
-                    subTitle={calcResult.commonCoord.size}
-                    content={calcResult.commonCoord.amount}
-                  />
-
-                  <SizingToolCard
-                    title={t('setups.dataNode.title')}
-                    tooltip={t('setups.dataNode.tooltip')}
-                    subTitle={calcResult.dataNode.size}
-                    content={calcResult.dataNode.amount}
-                    showTooltip
-                  />
-
-                  <SizingToolCard
-                    title={t('setups.indexNode.title')}
-                    tooltip={t('setups.indexNode.tooltip')}
-                    subTitle={calcResult.indexNode.size}
-                    content={calcResult.indexNode.amount}
-                    showTooltip
-                  />
-
-                  <SizingToolCard
-                    title={t('setups.queryNode.title')}
-                    tooltip={t('setups.queryNode.tooltip')}
-                    subTitle={calcResult.queryNode.size}
-                    content={calcResult.queryNode.amount}
-                    showTooltip
-                  />
+                  <div className={classes.cardsRow}>
+                    <SizingToolCard
+                      title={t('setups.dataNode.title')}
+                      tooltip={t('setups.dataNode.tooltip')}
+                      showTooltip
+                      subTitle={calcResult.dataNode.size}
+                      content={calcResult.dataNode.amount}
+                    />
+                    <SizingToolCard
+                      title={t('setups.indexNode.title')}
+                      tooltip={t('setups.indexNode.tooltip')}
+                      subTitle={calcResult.indexNode.size}
+                      content={calcResult.indexNode.amount}
+                      showTooltip
+                    />
+                    <SizingToolCard
+                      title={t('setups.queryNode.title')}
+                      tooltip={t('setups.queryNode.tooltip')}
+                      showTooltip
+                      subTitle={calcResult.queryNode.size}
+                      content={calcResult.queryNode.amount}
+                    />
+                  </div>
                 </div>
               </div>
               <div className={classes.cluster}>
@@ -764,6 +750,13 @@ export default function SizingTool() {
                     </div>
                   </div>
                 </div>
+
+                <section className={classes.note}>
+                  <span className={classes.iconWrapper}>
+                    <InfoFilled />
+                  </span>
+                  <h2>{t('dependencyNote')}</h2>
+                </section>
 
                 <div className={classes.line}>
                   <SizingToolCard
@@ -829,34 +822,36 @@ export default function SizingTool() {
 
               <div className={classes.btnContainer}>
                 <div className={classes.btnsWrapper}>
-                  <button
-                    className={classes.downloadBtn}
+                  <CustomButton
+                    className={classes.ctaButton}
                     onClick={handleDownloadHelm}
+                    endIcon={<DownloadIcon />}
                   >
-                    <DownloadIcon />
-                    <span>{t('buttons.helm')}</span>
-                  </button>
-                  <button
-                    className={classes.guideLink}
+                    {t('buttons.helm')}
+                  </CustomButton>
+                  <CustomButton
+                    className={classes.ctaButton}
                     onClick={() => handleOpenInstallGuide('helm')}
+                    variant="outlined"
                   >
                     {t('buttons.guide')}
-                  </button>
+                  </CustomButton>
                 </div>
                 <div className={classes.btnsWrapper}>
-                  <button
-                    className={classes.downloadBtn}
+                  <CustomButton
+                    className={classes.ctaButton}
                     onClick={handleDownloadOperator}
+                    endIcon={<DownloadIcon />}
                   >
-                    <DownloadIcon />
-                    <span>{t('buttons.operator')}</span>
-                  </button>
-                  <button
-                    className={classes.guideLink}
+                    {t('buttons.operator')}
+                  </CustomButton>
+                  <CustomButton
+                    className={classes.ctaButton}
                     onClick={() => handleOpenInstallGuide('operator')}
+                    variant="outlined"
                   >
                     {t('buttons.guide')}
-                  </button>
+                  </CustomButton>
                 </div>
               </div>
             </section>

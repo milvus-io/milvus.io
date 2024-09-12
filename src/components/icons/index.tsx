@@ -47,14 +47,17 @@ export const InfoFilled = () => (
 export const ToolTipFilled = () => (
   <svg
     width="20"
-    height="20"
-    viewBox="0 0 20 20"
+    height="21"
+    viewBox="0 0 20 21"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <circle cx="10" cy="10" r="10" fill="#E8EAEE" />
-    <path d="M9.29999 9H10.7V14H9.29999V9Z" fill="black" />
-    <path d="M9.3 6.39999H10.7V7.79999H9.3V6.39999Z" fill="black" />
+    <circle cx="10" cy="10.1194" r="9" fill="#D0D7DC" />
+    <path d="M9.30005 9.1194H10.7V14.1194H9.30005V9.1194Z" fill="#00131A" />
+    <path
+      d="M9.30006 6.51939H10.7001V7.91939H9.30006V6.51939Z"
+      fill="#00131A"
+    />
   </svg>
 );
 

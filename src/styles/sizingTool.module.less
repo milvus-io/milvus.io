@@ -31,7 +31,7 @@
 
   .note {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     background-color: rgba(224, 242, 252, 0.8);
     padding: 20px;
     border-radius: 8px;
@@ -39,8 +39,8 @@
 
     .iconWrapper {
       margin-right: 10px;
-      font-size: 0;
-      line-height: 0;
+      font-size: 14px;
+      line-height: 1.5em;
     }
   }
 
@@ -260,6 +260,21 @@
 
           @media @phone {
             grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        .cardLayoutWrapper {
+          .cardsRow {
+            display: flex;
+            gap: 20px;
+
+            div {
+              flex: 1;
+            }
+          }
+
+          .cardsRow + .cardsRow {
+            margin-top: 20px;
           }
         }
       }

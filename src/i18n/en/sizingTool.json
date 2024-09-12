@@ -49,6 +49,10 @@
       "title": "Index Node",
       "tooltip": "Index node builds indexes. Index nodes do not need to be memory resident, and can be implemented with the serverless framework."
     },
+    "mixCoord": {
+      "title": "Mix Coord",
+      "tooltip": "Mix coord is a combination of root coord, data coord and query coord. It is responsible for scheduling cluster background tasks, maintaining metadata topology, handling DDL, DCL, and TSO allocation. "
+    },
     "etcd": {
       "title": "ETCD"
     },
@@ -77,6 +81,7 @@
   },
   "milvus": "Milvus",
   "dependency": "Dependencies",
+  "dependencyNote": "The values shown on the sizing tool are for reference only. Please make adjustments according to your actual resource usage for optimal configuration.",
   "cluster": "Minimum Milvus cluster setup in total",
   "total": "CPU, Memory",
   "ssd": "SSD",

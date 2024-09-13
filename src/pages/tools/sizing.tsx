@@ -283,7 +283,6 @@ export default function SizingTool() {
     };
 
     if (form.indexType.value === IndexTypeEnum.DISKANN) {
-      console.log('milvus data', milvusData.memory);
       const rawFileSizeGb = unitBYTE2Any(
         (calcResult.rawFileSizeByte * 5) / 4,
         'GB'

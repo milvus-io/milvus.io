@@ -215,7 +215,8 @@ export default function SizingTool() {
       return {
         memorySize: { size: 0, unit: 'B' },
         rawFileSize: { size: 0, unit: 'B' },
-
+        dataNode: defaultSizeContent,
+        queryNode: defaultSizeContent,
         indexNode: defaultSizeContent,
         proxy: defaultSizeContent,
         mixCoord: defaultSizeContent,

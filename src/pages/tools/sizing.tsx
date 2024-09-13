@@ -37,6 +37,7 @@ import {
   pulsarCalculator,
   kafkaCalculator,
   mixCoordCalculator,
+  unitAny2BYTE,
 } from '@/utils/sizingTool';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import HighlightBlock from '@/components/card/sizingToolCard/codeBlock';
@@ -46,6 +47,7 @@ import {
   REQUIRE_MORE,
   INDEX_TYPE_OPTIONS,
   SEGMENT_SIZE_OPTIONS,
+  IndexTypeEnum,
 } from '@/components/card/sizingToolCard/constants';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 
@@ -246,6 +248,7 @@ export default function SizingTool() {
     const kafkaData = kafkaCalculator(rawFileSize);
     return {
       memorySize: unitBYTE2Any(memorySize),
+      rawFileSizeByte: rawFileSize,
       rawFileSize: unitBYTE2Any(rawFileSize),
       mixCoord,
       indexNode,
@@ -278,6 +281,16 @@ export default function SizingTool() {
         return acc;
       }, 0),
     };
+
+    if (form.indexType.value === IndexTypeEnum.DISKANN) {
+      console.log('milvus data', milvusData.memory);
+      const rawFileSizeGb = unitBYTE2Any(
+        (calcResult.rawFileSizeByte * 5) / 4,
+        'GB'
+      );
+
+      milvusData.memory += Math.ceil(rawFileSizeGb.size * 10) / 10;
+    }
 
     const secondPartData = {
       core:
@@ -387,7 +400,20 @@ export default function SizingTool() {
     };
   }, [calcResult, form.apacheType]);
 
-  const handleDownloadYmlFile = (content, fielName) => {
+  const queryNodeDiskData = useMemo(() => {
+    if (form.indexType.value === IndexTypeEnum.DISKANN) {
+      const rawFileSizeGb = unitBYTE2Any(calcResult.rawFileSizeByte, 'GB');
+      return {
+        key: 'Disk',
+        value:
+          Math.ceil((rawFileSizeGb.size / calcResult.queryNode.amount) * 10) /
+          10,
+      };
+    }
+    return undefined;
+  }, [form.indexType.value, calcResult.rawFileSizeByte, calcResult.queryNode]);
+
+  const handleDownloadYmlFile = (content, fileName) => {
     if (typeof window !== 'undefined') {
       const blob = new Blob([content], {
         type: 'text/plain',
@@ -397,7 +423,7 @@ export default function SizingTool() {
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${fielName}.yml`;
+      a.download = `${fileName}.yml`;
       a.click();
     }
   };
@@ -719,6 +745,7 @@ export default function SizingTool() {
                       showTooltip
                       subTitle={calcResult.queryNode.size}
                       content={calcResult.queryNode.amount}
+                      extraData={queryNodeDiskData}
                     />
                   </div>
                 </div>

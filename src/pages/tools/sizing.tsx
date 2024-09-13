@@ -262,149 +262,156 @@ export default function SizingTool() {
       kafkaData,
     };
   }, [form]);
-  const { milvusData, dependencyData, totalData } = useMemo(() => {
-    const calculateList = [
-      calcResult.proxy,
-      calcResult.mixCoord,
-      calcResult.indexNode,
-      calcResult.dataNode,
-      calcResult.queryNode,
-    ];
+  const { milvusData, dependencyData, totalData, queryNodeDiskData } =
+    useMemo(() => {
+      const calculateList = [
+        calcResult.proxy,
+        calcResult.mixCoord,
+        calcResult.indexNode,
+        calcResult.dataNode,
+        calcResult.queryNode,
+      ];
 
-    const milvusData = {
-      core: calculateList.reduce((acc, cur) => {
-        acc += cur.cpu * cur.amount;
-        return acc;
-      }, 0),
-      memory: calculateList.reduce((acc, cur) => {
-        acc += cur.memory * cur.amount;
-        return acc;
-      }, 0),
-    };
-
-    const secondPartData = {
-      core:
-        calcResult.etcdData.cpu * calcResult.etcdData.podNumber +
-        calcResult.minioData.cpu * calcResult.minioData.podNumber,
-      memory:
-        calcResult.etcdData.memory * calcResult.etcdData.podNumber +
-        calcResult.minioData.memory * calcResult.minioData.podNumber,
-      ssd:
-        calcResult.etcdData.pvcPerPodUnit === 'G'
-          ? calcResult.etcdData.pvcPerPodSize * calcResult.etcdData.podNumber
-          : (calcResult.etcdData.pvcPerPodSize *
-              calcResult.etcdData.podNumber) /
-            1024,
-      disk:
-        calcResult.minioData.pvcPerPodUnit === 'G'
-          ? calcResult.minioData.pvcPerPodSize * calcResult.minioData.podNumber
-          : (calcResult.minioData.pvcPerPodSize *
-              calcResult.minioData.podNumber) /
-            1024,
-    };
-
-    const pulsarBookieData =
-      calcResult.pulsarData.bookie.ledgers.unit === 'G'
-        ? calcResult.pulsarData.bookie.ledgers.size *
-          calcResult.pulsarData.bookie.podNum.value
-        : (calcResult.pulsarData.bookie.ledgers.size *
-            calcResult.pulsarData.bookie.podNum.value) /
-          1024;
-    const pulsarZookeeperData =
-      calcResult.pulsarData.zookeeper.pvc.unit === 'G'
-        ? calcResult.pulsarData.zookeeper.pvc.size *
-          calcResult.pulsarData.zookeeper.podNum.value
-        : (calcResult.pulsarData.zookeeper.pvc.size *
-            calcResult.pulsarData.zookeeper.podNum.value) /
-          1024;
-    const pulsarData = {
-      core: Object.values(calcResult.pulsarData).reduce((acc, cur) => {
-        acc += cur.cpu.size * cur.podNum.value;
-        return acc;
-      }, 0),
-      memory: Object.values(calcResult.pulsarData).reduce((acc, cur) => {
-        acc += cur.memory.size * cur.podNum.value;
-        return acc;
-      }, 0),
-      ssd: pulsarBookieData + pulsarZookeeperData,
-      disk:
-        calcResult.pulsarData.bookie.journal.unit === 'G'
-          ? calcResult.pulsarData.bookie.journal.size *
-            calcResult.pulsarData.bookie.podNum.value
-          : (calcResult.pulsarData.bookie.journal.size *
-              calcResult.pulsarData.bookie.podNum.value) /
-            1024,
-    };
-
-    const kafkaData = {
-      core: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
-        acc += cur.cpu.size * cur.podNum.value;
-        return acc;
-      }, 0),
-      memory: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
-        acc += cur.memory.size * cur.podNum.value;
-        return acc;
-      }, 0),
-      ssd: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
-        if (cur.pvc?.isSSD) {
-          if (cur.pvc.unit === 'G') {
-            acc += cur.pvc.size * cur.podNum.value;
-          } else {
-            acc += (cur.pvc.size * cur.podNum.value) / 1024;
-          }
-        }
-        return acc;
-      }, 0),
-      disk: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
-        if (!cur.pvc?.isSSD) {
-          if (cur.pvc.unit === 'G') {
-            acc += cur.pvc.size * cur.podNum.value;
-          } else {
-            acc += (cur.pvc.size * cur.podNum.value) / 1024;
-          }
-        }
-        return acc;
-      }, 0),
-    };
-
-    const thirdPartData = form.apacheType === 'pulsar' ? pulsarData : kafkaData;
-
-    const totalData = {
-      core: milvusData.core + secondPartData.core + thirdPartData.core,
-      memory: milvusData.memory + secondPartData.memory + thirdPartData.memory,
-      ssd: Math.ceil(secondPartData.ssd + thirdPartData.ssd),
-      disk: Math.ceil(secondPartData.disk + thirdPartData.disk),
-    };
-
-    const dependencyData = {
-      core: secondPartData.core + thirdPartData.core,
-      memory: secondPartData.memory + thirdPartData.memory,
-      ssd: Math.ceil(secondPartData.ssd + thirdPartData.ssd),
-      disk: Math.ceil(secondPartData.disk + thirdPartData.disk),
-    };
-
-    return {
-      milvusData,
-      dependencyData,
-      totalData,
-    };
-  }, [calcResult, form.apacheType]);
-
-  const queryNodeDiskData = useMemo(() => {
-    if (form.indexType.value === IndexTypeEnum.DISKANN) {
-      const rawFileSizeValue = unitBYTE2Any(calcResult.rawFileSizeByte, 'GB');
-      return {
-        totalQueryNodeDisk: `${Math.ceil(rawFileSizeValue.size * 10) / 10} GB`,
-        key: 'Disk',
-        value: `${
-          Math.ceil(
-            (rawFileSizeValue.size / calcResult.queryNode.amount) * 10
-          ) / 10
-        } GB`,
+      const milvusData = {
+        core: calculateList.reduce((acc, cur) => {
+          acc += cur.cpu * cur.amount;
+          return acc;
+        }, 0),
+        memory: calculateList.reduce((acc, cur) => {
+          acc += cur.memory * cur.amount;
+          return acc;
+        }, 0),
       };
-    }
-    return undefined;
-  }, [form.indexType.value, calcResult.rawFileSizeByte, calcResult.queryNode]);
+
+      const secondPartData = {
+        core:
+          calcResult.etcdData.cpu * calcResult.etcdData.podNumber +
+          calcResult.minioData.cpu * calcResult.minioData.podNumber,
+        memory:
+          calcResult.etcdData.memory * calcResult.etcdData.podNumber +
+          calcResult.minioData.memory * calcResult.minioData.podNumber,
+        ssd:
+          calcResult.etcdData.pvcPerPodUnit === 'G'
+            ? calcResult.etcdData.pvcPerPodSize * calcResult.etcdData.podNumber
+            : (calcResult.etcdData.pvcPerPodSize *
+                calcResult.etcdData.podNumber) /
+              1024,
+        disk:
+          calcResult.minioData.pvcPerPodUnit === 'G'
+            ? calcResult.minioData.pvcPerPodSize *
+              calcResult.minioData.podNumber
+            : (calcResult.minioData.pvcPerPodSize *
+                calcResult.minioData.podNumber) /
+              1024,
+      };
+
+      const pulsarBookieData =
+        calcResult.pulsarData.bookie.ledgers.unit === 'G'
+          ? calcResult.pulsarData.bookie.ledgers.size *
+            calcResult.pulsarData.bookie.podNum.value
+          : (calcResult.pulsarData.bookie.ledgers.size *
+              calcResult.pulsarData.bookie.podNum.value) /
+            1024;
+      const pulsarZookeeperData =
+        calcResult.pulsarData.zookeeper.pvc.unit === 'G'
+          ? calcResult.pulsarData.zookeeper.pvc.size *
+            calcResult.pulsarData.zookeeper.podNum.value
+          : (calcResult.pulsarData.zookeeper.pvc.size *
+              calcResult.pulsarData.zookeeper.podNum.value) /
+            1024;
+      const pulsarData = {
+        core: Object.values(calcResult.pulsarData).reduce((acc, cur) => {
+          acc += cur.cpu.size * cur.podNum.value;
+          return acc;
+        }, 0),
+        memory: Object.values(calcResult.pulsarData).reduce((acc, cur) => {
+          acc += cur.memory.size * cur.podNum.value;
+          return acc;
+        }, 0),
+        ssd: pulsarBookieData + pulsarZookeeperData,
+        disk:
+          calcResult.pulsarData.bookie.journal.unit === 'G'
+            ? calcResult.pulsarData.bookie.journal.size *
+              calcResult.pulsarData.bookie.podNum.value
+            : (calcResult.pulsarData.bookie.journal.size *
+                calcResult.pulsarData.bookie.podNum.value) /
+              1024,
+      };
+
+      const kafkaData = {
+        core: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
+          acc += cur.cpu.size * cur.podNum.value;
+          return acc;
+        }, 0),
+        memory: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
+          acc += cur.memory.size * cur.podNum.value;
+          return acc;
+        }, 0),
+        ssd: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
+          if (cur.pvc?.isSSD) {
+            if (cur.pvc.unit === 'G') {
+              acc += cur.pvc.size * cur.podNum.value;
+            } else {
+              acc += (cur.pvc.size * cur.podNum.value) / 1024;
+            }
+          }
+          return acc;
+        }, 0),
+        disk: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
+          if (!cur.pvc?.isSSD) {
+            if (cur.pvc.unit === 'G') {
+              acc += cur.pvc.size * cur.podNum.value;
+            } else {
+              acc += (cur.pvc.size * cur.podNum.value) / 1024;
+            }
+          }
+          return acc;
+        }, 0),
+      };
+
+      const thirdPartData =
+        form.apacheType === 'pulsar' ? pulsarData : kafkaData;
+
+      let queryNodeDiskData = undefined;
+
+      if (form.indexType.value === IndexTypeEnum.DISKANN) {
+        const rawFileSizeValue = unitBYTE2Any(calcResult.rawFileSizeByte, 'GB');
+        queryNodeDiskData = {
+          totalQueryNodeDisk: Math.ceil(rawFileSizeValue.size * 10) / 10,
+          key: 'SSD',
+          value: `${
+            Math.ceil(
+              (rawFileSizeValue.size / calcResult.queryNode.amount) * 10
+            ) / 10
+          } GB`,
+        };
+      }
+
+      const totalData = {
+        core: milvusData.core + secondPartData.core + thirdPartData.core,
+        memory:
+          milvusData.memory + secondPartData.memory + thirdPartData.memory,
+        ssd: queryNodeDiskData
+          ? Math.ceil(secondPartData.ssd + thirdPartData.ssd) +
+            queryNodeDiskData.totalQueryNodeDisk
+          : Math.ceil(secondPartData.ssd + thirdPartData.ssd),
+        disk: Math.ceil(secondPartData.disk + thirdPartData.disk),
+      };
+
+      const dependencyData = {
+        core: secondPartData.core + thirdPartData.core,
+        memory: secondPartData.memory + thirdPartData.memory,
+        ssd: Math.ceil(secondPartData.ssd + thirdPartData.ssd),
+        disk: Math.ceil(secondPartData.disk + thirdPartData.disk),
+      };
+
+      return {
+        milvusData,
+        dependencyData,
+        totalData,
+        queryNodeDiskData,
+      };
+    }, [calcResult, form.apacheType]);
 
   const handleDownloadYmlFile = (content, fileName) => {
     if (typeof window !== 'undefined') {
@@ -698,9 +705,9 @@ export default function SizingTool() {
                     </div>
                     {queryNodeDiskData && (
                       <div className={classes.detailInfo}>
-                        <p className={classes.label}>Disk:&nbsp;</p>
+                        <p className={classes.label}>SSD:&nbsp;</p>
                         <p className={classes.value}>
-                          {queryNodeDiskData.totalQueryNodeDisk}
+                          {queryNodeDiskData.totalQueryNodeDisk} GB
                         </p>
                       </div>
                     )}

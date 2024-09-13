@@ -14,6 +14,7 @@ export default function SizingToolCard(props) {
     showTooltip = false,
     tooltip = '',
     extraData,
+    disk,
   } = props;
   const { root, titleClassName, subTitleClassName, contentClassName } = classes;
 

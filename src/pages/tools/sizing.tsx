@@ -282,15 +282,6 @@ export default function SizingTool() {
       }, 0),
     };
 
-    if (form.indexType.value === IndexTypeEnum.DISKANN) {
-      const rawFileSizeGb = unitBYTE2Any(
-        (calcResult.rawFileSizeByte * 5) / 4,
-        'GB'
-      );
-
-      milvusData.memory += Math.ceil(rawFileSizeGb.size * 10) / 10;
-    }
-
     const secondPartData = {
       core:
         calcResult.etcdData.cpu * calcResult.etcdData.podNumber +
@@ -401,12 +392,15 @@ export default function SizingTool() {
 
   const queryNodeDiskData = useMemo(() => {
     if (form.indexType.value === IndexTypeEnum.DISKANN) {
-      const rawFileSizeGb = unitBYTE2Any(calcResult.rawFileSizeByte, 'GB');
+      const rawFileSizeValue = unitBYTE2Any(calcResult.rawFileSizeByte, 'GB');
       return {
+        totalQueryNodeDisk: `${Math.ceil(rawFileSizeValue.size * 10) / 10} GB`,
         key: 'Disk',
-        value:
-          Math.ceil((rawFileSizeGb.size / calcResult.queryNode.amount) * 10) /
-          10,
+        value: `${
+          Math.ceil(
+            (rawFileSizeValue.size / calcResult.queryNode.amount) * 10
+          ) / 10
+        } GB`,
       };
     }
     return undefined;
@@ -702,6 +696,14 @@ export default function SizingTool() {
                         })}
                       </p>
                     </div>
+                    {queryNodeDiskData && (
+                      <div className={classes.detailInfo}>
+                        <p className={classes.label}>Disk:&nbsp;</p>
+                        <p className={classes.value}>
+                          {queryNodeDiskData.totalQueryNodeDisk}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 

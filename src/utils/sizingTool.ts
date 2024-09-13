@@ -1,3 +1,4 @@
+import { IndexTypeEnum } from '@/components/card/sizingToolCard/constants';
 type DataSizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
 type DataNode = {
   size: string;
@@ -110,7 +111,7 @@ export const memorySizeCalculator: (params: {
   let theorySize = 0;
   let expandingRate = 0;
   switch (indexType) {
-    case 'IVF_FLAT':
+    case IndexTypeEnum.IVF_FLAT:
       theorySize = (nb + nlist) * d * 4;
       expandingRate = 2;
       return {
@@ -118,7 +119,7 @@ export const memorySizeCalculator: (params: {
         memorySize: theorySize * expandingRate,
       };
 
-    case 'IVF_SQ8':
+    case IndexTypeEnum.IVF_SQ8:
       theorySize = nb * d + nlist * d * 4;
       expandingRate = 3;
       return {
@@ -126,14 +127,14 @@ export const memorySizeCalculator: (params: {
         memorySize: theorySize * expandingRate,
       };
 
-    case 'HNSW':
+    case IndexTypeEnum.HNSW:
       theorySize = nb * d * 4 + nb * M * 8;
       expandingRate = 2;
       return {
         theorySize,
         memorySize: theorySize * expandingRate,
       };
-    case 'DISKANN':
+    case IndexTypeEnum.DISKANN:
       theorySize = rawFileSizeCalculator({ d, nb }) / 4;
       expandingRate = 1;
       return {

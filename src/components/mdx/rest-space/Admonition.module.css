@@ -1,0 +1,84 @@
+.admonition {
+  &.note {
+    background-color: #f0f9ff;
+    border-left: 5px solid #d4d5d8;
+  }
+
+  &.info {
+    background-color: #eef9fd;
+    border-left: 5px solid #4cb3d4;
+  }
+
+  &.tip {
+    background-color: #e6f6e6;
+    border-left: 5px solid #009400;
+  }
+
+  &.warning {
+    background-color: #fff8e6;
+    border-left: 5px solid #e6a700;
+  }
+
+  &.danger {
+    background-color: #ffebec;
+    border-left: 5px solid #e13238;
+  }
+}
+
+.admonition ol,
+.admonition ul {
+  margin: 0 0 1rem;
+  padding-left: 24px;
+}
+
+.admonition ol ol,
+.admonition ul ol {
+  list-style-type: lower-roman;
+}
+
+.admonition ol ol ol,
+.admonition ol ul ol,
+.admonition ul ol ol,
+.admonition ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.admonition li + li {
+  margin-top: 8px;
+}
+
+.admonition li {
+  line-height: 135%;
+  &::marker {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    text-indent: 0px !important;
+    text-align: start !important;
+    text-align-last: start !important;
+  }
+}
+
+.admonition p > code,
+.admonition li > code {
+  font-size: 14px;
+  line-height: 1.4rem;
+  font-family: SourceCodePro;
+  color: #1493cc;
+  display: inline-block;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 0px 8px;
+}
+
+.admonition p > code {
+  background-color: #f0f4f9;
+}
+
+.admonition li > code {
+  background-color: rgb(84 199 236 / 15%);
+}
+
+.admonition a:hover {
+  text-decoration: underline;
+}

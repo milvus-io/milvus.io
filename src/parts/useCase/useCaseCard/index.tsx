@@ -1,4 +1,5 @@
 import styles from './index.module.less';
+import CustomButton from '@/components/customButton';
 
 export default function UseCaseCard({ useCase }) {
   const { name, logo, description, link, cta_label } = useCase;
@@ -8,14 +9,16 @@ export default function UseCaseCard({ useCase }) {
       <img src={logo} alt={name} />
       <p className={styles.desc}>{description}</p>
       {link && (
-        <a
+        <CustomButton
           href={link}
           target="_blank"
-          rel="noreferrer"
-          className={styles.linkButton}
+          variant="outlined"
+          classes={{
+            root: styles.startLinkButton,
+          }}
         >
           {cta_label}
-        </a>
+        </CustomButton>
       )}
     </div>
   );

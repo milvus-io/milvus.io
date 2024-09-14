@@ -23,6 +23,10 @@ function MyApp({ Component, pageProps }) {
           content="https://assets.zilliz.com/meta_image_milvus_d6510e10e0.png"
         />
         <meta property="og:type" content="WebSite" />
+        <meta
+          name="keywords"
+          content="milvus, vector database, milvus docs, milvus blogs"
+        />
       </Head>
       <Component {...pageProps} />
       <Script

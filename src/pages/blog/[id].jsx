@@ -48,13 +48,15 @@ export default function Template(props) {
     navigate(`/blog?page=1#${tag}`);
   };
 
+  const metaTitle = `${title} - Milvus Blog`;
+
   return (
     <main>
       <Layout t={t}>
         <Head>
-          <title>{title}</title>
+          <title>{metaTitle}</title>
           <meta name="description" content={desc} />
-          <meta property="og:title" content={title} />
+          <meta property="og:title" content={metaTitle} />
           <meta property="og:description" content={desc} />
           <meta property="og:url" content={shareUrl} />
           <meta property="og:image" content={`https://${cover}`} />

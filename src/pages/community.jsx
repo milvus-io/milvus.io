@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Layout from '@/components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
 import { DISCORD_INVITE_URL } from '@/consts';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { ArrowRightAltIcon } from '@/components/icons/ArrowRightAltIcon';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import classes from '@/styles/community.module.less';
 import pageClasses from '@/styles/responsive.module.less';
@@ -111,91 +111,94 @@ export default function Community() {
           />
         </Head>
 
-        <section className={clsx(pageClasses.container, classes.headSection)}>
-          <h1 className="">{t('title')}</h1>
+        <div className={classes.communityPageContainer}>
+          <section className={clsx(pageClasses.container, classes.headSection)}>
+            <h1 className="">{t('title')}</h1>
 
-          <ul className={classes.mediaWrapper}>
-            {socialMediaList.map(v => (
-              <li key={v.label}>
-                <img src={v.imgUrl} alt={v.label} />
-                <p className="">{v.label}</p>
-                <Link href={v.href}>Join now</Link>
-              </li>
-            ))}
-          </ul>
-
-          <div className={classes.officeHoursContainer}>
-            <div className={classes.imgWrapper}>
-              <img src="/images/community/event-discord.png" alt="Discord" />
-            </div>
-            <div className={classes.contentWrapper}>
-              <h2 className={classes.title}>{t('officeHours.title')}</h2>
-              <p className={classes.desc}>{t('officeHours.content')}</p>
-
-              <CustomButton
-                variant="contained"
-                className={classes.linkBtn}
-                href={OFFICE_HOUR_REGISTER_LINK}
-                target="_blank"
-              >
-                {t('officeHours.button')}
-              </CustomButton>
-            </div>
-          </div>
-        </section>
-
-        <section
-          className={clsx(pageClasses.container, classes.contentSection)}
-        >
-          <h2>{t('community.title')}</h2>
-          <h3 className={classes.sectionDesc}>{t('community.content')}</h3>
-
-          <ul className={classes.featureWrapper}>
-            {featureList.map(v => (
-              <li key={v.label}>
-                <img src={v.icon} alt={v.label} />
-                <p className={classes.label}>{v.label}</p>
-                <p className={classes.desc}>{v.desc}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className={classes.resourceSection}>
-          <div className={clsx(pageClasses.container, classes.innerSection)}>
-            <h2>{t('resource')}</h2>
-            <ul className={classes.resourceList}>
-              {resourceList.map(v => (
+            <ul className={classes.mediaWrapper}>
+              {socialMediaList.map(v => (
                 <li key={v.label}>
-                  <div className={classes.topContent}>
-                    <img src={v.icon} alt={v.label} />
-                    <p className={classes.label}>{v.label}</p>
-                    <p className={classes.desc}>{v.desc}</p>
-                  </div>
-
-                  <Link href={v.href} className={classes.linkBtn}>
-                    {v.btnLabel}
-                    <ArrowRightAltIcon />
-                  </Link>
+                  <img src={v.imgUrl} alt={v.label} />
+                  <p className="">{v.label}</p>
+                  <CustomButton variant="outlined" href={v.href}>
+                    Join now
+                  </CustomButton>
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
 
-        <section
-          className={clsx(pageClasses.container, classes.mailListSection)}
-        >
-          <h2>{t('mail.title')}</h2>
-          <div className={classes.mailListWrapper}>
-            {mailList.map(v => (
-              <Link className={classes.linkBtn} href={v.href}>
-                <MailOutlineIcon />
-                <span>{v.label}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
+            <div className={classes.officeHoursContainer}>
+              <div className={classes.imgWrapper}>
+                <img src="/images/community/event-discord.png" alt="Discord" />
+              </div>
+              <div className={classes.contentWrapper}>
+                <h2 className={classes.title}>{t('officeHours.title')}</h2>
+                <p className={classes.desc}>{t('officeHours.content')}</p>
+
+                <CustomButton
+                  variant="contained"
+                  className={classes.linkBtn}
+                  href={OFFICE_HOUR_REGISTER_LINK}
+                  target="_blank"
+                >
+                  {t('officeHours.button')}
+                </CustomButton>
+              </div>
+            </div>
+          </section>
+
+          <section
+            className={clsx(pageClasses.container, classes.contentSection)}
+          >
+            <h2>{t('community.title')}</h2>
+            <h3 className={classes.sectionDesc}>{t('community.content')}</h3>
+
+            <ul className={classes.featureWrapper}>
+              {featureList.map(v => (
+                <li key={v.label}>
+                  <img src={v.icon} alt={v.label} />
+                  <p className={classes.label}>{v.label}</p>
+                  <p className={classes.desc}>{v.desc}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className={classes.resourceSection}>
+            <div className={clsx(pageClasses.container, classes.innerSection)}>
+              <h2>{t('resource')}</h2>
+              <ul className={classes.resourceList}>
+                {resourceList.map(v => (
+                  <li key={v.label}>
+                    <div className={classes.topContent}>
+                      <img src={v.icon} alt={v.label} />
+                      <p className={classes.label}>{v.label}</p>
+                      <p className={classes.desc}>{v.desc}</p>
+                    </div>
+
+                    <CustomButton variant="outlined" href={v.href}>
+                      {v.btnLabel} <ArrowRightAltIcon />
+                    </CustomButton>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section
+            className={clsx(pageClasses.container, classes.mailListSection)}
+          >
+            <h2>{t('mail.title')}</h2>
+            <div className={classes.mailListWrapper}>
+              {mailList.map(v => (
+                <Link className={classes.linkBtn} href={v.href}>
+                  <MailOutlineIcon fontSize="14" />
+                  <span>{v.label}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        </div>
       </Layout>
     </main>
   );

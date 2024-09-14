@@ -4,6 +4,7 @@
   margin: 0 auto;
   padding-bottom: 40px;
   font-family: 'Inter';
+  background-color: @color-white1;
 }
 
 .headSection {
@@ -38,13 +39,13 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      border: 1px solid var(--color-grey-04);
-      border-radius: 8px;
+      border-radius: 12px;
       align-items: center;
+      background-color: @color-white;
 
       img {
         width: 50px;
-        height: 50px;
+        height: 55px;
       }
 
       p {
@@ -55,21 +56,9 @@
       }
 
       a {
-        padding: 10px 20px;
         width: 100%;
-        text-align: center;
-        font-family: Roboto Mono;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 18px;
-        border: 1px solid #00a1ea;
-        border-radius: 20px;
-        color: #00a1ea;
-
-        &:hover {
-          color: #12389a;
-          border-color: #12389a;
-        }
+        font-weight: 400;
+        justify-content: center;
       }
     }
   }
@@ -137,14 +126,12 @@
 
       .linkBtn {
         color: #fff;
-        border-color: #00dcc6;
+        border-color: #fff;
         background-color: transparent;
-        color: #00dcc6;
+        color: #fff;
 
         &:hover {
-          border-color: #2c9986;
           background-color: transparent;
-          color: #2c9986;
         }
       }
     }
@@ -152,7 +139,7 @@
 }
 
 .contentSection {
-  padding: 60px 0;
+  padding: 40px 0;
   margin: 0 auto;
 
   h2 {
@@ -177,7 +164,7 @@
 
   .featureWrapper {
     display: flex;
-    gap: 40px;
+    gap: 30px;
     list-style: none;
 
     @media @tablet {
@@ -192,7 +179,10 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 20px;
+      background-color: @color-white;
+      padding: 25px 22px;
+      border-radius: 12px;
 
       img {
         width: 30px;
@@ -217,7 +207,7 @@
 }
 
 .resourceSection {
-  padding: 50px 0;
+  padding: 40px 0;
   background-color: #f5f8fb;
 
   .innerSection {
@@ -235,7 +225,7 @@
 
   .resourceList {
     display: flex;
-    gap: 40px;
+    gap: 30px;
     list-style: none;
 
     @media @tablet {
@@ -251,7 +241,9 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 10px;
+      gap: 20px;
+      background-color: @color-white;
+      padding: 25px 22px;
 
       .topContent {
         display: flex;
@@ -278,21 +270,8 @@
         line-height: 20px;
       }
 
-      .linkBtn {
-        display: flex;
-        align-items: center;
-        font-family: Roboto Mono;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 18px;
-        gap: 4px;
-        transition: gap linear 0.2s;
-        color: #00a1ea;
-
-        &:hover {
-          gap: 8px;
-        }
+      a {
+        align-self: start;
       }
     }
   }
@@ -313,37 +292,29 @@
 
   .mailListWrapper {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     justify-content: center;
     flex-wrap: wrap;
 
     .linkBtn {
-      flex: 0 0 auto;
-      padding: 10px 20px;
       display: flex;
+      padding: 14px 28px;
+      justify-content: center;
       align-items: center;
-      gap: 10px;
-
-      color: #00a1ea;
-      font-family: Roboto Mono;
+      gap: 8px;
+      flex: 1 0 0;
+      align-self: stretch;
+      border-radius: 6px;
+      background: var(--Black-100, #00131a);
+      color: #fff;
       font-size: 14px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 18px;
-      border: 1px solid #00a1ea;
-      border-radius: 20px;
+      font
 
       svg path {
-        fill: #00a1ea;
+        fill: #fff;
       }
 
       &:hover {
-        color: #12389a;
-        border-color: #12389a;
-
-        svg path {
-          fill: #12389a;
-        }
       }
     }
   }

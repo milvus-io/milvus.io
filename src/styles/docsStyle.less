@@ -190,11 +190,6 @@
     margin: 24px 0;
     position: relative;
     padding-right: 42px;
-    border: 1px solid @color-grey-04;
-
-    &:has(code[class*='language-']) {
-      border: none;
-    }
 
     &:has(code[class*='active']) {
       border: 1px solid @color-grey-04;
@@ -1036,6 +1031,10 @@
 .api-reference-wrapper {
   [class^='language-'] {
     display: block;
+  }
+
+  pre {
+    border: 1px solid @color-grey-04;
   }
 
   &.java {

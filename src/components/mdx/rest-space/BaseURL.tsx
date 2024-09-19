@@ -23,15 +23,6 @@ export const BaseURL = ({ endpoint, lang, target }) => {
             {server}
           </p>
         </div>
-        {prompt && (
-          <Admonition
-            type="info"
-            icon="📘"
-            title={i18n[lang]['admonition.title']}
-          >
-            <div dangerouslySetInnerHTML={{ __html: prompt }} />
-          </Admonition>
-        )}
       </section>
       <section className={styles.exampleContainer}>
         <CodeBlock className="language-shell" children={children} />

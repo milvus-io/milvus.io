@@ -172,7 +172,10 @@ export const generateAllContentDataOfSingleVersion = (params: {
     return cachedData;
   }
 
-  const filePath = join(BASE_DOC_DIR, `localization/${params.version}/site/${lang}`);
+  const filePath = join(
+    BASE_DOC_DIR,
+    `localization/${params.version}/site/${lang}`
+  );
 
   let fileDataList: DocFileDataInfoType[] = [];
 
@@ -259,7 +262,10 @@ export const generateHomePageDataOfSingleVersion = (params: {
     return cachedData;
   }
 
-  const filePath = join(BASE_DOC_DIR, `localization/${version}/site/${lang}/home/home.md`);
+  const filePath = join(
+    BASE_DOC_DIR,
+    `localization/${version}/site/${lang}/home/home.md`
+  );
   const fileInfo = fs.readFileSync(filePath, 'utf-8');
   const propsInfo = fs.readFileSync(filePath.replace('.md', '.json'), 'utf-8');
   const { data, content } = matter(fileInfo) as {
@@ -333,9 +339,25 @@ const getMenuStructureData = (params: {
       BASE_DOC_DIR,
       `localization/${docVersion}/site/${lang}/menuStructure/${lang}.json`
     );
-    return fs.readFileSync(filePath, 'utf-8')
+    return fs.readFileSync(filePath, 'utf-8');
   } catch (error) {
     // fallback to the en version
-    return fs.readFileSync(join(BASE_DOC_DIR, `${docVersion}/site/en/menuStructure/en.json`), 'utf-8');
+    return fs.readFileSync(
+      join(BASE_DOC_DIR, `${docVersion}/site/en/menuStructure/en.json`),
+      'utf-8'
+    );
   }
-}
+};
+
+export const sortVersionDir = (a: { id: string }, b: { id: string }) => {
+  const versionRegex = /^v(\d+)$/;
+  const aMatch = a.id.match(versionRegex);
+  const bMatch = b.id.match(versionRegex);
+  if (aMatch && bMatch) {
+    const aVersion = parseInt(aMatch[1], 10);
+    const bVersion = parseInt(bMatch[1], 10);
+
+    return bVersion - aVersion;
+  }
+  return 0;
+};

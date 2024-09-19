@@ -11,6 +11,7 @@ import {
   generateDocVersionInfo,
   validationFileFilter,
   DOCS_MINIMUM_VERSION,
+  sortVersionDir,
 } from './docs';
 import { getCacheData, setCacheData } from './index';
 import { formatMenuLabel } from './apiReference';
@@ -146,13 +147,16 @@ const generateApiMenuData = (params: {
      * to keep the menu item id unique, sub menu item will be like:
      * {id: 'MilvusClient-Client-MilvusClient().md', label: 'MilvusClient().md', children: []}
      */
-    const children = usablePaths.map(subPath =>
-      generateApiMenuData({
-        filePath: join(filePath, subPath),
-        prefix: menuItemId,
-        parentIds: parentNodes,
-      })
-    );
+    const children = usablePaths
+      .map(subPath =>
+        generateApiMenuData({
+          filePath: join(filePath, subPath),
+          prefix: menuItemId,
+          parentIds: parentNodes,
+        })
+      )
+      .sort(sortVersionDir);
+
     return {
       id: menuItemId,
       label: formatMenuLabel(fileName),

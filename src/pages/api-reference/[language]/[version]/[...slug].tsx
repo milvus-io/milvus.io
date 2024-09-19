@@ -229,20 +229,23 @@ export default function Template(props: ApiDetailPageProps) {
 export const getStaticPaths = () => {
   const apiData = generateApiReferenceVersionsInfo();
 
-  const result = apiData.map(data => {
-    const { language, versions } = data;
-    const ApiDataOfCurLang = versions.map(version =>
-      generateApiMenuAndContentDataOfSingleVersion({
-        version,
+  const result = apiData
+    .map(data => {
+      const { language, versions } = data;
+      const ApiDataOfCurLang = versions.map(version =>
+        generateApiMenuAndContentDataOfSingleVersion({
+          version,
+          language,
+        })
+      );
+      return {
         language,
-      })
-    );
-    return {
-      language,
-      versions,
-      data: ApiDataOfCurLang,
-    };
-  });
+        versions,
+        data: ApiDataOfCurLang,
+      };
+    })
+    // Restful paths have been moved to api-reference/restful/[version]/[...slug].tsx
+    .filter(item => item.language !== ApiReferenceLanguageEnum.Restful);
 
   let routers: ApiFileDateInfoType[] = [];
   result.forEach(({ data }) => {

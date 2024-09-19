@@ -34,11 +34,11 @@ const apiCache = new Map<string, any>();
  * */
 
 // remove .md from file name
-const formatMenuLabel = (label: string) => {
-  if (!label.includes('.md')) {
+export const formatMenuLabel = (label: string) => {
+  if (!label.includes('.md') && !label.includes('.mdx')) {
     return label;
   }
-  return label.replace('.md', '');
+  return label.replace(/\.mdx?$/, '');
 };
 // file will be html or mkd without front matter
 const readApiFile = (params: {

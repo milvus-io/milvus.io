@@ -9,6 +9,75 @@ type Props = {
   className?: string;
 };
 
+const HIGHLIGHT_COMMENT = {
+  START: '//highlight-start',
+  END: '//highlight-end',
+  NEXT_LINE: '//highlight-next-line',
+};
+const HIGHLIGHT_CLASS_NAME = 'bg-black/10 rounded-sm';
+let highlightStart = false;
+let highlightNextLine = false;
+
+const highlightLine = (
+  lineArray: Array<{
+    content: string;
+    types: string[];
+  }>,
+  lineProps: { className: string }
+) => {
+  let shouldExclude = false;
+
+  // Check for highlight-next-line
+  if (highlightNextLine) {
+    lineProps.className = `${lineProps.className} ${HIGHLIGHT_CLASS_NAME}`;
+    highlightNextLine = false;
+  }
+
+  lineArray.forEach((line, i) => {
+    const content = line.content;
+
+    if (content.replace(/\s/g, '').includes(HIGHLIGHT_COMMENT.NEXT_LINE)) {
+      highlightNextLine = true;
+      shouldExclude = true;
+    }
+
+    // Stop highlighting
+    if (
+      !!highlightStart &&
+      content.replace(/\s/g, '') === HIGHLIGHT_COMMENT.END
+    ) {
+      highlightStart = false;
+      shouldExclude = true;
+    }
+
+    // Start highlighting after "//highlight-start"
+    if (content.replace(/\s/g, '') === HIGHLIGHT_COMMENT.START) {
+      highlightStart = true;
+      shouldExclude = true;
+    }
+  });
+
+  if (!!highlightStart) {
+    lineProps.className = `${lineProps.className} ${HIGHLIGHT_CLASS_NAME}`;
+  }
+
+  return shouldExclude;
+};
+
+const removeCodeHighlightComments = (code: string) => {
+  return code
+    .split('\n')
+    .filter(line => {
+      const text = line.replace(/\s/g, '');
+      return (
+        !text.includes(HIGHLIGHT_COMMENT.START) &&
+        !text.includes(HIGHLIGHT_COMMENT.END) &&
+        !text.includes(HIGHLIGHT_COMMENT.NEXT_LINE)
+      );
+    })
+    .join('\n');
+};
+
 export const CodeBlock: FC<Props> = props => {
   const { children, className, language = 'javascript' } = props;
   const [isCopied, setIsCopied] = useState(false);
@@ -16,7 +85,8 @@ export const CodeBlock: FC<Props> = props => {
   const handleCopyClick = async () => {
     if (navigator.clipboard) {
       try {
-        await navigator.clipboard.writeText(children);
+        const code = removeCodeHighlightComments(children);
+        await navigator.clipboard.writeText(code);
         setIsCopied(true);
         setTimeout(() => {
           setIsCopied(false);
@@ -45,11 +115,13 @@ export const CodeBlock: FC<Props> = props => {
             )}
             style={style}
           >
-            <code className="p-[16px] inline-block">
+            <code className="p-[16px] inline-block w-full">
               {tokens.map((line, i) => {
+                const lineProps = getLineProps({ line });
+                const shouldExclude = highlightLine(line, lineProps);
                 const { className: lineClassName, ...restLineProps } =
-                  getLineProps({ line });
-                return (
+                  lineProps;
+                return !shouldExclude ? (
                   <div
                     key={i}
                     className={clsx(lineClassName, 'leading-[135%]')}
@@ -59,7 +131,7 @@ export const CodeBlock: FC<Props> = props => {
                       <span key={key} {...getTokenProps({ token })} />
                     ))}
                   </div>
-                );
+                ) : null;
               })}
             </code>
           </pre>

@@ -1,6 +1,7 @@
 import * as babel from '@babel/core';
 import { compile } from '@mdx-js/mdx';
 import traverse from '@babel/traverse';
+import { visit } from 'unist-util-visit';
 
 function extractValue(node) {
   if (node.type === 'StringLiteral') {
@@ -69,3 +70,23 @@ export async function getVariablesFromMDX(mdxContent) {
     exports,
   };
 }
+
+export const rehypeCodeBlockHighlightPlugin = () => {
+  return tree => {
+    visit(tree, 'element', (node, index, parent) => {
+      if (node.tagName === 'code' && parent.tagName === 'pre') {
+        const codeBlockNode = {
+          type: 'element',
+          tagName: 'CodeBlock',
+          children: node.children.map(item => {
+            if (item.type === 'text') {
+              item.value = item.value?.trim();
+            }
+            return item;
+          }),
+        };
+        parent.children[index] = codeBlockNode;
+      }
+    });
+  };
+};

@@ -16,7 +16,10 @@ import {
   FinalMenuStructureType,
 } from '@/types/docs';
 import { formatApiRelativePath } from '@/utils';
-import { getVariablesFromMDX } from '@/utils/mdx';
+import {
+  getVariablesFromMDX,
+  rehypeCodeBlockHighlightPlugin,
+} from '@/utils/mdx';
 import {
   generateRestfulMenuAndContentDataOfAllVersions,
   generateRestfulMenuAndContentDataOfSingleVersion,
@@ -179,7 +182,12 @@ export async function getStaticProps({ params }) {
   const { data = {}, content } = matter(markdown);
 
   const { exports } = await getVariablesFromMDX(content);
-  const mdxSource = await serialize(content, { scope: exports });
+  const mdxSource = await serialize(content, {
+    scope: exports,
+    mdxOptions: {
+      rehypePlugins: [rehypeCodeBlockHighlightPlugin],
+    },
+  });
 
   const headingRegex = /^#\s+(.*)$/m;
   const match = headingRegex.exec(content);

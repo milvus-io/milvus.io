@@ -19,7 +19,7 @@
 
 .paramName {
   font-family: monospace;
-  color: rgb(28, 23, 255);
+  color: var(--color-text-primary);
   font-weight: 700;
   font-size: 1rem;
   padding-right: 0.8rem;
@@ -89,8 +89,8 @@
 
 input[type='radio']:checked + .tabLabel {
   padding: 0.2em 0.5em;
-  color: rgb(28, 23, 255);
-  background-color: rgb(28, 23, 255, 0.2);
+  color: var(--color-text-primary);
+  background-color: rgb(240, 244, 249);
   border-radius: 10px;
 }
 

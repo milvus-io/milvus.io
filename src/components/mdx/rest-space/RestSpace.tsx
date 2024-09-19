@@ -666,7 +666,7 @@ const ExampleRequests = ({
 }: any) => {
   const condition = isControlPlane(endpoint);
   const baseUrl = condition ? '${BASE_URL}' : '${CLUSTER_ENDPOINT}';
-  const token = condition ? 'YOUR_API_KEY' : 'db_admin:xxxxxxxxxxxxx';
+  const token = condition ? 'YOUR_API_KEY' : 'root:Milvus';
   var req = `export TOKEN="${token}"${
     pathExample ? '\n' + pathExample : ''
   }\n\ncurl --request ${method.toUpperCase()} \\\n--url "${baseUrl}${endpoint}`;

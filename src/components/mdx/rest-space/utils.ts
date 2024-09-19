@@ -30,7 +30,7 @@ export const getBaseUrl = (endpoint, lang, pubTarget) => {
 
   if (pubTarget === 'milvus') {
     server = 'http://localhost:19530';
-    children = `export BASE_URL="${server}"`;
+    children = `export CLUSTER_ENDPOINT="${server}"`;
   }
 
   return {

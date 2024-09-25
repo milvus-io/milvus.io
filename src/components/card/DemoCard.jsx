@@ -77,13 +77,15 @@ const DemoCard = ({
         <h3>{name}</h3>
         <p>{desc}</p>
         <div className={styles.btnGroup}>
-          <CustomButton
-            onClick={handleSubmitEmail}
-            className={styles.tryBtn}
-            variant="outlined"
-          >
-            Try Demo
-          </CustomButton>
+          {href && (
+            <CustomButton
+              onClick={handleSubmitEmail}
+              className={styles.tryBtn}
+              variant="outlined"
+            >
+              Try Demo
+            </CustomButton>
+          )}
 
           {videoSrc && (
             <CustomButton

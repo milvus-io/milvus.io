@@ -1,0 +1,114 @@
+.paramContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.paramLabels {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.paramExample {
+  font-size: 0.8rem;
+  color: rgb(74, 83, 104);
+  font-weight: 600;
+}
+
+.paramName {
+  font-family: monospace;
+  color: var(--color-text-primary);
+  font-weight: 700;
+  font-size: 1rem;
+  padding-right: 0.8rem;
+}
+
+.label {
+  font-family: monospace;
+  padding: 0.2em 0.5em;
+  color: rgb(74, 83, 104);
+  background-color: rgba(223, 225, 236, 0.7);
+  border-radius: 5px;
+}
+
+.required {
+  font-family: monospace;
+  padding: 0.2em 0.5em;
+  color: rgb(220, 38, 38);
+  background-color: rgb(220, 38, 38, 0.2);
+  border-radius: 5px;
+}
+
+.sectionHeader {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(223, 225, 236, 0.7);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tabs > div {
+  min-width: 100%;
+  max-width: 100%;
+}
+
+.tabLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  background-color: #000;
+  color: #fff;
+  transition: background-color ease 0.3s;
+  padding: 0.2em 0.5em;
+  color: rgb(74, 83, 104);
+  background-color: rgba(223, 225, 236, 0.7);
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+.tabPanel {
+  height: 100%;
+  display: none;
+  order: 99;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+}
+
+.container input[type='radio'] {
+  display: none;
+}
+
+input[type='radio']:checked + .tabLabel {
+  padding: 0.2em 0.5em;
+  color: var(--color-text-primary);
+  background-color: rgb(240, 244, 249);
+  border-radius: 10px;
+}
+
+input[type='radio']:checked + .tabLabel + .tabPanel {
+  display: block;
+  min-width: 100%;
+}
+
+.exampleContainer {
+  margin-top: 4.5rem;
+  font-size: 0.85rem;
+}
+
+.description {
+  font-size: 0.95rem;
+  font-weight: 450;
+}
+
+.description p {
+  line-height: 1.5;
+}

@@ -11,6 +11,7 @@ import {
   generateDocVersionInfo,
   validationFileFilter,
   DOCS_MINIMUM_VERSION,
+  sortVersionDir,
 } from './docs';
 import { getCacheData, setCacheData } from './index';
 
@@ -34,11 +35,11 @@ const apiCache = new Map<string, any>();
  * */
 
 // remove .md from file name
-const formatMenuLabel = (label: string) => {
-  if (!label.includes('.md')) {
+export const formatMenuLabel = (label: string) => {
+  if (!label.includes('.md') && !label.includes('.mdx')) {
     return label;
   }
-  return label.replace('.md', '');
+  return label.replace(/\.mdx?$/, '');
 };
 // file will be html or mkd without front matter
 const readApiFile = (params: {
@@ -118,13 +119,15 @@ const generateApiMenuData = (params: {
      * to keep the menu item id unique, sub menu item will be like:
      * {id: 'MilvusClient-Client-MilvusClient().md', label: 'MilvusClient().md', children: []}
      */
-    const children = usablePaths.map(subPath =>
-      generateApiMenuData({
-        filePath: join(filePath, subPath),
-        prefix: menuItemId,
-        parentIds: parentNodes,
-      })
-    );
+    const children = usablePaths
+      .map(subPath =>
+        generateApiMenuData({
+          filePath: join(filePath, subPath),
+          prefix: menuItemId,
+          parentIds: parentNodes,
+        })
+      )
+      .sort(sortVersionDir);
     return {
       id: menuItemId,
       label: formatMenuLabel(fileName),

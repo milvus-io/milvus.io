@@ -36,6 +36,8 @@ function extractValue(node) {
     return result;
   } else if (node.type === 'Identifier') {
     return '${' + node.name + '}';
+  } else if (node.type === 'BooleanLiteral') {
+    return node.value;
   } else {
     return 'Unknown type';
   }

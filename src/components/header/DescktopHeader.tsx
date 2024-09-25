@@ -135,7 +135,7 @@ export default function DesktopHeader(props: Props) {
           <a
             href={GITHUB_MILVUS_LINK}
             className={
-              'flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] '
+              'h-9 px-3 py-1.5 rounded-md flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] transition duration-200 ease-in-out hover:bg-black4'
             }
             target="_blank"
           >

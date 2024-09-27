@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
 import Layout from '../../components/layout/commonLayout';
@@ -14,7 +14,7 @@ import BlogAnchorSection from '../../parts/blogs/blogAnchors';
 import pageClasses from '../../styles/responsive.module.less';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { useCopyCode } from '../../hooks/enhanceCodeBlock';
-import { CUSTOM_H1_TAG } from '@/consts';
+import 'highlight.js/styles/atom-one-light.css';
 
 export default function Template(props) {
   const {

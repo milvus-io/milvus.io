@@ -9,7 +9,10 @@ import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { CustomizedSnackbars } from '@/components/snackBar';
 import SubscribeNewsletter from '@/components/subscribe';
 import { ABSOLUTE_BASE_URL } from '@/consts';
-import { DEMO_MULTIMODAL_SEARCH_URL } from '@/consts/externalLinks';
+import {
+  DEMO_MULTIMODAL_SEARCH_URL,
+  DEMO_HYBRID_SEARCH_URL,
+} from '@/consts/externalLinks';
 import { useTranslation } from 'react-i18next';
 
 const TITLE = 'Similarity Search Demos Powered by Milvus';
@@ -39,7 +42,7 @@ export default function MilvusDemos() {
     {
       name: t('demos.hybridSearch.title'),
       desc: t('demos.hybridSearch.desc'),
-      href: 'https://demos.milvus.io/hybrid-search/ ',
+      href: DEMO_HYBRID_SEARCH_URL,
       cover: '/images/demos/hybrid-search.png',
       // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
       lowerCaseName: 'hybrid search',

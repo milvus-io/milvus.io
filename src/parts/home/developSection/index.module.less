@@ -21,49 +21,74 @@
     }
   }
 
-  .stacksList {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 12px;
-    margin-bottom: 12px;
+  .listViewArea {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 32px;
 
-    @media @tablet {
-      grid-template-columns: repeat(2, 1fr);
+    &::-webkit-scrollbar {
+      display: none;
     }
 
-    @media @phone {
-      grid-template-columns: 1fr;
+    .stacksList {
+      display: flex;
+      gap: 12px;
+
+      .stackItem {
+        flex: 0 0 382px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        justify-content: space-between;
+        padding: 30px;
+        border-radius: 16px;
+        border: 1px solid @color-black4;
+        background: #fff;
+
+        .logoWrapper {
+          display: block;
+          width: 100%;
+          margin-bottom: 24px;
+          text-align: center;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .stackTitle {
+          .heading4();
+        }
+
+        .stackDesc {
+          .paragraph4-regular();
+          color: @color-black2;
+        }
+      }
     }
   }
 
-  .stackItem {
+  .ctaButtonWrapper {
     display: flex;
-    flex-direction: column;
-    gap: 24px;
-    justify-content: space-between;
-    padding: 30px;
-    border-radius: 16px;
-    border: 1px solid @color-black4;
-    background: #fff;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 60px;
 
-    .logoWrapper {
-      display: block;
-      width: 100%;
-      margin-bottom: 24px;
-      text-align: center;
+    .ctaButton {
+      .resetNativeButton();
+      line-height: 0;
+      padding: 10px;
+      border: 1px solid @color-black4;
+      border-radius: 50%;
+      background-color: #fff;
 
-      img {
-        width: 100%;
+      &:disabled {
+        background-color: @color-black4;
       }
     }
 
-    .stackTitle {
-      .heading4();
-    }
-
-    .stackDesc {
-      .paragraph4-regular();
-      color: @color-black2;
+    .leftButton {
+      transform: rotate(180deg);
     }
   }
 

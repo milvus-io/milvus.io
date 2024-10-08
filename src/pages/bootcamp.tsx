@@ -19,7 +19,7 @@ export default function Bootcamp(props) {
     VIDEO_SEARCH: '/images/bootcamp/video-search.svg',
     AUDIO_SEARCH: '/images/bootcamp/audio-search.svg',
     MOLECULAR: '/images/bootcamp/molecular.svg',
-    HYBRID: '/images/bootcamp/hybrid.svg',
+    DNA_CLASS: '/images/bootcamp/hybrid.svg',
   };
 
   return (

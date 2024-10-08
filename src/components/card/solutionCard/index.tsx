@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './index.module.less';
 import Link from 'next/link';
 import clsx from 'clsx';
+import CustomButton from '@/components/customButton';
+import { RightWholeArrow } from '@/components/icons';
 
 const SolutionCard: React.FC<{
   img?: string;
@@ -21,21 +23,23 @@ const SolutionCard: React.FC<{
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={styles.topSection}
+        className={styles.linkWrapper}
       >
-        <div className={styles.titleBar}>
+        <div>
+          {img ? <img src={img} alt={title} className={styles.img} /> : null}
           <h3 className={styles.title}>{title}</h3>
-          {img ? <img src={img} alt="icon" className={styles.img} /> : null}
+          <p className={styles.content}>{content}</p>
         </div>
-
-        <p className={styles.content}>{content}</p>
+        {liveDemo && (
+          <CustomButton
+            className={styles.demoBtn}
+            endIcon={<RightWholeArrow />}
+            variant="text"
+          >
+            Live Demo
+          </CustomButton>
+        )}
       </Link>
-
-      {liveDemo && (
-        <Link className={styles.demoBtn} href={liveDemo}>
-          Live Demo
-        </Link>
-      )}
     </div>
   );
 };

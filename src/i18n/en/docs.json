@@ -26,5 +26,10 @@
   },
   "translate": {
     "by": "Translated by"
+  },
+  "advertise": {
+    "title": "Try Mananged Milvus Free",
+    "content": "Hassle-free, 10x faster than Milvus, AI-powered AutoIndex and enterprise-ready for your GenAI apps",
+    "ctaLabel": "Get Started Free"
   }
 }

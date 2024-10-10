@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AnchorTree from '../../parts/docs/anchorTree';
 import FeedbackSection from './feedback';
 import styles from './index.module.less';
+import CloudAdvertisementCard from '../card/advCard';
 
 interface DocData {
   editPath: string;
@@ -170,6 +171,7 @@ const Aside = (props: AsidePropsType) => {
             lang={lang}
           />
         )}
+        <CloudAdvertisementCard language={lang} />
         {isShowBtnGroup && (
           <ul
             className={clsx(styles.btnsGroup, btnGroup, {

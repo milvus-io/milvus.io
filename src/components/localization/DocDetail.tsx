@@ -20,6 +20,7 @@ import clsx from 'clsx';
 import { DocDetailPageProps } from '@/types/docs';
 import { LanguageEnum } from '@/components/language-selector';
 
+// contains the latest version's detail pages and other versions' home pages
 export function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,

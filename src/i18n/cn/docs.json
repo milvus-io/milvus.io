@@ -26,5 +26,10 @@
   },
   "translate": {
     "by": "翻译自"
+  },
+  "advertise": {
+    "title": "想要更快、更简单、更好用的 Milvus SaaS服务 ？",
+    "content": "Zilliz Cloud是基于Milvus的全托管向量数据库，拥有更高性能，更易扩展，以及卓越性价比",
+    "ctaLabel": "免费试用 Zilliz Cloud"
   }
 }

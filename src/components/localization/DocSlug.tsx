@@ -19,7 +19,7 @@ import { useActivateAnchorWhenScroll, useGenAnchor } from '@/hooks/doc-anchor';
 import { LanguageEnum } from '@/components/language-selector';
 import { useTranslation } from 'react-i18next';
 
-// this is doc detail page which's version is not the latest
+// doc detail page which's version is not the latest
 export function DocSlugPage(props: DocDetailPageProps) {
   const {
     homeData,

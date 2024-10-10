@@ -10,13 +10,10 @@ const BASE_PATH = join(process.cwd(), 'src/blogs/blog');
 
 const blogCache = new Map<string, any>();
 
-export const generateAllBlogContentList = (params?: {
-  lang?: 'en' | 'cn';
-  withContent?: boolean;
-}) => {
-  const { lang = 'en', withContent = false } = params || {};
+export const generateAllBlogContentList = (params?: { lang?: 'en' | 'cn' }) => {
+  const { lang = 'en' } = params || {};
 
-  const cacheKey = `all-blog-${lang}-${withContent}`;
+  const cacheKey = `all-blog-${lang}`;
 
   const cachedData = getCacheData({ cache: blogCache, key: cacheKey });
 
@@ -44,7 +41,7 @@ export const generateAllBlogContentList = (params?: {
         date: `${data.date}`,
         tags: data.tags ? data.tags.split(',').map(t => t.trim()) : [],
       },
-      content: withContent ? content : '',
+      content,
     };
   });
   blogList.sort((a, b) => {
@@ -61,7 +58,7 @@ export const generateAllBlogContentList = (params?: {
 
 export const generateLatestBlogInfo = (params: { lang?: 'en' | 'cn' }) => {
   const { lang = 'en' } = params;
-  const blogList = generateAllBlogContentList({ lang, withContent: false });
+  const blogList = generateAllBlogContentList({ lang });
   return blogList[0];
 };
 

@@ -11,8 +11,9 @@ import {
 } from '@/consts/externalLinks';
 import { useState } from 'react';
 
-export default function DevelopSection() {
+export default function DevelopSection(props: { showMeetup?: boolean }) {
   const { t } = useTranslation('home');
+  const { showMeetup = true } = props;
 
   const [moveRightSteps, setMoveRightSteps] = useState(0);
 
@@ -140,34 +141,36 @@ export default function DevelopSection() {
         </button>
       </div>
 
-      <div className={clsx(pageClasses.homeContainer)}>
-        <div className={classes.meetupBgContainer}>
-          <div className={classes.meetupWrapper}>
-            <div className={classes.contentWrapper}>
-              <img
-                src="/images/home/meetup-logo.png"
-                alt="Unstructured Data Meetups"
-              />
-              <div>
-                <h3>{t('developSection.meetup.title')}</h3>
-                <p>{t('developSection.meetup.desc')}</p>
+      {showMeetup && (
+        <div className={clsx(pageClasses.homeContainer)}>
+          <div className={classes.meetupBgContainer}>
+            <div className={classes.meetupWrapper}>
+              <div className={classes.contentWrapper}>
+                <img
+                  src="/images/home/meetup-logo.png"
+                  alt="Unstructured Data Meetups"
+                />
+                <div>
+                  <h3>{t('developSection.meetup.title')}</h3>
+                  <p>{t('developSection.meetup.desc')}</p>
+                </div>
               </div>
-            </div>
 
-            <CustomButton
-              href={MEETUP_UNSTRUCTURED_DATA_URL}
-              endIcon={<RightWholeArrow color="#fff" />}
-              variant="contained"
-              classes={{
-                root: classes.rsvpButton,
-                icon: classes.linkButtonIcon,
-              }}
-            >
-              {t('buttons.rsvp')}
-            </CustomButton>
+              <CustomButton
+                href={MEETUP_UNSTRUCTURED_DATA_URL}
+                endIcon={<RightWholeArrow color="#fff" />}
+                variant="contained"
+                classes={{
+                  root: classes.rsvpButton,
+                  icon: classes.linkButtonIcon,
+                }}
+              >
+                {t('buttons.rsvp')}
+              </CustomButton>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

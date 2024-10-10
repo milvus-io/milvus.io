@@ -21,6 +21,7 @@ export interface DocHomePageProps {
   mdListData: AllMdVersionIdType[];
 }
 
+// latest version's home page
 export function DocHomepage(props: DocHomePageProps) {
   const { t } = useTranslation('docs', { lng: props.lang });
   const { homeData, blog, menus, version, versions, mdListData, lang } = props;

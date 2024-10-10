@@ -131,15 +131,22 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
 export default NotFoundPage;
 
 export const getStaticProps = async () => {
-  const pickedBlogs = [
-    'milvus-2-4-nvidia-cagra-gpu-index-multivector-search-sparse-vector-support.md',
-    'introducing-milvus-lite.md',
-    'introducing-pymilvus-integrations-with-embedding-models.md',
-  ];
   const list = generateAllBlogContentList();
-  const blogList = list.filter(blog =>
-    pickedBlogs.includes(blog.frontMatter.id)
-  );
+
+  // they want to display the blogs in specific order
+  const blogList = [
+    list.find(
+      v =>
+        v.frontMatter.id ===
+        'milvus-2-4-nvidia-cagra-gpu-index-multivector-search-sparse-vector-support.md'
+    ),
+    list.find(v => v.frontMatter.id === 'introducing-milvus-lite.md'),
+    list.find(
+      v =>
+        v.frontMatter.id ===
+        'introducing-pymilvus-integrations-with-embedding-models.md'
+    ),
+  ];
 
   return {
     props: {

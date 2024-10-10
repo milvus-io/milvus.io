@@ -1,0 +1,27 @@
+@import (reference) '@/styles/global.module.less';
+
+.advCardContainer {
+  padding: 30px 20px;
+  border-radius: 12px;
+  border: 1px solid @color-black3;
+  background: #fff;
+  margin-top: 32px;
+
+  .advTitle {
+    .paragraph2-bold();
+    margin-bottom: 12px;
+  }
+
+  .advAbstract {
+    .paragraph3-regular();
+    color: #475467;
+    margin-bottom: 24px;
+  }
+
+  .ctaButton {
+    .paragraph4();
+    svg path {
+      stroke: #fff;
+    }
+  }
+}

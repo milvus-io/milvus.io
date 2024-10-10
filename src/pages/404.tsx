@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
 import Head from 'next/head';
 import styles from '@/styles/404.module.less';
+import pageClasses from '@/styles/responsive.module.less';
+import clsx from 'clsx';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import BlogCard from '@/components/card/BlogCard';
+import { generateAllBlogContentList } from '@/utils/blogs';
+import { BlogDataType } from '@/types/blogs';
+import CustomButton from '@/components/customButton';
+import { RightWholeArrow } from '@/components/icons';
+import DevelopSection from '@/parts/home/developSection';
 
-const NotFoundPage = () => {
-  const { t } = useTranslation('common');
+const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
+  const { t } = useTranslation('notFound');
+  const { blogList } = props;
 
   const router = useRouter();
   const pagePath = router.asPath;
@@ -20,18 +28,37 @@ const NotFoundPage = () => {
     window.dataLayer.push({
       event: 'page_view_404',
       page_path: pagePath,
-      referrer: document.referrer
+      referrer: document.referrer,
     });
   }, [pagePath]);
+
+  const navigatorCards = [
+    {
+      name: t('docs'),
+      link: '/docs',
+    },
+    {
+      name: t('homepage'),
+      link: '/',
+    },
+    {
+      name: t('tutorial'),
+      link: '/docs/build-rag-with-milvus.md',
+    },
+  ];
 
   return (
     <Layout>
       <main>
         <Head>
-          <title>404: Not Found</title>
+          <title>Open Source Vector Database Built for Scale | Milvus</title>
           <meta
             name="description"
-            content="Oops, the page you were looking for doesn't seem to exist!Please check the URL you entered or try navigating back to our homepage."
+            content="Milvus is an open-source vector database with high performance built for GenAI applications."
+          />
+          <meta
+            name="keywords"
+            content="Open source vector databases, GenAI, Milvus, RAG, Vector Similarity Search"
           />
           <link
             rel="alternate"
@@ -40,28 +67,75 @@ const NotFoundPage = () => {
           />
         </Head>
 
-        <div className={styles.notFoundContainer}>
-          <div className={styles.notFountCenterWrapper}>
-            <div className={styles.notFoundTitlebar}>
-              <h1 className={styles.notFoundTitle}>{t('v3trans.404.title')}</h1>
-            </div>
-
-            <p className={styles.notFoundContent}>{t('v3trans.404.desc1')}</p>
-            <p className={styles.notFoundContent}>{t('v3trans.404.desc2')}</p>
-            <Link
-              href={'/'}
-              className={styles.notFoundButton}
-              children={
-                <>
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                  <span>{t('v3trans.404.gobtn')}</span>
-                </>
-              }
+        <section className={clsx(pageClasses.container, styles.navContainer)}>
+          <h1 className={styles.pageTitle}>{t('title')}</h1>
+          <p className={styles.abstract}>
+            <Trans
+              t={t}
+              i18nKey="content"
+              components={[<br key="splitter"></br>]}
             />
+          </p>
+          <p className={styles.subtitle}>{t('subtitle')}</p>
+          <ul className={styles.navList}>
+            {navigatorCards.map(v => (
+              <li className="" key={v.name}>
+                <CustomButton
+                  href={v.link}
+                  endIcon={<RightWholeArrow />}
+                  variant="outlined"
+                  className={styles.navButton}
+                >
+                  {v.name}
+                </CustomButton>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section
+          className={clsx(pageClasses.container, styles.exploreContainer)}
+        >
+          <h2 className="">{t('explore.title')}</h2>
+          <p className="">{t('explore.desc')}</p>
+
+          <ul className={styles.blogList}>
+            {blogList.map(blog => (
+              <li className="" key={blog.frontMatter.id}>
+                <BlogCard
+                  title={blog.frontMatter.title}
+                  desc={blog.frontMatter.desc}
+                  tags={[blog.frontMatter.tag]}
+                  cover={`https://${blog.frontMatter.cover}`}
+                  path={`/${blog.frontMatter.id}`}
+                />
+              </li>
+            ))}
+          </ul>
+          <div className={styles.whatIsMilvusWrapper}>
+            <h2 className="">{t('explore.whatIsMilvus.title')}</h2>
+            <p className="">{t('explore.whatIsMilvus.desc')}</p>
+            <CustomButton
+              endIcon={<RightWholeArrow />}
+              href="/docs"
+              className={styles.learnMoreButton}
+            >
+              {t('explore.whatIsMilvus.learnMore')}
+            </CustomButton>
           </div>
-        </div>
+        </section>
+        <DevelopSection showMeetup={false} />
       </main>
     </Layout>
   );
 };
 export default NotFoundPage;
+
+export const getStaticProps = async () => {
+  const list = generateAllBlogContentList();
+
+  return {
+    props: {
+      blogList: list.slice(0, 3),
+    },
+  };
+};

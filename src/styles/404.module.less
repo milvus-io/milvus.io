@@ -1,113 +1,98 @@
-@import url('./global.module.less');
+@import (reference) './global.module.less';
 
-.notFoundContainer {
-  --footer-height: 390px;
-  width: 100%;
-  min-height: calc(
-    100vh - @header-height-desktop - @footer-height-desktop - 1px
-  );
-  box-sizing: border-box;
+.navContainer {
   text-align: center;
-  display: flex;
-  align-items: center;
-  background: url('/images/404/404.svg') no-repeat center 25%;
-  background-size: 50vh;
+  padding-top: 120px;
+  padding-bottom: 120px;
 
-  @media @tablet {
-    background: url('/images/404/404-mobile.svg') no-repeat center 120px;
-    min-height: calc(
-      100vh - @header-height-tablet - @footer-height-tablet - 1px
-    );
+  .pageTitle {
+    .heading1();
+    margin-bottom: 12px;
   }
 
-  @media @phone {
-    background: url('/images/404/404-mobile.svg') no-repeat center 60px;
-    min-height: calc(
-      100vh - @header-height-tablet - @footer-height-tablet - 1px
-    );
+  .abstract {
+    .paragraph2-regular();
+    color: @color-black2;
+    margin-bottom: 40px;
   }
 
-  .notFountCenterWrapper {
-    width: 100%;
-    padding: 0 64px;
+  .subtitle {
+    .paragraph2-regular();
+    color: @color-black2;
+    margin-bottom: 20px;
+  }
+
+  .navList {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-size: 400px;
-
-    @media @tablet {
-      padding: 0 32px;
-    }
-
-    @media @phone {
-      padding: 0 16px;
-    }
-  }
-
-  .notFoundTitlebar {
-    display: flex;
-    margin-top: 220px;
-    margin-bottom: 24px;
+    list-style: none;
     justify-content: center;
-    align-items: flex-end;
+    gap: 12px;
 
-    &::after {
-      content: '';
-      display: inline-block;
-      width: 64px;
-      height: 64px;
-      position: relative;
-      top: 10px;
-      background: url('/images/404/bird.svg') no-repeat center center;
-      background-size: 48px;
+    @media @tablet, @phone {
+      flex-direction: column;
     }
 
-    @media @phone {
-      margin-top: 24px;
-      margin-bottom: 12px;
-      &::after {
-        background: url('/images/404/bird-mobile.svg') no-repeat center center;
-        background-size: 24px;
+    li {
+      flex: 0 0 297px;
+
+      @media @tablet, @phone {
+        flex: auto;
       }
     }
 
-    .notFoundTitle {
-      font-size: 40px;
-      line-height: 48px;
-      margin-right: 8px;
-
-      @media @tablet {
-        font-size: 32px;
-        line-height: 40px;
-      }
-
-      @media @phone {
-        font-size: 18px;
-        line-height: 26px;
-        margin-right: 8px;
-      }
+    .navButton {
+      .paragraph2();
+      justify-content: center;
+      width: 100%;
+      padding: 16px 32px;
     }
   }
+}
 
-  .notFoundContent {
-    font-size: 16px;
-    line-height: 24px;
+.exploreContainer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 80px;
 
-    @media @phone {
-      font-size: 12px;
-      line-height: 16px;
-    }
+  h2 {
+    .heading2();
+    margin-bottom: 12px;
+    text-align: center;
   }
 
-  .notFoundButton {
-    margin-top: 24px;
-    .primaryBtn;
+  p {
+    .paragraph2-regular();
+    color: @color-black2;
+    margin-bottom: 40px;
+    text-align: center;
+  }
 
-    span {
-      margin-left: 16px;
-      font-size: 14px;
-      line-height: 16px;
-      font-weight: 700;
+  .blogList {
+    .commonGridLayout();
+    margin-bottom: 30px;
+  }
+
+  .whatIsMilvusWrapper {
+    padding: 44px 0;
+    background-image: url('/images/404/big-milvus-logo.png'),
+      linear-gradient(@color-blue1, @color-blue1);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100%;
+    color: #fff;
+    border-radius: 16px;
+
+    p {
+      color: #fff;
+    }
+
+    .learnMoreButton {
+      margin: 0 auto;
+      width: fit-content;
+
+      svg path {
+        stroke: #fff;
+      }
     }
   }
 }

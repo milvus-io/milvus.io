@@ -206,6 +206,7 @@ export default function Template(props: ApiDetailPageProps) {
               version={version}
               htmlContent={doc}
               mdId={currentId}
+              commitPath={apiReferenceData.editPath}
               type="api"
             />
           </div>

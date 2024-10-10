@@ -43,7 +43,7 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
     },
     {
       name: t('tutorial'),
-      link: '/docs/build-rag-with-milvus.md',
+      link: '/docs/tutorials-overview.md',
     },
   ];
 
@@ -116,7 +116,7 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
             <p className="">{t('explore.whatIsMilvus.desc')}</p>
             <CustomButton
               endIcon={<RightWholeArrow />}
-              href="/docs"
+              href="/docs/overview.md"
               className={styles.learnMoreButton}
             >
               {t('explore.whatIsMilvus.learnMore')}
@@ -133,9 +133,24 @@ export default NotFoundPage;
 export const getStaticProps = async () => {
   const list = generateAllBlogContentList();
 
+  // they want to display the blogs in specific order
+  const blogList = [
+    list.find(
+      v =>
+        v.frontMatter.id ===
+        'milvus-2-4-nvidia-cagra-gpu-index-multivector-search-sparse-vector-support.md'
+    ),
+    list.find(v => v.frontMatter.id === 'introducing-milvus-lite.md'),
+    list.find(
+      v =>
+        v.frontMatter.id ===
+        'introducing-pymilvus-integrations-with-embedding-models.md'
+    ),
+  ];
+
   return {
     props: {
-      blogList: list.slice(0, 3),
+      blogList,
     },
   };
 };

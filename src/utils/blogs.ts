@@ -10,7 +10,9 @@ const BASE_PATH = join(process.cwd(), 'src/blogs/blog');
 
 const blogCache = new Map<string, any>();
 
-export const generateAllBlogContentList = (params?: { lang?: 'en' | 'cn' }) => {
+export const generateAllBlogContentList = (params?: {
+  lang?: 'en' | 'cn';
+}): BlogDataType[] => {
   const { lang = 'en' } = params || {};
 
   const cacheKey = `all-blog-${lang}`;

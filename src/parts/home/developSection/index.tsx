@@ -43,28 +43,10 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
       logo: '/images/home/hybrid-search.png',
     },
     {
-      id: 'rag2',
-      title: t('developSection.rag'),
-      href: '/docs/build-rag-with-milvus.md',
-      logo: '/images/home/rag.png',
-    },
-    {
-      id: 'imgSearch2',
-      title: t('developSection.imgSearch'),
-      href: '/docs/image_similarity_search.md',
-      logo: '/images/home/image-search.png',
-    },
-    {
-      id: 'multimodal2',
-      title: t('developSection.multimodal'),
-      href: DEMO_MULTIMODAL_SEARCH_URL,
-      logo: '/images/home/multimodal-search.png',
-    },
-    {
-      id: 'hybridSearch2',
-      title: t('developSection.hybridSearch'),
-      href: DEMO_HYBRID_SEARCH_URL,
-      logo: '/images/home/hybrid-search.png',
+      id: 'graph-rag',
+      title: t('developSection.graphRag'),
+      href: '/docs/graph_rag_with_milvus.md',
+      logo: '/images/home/graph-rag.png',
     },
   ];
 

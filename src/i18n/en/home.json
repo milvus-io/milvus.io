@@ -118,6 +118,7 @@
     "imgSearch": "Image Search",
     "multimodal": "Multimodal Search",
     "hybridSearch": "Hybrid Search",
+    "graphRag": "Graph RAG",
     "meetup": {
       "title": "Unstructured Data Meetups",
       "desc": "Join a Community of Passionate Developers and Engineers Dedicated to Gen AI."

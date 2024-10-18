@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useActivateAnchorWhenScroll } from '../../../hooks/blog';
 import Share from '../../../components/share';
+import CloudAdvertisementCard from '@/components/card/advCard';
 
 export default function BlogAnchorSection(props) {
   const {
@@ -65,6 +66,8 @@ export default function BlogAnchorSection(props) {
           );
         })}
       </ul>
+
+      <CloudAdvertisementCard className={classes.advCard} />
 
       <div className="">
         <Share

@@ -44,7 +44,7 @@ export default function CloudAdvertisementCard(props: {
       window.localStorage.setItem('A_B_TEST_RANDOM', `${random}`);
       return;
     }
-    setRandom(Math.random());
+    setRandom(randomValue);
   }, []);
 
   return (

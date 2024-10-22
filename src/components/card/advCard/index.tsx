@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 
 const CN_CTA_LINK =
-  'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-09-30_display_milvus-docs_zilliz';
+  'https://cloud.zilliz.com.cn/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-09-30_display_milvus-docs_zilliz';
 
 const MANAGE_MILVUS_CTA_LINK =
   'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-10-17_display_manged-milvus-docs_milvusio';

@@ -14,7 +14,12 @@ import { LogoSection } from './Logos';
 import { CloseIcon, MenuIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
 import { Button } from '@/components/ui/button';
-import { GET_START_LINK } from '@/consts/links';
+import {
+  GET_START_LINK,
+  GITHUB_ATTU_LINK,
+  GITHUB_VTS_LINK,
+  GITHUB_MILVUS_CLI_LINK,
+} from '@/consts/links';
 import { RightTopArrowIcon } from '../icons';
 
 export default function MobileHeader(props) {
@@ -149,7 +154,7 @@ export default function MobileHeader(props) {
                     classes={{ root: classes.subMenuList }}
                   >
                     <a
-                      href="https://github.com/zilliztech/attu"
+                      href={GITHUB_ATTU_LINK}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={classes.externalLinkButton}
@@ -158,7 +163,7 @@ export default function MobileHeader(props) {
                       <RightTopArrowIcon />
                     </a>
                     <a
-                      href="https://github.com/zilliztech/milvus_cli"
+                      href={GITHUB_MILVUS_CLI_LINK}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={classes.externalLinkButton}
@@ -171,6 +176,13 @@ export default function MobileHeader(props) {
                       className={classes.externalLinkButton}
                     >
                       Sizing Tool <RightTopArrowIcon />
+                    </a>
+
+                    <a
+                      href={GITHUB_VTS_LINK}
+                      className={classes.externalLinkButton}
+                    >
+                      VTS <RightTopArrowIcon />
                     </a>
                   </List>
                 </Collapse>

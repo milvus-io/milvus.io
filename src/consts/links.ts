@@ -11,6 +11,7 @@ export const MILVUS_YOUTUBE_CHANNEL_LINK =
   'https://www.youtube.com/channel/UCMCo_F7pKjMHBlfyxwOPw-g';
 
 export const GITHUB_ATTU_LINK = 'https://github.com/zilliztech/attu';
+export const GITHUB_VTS_LINK = 'https://github.com/zilliztech/vts';
 export const GITHUB_MILVUS_CLI_LINK =
   'https://github.com/zilliztech/milvus_cli';
 export const GITHUB_MILVUS_BACKUP_LINK =

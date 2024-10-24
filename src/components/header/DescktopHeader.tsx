@@ -9,6 +9,7 @@ import {
   GITHUB_MILVUS_BACKUP_LINK,
   GET_START_LINK,
   GITHUB_MILVUS_LINK,
+  GITHUB_VTS_LINK,
 } from '@/consts/links';
 import { DownArrowIcon, GitHubIcon } from '@/components/icons';
 import { LogoSection } from './Logos';
@@ -65,6 +66,11 @@ export default function DesktopHeader(props: Props) {
           link: GITHUB_MILVUS_BACKUP_LINK,
           rel: 'noopener noreferrer',
         },
+        {
+          label: t('tools.vts'),
+          link: GITHUB_VTS_LINK,
+          rel: 'noopener noreferrer',
+        }
       ],
     },
     { label: t('blog'), link: '/blog' },

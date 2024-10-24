@@ -17,7 +17,8 @@
     "attu": "Attu",
     "cli": "Milvus CLI",
     "sizing": "Sizing Tool",
-    "backup": "Milvus Backup"
+    "backup": "Milvus Backup",
+    "vts": "VTS"
   },
   "blog": "Blog",
   "community": "Community",

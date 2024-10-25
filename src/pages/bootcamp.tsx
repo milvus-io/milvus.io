@@ -39,7 +39,10 @@ export default function Bootcamp(props) {
           <section className={classes.sectionContainer}>
             <h1 className={classes.seoTitle}>Milvus Bootcamp</h1>
             <h2 className={classes.title}>{title}</h2>
-            <p className={classes.desc}>{description}</p>
+            <p
+              className={classes.desc}
+              dangerouslySetInnerHTML={{ __html: description }}
+            ></p>
           </section>
 
           <section className={classes.sectionContainer}>
@@ -52,7 +55,6 @@ export default function Bootcamp(props) {
                     <SolutionCard
                       title={title}
                       content={desc}
-                      img={Icons[iconType]}
                       href={link}
                       liveDemo={liveDemo}
                     />
@@ -62,19 +64,21 @@ export default function Bootcamp(props) {
             </ul>
           </section>
 
-          <section className={classes.sectionContainer}>
-            <h2 className={classes.title}>{section4.title}</h2>
-            <ul className={classes.cardsWrapper}>
-              {section4.content.map(item => {
-                const { title, link, desc } = item;
-                return (
-                  <li key={title}>
-                    <SolutionCard title={title} content={desc} href={link} />
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
+          {section4.content.length > 0 && (
+            <section className={classes.sectionContainer}>
+              <h2 className={classes.title}>{section4.title}</h2>
+              <ul className={classes.cardsWrapper}>
+                {section4.content.map(item => {
+                  const { title, link, desc } = item;
+                  return (
+                    <li key={title}>
+                      <SolutionCard title={title} content={desc} href={link} />
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
         </div>
       </Layout>
     </main>

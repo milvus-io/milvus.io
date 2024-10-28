@@ -12,34 +12,49 @@ const SolutionCard: React.FC<{
   href: string;
   className?: string;
   liveDemo?: string;
-}> = ({ img, title, content, href, className = '', liveDemo = '' }) => {
-  const handleTryDemo = link => {
-    window.open(link, '_self');
-  };
-
+  ctaLabel?: string;
+}> = ({
+  img,
+  title,
+  content,
+  href,
+  className = '',
+  liveDemo = '',
+  ctaLabel = 'Learn More',
+}) => {
   return (
     <div tabIndex={0} className={clsx(styles.solutionCard, className)}>
-      <Link
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.linkWrapper}
-      >
+      <div rel="noopener noreferrer" className={styles.linkWrapper}>
         <div>
           {img ? <img src={img} alt={title} className={styles.img} /> : null}
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.content}>{content}</p>
         </div>
-        {liveDemo && (
-          <CustomButton
-            className={styles.demoBtn}
-            endIcon={<RightWholeArrow />}
-            variant="text"
-          >
-            Live Demo
-          </CustomButton>
-        )}
-      </Link>
+        <div className={styles.buttonsWrapper}>
+          {href && (
+            <CustomButton
+              href={href}
+              className={styles.LearnBtn}
+              endIcon={<RightWholeArrow />}
+              variant="outlined"
+              target="_blank"
+            >
+              {ctaLabel}
+            </CustomButton>
+          )}
+          {liveDemo && (
+            <CustomButton
+              className={styles.demoBtn}
+              endIcon={<RightWholeArrow />}
+              variant="text"
+              target="_blank"
+              href={liveDemo}
+            >
+              Live Demo
+            </CustomButton>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

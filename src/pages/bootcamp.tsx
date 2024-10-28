@@ -49,7 +49,8 @@ export default function Bootcamp(props) {
             <h2 className={classes.title}>{section3.title}</h2>
             <ul className={classes.cardsWrapper}>
               {section3.content.map(item => {
-                const { title, link, iconType, desc, liveDemo } = item;
+                const { title, link, iconType, desc, liveDemo, ctaLabel } =
+                  item;
                 return (
                   <li key={title}>
                     <SolutionCard
@@ -57,6 +58,7 @@ export default function Bootcamp(props) {
                       content={desc}
                       href={link}
                       liveDemo={liveDemo}
+                      ctaLabel={ctaLabel}
                     />
                   </li>
                 );

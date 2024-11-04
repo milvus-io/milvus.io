@@ -11,6 +11,10 @@ export default function Document(props) {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap"
           rel="stylesheet"
         />
+         <link
+            rel="stylesheet"
+            href="https://assets.zilliz.com/katex/katex.min.css"
+          />
       </Head>
       <body>
         <Main />

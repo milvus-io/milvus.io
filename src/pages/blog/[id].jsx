@@ -180,6 +180,7 @@ export const getStaticProps = async ({ locale = 'en', params }) => {
   const { tree, codeList, anchorList } = await markdownToHtml(content, {
     showAnchor: true,
     version: 'blog',
+    useLatex: true,
   });
   return {
     props: {

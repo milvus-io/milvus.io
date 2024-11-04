@@ -61,6 +61,10 @@ export default function Template(props) {
           <meta property="og:url" content={shareUrl} />
           <meta property="og:image" content={`https://${cover}`} />
           <link rel="alternate" href={shareUrl} hrefLang="en" />
+          <link
+            rel="stylesheet"
+            href="https://assets.zilliz.com/katex/katex.min.css"
+          />
         </Head>
         <div>
           <div className={clsx(pageClasses.docContainer, styles.upLayout)}>

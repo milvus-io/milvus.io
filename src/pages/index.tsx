@@ -5,7 +5,7 @@ import TryFreeSection, { AIToolsSection } from '@/parts/home/tryFreeSection';
 import LovedSection from '@/parts/home/lovedSection';
 import VectorDatabaseSection from '@/parts/home/vdbSection';
 import DeploySection from '@/parts/home/deploySection';
-import DevelopSection from '@/parts/home/developSection';
+import DevelopSection, { MeetupsSection } from '@/parts/home/developSection';
 import SubscribeSection from '@/parts/home/subscribeSection';
 import Layout from '@/components/layout/commonLayout';
 import { getMilvusStats } from '@/http/home';
@@ -36,9 +36,10 @@ export default function Homepage(props: {
         {/* <TryFreeSection /> */}
         <DeploySection />
         <AIToolsSection />
+        <DevelopSection />
         <LovedSection />
         <ProductionSection />
-        <DevelopSection />
+        <MeetupsSection />
         <VectorDatabaseSection />
         <SubscribeSection />
       </main>

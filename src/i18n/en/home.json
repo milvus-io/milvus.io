@@ -102,8 +102,8 @@
       ]
     },
     "cloud": {
-      "title": "Zilliz Cloud",
-      "advantage": "Fully managed with minimal operations",
+      "title": "Zilliz Cloud (fully managed Milvus)",
+      "advantage": "Hassle-free and 10x faster than Milvus",
       "features": [
         "Available in both serverless and dedicated cluster",
         "SaaS and BYOC options for different security and compliance requirements"
@@ -125,7 +125,7 @@
     }
   },
   "subscribeSection": {
-    "title": "Join the community of developers building GenAI apps with Milvus, now with over <0>25 million downloads</0>",
+    "title": "Join the community of developers building GenAI apps with Milvus, now with over <0>50 million downloads</0>",
     "subscribe": {
       "title": "Get Milvus Updates",
       "desc": "Subscribe to get updates on the latest Milvus releases, tutorials and training from Zilliz, the creator and key maintainer of Milvus.",

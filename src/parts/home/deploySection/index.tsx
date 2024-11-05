@@ -107,7 +107,9 @@ export default function DeploySection() {
           className={clsx(classes.zillizCloud, cloudConfig.class)}
         >
           <div className="">
-            <h3 className={clsx(classes.dbName)}>{cloudConfig.title}</h3>
+            <h3 className={clsx(classes.dbName)}>
+              <a href="https://zilliz.com/cloud/">{cloudConfig.title}</a>
+            </h3>
             <div className={classes.dbContent}>
               <p className={classes.dbAdvantage}>{cloudConfig.advantage}</p>
               <ol className={classes.dbFeatures}>

@@ -121,6 +121,12 @@ const Footer = (props: Props) => {
                     src="/images/blue-heart.png"
                     alt="Blue Heart Emoji"
                   />,
+                  <a
+                    href="https://zilliz.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-black2 hover:text-black2"
+                  ></a>,
                 ]}
               />
             </div>

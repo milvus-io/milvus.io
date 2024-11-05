@@ -26,9 +26,9 @@ export default function CloudAdvertisementCard(props: {
 
   const { enTitle, enCtaLink } = useMemo(() => {
     const manageMilvusTitle = t('advertise.titleA');
-    const tryCloudTitle = t('advertise.titleB');
-    const title = random > 0.5 ? manageMilvusTitle : tryCloudTitle;
-    const ctaLink = random > 0.5 ? MANAGE_MILVUS_CTA_LINK : CLOUD_UTM_CTA_LINK;
+    // const tryCloudTitle = t('advertise.titleB');
+    const title = manageMilvusTitle;
+    const ctaLink = MANAGE_MILVUS_CTA_LINK;
     return {
       enTitle: title,
       enCtaLink: ctaLink,

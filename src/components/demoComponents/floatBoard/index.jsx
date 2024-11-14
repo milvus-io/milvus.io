@@ -9,7 +9,7 @@ const FloatBord = ({ className = '' }) => {
       <div className={styles.linkItem}>
         <p className={styles.desc}>Dive into the source code.</p>
         <Button
-          link="https://bit.ly/3Ct2dKo"
+          link="https://github.com/milvus-io/bootcamp/tree/master/bootcamp/tutorials/quickstart/apps/image_search_with_milvus"
           variant="outline"
           className={`${styles.linkBtn} ${styles.whiteBtn}`}
           target="_blank"
@@ -26,7 +26,7 @@ const FloatBord = ({ className = '' }) => {
       <div className={styles.linkItem}>
         <p className={styles.desc}>Primary technical support channel.</p>
         <Button
-          link="https://bit.ly/3H7KOuu"
+          link="https://discord.com/invite/8uyFbECzPX"
           className={styles.linkBtn}
           target="_blank"
           variant="contained"

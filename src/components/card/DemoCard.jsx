@@ -79,9 +79,9 @@ const DemoCard = ({
         <div className={styles.btnGroup}>
           {href && (
             <CustomButton
-              onClick={handleSubmitEmail}
               className={styles.tryBtn}
               variant="outlined"
+              href={href}
             >
               Try Demo
             </CustomButton>

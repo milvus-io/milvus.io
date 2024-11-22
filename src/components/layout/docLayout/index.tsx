@@ -53,6 +53,8 @@ export default function DocLayout(props: DocLayoutPropsType) {
   } = seo;
   const { root = '', main = '', content = '' } = customerClasses;
 
+  const metaKeywords = `milvus, vector database, Milvus ${docSearchVersion}, vector similarity search`;
+
   return (
     <>
       <main className={clsx(classes.docLayoutContainer, root)}>
@@ -61,6 +63,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
           <meta name="description" content={desc}></meta>
           <meta property="og:title" content={title}></meta>
           <meta property="og:description" content={desc} />
+          <meta name="keywords" content={metaKeywords} />
           <meta property="og:url" content={url} />
           {docSearchLanguage && (
             <meta name="docsearch:language" content={docSearchLanguage} />

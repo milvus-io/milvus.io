@@ -106,7 +106,7 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
                   desc={blog.frontMatter.desc}
                   tags={[blog.frontMatter.tag]}
                   cover={`https://${blog.frontMatter.cover}`}
-                  path={`/${blog.frontMatter.id}`}
+                  path={`${blog.frontMatter.id}`}
                 />
               </li>
             ))}

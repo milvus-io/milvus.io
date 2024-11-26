@@ -159,7 +159,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
               homeData={homeData?.tree}
               latestBlog={latestBlog}
               lang={lang}
-              disableLanguageSelector={true}
+              disableLanguageSelector={!['v2.4.x', 'v2.5.x'].includes(version)}
             />
           }
         />

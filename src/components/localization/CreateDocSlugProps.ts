@@ -19,6 +19,19 @@ export const createDocSlugProps = (lang: LanguageEnum) => {
       data: generateAllContentDataOfSingleVersion({ version: v, lang }),
     }));
 
+    // const paths = isEN
+    //   ? contentList.reduce((acc, cur) => {
+    //       const { version, data } = cur;
+    //       const paths = data.map(d => {
+    //         return {
+    //           params: { slug: [version, d.frontMatter.id] },
+    //         };
+    //       });
+    //       acc = acc.concat(paths);
+    //       return acc;
+    //     }, [])
+    //   : [{ params: { slug: ['v2.4.x', 'overview.md'] } }];
+
     const paths = isEN
       ? contentList.reduce((acc, cur) => {
           const { version, data } = cur;
@@ -30,7 +43,19 @@ export const createDocSlugProps = (lang: LanguageEnum) => {
           acc = acc.concat(paths);
           return acc;
         }, [])
-      : [{ params: { slug: ['v2.4.x', 'overview.md'] } }];
+      : contentList.reduce((acc, cur) => {
+          const { version, data } = cur;
+          const paths =
+            version === 'v2.4.x'
+              ? data.map(d => {
+                  return {
+                    params: { slug: [version, d.frontMatter.id] },
+                  };
+                })
+              : [{ params: { slug: ['v2.4.x', 'overview.md'] } }];
+          acc = acc.concat(paths);
+          return acc;
+        }, []);
 
     return {
       paths,

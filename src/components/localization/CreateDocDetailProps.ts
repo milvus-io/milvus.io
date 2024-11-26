@@ -33,11 +33,25 @@ export const createDocDetailProps = (lang: LanguageEnum) => {
     /**
      * Home page path: previous versions
      */
+    // const homePagePaths = isEN
+    //   ? restVersions.map(v => ({
+    //       params: { id: v },
+    //     }))
+    //   : [];
     const homePagePaths = isEN
       ? restVersions.map(v => ({
           params: { id: v },
         }))
-      : [];
+      : restVersions
+          .map(v => {
+            if (v === 'v2.4.x') {
+              return {
+                params: { id: v },
+              };
+            }
+            return;
+          })
+          .filter(Boolean);
 
     return {
       paths: [...paths, ...homePagePaths],
@@ -67,7 +81,7 @@ export const createDocDetailProps = (lang: LanguageEnum) => {
         content: homepageContent,
         frontMatter,
         propsInfo,
-      } = generateHomePageDataOfSingleVersion({ version });
+      } = generateHomePageDataOfSingleVersion({ version, lang });
       const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
         docVersion: version,
       });

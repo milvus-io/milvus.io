@@ -162,7 +162,7 @@ export function DocSlugPage(props: DocDetailPageProps) {
                 root: classes.rightAnchorTreeWrapper,
               }}
               lang={locale}
-              disableLanguageSelector={true}
+              disableLanguageSelector={!['v2.4.x', 'v2.5.x'].includes(version)}
             />
           </div>
         </section>

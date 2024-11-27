@@ -8,21 +8,22 @@ import {
   generateMenuDataOfCurrentVersion,
 } from '@/utils/docs';
 
-export const createDocHomeProps = (lang: LanguageEnum) => {
+export const createDocHomeProps = (lang: LanguageEnum, version = '') => {
   const getPageStaticProps = async () => {
     const { versions, latestVersion } = generateDocVersionInfo();
+    const currentVersion = version || latestVersion;
     const { content: homeContent, filePath } =
       generateHomePageDataOfSingleVersion({
-        version: latestVersion,
+        version: currentVersion,
         lang,
       });
     const { frontMatter: latestBlogData } = generateAllBlogContentList()[0];
     const docMenu = generateMenuDataOfCurrentVersion({
-      docVersion: latestVersion,
+      docVersion: currentVersion,
       lang,
     });
     const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
-      docVersion: latestVersion,
+      docVersion: currentVersion,
     });
     const menu = [...docMenu, outerApiMenuItem];
 
@@ -33,7 +34,8 @@ export const createDocHomeProps = (lang: LanguageEnum) => {
       props: {
         homeData: homeContent,
         isHome: true,
-        version: latestVersion,
+        version: currentVersion,
+        latestVersion,
         lang,
         versions,
         blog: latestBlogData,

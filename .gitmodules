@@ -4,4 +4,3 @@
 [submodule "src/docs"]
 	path = src/docs
 	url = https://github.com/milvus-io/web-content.git
-  branch = preview

@@ -133,7 +133,6 @@ export interface DocDetailPageProps {
     editPath: string;
     frontMatter: DocFrontMatterType;
   };
-  isHome: boolean;
   blog: BlogFrontMatterType | null;
   version: string;
   lang: LanguageEnum;

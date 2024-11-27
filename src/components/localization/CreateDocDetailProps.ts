@@ -1,128 +1,58 @@
 import {
   generateDocVersionInfo,
   generateAllContentDataOfSingleVersion,
-  generateHomePageDataOfSingleVersion,
   generateMenuDataOfCurrentVersion,
   generateAllContentDataOfAllVersion,
 } from '@/utils/docs';
 import { GetStaticProps } from 'next';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
-import { generateAllBlogContentList } from '@/utils/blogs';
 import { LanguageEnum } from '@/components/language-selector';
 import { DocDetailPage } from '@/components/localization/DocDetail';
 
 export default DocDetailPage;
 
-export const createDocDetailProps = (lang: LanguageEnum) => {
-  const isEN = lang === LanguageEnum.ENGLISH;
-
+export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
   const getPageStaticPaths = () => {
-    const { latestVersion, restVersions } = generateDocVersionInfo();
+    const { latestVersion } = generateDocVersionInfo();
+    const currentVersion = version || latestVersion;
     const latestDocContentList = generateAllContentDataOfSingleVersion({
-      version: latestVersion,
+      version: currentVersion,
       lang,
     });
 
-    /**
-     * Detail page path: latest version
-     */
     const paths = latestDocContentList.map(v => ({
       params: { id: v.frontMatter.id },
     }));
 
-    /**
-     * Home page path: previous versions
-     */
-    // const homePagePaths = isEN
-    //   ? restVersions.map(v => ({
-    //       params: { id: v },
-    //     }))
-    //   : [];
-    const homePagePaths = isEN
-      ? restVersions.map(v => ({
-          params: { id: v },
-        }))
-      : restVersions
-          .map(v => {
-            if (v === 'v2.4.x') {
-              return {
-                params: { id: v },
-              };
-            }
-            return;
-          })
-          .filter(Boolean);
-
     return {
-      paths: [...paths, ...homePagePaths],
+      paths,
       fallback: false,
     };
   };
 
   const getPageStaticProps: GetStaticProps = async context => {
     const { params } = context;
-    const VERSION_REG = /^v\d/;
 
     const id = params.id as string;
     const { versions, latestVersion } = generateDocVersionInfo();
-    const version = VERSION_REG.test(id) ? id : latestVersion;
+    const currentVersion = version || latestVersion;
 
     const docMenu = generateMenuDataOfCurrentVersion({
-      docVersion: version,
+      docVersion: currentVersion,
       lang,
     });
 
     // used to detect has same page of current md
     const mdListData = generateAllContentDataOfAllVersion();
 
-    // home page data
-    if (VERSION_REG.test(id)) {
-      const {
-        content: homepageContent,
-        frontMatter,
-        propsInfo,
-      } = generateHomePageDataOfSingleVersion({ version, lang });
-      const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
-        docVersion: version,
-      });
-      const menu = [...docMenu, outerApiMenuItem];
-      const { frontMatter: latestBlogData } = generateAllBlogContentList()[0];
-
-      const { codeList, anchorList } = propsInfo;
-      const headingContent = anchorList?.[0]?.label;
-
-      return {
-        props: {
-          homeData: {
-            tree: homepageContent,
-            codeList: codeList || [],
-            headingContent: headingContent || '',
-            anchorList: anchorList || [],
-            summary: frontMatter?.summary || '',
-            editPath: '',
-            frontMatter: frontMatter,
-          },
-          isHome: true,
-          blog: latestBlogData,
-          version,
-          lang,
-          versions,
-          latestVersion,
-          menus: menu,
-          id: 'home.md',
-          mdListData,
-        },
-      };
-    }
-
     // xxx.md of latest version
     const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
-      docVersion: latestVersion,
+      docVersion: currentVersion,
     });
     const menu = [...docMenu, outerApiMenuItem];
 
     const docDetailContentList = generateAllContentDataOfSingleVersion({
-      version: latestVersion,
+      version: currentVersion,
       withContent: true,
       lang,
     });
@@ -149,8 +79,7 @@ export const createDocDetailProps = (lang: LanguageEnum) => {
           frontMatter,
         },
         blog: null,
-        isHome: false,
-        version: latestVersion,
+        version: currentVersion,
         latestVersion,
         lang,
         versions,

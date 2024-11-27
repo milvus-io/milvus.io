@@ -1,5 +1,4 @@
 import DocContent from '@/parts/docs/docContent';
-import HomeContent from '@/parts/docs/docHome';
 import { copyToCommand } from '@/utils/common';
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,19 +12,18 @@ import {
 import { useActivateAnchorWhenScroll, useGenAnchor } from '@/hooks/doc-anchor';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import DocLayout from '@/components/layout/docLayout';
-import { ABSOLUTE_BASE_URL } from '@/consts';
 import classes from '@/styles/docDetail.module.less';
 import { checkIconTpl } from '@/components/icons';
 import clsx from 'clsx';
 import { DocDetailPageProps } from '@/types/docs';
 import { LanguageEnum } from '@/components/language-selector';
+import { SHOW_LANGUAGE_SELECTOR_VERSIONS } from '@/components/localization/const';
+import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
 
 // contains the latest version's detail pages and other versions' home pages
 export function DocDetailPage(props: DocDetailPageProps) {
   const {
     homeData,
-    isHome,
-    blog: latestBlog,
     version,
     versions,
     latestVersion,
@@ -44,42 +42,28 @@ export function DocDetailPage(props: DocDetailPageProps) {
     editPath,
     frontMatter,
   } = homeData;
+  const seoUrl = getSeoUrl({ lang, version, latestVersion, docId: currentId });
+  const homePageLink = getHomePageLink({ lang, version, latestVersion });
 
   const isEN = lang === LanguageEnum.ENGLISH;
-
-  const homeSeoUrl = isEN
-    ? `${ABSOLUTE_BASE_URL}/docs/${version}`
-    : `${ABSOLUTE_BASE_URL}/docs/${lang}/${version}`;
-  const versionSeoUrl = isEN
-    ? `${ABSOLUTE_BASE_URL}/docs/${currentId}`
-    : `${ABSOLUTE_BASE_URL}/docs/${lang}/${currentId}`;
-  const seoUrl = isHome ? homeSeoUrl : versionSeoUrl;
-  const homePageLink = isEN ? '/docs' : `/docs/${lang}`;
-
   const { t } = useTranslation('docs', { lng: lang });
 
   const seoInfo = useMemo(() => {
-    const title = isHome
-      ? t('metaTitle')
-      : `${frontMatter?.title || headingContent}`;
+    const title = `${frontMatter?.title || headingContent}`;
 
     const pageTitle =
       version === latestVersion
         ? `${title} | ${t('title')}`
         : `${title} ${t('homepageDesc', { version })}`;
 
-    const desc = isHome
-      ? t('homepageDesc', { version })
-      : summary
-      ? `${summary} | ${version}`
-      : `${title} | ${version}`;
+    const desc = summary ? `${summary} | ${version}` : `${title} | ${version}`;
 
     return {
       title: pageTitle,
       url: seoUrl,
       desc,
     };
-  }, [isHome, frontMatter, version, summary, seoUrl, t]);
+  }, [frontMatter, version, summary, seoUrl, t]);
 
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const pageHref = useRef('');
@@ -130,100 +114,65 @@ export function DocDetailPage(props: DocDetailPageProps) {
   useGenAnchor(version, editPath);
 
   return (
-    <>
-      {isHome ? (
-        <DocLayout
+    <DocLayout
+      version={version}
+      latestVersion={latestVersion}
+      seo={{
+        ...seoInfo,
+        lang,
+        docSearchLanguage: lang,
+        docSearchVersion: version,
+      }}
+      left={
+        <LeftNavSection
+          tree={menus}
+          className={classes.docMenu}
           version={version}
-          latestVersion={latestVersion}
-          isHome
-          classes={{
-            root: clsx(classes.docPageContainer, classes.docHomePage),
+          versions={versions}
+          type="doc"
+          homepageConf={{
+            label: t('navigation.title'),
+            link: homePageLink,
           }}
-          seo={seoInfo}
-          left={
-            <LeftNavSection
-              tree={menus}
-              className={classes.docMenu}
-              version={version}
-              versions={versions}
-              type="doc"
-              homepageConf={{ label: 'Home', link: `/docs/${version}` }}
-              currentMdId="home"
-              latestVersion={latestVersion}
-              mdListData={mdListData}
-              lang={lang}
-            />
-          }
-          center={
-            <HomeContent
-              homeData={homeData?.tree}
-              latestBlog={latestBlog}
-              lang={lang}
-              disableLanguageSelector={!['v2.4.x', 'v2.5.x'].includes(version)}
-            />
-          }
+          currentMdId={currentId}
+          groupId={frontMatter.group}
+          latestVersion={latestVersion}
+          mdListData={mdListData}
+          lang={lang}
         />
-      ) : (
-        <DocLayout
-          version={version}
-          latestVersion={latestVersion}
-          seo={{
-            ...seoInfo,
-            lang,
-            docSearchLanguage: lang,
-            docSearchVersion: version,
-          }}
-          left={
-            <LeftNavSection
-              tree={menus}
-              className={classes.docMenu}
+      }
+      center={
+        <section className={clsx('scroll-padding', classes.docDetailContainer)}>
+          <div className={classes.contentSection} ref={articleContainer}>
+            <DocContent
               version={version}
-              versions={versions}
+              htmlContent={tree}
+              mdId={currentId}
+              commitPath={editPath}
               type="doc"
-              homepageConf={{
-                label: t('navigation.title'),
-                link: homePageLink,
-              }}
-              currentMdId={currentId}
-              groupId={frontMatter.group}
-              latestVersion={version}
-              mdListData={mdListData}
-              lang={lang}
             />
-          }
-          center={
-            <section
-              className={clsx('scroll-padding', classes.docDetailContainer)}
-            >
-              <div className={classes.contentSection} ref={articleContainer}>
-                <DocContent
-                  version={version}
-                  htmlContent={tree}
-                  mdId={currentId}
-                  commitPath={editPath}
-                  type="doc"
-                />
-              </div>
+          </div>
 
-              <div className={classes.asideSection}>
-                <Aside
-                  version={version}
-                  docData={{ editPath }}
-                  mdTitle={frontMatter.title}
-                  category="doc"
-                  items={anchorList}
-                  classes={{
-                    root: classes.rightAnchorTreeWrapper,
-                  }}
-                  activeAnchor={activeAnchor}
-                  lang={lang}
-                  isShowBtnGroup={isEN}
-                />
-              </div>
-            </section>
-          }
-        />
-      )}
-    </>
+          <div className={classes.asideSection}>
+            <Aside
+              version={version}
+              docData={{ editPath }}
+              mdTitle={frontMatter.title}
+              category="doc"
+              items={anchorList}
+              classes={{
+                root: classes.rightAnchorTreeWrapper,
+              }}
+              activeAnchor={activeAnchor}
+              lang={lang}
+              isShowBtnGroup={isEN}
+              disableLanguageSelector={
+                !SHOW_LANGUAGE_SELECTOR_VERSIONS.includes(version)
+              }
+            />
+          </div>
+        </section>
+      }
+    />
   );
 }

@@ -3,17 +3,19 @@ import { useTranslation } from 'react-i18next';
 
 import { LanguageEnum } from '@/components/language-selector';
 import DocLayout from '@/components/layout/docLayout';
-import { ABSOLUTE_BASE_URL } from '@/consts';
 import HomeContent from '@/parts/docs/docHome';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import classes from '@/styles/docs.module.less';
 import { BlogFrontMatterType } from '@/types/blogs';
 import { AllMdVersionIdType, FinalMenuStructureType } from '@/types/docs';
+import { SHOW_LANGUAGE_SELECTOR_VERSIONS } from '@/components/localization/const';
+import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
 
 export interface DocHomePageProps {
   homeData: string;
   isHome: boolean;
   version: string;
+  latestVersion: string;
   lang: LanguageEnum;
   versions: string[];
   blog: BlogFrontMatterType;
@@ -24,18 +26,23 @@ export interface DocHomePageProps {
 // latest version's home page
 export function DocHomepage(props: DocHomePageProps) {
   const { t } = useTranslation('docs', { lng: props.lang });
-  const { homeData, blog, menus, version, versions, mdListData, lang } = props;
-  const isEN = lang === LanguageEnum.ENGLISH;
-
-  const seoUrl = isEN
-    ? `${ABSOLUTE_BASE_URL}/docs`
-    : `${ABSOLUTE_BASE_URL}/docs/${lang}`;
-  const homePageLink = isEN ? '/docs' : `/docs/${lang}`;
+  const {
+    homeData,
+    blog,
+    menus,
+    version,
+    versions,
+    mdListData,
+    lang,
+    latestVersion,
+  } = props;
+  const seoUrl = getSeoUrl({ lang, version, latestVersion });
+  const homePageLink = getHomePageLink({ lang, version, latestVersion });
 
   return (
     <DocLayout
       version={version}
-      latestVersion={version}
+      latestVersion={latestVersion}
       isHome
       classes={{
         root: clsx(classes.docPageContainer, classes.docHomePage),
@@ -60,12 +67,21 @@ export function DocHomepage(props: DocHomePageProps) {
             link: homePageLink,
           }}
           currentMdId="home"
-          latestVersion={version}
+          latestVersion={latestVersion}
           mdListData={mdListData}
           lang={lang}
         />
       }
-      center={<HomeContent homeData={homeData} latestBlog={blog} lang={lang} />}
+      center={
+        <HomeContent
+          homeData={homeData}
+          latestBlog={blog}
+          lang={lang}
+          disableLanguageSelector={
+            !SHOW_LANGUAGE_SELECTOR_VERSIONS.includes(version)
+          }
+        />
+      }
     />
   );
 }

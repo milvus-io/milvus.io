@@ -106,6 +106,11 @@ export const generateDocVersionInfo = (params?: {
   };
 };
 
+function removeZeroWidthSpacesFromString(htmlString) {
+  const zeroWidthSpace = '\u200B';
+  return htmlString.replace(new RegExp(zeroWidthSpace, 'g'), '');
+}
+
 // file system
 const readFile = (params: {
   path: string;
@@ -136,11 +141,13 @@ const readFile = (params: {
         content: string;
       };
 
+      const cleanedContent = removeZeroWidthSpacesFromString(content);
+
       // ignore docs files that are marked as deprecated
       if (!data.deprecate) {
         fileDataList.push({
           frontMatter: data,
-          content: withContent ? content : '',
+          content: withContent ? cleanedContent : '',
           editPath: relativePath,
           propsInfo: JSON.parse(propsInfo),
         });
@@ -273,18 +280,20 @@ export const generateHomePageDataOfSingleVersion = (params: {
     content: string;
   };
 
+  const cleanedContent = removeZeroWidthSpacesFromString(content);
+
   setCacheData({
     cache: docCache,
     key: cacheKey,
     data: {
       frontMatter: data,
-      content,
+      content: cleanedContent,
     },
   });
 
   return {
     frontMatter: data,
-    content,
+    content: cleanedContent,
     filePath,
     propsInfo: JSON.parse(propsInfo),
   };

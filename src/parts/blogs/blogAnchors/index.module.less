@@ -1,5 +1,9 @@
+@import url('../../../styles/mixin.module.less');
+
 .sectionContainer {
   height: fit-content;
+  border-left: 1px solid @color-black3;
+  padding-left: 30px;
 
   .listWrapper {
     list-style: none;
@@ -8,33 +12,26 @@
 
     .anchorTitle {
       font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-      margin-bottom: 8px;
-      padding: 0 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 12px;
     }
 
     .anchorLink {
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 20px;
+      font-size: 12px;
+      line-height: 1.5;
       display: block;
-      padding: 8px 10px;
-      border-left: 2px solid #e8eaee;
       max-width: 100%;
       white-space: wrap;
       word-break: break-word;
-      color: #000;
+      color: @color-black2;
+      margin-bottom: 6px;
+      cursor: pointer;
 
-      &:hover {
-        border-color: #00a1ea;
-        background: #eff9fe;
+      &:hover,
+      &.activeAnchor {
+        color: @color-black1;
       }
-    }
-
-    .activeAnchor {
-      border-color: #00a1ea;
-      background: #eff9fe;
     }
   }
 
@@ -45,5 +42,5 @@
 }
 
 .advCard {
-  margin-bottom: 42px;
+  margin-bottom: 24px;
 }

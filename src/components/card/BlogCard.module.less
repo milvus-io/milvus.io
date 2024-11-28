@@ -1,7 +1,6 @@
 @import (reference) '../../styles/global.module.less';
 
 .BlogCardWrapper {
-  display: block;
   height: 100%;
   width: 100%;
   display: flex;
@@ -47,6 +46,40 @@
         text-transform: uppercase;
         color: @color-blue1;
         margin-bottom: 4px;
+      }
+    }
+  }
+
+  &.row {
+    flex-direction: row;
+    gap: 24px;
+
+    :global(.cover-container) {
+      max-width: 180px!important;
+      align-self: flex-start;
+      margin-bottom: 0;
+    }
+
+    .cover {
+      flex: 0 1 40%;
+      max-width: 180px;
+    }
+
+    .descWrapper {
+      flex: 1 1 calc(60% - 24px);
+      min-width: 200px;
+
+      .title {
+        font-weight: 600;
+        color: @color-black1;
+      }
+    }
+
+    .bottomWrapper {
+      .tags {
+        color: @color-black1-5;
+        letter-spacing: 1.2px;
+        font-weight: 600;
       }
     }
   }

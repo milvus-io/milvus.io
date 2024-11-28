@@ -1,6 +1,7 @@
 @import url('./mixin.module.less');
 
 @link-color: #1493cc;
+@block-margin: 1.8em;
 
 .doc-style {
   --pre-bg-color: #f9f9f9;
@@ -84,14 +85,14 @@
 
   p {
     font-size: 16px;
-    line-height: 24px;
-    margin-bottom: 12px;
+    line-height: 1.7;
+    margin-bottom: @block-margin;
     font-style: normal;
     font-weight: normal;
 
     @media @tablet {
       font-size: 14px;
-      line-height: 24px;
+      line-height: 1.7;
     }
   }
 
@@ -193,7 +194,7 @@
   pre {
     border-radius: 12px;
     background-color: @color-black1;
-    margin: 20px 0;
+    margin: 20px 0 40px;
     position: relative;
     padding: 24px;
 
@@ -238,7 +239,7 @@
 
   ul {
     list-style-type: disc;
-    margin: 8px 0;
+    margin: @block-margin 0;
     padding-left: 24px;
 
     & > li::marker {

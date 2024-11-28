@@ -1,42 +1,76 @@
 @import (reference) './global.module.less';
 
+@content-width: 1060px;
+
 .upLayout {
-  margin: 60px auto 100px;
-  max-width: 1140px;
+  margin: 60px auto 80px;
+  max-width: @content-width;
 
   .blogHeader {
     margin-top: 60px;
-    margin-bottom: 100px;
-    text-align: center;
+    margin-bottom: 80px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 
-    .authorDate {
-      color: @color-grey-02;
-      font-size: 18px;
+    .breadcrumb {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 20px;
-
-      span {
-        font-size: 16px;
-        line-height: 24px;
+      gap: 2px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+      color: @color-black2;
+      font-size: 12px;
+  
+      a {
+        color: @color-black1-5;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 500;
+      }
+  
+      svg {
+        width: 12px;
+        height: 12px;
+        path {
+          fill: currentColor;
+        }
       }
     }
 
     .title {
       font-weight: 700;
       font-size: 42px;
-      line-height: 1.5;
-      text-align: center;
-      margin-bottom: 20px;
+      line-height: 1.2;
+      text-align: left;
+      margin-bottom: 12px;
 
       @media @tablet, @phone {
         font-size: 32px;
       }
+    }
+
+    .subTitle {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+      letter-spacing: 1.4px;
+      font-weight: 600;
+    }
+
+    .subTitleSeparator {
+      width: 1px;
+      height: 12px;
+      background-color: @color-black3;
+      flex: 0 0 auto;
+    }
+
+    .date,
+    .author {
+      color: @color-black2;
     }
 
     .tags {
@@ -46,10 +80,9 @@
       justify-content: center;
 
       li {
-        color: @color-text-primary;
+        color: @color-black1-5;
         text-transform: uppercase;
         cursor: pointer;
-        font-weight: bold;
       }
       li + li {
         margin-left: 10px;
@@ -60,7 +93,7 @@
   .blogContent {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
+    gap: 30px;
     margin-bottom: 60px;
 
     .articleContainer {
@@ -81,10 +114,10 @@
     }
 
     .anchorsContainer {
-      flex: 0 0 300px;
-      position: static;
+      flex: 0 0 271px;
+      position: sticky;
       height: fit-content;
-      top: 100px;
+      top: 80px;
 
       @media @tablet, @phone {
         display: none;
@@ -110,38 +143,22 @@
 }
 
 .bottomLayout {
-  margin-bottom: 100px;
-  .breadcrumb {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 12px;
-    color: @color-black2;
-    font-size: 16px;
-
-    a {
-      color: @color-blue1;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    svg {
-      color: @color-grey-02;
-      font-size: 18px;
-    }
-  }
+  margin-bottom: 80px;
+  max-width: @content-width;
+  padding: 0 40px;
 
   .title {
-    font-weight: bold;
-    font-size: 40px;
-    line-height: 50px;
-    margin-bottom: 44px;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.4;
+    margin-bottom: 40px;
   }
 
   .blogCards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 32px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 40px;
+    row-gap: 30px;
     list-style: none;
 
     @media @tablet {

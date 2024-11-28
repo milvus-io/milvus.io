@@ -5,7 +5,7 @@
 .doc-style {
   --pre-bg-color: #f9f9f9;
   --pre-bg-color-dark: #242a35;
-  --code-bg-color: #f0f4f9;
+  --code-bg-color: @color-black3;
   --note-bg-color: #f0f4f9;
   --caution-bg-color: rgba(242, 92, 5, 0.1);
   --warning-bg-color: #fce8e5;
@@ -36,9 +36,9 @@
 
   h2 {
     font-size: 32px;
-    line-height: 42px;
+    line-height: 1.4;
     margin-bottom: 20px;
-    margin-top: 50px;
+    margin-top: 60px;
 
     & > code {
       font-size: 32px;
@@ -85,7 +85,7 @@
   p {
     font-size: 16px;
     line-height: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     font-style: normal;
     font-weight: normal;
 
@@ -95,8 +95,14 @@
     }
   }
 
+  strong {
+    font-weight: 600;
+  }
+
   a {
-    color: @link-color;
+    color: @color-black1;
+    text-decoration: underline;
+    text-underline-position: from-font;
 
     p {
       display: inline;
@@ -144,7 +150,7 @@
     background-color: var(--code-bg-color);
     border-radius: 4px;
     padding: 0 8px;
-    color: var(--color-text-primary);
+    color: @color-black1;
     display: inline-block;
     font-weight: 600;
 
@@ -178,31 +184,30 @@
 
       &:hover {
         svg > path {
-          stroke: #175fff;
+          stroke: @color-white;
         }
       }
     }
   }
 
   pre {
-    border-radius: 4px;
-    background-color: #fff;
-    margin: 24px 0;
+    border-radius: 12px;
+    background-color: @color-black1;
+    margin: 20px 0;
     position: relative;
-    padding-right: 42px;
+    padding: 24px;
 
     &:has(code[class*='active']) {
       border: 1px solid @color-grey-04;
     }
 
     code {
-      color: #454545;
+      color: @color-black3;
       display: block;
       font-size: 14px;
       line-height: 20px;
       font-family: 'SourceCodePro';
       border: none;
-      padding: 12px;
       background-color: transparent;
       font-weight: 400;
       width: 100%;
@@ -525,7 +530,7 @@
     }
 
     b {
-      font-weight: 400;
+      font-weight: 600;
     }
 
     li,

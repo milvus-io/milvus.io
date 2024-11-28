@@ -123,23 +123,8 @@ export const checkIconTpl = `
 
 // copy icon of code block
 export const copyIconTpl = `
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M16 4H6.5C5.11929 4 4 5.11929 4 6.5V16"
-      stroke="#1D2939"
-      strokeWidth="2"
-    />
-    <path
-      d="M19.5 8H8.5C8.22386 8 8 8.22386 8 8.5V19.5C8 19.7761 8.22386 20 8.5 20H19.5C19.7761 20 20 19.7761 20 19.5V8.5C20 8.22386 19.7761 8 19.5 8Z"
-      stroke="#1D2939"
-      strokeWidth="2"
-    />
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M3.33301 4V13.3333C3.33301 13.5101 3.40325 13.6797 3.52827 13.8047C3.65329 13.9298 3.82286 14 3.99967 14H10.6663M12.6663 4V11.3333H5.99967V2H10.6663L12.6663 4Z" stroke="#667176" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
 `;
 

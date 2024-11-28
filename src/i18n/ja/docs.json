@@ -26,5 +26,10 @@
   },
   "translate": {
     "by": "翻訳"
+  },
+  "advertise": {
+    "title": "無料で管理型Milvusをお試しください。",
+    "content": "Zilliz Cloudは、Milvusを基盤にしたサービスですが、従来の10倍の速さを実現し、手間を大々的に省けることができます。",
+    "ctaLabel": "今すぐ始める"
   }
 }

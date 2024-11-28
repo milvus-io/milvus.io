@@ -28,9 +28,8 @@
     "by": "Translated by"
   },
   "advertise": {
+    "title": "Try Managed Milvus for Free",
     "content": "Zilliz Cloud is hassle-free, powered by Milvus and 10x faster.",
-    "ctaLabel": "Get Started",
-    "titleA": "Try Managed Milvus for Free",
-    "titleB": "Try Zilliz Cloud for Free"
+    "ctaLabel": "Get Started"
   }
 }

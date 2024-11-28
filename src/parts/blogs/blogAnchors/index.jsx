@@ -29,6 +29,15 @@ export default function BlogAnchorSection(props) {
     setActiveAnchor(href);
   };
 
+  const handleAnchorClick = (href) => {
+    document.querySelector(`#${href}`).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+    handleChooseAnchor(href);
+    history.pushState(null, null, `#${href}`);
+  }
+
   useEffect(() => {
     if (anchors[0]) {
       handleChooseAnchor(anchors[0].href);
@@ -45,7 +54,7 @@ export default function BlogAnchorSection(props) {
     <div className={clsx(classes.sectionContainer, root)}>
       <ul className={classes.listWrapper}>
         {anchors.length ? (
-          <h3 className={classes.anchorTitle}>Content</h3>
+          <h3 className={classes.anchorTitle}>On This Page</h3>
         ) : null}
 
         {anchors.map((v, idx) => {
@@ -53,15 +62,15 @@ export default function BlogAnchorSection(props) {
 
           return (
             <li key={v.label + idx}>
-              <Link
-                onClick={() => handleChooseAnchor(href)}
-                href={`/blog/${id}/#${href}`}
+              <a
+                onClick={() => handleAnchorClick(href)}
+                // href={`#${href}`}
                 className={clsx(classes.anchorLink, {
                   [classes.activeAnchor]: href === activeAnchor,
                 })}
               >
                 {label}
-              </Link>
+              </a>
             </li>
           );
         })}

@@ -134,7 +134,9 @@ const readFile = (params: {
       );
     } else if (fileStat.isFile() && path.endsWith('.md')) {
       const fileData = fs.readFileSync(path, 'utf-8');
-      const propsInfo = fs.readFileSync(path.replace('.md', '.json'), 'utf-8');
+      const propsInfo = removeZeroWidthSpacesFromString(
+        fs.readFileSync(path.replace('.md', '.json'), 'utf-8')
+      );
 
       const { data, content } = matter(fileData) as {
         data: DocFrontMatterType;
@@ -274,7 +276,9 @@ export const generateHomePageDataOfSingleVersion = (params: {
     `localization/${version}/site/${lang}/home/home.md`
   );
   const fileInfo = fs.readFileSync(filePath, 'utf-8');
-  const propsInfo = fs.readFileSync(filePath.replace('.md', '.json'), 'utf-8');
+  const propsInfo = removeZeroWidthSpacesFromString(
+    fs.readFileSync(filePath.replace('.md', '.json'), 'utf-8')
+  );
   const { data, content } = matter(fileInfo) as {
     data: DocFrontMatterType;
     content: string;

@@ -1,25 +1,28 @@
 const { execSync } = require('child_process');
+const path = require('path');
 
-const execOptions = {
-  encoding: 'utf8',
-};
+const execOptions = { encoding: 'utf8' };
 
-const fileString = execSync('git diff --cached --name-only', execOptions);
+// Paths
+const confDir = path.resolve(__dirname, '../conf');
+const dockerfilePath = path.resolve(__dirname, '../Nginx.Dockerfile');
+const imageName = 'nginx-geoip2-test';
+const containerName = 'nginx-test-container';
 
-const nginxConfChanged = fileString
-  .trim()
-  .split('\n')
-  .some(item => item.includes('client.conf'));
+try {
+  // Build Docker image using Nginx.Dockerfile
+  console.info('Building Docker image...');
+  execSync(`docker build -f ${dockerfilePath} -t ${imageName} .`, execOptions);
 
-if (nginxConfChanged) {
-  try {
-    execSync('nginx -v', execOptions);
-  } catch (error) {
-    console.info('Installing nginx...');
-    execSync('brew install nginx', execOptions);
-  }
+  // Run container to test Nginx configuration
+  console.info('Running container to test Nginx configuration...');
+  execSync(
+    `docker run --rm --name ${containerName} -v ${confDir}:/etc/nginx/conf.d ${imageName} nginx -t`,
+    execOptions
+  );
 
-  execSync('nginx -t -c $(pwd)/scripts/test.conf', execOptions);
-} else {
-  console.info('Skipping nginx test as client.conf is not changed.');
+  console.info('Nginx configuration test passed!');
+} catch (error) {
+  console.error('Nginx configuration test failed:', error.stderr || error.message);
+  process.exit(1);
 }

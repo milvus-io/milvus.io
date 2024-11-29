@@ -14,7 +14,7 @@ import BlogAnchorSection from '../../parts/blogs/blogAnchors';
 import pageClasses from '../../styles/responsive.module.less';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { useCopyCode } from '../../hooks/enhanceCodeBlock';
-import 'highlight.js/styles/atom-one-light.css';
+import 'highlight.js/styles/atom-one-dark.css';
 
 export default function Template(props) {
   const {
@@ -91,7 +91,8 @@ export default function Template(props) {
             <section className={styles.blogHeader}>
               <p className={styles.breadcrumb}>
                 <a href="https://milvus.io">
-                  { homeIcon }
+                  {/* { homeIcon } */}
+                  Home
                 </a>
                 { sepIcon }
                 <a href="/blog">Blogs</a>

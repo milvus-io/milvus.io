@@ -738,8 +738,12 @@
     gap: 24px;
     list-style: none;
     padding: 0;
-    margin: 20px 0 -20px 0;
+    margin: 20px 0 -16px 0;
     overflow-x: auto;
+
+    & ~ pre:has(code:not(.active)[class*='language-']) {
+      margin-bottom: 0px;
+    }
 
     a {
       font-weight: 600;
@@ -753,6 +757,7 @@
       cursor: pointer;
       padding: 4px 0;
       color: #454545;
+      text-decoration: none;
 
       &.active {
         color: var(--color-text-primary);

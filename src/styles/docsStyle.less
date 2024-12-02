@@ -741,6 +741,10 @@
     margin: 20px 0 -16px 0;
     overflow-x: auto;
 
+    & + p:empty {
+      margin-bottom: 20px;
+    }
+
     & ~ pre:has(code:not(.active)[class*='language-']) {
       margin-bottom: 0px;
     }

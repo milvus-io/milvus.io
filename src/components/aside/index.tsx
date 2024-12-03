@@ -171,7 +171,10 @@ const Aside = (props: AsidePropsType) => {
             lang={lang}
           />
         )}
-        <CloudAdvertisementCard language={lang} />
+        <CloudAdvertisementCard
+          language={lang}
+          className={styles.advContainer}
+        />
         {isShowBtnGroup && (
           <ul
             className={clsx(styles.btnsGroup, btnGroup, {

@@ -212,7 +212,7 @@ export const getStaticProps = async ({ locale = 'en', params }) => {
       codeList,
       moreBlogs: allData
         .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
-        .slice(0, 3),
+        .slice(0, 4),
       tags,
       ...rest,
     },

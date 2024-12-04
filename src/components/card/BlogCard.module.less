@@ -7,7 +7,7 @@
   flex-direction: column;
   overflow: hidden;
 
-  &:hover {
+  &:hover:not(.wrapperLinkDisabled) {
     cursor: pointer;
   }
 
@@ -20,11 +20,15 @@
       .paragraph2();
       .overflowEllipsis3Row();
       margin-top: 0;
-      color: #000;
       height: 78px;
+
+      a {
+        color: #000;
+      }
 
       &:hover {
         text-decoration: underline;
+        text-underline-position: from-font;
       }
 
       @media @tablet, @phone {
@@ -71,13 +75,15 @@
 
       .title {
         font-weight: 600;
-        color: @color-black1;
+        a {
+          color: @color-black1;
+        }
       }
     }
 
     .bottomWrapper {
       .tags {
-        color: @color-black1;
+        color: @color-black2;
         letter-spacing: 1.2px;
         font-weight: 600;
       }

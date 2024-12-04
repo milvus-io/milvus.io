@@ -65,10 +65,9 @@ const SubscribeNewsletter = (props: {
 
   return (
     <div className={classes.subscribeContainer}>
-      <div className={classes.descriptionSection}>
-        <h3>{t('home:subscribeSection.subscribe.title')}</h3>
-        <p>{t('home:subscribeSection.subscribe.desc')}</p>
-      </div>
+      <h3 className={classes.title}>
+        {t('home:subscribeSection.subscribe.title')}
+      </h3>
       <div className={classes.subscribeSection}>
         <div className={classes.inputWrapper}>
           <CustomInput

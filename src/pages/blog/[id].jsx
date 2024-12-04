@@ -172,6 +172,7 @@ export default function Template(props) {
                       tags={tags}
                       path={id}
                       direction='row'
+                      disableWrapperLink={true}
                     />
                   </li>
                 );

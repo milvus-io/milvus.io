@@ -103,9 +103,9 @@ const DemoCard = ({
                   <path
                     d="M10.4668 6.85159C10.7334 7.05159 10.7334 7.45159 10.4668 7.65159L3.80009 12.6516C3.47047 12.8988 3.00009 12.6636 3.00009 12.2516V2.25159C3.00009 1.83956 3.47047 1.60437 3.80009 1.85159L10.4668 6.85159Z"
                     stroke="black"
-                    stroke-width="1.3"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               }

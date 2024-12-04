@@ -317,7 +317,6 @@ const BlogTemplate = (props: {
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
-            <SubscribeNewsletter />
           </section>
         </div>
       </main>

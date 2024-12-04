@@ -38,6 +38,12 @@ function extractValue(node) {
     return '${' + node.name + '}';
   } else if (node.type === 'BooleanLiteral') {
     return node.value;
+  } else if (
+    node.type === 'UnaryExpression' &&
+    node.operator === '-' &&
+    node.argument.type === 'NumericLiteral'
+  ) {
+    return -node.argument.value;
   } else {
     return 'Unknown type';
   }

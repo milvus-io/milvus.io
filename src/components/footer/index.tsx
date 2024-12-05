@@ -15,6 +15,7 @@ import {
 import { RightTopArrowIcon } from '@/components/icons';
 import SocialMedias from '../socialMedias';
 import { LanguageEnum } from '../language-selector';
+import SubscribeNewsletter from '../subscribe';
 
 const footerJson = [
   {
@@ -99,12 +100,12 @@ const Footer = (props: Props) => {
             content
           )}
         >
-          <div className="flex  flex-col items-center max-phone:items-start sm:items-start lg:items-start shrink-0">
+          <div className="flex  flex-col items-center max-phone:items-start sm:items-start lg:items-start flex-shrink flex-grow-0 flex-[390px]">
             <img
               alt="Milvus logo"
               height="30"
               width="131"
-              src={'/images/milvus_logo.svg'}
+              src="/images/milvus_logo.svg"
               style={{
                 aspectRatio: '120/40',
                 objectFit: 'cover',
@@ -130,6 +131,9 @@ const Footer = (props: Props) => {
                 ]}
               />
             </div>
+            <div className="mt-[40px] w-full">
+              <SubscribeNewsletter />
+            </div>
             <div className="flex mt-[40px] space-x-[12px]">
               <SocialMedias />
             </div>
@@ -141,7 +145,7 @@ const Footer = (props: Props) => {
           </div>
           <div
             className={clsx(
-              'grid grid-cols-2 gap-8 text-sm sm:gap-x-0 flex-shrink-0 flex-grow-0 flex-[520px] max-tablet:flex-auto',
+              'grid grid-cols-2 gap-8 text-sm sm:gap-x-0 flex-shrink-0 flex-grow-0 flex-[420px] max-tablet:flex-auto',
               nav
             )}
           >

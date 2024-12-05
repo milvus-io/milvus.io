@@ -249,6 +249,9 @@
     p {
       margin-bottom: 0;
     }
+    p + pre {
+      margin-top: 20px;
+    }
   }
 
   ul {
@@ -504,11 +507,16 @@
           border-right: 1px solid @color-black4;
         }
 
+        code {
+          font-size: 13px;
+          line-height: 1.4;
+        }
+
         @media @tablet {
           font-size: 14px;
 
           code {
-            font-size: 14px;
+            font-size: 13px;
           }
         }
       }

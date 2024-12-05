@@ -41,7 +41,6 @@ export default function Homepage(props: {
         <ProductionSection />
         <MeetupsSection />
         <VectorDatabaseSection />
-        <SubscribeSection />
       </main>
     </Layout>
   );

@@ -50,12 +50,12 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
     },
   ];
 
-  const transformRight = (step: 1 | -1) => {
-    if (step === -1 && moveRightSteps === 0) {
+  const transformRight = (step: 2 | -2) => {
+    if (step === -2 && moveRightSteps === 0) {
       return;
     }
 
-    if (step === 1 && moveRightSteps === techStacks.length - 3) {
+    if (step === 2 && moveRightSteps === techStacks.length - 3) {
       return;
     }
 
@@ -106,7 +106,7 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
         <button
           className={clsx(classes.ctaButton, classes.leftButton)}
           onClick={() => {
-            transformRight(-1);
+            transformRight(-2);
           }}
           disabled={moveRightSteps === 0}
         >
@@ -115,7 +115,7 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
         <button
           className={classes.ctaButton}
           onClick={() => {
-            transformRight(1);
+            transformRight(2);
           }}
           disabled={moveRightSteps === techStacks.length - 3}
         >

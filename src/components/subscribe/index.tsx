@@ -85,7 +85,7 @@ const SubscribeNewsletter = (props: {
           onClick={handleSubmitInfo}
           size="large"
           classes={{
-            root: classes.customScribeButton,
+            root: classes.customSubscribeButton,
           }}
         >
           {btnTextMap[subscribeStatus]}

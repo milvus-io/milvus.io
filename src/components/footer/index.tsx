@@ -131,7 +131,7 @@ const Footer = (props: Props) => {
                 ]}
               />
             </div>
-            <div className="mt-[40px] w-full">
+            <div className="mt-[100px] w-full">
               <SubscribeNewsletter />
             </div>
             <div className="flex mt-[40px] space-x-[12px]">

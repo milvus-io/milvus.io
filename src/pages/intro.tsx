@@ -201,7 +201,7 @@ export default function WhatIsMilvus() {
           </div>
           <div className={styles.imageWrapper}>
             <img
-              src="/images/milvus-architecture-overview.png"
+              src="https://milvus.io/docs/v2.5.x/assets/highly-decoupled-architecture.png"
               alt="Milvus Architecture Overview"
             />
           </div>

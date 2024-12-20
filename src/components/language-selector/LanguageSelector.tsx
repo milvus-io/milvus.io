@@ -145,7 +145,7 @@ export const LanguageSelector: FC<Props> = props => {
       {showDeepLogo && (
         <p className="flex items-center mt-[8px] text-[#042B48] opacity-50 text-[11px] font-400">
           <span className="mr-[6px]">{t('translate.by')}</span>
-          <img src={DeepLogo.src} height={16} alt="DeepLogo" />
+          <img src={DeepLogo.src} height={16} alt="DeepL" />
         </p>
       )}
     </div>

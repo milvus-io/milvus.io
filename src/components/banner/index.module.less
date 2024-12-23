@@ -1,0 +1,19 @@
+@import (reference) '../../styles/global.module.less';
+
+.bannerContainer {
+  padding: 10px 25px;
+  background-color: #000;
+
+  .bannerText {
+    .paragraph4-regular();
+    text-align: center;
+    color: #fff;
+
+    a {
+      color: @color-blue1;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

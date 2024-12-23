@@ -2,6 +2,7 @@ import classes from './index.module.less';
 import clsx from 'clsx';
 import DesktopHeader from './DescktopHeader';
 import MobileHeader from './mobileHeader';
+import CloudBanner from '../banner';
 
 const Header: React.FC<{
   darkMode?: Boolean;
@@ -14,6 +15,7 @@ const Header: React.FC<{
         [classes.fixedHeader]: darkMode,
       })}
     >
+      <CloudBanner />
       <DesktopHeader className={className} />
       <MobileHeader className={className} />
     </header>

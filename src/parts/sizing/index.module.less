@@ -1,0 +1,93 @@
+@import url('@/styles/global.module.less');
+
+.formSection {
+  padding: 30px 24px;
+  border-right: 1px solid #ececee;
+
+  .singlePart {
+    padding-bottom: 24px;
+    border-bottom: 1px solid #ececee;
+    margin-bottom: 24px;
+  }
+  .singleRow {
+    margin-bottom: 20px;
+  }
+
+  .commonLabel {
+    .paragraph4();
+    margin-bottom: 8px;
+  }
+
+  .smallerLabel {
+    .paragraph6();
+  }
+
+  .innerRow {
+    margin-top: 20px;
+  }
+  .marginBtm20 {
+    margin-bottom: 20px;
+  }
+
+  .marginBtm0 {
+    margin-bottom: 0;
+  }
+
+  .tooltipTrigger {
+    text-decoration: underline dashed #d0d7dc;
+  }
+
+  .offLoadingLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .offLoadingDesc {
+    .paragraph6-regular;
+    color: #2e373b;
+  }
+
+  .flexRow {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .switchRow {
+    margin-bottom: 20px;
+  }
+
+  .collapsible {
+    overflow: hidden;
+    transition: height 0.3s linear;
+    will-change: height;
+  }
+
+  .visibleCollapse {
+  }
+  .invisibleCollapse {
+    height: 0;
+  }
+
+  .selectTrigger {
+    .paragraph6-regular();
+    padding: 10px 12px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #e8eaee;
+    background: #fff;
+  }
+
+  .indexParamLabel {
+    .paragraph4-regular();
+    margin-bottom: 8px;
+  }
+
+  .radioGroup {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+}

@@ -11,7 +11,7 @@ export const BootstrapDialogTitle = props => {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2, fontFamily: 'Inter' }} {...other}>
+    <DialogTitle sx={{ m: 0, p: 2, fontFamily: 'Geist' }} {...other}>
       {children}
       {onClose ? (
         <IconButton
@@ -40,7 +40,7 @@ export const CustomizedDialogs = props => {
         onClose={handleClose}
         open={open}
         sx={{
-          fontFamily: 'Inter',
+          fontFamily: 'Geist',
         }}
       >
         <BootstrapDialogTitle onClose={handleClose}>

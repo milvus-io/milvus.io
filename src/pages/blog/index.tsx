@@ -516,7 +516,11 @@ const Blog: React.FC<Props> = props => {
             {t('blog:zillizAdv.title')}
           </h3>
           <ul className={styles['zilliz-adv-features']}>{featureItems}</ul>
-          <Link href={CTA_LINK} className={styles['zilliz-adv-btn']}>
+          <Link
+            href={CTA_LINK}
+            target="_blank"
+            className={styles['zilliz-adv-btn']}
+          >
             {t('blog:zillizAdv.btn')}
             <RightTopArrowIcon color="#FFFFFF" />
           </Link>

@@ -1,4 +1,4 @@
-import { DocSearch } from '@docsearch/react';
+import { DocSearch, DocSearchTranslations } from '@docsearch/react';
 import classes from './agloia.module.less';
 import { useTranslation } from 'react-i18next';
 import { LanguageEnum } from '../language-selector/LanguageSelector';
@@ -34,7 +34,9 @@ export const AlgoliaSearch = (props: {
           facetFilters: [`language:${locale}`, `version:${version}`],
         }}
         placeholder={t('v3trans.algolia.button.buttonText')}
-        translations={t('v3trans.algolia', { returnObjects: true })}
+        translations={
+          t('v3trans.algolia', { returnObjects: true }) as DocSearchTranslations
+        }
       />
     </div>
   );

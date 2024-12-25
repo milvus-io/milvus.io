@@ -70,7 +70,7 @@ export default function DesktopHeader(props: Props) {
           label: t('tools.vts'),
           link: GITHUB_VTS_LINK,
           rel: 'noopener noreferrer',
-        }
+        },
       ],
     },
     { label: t('blog'), link: '/blog' },
@@ -88,13 +88,13 @@ export default function DesktopHeader(props: Props) {
         <div className="flex items-center gap-[40px]">
           <LogoSection lightMode={true} />
 
-          <ul className="flex items-center list-none gap-[12px] max-[1080px]:gap-[10px]">
+          <ul className="flex items-center list-none gap-[16px] max-[1080px]:gap-[10px]">
             {menuConfigs.map(config => {
               if (config.list) {
                 return (
                   <li key={config.label} className="shrink-0">
                     <div className="group relative">
-                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] font-['Inter'] h-[21px] px-[6px] text-black1/[0.7] hover:text-black1/[0.9] cursor-pointer">
+                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] h-[21px] text-black1/[0.7] hover:text-black1/[0.9] cursor-pointer font-mono uppercase text-[#667176]">
                         <span className="inline-block leading-[16px]">
                           {config.label}
                         </span>
@@ -110,7 +110,7 @@ export default function DesktopHeader(props: Props) {
                             <Link
                               href={item.link}
                               rel={item.rel}
-                              className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04]"
+                              className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04] font-mono uppercase text-[#667176]"
                               target={item.rel ? '_blank' : undefined}
                             >
                               {item.label}
@@ -127,7 +127,7 @@ export default function DesktopHeader(props: Props) {
                 <li key={config.label}>
                   <Link
                     href={config.link}
-                    className="block text-[14px] leading-[21px] font-[500] px-[6px] text-black1/[0.7] hover:text-black1/[0.9] cursor-pointer"
+                    className="block text-[14px] leading-[21px] font-[500] text-black1/[0.7] hover:text-black1/[0.9] cursor-pointer font-mono uppercase text-[#667176]"
                   >
                     {config.label}
                   </Link>
@@ -141,7 +141,7 @@ export default function DesktopHeader(props: Props) {
           <a
             href={GITHUB_MILVUS_LINK}
             className={
-              'h-9 px-3 py-1.5 rounded-md flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] transition duration-200 ease-in-out hover:bg-black4'
+              'h-9 px-3 py-1.5 rounded-md flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] transition duration-200 ease-in-out hover:bg-black4 font-mono'
             }
             target="_blank"
           >

@@ -50,7 +50,7 @@ export function RestHeader(props) {
         <span
           style={{
             fontSize: '0.8rem',
-            fontFamily: 'monospace',
+            fontFamily: "'Geist Mono', monospace",
             borderLeft: '2px solid rgba(223, 225, 236, 0.7)',
             paddingLeft: '0.5em',
           }}

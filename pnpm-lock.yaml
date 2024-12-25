@@ -90,8 +90,8 @@ importers:
         specifier: ^11.6.0
         version: 11.9.0
       i18next:
-        specifier: ^21.9.1
-        version: 21.10.0
+        specifier: ^23.2.3
+        version: 23.16.8
       instantsearch.css:
         specifier: ^7.4.5
         version: 7.4.5
@@ -142,7 +142,7 @@ importers:
         version: 6.1.0(react@18.2.0)
       react-i18next:
         specifier: ^14.1.0
-        version: 14.1.2(i18next@21.10.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 14.1.2(i18next@23.16.8)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-player:
         specifier: ^2.9.0
         version: 2.16.0(react@18.2.0)
@@ -3040,8 +3040,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  i18next@21.10.0:
-    resolution: {integrity: sha512-YeuIBmFsGjUfO3qBmMOc0rQaun4mIpGKET5WDwvu8lU7gvwpcariZLNtL0Fzj+zazcHUrlXHiptcFhBMFaxzfg==}
+  i18next@23.16.8:
+    resolution: {integrity: sha512-06r/TitrM88Mg5FdUXAKL96dJMzgqLE5dv3ryBAra4KCwD9mJ4ndOTS95ZuymIGoE+2hzfdaMak2X11/es7ZWg==}
 
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
@@ -8304,7 +8304,7 @@ snapshots:
       eslint: 8.19.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1)(eslint@8.19.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0))(eslint@8.19.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.19.0)
       eslint-plugin-react: 7.34.2(eslint@8.19.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.19.0)
@@ -8326,7 +8326,7 @@ snapshots:
     dependencies:
       debug: 4.3.4
       eslint: 8.19.0
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1)(eslint@8.19.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0))(eslint@8.19.0)
       glob: 7.2.3
       is-glob: 4.0.3
       resolve: 1.22.8
@@ -8345,7 +8345,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1)(eslint@8.19.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.19.0)(typescript@5.4.5))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.29.1(eslint@8.19.0))(eslint@8.19.0))(eslint@8.19.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
@@ -8948,7 +8948,7 @@ snapshots:
 
   husky@9.0.11: {}
 
-  i18next@21.10.0:
+  i18next@23.16.8:
     dependencies:
       '@babel/runtime': 7.24.6
 
@@ -10328,11 +10328,11 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  react-i18next@14.1.2(i18next@21.10.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-i18next@14.1.2(i18next@23.16.8)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.24.6
       html-parse-stringify: 3.0.1
-      i18next: 21.10.0
+      i18next: 23.16.8
       react: 18.2.0
     optionalDependencies:
       react-dom: 18.2.0(react@18.2.0)

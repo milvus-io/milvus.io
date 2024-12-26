@@ -78,6 +78,11 @@
     font-weight: 600;
     line-height: 140%;
     margin: 12px 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 
     &:hover {
       text-decoration: underline;
@@ -130,6 +135,12 @@
       font-weight: 600;
       line-height: 1.5;
       color: @color-black1;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+
       &:hover {
         text-decoration: underline;
         text-underline-position: from-font;

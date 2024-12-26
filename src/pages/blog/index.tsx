@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Head from 'next/head';
 import blogUtils from '../../utils/blog.utils';
 import Layout from '../../components/layout/commonLayout';
@@ -31,6 +31,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import { Trans, useTranslation } from 'react-i18next';
 import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
+import { debounce } from '@mui/material';
 
 const PAGE_SIZE = 9;
 const TITLE = 'Learn Milvus: Insights and Innovations in VectorDB Technology';
@@ -177,13 +178,14 @@ const Blog: React.FC<Props> = props => {
     const data = props.blogList.reduce((acc, cur) => {
       const shouldSetRecommend =
         cur.recommend &&
-        (!acc.recommend || new Date(acc.recommend.date) < new Date(cur.date));
+        (!acc.recommend?.recommend ||
+          new Date(acc.recommend.date) < new Date(cur.date));
 
       if (shouldSetRecommend) {
         acc.recommend = cur;
         acc.all = props.blogList.filter(v => v.id !== cur.id);
       }
-      if (cur) return acc;
+      return acc;
     }, defaultData);
 
     const sortedByDate = [...data.all].sort(
@@ -253,14 +255,17 @@ const Blog: React.FC<Props> = props => {
     return `${router.pathname}?${search.toString()}`;
   };
 
-  const handleSearch = (e: React.FormEvent) => {
-    const value = (e.target as HTMLInputElement).value.trim();
-    const url = generateLinkUrl(
-      { key: SEARCH_QUERY_KEY, value, shouldRemove: !value },
-      { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
-    );
-    router.replace(url, undefined, { scroll: false });
-  };
+  const handleSearch = useCallback(
+    debounce((e: React.FormEvent) => {
+      const value = (e.target as HTMLInputElement).value.trim();
+      const url = generateLinkUrl(
+        { key: SEARCH_QUERY_KEY, value, shouldRemove: !value },
+        { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
+      );
+      router.replace(url, undefined, { scroll: false });
+    }, 300),
+    [router]
+  );
 
   const renderRecommend = () => {
     const { recommend } = blogs;

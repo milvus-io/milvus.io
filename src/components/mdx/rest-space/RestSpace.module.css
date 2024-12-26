@@ -18,7 +18,7 @@
 }
 
 .paramName {
-  font-family: monospace;
+  font-family: 'Geist Mono', monospace;
   color: var(--color-text-primary);
   font-weight: 700;
   font-size: 1rem;
@@ -26,7 +26,7 @@
 }
 
 .label {
-  font-family: monospace;
+  font-family: 'Geist Mono', monospace;
   padding: 0.2em 0.5em;
   color: rgb(74, 83, 104);
   background-color: rgba(223, 225, 236, 0.7);
@@ -34,7 +34,7 @@
 }
 
 .required {
-  font-family: monospace;
+  font-family: 'Geist Mono', monospace;
   padding: 0.2em 0.5em;
   color: rgb(220, 38, 38);
   background-color: rgb(220, 38, 38, 0.2);

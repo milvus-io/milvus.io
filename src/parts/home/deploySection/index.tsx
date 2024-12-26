@@ -16,7 +16,7 @@ export default function DeploySection() {
       advantage: t('deploySection.lite.advantage'),
       features: t('deploySection.lite.features', {
         returnObjects: true,
-      }),
+      }) as string[],
       class: classes.liteDb,
       learnMoreLink: '/docs/milvus_lite.md',
       startLink: '/docs/install-overview.md#Milvus-Lite',
@@ -26,7 +26,7 @@ export default function DeploySection() {
       advantage: t('deploySection.milvusStandalone.advantage'),
       features: t('deploySection.milvusStandalone.features', {
         returnObjects: true,
-      }),
+      }) as string[],
       class: classes.standaloneDb,
       learnMoreLink: '/docs/prerequisite-docker.md',
       startLink: '/docs/install-overview.md#Milvus-Standalone',
@@ -36,7 +36,7 @@ export default function DeploySection() {
       advantage: t('deploySection.milvusDistributed.advantage'),
       features: t('deploySection.milvusDistributed.features', {
         returnObjects: true,
-      }),
+      }) as string[],
       class: classes.contributedDb,
       learnMoreLink: '/docs/prerequisite-helm.md',
       startLink: '/docs/install-overview.md#Milvus-Distributed',
@@ -48,7 +48,7 @@ export default function DeploySection() {
     advantage: t('deploySection.cloud.advantage'),
     features: t('deploySection.cloud.features', {
       returnObjects: true,
-    }),
+    }) as string[],
     class: classes.cloudDb,
     cta: t('buttons.tryFree'),
     tryLink: CLOUD_SIGNUP_LINK,

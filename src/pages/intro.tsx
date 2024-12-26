@@ -9,23 +9,25 @@ import { DISCORD_INVITE_URL, MEETUP_URL } from '@/consts/externalLinks';
 import Link from 'next/link';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 
+interface Key {
+  title: string;
+  content: string;
+}
+
 export default function WhatIsMilvus() {
   const { t } = useTranslation('intro');
 
-  const usedForKeys: { title: string; content: string }[] = t('useFor.keys', {
+  const usedForKeys = t('useFor.keys', {
     returnObjects: true,
-  });
+  }) as Key[];
 
-  const milvusIsAVdbKeys: string[] = t('milvusIsAVdb.features', {
+  const milvusIsAVdbKeys = t('milvusIsAVdb.features', {
     returnObjects: true,
-  });
+  }) as string[];
 
-  const differenceKeys: { title: string; content: string }[] = t(
-    'difference.keys',
-    {
-      returnObjects: true,
-    }
-  );
+  const differenceKeys = t('difference.keys', {
+    returnObjects: true,
+  }) as Key[];
 
   const nutShellKeys1 = [
     <li key="sub2FeatureF1">

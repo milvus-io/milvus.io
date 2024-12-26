@@ -24,6 +24,7 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
 
   const modalSettings: InkeepModalSettings = {
     // optional settings
+    defaultView: 'AI_CHAT',
   };
 
   const searchSettings: InkeepSearchSettings = {

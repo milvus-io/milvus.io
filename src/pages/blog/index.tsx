@@ -1,16 +1,21 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Head from 'next/head';
 import blogUtils from '../../utils/blog.utils';
 import Layout from '../../components/layout/commonLayout';
-import BlogCard from '../../components/card/BlogCard';
-import Tags from '../../components/tags';
 import styles from '../../styles/blog.module.less';
 import pageClasses from '../../styles/responsive.module.less';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { ABSOLUTE_BASE_URL } from '@/consts';
-import CustomButton from '../../components/customButton';
-import { RightWholeArrow } from '../../components/icons';
+import {
+  AirplaneArrowIcon,
+  ClockIcon,
+  ListItemTickIcon,
+  RightTopArrowIcon,
+  RocketIcon,
+  SearchIcon,
+  TrendingIcon,
+} from '../../components/icons';
 import {
   Pagination,
   PaginationContent,
@@ -23,6 +28,9 @@ import {
 import { BlogFrontMatterType } from '@/types/blogs';
 import SubscribeNewsletter from '@/components/subscribe';
 import Link from 'next/link';
+import dayjs from 'dayjs';
+import { Trans, useTranslation } from 'react-i18next';
+import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
 
 const PAGE_SIZE = 9;
 const TITLE = 'Learn Milvus: Insights and Innovations in VectorDB Technology';
@@ -33,10 +41,14 @@ const TAG_QUERY_KEY = 'blog_tag';
 const DEFAULT_TAG = 'all';
 
 const PAGINATION_QUERY_KEY = 'page';
-const DEFAULT_PAGE = 1;
+
+const SEARCH_QUERY_KEY = 'q';
 
 const ELLIPSIS = 'ellipsis';
 const ELLIPSIS_2 = 'ellipsis2';
+
+const CTA_LINK =
+  'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_blog_overview-page_milvusio';
 
 const generatePaginationNavigators = (
   currentPage: number,
@@ -84,128 +96,519 @@ const generatePaginationNavigators = (
   ];
 };
 
-const BlogTemplate = (props: {
+interface Props {
   locale: string;
   blogList: BlogFrontMatterType[];
-}) => {
-  const { locale, blogList } = props;
+}
+
+interface BlogData {
+  recommend: BlogFrontMatterType;
+  all: BlogFrontMatterType[];
+  topRecent: BlogFrontMatterType[];
+  topRecentRelease: BlogFrontMatterType[];
+}
+
+enum BlogTag {
+  // old
+  events = 'events',
+  news = 'news',
+  scenarios = 'scenarios',
+  // new
+  engineering = 'engineering',
+  announcements = 'announcements',
+  tutorials = 'tutorials',
+  useCases = 'usecases',
+}
+
+interface BlogFilter {
+  [TAG_QUERY_KEY]?: BlogTag | typeof DEFAULT_TAG;
+  [PAGINATION_QUERY_KEY]?: number;
+  [SEARCH_QUERY_KEY]?: string;
+}
+
+interface BlogLinkParam {
+  key: keyof BlogFilter;
+  value: any;
+  shouldRemove?: boolean;
+}
+
+const TOP_RECENT_COUNT = 3;
+
+const convertToNewTag = (tag: string) => {
+  const processedTag = tag.replace(/\s/g, '').toLowerCase() as BlogTag;
+  // events & news => announcements
+  // scenarios => useCases
+  if ([BlogTag.events, BlogTag.news].includes(processedTag)) {
+    return BlogTag.announcements;
+  }
+  if ([BlogTag.scenarios].includes(processedTag)) {
+    return BlogTag.useCases;
+  }
+  return processedTag;
+};
+
+const includesTag = (blog: BlogFrontMatterType, tag: BlogTag) => {
+  const { tags } = blog;
+  return tags.map(t => convertToNewTag(t)).includes(tag);
+};
+
+const getBlogLink = (blog: BlogFrontMatterType) => `/blog/${blog.id}`;
+
+const Blog: React.FC<Props> = props => {
+  const absoluteUrl = `${ABSOLUTE_BASE_URL}/blog`;
 
   const router = useRouter();
+  const query: BlogFilter = router.query;
 
-  const [queryParams, setQueryParams] = useState({
-    tag: DEFAULT_TAG,
-    page: DEFAULT_PAGE,
-  });
-
-  const { featuredBlog, restBlogs } = useMemo(() => {
-    // blogs are sorted by time, take the latest recommended blog as the featured blog
-    // if no recommended blog, take the latest blog as the featured blog
-    const recommendedBlog = blogList.find(v => v.recommend) || blogList[0];
-    const restBlogs = blogList.filter(v => v.id !== recommendedBlog.id);
-    return {
-      featuredBlog: recommendedBlog,
-      restBlogs,
-    };
-  }, [blogList]);
-
-  const handleFilter = (tag: string) => {
-    // always reset to the first page when filtering tags
-    window.history.pushState(
-      {},
-      '',
-      `/blog?${TAG_QUERY_KEY}=${tag}&${PAGINATION_QUERY_KEY}=${DEFAULT_PAGE}`
-    );
-    setQueryParams({
-      tag,
-      page: DEFAULT_PAGE,
-    });
-  };
-
-  const generatePagination = (page: 1 | -1) => {
-    const { tag, page: currentPage } = queryParams;
-
-    if (page === 1 && currentPage === filteredData.totalPages) {
-      return '';
-    }
-    if (page === -1 && currentPage === 1) {
-      return '';
-    }
-
-    return {
-      path: `/blog?${TAG_QUERY_KEY}=${tag}&${PAGINATION_QUERY_KEY}=${
-        currentPage + page
-      }`,
-      previousDisabled: currentPage + page === 1,
-      nextDisabled: currentPage + page === filteredData.totalPages,
-    };
-  };
-
-  // list of tags
-  const tagList = useMemo(() => {
-    const tagData = {
-      all: DEFAULT_TAG,
-    };
-    blogList.forEach(item => {
-      const { tags } = item;
-      tags.forEach(subItem => {
-        tagData[subItem] = subItem;
-      });
-    });
-    return Object.keys(tagData);
-  }, [blogList]);
-
-  const filteredData = useMemo(() => {
-    const { tag, page } = queryParams;
-    const tagFilteredBlogs =
-      tag === DEFAULT_TAG
-        ? restBlogs
-        : restBlogs.filter(v => v.tags.includes(tag));
-    const pageFilteredBlogs = tagFilteredBlogs.slice(
-      (page - 1) * PAGE_SIZE,
-      page * PAGE_SIZE
-    );
-    const totalPages = Math.ceil(tagFilteredBlogs.length / PAGE_SIZE);
-    const paginationNavigators = generatePaginationNavigators(page, totalPages);
-    return {
-      blogs: pageFilteredBlogs,
-      totalLength: tagFilteredBlogs.length,
-      totalPages,
-      paginationNavigators,
-    };
-  }, [queryParams, restBlogs]);
+  const { t } = useTranslation(['blog', 'footer']);
+  const [filter, setFilter] = useState<BlogFilter>(query);
 
   useEffect(() => {
-    const { query } = router;
-    const tag = (query[TAG_QUERY_KEY] as string) || DEFAULT_TAG;
-    const page = Number(query[PAGINATION_QUERY_KEY]) || DEFAULT_PAGE;
+    setFilter(query);
+  }, [query]);
 
-    setQueryParams({
-      tag,
-      page,
-    });
-  }, [router]);
-
-  const navigateLinks = useMemo(() => {
-    const { tag, page } = queryParams;
-    const previousLink =
-      page > 1
-        ? `/blog?${TAG_QUERY_KEY}=${tag}&${PAGINATION_QUERY_KEY}=${page - 1}`
-        : '';
-    const previousLinkDisabled = page === 1;
-    const nextLink =
-      page < filteredData.totalPages
-        ? `/blog?${TAG_QUERY_KEY}=${tag}&${PAGINATION_QUERY_KEY}=${page + 1}`
-        : '';
-    const nextLinkDisabled = page === filteredData.totalPages;
-    return {
-      previousLink,
-      nextLink,
-      previousLinkDisabled,
-      nextLinkDisabled,
+  const blogs = useMemo(() => {
+    const defaultData: BlogData = {
+      recommend: props.blogList[0],
+      all: props.blogList,
+      topRecent: [],
+      topRecentRelease: [],
     };
-  }, [queryParams, filteredData]);
+    const data = props.blogList.reduce((acc, cur) => {
+      const shouldSetRecommend =
+        cur.recommend &&
+        (!acc.recommend?.recommend ||
+          new Date(acc.recommend.date) < new Date(cur.date));
 
-  const absoluteUrl = `${ABSOLUTE_BASE_URL}/blog`;
+      if (shouldSetRecommend) {
+        acc.recommend = cur;
+        acc.all = props.blogList.filter(v => v.id !== cur.id);
+      }
+      return acc;
+    }, defaultData);
+
+    const sortedByDate = [...data.all].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    sortedByDate.forEach(b => {
+      if (
+        data.topRecent.length < TOP_RECENT_COUNT &&
+        !includesTag(b, BlogTag.announcements)
+      ) {
+        data.topRecent.push(b);
+      }
+      if (
+        data.topRecentRelease.length < TOP_RECENT_COUNT &&
+        includesTag(b, BlogTag.announcements)
+      ) {
+        data.topRecentRelease.push(b);
+      }
+    });
+
+    return data;
+  }, [props.blogList]);
+
+  const filteredBlogs = useMemo(() => {
+    return blogs.all.filter((b, i) => {
+      const isMatchTag =
+        !filter[TAG_QUERY_KEY] ||
+        filter[TAG_QUERY_KEY] === DEFAULT_TAG ||
+        includesTag(b, filter[TAG_QUERY_KEY]);
+
+      const isMatchSearch =
+        !filter[SEARCH_QUERY_KEY] ||
+        b.title
+          .toLowerCase()
+          .includes(filter[SEARCH_QUERY_KEY].trim().toLowerCase());
+
+      return isMatchTag && isMatchSearch;
+    });
+  }, [filter, blogs]);
+
+  const paging = useMemo(() => {
+    const page = filter[PAGINATION_QUERY_KEY] || 1;
+    const start = (page - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const pages = Math.ceil(filteredBlogs.length / PAGE_SIZE);
+    return {
+      total: filteredBlogs.length,
+      pages,
+      list: filteredBlogs.slice(start, end),
+      navigators: generatePaginationNavigators(Number(page), pages),
+    };
+  }, [filteredBlogs]);
+
+  const generateLinkUrl = (...args: BlogLinkParam[]) => {
+    const { [SEARCH_QUERY_KEY]: _, ...queryObject } = filter;
+    const search = new URLSearchParams(queryObject as any);
+    args.forEach(({ key, value, shouldRemove }) => {
+      if (shouldRemove) {
+        search.delete(key);
+      } else {
+        search.set(key, value);
+      }
+    });
+    if (!search.size) {
+      return router.pathname;
+    }
+    return `${router.pathname}?${search.toString()}`;
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    const value = (e.target as HTMLInputElement).value.trim();
+    const url = generateLinkUrl(
+      // { key: SEARCH_QUERY_KEY, value, shouldRemove: !value },
+      { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
+    );
+    window.history.pushState({}, '', url);
+    setFilter(f => ({
+      ...f,
+      [SEARCH_QUERY_KEY]: value,
+      [PAGINATION_QUERY_KEY]: 1,
+    }));
+  };
+
+  const handleFilter = (tag: BlogTag | 'all') => (e: React.MouseEvent) => {
+    // reduce list fetch when router change
+    e.preventDefault();
+    const url = generateLinkUrl(
+      { key: TAG_QUERY_KEY, value: tag, shouldRemove: tag === DEFAULT_TAG },
+      { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
+    );
+    window.history.pushState({}, '', url);
+    setFilter(f => ({ ...f, [TAG_QUERY_KEY]: tag, [PAGINATION_QUERY_KEY]: 1 }));
+  };
+
+  const handlePaging = (page: number) => (e: React.MouseEvent) => {
+    // reduce list fetch when router change
+    e.preventDefault();
+    const url = generateLinkUrl({
+      key: PAGINATION_QUERY_KEY,
+      value: page,
+      shouldRemove: page === 1,
+    });
+    window.history.pushState({}, '', url);
+    setFilter(f => ({ ...f, [PAGINATION_QUERY_KEY]: page }));
+    scrollToListNav();
+  };
+
+  const renderRecommend = () => {
+    const { recommend } = blogs;
+    return (
+      <section className={styles['recommend']}>
+        <span className={styles['trending']}>
+          <TrendingIcon />
+          {t('blog:trending')}
+        </span>
+        <Link href={getBlogLink(recommend)}>
+          <h1 className={styles['recommend-title']}>{recommend.title}</h1>
+        </Link>
+        <p className={styles['recommend-desc']}>{recommend.desc}</p>
+        <div className={styles['recommend-extra']}>
+          <BlogExtra data={recommend} dark={true} />
+        </div>
+      </section>
+    );
+  };
+
+  const renderRecentBlogs = (list: BlogFrontMatterType[]) => {
+    return list.map((b, i) => (
+      <React.Fragment key={b.id}>
+        <div key={b.id} className={styles['recent-blog']}>
+          <Link href={getBlogLink(b)}>
+            <h2 className={styles['recent-blog-title']}>{b.title}</h2>
+          </Link>
+          <BlogExtra data={b} />
+        </div>
+        {i < list.length - 1 && (
+          <hr key={i} className={styles['recent-blog-separator']} />
+        )}
+      </React.Fragment>
+    ));
+  };
+
+  const renderRecentTabs = () => {
+    const tabs = [
+      {
+        title: t('blog:recent.most'),
+        icon: <ClockIcon />,
+        key: 'recent',
+        renderContent: () => renderRecentBlogs(blogs.topRecent),
+      },
+      {
+        title: t('blog:recent.release'),
+        icon: <RocketIcon />,
+        key: 'release',
+        renderContent: () => renderRecentBlogs(blogs.topRecentRelease),
+      },
+    ];
+
+    return (
+      <div className={styles['recent']}>
+        <Tabs tabs={tabs} />
+      </div>
+    );
+  };
+
+  const renderSubscribe = () => {
+    return (
+      <div className={styles['subscribe']}>
+        <div className={styles['subscribe-info']}>
+          <h2 className={styles['subscribe-title']}>
+            <Trans i18nKey="blog:subscribe.title" components={[<strong />]} />
+          </h2>
+          <p className={styles['subscribe-desc']}>{t('blog:subscribe.desc')}</p>
+        </div>
+        <div className={styles['subscribe-form']}>
+          <SubscribeNewsletter
+            withoutTitle={true}
+            classes={{
+              button: styles['subscribe-button'],
+              inputContainer: styles['subscribe-input-container'],
+              input: styles['subscribe-input'],
+              errorMessage: styles['subscribe-input-message'],
+            }}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const renderFilterTagItem = (tag: BlogTag | typeof DEFAULT_TAG) => {
+    const isActive = tag === (filter[TAG_QUERY_KEY] || DEFAULT_TAG);
+    const url = generateLinkUrl(
+      {
+        key: TAG_QUERY_KEY,
+        value: tag,
+        shouldRemove: tag === DEFAULT_TAG,
+      },
+      { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
+    );
+    return (
+      <Link key={tag} href={url} onClick={handleFilter(tag)} scroll={false}>
+        <div
+          className={clsx(styles['filter-tag'], isActive && styles['active'])}
+          key={tag}
+        >
+          {t(`blog:filter.${tag}`)}
+        </div>
+      </Link>
+    );
+  };
+
+  const renderFilter = () => {
+    const filterTags = [
+      DEFAULT_TAG,
+      BlogTag.engineering,
+      BlogTag.announcements,
+      BlogTag.tutorials,
+      BlogTag.useCases,
+    ] as const;
+    const filterTagItems = filterTags.map(f => renderFilterTagItem(f));
+
+    return (
+      <div className={styles['filter']}>
+        <div className={styles['filter-tags']}>{filterTagItems}</div>
+      </div>
+    );
+  };
+
+  const renderSearcher = () => {
+    return (
+      <label className={styles['searcher']}>
+        <SearchIcon className={styles['searcher-icon']} />
+        <input
+          className={styles['searcher-input']}
+          placeholder="Search"
+          defaultValue={filter[SEARCH_QUERY_KEY]}
+          onInput={handleSearch}
+        />
+      </label>
+    );
+  };
+
+  const renderBlogList = () => {
+    return paging.list.map(b => <BlogCard key={b.id} data={b} />);
+  };
+
+  const scrollToListNav = () => {
+    const listEl = document.querySelector(`.${styles['content']}`);
+    listEl?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const renderPaging = () => {
+    const { navigators, pages } = paging;
+    const currentPage = Number(filter[PAGINATION_QUERY_KEY] || 1);
+
+    const hasPrev = currentPage > 1;
+    const hasNext = currentPage < pages;
+
+    return (
+      <Pagination className={styles.paginationWrapper}>
+        <PaginationContent style={{ gap: 5 }}>
+          <PaginationItem>
+            <PaginationPrevious
+              scroll={false}
+              onClick={handlePaging(currentPage - 1)}
+              href={generateLinkUrl({
+                key: PAGINATION_QUERY_KEY,
+                value: currentPage - 1,
+                shouldRemove: currentPage === 2,
+              })}
+              disabled={!hasPrev}
+              className={clsx(styles.paginationLink, {
+                [styles.disabledNavigationLink]: !hasPrev,
+              })}
+            />
+          </PaginationItem>
+          {navigators.map((v, i) => {
+            return (
+              <PaginationItem key={v}>
+                {String(v).includes(ELLIPSIS) ? (
+                  <PaginationEllipsis />
+                ) : (
+                  <PaginationLink
+                    scroll={false}
+                    onClick={handlePaging(v as number)}
+                    href={generateLinkUrl({
+                      key: PAGINATION_QUERY_KEY,
+                      value: v,
+                      shouldRemove: v === 1,
+                    })}
+                    isActive={currentPage === v}
+                    className={clsx(styles.paginationLink, {
+                      [styles.activePaginationLink]: currentPage === v,
+                    })}
+                  >
+                    {v}
+                  </PaginationLink>
+                )}
+              </PaginationItem>
+            );
+          })}
+          <PaginationItem>
+            <PaginationNext
+              scroll={false}
+              onClick={handlePaging(currentPage + 1)}
+              href={generateLinkUrl({
+                key: PAGINATION_QUERY_KEY,
+                value: currentPage + 1,
+              })}
+              disabled={!hasNext}
+              className={clsx(styles.paginationLink, {
+                [styles.disabledNavigationLink]: !hasNext,
+              })}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    );
+  };
+
+  const renderAIService = () => {
+    return (
+      <section className={styles['ai-service']}>
+        <InkeepCustomTriggerWrapper className={styles['ai-service-wrapper']}>
+          <div
+            className={styles['ai-service-logo']}
+            style={{ backgroundImage: `url(/images/ai-bird.png)` }}
+          />
+          <div className={styles['ai-service-main']}>
+            <h3 className={styles['ai-service-title']}>
+              {t('blog:aiService.title')}
+            </h3>
+            <p className={styles['ai-service-desc']}>
+              {t('blog:aiService.desc')}
+            </p>
+          </div>
+          <AirplaneArrowIcon className={styles['ai-service-icon']} />
+        </InkeepCustomTriggerWrapper>
+      </section>
+    );
+  };
+
+  const renderZillizAdv = () => {
+    const features = [
+      t('blog:zillizAdv.feature1'),
+      t('blog:zillizAdv.feature2'),
+    ];
+
+    const featureItems = features.map(f => (
+      <li className={styles['zilliz-adv-features-item']} key={f}>
+        <ListItemTickIcon className={styles['zilliz-adv-features-item-icon']} />
+        {f}
+      </li>
+    ));
+
+    return (
+      <section className={styles['zilliz-adv']}>
+        <div className={styles['zilliz-adv-main']}>
+          <h6 className={styles['zilliz-adv-small-title']}>
+            {t('blog:zillizAdv.smallTitle')}
+          </h6>
+          <h3 className={styles['zilliz-adv-title']}>
+            {t('blog:zillizAdv.title')}
+          </h3>
+          <ul className={styles['zilliz-adv-features']}>{featureItems}</ul>
+          <Link
+            href={CTA_LINK}
+            target="_blank"
+            className={styles['zilliz-adv-btn']}
+          >
+            {t('blog:zillizAdv.btn')}
+            <RightTopArrowIcon color="#FFFFFF" />
+          </Link>
+        </div>
+        <div
+          className={styles['zilliz-adv-logo']}
+          style={{ backgroundImage: 'url(/images/supported.png)' }}
+        />
+      </section>
+    );
+  };
+
+  const renderAuthors = () => {
+    const authors = [
+      {
+        name: 'Stefan Webb',
+        title: 'Developer Advocate, Zilliz',
+        avatar: '/images/authors/stefanwebb.png',
+      },
+      {
+        name: 'David Wang',
+        title: 'Algorithm Engineer, Zilliz',
+        avatar: '/images/authors/davidwang.png',
+      },
+      {
+        name: 'Jiang Chen',
+        title: 'Engineering Lead, Zilliz',
+        avatar: '/images/authors/jiangchen.png',
+      },
+    ];
+
+    const authorsItems = authors.map(a => (
+      <div className={styles['author']} key={a.name}>
+        <div
+          className={styles['author-avatar']}
+          style={{ backgroundImage: `url(${a.avatar})` }}
+        />
+        <div className={styles['author-info']}>
+          <h4 className={styles['author-name']}>{a.name}</h4>
+          <p className={styles['author-title']}>{a.title}</p>
+        </div>
+      </div>
+    ));
+
+    return (
+      <section className={styles['authors']}>
+        <header className={styles['authors-header']}>
+          <h2 className={styles['authors-title']}>{t('blog:authors.title')}</h2>
+        </header>
+        <div className={styles['authors-list']}>{authorsItems}</div>
+      </section>
+    );
+  };
 
   return (
     <Layout>
@@ -218,113 +621,140 @@ const BlogTemplate = (props: {
         <link rel="alternate" href={absoluteUrl} hrefLang="en" />
       </Head>
       <main>
-        <div className={clsx(pageClasses.container, styles.listWrapper)}>
-          {/* screen > 1024  */}
-          <section className={styles.featuredBlog}>
-            <div className={clsx(styles.featuredImg)}>
-              <img src={featuredBlog.cover} alt={featuredBlog.title} />
+        <header className={styles['banner']}>
+          <div className={pageClasses.blogContainer}>
+            <div className={styles['banner-detail']}>
+              {renderRecommend()}
+              {renderRecentTabs()}
             </div>
-            <div className={clsx(styles.featuredBlogContent)}>
-              <div className="">
-                <p className={styles.tag}>{featuredBlog.tags.join(' ')}</p>
-                <Link href={`/blog/${featuredBlog.id}`}>
-                  <h2 className={styles.title}>{featuredBlog.title}</h2>
-                </Link>
-
-                <p className={styles.desc}>{featuredBlog.desc}</p>
-              </div>
-              <CustomButton
-                endIcon={<RightWholeArrow />}
-                variant="text"
-                className={styles.readMoreButton}
-                href={`/blog/${featuredBlog.id}`}
-              >
-                Read Now
-              </CustomButton>
-            </div>
-          </section>
-
-          <section className={styles.blogList}>
-            <h1 className={styles.hiddenHeading1}>Milvus Blogs</h1>
-            <Tags
-              list={tagList}
-              tagsClass={styles.tagsWrapper}
-              genTagClass={(tag: string) =>
-                clsx({
-                  [styles.active]: queryParams.tag === tag,
-                })
-              }
-              onClick={handleFilter}
-            />
-
-            <ul className={styles.blogCards}>
-              {filteredData.blogs.map(v => {
-                const { desc, cover, date, tags, title, id } = v;
-                return (
-                  <li key={v.id}>
-                    <BlogCard
-                      title={title}
-                      cover={cover}
-                      desc={desc}
-                      tags={tags}
-                      path={id}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-            <Pagination className={styles.paginationWrapper}>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    href={navigateLinks.previousLink}
-                    disabled={navigateLinks.previousLinkDisabled}
-                    className={clsx(styles.paginationLink, {
-                      [styles.disabledNavigationLink]:
-                        navigateLinks.previousLinkDisabled,
-                    })}
-                  />
-                </PaginationItem>
-                {filteredData.paginationNavigators.map((v, i) => {
-                  return (
-                    <PaginationItem key={v}>
-                      {String(v).includes(ELLIPSIS) ? (
-                        <PaginationEllipsis />
-                      ) : (
-                        <PaginationLink
-                          href={`/blog?${TAG_QUERY_KEY}=${queryParams.tag}&${PAGINATION_QUERY_KEY}=${v}`}
-                          isActive={v === queryParams.page}
-                          className={clsx(styles.paginationLink, {
-                            [styles.activePaginationLink]:
-                              v === queryParams.page,
-                          })}
-                        >
-                          {v}
-                        </PaginationLink>
-                      )}
-                    </PaginationItem>
-                  );
-                })}
-                <PaginationItem>
-                  <PaginationNext
-                    href={navigateLinks.nextLink}
-                    disabled={navigateLinks.nextLinkDisabled}
-                    className={clsx(styles.paginationLink, {
-                      [styles.disabledNavigationLink]:
-                        navigateLinks.nextLinkDisabled,
-                    })}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          </section>
-        </div>
+            {renderSubscribe()}
+          </div>
+        </header>
+        <section className={styles['content']}>
+          <div className={pageClasses.blogContainer}>
+            <header className={styles['list-header']}>
+              {renderFilter()}
+              {renderSearcher()}
+            </header>
+            <section className={styles['list-detail']}>
+              {renderBlogList()}
+              {renderPaging()}
+            </section>
+            {renderAIService()}
+            {renderZillizAdv()}
+            {renderAuthors()}
+          </div>
+        </section>
       </main>
     </Layout>
   );
 };
 
-export default BlogTemplate;
+interface BlogExtraProps {
+  className?: string;
+  dark?: boolean;
+  data: BlogFrontMatterType;
+}
+
+const BlogExtra: React.FC<BlogExtraProps> = props => {
+  const { tags, date } = props.data;
+  const { t } = useTranslation('blog');
+  const displayDate = dayjs(date).format('MMM DD, YYYY');
+  const displayTags = tags
+    .map(tag => t(`blog:filter.${convertToNewTag(tag)}`))
+    .join(' ');
+  return (
+    <p
+      className={clsx(
+        styles['blog-extra'],
+        props.dark && styles['dark'],
+        props.className
+      )}
+    >
+      <span className={styles['blog-extra-tags']}>{displayTags}</span>
+      <span className={styles['blog-extra-separator']} />
+      <span className={styles['blog-extra-date']}>{displayDate}</span>
+    </p>
+  );
+};
+
+interface BlogCardProps {
+  data: BlogFrontMatterType;
+}
+
+const BlogCard: React.FC<BlogCardProps> = props => {
+  return (
+    <section className={styles['blog-card']}>
+      <div
+        className={styles['blog-card-img']}
+        style={{ backgroundImage: `url(${props.data.cover})` }}
+      />
+      <BlogExtra className={styles['blog-card-extra']} data={props.data} />
+      <Link href={getBlogLink(props.data)} title={props.data.title}>
+        <h3 className={styles['blog-card-title']}>{props.data.title}</h3>
+      </Link>
+    </section>
+  );
+};
+
+interface TabItem {
+  title: React.ReactNode;
+  icon: React.ReactNode;
+  key: string;
+  renderContent: () => React.ReactNode;
+}
+
+interface TabsProps {
+  className?: string;
+  tabs: TabItem[];
+  defaultActive?: string;
+}
+
+const Tabs: React.FC<TabsProps> = props => {
+  const [active, setActive] = useState(
+    props.defaultActive || props.tabs[0].key
+  );
+
+  const renderTitle = () => {
+    const handleActive = (t: string) => () => {
+      setActive(t);
+    };
+
+    const titles = props.tabs.map(t => (
+      <div
+        className={clsx(
+          styles['tabs-title-item'],
+          active === t.key && styles['active']
+        )}
+        key={t.key}
+        onClick={handleActive(t.key)}
+      >
+        {t.icon}
+        {t.title}
+      </div>
+    ));
+
+    return <div className={styles['tabs-title']}>{titles}</div>;
+  };
+
+  const renderContent = () => {
+    const activeTab = props.tabs.find(t => t.key === active) || props.tabs[0];
+    return (
+      <div className={styles['tab-content']} key={activeTab.key}>
+        {activeTab.renderContent()}
+      </div>
+    );
+  };
+
+  return (
+    <div className={styles.tabs}>
+      {renderTitle()}
+      {renderContent()}
+    </div>
+  );
+};
+
+export default Blog;
 
 export const getStaticProps = () => {
   const list = blogUtils.getAllData();

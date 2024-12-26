@@ -188,7 +188,7 @@ const API_REFERENCE_CONFIG = {
   },
   [ApiReferenceLanguageEnum.Restful]: {
     name: ApiReferenceLabelEnum.Restful,
-    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Restful}`,
+    path: `${BASE_DOC_DIR}/API_Reference_MDX/${ApiReferenceLanguageEnum.Restful}`,
     minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Restful,
   },

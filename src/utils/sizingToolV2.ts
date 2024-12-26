@@ -1,0 +1,596 @@
+import { ONE_MILLION, FIXED_QUERY_NODE_CONFIG } from '@/consts/sizing';
+import {
+  DependencyComponentEnum,
+  DependencyConfigType,
+  IIndexType,
+  IndexTypeEnum,
+  ModeEnum,
+} from '@/types/sizing';
+import { unitAny2BYTE } from './sizingTool';
+import { NodesKeyType, NodesValueType } from '@/types/sizing';
+/**
+ * params list:
+ * num: number: number of vectors
+ * d: number: dimension of vectors
+ * withScalar: boolean: whether with scalar data
+ * scalarAvg: number: average length of scalar data
+ * maxDegree: number: maximum degree of the node
+ * segSize: number: segment size
+ *
+ */
+
+// raw data size calculator
+export const rawDataSizeCalculator = (params: {
+  num: number;
+  d: number;
+  withScalar: boolean;
+  scalarAvg: number;
+}) => {
+  const { num, d, withScalar, scalarAvg } = params;
+
+  const vectorRaw = (num * d * ONE_MILLION * 32) / 8; // bytes
+  const scalarRaw = withScalar ? num * scalarAvg * ONE_MILLION : 0; // bytes
+
+  return vectorRaw + scalarRaw;
+};
+
+const $1M768D = rawDataSizeCalculator({
+  num: 1,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+export const $10M768D = rawDataSizeCalculator({
+  num: 10,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+const $100M768D = rawDataSizeCalculator({
+  num: 100,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+const $1B768D = rawDataSizeCalculator({
+  num: 1000,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+
+// loading memory and disk calculator
+export const memoryAndDiskCalculator = (params: {
+  rawDataSize: number;
+  indexTypeParams: IIndexType;
+  d: number;
+  num: number;
+  withScalar: boolean;
+  offLoading: boolean;
+  scalarAvg: number;
+  segSize: number;
+}) => {
+  const {
+    rawDataSize,
+    num,
+    d,
+    withScalar,
+    scalarAvg,
+    offLoading,
+    indexTypeParams,
+    segSize,
+  } = params;
+  const { indexType, widthRawData, maxDegree, m, flatNList, sq8NList } =
+    indexTypeParams;
+  const segmentSizeByte = segSize * 1024;
+
+  let result = {
+    memory: 0,
+    disk: 0,
+  };
+  const rowSize = (d * 32) / 8;
+
+  switch (indexType) {
+    case IndexTypeEnum.FLAT:
+      result = {
+        memory: rawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.IVF_FLAT:
+      result = {
+        memory: rawDataSize + flatNList * rowSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.IVFSQ8:
+      result = {
+        memory: rawDataSize / 4 + sq8NList * rowSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.SCANN:
+      result = {
+        memory: widthRawData
+          ? (1 + 1 / 8) * rawDataSize
+          : (1 / 8) * rawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.HNSW:
+      result = {
+        memory: (1 + (2 * m) / d) * rawDataSize,
+        disk: 0,
+      };
+
+      break;
+    case IndexTypeEnum.DISKANN:
+      result = {
+        memory: rawDataSize / 4,
+        disk: (1 + maxDegree / d) * rawDataSize,
+      };
+      break;
+    default:
+      break;
+  }
+
+  const scalarLoadingMemory = withScalar
+    ? offLoading
+      ? (num * scalarAvg * ONE_MILLION) / 10
+      : num * scalarAvg * ONE_MILLION
+    : 0;
+
+  const scalarLocalDisk = offLoading ? num * scalarAvg * ONE_MILLION : 0;
+
+  if (indexType === IndexTypeEnum.DISKANN) {
+    const vectorLoadingMemory = result.memory * 1.15;
+    return {
+      memory: vectorLoadingMemory + scalarLoadingMemory, // bytes
+      disk: scalarLocalDisk + result.disk, // bytes
+    };
+  }
+
+  const vectorLoadingMemory = (result.memory + segmentSizeByte * 2) * 1.15;
+  return {
+    memory: vectorLoadingMemory + scalarLoadingMemory, // bytes
+    disk: scalarLocalDisk + result.disk, // bytes
+  };
+};
+
+// query nodes calculator
+export const nodesConfigCalculator = (params: { memory: number }) => {
+  const { memory } = params;
+  const memoryGB = Math.ceil((memory * 10) / 1024 / 1024 / 1024) / 10;
+
+  const queryNodeCount =
+    memoryGB >= 2048
+      ? Math.ceil(memoryGB / 128)
+      : memoryGB >= 512
+      ? Math.ceil(memoryGB / 64)
+      : memoryGB >= 96
+      ? Math.ceil(memoryGB / 32)
+      : 0;
+
+  const basicLargeNodeConfig = {
+    proxy: {
+      cpu: 8,
+      memory: 32,
+      count: 1,
+    },
+    mixCoord: {
+      cpu: 8,
+      memory: 32,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 8,
+      memory: 32,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 8,
+      memory: 16,
+      count: 8,
+    },
+  };
+  const queryNodesConfig = [
+    ...FIXED_QUERY_NODE_CONFIG,
+    {
+      memory: [96, 512],
+      queryNode: {
+        cpu: 8,
+        memory: 32,
+        count: queryNodeCount,
+      },
+      ...basicLargeNodeConfig,
+    },
+    {
+      memory: [512, 2048],
+      queryNode: {
+        cpu: 16,
+        memory: 64,
+        count: queryNodeCount,
+      },
+      ...basicLargeNodeConfig,
+    },
+    {
+      memory: [2048, Infinity],
+      queryNode: {
+        cpu: 32,
+        memory: 128,
+        count: queryNodeCount,
+      },
+      ...basicLargeNodeConfig,
+    },
+  ];
+
+  const properMemorySection = queryNodesConfig.find(
+    v => v.memory[0] <= memoryGB && v.memory[1] > memoryGB
+  );
+  return {
+    queryNode: properMemorySection?.queryNode,
+    proxy: properMemorySection?.proxy,
+    mixCoord: properMemorySection?.mixCoord,
+    dataNode: properMemorySection?.dataNode,
+    indexNode: properMemorySection?.indexNode,
+  };
+};
+
+export const dependencyCalculator = (params: {
+  num: number;
+  d: number;
+  mode: ModeEnum;
+  withScalar: boolean;
+  scalarAvg: number;
+}): DependencyConfigType => {
+  const { num, d, mode, scalarAvg, withScalar } = params;
+
+  const rawDataSize = rawDataSizeCalculator({
+    num,
+    d,
+    withScalar,
+    scalarAvg,
+  });
+
+  const thresholds = [$1M768D, $10M768D, $100M768D, $1B768D];
+
+  let etcdBaseConfig = {
+    cpu: 0,
+    memory: 0,
+    pvc: 0,
+    count: 0,
+  };
+  let minioBaseConfig = {
+    cpu: 0,
+    memory: 0,
+    pvc: 0,
+    count: 0,
+  };
+  let pulsarBaseConfig = {
+    bookie: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+      journal: 0,
+      ledgers: 0,
+    },
+    broker: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+    },
+    proxy: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+    },
+    zookeeper: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+      pvc: 0,
+    },
+  };
+  let kafkaBaseConfig = {
+    broker: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+      pvc: 0,
+    },
+    zookeeper: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+      pvc: 0,
+    },
+  };
+
+  switch (mode) {
+    case ModeEnum.Standalone:
+      etcdBaseConfig = {
+        cpu: 0.5,
+        memory: 1,
+        pvc: 10,
+        count: 1,
+      };
+      minioBaseConfig = {
+        cpu: 1,
+        memory: 4,
+        pvc: 20,
+        count: 1,
+      };
+
+      if (rawDataSize >= thresholds[0]) {
+        etcdBaseConfig.memory = 2;
+        minioBaseConfig.memory = 8;
+        minioBaseConfig.pvc = 120;
+      }
+
+      return {
+        etcd: etcdBaseConfig,
+        minio: minioBaseConfig,
+        pulsar: undefined,
+        kafka: undefined,
+      };
+    case ModeEnum.Cluster:
+      etcdBaseConfig = {
+        cpu: 1,
+        memory: 4,
+        pvc: 20,
+        count: 3,
+      };
+      minioBaseConfig = {
+        cpu: 1,
+        memory: 8,
+        pvc: 30,
+        count: 4,
+      };
+
+      pulsarBaseConfig = {
+        bookie: {
+          cpu: 1,
+          memory: 8,
+          count: 3,
+          journal: 30,
+          ledgers: 40,
+        },
+        broker: {
+          cpu: 1,
+          memory: 4,
+          count: 2,
+        },
+        proxy: {
+          cpu: 0.5,
+          memory: 4,
+          count: 2,
+        },
+        zookeeper: {
+          cpu: 0.5,
+          memory: 2,
+          count: 3,
+          pvc: 30,
+        },
+      };
+
+      kafkaBaseConfig = {
+        broker: {
+          cpu: 2,
+          memory: 8,
+          count: 3,
+          pvc: 100,
+        },
+        zookeeper: {
+          cpu: 0.5,
+          memory: 2,
+          count: 3,
+          pvc: 30,
+        },
+      };
+
+      if (rawDataSize >= thresholds[1] && rawDataSize < thresholds[2]) {
+        minioBaseConfig = {
+          cpu: 1,
+          memory: 8,
+          pvc: 300,
+          count: 4,
+        };
+        pulsarBaseConfig = {
+          bookie: {
+            cpu: 1,
+            memory: 8,
+            count: 3,
+            journal: 50,
+            ledgers: 400,
+          },
+          broker: {
+            cpu: 1,
+            memory: 4,
+            count: 2,
+          },
+          proxy: {
+            cpu: 0.5,
+            memory: 4,
+            count: 2,
+          },
+          zookeeper: {
+            cpu: 0.5,
+            memory: 2,
+            count: 3,
+            pvc: 30,
+          },
+        };
+
+        kafkaBaseConfig = {
+          broker: {
+            cpu: 2,
+            memory: 8,
+            count: 3,
+            pvc: 400,
+          },
+          zookeeper: {
+            cpu: 0.5,
+            memory: 2,
+            count: 3,
+            pvc: 30,
+          },
+        };
+      }
+
+      if (rawDataSize >= thresholds[2] && rawDataSize < thresholds[3]) {
+        etcdBaseConfig = {
+          cpu: 1,
+          memory: 8,
+          pvc: 50,
+          count: 3,
+        };
+        minioBaseConfig = {
+          cpu: 1,
+          memory: 8,
+          pvc: 3000,
+          count: 4,
+        };
+
+        pulsarBaseConfig = {
+          bookie: {
+            cpu: 2,
+            memory: 16,
+            count: 3,
+            journal: 100,
+            ledgers: 4000,
+          },
+          broker: {
+            cpu: 2,
+            memory: 8,
+            count: 2,
+          },
+          proxy: {
+            cpu: 1,
+            memory: 4,
+            count: 2,
+          },
+          zookeeper: {
+            cpu: 0.5,
+            memory: 4,
+            count: 3,
+            pvc: 100,
+          },
+        };
+
+        kafkaBaseConfig = {
+          broker: {
+            cpu: 4,
+            memory: 16,
+            count: 3,
+            pvc: 4000,
+          },
+          zookeeper: {
+            cpu: 0.5,
+            memory: 4,
+            count: 3,
+            pvc: 100,
+          },
+        };
+      }
+
+      return {
+        etcd: etcdBaseConfig,
+        minio: minioBaseConfig,
+        pulsar: pulsarBaseConfig,
+        kafka: kafkaBaseConfig,
+      };
+  }
+};
+
+export const milvusOverviewDataCalculator = (
+  params: Record<NodesKeyType, NodesValueType>
+) => {
+  const { queryNode, proxy, mixCoord, dataNode, indexNode } = params;
+  const milvusCpu =
+    queryNode.cpu * queryNode.count +
+    proxy.cpu * proxy.count +
+    mixCoord.cpu * mixCoord.count +
+    dataNode.cpu * dataNode.count +
+    indexNode.cpu * indexNode.count;
+
+  const milvusMemory =
+    queryNode.memory * queryNode.count +
+    proxy.memory * proxy.count +
+    mixCoord.memory * mixCoord.count +
+    dataNode.memory * dataNode.count +
+    indexNode.memory * indexNode.count;
+
+  return {
+    milvusCpu,
+    milvusMemory,
+  };
+};
+
+export const dependencyOverviewDataCalculator = (params: {
+  mode: ModeEnum;
+  dependency: DependencyComponentEnum;
+  dependencyConfig: DependencyConfigType;
+}) => {
+  const { mode, dependency, dependencyConfig } = params;
+  const { etcd, minio, pulsar, kafka } = dependencyConfig;
+
+  const pulsarCpu =
+    mode === ModeEnum.Standalone
+      ? 0
+      : pulsar.bookie.cpu * pulsar.bookie.count +
+        pulsar.broker.cpu * pulsar.broker.count +
+        pulsar.zookeeper.cpu * pulsar.zookeeper.count +
+        pulsar.proxy.cpu * pulsar.proxy.count;
+  const kafkaCpu =
+    mode === ModeEnum.Standalone
+      ? 0
+      : kafka.broker.cpu * kafka.broker.count +
+        kafka.zookeeper.cpu * kafka.zookeeper.count;
+  const streamPlatformCpu =
+    dependency === DependencyComponentEnum.Pulsar ? pulsarCpu : kafkaCpu;
+  const dependencyCpu =
+    etcd.cpu * etcd.count + minio.cpu * etcd.count + streamPlatformCpu;
+
+  const pulsarMemory =
+    mode === ModeEnum.Standalone
+      ? 0
+      : pulsar.bookie.memory * pulsar.bookie.count +
+        pulsar.broker.memory * pulsar.broker.count +
+        pulsar.zookeeper.memory * pulsar.zookeeper.count +
+        pulsar.proxy.memory * pulsar.proxy.count;
+  const kafkaMemory =
+    mode === ModeEnum.Standalone
+      ? 0
+      : kafka.broker.memory * kafka.broker.count +
+        kafka.zookeeper.memory * kafka.zookeeper.count;
+
+  const streamPlatformMemory =
+    dependency === DependencyComponentEnum.Pulsar ? pulsarMemory : kafkaMemory;
+
+  const dependencyMemory =
+    etcd.memory * etcd.count + minio.memory * etcd.count + streamPlatformMemory;
+
+  const pulsarStorage =
+    mode === ModeEnum.Standalone
+      ? 0
+      : (pulsar.bookie.journal + pulsar.bookie.ledgers) * pulsar.bookie.count +
+        pulsar.zookeeper.pvc * pulsar.zookeeper.count;
+  const kafkaStorage =
+    mode === ModeEnum.Standalone
+      ? 0
+      : kafka.broker.pvc * kafka.broker.count +
+        kafka.zookeeper.pvc * kafka.zookeeper.count;
+  const streamPlatformStorage =
+    dependency === DependencyComponentEnum.Pulsar
+      ? pulsarStorage
+      : kafkaStorage;
+
+  const dependencyStorage =
+    etcd.pvc * etcd.count + minio.pvc * etcd.count + streamPlatformStorage;
+
+  return {
+    dependencyCpu,
+    dependencyMemory,
+    dependencyStorage,
+  };
+};

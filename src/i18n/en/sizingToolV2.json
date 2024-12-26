@@ -1,0 +1,83 @@
+{
+  "title": "Milvus Sizing Tool",
+  "content": "A tool for estimate the resources required to set up Milvus based on your dataset.",
+  "tooltip": "Note: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production. If you have any question, please <0>contact us</0>.",
+  "form": {
+    "num": "Number of Vector",
+    "dim": "Vector Dimension",
+    "withScalar": "With Scalar Fields",
+    "averageLength": "Average Data Size Per Row",
+    "offloading": "Offloading Fields to Disk",
+    "mmp": "Milvus uses <0>Mmap</0> to enable direct memory access to large files on disk without reading the entire files into memory.",
+    "indexType": "Index Type",
+    "withRawData": "With_raw_data",
+    "m": "M(Maximum degree of the node)",
+    "nlist": "nlist",
+    "maxDegree": "Max Degree",
+    "segmentSize": "Segment Size",
+    "dependencyComp": "Dependency Component",
+    "mode": "Mode",
+    "modeTip": "With data growth, you can migrate data from standalone mode to cluster mode. <0>View More</0>",
+    "modeDisableTip": "Don‘t support standalone mode when number of vector exceed 10 Million or XXXXXXXX.",
+    "pulsar": "Pulsar",
+    "kafka": "Kafka",
+    "standalone": "Standalone",
+    "standaloneDesc": "Suitable for small data size and poc env.",
+    "cluster": "Cluster",
+    "clusterDesc": "Suitable for large datasize and production env. "
+  },
+  "overview": {
+    "title": "Approximate Capacity",
+    "raw": "Raw Data Size",
+    "rawTooltip": "Raw data size - Original data size, depending on the number of Vector, Vector Dimension and Scalar Field data size",
+    "memory": "Loading Memory",
+    "memoryTooltip": "Memory consumption for query nodes, depending on raw data size, index type and params"
+  },
+  "setup": {
+    "title": "Minimum Milvus cluster setup in total",
+    "share": "Scaling cluster or dependencies",
+    "milvus": {
+      "title": "Milvus",
+      "proxy": "Proxy",
+      "mixCoord": "Mix Coord",
+      "dataNode": "Data Node",
+      "indexNode": "Index Node",
+      "queryNode": "Query Node"
+    },
+    "dependency": {
+      "title": "Dependencies",
+      "etcd": "ETCD",
+      "minio": "Minio",
+      "pulsar": "Pulsar",
+      "kafka": "Kafka",
+      "bookie": "Bookie <0>x{{count}}</0>",
+      "broker": "Broker <0>x{{count}}</0>",
+      "proxy": "Proxy <0>x{{count}}</0>",
+      "zookeeper": "Zookeeper <0>x{{count}}</0>"
+    },
+    "basic": {
+      "cpuAndMemory": "CPU and Memory: <0>{{cpu}} Core {{memory}} GB</0>",
+      "storageWithValue": "Storage: <0>{{storage}} GB</0>",
+      "diskWithValue": "Local Disk: <0>{{disk}} {{unit}}</0>",
+      "cpu": "CPU",
+      "memory": "Memory",
+      "disk": "Local Disk",
+      "storage": "Storage",
+      "podNum": "Pod Number",
+      "pvc": "Pcv per Pod: <0>{{pvc}} GB</0>",
+      "pvcLabel": "Pcv per Pod",
+      "journal": "Journal",
+      "ledger": "Ledgers",
+      "config": "{{cpu}} Core {{memory}} GB",
+      "core": "{{cpu}} Core",
+      "gb": "{{memory}} GB",
+      "byte": "Bytes"
+    }
+  },
+  "install": {
+    "title": "Install Milvus",
+    "helm": "Helm Chart configuration.yml",
+    "operator": "Milvus Operator configuration.yml",
+    "adv": "Too many resources consumed? Try Zilliz Cloud (managed Milvus) to save resources and cut deployment and operation costs. Check out more details with the Zilliz Cloud calculator. <0>Go to Zilliz Cloud calculator</0>."
+  }
+}

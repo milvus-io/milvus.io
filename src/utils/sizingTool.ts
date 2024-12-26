@@ -55,14 +55,14 @@ export const unitBYTE2Any = (size: number, unit?: DataSizeUnit) => {
   sizeStatus === 1
     ? (baseUnit = 'B')
     : sizeStatus === 2
-    ? (baseUnit = 'K')
+    ? (baseUnit = 'KB')
     : sizeStatus === 3
-    ? (baseUnit = 'M')
+    ? (baseUnit = 'MB')
     : sizeStatus === 4
-    ? (baseUnit = 'G')
+    ? (baseUnit = 'GB')
     : sizeStatus === 5
-    ? (baseUnit = 'T')
-    : (baseUnit = 'K');
+    ? (baseUnit = 'TB')
+    : (baseUnit = 'KB');
 
   size = Math.ceil(size * 10) / 10;
   return {

@@ -13,7 +13,7 @@ export const ArrowRightAltIcon = (props: { size?: number; color?: string }) => {
         stroke="#00131A"
         strokeWidth="1.3"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

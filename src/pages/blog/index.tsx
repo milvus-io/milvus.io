@@ -48,7 +48,7 @@ const ELLIPSIS = 'ellipsis';
 const ELLIPSIS_2 = 'ellipsis2';
 
 const CTA_LINK =
-  'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_resource_milvus-webUI_milvusio';
+  'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_blog_overview-page_milvusio';
 
 const generatePaginationNavigators = (
   currentPage: number,
@@ -175,7 +175,11 @@ const Blog: React.FC<Props> = props => {
       topRecentRelease: [],
     };
     const data = props.blogList.reduce((acc, cur) => {
-      if (cur.recommend) {
+      const shouldSetRecommend =
+        cur.recommend &&
+        (!acc.recommend || new Date(acc.recommend.date) < new Date(cur.date));
+
+      if (shouldSetRecommend) {
         acc.recommend = cur;
         acc.all = props.blogList.filter(v => v.id !== cur.id);
       }
@@ -655,7 +659,7 @@ const BlogCard: React.FC<BlogCardProps> = props => {
         style={{ backgroundImage: `url(${props.data.cover})` }}
       />
       <BlogExtra className={styles['blog-card-extra']} data={props.data} />
-      <Link href={getBlogLink(props.data)}>
+      <Link href={getBlogLink(props.data)} title={props.data.title}>
         <h3 className={styles['blog-card-title']}>{props.data.title}</h3>
       </Link>
     </section>

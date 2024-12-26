@@ -52,6 +52,10 @@ module.exports = {
         marquee: 'marquee var(--duration) linear infinite',
         'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
       },
+      fontFamily: {
+        sans: ['Geist', 'Inter', 'sans-serif'],
+        mono: ['Geist Mono', 'JetBrains Mono', 'monospace'],
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

@@ -11,6 +11,7 @@ import {
   GITHUB_MILVUS_LINK,
   CLOUD_SIGNUP_LINK,
   GITHUB_MILVUS_BACKUP_LINK,
+  GITHUB_VTS_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
 import SocialMedias from '../socialMedias';
@@ -49,6 +50,11 @@ const footerJson = [
         name: 'Milvus Backup Tool',
         trans: false,
         to: GITHUB_MILVUS_BACKUP_LINK,
+      },
+      {
+        name: 'Vector Transport Service (VTS)',
+        trans: false,
+        to: GITHUB_VTS_LINK,
       },
     ],
   },
@@ -131,7 +137,7 @@ const Footer = (props: Props) => {
                 ]}
               />
             </div>
-            <div className="mt-[40px] w-full">
+            <div className="mt-[100px] w-full">
               <SubscribeNewsletter />
             </div>
             <div className="flex mt-[40px] space-x-[12px]">

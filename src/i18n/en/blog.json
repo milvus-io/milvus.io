@@ -1,0 +1,32 @@
+{
+  "trending": "TRENDING",
+  "recent": {
+    "most": "MOST RECENT",
+    "release": "RELEASES & EVENTS"
+  },
+  "subscribe": {
+    "title": "Join <0>30,000+</0> VDB engineers",
+    "desc": "Get updates on Milvus releases and tutorials from Zilliz, Milvus' creator and key maintainer."
+  },
+  "filter": {
+    "all": "ALL",
+    "engineering": "Engineering",
+    "announcements": "Announcements",
+    "tutorials": "Tutorials",
+    "usecases": "Use Cases"
+  },
+  "aiService": {
+    "title": "Ask me anything about Milvus!",
+    "desc": "An AI assistant trained on documentation, help articles, and other content."
+  },
+  "zillizAdv": {
+    "title": "Hassle-free and 10x faster than Milvus",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "Use-case optimized compute for your workload",
+    "feature2": "Enterprise grade security built-in, available across all three clouds",
+    "btn": "Try Fully Managed Milvus Free"
+  },
+  "authors": {
+    "title": "Most Contributing Authors"
+  }
+}

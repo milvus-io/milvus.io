@@ -4,6 +4,7 @@ import classes from './index.module.less';
 import CustomInput from '../customInput/customInput';
 import CustomButton from '../customButton';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 const REGEX =
@@ -16,11 +17,25 @@ enum SubscribeEnum {
   FAIL,
 }
 
-const SubscribeNewsletter = (props: {
+interface Props {
   className?: string;
   showAddress?: boolean;
-}) => {
-  const { className: classNameProp = '', showAddress = false } = props;
+  withoutTitle?: boolean;
+  classes?: {
+    input?: string;
+    inputContainer?: string;
+    button?: string;
+    errorMessage?: string;
+  };
+}
+
+const SubscribeNewsletter: React.FC<Props> = props => {
+  const {
+    className: classNameProp = '',
+    showAddress = false,
+    withoutTitle = false,
+    classes: customClasses = {},
+  } = props;
   const { t } = useTranslation(['common', 'home']);
   const [value, setValue] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<SubscribeEnum>(
@@ -63,29 +78,44 @@ const SubscribeNewsletter = (props: {
     setErrMsg('');
   };
 
-  return (
-    <div className={classes.subscribeContainer}>
+  const renderTitle = () => {
+    if (withoutTitle) {
+      return null;
+    }
+
+    return (
       <h3 className={classes.title}>
         {t('home:subscribeSection.subscribe.title')}
       </h3>
+    );
+  };
+
+  return (
+    <div className={classes.subscribeContainer}>
+      {renderTitle()}
       <div className={classes.subscribeSection}>
         <div className={classes.inputWrapper}>
           <CustomInput
             onChange={handleValueChange}
             classes={{
-              root: classes.customInputContainer,
-              input: classes.customInput,
+              root: clsx(
+                classes.customInputContainer,
+                customClasses.inputContainer
+              ),
+              input: clsx(classes.customInput, customClasses.input),
             }}
             placeholder="Email"
             fullWidth
           />
-          <p className={classes.errorMessage}>{errMsg}</p>
+          <p className={clsx(classes.errorMessage, customClasses.errorMessage)}>
+            {errMsg}
+          </p>
         </div>
         <CustomButton
           onClick={handleSubmitInfo}
           size="large"
           classes={{
-            root: classes.customScribeButton,
+            root: clsx(classes.customSubscribeButton, customClasses.button),
           }}
         >
           {btnTextMap[subscribeStatus]}

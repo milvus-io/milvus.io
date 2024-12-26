@@ -116,7 +116,7 @@ body {
   min-height: 100vh;
   color: #000;
   background: #fff;
-  font-family: 'Inter', 'RobotoMono', 'SourceCodePro', 'serif';
+  font-family: 'Geist', 'Inter', 'Geist Mono', 'SourceCodePro', 'serif';
   -webkit-font-smoothing: antialiased;
   overflow-y: overlay;
 }

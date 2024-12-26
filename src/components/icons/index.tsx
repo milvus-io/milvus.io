@@ -1,7 +1,7 @@
 export * from './RightTopArrow';
 export * from './DownArrow';
 export * from './SocialMedia';
-import { FC } from 'react';
+import { FC, HTMLAttributes } from 'react';
 
 export const Triangle = () => (
   <svg
@@ -386,3 +386,156 @@ export const ArrowTop = () => (
     />
   </svg>
 );
+export const TrendingIcon: FC<HTMLAttributes<SVGViewElement>> = props => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M14 4.66675L9.47333 9.19341C9.41136 9.2559 9.33762 9.3055 9.25638 9.33934C9.17515 9.37319 9.08801 9.39061 9 9.39061C8.91199 9.39061 8.82486 9.37319 8.74362 9.33934C8.66238 9.3055 8.58864 9.2559 8.52667 9.19341L6.80667 7.47341C6.74469 7.41093 6.67096 7.36133 6.58972 7.32749C6.50848 7.29364 6.42134 7.27622 6.33333 7.27622C6.24533 7.27622 6.15819 7.29364 6.07695 7.32749C5.99571 7.36133 5.92198 7.41093 5.86 7.47341L2 11.3334"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.9997 7.33341V4.66675H11.333"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const ClockIcon: FC<HTMLAttributes<SVGViewElement>> = props => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M10 2.5C11.4834 2.5 12.9334 2.93987 14.1668 3.76398C15.4001 4.58809 16.3614 5.75943 16.9291 7.12987C17.4968 8.50032 17.6453 10.0083 17.3559 11.4632C17.0665 12.918 16.3522 14.2544 15.3033 15.3033C14.2544 16.3522 12.918 17.0665 11.4632 17.3559C10.0083 17.6453 8.50032 17.4968 7.12987 16.9291C5.75943 16.3614 4.58809 15.4001 3.76398 14.1668C2.93987 12.9334 2.5 11.4834 2.5 10"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6.66699 10.0002H10.0003V5.8335"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const RocketIcon: FC<HTMLAttributes<SVGViewElement>> = props => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M13.1997 11.8167C13.6188 12.7758 13.722 13.8434 13.4942 14.8651C13.2665 15.8868 12.7198 16.8096 11.933 17.5L9.58301 15.15"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.18333 6.79992C7.22416 6.38081 6.15654 6.27765 5.13486 6.50535C4.11319 6.73306 3.19042 7.27983 2.5 8.06659L4.85 10.4166"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.90828 15.6584C15.5749 10.8167 17.1416 5.6584 17.4916 3.4584C17.5129 3.32848 17.5031 3.19535 17.4631 3.06994C17.423 2.94453 17.3538 2.83039 17.2611 2.73689C17.1684 2.64339 17.0549 2.57318 16.9298 2.53201C16.8048 2.49085 16.6717 2.4799 16.5416 2.50007C14.3666 2.8584 9.16661 4.39174 4.34161 11.0917L8.90828 15.6584ZM7.24161 16.3251L8.42494 15.1417L4.85828 11.6001L3.67494 12.7834C3.51974 12.9395 3.43262 13.1507 3.43262 13.3709C3.43262 13.5911 3.51974 13.8023 3.67494 13.9584L6.04161 16.3251C6.19775 16.4803 6.40896 16.5674 6.62911 16.5674C6.84927 16.5674 7.06048 16.4803 7.21661 16.3251H7.24161Z"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const SearchIcon: FC<HTMLAttributes<SVGViewElement>> = props => {
+  return (
+    <svg
+      width="20"
+      height="21"
+      viewBox="0 0 20 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M12.917 13.4165L15.8337 16.3332"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4.16699 9.6665C4.16699 12.4279 6.40557 14.6665 9.16699 14.6665C10.5501 14.6665 11.8021 14.1049 12.7072 13.1973C13.6093 12.2929 14.167 11.0448 14.167 9.6665C14.167 6.90508 11.9284 4.6665 9.16699 4.6665C6.40557 4.6665 4.16699 6.90508 4.16699 9.6665Z"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const AirplaneArrowIcon: FC<HTMLAttributes<SVGViewElement>> = props => {
+  return (
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M3 13.1621H9V11.1621H3V2.00781C3 1.73167 3.22386 1.50781 3.5 1.50781C3.58425 1.50781 3.66714 1.5291 3.74096 1.5697L22.2034 11.724C22.4454 11.8571 22.5337 12.1611 22.4006 12.4031C22.3549 12.4862 22.2865 12.5546 22.2034 12.6003L3.74096 22.7546C3.499 22.8877 3.19497 22.7994 3.06189 22.5575C3.02129 22.4836 3 22.4008 3 22.3165V13.1621Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const ListItemTickIcon: FC<HTMLAttributes<SVGViewElement>> = props => {
+  return (
+    <svg
+      width="20"
+      height="21"
+      viewBox="0 0 20 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M1 10.1137L4.5 14.2224L11.5 7.83105"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+};

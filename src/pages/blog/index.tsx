@@ -31,7 +31,6 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import { Trans, useTranslation } from 'react-i18next';
 import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
-import { debounce } from '@mui/material';
 
 const PAGE_SIZE = 9;
 const TITLE = 'Learn Milvus: Insights and Innovations in VectorDB Technology';
@@ -241,7 +240,8 @@ const Blog: React.FC<Props> = props => {
   }, [filteredBlogs]);
 
   const generateLinkUrl = (...args: BlogLinkParam[]) => {
-    const search = new URLSearchParams(router.query as any);
+    const { [SEARCH_QUERY_KEY]: _, ...queryObject } = filter;
+    const search = new URLSearchParams(queryObject as any);
     args.forEach(({ key, value, shouldRemove }) => {
       if (shouldRemove) {
         search.delete(key);
@@ -255,17 +255,43 @@ const Blog: React.FC<Props> = props => {
     return `${router.pathname}?${search.toString()}`;
   };
 
-  const handleSearch = useCallback(
-    debounce((e: React.FormEvent) => {
-      const value = (e.target as HTMLInputElement).value.trim();
-      const url = generateLinkUrl(
-        { key: SEARCH_QUERY_KEY, value, shouldRemove: !value },
-        { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
-      );
-      router.replace(url, undefined, { scroll: false });
-    }, 300),
-    [router]
-  );
+  const handleSearch = (e: React.FormEvent) => {
+    const value = (e.target as HTMLInputElement).value.trim();
+    const url = generateLinkUrl(
+      // { key: SEARCH_QUERY_KEY, value, shouldRemove: !value },
+      { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
+    );
+    window.history.pushState({}, '', url);
+    setFilter(f => ({
+      ...f,
+      [SEARCH_QUERY_KEY]: value,
+      [PAGINATION_QUERY_KEY]: 1,
+    }));
+  };
+
+  const handleFilter = (tag: BlogTag | 'all') => (e: React.MouseEvent) => {
+    // reduce list fetch when router change
+    e.preventDefault();
+    const url = generateLinkUrl(
+      { key: TAG_QUERY_KEY, value: tag, shouldRemove: tag === DEFAULT_TAG },
+      { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
+    );
+    window.history.pushState({}, '', url);
+    setFilter(f => ({ ...f, [TAG_QUERY_KEY]: tag, [PAGINATION_QUERY_KEY]: 1 }));
+  };
+
+  const handlePaging = (page: number) => (e: React.MouseEvent) => {
+    // reduce list fetch when router change
+    e.preventDefault();
+    const url = generateLinkUrl({
+      key: PAGINATION_QUERY_KEY,
+      value: page,
+      shouldRemove: page === 1,
+    });
+    window.history.pushState({}, '', url);
+    setFilter(f => ({ ...f, [PAGINATION_QUERY_KEY]: page }));
+    scrollToListNav();
+  };
 
   const renderRecommend = () => {
     const { recommend } = blogs;
@@ -351,16 +377,16 @@ const Blog: React.FC<Props> = props => {
 
   const renderFilterTagItem = (tag: BlogTag | typeof DEFAULT_TAG) => {
     const isActive = tag === (filter[TAG_QUERY_KEY] || DEFAULT_TAG);
+    const url = generateLinkUrl(
+      {
+        key: TAG_QUERY_KEY,
+        value: tag,
+        shouldRemove: tag === DEFAULT_TAG,
+      },
+      { key: PAGINATION_QUERY_KEY, value: 1, shouldRemove: true }
+    );
     return (
-      <Link
-        key={tag}
-        href={generateLinkUrl({
-          key: TAG_QUERY_KEY,
-          value: tag,
-          shouldRemove: tag === DEFAULT_TAG,
-        })}
-        scroll={false}
-      >
+      <Link key={tag} href={url} onClick={handleFilter(tag)} scroll={false}>
         <div
           className={clsx(styles['filter-tag'], isActive && styles['active'])}
           key={tag}
@@ -424,7 +450,7 @@ const Blog: React.FC<Props> = props => {
           <PaginationItem>
             <PaginationPrevious
               scroll={false}
-              onClick={scrollToListNav}
+              onClick={handlePaging(currentPage - 1)}
               href={generateLinkUrl({
                 key: PAGINATION_QUERY_KEY,
                 value: currentPage - 1,
@@ -444,7 +470,7 @@ const Blog: React.FC<Props> = props => {
                 ) : (
                   <PaginationLink
                     scroll={false}
-                    onClick={scrollToListNav}
+                    onClick={handlePaging(v as number)}
                     href={generateLinkUrl({
                       key: PAGINATION_QUERY_KEY,
                       value: v,
@@ -464,7 +490,7 @@ const Blog: React.FC<Props> = props => {
           <PaginationItem>
             <PaginationNext
               scroll={false}
-              onClick={scrollToListNav}
+              onClick={handlePaging(currentPage + 1)}
               href={generateLinkUrl({
                 key: PAGINATION_QUERY_KEY,
                 value: currentPage + 1,

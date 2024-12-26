@@ -8,6 +8,7 @@ export interface CustomButtonProps {
   variant?: 'contained' | 'outlined' | 'text';
   color?: 'primary' | 'secondary';
   endIcon?: React.ReactNode;
+  startIcon?: React.ReactNode;
   disabled?: boolean;
   size?: 'small' | 'medium' | 'large';
   classes?: {
@@ -25,6 +26,7 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
     variant = 'contained',
     color = 'primary',
     endIcon,
+    startIcon,
     disabled = false,
     classes: customClasses = {},
     computedClasses,
@@ -46,6 +48,9 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
           href={href}
           className={clsx(classes.linkButton, className, root, computedClasses)}
         >
+          {startIcon && (
+            <span className={clsx(classes.iconWrapper, icon)}>{startIcon}</span>
+          )}
           {children}
           {endIcon && (
             <span className={clsx(classes.iconWrapper, icon)}>{endIcon}</span>
@@ -76,6 +81,7 @@ const CustomButton = (props: CustomButtonProps) => {
     variant = 'contained',
     color = 'primary',
     endIcon,
+    startIcon,
     disabled = false,
     classes: customClasses = {},
     size = 'medium',
@@ -106,6 +112,9 @@ const CustomButton = (props: CustomButtonProps) => {
           {...rest}
           className={clsx(classes.linkButton, className, root, computedClasses)}
         >
+          {startIcon && (
+            <span className={clsx(classes.iconWrapper, icon)}>{startIcon}</span>
+          )}
           {children}
           {endIcon && (
             <span className={clsx(classes.iconWrapper, icon)}>{endIcon}</span>

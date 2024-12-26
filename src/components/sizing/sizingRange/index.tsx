@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -7,6 +7,7 @@ import classes from './index.module.less';
 import clsx from 'clsx';
 import { scaleLinear, scalePow } from 'd3-scale';
 import { SizingInput } from '../sizingInput';
+import { init } from 'next/dist/compiled/webpack/webpack';
 
 type RangeConfigType = {
   min: number;
@@ -26,6 +27,7 @@ interface SizingRangePropsType {
   value: number;
   onRangeChange: (value: number) => void;
   unit?: string;
+  placeholder?: string;
 }
 
 export const SizingRange = (props: SizingRangePropsType) => {
@@ -36,18 +38,48 @@ export const SizingRange = (props: SizingRangePropsType) => {
     onRangeChange,
     unit,
     value,
+    placeholder,
   } = props;
   const { root, label: labelCLass } = customClasses;
 
   // domain: 0 - 100 under progress
   // range: real value
-  const getRangeValue = scaleLinear()
-    .domain(rangeConfig.domain)
-    .range(rangeConfig.range);
+  const getRangeValue = (value: number) => {
+    const rangeScale = scaleLinear()
+      .domain(rangeConfig.domain)
+      .range(rangeConfig.range);
 
-  const getDomainValue = scaleLinear()
-    .domain(rangeConfig.range)
-    .range(rangeConfig.domain);
+    const rangeValue = Math.floor(rangeScale(value));
+
+    if (rangeValue <= rangeConfig.min) {
+      return rangeConfig.min;
+    }
+    if (rangeValue >= rangeConfig.max) {
+      return rangeConfig.max;
+    }
+    return rangeValue;
+  };
+
+  const getDomainValue = (value: number) => {
+    const domainScale = scaleLinear()
+      .domain(rangeConfig.range)
+      .range(rangeConfig.domain);
+
+    const domainValue = domainScale(value);
+    if (domainValue <= 0) {
+      return 0;
+    }
+    if (domainValue >= 100) {
+      return 100;
+    }
+    return domainValue;
+  };
+
+  const [initValue, setInitValue] = useState({
+    rangeValue: value,
+    domainValue: getDomainValue(value),
+    inputValue: `${value}`,
+  });
 
   const marks = rangeConfig.domain.map((item, index) => {
     return {
@@ -60,14 +92,61 @@ export const SizingRange = (props: SizingRangePropsType) => {
     return `${value}`;
   }
 
+  // props is domain value; [0,100]
   const handleRangeChange = (newValue: number | number[]) => {
-    const domainValue = Math.round(getRangeValue(newValue));
-    onRangeChange(domainValue);
+    const rangeValue = getRangeValue(newValue as number);
+    setInitValue({
+      rangeValue: rangeValue,
+      domainValue: newValue,
+      inputValue: `${rangeValue}`,
+    });
+    onRangeChange(rangeValue);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const realValue = Number(e.target.value);
-    handleRangeChange(realValue);
+    const inputValue = e.target.value;
+    let value = Number(inputValue); // range value
+    if (isNaN(value)) {
+      return;
+    }
+
+    value =
+      value <= rangeConfig.min
+        ? rangeConfig.min
+        : value >= rangeConfig.max
+        ? rangeConfig.max
+        : value;
+
+    const domainValue = getDomainValue(value);
+
+    setInitValue({
+      rangeValue: value,
+      domainValue,
+      inputValue,
+    });
+    onRangeChange(value);
+  };
+
+  const handleFormatInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    let value = Number(inputValue); // range value
+
+    value =
+      value <= rangeConfig.min
+        ? rangeConfig.min
+        : value >= rangeConfig.max
+        ? rangeConfig.max
+        : value;
+
+    const domainValue = getDomainValue(value);
+    console.log(value);
+
+    setInitValue({
+      rangeValue: value,
+      domainValue,
+      inputValue: `${value}`,
+    });
+    onRangeChange(value);
   };
 
   return (
@@ -78,8 +157,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
           track="normal"
           aria-labelledby="track-false-slider"
           getAriaValueText={valuetext}
-          defaultValue={getDomainValue(rangeConfig.defaultValue)}
-          value={getDomainValue(value)}
+          value={initValue.domainValue}
           marks={marks}
           onChange={(e, newVal) => {
             handleRangeChange(newVal);
@@ -95,10 +173,12 @@ export const SizingRange = (props: SizingRangePropsType) => {
           }}
         />
         <SizingInput
-          value={value}
+          value={initValue.inputValue}
           unit={unit}
           onChange={handleInputChange}
+          onBlur={handleFormatInput}
           customSize="small"
+          placeholder={placeholder}
         />
       </div>
     </div>

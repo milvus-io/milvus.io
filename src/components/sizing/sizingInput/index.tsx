@@ -19,12 +19,13 @@ const SizingInput = React.forwardRef<HTMLInputElement, SizingInputPropsType>(
   (
     {
       className,
-      unit = '',
+      unit,
       label = '',
       customSize = 'medium',
       classes: customClasses,
       fullWidth = false,
       type,
+      placeholder,
       ...props
     },
     ref
@@ -44,11 +45,12 @@ const SizingInput = React.forwardRef<HTMLInputElement, SizingInputPropsType>(
           root
         )}
       >
-        {label && <p className={classes.inputLabel}>{label}</p>}
+        {label && <div className={classes.inputLabel}>{label}</div>}
         <div
           className={cn(classes.inputWrapper, {
             [classes.mediumSize]: customSize === 'medium',
             [classes.smallSize]: customSize === 'small',
+            [classes.largePadding]: unit !== undefined,
           })}
         >
           <input
@@ -59,6 +61,7 @@ const SizingInput = React.forwardRef<HTMLInputElement, SizingInputPropsType>(
               className
             )}
             ref={ref}
+            placeholder={placeholder}
             {...props}
           />
           {unit && <span className={cn(classes.unit, unitClass)}>{unit}</span>}

@@ -11,9 +11,9 @@ export const ArrowRightAltIcon = (props: { size?: number; color?: string }) => {
       <path
         d="M2 7L12.7244 7M12.7244 7L7.57669 12.1477M12.7244 7L7.5767 1.85228"
         stroke="#00131A"
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

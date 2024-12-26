@@ -11,6 +11,7 @@ import sizingToolEn from './en/sizingTool.json';
 import useCaseEn from './en/useCase.json';
 import communityEn from './en/community.json';
 import notFoundEn from './en/404.json';
+import sizingToolV2 from './en/sizingToolV2.json';
 
 import docsCn from './cn/docs.json';
 import headerCn from './cn/header.json';
@@ -39,6 +40,7 @@ export const resources = {
     demo: demoEn,
     community: communityEn,
     notFound: notFoundEn,
+    sizingToolV2,
   },
   cn: {
     common: commonCn,

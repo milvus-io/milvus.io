@@ -16,7 +16,76 @@ export enum IndexTypeEnum {
 export interface IIndexType {
   indexType: IndexTypeEnum;
   widthRawData: boolean;
-  nodeDegree: number;
-  nlist: number;
   maxDegree: number;
+  nlist: number;
+  m: number;
+}
+
+export enum DependencyComponentEnum {
+  Pulsar,
+  Kafka,
+}
+
+export enum ModeEnum {
+  Standalone,
+  Cluster,
+}
+
+const NodesType = {
+  queryNode: 'Query Node',
+  proxy: 'Proxy',
+  mixCoord: 'Mix Coord',
+  dataNode: 'Data Node',
+  indexNode: 'Index Node',
+} as const;
+
+export type NodesKeyType = keyof typeof NodesType;
+export type NodesValueType = {
+  cpu: number;
+  memory: number;
+  count: number;
+};
+
+type DependencyBaseConfigType = {
+  cpu: number;
+  memory: number;
+  count: number;
+};
+
+export type DependencyConfigType = {
+  etcd: DependencyBaseConfigType & {
+    pvc: number;
+  };
+  minio: DependencyBaseConfigType & {
+    pvc: number;
+  };
+  pulsar?: {
+    bookie: DependencyBaseConfigType & {
+      journal: number;
+      ledgers: number;
+    };
+    broker: DependencyBaseConfigType;
+    proxy: DependencyBaseConfigType;
+    zookeeper: DependencyBaseConfigType & {
+      pvc: number;
+    };
+  };
+  kafka?: {
+    broker: DependencyBaseConfigType & {
+      pvc: number;
+    };
+    zookeeper: DependencyBaseConfigType & {
+      pvc: number;
+    };
+  };
+};
+
+export interface ICalculateResult {
+  rawDataSize: number;
+  memorySize: number;
+  localDiskSize: number;
+  nodeConfig: Record<NodesKeyType, NodesValueType>;
+  dependencyConfig: DependencyConfigType;
+  mode: ModeEnum;
+  dependency: DependencyComponentEnum;
 }

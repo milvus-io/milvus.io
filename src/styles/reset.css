@@ -144,6 +144,7 @@ a {
 }
 
 button {
+  font-family: Inter;
   background-color: transparent;
   padding: 0;
   margin: 0;

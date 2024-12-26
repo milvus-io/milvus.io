@@ -80,14 +80,15 @@ export const memoryAndDiskCalculator = (params: {
     indexTypeParams,
     segSize,
   } = params;
-  const { indexType, widthRawData, maxDegree, m, nlist } = indexTypeParams;
+  const { indexType, widthRawData, maxDegree, m, flatNList, sq8NList } =
+    indexTypeParams;
   const segmentSizeByte = segSize * 1024;
 
   let result = {
     memory: 0,
     disk: 0,
   };
-  const rowSize = rawDataSize / num;
+  const rowSize = (d * 32) / 8;
 
   switch (indexType) {
     case IndexTypeEnum.FLAT:
@@ -98,13 +99,13 @@ export const memoryAndDiskCalculator = (params: {
       break;
     case IndexTypeEnum.IVF_FLAT:
       result = {
-        memory: rawDataSize + nlist * rowSize,
+        memory: rawDataSize + flatNList * rowSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.IVFSQ8:
       result = {
-        memory: rawDataSize / 4 + nlist * rowSize,
+        memory: rawDataSize / 4 + sq8NList * rowSize,
         disk: 0,
       };
       break;
@@ -121,6 +122,7 @@ export const memoryAndDiskCalculator = (params: {
         memory: (1 + (2 * m) / d) * rawDataSize,
         disk: 0,
       };
+
       break;
     case IndexTypeEnum.DISKANN:
       result = {

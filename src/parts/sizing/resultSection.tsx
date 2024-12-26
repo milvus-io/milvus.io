@@ -46,6 +46,8 @@ export default function ResultSection(props: {
   } = calculatedResult;
   const { queryNode, proxy, mixCoord, dataNode, indexNode } = nodeConfig;
 
+  console.log('mode--', mode);
+
   const { size: totalRawDataSize, unit: rawDataUnit } =
     unitBYTE2Any(rawDataSize);
   const { size: totalMemorySize, unit: memoryUnit } = unitBYTE2Any(memorySize);

@@ -79,7 +79,7 @@ const DISKANNComponent = (props: IndexTypeComponentProps) => {
   );
 };
 
-const IVFComponent = (props: IndexTypeComponentProps) => {
+const IVFFlatComponent = (props: IndexTypeComponentProps) => {
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
@@ -87,9 +87,27 @@ const IVFComponent = (props: IndexTypeComponentProps) => {
       <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>nlist</p>
       <SizingRange
         rangeConfig={N_LIST_RANGE_CONFIG}
-        value={data.nlist}
+        value={data.flatNList}
         onRangeChange={value => {
-          onChange('nlist', value);
+          onChange('flatNList', value);
+        }}
+        placeholder={`[${N_LIST_RANGE_CONFIG.min}, ${N_LIST_RANGE_CONFIG.max}]`}
+      />
+    </div>
+  );
+};
+
+const IVFSQ8Component = (props: IndexTypeComponentProps) => {
+  const { data, onChange } = props;
+  return (
+    <div className="mt-[20px]">
+      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>Index Parameters</p>
+      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>nlist</p>
+      <SizingRange
+        rangeConfig={N_LIST_RANGE_CONFIG}
+        value={data.sq8NList}
+        onRangeChange={value => {
+          onChange('sq8NList', value);
         }}
         placeholder={`[${N_LIST_RANGE_CONFIG.min}, ${N_LIST_RANGE_CONFIG.max}]`}
       />
@@ -101,7 +119,7 @@ export const IndexTypeComponent = (props: {
   data: IIndexType;
   onChange: (key: string, value: any) => void;
 }) => {
-  const { data, onChange } = props;
+  const { data } = props;
   switch (data.indexType) {
     case IndexTypeEnum.FLAT:
       return null;
@@ -111,8 +129,11 @@ export const IndexTypeComponent = (props: {
       return <HNSWComponent {...props} />;
     case IndexTypeEnum.DISKANN:
       return <DISKANNComponent {...props} />;
+    case IndexTypeEnum.IVF_FLAT:
+      return <IVFFlatComponent {...props} />;
+    case IndexTypeEnum.IVFSQ8:
+      return <IVFSQ8Component {...props} />;
     default:
-      // IVF_FLAT, IVFSQ8 use the same component
-      return <IVFComponent {...props} />;
+      return null;
   }
 };

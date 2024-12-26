@@ -5,7 +5,6 @@ import classes from '@/styles/sizingTool.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import Head from 'next/head';
-
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import FormSection from '@/parts/sizing/formSection';
 import ResultSection from '@/parts/sizing/resultSection';
@@ -15,6 +14,7 @@ import {
   ModeEnum,
 } from '@/types/sizing';
 import { InfoFilled } from '@/components/icons';
+import ZillizAdv from '@/parts/blogs/zillizAdv';
 
 const etcdBaseValue = {
   cpu: 0,
@@ -174,6 +174,8 @@ export default function SizingTool() {
               calculatedResult={calculatedResult}
             />
           </div>
+
+          <ZillizAdv className={classes.zillizAdv} />
         </div>
       </Layout>
     </main>

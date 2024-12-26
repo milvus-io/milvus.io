@@ -10,8 +10,6 @@ import { ABSOLUTE_BASE_URL } from '@/consts';
 import {
   AirplaneArrowIcon,
   ClockIcon,
-  ListItemTickIcon,
-  RightTopArrowIcon,
   RocketIcon,
   SearchIcon,
   TrendingIcon,
@@ -32,6 +30,7 @@ import dayjs from 'dayjs';
 import { Trans, useTranslation } from 'react-i18next';
 import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
 import { debounce } from '@mui/material';
+import ZillizAdv from '@/parts/blogs/zillizAdv';
 
 const PAGE_SIZE = 9;
 const TITLE = 'Learn Milvus: Insights and Innovations in VectorDB Technology';
@@ -47,9 +46,6 @@ const SEARCH_QUERY_KEY = 'q';
 
 const ELLIPSIS = 'ellipsis';
 const ELLIPSIS_2 = 'ellipsis2';
-
-const CTA_LINK =
-  'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_blog_overview-page_milvusio';
 
 const generatePaginationNavigators = (
   currentPage: number,
@@ -502,46 +498,6 @@ const Blog: React.FC<Props> = props => {
     );
   };
 
-  const renderZillizAdv = () => {
-    const features = [
-      t('blog:zillizAdv.feature1'),
-      t('blog:zillizAdv.feature2'),
-    ];
-
-    const featureItems = features.map(f => (
-      <li className={styles['zilliz-adv-features-item']} key={f}>
-        <ListItemTickIcon className={styles['zilliz-adv-features-item-icon']} />
-        {f}
-      </li>
-    ));
-
-    return (
-      <section className={styles['zilliz-adv']}>
-        <div className={styles['zilliz-adv-main']}>
-          <h6 className={styles['zilliz-adv-small-title']}>
-            {t('blog:zillizAdv.smallTitle')}
-          </h6>
-          <h3 className={styles['zilliz-adv-title']}>
-            {t('blog:zillizAdv.title')}
-          </h3>
-          <ul className={styles['zilliz-adv-features']}>{featureItems}</ul>
-          <Link
-            href={CTA_LINK}
-            target="_blank"
-            className={styles['zilliz-adv-btn']}
-          >
-            {t('blog:zillizAdv.btn')}
-            <RightTopArrowIcon color="#FFFFFF" />
-          </Link>
-        </div>
-        <div
-          className={styles['zilliz-adv-logo']}
-          style={{ backgroundImage: 'url(/images/supported.png)' }}
-        />
-      </section>
-    );
-  };
-
   const renderAuthors = () => {
     const authors = [
       {
@@ -615,7 +571,7 @@ const Blog: React.FC<Props> = props => {
               {renderPaging()}
             </section>
             {renderAIService()}
-            {renderZillizAdv()}
+            <ZillizAdv />
             {renderAuthors()}
           </div>
         </section>

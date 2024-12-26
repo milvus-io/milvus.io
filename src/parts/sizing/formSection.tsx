@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { use, useEffect, useMemo, useRef, useState } from 'react';
 import classes from './index.module.less';
 import { SizingInput, SizingRange, SizingSwitch } from '@/components/sizing';
 import {
@@ -24,6 +24,8 @@ import {
   INDEX_TYPE_OPTIONS,
   DEPENDENCY_COMPONENTS,
   MODE_OPTIONS,
+  N_LIST_RANGE_CONFIG,
+  M_RANGE_CONFIG,
 } from '@/consts/sizing';
 import clsx from 'clsx';
 import { ICalculateResult, IIndexType, ModeEnum } from '@/types/sizing';
@@ -35,11 +37,13 @@ import {
   $10M768D,
   dependencyCalculator,
 } from '@/utils/sizingToolV2';
+import { Trans, useTranslation } from 'react-i18next';
 
 export default function FormSection(props: {
   className: string;
   updateCalculatedResult: (params: ICalculateResult) => void;
 }) {
+  const { t } = useTranslation('sizingToolV2');
   const { className, updateCalculatedResult } = props;
 
   const [collapseHeight, setCollapseHeight] = useState(0);
@@ -61,10 +65,13 @@ export default function FormSection(props: {
   const [indexTypeParams, setIndexTypeParams] = useState<IIndexType>({
     indexType: INDEX_TYPE_OPTIONS[0].value,
     widthRawData: false,
-    maxDegree: 0,
-    nlist: 0,
-    m: 0,
+    maxDegree: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
+    flatNList: N_LIST_RANGE_CONFIG.defaultValue,
+    sq8NList: N_LIST_RANGE_CONFIG.defaultValue,
+    m: M_RANGE_CONFIG.defaultValue,
   });
+
+  const [disableStandalone, setDisableStandalone] = useState(false);
 
   const handleFormChange = (key: string, value: any) => {
     setForm({
@@ -125,11 +132,11 @@ export default function FormSection(props: {
   const modeOptions = [
     {
       ...MODE_OPTIONS[0],
-      desc: 'Suitable for small datasize and poc env.',
+      desc: t('form.standaloneDesc'),
     },
     {
       ...MODE_OPTIONS[1],
-      desc: 'Suitable for large datasize and production env.',
+      desc: t('form.clusterDesc'),
     },
   ];
 
@@ -144,10 +151,10 @@ export default function FormSection(props: {
 
     if (rawDataSize >= $10M768D) {
       currentMode = ModeEnum.Cluster;
-      setForm({
-        ...form,
-        mode: currentMode,
-      });
+
+      setDisableStandalone(true);
+    } else if (rawDataSize < $10M768D) {
+      setDisableStandalone(false);
     }
     const { memory, disk: localDisk } = memoryAndDiskCalculator({
       rawDataSize,
@@ -169,7 +176,7 @@ export default function FormSection(props: {
       d: form.dimension,
       withScalar: form.widthScalar,
       scalarAvg: form.scalarData.average,
-      mode: form.mode,
+      mode: currentMode,
     });
 
     updateCalculatedResult({
@@ -181,7 +188,16 @@ export default function FormSection(props: {
       mode: currentMode,
       dependency: form.dependency,
     });
-  }, [form]);
+  }, [form, indexTypeParams]);
+
+  useEffect(() => {
+    if (disableStandalone && form.mode === ModeEnum.Standalone) {
+      setForm({
+        ...form,
+        mode: ModeEnum.Cluster,
+      });
+    }
+  }, [disableStandalone, form.mode]);
 
   return (
     <section className={clsx(className, classes.formSection)}>
@@ -189,7 +205,7 @@ export default function FormSection(props: {
         <div className={classes.marginBtm20}>
           <SizingRange
             rangeConfig={VECTOR_RANGE_CONFIG}
-            label="Number of Vector"
+            label={t('form.num')}
             onRangeChange={val => {
               handleFormChange('vector', val);
             }}
@@ -200,7 +216,7 @@ export default function FormSection(props: {
         <div className={classes.marginBtm20}>
           <SizingRange
             rangeConfig={DIMENSION_RANGE_CONFIG}
-            label="Vector Dimension"
+            label={t('form.dim')}
             onRangeChange={val => {
               handleFormChange('dimension', val);
             }}
@@ -209,7 +225,7 @@ export default function FormSection(props: {
         </div>
         <div className={clsx(classes.marginBtm0)}>
           <div className={clsx(classes.flexRow)}>
-            <p className={classes.switchLabel}>With Scalar Fields</p>
+            <p className={classes.switchLabel}>{t('form.withScalar')}</p>
             <SizingSwitch
               checked={form.widthScalar}
               onCheckedChange={value => {
@@ -238,12 +254,12 @@ export default function FormSection(props: {
                           classes.tooltipTrigger
                         )}
                       >
-                        Average Data Size Per Row
+                        {t('form.averageLength')}
                       </TooltipTrigger>
                     </Tooltip>
                   </TooltipProvider>
                 }
-                unit="Bytes"
+                unit={t('setup.basic.byte')}
                 value={form.scalarData.average}
                 onChange={handleAverageLengthChange}
                 fullWidth
@@ -257,13 +273,14 @@ export default function FormSection(props: {
                     checked={form.scalarData.offLoading}
                     onCheckedChange={handleOffLoadingChange}
                   />
-                  <p className={classes.smallerLabel}>
-                    Offloading Fields to Disk
-                  </p>
+                  <p className={classes.smallerLabel}>{t('form.offloading')}</p>
                 </div>
                 <p className={classes.offLoadingDesc}>
-                  Milvus uses Mmap to enable direct memory access to large files
-                  on disk without reading the entire files into memory.
+                  <Trans
+                    t={t}
+                    i18nKey="form.mmp"
+                    components={[<a href="#" key="mmp"></a>]}
+                  />
                 </p>
               </div>
             </div>
@@ -272,7 +289,7 @@ export default function FormSection(props: {
       </div>
       <div className={clsx(classes.singlePart, 'pb-[24px]')}>
         <div className="">
-          <h4 className={classes.commonLabel}>Index Type</h4>
+          <h4 className={classes.commonLabel}>{t('form.indexType')}</h4>
           <Select
             value={indexTypeParams.indexType}
             onValueChange={val => {
@@ -299,7 +316,7 @@ export default function FormSection(props: {
       </div>
       <div className={clsx(classes.singlePart, 'pb-[24px]')}>
         <div className={classes.marginBtm20}>
-          <h4 className={classes.commonLabel}>Segment Size</h4>
+          <h4 className={classes.commonLabel}>{t('form.segmentSize')}</h4>
           <Select
             value={form.segmentSize}
             onValueChange={val => {
@@ -319,7 +336,7 @@ export default function FormSection(props: {
           </Select>
         </div>
         <div className={classes.marginBtm20}>
-          <h4 className={classes.commonLabel}>Dependency Component</h4>
+          <h4 className={classes.commonLabel}>{t('dependencyComp')}</h4>
           <div className={classes.cardsWrapper}>
             {dependencyOptions.map(v => (
               <button
@@ -344,11 +361,14 @@ export default function FormSection(props: {
                 <TooltipTrigger
                   className={clsx(classes.commonLabel, classes.tooltipTrigger)}
                 >
-                  Mode
+                  {t('form.mode')}
                 </TooltipTrigger>
                 <TooltipContent className="w-[280px]">
-                  With data growth, you can migrate data from standalone mode to
-                  cluster mode. <a href="/">View More</a>
+                  <Trans
+                    t={t}
+                    i18nKey="form.modeTip"
+                    components={[<a href="#" key="mode-tip"></a>]}
+                  />
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -363,6 +383,7 @@ export default function FormSection(props: {
                   handleFormChange('mode', v.value);
                 }}
                 key={v.label}
+                disabled={disableStandalone && v.value === ModeEnum.Standalone}
               >
                 <h5 className={classes.modeName}>{v.label}</h5>
                 <span className={classes.modeDesc}>{v.desc}</span>

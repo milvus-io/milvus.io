@@ -25,27 +25,27 @@ export const DIMENSION_RANGE_CONFIG = {
 };
 
 export const MAX_NODE_DEGREE_RANGE_CONFIG = {
-  min: 2,
-  max: 2048,
-  defaultValue: 1,
-  domain: [0, 20, 40, 60, 80, 100],
-  range: [2, 8, 32, 128, 512, 2048],
-};
-
-export const M_RANGE_CONFIG = {
   min: 1,
   max: 2048,
-  defaultValue: 1,
+  defaultValue: 56,
   domain: [0, 20, 40, 60, 80, 100],
   range: [1, 8, 32, 128, 512, 2048],
 };
 
+export const M_RANGE_CONFIG = {
+  min: 2,
+  max: 2048,
+  defaultValue: 30,
+  domain: [0, 20, 40, 60, 80, 100],
+  range: [2, 8, 32, 128, 512, 2048],
+};
+
 export const N_LIST_RANGE_CONFIG = {
   min: 1,
-  max: 10000,
-  defaultValue: 1,
+  max: 65536,
+  defaultValue: 128,
   domain: [0, 10, 20, 40, 70, 100],
-  range: [1, 16, 256, 4096, 16384, 65536],
+  range: [1, 16, 128, 4096, 16384, 65536],
 };
 
 export const SEGMENT_SIZE_OPTIONS = [

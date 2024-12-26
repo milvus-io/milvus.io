@@ -1,0 +1,96 @@
+@import url('@/styles/global.module.less');
+
+.zilliz-adv {
+  border-radius: 16px;
+  border: 1px solid @color-black4;
+  background: @color-white;
+  padding: 30px 60px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  min-height: 392px;
+
+  @media @phone, @tablet {
+    flex-wrap: wrap;
+    padding: 30px;
+    gap: 20px;
+  }
+
+  &-main {
+    flex: 1 1 50%;
+  }
+
+  &-small-title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-transform: uppercase;
+    font-family: 'Geist Mono';
+  }
+
+  &-title {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  &-features {
+    margin-top: 12px;
+
+    &-item {
+      color: @color-black2;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      font-family: 'Geist Mono';
+
+      &:not(:first-of-type) {
+        margin-top: 8px;
+      }
+
+      &-icon {
+        color: @color-blue1;
+        margin-right: 2px;
+        flex: 0 0 auto;
+      }
+    }
+  }
+
+  &-btn {
+    padding: 9.5px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    border-radius: 6px;
+    background-color: @color-black1;
+    color: @color-white;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 36px;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    @media @phone, @tablet {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  &-logo {
+    min-height: 230px;
+    flex: 1 1 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    @media @tablet {
+      margin-top: 30px;
+    }
+  }
+}

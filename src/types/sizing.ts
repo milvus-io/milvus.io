@@ -17,7 +17,8 @@ export interface IIndexType {
   indexType: IndexTypeEnum;
   widthRawData: boolean;
   maxDegree: number;
-  nlist: number;
+  flatNList: number;
+  sq8NList: number;
   m: number;
 }
 

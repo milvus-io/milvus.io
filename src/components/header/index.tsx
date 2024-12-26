@@ -15,7 +15,7 @@ const Header: React.FC<{
         [classes.fixedHeader]: darkMode,
       })}
     >
-      <CloudBanner />
+      {/* <CloudBanner /> */}
       <DesktopHeader className={className} />
       <MobileHeader className={className} />
     </header>

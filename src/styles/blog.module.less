@@ -714,6 +714,12 @@
     line-height: 1.5;
     color: @color-black1;
     padding: 0 24px;
+    height: 4.5em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 
     &:hover {
       text-decoration: underline;

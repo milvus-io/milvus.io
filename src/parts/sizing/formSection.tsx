@@ -90,7 +90,7 @@ export default function FormSection(props: {
 
   const handleAverageLengthChange = (e: any) => {
     const length = Number(e.target.value) || 0;
-    if (length >= 10000000) {
+    if (length >= 60000000) {
       return;
     }
     setForm({
@@ -250,7 +250,7 @@ export default function FormSection(props: {
                   <TooltipProvider>
                     <Tooltip delayDuration={0}>
                       <TooltipContent className="w-[280px]">
-                        [0, 10,000,000]
+                        [0, 60,000,000]
                         <TooltipArrow />
                       </TooltipContent>
                       <TooltipTrigger

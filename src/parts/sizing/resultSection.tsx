@@ -5,34 +5,37 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  TooltipArrow,
   Collapsible,
   CollapsibleTrigger,
   CollapsibleContent,
 } from '@/components/ui';
-import {
-  ExternalLinkIcon,
-  ArrowTop,
-  DownloadIcon,
-  copyIconTpl,
-} from '@/components/icons';
+import { ExternalLinkIcon, ArrowTop, DownloadIcon } from '@/components/icons';
 import { ICalculateResult } from '@/types/sizing';
-import { unitBYTE2Any } from '@/utils/sizingTool';
+import { formatNumber, unitBYTE2Any } from '@/utils/sizingTool';
 import {
   milvusOverviewDataCalculator,
   dependencyOverviewDataCalculator,
-} from '@/utils/sizingToolV2';
+  helmYmlGenerator,
+  operatorYmlGenerator,
+} from '@/utils/sizingTool';
 import { DataCard, DependencyComponent } from './dependencyComponent';
 import { Trans, useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import CustomButton from '@/components/customButton';
-import { helmCodeExample, operatorCodeExample } from '@/consts/sizing';
+import {
+  helmCodeExample,
+  operatorCodeExample,
+  HELM_CONFIG_FILE_NAME,
+  OPERATOR_CONFIG_FILE_NAME,
+} from '@/consts/sizing';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
 
 export default function ResultSection(props: {
   className?: string;
   calculatedResult: ICalculateResult;
 }) {
-  const { t } = useTranslation('sizingToolV2');
+  const { t } = useTranslation('sizingTool');
   const { className, calculatedResult } = props;
 
   const {
@@ -46,22 +49,63 @@ export default function ResultSection(props: {
   } = calculatedResult;
   const { queryNode, proxy, mixCoord, dataNode, indexNode } = nodeConfig;
 
-  console.log('mode--', mode);
-
+  // Approximate Capacity
   const { size: totalRawDataSize, unit: rawDataUnit } =
     unitBYTE2Any(rawDataSize);
-  const { size: totalMemorySize, unit: memoryUnit } = unitBYTE2Any(memorySize);
-  const { size: diskSize, unit: diskUnit } = unitBYTE2Any(localDiskSize);
+  const { size: totalLoadingMemorySize, unit: memoryUnit } =
+    unitBYTE2Any(memorySize);
 
+  // milvus data
   const { milvusCpu, milvusMemory } = milvusOverviewDataCalculator(nodeConfig);
+  const milvusCpuData = formatNumber(milvusCpu);
+  const milvusMemoryData = unitBYTE2Any(milvusMemory);
+
+  // dependency data
   const { dependencyCpu, dependencyMemory, dependencyStorage } =
     dependencyOverviewDataCalculator({ mode, dependency, dependencyConfig });
+  const dependencyCpuData = formatNumber(dependencyCpu);
+  const dependencyMemoryData = unitBYTE2Any(
+    dependencyMemory * 1024 * 1024 * 1024
+  );
 
-  const totalCpu = milvusCpu + dependencyCpu;
-  const totalMemory = milvusMemory + dependencyMemory;
+  // setup data
+  const totalCpu = formatNumber(milvusCpu + dependencyCpu);
+  const totalMemory = unitBYTE2Any(
+    (milvusMemory + dependencyMemory) * 1024 * 1024 * 1024
+  );
+  const { size: diskSize, unit: diskUnit } = unitBYTE2Any(localDiskSize);
 
   const [isMilvusOpen, setIsMilvusOpen] = useState(false);
   const [isDependencyOpen, setIsDependencyOpen] = useState(false);
+
+  const handleDownloadConfigFile = (type: 'helm' | 'operator') => {
+    const configGenerator =
+      type === 'helm' ? helmYmlGenerator : operatorYmlGenerator;
+    const config = configGenerator(
+      {
+        proxy,
+        mixCoord,
+        indexNode,
+        etcdData: dependencyConfig.etcd,
+        minioData: dependencyConfig.minio,
+        pulsarData: dependencyConfig.pulsar,
+        kafkaData: dependencyConfig.kafka,
+      },
+      dependency,
+      mode
+    );
+
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(
+      new Blob([config], {
+        type: 'text/plain',
+      })
+    );
+    downloadLink.download =
+      type === 'helm' ? HELM_CONFIG_FILE_NAME : OPERATOR_CONFIG_FILE_NAME;
+
+    downloadLink.click();
+  };
 
   useCopyCode([helmCodeExample, operatorCodeExample]);
 
@@ -84,6 +128,7 @@ export default function ResultSection(props: {
                   </TooltipTrigger>
                   <TooltipContent sideOffset={5} className="w-[280px]">
                     {t('overview.rawTooltip')}
+                    <TooltipArrow />
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -104,11 +149,12 @@ export default function ResultSection(props: {
                   </TooltipTrigger>
                   <TooltipContent sideOffset={5} className="w-[280px]">
                     {t('overview.memoryTooltip')}
+                    <TooltipArrow />
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             }
-            data={`${totalMemorySize} ${memoryUnit}`}
+            data={`${totalLoadingMemorySize} ${memoryUnit}`}
           />
         </div>
       </div>
@@ -125,13 +171,15 @@ export default function ResultSection(props: {
           <div className={classes.dataSummary}>
             <DataCard
               name={t('setup.basic.cpu')}
-              data={t('setup.basic.core', { cpu: totalCpu })}
+              data={t('setup.basic.simpleCore', {
+                cpu: `${totalCpu.num}${totalCpu.unit}`,
+              })}
               classname={classes.summaryCard}
               size="large"
             />
             <DataCard
               name={t('setup.basic.memory')}
-              data={t('setup.basic.gb', { memory: totalMemory })}
+              data={`${totalMemory.size}${totalMemory.unit}`}
               classname={classes.summaryCard}
               size="large"
             />
@@ -164,8 +212,8 @@ export default function ResultSection(props: {
                         t={t}
                         i18nKey="setup.basic.cpuAndMemory"
                         values={{
-                          cpu: milvusCpu,
-                          memory: milvusMemory,
+                          cpu: `${milvusCpuData.num}${milvusCpuData.unit}`,
+                          memory: `${milvusMemoryData.size}${milvusMemoryData.unit}`,
                         }}
                         components={[
                           <span
@@ -205,7 +253,29 @@ export default function ResultSection(props: {
               <CollapsibleContent>
                 <div className={classes.milvusDataDetail}>
                   <DataCard
-                    name={t('setup.milvus.proxy')}
+                    name={
+                      <>
+                        <TooltipProvider>
+                          <Tooltip delayDuration={0}>
+                            <TooltipTrigger
+                              className={clsx(
+                                classes.dataCardName,
+                                classes.tooltipTrigger
+                              )}
+                            >
+                              {t('setup.milvus.proxy')}
+                            </TooltipTrigger>
+                            <TooltipContent
+                              sideOffset={5}
+                              className="w-[280px]"
+                            >
+                              {t('setup.milvus.proxyTip')}
+                              <TooltipArrow />
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </>
+                    }
                     data={t('setup.basic.config', {
                       cpu: proxy.cpu,
                       memory: proxy.memory,
@@ -214,7 +284,29 @@ export default function ResultSection(props: {
                     classname={classes.detailCard}
                   />
                   <DataCard
-                    name={t('setup.milvus.mixCoord')}
+                    name={
+                      <>
+                        <TooltipProvider>
+                          <Tooltip delayDuration={0}>
+                            <TooltipTrigger
+                              className={clsx(
+                                classes.dataCardName,
+                                classes.tooltipTrigger
+                              )}
+                            >
+                              {t('setup.milvus.mixCoord')}
+                            </TooltipTrigger>
+                            <TooltipContent
+                              sideOffset={5}
+                              className="w-[280px]"
+                            >
+                              {t('setup.milvus.mixCoordTip')}
+                              <TooltipArrow />
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </>
+                    }
                     data={t('setup.basic.config', {
                       cpu: mixCoord.cpu,
                       memory: mixCoord.memory,
@@ -223,7 +315,24 @@ export default function ResultSection(props: {
                     classname={classes.detailCard}
                   />
                   <DataCard
-                    name={t('setup.milvus.dataNode')}
+                    name={
+                      <TooltipProvider>
+                        <Tooltip delayDuration={0}>
+                          <TooltipTrigger
+                            className={clsx(
+                              classes.dataCardName,
+                              classes.tooltipTrigger
+                            )}
+                          >
+                            {t('setup.milvus.dataNode')}
+                          </TooltipTrigger>
+                          <TooltipContent sideOffset={5} className="w-[280px]">
+                            {t('setup.milvus.dataNodeTip')}
+                            <TooltipArrow />
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    }
                     data={t('setup.basic.config', {
                       cpu: dataNode.cpu,
                       memory: dataNode.memory,
@@ -232,7 +341,24 @@ export default function ResultSection(props: {
                     classname={classes.detailCard}
                   />
                   <DataCard
-                    name={t('setup.milvus.indexNode')}
+                    name={
+                      <TooltipProvider>
+                        <Tooltip delayDuration={0}>
+                          <TooltipTrigger
+                            className={clsx(
+                              classes.dataCardName,
+                              classes.tooltipTrigger
+                            )}
+                          >
+                            {t('setup.milvus.indexNode')}
+                          </TooltipTrigger>
+                          <TooltipContent sideOffset={5} className="w-[280px]">
+                            {t('setup.milvus.indexNodeTip')}
+                            <TooltipArrow />
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    }
                     data={t('setup.basic.config', {
                       cpu: indexNode.cpu,
                       memory: indexNode.memory,
@@ -241,7 +367,24 @@ export default function ResultSection(props: {
                     classname={classes.detailCard}
                   />
                   <DataCard
-                    name={t('setup.milvus.queryNode')}
+                    name={
+                      <TooltipProvider>
+                        <Tooltip delayDuration={0}>
+                          <TooltipTrigger
+                            className={clsx(
+                              classes.dataCardName,
+                              classes.tooltipTrigger
+                            )}
+                          >
+                            {t('setup.milvus.queryNode')}
+                          </TooltipTrigger>
+                          <TooltipContent sideOffset={5} className="w-[280px]">
+                            {t('setup.milvus.queryNodeTip')}
+                            <TooltipArrow />
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    }
                     data={t('setup.basic.config', {
                       cpu: queryNode.cpu,
                       memory: queryNode.memory,
@@ -271,8 +414,8 @@ export default function ResultSection(props: {
                         t={t}
                         i18nKey="setup.basic.cpuAndMemory"
                         values={{
-                          cpu: dependencyCpu,
-                          memory: dependencyMemory,
+                          cpu: `${dependencyCpuData.num}${dependencyCpuData.unit}`,
+                          memory: `${dependencyMemoryData.size}${dependencyMemoryData.unit}`,
                         }}
                         components={[
                           <span
@@ -328,6 +471,9 @@ export default function ResultSection(props: {
               classes={{
                 root: classes.installButton,
               }}
+              onClick={() => {
+                handleDownloadConfigFile('helm');
+              }}
             >
               {t('install.helm')}
             </CustomButton>
@@ -344,6 +490,9 @@ export default function ResultSection(props: {
               startIcon={<DownloadIcon />}
               classes={{
                 root: classes.installButton,
+              }}
+              onClick={() => {
+                handleDownloadConfigFile('operator');
               }}
             >
               {t('install.operator')}

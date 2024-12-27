@@ -6,13 +6,20 @@ import {
 import classes from './index.module.less';
 import { Trans, useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipArrow,
+} from '@/components/ui';
 
 export const DependencyComponent = (props: {
   data: DependencyConfigType;
   mode: ModeEnum;
   dependency: DependencyComponentEnum;
 }) => {
-  const { t } = useTranslation('sizingToolV2');
+  const { t } = useTranslation('sizingTool');
   const { data, mode, dependency } = props;
 
   const { etcd, minio, pulsar, kafka } = data;
@@ -22,7 +29,21 @@ export const DependencyComponent = (props: {
 
     return (
       <div className={classes.configContainer}>
-        <h5 className={classes.configName}>{t('setup.dependency.pulsar')}</h5>
+        <h5 className={classes.configName}>
+          <TooltipProvider>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger
+                className={clsx(classes.dataCardName, classes.tooltipTrigger)}
+              >
+                {t('setup.dependency.pulsar')}
+              </TooltipTrigger>
+              <TooltipContent sideOffset={5} className="w-[280px]">
+                {t('setup.dependency.apacheTip')}
+                <TooltipArrow />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </h5>
         <ul className={classes.configList}>
           <li className={classes.configItem}>
             <p className={classes.columnName}>
@@ -178,7 +199,21 @@ export const DependencyComponent = (props: {
 
     return (
       <div className={classes.configContainer}>
-        <h5 className={classes.configName}>{t('setup.dependency.pulsar')}</h5>
+        <h5 className={classes.configName}>
+          <TooltipProvider>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger
+                className={clsx(classes.dataCardName, classes.tooltipTrigger)}
+              >
+                {t('setup.dependency.kafka')}
+              </TooltipTrigger>
+              <TooltipContent sideOffset={5} className="w-[280px]">
+                {t('setup.dependency.apacheTip')}
+                <TooltipArrow />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </h5>
         <ul className={classes.configList}>
           <li className={classes.configItem}>
             <p className={classes.columnName}>
@@ -266,7 +301,21 @@ export const DependencyComponent = (props: {
     <div className={classes.dependencyDetailContainer}>
       <div className={classes.firstRow}>
         <DataCard
-          name={t('setup.dependency.etcd')}
+          name={
+            <TooltipProvider>
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger
+                  className={clsx(classes.dataCardName, classes.tooltipTrigger)}
+                >
+                  {t('setup.dependency.etcd')}
+                </TooltipTrigger>
+                <TooltipContent sideOffset={5} className="w-[280px]">
+                  {t('setup.dependency.etcdTip')}
+                  <TooltipArrow />
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          }
           data={t('setup.basic.config', { cpu: etcd.cpu, memory: etcd.memory })}
           count={etcd.count}
           desc={

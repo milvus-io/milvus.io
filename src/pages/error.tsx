@@ -12,13 +12,9 @@ const RELOAD_LIMIT = 3;
 export default function Error(props: { error: Error; reset: () => void }) {
   const count = useRef(0);
 
-  // useEffect(() => {
-  //   if (count.current >= RELOAD_LIMIT) {
-  //     redirect('/');
-  //   }
-  //   count.current += 1;
-  //   window.location.reload();
-  // }, []);
+  useEffect(() => {
+    redirect('/');
+  }, []);
 
   return (
     <div className={classes.errorContainer}>

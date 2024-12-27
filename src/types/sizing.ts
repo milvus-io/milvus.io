@@ -1,3 +1,4 @@
+export type DataSizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
 export enum SegmentSizeEnum {
   _512MB = '512',
   _1024MB = '1024',
@@ -47,38 +48,36 @@ export type NodesValueType = {
   count: number;
 };
 
-type DependencyBaseConfigType = {
-  cpu: number;
-  memory: number;
-  count: number;
+export type PulsarDataType = {
+  bookie: NodesValueType & {
+    journal: number;
+    ledgers: number;
+  };
+  broker: NodesValueType;
+  proxy: NodesValueType;
+  zookeeper: NodesValueType & {
+    pvc: number;
+  };
+};
+
+export type KafkaDataType = {
+  broker: NodesValueType & {
+    pvc: number;
+  };
+  zookeeper: NodesValueType & {
+    pvc: number;
+  };
 };
 
 export type DependencyConfigType = {
-  etcd: DependencyBaseConfigType & {
+  etcd: NodesValueType & {
     pvc: number;
   };
-  minio: DependencyBaseConfigType & {
+  minio: NodesValueType & {
     pvc: number;
   };
-  pulsar?: {
-    bookie: DependencyBaseConfigType & {
-      journal: number;
-      ledgers: number;
-    };
-    broker: DependencyBaseConfigType;
-    proxy: DependencyBaseConfigType;
-    zookeeper: DependencyBaseConfigType & {
-      pvc: number;
-    };
-  };
-  kafka?: {
-    broker: DependencyBaseConfigType & {
-      pvc: number;
-    };
-    zookeeper: DependencyBaseConfigType & {
-      pvc: number;
-    };
-  };
+  pulsar?: PulsarDataType;
+  kafka?: KafkaDataType;
 };
 
 export interface ICalculateResult {

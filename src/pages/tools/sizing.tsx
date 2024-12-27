@@ -69,7 +69,7 @@ const kafkaBaseValue = {
 };
 
 export default function SizingTool() {
-  const { t } = useTranslation('sizingToolV2');
+  const { t } = useTranslation('sizingTool');
   const [calculatedResult, setCalculatedResult] = useState<ICalculateResult>({
     rawDataSize: 0,
     memorySize: 0,

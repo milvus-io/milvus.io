@@ -36,14 +36,15 @@ import {
   rawDataSizeCalculator,
   $10M768D,
   dependencyCalculator,
-} from '@/utils/sizingToolV2';
+} from '@/utils/sizingTool';
 import { Trans, useTranslation } from 'react-i18next';
+import { TooltipArrow } from '@radix-ui/react-tooltip';
 
 export default function FormSection(props: {
   className: string;
   updateCalculatedResult: (params: ICalculateResult) => void;
 }) {
-  const { t } = useTranslation('sizingToolV2');
+  const { t } = useTranslation('sizingTool');
   const { className, updateCalculatedResult } = props;
 
   const [collapseHeight, setCollapseHeight] = useState(0);
@@ -89,6 +90,9 @@ export default function FormSection(props: {
 
   const handleAverageLengthChange = (e: any) => {
     const length = Number(e.target.value) || 0;
+    if (length >= 10000000) {
+      return;
+    }
     setForm({
       ...form,
       scalarData: {
@@ -246,7 +250,8 @@ export default function FormSection(props: {
                   <TooltipProvider>
                     <Tooltip delayDuration={0}>
                       <TooltipContent className="w-[280px]">
-                        some test tooltip sad dsdsadasd dadsadsa dssad d dasd
+                        [0, 10,000,000]
+                        <TooltipArrow />
                       </TooltipContent>
                       <TooltipTrigger
                         className={clsx(
@@ -367,28 +372,57 @@ export default function FormSection(props: {
                   <Trans
                     t={t}
                     i18nKey="form.modeTip"
-                    components={[<a href="#" key="mode-tip"></a>]}
+                    components={[
+                      <a
+                        href="#"
+                        key="mode-tip"
+                        className={classes.tooltipLink}
+                      ></a>,
+                    ]}
                   />
+                  <TooltipArrow />
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </h4>
           <div className={classes.cardsWrapper}>
-            {modeOptions.map(v => (
-              <button
-                className={clsx(classes.card, classes.modeCard, {
-                  [classes.activeCard]: form.mode === v.value,
-                })}
-                onClick={() => {
-                  handleFormChange('mode', v.value);
-                }}
-                key={v.label}
-                disabled={disableStandalone && v.value === ModeEnum.Standalone}
-              >
-                <h5 className={classes.modeName}>{v.label}</h5>
-                <span className={classes.modeDesc}>{v.desc}</span>
-              </button>
-            ))}
+            <button
+              className={clsx(classes.card, classes.modeCard, {
+                [classes.activeCard]: form.mode === modeOptions[0].value,
+                [classes.disabledCard]: disableStandalone,
+              })}
+              onClick={() => {
+                handleFormChange('mode', modeOptions[0].value);
+              }}
+              disabled={disableStandalone}
+            >
+              <h5 className={classes.modeName}>{modeOptions[0].label}</h5>
+              <span className={classes.modeDesc}>{modeOptions[0].desc}</span>
+
+              <TooltipProvider>
+                <Tooltip delayDuration={0}>
+                  <TooltipContent className="w-[280px]" side="bottom">
+                    Don‘t support standalone mode when number of vector exceed
+                    10 Million or XXXXXXXX.
+                    <TooltipArrow />
+                  </TooltipContent>
+                  <TooltipTrigger>
+                    <div className={classes.mask}></div>
+                  </TooltipTrigger>
+                </Tooltip>
+              </TooltipProvider>
+            </button>
+            <button
+              className={clsx(classes.card, classes.modeCard, {
+                [classes.activeCard]: form.mode === modeOptions[1].value,
+              })}
+              onClick={() => {
+                handleFormChange('mode', modeOptions[1].value);
+              }}
+            >
+              <h5 className={classes.modeName}>{modeOptions[1].label}</h5>
+              <span className={classes.modeDesc}>{modeOptions[1].desc}</span>
+            </button>
           </div>
         </div>
       </div>

@@ -1,91 +1,91 @@
 {
   "title": "Milvus Sizing Tool",
-  "subTitle": "Note: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production.",
-  "labels": {
-    "dataSize": "Choose data size",
-    "vector": "Number of vectors (Million)",
-    "dimension": "Dimensions",
-    "index": "Index Type",
-    "indexType": "Choose index type",
-    "indexParam": "Choose index parameters",
-    "m": "M (Maximum degree of the node)",
-    "segmentSize": "Choose segment size",
-    "segment": "Segment (MB)"
+  "content": "A tool for estimate the resources required to set up Milvus based on your dataset.",
+  "tooltip": "Note: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production. If you have any question, please <0>contact us</0>.",
+  "form": {
+    "num": "Number of Vector",
+    "dim": "Vector Dimension",
+    "withScalar": "With Scalar Fields",
+    "averageLength": "Average Data Size Per Row",
+    "offloading": "Offloading Fields to Disk",
+    "mmp": "Milvus uses <0>Mmap</0> to enable direct memory access to large files on disk without reading the entire files into memory.",
+    "indexType": "Index Type",
+    "withRawData": "With_raw_data",
+    "m": "M(Maximum degree of the node)",
+    "nlist": "nlist",
+    "maxDegree": "Max Degree",
+    "segmentSize": "Segment Size",
+    "dependencyComp": "Dependency Component",
+    "mode": "Mode",
+    "modeTip": "With data growth, you can migrate data from standalone mode to cluster mode. <0>View More</0>",
+    "modeDisableTip": "Don‘t support standalone mode when number of vector exceed 10 Million or XXXXXXXX.",
+    "pulsar": "Pulsar",
+    "kafka": "Kafka",
+    "standalone": "Standalone",
+    "standaloneDesc": "Suitable for small data size and poc env.",
+    "cluster": "Cluster",
+    "clusterDesc": "Suitable for large datasize and production env. "
   },
-  "capacity": "Approximate capacity",
-  "memory": "Loading Memory",
-  "fileSize": "Raw file size",
-  "setups": {
+  "overview": {
+    "title": "Approximate Capacity",
+    "raw": "Raw Data Size",
+    "rawTooltip": "Raw data size - Original data size, depending on the number of Vector, Vector Dimension and Scalar Field data size",
+    "memory": "Loading Memory",
+    "memoryTooltip": "Memory consumption for query nodes, depending on raw data size, index type and params"
+  },
+  "setup": {
     "title": "Minimum Milvus cluster setup in total",
-    "rootCoord": {
-      "title": "Root Coord",
-      "tooltip": "Root coord handles data definition language (DDL) and data control language (DCL) requests, such as create or delete collections, partitions, or indexes, as well as manage TSO (timestamp Oracle) and time ticker issuing."
+    "share": "Scaling cluster or dependencies",
+    "milvus": {
+      "title": "Milvus",
+      "proxy": "Proxy",
+      "mixCoord": "Mix Coord",
+      "dataNode": "Data Node",
+      "indexNode": "Index Node",
+      "queryNode": "Query Node",
+      "proxyTip": "Proxy is the access layer of the system and endpoint for users. Tips: Allocate more resources to handle higher QPS workload.",
+      "mixCoordTip": "Mix coord is responsible for scheduling cluster background tasks, maintaining metadata topology, handling DDL, DCL, and TSO allocation.",
+      "queryNodeTip": "Query node is responsible for data query and search. Tips: Allocate more resources to handle read-heavy workload. ",
+      "dataNodeTip": "Data node retrieves incremental log data by subscribing to the log broker, processes mutation requests, and packs log data into log snapshots and stores them in the object storage. Tips: Allocate more resources to handle write-heavy workload.",
+      "indexNodeTip": "Index node is responsible for building indexes. The amount of resources may affect the speed of index building. You can increase or decrease this resource according to actual needs."
     },
-    "queryCoord": {
-      "title": "Query Coord",
-      "tootip": "Query coord manages topology and load balancing for the query nodes, and handoff from growing segments to sealed segments."
+    "dependency": {
+      "title": "Dependencies",
+      "etcd": "ETCD",
+      "minio": "Minio",
+      "pulsar": "Pulsar",
+      "kafka": "Kafka",
+      "bookie": "Bookie <0>x{{count}}</0>",
+      "broker": "Broker <0>x{{count}}</0>",
+      "proxy": "Proxy <0>x{{count}}</0>",
+      "zookeeper": "Zookeeper <0>x{{count}}</0>",
+      "etcdTip": "ETCD is used to store meta data. Please mount a high-performance storage drive(NVMe SSD)  to ensure optimal performance.",
+      "apacheTip": "Please mount a high-performance storage drive(NVMe SSD) for Bookie.Journal and Zookeeper to ensure optimal performance."
     },
-    "dataCoord": {
-      "title": "Data Coord",
-      "tooltip": "Data coord manages topology of the data nodes, maintains metadata, and triggers flush, compact, and other background data operations."
-    },
-    "indexCoord": {
-      "title": "Index Coord",
-      "tooltip": "Index coord manages topology of the index nodes, builds index, and maintains index metadata."
-    },
-    "proxy": {
-      "title": "Proxy",
-      "tooltip": "Proxy is the access layer of the system and endpoint to users. It validates client requests and reduces the returned results."
-    },
-    "queryNode": {
-      "title": "Query Node",
-      "tooltip": "Query node retrieves incremental log data and turn them into growing segments by subscribing to the log broker, loads historical data from the object storage, and runs hybrid search between vector and scalar data."
-    },
-    "dataNode": {
-      "title": "Data Node",
-      "tooltip": "Data node retrieves incremental log data by subscribing to the log broker, processes mutation requests, and packs log data into log snapshots and stores them in the object storage."
-    },
-    "indexNode": {
-      "title": "Index Node",
-      "tooltip": "Index node builds indexes. Index nodes do not need to be memory resident, and can be implemented with the serverless framework."
-    },
-    "mixCoord": {
-      "title": "Mix Coord",
-      "tooltip": "Mix coord is a combination of root coord, data coord and query coord. It is responsible for scheduling cluster background tasks, maintaining metadata topology, handling DDL, DCL, and TSO allocation. "
-    },
-    "etcd": {
-      "title": "ETCD"
-    },
-    "minio": {
-      "title": "Minio"
-    },
-    "pulsar": {
-      "title": "Pulsar"
-    },
-    "kafka": {
-      "title": "Kafka"
-    },
-    "bookie": "Bookie",
-    "broker": "Broker",
-    "proxyLabel": "Proxy",
-    "zookeeper": "Zookeeper"
+    "basic": {
+      "cpuAndMemory": "CPU and Memory: <0>{{cpu}} C {{memory}}</0>",
+      "storageWithValue": "Storage: <0>{{storage}} GB</0>",
+      "diskWithValue": "Local Disk: <0>{{disk}} {{unit}}</0>",
+      "cpu": "CPU",
+      "memory": "Memory",
+      "disk": "Local Disk",
+      "storage": "Storage",
+      "podNum": "Pod Number",
+      "pvc": "Pcv per Pod: <0>{{pvc}} GB</0>",
+      "pvcLabel": "Pcv per Pod",
+      "journal": "Journal",
+      "ledger": "Ledgers",
+      "config": "{{cpu}} Core {{memory}} GB",
+      "core": "{{cpu}} Core",
+      "simpleCore": "{{cpu}} C",
+      "gb": "{{memory}} GB",
+      "byte": "Bytes"
+    }
   },
-  "buttons": {
-    "helm": "Download Helm Chart configuration yml",
-    "operator": "Download Milvus Operator configuration yml",
-    "guide": "View install guide"
-  },
-  "installGuide": {
-    "helm": "Helm Install Guide",
-    "operator": "Operator Install Guide"
-  },
-  "milvus": "Milvus",
-  "dependency": "Dependencies",
-  "dependencyNote": "The values shown on the sizing tool are for reference only. Please make adjustments according to your actual resource usage for optimal configuration.",
-  "cluster": "Minimum Milvus cluster setup in total",
-  "total": "CPU, Memory",
-  "ssd": "SSD",
-  "disk": "Disk",
-  "coreInfo": "{{core}} core, {{memory}} GB",
-  "sizeInfo": "{{size}} GB"
+  "install": {
+    "title": "Install Milvus",
+    "helm": "Helm Chart configuration.yml",
+    "operator": "Milvus Operator configuration.yml",
+    "adv": "Too many resources consumed? Try Zilliz Cloud (managed Milvus) to save resources and cut deployment and operation costs. Check out more details with the Zilliz Cloud calculator. <0>Go to Zilliz Cloud calculator</0>."
+  }
 }

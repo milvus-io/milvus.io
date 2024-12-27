@@ -37,6 +37,11 @@
     border-bottom: 1px solid #ececee;
   }
 
+  .tooltipLink {
+    color: #fff;
+    text-decoration: underline;
+  }
+
   .singlePart {
     border-bottom: 1px solid #ececee;
     margin-bottom: 24px;
@@ -153,6 +158,27 @@
       .modeDesc {
         .paragraph6-regular();
         text-align: left;
+      }
+
+      .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -99;
+        visibility: hidden;
+        pointer-events: none;
+      }
+    }
+
+    .disabledCard {
+      position: relative;
+
+      .mask {
+        z-index: 99;
+        visibility: visible;
+        pointer-events: all;
       }
     }
 

@@ -58,7 +58,7 @@ export default function ResultSection(props: {
   // milvus data
   const { milvusCpu, milvusMemory } = milvusOverviewDataCalculator(nodeConfig);
   const milvusCpuData = formatNumber(milvusCpu);
-  const milvusMemoryData = unitBYTE2Any(milvusMemory);
+  const milvusMemoryData = unitBYTE2Any(milvusMemory * 1024 * 1024 * 1024);
 
   // dependency data
   const { dependencyCpu, dependencyMemory, dependencyStorage } =

@@ -8,6 +8,7 @@ import {
   N_LIST_RANGE_CONFIG,
   M_RANGE_CONFIG,
 } from '@/consts/sizing';
+import { useTranslation } from 'react-i18next';
 
 type IndexTypeComponentProps = {
   data: IIndexType;
@@ -16,11 +17,16 @@ type IndexTypeComponentProps = {
 
 const SCANNComponent = (props: IndexTypeComponentProps) => {
   const { data, onChange } = props;
+  const { t } = useTranslation('sizingTool');
 
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>Index Parameters</p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>With_raw_data</p>
+      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
+        {t('form.indexType')}
+      </p>
+      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
+        {t('form.withRawData')}
+      </p>
       <RadioGroup
         value={data.widthRawData.toString()}
         onValueChange={val => {
@@ -33,7 +39,7 @@ const SCANNComponent = (props: IndexTypeComponentProps) => {
           <p className="">True</p>
         </div>
         <div className={classes.flexRow}>
-          <RadioGroupItem value="false">False</RadioGroupItem>
+          <RadioGroupItem value="false"></RadioGroupItem>
           <p className="">False</p>
         </div>
       </RadioGroup>
@@ -42,13 +48,14 @@ const SCANNComponent = (props: IndexTypeComponentProps) => {
 };
 
 const HNSWComponent = (props: IndexTypeComponentProps) => {
+  const { t } = useTranslation('sizingTool');
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>Index Parameters</p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
-        M(Maximum degree of the node)
+      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
+        {t('form.indexType')}
       </p>
+      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>{t('form.m')}</p>
       <SizingRange
         rangeConfig={M_RANGE_CONFIG}
         value={data.m}
@@ -62,11 +69,16 @@ const HNSWComponent = (props: IndexTypeComponentProps) => {
 };
 
 const DISKANNComponent = (props: IndexTypeComponentProps) => {
+  const { t } = useTranslation('sizingTool');
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>Index Parameters</p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>nlist</p>
+      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
+        {t('form.indexType')}
+      </p>
+      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
+        {t('form.maxDegree')}
+      </p>
       <SizingRange
         rangeConfig={MAX_NODE_DEGREE_RANGE_CONFIG}
         value={data.maxDegree}
@@ -80,11 +92,16 @@ const DISKANNComponent = (props: IndexTypeComponentProps) => {
 };
 
 const IVFFlatComponent = (props: IndexTypeComponentProps) => {
+  const { t } = useTranslation('sizingTool');
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>Index Parameters</p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>nlist</p>
+      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
+        {t('form.indexType')}
+      </p>
+      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
+        {t('form.nlist')}
+      </p>
       <SizingRange
         rangeConfig={N_LIST_RANGE_CONFIG}
         value={data.flatNList}
@@ -98,11 +115,16 @@ const IVFFlatComponent = (props: IndexTypeComponentProps) => {
 };
 
 const IVFSQ8Component = (props: IndexTypeComponentProps) => {
+  const { t } = useTranslation('sizingTool');
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>Index Parameters</p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>nlist</p>
+      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
+        {t('form.indexType')}
+      </p>
+      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
+        {t('form.nlist')}
+      </p>
       <SizingRange
         rangeConfig={N_LIST_RANGE_CONFIG}
         value={data.sq8NList}

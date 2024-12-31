@@ -94,7 +94,7 @@ export default function DesktopHeader(props: Props) {
                 return (
                   <li key={config.label} className="shrink-0">
                     <div className="group relative">
-                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] h-[21px] text-black1/[0.7] hover:text-black1/[0.9] cursor-pointer font-mono uppercase text-[#667176]">
+                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] h-[21px] text-black2 hover:text-black1 cursor-pointer font-mono uppercase text-[#667176]">
                         <span className="inline-block leading-[16px]">
                           {config.label}
                         </span>
@@ -127,7 +127,7 @@ export default function DesktopHeader(props: Props) {
                 <li key={config.label}>
                   <Link
                     href={config.link}
-                    className="block text-[14px] leading-[21px] font-[500] text-black1/[0.7] hover:text-black1/[0.9] cursor-pointer font-mono uppercase text-[#667176]"
+                    className="block text-[14px] leading-[21px] font-[500] text-black2 hover:text-black1 cursor-pointer font-mono uppercase text-[#667176]"
                   >
                     {config.label}
                   </Link>

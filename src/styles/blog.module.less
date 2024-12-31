@@ -321,6 +321,11 @@
   height: 40px;
   box-sizing: border-box;
   font-family: 'Geist Mono';
+  transition: all .1s ease;
+
+  &:focus-within {
+    border-color: @color-black1;
+  }
 
   &-icon {
     color: @color-black2;
@@ -531,6 +536,10 @@
     align-items: center;
     gap: 8px;
     margin-top: 36px;
+
+    &:hover {
+      opacity: 0.7;
+    }
 
     @media @phone, @tablet {
       width: 100%;

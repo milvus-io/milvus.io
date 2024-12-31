@@ -47,10 +47,20 @@ export default function CloudAdvertisementCard(props: {
     setRandom(randomValue);
   }, []);
 
+  const renderZillizLogo = () => {
+    return (
+      <div
+        className={classes.logo}
+        style={{ backgroundImage: `url(/images/home/zilliz-logo.png)` }}
+      />
+    );
+  };
+
   return (
     <>
       {isCnAdv ? (
         <div className={clsx(classes.advCardContainer, className)}>
+          {renderZillizLogo()}
           <h2 className={classes.advTitle}>{t('advertise.title')}</h2>
           <p className={classes.advAbstract}>{t('advertise.content')}</p>
           <CustomButton
@@ -63,6 +73,7 @@ export default function CloudAdvertisementCard(props: {
         </div>
       ) : (
         <div className={clsx(classes.advCardContainer, className)}>
+          {renderZillizLogo()}
           <h2 className={classes.advTitle}>{enTitle}</h2>
           <p className={classes.advAbstract}>{t('advertise.content')}</p>
           <CustomButton

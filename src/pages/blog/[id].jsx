@@ -8,13 +8,15 @@ import dayjs from 'dayjs';
 import Share from '../../components/share';
 import styles from '../../styles/blogDetail.module.less';
 import blogUtils from '../../utils/blog.utils';
-import { markdownToHtml } from '../../utils/common';
+import { copyToCommand, markdownToHtml } from '../../utils/common';
 import clsx from 'clsx';
 import BlogAnchorSection from '../../parts/blogs/blogAnchors';
 import pageClasses from '../../styles/responsive.module.less';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { useCopyCode } from '../../hooks/enhanceCodeBlock';
 import 'highlight.js/styles/atom-one-dark.css';
+import { useEffect } from 'react';
+import { checkIconTpl, linkIconTpl } from '../../components/icons';
 
 export default function Template(props) {
   const {
@@ -42,11 +44,48 @@ export default function Template(props) {
 
   const dateTime = useMemo(() => dayjs(date).format('MMMM DD, YYYY'), [date]);
 
+  const pageHref = useRef('');
+
   useCopyCode(codeList);
 
   const handleTagClick = tag => {
     navigate(`/blog?page=1#${tag}`);
   };
+
+  useEffect(() => {
+    // add click event handler for copy icon after headings
+    if (window && typeof window !== 'undefined') {
+      const anchors = Array.from(document.querySelectorAll('.anchor-icon'));
+      const baseHref = window.location.href.split('#')[0];
+
+      anchors.forEach(anchor => {
+        anchor.addEventListener(
+          'click',
+          e => {
+            if (!e.currentTarget) {
+              return;
+            }
+            const {
+              dataset: { href },
+            } = e.currentTarget;
+            pageHref.current = `${baseHref}${href}`;
+            copyToCommand(pageHref.current);
+
+            anchor.innerHTML = checkIconTpl;
+
+            setTimeout(() => {
+              anchor.innerHTML = linkIconTpl;
+            }, 3000);
+          },
+          false
+        );
+      });
+    }
+    // close mask when router changed
+    // isOpenMobileMenu && setIsOpenMobileMenu(false);
+    // no need to watch 'isOpenMobileMenu'
+    // eslint-disable-next-line
+  }, [id]);
 
   const metaTitle = `${title} - Milvus Blog`;
 

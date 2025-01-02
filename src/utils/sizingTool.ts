@@ -23,7 +23,7 @@ import {
  */
 
 export const unitBYTE2Any = (size: number, unit?: DataSizeUnit) => {
-  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'];
   if (unit) {
     const base = units.findIndex(v => v === unit.toUpperCase());
     return {
@@ -34,7 +34,7 @@ export const unitBYTE2Any = (size: number, unit?: DataSizeUnit) => {
 
   let sizeStatus = 0;
   let baseUnit = 'BYTE';
-  while (sizeStatus < 4 && size > 1024) {
+  while (sizeStatus < units.length - 1 && size > 1024) {
     size = size / 1024;
     sizeStatus++;
   }
@@ -68,10 +68,19 @@ export const unitAny2BYTE = (size: number, unit: DataSizeUnit) => {
       label: 'TB',
       value: 4,
     },
+    {
+      label: 'PB',
+      value: 5,
+    },
+    {
+      label: 'EB',
+      value: 6,
+    },
   ];
   const value = charts.find(v => v.label === unit.toUpperCase())?.value || 0;
   return Math.pow(1024, value) * size;
 };
+
 export const formatNumber = (num: number) => {
   const units = ['', 'K', 'M', 'B', 'T'];
   let i = 0;
@@ -150,7 +159,7 @@ export const memoryAndDiskCalculator = (params: {
   } = params;
   const { indexType, widthRawData, maxDegree, m, flatNList, sq8NList } =
     indexTypeParams;
-  const segmentSizeByte = segSize * 1024;
+  const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
 
   let result = {
     memory: 0,
@@ -219,6 +228,7 @@ export const memoryAndDiskCalculator = (params: {
   }
 
   const vectorLoadingMemory = (result.memory + segmentSizeByte * 2) * 1.15;
+
   return {
     memory: vectorLoadingMemory + scalarLoadingMemory, // bytes
     disk: scalarLocalDisk + result.disk, // bytes

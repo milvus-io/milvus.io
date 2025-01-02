@@ -19,7 +19,7 @@ export const VECTOR_RANGE_CONFIG = {
 export const DIMENSION_RANGE_CONFIG = {
   min: 2,
   max: 32768,
-  defaultValue: 128,
+  defaultValue: 768,
   domain: [0, 25, 50, 75, 100],
   range: [2, 128, 768, 1536, 32768],
 };

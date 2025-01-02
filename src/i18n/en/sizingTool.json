@@ -10,6 +10,7 @@
     "offloading": "Offloading Fields to Disk",
     "mmp": "Milvus uses <0>Mmap</0> to enable direct memory access to large files on disk without reading the entire files into memory.",
     "indexType": "Index Type",
+    "indexParam": "Index Parameters",
     "withRawData": "with_raw_data",
     "m": "m(maximum degree of the node)",
     "nlist": "nlist",
@@ -27,17 +28,17 @@
     "clusterDesc": "Suitable for large datasize and production env. "
   },
   "overview": {
-    "title": "Approximate Capacity",
+    "title": "Data Size Calculation",
     "raw": "Raw Data Size",
     "rawTooltip": "Raw data size - Original data size, depending on the number of Vector, Vector Dimension and Scalar Field data size",
     "memory": "Loading Memory",
     "memoryTooltip": "Memory consumption for query nodes, depending on raw data size, index type and params"
   },
   "setup": {
-    "title": "Minimum Milvus cluster setup in total",
+    "title": "Setup Resource Requirements",
     "share": "Scaling cluster or dependencies",
     "milvus": {
-      "title": "Milvus",
+      "title": "Milvus Components",
       "proxy": "Proxy",
       "mixCoord": "Mix Coord",
       "dataNode": "Data Node",
@@ -50,7 +51,7 @@
       "indexNodeTip": "Index node is responsible for building indexes. The amount of resources may affect the speed of index building. You can increase or decrease this resource according to actual needs."
     },
     "dependency": {
-      "title": "Dependencies",
+      "title": "Dependency Components",
       "etcd": "ETCD",
       "minio": "Minio",
       "pulsar": "Pulsar",

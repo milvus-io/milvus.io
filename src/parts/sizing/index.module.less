@@ -1,7 +1,7 @@
 @import url('@/styles/global.module.less');
 
 .tooltipTrigger {
-  text-decoration: underline dashed #d0d7dc;
+  text-decoration: underline dashed #00131a;
 }
 
 .flexRow {
@@ -59,7 +59,7 @@
   }
 
   .smallerLabel {
-    .paragraph6();
+    .paragraph4();
   }
 
   .innerRow {
@@ -110,14 +110,17 @@
   }
 
   .indexParamLabel {
-    .paragraph4-regular();
-    margin-bottom: 8px;
+    .paragraph6-regular();
   }
 
   .radioGroup {
     display: flex;
     gap: 20px;
     align-items: center;
+
+    .radioItemLabel {
+      .paragraph4-regular();
+    }
   }
 
   .cardsWrapper {
@@ -248,9 +251,11 @@
     display: flex;
     border-bottom: 1px solid @color-black4;
     padding: 0 20px 20px 20px;
+    gap: 20px;
 
     .summaryCard {
       flex: 1;
+      padding: 0px;
     }
   }
 
@@ -297,10 +302,11 @@
       }
       .collapseIcon {
         flex: 0 0 16px;
+        transform: rotate(180deg);
       }
 
       .activeIcon {
-        transform: rotate(180deg);
+        transform: rotate(0deg);
       }
     }
 
@@ -394,7 +400,7 @@
   }
 
   .dataInfo {
-    .paragraph3-bold();
+    .paragraph3();
     color: #008dc8;
   }
 

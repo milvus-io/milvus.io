@@ -22,7 +22,7 @@ const SCANNComponent = (props: IndexTypeComponentProps) => {
   return (
     <div className="mt-[20px]">
       <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexType')}
+        {t('form.indexParam')}
       </p>
       <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
         {t('form.withRawData')}
@@ -36,11 +36,11 @@ const SCANNComponent = (props: IndexTypeComponentProps) => {
       >
         <div className={classes.flexRow}>
           <RadioGroupItem value="true"></RadioGroupItem>
-          <p className="">True</p>
+          <p className={classes.radioItemLabel}>True</p>
         </div>
         <div className={classes.flexRow}>
           <RadioGroupItem value="false"></RadioGroupItem>
-          <p className="">False</p>
+          <p className={classes.radioItemLabel}>False</p>
         </div>
       </RadioGroup>
     </div>
@@ -53,9 +53,9 @@ const HNSWComponent = (props: IndexTypeComponentProps) => {
   return (
     <div className="mt-[20px]">
       <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexType')}
+        {t('form.indexParam')}
       </p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>{t('form.m')}</p>
+      <p className={clsx(classes.indexParamLabel)}>{t('form.m')}</p>
       <SizingRange
         rangeConfig={M_RANGE_CONFIG}
         value={data.m}
@@ -74,11 +74,9 @@ const DISKANNComponent = (props: IndexTypeComponentProps) => {
   return (
     <div className="mt-[20px]">
       <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexType')}
+        {t('form.indexParam')}
       </p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
-        {t('form.maxDegree')}
-      </p>
+      <p className={clsx(classes.indexParamLabel)}>{t('form.maxDegree')}</p>
       <SizingRange
         rangeConfig={MAX_NODE_DEGREE_RANGE_CONFIG}
         value={data.maxDegree}
@@ -97,11 +95,9 @@ const IVFFlatComponent = (props: IndexTypeComponentProps) => {
   return (
     <div className="mt-[20px]">
       <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexType')}
+        {t('form.indexParam')}
       </p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
-        {t('form.nlist')}
-      </p>
+      <p className={clsx(classes.indexParamLabel)}>{t('form.nlist')}</p>
       <SizingRange
         rangeConfig={N_LIST_RANGE_CONFIG}
         value={data.flatNList}
@@ -120,11 +116,9 @@ const IVFSQ8Component = (props: IndexTypeComponentProps) => {
   return (
     <div className="mt-[20px]">
       <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexType')}
+        {t('form.indexParam')}
       </p>
-      <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
-        {t('form.nlist')}
-      </p>
+      <p className={clsx(classes.indexParamLabel)}>{t('form.nlist')}</p>
       <SizingRange
         rangeConfig={N_LIST_RANGE_CONFIG}
         value={data.sq8NList}

@@ -170,6 +170,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
             rail: classes.customRail,
             track: classes.customTrack,
             thumb: classes.customThumb,
+            root: classes.customRangeRoot,
           }}
         />
         <SizingInput
@@ -179,6 +180,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
           onBlur={handleFormatInput}
           customSize="small"
           placeholder={placeholder}
+          classes={{ root: classes.inputWrapper }}
         />
       </div>
     </div>

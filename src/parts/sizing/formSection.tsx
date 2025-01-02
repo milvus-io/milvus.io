@@ -59,7 +59,7 @@ export default function FormSection(props: {
       average: 0,
       offLoading: false,
     },
-    segmentSize: SEGMENT_SIZE_OPTIONS[0].value,
+    segmentSize: SEGMENT_SIZE_OPTIONS[1].value,
     dependency: DEPENDENCY_COMPONENTS[0].value,
     mode: MODE_OPTIONS[0].value,
   });
@@ -226,6 +226,7 @@ export default function FormSection(props: {
             }}
             value={form.vector}
             unit="Million"
+            placeholder={`[${VECTOR_RANGE_CONFIG.min}, ${VECTOR_RANGE_CONFIG.max}]`}
           />
         </div>
         <div className={classes.marginBtm20}>
@@ -236,6 +237,7 @@ export default function FormSection(props: {
               handleFormChange('dimension', val);
             }}
             value={form.dimension}
+            placeholder={`[${DIMENSION_RANGE_CONFIG.min}, ${DIMENSION_RANGE_CONFIG.max}]`}
           />
         </div>
         <div className={clsx(classes.marginBtm0)}>
@@ -352,7 +354,7 @@ export default function FormSection(props: {
           </Select>
         </div>
         <div className={classes.marginBtm20}>
-          <h4 className={classes.commonLabel}>{t('dependencyComp')}</h4>
+          <h4 className={classes.commonLabel}>{t('form.dependencyComp')}</h4>
           <div className={classes.cardsWrapper}>
             {dependencyOptions.map(v => (
               <button

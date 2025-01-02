@@ -26,6 +26,7 @@ import {
   MODE_OPTIONS,
   N_LIST_RANGE_CONFIG,
   M_RANGE_CONFIG,
+  MAXIMUM_AVERAGE_LENGTH,
 } from '@/consts/sizing';
 import clsx from 'clsx';
 import { ICalculateResult, IIndexType, ModeEnum } from '@/types/sizing';
@@ -89,10 +90,8 @@ export default function FormSection(props: {
   };
 
   const handleAverageLengthChange = (e: any) => {
-    const length = Number(e.target.value) || 0;
-    if (length >= 60000000) {
-      return;
-    }
+    let length = Number(e.target.value) || 0;
+    length = Math.min(length, MAXIMUM_AVERAGE_LENGTH);
     setForm({
       ...form,
       scalarData: {
@@ -143,6 +142,18 @@ export default function FormSection(props: {
       desc: t('form.clusterDesc'),
     },
   ];
+
+  useEffect(() => {
+    if (form.widthScalar === false) {
+      setForm({
+        ...form,
+        scalarData: {
+          average: 0,
+          offLoading: false,
+        },
+      });
+    }
+  }, [form.widthScalar]);
 
   useEffect(() => {
     let currentMode = form.mode;
@@ -250,7 +261,7 @@ export default function FormSection(props: {
                   <TooltipProvider>
                     <Tooltip delayDuration={0}>
                       <TooltipContent className="w-[280px]">
-                        [0, 60,000,000]
+                        [0, 59,999,999]
                         <TooltipArrow />
                       </TooltipContent>
                       <TooltipTrigger
@@ -386,15 +397,18 @@ export default function FormSection(props: {
             </TooltipProvider>
           </h4>
           <div className={classes.cardsWrapper}>
-            <button
+            <div
+              role="button"
               className={clsx(classes.card, classes.modeCard, {
                 [classes.activeCard]: form.mode === modeOptions[0].value,
                 [classes.disabledCard]: disableStandalone,
               })}
               onClick={() => {
+                if (disableStandalone) {
+                  return;
+                }
                 handleFormChange('mode', modeOptions[0].value);
               }}
-              disabled={disableStandalone}
             >
               <h5 className={classes.modeName}>{modeOptions[0].label}</h5>
               <span className={classes.modeDesc}>{modeOptions[0].desc}</span>
@@ -411,8 +425,8 @@ export default function FormSection(props: {
                   </TooltipTrigger>
                 </Tooltip>
               </TooltipProvider>
-            </button>
-            <button
+            </div>
+            <div
               className={clsx(classes.card, classes.modeCard, {
                 [classes.activeCard]: form.mode === modeOptions[1].value,
               })}
@@ -422,7 +436,7 @@ export default function FormSection(props: {
             >
               <h5 className={classes.modeName}>{modeOptions[1].label}</h5>
               <span className={classes.modeDesc}>{modeOptions[1].desc}</span>
-            </button>
+            </div>
           </div>
         </div>
       </div>

@@ -627,7 +627,7 @@ export const dependencyOverviewDataCalculator = (params: {
   const streamPlatformCpu =
     dependency === DependencyComponentEnum.Pulsar ? pulsarCpu : kafkaCpu;
   const dependencyCpu =
-    etcd.cpu * etcd.count + minio.cpu * etcd.count + streamPlatformCpu;
+    etcd.cpu * etcd.count + minio.cpu * minio.count + streamPlatformCpu;
 
   const pulsarMemory =
     mode === ModeEnum.Standalone
@@ -646,7 +646,9 @@ export const dependencyOverviewDataCalculator = (params: {
     dependency === DependencyComponentEnum.Pulsar ? pulsarMemory : kafkaMemory;
 
   const dependencyMemory =
-    etcd.memory * etcd.count + minio.memory * etcd.count + streamPlatformMemory;
+    etcd.memory * etcd.count +
+    minio.memory * minio.count +
+    streamPlatformMemory;
 
   const pulsarStorage =
     mode === ModeEnum.Standalone
@@ -664,7 +666,7 @@ export const dependencyOverviewDataCalculator = (params: {
       : kafkaStorage;
 
   const dependencyStorage =
-    etcd.pvc * etcd.count + minio.pvc * etcd.count + streamPlatformStorage;
+    etcd.pvc * etcd.count + minio.pvc * minio.count + streamPlatformStorage;
 
   return {
     dependencyCpu,

@@ -389,6 +389,23 @@ export default function ResultSection(props: {
                       cpu: queryNode.cpu,
                       memory: queryNode.memory,
                     })}
+                    desc={
+                      <Trans
+                        t={t}
+                        i18nKey="setup.milvus.diskSize"
+                        values={{ size: `${diskSize} ${diskUnit}` }}
+                        components={[
+                          <span
+                            className={classes.descLabel}
+                            key="desc-label"
+                          ></span>,
+                          <span
+                            className={classes.descValue}
+                            key="desc-value"
+                          ></span>,
+                        ]}
+                      />
+                    }
                     count={queryNode.count}
                     classname={classes.detailCard}
                   />
@@ -503,6 +520,14 @@ export default function ResultSection(props: {
                 className={clsx('copy-code-btn', classes.copyBtn)}
               ></button>
             </pre>
+          </div>
+
+          <div className={classes.advCard}>
+            <Trans
+              t={t}
+              i18nKey="install.adv2"
+              components={[<a href="#" key="vdb-guidance"></a>]}
+            />
           </div>
 
           <div className={classes.advCard}>

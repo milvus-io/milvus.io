@@ -44,6 +44,7 @@
       "dataNode": "Data Node",
       "indexNode": "Index Node",
       "queryNode": "Query Node",
+      "diskSize": "<0>Local Disk</0>: <1>{{size}}</1>",
       "proxyTip": "Proxy is the access layer of the system and endpoint for users. Tips: Allocate more resources to handle higher QPS workload.",
       "mixCoordTip": "Mix coord is responsible for scheduling cluster background tasks, maintaining metadata topology, handling DDL, DCL, and TSO allocation.",
       "queryNodeTip": "Query node is responsible for data query and search. Tips: Allocate more resources to handle read-heavy workload. ",
@@ -87,6 +88,7 @@
     "title": "Install Milvus",
     "helm": "Helm Chart configuration.yml",
     "operator": "Milvus Operator configuration.yml",
-    "adv": "Too many resources consumed? Try Zilliz Cloud (managed Milvus) to save resources and cut deployment and operation costs. Check out more details with the Zilliz Cloud calculator. <0>Go to Zilliz Cloud calculator</0>."
+    "adv": "Too many resources consumed? Try Zilliz Cloud (managed Milvus) to save resources and cut deployment and operation costs. Check out more details with the Zilliz Cloud calculator. <0>Go to Zilliz Cloud calculator</0>.",
+    "adv2": "Setting up a Milvus cluster for performance testing or benchmarking? Refer to <0>VDB Bench for detailed guidance</0>."
   }
 }

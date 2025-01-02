@@ -56,7 +56,8 @@ export default function FormSection(props: {
     dimension: DIMENSION_RANGE_CONFIG.defaultValue,
     widthScalar: false,
     scalarData: {
-      average: 0,
+      averageNum: 0,
+      averageString: '',
       offLoading: false,
     },
     segmentSize: SEGMENT_SIZE_OPTIONS[1].value,
@@ -90,13 +91,21 @@ export default function FormSection(props: {
   };
 
   const handleAverageLengthChange = (e: any) => {
-    let length = Number(e.target.value) || 0;
+    let lengthString = e.target.value;
+    let lengthNum = Number(lengthString);
+    if (Number.isNaN(lengthNum) && lengthString !== '') {
+      return;
+    }
+    if (lengthString === '') {
+      lengthNum = 0;
+    }
     length = Math.min(length, MAXIMUM_AVERAGE_LENGTH);
     setForm({
       ...form,
       scalarData: {
         ...form.scalarData,
-        average: length,
+        averageNum: lengthNum,
+        averageString: lengthString,
       },
     });
   };
@@ -148,7 +157,8 @@ export default function FormSection(props: {
       setForm({
         ...form,
         scalarData: {
-          average: 0,
+          averageString: '',
+          averageNum: 0,
           offLoading: false,
         },
       });
@@ -161,7 +171,7 @@ export default function FormSection(props: {
       num: form.vector,
       d: form.dimension,
       withScalar: form.widthScalar,
-      scalarAvg: form.scalarData.average,
+      scalarAvg: form.scalarData.averageNum,
     });
 
     if (rawDataSize >= $10M768D) {
@@ -178,7 +188,7 @@ export default function FormSection(props: {
       num: form.vector,
       withScalar: form.widthScalar,
       offLoading: form.scalarData.offLoading,
-      scalarAvg: form.scalarData.average,
+      scalarAvg: form.scalarData.averageNum,
       segSize: Number(form.segmentSize),
     });
 
@@ -190,7 +200,7 @@ export default function FormSection(props: {
       num: form.vector,
       d: form.dimension,
       withScalar: form.widthScalar,
-      scalarAvg: form.scalarData.average,
+      scalarAvg: form.scalarData.averageNum,
       mode: currentMode,
     });
 
@@ -259,31 +269,16 @@ export default function FormSection(props: {
           >
             <div className="" ref={collapseEle}>
               <SizingInput
-                label={
-                  <TooltipProvider>
-                    <Tooltip delayDuration={0}>
-                      <TooltipContent className="w-[280px]">
-                        [0, 59,999,999]
-                        <TooltipArrow />
-                      </TooltipContent>
-                      <TooltipTrigger
-                        className={clsx(
-                          classes.smallerLabel,
-                          classes.tooltipTrigger
-                        )}
-                      >
-                        {t('form.averageLength')}
-                      </TooltipTrigger>
-                    </Tooltip>
-                  </TooltipProvider>
-                }
+                label={t('form.averageLength')}
                 unit={t('setup.basic.byte')}
-                value={form.scalarData.average}
+                value={form.scalarData.averageString}
                 onChange={handleAverageLengthChange}
                 fullWidth
                 classes={{
                   root: classes.marginBtm20,
+                  label: classes.averageLabel,
                 }}
+                placeholder="[0, 60,000,000]"
               />
               <div>
                 <div className={classes.offLoadingLabel}>

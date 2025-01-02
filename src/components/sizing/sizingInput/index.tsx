@@ -12,6 +12,7 @@ interface SizingInputPropsType extends React.ComponentProps<'input'> {
     root?: string;
     input?: string;
     unit?: string;
+    label?: string;
   };
 }
 
@@ -34,6 +35,7 @@ const SizingInput = React.forwardRef<HTMLInputElement, SizingInputPropsType>(
       root = '',
       input: inputClass = '',
       unit: unitClass = '',
+      label: labelClass = '',
     } = customClasses || {};
     return (
       <div
@@ -45,7 +47,9 @@ const SizingInput = React.forwardRef<HTMLInputElement, SizingInputPropsType>(
           root
         )}
       >
-        {label && <div className={classes.inputLabel}>{label}</div>}
+        {label && (
+          <div className={cn(classes.inputLabel, labelClass)}>{label}</div>
+        )}
         <div
           className={cn(classes.inputWrapper, {
             [classes.mediumSize]: customSize === 'medium',

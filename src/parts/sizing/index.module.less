@@ -66,6 +66,10 @@
     margin-top: 20px;
   }
 
+  .averageLabel {
+    font-weight: 400;
+  }
+
   .offLoadingLabel {
     display: flex;
     align-items: center;
@@ -317,6 +321,15 @@
       .detailCard {
         flex: 0 1 33.33%;
       }
+
+      .descLabel {
+        .paragraph3-regular();
+      }
+
+      .descValue {
+        .paragraph3();
+        color: @color-blue2;
+      }
     }
 
     .depDataItem {
@@ -384,6 +397,10 @@
         color: #000;
         text-decoration: underline;
       }
+    }
+
+    .advCard + .advCard {
+      margin-top: 40px;
     }
   }
 }

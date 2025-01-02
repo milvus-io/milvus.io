@@ -311,7 +311,9 @@ export const FIXED_QUERY_NODE_CONFIG = [
   },
 ];
 
-export const helmCodeExample = `helm repo add milvus https://zilliztech.github.io/milvus-helm/helm repo update helm install my-release milvus/milvus -f helmConfigYml.yml    
+export const helmCodeExample = `helm repo add milvus https://zilliztech.github.io/milvus-helm/
+helm repo update 
+helm install my-release milvus/milvus -f helmConfigYml.yml    
 `;
 
 export const operatorCodeExample = `helm repo add milvus-operator https://zilliztech.github.io/milvus-operator/
@@ -323,4 +325,4 @@ kubectl create -f operatorConfigYml.yml
 export const HELM_CONFIG_FILE_NAME = 'helmConfigYml.yml';
 export const OPERATOR_CONFIG_FILE_NAME = 'operatorConfigYml.yml';
 
-export const MAXIMUM_AVERAGE_LENGTH = 59999999;
+export const MAXIMUM_AVERAGE_LENGTH = 60 * ONE_MILLION;

@@ -15,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
 import CustomButton from '@/components/customButton';
+import { RightWholeArrow } from '@/components/icons';
 
 const TITLE = 'Similarity Search Demos Powered by Milvus';
 const DESC =
@@ -63,6 +64,7 @@ export default function MilvusDemos() {
         <CustomButton
           href="https://zilliz.com/blog/how-inkeep-and-milvus-built-rag-driven-ai-assisstant-for-smarter-interaction"
           variant="text"
+          endIcon={<RightWholeArrow />}
         >
           {t('demos.askAi.ctaLabel2')}
         </CustomButton>

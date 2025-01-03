@@ -7,34 +7,26 @@ import CustomButton from '@/components/customButton';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
-const DemoCard = ({
+const DemoCard: React.FC<{
+  href?: string;
+  videoSrc?: string;
+  renderButton1?: () => JSX.Element;
+  renderButton2?: () => JSX.Element;
+  cover: string;
+  name: string;
+  desc: string;
+  handelOpenDialog: (content: JSX.Element, title: string) => void;
+}> = ({
   href,
   videoSrc,
   cover,
   name,
   desc,
-  index,
   handelOpenDialog,
-  handleOpenSnackbar,
+  renderButton1,
+  renderButton2,
 }) => {
   const { t } = useTranslation('demo');
-  const submitCallback = (statusCode, unique_email_id, href) => {
-    if (statusCode === 200) {
-      window.localStorage.setItem(UNIQUE_EMAIL_ID, unique_email_id);
-      handleOpenSnackbar({
-        type: 'success',
-        message: t('prompts.success'),
-      });
-      //
-    } else {
-      handleOpenSnackbar({
-        type: 'warning',
-        message: t('prompts.warning'),
-      });
-      window.localStorage.setItem(UNIQUE_EMAIL_ID, true);
-    }
-    window.location.href = href;
-  };
 
   const handleWatchVideo = () => {
     const { innerWidth } = window;
@@ -44,28 +36,10 @@ const DemoCard = ({
         : innerWidth < 1200
         ? innerWidth * 0.8
         : 1200 * 0.8;
-    const content = () => (
+    const content = (
       <VideoPlayer videoSrc={videoSrc} clientWidth={clientWidth} />
     );
     handelOpenDialog(content, name);
-  };
-
-  const handleSubmitEmail = () => {
-    const { search } = window.location;
-    const source = ['utm_source', 'utm_medium', 'utm_campaign'].every(v =>
-      search.includes(v)
-    )
-      ? 'Ads: Reddit'
-      : 'Milvus: demo';
-    const isSubscribed = window.localStorage.getItem(UNIQUE_EMAIL_ID) || false;
-    if (isSubscribed) {
-      window.location.href = href;
-      return;
-    }
-    const content = () => (
-      <InfoSubmitter source={source} href={href} submitCb={submitCallback} />
-    );
-    handelOpenDialog(content, t('prompts.waiting'));
   };
 
   return (
@@ -83,7 +57,7 @@ const DemoCard = ({
               variant="outlined"
               href={href}
             >
-              Try Demo
+              {t('tryDemo')}
             </CustomButton>
           )}
 
@@ -110,9 +84,11 @@ const DemoCard = ({
                 </svg>
               }
             >
-              Watch Demo
+              {t('watchDemo')}
             </CustomButton>
           )}
+          {renderButton1 && renderButton1()}
+          {renderButton2 && renderButton2()}
         </div>
       </div>
     </div>

@@ -7,13 +7,14 @@ import DemoCard from '@/components/card/DemoCard';
 import { useState } from 'react';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { CustomizedSnackbars } from '@/components/snackBar';
-import SubscribeNewsletter from '@/components/subscribe';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import {
   DEMO_MULTIMODAL_SEARCH_URL,
   DEMO_HYBRID_SEARCH_URL,
 } from '@/consts/externalLinks';
 import { useTranslation } from 'react-i18next';
+import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
+import CustomButton from '@/components/customButton';
 
 const TITLE = 'Similarity Search Demos Powered by Milvus';
 const DESC =
@@ -48,12 +49,25 @@ export default function MilvusDemos() {
       lowerCaseName: 'hybrid search',
     },
     {
-      name: t('demos.ossChat.title'),
-      desc: t('demos.ossChat.desc'),
-      href: 'https://osschat.io/',
-      cover: '/images/demos/oss-chat.png',
-      // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
-      lowerCaseName: 'chatbots',
+      name: t('demos.askAi.title'),
+      desc: t('demos.askAi.desc'),
+      cover: '/images/demos/ask-ai.png',
+      renderButton1: () => (
+        <InkeepCustomTriggerWrapper>
+          <CustomButton className="" variant="outlined">
+            {t('demos.askAi.ctaLabel1')}
+          </CustomButton>
+        </InkeepCustomTriggerWrapper>
+      ),
+      renderButton2: () => (
+        <CustomButton
+          href="https://zilliz.com/blog/how-inkeep-and-milvus-built-rag-driven-ai-assisstant-for-smarter-interaction"
+          variant="text"
+        >
+          {t('demos.askAi.ctaLabel2')}
+        </CustomButton>
+      ),
+      lowerCaseName: 'ask-ai',
     },
     {
       name: t('demos.chemicalSearch.title'),
@@ -68,7 +82,7 @@ export default function MilvusDemos() {
   const [dialogConfig, setDialogConfig] = useState({
     open: false,
     title: '',
-    content: () => <></>,
+    content: <></>,
   });
 
   const [snackbarConfig, setSnackbarConfig] = useState({
@@ -77,7 +91,7 @@ export default function MilvusDemos() {
     message: '',
   });
 
-  const handelOpenDialog = (content, title) => {
+  const handelOpenDialog = (content: JSX.Element, title: string) => {
     setDialogConfig({
       open: true,
       title,
@@ -87,17 +101,8 @@ export default function MilvusDemos() {
 
   const handleCloseDialog = () => {
     setDialogConfig({
+      ...dialogConfig,
       open: false,
-      title: '',
-      content: () => <></>,
-    });
-  };
-
-  const handleOpenSnackbar = ({ message, type }) => {
-    setSnackbarConfig({
-      open: true,
-      type,
-      message,
     });
   };
 
@@ -131,14 +136,9 @@ export default function MilvusDemos() {
 
         <section className={clsx(pageClasses.container, classes.demoContainer)}>
           <ul className={classes.demoList}>
-            {DEMOS.map((demo, index) => (
+            {DEMOS.map(demo => (
               <li key={demo.name}>
-                <DemoCard
-                  {...demo}
-                  index={index}
-                  handelOpenDialog={handelOpenDialog}
-                  handleOpenSnackbar={handleOpenSnackbar}
-                />
+                <DemoCard {...demo} handelOpenDialog={handelOpenDialog} />
               </li>
             ))}
           </ul>
@@ -152,7 +152,7 @@ export default function MilvusDemos() {
           root: classes.dialogRoot,
         }}
       >
-        {dialogConfig.content()}
+        {dialogConfig.content}
       </CustomizedContentDialogs>
 
       <CustomizedSnackbars

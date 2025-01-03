@@ -21,11 +21,19 @@
     "chemicalSearch": {
       "title": "Chemical Structure Search",
       "desc": "Blazing fast similarity search, substructure search, or superstructure search for a specified molecule."
+    },
+    "askAi": {
+      "title": "Milvus AI Assistant",
+      "desc": "This is an AI assistant trained with Milvus documentation, help articles, and many other resources. Ask AI anything about Milvus now.",
+      "ctaLabel1": "Ask AI",
+      "ctaLabel2": "Learn how we built it"
     }
   },
   "prompts": {
     "success": "Thank you, you have been added to our mailing list!",
     "warning": "One second! We're taking you there...",
     "waiting": "Before you go..."
-  }
+  },
+  "tryDemo": "Try Demo",
+  "watchDemo": "Watch Demo"
 }

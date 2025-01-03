@@ -27,7 +27,7 @@
   },
   "trySection": {
     "title": "Looking for a managed Milvus to minimize your ops burden?",
-    "subTitle": "Plays nicely with all your favorite AI tools"
+    "subTitle": "Plays nicely with all your favorite AI dev tools"
   },
   "lovedSection": {
     "title": "Loved by GenAI developers",
@@ -54,7 +54,7 @@
     "features": {
       "scale": {
         "title": "Scale as needed",
-        "desc": "Elastic scaling to tens of billions of vectors with distributed architecture."
+        "desc": "Scale elastically to support tens of billions of vectors with a fully distributed "
       },
       "fast": {
         "title": "Blazing fast",
@@ -73,7 +73,7 @@
         "desc": "Metadata filtering, hybrid search, multi-vector and more."
       }
     },
-    "prompt": "Want to learn more about Milvus? View our <0>documentation</0>"
+    "prompt": "Want to learn more about Milvus? <0>View our documentation</0>"
   },
   "deploySection": {
     "title": "Deployment Options to Match Your Unique Journey",
@@ -102,8 +102,8 @@
       ]
     },
     "cloud": {
-      "title": "Zilliz Cloud (fully managed Milvus)",
-      "advantage": "Hassle-free and 10x faster than Milvus",
+      "title": "Zilliz Cloud",
+      "advantage": "Fully managed with minimal operations",
       "features": [
         "Available in both serverless and dedicated cluster",
         "SaaS and BYOC options for different security and compliance requirements"
@@ -112,7 +112,7 @@
     "deployModels": "Learn more about different <0>Milvus deployment models</0>"
   },
   "developSection": {
-    "title": "Start building your GenAI app now",
+    "title": "Start Building Your GenAI App",
     "subTitle": "Guided with notebooks developed by us and our community",
     "rag": "RAG",
     "imgSearch": "Image Search",
@@ -125,7 +125,7 @@
     }
   },
   "subscribeSection": {
-    "title": "Join the community of developers building GenAI apps with Milvus, now with over <0>50 million downloads</0>",
+    "title": "Join the community of developers building GenAI apps with Milvus, now with over <0>25 million+ downloads</0>",
     "subscribe": {
       "title": "Get Milvus Updates",
       "desc": "Subscribe to get updates on the latest Milvus releases, tutorials and training from Zilliz, the creator and key maintainer of Milvus.",

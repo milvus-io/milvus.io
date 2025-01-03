@@ -13,6 +13,7 @@ import { ProductionSection } from '@/parts/home/productionSection/ProductionSect
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { getHomepageHeadline } from '@/utils/blogs';
 import classes from '@/styles/home.module.less';
+import { Community } from '@/parts/home/community';
 
 export default function Homepage(props: {
   headline: { label: string; link: string };
@@ -36,11 +37,12 @@ export default function Homepage(props: {
         {/* <TryFreeSection /> */}
         <DeploySection />
         <AIToolsSection />
-        <DevelopSection />
         <LovedSection />
         <ProductionSection />
+        <DevelopSection />
         <MeetupsSection />
         <VectorDatabaseSection />
+        <SubscribeSection />
       </main>
     </Layout>
   );

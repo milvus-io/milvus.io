@@ -52,7 +52,8 @@
       "mixCoordTip": "Mix coord is responsible for scheduling cluster background tasks, maintaining metadata topology, handling DDL, DCL, and TSO allocation.",
       "queryNodeTip": "Query node is responsible for data query and search. Tips: Allocate more resources to handle read-heavy workload. ",
       "dataNodeTip": "Data node retrieves incremental log data by subscribing to the log broker, processes mutation requests, and packs log data into log snapshots and stores them in the object storage. Tips: Allocate more resources to handle write-heavy workload.",
-      "indexNodeTip": "Index node is responsible for building indexes. The amount of resources may affect the speed of index building. You can increase or decrease this resource according to actual needs."
+      "indexNodeTip": "Index node is responsible for building indexes. The amount of resources may affect the speed of index building. You can increase or decrease this resource according to actual needs.",
+      "standaloneNode": "Standalone Node"
     },
     "dependency": {
       "title": "Dependency Components",

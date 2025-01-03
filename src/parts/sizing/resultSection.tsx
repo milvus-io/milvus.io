@@ -36,8 +36,7 @@ import {
   OPERATOR_CONFIG_FILE_NAME,
 } from '@/consts/sizing';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
-import { format } from 'path';
-import { cardClasses } from '@mui/material';
+import { MilvusComponent } from './milvusComponent';
 
 export default function ResultSection(props: {
   className?: string;
@@ -319,207 +318,15 @@ export default function ResultSection(props: {
               </CollapsibleTrigger>
 
               <CollapsibleContent>
-                <div className={classes.milvusDataDetail}>
-                  <DataCard
-                    name={
-                      <>
-                        <TooltipProvider>
-                          <Tooltip delayDuration={0}>
-                            <TooltipTrigger
-                              className={clsx(
-                                classes.dataCardName,
-                                classes.tooltipTrigger
-                              )}
-                            >
-                              {t('setup.milvus.proxy')}
-                            </TooltipTrigger>
-                            <TooltipContent
-                              sideOffset={5}
-                              className="w-[280px]"
-                            >
-                              {t('setup.milvus.proxyTip')}
-                              <TooltipArrow />
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </>
-                    }
-                    data={formatOutOfCalData({
-                      data: t('setup.basic.config', {
-                        cpu: proxy.cpu,
-                        memory: proxy.memory,
-                      }),
-                      isOut: isOutOfCalculate,
-                    })}
-                    count={formatOutOfCalData({
-                      data: proxy.count,
-                      isOut: isOutOfCalculate,
-                      isCount: true,
-                    })}
-                    classname={classes.detailCard}
-                  />
-                  <DataCard
-                    name={
-                      <>
-                        <TooltipProvider>
-                          <Tooltip delayDuration={0}>
-                            <TooltipTrigger
-                              className={clsx(
-                                classes.dataCardName,
-                                classes.tooltipTrigger
-                              )}
-                            >
-                              {t('setup.milvus.mixCoord')}
-                            </TooltipTrigger>
-                            <TooltipContent
-                              sideOffset={5}
-                              className="w-[280px]"
-                            >
-                              {t('setup.milvus.mixCoordTip')}
-                              <TooltipArrow />
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </>
-                    }
-                    data={formatOutOfCalData({
-                      data: t('setup.basic.config', {
-                        cpu: mixCoord.cpu,
-                        memory: mixCoord.memory,
-                      }),
-                      isOut: isOutOfCalculate,
-                    })}
-                    count={formatOutOfCalData({
-                      data: mixCoord.count,
-                      isOut: isOutOfCalculate,
-                      isCount: true,
-                    })}
-                    classname={classes.detailCard}
-                  />
-                  <DataCard
-                    name={
-                      <TooltipProvider>
-                        <Tooltip delayDuration={0}>
-                          <TooltipTrigger
-                            className={clsx(
-                              classes.dataCardName,
-                              classes.tooltipTrigger
-                            )}
-                          >
-                            {t('setup.milvus.dataNode')}
-                          </TooltipTrigger>
-                          <TooltipContent sideOffset={5} className="w-[280px]">
-                            {t('setup.milvus.dataNodeTip')}
-                            <TooltipArrow />
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    }
-                    data={formatOutOfCalData({
-                      data: t('setup.basic.config', {
-                        cpu: dataNode.cpu,
-                        memory: dataNode.memory,
-                      }),
-                      isOut: isOutOfCalculate,
-                    })}
-                    count={formatOutOfCalData({
-                      data: dataNode.count,
-                      isOut: isOutOfCalculate,
-                      isCount: true,
-                    })}
-                    classname={classes.detailCard}
-                  />
-                  <DataCard
-                    name={
-                      <TooltipProvider>
-                        <Tooltip delayDuration={0}>
-                          <TooltipTrigger
-                            className={clsx(
-                              classes.dataCardName,
-                              classes.tooltipTrigger
-                            )}
-                          >
-                            {t('setup.milvus.indexNode')}
-                          </TooltipTrigger>
-                          <TooltipContent sideOffset={5} className="w-[280px]">
-                            {t('setup.milvus.indexNodeTip')}
-                            <TooltipArrow />
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    }
-                    data={formatOutOfCalData({
-                      data: t('setup.basic.config', {
-                        cpu: indexNode.cpu,
-                        memory: indexNode.memory,
-                      }),
-                      isOut: isOutOfCalculate,
-                    })}
-                    count={formatOutOfCalData({
-                      data: indexNode.count,
-                      isOut: isOutOfCalculate,
-                      isCount: true,
-                    })}
-                    classname={classes.detailCard}
-                  />
-                  <DataCard
-                    name={
-                      <TooltipProvider>
-                        <Tooltip delayDuration={0}>
-                          <TooltipTrigger
-                            className={clsx(
-                              classes.dataCardName,
-                              classes.tooltipTrigger
-                            )}
-                          >
-                            {t('setup.milvus.queryNode')}
-                          </TooltipTrigger>
-                          <TooltipContent sideOffset={5} className="w-[280px]">
-                            {t('setup.milvus.queryNodeTip')}
-                            <TooltipArrow />
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    }
-                    data={formatOutOfCalData({
-                      data: t('setup.basic.config', {
-                        cpu: queryNode.cpu,
-                        memory: queryNode.memory,
-                      }),
-                      isOut: isOutOfCalculate,
-                    })}
-                    desc={
-                      diskSize > 0 ? (
-                        <Trans
-                          t={t}
-                          i18nKey="setup.milvus.diskSize"
-                          values={{
-                            size: formatOutOfCalData({
-                              data: `${diskSize} ${diskUnit}`,
-                              isOut: isOutOfCalculate,
-                            }),
-                          }}
-                          components={[
-                            <span
-                              className={classes.descLabel}
-                              key="desc-label"
-                            ></span>,
-                            <span
-                              className={classes.descValue}
-                              key="desc-value"
-                            ></span>,
-                          ]}
-                        />
-                      ) : undefined
-                    }
-                    count={formatOutOfCalData({
-                      data: queryNode.count,
-                      isOut: isOutOfCalculate,
-                      isCount: true,
-                    })}
-                    classname={classes.detailCard}
-                  />
-                </div>
+                <MilvusComponent
+                  nodeConfig={nodeConfig}
+                  isOutOfCalculate={isOutOfCalculate}
+                  diskSize={diskSize}
+                  diskUnit={diskUnit}
+                  mode={mode}
+                  rawDataSize={rawDataSize}
+                  memorySize={memorySize}
+                />
               </CollapsibleContent>
             </Collapsible>
           </div>
@@ -542,7 +349,7 @@ export default function ResultSection(props: {
                         i18nKey="setup.basic.cpuAndMemory"
                         values={{
                           cpu: formatOutOfCalData({
-                            data: `${dependencyCpuData.num}${dependencyCpuData.unit}`,
+                            data: `${dependencyCpuData.num}${dependencyCpuData.unit} C`,
                             isOut: isOutOfCalculate,
                             short: true,
                           }),

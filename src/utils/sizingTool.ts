@@ -343,8 +343,6 @@ export const dependencyCalculator = (params: {
     scalarAvg,
   });
 
-  const thresholds = [$1M768D, $10M768D, $100M768D, $1B768D];
-
   let etcdBaseConfig = {
     cpu: 0,
     memory: 0,
@@ -412,7 +410,7 @@ export const dependencyCalculator = (params: {
         count: 1,
       };
 
-      if (rawDataSize >= thresholds[0]) {
+      if (rawDataSize >= $1M768D) {
         etcdBaseConfig.memory = 2;
         minioBaseConfig.memory = 8;
         minioBaseConfig.pvc = 120;
@@ -479,7 +477,7 @@ export const dependencyCalculator = (params: {
         },
       };
 
-      if (rawDataSize >= thresholds[1] && rawDataSize <= thresholds[2]) {
+      if (rawDataSize >= $10M768D && rawDataSize <= $100M768D) {
         minioBaseConfig = {
           cpu: 1,
           memory: 8,
@@ -527,8 +525,7 @@ export const dependencyCalculator = (params: {
           },
         };
       }
-
-      if (rawDataSize >= thresholds[2] && rawDataSize < thresholds[3]) {
+      if (rawDataSize >= $100M768D && rawDataSize <= $1B768D) {
         etcdBaseConfig = {
           cpu: 1,
           memory: 8,

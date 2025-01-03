@@ -213,7 +213,7 @@ export default function ResultSection(props: {
                 isOutOfCalculate
                   ? '--'
                   : t('setup.basic.simpleCore', {
-                      cpu: `${totalCpu.num}${totalCpu.unit}`,
+                      cpu: `${totalCpu.num} ${totalCpu.unit}`,
                     })
               }
               classname={classes.summaryCard}
@@ -222,7 +222,7 @@ export default function ResultSection(props: {
             <DataCard
               name={t('setup.basic.memory')}
               data={formatOutOfCalData({
-                data: `${totalMemory.size}${totalMemory.unit}`,
+                data: `${totalMemory.size} ${totalMemory.unit}`,
                 isOut: isOutOfCalculate,
               })}
               classname={classes.summaryCard}
@@ -264,12 +264,12 @@ export default function ResultSection(props: {
                         i18nKey="setup.basic.cpuAndMemory"
                         values={{
                           cpu: formatOutOfCalData({
-                            data: `${milvusCpuData.num}${milvusCpuData.unit} C`,
+                            data: `${milvusCpuData.num} ${milvusCpuData.unit} C`,
                             isOut: isOutOfCalculate,
                             short: true,
                           }),
                           memory: formatOutOfCalData({
-                            data: `${milvusMemoryData.size}${milvusMemoryData.unit}`,
+                            data: `${milvusMemoryData.size} ${milvusMemoryData.unit}`,
                             isOut: isOutOfCalculate,
                             short: true,
                           }),

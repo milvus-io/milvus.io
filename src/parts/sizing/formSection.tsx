@@ -37,6 +37,7 @@ import {
   rawDataSizeCalculator,
   $10M768D,
   dependencyCalculator,
+  $1B768D,
 } from '@/utils/sizingTool';
 import { Trans, useTranslation } from 'react-i18next';
 import { TooltipArrow } from '@radix-ui/react-tooltip';
@@ -174,13 +175,14 @@ export default function FormSection(props: {
       scalarAvg: form.scalarData.averageNum,
     });
 
-    if (rawDataSize >= $10M768D) {
+    if (rawDataSize > $10M768D) {
       currentMode = ModeEnum.Cluster;
 
       setDisableStandalone(true);
     } else if (rawDataSize < $10M768D) {
       setDisableStandalone(false);
     }
+
     const { memory, disk: localDisk } = memoryAndDiskCalculator({
       rawDataSize,
       indexTypeParams,
@@ -212,6 +214,7 @@ export default function FormSection(props: {
       dependencyConfig: dependencyConfig,
       mode: currentMode,
       dependency: form.dependency,
+      isOutOfCalculate: rawDataSize > $1B768D,
     });
   }, [form, indexTypeParams]);
 
@@ -292,7 +295,7 @@ export default function FormSection(props: {
                   <Trans
                     t={t}
                     i18nKey="form.mmp"
-                    components={[<a href="#" key="mmp"></a>]}
+                    components={[<a href="/docs/mmap.md" key="mmp"></a>]}
                   />
                 </p>
               </div>
@@ -302,7 +305,32 @@ export default function FormSection(props: {
       </div>
       <div className={clsx(classes.singlePart, 'pb-[24px]')}>
         <div className="">
-          <h4 className={classes.commonLabel}>{t('form.indexType')}</h4>
+          <TooltipProvider>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger>
+                <h4
+                  className={clsx(classes.commonLabel, classes.tooltipTrigger)}
+                >
+                  {t('form.indexType')}
+                </h4>
+              </TooltipTrigger>
+              <TooltipContent>
+                <Trans
+                  t={t}
+                  i18nKey="form.indexTypeTip"
+                  components={[
+                    <a
+                      href="/docs/index.md?tab=floating"
+                      key="index-type"
+                      className={classes.tooltipLink}
+                    ></a>,
+                  ]}
+                />
+                <TooltipArrow></TooltipArrow>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
           <Select
             value={indexTypeParams.indexType}
             onValueChange={val => {
@@ -348,26 +376,8 @@ export default function FormSection(props: {
             </SelectContent>
           </Select>
         </div>
-        <div className={classes.marginBtm20}>
-          <h4 className={classes.commonLabel}>{t('form.dependencyComp')}</h4>
-          <div className={classes.cardsWrapper}>
-            {dependencyOptions.map(v => (
-              <button
-                className={clsx(classes.card, classes.dependencyCard, {
-                  [classes.activeCard]: form.dependency === v.value,
-                })}
-                onClick={() => {
-                  handleFormChange('dependency', v.value);
-                }}
-                key={v.label}
-              >
-                <img src={v.icon} alt={v.label} />
-                <span className={classes.depName}>{v.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className={classes.singleRow}>
+
+        <div className={clsx(classes.singleRow, classes.marginBtm20)}>
           <h4 className="">
             <TooltipProvider>
               <Tooltip delayDuration={0}>
@@ -413,8 +423,7 @@ export default function FormSection(props: {
               <TooltipProvider>
                 <Tooltip delayDuration={0}>
                   <TooltipContent className="w-[280px]" side="bottom">
-                    Don‘t support standalone mode when number of vector exceed
-                    10 Million or XXXXXXXX.
+                    {t('form.modeDisableTip')}
                     <TooltipArrow />
                   </TooltipContent>
                   <TooltipTrigger>
@@ -436,6 +445,27 @@ export default function FormSection(props: {
             </div>
           </div>
         </div>
+        {form.mode === ModeEnum.Cluster && (
+          <div>
+            <h4 className={classes.commonLabel}>{t('form.dependencyComp')}</h4>
+            <div className={classes.cardsWrapper}>
+              {dependencyOptions.map(v => (
+                <button
+                  className={clsx(classes.card, classes.dependencyCard, {
+                    [classes.activeCard]: form.dependency === v.value,
+                  })}
+                  onClick={() => {
+                    handleFormChange('dependency', v.value);
+                  }}
+                  key={v.label}
+                >
+                  <img src={v.icon} alt={v.label} />
+                  <span className={classes.depName}>{v.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -10,7 +10,12 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from '@/components/ui';
-import { ExternalLinkIcon, ArrowTop, DownloadIcon } from '@/components/icons';
+import {
+  ExternalLinkIcon,
+  ArrowTop,
+  DownloadIcon,
+  InfoFilled,
+} from '@/components/icons';
 import { ICalculateResult } from '@/types/sizing';
 import { formatNumber, unitBYTE2Any } from '@/utils/sizingTool';
 import {
@@ -18,6 +23,7 @@ import {
   dependencyOverviewDataCalculator,
   helmYmlGenerator,
   operatorYmlGenerator,
+  formatOutOfCalData,
 } from '@/utils/sizingTool';
 import { DataCard, DependencyComponent } from './dependencyComponent';
 import { Trans, useTranslation } from 'react-i18next';
@@ -30,6 +36,8 @@ import {
   OPERATOR_CONFIG_FILE_NAME,
 } from '@/consts/sizing';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
+import { format } from 'path';
+import { cardClasses } from '@mui/material';
 
 export default function ResultSection(props: {
   className?: string;
@@ -46,6 +54,7 @@ export default function ResultSection(props: {
     dependencyConfig,
     mode,
     dependency,
+    isOutOfCalculate,
   } = calculatedResult;
   const { queryNode, proxy, mixCoord, dataNode, indexNode } = nodeConfig;
 
@@ -67,6 +76,8 @@ export default function ResultSection(props: {
   const dependencyMemoryData = unitBYTE2Any(
     dependencyMemory * 1024 * 1024 * 1024
   );
+  const { size: dependencyStorageSize, unit: dependencyStorageUnit } =
+    unitBYTE2Any(dependencyStorage * 1024 * 1024 * 1024);
 
   // setup data
   const totalCpu = formatNumber(milvusCpu + dependencyCpu);
@@ -111,6 +122,25 @@ export default function ResultSection(props: {
 
   return (
     <section className={clsx(classes.resultContainer, className)}>
+      {isOutOfCalculate && (
+        <div className={classes.substantialWrapper}>
+          <InfoFilled />
+          <p className={classes.substantialTip}>
+            {
+              <Trans
+                t={t}
+                i18nKey="setup.outOfRange"
+                components={[
+                  <a
+                    href="https://zilliz.com/contact-sales"
+                    key="contact-us"
+                  ></a>,
+                ]}
+              />
+            }
+          </p>
+        </div>
+      )}
       <div className={classes.dataSection}>
         <h2 className={classes.sectionLabel}>{t('overview.title')}</h2>
         <div className={classes.flexRow}>
@@ -133,7 +163,10 @@ export default function ResultSection(props: {
                 </Tooltip>
               </TooltipProvider>
             }
-            data={`${totalRawDataSize} ${rawDataUnit}`}
+            data={formatOutOfCalData({
+              data: `${totalRawDataSize} ${rawDataUnit}`,
+              isOut: isOutOfCalculate,
+            })}
           />
           <DataCard
             name={
@@ -154,15 +187,21 @@ export default function ResultSection(props: {
                 </Tooltip>
               </TooltipProvider>
             }
-            data={`${totalLoadingMemorySize} ${memoryUnit}`}
+            data={formatOutOfCalData({
+              data: `${totalLoadingMemorySize} ${memoryUnit}`,
+              isOut: isOutOfCalculate,
+            })}
           />
         </div>
       </div>
       <div className="">
         <div className={classes.sectionLabelBar}>
           <h2 className={classes.title}>{t('setup.title')}</h2>
-          <a className={classes.buttonWrapper} href="#">
-            <span className="">{t('setup.share')}</span>
+          <a
+            className={classes.buttonWrapper}
+            href="https://zilliz.com/pricing#calculator"
+          >
+            <span className="">{t('setup.cloud')}</span>
             <ExternalLinkIcon />
           </a>
         </div>
@@ -171,27 +210,40 @@ export default function ResultSection(props: {
           <div className={classes.dataSummary}>
             <DataCard
               name={t('setup.basic.cpu')}
-              data={t('setup.basic.simpleCore', {
-                cpu: `${totalCpu.num}${totalCpu.unit}`,
-              })}
+              data={
+                isOutOfCalculate
+                  ? '--'
+                  : t('setup.basic.simpleCore', {
+                      cpu: `${totalCpu.num}${totalCpu.unit}`,
+                    })
+              }
               classname={classes.summaryCard}
               size="large"
             />
             <DataCard
               name={t('setup.basic.memory')}
-              data={`${totalMemory.size}${totalMemory.unit}`}
+              data={formatOutOfCalData({
+                data: `${totalMemory.size}${totalMemory.unit}`,
+                isOut: isOutOfCalculate,
+              })}
               classname={classes.summaryCard}
               size="large"
             />
             <DataCard
               name={t('setup.basic.storage')}
-              data={t('setup.basic.gb', { memory: dependencyStorage })}
+              data={formatOutOfCalData({
+                data: `${dependencyStorageSize} ${dependencyStorageUnit}`,
+                isOut: isOutOfCalculate,
+              })}
               classname={classes.summaryCard}
               size="large"
             />
             <DataCard
               name={t('setup.basic.disk')}
-              data={`${diskSize} ${diskUnit}`}
+              data={formatOutOfCalData({
+                data: `${diskSize} ${diskUnit}`,
+                isOut: isOutOfCalculate,
+              })}
               classname={classes.summaryCard}
               size="large"
             />
@@ -212,8 +264,16 @@ export default function ResultSection(props: {
                         t={t}
                         i18nKey="setup.basic.cpuAndMemory"
                         values={{
-                          cpu: `${milvusCpuData.num}${milvusCpuData.unit}`,
-                          memory: `${milvusMemoryData.size}${milvusMemoryData.unit}`,
+                          cpu: formatOutOfCalData({
+                            data: `${milvusCpuData.num}${milvusCpuData.unit} C`,
+                            isOut: isOutOfCalculate,
+                            short: true,
+                          }),
+                          memory: formatOutOfCalData({
+                            data: `${milvusMemoryData.size}${milvusMemoryData.unit}`,
+                            isOut: isOutOfCalculate,
+                            short: true,
+                          }),
                         }}
                         components={[
                           <span
@@ -228,8 +288,16 @@ export default function ResultSection(props: {
                         t={t}
                         i18nKey="setup.basic.diskWithValue"
                         values={{
-                          disk: diskSize,
-                          unit: diskUnit,
+                          disk: formatOutOfCalData({
+                            data: diskSize,
+                            isOut: isOutOfCalculate,
+                            short: true,
+                          }),
+                          unit: formatOutOfCalData({
+                            data: diskUnit,
+                            isOut: isOutOfCalculate,
+                            short: true,
+                          }),
                         }}
                         components={[
                           <span
@@ -276,11 +344,18 @@ export default function ResultSection(props: {
                         </TooltipProvider>
                       </>
                     }
-                    data={t('setup.basic.config', {
-                      cpu: proxy.cpu,
-                      memory: proxy.memory,
+                    data={formatOutOfCalData({
+                      data: t('setup.basic.config', {
+                        cpu: proxy.cpu,
+                        memory: proxy.memory,
+                      }),
+                      isOut: isOutOfCalculate,
                     })}
-                    count={proxy.count}
+                    count={formatOutOfCalData({
+                      data: proxy.count,
+                      isOut: isOutOfCalculate,
+                      isCount: true,
+                    })}
                     classname={classes.detailCard}
                   />
                   <DataCard
@@ -307,11 +382,18 @@ export default function ResultSection(props: {
                         </TooltipProvider>
                       </>
                     }
-                    data={t('setup.basic.config', {
-                      cpu: mixCoord.cpu,
-                      memory: mixCoord.memory,
+                    data={formatOutOfCalData({
+                      data: t('setup.basic.config', {
+                        cpu: mixCoord.cpu,
+                        memory: mixCoord.memory,
+                      }),
+                      isOut: isOutOfCalculate,
                     })}
-                    count={mixCoord.count}
+                    count={formatOutOfCalData({
+                      data: mixCoord.count,
+                      isOut: isOutOfCalculate,
+                      isCount: true,
+                    })}
                     classname={classes.detailCard}
                   />
                   <DataCard
@@ -333,11 +415,18 @@ export default function ResultSection(props: {
                         </Tooltip>
                       </TooltipProvider>
                     }
-                    data={t('setup.basic.config', {
-                      cpu: dataNode.cpu,
-                      memory: dataNode.memory,
+                    data={formatOutOfCalData({
+                      data: t('setup.basic.config', {
+                        cpu: dataNode.cpu,
+                        memory: dataNode.memory,
+                      }),
+                      isOut: isOutOfCalculate,
                     })}
-                    count={dataNode.count}
+                    count={formatOutOfCalData({
+                      data: dataNode.count,
+                      isOut: isOutOfCalculate,
+                      isCount: true,
+                    })}
                     classname={classes.detailCard}
                   />
                   <DataCard
@@ -359,11 +448,18 @@ export default function ResultSection(props: {
                         </Tooltip>
                       </TooltipProvider>
                     }
-                    data={t('setup.basic.config', {
-                      cpu: indexNode.cpu,
-                      memory: indexNode.memory,
+                    data={formatOutOfCalData({
+                      data: t('setup.basic.config', {
+                        cpu: indexNode.cpu,
+                        memory: indexNode.memory,
+                      }),
+                      isOut: isOutOfCalculate,
                     })}
-                    count={indexNode.count}
+                    count={formatOutOfCalData({
+                      data: indexNode.count,
+                      isOut: isOutOfCalculate,
+                      isCount: true,
+                    })}
                     classname={classes.detailCard}
                   />
                   <DataCard
@@ -385,28 +481,42 @@ export default function ResultSection(props: {
                         </Tooltip>
                       </TooltipProvider>
                     }
-                    data={t('setup.basic.config', {
-                      cpu: queryNode.cpu,
-                      memory: queryNode.memory,
+                    data={formatOutOfCalData({
+                      data: t('setup.basic.config', {
+                        cpu: queryNode.cpu,
+                        memory: queryNode.memory,
+                      }),
+                      isOut: isOutOfCalculate,
                     })}
                     desc={
-                      <Trans
-                        t={t}
-                        i18nKey="setup.milvus.diskSize"
-                        values={{ size: `${diskSize} ${diskUnit}` }}
-                        components={[
-                          <span
-                            className={classes.descLabel}
-                            key="desc-label"
-                          ></span>,
-                          <span
-                            className={classes.descValue}
-                            key="desc-value"
-                          ></span>,
-                        ]}
-                      />
+                      diskSize > 0 ? (
+                        <Trans
+                          t={t}
+                          i18nKey="setup.milvus.diskSize"
+                          values={{
+                            size: formatOutOfCalData({
+                              data: `${diskSize} ${diskUnit}`,
+                              isOut: isOutOfCalculate,
+                            }),
+                          }}
+                          components={[
+                            <span
+                              className={classes.descLabel}
+                              key="desc-label"
+                            ></span>,
+                            <span
+                              className={classes.descValue}
+                              key="desc-value"
+                            ></span>,
+                          ]}
+                        />
+                      ) : undefined
                     }
-                    count={queryNode.count}
+                    count={formatOutOfCalData({
+                      data: queryNode.count,
+                      isOut: isOutOfCalculate,
+                      isCount: true,
+                    })}
                     classname={classes.detailCard}
                   />
                 </div>
@@ -431,8 +541,16 @@ export default function ResultSection(props: {
                         t={t}
                         i18nKey="setup.basic.cpuAndMemory"
                         values={{
-                          cpu: `${dependencyCpuData.num}${dependencyCpuData.unit}`,
-                          memory: `${dependencyMemoryData.size}${dependencyMemoryData.unit}`,
+                          cpu: formatOutOfCalData({
+                            data: `${dependencyCpuData.num}${dependencyCpuData.unit}`,
+                            isOut: isOutOfCalculate,
+                            short: true,
+                          }),
+                          memory: formatOutOfCalData({
+                            data: `${dependencyMemoryData.size}${dependencyMemoryData.unit}`,
+                            isOut: isOutOfCalculate,
+                            short: true,
+                          }),
                         }}
                         components={[
                           <span
@@ -447,7 +565,10 @@ export default function ResultSection(props: {
                         t={t}
                         i18nKey="setup.basic.storageWithValue"
                         values={{
-                          storage: dependencyStorage,
+                          size: formatOutOfCalData({
+                            data: `${dependencyStorageSize} ${dependencyStorageUnit}`,
+                            isOut: isOutOfCalculate,
+                          }),
                         }}
                         components={[
                           <span
@@ -473,6 +594,7 @@ export default function ResultSection(props: {
                   dependency={dependency}
                   mode={mode}
                   data={dependencyConfig}
+                  isOutOfCalculate={isOutOfCalculate}
                 />
               </CollapsibleContent>
             </Collapsible>
@@ -483,12 +605,16 @@ export default function ResultSection(props: {
           <h2 className={classes.sectionTitle}>{t('install.title')}</h2>
           <div className="mb-[16px]">
             <CustomButton
+              disabled={isOutOfCalculate}
               variant="outlined"
               startIcon={<DownloadIcon />}
               classes={{
                 root: classes.installButton,
               }}
               onClick={() => {
+                if (isOutOfCalculate) {
+                  return;
+                }
                 handleDownloadConfigFile('helm');
               }}
             >
@@ -503,12 +629,16 @@ export default function ResultSection(props: {
           </div>
           <div className="mb-[40px]">
             <CustomButton
+              disabled={isOutOfCalculate}
               variant="outlined"
               startIcon={<DownloadIcon />}
               classes={{
                 root: classes.installButton,
               }}
               onClick={() => {
+                if (isOutOfCalculate) {
+                  return;
+                }
                 handleDownloadConfigFile('operator');
               }}
             >
@@ -527,19 +657,6 @@ export default function ResultSection(props: {
               t={t}
               i18nKey="install.adv2"
               components={[<a href="#" key="vdb-guidance"></a>]}
-            />
-          </div>
-
-          <div className={classes.advCard}>
-            <Trans
-              t={t}
-              i18nKey="install.adv"
-              components={[
-                <a
-                  href="https://zilliz.com/pricing"
-                  key="pricing-calculator"
-                ></a>,
-              ]}
             />
           </div>
         </div>

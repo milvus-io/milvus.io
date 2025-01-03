@@ -117,6 +117,7 @@ export default function SizingTool() {
     },
     mode: ModeEnum.Standalone,
     dependency: DependencyComponentEnum.Pulsar,
+    isOutOfCalculate: false,
   });
 
   const updateCalculatedResult = (result: ICalculateResult) => {

@@ -88,4 +88,5 @@ export interface ICalculateResult {
   dependencyConfig: DependencyConfigType;
   mode: ModeEnum;
   dependency: DependencyComponentEnum;
+  isOutOfCalculate: boolean;
 }

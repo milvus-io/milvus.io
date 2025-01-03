@@ -93,7 +93,7 @@ const Footer = (props: Props) => {
   const { t } = useTranslation('common', { lng: lang });
 
   return (
-    <footer className="min-h-[390px] box-border bg-[#fff] border-t-[1px] border-solid border-[#ECECEE]">
+    <footer className="min-h-[390px] box-border bg-[#fff] border-t-[1px] border-solid border-[#ECECEE] font-mono">
       <div
         className={clsx(
           'max-w-[1440px] mx-auto px-[48px] py-[80px] md:px-[135px] lg:px-[80px] xl:px-[135px]',

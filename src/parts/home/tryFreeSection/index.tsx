@@ -109,7 +109,7 @@ export const AIToolsSection = () => {
               >
                 <img src={tool.logo} alt={tool.name} />
                 <div className="inline-flex items-center opacity-0 group-hover:opacity-100 gap-[4px] transition-opacity">
-                  <span className="text-black1 text-[14px] font-[500]">
+                  <span className="text-black1 text-[14px] font-[500] font-mono">
                     {tool.name}
                   </span>
                   <RightWholeArrow />

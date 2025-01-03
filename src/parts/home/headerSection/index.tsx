@@ -25,11 +25,11 @@ export default function HomePageHeaderSection(props: {
     >
       <div className={pageClasses.homeContainer}>
         <div className="flex items-center gap-[8px] justify-center mb-[12px]">
-          <p className="px-[8px] py-[2px] box-border border-[1px] rounded-[8px] border-[rgba(0,179,255,0.30)] border-solid bg-[#00B3FF]/[0.15] text-[12px] font-[500] leading-[18px]">
+          <p className="px-[8px] py-[2px] box-border border-[1px] rounded-[8px] border-[rgba(0,179,255,0.30)] border-solid bg-[#00B3FF]/[0.15] text-[12px] font-mono font-[500] leading-[18px]">
             {t('news')}
           </p>
           <Link
-            className="text-black2 text-[12px] leading-[18px] hover:underline"
+            className="text-black2 text-[12px] leading-[18px] hover:underline font-mono"
             href={link}
           >
             {label}
@@ -45,7 +45,7 @@ export default function HomePageHeaderSection(props: {
             ]}
           />
         </h1>
-        <p className="w-full max-w-[745px] text-black2 text-[18px] max-tablet:text-[16px] leading-[26px] max-tablet:leading-[22px] mb-[40px] mx-auto text-center">
+        <p className="w-full max-w-[900px] text-black2 text-[18px] max-tablet:text-[16px] leading-[26px] max-tablet:leading-[22px] mb-[40px] mx-auto text-center font-mono">
           {t('subTitle')}
         </p>
 

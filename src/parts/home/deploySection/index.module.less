@@ -125,17 +125,24 @@
       flex: 1;
     }
     .dbAdvantage {
-      .paragraph3();
+      .paragraph2();
+      font-family: 'Geist Mono';
       margin-bottom: 12px;
+      height: 54px;
     }
 
     .dbFeatures {
       list-style-type: disc;
-      padding-left: 24px;
+      padding-left: 20px;
+      font-family: 'Geist Mono';
 
       li {
         .paragraph3-regular();
         color: @color-black2;
+
+        &::marker {
+          font-size: 10px;
+        }
       }
     }
 
@@ -147,7 +154,12 @@
     }
 
     .startLinkButton {
-      padding: 8px 28px;
+      padding: 12px 20px;
+      line-height: 14px;
+    }
+
+    .linkButton {
+      padding: 0;
     }
 
     .containedLinkButton {
@@ -172,15 +184,14 @@
     background-color: #fff;
     border-radius: 12px;
     border: 1px solid @color-black4;
-    max-width: 416px;
+    max-width: 479px;
     margin: 0 auto;
+    font-family: 'Geist Mono';
+    font-weight: 500;
 
     a {
       color: @color-blue2;
-
-      &:hover {
-        text-decoration: underline;
-      }
+      text-decoration: underline;
     }
   }
 }

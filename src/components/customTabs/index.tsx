@@ -75,6 +75,7 @@ export default function CustomTabs(props: CustomTabsProps) {
           className={clsx(classes.tabItem, tabItem, 'tab-item', {
             [classes.active]: tab.id === activeTab,
           })}
+          style={{ width: tab.width }}
           key={tab.id}
           data-id={tab.id}
         >

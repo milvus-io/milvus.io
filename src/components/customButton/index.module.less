@@ -46,6 +46,19 @@
       background-color: @color-white1;
     }
   }
+  &.disabledButton {
+    border-color: #e4eaf1;
+    color: #ccc;
+    cursor: not-allowed;
+
+    svg path {
+      fill: #ccc;
+    }
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
 }
 
 .text {
@@ -71,7 +84,4 @@
 .largeSize {
   padding: 14px 32px;
   border-radius: 10px;
-}
-
-.disabledButton {
 }

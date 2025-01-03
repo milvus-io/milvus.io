@@ -10,7 +10,9 @@
     "offloading": "Offloading Fields to Disk",
     "mmp": "Milvus uses <0>Mmap</0> to enable direct memory access to large files on disk without reading the entire files into memory.",
     "indexType": "Index Type",
+    "indexTypeTip": "How to choose vector index? <0>Learn more</0>.",
     "indexParam": "Index Parameters",
+    "indexParamTip": "How to set proper index parameters? <0>learn more details</0>.",
     "withRawData": "with_raw_data",
     "m": "m(maximum degree of the node)",
     "nlist": "nlist",
@@ -18,14 +20,14 @@
     "segmentSize": "Segment Size",
     "dependencyComp": "Dependency Component",
     "mode": "Mode",
-    "modeTip": "With data growth, you can migrate data from standalone mode to cluster mode. <0>View More</0>",
-    "modeDisableTip": "Don‘t support standalone mode when number of vector exceed 10 Million or XXXXXXXX.",
+    "modeTip": "With data growth, you can migrate data from standalone mode to cluster mode. <0>View More</0>.",
+    "modeDisableTip": "For large data sizes, it is recommended to use cluster mode deployment to achieve better performance and scalability.",
     "pulsar": "Pulsar",
     "kafka": "Kafka",
     "standalone": "Standalone",
     "standaloneDesc": "Suitable for small data size and poc env.",
     "cluster": "Cluster",
-    "clusterDesc": "Suitable for large datasize and production env. "
+    "clusterDesc": "Suitable for large data size and production env. "
   },
   "overview": {
     "title": "Data Size Calculation",
@@ -36,7 +38,8 @@
   },
   "setup": {
     "title": "Setup Resource Requirements",
-    "share": "Scaling cluster or dependencies",
+    "cloud": "Try Zilliz Cloud Calculator",
+    "outOfRange": "Your data volume is substantial. Please <0>contact us</0> to explore the best deployment practices.",
     "milvus": {
       "title": "Milvus Components",
       "proxy": "Proxy",
@@ -65,15 +68,15 @@
       "apacheTip": "Please mount a high-performance storage drive(NVMe SSD) for Bookie.Journal and Zookeeper to ensure optimal performance."
     },
     "basic": {
-      "cpuAndMemory": "CPU and Memory: <0>{{cpu}} C {{memory}}</0>",
-      "storageWithValue": "Storage: <0>{{storage}} GB</0>",
+      "cpuAndMemory": "CPU and Memory: <0>{{cpu}} {{memory}}</0>",
+      "storageWithValue": "Storage: <0>{{size}}</0>",
       "diskWithValue": "Local Disk: <0>{{disk}} {{unit}}</0>",
       "cpu": "CPU",
       "memory": "Memory",
       "disk": "Local Disk",
       "storage": "Storage",
       "podNum": "Pod Number",
-      "pvc": "Pvc per Pod: <0>{{pvc}} GB</0>",
+      "pvc": "Pvc per Pod: <0>{{pvc}}</0>",
       "pvcLabel": "Pvc per Pod",
       "journal": "Journal",
       "ledger": "Ledgers",

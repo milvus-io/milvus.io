@@ -1,5 +1,13 @@
 import { IIndexType, IndexTypeEnum } from '@/types/sizing';
-import { RadioGroupItem, RadioGroup } from '@/components/ui';
+import {
+  RadioGroupItem,
+  RadioGroup,
+  TooltipProvider,
+  TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipArrow,
+} from '@/components/ui';
 import classes from './index.module.less';
 import clsx from 'clsx';
 import { SizingRange } from '@/components/sizing';
@@ -8,7 +16,7 @@ import {
   N_LIST_RANGE_CONFIG,
   M_RANGE_CONFIG,
 } from '@/consts/sizing';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 type IndexTypeComponentProps = {
   data: IIndexType;
@@ -21,9 +29,36 @@ const SCANNComponent = (props: IndexTypeComponentProps) => {
 
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexParam')}
-      </p>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <p
+              className={clsx(
+                classes.smallerLabel,
+                classes.tooltipTrigger,
+                'mb-[8px]'
+              )}
+            >
+              {t('form.indexParam')}
+            </p>
+          </TooltipTrigger>
+          <TooltipContent className="w-[240px]">
+            <Trans
+              t={t}
+              i18nKey="form.indexParamTip"
+              components={[
+                <a
+                  href="/docs/index-vector-fields.md#Index-Vector-Fields"
+                  className={classes.tooltipLink}
+                  key="index-parameters"
+                ></a>,
+              ]}
+            />
+            <TooltipArrow />
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       <p className={clsx(classes.indexParamLabel, 'mb-[8px]')}>
         {t('form.withRawData')}
       </p>
@@ -52,9 +87,35 @@ const HNSWComponent = (props: IndexTypeComponentProps) => {
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexParam')}
-      </p>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <p
+              className={clsx(
+                classes.smallerLabel,
+                classes.tooltipTrigger,
+                'mb-[8px]'
+              )}
+            >
+              {t('form.indexParam')}
+            </p>
+          </TooltipTrigger>
+          <TooltipContent className="w-[240px]">
+            <Trans
+              t={t}
+              i18nKey="form.indexParamTip"
+              components={[
+                <a
+                  href="/docs/index-vector-fields.md#Index-Vector-Fields"
+                  className={classes.tooltipLink}
+                  key="index-parameters"
+                ></a>,
+              ]}
+            />
+            <TooltipArrow />
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <p className={clsx(classes.indexParamLabel)}>{t('form.m')}</p>
       <SizingRange
         rangeConfig={M_RANGE_CONFIG}
@@ -73,9 +134,35 @@ const DISKANNComponent = (props: IndexTypeComponentProps) => {
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexParam')}
-      </p>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <p
+              className={clsx(
+                classes.smallerLabel,
+                classes.tooltipTrigger,
+                'mb-[8px]'
+              )}
+            >
+              {t('form.indexParam')}
+            </p>
+          </TooltipTrigger>
+          <TooltipContent className="w-[240px]">
+            <Trans
+              t={t}
+              i18nKey="form.indexParamTip"
+              components={[
+                <a
+                  href="/docs/index-vector-fields.md#Index-Vector-Fields"
+                  className={classes.tooltipLink}
+                  key="index-parameters"
+                ></a>,
+              ]}
+            />
+            <TooltipArrow />
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <p className={clsx(classes.indexParamLabel)}>{t('form.maxDegree')}</p>
       <SizingRange
         rangeConfig={MAX_NODE_DEGREE_RANGE_CONFIG}
@@ -94,9 +181,35 @@ const IVFFlatComponent = (props: IndexTypeComponentProps) => {
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexParam')}
-      </p>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <p
+              className={clsx(
+                classes.smallerLabel,
+                classes.tooltipTrigger,
+                'mb-[8px]'
+              )}
+            >
+              {t('form.indexParam')}
+            </p>
+          </TooltipTrigger>
+          <TooltipContent className="w-[240px]">
+            <Trans
+              t={t}
+              i18nKey="form.indexParamTip"
+              components={[
+                <a
+                  href="/docs/index-vector-fields.md#Index-Vector-Fields"
+                  className={classes.tooltipLink}
+                  key="index-parameters"
+                ></a>,
+              ]}
+            />
+            <TooltipArrow />
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <p className={clsx(classes.indexParamLabel)}>{t('form.nlist')}</p>
       <SizingRange
         rangeConfig={N_LIST_RANGE_CONFIG}
@@ -115,9 +228,35 @@ const IVFSQ8Component = (props: IndexTypeComponentProps) => {
   const { data, onChange } = props;
   return (
     <div className="mt-[20px]">
-      <p className={clsx(classes.smallerLabel, 'mb-[8px]')}>
-        {t('form.indexParam')}
-      </p>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <p
+              className={clsx(
+                classes.smallerLabel,
+                classes.tooltipTrigger,
+                'mb-[8px]'
+              )}
+            >
+              {t('form.indexParam')}
+            </p>
+          </TooltipTrigger>
+          <TooltipContent className="w-[240px]">
+            <Trans
+              t={t}
+              i18nKey="form.indexParamTip"
+              components={[
+                <a
+                  href="/docs/index-vector-fields.md#Index-Vector-Fields"
+                  className={classes.tooltipLink}
+                  key="index-parameters"
+                ></a>,
+              ]}
+            />
+            <TooltipArrow />
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <p className={clsx(classes.indexParamLabel)}>{t('form.nlist')}</p>
       <SizingRange
         rangeConfig={N_LIST_RANGE_CONFIG}

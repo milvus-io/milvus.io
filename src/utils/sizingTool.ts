@@ -96,6 +96,19 @@ export const formatNumber = (num: number) => {
   };
 };
 
+export const formatOutOfCalData = <T>(params: {
+  data: T;
+  isOut: boolean;
+  short?: boolean;
+  isCount?: boolean;
+}) => {
+  const { data, isOut, short, isCount } = params;
+  if (isOut) {
+    return short ? '-' : isCount ? '0' : '--';
+  }
+  return data;
+};
+
 // raw data size calculator
 export const rawDataSizeCalculator = (params: {
   num: number;
@@ -129,7 +142,7 @@ const $100M768D = rawDataSizeCalculator({
   withScalar: false,
   scalarAvg: 0,
 });
-const $1B768D = rawDataSizeCalculator({
+export const $1B768D = rawDataSizeCalculator({
   num: 1000,
   d: 768,
   withScalar: false,
@@ -466,7 +479,7 @@ export const dependencyCalculator = (params: {
         },
       };
 
-      if (rawDataSize >= thresholds[1] && rawDataSize < thresholds[2]) {
+      if (rawDataSize >= thresholds[1] && rawDataSize <= thresholds[2]) {
         minioBaseConfig = {
           cpu: 1,
           memory: 8,

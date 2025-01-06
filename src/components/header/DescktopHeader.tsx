@@ -104,7 +104,7 @@ export default function DesktopHeader(props: Props) {
                           className="group-hover:rotate-180 transition-transform"
                         />
                       </button>
-                      <ul className="flex flex-col items-stretch gap-[4px] bg-white py-[8px] absolute invisible -z-10 opacity-0 rounded-[4px] list-none shadow-nav-menu transition group-hover:visible group-hover:z-10 group-hover:opacity-100 ">
+                      <ul className="flex flex-col items-stretch gap-[4px] bg-white py-[8px] absolute invisible -z-10 opacity-0 rounded-[4px] list-none shadow-nav-menu transition group-hover:visible group-hover:z-10 group-hover:opacity-100 top-[33px]">
                         {config.list.map(item => (
                           <li key={item.label}>
                             <Link

@@ -33,7 +33,6 @@ export default function Homepage(props: {
         </Head>
         <HomePageHeaderSection {...headline} />
         <CodeExampleSection />
-        {/* <TryFreeSection /> */}
         <DeploySection />
         <AIToolsSection />
         <LovedSection />
@@ -41,7 +40,6 @@ export default function Homepage(props: {
         <DevelopSection />
         <MeetupsSection />
         <VectorDatabaseSection />
-        <SubscribeSection />
       </main>
     </Layout>
   );

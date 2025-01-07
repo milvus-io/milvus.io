@@ -56,8 +56,8 @@ export const useInkeepSettings = (): InkeepSharedSettings => {
       },
     ],
     quickQuestions: [
-      'How to use Milvus lite?',
-      "What's new in Milvus 2.4?",
+      "What's new in Milvus 2.5?",
+      'How to use full text search in Milvus?',
       'How do I perform hybrid search and how does it work?',
     ],
   };

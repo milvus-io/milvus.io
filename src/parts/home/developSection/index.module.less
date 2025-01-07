@@ -84,6 +84,12 @@
       border-radius: 50%;
       background-color: #fff;
 
+      &:not(:disabled):hover {
+        svg {
+          opacity: 0.5!important;
+        }
+      }
+
       &:disabled {
         background-color: @color-black4;
       }

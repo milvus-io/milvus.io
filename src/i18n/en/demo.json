@@ -23,8 +23,8 @@
       "desc": "Blazing fast similarity search, substructure search, or superstructure search for a specified molecule."
     },
     "askAi": {
-      "title": "Milvus AI Assistant",
-      "desc": "This is an AI assistant trained with Milvus documentation, help articles, and many other resources. Ask AI anything about Milvus now.",
+      "title": "Retrieval-Augmented Generation (RAG)",
+      "desc": "Ask AI is a RAG chatbot for Milvus documentation and help articles. The vector database powering retrieval is Zilliz Cloud (fully-managed Milvus).",
       "ctaLabel1": "Ask AI",
       "ctaLabel2": "Learn how we built it"
     }

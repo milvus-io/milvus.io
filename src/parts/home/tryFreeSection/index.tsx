@@ -108,7 +108,7 @@ export const AIToolsSection = () => {
                 className={clsx(classes.toolButton, 'group')}
               >
                 <img src={tool.logo} alt={tool.name} />
-                <div className="inline-flex items-center gap-[4px] transition-opacity">
+                <div className="inline-flex items-center gap-[4px] transition-opacity group-hover:opacity-60">
                   <span className="text-black1 text-[14px] font-[500] font-mono">
                     {tool.name}
                   </span>

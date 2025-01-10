@@ -26,30 +26,6 @@ export default function MilvusDemos() {
 
   const DEMOS = [
     {
-      name: t('demos.multimodal.title'),
-      desc: t('demos.multimodal.desc'),
-      href: DEMO_MULTIMODAL_SEARCH_URL,
-      cover: '/images/demos/multimodal-image-search.png',
-      lowerCaseName: 'multimodal image search',
-    },
-    {
-      name: t('demos.imgSearch.title'),
-      desc: t('demos.imgSearch.desc'),
-      // link: 'http://35.166.123.214:8004/#/',
-      href: '/milvus-demos/reverse-image-search',
-      cover: '/images/demos/image-search.png',
-      videoSrc: 'https://www.youtube.com/watch?v=hkU9hJnhGsU',
-      lowerCaseName: 'image search',
-    },
-    {
-      name: t('demos.hybridSearch.title'),
-      desc: t('demos.hybridSearch.desc'),
-      href: DEMO_HYBRID_SEARCH_URL,
-      cover: '/images/demos/hybrid-search.png',
-      // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
-      lowerCaseName: 'hybrid search',
-    },
-    {
       name: t('demos.askAi.title'),
       desc: t('demos.askAi.desc'),
       cover: '/images/demos/ask-ai.png',
@@ -70,6 +46,30 @@ export default function MilvusDemos() {
         </CustomButton>
       ),
       lowerCaseName: 'ask-ai',
+    },
+    {
+      name: t('demos.multimodal.title'),
+      desc: t('demos.multimodal.desc'),
+      href: DEMO_MULTIMODAL_SEARCH_URL,
+      cover: '/images/demos/multimodal-image-search.png',
+      lowerCaseName: 'multimodal image search',
+    },
+    {
+      name: t('demos.hybridSearch.title'),
+      desc: t('demos.hybridSearch.desc'),
+      href: DEMO_HYBRID_SEARCH_URL,
+      cover: '/images/demos/hybrid-search.png',
+      // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
+      lowerCaseName: 'hybrid search',
+    },
+    {
+      name: t('demos.imgSearch.title'),
+      desc: t('demos.imgSearch.desc'),
+      // link: 'http://35.166.123.214:8004/#/',
+      href: '/milvus-demos/reverse-image-search',
+      cover: '/images/demos/image-search.png',
+      videoSrc: 'https://www.youtube.com/watch?v=hkU9hJnhGsU',
+      lowerCaseName: 'image search',
     },
     {
       name: t('demos.chemicalSearch.title'),

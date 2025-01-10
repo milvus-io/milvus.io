@@ -281,7 +281,7 @@ export const DependencyComponent = (props: {
                 {t('setup.dependency.kafka')}
               </TooltipTrigger>
               <TooltipContent sideOffset={5} className="w-[280px]">
-                {t('setup.dependency.apacheTip')}
+                {t('setup.dependency.kafkaTip')}
                 <TooltipArrow />
               </TooltipContent>
             </Tooltip>

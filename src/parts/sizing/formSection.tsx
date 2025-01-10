@@ -33,11 +33,12 @@ import { ICalculateResult, IIndexType, ModeEnum } from '@/types/sizing';
 import { IndexTypeComponent } from './indexTypeComponent';
 import {
   memoryAndDiskCalculator,
-  nodesConfigCalculator,
   rawDataSizeCalculator,
   $10M768D,
   dependencyCalculator,
   $1B768D,
+  clusterNodesConfigCalculator,
+  standaloneNodeConfigCalculator,
 } from '@/utils/sizingTool';
 import { Trans, useTranslation } from 'react-i18next';
 import { TooltipArrow } from '@radix-ui/react-tooltip';
@@ -99,6 +100,10 @@ export default function FormSection(props: {
     }
     if (lengthString === '') {
       lengthNum = 0;
+    }
+
+    if (Number(lengthString) > MAXIMUM_AVERAGE_LENGTH) {
+      lengthString = `${MAXIMUM_AVERAGE_LENGTH}`;
     }
     length = Math.min(length, MAXIMUM_AVERAGE_LENGTH);
     setForm({
@@ -192,9 +197,14 @@ export default function FormSection(props: {
       offLoading: form.scalarData.offLoading,
       scalarAvg: form.scalarData.averageNum,
       segSize: Number(form.segmentSize),
+      mode: currentMode,
     });
 
-    const nodeConfig = nodesConfigCalculator({
+    const standaloneNodeConfig = standaloneNodeConfigCalculator({
+      memory: memory,
+    });
+
+    const clusterNodeConfig = clusterNodesConfigCalculator({
       memory: memory,
     });
 
@@ -210,7 +220,8 @@ export default function FormSection(props: {
       rawDataSize,
       memorySize: memory,
       localDiskSize: localDisk,
-      nodeConfig: nodeConfig,
+      clusterNodeConfig,
+      standaloneNodeConfig,
       dependencyConfig: dependencyConfig,
       mode: currentMode,
       dependency: form.dependency,
@@ -392,7 +403,7 @@ export default function FormSection(props: {
                     i18nKey="form.modeTip"
                     components={[
                       <a
-                        href="#"
+                        href="/docs/multi-storage-backup-and-restore.md"
                         key="mode-tip"
                         className={classes.tooltipLink}
                       ></a>,

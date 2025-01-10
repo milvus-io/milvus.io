@@ -104,10 +104,14 @@ export const SizingRange = (props: SizingRangePropsType) => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
+    let inputValue = e.target.value;
     let value = Number(inputValue); // range value
     if (isNaN(value)) {
       return;
+    }
+
+    if (value > rangeConfig.max) {
+      inputValue = `${rangeConfig.max}`;
     }
 
     value =
@@ -122,7 +126,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
     setInitValue({
       rangeValue: value,
       domainValue,
-      inputValue,
+      inputValue: inputValue,
     });
     onRangeChange(value);
   };

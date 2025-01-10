@@ -49,13 +49,15 @@ export default function ResultSection(props: {
     rawDataSize,
     memorySize,
     localDiskSize,
-    nodeConfig,
+    clusterNodeConfig,
+    standaloneNodeConfig,
     dependencyConfig,
     mode,
     dependency,
     isOutOfCalculate,
   } = calculatedResult;
-  const { queryNode, proxy, mixCoord, dataNode, indexNode } = nodeConfig;
+
+  const { queryNode, proxy, mixCoord, dataNode, indexNode } = clusterNodeConfig;
 
   // Approximate Capacity
   const { size: totalRawDataSize, unit: rawDataUnit } =
@@ -64,7 +66,11 @@ export default function ResultSection(props: {
     unitBYTE2Any(memorySize);
 
   // milvus data
-  const { milvusCpu, milvusMemory } = milvusOverviewDataCalculator(nodeConfig);
+  const { milvusCpu, milvusMemory } = milvusOverviewDataCalculator({
+    clusterNodeConfig,
+    standaloneNodeConfig,
+    mode,
+  });
   const milvusCpuData = formatNumber(milvusCpu);
   const milvusMemoryData = unitBYTE2Any(milvusMemory * 1024 * 1024 * 1024);
 
@@ -319,7 +325,8 @@ export default function ResultSection(props: {
 
               <CollapsibleContent>
                 <MilvusComponent
-                  nodeConfig={nodeConfig}
+                  standaloneNodeConfig={standaloneNodeConfig}
+                  clusterNodeConfig={clusterNodeConfig}
                   isOutOfCalculate={isOutOfCalculate}
                   diskSize={diskSize}
                   diskUnit={diskUnit}

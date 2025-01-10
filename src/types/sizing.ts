@@ -84,7 +84,8 @@ export interface ICalculateResult {
   rawDataSize: number;
   memorySize: number;
   localDiskSize: number;
-  nodeConfig: Record<NodesKeyType, NodesValueType>;
+  clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
+  standaloneNodeConfig: NodesValueType;
   dependencyConfig: DependencyConfigType;
   mode: ModeEnum;
   dependency: DependencyComponentEnum;

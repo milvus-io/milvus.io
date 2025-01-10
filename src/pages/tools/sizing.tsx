@@ -74,7 +74,12 @@ export default function SizingTool() {
     rawDataSize: 0,
     memorySize: 0,
     localDiskSize: 0,
-    nodeConfig: {
+    standaloneNodeConfig: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+    },
+    clusterNodeConfig: {
       queryNode: {
         cpu: 0,
         memory: 0,

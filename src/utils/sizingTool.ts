@@ -39,7 +39,8 @@ export const unitBYTE2Any = (size: number, unit?: DataSizeUnit) => {
     sizeStatus++;
   }
   baseUnit = units[sizeStatus];
-  size = Math.ceil(size * 10) / 10;
+  const decimal = sizeStatus >= 4 ? 100 : 10;
+  size = Math.round(size * decimal) / decimal;
   return {
     size,
     unit: baseUnit,
@@ -159,6 +160,7 @@ export const memoryAndDiskCalculator = (params: {
   offLoading: boolean;
   scalarAvg: number;
   segSize: number;
+  mode: ModeEnum;
 }) => {
   const {
     rawDataSize,
@@ -169,10 +171,13 @@ export const memoryAndDiskCalculator = (params: {
     offLoading,
     indexTypeParams,
     segSize,
+    mode,
   } = params;
   const { indexType, widthRawData, maxDegree, m, flatNList, sq8NList } =
     indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
+  const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
+  console.log('vectorRawDataSize--', vectorRawDataSize);
 
   let result = {
     memory: 0,
@@ -183,45 +188,53 @@ export const memoryAndDiskCalculator = (params: {
   switch (indexType) {
     case IndexTypeEnum.FLAT:
       result = {
-        memory: rawDataSize,
+        memory: vectorRawDataSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.IVF_FLAT:
       result = {
-        memory: rawDataSize + flatNList * rowSize,
+        memory: vectorRawDataSize + flatNList * rowSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.IVFSQ8:
       result = {
-        memory: rawDataSize / 4 + sq8NList * rowSize,
+        memory: vectorRawDataSize / 4 + sq8NList * rowSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.SCANN:
       result = {
         memory: widthRawData
-          ? (1 + 1 / 8) * rawDataSize
-          : (1 / 8) * rawDataSize,
+          ? (9 / 8) * vectorRawDataSize
+          : (1 / 8) * vectorRawDataSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.HNSW:
       result = {
-        memory: (1 + (2 * m) / d) * rawDataSize,
+        memory: (1 + (2 * m) / d) * vectorRawDataSize,
         disk: 0,
       };
 
       break;
     case IndexTypeEnum.DISKANN:
       result = {
-        memory: rawDataSize / 4,
-        disk: (1 + maxDegree / d) * rawDataSize,
+        memory: vectorRawDataSize / 4,
+        disk: (1 + maxDegree / d) * vectorRawDataSize,
       };
       break;
     default:
+      result = {
+        memory: 0,
+        disk: 0,
+      };
       break;
+  }
+
+  if (mode === ModeEnum.Standalone) {
+    result.disk = rawDataSize * 4;
   }
 
   const scalarLoadingMemory = withScalar
@@ -241,6 +254,9 @@ export const memoryAndDiskCalculator = (params: {
   }
 
   const vectorLoadingMemory = (result.memory + segmentSizeByte * 2) * 1.15;
+  console.log('result--', result.memory);
+  console.log('vectorLoadingMemory--', vectorLoadingMemory);
+  console.log('scalarLoadingMemory--', scalarLoadingMemory);
 
   return {
     memory: vectorLoadingMemory + scalarLoadingMemory, // bytes
@@ -248,10 +264,22 @@ export const memoryAndDiskCalculator = (params: {
   };
 };
 
+export const standaloneNodeConfigCalculator = (params: { memory: number }) => {
+  const { size: memoryGb } = unitBYTE2Any(params.memory, 'GB');
+  const MEMORY_SIZE_OPTIONS = [8, 16, 32, 64];
+  const properMemorySize = MEMORY_SIZE_OPTIONS.find(item => item >= memoryGb);
+  const properCoreSize = properMemorySize / 4;
+
+  return {
+    cpu: properCoreSize,
+    memory: properMemorySize,
+    count: 1,
+  };
+};
+
 // query nodes calculator
-export const nodesConfigCalculator = (params: { memory: number }) => {
-  const { memory } = params;
-  const memoryGB = Math.ceil((memory * 10) / 1024 / 1024 / 1024) / 10;
+export const clusterNodesConfigCalculator = (params: { memory: number }) => {
+  const { size: memoryGB } = unitBYTE2Any(params.memory, 'GB');
 
   const queryNodeCount =
     memoryGB >= 2048
@@ -590,23 +618,30 @@ export const dependencyCalculator = (params: {
   }
 };
 
-export const milvusOverviewDataCalculator = (
-  params: Record<NodesKeyType, NodesValueType>
-) => {
-  const { queryNode, proxy, mixCoord, dataNode, indexNode } = params;
+export const milvusOverviewDataCalculator = (params: {
+  standaloneNodeConfig: NodesValueType;
+  clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
+  mode: ModeEnum;
+}) => {
+  const { standaloneNodeConfig, clusterNodeConfig, mode } = params;
+  const { queryNode, proxy, mixCoord, dataNode, indexNode } = clusterNodeConfig;
   const milvusCpu =
-    queryNode.cpu * queryNode.count +
-    proxy.cpu * proxy.count +
-    mixCoord.cpu * mixCoord.count +
-    dataNode.cpu * dataNode.count +
-    indexNode.cpu * indexNode.count;
+    mode === ModeEnum.Standalone
+      ? standaloneNodeConfig.cpu
+      : queryNode.cpu * queryNode.count +
+        proxy.cpu * proxy.count +
+        mixCoord.cpu * mixCoord.count +
+        dataNode.cpu * dataNode.count +
+        indexNode.cpu * indexNode.count;
 
   const milvusMemory =
-    queryNode.memory * queryNode.count +
-    proxy.memory * proxy.count +
-    mixCoord.memory * mixCoord.count +
-    dataNode.memory * dataNode.count +
-    indexNode.memory * indexNode.count;
+    mode === ModeEnum.Standalone
+      ? standaloneNodeConfig.memory
+      : queryNode.memory * queryNode.count +
+        proxy.memory * proxy.count +
+        mixCoord.memory * mixCoord.count +
+        dataNode.memory * dataNode.count +
+        indexNode.memory * indexNode.count;
 
   return {
     milvusCpu,

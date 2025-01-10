@@ -7,16 +7,15 @@ import {
   TooltipTrigger,
   TooltipContent,
   TooltipArrow,
-} from '@radix-ui/react-tooltip';
+} from '@/components/ui/tooltip';
 import clsx from 'clsx';
 import { formatOutOfCalData, unitBYTE2Any } from '@/utils/sizingTool';
 import { ModeEnum, NodesKeyType, NodesValueType } from '@/types/sizing';
 
-const MEMORY_SIZE_OPTIONS = [8, 16, 32, 64];
-
 export const MilvusComponent = (props: {
   isOutOfCalculate: boolean;
-  nodeConfig: Record<NodesKeyType, NodesValueType>;
+  clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
+  standaloneNodeConfig: NodesValueType;
   diskSize: number;
   diskUnit: string;
   mode: ModeEnum;
@@ -27,21 +26,17 @@ export const MilvusComponent = (props: {
 
   const {
     isOutOfCalculate,
-    nodeConfig,
+    clusterNodeConfig,
+    standaloneNodeConfig,
     diskSize,
     diskUnit,
     mode,
     memorySize,
     rawDataSize,
   } = props;
-  const { proxy, mixCoord, dataNode, indexNode, queryNode } = nodeConfig;
+  const { proxy, mixCoord, dataNode, indexNode, queryNode } = clusterNodeConfig;
 
-  const { size: memoryGb } = unitBYTE2Any(memorySize, 'GB');
-  const properMemorySize = MEMORY_SIZE_OPTIONS.find(item => item >= memoryGb);
-  console.log('properMemorySize--', properMemorySize);
-  const properCoreSize = properMemorySize / 4;
   const localDisk = unitBYTE2Any(rawDataSize * 4);
-  console.log('localDisk--', localDisk);
 
   return (
     <div className={classes.milvusDataDetail}>
@@ -49,8 +44,8 @@ export const MilvusComponent = (props: {
         <DataCard
           name={t('setup.milvus.standaloneNode')}
           data={t('setup.basic.config', {
-            cpu: properCoreSize,
-            memory: properMemorySize,
+            cpu: standaloneNodeConfig.cpu,
+            memory: standaloneNodeConfig.memory,
           })}
           desc={
             <Trans
@@ -70,24 +65,22 @@ export const MilvusComponent = (props: {
         <>
           <DataCard
             name={
-              <>
-                <TooltipProvider>
-                  <Tooltip delayDuration={0}>
-                    <TooltipTrigger
-                      className={clsx(
-                        classes.dataCardName,
-                        classes.tooltipTrigger
-                      )}
-                    >
-                      {t('setup.milvus.proxy')}
-                    </TooltipTrigger>
-                    <TooltipContent sideOffset={5} className="w-[280px]">
-                      {t('setup.milvus.proxyTip')}
-                      <TooltipArrow />
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </>
+              <TooltipProvider>
+                <Tooltip delayDuration={0}>
+                  <TooltipTrigger
+                    className={clsx(
+                      classes.dataCardName,
+                      classes.tooltipTrigger
+                    )}
+                  >
+                    {t('setup.milvus.proxy')}
+                  </TooltipTrigger>
+                  <TooltipContent sideOffset={5} className="w-[280px]">
+                    {t('setup.milvus.proxyTip')}
+                    <TooltipArrow />
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             }
             data={formatOutOfCalData({
               data: t('setup.basic.config', {

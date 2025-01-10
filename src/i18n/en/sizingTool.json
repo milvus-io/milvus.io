@@ -1,16 +1,16 @@
 {
   "title": "Milvus Sizing Tool",
-  "content": "A tool for estimate the resources required to set up Milvus based on your dataset.",
-  "tooltip": "Note: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production. If you have any question, please <0>contact us</0>.",
+  "content": "A tool for estimating the resources required to set up Milvus based on your dataset.",
+  "tooltip": "Note: all the recommended results are calculated based on our lab data. Please adjust them with your own testing before deploying to production. If you have any question, please <0>contact us</0>.",
   "form": {
-    "num": "Number of Vector",
+    "num": "Number of Vectors",
     "dim": "Vector Dimension",
     "withScalar": "With Scalar Fields",
     "averageLength": "Average Data Size Per Row",
     "offloading": "Offloading Fields to Disk",
     "mmp": "Milvus uses <0>Mmap</0> to enable direct memory access to large files on disk without reading the entire files into memory.",
     "indexType": "Index Type",
-    "indexTypeTip": "How to choose vector index? <0>Learn more</0>.",
+    "indexTypeTip": "How to choose the right vector index? <0>Learn more</0>.",
     "indexParam": "Index Parameters",
     "indexParamTip": "How to set proper index parameters? <0>learn more details</0>.",
     "withRawData": "with_raw_data",
@@ -20,7 +20,7 @@
     "segmentSize": "Segment Size",
     "dependencyComp": "Dependency Component",
     "mode": "Mode",
-    "modeTip": "With data growth, you can migrate data from standalone mode to cluster mode. <0>View More</0>.",
+    "modeTip": "As your data size grows, you can migrate data from the Standalone mode to the Cluster mode. <0>View More</0>.",
     "modeDisableTip": "For large data sizes, it is recommended to use cluster mode deployment to achieve better performance and scalability.",
     "pulsar": "Pulsar",
     "kafka": "Kafka",
@@ -32,13 +32,13 @@
   "overview": {
     "title": "Data Size Calculation",
     "raw": "Raw Data Size",
-    "rawTooltip": "Raw data size - Original data size, depending on the number of Vector, Vector Dimension and Scalar Field data size",
+    "rawTooltip": "The size of the original data which is determined by the number of vectors, vector dimension, and the scalar field data size.",
     "memory": "Loading Memory",
-    "memoryTooltip": "Memory consumption for query nodes, depending on raw data size, index type and params"
+    "memoryTooltip": "The size of the original data which is determined by the number of vectors, vector dimension, and the scalar field data size."
   },
   "setup": {
     "title": "Setup Resource Requirements",
-    "cloud": "Try Zilliz Cloud Calculator",
+    "cloud": "Explore Managed Service Cost",
     "outOfRange": "Your data volume is substantial. Please <0>contact us</0> to explore the best deployment practices.",
     "milvus": {
       "title": "Milvus Components",
@@ -66,7 +66,8 @@
       "proxy": "Proxy <0>x{{count}}</0>",
       "zookeeper": "Zookeeper <0>x{{count}}</0>",
       "etcdTip": "ETCD is used to store meta data. Please mount a high-performance storage drive(NVMe SSD)  to ensure optimal performance.",
-      "apacheTip": "Please mount a high-performance storage drive(NVMe SSD) for Bookie.Journal and Zookeeper to ensure optimal performance."
+      "apacheTip": "Please mount a high-performance storage drive(NVMe SSD) for Bookie.Journal and Zookeeper to ensure optimal performance.",
+      "kafkaTip": "Please mount a high-performance storage drive(NVMe SSD) for Zookeeper to ensure optimal performance."
     },
     "basic": {
       "cpuAndMemory": "CPU and Memory: <0>{{cpu}} {{memory}}</0>",
@@ -93,6 +94,6 @@
     "helm": "Helm Chart configuration.yml",
     "operator": "Milvus Operator configuration.yml",
     "adv": "Too many resources consumed? Try Zilliz Cloud (managed Milvus) to save resources and cut deployment and operation costs. Check out more details with the Zilliz Cloud calculator. <0>Go to Zilliz Cloud calculator</0>.",
-    "adv2": "Setting up a Milvus cluster for performance testing or benchmarking? Refer to <0>VDB Bench for detailed guidance</0>."
+    "adv2": "Setting up a Milvus cluster for performance testing or benchmarking? Refer to <0>VDB Bench</0> for detailed guidance."
   }
 }

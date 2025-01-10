@@ -22,8 +22,9 @@
   "zillizAdv": {
     "title": "Hassle-free and 10x faster than Milvus",
     "smallTitle": "Zilliz Cloud",
-    "feature1": "Use-case optimized compute for your workload",
-    "feature2": "Enterprise grade security built-in, available across all three clouds",
+    "feature1": "Use-case optimized compute units for your workload",
+    "feature2": "Enterprise-grade security",
+    "feature3": "Available on AWS, GCP, and Azure",
     "btn": "Try Fully Managed Milvus Free"
   },
   "authors": {

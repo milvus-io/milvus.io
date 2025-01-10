@@ -10,7 +10,11 @@ const CTA_LINK =
 export default function ZillizAdv(props: { className?: string }) {
   const { t } = useTranslation('blog');
   const { className = '' } = props;
-  const features = [t('blog:zillizAdv.feature1'), t('blog:zillizAdv.feature2')];
+  const features = [
+    t('blog:zillizAdv.feature1'),
+    t('blog:zillizAdv.feature2'),
+    t('blog:zillizAdv.feature3'),
+  ];
 
   const featureItems = features.map(f => (
     <li className={styles['zilliz-adv-features-item']} key={f}>

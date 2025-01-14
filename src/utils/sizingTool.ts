@@ -97,15 +97,10 @@ export const formatNumber = (num: number) => {
   };
 };
 
-export const formatOutOfCalData = <T>(params: {
-  data: T;
-  isOut: boolean;
-  short?: boolean;
-  isCount?: boolean;
-}) => {
-  const { data, isOut, short, isCount } = params;
+export const formatOutOfCalData = <T>(params: { data: T; isOut: boolean }) => {
+  const { data, isOut } = params;
   if (isOut) {
-    return short ? '-' : isCount ? '0' : '--';
+    return '--';
   }
   return data;
 };
@@ -177,7 +172,6 @@ export const memoryAndDiskCalculator = (params: {
     indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
   const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
-  console.log('vectorRawDataSize--', vectorRawDataSize);
 
   let result = {
     memory: 0,
@@ -233,10 +227,6 @@ export const memoryAndDiskCalculator = (params: {
       break;
   }
 
-  if (mode === ModeEnum.Standalone) {
-    result.disk = rawDataSize * 4;
-  }
-
   const scalarLoadingMemory = withScalar
     ? offLoading
       ? (num * scalarAvg * ONE_MILLION) / 10
@@ -254,9 +244,6 @@ export const memoryAndDiskCalculator = (params: {
   }
 
   const vectorLoadingMemory = (result.memory + segmentSizeByte * 2) * 1.15;
-  console.log('result--', result.memory);
-  console.log('vectorLoadingMemory--', vectorLoadingMemory);
-  console.log('scalarLoadingMemory--', scalarLoadingMemory);
 
   return {
     memory: vectorLoadingMemory + scalarLoadingMemory, // bytes

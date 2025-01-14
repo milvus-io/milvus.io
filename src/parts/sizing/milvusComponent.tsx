@@ -1,6 +1,6 @@
 import classes from './index.module.less';
 import { Trans, useTranslation } from 'react-i18next';
-import { DataCard } from './dependencyComponent';
+import { DataCard } from './components';
 import {
   TooltipProvider,
   Tooltip,
@@ -36,8 +36,6 @@ export const MilvusComponent = (props: {
   } = props;
   const { proxy, mixCoord, dataNode, indexNode, queryNode } = clusterNodeConfig;
 
-  const localDisk = unitBYTE2Any(rawDataSize * 4);
-
   return (
     <div className={classes.milvusDataDetail}>
       {mode === ModeEnum.Standalone ? (
@@ -52,11 +50,13 @@ export const MilvusComponent = (props: {
               t={t}
               i18nKey="setup.basic.diskWithValue"
               values={{
-                disk: localDisk.size,
-                unit: localDisk.unit,
+                disk: `${diskSize} ${diskUnit}`,
               }}
               components={[
-                <span key="value" className={classes.valueInfo}></span>,
+                <span
+                  key="value"
+                  className="text-[12px] leading-[18px] font-[500] text-black1"
+                ></span>,
               ]}
             />
           }
@@ -69,7 +69,7 @@ export const MilvusComponent = (props: {
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger
                     className={clsx(
-                      classes.dataCardName,
+                      classes.commonKeyLabel,
                       classes.tooltipTrigger
                     )}
                   >
@@ -82,19 +82,13 @@ export const MilvusComponent = (props: {
                 </Tooltip>
               </TooltipProvider>
             }
-            data={formatOutOfCalData({
-              data: t('setup.basic.config', {
-                cpu: proxy.cpu,
-                memory: proxy.memory,
-              }),
-              isOut: isOutOfCalculate,
+            data={t('setup.basic.config', {
+              cpu: proxy.cpu,
+              memory: proxy.memory,
             })}
-            count={formatOutOfCalData({
-              data: proxy.count,
-              isOut: isOutOfCalculate,
-              isCount: true,
-            })}
+            count={proxy.count}
             classname={classes.detailCard}
+            isOutOfCalculate={isOutOfCalculate}
           />
           <DataCard
             name={
@@ -103,7 +97,7 @@ export const MilvusComponent = (props: {
                   <Tooltip delayDuration={0}>
                     <TooltipTrigger
                       className={clsx(
-                        classes.dataCardName,
+                        classes.commonKeyLabel,
                         classes.tooltipTrigger
                       )}
                     >
@@ -117,19 +111,13 @@ export const MilvusComponent = (props: {
                 </TooltipProvider>
               </>
             }
-            data={formatOutOfCalData({
-              data: t('setup.basic.config', {
-                cpu: mixCoord.cpu,
-                memory: mixCoord.memory,
-              }),
-              isOut: isOutOfCalculate,
+            data={t('setup.basic.config', {
+              cpu: mixCoord.cpu,
+              memory: mixCoord.memory,
             })}
-            count={formatOutOfCalData({
-              data: mixCoord.count,
-              isOut: isOutOfCalculate,
-              isCount: true,
-            })}
+            count={mixCoord.count}
             classname={classes.detailCard}
+            isOutOfCalculate={isOutOfCalculate}
           />
           <DataCard
             name={
@@ -137,7 +125,7 @@ export const MilvusComponent = (props: {
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger
                     className={clsx(
-                      classes.dataCardName,
+                      classes.commonKeyLabel,
                       classes.tooltipTrigger
                     )}
                   >
@@ -150,19 +138,13 @@ export const MilvusComponent = (props: {
                 </Tooltip>
               </TooltipProvider>
             }
-            data={formatOutOfCalData({
-              data: t('setup.basic.config', {
-                cpu: dataNode.cpu,
-                memory: dataNode.memory,
-              }),
-              isOut: isOutOfCalculate,
+            data={t('setup.basic.config', {
+              cpu: dataNode.cpu,
+              memory: dataNode.memory,
             })}
-            count={formatOutOfCalData({
-              data: dataNode.count,
-              isOut: isOutOfCalculate,
-              isCount: true,
-            })}
+            count={dataNode.count}
             classname={classes.detailCard}
+            isOutOfCalculate={isOutOfCalculate}
           />
           <DataCard
             name={
@@ -170,7 +152,7 @@ export const MilvusComponent = (props: {
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger
                     className={clsx(
-                      classes.dataCardName,
+                      classes.commonKeyLabel,
                       classes.tooltipTrigger
                     )}
                   >
@@ -183,19 +165,13 @@ export const MilvusComponent = (props: {
                 </Tooltip>
               </TooltipProvider>
             }
-            data={formatOutOfCalData({
-              data: t('setup.basic.config', {
-                cpu: indexNode.cpu,
-                memory: indexNode.memory,
-              }),
-              isOut: isOutOfCalculate,
+            data={t('setup.basic.config', {
+              cpu: indexNode.cpu,
+              memory: indexNode.memory,
             })}
-            count={formatOutOfCalData({
-              data: indexNode.count,
-              isOut: isOutOfCalculate,
-              isCount: true,
-            })}
+            count={indexNode.count}
             classname={classes.detailCard}
+            isOutOfCalculate={isOutOfCalculate}
           />
           <DataCard
             name={
@@ -203,7 +179,7 @@ export const MilvusComponent = (props: {
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger
                     className={clsx(
-                      classes.dataCardName,
+                      classes.commonKeyLabel,
                       classes.tooltipTrigger
                     )}
                   >
@@ -216,43 +192,30 @@ export const MilvusComponent = (props: {
                 </Tooltip>
               </TooltipProvider>
             }
-            data={formatOutOfCalData({
-              data: t('setup.basic.config', {
-                cpu: queryNode.cpu,
-                memory: queryNode.memory,
-              }),
-              isOut: isOutOfCalculate,
+            data={t('setup.basic.config', {
+              cpu: queryNode.cpu,
+              memory: queryNode.memory,
             })}
             desc={
-              diskSize > 0 ? (
+              isOutOfCalculate ? undefined : diskSize > 0 ? (
                 <Trans
                   t={t}
-                  i18nKey="setup.milvus.diskSize"
+                  i18nKey="setup.basic.diskWithValue"
                   values={{
-                    size: formatOutOfCalData({
-                      data: `${diskSize} ${diskUnit}`,
-                      isOut: isOutOfCalculate,
-                    }),
+                    disk: `${diskSize} ${diskUnit}`,
                   }}
                   components={[
                     <span
-                      className={classes.descLabel}
-                      key="desc-label"
-                    ></span>,
-                    <span
-                      className={classes.descValue}
-                      key="desc-value"
+                      className="text-[12px] leading-[18px] font-[500] text-black1"
+                      key="local-disk"
                     ></span>,
                   ]}
                 />
               ) : undefined
             }
-            count={formatOutOfCalData({
-              data: queryNode.count,
-              isOut: isOutOfCalculate,
-              isCount: true,
-            })}
+            count={queryNode.count}
             classname={classes.detailCard}
+            isOutOfCalculate={isOutOfCalculate}
           />
         </>
       )}

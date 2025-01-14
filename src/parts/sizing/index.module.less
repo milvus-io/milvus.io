@@ -1,7 +1,37 @@
 @import url('@/styles/global.module.less');
 
 .tooltipTrigger {
-  text-decoration: underline dashed #00131a;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-bottom: 1px dashed @color-black2;
+  }
+}
+
+.commonLabel {
+  font-family: 'Geist Mono';
+  .paragraph4-bold();
+}
+
+.selectItem {
+  font-family: 'Geist Mono';
+  .paragraph6();
+}
+
+.selectTrigger {
+  font-family: 'Geist Mono';
+  .paragraph6();
+  padding: 9px 12px;
+  height: 36px;
+  border-radius: 8px;
+  border: 2px solid #e8eaee;
+  background: #fff;
 }
 
 .flexRow {
@@ -28,15 +58,19 @@
   padding-bottom: 20px;
 }
 
+div.averageLabel {
+  margin-bottom: 8px;
+}
+
+.font14Bold {
+  .paragraph4-bold();
+}
+
+.font16Bold {
+  .paragraph3-bold();
+}
+
 .formSection {
-  padding: 30px 24px;
-  border-right: 1px solid #ececee;
-
-  @media @tablet, @phone {
-    border-right: none;
-    border-bottom: 1px solid #ececee;
-  }
-
   .tooltipLink {
     color: #fff;
     text-decoration: underline;
@@ -45,6 +79,7 @@
   .singlePart {
     border-bottom: 1px solid #ececee;
     margin-bottom: 24px;
+    padding-bottom: 24px;
 
     &:last-of-type {
       border-bottom: none;
@@ -64,17 +99,6 @@
 
   .innerRow {
     margin-top: 20px;
-  }
-
-  .averageLabel {
-    font-weight: 400;
-  }
-
-  .offLoadingLabel {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
   }
 
   .offLoadingDesc {
@@ -104,15 +128,6 @@
     padding-top: 0;
   }
 
-  .selectTrigger {
-    .paragraph6-regular();
-    padding: 10px 12px;
-    height: 36px;
-    border-radius: 8px;
-    border: 1px solid #e8eaee;
-    background: #fff;
-  }
-
   .indexParamLabel {
     .paragraph6-regular();
   }
@@ -134,7 +149,7 @@
     .card {
       flex: 1;
       border-radius: 10px;
-      border: 1px solid #e4eaf1;
+      border: 2px solid #e4eaf1;
       background: #fff;
       cursor: pointer;
     }
@@ -144,8 +159,9 @@
       padding: 3px 12px;
       justify-content: center;
       align-items: center;
+      gap: 4px;
 
-      img {
+      svg {
         width: 28px;
         height: 28px;
       }
@@ -194,6 +210,10 @@
 
     .activeCard {
       border-color: @color-blue1;
+
+      svg path {
+        fill: #188fff;
+      }
     }
 
     .switchLabel {
@@ -203,14 +223,21 @@
 }
 
 .resultContainer {
-  padding: 40px 20px;
+  .commonKeyLabel {
+    .paragraph6-regular();
+    color: @color-black2;
+  }
+  .commonValueLabel {
+    .paragraph6-bold();
+    color: @color-black1;
+  }
 
   .substantialWrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
     padding: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     background-color: #e0f2fc;
     border-radius: 12px;
 
@@ -282,130 +309,127 @@
     }
   }
 
-  .dataDetail {
-    padding: 0 20px;
-    border-bottom: 1px solid @color-black4;
+  .commonCollapseTitle {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    cursor: pointer;
 
-    &:last-of-type {
-      border-bottom: none;
-    }
-
-    .commonCollapseTitle {
-      width: 100%;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      padding: 24px 0;
-
-      .collapseTitle {
-        flex: 1;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        @media @phone {
-          flex-direction: column;
-          gap: 8px;
-          align-items: flex-start;
-          justify-content: center;
-        }
-
-        .titleName {
-          .paragraph3-bold();
-        }
-        .titleOverview {
-          .paragraph3();
-
-          .valueInfo {
-            .paragraph3-bold();
-            color: @color-blue2;
-            letter-spacing: 150%;
-          }
-        }
-      }
-      .collapseIcon {
-        flex: 0 0 16px;
-        transform: rotate(180deg);
-      }
-
-      .activeIcon {
-        transform: rotate(0deg);
-      }
-    }
-
-    .milvusDataDetail {
-      display: flex;
-      flex-wrap: wrap;
-
-      .detailCard {
-        flex: 0 1 33.33%;
-      }
-
-      .descLabel {
-        .paragraph3-regular();
-      }
-
-      .descValue {
-        .paragraph3();
-        color: @color-blue2;
-      }
-
-      .valueInfo {
-        .paragraph3();
-        color: @color-blue2;
-        letter-spacing: 150%;
-      }
-    }
-
-    .depDataItem {
+    .collapseTitle {
       flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media @phone {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .titleName {
+        .paragraph3-bold();
+      }
+      .titleOverview {
+        .paragraph3();
+
+        .valueInfo {
+          .paragraph3-bold();
+          color: @color-blue2;
+          letter-spacing: 150%;
+        }
+      }
+    }
+    .collapseIcon {
+      flex: 0 0 21px;
+      transform: rotate(0deg);
+      transition: transform 0.2s linear;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .activeIcon {
+      transform: rotate(180deg);
     }
   }
 
+  .milvusDataDetail {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding: 0 24px;
+
+    .detailCard {
+      flex: 1;
+    }
+
+    .descLabel {
+      .paragraph3-regular();
+    }
+
+    .descValue {
+      .paragraph3();
+      color: @color-blue2;
+    }
+
+    .valueInfo {
+      .paragraph3();
+      color: @color-blue2;
+      letter-spacing: 150%;
+    }
+  }
+
+  .depDataItem {
+    flex: 1;
+  }
+  .installButton {
+    .paragraph4();
+    padding: 8px 0;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 8px;
+    border-color: @color-black3;
+  }
+  .installCodeWrapper {
+    padding: 24px 38px 24px 24px;
+    background-color: @color-white1;
+    border-radius: 16px;
+    position: relative;
+    margin-bottom: 8px;
+
+    code {
+      .paragraph6-regular();
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .copyBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      margin: 0;
+      outline: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
   .installationSection {
     .sectionTitle {
       .paragraph3-bold();
       margin-bottom: 16px;
-    }
-    .installButton {
-      .paragraph4();
-      padding: 9px 0;
-      width: 100%;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
-    .installCodeWrapper {
-      padding: 32px 24px 20px 24px;
-      background-color: @color-white1;
-      border-radius: 16px;
-      position: relative;
-
-      code {
-        .paragraph4-regular();
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 10px;
-      }
-
-      .copyBtn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 16px;
-        height: 16px;
-        padding: 0;
-        margin: 0;
-        outline: none;
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        cursor: pointer;
-
-        &:hover {
-          opacity: 0.7;
-        }
-      }
     }
 
     .advCard {
@@ -432,9 +456,7 @@
 
 .dataCard {
   width: 100%;
-  padding: 8px 20px;
   border-radius: 12px;
-  background: @color-white1;
 
   .dataName {
     .paragraph4-bold();
@@ -462,6 +484,7 @@
 }
 
 .dependencyDetailContainer {
+  margin-top: 16px;
   .firstRow {
     display: flex;
     gap: 20px;
@@ -484,7 +507,12 @@
 }
 
 .configContainer {
-  padding: 0 16px;
+  padding: 0 24px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
 
   .configName {
     .paragraph4-bold();

@@ -321,6 +321,8 @@ helm repo update milvus-operator
 helm -n milvus-operator upgrade --install milvus-operator milvus-operator/milvus-operator
 kubectl create -f operatorConfigYml.yml
 `;
+export const dockerComposeExample = `wget https://github.com/milvus-io/milvus/releases/download/latest/milvus-standalone-docker-compose.yml -O docker-compose.yml
+sudo docker compose up -d`;
 
 export const HELM_CONFIG_FILE_NAME = 'helmConfigYml.yml';
 export const OPERATOR_CONFIG_FILE_NAME = 'operatorConfigYml.yml';

@@ -1,7 +1,7 @@
 {
   "title": "Milvus Sizing Tool",
   "content": "A tool for estimating the resources required to set up Milvus based on your dataset.",
-  "tooltip": "Note: all the recommended results are calculated based on our lab data. Please adjust them with your own testing before deploying to production. If you have any question, please <0>contact us</0>.",
+  "tooltip": "Note: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production.",
   "form": {
     "num": "Number of Vectors",
     "dim": "Vector Dimension",
@@ -10,7 +10,7 @@
     "offloading": "Offloading Fields to Disk",
     "mmp": "Milvus uses <0>Mmap</0> to enable direct memory access to large files on disk without reading the entire files into memory.",
     "indexType": "Index Type",
-    "indexTypeTip": "How to choose the right vector index? <0>Learn more</0>.",
+    "indexTypeTip": "How to choose vector index?",
     "indexParam": "Index Parameters",
     "indexParamTip": "How to set proper index parameters? <0>learn more details</0>.",
     "withRawData": "with_raw_data",
@@ -25,15 +25,17 @@
     "pulsar": "Pulsar",
     "kafka": "Kafka",
     "standalone": "Standalone",
-    "standaloneDesc": "Suitable for small data size and poc env.",
+    "standaloneDesc": "Suitable for small to medium data size.",
     "cluster": "Cluster",
-    "clusterDesc": "Suitable for large data size and production env. "
+    "clusterDesc": "Suitable for large data size. "
   },
   "overview": {
-    "title": "Data Size Calculation",
-    "raw": "Raw Data Size",
+    "title": "Setup Resource Requirements",
+    "explore": "Explore Managed Service Cost",
+    "overview": "Data Size Calculation",
+    "raw": "Raw Data Size: ",
     "rawTooltip": "The size of the original data which is determined by the number of vectors, vector dimension, and the scalar field data size.",
-    "memory": "Loading Memory",
+    "memory": "Loading Memory: ",
     "memoryTooltip": "The size of the original data which is determined by the number of vectors, vector dimension, and the scalar field data size."
   },
   "setup": {
@@ -41,7 +43,7 @@
     "cloud": "Explore Managed Service Cost",
     "outOfRange": "Your data volume is substantial. Please <0>contact us</0> to explore the best deployment practices.",
     "milvus": {
-      "title": "Milvus Components",
+      "title": "Milvus",
       "proxy": "Proxy",
       "mixCoord": "Mix Coord",
       "dataNode": "Data Node",
@@ -56,15 +58,15 @@
       "standaloneNode": "Standalone Node"
     },
     "dependency": {
-      "title": "Dependency Components",
+      "title": "Dependency",
       "etcd": "ETCD",
       "minio": "Minio",
       "pulsar": "Pulsar",
       "kafka": "Kafka",
-      "bookie": "Bookie <0>x{{count}}</0>",
-      "broker": "Broker <0>x{{count}}</0>",
-      "proxy": "Proxy <0>x{{count}}</0>",
-      "zookeeper": "Zookeeper <0>x{{count}}</0>",
+      "bookie": "Bookie",
+      "broker": "Broker",
+      "proxy": "Proxy",
+      "zookeeper": "Zookeeper",
       "etcdTip": "ETCD is used to store meta data. Please mount a high-performance storage drive(NVMe SSD)  to ensure optimal performance.",
       "apacheTip": "Please mount a high-performance storage drive(NVMe SSD) for Bookie.Journal and Zookeeper to ensure optimal performance.",
       "kafkaTip": "Please mount a high-performance storage drive(NVMe SSD) for Zookeeper to ensure optimal performance."
@@ -72,7 +74,7 @@
     "basic": {
       "cpuAndMemory": "CPU and Memory: <0>{{cpu}} {{memory}}</0>",
       "storageWithValue": "Storage: <0>{{size}}</0>",
-      "diskWithValue": "Local Disk: <0>{{disk}} {{unit}}</0>",
+      "diskWithValue": "Local Disk: <0>{{disk}}</0>",
       "cpu": "CPU",
       "memory": "Memory",
       "disk": "Local Disk",
@@ -91,9 +93,13 @@
   },
   "install": {
     "title": "Install Milvus",
-    "helm": "Helm Chart configuration.yml",
-    "operator": "Milvus Operator configuration.yml",
+    "helm": "Helm Chart configuration",
+    "operator": "Milvus Operator configuration",
+    "docker": "Docker Compose configuration",
     "adv": "Too many resources consumed? Try Zilliz Cloud (managed Milvus) to save resources and cut deployment and operation costs. Check out more details with the Zilliz Cloud calculator. <0>Go to Zilliz Cloud calculator</0>.",
-    "adv2": "Setting up a Milvus cluster for performance testing or benchmarking? Refer to <0>VDB Bench</0> for detailed guidance."
+    "adv2": "Setting up a Milvus cluster for performance testing or benchmarking? Refer to <0>VDB Bench</0> for detailed guidance.",
+    "tip1": "How to run Milvus with Docker Compose?",
+    "tip2": "How to run Milvus with Helm Chart?",
+    "tip3": "HHow to run Milvus with Milvus Operator?"
   }
 }

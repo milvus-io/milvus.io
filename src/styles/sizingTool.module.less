@@ -7,16 +7,19 @@
 .sizingToolContainer {
   padding-top: 40px;
   padding-bottom: 40px;
+  font-family: 'Geist Mono';
+  color: @color-black1;
 
   .title {
     .heading2();
     margin-bottom: 12px;
     text-align: center;
+    font-family: 'Geist';
   }
 
   .desc {
-    .paragraph6-regular();
-    margin-bottom: 40px;
+    .paragraph2-regular();
+    margin-bottom: 60px;
     text-align: center;
   }
 
@@ -24,7 +27,10 @@
     display: flex;
     align-items: flex-start;
     gap: 8px;
-    padding: 20px 0;
+    background-color: @color-white1;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 36px;
 
     .iconWrapper {
       flex: 0 0 20px;
@@ -50,15 +56,15 @@
   .contentContainer {
     display: flex;
     border-radius: 24px;
-    border: 2px solid #ececee;
     margin-bottom: 80px;
+    gap: 60px;
 
     @media @tablet, @phone {
       flex-direction: column;
     }
 
     .leftSection {
-      flex: 0 1 446px;
+      flex: 0 1 386px;
     }
 
     .rightSection {

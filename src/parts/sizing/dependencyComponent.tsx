@@ -14,6 +14,7 @@ import {
   TooltipArrow,
 } from '@/components/ui';
 import { formatOutOfCalData } from '@/utils/sizingTool';
+import { DataCard, PulsarIcon, KafkaIcon } from './components';
 
 export const DependencyComponent = (props: {
   data: DependencyConfigType;
@@ -35,11 +36,12 @@ export const DependencyComponent = (props: {
 
     return (
       <div className={classes.configContainer}>
-        <h5 className={classes.configName}>
+        <h5 className="flex items-center gap-[4px] mb-[12px]">
+          <PulsarIcon color="#188FFF" />
           <TooltipProvider>
             <Tooltip delayDuration={0}>
               <TooltipTrigger
-                className={clsx(classes.dataCardName, classes.tooltipTrigger)}
+                className={clsx(classes.commonKeyLabel, classes.tooltipTrigger)}
               >
                 {t('setup.dependency.pulsar')}
               </TooltipTrigger>
@@ -52,211 +54,88 @@ export const DependencyComponent = (props: {
         </h5>
         <ul className={classes.configList}>
           <li className={classes.configItem}>
-            <p className={classes.columnName}>
-              <Trans
-                t={t}
-                i18nKey="setup.dependency.bookie"
-                values={{
-                  count: formatOutOfCalData({
-                    data: pulsar.bookie.count,
-                    isOut: isOutOfCalculate,
-                    isCount: true,
-                  }),
-                }}
-                components={[
-                  <span key="pod-num" className={classes.columnValue}></span>,
-                ]}
-              />
-            </p>
-            <ol className={classes.columnList}>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.cpu')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.core', { cpu: pulsar.bookie.cpu }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.memory')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', { memory: pulsar.bookie.memory }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.journal')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', {
-                      memory: pulsar.bookie.journal,
-                    }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.ledger')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', {
-                      memory: pulsar.bookie.ledgers,
-                    }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-            </ol>
+            <DataCard
+              name={t('setup.dependency.bookie')}
+              data={t('setup.basic.config', {
+                cpu: pulsar.bookie.cpu,
+                memory: pulsar.bookie.memory,
+              })}
+              count={pulsar.bookie.count}
+              desc={
+                <>
+                  <div className="flex items-center">
+                    {t('setup.basic.journal')}:&nbsp;
+                    <span className="text-black1 font-[500]">
+                      {formatOutOfCalData({
+                        data: t('setup.basic.gb', {
+                          memory: pulsar.bookie.journal,
+                        }),
+                        isOut: isOutOfCalculate,
+                      })}
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    {t('setup.basic.ledger')}:&nbsp;
+                    <span className="text-black1 font-[500]">
+                      {formatOutOfCalData({
+                        data: t('setup.basic.gb', {
+                          memory: pulsar.bookie.ledgers,
+                        }),
+                        isOut: isOutOfCalculate,
+                      })}
+                    </span>
+                  </div>
+                </>
+              }
+              isOutOfCalculate={isOutOfCalculate}
+            />
           </li>
           <li className={classes.configItem}>
-            <p className={classes.columnName}>
-              <Trans
-                t={t}
-                i18nKey="setup.dependency.broker"
-                values={{
-                  count: formatOutOfCalData({
-                    data: pulsar.broker.count,
-                    isOut: isOutOfCalculate,
-                    isCount: true,
-                  }),
-                }}
-                components={[
-                  <span key="pod-num" className={classes.columnValue}></span>,
-                ]}
-              />
-            </p>
-            <ol className={classes.columnList}>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.cpu')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.core', { cpu: pulsar.broker.cpu }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.memory')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', { memory: pulsar.broker.memory }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-            </ol>
+            <DataCard
+              name={t('setup.dependency.broker')}
+              count={pulsar.broker.count}
+              data={t('setup.basic.config', {
+                cpu: pulsar.broker.cpu,
+                memory: pulsar.broker.memory,
+              })}
+              isOutOfCalculate={isOutOfCalculate}
+            />
           </li>
           <li className={classes.configItem}>
-            <p className={classes.columnName}>
-              <Trans
-                t={t}
-                i18nKey="setup.dependency.proxy"
-                values={{
-                  count: formatOutOfCalData({
-                    data: pulsar.proxy.count,
-                    isOut: isOutOfCalculate,
-                    isCount: true,
-                  }),
-                }}
-                components={[
-                  <span key="pod-num" className={classes.columnValue}></span>,
-                ]}
-              />
-            </p>
-            <ol className={classes.columnList}>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.cpu')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.core', { cpu: pulsar.proxy.cpu }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.memory')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', { memory: pulsar.proxy.memory }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-            </ol>
+            <DataCard
+              name={t('setup.dependency.proxy')}
+              count={pulsar.proxy.count}
+              data={t('setup.basic.config', {
+                cpu: pulsar.proxy.cpu,
+                memory: pulsar.proxy.memory,
+              })}
+              isOutOfCalculate={isOutOfCalculate}
+            />
           </li>
+
           <li className={classes.configItem}>
-            <p className={classes.columnName}>
-              <Trans
-                t={t}
-                i18nKey="setup.dependency.zookeeper"
-                values={{
-                  count: formatOutOfCalData({
-                    data: pulsar.zookeeper.count,
-                    isOut: isOutOfCalculate,
-                    isCount: true,
-                  }),
-                }}
-                components={[
-                  <span key="pod-num" className={classes.columnValue}></span>,
-                ]}
-              />
-            </p>
-            <ol className={classes.columnList}>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.cpu')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.core', { cpu: pulsar.zookeeper.cpu }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.memory')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', {
-                      memory: pulsar.zookeeper.memory,
-                    }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.pvcLabel')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', { memory: pulsar.zookeeper.pvc }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-            </ol>
+            <DataCard
+              name={t('setup.dependency.zookeeper')}
+              data={t('setup.basic.config', {
+                cpu: pulsar.zookeeper.cpu,
+                memory: pulsar.zookeeper.memory,
+              })}
+              count={pulsar.zookeeper.count}
+              desc={
+                <div className="flex items-center">
+                  {t('setup.basic.pvcLabel')}:&nbsp;
+                  <span className="text-black1 font-[500]">
+                    {formatOutOfCalData({
+                      data: t('setup.basic.gb', {
+                        memory: pulsar.zookeeper.pvc,
+                      }),
+                      isOut: isOutOfCalculate,
+                    })}
+                  </span>
+                </div>
+              }
+              isOutOfCalculate={isOutOfCalculate}
+            />
           </li>
         </ul>
       </div>
@@ -272,11 +151,12 @@ export const DependencyComponent = (props: {
 
     return (
       <div className={classes.configContainer}>
-        <h5 className={classes.configName}>
+        <h5 className="flex items-center gap-[4px] mb-[12px]">
+          <KafkaIcon color="#188FFF" />
           <TooltipProvider>
             <Tooltip delayDuration={0}>
               <TooltipTrigger
-                className={clsx(classes.dataCardName, classes.tooltipTrigger)}
+                className={clsx(classes.commonKeyLabel, classes.tooltipTrigger)}
               >
                 {t('setup.dependency.kafka')}
               </TooltipTrigger>
@@ -289,113 +169,53 @@ export const DependencyComponent = (props: {
         </h5>
         <ul className={classes.configList}>
           <li className={classes.configItem}>
-            <p className={classes.columnName}>
-              <Trans
-                t={t}
-                i18nKey="setup.dependency.broker"
-                values={{
-                  count: formatOutOfCalData({
-                    data: kafka.broker.count,
-                    isOut: isOutOfCalculate,
-                    isCount: true,
-                  }),
-                }}
-                components={[
-                  <span key="pod-num" className={classes.columnValue}></span>,
-                ]}
-              />
-            </p>
-            <ol className={classes.columnList}>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.cpu')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.core', { cpu: kafka.broker.cpu }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.memory')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', { memory: kafka.broker.memory }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.pvcLabel')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', { memory: kafka.broker.pvc }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-            </ol>
+            <DataCard
+              name={t('setup.dependency.broker')}
+              data={t('setup.basic.config', {
+                cpu: kafka.broker.cpu,
+                memory: kafka.broker.memory,
+              })}
+              count={kafka.broker.count}
+              desc={
+                <div className="flex items-center">
+                  {t('setup.basic.pvcLabel')}:&nbsp;
+                  <span className="text-black1 font-[500]">
+                    {formatOutOfCalData({
+                      data: t('setup.basic.gb', {
+                        memory: kafka.broker.pvc,
+                      }),
+                      isOut: isOutOfCalculate,
+                    })}
+                  </span>
+                </div>
+              }
+              isOutOfCalculate={isOutOfCalculate}
+            />
           </li>
 
           <li className={classes.configItem}>
-            <p className={classes.columnName}>
-              <Trans
-                t={t}
-                i18nKey="setup.dependency.zookeeper"
-                values={{
-                  count: formatOutOfCalData({
-                    data: kafka.zookeeper.count,
-                    isOut: isOutOfCalculate,
-                    isCount: true,
-                  }),
-                }}
-                components={[
-                  <span key="pod-num" className={classes.columnValue}></span>,
-                ]}
-              />
-            </p>
-            <ol className={classes.columnList}>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.cpu')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.core', { cpu: kafka.zookeeper.cpu }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.memory')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', {
-                      memory: kafka.zookeeper.memory,
-                    }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-              <li className={classes.columnItem}>
-                <span className={classes.columnLabel}>
-                  {t('setup.basic.pvcLabel')}:
-                </span>
-                <span className={classes.columnValue}>
-                  {formatOutOfCalData({
-                    data: t('setup.basic.gb', { memory: kafka.zookeeper.pvc }),
-                    isOut: isOutOfCalculate,
-                  })}
-                </span>
-              </li>
-            </ol>
+            <DataCard
+              name={t('setup.dependency.zookeeper')}
+              data={t('setup.basic.config', {
+                cpu: kafka.zookeeper.cpu,
+                memory: kafka.zookeeper.memory,
+              })}
+              count={kafka.zookeeper.count}
+              desc={
+                <div className="flex items-center">
+                  {t('setup.basic.pvcLabel')}:&nbsp;
+                  <span className="text-black1 font-[500]">
+                    {formatOutOfCalData({
+                      data: t('setup.basic.gb', {
+                        memory: kafka.zookeeper.pvc,
+                      }),
+                      isOut: isOutOfCalculate,
+                    })}
+                  </span>
+                </div>
+              }
+              isOutOfCalculate={isOutOfCalculate}
+            />
           </li>
         </ul>
       </div>
@@ -404,13 +224,16 @@ export const DependencyComponent = (props: {
 
   return (
     <div className={classes.dependencyDetailContainer}>
-      <div className={classes.firstRow}>
+      <div className="flex items-center justify-between gap-[24px] pl-[24px] pr-[24px] mb-[16px]">
         <DataCard
           name={
             <TooltipProvider>
               <Tooltip delayDuration={0}>
                 <TooltipTrigger
-                  className={clsx(classes.dataCardName, classes.tooltipTrigger)}
+                  className={clsx(
+                    classes.commonKeyLabel,
+                    classes.tooltipTrigger
+                  )}
                 >
                   {t('setup.dependency.etcd')}
                 </TooltipTrigger>
@@ -421,109 +244,60 @@ export const DependencyComponent = (props: {
               </Tooltip>
             </TooltipProvider>
           }
-          data={formatOutOfCalData({
-            data: t('setup.basic.config', {
-              cpu: etcd.cpu,
-              memory: etcd.memory,
-            }),
-            isOut: isOutOfCalculate,
+          data={t('setup.basic.config', {
+            cpu: etcd.cpu,
+            memory: etcd.memory,
           })}
-          count={formatOutOfCalData({
-            data: etcd.count,
-            isOut: isOutOfCalculate,
-            isCount: true,
-          })}
+          count={etcd.count}
           desc={
-            <p className={classes.dataDesc}>
-              <Trans
-                t={t}
-                i18nKey="setup.basic.pvc"
-                values={{
-                  pvc: formatOutOfCalData({
-                    data: `${etcd.pvc} GB`,
-                    isOut: isOutOfCalculate,
-                  }),
-                }}
-                components={[<span key="pvc"></span>]}
-              />
-            </p>
+            <Trans
+              t={t}
+              i18nKey="setup.basic.pvc"
+              values={{
+                pvc: formatOutOfCalData({
+                  data: `${etcd.pvc} GB`,
+                  isOut: isOutOfCalculate,
+                }),
+              }}
+              components={[<span key="pvc"></span>]}
+            />
           }
           classname={classes.card}
+          isOutOfCalculate={isOutOfCalculate}
         />
         <DataCard
           name={t('setup.dependency.minio')}
-          data={formatOutOfCalData({
-            data: t('setup.basic.config', {
-              cpu: minio.cpu,
-              memory: minio.memory,
-            }),
-            isOut: isOutOfCalculate,
+          data={t('setup.basic.config', {
+            cpu: minio.cpu,
+            memory: minio.memory,
           })}
-          count={formatOutOfCalData({
-            data: minio.count,
-            isOut: isOutOfCalculate,
-            isCount: true,
-          })}
+          count={minio.count}
           desc={
-            <p className={classes.dataDesc}>
-              <Trans
-                t={t}
-                i18nKey="setup.basic.pvc"
-                values={{
-                  pvc: formatOutOfCalData({
-                    data: `${minio.pvc} GB`,
-                    isOut: isOutOfCalculate,
-                  }),
-                }}
-                components={[<span key="pvc"></span>]}
-              />
-            </p>
+            <Trans
+              t={t}
+              i18nKey="setup.basic.pvc"
+              values={{
+                pvc: formatOutOfCalData({
+                  data: `${minio.pvc} GB`,
+                  isOut: isOutOfCalculate,
+                }),
+              }}
+              components={[<span key="pvc"></span>]}
+            />
           }
           classname={classes.card}
+          isOutOfCalculate={isOutOfCalculate}
         />
       </div>
       {mode === ModeEnum.Cluster && (
-        <div className="">
-          <>
-            {dependency === DependencyComponentEnum.Pulsar ? (
-              <PulsarInfo pulsar={pulsar} isOutOfCalculate={isOutOfCalculate} />
-            ) : (
-              <KafkaInfo kafka={kafka} isOutOfCalculate={isOutOfCalculate} />
-            )}
-          </>
-        </div>
+        <>
+          {dependency === DependencyComponentEnum.Pulsar ? (
+            <PulsarInfo pulsar={pulsar} isOutOfCalculate={isOutOfCalculate} />
+          ) : (
+            <KafkaInfo kafka={kafka} isOutOfCalculate={isOutOfCalculate} />
+          )}
+        </>
       )}
-    </div>
-  );
-};
-
-export const DataCard = (props: {
-  name: React.ReactNode;
-  data: string;
-  desc?: React.ReactNode;
-  count?: number | string;
-  classname?: string;
-  size?: string;
-}) => {
-  const { name, data, count, desc, classname = '', size = 'medium' } = props;
-  return (
-    <div className={clsx(classes.dataCard, classname)}>
-      <div
-        className={clsx(classes.dataName, {
-          [classes.largeName]: size === 'large',
-        })}
-      >
-        {name}
-      </div>
-      <p
-        className={clsx(classes.dataInfo, {
-          [classes.largeData]: size === 'large',
-        })}
-      >
-        {data}
-      </p>
-      {desc && <div className={classes.dataDesc}>{desc}</div>}
-      {count && <p className={classes.dataCount}>x{count}</p>}
     </div>
   );
 };

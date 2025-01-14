@@ -157,18 +157,7 @@ export default function SizingTool() {
             <span className={classes.iconWrapper}>
               <InfoFilled />
             </span>
-            <p className={classes.tip}>
-              <Trans
-                t={t}
-                i18nKey="tooltip"
-                components={[
-                  <a
-                    href="https://zilliz.com/contact-sales"
-                    key="contact-link"
-                  ></a>,
-                ]}
-              />
-            </p>
+            <p className={classes.tip}>{t('tooltip')}</p>
           </div>
           <div className={classes.contentContainer}>
             <FormSection

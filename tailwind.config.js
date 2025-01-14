@@ -20,6 +20,7 @@ module.exports = {
         black4: '#ececee',
         blue1: '#00B3FF',
         gray1: '#CDD8E8',
+        gary2: '#F9F9F9',
         textPrimary: 'var(--color-text-primary)',
       },
       boxShadow: {

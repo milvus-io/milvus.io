@@ -42,6 +42,8 @@ import {
 } from '@/utils/sizingTool';
 import { Trans, useTranslation } from 'react-i18next';
 import { TooltipArrow } from '@radix-ui/react-tooltip';
+import { ExternalLinkIcon } from '@/components/icons';
+import { KafkaIcon, PulsarIcon } from './components';
 
 export default function FormSection(props: {
   className: string;
@@ -139,11 +141,11 @@ export default function FormSection(props: {
   const dependencyOptions = [
     {
       ...DEPENDENCY_COMPONENTS[0],
-      icon: '/images/sizing-tool/pulsar.svg',
+      icon: <PulsarIcon />,
     },
     {
       ...DEPENDENCY_COMPONENTS[1],
-      icon: '/images/sizing-tool/kafka.svg',
+      icon: <KafkaIcon />,
     },
   ];
 
@@ -240,8 +242,8 @@ export default function FormSection(props: {
 
   return (
     <section className={clsx(className, classes.formSection)}>
-      <div className={clsx(classes.singlePart, classes.paddingBtm20)}>
-        <div className={classes.marginBtm20}>
+      <div className={classes.singlePart}>
+        <div className="mb-[24px]">
           <SizingRange
             rangeConfig={VECTOR_RANGE_CONFIG}
             label={t('form.num')}
@@ -253,7 +255,7 @@ export default function FormSection(props: {
             placeholder={`[${VECTOR_RANGE_CONFIG.min}, ${VECTOR_RANGE_CONFIG.max}]`}
           />
         </div>
-        <div className={classes.marginBtm20}>
+        <div className="mb-[24px]">
           <SizingRange
             rangeConfig={DIMENSION_RANGE_CONFIG}
             label={t('form.dim')}
@@ -264,9 +266,53 @@ export default function FormSection(props: {
             placeholder={`[${DIMENSION_RANGE_CONFIG.min}, ${DIMENSION_RANGE_CONFIG.max}]`}
           />
         </div>
-        <div className={clsx(classes.marginBtm0)}>
-          <div className={clsx(classes.flexRow)}>
-            <p className={classes.switchLabel}>{t('form.withScalar')}</p>
+        <div className="mb-[24px]">
+          <h4 className="flex items-center justify-between mb-[8px]">
+            <span className="font-[500] text-[16px] leading-[22px] text-black1">
+              {t('form.indexType')}
+            </span>
+            <a
+              className="flex items-center gap-[4px] font-[500] text-[12px] leading-[16px] text-black1"
+              href="/docs/index.md?tab=floating"
+              target="_blank"
+            >
+              {t('form.indexTypeTip')}
+              <ExternalLinkIcon />
+            </a>
+          </h4>
+
+          <Select
+            value={indexTypeParams.indexType}
+            onValueChange={val => {
+              handleIndexTypeParamsChange('indexType', val);
+            }}
+          >
+            <SelectTrigger className={classes.selectTrigger}>
+              {indexTypeParams.indexType}
+            </SelectTrigger>
+            <SelectContent>
+              {INDEX_TYPE_OPTIONS.map(v => (
+                <SelectItem
+                  key={v.value}
+                  value={v.value}
+                  className={classes.selectItem}
+                >
+                  {v.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <IndexTypeComponent
+            data={indexTypeParams}
+            onChange={handleIndexTypeParamsChange}
+          />
+        </div>
+        <div className="">
+          <div className="flex items-center gap-[8px]">
+            <p className="text-[14px] leading-[22px] font-[500]">
+              {t('form.withScalar')}
+            </p>
             <SizingSwitch
               checked={form.widthScalar}
               onCheckedChange={value => {
@@ -292,15 +338,17 @@ export default function FormSection(props: {
                   root: classes.marginBtm20,
                   label: classes.averageLabel,
                 }}
-                placeholder="[0, 60,000,000]"
+                placeholder="[ 0, 60,000,000 ]"
               />
               <div>
-                <div className={classes.offLoadingLabel}>
+                <div className="flex items-center gap-[8px] mb-[8px]">
                   <Checkbox
                     checked={form.scalarData.offLoading}
                     onCheckedChange={handleOffLoadingChange}
                   />
-                  <p className={classes.smallerLabel}>{t('form.offloading')}</p>
+                  <p className="text-[12px] leading-[18px] font-[500]">
+                    {t('form.offloading')}
+                  </p>
                 </div>
                 <p className={classes.offLoadingDesc}>
                   <Trans
@@ -315,60 +363,10 @@ export default function FormSection(props: {
         </div>
       </div>
       <div className={clsx(classes.singlePart, 'pb-[24px]')}>
-        <div className="">
-          <TooltipProvider>
-            <Tooltip delayDuration={0}>
-              <TooltipTrigger>
-                <h4
-                  className={clsx(classes.commonLabel, classes.tooltipTrigger)}
-                >
-                  {t('form.indexType')}
-                </h4>
-              </TooltipTrigger>
-              <TooltipContent>
-                <Trans
-                  t={t}
-                  i18nKey="form.indexTypeTip"
-                  components={[
-                    <a
-                      href="/docs/index.md?tab=floating"
-                      key="index-type"
-                      className={classes.tooltipLink}
-                    ></a>,
-                  ]}
-                />
-                <TooltipArrow></TooltipArrow>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <Select
-            value={indexTypeParams.indexType}
-            onValueChange={val => {
-              handleIndexTypeParamsChange('indexType', val);
-            }}
-          >
-            <SelectTrigger className={classes.selectTrigger}>
-              {indexTypeParams.indexType}
-            </SelectTrigger>
-            <SelectContent>
-              {INDEX_TYPE_OPTIONS.map(v => (
-                <SelectItem key={v.value} value={v.value}>
-                  {v.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <IndexTypeComponent
-            data={indexTypeParams}
-            onChange={handleIndexTypeParamsChange}
-          />
-        </div>
-      </div>
-      <div className={clsx(classes.singlePart, 'pb-[24px]')}>
-        <div className={classes.marginBtm20}>
-          <h4 className={classes.commonLabel}>{t('form.segmentSize')}</h4>
+        <div className="mb-[24px]">
+          <h4 className="text-[14px] font-[600] leading-[22px] mb-[8px]">
+            {t('form.segmentSize')}
+          </h4>
           <Select
             value={form.segmentSize}
             onValueChange={val => {
@@ -388,12 +386,15 @@ export default function FormSection(props: {
           </Select>
         </div>
 
-        <div className={clsx(classes.singleRow, classes.marginBtm20)}>
+        <div className="mb-[24px]">
           <h4 className="">
             <TooltipProvider>
               <Tooltip delayDuration={0}>
                 <TooltipTrigger
-                  className={clsx(classes.commonLabel, classes.tooltipTrigger)}
+                  className={clsx(
+                    'text-[14px] font-[600] leading-[22px] mb-[8px]',
+                    classes.tooltipTrigger
+                  )}
                 >
                   {t('form.mode')}
                 </TooltipTrigger>
@@ -428,8 +429,12 @@ export default function FormSection(props: {
                 handleFormChange('mode', modeOptions[0].value);
               }}
             >
-              <h5 className={classes.modeName}>{modeOptions[0].label}</h5>
-              <span className={classes.modeDesc}>{modeOptions[0].desc}</span>
+              <h5 className="text-[14px] font-[600] leading-[22px]">
+                {modeOptions[0].label}
+              </h5>
+              <span className="text-[12px] font-[400] leading-[16px]">
+                {modeOptions[0].desc}
+              </span>
 
               <TooltipProvider>
                 <Tooltip delayDuration={0}>
@@ -451,14 +456,20 @@ export default function FormSection(props: {
                 handleFormChange('mode', modeOptions[1].value);
               }}
             >
-              <h5 className={classes.modeName}>{modeOptions[1].label}</h5>
-              <span className={classes.modeDesc}>{modeOptions[1].desc}</span>
+              <h5 className="text-[14px] font-[600] leading-[22px]">
+                {modeOptions[1].label}
+              </h5>
+              <span className="text-[12px] font-[400] leading-[16px]">
+                {modeOptions[1].desc}
+              </span>
             </div>
           </div>
         </div>
         {form.mode === ModeEnum.Cluster && (
           <div>
-            <h4 className={classes.commonLabel}>{t('form.dependencyComp')}</h4>
+            <h4 className="text-[14px] font-[600] leading-[22px] mb-[8px]">
+              {t('form.dependencyComp')}
+            </h4>
             <div className={classes.cardsWrapper}>
               {dependencyOptions.map(v => (
                 <button
@@ -470,8 +481,10 @@ export default function FormSection(props: {
                   }}
                   key={v.label}
                 >
-                  <img src={v.icon} alt={v.label} />
-                  <span className={classes.depName}>{v.label}</span>
+                  {v.icon}
+                  <span className="text-[14px] font-[600] leading-[22px]">
+                    {v.label}
+                  </span>
                 </button>
               ))}
             </div>

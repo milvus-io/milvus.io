@@ -30,7 +30,7 @@
     "clusterDesc": "Suitable for large data size. "
   },
   "overview": {
-    "title": "Setup Resource Requirements",
+    "title": "Resource Requirements for Setup",
     "explore": "Explore Managed Service Cost",
     "overview": "Data Size Calculation",
     "raw": "Raw Data Size: ",
@@ -41,7 +41,7 @@
   "setup": {
     "title": "Setup Resource Requirements",
     "cloud": "Explore Managed Service Cost",
-    "outOfRange": "Your data volume is substantial. Please <0>contact us</0> to explore the best deployment practices.",
+    "outOfRange": "You have a large amount of data. Please <0>contact us</0> to explore the best practices for deployment.",
     "milvus": {
       "title": "Milvus",
       "proxy": "Proxy",
@@ -93,9 +93,9 @@
   },
   "install": {
     "title": "Install Milvus",
-    "helm": "Helm Chart configuration",
-    "operator": "Milvus Operator configuration",
-    "docker": "Docker Compose configuration",
+    "helm": "Helm Chart Configuration",
+    "operator": "Milvus Operator Configuration",
+    "docker": "Docker Compose Configuration",
     "adv": "Too many resources consumed? Try Zilliz Cloud (managed Milvus) to save resources and cut deployment and operation costs. Check out more details with the Zilliz Cloud calculator. <0>Go to Zilliz Cloud calculator</0>.",
     "adv2": "Setting up a Milvus cluster for performance testing or benchmarking? Refer to <0>VDB Bench</0> for detailed guidance.",
     "tip1": "How to run Milvus with Docker Compose?",

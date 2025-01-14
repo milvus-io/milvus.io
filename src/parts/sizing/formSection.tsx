@@ -52,7 +52,7 @@ export default function FormSection(props: {
   const { t } = useTranslation('sizingTool');
   const { className, updateCalculatedResult } = props;
 
-  const [collapseHeight, setCollapseHeight] = useState(0);
+  // const [collapseHeight, setCollapseHeight] = useState(0);
   const collapseEle = useRef<HTMLDivElement | null>(null);
 
   const [form, setForm] = useState({
@@ -128,11 +128,11 @@ export default function FormSection(props: {
     });
   };
 
-  useEffect(() => {
-    const targetEle = collapseEle?.current;
-    const height = targetEle.offsetHeight;
-    setCollapseHeight(height);
-  }, []);
+  // useEffect(() => {
+  //   const targetEle = collapseEle?.current;
+  //   const height = targetEle.offsetHeight;
+  //   setCollapseHeight(height);
+  // }, []);
 
   const selectedSegmentSize = useMemo(() => {
     return SEGMENT_SIZE_OPTIONS.find(v => v.value === form.segmentSize);

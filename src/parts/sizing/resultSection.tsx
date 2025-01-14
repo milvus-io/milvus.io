@@ -118,7 +118,7 @@ export default function ResultSection(props: {
       value: InstallTypeEnum.Helm,
       code: helmCodeExample,
       tip: t('install.tip2'),
-      document: 'docs/install_cluster-helm.md',
+      document: '/docs/install_cluster-helm.md',
     },
     {
       label: t('install.operator'),
@@ -259,7 +259,7 @@ export default function ResultSection(props: {
             <p className={clsx('text-blue1', classes.font16Bold)}>
               {isOutOfCalculate
                 ? '--'
-                : t('setup.basic.simpleCore', {
+                : t('setup.basic.core', {
                     cpu: `${totalCpu.num} ${totalCpu.unit}`,
                   })}
             </p>
@@ -323,7 +323,7 @@ export default function ResultSection(props: {
                       {t('setup.basic.cpu')}:&nbsp;
                       <span className="font-[600] text-[12px] leading-[18px] text-black1">
                         {formatOutOfCalData({
-                          data: `${milvusCpuData.num} ${milvusCpuData.unit} C`,
+                          data: `${milvusCpuData.num} ${milvusCpuData.unit} Core`,
                           isOut: isOutOfCalculate,
                         })}
                       </span>
@@ -396,7 +396,7 @@ export default function ResultSection(props: {
                       {t('setup.basic.cpu')}:&nbsp;
                       <span className="font-[600] text-[12px] leading-[18px] text-black1">
                         {formatOutOfCalData({
-                          data: `${dependencyCpuData.num}${dependencyCpuData.unit} C`,
+                          data: `${dependencyCpuData.num}${dependencyCpuData.unit} Core`,
                           isOut: isOutOfCalculate,
                         })}
                       </span>

@@ -1,6 +1,6 @@
 import classes from './index.module.less';
 import { useTranslation } from 'react-i18next';
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import CustomButton from '@/components/customButton';
 import { RightTopArrowIcon } from '@/components/icons';
 import { useEffect, useMemo, useState } from 'react';

@@ -10,7 +10,7 @@ import {
 } from '@/types/docs';
 import { JSON_REG, VERSION_REG } from '@/consts/regexp';
 import { setCacheData, getCacheData } from './index';
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 
 const matter = require('gray-matter');
 

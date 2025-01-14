@@ -1,7 +1,7 @@
 import { AlgoliaSearch } from '@/components/search/agloia';
 import ExpansionTreeView from '@/components/treeView/ExpansionTreeView';
 import VersionSelector from '@/components/versionSelector';
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import {
   AllMdVersionIdType,
   ApiReferenceRouteEnum,

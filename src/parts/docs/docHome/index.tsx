@@ -3,7 +3,8 @@ import HorizontalBlogCard from '../../../components/card/HorizontalBlogCard';
 import classes from './index.module.less';
 import clsx from 'clsx';
 import { BlogFrontMatterType } from '@/types/blogs';
-import { LanguageEnum, LanguageSelector } from '@/components/language-selector';
+import { LanguageSelector } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import React from 'react';
 
 interface HomeContentProps {
@@ -11,9 +12,10 @@ interface HomeContentProps {
   homeData: string;
   lang?: LanguageEnum;
   disableLanguageSelector?: boolean;
+  disabledLanguages?: LanguageEnum[];
 }
 export default function HomeContent(props: HomeContentProps) {
-  const { homeData = '', latestBlog, lang, disableLanguageSelector } = props;
+  const { homeData = '', latestBlog, lang, disableLanguageSelector, disabledLanguages = [] } = props;
 
   return (
     <section className={classes.container}>
@@ -22,6 +24,7 @@ export default function HomeContent(props: HomeContentProps) {
           value={lang}
           disabled={disableLanguageSelector}
           showDeepLogo={lang !== LanguageEnum.ENGLISH}
+          disabledLanguages={disabledLanguages}
         />
       </div>
 

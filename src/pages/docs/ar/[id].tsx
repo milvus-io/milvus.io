@@ -6,17 +6,11 @@ import { createDocDetailProps } from '@/components/localization/CreateDocDetailP
 export default DocDetailPage;
 
 export const getStaticPaths = () => {
-  const { getPageStaticPaths } = createDocDetailProps(
-    LanguageEnum.ENGLISH,
-    'v2.0.x'
-  );
+  const { getPageStaticPaths } = createDocDetailProps(LanguageEnum.ARABIC);
   return getPageStaticPaths();
 };
 
 export const getStaticProps: GetStaticProps = async context => {
-  const { getPageStaticProps } = createDocDetailProps(
-    LanguageEnum.ENGLISH,
-    'v2.0.x'
-  );
+  const { getPageStaticProps } = createDocDetailProps(LanguageEnum.ARABIC);
   return getPageStaticProps(context);
 };

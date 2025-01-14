@@ -6,7 +6,7 @@ import {
 } from '@/utils/docs';
 import { GetStaticProps } from 'next';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import { DocDetailPage } from '@/components/localization/DocDetail';
 
 export default DocDetailPage;

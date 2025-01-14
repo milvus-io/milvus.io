@@ -1,4 +1,4 @@
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 
 export const getLinkPrefix = (params: {
   type: 'doc' | 'api';

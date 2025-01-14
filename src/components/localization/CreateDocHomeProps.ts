@@ -1,4 +1,4 @@
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
 import { generateAllBlogContentList } from '@/utils/blogs';
 import {

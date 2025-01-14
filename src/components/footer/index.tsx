@@ -15,7 +15,7 @@ import {
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
 import SocialMedias from '../socialMedias';
-import { LanguageEnum } from '../language-selector';
+import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
 
 const footerJson = [

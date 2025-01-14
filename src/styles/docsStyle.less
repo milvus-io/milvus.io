@@ -3,6 +3,17 @@
 @link-color: #1493cc;
 @block-margin: 1.8em;
 
+// handle arabic layout
+html[lang='ar'] {
+  .doc-style {
+    direction: rtl;
+  }
+
+  code {
+    direction: ltr;
+  }
+}
+
 .doc-style {
   --pre-bg-color: #f9f9f9;
   --pre-bg-color-dark: #242a35;
@@ -466,7 +477,7 @@
       width: calc(100vw - 32px);
 
       th {
-        text-align: left!important;
+        text-align: left !important;
 
         &:not(:last-child) {
           border-right: 1px solid @color-black4;
@@ -495,7 +506,7 @@
 
       td {
         padding: 10px 20px;
-        text-align: left!important;
+        text-align: left !important;
         font-size: 14px;
         line-height: 1.5;
         width: calc(100vw - 32px);

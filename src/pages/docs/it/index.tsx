@@ -1,4 +1,4 @@
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import { createDocHomeProps } from '@/components/localization/CreateDocHomeProps';
 import { DocHomepage } from '@/components/localization/DocHome';
 

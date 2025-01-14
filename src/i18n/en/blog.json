@@ -29,5 +29,12 @@
   },
   "authors": {
     "title": "Most Contributing Authors"
+  },
+  "homepage": {
+    "title": "Learn Milvus: Insights and Innovations in VectorDB Technology",
+    "desc": "Learn vector database fundamentals, Milvus features and capabilities, and technical tutorials on managing and optimizing vector search for modern AI apps."
+  },
+  "detail": {
+    "keepReading": "Keep Reading"
   }
 }

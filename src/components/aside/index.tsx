@@ -14,6 +14,7 @@ import AnchorTree from '../../parts/docs/anchorTree';
 import FeedbackSection from './feedback';
 import styles from './index.module.less';
 import CloudAdvertisementCard from '../card/advCard';
+import { DeepLogo } from '../localization/DeepLogo';
 
 interface DocData {
   editPath: string;
@@ -35,8 +36,6 @@ interface AsidePropsType {
   docData?: DocData;
   activeAnchor?: string;
   lang?: LanguageEnum;
-  disableLanguageSelector?: boolean;
-  disabledLanguages?: LanguageEnum[];
 
   classes?: {
     root?: string;
@@ -62,8 +61,6 @@ const Aside = (props: AsidePropsType) => {
     apiReferenceData,
     activeAnchor = '',
     lang,
-    disableLanguageSelector,
-    disabledLanguages = [],
   } = props;
   const { t } = useTranslation('docs', { lng: lang });
   const { root, btnGroup, anchorTree } = classes;
@@ -159,13 +156,7 @@ const Aside = (props: AsidePropsType) => {
 
   return (
     <div className={clsx(styles.rightNavWrapper, root)}>
-      <LanguageSelector
-        value={lang}
-        className="mb-[32px]"
-        disabled={disableLanguageSelector}
-        showDeepLogo={lang !== LanguageEnum.ENGLISH}
-        disabledLanguages={disabledLanguages}
-      />
+      <DeepLogo className="mb-[32px]" />
       <>
         {category === 'doc' && (
           <AnchorTree

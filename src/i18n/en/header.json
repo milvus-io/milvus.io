@@ -24,5 +24,15 @@
   "community": "Community",
   "start": "Try Managed Milvus",
   "star": "Star",
-  "contact": "Contact Us"
+  "contact": "Contact Us",
+  "footer": {
+    "resource": {
+      "managed": "Managed Milvus"
+    },
+    "tools": {
+      "sizing": "MIlvus Sizing Tool",
+      "backup": "Milvus Backup Tool",
+      "vts": "Vector Transport Service (VTS)"
+    }
+  }
 }

@@ -1,0 +1,40 @@
+{
+  "trending": "趋势",
+  "recent": {
+    "most": "最近",
+    "release": "发布 & 事件"
+  },
+  "subscribe": {
+    "title": "<0>30,000+</0> VDB 工程师加入",
+    "desc": "从 Milvus 的创建者和关键维护者 Zilliz 获取 Milvus 版本和教程的更新。"
+  },
+  "filter": {
+    "all": "全部",
+    "engineering": "工程",
+    "announcements": "公告",
+    "tutorials": "教程",
+    "usecases": "用例"
+  },
+  "aiService": {
+    "title": "问我任何关于 Milvus!",
+    "desc": "人工智能助理接受了文档、帮助文章和其他内容培训。"
+  },
+  "zillizAdv": {
+    "title": "轻松自在，比 Milvus 快 10 倍",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "针对您的工作负载进行特殊情况优化的计算单元",
+    "feature2": "企业级安全性",
+    "feature3": "可在 AWS、GCP 和 Azure 上提供",
+    "btn": "免费试用 Milvus"
+  },
+  "authors": {
+    "title": "最有贡献的作者"
+  },
+  "homepage": {
+    "title": "了解Milvus：VectorDB技术的见解和创新",
+    "desc": "了解向量数据库基础知识、Milvus功能和功能，以及有关管理和优化现代人工智能应用程序的载体搜索的技术教程。"
+  },
+  "detail": {
+    "keepReading": "扩展阅读"
+  }
+}

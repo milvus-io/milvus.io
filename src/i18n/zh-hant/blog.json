@@ -1,0 +1,40 @@
+{
+  "trending": "熱門",
+  "recent": {
+    "most": "最新",
+    "release": "發布與活動"
+  },
+  "subscribe": {
+    "title": "第一時間獲取資訊",
+    "desc": "從 Milvus 的創建者和主要維護者 Zilliz 獲取 Milvus 發布和教程的更新。"
+  },
+  "filter": {
+    "all": "全部",
+    "engineering": "工程",
+    "announcements": "公告",
+    "tutorials": "教程",
+    "usecases": "使用案例"
+  },
+  "aiService": {
+    "title": "問我有關 Milvus 的任何問題！",
+    "desc": "一個在文檔、幫助文章和其他內容上訓練的 AI 助手。"
+  },
+  "zillizAdv": {
+    "title": "無煩惱且比 Milvus 快 10 倍",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "針對您的工作負載優化的使用案例計算單元",
+    "feature2": "企業級安全",
+    "feature3": "可用於 AWS、GCP 和 Azure",
+    "btn": "免費試用完全管理的 Milvus"
+  },
+  "authors": {
+    "title": "最多貢獻的作者"
+  },
+  "homepage": {
+    "title": "學習 Milvus：向量數據庫技術的見解與創新",
+    "desc": "學習向量數據庫的基本知識、Milvus 的功能和能力，以及管理和優化現代 AI 應用程序的向量搜索的技術教程。"
+  },
+  "detail": {
+    "keepReading": "繼續閱讀"
+  }
+}

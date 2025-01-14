@@ -4,17 +4,16 @@ import clsx from 'clsx';
 import classes from './index.module.less';
 import { GET_START_LINK } from '@/consts/links';
 import CustomButton from '@/components/customButton';
-import CopyCodeButton from '@/components/copyCodeButton';
 import Link from 'next/link';
-
-const PIP_INSTALL_TEXT = 'pip install pymilvus';
+import { LanguageEnum } from '@/types/localization';
 
 export default function HomePageHeaderSection(props: {
   label: string;
   link: string;
+  locale: LanguageEnum;
 }) {
-  const { t } = useTranslation('home');
-  const { label, link } = props;
+  const { label, link, locale } = props;
+  const { t } = useTranslation('home', { lng: locale });
 
   return (
     <section

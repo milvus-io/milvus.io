@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import { useMemo } from 'react';
 import { AllMdVersionIdType, ApiReferenceRouteEnum } from '@/types/docs';
 import { generateVersionSelectOptions } from '@/utils';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
+import { LanguageEnum } from '@/types/localization';
 
 interface VersionSelectorProps {
   versions: string[];
@@ -32,6 +34,7 @@ export default function VersionSelector(props: VersionSelectorProps) {
     mdListData,
     category,
   } = props;
+  const { changeLocale } = useGlobalLocale();
 
   const links = useMemo(() => {
     if (currentMdId === 'home') {
@@ -52,6 +55,10 @@ export default function VersionSelector(props: VersionSelectorProps) {
     });
   }, [currentMdId, mdListData, latestVersion, versions, category]);
 
+  const handleVersionChange = () => {
+    changeLocale(LanguageEnum.ENGLISH);
+  };
+
   return (
     <div className={classes.selectorWrapper}>
       <Link
@@ -66,7 +73,7 @@ export default function VersionSelector(props: VersionSelectorProps) {
 
       <Select
         value={curVersion}
-        onChange={data => {}}
+        onChange={handleVersionChange}
         classes={{
           select: classes.selectRoot,
         }}

@@ -1,0 +1,140 @@
+{
+  "title": "高性能<0/> <1>向量資料庫</1>，為規模而構建",
+  "subTitle": "Milvus 是一個開源的向量數據庫，專為 GenAI 應用而構建。使用 pip 安裝，進行高速搜索，並在幾乎沒有性能損失的情況下擴展到數十億個向量。",
+  "news": "新聞",
+  "buttons": {
+    "download": "下載",
+    "star": "星標",
+    "pipInstall": "pip 安裝 pymilvus",
+    "start": "開始",
+    "tryCloud": "免費嘗試 Zilliz Cloud",
+    "getStarted": "開始",
+    "learnMore": "了解更多",
+    "quickStart": "Milvus 快速開始",
+    "tryFree": "免費嘗試",
+    "rsvp": "立即報名",
+    "subscribe": "訂閱",
+    "tryNow": "立即嘗試"
+  },
+  "codeSection": {
+    "title": "幾秒鐘內開始運行 Milvus",
+    "tabs": {
+      "createCollection": "創建集合",
+      "insertData": "插入數據",
+      "search": "搜索",
+      "product": "生產",
+      "delete": "刪除數據"
+    }
+  },
+  "trySection": {
+    "title": "尋找托管的 Milvus 以最小化你的運營負擔？",
+    "subTitle": "與所有你喜愛的 AI 開發工具完美兼容"
+  },
+  "lovedSection": {
+    "title": "受 GenAI 開發者喜愛",
+    "cards": {
+      "nandula": {
+        "content": "根據我們的研究，Milvus 被選為首選的向量數據庫（優於 Chroma 和 Pinecone）。Milvus 是一個專為大規模數據集的高維向量相似性搜索而設計的開源向量數據庫。",
+        "author": "Nandula Asel",
+        "title": "高級數據科學家"
+      },
+      "bhargav": {
+        "content": "專注於高效的向量相似性搜索，Milvus 使你能夠構建強大且可擴展的圖像檢索系統。無論你是管理個人照片庫還是開發商業圖像搜索應用，Milvus 都為揭示你的圖像集合中的潛力提供了強大的基礎。",
+        "author": "Bhargav Mankad",
+        "title": "高級解決方案架構師"
+      },
+      "igor": {
+        "content": "Milvus 是一個強大的向量數據庫，專為處理和搜索大量向量數據而設計。它以其高性能和可擴展性而聞名，使其成為機器學習、深度學習、相似性搜索任務和推薦系統的完美選擇。",
+        "author": "Igor Gorbenko",
+        "title": "大數據架構師"
+      }
+    }
+  },
+  "vdbSection": {
+    "title": "為什麼開發者更喜歡 Milvus 作為向量數據庫",
+    "features": {
+      "scale": {
+        "title": "按需擴展",
+        "desc": "彈性擴展以支持數十億個向量，完全分佈式"
+      },
+      "fast": {
+        "title": "快速",
+        "desc": "使用全局索引，無論規模如何，快速準確地檢索數據。"
+      },
+      "reusable": {
+        "title": "可重用代碼",
+        "desc": "編寫一次，使用一行代碼部署到生產環境中。"
+      },
+      "community": {
+        "title": "支持社群",
+        "desc": "最受歡迎的向量數據庫，具有豐富的資源和支持的貢獻者。"
+      },
+      "featureRich": {
+        "title": "功能豐富",
+        "desc": "元數據過濾、混合搜索、多向量等。"
+      }
+    },
+    "prompt": "想了解更多有關 Milvus 的信息嗎？<0>查看我們的文檔</0>"
+  },
+  "deploySection": {
+    "title": "部署選項以匹配你的獨特旅程",
+    "lite": {
+      "title": "Milvus Lite",
+      "advantage": "輕量級，易於開始",
+      "features": [
+        "向量數據庫作為庫在筆記本/筆記本電腦上運行，通過 pip 安裝",
+        "最適合學習和原型設計"
+      ]
+    },
+    "milvusStandalone": {
+      "title": "Milvus Standalone",
+      "advantage": "穩健的單機部署",
+      "features": [
+        "齊全的向量數據庫，適合生產或測試",
+        "理想的數十萬個向量的數據集"
+      ]
+    },
+    "milvusDistributed": {
+      "title": "Milvus Distributed",
+      "advantage": "可擴展的企業級解決方案",
+      "features": [
+        "高度可靠且分佈的向量數據庫，具有全面的工具包",
+        "水平擴展以處理數十億個向量"
+      ]
+    },
+    "cloud": {
+      "title": "Zilliz Cloud",
+      "advantage": "完全托管，最小化運營",
+      "features": [
+        "提供無服務器和專用集群兩種選項",
+        "SaaS 和 BYOC 選項以滿足不同的安全和合規要求"
+      ]
+    },
+    "deployModels": "了解更多有關不同 <0>Milvus 部署模型</0>"
+  },
+  "developSection": {
+    "title": "開始構建你的 GenAI 應用",
+    "subTitle": "由我們和我們的社群開發的筆記本指導",
+    "rag": "RAG",
+    "imgSearch": "圖像搜索",
+    "multimodal": "多模態搜索",
+    "hybridSearch": "混合搜索",
+    "graphRag": "圖 RAG",
+    "meetup": {
+      "title": "非結構化數據聚會",
+      "desc": "加入一個致力於 Gen AI 的開發者和工程師社群。"
+    }
+  },
+  "subscribeSection": {
+    "title": "加入使用 Milvus 構建 GenAI 應用的開發者社群，現在已有超過 <0>2500 萬次下載</0>",
+    "subscribe": {
+      "title": "獲取 Milvus 更新",
+      "desc": "訂閱以獲取有關最新 Milvus 版本、教程和培訓的更新，來自 Zilliz，Milvus 的創造者和主要維護者。",
+      "email": "電子郵件"
+    }
+  },
+  "productionSection": {
+    "title": "值得信賴的生產工作負擔"
+  },
+  "banner": "🚀 免費嘗試 Zilliz Cloud，完全托管的 Milvus，體驗速度提升 10 倍！<0>立即嘗試</0>"
+}

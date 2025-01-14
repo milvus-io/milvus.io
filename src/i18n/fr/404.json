@@ -1,0 +1,17 @@
+{
+  "title": "404 : Page non trouvée",
+  "content": "Oups ! Il semble que vous ayez pris un mauvais tournant.<0></0>La page que vous recherchez ne semble pas exister.",
+  "subtitle": "Mais ne vous inquiétez pas, vous pouvez retourner là où vous devez être :",
+  "docs": "Docs Milvus",
+  "homepage": "Page d'accueil",
+  "tutorial": "Tutoriels Milvus & GenAI",
+  "explore": {
+    "title": "Ou, explorez quelque chose de nouveau :",
+    "desc": "Pendant que vous êtes ici, découvrez ces dernières ressources.",
+    "whatIsMilvus": {
+      "title": "Qu'est-ce que Milvus ?",
+      "desc": "Tout ce que vous devez savoir sur Milvus en moins de 10 minutes.",
+      "learnMore": "En savoir plus"
+    }
+  }
+}

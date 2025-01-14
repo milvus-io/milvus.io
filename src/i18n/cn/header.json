@@ -1,25 +1,36 @@
 {
   "intro": {
-    "label": "Why Milvus",
-    "definition": "What is Milvus",
-    "cases": "Use Cases"
+    "label": "为什么选择 Milvus",
+    "definition": "什么是 Milvus",
+    "cases": "使用案例"
   },
-  "docs": "Docs",
+  "docs": "文档",
   "tutorials": {
-    "label": "Tutorials",
-    "codelabs": "Codelabs",
-    "bootcamp": "Bootcamp",
-    "demo": "Demos",
-    "video": "Video"
+    "label": "教程",
+    "codelabs": "代码实验室",
+    "bootcamp": "训练营",
+    "demo": "演示",
+    "video": "视频"
   },
   "tools": {
-    "label": "Tools",
+    "label": "工具",
     "attu": "Attu",
     "cli": "Milvus CLI",
-    "sizing": "Sizing Tool",
-    "backup": "Milvus Backup"
+    "sizing": "配置工具",
+    "backup": "Milvus 备份"
   },
-  "blog": "Blog",
-  "community": "Community",
-  "start": "Get Started"
+  "blog": "博客",
+  "community": "社区",
+  "start": "开始使用",
+  "contact": "联系我们",
+  "footer": {
+    "resource": {
+      "managed": "托管 Milvus"
+    },
+    "tools": {
+      "sizing": "Milvus 容量计算工具",
+      "backup": "Milvus 备份工具",
+      "vts": "向量传输服务 (VTS)"
+    }
+  }
 }

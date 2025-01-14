@@ -1,0 +1,39 @@
+{
+  "title": "Milvus facilite l'ajout de recherche de similarité à vos applications.",
+  "desc": "Stockez, indexez et gérez des vecteurs d'incorporation massifs générés par des réseaux de neurones profonds et d'autres modèles d'apprentissage automatique (ML).",
+  "demos": {
+    "multimodal": {
+      "title": "Recherche d'images multimodale",
+      "desc": "Téléchargez des images et modifiez du texte pour améliorer les recherches d'images intuitives à l'aide de technologies de récupération avancées."
+    },
+    "imgSearch": {
+      "title": "Recherche d'images",
+      "desc": "Images rendues recherchables. Retourne instantanément les images les plus similaires à partir d'une base de données massive."
+    },
+    "hybridSearch": {
+      "title": "Recherche hybride",
+      "desc": "Faites l'expérience d'une recherche de texte avancée avec le modèle BGE-M3, fournissant des résultats précis Dense, Sparse et Hybrid pour une pertinence de requête améliorée."
+    },
+    "ossChat": {
+      "title": "OSSChat",
+      "desc": "ChatGPT amélioré avec documentation, problèmes, articles de blog, Q&A communautaires comme bases de connaissances. Conçu pour chaque communauté et développeur."
+    },
+    "chemicalSearch": {
+      "title": "Recherche de structure chimique",
+      "desc": "Recherche de similarité ultra-rapide, recherche de sous-structure ou recherche de superstructure pour une molécule spécifiée."
+    },
+    "askAi": {
+      "title": "Génération augmentée par récupération (RAG)",
+      "desc": "Ask AI est un chatbot RAG pour la documentation et les articles d'aide de Milvus. La base de données vectorielle alimentant la récupération est Zilliz Cloud (Milvus entièrement géré).",
+      "ctaLabel1": "Demander à l'IA",
+      "ctaLabel2": "Découvrez comment nous l'avons construit"
+    }
+  },
+  "prompts": {
+    "success": "Merci, vous avez été ajouté à notre liste de diffusion !",
+    "warning": "Une seconde ! Nous vous y emmenons...",
+    "waiting": "Avant de partir..."
+  },
+  "tryDemo": "Essayer la démo",
+  "watchDemo": "Regarder la démo"
+}

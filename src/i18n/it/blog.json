@@ -1,0 +1,40 @@
+{
+  "trending": "IN TENDENZA",
+  "recent": {
+    "most": "PIÙ RECENTE",
+    "release": "RILASCI E EVENTI"
+  },
+  "subscribe": {
+    "title": "Sii il primo a saperlo",
+    "desc": "Ricevi aggiornamenti sui rilasci e tutorial di Milvus da Zilliz, il creatore e principale manutentore di Milvus."
+  },
+  "filter": {
+    "all": "TUTTO",
+    "engineering": "Ingegneria",
+    "announcements": "Annunci",
+    "tutorials": "Tutorial",
+    "usecases": "Casi d'Uso"
+  },
+  "aiService": {
+    "title": "Chiedimi qualsiasi cosa su Milvus!",
+    "desc": "Un assistente AI addestrato su documentazione, articoli di aiuto e altri contenuti."
+  },
+  "zillizAdv": {
+    "title": "Senza problemi e 10 volte più veloce di Milvus",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "Unità di calcolo ottimizzate per il caso d'uso per il tuo carico di lavoro",
+    "feature2": "Sicurezza di livello aziendale",
+    "feature3": "Disponibile su AWS, GCP e Azure",
+    "btn": "Prova Milvus Completamente Gestito Gratis"
+  },
+  "authors": {
+    "title": "Autori Più Contributivi"
+  },
+  "homepage": {
+    "title": "Impara Milvus: Insights e Innovazioni nella Tecnologia VectorDB",
+    "desc": "Impara i fondamenti dei database vettoriali, le funzionalità e le capacità di Milvus, e tutorial tecnici sulla gestione e ottimizzazione della ricerca vettoriale per le app AI moderne."
+  },
+  "detail": {
+    "keepReading": "Continua a Leggere"
+  }
+}

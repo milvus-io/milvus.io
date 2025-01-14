@@ -1,0 +1,284 @@
+{
+  "v3trans": {
+    "desc": "所有 V3 翻譯內容將放在這裡",
+    "home": {
+      "banner": {
+        "title": "為可擴展相似性搜索而建的向量數據庫",
+        "desc": "開源、高度可擴展且極快。",
+        "tryManaged": "試試託管 Milvus",
+        "getstart": "試試開源",
+        "watch": "觀看視頻",
+        "star": "GitHub 星標",
+        "contirbutor": "貢獻者",
+        "downloads": "下載量",
+        "users": "用戶"
+      },
+      "feature": {
+        "easy": {
+          "title": "易於使用",
+          "desc": "使用 Milvus 向量數據庫，您可以在不到一分鐘的時間內創建一個大規模的相似性搜索服務。還提供簡單直觀的 SDK，適用於多種不同語言。"
+        },
+        "fast": {
+          "title": "極快",
+          "desc": "Milvus 硬件高效，並提供先進的索引算法，在檢索速度上實現了 10 倍的性能提升。"
+        },
+        "available": {
+          "title": "高度可用",
+          "desc": "Milvus 向量數據庫已在各種用例中經過數千家企業用戶的實戰測試。通過對各個系統組件的廣泛隔離，Milvus 具有高度的彈性和可靠性。"
+        },
+        "scalable": {
+          "title": "高度可擴展",
+          "desc": "Milvus 的分佈式和高吞吐量特性使其自然適合服務大規模向量數據。"
+        },
+        "cloud": {
+          "title": "雲原生",
+          "desc": "Milvus 向量數據庫採用系統化的雲原生方法，將計算與存儲分離，讓您可以上下擴展。"
+        },
+        "rich": {
+          "title": "功能豐富",
+          "desc": "支持各種數據類型，通過屬性過濾增強向量搜索，支持 UDF，可配置的一致性級別，時間旅行等。"
+        },
+        "title": "為您的機器學習部署提供動力",
+        "desc": "存儲、索引和管理由深度神經網絡和其他機器學習（ML）模型生成的大規模嵌入向量。"
+      },
+      "code": {
+        "install": "在 2 分鐘內安裝 Milvus",
+        "manage": "管理向量數據的新方法",
+        "search": "向量搜索從未如此簡單",
+        "learn": "了解更多"
+      },
+      "attu": {
+        "title": "簡化開發",
+        "desc": "（感謝 Zilliz 的貢獻）",
+        "sub-title": "簡化開發",
+        "statistics": "查看 Milvus 集群統計信息",
+        "manage": "瀏覽、查詢和管理集合",
+        "operation": "執行增刪改查或批量操作",
+        "download": "下載 Attu",
+        "learn": "了解更多"
+      }
+    },
+    "docs": {
+      "homeTitle": "首頁",
+      "blogTitle": "博客",
+      "commitTrans": "最後更新於",
+      "faqTitle": "最相關的問題",
+      "faqBtnGroupTitle": "沒有找到你需要的嗎？",
+      "scoreQuestion": "此頁面是否有幫助？",
+      "scoreThanks": "評分成功！",
+      "yes": "是",
+      "no": "否",
+      "contactFollow": "跟進我",
+      "contactSlack": "在 Slack 上討論",
+      "contactGithub": "在 GitHub 上討論",
+      "feedbackDialogTitle": "我們會跟進你的問題。",
+      "feedbackDialogContent": "請在這裡留下你的問題，我們會與你聯繫。",
+      "emailAddress": "電子郵件地址",
+      "emailInvaild": "請輸入有效的電子郵件。",
+      "yourQuestion": "你的問題",
+      "yourQuestionInvalid": "請輸入有效的問題。",
+      "cancel": "取消",
+      "submit": "提交",
+      "tocTitle": "在此頁面上",
+      "btnGroup": {
+        "editBtn": "編輯此頁面",
+        "issueBtn": "報告文檔問題",
+        "bugBtn": "報告錯誤",
+        "suggestBtn": "請求文檔更改",
+        "pdfBtn": "下載 PDF 文檔",
+        "joinBtn": "加入 Slack 頻道",
+        "discussBtn": "在 GitHub 上討論"
+      }
+    },
+    "main": {
+      "nav": {
+        "docs": "文檔",
+        "tutorials": "教程",
+        "tools": "工具",
+        "blog": "博客",
+        "community": "社區",
+        "bootcamp": "訓練營",
+        "demo": "演示",
+        "video": "視頻",
+        "getstarted": "開始使用",
+        "watchvideo": "觀看視頻",
+        "about": "關於",
+        "resources": "資源",
+        "getinvolved": "參與其中",
+        "repo": "倉庫",
+        "forum": "論壇"
+      },
+      "h1": "為可擴展相似性搜索而建的向量數據庫",
+      "desc": "開源、高度可擴展且極快。",
+      "stars": "GitHub 星標",
+      "contirbutors": "貢獻者",
+      "downloads": "下載量",
+      "customers": "客戶",
+      "communitydesc": "Milvus 由一個強大的開源社區支持",
+      "communitytitle": "加入我們的社區",
+      "customer": "最受企業用戶歡迎的向量數據庫"
+    },
+    "404": {
+      "title": "哎呀...出了點問題！",
+      "desc1": "看起來你走得太遠了！",
+      "desc2": "我們找不到你要找的頁面:(",
+      "gobtn": "前往首頁"
+    },
+    "signup": {
+      "emailerror": "電子郵件格式錯誤",
+      "thankyou": "謝謝，你已加入我們的郵件列表！",
+      "subscribed": "此電子郵件已訂閱！",
+      "placeholder": "你的電子郵件是什麼？",
+      "signup": "從 Zilliz 獲取最新的 Milvus 新聞",
+      "montyly": "訂閱以獲取有關最新 Milvus 版本、教程和培訓的更新。",
+      "subscribe": "訂閱"
+    },
+    "copyBtn": {
+      "copyLabel": "複製",
+      "copiedLabel": "已複製！"
+    },
+    "algolia": {
+      "button": {
+        "buttonText": "搜索",
+        "buttonAriaLabel": "搜索"
+      },
+      "modal": {
+        "searchBox": {
+          "resetButtonTitle": "清除查詢",
+          "resetButtonAriaLabel": "清除查詢",
+          "cancelButtonText": "取消",
+          "cancelButtonAriaLabel": "取消"
+        },
+        "startScreen": {
+          "recentSearchesTitle": "最近",
+          "noRecentSearchesText": "沒有最近的搜索",
+          "saveRecentSearchButtonTitle": "保存此搜索",
+          "removeRecentSearchButtonTitle": "從歷史記錄中刪除此搜索",
+          "favoriteSearchesTitle": "收藏",
+          "removeFavoriteSearchButtonTitle": "從收藏中刪除此搜索"
+        },
+        "errorScreen": {
+          "titleText": "無法獲取結果",
+          "helpText": "你可能需要檢查你的網絡連接。"
+        },
+        "footer": {
+          "selectText": "選擇",
+          "navigateText": "導航",
+          "closeText": "關閉",
+          "searchByText": "搜索方式"
+        },
+        "noResultsScreen": {
+          "noResultsText": "沒有結果",
+          "suggestedQueryText": "嘗試搜索",
+          "openIssueText": "認為此查詢應該返回結果？",
+          "openIssueLinkText": "告訴我們"
+        }
+      }
+    },
+    "cookie": {
+      "title": "我們如何使用 Cookie",
+      "desc": "本網站將 Cookie 存儲在你的計算機上。繼續瀏覽或點擊“接受”，即表示你同意在設備上存儲 Cookie 以增強你的網站體驗並用於分析目的。"
+    },
+    "sizingTool": {
+      "title": "Milvus 規模計算工具",
+      "subTitle": "注意：所有建議均基於我們的實驗室數據計算，你應在部署到生產環境之前根據自己的測試進行調整。",
+
+      "labels": {
+        "dataSize": "選擇數據大小",
+        "vector": "向量數量（百萬）",
+        "dimension": "維度",
+        "index": "索引類型",
+        "indexType": "選擇索引類型",
+        "indexParam": "選擇索引參數",
+        "m": "M（節點的最大度數）",
+        "segmentSize": "選擇段大小",
+        "segment": "段（MB）"
+      },
+
+      "capacity": "近似容量",
+      "memory": "加載內存",
+      "fileSize": "原始文件大小",
+      "setups": {
+        "title": "最小 Milvus 集群設置",
+        "rootCoord": {
+          "title": "根協調器",
+          "tooltip": "根協調器處理數據定義語言（DDL）和數據控制語言（DCL）請求，例如創建或刪除集合、分區或索引，以及管理 TSO（時間戳 Oracle）和時間滴答發行。"
+        },
+        "queryCoord": {
+          "title": "查詢協調器",
+          "tootip": "查詢協調器管理查詢節點的拓撲和負載平衡，並處理從增長段到封閉段的切換。"
+        },
+        "dataCoord": {
+          "title": "數據協調器",
+          "tooltip": "數據協調器管理數據節點的拓撲，維護元數據，並觸發刷新、壓縮和其他後台數據操作。"
+        },
+        "indexCoord": {
+          "title": "索引協調器",
+          "tooltip": "索引協調器管理索引節點的拓撲，構建索引，並維護索引元數據。"
+        },
+        "proxy": {
+          "title": "代理",
+          "tooltip": "代理是系統的訪問層和用戶的端點。它驗證客戶端請求並減少返回的結果。"
+        },
+        "queryNode": {
+          "title": "查詢節點",
+          "tooltip": "查詢節點通過訂閱日誌代理檢索增量日誌數據並將其轉換為增長段，從對象存儲加載歷史數據，並在向量和標量數據之間運行混合搜索。"
+        },
+        "dataNode": {
+          "title": "數據節點",
+          "tooltip": "數據節點通過訂閱日誌代理檢索增量日誌數據，處理變更請求，並將日誌數據打包成日誌快照並存儲在對象存儲中。"
+        },
+        "indexNode": {
+          "title": "索引節點",
+          "tooltip": "索引節點構建索引。索引節點不需要常駐內存，可以使用無服務器框架實現。"
+        },
+        "etcd": {
+          "title": "ETCD"
+        },
+        "minio": {
+          "title": "Minio"
+        },
+        "pulsar": {
+          "title": "Pulsar"
+        },
+        "kafka": {
+          "title": "Kafka"
+        },
+        "bookie": "Bookie",
+        "broker": "Broker",
+        "proxyLabel": "Proxy",
+        "zookeeper": "Zookeeper"
+      },
+      "buttons": {
+        "helm": "下載 Helm Chart 配置 yml",
+        "operator": "下載 Milvus Operator 配置 yml",
+        "guide": "查看安裝指南"
+      },
+      "installGuide": {
+        "helm": "Helm 安裝指南",
+        "operator": "Operator 安裝指南"
+      }
+    },
+    "slack": {
+      "title": "Milvus Slack 社區",
+      "desc": "想與其他 Milvus 用戶聯繫，分享想法，獲取建議和最新 Milvus 版本的更新嗎？加入我們的 Slack 社區！填寫表格以請求訪問。"
+    },
+    "footnote": {
+      "copyright": "版權所有 © Milvus。{{year}} 保留所有權利。",
+      "maintainer": "由 <0></0> 的開發者用愛製作 <1>Zilliz</1>"
+    }
+  },
+  "status": {
+    "subscribe": "訂閱",
+    "wait": "加載中...",
+    "success": "成功",
+    "failed": "失敗"
+  },
+  "cookie": {
+    "title": "我們如何使用 Cookie",
+    "consent": "本網站將 Cookie 存儲在你的計算機上。繼續瀏覽或點擊“接受”，即表示你同意在設備上存儲 Cookie 以增強你的網站體驗並用於分析目的。",
+    "accept": "接受",
+    "reject": "拒絕"
+  },
+  "email": "電子郵件"
+}

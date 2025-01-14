@@ -1,0 +1,48 @@
+{
+  "title": "Treten Sie der Community bei",
+  "ctaLabel": "Jetzt beitreten",
+  "officeHours": {
+    "title": "Erhalten Sie Expertenhilfe bei Milvus Office Hours",
+    "content": "Buchen Sie eine kostenlose 1:1-Session, um Hilfe bei Ihrer Produktionsimplementierung von Zilliz, den Experten für Milvus, zu erhalten.",
+    "button": "Buchen Sie Ihre Session"
+  },
+  "community": {
+    "title": "Willkommen in der Milvus-Community",
+    "content": "Die Milvus-Community besteht aus Benutzern und Open-Source-Mitwirkenden, die neue Ideen austauschen, an Projekten zusammenarbeiten und das Lernen fördern. Unsere Open-Source-Community-Mitglieder tragen Code bei, besuchen Veranstaltungen, setzen sich für eine stärkere Verbreitung von Milvus ein und leisten viele andere wertvolle Beiträge. Lesen Sie weiter, um zu erfahren, wie Sie sich beteiligen und Teil dieser großartigen Community werden können.",
+    "features": {
+      "learn": {
+        "title": "Lernen",
+        "content": "Erweitern Sie Ihr Wissen und Ihre Fähigkeiten in Vektordatenbanktechnologien."
+      },
+      "build": {
+        "title": "Bauen",
+        "content": "Tragen Sie durch Open-Source-Zusammenarbeit zur Entwicklung von Milvus bei."
+      },
+      "share": {
+        "title": "Teilen",
+        "content": "Teilen Sie Best Practices und gewonnene Erkenntnisse mit der gesamten Community."
+      }
+    }
+  },
+  "resource": "Ressourcen",
+  "mail": {
+    "title": "Mailinglisten",
+    "mailList": {
+      "meeting": {
+        "title": "Milvus Technical Meeting",
+        "content": "Nehmen Sie an unserem nächsten Treffen teil, um an der Diskussion und Entscheidungsfindung über die neuesten Funktionen und den Entwicklungszeitplan von Milvus beteiligt zu sein.",
+        "cta": "Mehr erfahren"
+      },
+      "event": {
+        "title": "Veranstaltung",
+        "content": "Wir veranstalten häufig Events. Klicken Sie hier, um die bevorstehenden Veranstaltungen in Ihrer Nähe zu finden.",
+        "cta": "Weitere Veranstaltungen"
+      },
+      "video": {
+        "title": "Video",
+        "content": "Wir laden häufig Videos hoch. Klicken Sie hier, um Video-Tutorials, Webinar-Wiederholungen und andere Videoinhalte anzusehen.",
+        "cta": "Weitere Videos"
+      }
+    }
+  }
+}

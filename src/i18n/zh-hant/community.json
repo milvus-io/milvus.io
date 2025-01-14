@@ -1,0 +1,48 @@
+{
+  "title": "加入社群",
+  "ctaLabel": "立即加入",
+  "officeHours": {
+    "title": "在 Milvus 辦公時間獲得專家幫助",
+    "content": "預約免費的 1:1 會話，從 Zilliz 獲得生產部署的幫助，Zilliz 是 Milvus 的專家。",
+    "button": "預約會話"
+  },
+  "community": {
+    "title": "歡迎來到 Milvus 社群",
+    "content": "Milvus 社群由用戶和開源貢獻者組成，他們分享新想法，協作項目，並促進學習。我們的開源社群成員貢獻代碼，參加活動，倡導更廣泛地採用 Milvus，並做出許多其他有價值的貢獻。繼續閱讀，了解如何參與並成為這個令人驚嘆的社群的一部分。",
+    "features": {
+      "learn": {
+        "title": "學習",
+        "content": "擴展你在向量數據庫技術方面的知識和技能。"
+      },
+      "build": {
+        "title": "構建",
+        "content": "通過開源協作，為 Milvus 的開發做出貢獻。"
+      },
+      "share": {
+        "title": "分享",
+        "content": "與社群分享最佳實踐和經驗教訓。"
+      }
+    }
+  },
+  "resource": "資源",
+  "mail": {
+    "title": "郵寄名單",
+    "mailList": {
+      "meeting": {
+        "title": "Milvus 技術會議",
+        "content": "加入我們的下一次會議，參與有關 Milvus 最新功能和開發時間表的討論和決策。",
+        "cta": "了解更多"
+      },
+      "event": {
+        "title": "活動",
+        "content": "我們經常舉辦活動。點擊查看即將在你附近舉行的活動。",
+        "cta": "更多活動"
+      },
+      "video": {
+        "title": "視頻",
+        "content": "我們經常上傳視頻。點擊觀看視頻教程、網絡研討會重播和其他視頻內容。",
+        "cta": "更多視頻"
+      }
+    }
+  }
+}

@@ -13,6 +13,7 @@ import { ProductionSection } from '@/parts/home/productionSection/ProductionSect
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { getHomepageHeadline } from '@/utils/blogs';
 import classes from '@/styles/home.module.less';
+import { LanguageEnum } from '@/types/localization';
 
 export default function Homepage(props: {
   headline: { label: string; link: string };
@@ -31,7 +32,7 @@ export default function Homepage(props: {
           />
           <link rel="alternate" href={`${ABSOLUTE_BASE_URL}/`} hrefLang="en" />
         </Head>
-        <HomePageHeaderSection {...headline} />
+        <HomePageHeaderSection {...headline} locale={LanguageEnum.ENGLISH} />
         <CodeExampleSection />
         <DeploySection />
         <AIToolsSection />

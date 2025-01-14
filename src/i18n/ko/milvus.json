@@ -1,0 +1,282 @@
+{
+  "v3trans": {
+    "desc": "V3 번역을 위한 모든 것이 여기에 있습니다",
+    "home": {
+      "banner": {
+        "title": "확장 가능한 유사성 검색을 위해 구축된 벡터 데이터베이스",
+        "desc": "오픈소스, 고도로 확장 가능, 매우 빠름.",
+        "tryManaged": "Managed Milvus 시도",
+        "getstart": "오픈소스 시도",
+        "watch": "비디오 보기",
+        "star": "GitHub 스타",
+        "contirbutor": "기여자",
+        "downloads": "다운로드",
+        "users": "사용자"
+      },
+      "feature": {
+        "easy": {
+          "title": "사용 편의성",
+          "desc": "Milvus 벡터 데이터베이스를 사용하면 1분 이내에 대규모 유사성 검색 서비스를 만들 수 있습니다. 다양한 언어로 간단하고 직관적인 SDK도 제공됩니다."
+        },
+        "fast": {
+          "title": "매우 빠름",
+          "desc": "Milvus는 하드웨어 효율적이며 고급 인덱싱 알고리즘을 제공하여 검색 속도에서 10배의 성능 향상을 달성합니다."
+        },
+        "available": {
+          "title": "고가용성",
+          "desc": "Milvus 벡터 데이터베이스는 다양한 사용 사례에서 수천 명의 기업 사용자로부터 검증되었습니다. 개별 시스템 구성 요소의 광범위한 격리를 통해 Milvus는 매우 탄력적이고 신뢰할 수 있습니다."
+        },
+        "scalable": {
+          "title": "고도로 확장 가능",
+          "desc": "Milvus의 분산 및 고처리량 특성은 대규모 벡터 데이터를 제공하는 데 자연스럽게 적합합니다."
+        },
+        "cloud": {
+          "title": "클라우드 네이티브",
+          "desc": "Milvus 벡터 데이터베이스는 클라우드 네이티브에 대한 체계적인 접근 방식을 채택하여 컴퓨팅과 스토리지를 분리하고 수직 및 수평 확장을 가능하게 합니다."
+        },
+        "rich": {
+          "title": "풍부한 기능",
+          "desc": "다양한 데이터 유형 지원, 속성 필터링을 통한 향상된 벡터 검색, UDF 지원, 구성 가능한 일관성 수준, 시간 여행 등."
+        },
+        "title": "머신러닝 배포를 지원",
+        "desc": "딥 신경망 및 기타 머신러닝(ML) 모델에서 생성된 대규모 임베딩 벡터를 저장, 인덱싱 및 관리합니다."
+      },
+      "code": {
+        "install": "2분 만에 Milvus 설치",
+        "manage": "벡터 데이터 관리의 새로운 방법",
+        "search": "벡터 검색이 이렇게 쉬웠던 적이 없습니다",
+        "learn": "자세히 알아보기"
+      },
+      "attu": {
+        "title": "간소화된 개발",
+        "desc": "(Zilliz의 기여에 감사드립니다)",
+        "sub-title": "간소화된 개발",
+        "statistics": "Milvus 클러스터 통계 보기",
+        "manage": "컬렉션 탐색, 쿼리 및 관리",
+        "operation": "CRUD 또는 대량 작업 수행",
+        "download": "Attu 다운로드",
+        "learn": "자세히 알아보기"
+      }
+    },
+    "docs": {
+      "homeTitle": "홈",
+      "blogTitle": "블로그",
+      "commitTrans": "마지막 업데이트",
+      "faqTitle": "가장 관련된 질문",
+      "faqBtnGroupTitle": "원하는 것을 찾지 못하셨나요?",
+      "scoreQuestion": "이 페이지가 도움이 되었나요?",
+      "scoreThanks": "성공적으로 평가되었습니다!",
+      "yes": "예",
+      "no": "아니오",
+      "contactFollow": "문의사항 팔로우",
+      "contactSlack": "Slack에서 토론하기",
+      "contactGithub": "GitHub에서 토론하기",
+      "feedbackDialogTitle": "문의사항을 확인하겠습니다.",
+      "feedbackDialogContent": "문의사항을 남겨주시면 연락드리겠습니다.",
+      "emailAddress": "이메일 주소",
+      "emailInvaild": "유효한 이메일을 입력하세요.",
+      "yourQuestion": "문의사항",
+      "yourQuestionInvalid": "유효한 문의사항을 입력하세요.",
+      "cancel": "취소",
+      "submit": "제출",
+      "tocTitle": "이 페이지",
+      "btnGroup": {
+        "editBtn": "이 페이지 편집",
+        "issueBtn": "문서 문제 신고",
+        "bugBtn": "버그 신고",
+        "suggestBtn": "문서 변경 요청",
+        "pdfBtn": "PDF 문서 다운로드",
+        "joinBtn": "Slack 채널 참여",
+        "discussBtn": "GitHub에서 토론하기"
+      }
+    },
+    "main": {
+      "nav": {
+        "docs": "문서",
+        "tutorials": "튜토리얼",
+        "tools": "도구",
+        "blog": "블로그",
+        "community": "커뮤니티",
+        "bootcamp": "부트캠프",
+        "demo": "데모",
+        "video": "비디오",
+        "getstarted": "시작하기",
+        "watchvideo": "비디오 보기",
+        "about": "소개",
+        "resources": "리소스",
+        "getinvolved": "참여하기",
+        "repo": "저장소",
+        "forum": "포럼"
+      },
+      "h1": "확장 가능한 유사성 검색을 위해 구축된 벡터 데이터베이스",
+      "desc": "오픈소스, 고도로 확장 가능, 매우 빠름.",
+      "stars": "GitHub 스타",
+      "contirbutors": "기여자",
+      "downloads": "다운로드",
+      "customers": "고객",
+      "communitydesc": "Milvus는 강력한 오픈소스 커뮤니티에 의해 지원됩니다",
+      "communitytitle": "커뮤니티 참여",
+      "customer": "기업 사용자를 위한 가장 인기 있는 벡터 데이터베이스"
+    },
+    "404": {
+      "title": "이런...문제가 발생했습니다!",
+      "desc1": "너무 멀리 떠나신 것 같습니다!",
+      "desc2": "찾으시는 페이지를 찾을 수 없습니다:(",
+      "gobtn": "홈페이지로 이동"
+    },
+    "signup": {
+      "emailerror": "이메일 형식 오류",
+      "thankyou": "감사합니다, 메일링 리스트에 추가되었습니다!",
+      "subscribed": "이 이메일은 이미 구독되었습니다!",
+      "placeholder": "이메일 주소를 입력하세요",
+      "signup": "Zilliz의 최신 Milvus 소식 받기",
+      "montyly": "최신 Milvus 릴리스, 튜토리얼 및 교육에 대한 업데이트를 받으려면 구독하세요.",
+      "subscribe": "구독"
+    },
+    "copyBtn": {
+      "copyLabel": "복사",
+      "copiedLabel": "복사됨!"
+    },
+    "algolia": {
+      "button": {
+        "buttonText": "검색",
+        "buttonAriaLabel": "검색"
+      },
+      "modal": {
+        "searchBox": {
+          "resetButtonTitle": "쿼리 지우기",
+          "resetButtonAriaLabel": "쿼리 지우기",
+          "cancelButtonText": "취소",
+          "cancelButtonAriaLabel": "취소"
+        },
+        "startScreen": {
+          "recentSearchesTitle": "최근 검색",
+          "noRecentSearchesText": "최근 검색 없음",
+          "saveRecentSearchButtonTitle": "이 검색 저장",
+          "removeRecentSearchButtonTitle": "이 검색을 기록에서 제거"
+        },
+        "errorScreen": {
+          "titleText": "결과를 가져올 수 없습니다",
+          "helpText": "네트워크 연결을 확인하세요."
+        },
+        "footer": {
+          "selectText": "선택",
+          "navigateText": "탐색",
+          "closeText": "닫기",
+          "searchByText": "검색 기준"
+        },
+        "noResultsScreen": {
+          "noResultsText": "결과 없음",
+          "suggestedQueryText": "다음을 검색해 보세요",
+          "openIssueText": "이 쿼리가 결과를 반환해야 한다고 생각하시나요?",
+          "openIssueLinkText": "알려주세요"
+        }
+      }
+    },
+    "cookie": {
+      "title": "쿠키 사용 방법",
+      "desc": "이 웹사이트는 컴퓨터에 쿠키를 저장합니다. 계속 탐색하거나 '수락'을 클릭하면 사이트 경험을 향상시키고 분석 목적으로 장치에 쿠키를 저장하는 데 동의하는 것입니다."
+    },
+    "sizingTool": {
+      "title": "Milvus 크기 조정 도구",
+      "subTitle": "참고: 모든 권장 사항은 실험실 데이터를 기반으로 계산되었으며, 프로덕션에 배포하기 전에 자체 테스트로 조정해야 합니다.",
+
+      "labels": {
+        "dataSize": "데이터 크기 선택",
+        "vector": "벡터 수 (백만)",
+        "dimension": "차원",
+        "index": "인덱스 유형",
+        "indexType": "인덱스 유형 선택",
+        "indexParam": "인덱스 매개변수 선택",
+        "m": "M (노드의 최대 차수)",
+        "segmentSize": "세그먼트 크기 선택",
+        "segment": "세그먼트 (MB)"
+      },
+
+      "capacity": "대략적인 용량",
+      "memory": "로딩 메모리",
+      "fileSize": "원본 파일 크기",
+      "setups": {
+        "title": "최소 Milvus 클러스터 설정",
+        "rootCoord": {
+          "title": "루트 코디네이터",
+          "tooltip": "루트 코디네이터는 데이터 정의 언어(DDL) 및 데이터 제어 언어(DCL) 요청을 처리하며, 컬렉션, 파티션 또는 인덱스 생성 또는 삭제와 같은 작업을 관리하고 TSO(타임스탬프 오라클) 및 시간 티커 발행을 관리합니다."
+        },
+        "queryCoord": {
+          "title": "쿼리 코디네이터",
+          "tootip": "쿼리 코디네이터는 쿼리 노드의 토폴로지 및 로드 밸런싱을 관리하고, 성장 세그먼트에서 봉인된 세그먼트로의 핸드오프를 처리합니다."
+        },
+        "dataCoord": {
+          "title": "데이터 코디네이터",
+          "tooltip": "데이터 코디네이터는 데이터 노드의 토폴로지를 관리하고, 메타데이터를 유지하며, 플러시, 컴팩트 및 기타 백그라운드 데이터 작업을 트리거합니다."
+        },
+        "indexCoord": {
+          "title": "인덱스 코디네이터",
+          "tooltip": "인덱스 코디네이터는 인덱스 노드의 토폴로지를 관리하고, 인덱스를 구축하며, 인덱스 메타데이터를 유지합니다."
+        },
+        "proxy": {
+          "title": "프록시",
+          "tooltip": "프록시는 시스템의 액세스 계층이며 사용자에게 엔드포인트를 제공합니다. 클라이언트 요청을 검증하고 반환된 결과를 줄입니다."
+        },
+        "queryNode": {
+          "title": "쿼리 노드",
+          "tooltip": "쿼리 노드는 로그 브로커를 구독하여 증분 로그 데이터를 검색하고 이를 성장 세그먼트로 변환하며, 객체 스토리지에서 역사적 데이터를 로드하고 벡터와 스칼라 데이터 간의 하이브리드 검색을 실행합니다."
+        },
+        "dataNode": {
+          "title": "데이터 노드",
+          "tooltip": "데이터 노드는 로그 브로커를 구독하여 증분 로그 데이터를 검색하고, 변이 요청을 처리하며, 로그 데이터를 로그 스냅샷으로 패키징하여 객체 스토리지에 저장합니다."
+        },
+        "indexNode": {
+          "title": "인덱스 노드",
+          "tooltip": "인덱스 노드는 인덱스를 구축합니다. 인덱스 노드는 메모리 상주일 필요가 없으며 서버리스 프레임워크로 구현할 수 있습니다."
+        },
+        "etcd": {
+          "title": "ETCD"
+        },
+        "minio": {
+          "title": "Minio"
+        },
+        "pulsar": {
+          "title": "Pulsar"
+        },
+        "kafka": {
+          "title": "Kafka"
+        },
+        "bookie": "Bookie",
+        "broker": "Broker",
+        "proxyLabel": "프록시",
+        "zookeeper": "Zookeeper"
+      },
+      "buttons": {
+        "helm": "Helm Chart 구성 yml 다운로드",
+        "operator": "Milvus Operator 구성 yml 다운로드",
+        "guide": "설치 가이드 보기"
+      },
+      "installGuide": {
+        "helm": "Helm 설치 가이드",
+        "operator": "Operator 설치 가이드"
+      }
+    },
+    "slack": {
+      "title": "Milvus Slack 커뮤니티",
+      "desc": "다른 Milvus 사용자와 연결하여 아이디어를 공유하고, 조언을 얻고, 최신 Milvus 릴리스 소식을 받아보려면 Slack 커뮤니티에 참여하세요! 액세스를 요청하려면 양식을 작성하세요."
+    },
+    "footnote": {
+      "copyright": "저작권 © Milvus. {{year}} 모든 권리 보유.",
+      "maintainer": "Zilliz의 개발자들이 <0></0> 사랑으로 만들었습니다 <1>Zilliz</1>"
+    }
+  },
+  "status": {
+    "subscribe": "구독",
+    "wait": "로딩 중...",
+    "success": "성공",
+    "failed": "실패"
+  },
+  "cookie": {
+    "title": "쿠키 사용 방법",
+    "consent": "이 웹사이트는 컴퓨터에 쿠키를 저장합니다. 계속 탐색하거나 '수락'을 클릭하면 사이트 경험을 향상시키고 분석 목적으로 장치에 쿠키를 저장하는 데 동의하는 것입니다.",
+    "accept": "수락",
+    "reject": "거부"
+  },
+  "email": "이메일"
+}

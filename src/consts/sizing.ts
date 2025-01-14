@@ -50,15 +50,15 @@ export const N_LIST_RANGE_CONFIG = {
 
 export const SEGMENT_SIZE_OPTIONS = [
   {
-    label: '512MB',
+    label: '512 MB',
     value: SegmentSizeEnum._512MB,
   },
   {
-    label: '1024MB',
+    label: '1024 MB',
     value: SegmentSizeEnum._1024MB,
   },
   {
-    label: '2048MB',
+    label: '2048 MB',
     value: SegmentSizeEnum._2048MB,
   },
 ];

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, Typography, InputLabel } from '@mui/material';
 import { useRouter } from 'next/router';
-import { LanguageEnum } from '../language-selector';
+import { LanguageEnum } from '@/types/localization';
 
 declare global {
   interface Window {

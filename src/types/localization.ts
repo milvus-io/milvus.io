@@ -1,0 +1,15 @@
+export enum LanguageEnum {
+  ENGLISH = 'en',
+  CHINESE = 'zh',
+  CHINESE_TW = 'zh-hant',
+  JAPANESE = 'ja',
+  KOREAN = 'ko',
+  FRANCE = 'fr',
+  GERMAN = 'de',
+  SPANISH = 'es',
+  ITALIAN = 'it',
+  PORTUGUESE = 'pt',
+  RUSSIAN = 'ru',
+  INDONESIAN = 'id',
+  ARABIC = 'ar',
+}

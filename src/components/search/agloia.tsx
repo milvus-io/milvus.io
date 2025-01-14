@@ -1,7 +1,7 @@
 import { DocSearch, DocSearchTranslations } from '@docsearch/react';
 import classes from './agloia.module.less';
 import { useTranslation } from 'react-i18next';
-import { LanguageEnum } from '../language-selector/LanguageSelector';
+import { LanguageEnum } from '@/types/localization';
 import { useEffect } from 'react';
 
 export const AlgoliaSearch = (props: {

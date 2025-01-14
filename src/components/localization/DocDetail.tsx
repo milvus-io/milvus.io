@@ -16,8 +16,11 @@ import classes from '@/styles/docDetail.module.less';
 import { checkIconTpl } from '@/components/icons';
 import clsx from 'clsx';
 import { DocDetailPageProps } from '@/types/docs';
-import { LanguageEnum } from '@/components/language-selector';
-import { SHOW_LANGUAGE_SELECTOR_VERSIONS } from '@/components/localization/const';
+import { LanguageEnum } from '@/types/localization';
+import {
+  DOCS_LANGUAGE_DISABLED_MAP,
+  SHOW_LANGUAGE_SELECTOR_VERSIONS,
+} from '@/components/localization/const';
 import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
 
 // contains the latest version's detail pages and other versions' home pages
@@ -169,6 +172,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
               disableLanguageSelector={
                 !SHOW_LANGUAGE_SELECTOR_VERSIONS.includes(version)
               }
+              disabledLanguages={DOCS_LANGUAGE_DISABLED_MAP[version]}
             />
           </div>
         </section>

@@ -67,9 +67,9 @@
       "broker": "Broker",
       "proxy": "Proxy",
       "zookeeper": "Zookeeper",
-      "etcdTip": "ETCD is used to store meta data. Please mount a high-performance storage drive(NVMe SSD)  to ensure optimal performance.",
-      "apacheTip": "Please mount a high-performance storage drive(NVMe SSD) for Bookie.Journal and Zookeeper to ensure optimal performance.",
-      "kafkaTip": "Please mount a high-performance storage drive(NVMe SSD) for Zookeeper to ensure optimal performance."
+      "etcdTip": "ETCD is used to store meta data. Please specify a high-disk-performance storage class  to ensure optimal performance.",
+      "apacheTip": "Please specify a high-disk-performance storage class for Bookie.Journal and Zookeeper to ensure optimal performance.",
+      "kafkaTip": "Please specify a high-disk-performance storage class for Zookeeper to ensure optimal performance."
     },
     "basic": {
       "cpuAndMemory": "CPU and Memory: <0>{{cpu}} {{memory}}</0>",

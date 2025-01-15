@@ -184,7 +184,6 @@ export default function ResultSection(props: {
     <section className={clsx(classes.resultContainer, className)}>
       {isOutOfCalculate && (
         <div className={classes.substantialWrapper}>
-          <InfoFilled />
           <p className={classes.substantialTip}>
             {
               <Trans
@@ -470,7 +469,7 @@ export default function ResultSection(props: {
             disabled={mode === ModeEnum.Standalone}
           >
             <SelectTrigger
-              className="py-[10px] px-[12px] h-[36px] w-[300px] text-[12px] leading-[18px] text-black1 border-[2px] border-solid border-black4 rounded-[8px]"
+              className="py-[10px] px-[12px] h-[36px] w-[300px] text-[12px] leading-[18px] text-black1 border-[1px] border-solid border-black4 rounded-[8px]"
               disabled={mode === ModeEnum.Standalone}
             >
               {

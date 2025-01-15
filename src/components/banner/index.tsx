@@ -11,7 +11,12 @@ export default function CloudBanner() {
         <Trans
           t={t}
           i18nKey="banner"
-          components={[<a href={CLOUD_SIGNUP_LINK} key="zilliz-cloud"></a>]}
+          components={[
+            <a
+              href={`${CLOUD_SIGNUP_LINK}?utm_source=partner&utm_medium=referral&utm_campaign=2024_12_23_top_banner_milvusio`}
+              key="zilliz-cloud"
+            ></a>,
+          ]}
         />
       </p>
     </div>

@@ -502,7 +502,9 @@ export default function ResultSection(props: {
               handleDownloadConfigFile(installInfo.value);
             }}
           >
-            {t('install.operator')}
+            {installInfo.value === 'helm'
+              ? t('install.helm')
+              : t('install.operator')}
           </CustomButton>
         )}
         <pre className={classes.installCodeWrapper}>

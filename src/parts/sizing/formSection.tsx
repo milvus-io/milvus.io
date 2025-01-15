@@ -252,7 +252,7 @@ export default function FormSection(props: {
             }}
             value={form.vector}
             unit="Million"
-            placeholder={`[${VECTOR_RANGE_CONFIG.min}, ${VECTOR_RANGE_CONFIG.max}]`}
+            // placeholder={`[${VECTOR_RANGE_CONFIG.min}, ${VECTOR_RANGE_CONFIG.max}]`}
           />
         </div>
         <div className="mb-[24px]">
@@ -268,11 +268,11 @@ export default function FormSection(props: {
         </div>
         <div className="mb-[24px]">
           <h4 className="flex items-center justify-between mb-[8px]">
-            <span className="font-[500] text-[16px] leading-[22px] text-black1">
+            <span className="font-[600] text-[14px] leading-[22px] text-black1">
               {t('form.indexType')}
             </span>
             <a
-              className="flex items-center gap-[4px] font-[500] text-[12px] leading-[16px] text-black1"
+              className="flex items-center gap-[4px] font-[400] text-[12px] leading-[16px] text-black1 hover:underline"
               href="/docs/index.md?tab=floating"
               target="_blank"
             >
@@ -310,7 +310,7 @@ export default function FormSection(props: {
         </div>
         <div className="">
           <div className="flex items-center gap-[8px]">
-            <p className="text-[14px] leading-[22px] font-[500]">
+            <p className="text-[14px] leading-[22px] font-[600]">
               {t('form.withScalar')}
             </p>
             <SizingSwitch

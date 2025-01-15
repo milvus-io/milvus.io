@@ -27,7 +27,7 @@ export const OutLinkIcon = () => (
   </svg>
 );
 
-export const InfoFilled = () => (
+export const InfoFilled = (props?: { color?: string }) => (
   <svg
     width="24"
     height="24"
@@ -35,7 +35,12 @@ export const InfoFilled = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <circle cx="12.0006" cy="12.0001" r="10.2857" fill="#4FC4F9" />
+    <circle
+      cx="12.0006"
+      cy="12.0001"
+      r="10.2857"
+      fill={props.color || '#4FC4F9'}
+    />
     <path
       d="M11.1431 9.42704H12.8574L12.8574 7.71275H11.1431L11.1431 9.42704Z"
       fill="white"

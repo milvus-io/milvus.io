@@ -1,5 +1,7 @@
 @import url('@/styles/global.module.less');
 
+@sizing-result-cell-width: 65px;
+
 .tooltipTrigger {
   position: relative;
 
@@ -240,9 +242,7 @@ div.averageLabel {
 
 .resultContainer {
   font-family: 'Geist Mono';
-  button {
-    font-family: 'Geist Mono';
-  }
+
   .commonKeyLabel {
     .paragraph6-regular();
     color: @color-black2;
@@ -250,6 +250,7 @@ div.averageLabel {
   .commonValueLabel {
     .paragraph6-bold();
     color: @color-black1;
+    width: @sizing-result-cell-width;
   }
 
   .substantialWrapper {

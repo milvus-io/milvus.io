@@ -232,13 +232,13 @@ export default function FormSection(props: {
   }, [form, indexTypeParams]);
 
   useEffect(() => {
-    if (disableStandalone && form.mode === ModeEnum.Standalone) {
+    if (disableStandalone) {
       setForm({
         ...form,
         mode: ModeEnum.Cluster,
       });
     }
-  }, [disableStandalone, form.mode]);
+  }, [disableStandalone]);
 
   return (
     <section className={clsx(className, classes.formSection)}>

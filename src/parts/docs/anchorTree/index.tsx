@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { TOCIcon } from '@/components/icons';
 import { useTranslation } from 'react-i18next';
 import { DocAnchorItemType } from '@/types/docs';
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 
 export default function AnchorTree(props: {
   list: DocAnchorItemType[];

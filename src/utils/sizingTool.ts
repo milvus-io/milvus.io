@@ -1,70 +1,46 @@
-import { IndexTypeEnum } from '@/components/card/sizingToolCard/constants';
-type DataSizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
-type DataNode = {
-  size: string;
-  cpu: number;
-  memory: number;
-  amount: number;
-};
-
-type MilvusDataType = {
-  cpu: number;
-  memory: number;
-  podNumber: number;
-  pvcPerPodSize: number;
-  pvcPerPodUnit: string;
-  isError: boolean;
-};
-
-type ApacheType = 'pulsar' | 'kafka';
-
-const ONE_MILLION = Math.pow(10, 6);
-
-const defaultSizeContent = {
-  size: 'Require more data',
-  cpu: 0,
-  memory: 0,
-  amount: 0,
-};
-
-// one million
-const $1M = Math.pow(10, 6);
-/// one billion
-const $1B = Math.pow(10, 9);
-
-// collection shard, default value = 2;
-const SHARD = 2;
+import { ONE_MILLION, FIXED_QUERY_NODE_CONFIG } from '@/consts/sizing';
+import {
+  NodesValueType,
+  DependencyComponentEnum,
+  DependencyConfigType,
+  IIndexType,
+  IndexTypeEnum,
+  ModeEnum,
+  PulsarDataType,
+  KafkaDataType,
+  NodesKeyType,
+  DataSizeUnit,
+} from '@/types/sizing';
+/**
+ * params list:
+ * num: number: number of vectors
+ * d: number: dimension of vectors
+ * withScalar: boolean: whether with scalar data
+ * scalarAvg: number: average length of scalar data
+ * maxDegree: number: maximum degree of the node
+ * segSize: number: segment size
+ *
+ */
 
 export const unitBYTE2Any = (size: number, unit?: DataSizeUnit) => {
+  const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'];
   if (unit) {
-    const base = ['B', 'KB', 'MB', 'GB', 'TB'].findIndex(
-      v => v === unit.toUpperCase()
-    );
+    const base = units.findIndex(v => v === unit.toUpperCase());
     return {
       unit,
       size: size / Math.pow(1024, base),
     };
   }
 
-  let sizeStatus = 1;
+  let sizeStatus = 0;
   let baseUnit = 'BYTE';
-  while (sizeStatus < 4 && size > 1024) {
+  while (sizeStatus < units.length - 1 && size > 1024) {
     size = size / 1024;
     sizeStatus++;
   }
-  sizeStatus === 1
-    ? (baseUnit = 'B')
-    : sizeStatus === 2
-    ? (baseUnit = 'K')
-    : sizeStatus === 3
-    ? (baseUnit = 'M')
-    : sizeStatus === 4
-    ? (baseUnit = 'G')
-    : sizeStatus === 5
-    ? (baseUnit = 'T')
-    : (baseUnit = 'K');
-
-  size = Math.ceil(size * 10) / 10;
+  baseUnit = units[sizeStatus];
+  const decimal = sizeStatus >= 4 ? 100 : 10;
+  size = Math.round(size * decimal) / decimal;
   return {
     size,
     unit: baseUnit,
@@ -93,1407 +69,761 @@ export const unitAny2BYTE = (size: number, unit: DataSizeUnit) => {
       label: 'TB',
       value: 4,
     },
+    {
+      label: 'PB',
+      value: 5,
+    },
+    {
+      label: 'EB',
+      value: 6,
+    },
   ];
   const value = charts.find(v => v.label === unit.toUpperCase())?.value || 0;
   return Math.pow(1024, value) * size;
 };
 
-export const memorySizeCalculator: (params: {
-  nb: number;
+export const formatNumber = (num: number) => {
+  const units = ['', 'K', 'M', 'B', 'T'];
+  let i = 0;
+  let number = num;
+  while (number > 1000 && i < 4) {
+    number = Math.round((number / 1000) * 10) / 10;
+    i += 1;
+  }
+
+  return {
+    num: number,
+    unit: units[i],
+  };
+};
+
+export const formatOutOfCalData = <T>(params: { data: T; isOut: boolean }) => {
+  const { data, isOut } = params;
+  if (isOut) {
+    return '--';
+  }
+  return data;
+};
+
+// raw data size calculator
+export const rawDataSizeCalculator = (params: {
+  num: number;
   d: number;
-  nlist: number;
-  M: number;
-  indexType: string;
+  withScalar: boolean;
+  scalarAvg: number;
 }) => {
-  theorySize: number;
-  memorySize: number;
-} = ({ nb, d, nlist, M, indexType }) => {
-  let theorySize = 0;
-  let expandingRate = 0;
-  switch (indexType) {
-    case IndexTypeEnum.IVF_FLAT:
-      theorySize = (nb + nlist) * d * 4;
-      expandingRate = 2;
-      return {
-        theorySize,
-        memorySize: theorySize * expandingRate,
-      };
+  const { num, d, withScalar, scalarAvg } = params;
 
-    case IndexTypeEnum.IVF_SQ8:
-      theorySize = nb * d + nlist * d * 4;
-      expandingRate = 3;
-      return {
-        theorySize,
-        memorySize: theorySize * expandingRate,
-      };
+  const vectorRaw = (num * d * ONE_MILLION * 32) / 8; // bytes
+  const scalarRaw = withScalar ? num * scalarAvg * ONE_MILLION : 0; // bytes
 
-    case IndexTypeEnum.HNSW:
-      theorySize = nb * d * 4 + nb * M * 8;
-      expandingRate = 2;
-      return {
-        theorySize,
-        memorySize: theorySize * expandingRate,
-      };
-    case IndexTypeEnum.DISKANN:
-      theorySize = rawFileSizeCalculator({ d, nb }) / 4;
-      expandingRate = 1;
-      return {
-        theorySize,
-        memorySize: theorySize * expandingRate,
-      };
-
-    default:
-      // FLAT
-      theorySize = nb * d * 4;
-      expandingRate = 2;
-      return {
-        theorySize,
-        memorySize: theorySize * expandingRate,
-      };
-  }
+  return vectorRaw + scalarRaw;
 };
 
-export const rawFileSizeCalculator: (params: {
+const $1M768D = rawDataSizeCalculator({
+  num: 1,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+export const $10M768D = rawDataSizeCalculator({
+  num: 10,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+const $100M768D = rawDataSizeCalculator({
+  num: 100,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+export const $1B768D = rawDataSizeCalculator({
+  num: 1000,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+
+// loading memory and disk calculator
+export const memoryAndDiskCalculator = (params: {
+  rawDataSize: number;
+  indexTypeParams: IIndexType;
   d: number;
-  nb: number;
-}) => number = ({ d, nb }) => {
-  const sizeOfFloat = 4;
-  return d * sizeOfFloat * nb;
+  num: number;
+  withScalar: boolean;
+  offLoading: boolean;
+  scalarAvg: number;
+  segSize: number;
+  mode: ModeEnum;
+}) => {
+  const {
+    rawDataSize,
+    num,
+    d,
+    withScalar,
+    scalarAvg,
+    offLoading,
+    indexTypeParams,
+    segSize,
+    mode,
+  } = params;
+  const { indexType, widthRawData, maxDegree, m, flatNList, sq8NList } =
+    indexTypeParams;
+  const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
+  const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
+
+  let result = {
+    memory: 0,
+    disk: 0,
+  };
+  const rowSize = (d * 32) / 8;
+
+  switch (indexType) {
+    case IndexTypeEnum.FLAT:
+      result = {
+        memory: vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.IVF_FLAT:
+      result = {
+        memory: vectorRawDataSize + flatNList * rowSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.IVFSQ8:
+      result = {
+        memory: vectorRawDataSize / 4 + sq8NList * rowSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.SCANN:
+      result = {
+        memory: widthRawData
+          ? (9 / 8) * vectorRawDataSize
+          : (1 / 8) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.HNSW:
+      result = {
+        memory: (1 + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+
+      break;
+    case IndexTypeEnum.DISKANN:
+      result = {
+        memory: vectorRawDataSize / 4,
+        disk: (1 + maxDegree / d) * vectorRawDataSize,
+      };
+      break;
+    default:
+      result = {
+        memory: 0,
+        disk: 0,
+      };
+      break;
+  }
+
+  const scalarLoadingMemory = withScalar
+    ? offLoading
+      ? (num * scalarAvg * ONE_MILLION) / 10
+      : num * scalarAvg * ONE_MILLION
+    : 0;
+
+  const scalarLocalDisk = offLoading ? num * scalarAvg * ONE_MILLION : 0;
+
+  if (indexType === IndexTypeEnum.DISKANN) {
+    const vectorLoadingMemory = result.memory * 1.15;
+    return {
+      memory: vectorLoadingMemory + scalarLoadingMemory, // bytes
+      disk: scalarLocalDisk + result.disk, // bytes
+    };
+  }
+
+  const vectorLoadingMemory = (result.memory + segmentSizeByte * 2) * 1.15;
+
+  return {
+    memory: vectorLoadingMemory + scalarLoadingMemory, // bytes
+    disk: scalarLocalDisk + result.disk, // bytes
+  };
 };
 
-export const indexNodeCalculator = (
-  theorySize: number,
-  segmentSize: number
-) => {
-  const scale = segmentSize / 512;
+export const standaloneNodeConfigCalculator = (params: { memory: number }) => {
+  const { size: memoryGb } = unitBYTE2Any(params.memory, 'GB');
+  const MEMORY_SIZE_OPTIONS = [8, 16, 32, 64];
+  const properMemorySize = MEMORY_SIZE_OPTIONS.find(item => item >= memoryGb);
+  const properCoreSize = properMemorySize / 4;
 
-  const size = Math.ceil((theorySize * 10) / 1024 / 1024 / 1024) / 10;
-  if (size < 5 && size > 0) {
-    return {
-      size: `${4 * scale} core ${8 * scale} GB`,
-      cpu: 4 * scale,
-      memory: 8 * scale,
-      amount: 1,
-    };
-  }
-
-  if (size >= 5 && size < 20) {
-    return {
-      size: `${4 * scale} core ${8 * scale} GB`,
-      cpu: 4 * scale,
-      memory: 8 * scale,
-      amount: 2,
-    };
-  }
-
-  if (size >= 20 && size < 50) {
-    return {
-      size: `${8 * scale} core ${16 * scale} GB`,
-      cpu: 8 * scale,
-      memory: 16 * scale,
-      amount: 2,
-    };
-  }
-
-  if (size >= 50) {
-    return {
-      size: `${8 * scale} core ${16 * scale} GB`,
-      cpu: 8 * scale,
-      memory: 16 * scale,
-      amount: 4,
-    };
-  }
-
-  return defaultSizeContent;
+  return {
+    cpu: properCoreSize,
+    memory: properMemorySize,
+    count: 1,
+  };
 };
 
-export const queryNodeCalculator = (memorySize: number) => {
-  const size = Math.ceil((memorySize * 10) / 1024 / 1024 / 1024) / 10;
+// query nodes calculator
+export const clusterNodesConfigCalculator = (params: { memory: number }) => {
+  const { size: memoryGB } = unitBYTE2Any(params.memory, 'GB');
 
-  if (size > 0 && size < 16) {
-    const scaleUp = Math.ceil(size / 4);
+  const queryNodeCount =
+    memoryGB >= 2048
+      ? Math.ceil(memoryGB / 128)
+      : memoryGB >= 512
+      ? Math.ceil(memoryGB / 64)
+      : memoryGB >= 96
+      ? Math.ceil(memoryGB / 32)
+      : 0;
 
-    return {
-      size: `${scaleUp} core ${scaleUp * 4} GB`,
-      cpu: scaleUp,
-      memory: scaleUp * 4,
-      amount: 1,
-    };
-  }
-
-  if (size >= 16 && size < 96) {
-    const scaleOut = Math.ceil(size / 16);
-    return {
-      size: '4 core 16 GB',
-      cpu: 4,
-      memory: 16,
-      amount: scaleOut,
-    };
-  }
-
-  if (size >= 96 && size < 384) {
-    const scaleOut = Math.ceil(size / 32);
-    return {
-      size: '8 core 32 GB',
+  const basicLargeNodeConfig = {
+    proxy: {
       cpu: 8,
       memory: 32,
-      amount: scaleOut,
-    };
-  }
-
-  if (size >= 384 && size < 4000) {
-    const scaleOut = Math.ceil(size / 64);
-    return {
-      size: '8 core 64 GB',
+      count: 1,
+    },
+    mixCoord: {
       cpu: 8,
-      memory: 64,
-      amount: scaleOut,
-    };
-  }
-
-  if (size >= 4000) {
-    const scaleOut = Math.ceil(size / 128);
-    return {
-      size: '16 core 128 GB',
-      cpu: 16,
-      memory: 128,
-      amount: scaleOut,
-    };
-  }
-
-  return defaultSizeContent;
-};
-
-export const rootCoordCalculator = (nb: number) => {
-  return nb === 0
-    ? defaultSizeContent
-    : nb < $1B
-    ? {
-        size: `1 core 2 GB`,
-        cpu: 1,
-        memory: 2,
-        amount: 1,
-      }
-    : {
-        size: '2 core 4 GB',
-        cpu: 2,
-        memory: 4,
-        amount: 1,
-      };
-};
-
-export const dataNodeCalculator = (nb: number) => {
-  return nb === 0
-    ? defaultSizeContent
-    : nb < $1M * 40
-    ? {
-        size: '1 core 4 GB',
-        cpu: 1,
-        memory: 4,
-        amount: 1,
-      }
-    : nb < $1B
-    ? {
-        size: '2 core 8 GB',
-        cpu: 2,
-        memory: 8,
-        amount: 1,
-      }
-    : {
-        size: '2 core 8 GB',
-        cpu: 2,
-        memory: 8,
-        amount: SHARD,
-      };
-};
-
-export const proxyCalculator = (memorySize: number) => {
-  return memorySize === 0
-    ? defaultSizeContent
-    : memorySize < unitAny2BYTE(384, 'GB')
-    ? {
-        size: '1 core 4 GB',
-        cpu: 1,
-        memory: 4,
-        amount: 1,
-      }
-    : {
-        size: '2 core 8 GB',
-        cpu: 2,
-        memory: 8,
-        amount: 1,
-      };
-};
-
-export const commonCoordCalculator = (memorySize: number) => {
-  const $1TB = unitAny2BYTE(1, 'TB');
-
-  return memorySize < $1TB
-    ? {
-        size: '0.5 core 0.5 GB',
-        cpu: 0.5,
-        memory: 0.5,
-        amount: 1,
-      }
-    : {
-        size: '1 core 1 GB',
-        cpu: 1,
-        memory: 1,
-        amount: 1,
-      };
-};
-
-export const mixCoordCalculator = (nb: number) => {
-  const numberOfVector = nb / ONE_MILLION;
-  // unit is million
-  if (numberOfVector <= 1) {
-    return {
-      size: '1 core 4 GB',
-      cpu: 1,
-      memory: 4,
-      amount: 1,
-    };
-  } else if (numberOfVector > 1 && numberOfVector < 100) {
-    return {
-      size: '2 core 8 GB',
-      cpu: 2,
-      memory: 8,
-      amount: 1,
-    };
-  } else {
-    return {
-      size: '4 core 16 GB',
-      cpu: 4,
+      memory: 32,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 8,
+      memory: 32,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 8,
       memory: 16,
-      amount: 1,
-    };
+      count: 8,
+    },
+  };
+  const queryNodesConfig = [
+    ...FIXED_QUERY_NODE_CONFIG,
+    {
+      memory: [96, 512],
+      queryNode: {
+        cpu: 8,
+        memory: 32,
+        count: queryNodeCount,
+      },
+      ...basicLargeNodeConfig,
+    },
+    {
+      memory: [512, 2048],
+      queryNode: {
+        cpu: 16,
+        memory: 64,
+        count: queryNodeCount,
+      },
+      ...basicLargeNodeConfig,
+    },
+    {
+      memory: [2048, Infinity],
+      queryNode: {
+        cpu: 32,
+        memory: 128,
+        count: queryNodeCount,
+      },
+      ...basicLargeNodeConfig,
+    },
+  ];
+
+  const properMemorySection = queryNodesConfig.find(
+    v => v.memory[0] <= memoryGB && v.memory[1] > memoryGB
+  );
+  return {
+    queryNode: properMemorySection?.queryNode,
+    proxy: properMemorySection?.proxy,
+    mixCoord: properMemorySection?.mixCoord,
+    dataNode: properMemorySection?.dataNode,
+    indexNode: properMemorySection?.indexNode,
+  };
+};
+
+export const dependencyCalculator = (params: {
+  num: number;
+  d: number;
+  mode: ModeEnum;
+  withScalar: boolean;
+  scalarAvg: number;
+}): DependencyConfigType => {
+  const { num, d, mode, scalarAvg, withScalar } = params;
+
+  const rawDataSize = rawDataSizeCalculator({
+    num,
+    d,
+    withScalar,
+    scalarAvg,
+  });
+
+  let etcdBaseConfig = {
+    cpu: 0,
+    memory: 0,
+    pvc: 0,
+    count: 0,
+  };
+  let minioBaseConfig = {
+    cpu: 0,
+    memory: 0,
+    pvc: 0,
+    count: 0,
+  };
+  let pulsarBaseConfig = {
+    bookie: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+      journal: 0,
+      ledgers: 0,
+    },
+    broker: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+    },
+    proxy: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+    },
+    zookeeper: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+      pvc: 0,
+    },
+  };
+  let kafkaBaseConfig = {
+    broker: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+      pvc: 0,
+    },
+    zookeeper: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+      pvc: 0,
+    },
+  };
+
+  switch (mode) {
+    case ModeEnum.Standalone:
+      etcdBaseConfig = {
+        cpu: 0.5,
+        memory: 1,
+        pvc: 10,
+        count: 1,
+      };
+      minioBaseConfig = {
+        cpu: 1,
+        memory: 4,
+        pvc: 20,
+        count: 1,
+      };
+
+      if (rawDataSize >= $1M768D) {
+        etcdBaseConfig.memory = 2;
+        minioBaseConfig.memory = 8;
+        minioBaseConfig.pvc = 120;
+      }
+
+      return {
+        etcd: etcdBaseConfig,
+        minio: minioBaseConfig,
+        pulsar: undefined,
+        kafka: undefined,
+      };
+    case ModeEnum.Cluster:
+      etcdBaseConfig = {
+        cpu: 1,
+        memory: 4,
+        pvc: 20,
+        count: 3,
+      };
+      minioBaseConfig = {
+        cpu: 1,
+        memory: 8,
+        pvc: 30,
+        count: 4,
+      };
+
+      pulsarBaseConfig = {
+        bookie: {
+          cpu: 1,
+          memory: 8,
+          count: 3,
+          journal: 30,
+          ledgers: 40,
+        },
+        broker: {
+          cpu: 1,
+          memory: 4,
+          count: 2,
+        },
+        proxy: {
+          cpu: 0.5,
+          memory: 4,
+          count: 2,
+        },
+        zookeeper: {
+          cpu: 0.5,
+          memory: 2,
+          count: 3,
+          pvc: 30,
+        },
+      };
+
+      kafkaBaseConfig = {
+        broker: {
+          cpu: 2,
+          memory: 8,
+          count: 3,
+          pvc: 100,
+        },
+        zookeeper: {
+          cpu: 0.5,
+          memory: 2,
+          count: 3,
+          pvc: 30,
+        },
+      };
+
+      if (rawDataSize >= $10M768D && rawDataSize <= $100M768D) {
+        minioBaseConfig = {
+          cpu: 1,
+          memory: 8,
+          pvc: 300,
+          count: 4,
+        };
+        pulsarBaseConfig = {
+          bookie: {
+            cpu: 1,
+            memory: 8,
+            count: 3,
+            journal: 50,
+            ledgers: 400,
+          },
+          broker: {
+            cpu: 1,
+            memory: 4,
+            count: 2,
+          },
+          proxy: {
+            cpu: 0.5,
+            memory: 4,
+            count: 2,
+          },
+          zookeeper: {
+            cpu: 0.5,
+            memory: 2,
+            count: 3,
+            pvc: 30,
+          },
+        };
+
+        kafkaBaseConfig = {
+          broker: {
+            cpu: 2,
+            memory: 8,
+            count: 3,
+            pvc: 400,
+          },
+          zookeeper: {
+            cpu: 0.5,
+            memory: 2,
+            count: 3,
+            pvc: 30,
+          },
+        };
+      }
+      if (rawDataSize >= $100M768D && rawDataSize <= $1B768D) {
+        etcdBaseConfig = {
+          cpu: 1,
+          memory: 8,
+          pvc: 50,
+          count: 3,
+        };
+        minioBaseConfig = {
+          cpu: 1,
+          memory: 8,
+          pvc: 3000,
+          count: 4,
+        };
+
+        pulsarBaseConfig = {
+          bookie: {
+            cpu: 2,
+            memory: 16,
+            count: 3,
+            journal: 100,
+            ledgers: 4000,
+          },
+          broker: {
+            cpu: 2,
+            memory: 8,
+            count: 2,
+          },
+          proxy: {
+            cpu: 1,
+            memory: 4,
+            count: 2,
+          },
+          zookeeper: {
+            cpu: 0.5,
+            memory: 4,
+            count: 3,
+            pvc: 100,
+          },
+        };
+
+        kafkaBaseConfig = {
+          broker: {
+            cpu: 4,
+            memory: 16,
+            count: 3,
+            pvc: 4000,
+          },
+          zookeeper: {
+            cpu: 0.5,
+            memory: 4,
+            count: 3,
+            pvc: 100,
+          },
+        };
+      }
+
+      return {
+        etcd: etcdBaseConfig,
+        minio: minioBaseConfig,
+        pulsar: pulsarBaseConfig,
+        kafka: kafkaBaseConfig,
+      };
   }
 };
 
-export const isBetween: (
-  value: number,
-  option: {
-    min: number;
-    max: number;
-  }
-) => boolean = (value, { min, max }) => {
-  return value >= min && value <= max;
-};
+export const milvusOverviewDataCalculator = (params: {
+  standaloneNodeConfig: NodesValueType;
+  clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
+  mode: ModeEnum;
+}) => {
+  const { standaloneNodeConfig, clusterNodeConfig, mode } = params;
+  const { queryNode, proxy, mixCoord, dataNode, indexNode } = clusterNodeConfig;
+  const milvusCpu =
+    mode === ModeEnum.Standalone
+      ? standaloneNodeConfig.cpu
+      : queryNode.cpu * queryNode.count +
+        proxy.cpu * proxy.count +
+        mixCoord.cpu * mixCoord.count +
+        dataNode.cpu * dataNode.count +
+        indexNode.cpu * indexNode.count;
 
-export const etcdCalculator = (rowFileSize?: number) => {
-  let cpu = 0;
-  let memory = 0;
-  let podNumber = 0;
-  let pvcPerPodSize = 0;
-  let pvcPerPodUnit = '';
-  let isError = false;
-
-  if (!rowFileSize) {
-    isError = true;
-  } else {
-    if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-      cpu = 1;
-      memory = 2;
-      podNumber = 3;
-      pvcPerPodSize = 30;
-      pvcPerPodUnit = 'G';
-    } else if (
-      rowFileSize > unitAny2BYTE(50, 'GB') &&
-      rowFileSize <= unitAny2BYTE(500, 'GB')
-    ) {
-      cpu = 2;
-      memory = 4;
-      podNumber = 3;
-      pvcPerPodSize = 30;
-      pvcPerPodUnit = 'G';
-    } else {
-      cpu = 4;
-      memory = 8;
-      podNumber = 3;
-      pvcPerPodSize = 30;
-      pvcPerPodUnit = 'G';
-    }
-  }
+  const milvusMemory =
+    mode === ModeEnum.Standalone
+      ? standaloneNodeConfig.memory
+      : queryNode.memory * queryNode.count +
+        proxy.memory * proxy.count +
+        mixCoord.memory * mixCoord.count +
+        dataNode.memory * dataNode.count +
+        indexNode.memory * indexNode.count;
 
   return {
-    cpu,
-    memory,
-    podNumber,
-    pvcPerPodSize,
-    pvcPerPodUnit,
-    isError,
+    milvusCpu,
+    milvusMemory,
   };
 };
 
-export const minioCalculator = (rowFileSize?: number, indexSize?: number) => {
-  let cpu = 0;
-  let memory = 0;
-  let podNumber = 0;
-  let pvcPerPodSize = 0;
-  let pvcPerPodUnit = '';
-  let isError = false;
+export const dependencyOverviewDataCalculator = (params: {
+  mode: ModeEnum;
+  dependency: DependencyComponentEnum;
+  dependencyConfig: DependencyConfigType;
+}) => {
+  const { mode, dependency, dependencyConfig } = params;
+  const { etcd, minio, pulsar, kafka } = dependencyConfig;
 
-  if (!rowFileSize || !indexSize) {
-    isError = true;
-  } else {
-    const { size, unit } = unitBYTE2Any(
-      ((rowFileSize + indexSize) * 3 * 2) / 4
-    );
-    const intSize = Math.ceil(size / 10) * 10;
+  const pulsarCpu =
+    mode === ModeEnum.Standalone
+      ? 0
+      : pulsar.bookie.cpu * pulsar.bookie.count +
+        pulsar.broker.cpu * pulsar.broker.count +
+        pulsar.zookeeper.cpu * pulsar.zookeeper.count +
+        pulsar.proxy.cpu * pulsar.proxy.count;
+  const kafkaCpu =
+    mode === ModeEnum.Standalone
+      ? 0
+      : kafka.broker.cpu * kafka.broker.count +
+        kafka.zookeeper.cpu * kafka.zookeeper.count;
+  const streamPlatformCpu =
+    dependency === DependencyComponentEnum.Pulsar ? pulsarCpu : kafkaCpu;
+  const dependencyCpu =
+    etcd.cpu * etcd.count + minio.cpu * minio.count + streamPlatformCpu;
 
-    if (rowFileSize <= unitAny2BYTE(50, 'GB') || !rowFileSize) {
-      cpu = 1;
-      memory = 2;
-      podNumber = 4;
-      pvcPerPodSize = intSize;
-      pvcPerPodUnit = unit;
-    } else if (
-      rowFileSize > unitAny2BYTE(50, 'GB') &&
-      rowFileSize <= unitAny2BYTE(500, 'GB')
-    ) {
-      cpu = 2;
-      memory = 8;
-      podNumber = 4;
-      pvcPerPodSize = intSize;
-      pvcPerPodUnit = unit;
-    } else {
-      cpu = 4;
-      memory = 16;
-      podNumber = 4;
-      pvcPerPodSize = intSize;
-      pvcPerPodUnit = unit;
-    }
-  }
+  const pulsarMemory =
+    mode === ModeEnum.Standalone
+      ? 0
+      : pulsar.bookie.memory * pulsar.bookie.count +
+        pulsar.broker.memory * pulsar.broker.count +
+        pulsar.zookeeper.memory * pulsar.zookeeper.count +
+        pulsar.proxy.memory * pulsar.proxy.count;
+  const kafkaMemory =
+    mode === ModeEnum.Standalone
+      ? 0
+      : kafka.broker.memory * kafka.broker.count +
+        kafka.zookeeper.memory * kafka.zookeeper.count;
 
-  return {
-    cpu,
-    memory,
-    podNumber,
-    pvcPerPodSize,
-    pvcPerPodUnit,
-    isError,
-  };
-};
+  const streamPlatformMemory =
+    dependency === DependencyComponentEnum.Pulsar ? pulsarMemory : kafkaMemory;
 
-export const pulsarCalculator = (rowFileSize?: number) => {
-  const minimumJournalSize = unitAny2BYTE(10, 'GB');
-  const minimumLedgersSize = unitAny2BYTE(25, 'GB');
+  const dependencyMemory =
+    etcd.memory * etcd.count +
+    minio.memory * minio.count +
+    streamPlatformMemory;
 
-  let bookie = {
-    cpu: {
-      key: 'Cpu',
-      size: 0,
-      unit: '',
-    },
-    memory: {
-      key: 'Memory',
-      size: 0,
-      unit: '',
-    },
-    xms: {
-      key: '-Xms',
-      size: 0,
-      unit: '',
-    },
-    xmx: {
-      key: '-Xmx',
-      size: 0,
-      unit: '',
-    },
-    xx: {
-      key: '-Xx',
-      size: 0,
-      unit: '',
-    },
-    podNum: {
-      key: 'Pod Number',
-      value: 0,
-    },
-    journal: {
-      key: 'Journal',
-      size: 0,
-      unit: '',
-    },
-    ledgers: {
-      key: 'Ledgers',
-      size: 0,
-      unit: '',
-      isSSD: true,
-    },
-  };
-  let broker = {
-    cpu: {
-      key: 'Cpu',
-      size: 0,
-      unit: '',
-    },
-    memory: {
-      key: 'Memory',
-      size: 0,
-      unit: '',
-    },
-    xms: {
-      key: '-Xms',
-      size: 0,
-      unit: '',
-    },
-    xmx: {
-      key: '-Xmx',
-      size: 0,
-      unit: '',
-    },
-    xx: {
-      key: '-Xx',
-      size: 0,
-      unit: '',
-    },
-    podNum: {
-      key: 'Pod Number',
-      value: 0,
-    },
-  };
-  let proxy = {
-    cpu: {
-      key: 'Cpu',
-      size: 0,
-      unit: '',
-    },
-    memory: {
-      key: 'Memory',
-      size: 0,
-      unit: '',
-    },
-    xms: {
-      key: '-Xms',
-      size: 0,
-      unit: '',
-    },
-    xmx: {
-      key: '-Xmx',
-      size: 0,
-      unit: '',
-    },
-    xx: {
-      key: '-Xx',
-      size: 0,
-      unit: '',
-    },
-    podNum: {
-      key: 'Pod Number',
-      value: 0,
-    },
-  };
-  let zookeeper = {
-    cpu: {
-      key: 'Cpu',
-      size: 0,
-      unit: '',
-    },
-    memory: {
-      key: 'Memory',
-      size: 0,
-      unit: '',
-    },
-    xms: {
-      key: '-Xms',
-      size: 0,
-      unit: '',
-    },
-    xmx: {
-      key: '-Xmx',
-      size: 0,
-      unit: '',
-    },
+  const pulsarStorage =
+    mode === ModeEnum.Standalone
+      ? 0
+      : (pulsar.bookie.journal + pulsar.bookie.ledgers) * pulsar.bookie.count +
+        pulsar.zookeeper.pvc * pulsar.zookeeper.count;
+  const kafkaStorage =
+    mode === ModeEnum.Standalone
+      ? 0
+      : kafka.broker.pvc * kafka.broker.count +
+        kafka.zookeeper.pvc * kafka.zookeeper.count;
+  const streamPlatformStorage =
+    dependency === DependencyComponentEnum.Pulsar
+      ? pulsarStorage
+      : kafkaStorage;
 
-    podNum: {
-      key: 'Pod Number',
-      value: 0,
-    },
-    pvc: {
-      key: 'Pvc per Pod',
-      size: 0,
-      unit: '',
-      isSSD: true,
-    },
-  };
-  if (!rowFileSize) {
-    return {
-      bookie,
-      broker,
-      proxy,
-      zookeeper,
-    };
-  }
-
-  const journalData =
-    rowFileSize > minimumJournalSize
-      ? unitBYTE2Any(rowFileSize / 5)
-      : { size: 10, unit: 'G' };
-  const ledgersData =
-    rowFileSize > minimumLedgersSize
-      ? unitBYTE2Any(rowFileSize / 2)
-      : { size: 25, unit: 'G' };
-
-  const intJournalData = {
-    size: Math.ceil(journalData.size / 10) * 10,
-    unit: journalData.unit,
-  };
-
-  const intLedgersData = {
-    size: Math.ceil(ledgersData.size / 10) * 10,
-    unit: ledgersData.unit,
-  };
-
-  if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-    bookie = {
-      cpu: {
-        key: 'Cpu',
-        size: 1,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 8,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 2048,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 2048,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 4096,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      journal: {
-        key: 'Journal',
-        size: intJournalData.size,
-        unit: intJournalData.unit,
-      },
-      ledgers: {
-        key: 'Ledgers',
-        size: intLedgersData.size,
-        unit: intLedgersData.unit,
-        isSSD: true,
-      },
-    };
-    broker = {
-      cpu: {
-        key: 'Cpu',
-        size: 2,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 9,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 2048,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 2048,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 4096,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 2,
-      },
-    };
-    proxy = {
-      cpu: {
-        key: 'Cpu',
-        size: 1,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 3,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 1024,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 1024,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 1024,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 2,
-      },
-    };
-    zookeeper = {
-      cpu: {
-        key: 'Cpu',
-        size: 1,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 1,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 512,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 512,
-        unit: 'M',
-      },
-
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc per Pod',
-        size: 20,
-        unit: 'G',
-        isSSD: true,
-      },
-    };
-  } else if (
-    rowFileSize > unitAny2BYTE(50, 'GB') &&
-    rowFileSize <= unitAny2BYTE(500, 'GB')
-  ) {
-    bookie = {
-      cpu: {
-        key: 'Cpu',
-        size: 2,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 16,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 4096,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 4096,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 8192,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      journal: {
-        key: 'Journal',
-        size: intJournalData.size,
-        unit: intJournalData.unit,
-      },
-      ledgers: {
-        key: 'Ledgers',
-        size: intLedgersData.size,
-        unit: intLedgersData.unit,
-        isSSD: true,
-      },
-    };
-    broker = {
-      cpu: {
-        key: 'Cpu',
-        size: 2,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 18,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 4096,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 4096,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 8192,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 2,
-      },
-    };
-    proxy = {
-      cpu: {
-        key: 'Cpu',
-        size: 2,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 5,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 2048,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 2048,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 2048,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 2,
-      },
-    };
-    zookeeper = {
-      cpu: {
-        key: 'Cpu',
-        size: 1,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 2,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 1024,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 1024,
-        unit: 'M',
-      },
-
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc per Pod',
-        size: 20,
-        unit: 'G',
-        isSSD: true,
-      },
-    };
-  } else {
-    bookie = {
-      cpu: {
-        key: 'Cpu',
-        size: 4,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 32,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 8192,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 8192,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 16384,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      journal: {
-        key: 'Journal',
-        size: intJournalData.size,
-        unit: intJournalData.unit,
-      },
-      ledgers: {
-        key: 'Ledgers',
-        size: intLedgersData.size,
-        unit: intLedgersData.unit,
-        isSSD: true,
-      },
-    };
-    broker = {
-      cpu: {
-        key: 'Cpu',
-        size: 4,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 36,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 8192,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 8192,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 16384,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 2,
-      },
-    };
-    proxy = {
-      cpu: {
-        key: 'Cpu',
-        size: 4,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 9,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 4096,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 4096,
-        unit: 'M',
-      },
-      xx: {
-        key: '-Xx',
-        size: 4096,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 2,
-      },
-    };
-    zookeeper = {
-      cpu: {
-        key: 'Cpu',
-        size: 2,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 4,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 2048,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 2048,
-        unit: 'M',
-      },
-
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc per Pod',
-        size: 20,
-        unit: 'G',
-        isSSD: true,
-      },
-    };
-  }
+  const dependencyStorage =
+    etcd.pvc * etcd.count + minio.pvc * minio.count + streamPlatformStorage;
 
   return {
-    bookie,
-    broker,
-    proxy,
-    zookeeper,
-  };
-};
-
-export const kafkaCalculator = (rowFileSize?: number) => {
-  let broker = {
-    cpu: {
-      key: 'Cpu',
-      size: 0,
-      unit: 'core',
-    },
-    memory: {
-      key: 'Memory',
-      size: 0,
-      unit: 'G',
-    },
-    xms: {
-      key: '-Xms',
-      size: 0,
-      unit: '',
-    },
-    xmx: {
-      key: '-Xmx',
-      size: 0,
-      unit: '',
-    },
-    podNum: {
-      key: 'Pod Number',
-      value: 0,
-    },
-    pvc: {
-      key: 'Pvc Per Pod',
-      size: 0,
-      unit: '',
-      isSSD: false,
-    },
-  };
-  let zookeeper = {
-    cpu: {
-      key: 'Cpu',
-      size: 0,
-      unit: 'core',
-    },
-    memory: {
-      key: 'Memory',
-      size: 0,
-      unit: 'G',
-    },
-    xms: {
-      key: '-Xms',
-      size: 0,
-      unit: '',
-    },
-    xmx: {
-      key: '-Xmx',
-      size: 0,
-      unit: '',
-    },
-    podNum: {
-      key: 'Pod Number',
-      value: 0,
-    },
-    pvc: {
-      key: 'Pvc Per Pod',
-      size: 0,
-      unit: '',
-      isSSD: true,
-    },
-  };
-
-  if (!rowFileSize) {
-    return {
-      broker,
-      zookeeper,
-    };
-  }
-
-  const minimumBrokerPvc = unitAny2BYTE(10, 'GB');
-
-  const { size, unit } =
-    minimumBrokerPvc > rowFileSize
-      ? { size: 10, unit: 'G' }
-      : unitBYTE2Any(rowFileSize);
-
-  const intSize = Math.ceil(size / 10) * 10;
-
-  if (rowFileSize <= unitAny2BYTE(50, 'GB')) {
-    broker = {
-      cpu: {
-        key: 'Cpu',
-        size: 1,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 7,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 2048,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 2048,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc Per Pod',
-        size: intSize,
-        unit: unit,
-        isSSD: false,
-      },
-    };
-    zookeeper = {
-      cpu: {
-        key: 'Cpu',
-        size: 1,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 1,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 512,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 512,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc Per Pod',
-        size: 20,
-        unit: 'G',
-        isSSD: true,
-      },
-    };
-  } else if (
-    rowFileSize > unitAny2BYTE(50, 'GB') &&
-    rowFileSize <= unitAny2BYTE(500, 'GB')
-  ) {
-    broker = {
-      cpu: {
-        key: 'Cpu',
-        size: 2,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 13,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 4096,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 4096,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc Per Pod',
-        size: intSize,
-        unit: unit,
-        isSSD: false,
-      },
-    };
-    zookeeper = {
-      cpu: {
-        key: 'Cpu',
-        size: 1,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 2,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 1024,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 1024,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc Per Pod',
-        size: 20,
-        unit: 'G',
-        isSSD: true,
-      },
-    };
-  } else {
-    broker = {
-      cpu: {
-        key: 'Cpu',
-        size: 4,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 25,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 8192,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 8192,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc Per Pod',
-        size: intSize,
-        unit: unit,
-        isSSD: false,
-      },
-    };
-    zookeeper = {
-      cpu: {
-        key: 'Cpu',
-        size: 2,
-        unit: 'core',
-      },
-      memory: {
-        key: 'Memory',
-        size: 4,
-        unit: 'G',
-      },
-      xms: {
-        key: '-Xms',
-        size: 2048,
-        unit: 'M',
-      },
-      xmx: {
-        key: '-Xmx',
-        size: 2048,
-        unit: 'M',
-      },
-      podNum: {
-        key: 'Pod Number',
-        value: 3,
-      },
-      pvc: {
-        key: 'Pvc Per Pod',
-        size: 20,
-        unit: 'G',
-        isSSD: true,
-      },
-    };
-  }
-
-  return {
-    broker,
-    zookeeper,
+    dependencyCpu,
+    dependencyMemory,
+    dependencyStorage,
   };
 };
 
 export const helmYmlGenerator: (
   params: {
-    proxy: DataNode;
-    mixCoord: DataNode;
-    indexNode: DataNode;
-    commonCoord: DataNode;
-    etcdData: MilvusDataType;
-    minioData: MilvusDataType;
-    pulsarData: any;
-    kafkaData: any;
+    proxy: NodesValueType;
+    mixCoord: NodesValueType;
+    indexNode: NodesValueType;
+    etcdData: NodesValueType & {
+      pvc: number;
+    };
+    minioData: NodesValueType & {
+      pvc: number;
+    };
+    pulsarData: PulsarDataType;
+    kafkaData: KafkaDataType;
   },
-  apacheType: ApacheType
+  apacheType: DependencyComponentEnum,
+  mode: ModeEnum
 ) => any = (
-  {
-    proxy,
-    mixCoord,
-    indexNode,
-    commonCoord,
-    etcdData,
-    minioData,
-    pulsarData,
-    kafkaData,
-  },
-  apacheType
+  { proxy, mixCoord, indexNode, etcdData, minioData, pulsarData, kafkaData },
+  apacheType,
+  mode
 ) => {
-  const pulsarConfig = `
+  const pulsarConfig =
+    mode === ModeEnum.Standalone
+      ? ''
+      : `
 pulsar:
   enabled: true
   proxy:
     resources:
       requests:
-        memory: ${pulsarData.proxy.memory.size}${pulsarData.proxy.memory.unit}i
-        cpu: ${pulsarData.proxy.cpu.size}
-    replicaCount: ${pulsarData.proxy.podNum.value}
+        memory: ${pulsarData.proxy.memory}Gi
+        cpu: ${pulsarData.proxy.cpu}
+    replicaCount: ${pulsarData.proxy.count}
     configData:
-      PULSAR_MEM: >
-        -Xms${pulsarData.proxy.xms.size}${pulsarData.proxy.xms.unit}
-        -Xmx${pulsarData.proxy.xmx.size}${pulsarData.proxy.xmx.unit}
-        -XX:MaxDirectMemorySize=${pulsarData.proxy.xx.size}${pulsarData.proxy.xx.unit}
       httpNumThreads: "100"
   zookeeper:
     volumes:
       persistence: true
       data:
         name: data
-        size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i   #SSD Required
+        size: ${pulsarData.zookeeper.pvc}Gi   #SSD Required
         storageClassName:
     resources:
       requests:
-        memory: ${pulsarData.zookeeper.memory.size}${pulsarData.zookeeper.memory.unit}i
-        cpu: ${pulsarData.zookeeper.cpu.size}
-    configData:
-      PULSAR_MEM: >
-        -Xms${pulsarData.zookeeper.xms.size}${pulsarData.zookeeper.xms.unit}
-        -Xmx${pulsarData.zookeeper.xmx.size}${pulsarData.zookeeper.xmx.unit}
+        memory: ${pulsarData.zookeeper.memory}Gi
+        cpu: ${pulsarData.zookeeper.cpu}
   bookkeeper:
     volumes:
       journal:
         name: journal
-        size: ${pulsarData.bookie.journal.size}${pulsarData.bookie.journal.unit}i
+        size: ${pulsarData.bookie.journal}Gi
         storageClassName:
       ledgers:
         name: ledgers
-        size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i  #SSD Required
+        size: ${pulsarData.bookie.ledgers}Gi  #SSD Required
         storageClassName:
     resources:
       requests:
-        memory: ${pulsarData.bookie.memory.size}${pulsarData.bookie.memory.unit}i
-        cpu: ${pulsarData.bookie.cpu.size}
-    configData:
-      PULSAR_MEM: >
-        -Xms${pulsarData.bookie.xms.size}${pulsarData.bookie.xms.unit}
-        -Xmx${pulsarData.bookie.xmx.size}${pulsarData.bookie.xmx.unit}
-        -XX:MaxDirectMemorySize=${pulsarData.bookie.xx.size}${pulsarData.bookie.xx.unit}
+        memory: ${pulsarData.bookie.memory}Gi
+        cpu: ${pulsarData.bookie.cpu}
   broker:
     component: broker
     podMonitor:
       enabled: false
-    replicaCount: ${pulsarData.broker.podNum.value}
+    replicaCount: ${pulsarData.broker.count}
     resources:
       requests:
-        memory: ${pulsarData.broker.memory.size}${pulsarData.broker.memory.unit}i
-        cpu: ${pulsarData.broker.cpu.size}
-    configData:
-      PULSAR_MEM: >
-        -Xms${pulsarData.broker.xms.size}${pulsarData.broker.xms.unit}
-        -Xmx${pulsarData.broker.xmx.size}${pulsarData.broker.xmx.unit}
-        -XX:MaxDirectMemorySize=${pulsarData.broker.xx.size}${pulsarData.broker.xx.unit}
+        memory: ${pulsarData.broker.memory}Gi
+        cpu: ${pulsarData.broker.cpu}
   `;
 
-  const kafkaConfig = `
+  const kafkaConfig =
+    mode === ModeEnum.Standalone
+      ? ''
+      : `
 pulsar:
   enabled: false
 kafka:
   enabled: true
-  heapOpts: "-Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit} -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}"
   persistence:
     enabled: true
     storageClass:
     accessMode: ReadWriteOnce
-    size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}
+    size: ${kafkaData.broker.pvc}Gi
   resources:
     limits:
-      cpu: ${kafkaData.broker.cpu.size}
-      memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
+      cpu: ${kafkaData.broker.cpu}
+      memory: ${kafkaData.broker.memory}Gi
   zookeeper:
     enabled: true
-    replicaCount: ${kafkaData.zookeeper.podNum.value}
-    heapSize: ${kafkaData.zookeeper.xms.size}  # zk heap size in MB
+    replicaCount: ${kafkaData.zookeeper.count}
     persistence:
       enabled: true
       storageClass: ""
       accessModes:
         - ReadWriteOnce
-      size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i   #SSD Required
+      size: ${kafkaData.zookeeper.pvc}Gi   #SSD Required
     resources:
       limits:
-        cpu: ${kafkaData.zookeeper.cpu.size}
-        memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
+        cpu: ${kafkaData.zookeeper.cpu}
+        memory: ${kafkaData.zookeeper.memory}Gi
   `;
 
   return `mixCoordinator:
-  replicas: ${mixCoord.amount}
+  replicas: ${mixCoord.count}
   resources: 
     limits:
       cpu: "${mixCoord.cpu}"
       memory: ${mixCoord.memory}Gi
 proxy:
-  replicas: ${proxy.amount}
+  replicas: ${proxy.count}
   resources: 
     limits:
       cpu: ${proxy.cpu}
       memory: ${proxy.memory}Gi
 indexNode:
-  replicas: ${indexNode.amount}
+  replicas: ${indexNode.count}
   resources: 
     limits:
       cpu: ${indexNode.cpu}
@@ -1515,9 +845,9 @@ etcd:
   persistence:
     accessMode: ReadWriteOnce
     enabled: true
-    size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i  #SSD Required
+    size: ${etcdData.pvc}Gi  #SSD Required
     storageClass:
-  replicaCount: ${etcdData.podNumber}
+  replicaCount: ${etcdData.count}
   resources:
     limits:
       cpu: ${etcdData.cpu}
@@ -1525,7 +855,7 @@ etcd:
     requests:
       cpu: ${etcdData.cpu}
       memory: ${etcdData.memory}Gi
-${apacheType === 'pulsar' ? pulsarConfig : kafkaConfig}
+${apacheType === DependencyComponentEnum.Pulsar ? pulsarConfig : kafkaConfig}
 minio:
   resources:
     limits:
@@ -1534,129 +864,112 @@ minio:
   persistence:
     storageClass:
     accessMode: ReadWriteOnce
-    size: ${minioData.pvcPerPodSize}${minioData.pvcPerPodUnit}i
+    size: ${minioData.pvc}Gi
   `;
 };
 
 export const operatorYmlGenerator: (
   params: {
-    mixCoord: DataNode;
-    proxy: DataNode;
-    indexNode: DataNode;
-    commonCoord: DataNode;
-    etcdData: MilvusDataType;
-    minioData: MilvusDataType;
-    pulsarData: any;
-    kafkaData: any;
+    proxy: NodesValueType;
+    mixCoord: NodesValueType;
+    indexNode: NodesValueType;
+    etcdData: NodesValueType & {
+      pvc: number;
+    };
+    minioData: NodesValueType & {
+      pvc: number;
+    };
+    pulsarData: PulsarDataType;
+    kafkaData: KafkaDataType;
   },
-  apacheType: ApacheType
-) => any = (
-  {
-    mixCoord,
-    proxy,
-    indexNode,
-    commonCoord,
-    etcdData,
-    minioData,
-    pulsarData,
-    kafkaData,
-  },
-  apacheType
+  apacheType: DependencyComponentEnum,
+  mode: ModeEnum
+) => string = (
+  { mixCoord, proxy, indexNode, etcdData, minioData, pulsarData, kafkaData },
+  apacheType,
+  mode
 ) => {
-  const pulsarConfig = `
+  const pulsarConfig =
+    mode === ModeEnum.Standalone
+      ? ''
+      : `
     pulsar:
       inCluster:
         values:
           proxy:
-            replicaCount: ${pulsarData.proxy.podNum.value}
+            replicaCount: ${pulsarData.proxy.count}
             configData:
-              PULSAR_MEM: >
-                -Xms${pulsarData.proxy.xms.size}${pulsarData.proxy.xms.unit}
-                -Xmx${pulsarData.proxy.xmx.size}${pulsarData.proxy.xmx.unit}
-                -XX:MaxDirectMemorySize=${pulsarData.proxy.xx.size}${pulsarData.proxy.xx.unit}
               httpNumThreads: "100"
           zookeeper:
             volumes:
               persistence: true
               data:
                 name: data
-                size: ${pulsarData.zookeeper.pvc.size}${pulsarData.zookeeper.pvc.unit}i   #SSD Required
+                size: ${pulsarData.zookeeper.pvc}Gi   #SSD Required
                 storageClassName:
             resources:
               requests:
-                memory: ${pulsarData.zookeeper.memory.size}${pulsarData.zookeeper.memory.unit}i
-                cpu: ${pulsarData.zookeeper.cpu.size}
-            configData:
-              PULSAR_MEM: >
-                -Xms${pulsarData.zookeeper.xms.size}${pulsarData.zookeeper.xms.unit}
-                -Xmx${pulsarData.zookeeper.xmx.size}${pulsarData.zookeeper.xmx.unit}
+                memory: ${pulsarData.zookeeper.memory}Gi
+                cpu: ${pulsarData.zookeeper.cpu}
           bookkeeper:
             volumes:
               journal:
                 name: journal
-                size: ${pulsarData.bookie.journal.size}${pulsarData.bookie.journal.unit}i
+                size: ${pulsarData.bookie.journal}Gi
                 storageClassName:
               ledgers:
                 name: ledgers
-                size: ${pulsarData.bookie.ledgers.size}${pulsarData.bookie.ledgers.unit}i   #SSD Required
+                size: ${pulsarData.bookie.ledgers}Gi   #SSD Required
                 storageClassName:
             resources:
               requests:
-                memory: ${pulsarData.bookie.memory.size}${pulsarData.bookie.memory.unit}i
-                cpu: ${pulsarData.bookie.cpu.size}
-            configData:
-              PULSAR_MEM: >
-                -Xms${pulsarData.bookie.xms.size}${pulsarData.bookie.xms.unit}
-                -Xmx${pulsarData.bookie.xmx.size}${pulsarData.bookie.xmx.unit}
-                -XX:MaxDirectMemorySize=${pulsarData.bookie.xx.size}${pulsarData.bookie.xx.unit}
+                memory: ${pulsarData.bookie.memory}Gi
+                cpu: ${pulsarData.bookie.cpu}
           broker:
             component: broker
             podMonitor:
               enabled: false
-            replicaCount: ${pulsarData.broker.podNum.value}
+            replicaCount: ${pulsarData.broker.count}
             resources:
               requests:
-                memory: ${pulsarData.broker.memory.size}${pulsarData.broker.memory.unit}i
-                cpu: ${pulsarData.broker.cpu.size}
-            configData:
-              PULSAR_MEM: >
-                -Xms${pulsarData.broker.xms.size}${pulsarData.broker.xms.unit}
-                -Xmx${pulsarData.broker.xmx.size}${pulsarData.broker.xmx.unit}
-                -XX:MaxDirectMemorySize=${pulsarData.broker.xx.size}${pulsarData.broker.xx.unit}
+                memory: ${pulsarData.broker.memory}Gi
+                cpu: ${pulsarData.broker.cpu}
   `;
 
-  const kafkaConfig = `
+  const kafkaConfig =
+    mode === ModeEnum.Standalone
+      ? ''
+      : `
     msgStreamType: kafka
     kafka:
       inCluster:
         values:
-          heapOpts: "-Xmx${kafkaData.broker.xmx.size}${kafkaData.broker.xmx.unit} -Xms${kafkaData.broker.xms.size}${kafkaData.broker.xms.unit}"
           persistence:
             enabled: true
             storageClass:
             accessMode: ReadWriteOnce
-            size: ${kafkaData.broker.pvc.size}${kafkaData.broker.pvc.unit}i
+            size: ${kafkaData.broker.pvc}Gi
           resources:
             limits:
-              cpu: ${kafkaData.broker.cpu.size}
-              memory: ${kafkaData.broker.memory.size}${kafkaData.broker.memory.unit}i
+              cpu: ${kafkaData.broker.cpu}
+              memory: ${kafkaData.broker.memory}Gi
           zookeeper:
             enabled: true
-            replicaCount: ${kafkaData.zookeeper.podNum.value}
-            heapSize: ${kafkaData.zookeeper.xms.size}  # zk heap size in MB
+            replicaCount: ${kafkaData.zookeeper.count}
             persistence:
               enabled: true
               storageClass: ""
               accessModes:
                 - ReadWriteOnce
-              size: ${kafkaData.zookeeper.pvc.size}${kafkaData.zookeeper.pvc.unit}i #SSD Required
+              size: ${kafkaData.zookeeper.pvc}Gi #SSD Required
             resources:
               limits:
-                cpu: ${kafkaData.zookeeper.cpu.size}
-                memory: ${kafkaData.zookeeper.memory.size}${kafkaData.zookeeper.memory.unit}i
+                cpu: ${kafkaData.zookeeper.cpu}
+                memory: ${kafkaData.zookeeper.memory}Gi
   `;
 
-  const apacheConfig = apacheType === 'pulsar' ? pulsarConfig : kafkaConfig;
+  const apacheConfig =
+    apacheType === DependencyComponentEnum.Pulsar ? pulsarConfig : kafkaConfig;
 
   return `apiVersion: milvus.io/v1beta1
 kind: Milvus
@@ -1667,19 +980,19 @@ metadata:
 spec:
   components:
     mixCoord:
-      replicas: ${mixCoord.amount}
+      replicas: ${mixCoord.count}
       resources:
         limits:
           cpu: ${mixCoord.cpu}
           memory: ${mixCoord.memory}Gi
     indexNode:
-      replicas: ${indexNode.amount}
+      replicas: ${indexNode.count}
       resources:
         limits:
           cpu: ${indexNode.cpu}
           memory: ${indexNode.memory}Gi
     proxy:
-      replicas: ${proxy.amount}
+      replicas: ${proxy.count}
       resources:
         limits:
           cpu: ${proxy.cpu}
@@ -1705,9 +1018,9 @@ spec:
           persistence:
             accessMode: ReadWriteOnce
             enabled: true
-            size: ${etcdData.pvcPerPodSize}${etcdData.pvcPerPodUnit}i   #SSD Required
+            size: ${etcdData.pvc}Gi   #SSD Required
             storageClass:
-          replicaCount: ${etcdData.podNumber}
+          replicaCount: ${etcdData.count}
           resources:
             limits:
               cpu: ${etcdData.cpu}
@@ -1727,7 +1040,6 @@ spec:
           persistence:
             storageClass:
             accessMode: ReadWriteOnce
-            size: ${minioData.pvcPerPodSize}${minioData.pvcPerPodUnit}i
-
+            size: ${minioData.pvc}Gi
   `;
 };

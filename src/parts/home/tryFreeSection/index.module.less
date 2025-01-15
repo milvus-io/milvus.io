@@ -75,12 +75,13 @@
     margin-top: 28px;
 
     .subTitle {
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 24px;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.5;
       color: @color-black1;
       text-align: center;
       margin-bottom: 24px;
+      font-family: 'Geist Mono';
 
       @media @tablet, @phone {
         font-size: 14px;
@@ -92,26 +93,24 @@
       list-style-type: none;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gird-gap: 24px;
+      grid-gap: 12px;
+
 
       .toolItem {
         display: flex;
-        justify-content: center;
 
         .toolButton {
-          width: 140px;
+          width: 136px;
           height: 108px;
           border-radius: 10px;
           display: flex;
           flex-direction: column;
           align-items: center;
+          background-color: #fff;
+          border: 1px solid @color-black4;
 
           img {
             width: 80px;
-          }
-
-          &:hover {
-            background-color: #fff;
           }
         }
       }

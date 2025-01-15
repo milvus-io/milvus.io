@@ -1,4 +1,4 @@
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import { BlogFrontMatterType } from './blogs';
 
 export interface DocFrontMatterType {

@@ -1,5 +1,12 @@
 @import url('@/styles/global.module.less');
 
+// handle arabic layout
+html[lang='ar'] {
+  .asideSection {
+    direction: rtl;
+  }
+}
+
 .docDetailContainer {
   display: flex;
   justify-content: flex-start;

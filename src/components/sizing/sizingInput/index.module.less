@@ -1,0 +1,65 @@
+@import url('@/styles/global.module.less');
+
+.inputContainer {
+  width: 140px;
+  max-width: 140px;
+}
+
+.fullWidth {
+  width: 100%;
+  max-width: 100%;
+}
+
+.inputLabel {
+  .paragraph6();
+  margin-bottom: 10px;
+}
+
+.inputWrapper {
+  border-radius: 8px;
+  border: 1px solid @color-black3;
+  background: #fff;
+  position: relative;
+
+  &:hover {
+    border-color: @color-black2;
+  }
+
+  &:focus-within {
+    border-color: @color-black1;
+  }
+
+  input {
+    .paragraph6();
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    color: @color-black1;
+  }
+}
+
+.mediumSize {
+  height: 36px;
+  padding: 9px 8px;
+}
+.smallSize {
+  height: 28px;
+  padding: 5px 8px;
+}
+
+.largePadding {
+  padding-right: 52px;
+}
+.unit {
+  .paragraph6-regular();
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 8px;
+  top: 0;
+  bottom: 0;
+  color: @color-black2;
+}

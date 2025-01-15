@@ -1,14 +1,14 @@
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import DocLayout from '@/components/layout/docLayout';
 import HomeContent from '@/parts/docs/docHome';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import classes from '@/styles/docs.module.less';
 import { BlogFrontMatterType } from '@/types/blogs';
 import { AllMdVersionIdType, FinalMenuStructureType } from '@/types/docs';
-import { SHOW_LANGUAGE_SELECTOR_VERSIONS } from '@/components/localization/const';
+import { DOCS_LANGUAGE_DISABLED_MAP, SHOW_LANGUAGE_SELECTOR_VERSIONS } from '@/components/localization/const';
 import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
 
 export interface DocHomePageProps {
@@ -80,6 +80,7 @@ export function DocHomepage(props: DocHomePageProps) {
           disableLanguageSelector={
             !SHOW_LANGUAGE_SELECTOR_VERSIONS.includes(version)
           }
+          disabledLanguages={DOCS_LANGUAGE_DISABLED_MAP[version]}
         />
       }
     />

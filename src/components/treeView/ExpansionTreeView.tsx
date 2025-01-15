@@ -10,7 +10,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ExternalDocLinkIcon } from '@/components/icons';
 import { findActiveMenuItem } from '@/utils';
 import { useRouter } from 'next/router';
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import { getLinkPrefix } from './utils';
 
 const SCROLL_TOP = '@@scroll|menu';

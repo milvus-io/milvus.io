@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -11,19 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { LanguageEnum } from '@/types/localization';
 import DeepLogo from '../../../public/images/docs/deepl.png';
-
-export enum LanguageEnum {
-  ENGLISH = 'en',
-  CHINESE = 'zh',
-  JAPANESE = 'ja',
-  KOREAN = 'ko',
-  FRANCE = 'fr',
-  GERMAN = 'de',
-  SPANISH = 'es',
-  ITALIAN = 'it',
-  PORTUGUESE = 'pt',
-}
 
 export const LanguageValues = Object.values(LanguageEnum);
 
@@ -73,6 +62,7 @@ type Props = {
   className?: string;
   disabled?: boolean;
   showDeepLogo?: boolean;
+  disabledLanguages?: LanguageEnum[];
 };
 
 export const LanguageSelector: FC<Props> = props => {
@@ -83,11 +73,14 @@ export const LanguageSelector: FC<Props> = props => {
     className = '',
     disabled,
     showDeepLogo = false,
+    disabledLanguages = [],
   } = props;
   const [opened, setOpened] = useState(false);
   const { t } = useTranslation('docs', { lng: value });
 
   const handleLanguageChange = (lang: LanguageEnum) => {
+    document.documentElement.lang = lang;
+
     if (value === LanguageEnum.ENGLISH) {
       const newPath = pathname.replace(`/docs`, `/docs/${lang}`);
       router.push(newPath);
@@ -110,6 +103,74 @@ export const LanguageSelector: FC<Props> = props => {
     return null;
   }
 
+  const options = [
+    {
+      label: 'English',
+      value: LanguageEnum.ENGLISH,
+      disabled: disabledLanguages.includes(LanguageEnum.ENGLISH),
+    },
+    {
+      label: '简体中文',
+      value: LanguageEnum.CHINESE,
+      disabled: disabledLanguages.includes(LanguageEnum.CHINESE),
+    },
+    {
+      label: '繁體中文',
+      value: LanguageEnum.CHINESE_TW,
+      disabled: disabledLanguages.includes(LanguageEnum.CHINESE_TW),
+    },
+    {
+      label: '日本語で',
+      value: LanguageEnum.JAPANESE,
+      disabled: disabledLanguages.includes(LanguageEnum.JAPANESE),
+    },
+    {
+      label: '한국어',
+      value: LanguageEnum.KOREAN,
+      disabled: disabledLanguages.includes(LanguageEnum.KOREAN),
+    },
+    {
+      label: 'Français',
+      value: LanguageEnum.FRANCE,
+      disabled: disabledLanguages.includes(LanguageEnum.FRANCE),
+    },
+    {
+      label: 'Deutsch',
+      value: LanguageEnum.GERMAN,
+      disabled: disabledLanguages.includes(LanguageEnum.GERMAN),
+    },
+    {
+      label: 'Español',
+      value: LanguageEnum.SPANISH,
+      disabled: disabledLanguages.includes(LanguageEnum.SPANISH),
+    },
+    {
+      label: 'Italiano',
+      value: LanguageEnum.ITALIAN,
+      disabled: disabledLanguages.includes(LanguageEnum.ITALIAN),
+    },
+    {
+      label: 'Português',
+      value: LanguageEnum.PORTUGUESE,
+      disabled: disabledLanguages.includes(LanguageEnum.PORTUGUESE),
+    },
+    {
+      label: 'Русский',
+      value: LanguageEnum.RUSSIAN,
+      disabled: disabledLanguages.includes(LanguageEnum.RUSSIAN),
+    },
+    {
+      label: 'Indonesia',
+      value: LanguageEnum.INDONESIAN,
+      disabled: disabledLanguages.includes(LanguageEnum.INDONESIAN),
+    },
+    {
+      label: 'العربية',
+      value: LanguageEnum.ARABIC,
+      disabled: disabledLanguages.includes(LanguageEnum.ARABIC),
+    },
+  ].filter(option => !option.disabled);
+
   return (
     <div className={className}>
       <Select
@@ -120,7 +181,10 @@ export const LanguageSelector: FC<Props> = props => {
         <SelectTrigger
           className={clsx(
             `w-[150px] border-0 pl-0 gap-[2px] justify-start font-[600] text-black1 hover:text-black2`,
-            { 'text-textPrimary': opened }
+            {
+              'text-textPrimary': opened,
+              'justify-end': value === LanguageEnum.ARABIC,
+            }
           )}
           open={opened}
         >
@@ -129,15 +193,13 @@ export const LanguageSelector: FC<Props> = props => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value={LanguageEnum.ENGLISH}>English</SelectItem>
-            <SelectItem value={LanguageEnum.CHINESE}>简体中文</SelectItem>
-            <SelectItem value={LanguageEnum.JAPANESE}>日本語で</SelectItem>
-            <SelectItem value={LanguageEnum.KOREAN}>한국어</SelectItem>
-            <SelectItem value={LanguageEnum.FRANCE}>Français</SelectItem>
-            <SelectItem value={LanguageEnum.GERMAN}>Deutsch</SelectItem>
-            <SelectItem value={LanguageEnum.SPANISH}>Español</SelectItem>
-            <SelectItem value={LanguageEnum.ITALIAN}>Italiano</SelectItem>
-            <SelectItem value={LanguageEnum.PORTUGUESE}>Português</SelectItem>
+            {options.map(option => {
+              return (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              );
+            })}
           </SelectGroup>
         </SelectContent>
       </Select>

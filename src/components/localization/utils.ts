@@ -1,4 +1,4 @@
-import { LanguageEnum } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 
 export const getHomePageLink = (params: {

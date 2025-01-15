@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
-import { LanguageEnum, LanguageSelector } from '@/components/language-selector';
+import { LanguageSelector } from '@/components/language-selector';
+import { LanguageEnum } from '@/types/localization';
 import { DocAnchorItemType } from '@/types/docs';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
@@ -35,6 +36,7 @@ interface AsidePropsType {
   activeAnchor?: string;
   lang?: LanguageEnum;
   disableLanguageSelector?: boolean;
+  disabledLanguages?: LanguageEnum[];
 
   classes?: {
     root?: string;
@@ -61,6 +63,7 @@ const Aside = (props: AsidePropsType) => {
     activeAnchor = '',
     lang,
     disableLanguageSelector,
+    disabledLanguages = [],
   } = props;
   const { t } = useTranslation('docs', { lng: lang });
   const { root, btnGroup, anchorTree } = classes;
@@ -161,6 +164,7 @@ const Aside = (props: AsidePropsType) => {
         className="mb-[32px]"
         disabled={disableLanguageSelector}
         showDeepLogo={lang !== LanguageEnum.ENGLISH}
+        disabledLanguages={disabledLanguages}
       />
       <>
         {category === 'doc' && (

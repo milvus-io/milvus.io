@@ -1,458 +1,132 @@
 import React, { useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
 import classes from '@/styles/sizingTool.module.less';
 import pageClasses from '@/styles/responsive.module.less';
-import { InfoFilled, DownloadIcon } from '@/components/icons';
-import SizingToolCard from '@/components/card/sizingToolCard';
-import SizingConfigCard from '@/components/card/sizingToolCard/sizingConfigCard';
 import clsx from 'clsx';
-import Slider from '@mui/material/Slider';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Head from 'next/head';
-import CustomButton from '@/components/customButton';
-
-import {
-  memorySizeCalculator,
-  rawFileSizeCalculator,
-  commonCoordCalculator,
-  unitBYTE2Any,
-  indexNodeCalculator,
-  queryNodeCalculator,
-  isBetween,
-  rootCoordCalculator,
-  dataNodeCalculator,
-  proxyCalculator,
-  helmYmlGenerator,
-  operatorYmlGenerator,
-  etcdCalculator,
-  minioCalculator,
-  pulsarCalculator,
-  kafkaCalculator,
-  mixCoordCalculator,
-  unitAny2BYTE,
-} from '@/utils/sizingTool';
-import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
-import HighlightBlock from '@/components/card/sizingToolCard/codeBlock';
-import {
-  HELM_CONFIG_FILE_NAME,
-  OPERATOR_CONFIG_FILE_NAME,
-  REQUIRE_MORE,
-  INDEX_TYPE_OPTIONS,
-  SEGMENT_SIZE_OPTIONS,
-  IndexTypeEnum,
-} from '@/components/card/sizingToolCard/constants';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import FormSection from '@/parts/sizing/formSection';
+import ResultSection from '@/parts/sizing/resultSection';
+import {
+  DependencyComponentEnum,
+  ICalculateResult,
+  ModeEnum,
+} from '@/types/sizing';
+import { InfoFilled } from '@/components/icons';
+import ZillizAdv from '@/parts/blogs/zillizAdv';
 
-// one million
-const $1M = Math.pow(10, 6);
-
-const defaultSizeContent = {
-  size: REQUIRE_MORE,
+const etcdBaseValue = {
   cpu: 0,
   memory: 0,
-  amount: 0,
+  pvc: 0,
+  count: 0,
 };
-
-enum FromKeysEnum {
-  Nb = 'nb',
-  D = 'd',
-  IndexType = 'indexType',
-  M = 'm',
-  Nlist = 'nlist',
-  SegmentSize = 'segmentSize',
-  aApacheType = 'apacheType',
-}
+const minioBaseValue = {
+  cpu: 0,
+  memory: 0,
+  pvc: 0,
+  count: 0,
+};
+const pulsarBaseValue = {
+  bookie: {
+    cpu: 0,
+    memory: 0,
+    count: 0,
+    journal: 0,
+    ledgers: 0,
+  },
+  broker: {
+    cpu: 0,
+    memory: 0,
+    count: 0,
+  },
+  proxy: {
+    cpu: 0,
+    memory: 0,
+    count: 0,
+  },
+  zookeeper: {
+    cpu: 0,
+    memory: 0,
+    count: 0,
+    pvc: 0,
+  },
+};
+const kafkaBaseValue = {
+  broker: {
+    cpu: 0,
+    memory: 0,
+    count: 0,
+    pvc: 0,
+  },
+  zookeeper: {
+    cpu: 0,
+    memory: 0,
+    count: 0,
+    pvc: 0,
+  },
+};
 
 export default function SizingTool() {
   const { t } = useTranslation('sizingTool');
-
-  const [dialogState, setDialogState] = useState({
-    open: false,
-    title: '',
-    children: <></>,
-  });
-  const [form, setForm] = useState<{ [key in FromKeysEnum]: any }>({
-    // number of vectors
-    nb: {
-      value: 1,
-      showError: false,
-      helpText: '',
-      placeholder: `[1, 10000]`,
-      validation: {
-        validate: isBetween,
-        params: { min: 1, max: 10000 },
-        errorMsg: 'Number of vectors should be an integer between [1, 10000]',
+  const [calculatedResult, setCalculatedResult] = useState<ICalculateResult>({
+    rawDataSize: 0,
+    memorySize: 0,
+    localDiskSize: 0,
+    standaloneNodeConfig: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+    },
+    clusterNodeConfig: {
+      queryNode: {
+        cpu: 0,
+        memory: 0,
+        count: 0,
+      },
+      proxy: {
+        cpu: 0,
+        memory: 0,
+        count: 0,
+      },
+      mixCoord: {
+        cpu: 0,
+        memory: 0,
+        count: 0,
+      },
+      dataNode: {
+        cpu: 0,
+        memory: 0,
+        count: 0,
+      },
+      indexNode: {
+        cpu: 0,
+        memory: 0,
+        count: 0,
       },
     },
-    // dimensions
-    d: {
-      value: 128,
-      showError: false,
-      helpText: '',
-      placeholder: '[1, 10000]',
-      validation: {
-        validate: isBetween,
-        params: { min: 1, max: 10000 },
-        errorMsg: 'Dimensions should be an integer between [1, 10000]',
+    dependencyConfig: {
+      etcd: {
+        ...etcdBaseValue,
+      },
+      minio: {
+        ...minioBaseValue,
+      },
+      pulsar: {
+        ...pulsarBaseValue,
+      },
+      kafka: {
+        ...kafkaBaseValue,
       },
     },
-    // index type
-    indexType: {
-      value: INDEX_TYPE_OPTIONS[0].value,
-      showError: false,
-    },
-    // index parameters
-    m: {
-      value: 8,
-      showError: false,
-    },
-    // ivf parameters
-    nlist: {
-      value: 1024,
-      showError: false,
-      helpText: '',
-      placeholder: '[1, 10000]',
-      validation: {
-        validate: isBetween,
-        params: { min: 1, max: 10000 },
-        errorMsg: 'nList should be an integer between [1, 10000]',
-      },
-    },
-    // segment size
-    segmentSize: {
-      value: SEGMENT_SIZE_OPTIONS[0].value,
-      showError: false,
-    },
-    apacheType: 'pulsar',
+    mode: ModeEnum.Standalone,
+    dependency: DependencyComponentEnum.Pulsar,
+    isOutOfCalculate: false,
   });
 
-  const handleFormValueChange = (val: any, key: FromKeysEnum) => {
-    const { validation } = form[key];
-
-    if (!validation) {
-      setForm(v => ({
-        ...v,
-        [key]: {
-          ...v[key],
-          value: val,
-        },
-      }));
-      return;
-    }
-
-    const isValidated = validation.validate(val, validation.params);
-    if (isValidated) {
-      setForm(v => ({
-        ...v,
-        [key]: {
-          ...v[key],
-          value: val,
-          showError: false,
-          helpText: '',
-        },
-      }));
-    } else {
-      setForm(v => ({
-        ...v,
-        [key]: {
-          ...v[key],
-          value: val,
-          showError: true,
-          helpText: validation.errorMsg,
-        },
-      }));
-    }
-  };
-
-  const hanldeRemovePromot = key => {
-    if (!form[key].showError) {
-      return;
-    }
-    setForm(v => ({
-      ...v,
-      [key]: {
-        ...v[key],
-        value: '',
-        showError: false,
-        helpText: '',
-      },
-    }));
-  };
-
-  const handleApacheChange = (e, value) => {
-    setForm(v => ({
-      ...v,
-      apacheType: value,
-    }));
-  };
-
-  const calcResult = useMemo(() => {
-    const { nb, d, indexType, nlist, m, segmentSize } = form;
-
-    const nbVal = Number(nb.value) * $1M || 0;
-    const dVal = Number(d.value) || 0;
-    const nlistVal = Number(nlist.value) || 0;
-    const mVal = Number(m.value) || 0;
-    const sVal = Number(segmentSize.value) || 0;
-
-    const isErrorParameters = Object.values(form).some(
-      v => v.showError || v.value === ''
-    );
-
-    if (isErrorParameters) {
-      const etcdData = etcdCalculator();
-      const minioData = minioCalculator();
-      const pulsarData = pulsarCalculator();
-      const kafkaData = kafkaCalculator();
-      return {
-        memorySize: { size: 0, unit: 'B' },
-        rawFileSize: { size: 0, unit: 'B' },
-        dataNode: defaultSizeContent,
-        queryNode: defaultSizeContent,
-        indexNode: defaultSizeContent,
-        proxy: defaultSizeContent,
-        mixCoord: defaultSizeContent,
-        commonCoord: defaultSizeContent,
-        etcdData,
-        minioData,
-        pulsarData,
-        kafkaData,
-      };
-    }
-
-    const { memorySize, theorySize } = memorySizeCalculator({
-      nb: nbVal,
-      d: dVal,
-      nlist: nlistVal,
-      M: mVal,
-      indexType: indexType.value,
-    });
-
-    const rawFileSize = rawFileSizeCalculator({ d: dVal, nb: nbVal });
-    const dataNode = dataNodeCalculator(nbVal);
-    const indexNode = indexNodeCalculator(theorySize, sVal);
-    const proxy = proxyCalculator(memorySize);
-    const queryNode = queryNodeCalculator(memorySize);
-    const commonCoord = commonCoordCalculator(memorySize);
-    const mixCoord = mixCoordCalculator(nbVal);
-    const etcdData = etcdCalculator(rawFileSize);
-    const minioData = minioCalculator(rawFileSize, theorySize);
-    const pulsarData = pulsarCalculator(rawFileSize);
-    const kafkaData = kafkaCalculator(rawFileSize);
-    return {
-      memorySize: unitBYTE2Any(memorySize),
-      rawFileSizeByte: rawFileSize,
-      rawFileSize: unitBYTE2Any(rawFileSize),
-      mixCoord,
-      indexNode,
-      dataNode,
-      queryNode,
-      proxy,
-      commonCoord,
-      etcdData,
-      minioData,
-      pulsarData,
-      kafkaData,
-    };
-  }, [form]);
-  const { milvusData, dependencyData, totalData, queryNodeDiskData } =
-    useMemo(() => {
-      const calculateList = [
-        calcResult.proxy,
-        calcResult.mixCoord,
-        calcResult.indexNode,
-        calcResult.dataNode,
-        calcResult.queryNode,
-      ];
-
-      const milvusData = {
-        core: calculateList.reduce((acc, cur) => {
-          acc += cur.cpu * cur.amount;
-          return acc;
-        }, 0),
-        memory: calculateList.reduce((acc, cur) => {
-          acc += cur.memory * cur.amount;
-          return acc;
-        }, 0),
-      };
-
-      const secondPartData = {
-        core:
-          calcResult.etcdData.cpu * calcResult.etcdData.podNumber +
-          calcResult.minioData.cpu * calcResult.minioData.podNumber,
-        memory:
-          calcResult.etcdData.memory * calcResult.etcdData.podNumber +
-          calcResult.minioData.memory * calcResult.minioData.podNumber,
-        ssd:
-          calcResult.etcdData.pvcPerPodUnit === 'G'
-            ? calcResult.etcdData.pvcPerPodSize * calcResult.etcdData.podNumber
-            : (calcResult.etcdData.pvcPerPodSize *
-                calcResult.etcdData.podNumber) /
-              1024,
-        disk:
-          calcResult.minioData.pvcPerPodUnit === 'G'
-            ? calcResult.minioData.pvcPerPodSize *
-              calcResult.minioData.podNumber
-            : (calcResult.minioData.pvcPerPodSize *
-                calcResult.minioData.podNumber) /
-              1024,
-      };
-
-      const pulsarBookieData =
-        calcResult.pulsarData.bookie.ledgers.unit === 'G'
-          ? calcResult.pulsarData.bookie.ledgers.size *
-            calcResult.pulsarData.bookie.podNum.value
-          : (calcResult.pulsarData.bookie.ledgers.size *
-              calcResult.pulsarData.bookie.podNum.value) /
-            1024;
-      const pulsarZookeeperData =
-        calcResult.pulsarData.zookeeper.pvc.unit === 'G'
-          ? calcResult.pulsarData.zookeeper.pvc.size *
-            calcResult.pulsarData.zookeeper.podNum.value
-          : (calcResult.pulsarData.zookeeper.pvc.size *
-              calcResult.pulsarData.zookeeper.podNum.value) /
-            1024;
-      const pulsarData = {
-        core: Object.values(calcResult.pulsarData).reduce((acc, cur) => {
-          acc += cur.cpu.size * cur.podNum.value;
-          return acc;
-        }, 0),
-        memory: Object.values(calcResult.pulsarData).reduce((acc, cur) => {
-          acc += cur.memory.size * cur.podNum.value;
-          return acc;
-        }, 0),
-        ssd: pulsarBookieData + pulsarZookeeperData,
-        disk:
-          calcResult.pulsarData.bookie.journal.unit === 'G'
-            ? calcResult.pulsarData.bookie.journal.size *
-              calcResult.pulsarData.bookie.podNum.value
-            : (calcResult.pulsarData.bookie.journal.size *
-                calcResult.pulsarData.bookie.podNum.value) /
-              1024,
-      };
-
-      const kafkaData = {
-        core: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
-          acc += cur.cpu.size * cur.podNum.value;
-          return acc;
-        }, 0),
-        memory: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
-          acc += cur.memory.size * cur.podNum.value;
-          return acc;
-        }, 0),
-        ssd: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
-          if (cur.pvc?.isSSD) {
-            if (cur.pvc.unit === 'G') {
-              acc += cur.pvc.size * cur.podNum.value;
-            } else {
-              acc += (cur.pvc.size * cur.podNum.value) / 1024;
-            }
-          }
-          return acc;
-        }, 0),
-        disk: Object.values(calcResult.kafkaData).reduce((acc, cur) => {
-          if (!cur.pvc?.isSSD) {
-            if (cur.pvc.unit === 'G') {
-              acc += cur.pvc.size * cur.podNum.value;
-            } else {
-              acc += (cur.pvc.size * cur.podNum.value) / 1024;
-            }
-          }
-          return acc;
-        }, 0),
-      };
-
-      const thirdPartData =
-        form.apacheType === 'pulsar' ? pulsarData : kafkaData;
-
-      let queryNodeDiskData = undefined;
-
-      if (form.indexType.value === IndexTypeEnum.DISKANN) {
-        const rawFileSizeValue = unitBYTE2Any(calcResult.rawFileSizeByte, 'GB');
-        queryNodeDiskData = {
-          totalQueryNodeDisk: Math.ceil(rawFileSizeValue.size * 10) / 10,
-          key: 'SSD',
-          value: `${
-            Math.ceil(
-              (rawFileSizeValue.size / calcResult.queryNode.amount) * 10
-            ) / 10
-          } GB`,
-        };
-      }
-
-      const totalData = {
-        core: milvusData.core + secondPartData.core + thirdPartData.core,
-        memory:
-          milvusData.memory + secondPartData.memory + thirdPartData.memory,
-        ssd: queryNodeDiskData
-          ? Math.ceil(secondPartData.ssd + thirdPartData.ssd) +
-            queryNodeDiskData.totalQueryNodeDisk
-          : Math.ceil(secondPartData.ssd + thirdPartData.ssd),
-        disk: Math.ceil(secondPartData.disk + thirdPartData.disk),
-      };
-
-      const dependencyData = {
-        core: secondPartData.core + thirdPartData.core,
-        memory: secondPartData.memory + thirdPartData.memory,
-        ssd: Math.ceil(secondPartData.ssd + thirdPartData.ssd),
-        disk: Math.ceil(secondPartData.disk + thirdPartData.disk),
-      };
-
-      return {
-        milvusData,
-        dependencyData,
-        totalData,
-        queryNodeDiskData,
-      };
-    }, [calcResult, form.apacheType]);
-
-  const handleDownloadYmlFile = (content, fileName) => {
-    if (typeof window !== 'undefined') {
-      const blob = new Blob([content], {
-        type: 'text/plain',
-      });
-
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${fileName}.yml`;
-      a.click();
-    }
-  };
-
-  const handleDownloadHelm = () => {
-    const content = helmYmlGenerator(calcResult, form.apacheType);
-    handleDownloadYmlFile(content, HELM_CONFIG_FILE_NAME);
-  };
-  const handleDownloadOperator = () => {
-    const content = operatorYmlGenerator(calcResult, form.apacheType);
-    handleDownloadYmlFile(content, OPERATOR_CONFIG_FILE_NAME);
-  };
-
-  const handleCloseDialog = () => {
-    setDialogState(v => ({
-      ...v,
-      open: false,
-    }));
-  };
-
-  const handleOpenInstallGuide = type => {
-    const title = type === 'helm' ? t('buttons.helm') : t('buttons.operator');
-
-    setDialogState({
-      open: true,
-      title,
-      children: <HighlightBlock type={type} />,
-    });
+  const updateCalculatedResult = (result: ICalculateResult) => {
+    setCalculatedResult(result);
   };
 
   return (
@@ -470,434 +144,35 @@ export default function SizingTool() {
             hrefLang="en"
           />
         </Head>
-        <div className={clsx(pageClasses.container, classes.container)}>
-          <h1>{t('title')}</h1>
-          <section className={classes.note}>
+
+        <div
+          className={clsx(
+            pageClasses.homeContainer,
+            classes.sizingToolContainer
+          )}
+        >
+          <h1 className={classes.title}>{t('title')}</h1>
+          <p className={classes.desc}>{t('content')}</p>
+          <div className={classes.tipWrapper}>
             <span className={classes.iconWrapper}>
-              <InfoFilled />
+              <InfoFilled color="#667176" />
             </span>
-            <h2>{t('subTitle')}</h2>
-          </section>
-          <div className={classes.contentWrapper}>
-            <section className={classes.leftPart}>
-              <div className={classes.dataSize}>
-                <h3>{t('labels.dataSize')}</h3>
-
-                <div className={classes.dataItem}>
-                  <p className={classes.label}>{t('labels.vector')}</p>
-                  <TextField
-                    fullWidth
-                    error={form.nb.showError}
-                    label={t('labels.vector')}
-                    value={form.nb.value}
-                    helperText={form.nb.helpText}
-                    placeholder={form.nb.placeholder}
-                    onFocus={() => hanldeRemovePromot('nb')}
-                    onChange={e => {
-                      handleFormValueChange(e.target.value, FromKeysEnum.Nb);
-                    }}
-                  />
-                </div>
-
-                <div className={classes.dataItem}>
-                  <p className={classes.label}>{t('labels.dimension')}</p>
-                  <TextField
-                    fullWidth
-                    error={form.d.showError}
-                    label={t('labels.dimension')}
-                    value={form.d.value}
-                    helperText={form.d.helpText}
-                    placeholder={form.d.placeholder}
-                    onFocus={() => hanldeRemovePromot('d')}
-                    onChange={e => {
-                      handleFormValueChange(e.target.value, FromKeysEnum.D);
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className={classes.indexType}>
-                <h3>{t('labels.indexType')}</h3>
-
-                <div className={classes.dataItem}>
-                  <FormControl fullWidth>
-                    <InputLabel>{t('labels.index')}</InputLabel>
-                    <Select
-                      value={form.indexType.value}
-                      label={t('labels.index')}
-                      onChange={e => {
-                        handleFormValueChange(
-                          e.target.value,
-                          FromKeysEnum.IndexType
-                        );
-                      }}
-                    >
-                      {INDEX_TYPE_OPTIONS.map(v => (
-                        <MenuItem value={v.value} key={v.value}>
-                          {v.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
-
-                <div className={classes.dataItem}>
-                  {form.indexType.value === 'FLAT' ? null : form.indexType
-                      .value === 'HNSW' ? (
-                    <>
-                      <p className={clsx(classes.label, classes.shortMargin)}>
-                        {t('labels.indexParam')}
-                      </p>
-                      <p
-                        className={clsx(
-                          classes.interpretation,
-                          classes.largeMargin
-                        )}
-                      >
-                        {t('labels.m')}
-                      </p>
-                      <div className={classes.sliderWrapper}>
-                        <Slider
-                          value={form.m.value}
-                          step={2}
-                          min={4}
-                          max={64}
-                          valueLabelDisplay="on"
-                          onChange={(e, value) => {
-                            handleFormValueChange(value, FromKeysEnum.M);
-                          }}
-                          marks={[
-                            { label: '4', value: 4 },
-                            { label: '64', value: 64 },
-                          ]}
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <p className={classes.interpretation}>{t('labels.m')}</p>
-                      <TextField
-                        fullWidth
-                        error={form.nlist.showError}
-                        label="nlist"
-                        value={form.nlist.value}
-                        helperText={form.nlist.helpText}
-                        placeholder={form.nlist.placeholder}
-                        onFocus={() => hanldeRemovePromot('nlist')}
-                        onChange={e => {
-                          handleFormValueChange(
-                            e.target.value,
-                            FromKeysEnum.Nlist
-                          );
-                        }}
-                      />
-                    </>
-                  )}
-                </div>
-
-                <div className={classes.dataItem}>
-                  <p className={classes.label}>{t('labels.segmentSize')}</p>
-                  <FormControl fullWidth>
-                    <InputLabel>{t('labels.segment')}</InputLabel>
-                    <Select
-                      value={form.segmentSize.value}
-                      label={t('labels.segment')}
-                      onChange={d => {
-                        handleFormValueChange(
-                          d.target.value,
-                          FromKeysEnum.SegmentSize
-                        );
-                      }}
-                    >
-                      {SEGMENT_SIZE_OPTIONS.map(v => (
-                        <MenuItem value={v.value} key={v.value}>
-                          {v.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  <FormControl fullWidth>
-                    <RadioGroup
-                      value={form.apacheType}
-                      onChange={handleApacheChange}
-                      className={classes.radioGroup}
-                    >
-                      <FormControlLabel
-                        value="pulsar"
-                        control={<Radio />}
-                        label="Pulsar"
-                      />
-                      <FormControlLabel
-                        value="kafka"
-                        control={<Radio />}
-                        label="Kafka"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </div>
-              </div>
-            </section>
-            <section className={classes.rightPart}>
-              <div className={classes.capacity}>
-                <h3>{t('capacity')}</h3>
-
-                <div className={classes.cardsWrapper}>
-                  <SizingToolCard
-                    title={t('memory')}
-                    content={`${calcResult.memorySize.size} ${calcResult.memorySize.unit}`}
-                    classes={{
-                      contentClassName: classes.contentClassName,
-                    }}
-                  />
-                  <SizingToolCard
-                    title={t('fileSize')}
-                    content={`${calcResult.rawFileSize.size} ${calcResult.rawFileSize.unit}`}
-                    classes={{
-                      contentClassName: classes.contentClassName,
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className={classes.cluster}>
-                <h3>{t('setups.title')}</h3>
-
-                <div className={classes.singleRowCard}>
-                  <div className={classes.totalWrapper}>
-                    <div className={classes.singlePart}>
-                      <p className={classes.label}>{t('total')}</p>
-                      <p className={classes.value}>
-                        {t('coreInfo', {
-                          core: totalData.core,
-                          memory: totalData.memory,
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                  <div className={classes.totalWrapper}>
-                    <div className={classes.singlePart}>
-                      <p className={classes.label}>{t('ssd')}</p>
-                      <p className={classes.value}>
-                        {t('sizeInfo', { size: totalData.ssd })}
-                      </p>
-                    </div>
-                    <div className={classes.singlePart}>
-                      <p className={classes.label}>{t('disk')}</p>
-                      <p className={classes.value}>
-                        {t('sizeInfo', { size: totalData.disk })}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className={classes.cluster}>
-                <div className={classes.titleRow}>
-                  <h3 className={classes.title}>{t('milvus')}</h3>
-                  <div className={classes.detailWrapper}>
-                    <div className={classes.detailInfo}>
-                      <p className={classes.label}>{t('total')}:&nbsp;</p>
-                      <p className={classes.value}>
-                        {t('coreInfo', {
-                          core: milvusData.core,
-                          memory: milvusData.memory,
-                        })}
-                      </p>
-                    </div>
-                    {queryNodeDiskData && (
-                      <div className={classes.detailInfo}>
-                        <p className={classes.label}>SSD:&nbsp;</p>
-                        <p className={classes.value}>
-                          {queryNodeDiskData.totalQueryNodeDisk} GB
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className={classes.cardLayoutWrapper}>
-                  <div className={classes.cardsRow}>
-                    <SizingToolCard
-                      title={t('setups.proxy.title')}
-                      tooltip={t('setups.proxy.tooltip')}
-                      subTitle={calcResult.proxy.size}
-                      content={calcResult.proxy.amount}
-                      showTooltip
-                    />
-                    <SizingToolCard
-                      title={t('setups.mixCoord.title')}
-                      tooltip={t('setups.mixCoord.tooltip')}
-                      showTooltip
-                      subTitle={calcResult.mixCoord.size}
-                      content={calcResult.mixCoord.amount}
-                    />
-                  </div>
-
-                  <div className={classes.cardsRow}>
-                    <SizingToolCard
-                      title={t('setups.dataNode.title')}
-                      tooltip={t('setups.dataNode.tooltip')}
-                      showTooltip
-                      subTitle={calcResult.dataNode.size}
-                      content={calcResult.dataNode.amount}
-                    />
-                    <SizingToolCard
-                      title={t('setups.indexNode.title')}
-                      tooltip={t('setups.indexNode.tooltip')}
-                      subTitle={calcResult.indexNode.size}
-                      content={calcResult.indexNode.amount}
-                      showTooltip
-                    />
-                    <SizingToolCard
-                      title={t('setups.queryNode.title')}
-                      tooltip={t('setups.queryNode.tooltip')}
-                      showTooltip
-                      subTitle={calcResult.queryNode.size}
-                      content={calcResult.queryNode.amount}
-                      extraData={queryNodeDiskData}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className={classes.cluster}>
-                <div className={classes.titleRow}>
-                  <h3 className={classes.title}>{t('dependency')}</h3>
-                  <div className={classes.detailWrapper}>
-                    <div className={classes.detailInfo}>
-                      <p className={classes.label}>{t('total')}:&nbsp;</p>
-                      <p className={classes.value}>
-                        {t('coreInfo', {
-                          core: dependencyData.core,
-                          memory: dependencyData.memory,
-                        })}
-                      </p>
-                    </div>
-                    <div className={classes.detailInfo}>
-                      <p className={classes.label}>{t('ssd')}:&nbsp;</p>
-                      <p className={classes.value}>
-                        {t('sizeInfo', { size: dependencyData.ssd })}
-                      </p>
-                    </div>
-                    <div className={classes.detailInfo}>
-                      <p className={classes.label}>{t('disk')}:&nbsp;</p>
-                      <p className={classes.value}>
-                        {t('sizeInfo', { size: dependencyData.disk })}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <section className={classes.note}>
-                  <span className={classes.iconWrapper}>
-                    <InfoFilled />
-                  </span>
-                  <h2>{t('dependencyNote')}</h2>
-                </section>
-
-                <div className={classes.line}>
-                  <SizingToolCard
-                    title={t('setups.etcd.title')}
-                    subTitle={
-                      calcResult.etcdData.isError
-                        ? REQUIRE_MORE
-                        : `${calcResult.etcdData.cpu} core ${calcResult.etcdData.memory} GB`
-                    }
-                    content={`x ${
-                      calcResult.etcdData.isError
-                        ? 0
-                        : calcResult.etcdData.podNumber
-                    }`}
-                    extraData={
-                      calcResult.etcdData.isError
-                        ? null
-                        : {
-                            key: 'Pvc per pod',
-                            value: `SSD ${calcResult.etcdData.pvcPerPodSize} GB`,
-                          }
-                    }
-                  />
-                  {/* Minio */}
-                  <SizingToolCard
-                    title={t('setups.minio.title')}
-                    subTitle={
-                      calcResult.minioData.isError
-                        ? REQUIRE_MORE
-                        : `${calcResult.minioData.cpu} core ${calcResult.minioData.memory} GB`
-                    }
-                    content={`x ${
-                      calcResult.minioData.isError
-                        ? 0
-                        : calcResult.minioData.podNumber
-                    }`}
-                    extraData={
-                      calcResult.minioData.isError
-                        ? null
-                        : {
-                            key: 'Pvc per pod',
-                            value: `${calcResult.minioData.pvcPerPodSize} ${calcResult.minioData.pvcPerPodUnit}B`,
-                          }
-                    }
-                  />
-                </div>
-
-                {/* pulsar or kafka */}
-                <div className={classes.line}>
-                  {form.apacheType === 'pulsar' ? (
-                    <SizingConfigCard
-                      title={t('setups.pulsar.title')}
-                      {...calcResult.pulsarData}
-                    />
-                  ) : (
-                    <SizingConfigCard
-                      title={t('setups.kafka.title')}
-                      {...calcResult.kafkaData}
-                    />
-                  )}
-                </div>
-              </div>
-
-              <div className={classes.btnContainer}>
-                <div className={classes.btnsWrapper}>
-                  <CustomButton
-                    className={classes.ctaButton}
-                    onClick={handleDownloadHelm}
-                    endIcon={<DownloadIcon />}
-                  >
-                    {t('buttons.helm')}
-                  </CustomButton>
-                  <CustomButton
-                    className={classes.ctaButton}
-                    onClick={() => handleOpenInstallGuide('helm')}
-                    variant="outlined"
-                  >
-                    {t('buttons.guide')}
-                  </CustomButton>
-                </div>
-                <div className={classes.btnsWrapper}>
-                  <CustomButton
-                    className={classes.ctaButton}
-                    onClick={handleDownloadOperator}
-                    endIcon={<DownloadIcon />}
-                  >
-                    {t('buttons.operator')}
-                  </CustomButton>
-                  <CustomButton
-                    className={classes.ctaButton}
-                    onClick={() => handleOpenInstallGuide('operator')}
-                    variant="outlined"
-                  >
-                    {t('buttons.guide')}
-                  </CustomButton>
-                </div>
-              </div>
-            </section>
+            <p className={classes.tip}>{t('tooltip')}</p>
           </div>
+          <div className={classes.contentContainer}>
+            <FormSection
+              className={classes.leftSection}
+              updateCalculatedResult={updateCalculatedResult}
+            />
+            <ResultSection
+              className={classes.rightSection}
+              calculatedResult={calculatedResult}
+            />
+          </div>
+
+          <ZillizAdv className={classes.zillizAdv} />
         </div>
       </Layout>
-      <CustomizedContentDialogs
-        {...dialogState}
-        handleClose={handleCloseDialog}
-      />
     </main>
   );
 }

@@ -13,25 +13,46 @@ export default function SubscribeSection() {
     <section
       className={clsx(pageClasses.homeContainer, classes.sectionContainer)}
     >
-      <div className={classes.milvusWrapper}>
-        <img src="/images/home/milvus-union.svg" alt="Milvus" />
-      </div>
-      <h2 className={classes.title}>
-        <Trans
-          t={t}
-          i18nKey="subscribeSection.title"
-          components={[<span key="blue-text"></span>]}
+      <div
+        className={classes.milvusWrapper}
+        style={{ backgroundImage: 'url(/images/home/milvus-union.svg)' }}
+      >
+        <h2 className={classes.title}>
+          <Trans
+            t={t}
+            i18nKey="subscribeSection.title"
+            components={[<span key="blue-text"></span>]}
+          />
+        </h2>
+        <SocialMedias
+          classes={{
+            link: classes.customIconButton,
+            root: classes.socialMediasContainer,
+          }}
         />
-      </h2>
+      </div>
 
-      <SocialMedias
-        classes={{
-          link: classes.customIconButton,
-          root: classes.socialMediasContainer,
-        }}
-      />
-
-      <SubscribeNewsletter />
+      <div className={classes.subscribeWrapper}>
+        <div className={classes.subscribeInfo}>
+          <h2 className={classes.subscribeTitle}>
+            {t('subscribeSection.subscribe.title')}
+          </h2>
+          <p className={classes.subscribeDesc}>
+            {t('subscribeSection.subscribe.desc')}
+          </p>
+        </div>
+        <div className={classes.subscribeForm}>
+          <SubscribeNewsletter
+            withoutTitle={true}
+            classes={{
+              button: classes['subscribeForm-button'],
+              inputContainer: classes['subscribeForm-input-container'],
+              input: classes['subscribeForm-input'],
+              errorMessage: classes['subscribeForm-input-message'],
+            }}
+          />
+        </div>
+      </div>
     </section>
   );
 }

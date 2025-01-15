@@ -33,12 +33,11 @@ export default function Homepage(props: {
         </Head>
         <HomePageHeaderSection {...headline} />
         <CodeExampleSection />
-        {/* <TryFreeSection /> */}
         <DeploySection />
         <AIToolsSection />
-        <DevelopSection />
         <LovedSection />
         <ProductionSection />
+        <DevelopSection />
         <MeetupsSection />
         <VectorDatabaseSection />
       </main>

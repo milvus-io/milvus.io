@@ -1,0 +1,52 @@
+@import url('@/styles/global.module.less');
+
+.rangeContainer {
+  width: 100%;
+}
+
+.label {
+  .paragraph4-bold();
+}
+
+.customMarkLabel {
+  .paragraph6();
+  top: 20px;
+  color: @color-black2;
+}
+
+.customMark {
+  background-color: #00b3ff;
+}
+
+.customRail {
+  height: 4px;
+  background-color: #e0f2fc;
+}
+
+.customTrack {
+  background-color: #00b3ff;
+  border: none;
+}
+
+.customThumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #00b3ff;
+  border: 2px solid #fff;
+}
+
+.rangeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.customRangeRoot {
+  flex: 1;
+  margin-bottom: 8px;
+}
+.inputWrapper {
+  flex: 0 0 110px;
+  box-sizing: border-box;
+}

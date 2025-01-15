@@ -130,7 +130,9 @@ export const MeetupsSection = () => {
   const { t } = useTranslation('home');
 
   return (
-    <section className={clsx(classes.sectionContainer)}>
+    <section
+      className={clsx(classes.sectionContainer, classes.meetupContainer)}
+    >
       <div className={clsx(pageClasses.homeContainer)}>
         <div className={classes.meetupBgContainer}>
           <div className={classes.meetupWrapper}>

@@ -18,6 +18,7 @@
     p {
       .paragraph2-regular();
       color: @color-black2;
+      font-family: 'Geist Mono';
     }
   }
 
@@ -83,6 +84,12 @@
       border-radius: 50%;
       background-color: #fff;
 
+      &:not(:disabled):hover {
+        svg {
+          opacity: 0.5!important;
+        }
+      }
+
       &:disabled {
         background-color: @color-black4;
       }
@@ -91,6 +98,10 @@
     .leftButton {
       transform: rotate(180deg);
     }
+  }
+
+  &.meetupContainer {
+    margin-top: -120px;
   }
 
   .meetupBgContainer {

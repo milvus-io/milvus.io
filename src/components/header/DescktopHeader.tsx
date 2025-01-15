@@ -104,21 +104,23 @@ export default function DesktopHeader(props: Props) {
                           className="group-hover:rotate-180 transition-transform"
                         />
                       </button>
-                      <ul className="flex flex-col items-stretch gap-[4px] bg-white py-[8px] absolute invisible -z-10 opacity-0 rounded-[4px] list-none shadow-nav-menu transition group-hover:visible group-hover:z-10 group-hover:opacity-100 ">
-                        {config.list.map(item => (
-                          <li key={item.label}>
-                            <Link
-                              href={item.link}
-                              rel={item.rel}
-                              className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04] font-mono uppercase text-[#667176]"
-                              target={item.rel ? '_blank' : undefined}
-                            >
-                              {item.label}
-                              {item.rel && <RightTopArrowIcon />}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="invisible absolute opacity-0 group-hover:visible group-hover:z-10 group-hover:opacity-100 pt-[12px]">
+                        <ul className="flex flex-col items-stretch gap-[4px] bg-white py-[8px] -z-10 rounded-[4px] list-none shadow-nav-menu transition">
+                          {config.list.map(item => (
+                            <li key={item.label}>
+                              <Link
+                                href={item.link}
+                                rel={item.rel}
+                                className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04] font-mono uppercase text-[#667176]"
+                                target={item.rel ? '_blank' : undefined}
+                              >
+                                {item.label}
+                                {item.rel && <RightTopArrowIcon />}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </li>
                 );

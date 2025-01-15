@@ -1,7 +1,7 @@
 {
   "title": "Milvus Sizing Tool",
   "content": "A tool for estimating the resources required to set up Milvus based on your dataset.",
-  "tooltip": "Note: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production.",
+  "tooltip": "<0>Note</0>: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production.",
   "form": {
     "num": "Number of Vectors",
     "dim": "Vector Dimension",

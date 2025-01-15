@@ -490,6 +490,14 @@ export default function FormSection(props: {
             </div>
           </div>
         )}
+
+        <p className="mt-[36px] text-[12px]  leading-[18px] text-black2">
+          <Trans
+            t={t}
+            i18nKey="tooltip"
+            components={[<span key="note" className="font-[600]"></span>]}
+          />
+        </p>
       </div>
     </section>
   );

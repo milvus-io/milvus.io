@@ -153,12 +153,7 @@ export default function SizingTool() {
         >
           <h1 className={classes.title}>{t('title')}</h1>
           <p className={classes.desc}>{t('content')}</p>
-          <div className={classes.tipWrapper}>
-            <span className={classes.iconWrapper}>
-              <InfoFilled color="#667176" />
-            </span>
-            <p className={classes.tip}>{t('tooltip')}</p>
-          </div>
+
           <div className={classes.contentContainer}>
             <FormSection
               className={classes.leftSection}

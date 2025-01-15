@@ -275,11 +275,12 @@ export default function ResultSection(props: {
               {t('setup.basic.cpu')}
             </p>
             <p className={clsx('text-blue1', classes.font16Bold)}>
-              {isOutOfCalculate
-                ? '--'
-                : t('setup.basic.core', {
-                    cpu: `${totalCpu.num} ${totalCpu.unit}`,
-                  })}
+              {formatOutOfCalData({
+                data: t('setup.basic.core', {
+                  cpu: `${totalCpu.num} ${totalCpu.unit}`,
+                }),
+                isOut: isOutOfCalculate,
+              })}
             </p>
           </div>
           <div className="flex-[1]">
@@ -340,7 +341,7 @@ export default function ResultSection(props: {
                   <div className="flex items-center gap-[12px]">
                     <p className={classes.commonKeyLabel}>
                       {t('setup.basic.cpu')}:&nbsp;
-                      <span className="font-[600] text-[12px] leading-[18px] text-black1">
+                      <span className="inline-block font-[600] text-[12px] leading-[18px] text-black1 w-[65px] text-left">
                         {formatOutOfCalData({
                           data: `${milvusCpuData.num} ${milvusCpuData.unit} Core`,
                           isOut: isOutOfCalculate,
@@ -349,7 +350,7 @@ export default function ResultSection(props: {
                     </p>
                     <p className={classes.commonKeyLabel}>
                       {t('setup.basic.memory')}:&nbsp;
-                      <span className="font-[600] text-[12px] leading-[18px] text-black1">
+                      <span className="inline-block font-[600] text-[12px] leading-[18px] text-black1 w-[65px] text-left">
                         {formatOutOfCalData({
                           data: `${milvusMemoryData.size} ${milvusMemoryData.unit}`,
                           isOut: isOutOfCalculate,
@@ -369,7 +370,7 @@ export default function ResultSection(props: {
                         components={[
                           <span
                             key="value"
-                            className="font-[600] text-[12px] leading-[18px] text-black1"
+                            className="font-[600] text-[12px] leading-[18px] text-black1 inline-block w-[65px] text-left"
                           ></span>,
                         ]}
                       />
@@ -414,7 +415,7 @@ export default function ResultSection(props: {
                   <div className="flex items-center gap-[12px]">
                     <p className={classes.commonKeyLabel}>
                       {t('setup.basic.cpu')}:&nbsp;
-                      <span className="font-[600] text-[12px] leading-[18px] text-black1">
+                      <span className="font-[600] text-[12px] leading-[18px] text-black1 inline-block w-[65px] text-left">
                         {formatOutOfCalData({
                           data: `${dependencyCpuData.num}${dependencyCpuData.unit} Core`,
                           isOut: isOutOfCalculate,
@@ -423,7 +424,7 @@ export default function ResultSection(props: {
                     </p>
                     <p className={classes.commonKeyLabel}>
                       {t('setup.basic.memory')}:&nbsp;
-                      <span className="font-[600] text-[12px] leading-[18px] text-black1">
+                      <span className="font-[600] text-[12px] leading-[18px] text-black1 inline-block w-[65px] text-left">
                         {formatOutOfCalData({
                           data: `${dependencyMemoryData.size} ${dependencyMemoryData.unit}`,
                           isOut: isOutOfCalculate,
@@ -432,7 +433,7 @@ export default function ResultSection(props: {
                     </p>
                     <p className={classes.commonKeyLabel}>
                       {t('setup.basic.storage')}:&nbsp;
-                      <span className="font-[600] text-[12px] leading-[18px] text-black1">
+                      <span className="font-[600] text-[12px] leading-[18px] text-black1 inline-block w-[65px] text-left">
                         {formatOutOfCalData({
                           data: `${dependencyStorageSize} ${dependencyStorageUnit}`,
                           isOut: isOutOfCalculate,

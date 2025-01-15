@@ -1,5 +1,7 @@
 @import url('@/styles/global.module.less');
 
+@sizing-result-cell-width: 65px;
+
 .tooltipTrigger {
   position: relative;
 
@@ -162,7 +164,7 @@ div.averageLabel {
       cursor: pointer;
 
       &:hover {
-        border-color: @color-blue1;
+        border-color: @color-black2;
       }
     }
 
@@ -223,8 +225,12 @@ div.averageLabel {
     .activeCard {
       border-color: @color-blue1;
 
+      &:hover {
+        border-color: @color-blue1;
+      }
+
       svg path {
-        fill: #188fff;
+        fill: @color-blue1;
       }
     }
 
@@ -236,9 +242,7 @@ div.averageLabel {
 
 .resultContainer {
   font-family: 'Geist Mono';
-  button {
-    font-family: 'Geist Mono';
-  }
+
   .commonKeyLabel {
     .paragraph6-regular();
     color: @color-black2;
@@ -246,6 +250,7 @@ div.averageLabel {
   .commonValueLabel {
     .paragraph6-bold();
     color: @color-black1;
+    width: @sizing-result-cell-width;
   }
 
   .substantialWrapper {

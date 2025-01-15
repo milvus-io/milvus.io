@@ -14,7 +14,7 @@
     "indexParam": "Index Parameters",
     "indexParamTip": "How to set proper index parameters? <0>learn more details</0>.",
     "withRawData": "with_raw_data",
-    "m": "m(maximum degree of the node)",
+    "m": "M(Maximum degree of the node)",
     "nlist": "nlist",
     "maxDegree": "max_degree",
     "segmentSize": "Segment Size",
@@ -36,7 +36,7 @@
     "raw": "Raw Data Size: ",
     "rawTooltip": "The size of the original data which is determined by the number of vectors, vector dimension, and the scalar field data size.",
     "memory": "Loading Memory: ",
-    "memoryTooltip": "The size of the original data which is determined by the number of vectors, vector dimension, and the scalar field data size."
+    "memoryTooltip": "Memory consumption for query nodes which is determined by the raw data size, index type, and params for query nodes."
   },
   "setup": {
     "title": "Setup Resource Requirements",
@@ -93,9 +93,9 @@
   },
   "install": {
     "title": "Install Milvus",
-    "helm": "Helm Chart Configuration",
-    "operator": "Milvus Operator Configuration",
-    "docker": "Docker Compose Configuration",
+    "helm": "Helm Chart",
+    "operator": "Milvus Operator",
+    "docker": "Docker Compose",
     "adv": "Too many resources consumed? Try Zilliz Cloud (managed Milvus) to save resources and cut deployment and operation costs. Check out more details with the Zilliz Cloud calculator. <0>Go to Zilliz Cloud calculator</0>.",
     "adv2": "Setting up a Milvus cluster for performance testing or benchmarking? Refer to <0>VDB Bench</0> for detailed guidance.",
     "tip1": "How to run Milvus with Docker Compose?",

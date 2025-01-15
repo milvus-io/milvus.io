@@ -17,9 +17,17 @@
 
 .inputWrapper {
   border-radius: 8px;
-  border: 2px solid #e8eaee;
+  border: 1px solid @color-black3;
   background: #fff;
   position: relative;
+
+  &:hover {
+    border-color: @color-black2;
+  }
+
+  &:focus-within {
+    border-color: @color-black1;
+  }
 
   input {
     .paragraph6();

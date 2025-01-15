@@ -20,7 +20,7 @@ import {
   DownloadIcon,
   InfoFilled,
 } from '@/components/icons';
-import { ICalculateResult } from '@/types/sizing';
+import { ICalculateResult, ModeEnum } from '@/types/sizing';
 import { formatNumber, unitBYTE2Any } from '@/utils/sizingTool';
 import {
   milvusOverviewDataCalculator,
@@ -31,7 +31,7 @@ import {
 } from '@/utils/sizingTool';
 import { DependencyComponent } from './dependencyComponent';
 import { Trans, useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import CustomButton from '@/components/customButton';
 import {
   helmCodeExample,
@@ -102,10 +102,10 @@ export default function ResultSection(props: {
   );
   const { size: diskSize, unit: diskUnit } = unitBYTE2Any(localDiskSize);
 
-  const [isMilvusOpen, setIsMilvusOpen] = useState(false);
-  const [isDependencyOpen, setIsDependencyOpen] = useState(false);
+  const [isMilvusOpen, setIsMilvusOpen] = useState(true);
+  const [isDependencyOpen, setIsDependencyOpen] = useState(true);
 
-  const installOptions = [
+  const standaloneInstallOptions = [
     {
       label: t('install.docker'),
       value: InstallTypeEnum.Docker,
@@ -113,6 +113,9 @@ export default function ResultSection(props: {
       tip: t('install.tip1'),
       document: '/docs/install_standalone-docker-compose.md',
     },
+  ];
+
+  const clusterInstallOptions = [
     {
       label: t('install.helm'),
       value: InstallTypeEnum.Helm,
@@ -129,7 +132,10 @@ export default function ResultSection(props: {
     },
   ];
 
-  const [installType, setInstallType] = useState(installOptions[0].value);
+  const [installInfo, setInstallInfo] = useState({
+    options: standaloneInstallOptions,
+    value: standaloneInstallOptions[0].value,
+  });
 
   const handleDownloadConfigFile = (type: InstallTypeEnum) => {
     const configGenerator =
@@ -161,6 +167,18 @@ export default function ResultSection(props: {
   };
 
   useCopyCode([helmCodeExample, operatorCodeExample]);
+
+  useEffect(() => {
+    const installOptions =
+      mode === ModeEnum.Standalone
+        ? standaloneInstallOptions
+        : clusterInstallOptions;
+
+    setInstallInfo({
+      options: installOptions,
+      value: installOptions[0].value,
+    });
+  }, [mode]);
 
   return (
     <section className={clsx(classes.resultContainer, className)}>
@@ -305,6 +323,7 @@ export default function ResultSection(props: {
               onOpenChange={isOpen => {
                 setIsMilvusOpen(isOpen);
               }}
+              open={isMilvusOpen}
             >
               <CollapsibleTrigger className={classes.commonCollapseTitle}>
                 <span
@@ -378,6 +397,7 @@ export default function ResultSection(props: {
               onOpenChange={isOpen => {
                 setIsDependencyOpen(isOpen);
               }}
+              open={isDependencyOpen}
             >
               <CollapsibleTrigger className={classes.commonCollapseTitle}>
                 <span
@@ -441,15 +461,25 @@ export default function ResultSection(props: {
           <p className={classes.font14Bold}>{t('install.title')}</p>
           <Select
             onValueChange={v => {
-              setInstallType(v as InstallTypeEnum);
+              setInstallInfo(installInfo => ({
+                ...installInfo,
+                value: v as InstallTypeEnum,
+              }));
             }}
+            disabled={mode === ModeEnum.Standalone}
           >
-            <SelectTrigger className="py-[10px] px-[12px] h-[36px] w-[300px] text-[12px] leading-[18px] text-black1 border-[2px] border-solid border-black4 rounded-[8px]">
-              {installOptions.find(v => v.value === installType)?.label}
+            <SelectTrigger
+              className="py-[10px] px-[12px] h-[36px] w-[300px] text-[12px] leading-[18px] text-black1 border-[2px] border-solid border-black4 rounded-[8px]"
+              disabled={mode === ModeEnum.Standalone}
+            >
+              {
+                installInfo.options.find(v => v.value === installInfo.value)
+                  ?.label
+              }
             </SelectTrigger>
 
             <SelectContent>
-              {installOptions.map(v => (
+              {installInfo.options.map(v => (
                 <SelectItem key={v.value} value={v.value}>
                   {v.label}
                 </SelectItem>
@@ -457,7 +487,7 @@ export default function ResultSection(props: {
             </SelectContent>
           </Select>
         </div>
-        {installType !== InstallTypeEnum.Docker && (
+        {installInfo.value !== InstallTypeEnum.Docker && (
           <CustomButton
             disabled={isOutOfCalculate}
             variant="outlined"
@@ -469,22 +499,28 @@ export default function ResultSection(props: {
               if (isOutOfCalculate) {
                 return;
               }
-              handleDownloadConfigFile(installType);
+              handleDownloadConfigFile(installInfo.value);
             }}
           >
             {t('install.operator')}
           </CustomButton>
         )}
         <pre className={classes.installCodeWrapper}>
-          <code>{installOptions.find(v => v.value === installType)?.code}</code>
+          <code>
+            {installInfo.options.find(v => v.value === installInfo.value)?.code}
+          </code>
           <button className={clsx('copy-code-btn', classes.copyBtn)}></button>
         </pre>
 
         <a
           className="flex items-center just gap-[4px] text-[12px] leading-[18px] text-black1 hover:underline"
-          href={installOptions.find(v => v.value === installType)?.document}
+          href={
+            installInfo.options.find(v => v.value === installInfo.value)
+              ?.document
+          }
+          target="_blank"
         >
-          {installOptions.find(v => v.value === installType)?.tip}
+          {installInfo.options.find(v => v.value === installInfo.value)?.tip}
           <ExternalLinkIcon />
         </a>
       </div>

@@ -155,7 +155,7 @@ export default function SizingTool() {
           <p className={classes.desc}>{t('content')}</p>
           <div className={classes.tipWrapper}>
             <span className={classes.iconWrapper}>
-              <InfoFilled />
+              <InfoFilled color="#667176" />
             </span>
             <p className={classes.tip}>{t('tooltip')}</p>
           </div>

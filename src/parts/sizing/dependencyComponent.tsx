@@ -259,7 +259,7 @@ export const DependencyComponent = (props: {
                   isOut: isOutOfCalculate,
                 }),
               }}
-              components={[<span key="pvc"></span>]}
+              components={[<span key="pvc" className="text-black1"></span>]}
             />
           }
           classname={classes.card}
@@ -282,7 +282,7 @@ export const DependencyComponent = (props: {
                   isOut: isOutOfCalculate,
                 }),
               }}
-              components={[<span key="pvc"></span>]}
+              components={[<span key="pvc" className="text-black1"></span>]}
             />
           }
           classname={classes.card}

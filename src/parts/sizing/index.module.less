@@ -10,7 +10,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border-bottom: 1px dashed @color-black2;
+    border-bottom: 1px dashed @color-black3;
   }
 }
 
@@ -26,12 +26,20 @@
 
 .selectTrigger {
   font-family: 'Geist Mono';
-  .paragraph6();
+  .paragraph6-regular();
   padding: 9px 12px;
   height: 36px;
   border-radius: 8px;
-  border: 2px solid #e8eaee;
+  border: 1px solid @color-black3;
   background: #fff;
+
+  &:hover {
+    border-color: @color-black2;
+  }
+
+  &:focus {
+    border-color: @color-black1;
+  }
 }
 
 .flexRow {
@@ -118,7 +126,7 @@ div.averageLabel {
   .collapsible {
     overflow: hidden;
     height: fit-content;
-    padding-top: 20px;
+    padding-top: 16px;
   }
 
   .visibleCollapse {
@@ -149,9 +157,13 @@ div.averageLabel {
     .card {
       flex: 1;
       border-radius: 10px;
-      border: 2px solid #e4eaf1;
+      border: 1px solid @color-black3;
       background: #fff;
       cursor: pointer;
+
+      &:hover {
+        border-color: @color-blue1;
+      }
     }
 
     .dependencyCard {
@@ -223,6 +235,10 @@ div.averageLabel {
 }
 
 .resultContainer {
+  font-family: 'Geist Mono';
+  button {
+    font-family: 'Geist Mono';
+  }
   .commonKeyLabel {
     .paragraph6-regular();
     color: @color-black2;

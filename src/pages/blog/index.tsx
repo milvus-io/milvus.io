@@ -577,17 +577,17 @@ const Blog: React.FC<Props> = props => {
         <link rel="alternate" href={absoluteUrl} hrefLang="en" />
       </Head>
       <main>
-        <header className={styles['banner']}>
-          <div className={pageClasses.blogContainer}>
+        <section className={styles['banner']}>
+          <div className={pageClasses.homeContainer}>
             <div className={styles['banner-detail']}>
               {renderRecommend()}
               {renderRecentTabs()}
             </div>
             {renderSubscribe()}
           </div>
-        </header>
+        </section>
         <section className={styles['content']}>
-          <div className={pageClasses.blogContainer}>
+          <div className={pageClasses.homeContainer}>
             <header className={styles['list-header']}>
               {renderFilter()}
               {renderSearcher()}

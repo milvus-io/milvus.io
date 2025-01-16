@@ -165,7 +165,10 @@ export default function SizingTool() {
             />
           </div>
 
-          <ZillizAdv className={classes.zillizAdv} />
+          <ZillizAdv
+            className={classes.zillizAdv}
+            ctaLink="https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_resouces_milvus-sizing-tool_milvusio"
+          />
         </div>
       </Layout>
     </main>

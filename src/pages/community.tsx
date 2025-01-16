@@ -123,7 +123,9 @@ export default function Community() {
         </Head>
 
         <div className={classes.communityPageContainer}>
-          <section className={clsx(pageClasses.container, classes.headSection)}>
+          <section
+            className={clsx(pageClasses.homeContainer, classes.headSection)}
+          >
             <h1 className="">{t('title')}</h1>
 
             <ul className={classes.mediaWrapper}>
@@ -162,7 +164,7 @@ export default function Community() {
           </section>
 
           <section
-            className={clsx(pageClasses.container, classes.contentSection)}
+            className={clsx(pageClasses.homeContainer, classes.contentSection)}
           >
             <h2>{t('community.title')}</h2>
             <h3 className={classes.sectionDesc}>{t('community.content')}</h3>
@@ -179,7 +181,7 @@ export default function Community() {
           </section>
 
           <section
-            className={clsx(pageClasses.container, classes.mailListSection)}
+            className={clsx(pageClasses.homeContainer, classes.mailListSection)}
           >
             <h2>{t('mail.title')}</h2>
             <div className={classes.mailListWrapper}>

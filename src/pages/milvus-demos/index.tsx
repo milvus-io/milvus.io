@@ -130,13 +130,17 @@ export default function MilvusDemos() {
         </Head>
 
         <section className={classes.headerSection}>
-          <div className={clsx(pageClasses.container, classes.innerSection)}>
+          <div
+            className={clsx(pageClasses.homeContainer, classes.innerSection)}
+          >
             <h1 className={classes.title}>{t('title')}</h1>
             <p className={classes.desc}>{t('desc')}</p>
           </div>
         </section>
 
-        <section className={clsx(pageClasses.container, classes.demoContainer)}>
+        <section
+          className={clsx(pageClasses.homeContainer, classes.demoContainer)}
+        >
           <ul className={classes.demoList}>
             {DEMOS.map(demo => (
               <li key={demo.name}>

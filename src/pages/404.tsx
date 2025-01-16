@@ -67,7 +67,9 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
           />
         </Head>
 
-        <section className={clsx(pageClasses.container, styles.navContainer)}>
+        <section
+          className={clsx(pageClasses.homeContainer, styles.navContainer)}
+        >
           <h1 className={styles.pageTitle}>{t('title')}</h1>
           <p className={styles.abstract}>
             <Trans
@@ -93,7 +95,7 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
           </ul>
         </section>
         <section
-          className={clsx(pageClasses.container, styles.exploreContainer)}
+          className={clsx(pageClasses.homeContainer, styles.exploreContainer)}
         >
           <h2 className="">{t('explore.title')}</h2>
           <p className="">{t('explore.desc')}</p>

@@ -20,7 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.1",
     "@giscus/react": "^2.2.0",
-    "@inkeep/widgets": "^0.2.285",
+    "@inkeep/widgets": "^0.2.289",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.5",
     "@mui/x-tree-view": "^6.17.0",

@@ -207,6 +207,7 @@ export default function ResultSection(props: {
         <a
           className="flex items-center gap-[4px] font-[400] text-[12px] leading-[18px] text-black1 hover:underline"
           href="https://zilliz.com/pricing#calculator"
+          target="_blank"
         >
           {t('overview.explore')}
           <ExternalLinkIcon />

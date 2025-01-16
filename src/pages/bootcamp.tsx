@@ -35,7 +35,9 @@ export default function Bootcamp(props) {
           />
         </Head>
 
-        <div className={clsx(pageClasses.container, classes.bootcampContainer)}>
+        <div
+          className={clsx(pageClasses.homeContainer, classes.bootcampContainer)}
+        >
           <section className={classes.sectionContainer}>
             <h1 className={classes.seoTitle}>Milvus Bootcamp</h1>
             <h2 className={classes.title}>{title}</h2>

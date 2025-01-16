@@ -56,16 +56,21 @@
 
 .homeContainer {
   margin: 0 auto;
-  max-width: calc(@homepage-content-width + 80px);
-  width: 100%;
-  padding: 0 40px;
+  max-width: 1580px;
+
+  @media @desktop1024, @desktop1440 {
+    width: calc(100vw - 270px);
+  }
+
+  @media @desktop1920 {
+    width: calc(100vw - 340px);
+  }
 
   @media @tablet {
-    max-width: 100%;
-    padding: 0 40px;
+    width: calc((100vw - 180px) / 10 * 8 + 140px);
   }
 
   @media @phone {
-    padding: 0 25px;
+    width: calc(100vw - 50px);
   }
 }

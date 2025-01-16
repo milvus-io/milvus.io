@@ -64,7 +64,7 @@ const DemoCard: React.FC<{
           {videoSrc && (
             <CustomButton
               className={styles.watchBtn}
-              variant="text"
+              variant="outlined"
               onClick={handleWatchVideo}
               endIcon={
                 <svg

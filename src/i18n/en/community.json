@@ -1,9 +1,10 @@
 {
   "title": "Join the Community",
+  "ctaLabel": "Join now",
   "officeHours": {
-    "title": "Join the Milvus Discord Community",
-    "content": "Find help, discover solutions, share ideas, and follow discussions. Get notified of upcoming Zilliz events!",
-    "button": "Join the Milvus Discord Server! "
+    "title": "Get Expert Help at Milvus Office Hours",
+    "content": "Book a free 1:1 session to get help with your production deployment from Zilliz, the experts on Milvus.",
+    "button": "Book Your Session"
   },
   "community": {
     "title": "Welcome to the Milvus Community",

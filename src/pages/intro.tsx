@@ -115,7 +115,7 @@ export default function WhatIsMilvus() {
 
       <main>
         <section className={styles.headerSection}>
-          <div className={clsx(pageClasses.container, styles.innerSection)}>
+          <div className={clsx(pageClasses.homeContainer, styles.innerSection)}>
             <h1 className="">{t('title')}</h1>
             <p className={styles.desc}>{t('desc')}</p>
           </div>

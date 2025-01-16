@@ -7,9 +7,12 @@ import clsx from 'clsx';
 const CTA_LINK =
   'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_blog_overview-page_milvusio';
 
-export default function ZillizAdv(props: { className?: string }) {
+export default function ZillizAdv(props: {
+  className?: string;
+  ctaLink?: string;
+}) {
   const { t } = useTranslation('blog');
-  const { className = '' } = props;
+  const { className = '', ctaLink = CTA_LINK } = props;
   const features = [
     t('blog:zillizAdv.feature1'),
     t('blog:zillizAdv.feature2'),
@@ -34,7 +37,7 @@ export default function ZillizAdv(props: { className?: string }) {
         </h3>
         <ul className={styles['zilliz-adv-features']}>{featureItems}</ul>
         <Link
-          href={CTA_LINK}
+          href={ctaLink}
           target="_blank"
           className={styles['zilliz-adv-btn']}
         >

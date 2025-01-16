@@ -41,7 +41,9 @@ export default function UseCasesTemplate(props: {
       </Head>
       <main>
         <div className={styles.casePageContainer} ref={scrollContainer}>
-          <div className={clsx(pageClasses.container, styles.contentContainer)}>
+          <div
+            className={clsx(pageClasses.homeContainer, styles.contentContainer)}
+          >
             <section className={styles.headerSection}>
               <Typography variant="h2" component="h1">
                 {t('title')}

@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import Link from 'next/link';
 import clsx from 'clsx';
-
+import pageClasses from '@/styles/responsive.module.less';
 import {
   DISCORD_INVITE_URL,
   MILVUS_VIDEO_LINK,
@@ -93,20 +93,20 @@ const Footer = (props: Props) => {
   const { t } = useTranslation('common', { lng: lang });
 
   return (
-    <footer className="min-h-[390px] box-border bg-[#fff] border-t-[1px] border-solid border-[#ECECEE] font-mono">
-      <div
-        className={clsx(
-          'max-w-[1440px] mx-auto px-[48px] py-[80px] md:px-[135px] lg:px-[80px] xl:px-[135px]',
-          root
-        )}
-      >
+    <footer
+      className={clsx(
+        pageClasses.homeContainer,
+        'min-h-[390px] box-border bg-[#fff] border-t-[1px] border-solid border-[#ECECEE] font-mono'
+      )}
+    >
+      <div className={clsx('py-[80px]', root)}>
         <div
           className={clsx(
             'flex flex-col lg:flex-row justify-between space-y-8 lg:space-y-0 lg:space-x-16',
             content
           )}
         >
-          <div className="flex  flex-col items-center max-phone:items-start sm:items-start lg:items-start flex-shrink flex-grow-0 flex-[390px]">
+          <div className="flex  flex-col items-center max-phone:items-start sm:items-start lg:items-start flex-shrink-0 flex-grow-0 flex-[390px]">
             <img
               alt="Milvus logo"
               height="30"

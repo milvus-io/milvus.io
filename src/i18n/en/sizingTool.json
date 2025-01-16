@@ -1,7 +1,7 @@
 {
   "title": "Milvus Sizing Tool",
-  "content": "A tool for estimating the resources required to set up Milvus based on your dataset.",
-  "tooltip": "<0>Note</0>: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production.",
+  "content": "Get a deployment config and estimate resource requirements for your Milvus setup.",
+  "tooltip": "<0>Note</0>: the config is our best estimation based on the experience but we suggest to test with your data and traffic pattern before launching to production.",
   "form": {
     "num": "Number of Vectors",
     "dim": "Vector Dimension",
@@ -25,12 +25,12 @@
     "pulsar": "Pulsar",
     "kafka": "Kafka",
     "standalone": "Standalone",
-    "standaloneDesc": "Suitable for small to medium data size.",
-    "cluster": "Cluster",
-    "clusterDesc": "Suitable for large data size. "
+    "standaloneDesc": "Suitable for small to medium scale.",
+    "cluster": "Distributed",
+    "clusterDesc": "Suitable for large scale."
   },
   "overview": {
-    "title": "Resource Requirements for Setup",
+    "title": "Resource Requirements",
     "explore": "Explore Managed Service Cost",
     "overview": "Data Size Calculation",
     "raw": "Raw Data Size: ",

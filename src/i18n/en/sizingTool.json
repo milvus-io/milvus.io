@@ -1,6 +1,6 @@
 {
   "title": "Milvus Sizing Tool",
-  "content": "Get a deployment config and estimate resource requirements for your Milvus setup.",
+  "content": "A tool for estimating resource requirements and generating a configuration for your Milvus deployment.",
   "tooltip": "<0>Note</0>: the config is our best estimation based on the experience but we suggest to test with your data and traffic pattern before launching to production.",
   "form": {
     "num": "Number of Vectors",

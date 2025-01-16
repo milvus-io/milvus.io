@@ -107,7 +107,7 @@ export const MODE_OPTIONS = [
     value: ModeEnum.Standalone,
   },
   {
-    label: 'Cluster',
+    label: 'Distributed',
     value: ModeEnum.Cluster,
   },
 ];

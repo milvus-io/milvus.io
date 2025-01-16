@@ -10,6 +10,7 @@ import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import CustomButton from '@/components/customButton';
+import { RightTopArrowIcon } from '@/components/icons/RightTopArrow';
 
 const OFFICE_HOUR_REGISTER_LINK = 'https://discord.com/invite/8uyFbECzPX';
 
@@ -33,9 +34,19 @@ export default function Community() {
       href: 'https://www.reddit.com/r/vectordatabase/',
     },
     {
+      label: 'Youtube',
+      imgUrl: '/images/community/socialMedia/youtube.svg',
+      href: 'https://www.youtube.com/@MilvusVectorDatabase/playlists',
+    },
+    {
       label: 'Twitter',
       imgUrl: '/images/community/socialMedia/twitter.svg',
       href: 'https://twitter.com/milvusio',
+    },
+    {
+      label: 'LinkedIn',
+      imgUrl: '/images/community/socialMedia/linkedin.svg',
+      href: 'https://www.linkedin.com/company/the-milvus-project/',
     },
   ];
 
@@ -120,17 +131,20 @@ export default function Community() {
                 <li key={v.label}>
                   <img src={v.imgUrl} alt={v.label} />
                   <p className="">{v.label}</p>
-                  <CustomButton variant="outlined" href={v.href}>
-                    Join now
+                  <CustomButton
+                    variant="outlined"
+                    href={v.href}
+                    className={classes.linkBtn}
+                  >
+                    {t('ctaLabel')}
+                    <RightTopArrowIcon />
                   </CustomButton>
                 </li>
               ))}
             </ul>
 
             <div className={classes.officeHoursContainer}>
-              <div className={classes.imgWrapper}>
-                <img src="/images/community/event-discord.png" alt="Discord" />
-              </div>
+              <div className={classes.imgWrapper}></div>
               <div className={classes.contentWrapper}>
                 <h2 className={classes.title}>{t('officeHours.title')}</h2>
                 <p className={classes.desc}>{t('officeHours.content')}</p>
@@ -138,8 +152,8 @@ export default function Community() {
                 <CustomButton
                   variant="contained"
                   className={classes.linkBtn}
-                  href={OFFICE_HOUR_REGISTER_LINK}
-                  target="_blank"
+                  href="/blog/join-milvus-office-hours-to-get-support-from-vectordb-experts.md"
+                  endIcon={<RightTopArrowIcon />}
                 >
                   {t('officeHours.button')}
                 </CustomButton>
@@ -164,27 +178,6 @@ export default function Community() {
             </ul>
           </section>
 
-          <section className={classes.resourceSection}>
-            <div className={clsx(pageClasses.container, classes.innerSection)}>
-              <h2>{t('resource')}</h2>
-              <ul className={classes.resourceList}>
-                {resourceList.map(v => (
-                  <li key={v.label}>
-                    <div className={classes.topContent}>
-                      <img src={v.icon} alt={v.label} />
-                      <p className={classes.label}>{v.label}</p>
-                      <p className={classes.desc}>{v.desc}</p>
-                    </div>
-
-                    <CustomButton variant="outlined" href={v.href}>
-                      {v.btnLabel} <ArrowRightAltIcon />
-                    </CustomButton>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-
           <section
             className={clsx(pageClasses.container, classes.mailListSection)}
           >
@@ -192,7 +185,7 @@ export default function Community() {
             <div className={classes.mailListWrapper}>
               {mailList.map(v => (
                 <Link className={classes.linkBtn} href={v.href}>
-                  <MailOutlineIcon fontSize="14" />
+                  <MailOutlineIcon />
                   <span>{v.label}</span>
                 </Link>
               ))}

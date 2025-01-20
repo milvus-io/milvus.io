@@ -216,7 +216,8 @@ export default function MobileHeader(props) {
                 {t('contact')}
               </Link>
               <Link
-                href={`${CLOUD_SIGNUP_LINK}/utm_source=partner&utm_medium=referral&utm_campaign=2025-01-16_resource_top-home-nav_milvusio`}
+                href={`${CLOUD_SIGNUP_LINK}?utm_source=partner&utm_medium=referral&utm_campaign=2025-01-16_resource_top-home-nav_milvusio`}
+                target="_blank"
               >
                 <Button className="w-full">{t('start')}</Button>
               </Link>

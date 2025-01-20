@@ -10,12 +10,12 @@ import {
   GET_START_LINK,
   GITHUB_MILVUS_LINK,
   GITHUB_VTS_LINK,
+  CLOUD_SIGNUP_LINK,
 } from '@/consts/links';
 import { DownArrowIcon, GitHubIcon } from '@/components/icons';
 import { LogoSection } from './Logos';
 import milvusStats from '../../../global-stats.json';
 import { RightTopArrowIcon } from '@/components/icons';
-import CustomButton from '../customButton';
 
 type Props = { className?: string };
 
@@ -82,7 +82,7 @@ export default function DesktopHeader(props: Props) {
     <div className="bg-white border-b-black4 border-b-[1px] border-solid ">
       <div
         className={clsx(
-          'hidden tablet:flex h-[58px] px-10 items-center justify-between mx-auto',
+          'hidden xl:flex h-[58px] px-10 items-center justify-between mx-auto',
           className
         )}
       >
@@ -140,11 +140,11 @@ export default function DesktopHeader(props: Props) {
           </ul>
         </div>
 
-        <div className="flex gap-[20px] max-[1240px]:gap-[12px] max-[1080px]:gap-[10px] items-center">
+        <div className="flex gap-[20px] max-[1240px]:gap-[12px] max-[1080px]:gap-[10px] items-center font-mono">
           <a
             href={GITHUB_MILVUS_LINK}
             className={
-              'h-9 px-3 py-1.5 rounded-md flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] transition duration-200 ease-in-out hover:bg-black4 font-mono'
+              'h-9 px-3 py-1.5 rounded-md flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] transition duration-200 ease-in-out hover:bg-black4'
             }
             target="_blank"
           >
@@ -162,9 +162,11 @@ export default function DesktopHeader(props: Props) {
           >
             {t('contact')}
           </Link>
-          <Link href={GET_START_LINK}>
-            <div className="h-9 px-3 py-1.5 rounded-md border border-solid border-gray-300 hover:border-slate-950 justify-start items-center gap-1 inline-flex cursor-pointer transition">
-              <div className="text-center text-black1 text-sm font-medium leading-[21px]">
+          <Link
+            href={`${CLOUD_SIGNUP_LINK}/utm_source=partner&utm_medium=referral&utm_campaign=2025-01-16_resource_top-home-nav_milvusio`}
+          >
+            <div className="h-9 px-3 py-1.5 rounded-md  bg-blue1 hover:opacity-70 justify-start items-center gap-1 inline-flex cursor-pointer transition">
+              <div className="text-center text-white text-sm font-medium leading-[21px]">
                 {t('start')}
               </div>
             </div>

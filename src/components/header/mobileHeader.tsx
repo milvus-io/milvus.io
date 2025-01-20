@@ -19,6 +19,7 @@ import {
   GITHUB_ATTU_LINK,
   GITHUB_VTS_LINK,
   GITHUB_MILVUS_CLI_LINK,
+  CLOUD_SIGNUP_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '../icons';
 
@@ -55,7 +56,7 @@ export default function MobileHeader(props) {
   };
 
   return (
-    <div className="block tablet:hidden bg-white border-b border-solid border-gray-300">
+    <div className="block xl:hidden bg-white border-b border-solid border-gray-300">
       <div
         className={clsx(
           pageClasses.container,
@@ -214,7 +215,9 @@ export default function MobileHeader(props) {
               >
                 {t('contact')}
               </Link>
-              <Link href={GET_START_LINK}>
+              <Link
+                href={`${CLOUD_SIGNUP_LINK}/utm_source=partner&utm_medium=referral&utm_campaign=2025-01-16_resource_top-home-nav_milvusio`}
+              >
                 <Button className="w-full">{t('start')}</Button>
               </Link>
             </div>

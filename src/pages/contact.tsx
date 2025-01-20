@@ -21,7 +21,7 @@ export default function ContactUs() {
       return <p className={classes.prompt}>{t('form.error')}</p>;
     }
     return formCreated ? null : (
-      <p className="text-[16px] leading-[24px] text-center mt-[300px]">
+      <p className="text-[16px] leading-[24px] text-center mt-[150px]">
         {t('form.loading')}
       </p>
     );
@@ -69,7 +69,7 @@ export default function ContactUs() {
               ]}
             />
           </p>
-          <div className="rounded-[16px] border border-solid border-[#ECECEE] bg-white p-[40px] max-w-[680px] min-h-[640px] mx-auto">
+          <div className="rounded-[16px] border border-solid border-[#ECECEE] bg-white p-[40px] max-w-[680px] min-h-[340px] mx-auto">
             <div id="hubspot-form">{formContentHtml}</div>
           </div>
         </div>

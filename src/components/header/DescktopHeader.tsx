@@ -163,7 +163,8 @@ export default function DesktopHeader(props: Props) {
             {t('contact')}
           </Link>
           <Link
-            href={`${CLOUD_SIGNUP_LINK}/utm_source=partner&utm_medium=referral&utm_campaign=2025-01-16_resource_top-home-nav_milvusio`}
+            href={`${CLOUD_SIGNUP_LINK}?utm_source=partner&utm_medium=referral&utm_campaign=2025-01-16_resource_top-home-nav_milvusio`}
+            target="_blank"
           >
             <div className="h-9 px-3 py-1.5 rounded-md  bg-blue1 hover:opacity-70 justify-start items-center gap-1 inline-flex cursor-pointer transition">
               <div className="text-center text-white text-sm font-medium leading-[21px]">

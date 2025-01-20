@@ -49,7 +49,7 @@ export default function HomePageHeaderSection(props: {
           {t('subTitle')}
         </p>
 
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center gap-[20px] max-sm:flex-col">
           <CustomButton
             href={GET_START_LINK}
             size="large"
@@ -57,7 +57,17 @@ export default function HomePageHeaderSection(props: {
               root: classes.startButton,
             }}
           >
-            {t('buttons.start')}
+            {t('buttons.quickStart')}
+          </CustomButton>
+          <CustomButton
+            href="/intro"
+            size="large"
+            variant="outlined"
+            classes={{
+              root: classes.startButton,
+            }}
+          >
+            {t('buttons.learnMore')}
           </CustomButton>
         </div>
       </div>

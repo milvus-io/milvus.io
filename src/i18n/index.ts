@@ -19,6 +19,7 @@ import introCn from './cn/intro.json';
 import commonCn from './cn/milvus.json';
 import sizingToolCn from './cn/sizingTool.json';
 import useCaseCn from './cn/useCase.json';
+import contactEn from './en/contact.json';
 
 import docsDe from './de/docs.json';
 import docsEs from './es/docs.json';
@@ -41,6 +42,7 @@ export const resources = {
     community: communityEn,
     notFound: notFoundEn,
     blog: blogEn,
+    contact: contactEn,
   },
   cn: {
     common: commonCn,

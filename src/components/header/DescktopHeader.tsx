@@ -15,6 +15,7 @@ import { DownArrowIcon, GitHubIcon } from '@/components/icons';
 import { LogoSection } from './Logos';
 import milvusStats from '../../../global-stats.json';
 import { RightTopArrowIcon } from '@/components/icons';
+import CustomButton from '../customButton';
 
 type Props = { className?: string };
 
@@ -85,7 +86,7 @@ export default function DesktopHeader(props: Props) {
           className
         )}
       >
-        <div className="flex items-center gap-[40px]">
+        <div className="flex items-center gap-[40px] max-[1240px]:gap-[10px]">
           <LogoSection lightMode={true} />
 
           <ul className="flex items-center list-none gap-[16px] max-[1080px]:gap-[10px]">
@@ -139,7 +140,7 @@ export default function DesktopHeader(props: Props) {
           </ul>
         </div>
 
-        <div className="flex gap-[12px] items-center">
+        <div className="flex gap-[20px] max-[1240px]:gap-[12px] max-[1080px]:gap-[10px] items-center">
           <a
             href={GITHUB_MILVUS_LINK}
             className={
@@ -155,6 +156,12 @@ export default function DesktopHeader(props: Props) {
               {startNum}
             </span>
           </a>
+          <Link
+            href="/contact"
+            className="text-[12px] font-[500] leading-[18px] text-black1"
+          >
+            {t('contact')}
+          </Link>
           <Link href={GET_START_LINK}>
             <div className="h-9 px-3 py-1.5 rounded-md border border-solid border-gray-300 hover:border-slate-950 justify-start items-center gap-1 inline-flex cursor-pointer transition">
               <div className="text-center text-black1 text-sm font-medium leading-[21px]">

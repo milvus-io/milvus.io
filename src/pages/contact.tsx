@@ -31,12 +31,20 @@ export default function ContactUs() {
     <Layout>
       <main>
         <Head>
-          <title></title>
-          <meta name="description" content="" />
-          <meta name="keywords" content="" />
+          <title>
+            Contact Us - Get help with Milvus Deployment & Managed Milvus
+          </title>
+          <meta
+            name="description"
+            content="Need help deploying Milvus or have questions about Zilliz Cloud? Reach out to the Zilliz team today through our contact form. Whether you're ready to scale or just starting out, our experts are here to assist you with all your vector database needs."
+          />
+          <meta
+            name="keywords"
+            content="Milvus support, managed Milvus, Zilliz Cloud, Contact Zilliz, Vector database help, Milvus deployment support, Zilliz Cloud support, Managed vector database, Milvus database contact, Zilliz team contact, Get help with Milvus."
+          />
         </Head>
       </main>
-      <section className="py-[80px]">
+      <section className="py-[80px] bg-[url('/images/contact/contact-bg.png')] bg-no-repeat bg-cover bg-center">
         <div className={pageClasses.homeContainer}>
           <h1 className="text-[42px] leading-[54px] font-[600] text-center mb-[12px]">
             {t('title')}

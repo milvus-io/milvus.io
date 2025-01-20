@@ -15,6 +15,7 @@ import {
 } from '@/types/sizing';
 import { InfoFilled } from '@/components/icons';
 import ZillizAdv from '@/parts/blogs/zillizAdv';
+import { CLOUD_SIGNUP_LINK } from '@/consts';
 
 const etcdBaseValue = {
   cpu: 0,
@@ -167,7 +168,7 @@ export default function SizingTool() {
 
           <ZillizAdv
             className={classes.zillizAdv}
-            ctaLink="https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_resouces_milvus-sizing-tool_milvusio"
+            ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_resources_milvus-sizing-tool_milvusio`}
           />
         </div>
       </Layout>

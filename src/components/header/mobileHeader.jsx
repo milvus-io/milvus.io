@@ -207,6 +207,13 @@ export default function MobileHeader(props) {
             </div>
 
             <div className={classes.mobileStartBtnWrapper}>
+              <Link
+                href="/contact"
+                target="_self"
+                className="block text-[14px] font-[500] leading-[40px] text-black1 px-[1rem]  text-center h-[40px]"
+              >
+                {t('contact')}
+              </Link>
               <Link href={GET_START_LINK}>
                 <Button className="w-full">{t('start')}</Button>
               </Link>

@@ -129,7 +129,7 @@ const Footer = (props: Props) => {
                 objectFit: 'cover',
               }}
             />
-            <div className="flex items-center gap-[4px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2">
+            <div className="flex items-center gap-[4px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2 whitespace-nowrap">
               <Trans
                 t={t}
                 i18nKey="v3trans.footnote.maintainer"

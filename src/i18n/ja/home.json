@@ -103,8 +103,8 @@
       ]
     },
     "cloud": {
-      "title": "Zilliz Cloud",
-      "advantage": "最小限の運用で完全管理",
+      "title": "Zilliz Cloud（完全管理型Milvus）",
+      "advantage": "手間がかからないし、Milvusよりも10倍速い",
       "features": [
         "サーバーレスと専用クラスターの両方で利用可能",
         "さまざまなセキュリティとコンプライアンス要件に対応するSaaSとBYOCオプション"

@@ -103,8 +103,8 @@
       ]
     },
     "cloud": {
-      "title": "Zilliz Cloud",
-      "advantage": "최소한의 운영으로 완전 관리형",
+      "title": "Zilliz Cloud (완전 관리형 Milvus)",
+      "advantage": "번거롭지 않고 Milvus보다 10배 빠릅니다.",
       "features": [
         "서버리스 및 전용 클러스터 모두에서 사용 가능",
         "다양한 보안 및 규제 요구 사항을 위한 SaaS 및 BYOC 옵션"

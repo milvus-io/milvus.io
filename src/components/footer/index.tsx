@@ -144,7 +144,7 @@ const Footer = (props: Props) => {
                     href="https://zilliz.com/"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-black2 hover:text-black2"
+                    className="text-black2 hover:underline"
                   ></a>,
                 ]}
               />

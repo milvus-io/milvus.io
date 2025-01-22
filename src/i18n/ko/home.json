@@ -1,0 +1,144 @@
+{
+  "title": "고성능<0 /> <1>벡터 데이터베이스</1> 스케일을 위해 구축됨",
+  "subTitle": "Milvus는 GenAI 애플리케이션을 위해 구축된 오픈소스 벡터 데이터베이스입니다. pip로 설치하고, 고속 검색을 수행하며, 최소한의 성능 손실로 수백억 개의 벡터로 확장할 수 있습니다.",
+  "news": "뉴스",
+  "buttons": {
+    "download": "다운로드",
+    "star": "스타",
+    "pipInstall": "pip install pymilvus",
+    "start": "시작하기",
+    "tryCloud": "Zilliz Cloud 무료 체험",
+    "getStarted": "시작하기",
+    "learnMore": "더 알아보기",
+    "quickStart": "Milvus 빠른 시작",
+    "tryFree": "무료 체험",
+    "rsvp": "지금 RSVP",
+    "subscribe": "구독",
+    "tryNow": "지금 체험하기"
+  },
+  "codeSection": {
+    "title": "몇 초 만에 Milvus 실행 시작",
+    "tabs": {
+      "createCollection": "컬렉션 생성",
+      "insertData": "데이터 삽입",
+      "search": "검색",
+      "product": "프로덕션",
+      "delete": "데이터 삭제"
+    }
+  },
+  "trySection": {
+    "title": "운영 부담을 최소화할 관리형 Milvus를 찾고 계신가요?",
+    "subTitle": "선호하는 모든 AI 개발 도구와 원활하게 연동"
+  },
+  "lovedSection": {
+    "title": "GenAI 개발자들에게 사랑받는",
+    "cards": {
+      "nandula": {
+        "content": "우리의 연구에 따르면, Milvus는 Chroma와 Pinecone을 제치고 선택된 벡터 데이터베이스입니다. Milvus는 고차원 벡터의 대규모 데이터셋에 대한 유사성 검색을 위해 특별히 설계된 오픈소스 벡터 데이터베이스입니다.",
+        "author": "난둘라 아셀",
+        "title": "시니어 데이터 과학자"
+      },
+      "bhargav": {
+        "content": "효율적인 벡터 유사성 검색에 중점을 둔 Milvus는 강력하고 확장 가능한 이미지 검색 시스템을 구축할 수 있게 해줍니다. 개인 사진 라이브러리를 관리하거나 상용 이미지 검색 애플리케이션을 개발하는 경우, Milvus는 이미지 컬렉션 내의 잠재력을 발휘할 수 있는 강력한 기반을 제공합니다.",
+        "author": "바르가브 망카드",
+        "title": "시니어 솔루션 아키텍트"
+      },
+      "igor": {
+        "content": "Milvus는 대규모 벡터 데이터를 처리하고 검색하기 위해 특별히 설계된 강력한 벡터 데이터베이스입니다. 높은 성능과 확장성으로 두드러져 머신러닝, 딥러닝, 유사성 검색 작업 및 추천 시스템에 이상적입니다.",
+        "author": "이고르 고르벤코",
+        "title": "빅데이터 아키텍트"
+      }
+    }
+  },
+  "vdbSection": {
+    "title": "개발자들이 벡터 데이터베이스로 Milvus를 선호하는 이유",
+    "features": {
+      "scale": {
+        "title": "필요에 따라 확장",
+        "desc": "완전히 분산된 환경에서 수백억 개의 벡터를 지원하기 위해 탄력적으로 확장"
+      },
+      "fast": {
+        "title": "매우 빠름",
+        "desc": "Global Index를 사용하여 규모에 관계없이 빠르고 정확하게 데이터를 검색합니다."
+      },
+      "reusable": {
+        "title": "재사용 가능한 코드",
+        "desc": "한 번 작성하고, 한 줄의 코드로 프로덕션 환경에 배포합니다."
+      },
+      "community": {
+        "title": "지원적인 커뮤니티",
+        "desc": "풍부한 리소스와 지원적인 기여자들이 있는 인기 벡터 데이터베이스."
+      },
+      "featureRich": {
+        "title": "풍부한 기능",
+        "desc": "메타데이터 필터링, 하이브리드 검색, 멀티벡터 등."
+      }
+    },
+    "prompt": "Milvus에 대해 더 알고 싶으신가요? <0>문서 보기</0>"
+  },
+  "deploySection": {
+    "title": "당신의 독특한 여정에 맞는 배포 옵션",
+    "lite": {
+      "title": "Milvus Lite",
+      "advantage": "가볍고 시작하기 쉬움",
+      "features": [
+        "VectorDB-as-a-library는 pip 설치로 노트북/랩톱에서 실행",
+        "학습 및 프로토타이핑에 최적"
+      ]
+    },
+    "milvusStandalone": {
+      "title": "Milvus Standalone",
+      "advantage": "견고한 단일 머신 배포",
+      "features": [
+        "프로덕션 또는 테스트를 위한 완벽한 벡터 데이터베이스",
+        "수백만 개의 벡터까지의 데이터셋에 이상적"
+      ]
+    },
+    "milvusDistributed": {
+      "title": "Milvus Distributed",
+      "advantage": "확장 가능한 엔터프라이즈급 솔루션",
+      "features": [
+        "고도로 신뢰할 수 있고 분산된 벡터 데이터베이스와 포괄적인 툴킷",
+        "수평 확장으로 수십억 개의 벡터 처리"
+      ]
+    },
+    "cloud": {
+      "title": "Zilliz Cloud (완전 관리형 Milvus)",
+      "advantage": "번거롭지 않고 Milvus보다 10배 빠릅니다.",
+      "features": [
+        "서버리스 및 전용 클러스터 모두에서 사용 가능",
+        "다양한 보안 및 규제 요구 사항을 위한 SaaS 및 BYOC 옵션"
+      ]
+    },
+    "deployModels": "다양한 <0>Milvus 배포 모델</0>에 대해 더 알아보기"
+  },
+  "developSection": {
+    "title": "GenAI 앱 구축 시작",
+    "subTitle": "우리와 커뮤니티가 개발한 노트북으로 안내",
+    "rag": "RAG",
+    "imgSearch": "이미지 검색",
+    "multimodal": "멀티모달 검색",
+    "hybridSearch": "하이브리드 검색",
+    "graphRag": "Graph RAG",
+    "meetup": {
+      "title": "비정형 데이터 미트업",
+      "desc": "Gen AI에 헌신하는 열정적인 개발자 및 엔지니어 커뮤니티에 참여하세요."
+    }
+  },
+  "subscribeSection": {
+    "title": "Milvus로 GenAI 앱을 구축하는 개발자 커뮤니티에 참여하세요. 현재 <0>2,500만 회 이상</0>의 다운로드를 기록했습니다.",
+    "subscribe": {
+      "title": "Milvus 업데이트 받기",
+      "desc": "Milvus의 창시자이자 주요 관리자인 Zilliz로부터 최신 Milvus 릴리스, 튜토리얼 및 교육 업데이트를 받으려면 구독하세요.",
+      "email": "이메일"
+    }
+  },
+  "productionSection": {
+    "title": "프로덕션 워크로드에서 신뢰받음"
+  },
+  "banner": "🚀 완전 관리형 Milvus인 Zilliz Cloud를 무료로 체험해보세요—10배 더 빠른 성능을 경험하세요! <0>지금 체험하기>></0>",
+  "meta": {
+    "title": "Milvus | 확장성을 위해 구축된 고성능 벡터 데이터베이스",
+    "description": "Milvus는 GenAI 애플리케이션을 위해 구축된 오픈 소스 벡터 데이터베이스입니다. pip로 설치하고 고속 검색을 수행하며 수십억 개의 벡터로 확장합니다."
+  }
+}

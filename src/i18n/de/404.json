@@ -1,0 +1,17 @@
+{
+  "title": "404: Seite nicht gefunden",
+  "content": "Hoppla! Es scheint, Sie haben eine falsche Abzweigung genommen.<0></0>Die Seite, nach der Sie suchen, scheint nicht zu existieren.",
+  "subtitle": "Aber keine Sorge, Sie können dorthin zurückkehren, wo Sie sein müssen:",
+  "docs": "Milvus-Dokumentation",
+  "homepage": "Startseite",
+  "tutorial": "Milvus & GenAI-Tutorials",
+  "explore": {
+    "title": "Oder erkunden Sie etwas Neues:",
+    "desc": "Während Sie hier sind, schauen Sie sich diese neuesten Ressourcen an.",
+    "whatIsMilvus": {
+      "title": "Was ist Milvus?",
+      "desc": "Alles, was Sie über Milvus in weniger als 10 Minuten wissen müssen.",
+      "learnMore": "Mehr erfahren"
+    }
+  }
+}

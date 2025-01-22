@@ -1,0 +1,144 @@
+{
+  "title": "Database Vektor Berkinerja Tinggi<0 /> <1>Dibangun untuk Skala Besar</1>",
+  "subTitle": "Milvus adalah database vektor open-source yang dibangun untuk aplikasi GenAI. Instal dengan pip, lakukan pencarian berkecepatan tinggi, dan skalakan hingga puluhan miliar vektor dengan kehilangan performa minimal.",
+  "news": "Berita",
+  "buttons": {
+    "download": "Unduh",
+    "star": "Bintang",
+    "pipInstall": "pip install pymilvus",
+    "start": "Mulai",
+    "tryCloud": "Coba Zilliz Cloud Gratis",
+    "getStarted": "Mulai",
+    "learnMore": "Pelajari Lebih Lanjut",
+    "quickStart": "Milvus Quickstart",
+    "tryFree": "Coba Gratis",
+    "rsvp": "RSVP sekarang",
+    "subscribe": "Berlangganan",
+    "tryNow": "Coba Sekarang"
+  },
+  "codeSection": {
+    "title": "Mulai menjalankan Milvus dalam hitungan detik",
+    "tabs": {
+      "createCollection": "Buat Koleksi",
+      "insertData": "Sisipkan Data",
+      "search": "Cari",
+      "product": "Produksi",
+      "delete": "Hapus Data"
+    }
+  },
+  "trySection": {
+    "title": "Mencari Milvus terkelola untuk meminimalkan beban operasional Anda?",
+    "subTitle": "Bekerja dengan baik dengan semua alat pengembangan AI favorit Anda"
+  },
+  "lovedSection": {
+    "title": "Disukai oleh pengembang GenAI",
+    "cards": {
+      "nandula": {
+        "content": "Berdasarkan penelitian kami, Milvus dipilih sebagai database vektor pilihan (dibandingkan Chroma dan Pinecone). Milvus adalah database vektor open-source yang dirancang khusus untuk pencarian kesamaan pada dataset besar vektor berdimensi tinggi.",
+        "author": "Nandula Asel",
+        "title": "Ilmuwan Data Senior"
+      },
+      "bhargav": {
+        "content": "Dengan fokus pada pencarian kesamaan vektor yang efisien, Milvus memberdayakan Anda untuk membangun sistem pengambilan gambar yang kuat dan skalabel. Baik Anda mengelola perpustakaan foto pribadi atau mengembangkan aplikasi pencarian gambar komersial, Milvus menawarkan fondasi yang kuat untuk mengungkap potensi tersembunyi dalam koleksi gambar Anda.",
+        "author": "Bhargav Mankad",
+        "title": "Arsitek Solusi Senior"
+      },
+      "igor": {
+        "content": "Milvus adalah database vektor yang kuat yang dirancang untuk memproses dan mencari data vektor yang luas. Ini menonjol karena kinerja dan skalabilitasnya yang tinggi, menjadikannya sempurna untuk pembelajaran mesin, pembelajaran mendalam, tugas pencarian kesamaan, dan sistem rekomendasi.",
+        "author": "Igor Gorbenko",
+        "title": "Arsitek Big Data"
+      }
+    }
+  },
+  "vdbSection": {
+    "title": "Mengapa Pengembang Lebih Memilih Milvus untuk Database Vektor",
+    "features": {
+      "scale": {
+        "title": "Skala sesuai kebutuhan",
+        "desc": "Skala secara elastis untuk mendukung puluhan miliar vektor dengan sistem yang sepenuhnya terdistribusi"
+      },
+      "fast": {
+        "title": "Sangat cepat",
+        "desc": "Ambil data dengan cepat dan akurat dengan Global Index, terlepas dari skalanya."
+      },
+      "reusable": {
+        "title": "Kode yang Dapat Digunakan Kembali",
+        "desc": "Tulis sekali, dan deploy dengan satu baris kode ke lingkungan produksi."
+      },
+      "community": {
+        "title": "Komunitas yang Mendukung",
+        "desc": "Database vektor favorit penggemar dengan sumber daya yang luas dan kontributor yang mendukung."
+      },
+      "featureRich": {
+        "title": "Kaya fitur",
+        "desc": "Penyaringan metadata, pencarian hibrida, multi-vektor, dan banyak lagi."
+      }
+    },
+    "prompt": "Ingin mempelajari lebih lanjut tentang Milvus? <0>Lihat dokumentasi kami</0>"
+  },
+  "deploySection": {
+    "title": "Opsi Penyebaran yang Sesuai dengan Perjalanan Unik Anda",
+    "lite": {
+      "title": "Milvus Lite",
+      "advantage": "Ringan, mudah untuk memulai",
+      "features": [
+        "VectorDB-sebagai-perpustakaan berjalan di notebook/laptop dengan pip install",
+        "Terbaik untuk pembelajaran dan pembuatan prototipe"
+      ]
+    },
+    "milvusStandalone": {
+      "title": "Milvus Standalone",
+      "advantage": "Penyebaran tunggal yang kuat",
+      "features": [
+        "Database vektor lengkap untuk produksi atau pengujian",
+        "Ideal untuk dataset dengan hingga jutaan vektor"
+      ]
+    },
+    "milvusDistributed": {
+      "title": "Milvus Terdistribusi",
+      "advantage": "Solusi tingkat perusahaan yang skalabel",
+      "features": [
+        "Database vektor yang sangat andal dan terdistribusi dengan toolkit komprehensif",
+        "Skala horizontal untuk menangani miliaran vektor"
+      ]
+    },
+    "cloud": {
+      "title": "Zilliz Cloud (Milvus dikelola sepenuhnya)",
+      "advantage": "Tanpa repot dan 10 kali lebih cepat dari Milvus",
+      "features": [
+        "Tersedia dalam serverless dan kluster khusus",
+        "Opsi SaaS dan BYOC untuk persyaratan keamanan dan kepatuhan yang berbeda"
+      ]
+    },
+    "deployModels": "Pelajari lebih lanjut tentang berbagai <0>model penyebaran Milvus</0>"
+  },
+  "developSection": {
+    "title": "Mulai Membangun Aplikasi GenAI Anda",
+    "subTitle": "Dipandu dengan notebook yang dikembangkan oleh kami dan komunitas kami",
+    "rag": "RAG",
+    "imgSearch": "Pencarian Gambar",
+    "multimodal": "Pencarian Multimodal",
+    "hybridSearch": "Pencarian Hibrida",
+    "graphRag": "Graph RAG",
+    "meetup": {
+      "title": "Unstructured Data Meetups",
+      "desc": "Bergabunglah dengan Komunitas Pengembang dan Insinyur yang Berdedikasi untuk Gen AI."
+    }
+  },
+  "subscribeSection": {
+    "title": "Bergabunglah dengan komunitas pengembang yang membangun aplikasi GenAI dengan Milvus, sekarang dengan lebih dari <0>25 juta+ unduhan</0>",
+    "subscribe": {
+      "title": "Dapatkan Pembaruan Milvus",
+      "desc": "Berlangganan untuk mendapatkan pembaruan tentang rilis terbaru Milvus, tutorial, dan pelatihan dari Zilliz, pencipta dan pemelihara utama Milvus.",
+      "email": "Email"
+    }
+  },
+  "productionSection": {
+    "title": "Dipercaya untuk beban kerja produksi"
+  },
+  "banner": "🚀 Coba Zilliz Cloud, Milvus yang sepenuhnya terkelola, secara gratis—rasakan performa 10x lebih cepat! <0>Coba Sekarang>></0>",
+  "meta": {
+    "title": "Milvus | Basis Data Vektor Berperforma Tinggi Dibangun untuk Skala",
+    "description": "Milvus adalah basis data vektor sumber terbuka yang dibangun untuk aplikasi GenAI. Pasang dengan pip, lakukan pencarian berkecepatan tinggi, dan skalakan hingga puluhan miliar vektor."
+  }
+}

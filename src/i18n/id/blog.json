@@ -1,0 +1,40 @@
+{
+  "trending": "TRENDING",
+  "recent": {
+    "most": "PALING BARU",
+    "release": "RIWAYAT & ACARA"
+  },
+  "subscribe": {
+    "title": "Jadilah yang pertama mengetahui",
+    "desc": "Dapatkan pembaruan tentang rilis dan tutorial Milvus dari Zilliz, pencipta dan pemelihara utama Milvus."
+  },
+  "filter": {
+    "all": "SEMUA",
+    "engineering": "Teknik",
+    "announcements": "Pengumuman",
+    "tutorials": "Tutorial",
+    "usecases": "Kasus Penggunaan"
+  },
+  "aiService": {
+    "title": "Tanyakan saya apa saja tentang Milvus!",
+    "desc": "Asisten AI yang dilatih pada dokumentasi, artikel bantuan, dan konten lainnya."
+  },
+  "zillizAdv": {
+    "title": "Tanpa repot dan 10x lebih cepat dari Milvus",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "Unit komputasi yang dioptimalkan untuk kasus penggunaan beban kerja Anda",
+    "feature2": "Keamanan kelas perusahaan",
+    "feature3": "Tersedia di AWS, GCP, dan Azure",
+    "btn": "Coba Milvus yang Dikelola Penuh secara Gratis"
+  },
+  "authors": {
+    "title": "Penulis yang Paling Banyak Berkontribusi"
+  },
+  "homepage": {
+    "title": "Pelajari Milvus: Wawasan dan Inovasi dalam Teknologi VectorDB",
+    "desc": "Pelajari dasar-dasar basis data vektor, fitur dan kemampuan Milvus, serta tutorial teknis tentang mengelola dan mengoptimalkan pencarian vektor untuk aplikasi AI modern."
+  },
+  "detail": {
+    "keepReading": "Terus Baca"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "intro": {
+    "label": "لماذا Milvus؟",
+    "definition": "ما هو Milvus؟",
+    "cases": "حالات الاستخدام"
+  },
+  "docs": "الوثائق",
+  "tutorials": {
+    "label": "الدروس",
+    "codelabs": "مختبرات التعليمات البرمجية",
+    "bootcamp": "معسكر تدريبي",
+    "demo": "عروض توضيحية",
+    "video": "فيديو"
+  },
+  "tools": {
+    "label": "الأدوات",
+    "attu": "Attu",
+    "cli": "Milvus CLI",
+    "sizing": "أداة التحجيم",
+    "backup": "نسخ احتياطي Milvus",
+    "vts": "VTS"
+  },
+  "blog": "المدونة",
+  "community": "المجتمع",
+  "start": "ابدأ",
+  "star": "نجمة",
+  "contact": "تواصل معنا",
+  "footer": {
+    "resource": {
+      "managed": "Milvus المدار"
+    },
+    "tools": {
+      "sizing": "أداة تحديد حجم Milvus",
+      "backup": "أداة نسخ احتياطي لـ Milvus",
+      "vts": "خدمة نقل المتجهات (VTS)"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "title": "Dokumentasi Milvus",
+  "metaTitle": "Dokumentasi basis data vektor Milvus",
+  "homepageDesc": "Dokumentasi Milvus {{version}}",
+  "feedback": {
+    "title": "Umpan balik",
+    "prompt": "Apakah halaman ini bermanfaat?",
+    "comment": {
+      "title": "Kirimkan umpan balik Anda kepada kami",
+      "desc": "Terima kasih telah membantu kami meningkatkan dokumentasi Milvus.",
+      "inputLabel": "Komentar tambahan (opsional)",
+      "cancel": "Batalkan",
+      "send": "Kirim"
+    },
+    "thanks": "Terima kasih atas umpan balik Anda yang berharga!"
+  },
+  "docAction": {
+    "edit": "Edit halaman ini",
+    "issue": "Buat isu"
+  },
+  "anchors": {
+    "title": "Daftar isi"
+  },
+  "navigation": {
+    "title": "Beranda"
+  },
+  "translate": {
+    "by": "Diterjemahkan oleh"
+  },
+  "advertise": {
+    "content": "Zilliz Cloud bebas masalah, didukung oleh Milvus dan 10x lebih cepat.",
+    "ctaLabel": "Mulai",
+    "titleA": "Coba Milvus yang Dikelola secara Gratis",
+    "titleB": "Coba Zilliz Cloud secara Gratis"
+  }
+}

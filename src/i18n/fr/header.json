@@ -1,0 +1,38 @@
+{
+  "intro": {
+    "label": "Pourquoi Milvus",
+    "definition": "Qu'est-ce que Milvus",
+    "cases": "Cas d'Utilisation"
+  },
+  "docs": "Docs",
+  "tutorials": {
+    "label": "Tutoriels",
+    "codelabs": "Codelabs",
+    "bootcamp": "Bootcamp",
+    "demo": "Démos",
+    "video": "Vidéo"
+  },
+  "tools": {
+    "label": "Outils",
+    "attu": "Attu",
+    "cli": "Milvus CLI",
+    "sizing": "Outil de Dimensionnement",
+    "backup": "Sauvegarde Milvus",
+    "vts": "VTS"
+  },
+  "blog": "Blog",
+  "community": "Communauté",
+  "start": "Commencer",
+  "star": "Étoile",
+  "contact": "Contactez-nous",
+  "footer": {
+    "resource": {
+      "managed": "Milvus Géré"
+    },
+    "tools": {
+      "sizing": "Outil de Dimensionnement Milvus",
+      "backup": "Outil de Sauvegarde Milvus",
+      "vts": "Service de Transport de Vecteurs (VTS)"
+    }
+  }
+}

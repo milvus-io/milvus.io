@@ -1,0 +1,48 @@
+{
+  "title": "Unisciti alla Community",
+  "ctaLabel": "Unisciti ora",
+  "officeHours": {
+    "title": "Ottieni Aiuto dagli Esperti durante le Ore di Ufficio di Milvus",
+    "content": "Prenota una sessione gratuita 1:1 per ottenere aiuto con la tua implementazione di produzione da Zilliz, gli esperti di Milvus.",
+    "button": "Prenota la Tua Sessione"
+  },
+  "community": {
+    "title": "Benvenuto nella Community di Milvus",
+    "content": "La community di Milvus è composta da utenti e contributori open source che condividono nuove idee, collaborano su progetti e promuovono l'apprendimento. I membri della nostra community open source contribuiscono con codice, partecipano a eventi, promuovono una maggiore adozione di Milvus e fanno molti altri contributi preziosi. Continua a leggere per scoprire come puoi partecipare e diventare parte di questa straordinaria community.",
+    "features": {
+      "learn": {
+        "title": "Impara",
+        "content": "Espandi le tue conoscenze e competenze nelle tecnologie di database vettoriali."
+      },
+      "build": {
+        "title": "Costruisci",
+        "content": "Contribuisci allo sviluppo di Milvus attraverso la collaborazione open source."
+      },
+      "share": {
+        "title": "Condividi",
+        "content": "Condividi le migliori pratiche e le lezioni apprese con l'intera community."
+      }
+    }
+  },
+  "resource": "Risorse",
+  "mail": {
+    "title": "Mailing Lists",
+    "mailList": {
+      "meeting": {
+        "title": "Incontro Tecnico di Milvus",
+        "content": "Unisciti al nostro prossimo incontro per essere coinvolto nella discussione e nella decisione delle ultime funzionalità e della timeline di sviluppo di Milvus.",
+        "cta": "Scopri di più"
+      },
+      "event": {
+        "title": "Evento",
+        "content": "Organizziamo spesso eventi. Clicca per scoprire i prossimi eventi vicino a te.",
+        "cta": "Altri Eventi"
+      },
+      "video": {
+        "title": "Video",
+        "content": "Carichiamo spesso video. Clicca per guardare i tutorial video, le repliche dei webinar e altri contenuti video.",
+        "cta": "Altri Video"
+      }
+    }
+  }
+}

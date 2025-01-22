@@ -1,85 +1,105 @@
 {
-  "title": "Milvus Sizing Tool",
-  "subTitle": "Note: all the recommendations are calculated based on our lab data, you should adjust it with your own testing before deploying to production.",
-  "labels": {
-    "dataSize": "Choose data size",
-    "vector": "Number of vectors (Million)",
-    "dimension": "Dimensions",
-    "index": "Index Type",
-    "indexType": "Choose index type",
-    "indexParam": "Choose index parameters",
-    "m": "M (Maximum degree of the node)",
-    "segmentSize": "Choose segment size",
-    "segment": "Segment (MB)"
+  "title": "Milvus 配置工具",
+  "content": "一个用于估算资源需求并为您的 Milvus 部署生成配置的工具。",
+  "tooltip": "<0>注意</0>：配置是基于经验的最佳估算，但我们建议在投入生产之前使用您的数据和流量模式进行测试。",
+  "form": {
+    "num": "向量数量",
+    "dim": "向量维度",
+    "withScalar": "带标量字段",
+    "averageLength": "每行数据的平均大小",
+    "offloading": "将字段卸载到磁盘",
+    "mmp": "Milvus 使用 <0>Mmap</0> 以直接访问磁盘上的大文件，而无需将整个文件读入内存。",
+    "indexType": "索引类型",
+    "indexTypeTip": "如何选择向量索引？",
+    "indexParam": "索引参数",
+    "indexParamTip": "如何设置适当的索引参数？<0>了解更多详情</0>。",
+    "withRawData": "with_raw_data",
+    "m": "M（节点的最大度数）",
+    "nlist": "nlist",
+    "maxDegree": "max_degree",
+    "segmentSize": "段大小",
+    "dependencyComp": "依赖组件",
+    "mode": "模式",
+    "modeTip": "随着数据量的增长，您可以将数据从独立模式迁移到集群模式。<0>查看更多</0>。",
+    "modeDisableTip": "对于大数据量，建议使用集群模式部署以实现更好的性能和可扩展性。",
+    "pulsar": "Pulsar",
+    "kafka": "Kafka",
+    "standalone": "独立模式",
+    "standaloneDesc": "适用于小到中规模。",
+    "cluster": "分布式",
+    "clusterDesc": "适用于大规模。"
   },
-  "capacity": "Approximate capacity",
-  "memory": "Loading Memory",
-  "fileSize": "Raw file size",
-  "setups": {
-    "title": "Minimum Milvus cluster setup",
-    "rootCoord": {
-      "title": "Root Coord",
-      "tooltip": "Root coord handles data definition language (DDL) and data control language (DCL) requests, such as create or delete collections, partitions, or indexes, as well as manage TSO (timestamp Oracle) and time ticker issuing."
-    },
-    "queryCoord": {
-      "title": "Query Coord",
-      "tootip": "Query coord manages topology and load balancing for the query nodes, and handoff from growing segments to sealed segments."
-    },
-    "dataCoord": {
-      "title": "Data Coord",
-      "tooltip": "Data coord manages topology of the data nodes, maintains metadata, and triggers flush, compact, and other background data operations."
-    },
-    "indexCoord": {
-      "title": "Index Coord",
-      "tooltip": "Index coord manages topology of the index nodes, builds index, and maintains index metadata."
-    },
-    "proxy": {
-      "title": "Proxy",
-      "tooltip": "Proxy is the access layer of the system and endpoint to users. It validates client requests and reduces the returned results."
-    },
-    "queryNode": {
-      "title": "Query Node",
-      "tooltip": "Query node retrieves incremental log data and turn them into growing segments by subscribing to the log broker, loads historical data from the object storage, and runs hybrid search between vector and scalar data."
-    },
-    "dataNode": {
-      "title": "Data Node",
-      "tooltip": "Data node retrieves incremental log data by subscribing to the log broker, processes mutation requests, and packs log data into log snapshots and stores them in the object storage."
-    },
-    "indexNode": {
-      "title": "Index Node",
-      "tooltip": "Index node builds indexes. Index nodes do not need to be memory resident, and can be implemented with the serverless framework."
-    },
-    "etcd": {
-      "title": "ETCD"
-    },
-    "minio": {
-      "title": "Minio"
-    },
-    "pulsar": {
-      "title": "Pulsar"
-    },
-    "kafka": {
-      "title": "Kafka"
-    },
-    "bookie": "Bookie",
-    "broker": "Broker",
-    "proxyLabel": "Proxy",
-    "zookeeper": "Zookeeper"
+  "overview": {
+    "title": "资源需求",
+    "explore": "探索托管服务成本",
+    "overview": "数据大小计算",
+    "raw": "原始数据大小：",
+    "rawTooltip": "原始数据的大小由向量数量、向量维度和标量字段数据大小决定。",
+    "memory": "加载内存：",
+    "memoryTooltip": "查询节点的内存消耗由原始数据大小、索引类型和查询节点的参数决定。"
   },
-  "buttons": {
-    "helm": "Download Helm Chart configuration yml",
-    "operator": "Download Milvus Operator configuration yml",
-    "guide": "View install guide"
+  "setup": {
+    "title": "设置资源需求",
+    "cloud": "探索托管服务成本",
+    "outOfRange": "您有大量数据。请<0>联系我们</0>以探讨最佳部署实践。",
+    "milvus": {
+      "title": "Milvus",
+      "proxy": "代理",
+      "mixCoord": "混合协调器",
+      "dataNode": "数据节点",
+      "indexNode": "索引节点",
+      "queryNode": "查询节点",
+      "diskSize": "<0>本地磁盘</0>：<1>{{size}}</1>",
+      "proxyTip": "代理是系统的访问层和用户的端点。提示：分配更多资源以处理更高的 QPS 负载。",
+      "mixCoordTip": "混合协调器负责调度集群后台任务、维护元数据拓扑、处理 DDL、DCL 和 TSO 分配。",
+      "queryNodeTip": "查询节点负责数据查询和搜索。提示：分配更多资源以处理读密集型负载。",
+      "dataNodeTip": "数据节点通过订阅日志代理检索增量日志数据，处理变异请求，并将日志数据打包成日志快照并存储在对象存储中。提示：分配更多资源以处理写密集型负载。",
+      "indexNodeTip": "索引节点负责构建索引。资源量可能会影响索引构建的速度。您可以根据实际需求增加或减少此资源。",
+      "standaloneNode": "独立节点"
+    },
+    "dependency": {
+      "title": "依赖",
+      "etcd": "ETCD",
+      "minio": "Minio",
+      "pulsar": "Pulsar",
+      "kafka": "Kafka",
+      "bookie": "Bookie",
+      "broker": "Broker",
+      "proxy": "代理",
+      "zookeeper": "Zookeeper",
+      "etcdTip": "ETCD 用于存储元数据。请指定高磁盘性能的存储类以确保最佳性能。",
+      "apacheTip": "请为 Bookie.Journal 和 Zookeeper 指定高磁盘性能的存储类以确保最佳性能。",
+      "kafkaTip": "请为 Zookeeper 指定高磁盘性能的存储类以确保最佳性能。"
+    },
+    "basic": {
+      "cpuAndMemory": "CPU 和内存：<0>{{cpu}} {{memory}}</0>",
+      "storageWithValue": "存储：<0>{{size}}</0>",
+      "diskWithValue": "本地磁盘：<0>{{disk}}</0>",
+      "cpu": "CPU",
+      "memory": "内存",
+      "disk": "本地磁盘",
+      "storage": "存储",
+      "podNum": "Pod 数量",
+      "pvc": "每个 Pod 的 Pvc：<0>{{pvc}}</0>",
+      "pvcLabel": "每个 Pod 的 Pvc",
+      "journal": "日志",
+      "ledger": "账本",
+      "config": "{{cpu}} 核 {{memory}} GB",
+      "core": "{{cpu}} 核",
+      "simpleCore": "{{cpu}} C",
+      "gb": "{{memory}} GB",
+      "byte": "字节"
+    }
   },
-  "installGuide": {
-    "helm": "Helm Install Guide",
-    "operator": "Operator Install Guide"
-  },
-  "milvus": "Milvus",
-  "dependency": "Dependencies",
-  "cluster": "Minimum Milvus Cluster Setup",
-  "ssd": "SSD",
-  "disk": "Disk",
-  "coreInfo": "{{core}} core {{memory}} GB",
-  "sizeInfo": "{{size}} GB"
+  "install": {
+    "title": "安装 Milvus",
+    "helm": "Helm 图表",
+    "operator": "Milvus 操作员",
+    "docker": "Docker Compose",
+    "adv": "消耗了太多资源？尝试 Zilliz Cloud（托管的 Milvus）以节省资源并降低部署和运营成本。使用 Zilliz Cloud 计算器了解更多详情。<0>前往 Zilliz Cloud 计算器</0>。",
+    "adv2": "设置 Milvus 集群进行性能测试或基准测试？请参考 <0>VDB Bench</0> 获取详细指导。",
+    "tip1": "如何使用 Docker Compose 运行 Milvus？",
+    "tip2": "如何使用 Helm 图表运行 Milvus？",
+    "tip3": "如何使用 Milvus 操作员运行 Milvus？"
+  }
 }

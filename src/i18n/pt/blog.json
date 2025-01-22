@@ -1,0 +1,40 @@
+{
+  "trending": "EM ALTA",
+  "recent": {
+    "most": "MAIS RECENTE",
+    "release": "LANÇAMENTOS E EVENTOS"
+  },
+  "subscribe": {
+    "title": "Seja o primeiro a saber",
+    "desc": "Receba atualizações sobre lançamentos e tutoriais do Milvus da Zilliz, criadora e principal mantenedora do Milvus."
+  },
+  "filter": {
+    "all": "TODOS",
+    "engineering": "Engenharia",
+    "announcements": "Anúncios",
+    "tutorials": "Tutoriais",
+    "usecases": "Casos de Uso"
+  },
+  "aiService": {
+    "title": "Pergunte-me qualquer coisa sobre o Milvus!",
+    "desc": "Um assistente de IA treinado em documentação, artigos de ajuda e outros conteúdos."
+  },
+  "zillizAdv": {
+    "title": "Sem complicações e 10x mais rápido que o Milvus",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "Unidades de computação otimizadas para casos de uso para sua carga de trabalho",
+    "feature2": "Segurança de nível corporativo",
+    "feature3": "Disponível na AWS, GCP e Azure",
+    "btn": "Experimente o Milvus Totalmente Gerenciado Gratuitamente"
+  },
+  "authors": {
+    "title": "Autores Mais Contribuintes"
+  },
+  "homepage": {
+    "title": "Aprenda Milvus: Insights e Inovações na Tecnologia VectorDB",
+    "desc": "Aprenda os fundamentos de bancos de dados vetoriais, recursos e capacidades do Milvus e tutoriais técnicos sobre a gestão e otimização da pesquisa vetorial para aplicativos modernos de IA."
+  },
+  "detail": {
+    "keepReading": "Continue Lendo"
+  }
+}

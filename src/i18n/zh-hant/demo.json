@@ -1,0 +1,39 @@
+{
+  "title": "Milvus 使添加相似性搜索变得容易",
+  "desc": "存儲、索引和管理由深度神經網絡和其他機器學習（ML）模型生成的大量嵌入向量。",
+  "demos": {
+    "multimodal": {
+      "title": "多模態圖像搜索",
+      "desc": "上傳圖像並編輯文本，以增強直觀的圖像搜索，使用先進的檢索技術。"
+    },
+    "imgSearch": {
+      "title": "圖像搜索",
+      "desc": "使圖像可搜索。立即從大型數據庫中返回最相似的圖像。"
+    },
+    "hybridSearch": {
+      "title": "混合搜索",
+      "desc": "體驗使用 BGE-M3 模型進行的先進文本搜索，提供精確的 Dense、Sparse 和 Hybrid 結果，以增強查詢相關性。"
+    },
+    "ossChat": {
+      "title": "OSSChat",
+      "desc": "增強的 ChatGPT，具有文檔、問題、博客文章和社群問答作為知識庫。為每個社群和開發者構建。"
+    },
+    "chemicalSearch": {
+      "title": "化學結構搜索",
+      "desc": "快速搜索指定分子的相似性、子結構或超結構。"
+    },
+    "askAi": {
+      "title": "檢索增強生成（RAG）",
+      "desc": "Ask AI 是 Milvus 文檔和幫助文章的 RAG 聊機器人。支持該向量數據庫的檢索是 Zilliz Cloud（完全托管的 Milvus）。",
+      "ctaLabel1": "問 AI",
+      "ctaLabel2": "了解我們如何構建它"
+    }
+  },
+  "prompts": {
+    "success": "謝謝，你已被添加到我們的郵寄名單！",
+    "warning": "一秒鐘！我們帶你去那裡...",
+    "waiting": "在你離開之前..."
+  },
+  "tryDemo": "嘗試 Demo",
+  "watchDemo": "觀看 Demo"
+}

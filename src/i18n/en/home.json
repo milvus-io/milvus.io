@@ -103,8 +103,8 @@
       ]
     },
     "cloud": {
-      "title": "Zilliz Cloud",
-      "advantage": "Fully managed with minimal operations",
+      "title": "Zilliz Cloud (fully managed Milvus)",
+      "advantage": "Hassle-free and 10x faster than Milvus",
       "features": [
         "Available in both serverless and dedicated cluster",
         "SaaS and BYOC options for different security and compliance requirements"
@@ -136,5 +136,9 @@
   "productionSection": {
     "title": "Trusted for production workloads"
   },
-  "banner": "🚀 Try Zilliz Cloud, the fully managed Milvus, for free—experience 10x faster performance! <0>Try Now>></0>"
+  "banner": "🚀 Try Zilliz Cloud, the fully managed Milvus, for free—experience 10x faster performance! <0>Try Now>></0>",
+  "meta": {
+    "title": "Milvus | High-Performance Vector Database Built for Scale",
+    "description": "Milvus is an open-source vector database built for GenAI applications. Install with pip, perform high-speed searches, and scale to tens of billions of vectors."
+  }
 }

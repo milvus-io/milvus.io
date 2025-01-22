@@ -1,8 +1,7 @@
 import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
-
-const BASE_BLOG_DIR = join(process.cwd(), 'src/blogs/blog/en');
+import { LanguageEnum } from '@/types/localization';
 
 const generateBlogCover = (cover: string, date: Date) => {
   if (cover) {
@@ -17,20 +16,41 @@ const generateBlogCover = (cover: string, date: Date) => {
   return `https://${defaultCover}`;
 };
 
-const generateBlogData = () => {
+const generateBlogData = (locale: LanguageEnum = LanguageEnum.ENGLISH) => {
+  const BASE_BLOG_DIR =
+    locale === LanguageEnum.ENGLISH
+      ? join(process.cwd(), 'src/blogs/blog/en')
+      : join(process.cwd(), `src/blogs/localization/blog/${locale}`);
   const blogsData = fs.readdirSync(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
     const { data, content } = matter(file);
-    const { tag, date, cover, ...rest } = data;
+    const { tag, date, cover, title = '', ...rest } = data;
+
+    const metaFilePath = `${BASE_BLOG_DIR}/${v.replace('.md', '.json')}`;
+    let metaData: {
+      codeList?: string[];
+      anchorList?: Array<{
+        label: string;
+        href: string;
+        type: number;
+        isActive: boolean;
+      }>;
+    } = {};
+    if (fs.existsSync(metaFilePath)) {
+      const metaFile = fs.readFileSync(metaFilePath);
+      metaData = JSON.parse(metaFile.toString());
+    }
 
     return {
+      ...rest,
       id: v,
       date: new Date(data.date).toJSON(),
       cover: generateBlogCover(cover, new Date(data.date)),
-      ...rest,
       tags: tag ? tag.split(',') : [],
       href: `/blog/${v}`,
       content,
+      title,
+      metaData,
     };
   });
 
@@ -41,8 +61,8 @@ const generateBlogData = () => {
   return blogsData;
 };
 
-const generateBlogRouter = () => {
-  const data = generateBlogData();
+const generateBlogRouter = (locale: LanguageEnum) => {
+  const data = generateBlogData(locale);
   const router = data.map(v => ({
     params: {
       id: v.id,
@@ -51,21 +71,9 @@ const generateBlogRouter = () => {
   return router;
 };
 
-const generateHomepageBannerData = () => {
-  const filePath = join(process.cwd(), 'src/blogs/homepage/index.json');
-  try {
-    const data = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.log('Try to read homepage data json failed', error);
-    return [];
-  }
-};
-
 const blogUtils = {
   getAllData: generateBlogData,
   getRouter: generateBlogRouter,
-  getHomepageData: generateHomepageBannerData,
 };
 
 export default blogUtils;

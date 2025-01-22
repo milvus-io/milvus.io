@@ -1,0 +1,38 @@
+{
+  "intro": {
+    "label": "Mengapa Milvus",
+    "definition": "Apa itu Milvus",
+    "cases": "Kasus Penggunaan"
+  },
+  "docs": "Dokumen",
+  "tutorials": {
+    "label": "Tutorial",
+    "codelabs": "Codelabs",
+    "bootcamp": "Bootcamp",
+    "demo": "Demo",
+    "video": "Video"
+  },
+  "tools": {
+    "label": "Alat",
+    "attu": "Attu",
+    "cli": "Milvus CLI",
+    "sizing": "Alat Ukuran",
+    "backup": "Cadangan Milvus",
+    "vts": "VTS"
+  },
+  "blog": "Blog",
+  "community": "Komunitas",
+  "start": "Mulai",
+  "star": "Bintang",
+  "contact": "Hubungi Kami",
+  "footer": {
+    "resource": {
+      "managed": "Milvus Terkelola"
+    },
+    "tools": {
+      "sizing": "Alat Penentuan Ukuran Milvus",
+      "backup": "Alat Cadangan Milvus",
+      "vts": "Layanan Transportasi Vektor (VTS)"
+    }
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "v3trans": {
+    "desc": "semua hal untuk terjemahan V3 akan ditempatkan di sini",
+    "home": {
+      "banner": {
+        "title": "Database vektor dibangun untuk pencarian kesamaan yang skalabel",
+        "desc": "Open-source, sangat skalabel, dan sangat cepat.",
+        "tryManaged": "Coba Milvus Managed",
+        "getstart": "Coba Open Source",
+        "watch": "Tonton Video",
+        "star": "Bintang di GitHub",
+        "contirbutor": "Kontributor",
+        "downloads": "Unduhan",
+        "users": "Pengguna"
+      },
+      "feature": {
+        "easy": {
+          "title": "Mudah Digunakan",
+          "desc": "Dengan database vektor Milvus, Anda dapat membuat layanan pencarian kesamaan skala besar dalam waktu kurang dari satu menit. SDK sederhana dan intuitif juga tersedia untuk berbagai bahasa yang berbeda."
+        },
+        "fast": {
+          "title": "Sangat Cepat",
+          "desc": "Milvus hemat perangkat keras dan menyediakan algoritma pengindeksan canggih, mencapai peningkatan kinerja 10x dalam kecepatan pengambilan."
+        },
+        "available": {
+          "title": "Sangat Tersedia",
+          "desc": "Database vektor Milvus telah diuji oleh lebih dari seribu pengguna perusahaan dalam berbagai kasus penggunaan. Dengan isolasi ekstensif dari komponen sistem individu, Milvus sangat tangguh dan andal."
+        },
+        "scalable": {
+          "title": "Sangat Skalabel",
+          "desc": "Sifat terdistribusi dan throughput tinggi dari Milvus membuatnya cocok untuk melayani data vektor skala besar."
+        },
+        "cloud": {
+          "title": "Cloud-native",
+          "desc": "Database vektor Milvus mengadopsi pendekatan sistemik terhadap cloud-nativity, memisahkan komputasi dari penyimpanan dan memungkinkan Anda untuk menskalakan keduanya ke atas dan ke luar."
+        },
+        "rich": {
+          "title": "Kaya Fitur",
+          "desc": "Dukungan untuk berbagai jenis data, pencarian vektor yang ditingkatkan dengan penyaringan atribut, dukungan UDF, tingkat konsistensi yang dapat dikonfigurasi, time travel, dan banyak lagi."
+        },
+        "title": "Bahan bakar penyebaran pembelajaran mesin Anda",
+        "desc": "Simpan, indeks, dan kelola vektor embedding skala besar yang dihasilkan oleh jaringan saraf dalam dan model pembelajaran mesin (ML) lainnya."
+      },
+      "code": {
+        "install": "Instal milvus dalam 2 menit",
+        "manage": "Cara baru untuk mengelola data vektor",
+        "search": "Pencarian vektor tidak pernah semudah ini",
+        "learn": "Pelajari Lebih Lanjut"
+      },
+      "attu": {
+        "title": "Pengembangan yang disederhanakan",
+        "desc": "(Terima kasih atas kontribusi dari Zilliz)",
+        "sub-title": "Pengembangan yang disederhanakan dengan",
+        "statistics": "Lihat statistik kluster Milvus",
+        "manage": "Jelajahi, kueri, dan kelola koleksi",
+        "operation": "Lakukan operasi CRUD atau massal",
+        "download": "Unduh Attu",
+        "learn": "Pelajari lebih lanjut"
+      }
+    },
+    "docs": {
+      "homeTitle": "Beranda",
+      "blogTitle": "Blog",
+      "commitTrans": "terakhir diperbarui pada",
+      "faqTitle": "Pertanyaan Terkait",
+      "faqBtnGroupTitle": "Tidak menemukan yang Anda butuhkan?",
+      "scoreQuestion": "Apakah halaman ini membantu?",
+      "scoreThanks": "Berhasil Dinilai!",
+      "yes": "Ya",
+      "no": "Tidak",
+      "contactFollow": "Ikuti saya",
+      "contactSlack": "Diskusikan di Slack",
+      "contactGithub": "Diskusikan di GitHub",
+      "feedbackDialogTitle": "Kami akan menindaklanjuti pertanyaan Anda.",
+      "feedbackDialogContent": "Silakan tinggalkan pertanyaan Anda di sini dan kami akan menghubungi Anda.",
+      "emailAddress": "Alamat Email",
+      "emailInvaild": "Harap masukkan email yang valid.",
+      "yourQuestion": "Pertanyaan Anda",
+      "yourQuestionInvalid": "Harap masukkan pertanyaan yang valid.",
+      "cancel": "Batal",
+      "submit": "Kirim",
+      "tocTitle": "Di halaman ini",
+      "btnGroup": {
+        "editBtn": "Edit halaman ini",
+        "issueBtn": "Laporkan masalah dokumen",
+        "bugBtn": "Laporkan bug",
+        "suggestBtn": "Minta perubahan dokumen",
+        "pdfBtn": "Unduh Dokumen PDF",
+        "joinBtn": "Bergabung dengan saluran Slack",
+        "discussBtn": "Diskusikan di GitHub"
+      }
+    },
+    "main": {
+      "nav": {
+        "docs": "Dokumen",
+        "tutorials": "Tutorial",
+        "tools": "Alat",
+        "blog": "Blog",
+        "community": "Komunitas",
+        "bootcamp": "Bootcamp",
+        "demo": "Demo",
+        "video": "Video",
+        "getstarted": "Mulai",
+        "watchvideo": "Tonton Video",
+        "about": "Tentang",
+        "resources": "Sumber Daya",
+        "getinvolved": "Terlibat",
+        "repo": "Repo",
+        "forum": "Forum"
+      },
+      "h1": "Database vektor dibangun untuk pencarian kesamaan yang skalabel",
+      "desc": "Open-source, sangat skalabel, dan sangat cepat.",
+      "stars": "Bintang di GitHub",
+      "contirbutors": "Kontributor",
+      "downloads": "Unduhan",
+      "customers": "Pelanggan",
+      "communitydesc": "Milvus didukung oleh komunitas open source yang kuat",
+      "communitytitle": "Bergabunglah dengan komunitas kami",
+      "customer": "Database vektor paling populer untuk pengguna perusahaan"
+    },
+    "404": {
+      "title": "Ups... ada yang salah!",
+      "desc1": "Sepertinya Anda telah tersesat terlalu jauh!",
+      "desc2": "Kami tidak dapat menemukan halaman yang Anda cari:(",
+      "gobtn": "Pergi ke halaman utama"
+    },
+    "signup": {
+      "emailerror": "Format email salah",
+      "thankyou": "Terima kasih, Anda telah ditambahkan ke daftar email kami!",
+      "subscribed": "Email ini sudah berlangganan!",
+      "placeholder": "Apa email Anda?",
+      "signup": "Dapatkan berita terbaru Milvus dari Zilliz",
+      "montyly": "Berlangganan untuk mendapatkan pembaruan tentang rilis terbaru Milvus, tutorial, dan pelatihan.",
+      "subscribe": "Berlangganan"
+    },
+    "copyBtn": {
+      "copyLabel": "Salin",
+      "copiedLabel": "Tersalin!"
+    },
+    "algolia": {
+      "button": {
+        "buttonText": "Cari",
+        "buttonAriaLabel": "Cari"
+      },
+      "modal": {
+        "searchBox": {
+          "resetButtonTitle": "Hapus kueri",
+          "resetButtonAriaLabel": "Hapus kueri",
+          "cancelButtonText": "Batal",
+          "cancelButtonAriaLabel": "Batal"
+        },
+        "startScreen": {
+          "recentSearchesTitle": "Terakhir",
+          "noRecentSearchesText": "Tidak ada pencarian terakhir",
+          "saveRecentSearchButtonTitle": "Simpan pencarian ini",
+          "removeRecentSearchButtonTitle": "Hapus pencarian ini dari riwayat",
+          "favoriteSearchesTitle": "Favorit",
+          "removeFavoriteSearchButtonTitle": "Hapus pencarian ini dari favorit"
+        },
+        "errorScreen": {
+          "titleText": "Tidak dapat mengambil hasil",
+          "helpText": "Anda mungkin ingin memeriksa koneksi jaringan Anda."
+        },
+        "footer": {
+          "selectText": "untuk memilih",
+          "navigateText": "untuk menavigasi",
+          "closeText": "untuk menutup",
+          "searchByText": "Cari oleh"
+        },
+        "noResultsScreen": {
+          "noResultsText": "Tidak ada hasil untuk",
+          "suggestedQueryText": "Coba cari",
+          "openIssueText": "Percaya kueri ini harus mengembalikan hasil?",
+          "openIssueLinkText": "Beri tahu kami"
+        }
+      }
+    },
+    "cookie": {
+      "title": "Bagaimana kami menggunakan cookie",
+      "desc": "Situs web ini menyimpan cookie di komputer Anda. Dengan melanjutkan penelusuran atau dengan mengklik ‘Terima’, Anda setuju dengan penyimpanan cookie di perangkat Anda untuk meningkatkan pengalaman situs Anda dan untuk tujuan analitis."
+    },
+    "sizingTool": {
+      "title": "Alat Ukur Milvus",
+      "subTitle": "Catatan: semua rekomendasi dihitung berdasarkan data lab kami, Anda harus menyesuaikannya dengan pengujian Anda sendiri sebelum menyebarkan ke produksi.",
+
+      "labels": {
+        "dataSize": "Pilih ukuran data",
+        "vector": "Jumlah vektor (Juta)",
+        "dimension": "Dimensi",
+        "index": "Jenis Indeks",
+        "indexType": "Pilih jenis indeks",
+        "indexParam": "Pilih parameter indeks",
+        "m": "M (Derajat maksimum node)",
+        "segmentSize": "Pilih ukuran segmen",
+        "segment": "Segmen (MB)"
+      },
+
+      "capacity": "Perkiraan kapasitas",
+      "memory": "Memori Pemuatan",
+      "fileSize": "Ukuran file mentah",
+      "setups": {
+        "title": "Pengaturan kluster Milvus minimum",
+        "rootCoord": {
+          "title": "Root Coord",
+          "tooltip": "Root coord menangani permintaan bahasa definisi data (DDL) dan bahasa kontrol data (DCL), seperti membuat atau menghapus koleksi, partisi, atau indeks, serta mengelola TSO (timestamp Oracle) dan penerbit time ticker."
+        },
+        "queryCoord": {
+          "title": "Query Coord",
+          "tootip": "Query coord mengelola topologi dan penyeimbangan beban untuk node kueri, dan handoff dari segmen yang tumbuh ke segmen yang disegel."
+        },
+        "dataCoord": {
+          "title": "Data Coord",
+          "tooltip": "Data coord mengelola topologi node data, memelihara metadata, dan memicu flush, compact, dan operasi data latar belakang lainnya."
+        },
+        "indexCoord": {
+          "title": "Index Coord",
+          "tooltip": "Index coord mengelola topologi node indeks, membangun indeks, dan memelihara metadata indeks."
+        },
+        "proxy": {
+          "title": "Proxy",
+          "tooltip": "Proxy adalah lapisan akses sistem dan titik akhir bagi pengguna. Ini memvalidasi permintaan klien dan mengurangi hasil yang dikembalikan."
+        },
+        "queryNode": {
+          "title": "Query Node",
+          "tooltip": "Query node mengambil data log inkremental dan mengubahnya menjadi segmen yang tumbuh dengan berlangganan ke log broker, memuat data historis dari penyimpanan objek, dan menjalankan pencarian hibrida antara data vektor dan skalar."
+        },
+        "dataNode": {
+          "title": "Data Node",
+          "tooltip": "Data node mengambil data log inkremental dengan berlangganan ke log broker, memproses permintaan mutasi, dan mengemas data log ke dalam snapshot log dan menyimpannya di penyimpanan objek."
+        },
+        "indexNode": {
+          "title": "Index Node",
+          "tooltip": "Index node membangun indeks. Node indeks tidak perlu berada di memori, dan dapat diimplementasikan dengan kerangka kerja serverless."
+        },
+        "etcd": {
+          "title": "ETCD"
+        },
+        "minio": {
+          "title": "Minio"
+        },
+        "pulsar": {
+          "title": "Pulsar"
+        },
+        "kafka": {
+          "title": "Kafka"
+        },
+        "bookie": "Bookie",
+        "broker": "Broker",
+        "proxyLabel": "Proxy",
+        "zookeeper": "Zookeeper"
+      },
+      "buttons": {
+        "helm": "Unduh konfigurasi yml Helm Chart",
+        "operator": "Unduh konfigurasi yml Milvus Operator",
+        "guide": "Lihat panduan instalasi"
+      },
+      "installGuide": {
+        "helm": "Panduan Instalasi Helm",
+        "operator": "Panduan Instalasi Operator"
+      }
+    },
+    "slack": {
+      "title": "Komunitas Slack Milvus",
+      "desc": "Ingin terhubung dengan pengguna Milvus lainnya untuk berbagi ide, mendapatkan saran, dan pembaruan tentang rilis terbaru Milvus? Bergabunglah dengan komunitas Slack kami! Isi formulir untuk meminta akses."
+    },
+    "footnote": {
+      "copyright": "Hak Cipta © Milvus. {{year}} Semua hak dilindungi.",
+      "maintainer": "Dibuat dengan Cinta <0></0> oleh Pengembang dari <1>Zilliz</1>"
+    }
+  },
+  "status": {
+    "subscribe": "Berlangganan",
+    "wait": "Memuat...",
+    "success": "Berhasil",
+    "failed": "Gagal"
+  },
+  "cookie": {
+    "title": "Bagaimana kami menggunakan cookie",
+    "consent": "Situs web ini menyimpan cookie di komputer Anda. Dengan melanjutkan penelusuran atau dengan mengklik ‘Terima’, Anda setuju dengan penyimpanan cookie di perangkat Anda untuk meningkatkan pengalaman situs Anda dan untuk tujuan analitis.",
+    "accept": "Terima",
+    "reject": "Tolak"
+  },
+  "email": "Surel"
+}

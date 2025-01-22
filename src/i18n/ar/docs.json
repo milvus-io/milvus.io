@@ -1,0 +1,36 @@
+{
+  "title": "وثائق Milvus",
+  "metaTitle": "وثائق قاعدة بيانات المتجهات Milvus",
+  "homepageDesc": "وثائق Milvus {{version}}",
+  "feedback": {
+    "title": "التعليقات",
+    "prompt": "هل كانت هذه الصفحة مفيدة؟",
+    "comment": {
+      "title": "أرسل لنا تعليقاتك",
+      "desc": "شكراً لك على مساعدتنا في تحسين وثائق Milvus.",
+      "inputLabel": "تعليق إضافي (اختياري)",
+      "cancel": "إلغاء",
+      "send": "إرسال"
+    },
+    "thanks": "شكراً لتعليقاتك القيمة!"
+  },
+  "docAction": {
+    "edit": "تعديل هذه الصفحة",
+    "issue": "إنشاء مشكلة"
+  },
+  "anchors": {
+    "title": "جدول المحتويات"
+  },
+  "navigation": {
+    "title": "الصفحة الرئيسية"
+  },
+  "translate": {
+    "by": "ترجمة بواسطة"
+  },
+  "advertise": {
+    "content": "Zilliz Cloud خالي من المتاعب، ويعمل بواسطة Milvus ويعمل بسرعة 10 أضعاف.",
+    "ctaLabel": "ابدأ",
+    "titleA": "جرب Managed Milvus مجاناً",
+    "titleB": "جرب Zilliz Cloud مجاناً"
+  }
+}

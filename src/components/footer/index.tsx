@@ -17,66 +17,7 @@ import { RightTopArrowIcon } from '@/components/icons';
 import SocialMedias from '../socialMedias';
 import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
-
-const footerJson = [
-  {
-    title: 'resources',
-    children: [
-      { name: 'Docs', trans: false, to: '/docs' },
-      { name: 'Blog', trans: false, to: '/blog' },
-      {
-        name: 'Managed Milvus',
-        trans: false,
-        to: CLOUD_SIGNUP_LINK,
-        isExternal: true,
-      },
-    ],
-  },
-  {
-    title: 'tutorials',
-    children: [
-      { name: 'bootcamp', trans: true, to: '/bootcamp' },
-      { name: 'demo', trans: true, to: '/milvus-demos' },
-      { name: 'video', trans: true, to: MILVUS_VIDEO_LINK },
-    ],
-  },
-  {
-    title: 'tools',
-    children: [
-      { name: 'Attu', trans: false, to: GITHUB_ATTU_LINK },
-      { name: 'Milvus CLI', trans: false, to: GITHUB_MILVUS_CLI_LINK },
-      { name: 'Milvus Sizing Tool', trans: false, to: '/tools/sizing' },
-      {
-        name: 'Milvus Backup Tool',
-        trans: false,
-        to: GITHUB_MILVUS_BACKUP_LINK,
-      },
-      {
-        name: 'Vector Transport Service (VTS)',
-        trans: false,
-        to: GITHUB_VTS_LINK,
-      },
-    ],
-  },
-  {
-    title: 'community',
-    children: [
-      { name: 'getinvolved', trans: true, to: '/community' },
-      {
-        name: 'Discord',
-        trans: false,
-        to: DISCORD_INVITE_URL,
-        isExternal: true,
-      },
-      {
-        name: 'Github',
-        trans: false,
-        to: GITHUB_MILVUS_LINK,
-        isExternal: true,
-      },
-    ],
-  },
-];
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 type Props = {
   classes?: {
@@ -88,9 +29,80 @@ type Props = {
 };
 
 const Footer = (props: Props) => {
-  const { classes: customClasses = {}, lang } = props;
+  const { classes: customClasses = {} } = props;
   const { root = '', content = '', nav } = customClasses;
-  const { t } = useTranslation('common', { lng: lang });
+  const { locale, getLocalePath } = useGlobalLocale();
+  const { t } = useTranslation(['common', 'header'], { lng: locale });
+
+  const footerJson = [
+    {
+      title: t(`common:v3trans.main.nav.resources`),
+      children: [
+        { name: t('header:docs'), to: getLocalePath('/docs') },
+        { name: t('header:blog'), to: getLocalePath('/blog') },
+        {
+          name: t('header:footer.resource.managed'),
+          to: CLOUD_SIGNUP_LINK,
+          isExternal: true,
+        },
+      ],
+    },
+    {
+      title: t(`common:v3trans.main.nav.tutorials`),
+      children: [
+        {
+          name: t(`common:v3trans.main.nav.bootcamp`),
+          to: getLocalePath('/bootcamp'),
+        },
+        {
+          name: t(`common:v3trans.main.nav.demo`),
+          to: getLocalePath('/milvus-demos'),
+        },
+        {
+          name: t(`common:v3trans.main.nav.video`),
+          to: MILVUS_VIDEO_LINK,
+        },
+      ],
+    },
+    {
+      title: t(`common:v3trans.main.nav.tools`),
+      children: [
+        { name: 'Attu', to: GITHUB_ATTU_LINK },
+        { name: 'Milvus CLI', to: GITHUB_MILVUS_CLI_LINK },
+        {
+          name: t('header:footer.tools.sizing'),
+          to: getLocalePath('/tools/sizing'),
+        },
+        {
+          name: t('header:footer.tools.backup'),
+          to: GITHUB_MILVUS_BACKUP_LINK,
+        },
+        {
+          name: t('header:footer.tools.vts'),
+          to: GITHUB_VTS_LINK,
+        },
+      ],
+    },
+    {
+      title: t(`common:v3trans.main.nav.community`),
+      children: [
+        {
+          name: t(`common:v3trans.main.nav.getinvolved`),
+          to: getLocalePath('/community'),
+        },
+        {
+          name: 'Discord',
+          to: DISCORD_INVITE_URL,
+          isExternal: true,
+        },
+        {
+          name: 'Github',
+          to: GITHUB_MILVUS_LINK,
+          isExternal: true,
+        },
+      ],
+    },
+  ];
 
   return (
     <footer
@@ -117,7 +129,7 @@ const Footer = (props: Props) => {
                 objectFit: 'cover',
               }}
             />
-            <div className="flex items-center gap-[4px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2">
+            <div className="flex items-center gap-[4px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2 whitespace-nowrap">
               <Trans
                 t={t}
                 i18nKey="v3trans.footnote.maintainer"
@@ -132,7 +144,7 @@ const Footer = (props: Props) => {
                     href="https://zilliz.com/"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-black2 hover:text-black2"
+                    className="text-black2 hover:underline"
                   ></a>,
                 ]}
               />
@@ -144,7 +156,7 @@ const Footer = (props: Props) => {
               <SocialMedias />
             </div>
             <p className="mt-3 text-sm text-black1">
-              {t('v3trans.footnote.copyright', {
+              {t('common:v3trans.footnote.copyright', {
                 year: new Date().getFullYear(),
               })}
             </p>
@@ -159,7 +171,7 @@ const Footer = (props: Props) => {
               return (
                 <div key={item.title}>
                   <h3 className="text-[16px] font-[500] leading-[24px]">
-                    {t(`v3trans.main.nav.${item.title}`)}
+                    {item.title}
                   </h3>
                   <ul className="mt-[20px] space-y-[8px]">
                     {item.children.map((child, index) => {
@@ -173,9 +185,7 @@ const Footer = (props: Props) => {
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              {child.trans
-                                ? t(`v3trans.main.nav.${child.name}`)
-                                : child.name}
+                              {child.name}
                               {child.isExternal && <RightTopArrowIcon />}
                             </a>
                           </li>
@@ -188,9 +198,7 @@ const Footer = (props: Props) => {
                             href={child.to}
                             className="text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
                           >
-                            {child.trans
-                              ? t(`v3trans.main.nav.${child.name}`)
-                              : child.name}
+                            {child.name}
                           </Link>
                         </li>
                       );

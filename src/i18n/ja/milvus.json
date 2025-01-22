@@ -1,0 +1,284 @@
+{
+  "v3trans": {
+    "desc": "V3の翻訳に関するすべてがここに置かれます",
+    "home": {
+      "banner": {
+        "title": "スケーラブルな類似性検索のために構築されたベクトルデータベース",
+        "desc": "オープンソース、高度なスケーラビリティ、非常に高速。",
+        "tryManaged": "管理されたMilvusを試す",
+        "getstart": "オープンソースを試す",
+        "watch": "ビデオを見る",
+        "star": "GitHubのスター",
+        "contirbutor": "貢献者",
+        "downloads": "ダウンロード",
+        "users": "ユーザー"
+      },
+      "feature": {
+        "easy": {
+          "title": "使いやすい",
+          "desc": "Milvusベクトルデータベースを使用すると、1分以内に大規模な類似性検索サービスを作成できます。さまざまな言語向けのシンプルで直感的なSDKも利用可能です。"
+        },
+        "fast": {
+          "title": "非常に高速",
+          "desc": "Milvusはハードウェア効率が高く、高度なインデックスアルゴリズムを提供し、検索速度を10倍向上させます。"
+        },
+        "available": {
+          "title": "高可用性",
+          "desc": "Milvusベクトルデータベースは、1,000以上の企業ユーザーによってさまざまなユースケースでテストされています。個々のシステムコンポーネントの広範な分離により、Milvusは非常に回復力があり、信頼性が高いです。"
+        },
+        "scalable": {
+          "title": "高度なスケーラビリティ",
+          "desc": "Milvusの分散型および高スループットの性質により、大規模なベクトルデータを提供するのに最適です。"
+        },
+        "cloud": {
+          "title": "クラウドネイティブ",
+          "desc": "Milvusベクトルデータベースは、クラウドネイティブに対する体系的なアプローチを採用し、計算とストレージを分離し、上下にスケーリングできるようにします。"
+        },
+        "rich": {
+          "title": "機能豊富",
+          "desc": "さまざまなデータタイプのサポート、属性フィルタリングによる強化されたベクトル検索、UDFサポート、設定可能な一貫性レベル、タイムトラベルなど。"
+        },
+        "title": "機械学習の展開を強化する",
+        "desc": "深層ニューラルネットワークや他の機械学習（ML）モデルによって生成された大規模な埋め込みベクトルを保存、インデックス化、管理します。"
+      },
+      "code": {
+        "install": "2分でMilvusをインストール",
+        "manage": "ベクトルデータを管理する新しい方法",
+        "search": "ベクトル検索がこれほど簡単になったことはありません",
+        "learn": "もっと学ぶ"
+      },
+      "attu": {
+        "title": "簡素化された開発",
+        "desc": "（Zillizからの貢献に感謝）",
+        "sub-title": "簡素化された開発",
+        "statistics": "Milvusクラスターの統計を表示",
+        "manage": "コレクションを閲覧、クエリ、管理",
+        "operation": "CRUDまたはバルク操作を実行",
+        "download": "Attuをダウンロード",
+        "learn": "もっと学ぶ"
+      }
+    },
+    "docs": {
+      "homeTitle": "ホーム",
+      "blogTitle": "ブログ",
+      "commitTrans": "最終更新日",
+      "faqTitle": "最も関連する質問",
+      "faqBtnGroupTitle": "必要なものを見つけられませんでしたか？",
+      "scoreQuestion": "このページは役に立ちましたか？",
+      "scoreThanks": "正常にスコアされました！",
+      "yes": "はい",
+      "no": "いいえ",
+      "contactFollow": "フォローアップする",
+      "contactSlack": "Slackで議論する",
+      "contactGithub": "GitHubで議論する",
+      "feedbackDialogTitle": "質問にフォローアップします。",
+      "feedbackDialogContent": "ここに質問を残してください。後ほどご連絡いたします。",
+      "emailAddress": "メールアドレス",
+      "emailInvaild": "有効なメールアドレスを入力してください。",
+      "yourQuestion": "質問",
+      "yourQuestionInvalid": "有効な質問を入力してください。",
+      "cancel": "キャンセル",
+      "submit": "送信",
+      "tocTitle": "このページ",
+      "btnGroup": {
+        "editBtn": "このページを編集",
+        "issueBtn": "ドキュメントの問題を報告",
+        "bugBtn": "バグを報告",
+        "suggestBtn": "ドキュメントの変更をリクエスト",
+        "pdfBtn": "PDFドキュメントをダウンロード",
+        "joinBtn": "Slackチャンネルに参加",
+        "discussBtn": "GitHubで議論する"
+      }
+    },
+    "main": {
+      "nav": {
+        "docs": "ドキュメント",
+        "tutorials": "チュートリアル",
+        "tools": "ツール",
+        "blog": "ブログ",
+        "community": "コミュニティ",
+        "bootcamp": "ブートキャンプ",
+        "demo": "デモ",
+        "video": "ビデオ",
+        "getstarted": "始める",
+        "watchvideo": "ビデオを見る",
+        "about": "について",
+        "resources": "リソース",
+        "getinvolved": "参加する",
+        "repo": "リポジトリ",
+        "forum": "フォーラム"
+      },
+      "h1": "スケーラブルな類似性検索のために構築されたベクトルデータベース",
+      "desc": "オープンソース、高度なスケーラビリティ、非常に高速。",
+      "stars": "GitHubのスター",
+      "contirbutors": "貢献者",
+      "downloads": "ダウンロード",
+      "customers": "顧客",
+      "communitydesc": "Milvusは強力なオープンソースコミュニティに支えられています",
+      "communitytitle": "コミュニティに参加する",
+      "customer": "企業ユーザー向けの最も人気のあるベクトルデータベース"
+    },
+    "404": {
+      "title": "おっと...何か問題が発生しました！",
+      "desc1": "迷子になったようです！",
+      "desc2": "お探しのページが見つかりません:(",
+      "gobtn": "ホームページに移動"
+    },
+    "signup": {
+      "emailerror": "メール形式エラー",
+      "thankyou": "ありがとうございます。メーリングリストに追加されました！",
+      "subscribed": "このメールはすでに登録されています！",
+      "placeholder": "メールアドレスは何ですか？",
+      "signup": "Zillizから最新のMilvusニュースを入手",
+      "montyly": "最新のMilvusリリース、チュートリアル、トレーニングの更新を購読する。",
+      "subscribe": "購読"
+    },
+    "copyBtn": {
+      "copyLabel": "コピー",
+      "copiedLabel": "コピーされました！"
+    },
+    "algolia": {
+      "button": {
+        "buttonText": "検索",
+        "buttonAriaLabel": "検索"
+      },
+      "modal": {
+        "searchBox": {
+          "resetButtonTitle": "クエリをクリア",
+          "resetButtonAriaLabel": "クエリをクリア",
+          "cancelButtonText": "キャンセル",
+          "cancelButtonAriaLabel": "キャンセル"
+        },
+        "startScreen": {
+          "recentSearchesTitle": "最近",
+          "noRecentSearchesText": "最近の検索はありません",
+          "saveRecentSearchButtonTitle": "この検索を保存",
+          "removeRecentSearchButtonTitle": "この検索を履歴から削除",
+          "favoriteSearchesTitle": "お気に入り",
+          "removeFavoriteSearchButtonTitle": "この検索をお気に入りから削除"
+        },
+        "errorScreen": {
+          "titleText": "結果を取得できません",
+          "helpText": "ネットワーク接続を確認してください。"
+        },
+        "footer": {
+          "selectText": "選択する",
+          "navigateText": "ナビゲートする",
+          "closeText": "閉じる",
+          "searchByText": "検索方法"
+        },
+        "noResultsScreen": {
+          "noResultsText": "結果が見つかりません",
+          "suggestedQueryText": "検索してみてください",
+          "openIssueText": "このクエリが結果を返すべきだと思いますか？",
+          "openIssueLinkText": "お知らせください"
+        }
+      }
+    },
+    "cookie": {
+      "title": "クッキーの使用方法",
+      "desc": "このウェブサイトは、コンピューターにクッキーを保存します。引き続き閲覧するか、「同意」をクリックすると、サイト体験を向上させ、分析目的でデバイスにクッキーを保存することに同意したことになります。"
+    },
+    "sizingTool": {
+      "title": "Milvusサイジングツール",
+      "subTitle": "注：すべての推奨事項は、ラボデータに基づいて計算されています。本番環境に展開する前に、独自のテストで調整する必要があります。",
+
+      "labels": {
+        "dataSize": "データサイズを選択",
+        "vector": "ベクトル数（百万）",
+        "dimension": "次元",
+        "index": "インデックスタイプ",
+        "indexType": "インデックスタイプを選択",
+        "indexParam": "インデックスパラメータを選択",
+        "m": "M（ノードの最大次数）",
+        "segmentSize": "セグメントサイズを選択",
+        "segment": "セグメント（MB）"
+      },
+
+      "capacity": "おおよその容量",
+      "memory": "ロードメモリ",
+      "fileSize": "生ファイルサイズ",
+      "setups": {
+        "title": "最小Milvusクラスター設定",
+        "rootCoord": {
+          "title": "Root Coord",
+          "tooltip": "Root coordは、データ定義言語（DDL）およびデータ制御言語（DCL）リクエストを処理し、コレクション、パーティション、またはインデックスの作成や削除、およびTSO（タイムスタンプオラクル）とタイムティッカーの発行を管理します。"
+        },
+        "queryCoord": {
+          "title": "Query Coord",
+          "tootip": "Query coordは、クエリノードのトポロジと負荷分散を管理し、成長中のセグメントからシールドされたセグメントへのハンドオフを行います。"
+        },
+        "dataCoord": {
+          "title": "Data Coord",
+          "tooltip": "Data coordは、データノードのトポロジを管理し、メタデータを維持し、フラッシュ、コンパクト、およびその他のバックグラウンドデータ操作をトリガーします。"
+        },
+        "indexCoord": {
+          "title": "Index Coord",
+          "tooltip": "Index coordは、インデックスノードのトポロジを管理し、インデックスを構築し、インデックスメタデータを維持します。"
+        },
+        "proxy": {
+          "title": "Proxy",
+          "tooltip": "Proxyは、システムのアクセス層であり、ユーザーへのエンドポイントです。クライアントリクエストを検証し、返される結果を削減します。"
+        },
+        "queryNode": {
+          "title": "Query Node",
+          "tooltip": "Query nodeは、ログブローカーにサブスクライブして増分ログデータを取得し、成長中のセグメントに変換し、オブジェクトストレージから履歴データをロードし、ベクトルとスカラーデータの間でハイブリッド検索を実行します。"
+        },
+        "dataNode": {
+          "title": "Data Node",
+          "tooltip": "Data nodeは、ログブローカーにサブスクライブして増分ログデータを取得し、変更リクエストを処理し、ログデータをログスナップショットにパックしてオブジェクトストレージに保存します。"
+        },
+        "indexNode": {
+          "title": "Index Node",
+          "tooltip": "Index nodeはインデックスを構築します。インデックスノードはメモリ常駐である必要はなく、サーバーレスフレームワークで実装できます。"
+        },
+        "etcd": {
+          "title": "ETCD"
+        },
+        "minio": {
+          "title": "Minio"
+        },
+        "pulsar": {
+          "title": "Pulsar"
+        },
+        "kafka": {
+          "title": "Kafka"
+        },
+        "bookie": "Bookie",
+        "broker": "Broker",
+        "proxyLabel": "Proxy",
+        "zookeeper": "Zookeeper"
+      },
+      "buttons": {
+        "helm": "Helm Chart設定ymlをダウンロード",
+        "operator": "Milvus Operator設定ymlをダウンロード",
+        "guide": "インストールガイドを表示"
+      },
+      "installGuide": {
+        "helm": "Helmインストールガイド",
+        "operator": "Operatorインストールガイド"
+      }
+    },
+    "slack": {
+      "title": "Milvus Slackコミュニティ",
+      "desc": "他のMilvusユーザーとつながり、アイデアを共有し、最新のMilvusリリースに関するアドバイスや更新を入手したいですか？Slackコミュニティに参加してください！アクセスをリクエストするためにフォームに記入してください。"
+    },
+    "footnote": {
+      "copyright": "著作権 © Milvus. {{year}} 全著作権所有。",
+      "maintainer": "愛を込めて <0></0> Zillizの開発者たちによって作られました"
+    }
+  },
+  "status": {
+    "subscribe": "購読",
+    "wait": "読み込み中...",
+    "success": "成功",
+    "failed": "失敗"
+  },
+  "cookie": {
+    "title": "クッキーの使用方法",
+    "consent": "このウェブサイトは、コンピューターにクッキーを保存します。引き続き閲覧するか、「同意」をクリックすると、サイト体験を向上させ、分析目的でデバイスにクッキーを保存することに同意したことになります。",
+    "accept": "同意",
+    "reject": "拒否"
+  },
+  "email": "メール"
+}

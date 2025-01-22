@@ -1,0 +1,48 @@
+{
+  "title": "Junte-se à Comunidade",
+  "ctaLabel": "Junte-se agora",
+  "officeHours": {
+    "title": "Obtenha Ajuda de Especialistas nas Sessões do Milvus",
+    "content": "Agende uma sessão gratuita 1:1 para obter ajuda com sua implantação de produção da Zilliz, os especialistas em Milvus.",
+    "button": "Agende Sua Sessão"
+  },
+  "community": {
+    "title": "Bem-vindo à Comunidade Milvus",
+    "content": "A comunidade Milvus é composta por usuários e colaboradores de código aberto que compartilham novas ideias, colaboram em projetos e promovem o aprendizado. Nossos membros da comunidade de código aberto contribuem com código, participam de eventos, defendem uma maior adoção do Milvus e fazem muitas outras contribuições valiosas. Continue lendo para saber como você pode se envolver e fazer parte dessa comunidade incrível.",
+    "features": {
+      "learn": {
+        "title": "Aprender",
+        "content": "Expanda seu conhecimento e habilidades em tecnologias de banco de dados vetoriais."
+      },
+      "build": {
+        "title": "Construir",
+        "content": "Contribua para o desenvolvimento do Milvus por meio da colaboração de código aberto."
+      },
+      "share": {
+        "title": "Compartilhar",
+        "content": "Compartilhe as melhores práticas e lições aprendidas com a comunidade em geral."
+      }
+    }
+  },
+  "resource": "Recursos",
+  "mail": {
+    "title": "Listas de E-mail",
+    "mailList": {
+      "meeting": {
+        "title": "Reunião Técnica do Milvus",
+        "content": "Participe da nossa próxima reunião para participar da discussão e tomada de decisão sobre os últimos recursos e cronograma de desenvolvimento do Milvus.",
+        "cta": "Saiba mais"
+      },
+      "event": {
+        "title": "Evento",
+        "content": "Realizamos eventos com frequência. Clique para descobrir os próximos eventos perto de você.",
+        "cta": "Mais Eventos"
+      },
+      "video": {
+        "title": "Vídeo",
+        "content": "Fazemos upload de vídeos com frequência. Clique para assistir a tutoriais em vídeo, reproduções de webinars e outros conteúdos em vídeo.",
+        "cta": "Mais Vídeos"
+      }
+    }
+  }
+}

@@ -10,9 +10,11 @@ import {
   DEMO_HYBRID_SEARCH_URL,
 } from '@/consts/externalLinks';
 import { useState } from 'react';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function DevelopSection(props: { showMeetup?: boolean }) {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
   const { showMeetup = true } = props;
 
   const [moveRightSteps, setMoveRightSteps] = useState(0);
@@ -127,7 +129,8 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
 }
 
 export const MeetupsSection = () => {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
 
   return (
     <section

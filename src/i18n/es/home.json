@@ -1,0 +1,144 @@
+{
+  "title": "La base de datos <0 /> <1>vectorial de alto rendimiento</1> construida para escalar",
+  "subTitle": "Milvus es una base de datos vectorial de código abierto construida para aplicaciones de GenAI. Instala con pip, realiza búsquedas de alta velocidad y escala a decenas de miles de millones de vectores con una pérdida mínima de rendimiento.",
+  "news": "Noticias",
+  "buttons": {
+    "download": "Descargar",
+    "star": "Estrella",
+    "pipInstall": "pip install pymilvus",
+    "start": "Empezar",
+    "tryCloud": "Prueba Zilliz Cloud Gratis",
+    "getStarted": "Empezar",
+    "learnMore": "Aprende más",
+    "quickStart": "Inicio rápido de Milvus",
+    "tryFree": "Prueba Gratis",
+    "rsvp": "Reserva ahora",
+    "subscribe": "Suscribirse",
+    "tryNow": "Prueba Ahora"
+  },
+  "codeSection": {
+    "title": "Comienza a ejecutar Milvus en segundos",
+    "tabs": {
+      "createCollection": "Crear Colección",
+      "insertData": "Insertar Datos",
+      "search": "Buscar",
+      "product": "Producción",
+      "delete": "Eliminar Datos"
+    }
+  },
+  "trySection": {
+    "title": "¿Buscas un Milvus gestionado para minimizar tu carga operativa?",
+    "subTitle": "Funciona perfectamente con todas tus herramientas de desarrollo de IA favoritas"
+  },
+  "lovedSection": {
+    "title": "Amado por desarrolladores de GenAI",
+    "cards": {
+      "nandula": {
+        "content": "Según nuestra investigación, Milvus fue seleccionado como la base de datos vectorial preferida (por encima de Chroma y Pinecone). Milvus es una base de datos vectorial de código abierto diseñada específicamente para la búsqueda de similitud en conjuntos de datos masivos de vectores de alta dimensión.",
+        "author": "Nandula Asel",
+        "title": "Científico de Datos Senior"
+      },
+      "bhargav": {
+        "content": "Con su enfoque en la búsqueda eficiente de similitud vectorial, Milvus te permite construir sistemas robustos y escalables de recuperación de imágenes. Ya sea que estés gestionando una biblioteca personal de fotos o desarrollando una aplicación comercial de búsqueda de imágenes, Milvus ofrece una base poderosa para desbloquear el potencial oculto dentro de tus colecciones de imágenes.",
+        "author": "Bhargav Mankad",
+        "title": "Arquitecto de Soluciones Senior"
+      },
+      "igor": {
+        "content": "Milvus es una base de datos vectorial potente diseñada para procesar y buscar datos vectoriales extensos. Se destaca por su alto rendimiento y escalabilidad, lo que la hace perfecta para aprendizaje automático, aprendizaje profundo, tareas de búsqueda de similitud y sistemas de recomendación.",
+        "author": "Igor Gorbenko",
+        "title": "Arquitecto de Big Data"
+      }
+    }
+  },
+  "vdbSection": {
+    "title": "Por qué los desarrolladores prefieren Milvus para bases de datos vectoriales",
+    "features": {
+      "scale": {
+        "title": "Escala según sea necesario",
+        "desc": "Escala elásticamente para soportar decenas de miles de millones de vectores con una arquitectura completamente distribuida."
+      },
+      "fast": {
+        "title": "Extremadamente rápido",
+        "desc": "Recupera datos rápidamente y con precisión con Global Index, independientemente de la escala."
+      },
+      "reusable": {
+        "title": "Código reutilizable",
+        "desc": "Escribe una vez y despliega con una línea de código en el entorno de producción."
+      },
+      "community": {
+        "title": "Comunidad de apoyo",
+        "desc": "Base de datos vectorial favorita de los fans con recursos extensos y contribuyentes solidarios."
+      },
+      "featureRich": {
+        "title": "Rico en características",
+        "desc": "Filtrado de metadatos, búsqueda híbrida, multivector y más."
+      }
+    },
+    "prompt": "¿Quieres aprender más sobre Milvus? <0>Consulta nuestra documentación</0>"
+  },
+  "deploySection": {
+    "title": "Opciones de despliegue para adaptarse a tu viaje único",
+    "lite": {
+      "title": "Milvus Lite",
+      "advantage": "Ligero, fácil de empezar",
+      "features": [
+        "VectorDB-como-biblioteca que se ejecuta en notebooks/portátiles con una instalación de pip",
+        "Ideal para aprendizaje y prototipado"
+      ]
+    },
+    "milvusStandalone": {
+      "title": "Milvus Standalone",
+      "advantage": "Despliegue robusto en una sola máquina",
+      "features": [
+        "Base de datos vectorial completa para producción o pruebas",
+        "Ideal para conjuntos de datos con hasta millones de vectores"
+      ]
+    },
+    "milvusDistributed": {
+      "title": "Milvus Distribuido",
+      "advantage": "Solución escalable de nivel empresarial",
+      "features": [
+        "Base de datos vectorial altamente confiable y distribuida con un kit de herramientas completo",
+        "Escala horizontalmente para manejar miles de millones de vectores"
+      ]
+    },
+    "cloud": {
+      "title": "Zilliz Cloud (Milvus completamente administrado)",
+      "advantage": "Sin complicaciones y 10 veces más rápido que Milvus",
+      "features": [
+        "Disponible en opciones sin servidor y clúster dedicado",
+        "Opciones SaaS y BYOC para diferentes requisitos de seguridad y cumplimiento"
+      ]
+    },
+    "deployModels": "Aprende más sobre los diferentes <0>modelos de despliegue de Milvus</0>"
+  },
+  "developSection": {
+    "title": "Comienza a construir tu aplicación GenAI",
+    "subTitle": "Guiado con notebooks desarrollados por nosotros y nuestra comunidad",
+    "rag": "RAG",
+    "imgSearch": "Búsqueda de Imágenes",
+    "multimodal": "Búsqueda Multimodal",
+    "hybridSearch": "Búsqueda Híbrida",
+    "graphRag": "Graph RAG",
+    "meetup": {
+      "title": "Reuniones de Datos No Estructurados",
+      "desc": "Únete a una comunidad de desarrolladores e ingenieros apasionados dedicados a Gen AI."
+    }
+  },
+  "subscribeSection": {
+    "title": "Únete a la comunidad de desarrolladores que construyen aplicaciones GenAI con Milvus, ahora con más de <0>25 millones de descargas</0>",
+    "subscribe": {
+      "title": "Recibe actualizaciones de Milvus",
+      "desc": "Suscríbete para recibir actualizaciones sobre los últimos lanzamientos de Milvus, tutoriales y capacitaciones de Zilliz, el creador y principal mantenedor de Milvus.",
+      "email": "Correo electrónico"
+    }
+  },
+  "productionSection": {
+    "title": "Confiado para cargas de trabajo de producción"
+  },
+  "banner": "🚀 Prueba Zilliz Cloud, el Milvus completamente gestionado, gratis—¡experimenta un rendimiento 10 veces más rápido! <0>Prueba Ahora>></0>",
+  "meta": {
+    "title": "Milvus | Base de datos de vectores de alto rendimiento construida para escalar",
+    "description": "Milvus es una base de datos de vectores de código abierto construida para aplicaciones GenAI. Instale con pip, realice búsquedas de alta velocidad y escale a decenas de miles de millones de vectores."
+  }
+}

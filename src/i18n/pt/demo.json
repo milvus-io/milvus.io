@@ -1,0 +1,39 @@
+{
+  "title": "Milvus facilita a adição de busca por similaridade aos seus aplicativos.",
+  "desc": "Armazene, indexe e gerencie vetores de incorporação massivos gerados por redes neurais profundas e outros modelos de aprendizado de máquina (ML).",
+  "demos": {
+    "multimodal": {
+      "title": "Busca de Imagens Multimodal",
+      "desc": "Faça upload de imagens e edite o texto para aprimorar pesquisas de imagens intuitivas usando tecnologia avançada de recuperação."
+    },
+    "imgSearch": {
+      "title": "Busca de Imagens",
+      "desc": "Imagens tornadas pesquisáveis. Retorne instantaneamente as imagens mais similares de um banco de dados massivo."
+    },
+    "hybridSearch": {
+      "title": "Busca Híbrida",
+      "desc": "Experimente busca de texto avançada com o modelo BGE-M3, entregando resultados precisos de Dense, Sparse e Híbrido para maior relevância de consultas."
+    },
+    "ossChat": {
+      "title": "OSSChat",
+      "desc": "ChatGPT aprimorado com documentação, issues, posts de blog e perguntas e respostas da comunidade como bases de conhecimento. Construído para cada comunidade e desenvolvedor."
+    },
+    "chemicalSearch": {
+      "title": "Busca de Estruturas Químicas",
+      "desc": "Busca de similaridade extremamente rápida, busca de subestrutura ou busca de superestrutura para uma molécula específica."
+    },
+    "askAi": {
+      "title": "Recuperação Aumentada por Busca (RAG)",
+      "desc": "Ask AI é um chatbot RAG para documentação e artigos de ajuda do Milvus. O banco de dados vetorial que alimenta a busca é o Zilliz Cloud (Milvus gerenciado integralmente).",
+      "ctaLabel1": "Perguntar à IA",
+      "ctaLabel2": "Saiba como construímos"
+    }
+  },
+  "prompts": {
+    "success": "Obrigado, você foi adicionado à nossa lista de e-mails!",
+    "warning": "Um segundo! Estamos levando você lá...",
+    "waiting": "Antes de você ir..."
+  },
+  "tryDemo": "Experimentar Demonstração",
+  "watchDemo": "Assistir Demonstração"
+}

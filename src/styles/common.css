@@ -4,6 +4,11 @@
 @import url('./reset.css');
 @import url('./fonts.css');
 
+/* handle arabic layout */
+html[lang='ar'] {
+  direction: rtl;
+}
+
 body:has(.lock-scroll) {
   overflow: hidden;
 }

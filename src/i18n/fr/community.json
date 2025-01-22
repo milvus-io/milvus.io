@@ -1,0 +1,48 @@
+{
+  "title": "Rejoignez la communauté",
+  "ctaLabel": "Rejoindre maintenant",
+  "officeHours": {
+    "title": "Obtenez de l'aide d'experts lors des heures de bureau de Milvus",
+    "content": "Réservez une session gratuite 1:1 pour obtenir de l'aide avec votre déploiement de production de la part de Zilliz, les experts de Milvus.",
+    "button": "Réservez votre session"
+  },
+  "community": {
+    "title": "Bienvenue dans la communauté Milvus",
+    "content": "La communauté Milvus est composée d'utilisateurs et de contributeurs open source qui partagent de nouvelles idées, collaborent sur des projets et promeuvent l'apprentissage. Nos membres de la communauté open source contribuent au code, participent à des événements, plaident pour une adoption plus large de Milvus et apportent de nombreuses autres contributions précieuses. Lisez la suite pour découvrir comment vous pouvez vous impliquer et devenir membre de cette incroyable communauté.",
+    "features": {
+      "learn": {
+        "title": "Apprendre",
+        "content": "Élargissez vos connaissances et compétences dans les technologies de bases de données vectorielles."
+      },
+      "build": {
+        "title": "Construire",
+        "content": "Contribuez au développement de Milvus par le biais de la collaboration open source."
+      },
+      "share": {
+        "title": "Partager",
+        "content": "Partagez les meilleures pratiques et les leçons apprises avec la communauté au sens large."
+      }
+    }
+  },
+  "resource": "Ressources",
+  "mail": {
+    "title": "Listes de diffusion",
+    "mailList": {
+      "meeting": {
+        "title": "Réunion technique Milvus",
+        "content": "Rejoignez notre prochaine réunion pour participer à la discussion et à la prise de décision sur les dernières fonctionnalités et la chronologie de développement de Milvus.",
+        "cta": "En savoir plus"
+      },
+      "event": {
+        "title": "Événement",
+        "content": "Nous organisons souvent des événements. Cliquez pour découvrir les événements à venir près de chez vous.",
+        "cta": "Plus d'événements"
+      },
+      "video": {
+        "title": "Vidéo",
+        "content": "Nous téléchargeons souvent des vidéos. Cliquez pour regarder les tutoriels vidéo, les rediffusions de webinaires et autres contenus vidéo.",
+        "cta": "Plus de vidéos"
+      }
+    }
+  }
+}

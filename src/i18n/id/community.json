@@ -1,0 +1,48 @@
+{
+  "title": "Bergabung dengan Komunitas",
+  "ctaLabel": "Bergabung sekarang",
+  "officeHours": {
+    "title": "Dapatkan Bantuan Ahli di Jam Kantor Milvus",
+    "content": "Pesan sesi 1:1 gratis untuk mendapatkan bantuan dengan deployment produksi Anda dari Zilliz, ahli di Milvus.",
+    "button": "Pesan Sesi Anda"
+  },
+  "community": {
+    "title": "Selamat datang di Komunitas Milvus",
+    "content": "Komunitas Milvus terdiri dari pengguna dan kontributor sumber terbuka yang berbagi ide baru, bekerja sama dalam proyek, dan mempromosikan pembelajaran. Anggota komunitas sumber terbuka kami berkontribusi pada kode, menghadiri acara, mengadvokasi adopsi Milvus yang lebih besar, dan melakukan banyak kontribusi berharga lainnya. Baca selengkapnya untuk mengetahui cara Anda dapat terlibat dan menjadi bagian dari komunitas yang luar biasa ini.",
+    "features": {
+      "learn": {
+        "title": "Belajar",
+        "content": "Perluas pengetahuan dan keterampilan Anda dalam teknologi basis data vektor."
+      },
+      "build": {
+        "title": "Bangun",
+        "content": "Berkontribusi pada pengembangan Milvus melalui kolaborasi sumber terbuka."
+      },
+      "share": {
+        "title": "Bagikan",
+        "content": "Bagikan praktik terbaik dan pelajaran yang dipelajari dengan komunitas yang lebih besar."
+      }
+    }
+  },
+  "resource": "Sumber Daya",
+  "mail": {
+    "title": "Daftar Sirkulasi",
+    "mailList": {
+      "meeting": {
+        "title": "Pertemuan Teknis Milvus",
+        "content": "Bergabunglah dalam pertemuan berikutnya untuk terlibat dalam diskusi dan pengambilan keputusan tentang fitur terbaru dan garis waktu pengembangan Milvus.",
+        "cta": "Pelajari lebih lanjut"
+      },
+      "event": {
+        "title": "Acara",
+        "content": "Kami menyelenggarakan acara, sering. Klik untuk mengetahui acara mendatang dekat Anda.",
+        "cta": "Lebih Banyak Acara"
+      },
+      "video": {
+        "title": "Video",
+        "content": "Kami mengunggah video, sering. Klik untuk menonton tutorial video, ulangan webinar, dan konten video lainnya.",
+        "cta": "Lebih Banyak Video"
+      }
+    }
+  }
+}

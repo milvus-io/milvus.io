@@ -8,7 +8,6 @@ import LeftNavSection from '@/parts/docs/leftNavTree';
 import classes from '@/styles/docs.module.less';
 import { BlogFrontMatterType } from '@/types/blogs';
 import { AllMdVersionIdType, FinalMenuStructureType } from '@/types/docs';
-import { DOCS_LANGUAGE_DISABLED_MAP, SHOW_LANGUAGE_SELECTOR_VERSIONS } from '@/components/localization/const';
 import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
 
 export interface DocHomePageProps {
@@ -72,17 +71,7 @@ export function DocHomepage(props: DocHomePageProps) {
           lang={lang}
         />
       }
-      center={
-        <HomeContent
-          homeData={homeData}
-          latestBlog={blog}
-          lang={lang}
-          disableLanguageSelector={
-            !SHOW_LANGUAGE_SELECTOR_VERSIONS.includes(version)
-          }
-          disabledLanguages={DOCS_LANGUAGE_DISABLED_MAP[version]}
-        />
-      }
+      center={<HomeContent homeData={homeData} latestBlog={blog} lang={lang} />}
     />
   );
 }

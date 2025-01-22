@@ -1,7 +1,5 @@
-import { FC, useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { FC, useState } from 'react';
 import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
 
 import {
   Select,
@@ -12,7 +10,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { LanguageEnum } from '@/types/localization';
-import DeepLogo from '../../../public/images/docs/deepl.png';
 
 export const LanguageValues = Object.values(LanguageEnum);
 
@@ -57,44 +54,58 @@ const LanguageIcon = ({ className }: { className?: string }) => {
   );
 };
 
+const ArrowDownIcon = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      className={className}
+    >
+      <g clip-path="url(#clip0_3441_107)">
+        <path
+          d="M1.85228 5.0569L7 10.2046L12.1477 5.0569"
+          stroke="#667176"
+          strokeWidth="1.3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_3441_107">
+          <rect
+            width="14"
+            height="14"
+            fill="white"
+            transform="matrix(1 0 0 -1 0 14)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
 type Props = {
   value?: LanguageEnum;
   className?: string;
   disabled?: boolean;
-  showDeepLogo?: boolean;
   disabledLanguages?: LanguageEnum[];
+  hiddenSelectValue?: boolean;
+  onChange?: (lang: LanguageEnum) => void;
 };
 
 export const LanguageSelector: FC<Props> = props => {
-  const router = useRouter();
-  const pathname = usePathname();
   const {
     value = LanguageEnum.ENGLISH,
     className = '',
     disabled,
-    showDeepLogo = false,
     disabledLanguages = [],
+    hiddenSelectValue,
+    onChange,
   } = props;
   const [opened, setOpened] = useState(false);
-  const { t } = useTranslation('docs', { lng: value });
-
-  const handleLanguageChange = (lang: LanguageEnum) => {
-    document.documentElement.lang = lang;
-
-    if (value === LanguageEnum.ENGLISH) {
-      const newPath = pathname.replace(`/docs`, `/docs/${lang}`);
-      router.push(newPath);
-      return;
-    }
-    if (lang === LanguageEnum.ENGLISH) {
-      const newPath = pathname.replace(`/${value}`, '');
-      router.push(newPath);
-      return;
-    }
-    const newPath = pathname.replace(`/${value}`, `/${lang}`);
-    router.push(newPath);
-  };
-
   const handleOpenChange = (open: boolean) => {
     setOpened(open);
   };
@@ -175,23 +186,29 @@ export const LanguageSelector: FC<Props> = props => {
     <div className={className}>
       <Select
         value={value}
-        onValueChange={handleLanguageChange}
+        onValueChange={onChange}
         onOpenChange={handleOpenChange}
       >
         <SelectTrigger
           className={clsx(
-            `w-[150px] border-0 pl-0 gap-[2px] justify-start font-[600] text-black1 hover:text-black2`,
+            `border-0 pl-0 gap-[4px] justify-start font-[600] text-black1 hover:text-black2`,
             {
-              'text-textPrimary': opened,
-              'justify-end': value === LanguageEnum.ARABIC,
+              'text-black2': opened,
             }
           )}
+          endIcon={
+            <ArrowDownIcon
+              className={clsx('transition-all', {
+                'transform rotate-180': opened,
+              })}
+            />
+          }
           open={opened}
         >
-          <LanguageIcon className="mr-[4px]" />
-          <SelectValue placeholder="Language" />
+          <LanguageIcon className="transition-all" />
+          {!hiddenSelectValue && <SelectValue placeholder="Language" />}
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="z-[1000] shadow-nav-menu mt-[8px]">
           <SelectGroup>
             {options.map(option => {
               return (
@@ -203,13 +220,6 @@ export const LanguageSelector: FC<Props> = props => {
           </SelectGroup>
         </SelectContent>
       </Select>
-
-      {showDeepLogo && (
-        <p className="flex items-center mt-[8px] text-[#042B48] opacity-50 text-[11px] font-400">
-          <span className="mr-[6px]">{t('translate.by')}</span>
-          <img src={DeepLogo.src} height={16} alt="DeepL" />
-        </p>
-      )}
     </div>
   );
 };

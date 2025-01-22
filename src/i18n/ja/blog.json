@@ -1,0 +1,40 @@
+{
+  "trending": "トレンド",
+  "recent": {
+    "most": "最新",
+    "release": "リリースとイベント"
+  },
+  "subscribe": {
+    "title": "最新情報を最初に知る",
+    "desc": "ZillizからMilvusのリリースとチュートリアルの更新情報を受け取ります。Milvusの創設者であり、主要なメンテナンス担当者です。"
+  },
+  "filter": {
+    "all": "すべて",
+    "engineering": "エンジニアリング",
+    "announcements": "お知らせ",
+    "tutorials": "チュートリアル",
+    "usecases": "ユースケース"
+  },
+  "aiService": {
+    "title": "Milvusについて何でも聞いてください！",
+    "desc": "ドキュメント、ヘルプ記事、その他のコンテンツでトレーニングされたAIアシスタントです。"
+  },
+  "zillizAdv": {
+    "title": "Milvusより10倍速く、手間がかからない",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "ワークロードに最適化されたユースケース計算ユニット",
+    "feature2": "エンタープライズ級のセキュリティ",
+    "feature3": "AWS、GCP、Azureで利用可能",
+    "btn": "完全管理されたMilvusを無料で試す"
+  },
+  "authors": {
+    "title": "最も貢献している著者"
+  },
+  "homepage": {
+    "title": "Milvusを学ぶ：VectorDB技術の洞察と革新",
+    "desc": "ベクトルデータベースの基本、Milvusの機能と能力、そして現代のAIアプリケーションのベクトル検索の管理と最適化に関する技術チュートリアルを学びます。"
+  },
+  "detail": {
+    "keepReading": "続けて読む"
+  }
+}

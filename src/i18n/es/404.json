@@ -1,0 +1,17 @@
+{
+  "title": "404: Página No Encontrada",
+  "content": "¡Ups! Parece que has tomado un camino equivocado.<0></0>La página que buscas no parece existir.",
+  "subtitle": "Pero no te preocupes, puedes regresar a donde necesitas estar:",
+  "docs": "Documentación de Milvus",
+  "homepage": "Página de Inicio",
+  "tutorial": "Tutoriales de Milvus y GenAI",
+  "explore": {
+    "title": "O, explora algo nuevo:",
+    "desc": "Mientras estás aquí, revisa estos últimos recursos.",
+    "whatIsMilvus": {
+      "title": "¿Qué es Milvus?",
+      "desc": "Todo lo que necesitas saber sobre Milvus en menos de 10 minutos.",
+      "learnMore": "Aprende Más"
+    }
+  }
+}

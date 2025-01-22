@@ -1,9 +1,9 @@
 {
-  "title": "Use cases",
-  "desc": "Discover how Milvus helps enterprises build AI apps to drive their businesses",
+  "title": "使用案例",
+  "desc": "了解 Milvus 如何帮助企业构建 AI 应用程序以推动其业务发展",
   "shareSection": {
-    "title": "Share Your Story with Us!",
-    "desc": "Have you built something cool using Milvus or Zilliz Cloud? We want to hear all about it. You’ll get a free Zilliz hoody for sharing your project made with Milvus or Zilliz.",
-    "cta": "Submit My Story"
+    "title": "与我们分享您的故事！",
+    "desc": "您是否使用 Milvus 或 Zilliz Cloud 构建了一些很棒的东西？我们想听听您的故事。分享您使用 Milvus 或 Zilliz 构建的项目，您将获得一件免费的 Zilliz 连帽衫。",
+    "cta": "提交我的故事"
   }
 }

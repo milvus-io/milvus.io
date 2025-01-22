@@ -1,0 +1,962 @@
+{
+  "layout": {
+    "notFound": "404 Seite nicht gefunden",
+    "backtohome": "Bring mich zurück zur Startseite.",
+    "header": {
+      "quick": "Schnellstart",
+      "why": "Warum Milvus",
+      "gui": "Admin",
+      "tutorials": "Tutorials",
+      "solution": "Szenarien",
+      "about": "Über Milvus",
+      "doc": "Dokumentation",
+      "blog": "Blog",
+      "tutorial": "Tutorial",
+      "benchmarks": "Benchmarks",
+      "bootcamp": "Bootcamp",
+      "try": "Ausprobieren",
+      "loading": "Laden...",
+      "noresult": "Kein Ergebnis",
+      "search": "Suchen"
+    },
+    "footer": {
+      "faq": {
+        "question": {
+          "title": "Meistgestellte Fragen"
+        },
+        "contact": {
+          "title": "Haben Sie nicht gefunden, was Sie brauchen?",
+          "slack": {
+            "label": "Diskutieren Sie auf Slack",
+            "link": "/slack"
+          },
+          "github": {
+            "label": "Diskutieren Sie auf GitHub",
+            "link": "https://github.com/milvus-io/milvus/issues/"
+          },
+          "follow": {
+            "label": "Folgen Sie mir"
+          },
+          "dialog": {
+            "title": "Wir werden Ihre Frage verfolgen",
+            "desc": "Bitte hinterlassen Sie hier Ihre Frage und wir werden uns bei Ihnen melden.",
+            "placeholder1": "Ihre E-Mail*",
+            "placeholder2": "Ihre Frage*",
+            "submit": "Absenden",
+            "invalid": "Bitte geben Sie eine gültige E-Mail und Ihre Frage ein"
+          }
+        }
+      },
+      "questionBtn": {
+        "link": "/slack",
+        "label": "Slack-Kanal beitreten."
+      },
+      "issueBtn": {
+        "label": "Einen Fehler melden.",
+        "docLabel": "Neuen Inhalt vorschlagen."
+      },
+      "docIssueBtn": {
+        "label": "Diskutieren Sie es auf GitHub.",
+        "docLabel": "Dokumentationsproblem melden."
+      },
+      "editBtn": {
+        "label": "Diese Seite bearbeiten."
+      },
+      "product": {
+        "title": "Produkt",
+        "txt1": "Milvus",
+        "txt2": "Milvus Roadmap"
+      },
+      "doc": {
+        "title": "Dokumentation",
+        "txt1": "Schnellstart",
+        "txt2": "FAQ",
+        "txt3": "Versionshinweise"
+      },
+      "tool": {
+        "title": "Tool",
+        "txt1": "Milvus Dimensionierungstool"
+      },
+      "resource": {
+        "title": "Ressourcen",
+        "txt1": "GitHub",
+        "txt2": "Medium",
+        "txt3": "CSDN",
+        "txt4": "Milvus Bootcamp"
+      },
+      "contact": {
+        "title": "Kontakt",
+        "wechat": "Wechat"
+      },
+      "content": "Auf dieser Seite"
+    },
+    "home": {
+      "notification": {
+        "version": "Version",
+        "available": "ist jetzt verfügbar! ",
+        "more": "Erfahren Sie mehr über die neuen Funktionen und Korrekturen→",
+        "join": "Treten Sie hier dem Milvus Slack-Kanal bei",
+        "interact": "um mit unserer Community zu interagieren!",
+        "v2": {
+          "title": "🎯 Besuchen Sie unsere Seite für Milvus v2.0",
+          "here": " Hier "
+        }
+      },
+      "section1": {
+        "desc1": "Die weltweit beliebteste Open-Source-Vektordatenbank",
+        "desc2": "Milvus ist benutzerfreundlich, hochzuverlässig, skalierbar, robust und unglaublich schnell.",
+        "link": "Mehr erfahren",
+        "link2": "Loslegen",
+        "community": "Community"
+      },
+      "section2": {
+        "title": "Was ist Milvus",
+        "content": "Milvus ist eine Open-Source-Vektordatenbank für massiv skalierte Merkmalsvektoren. Mit einer heterogenen Rechnerarchitektur für die beste Kosteneffizienz. Suchen über Milliarden von Vektoren dauern nur Millisekunden mit minimalen Rechenressourcen. Milvus kann in einer Vielzahl von Szenarien eingesetzt werden, um die KI-Entwicklung zu fördern.",
+        "link": "Schnellstart"
+      },
+      "section3": {
+        "title": "Milvus-Funktionen",
+        "list": [
+          {
+            "title": "Umfassende Ähnlichkeitsmetriken",
+            "content": "Milvus bietet häufig verwendete Ähnlichkeitsmetriken, einschließlich euklidischer Abstand, inneres Produkt, Hamming-Abstand, Jaccard-Abstand usw., sodass Sie die Vektorähnlichkeit auf die effektivste und effizienteste Weise erkunden können.",
+            "img": "metrics"
+          },
+          {
+            "title": "Hochleistungsfähigkeit",
+            "content": "Milvus basiert auf mehreren optimierten Approximate Nearest Neighbor Search (ANNS)-Indexierungsbibliotheken, einschließlich <a href='https://github.com/facebookresearch/faiss' target='_blank'>faiss</a>, <a href='https://github.com/spotify/annoy' target='_blank'>annoy</a>, <a href='https://github.com/nmslib/hnswlib' target='_blank'>hnswlib</a> usw., und stellt somit sicher, dass Sie in verschiedenen Szenarien immer die beste Leistung erhalten.",
+            "img": "performence"
+          },
+          {
+            "title": "Dynamische Datenverwaltung",
+            "content": "Nicht mehr von statischen Daten gestört, können Sie Daten jederzeit mit Einfügen, Löschen, Suchen und Aktualisieren bearbeiten.",
+            "img": "crud"
+          },
+          {
+            "title": "Nahezu Echtzeit-Suche",
+            "content": "Daten sind fast unmittelbar nach dem Einfügen und Aktualisieren durchsuchbar. Milvus übernimmt die schwere Arbeit in Ihrem besten Interesse in Bezug auf Ergebnisgenauigkeit und Datenkonsistenz.",
+            "img": "realtime"
+          },
+          {
+            "title": "Kosteneffizient",
+            "content": "Milvus nutzt die Parallelität moderner Prozessoren und ermöglicht Ähnlichkeitssuchen im Milliardenbereich in Millisekunden auf einem einzigen Standardserver.",
+            "img": "cost"
+          },
+          {
+            "title": "Vielfältige Datentypen und erweiterte Suche",
+            "content": "Milvus unterstützt verschiedene Datentypen für Felder in einem Datensatz. Sie können auch erweiterte Suchmethoden verwenden, wie z. B. Filtern, Sortieren und Aggregieren für ein oder mehrere Felder.",
+            "img": "search"
+          },
+          {
+            "title": "Hochskalierbar und robust",
+            "content": "Sie können Milvus in einer verteilten Umgebung bereitstellen. Um die Kapazität und Zuverlässigkeit eines Milvus-Clusters zu erhöhen, können Sie einfach weitere Knoten hinzufügen.",
+            "img": "scalable"
+          },
+          {
+            "title": "Cloud-nativ",
+            "content": "Wir machen es Ihnen leicht, Milvus in der Public Cloud, Private Cloud oder irgendwo dazwischen auszuführen.",
+            "img": "cloud"
+          },
+          {
+            "title": "Benutzerfreundlich",
+            "content": "Milvus bietet benutzerfreundliche SDKs in Python, Java, Go und C++ sowie eine RESTful-API.",
+            "img": "availability"
+          }
+        ]
+      },
+      "section4": {
+        "title": "Open Source",
+        "desc1": "Milvus ist auf GitHub Open Source. ",
+        "desc2": "Beiträge und Feedback sind willkommen!",
+        "contribute": "Auf GitHub beitragen",
+        "bootcamp": "Milvus Bootcamp ausprobieren"
+      },
+      "section5": {
+        "desc": "Milvus ist ein Inkubationsprojekt der LF AI Foundation."
+      },
+      "section8": {
+        "title": "Szenarien",
+        "desc": "Schritt-für-Schritt-Anleitungen zur Lösung von KI-Problemen mit Milvus.",
+        "img1": {
+          "title": "Umgekehrte Bildersuche",
+          "content": "Hochleistungsfähiges, anpassbares System zur umgekehrten Bildersuche, das mit dem VGG-Neuronalnetzmodell erstellt wurde"
+        },
+        "img2": {
+          "title": "Personalisiertes Empfehlungssystem",
+          "content": "Hochleistungsfähiges Empfehlungssystem, das mit der PaddlePaddle-Deep-Learning-Plattform erstellt wurde"
+        },
+        "img3": {
+          "title": "Ähnlichkeitssuche für chemische Strukturen",
+          "content": "Hochleistungsfähige Ähnlichkeitssuche für massiv skalierte chemische Strukturen"
+        },
+        "button": "In der Cloud ausprobieren",
+        "viewall": "Alle Szenarien anzeigen"
+      },
+      "section6": {
+        "title": "Milvus-Benutzercommunity"
+      },
+      "section7": {
+        "title": "Mitmachen",
+        "list": [
+          {
+            "title": "Milvus verwenden",
+            "desc": "Open-Source-Vektordatenbank, die entwickelt wurde, um KI-Anwendungen und Vektorähnlichkeitssuchen zu unterstützen.",
+            "type": "milvus",
+            "urlList": [
+              {
+                "title": "Loslegen >",
+                "url": "/docs/install_milvus.md"
+              }
+            ]
+          },
+          {
+            "title": "Beitragen",
+            "desc": "Milvus ist ein Community-Projekt. Wir ermutigen Sie, sich zu beteiligen und Feedback, Ideen und Code beizutragen.",
+            "type": "contribute",
+            "urlList": [
+              {
+                "title": "Auf GitHub beitreten >",
+                "url": "https://github.com/milvus-io"
+              }
+            ]
+          },
+          {
+            "title": "Folgen Sie uns",
+            "desc": "Bleiben Sie auf dem Laufenden über die neuesten Milvus-Nachrichten.",
+            "type": "follow",
+            "urlList": []
+          },
+          {
+            "title": "Treten Sie unserer Mailingliste bei",
+            "desc": "",
+            "type": "conversation",
+            "urlList": [
+              {
+                "title": "Ankündigung >",
+                "url": "https://lists.lfaidata.foundation/g/milvus-announce"
+              },
+              {
+                "title": "Technische Diskussion >",
+                "url": "https://lists.lfaidata.foundation/g/milvus-technical-discuss"
+              },
+              {
+                "title": "Technisches Lenkungsgremium >",
+                "url": "https://lists.lfaidata.foundation/g/milvus-tsc"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "scenarios": {
+      "section1": {
+        "title": "Die Suchmaschine für das KI-Zeitalter bauen",
+        "desc": "Von Hunderten von Organisationen und Institutionen weltweit übernommen, ermöglicht Milvus Anwendungen in verschiedenen Bereichen, einschließlich Bildverarbeitung, Computer Vision, natürliche Sprachverarbeitung, Spracherkennung, Empfehlungssysteme, Arzneimittelentdeckung usw."
+      },
+      "section2": {
+        "desc1": "Die Nachfrage nach der Verarbeitung unstrukturierter Daten wie Bilder, Videos, Stimmen und Text steigt kontinuierlich mit dem Aufkommen neuer Anwendungen wie Smart Cities, Kurzvideos, personalisierte Produktempfehlungen und visuelle Produktsuche. Die gängigste Methode zur Verarbeitung dieser unstrukturierten Daten ist die Verwendung von KI-Technologie (Deep-Learning-Algorithmen), um die Merkmale dieser unstrukturierten Daten zu extrahieren und sie mit Merkmalsvektoren darzustellen, und dann diese Merkmalsvektoren zu berechnen und abzurufen, um die Analyse und den Abruf von nicht-strukturierten Daten zu ermöglichen.",
+        "desc2": "Milvus wurde entwickelt, um Benutzern die einfache Berechnung und den Abruf von Merkmalsvektoren zu erleichtern. Es unterstützt reichhaltige Merkmalsvektor-Indexierungsalgorithmen und die Planung heterogener Rechenressourcen. Es verfügt über eine vollständige Benutzeroberfläche, Datenverwaltungskomponenten und grafische Verwaltungstools. Das Cloud-native Designkonzept ermöglicht es Milvus, problemlos horizontale Skalierung und Hochverfügbarkeit basierend auf K8S zu erreichen. Seit das Produkt Open Source ist, hat es die Anerkennung und Unterstützung einer großen Anzahl von Benutzern erhalten. Derzeit übersteigt die globale Community-Größe 3.000 Personen und es gibt mehr als 50 Unternehmensbenutzer.",
+        "desc3": "Durch die Optimierung von Vektorabrufalgorithmen und die Integration heterogener Rechenressourcen kann Milvus stabile und leistungsstarke Vektorabrufunterstützung für Unternehmensanwendungen bieten. In den meisten Szenarien, wenn die Top-1-Trefferquote garantiert 100% beträgt und die Top100-Trefferquote nicht weniger als 95% beträgt, beträgt die Abrufzeit für Millionen von Datensätzen 0,01 Sekunden und die Abrufzeit für 100 Millionen Datensätze 0,1 Sekunden. Die Abrufzeit für Milliarden von Datensätzen beträgt Sekunden."
+      },
+      "section3": {
+        "title": "Wobei Milvus helfen kann",
+        "list": [
+          {
+            "title": "Computer Vision",
+            "desc": "Milvus kann verschiedene Anwendungen im Bereich der Computer Vision unterstützen, insbesondere die effiziente Verarbeitung von ultra-großen Datenmengen, was Milvus im Bereich der Computer Vision weit verbreitet macht.",
+            "list": [
+              "Bildersuche",
+              "Bilddeduplizierung",
+              "Videodeduplizierung",
+              "Produktsuche nach Produkt"
+            ],
+            "img": "cv",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/pic_search/README.md",
+            "href": "https://zilliz.com/milvus-demos/reverse-image-search"
+          },
+          {
+            "title": "Natürliche Sprachverarbeitung",
+            "desc": "Die Vektorisierung semantischer Merkmale für Wörter, Sätze, Artikel usw. wird zur gängigen Technologie für die natürliche Sprachverarbeitung. Die semantische Analyse durch den Vergleich der Distanz semantischer Merkmalsvektoren wird von einer großen Anzahl semantischer Analyselösungen übernommen und wurde in verwandten Bereichen weit verbreitet eingesetzt.",
+            "list": [
+              "Semantische Extraktion",
+              "Personalisierte Empfehlung",
+              "Korpusanalyse und Empfehlung"
+            ],
+            "img": "nlp",
+            "titleHref": "https://github.com/milvus-io/bootcamp/tree/master/solutions/QA_System",
+            "href": "http://40.117.75.127:8005/"
+          },
+          {
+            "title": "Traditionelle Vektorberechnungen",
+            "desc": "Es gibt auch viele Vektorberechnungsszenarien im Bereich der traditionellen Datenverarbeitung. Die Verwendung traditioneller Berechnungsmethoden erfordert viel Rechenleistung. Mit fortschrittlichen Algorithmen kann Milvus die Vektordatenverarbeitungskapazität mit denselben Rechenleistungsressourcen um mindestens zwei Größenordnungen erhöhen.",
+            "list": [
+              "Molekulare Strukturähnlichkeitsanalyse",
+              "Molekulare pharmakologische Analyse",
+              "Virtuelles Screening von Arzneimittelmolekülen"
+            ],
+            "img": "molsearch",
+            "titleHref": "https://github.com/milvus-io/bootcamp/blob/master/EN_solutions/mols_search/README.md",
+            "href": "http://40.117.75.127:8002/"
+          },
+          {
+            "title": "Audiodatenverarbeitung",
+            "desc": "Die Verwendung von Deep-Learning-Modellen zur Analyse und Verarbeitung von Audiodaten kann die Genauigkeit der Spracherkennung erheblich verbessern, und der Kern besteht darin, verwandte Audiosegmente zu vektorisieren und die Bedeutung ihrer Aussage durch die Berechnung der Vektordistanz zu beurteilen. Daher hat Milvus auch reichhaltige Anwendungen in den Bereichen Sprache, Musik und andere Audiodatenverarbeitung.",
+            "list": [
+              "Personalisierte Musikempfehlung",
+              "Musikdeduplizierung",
+              "Stimmabdruckverifizierung",
+              "Spracherkennung",
+              "Intelligenter Sprachassistent",
+              "Intelligenter Übersetzungsroboter"
+            ],
+            "img": "audio",
+            "href": ""
+          }
+        ]
+      }
+    },
+    "gui": {
+      "section1": {
+        "title": "Holen Sie sich Milvus EM",
+        "desc": "Eine benutzerfreundliche Milvus-Verwaltungsplattform",
+        "link": "Loslegen"
+      },
+      "section2": {
+        "desc1": "Die Nachfrage nach der Verarbeitung unstrukturierter Daten wie Bilder, Videos, Stimmen und Text steigt kontinuierlich mit dem Aufkommen neuer Anwendungen wie Smart Cities, Kurzvideos, personalisierte Produktempfehlungen und visuelle Produktsuche. Die gängigste Methode zur Verarbeitung dieser unstrukturierten Daten ist die Verwendung von KI-Technologie (Deep-Learning-Algorithmen), um die Merkmale dieser unstrukturierten Daten zu extrahieren und sie mit Merkmalsvektoren darzustellen, und dann diese Merkmalsvektoren zu berechnen und abzurufen, um die Analyse und den Abruf von nicht-strukturierten Daten zu ermöglichen.",
+        "desc2": "Milvus wurde entwickelt, um Benutzern die einfache Berechnung und den Abruf von Merkmalsvektoren zu erleichtern. Es unterstützt reichhaltige Merkmalsvektor-Indexierungsalgorithmen und die Planung heterogener Rechenressourcen. Es verfügt über eine vollständige Benutzeroberfläche, Datenverwaltungskomponenten und grafische Verwaltungstools. Das Cloud-native Designkonzept ermöglicht es Milvus, problemlos horizontale Skalierung und Hochverfügbarkeit basierend auf K8S zu erreichen. Seit das Produkt Open Source ist, hat es die Anerkennung und Unterstützung einer großen Anzahl von Benutzern erhalten. Derzeit übersteigt die globale Community-Größe 3.000 Personen und es gibt mehr als 50 Unternehmensbenutzer.",
+        "desc3": "Durch die Optimierung von Vektorabrufalgorithmen und die Integration heterogener Rechenressourcen kann Milvus stabile und leistungsstarke Vektorabrufunterstützung für Unternehmensanwendungen bieten. In den meisten Szenarien, wenn die Top-1-Trefferquote garantiert 100% beträgt und die Top100-Trefferquote nicht weniger als 95% beträgt, beträgt die Abrufzeit für Millionen von Datensätzen 0,01 Sekunden und die Abrufzeit für 100 Millionen Datensätze 0,1 Sekunden. Die Abrufzeit für Milliarden von Datensätzen beträgt Sekunden."
+      },
+      "section3": {
+        "title": "Installieren und Ausführen",
+        "desc": "Öffnen Sie dann Ihren Browser und besuchen Sie",
+        "help": "BRAUCHEN SIE HILFE?"
+      },
+      "section4": {
+        "feature1": {
+          "title": "Ähnlichkeitssuche",
+          "desc1": "Schnelle Vektorähnlichkeitsüberprüfung"
+        },
+        "feature2": {
+          "title": "Verwalten Sie Ihre Daten über eine intuitive GUI",
+          "desc1": "Sammlung als Baum anzeigen",
+          "desc2": "Daten und Indizes mit wenigen Klicks bearbeiten"
+        },
+        "feature3": {
+          "title": "Einfache Konfiguration",
+          "desc1": "Richten Sie über 10 Milvus-Präferenzen über die GUI ein"
+        }
+      }
+    },
+    "selectMenu": {
+      "comment": "Kommentar",
+      "github": "Dokumentationsproblem erstellen",
+      "sendBtn": "Senden",
+      "cancelBtn": "Abbrechen",
+      "placeholder": "Hinterlassen Sie eine Nachricht"
+    },
+    "menu": {
+      "home": "Startseite"
+    },
+    "community": {
+      "slack": "Slack beitreten",
+      "github": "GitHub beitreten"
+    }
+  },
+  "v2": {
+    "header": {
+      "navlist": [
+        {
+          "label": "Was ist Milvus?",
+          "link": "/docs/overview.md",
+          "icon": null
+        },
+        {
+          "label": "Dokumentation",
+          "link": "/docs",
+          "icon": null
+        },
+        {
+          "label": "Blog",
+          "link": "https://blog.milvus.io/",
+          "icon": null
+        },
+        {
+          "label": "Beitragen",
+          "link": "/community",
+          "icon": null
+        },
+        {
+          "label": "GitHub",
+          "link": "https://github.com/milvus-io/milvus/",
+          "icon": "git"
+        }
+      ]
+    },
+    "banner": {
+      "entry": "Hacktoberfest ist da! Tauchen Sie mit Milvus in Open Source ein. Jetzt beitreten",
+      "title": ["Cloud-nativ.", "Hochskalierbar.", "Blitzschnell."],
+      "subTitle": "Milvus",
+      "text": "Open-Source-Vektordatenbank für unstrukturierte Daten",
+      "startBtn": {
+        "href": "/docs",
+        "label": "Loslegen"
+      },
+      "contributeBtn": {
+        "href": "/community/making_your_first_contributions.md",
+        "label": "Beitragen"
+      }
+    },
+    "slogan": {
+      "text": "Wir konnten dieses Ding buchstäblich nicht töten. Egal, was wir darauf geworfen haben.",
+      "author": "von Mi.Alato"
+    },
+    "content": {
+      "feature": {
+        "title": "Funktionen",
+        "list": [
+          {
+            "title": "Kosteneffizient",
+            "text": "Verbesserung der Spaltenspeicherung und Ähnlichkeitssuchbibliotheken wie Faiss und HNSW bietet die Milvus-Vektordatenbank effiziente Vektorähnlichkeitssuchleistung. Mit der Beschleunigung von CPU, GPU und FPGA kann Milvus Milliarden von Vektoren in Millisekunden abrufen.",
+            "img": "supporting"
+          },
+          {
+            "title": "Cloud-skalierbar",
+            "text": "Als Cloud-native Vektordatenbank unterstützt Milvus horizontale Skalierung, die Speicherung und Berechnung in jeder Größenordnung ermöglicht.",
+            "img": "search"
+          },
+          {
+            "title": "Für unstrukturierte Daten entwickelt",
+            "text": "Milvus hilft Benutzern, sich auf die semantische Bedeutung unstrukturierter Daten zu konzentrieren, ohne sich um Sharding, Datenpersistenz oder Lastenausgleich kümmern zu müssen. Die Vektordatenbank unterstützt leistungsstarke hybride Vektorähnlichkeitssuchen auf einer Mischung aus Vektoren und Skalaren.",
+            "img": "deployment"
+          },
+          {
+            "title": "Community-getrieben",
+            "text": "Als Abschlussprojekt der LF AI & Data Foundation besteht die Milvus-Vektordatenbank-Community aus über 2.000 Unternehmensbenutzern und vielen weiteren Mitwirkenden.",
+            "img": "storage"
+          },
+          {
+            "title": "Entwicklerfreundlich",
+            "text": "Die Milvus-Vektordatenbank bietet eine vollständige Toolchain und eine Reihe von APIs, mit denen Entwickler schnell und mühelos Entwicklung und Betrieb implementieren können.",
+            "img": "autoscaling"
+          }
+        ]
+      },
+      "community": {
+        "title": "Treten Sie der Community bei",
+        "text1": "Die Milvus-Vektordatenbank ist auf GitHub Open Source.",
+        "text2": "Wir freuen uns über Beiträge und Feedback!",
+        "gitBtn": {
+          "href": "/community",
+          "label": "Zur Community gehen"
+        }
+      }
+    },
+    "footer": {
+      "list": [
+        {
+          "title": "Was ist Milvus?",
+          "text": "Open-Source-Vektordatenbank für unstrukturierte Daten.",
+          "href": "/docs/overview.md",
+          "label": "Loslegen",
+          "icons": []
+        },
+        {
+          "title": "Beitragen",
+          "text": "Die Milvus-Vektordatenbank ist ein Community-Projekt. Beteiligen Sie sich und tragen Sie Code, Dokumentation oder Anwendungs-Tutorials bei.",
+          "href": "https://github.com/milvus-io",
+          "label": "Treten Sie uns auf GitHub bei",
+          "icons": []
+        },
+        {
+          "title": "Folgen Sie uns",
+          "text": "Bleiben Sie auf dem Laufenden über die neuesten Nachrichten und Ereignisse in der Welt der Vektordatenbanken.",
+          "href": "",
+          "label": "",
+          "icons": [
+            {
+              "href": "#",
+              "name": "wechat"
+            },
+            {
+              "href": "https://medium.com/unstructured-data-service",
+              "name": "medium"
+            },
+            {
+              "href": "https://twitter.com/milvusio",
+              "name": "twitter"
+            },
+            {
+              "href": "/slack",
+              "name": "slack"
+            }
+          ]
+        }
+      ],
+      "licence": {
+        "text1": {
+          "label": "© Milvus 2021",
+          "link": "#"
+        },
+        "text2": {
+          "label": "Milvus",
+          "link": "/"
+        },
+        "text3": {
+          "label": " und zugehörige Open-Source-Projektnamen sind Marken der LF AI & Data Foundation.",
+          "link": "#"
+        },
+        "list": [
+          {
+            "label": "Allgemeine Geschäftsbedingungen",
+            "link": "#"
+          },
+          {
+            "label": "Compliance (Datenschutz)",
+            "link": "#"
+          },
+          {
+            "label": "Datenschutzrichtlinie",
+            "link": "#"
+          },
+          {
+            "label": "Cookie-Richtlinie",
+            "link": "#"
+          }
+        ]
+      }
+    },
+    "feedback": {
+      "text1": "Ist diese Seite hilfreich?",
+      "text2": "Erfolgreich bewertet!"
+    },
+    "commit": "wurde zuletzt aktualisiert",
+    "docHome": {
+      "title": "Blog",
+      "btnLabel": "Mehr lesen"
+    }
+  },
+  "hackathon": {
+    "firstSection": {
+      "firstBanner": {
+        "title": "Milvus Hacktoberfest 2021",
+        "content": "Sie wissen, dass es wieder diese Zeit des Jahres ist. <br />Hacktoberfest kommt! Und dieses Jahr gehen wir voll rein.",
+        "image": "../../images/hackathon/banner-image-1.svg",
+        "alert": "Spoiler-Alarm - unser größter Preis heißt D-R-O-N-E.",
+        "badge": "../../images/hackathon/badge.svg",
+        "btnLabel": "Schnellstart",
+        "btnLink": "#quick_start"
+      },
+      "secondBanner": {
+        "title": "Was ist Hacktoberfest",
+        "content": "Hacktoberfest ist ein jährliches, monatelanges Fest der Open Source. Es ist eine großartige Gelegenheit für alle, von erfahrenen Entwicklern bis zu Studenten und Code-Neulingen, von technischen Autoren bis zu UX-Designern, um zu Open-Source-Communities beizutragen und Ihre Fähigkeiten zu entwickeln, mit dem Bonus, limitierte Editionen von Swags zu gewinnen.",
+        "image": "../../images/hackathon/banner-image-2.png"
+      }
+    },
+    "secondSection": {
+      "title": "Was ist Milvus",
+      "content": "Milvus, eine Open-Source-Vektordatenbank, die entwickelt wurde, um KI-Anwendungen und Vektorähnlichkeitssuchen zu unterstützen, nimmt zum ersten Mal teil! Die Milvus-Community hat eine Reihe von Veranstaltungen und Aktivitäten für den gesamten Oktober geplant, und wir würden uns freuen, wenn Sie dabei sind!",
+      "btnLabel": "Milvus erkunden",
+      "btnLink": "/docs/overview.md"
+    },
+    "thirdSection": {
+      "title": "Schnellstart",
+      "list": [
+        {
+          "stepNum": 1,
+          "title": "Anmelden",
+          "content": "Melden Sie sich auf der Veranstaltungswebsite für Hacktoberfest an.",
+          "iconType": "external",
+          "href": "https://hackathon-tracker.digitalocean.com/users/oauth/github?success_redirect=https://hacktoberfest.digitalocean.com/register/info&error_redirect=https://hacktoberfest.digitalocean.com/register"
+        },
+        {
+          "stepNum": 2,
+          "title": "Diskussion beitreten",
+          "content": "Erstellen Sie ein Milvus-Forumskonto und interagieren Sie mit anderen Community-Mitgliedern.",
+          "iconType": "external",
+          "href": "https://discuss.milvus.io/c/hacktoberfest/9"
+        },
+        {
+          "stepNum": 3,
+          "title": "Pull Request",
+          "content": "Durchsuchen Sie die folgenden Komponenten und beginnen Sie mit der Erstellung von Pull Requests.",
+          "iconType": "anchor",
+          "href": "#issue_list"
+        }
+      ]
+    },
+    "forthSection": {
+      "title": "Wie man beiträgt",
+      "content": "Unten haben wir Listen von Problemen vorbereitet, die mit <span>[hacktoberfest]</span> markiert sind, um Sie aufzuwärmen. Fühlen Sie sich frei, jedes offene Problem anzugehen, auch unmarkierte, oder reichen Sie neue ein. Stellen Sie nur sicher, dass Sie Hacktoberfest in Ihren Pull Requests erwähnen, damit wir das Thema setzen und sicherstellen können, dass sie für Ihre Hacktoberfest-Teilnahme gezählt werden, sobald sie als gültig erachtet werden."
+    },
+    "fifthSection": {
+      "title": "Probleme",
+      "listHeader": ["Komponente", "Beschreibung", "Problem / Richtlinien"],
+      "list": [
+        {
+          "cate": "Milvus-Code",
+          "desc": "Fehler beheben, Code verbessern oder uns helfen, eine neue Funktion Wirklichkeit werden zu lassen.",
+          "icon": "../../images/hackathon/code.svg",
+          "issueHref": "https://github.com/milvus-io/milvus/issues?q=is%3Aopen+is%3Aissue+label%3AHacktoberfest",
+          "guideHref": "https://github.com/milvus-io/milvus/blob/master/CONTRIBUTING.md"
+        },
+        {
+          "cate": "Milvus-Dokumentation",
+          "desc": "Verbessern, erweitern oder fügen Sie Milvus-Dokumentation hinzu.",
+          "icon": "../../images/hackathon/doc.svg",
+          "issueHref": "https://github.com/milvus-io/milvus-docs/issues?q=is%3Aopen+is%3Aissue+label%3Ahacktoberfest",
+          "guideHref": "https://github.com/milvus-io/milvus-docs/blob/v2.0.x/CONTRIBUTING.md"
+        },
+        {
+          "cate": "Milvus Golang API-Referenz",
+          "desc": "Helfen Sie mit, die Golang-API-Dokumentation zu erweitern und weitere Beispiele hinzuzufügen.",
+          "icon": "../../images/hackathon/api.svg",
+          "issueHref": "https://github.com/milvus-io/milvus-sdk-go/issues?q=is%3Aopen+is%3Aissue+label%3AHACKTOBERFEST",
+          "guideHref": "https://github.com/milvus-io/milvus-sdk-go/blob/master/CONTRIBUTING.md"
+        },
+        {
+          "cate": "Bootcamp / Tutorials",
+          "desc": "Zeigen Sie ein Projekt, das Sie mit Milvus gebaut haben.",
+          "icon": "../../images/hackathon/bootcamp.svg",
+          "issueHref": "",
+          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72#community-content-4"
+        },
+        {
+          "cate": "Andere Community-Inhalte",
+          "desc": "Schreiben Sie Blogbeiträge, erstellen Sie Videoinhalte, entwerfen Sie Kunstwerke, teilen Sie Ihre Einsichten zum Website-Design und mehr.",
+          "icon": "../../images/hackathon/others.svg",
+          "issueHref": "",
+          "guideHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72#community-content-4"
+        }
+      ]
+    },
+    "sixthSection": {
+      "title": "Holen Sie sich Ihren Preis",
+      "content": "Jeder Pull Request zählt. Vergessen Sie nicht, hierher zurückzukehren, um Ihre Informationen einzugeben, sobald Sie Ihren Beitrag geleistet haben, und wir werden Ihnen Geschenke zukommen lassen.",
+      "btnLabel": "Ich habe meinen PR eingereicht!",
+      "btnLink": "https://milvus.typeform.com/to/xvyhEadO",
+      "tip": "*Preisregeln gelten,",
+      "tipLabel": "Mehr erfahren",
+      "tipHref": "https://discuss.milvus.io/t/join-hacktoberfest-2021-with-us/72",
+      "image": "../../images/hackathon/prize.jpg",
+      "label1": "Größter Preis",
+      "label2": "DJI Mavic Air 2",
+      "list": [
+        {
+          "image": "../../images/hackathon/prize-keybord.png",
+          "name": "Logitech-Tastatur"
+        },
+        {
+          "image": "../../images/hackathon/prize-sticker.png",
+          "name": "Milvus-Sticker-Pakete"
+        },
+        {
+          "image": "../../images/hackathon/prize-tshirt.png",
+          "name": "Milvus-T-Shirts und Abzeichen"
+        }
+      ]
+    },
+    "seventhSection": {
+      "title": "Veranstaltungen und Ressourcen",
+      "content": "Bitte besuchen Sie unser Milvus-Community-Forum für Ressourcen, die Sie möglicherweise für Hacktoberfest und die umliegenden Veranstaltungen benötigen.",
+      "btnLabel": "Mehr erkunden",
+      "btnLink": "https://discuss.milvus.io/c/hacktoberfest/9",
+      "image": "../../images/hackathon/discuss-forum.png"
+    },
+    "eighthSection": {
+      "title": "Kontaktieren Sie uns",
+      "list": [
+        {
+          "href": "https://discuss.milvus.io/",
+          "icon": "../../images/hackathon/discourse.png",
+          "content": "Treten Sie unserem Discourse-Forum bei"
+        },
+        {
+          "href": "https://join.slack.com/t/milvusio/shared_invite/zt-e0u4qu3k-bI2GDNys3ZqX1YCJ9OM~GQ",
+          "icon": "../../images/hackathon/slack.svg",
+          "content": "Treten Sie unserem Slack-Kanal bei"
+        }
+      ]
+    }
+  },
+  "v3trans": {
+    "desc": "Alles für die V3-Übersetzung wird hier abgelegt",
+    "home": {
+      "banner": {
+        "title": "Vektordatenbank für skalierbare Ähnlichkeitssuche",
+        "desc": "Open Source, hochskalierbar und blitzschnell.",
+        "tryManaged": "Verwaltetes Milvus ausprobieren",
+        "getstart": "Open Source ausprobieren",
+        "watch": "Video ansehen",
+        "star": "Sterne auf GitHub",
+        "contirbutor": "Mitwirkende",
+        "downloads": "Downloads",
+        "users": "Benutzer"
+      },
+      "feature": {
+        "easy": {
+          "title": "Einfach zu verwenden",
+          "desc": "Mit der Milvus-Vektordatenbank können Sie in weniger als einer Minute einen groß angelegten Ähnlichkeitssuchdienst erstellen. Einfache und intuitive SDKs sind auch für eine Vielzahl verschiedener Sprachen verfügbar."
+        },
+        "fast": {
+          "title": "Blitzschnell",
+          "desc": "Milvus ist hardwareeffizient und bietet fortschrittliche Indexierungsalgorithmen, die eine 10-fache Leistungssteigerung bei der Abrufgeschwindigkeit ermöglichen."
+        },
+        "available": {
+          "title": "Hochverfügbar",
+          "desc": "Die Milvus-Vektordatenbank wurde von über tausend Unternehmensbenutzern in einer Vielzahl von Anwendungsfällen getestet. Mit umfassender Isolierung einzelner Systemkomponenten ist Milvus hochgradig widerstandsfähig und zuverlässig."
+        },
+        "scalable": {
+          "title": "Hochskalierbar",
+          "desc": "Die verteilte und hochdurchsatzfähige Natur von Milvus macht es zu einer natürlichen Wahl für die Bereitstellung großer Vektordatenmengen."
+        },
+        "cloud": {
+          "title": "Cloud-nativ",
+          "desc": "Die Milvus-Vektordatenbank verfolgt einen systemischen Ansatz für Cloud-Nativität, trennt Rechen- und Speicherressourcen und ermöglicht es Ihnen, sowohl vertikal als auch horizontal zu skalieren."
+        },
+        "rich": {
+          "title": "Funktionsreich",
+          "desc": "Unterstützung für verschiedene Datentypen, erweiterte Vektorsuche mit Attributfilterung, UDF-Unterstützung, konfigurierbare Konsistenzebene, Zeitreise und mehr."
+        },
+        "title": "Unterstützen Sie Ihr maschinelles Lernmodell",
+        "desc": "Speichern, indizieren und verwalten Sie massiv große Einbettungsvektoren, die von tiefen neuronalen Netzwerken und anderen maschinellen Lernmodellen (ML) generiert werden."
+      },
+      "code": {
+        "install": "Installieren Sie Milvus in 2 Minuten",
+        "manage": "Neue Art, Vektordaten zu verwalten",
+        "search": "Vektorsuche war noch nie so einfach",
+        "learn": "Mehr erfahren"
+      },
+      "attu": {
+        "title": "Vereinfachte Entwicklung",
+        "desc": "(Dank des Beitrags von Zilliz)",
+        "sub-title": "Vereinfachte Entwicklung mit",
+        "statistics": "Milvus-Cluster-Statistiken anzeigen",
+        "manage": "Sammlungen durchsuchen, abfragen und verwalten",
+        "operation": "CRUD- oder Massenoperationen durchführen",
+        "download": "Attu herunterladen",
+        "learn": "Mehr erfahren"
+      }
+    },
+    "docs": {
+      "homeTitle": "Startseite",
+      "blogTitle": "Blog",
+      "commitTrans": "wurde zuletzt aktualisiert am",
+      "faqTitle": "Meistgestellte Fragen",
+      "faqBtnGroupTitle": "Haben Sie nicht gefunden, was Sie brauchen?",
+      "scoreQuestion": "Ist diese Seite hilfreich?",
+      "scoreThanks": "Erfolgreich bewertet!",
+      "yes": "Ja",
+      "no": "Nein",
+      "contactFollow": "Folgen Sie mir",
+      "contactSlack": "Diskutieren Sie auf Slack",
+      "contactGithub": "Diskutieren Sie auf GitHub",
+      "feedbackDialogTitle": "Wir werden Ihre Frage verfolgen.",
+      "feedbackDialogContent": "Bitte hinterlassen Sie hier Ihre Frage und wir werden uns bei Ihnen melden.",
+      "emailAddress": "E-Mail-Adresse",
+      "emailInvaild": "Bitte geben Sie eine gültige E-Mail ein.",
+      "yourQuestion": "Ihre Frage",
+      "yourQuestionInvalid": "Bitte geben Sie eine gültige Frage ein.",
+      "cancel": "Abbrechen",
+      "submit": "Absenden",
+      "tocTitle": "Auf dieser Seite",
+      "btnGroup": {
+        "editBtn": "Diese Seite bearbeiten",
+        "issueBtn": "Dokumentationsproblem melden",
+        "bugBtn": "Einen Fehler melden",
+        "suggestBtn": "Dokumentationsänderungen anfordern",
+        "pdfBtn": "PDF-Dokument herunterladen",
+        "joinBtn": "Slack-Kanal beitreten",
+        "discussBtn": "Diskutieren Sie es auf GitHub"
+      }
+    },
+    "main": {
+      "nav": {
+        "docs": "Dokumentation",
+        "tutorials": "Tutorials",
+        "tools": "Tools",
+        "blog": "Blog",
+        "community": "Community",
+        "bootcamp": "Bootcamps",
+        "demo": "Demo",
+        "video": "Video",
+        "getstarted": "Loslegen",
+        "watchvideo": "Video ansehen",
+        "about": "Über",
+        "resources": "Ressourcen",
+        "getinvolved": "Mitmachen",
+        "repo": "Repo",
+        "forum": "Forum"
+      },
+      "h1": "Vektordatenbank für skalierbare Ähnlichkeitssuche",
+      "desc": "Open Source, hochskalierbar und blitzschnell.",
+      "stars": "Sterne auf GitHub",
+      "contirbutors": "Mitwirkende",
+      "downloads": "Downloads",
+      "customers": "Kunden",
+      "communitydesc": "Milvus wird von einer starken Open-Source-Community unterstützt",
+      "communitytitle": "Treten Sie unserer Community bei",
+      "customer": "Die beliebteste Vektordatenbank für Unternehmensbenutzer"
+    },
+    "404": {
+      "title": "Hoppla... etwas ist schiefgelaufen!",
+      "desc1": "Sieht so aus, als wären Sie zu weit abgekommen!",
+      "desc2": "Wir können die gesuchte Seite nicht finden:(",
+      "gobtn": "Zur Startseite gehen"
+    },
+    "signup": {
+      "emailerror": "E-Mail-Formatfehler",
+      "thankyou": "Vielen Dank, Sie wurden unserer Mailingliste hinzugefügt!",
+      "subscribed": "Diese E-Mail ist bereits abonniert!",
+      "placeholder": "Wie lautet Ihre E-Mail?",
+      "signup": "Erhalten Sie die neuesten Milvus-Nachrichten von Zilliz",
+      "montyly": "Abonnieren Sie, um Updates zu den neuesten Milvus-Versionen, Tutorials und Schulungen zu erhalten.",
+      "subscribe": "Abonnieren"
+    },
+    "copyBtn": {
+      "copyLabel": "Kopieren",
+      "copiedLabel": "Kopiert!"
+    },
+    "algolia": {
+      "button": {
+        "buttonText": "Suchen",
+        "buttonAriaLabel": "Suchen"
+      },
+      "modal": {
+        "searchBox": {
+          "resetButtonTitle": "Abfrage löschen",
+          "resetButtonAriaLabel": "Abfrage löschen",
+          "cancelButtonText": "Abbrechen",
+          "cancelButtonAriaLabel": "Abbrechen"
+        },
+        "startScreen": {
+          "recentSearchesTitle": "Kürzlich",
+          "noRecentSearchesText": "Keine kürzlichen Suchanfragen",
+          "saveRecentSearchButtonTitle": "Diese Suche speichern",
+          "removeRecentSearchButtonTitle": "Diese Suche aus dem Verlauf entfernen",
+          "favoriteSearchesTitle": "Favoriten",
+          "removeFavoriteSearchButtonTitle": "Diese Suche aus den Favoriten entfernen"
+        },
+        "errorScreen": {
+          "titleText": "Ergebnisse konnten nicht abgerufen werden",
+          "helpText": "Möglicherweise möchten Sie Ihre Netzwerkverbindung überprüfen."
+        },
+        "footer": {
+          "selectText": "auswählen",
+          "navigateText": "navigieren",
+          "closeText": "schließen",
+          "searchByText": "Suchen nach"
+        },
+        "noResultsScreen": {
+          "noResultsText": "Keine Ergebnisse für",
+          "suggestedQueryText": "Versuchen Sie, nach",
+          "openIssueText": "Glauben Sie, dass diese Abfrage Ergebnisse liefern sollte?",
+          "openIssueLinkText": "Lassen Sie es uns wissen"
+        }
+      }
+    },
+    "cookie": {
+      "title": "Wie wir Cookies verwenden",
+      "desc": "Diese Website speichert Cookies auf Ihrem Computer. Durch das weitere Surfen oder Klicken auf „Akzeptieren“ erklären Sie sich mit der Speicherung von Cookies auf Ihrem Gerät einverstanden, um Ihre Website-Erfahrung zu verbessern und für analytische Zwecke."
+    },
+    "sizingTool": {
+      "title": "Milvus Dimensionierungstool",
+      "subTitle": "Hinweis: Alle Empfehlungen basieren auf unseren Labordaten. Sie sollten sie mit Ihren eigenen Tests anpassen, bevor Sie sie in der Produktion einsetzen.",
+
+      "labels": {
+        "dataSize": "Datenmenge auswählen",
+        "vector": "Anzahl der Vektoren (Millionen)",
+        "dimension": "Dimensionen",
+        "index": "Indextyp",
+        "indexType": "Indextyp auswählen",
+        "indexParam": "Indexparameter auswählen",
+        "m": "M (Maximaler Grad des Knotens)",
+        "segmentSize": "Segmentgröße auswählen",
+        "segment": "Segment (MB)"
+      },
+
+      "capacity": "Ungefähre Kapazität",
+      "memory": "Ladespeicher",
+      "fileSize": "Rohdatengröße",
+      "setups": {
+        "title": "Minimale Milvus-Cluster-Einrichtung",
+        "rootCoord": {
+          "title": "Root Coord",
+          "tooltip": "Root Coord verarbeitet Datenbeschreibungssprache (DDL) und Datenkontrollsprache (DCL) Anfragen, wie das Erstellen oder Löschen von Sammlungen, Partitionen oder Indizes, sowie die Verwaltung von TSO (Timestamp Oracle) und Zeitgeberausgabe."
+        },
+        "queryCoord": {
+          "title": "Query Coord",
+          "tootip": "Query Coord verwaltet die Topologie und den Lastenausgleich für die Abfrageknoten und übergibt wachsende Segmente an versiegelte Segmente."
+        },
+        "dataCoord": {
+          "title": "Data Coord",
+          "tooltip": "Data Coord verwaltet die Topologie der Datenknoten, pflegt Metadaten und löst Hintergrunddatenoperationen wie Flush, Compact und andere aus."
+        },
+        "indexCoord": {
+          "title": "Index Coord",
+          "tooltip": "Index Coord verwaltet die Topologie der Indexknoten, baut Indizes auf und pflegt Indexmetadaten."
+        },
+        "proxy": {
+          "title": "Proxy",
+          "tooltip": "Proxy ist die Zugriffsschicht des Systems und der Endpunkt für Benutzer. Es validiert Client-Anfragen und reduziert die zurückgegebenen Ergebnisse."
+        },
+        "queryNode": {
+          "title": "Query Node",
+          "tooltip": "Query Node ruft inkrementelle Protokolldaten ab und wandelt sie in wachsende Segmente um, indem es den Log-Broker abonniert, lädt historische Daten aus dem Objektspeicher und führt Hybridsuchen zwischen Vektor- und Skalardaten durch."
+        },
+        "dataNode": {
+          "title": "Data Node",
+          "tooltip": "Data Node ruft inkrementelle Protokolldaten ab, indem es den Log-Broker abonniert, verarbeitet Mutationsanfragen und packt Protokolldaten in Protokoll-Snapshots und speichert sie im Objektspeicher."
+        },
+        "indexNode": {
+          "title": "Index Node",
+          "tooltip": "Index Node baut Indizes auf. Indexknoten müssen nicht im Speicher resident sein und können mit dem serverlosen Framework implementiert werden."
+        },
+        "etcd": {
+          "title": "ETCD"
+        },
+        "minio": {
+          "title": "Minio"
+        },
+        "pulsar": {
+          "title": "Pulsar"
+        },
+        "kafka": {
+          "title": "Kafka"
+        },
+        "bookie": "Bookie",
+        "broker": "Broker",
+        "proxyLabel": "Proxy",
+        "zookeeper": "Zookeeper"
+      },
+      "buttons": {
+        "helm": "Helm Chart Konfigurations-YML herunterladen",
+        "operator": "Milvus Operator Konfigurations-YML herunterladen",
+        "guide": "Installationsanleitung anzeigen"
+      },
+      "installGuide": {
+        "helm": "Helm Installationsanleitung",
+        "operator": "Operator Installationsanleitung"
+      }
+    },
+    "slack": {
+      "title": "Milvus Slack-Community",
+      "desc": "Möchten Sie sich mit anderen Milvus-Benutzern verbinden, um Ideen auszutauschen, Ratschläge und Updates zu den neuesten Milvus-Versionen zu erhalten? Treten Sie unserer Slack-Community bei! Füllen Sie das Formular aus, um Zugang anzufordern."
+    },
+    "footnote": {
+      "copyright": "Copyright © Milvus. {{year}} Alle Rechte vorbehalten.",
+      "maintainer": "Mit Liebe gemacht <0></0> von den Entwicklern von <1>Zilliz</1>"
+    }
+  },
+  "status": {
+    "subscribe": "Abonnieren",
+    "wait": "Laden...",
+    "success": "Erfolg",
+    "failed": "Fehlgeschlagen"
+  },
+  "cookie": {
+    "title": "Wie wir Cookies verwenden",
+    "consent": "Diese Website speichert Cookies auf Ihrem Computer. Durch das weitere Surfen oder Klicken auf „Akzeptieren“ erklären Sie sich mit der Speicherung von Cookies auf Ihrem Gerät einverstanden, um Ihre Website-Erfahrung zu verbessern und für analytische Zwecke.",
+    "accept": "Akzeptieren",
+    "reject": "Ablehnen"
+  }
+}

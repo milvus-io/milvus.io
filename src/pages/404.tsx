@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation, Trans } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
 import Head from 'next/head';
@@ -15,9 +13,11 @@ import { BlogDataType } from '@/types/blogs';
 import CustomButton from '@/components/customButton';
 import { RightWholeArrow } from '@/components/icons';
 import DevelopSection from '@/parts/home/developSection';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
-  const { t } = useTranslation('notFound');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('notFound', { lng: locale });
   const { blogList } = props;
 
   const router = useRouter();
@@ -109,6 +109,7 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
                   tags={[blog.frontMatter.tag]}
                   cover={`https://${blog.frontMatter.cover}`}
                   path={`${blog.frontMatter.id}`}
+                  locale={locale}
                 />
               </li>
             ))}

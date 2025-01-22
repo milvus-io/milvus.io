@@ -1,0 +1,140 @@
+{
+  "title": "Die Hochleistungs-<0 /> <1>Vektordatenbank</1> für Skalierbarkeit",
+  "subTitle": "Milvus ist eine Open-Source-Vektordatenbank, die für GenAI-Anwendungen entwickelt wurde. Installieren Sie sie mit pip, führen Sie Hochgeschwindigkeitssuchen durch und skalieren Sie auf zig Milliarden Vektoren mit minimalem Leistungsverlust.",
+  "news": "Neuigkeiten",
+  "buttons": {
+    "download": "Herunterladen",
+    "star": "Stern",
+    "pipInstall": "pip install pymilvus",
+    "start": "Loslegen",
+    "tryCloud": "Zilliz Cloud kostenlos testen",
+    "getStarted": "Loslegen",
+    "learnMore": "Mehr erfahren",
+    "quickStart": "Milvus Schnellstart",
+    "tryFree": "Kostenlos testen",
+    "rsvp": "Jetzt anmelden",
+    "subscribe": "Abonnieren",
+    "tryNow": "Jetzt testen"
+  },
+  "codeSection": {
+    "title": "Starten Sie Milvus in Sekunden",
+    "tabs": {
+      "createCollection": "Sammlung erstellen",
+      "insertData": "Daten einfügen",
+      "search": "Suchen",
+      "product": "Produktion",
+      "delete": "Daten löschen"
+    }
+  },
+  "trySection": {
+    "title": "Suchen Sie eine verwaltete Milvus-Lösung, um Ihren Betriebsaufwand zu minimieren?",
+    "subTitle": "Funktioniert gut mit all Ihren bevorzugten KI-Entwicklungstools"
+  },
+  "lovedSection": {
+    "title": "Geliebt von GenAI-Entwicklern",
+    "cards": {
+      "nandula": {
+        "content": "Basierend auf unserer Forschung wurde Milvus als die bevorzugte Vektordatenbank (gegenüber Chroma und Pinecone) ausgewählt. Milvus ist eine Open-Source-Vektordatenbank, die speziell für die Ähnlichkeitssuche auf massiven Datensätzen mit hochdimensionalen Vektoren entwickelt wurde.",
+        "author": "Nandula Asel",
+        "title": "Senior Data Scientist"
+      },
+      "bhargav": {
+        "content": "Mit seinem Fokus auf effiziente Vektorähnlichkeitssuche ermöglicht Milvus den Aufbau robuster und skalierbarer Bildabrufsysteme. Egal, ob Sie eine persönliche Fotobibliothek verwalten oder eine kommerzielle Bildsuchanwendung entwickeln, Milvus bietet eine leistungsstarke Grundlage, um das verborgene Potenzial Ihrer Bildersammlungen zu erschließen.",
+        "author": "Bhargav Mankad",
+        "title": "Senior Solution Architect"
+      },
+      "igor": {
+        "content": "Milvus ist eine leistungsstarke Vektordatenbank, die für die Verarbeitung und Suche in umfangreichen Vektordaten entwickelt wurde. Es zeichnet sich durch seine hohe Leistung und Skalierbarkeit aus und eignet sich daher perfekt für maschinelles Lernen, Deep Learning, Ähnlichkeitssuchen und Empfehlungssysteme.",
+        "author": "Igor Gorbenko",
+        "title": "Big Data Architect"
+      }
+    }
+  },
+  "vdbSection": {
+    "title": "Warum Entwickler Milvus für Vektordatenbanken bevorzugen",
+    "features": {
+      "scale": {
+        "title": "Skalieren Sie nach Bedarf",
+        "desc": "Skalieren Sie elastisch, um zig Milliarden Vektoren mit einer vollständig verteilten Architektur zu unterstützen."
+      },
+      "fast": {
+        "title": "Blitzschnell",
+        "desc": "Rufen Sie Daten schnell und präzise mit Global Index ab, unabhängig von der Skalierung."
+      },
+      "reusable": {
+        "title": "Wiederverwendbarer Code",
+        "desc": "Schreiben Sie einmal und stellen Sie mit einer Codezeile in der Produktionsumgebung bereit."
+      },
+      "community": {
+        "title": "Unterstützende Community",
+        "desc": "Beliebte Vektordatenbank mit umfangreichen Ressourcen und unterstützenden Mitwirkenden."
+      },
+      "featureRich": {
+        "title": "Funktionsreich",
+        "desc": "Metadatenfilterung, Hybridsuche, Multi-Vektor und mehr."
+      }
+    },
+    "prompt": "Möchten Sie mehr über Milvus erfahren? <0>Sehen Sie sich unsere Dokumentation an</0>"
+  },
+  "deploySection": {
+    "title": "Bereitstellungsoptionen für Ihre einzigartige Reise",
+    "lite": {
+      "title": "Milvus Lite",
+      "advantage": "Leichtgewichtig, einfach zu starten",
+      "features": [
+        "Vektordatenbank als Bibliothek, die in Notebooks/Laptops mit einer pip-Installation läuft",
+        "Ideal zum Lernen und Prototyping"
+      ]
+    },
+    "milvusStandalone": {
+      "title": "Milvus Standalone",
+      "advantage": "Robuste, einzelne Maschine Bereitstellung",
+      "features": [
+        "Vollständige Vektordatenbank für Produktion oder Tests",
+        "Ideal für Datensätze mit bis zu Millionen von Vektoren"
+      ]
+    },
+    "milvusDistributed": {
+      "title": "Milvus Distributed",
+      "advantage": "Skalierbare, unternehmensgerechte Lösung",
+      "features": [
+        "Hochzuverlässige und verteilte Vektordatenbank mit umfassendem Toolkit",
+        "Skalieren Sie horizontal, um Milliarden von Vektoren zu verarbeiten"
+      ]
+    },
+    "cloud": {
+      "title": "Zilliz Cloud",
+      "advantage": "Vollständig verwaltet mit minimalem Betriebsaufwand",
+      "features": [
+        "Verfügbar in Serverless und Dedicated Cluster",
+        "SaaS- und BYOC-Optionen für verschiedene Sicherheits- und Compliance-Anforderungen"
+      ]
+    },
+    "deployModels": "Erfahren Sie mehr über verschiedene <0>Milvus-Bereitstellungsmodelle</0>"
+  },
+  "developSection": {
+    "title": "Beginnen Sie mit dem Aufbau Ihrer GenAI-App",
+    "subTitle": "Geführt mit Notebooks, die von uns und unserer Community entwickelt wurden",
+    "rag": "RAG",
+    "imgSearch": "Bildersuche",
+    "multimodal": "Multimodale Suche",
+    "hybridSearch": "Hybridsuche",
+    "graphRag": "Graph RAG",
+    "meetup": {
+      "title": "Unstructured Data Meetups",
+      "desc": "Treten Sie einer Community leidenschaftlicher Entwickler und Ingenieure bei, die sich Gen AI widmen."
+    }
+  },
+  "subscribeSection": {
+    "title": "Werden Sie Teil der Community von Entwicklern, die GenAI-Apps mit Milvus erstellen, jetzt mit über <0>25 Millionen Downloads</0>",
+    "subscribe": {
+      "title": "Erhalten Sie Milvus-Updates",
+      "desc": "Abonnieren Sie, um Updates zu den neuesten Milvus-Versionen, Tutorials und Schulungen von Zilliz, dem Schöpfer und Hauptverwalter von Milvus, zu erhalten.",
+      "email": "E-Mail"
+    }
+  },
+  "productionSection": {
+    "title": "Vertrauenswürdig für Produktionsworkloads"
+  },
+  "banner": "🚀 Testen Sie Zilliz Cloud, die vollständig verwaltete Milvus, kostenlos – erleben Sie 10x schnellere Leistung! <0>Jetzt testen>></0>"
+}

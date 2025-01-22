@@ -1,0 +1,282 @@
+{
+  "v3trans": {
+    "desc": "tout ce qui concerne la traduction V3 sera mis ici",
+    "home": {
+      "banner": {
+        "title": "Base de données vectorielle conçue pour la recherche de similarité évolutive",
+        "desc": "Open source, hautement évolutive et extrêmement rapide.",
+        "tryManaged": "Essayer Managed Milvus",
+        "getstart": "Essayer Open Source",
+        "watch": "Regarder la vidéo",
+        "star": "Étoiles sur GitHub",
+        "contirbutor": "Contributeurs",
+        "downloads": "Téléchargements",
+        "users": "Utilisateurs"
+      },
+      "feature": {
+        "easy": {
+          "title": "Facile à utiliser",
+          "desc": "Avec la base de données vectorielle Milvus, vous pouvez créer un service de recherche de similarité à grande échelle en moins d'une minute. Des SDK simples et intuitifs sont également disponibles pour une variété de langages différents."
+        },
+        "fast": {
+          "title": "Extrêmement rapide",
+          "desc": "Milvus est efficace en termes de matériel et fournit des algorithmes d'indexation avancés, offrant une augmentation des performances de 10x en vitesse de récupération."
+        },
+        "available": {
+          "title": "Hautement disponible",
+          "desc": "La base de données vectorielle Milvus a été testée par plus d'un millier d'utilisateurs entreprises dans une variété de cas d'utilisation. Avec une isolation étendue des composants individuels du système, Milvus est très résilient et fiable."
+        },
+        "scalable": {
+          "title": "Hautement évolutif",
+          "desc": "La nature distribuée et à haut débit de Milvus en fait un choix naturel pour servir des données vectorielles à grande échelle."
+        },
+        "cloud": {
+          "title": "Cloud-native",
+          "desc": "La base de données vectorielle Milvus adopte une approche systémique du cloud-native, séparant le calcul du stockage et vous permettant de faire évoluer les deux verticalement et horizontalement."
+        },
+        "rich": {
+          "title": "Riche en fonctionnalités",
+          "desc": "Prise en charge de divers types de données, recherche vectorielle améliorée avec filtrage d'attributs, prise en charge des UDF, niveau de cohérence configurable, voyage dans le temps, et plus encore."
+        },
+        "title": "Alimentez votre déploiement d'apprentissage automatique",
+        "desc": "Stockez, indexez et gérez des vecteurs d'embedding massifs générés par des réseaux de neurones profonds et d'autres modèles d'apprentissage automatique (ML)."
+      },
+      "code": {
+        "install": "Installer Milvus en 2 minutes",
+        "manage": "Nouvelle façon de gérer les données vectorielles",
+        "search": "La recherche vectorielle n'a jamais été aussi facile",
+        "learn": "En savoir plus"
+      },
+      "attu": {
+        "title": "Développement simplifié",
+        "desc": "(Merci pour la contribution de Zilliz)",
+        "sub-title": "Développement simplifié avec",
+        "statistics": "Voir les statistiques du cluster Milvus",
+        "manage": "Parcourir, interroger et gérer les collections",
+        "operation": "Effectuer des opérations CRUD ou en masse",
+        "download": "Télécharger Attu",
+        "learn": "En savoir plus"
+      }
+    },
+    "docs": {
+      "homeTitle": "Accueil",
+      "blogTitle": "Blog",
+      "commitTrans": "dernière mise à jour à",
+      "faqTitle": "Questions les plus pertinentes",
+      "faqBtnGroupTitle": "Vous n'avez pas trouvé ce dont vous avez besoin ?",
+      "scoreQuestion": "Cette page est-elle utile ?",
+      "scoreThanks": "Noté avec succès !",
+      "yes": "Oui",
+      "no": "Non",
+      "contactFollow": "Suivez-moi",
+      "contactSlack": "Discuter sur Slack",
+      "contactGithub": "Discuter sur GitHub",
+      "feedbackDialogTitle": "Nous suivrons votre question.",
+      "feedbackDialogContent": "Veuillez laisser votre question ici et nous vous contacterons.",
+      "emailAddress": "Adresse email",
+      "emailInvaild": "Veuillez entrer un email valide.",
+      "yourQuestion": "Votre question",
+      "yourQuestionInvalid": "Veuillez entrer une question valide.",
+      "cancel": "Annuler",
+      "submit": "Soumettre",
+      "tocTitle": "Sur cette page",
+      "btnGroup": {
+        "editBtn": "Modifier cette page",
+        "issueBtn": "Signaler un problème de documentation",
+        "bugBtn": "Signaler un bug",
+        "suggestBtn": "Demander des modifications de documentation",
+        "pdfBtn": "Télécharger le document PDF",
+        "joinBtn": "Rejoindre le canal Slack",
+        "discussBtn": "En discuter sur GitHub"
+      }
+    },
+    "main": {
+      "nav": {
+        "docs": "Docs",
+        "tutorials": "Tutoriels",
+        "tools": "Outils",
+        "blog": "Blog",
+        "community": "Communauté",
+        "bootcamp": "Bootcamps",
+        "demo": "Démo",
+        "video": "Vidéo",
+        "getstarted": "Commencer",
+        "watchvideo": "Regarder la vidéo",
+        "about": "À propos",
+        "resources": "Ressources",
+        "getinvolved": "Participer",
+        "repo": "Dépôt",
+        "forum": "Forum"
+      },
+      "h1": "Base de données vectorielle conçue pour la recherche de similarité évolutive",
+      "desc": "Open source, hautement évolutive et extrêmement rapide.",
+      "stars": "Étoiles sur GitHub",
+      "contirbutors": "Contributeurs",
+      "downloads": "Téléchargements",
+      "customers": "Clients",
+      "communitydesc": "Milvus est soutenu par une forte communauté open source",
+      "communitytitle": "Rejoignez notre communauté",
+      "customer": "La base de données vectorielle la plus populaire pour les utilisateurs entreprises"
+    },
+    "404": {
+      "title": "Oups... quelque chose s'est mal passé !",
+      "desc1": "On dirait que vous vous êtes égaré trop loin !",
+      "desc2": "Nous ne trouvons pas la page que vous recherchez :(",
+      "gobtn": "Aller à la page d'accueil"
+    },
+    "signup": {
+      "emailerror": "Erreur de format d'email",
+      "thankyou": "Merci, vous avez été ajouté à notre liste de diffusion !",
+      "subscribed": "Cet email est déjà inscrit !",
+      "placeholder": "Quel est votre email ?",
+      "signup": "Recevez les dernières nouvelles de Milvus de Zilliz",
+      "montyly": "Abonnez-vous pour recevoir des mises à jour sur les dernières versions de Milvus, des tutoriels et des formations.",
+      "subscribe": "S'abonner"
+    },
+    "copyBtn": {
+      "copyLabel": "Copier",
+      "copiedLabel": "Copié !"
+    },
+    "algolia": {
+      "button": {
+        "buttonText": "Rechercher",
+        "buttonAriaLabel": "Rechercher"
+      },
+      "modal": {
+        "searchBox": {
+          "resetButtonTitle": "Effacer la requête",
+          "resetButtonAriaLabel": "Effacer la requête",
+          "cancelButtonText": "Annuler",
+          "cancelButtonAriaLabel": "Annuler"
+        },
+        "startScreen": {
+          "recentSearchesTitle": "Récent",
+          "noRecentSearchesText": "Aucune recherche récente",
+          "saveRecentSearchButtonTitle": "Enregistrer cette recherche",
+          "removeRecentSearchButtonTitle": "Supprimer cette recherche de l'historique"
+        },
+        "errorScreen": {
+          "titleText": "Impossible de récupérer les résultats",
+          "helpText": "Vous devriez vérifier votre connexion réseau."
+        },
+        "footer": {
+          "selectText": "pour sélectionner",
+          "navigateText": "pour naviguer",
+          "closeText": "pour fermer",
+          "searchByText": "Rechercher par"
+        },
+        "noResultsScreen": {
+          "noResultsText": "Aucun résultat pour",
+          "suggestedQueryText": "Essayez de rechercher",
+          "openIssueText": "Vous pensez que cette requête devrait retourner des résultats ?",
+          "openIssueLinkText": "Faites-le nous savoir"
+        }
+      }
+    },
+    "cookie": {
+      "title": "Comment nous utilisons les cookies",
+      "desc": "Ce site web stocke des cookies sur votre ordinateur. En continuant à naviguer ou en cliquant sur 'Accepter', vous acceptez le stockage de cookies sur votre appareil pour améliorer votre expérience sur le site et à des fins analytiques."
+    },
+    "sizingTool": {
+      "title": "Outil de dimensionnement de Milvus",
+      "subTitle": "Remarque : toutes les recommandations sont calculées sur la base de nos données de laboratoire, vous devriez les ajuster avec vos propres tests avant de les déployer en production.",
+
+      "labels": {
+        "dataSize": "Choisir la taille des données",
+        "vector": "Nombre de vecteurs (Millions)",
+        "dimension": "Dimensions",
+        "index": "Type d'index",
+        "indexType": "Choisir le type d'index",
+        "indexParam": "Choisir les paramètres d'index",
+        "m": "M (Degré maximum du nœud)",
+        "segmentSize": "Choisir la taille du segment",
+        "segment": "Segment (MB)"
+      },
+
+      "capacity": "Capacité approximative",
+      "memory": "Mémoire de chargement",
+      "fileSize": "Taille du fichier brut",
+      "setups": {
+        "title": "Configuration minimale du cluster Milvus",
+        "rootCoord": {
+          "title": "Coordinateur racine",
+          "tooltip": "Le coordinateur racine gère les requêtes de langage de définition de données (DDL) et de langage de contrôle de données (DCL), telles que la création ou la suppression de collections, de partitions ou d'index, ainsi que la gestion de TSO (Oracle de timestamp) et l'émission de ticks temporels."
+        },
+        "queryCoord": {
+          "title": "Coordinateur de requête",
+          "tootip": "Le coordinateur de requête gère la topologie et l'équilibrage de charge pour les nœuds de requête, et le transfert des segments en croissance vers les segments scellés."
+        },
+        "dataCoord": {
+          "title": "Coordinateur de données",
+          "tooltip": "Le coordinateur de données gère la topologie des nœuds de données, maintient les métadonnées et déclenche le flush, la compaction et d'autres opérations de données en arrière-plan."
+        },
+        "indexCoord": {
+          "title": "Coordinateur d'index",
+          "tooltip": "Le coordinateur d'index gère la topologie des nœuds d'index, construit les index et maintient les métadonnées d'index."
+        },
+        "proxy": {
+          "title": "Proxy",
+          "tooltip": "Le proxy est la couche d'accès du système et le point de terminaison pour les utilisateurs. Il valide les requêtes des clients et réduit les résultats retournés."
+        },
+        "queryNode": {
+          "title": "Nœud de requête",
+          "tooltip": "Le nœud de requête récupère les données de journal incrémentielles et les transforme en segments en croissance en s'abonnant au courtier de journaux, charge les données historiques depuis le stockage d'objets et exécute des recherches hybrides entre les données vectorielles et scalaires."
+        },
+        "dataNode": {
+          "title": "Nœud de données",
+          "tooltip": "Le nœud de données récupère les données de journal incrémentielles en s'abonnant au courtier de journaux, traite les requêtes de mutation et regroupe les données de journal en instantanés de journaux et les stocke dans le stockage d'objets."
+        },
+        "indexNode": {
+          "title": "Nœud d'index",
+          "tooltip": "Le nœud d'index construit les index. Les nœuds d'index n'ont pas besoin d'être résidents en mémoire et peuvent être implémentés avec le framework serverless."
+        },
+        "etcd": {
+          "title": "ETCD"
+        },
+        "minio": {
+          "title": "Minio"
+        },
+        "pulsar": {
+          "title": "Pulsar"
+        },
+        "kafka": {
+          "title": "Kafka"
+        },
+        "bookie": "Bookie",
+        "broker": "Broker",
+        "proxyLabel": "Proxy",
+        "zookeeper": "Zookeeper"
+      },
+      "buttons": {
+        "helm": "Télécharger la configuration yml du Helm Chart",
+        "operator": "Télécharger la configuration yml de Milvus Operator",
+        "guide": "Voir le guide d'installation"
+      },
+      "installGuide": {
+        "helm": "Guide d'installation Helm",
+        "operator": "Guide d'installation Operator"
+      }
+    },
+    "slack": {
+      "title": "Communauté Slack Milvus",
+      "desc": "Vous souhaitez vous connecter avec d'autres utilisateurs de Milvus pour partager des idées, obtenir des conseils et des mises à jour sur les dernières versions de Milvus ? Rejoignez notre communauté Slack ! Remplissez le formulaire pour demander l'accès."
+    },
+    "footnote": {
+      "copyright": "Copyright © Milvus. {{year}} Tous droits réservés.",
+      "maintainer": "Fait avec amour <0></0> par les développeurs de <1>Zilliz</1>"
+    }
+  },
+  "status": {
+    "subscribe": "S'abonner",
+    "wait": "Chargement...",
+    "success": "Succès",
+    "failed": "Échec"
+  },
+  "cookie": {
+    "title": "Comment nous utilisons les cookies",
+    "consent": "Ce site web stocke des cookies sur votre ordinateur. En continuant à naviguer ou en cliquant sur 'Accepter', vous acceptez le stockage de cookies sur votre appareil pour améliorer votre expérience sur le site et à des fins analytiques.",
+    "accept": "Accepter",
+    "reject": "Rejeter"
+  },
+  "email": "Courriel"
+}

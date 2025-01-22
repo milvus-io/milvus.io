@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import CustomTabs from '@/components/customTabs';
 import { useMemo, useState } from 'react';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 import {
   CODE_CREATE_COLLECTION,
   CODE_INSERT_DATA,
@@ -18,7 +19,8 @@ import {
 hljs.registerLanguage('javascript', javascript);
 
 export default function CodeExampleSection() {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
 
   const tabs = [
     {

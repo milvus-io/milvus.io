@@ -1,0 +1,38 @@
+{
+  "intro": {
+    "label": "왜 Milvus인가요?",
+    "definition": "Milvus란 무엇인가요?",
+    "cases": "사용 사례"
+  },
+  "docs": "문서",
+  "tutorials": {
+    "label": "튜토리얼",
+    "codelabs": "코드랩",
+    "bootcamp": "부트캠프",
+    "demo": "데모",
+    "video": "비디오"
+  },
+  "tools": {
+    "label": "도구",
+    "attu": "Attu",
+    "cli": "Milvus CLI",
+    "sizing": "사이징 도구",
+    "backup": "Milvus 백업",
+    "vts": "VTS"
+  },
+  "blog": "블로그",
+  "community": "커뮤니티",
+  "start": "시작하기",
+  "star": "별표",
+  "contact": "문의하기",
+  "footer": {
+    "resource": {
+      "managed": "관리형 Milvus"
+    },
+    "tools": {
+      "sizing": "Milvus 크기 계산 도구",
+      "backup": "Milvus 백업 도구",
+      "vts": "벡터 전송 서비스 (VTS)"
+    }
+  }
+}

@@ -1,21 +1,27 @@
-import { useTranslation } from 'react-i18next';
-import Link from 'next/link';
 import clsx from 'clsx';
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+
 import {
-  MILVUS_CODELAB_LINK,
-  MILVUS_VIDEO_LINK,
-  GITHUB_ATTU_LINK,
-  GITHUB_MILVUS_CLI_LINK,
-  GITHUB_MILVUS_BACKUP_LINK,
+  DownArrowIcon,
+  GitHubIcon,
+  RightTopArrowIcon,
+} from '@/components/icons';
+import {
   GET_START_LINK,
+  GITHUB_ATTU_LINK,
+  GITHUB_MILVUS_BACKUP_LINK,
+  GITHUB_MILVUS_CLI_LINK,
   GITHUB_MILVUS_LINK,
   GITHUB_VTS_LINK,
   CLOUD_SIGNUP_LINK,
+  MILVUS_VIDEO_LINK,
 } from '@/consts/links';
-import { DownArrowIcon, GitHubIcon } from '@/components/icons';
-import { LogoSection } from './Logos';
+import { LanguageSelector } from '@/components/language-selector';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
+
 import milvusStats from '../../../global-stats.json';
-import { RightTopArrowIcon } from '@/components/icons';
+import { LogoSection } from './Logos';
 
 type Props = { className?: string };
 
@@ -25,22 +31,42 @@ const startNum = `${(Number(milvusStats?.milvusStars || 0) / 1000).toFixed(
 
 export default function DesktopHeader(props: Props) {
   const { className } = props;
-  const { t } = useTranslation('header');
+  const {
+    locale,
+    disabled,
+    disabledLanguages,
+    localeSuffix,
+    onLocaleChange,
+    getLocalePath,
+  } = useGlobalLocale();
+  const { t } = useTranslation('header', { lng: locale });
 
   const menuConfigs = [
     {
       label: t('intro.label'),
       list: [
-        { label: t('intro.definition'), link: '/intro' },
-        { label: t('intro.cases'), link: '/use-cases' },
+        {
+          label: t('intro.definition'),
+          link: getLocalePath('/intro'),
+        },
+        {
+          label: t('intro.cases'),
+          link: getLocalePath('/use-cases'),
+        },
       ],
     },
-    { label: t('docs'), link: '/docs' },
+    { label: t('docs'), link: '/docs' + localeSuffix },
     {
       label: t('tutorials.label'),
       list: [
-        { label: t('tutorials.bootcamp'), link: '/bootcamp' },
-        { label: t('tutorials.demo'), link: '/milvus-demos' },
+        {
+          label: t('tutorials.bootcamp'),
+          link: getLocalePath('/bootcamp'),
+        },
+        {
+          label: t('tutorials.demo'),
+          link: getLocalePath('/milvus-demos'),
+        },
         {
           label: t('tutorials.video'),
           link: MILVUS_VIDEO_LINK,
@@ -61,7 +87,10 @@ export default function DesktopHeader(props: Props) {
           link: GITHUB_MILVUS_CLI_LINK,
           rel: 'noopener noreferrer',
         },
-        { label: t('tools.sizing'), link: '/tools/sizing' },
+        {
+          label: t('tools.sizing'),
+          link: getLocalePath('/tools/sizing'),
+        },
         {
           label: t('tools.backup'),
           link: GITHUB_MILVUS_BACKUP_LINK,
@@ -74,8 +103,11 @@ export default function DesktopHeader(props: Props) {
         },
       ],
     },
-    { label: t('blog'), link: '/blog' },
-    { label: t('community'), link: '/community' },
+    { label: t('blog'), link: getLocalePath('/blog') },
+    {
+      label: t('community'),
+      link: getLocalePath('/community'),
+    },
   ];
 
   return (
@@ -112,7 +144,7 @@ export default function DesktopHeader(props: Props) {
                               <Link
                                 href={item.link}
                                 rel={item.rel}
-                                className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] text-black no whitespace-nowrap cursor-pointer hover:bg-black/[0.04] font-mono uppercase text-[#667176]"
+                                className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] no whitespace-nowrap cursor-pointer hover:bg-black/[0.04] font-mono uppercase text-[#667176]"
                                 target={item.rel ? '_blank' : undefined}
                               >
                                 {item.label}
@@ -130,7 +162,7 @@ export default function DesktopHeader(props: Props) {
                 <li key={config.label}>
                   <Link
                     href={config.link}
-                    className="block text-[14px] leading-[21px] font-[500] text-black2 hover:text-black1 cursor-pointer font-mono uppercase text-[#667176]"
+                    className="block text-[14px] leading-[21px] font-[500]  hover:text-black1 cursor-pointer font-mono uppercase text-black2"
                   >
                     {config.label}
                   </Link>
@@ -141,24 +173,31 @@ export default function DesktopHeader(props: Props) {
         </div>
 
         <div className="flex gap-[20px] max-[1240px]:gap-[12px] max-[1080px]:gap-[10px] items-center font-mono">
+          <LanguageSelector
+            value={locale}
+            onChange={onLocaleChange}
+            disabled={disabled}
+            disabledLanguages={disabledLanguages}
+            hiddenSelectValue={true}
+          />
           <a
             href={GITHUB_MILVUS_LINK}
             className={
-              'h-9 px-3 py-1.5 rounded-md flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] transition duration-200 ease-in-out hover:bg-black4'
+              'h-9 rounded-md flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] transition duration-200 ease-in-out text-black hover:text-black2'
             }
             target="_blank"
           >
             <GitHubIcon />
-            <span className="text-[12px] leading-[18px] ml-[2px] mr-[4px] text-black">
+            <span className="text-[12px] leading-[18px] ml-[2px] mr-[4px] whitespace-nowrap">
               {t('star')}
             </span>
-            <span className="text-[12px] font-[500] leading-[18px] text-black">
+            <span className="text-[12px] font-[500] leading-[18px]">
               {startNum}
             </span>
           </a>
           <Link
-            href="/contact"
-            className="text-[12px] font-[500] leading-[18px] text-black1"
+            href={getLocalePath('/contact')}
+            className="text-[12px] font-[500] leading-[18px] text-black1 hover:text-black2 transition duration-200 ease-in-out whitespace-pre"
           >
             {t('contact')}
           </Link>
@@ -166,8 +205,8 @@ export default function DesktopHeader(props: Props) {
             href={`${CLOUD_SIGNUP_LINK}?utm_source=partner&utm_medium=referral&utm_campaign=2025-01-16_resource_top-home-nav_milvusio`}
             target="_blank"
           >
-            <div className="h-9 px-3 py-1.5 rounded-md  bg-blue1 hover:opacity-70 justify-start items-center gap-1 inline-flex cursor-pointer transition">
-              <div className="text-center text-white text-sm font-medium leading-[21px]">
+            <div className="h-9 px-3 py-1.5 rounded-md  bg-blue1 hover:bg-[#008DC8] justify-start items-center gap-1 inline-flex cursor-pointer transition duration-200 ease-in-out">
+              <div className="text-center text-white text-sm font-medium leading-[21px] whitespace-nowrap">
                 {t('start')}
               </div>
             </div>

@@ -15,6 +15,7 @@ import {
   MILVUS_INTEGRATION_OPENAI_LINK,
   MILVUS_INTEGRATION_RAGAS_LINK,
 } from '@/consts/links';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 const tools = [
   {
@@ -60,7 +61,8 @@ const tools = [
 ];
 
 export default function TryFreeSection() {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
 
   return (
     <section
@@ -92,7 +94,8 @@ export default function TryFreeSection() {
 }
 
 export const AIToolsSection = () => {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
   return (
     <section
       className={clsx(pageClasses.homeContainer, classes.sectionContainer)}

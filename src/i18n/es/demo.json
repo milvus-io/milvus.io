@@ -1,0 +1,39 @@
+{
+  "title": "Milvus facilita la adición de búsqueda por similitud a tus aplicaciones.",
+  "desc": "Almacena, indexa y gestiona grandes vectores de incrustación generados por redes neuronales profundas y otros modelos de aprendizaje automático (ML).",
+  "demos": {
+    "multimodal": {
+      "title": "Búsqueda de Imágenes Multimodal",
+      "desc": "Sube imágenes y edita texto para mejorar las búsquedas de imágenes intuitivas utilizando tecnología de recuperación avanzada."
+    },
+    "imgSearch": {
+      "title": "Búsqueda de Imágenes",
+      "desc": "Imágenes disponibles para búsqueda. Devuelve instantáneamente las imágenes más similares de una base de datos masiva."
+    },
+    "hybridSearch": {
+      "title": "Búsqueda Híbrida",
+      "desc": "Experimenta una búsqueda de texto avanzada con el modelo BGE-M3, que proporciona resultados Dense, Sparse y Hybrid precisos para una mayor relevancia de las consultas."
+    },
+    "ossChat": {
+      "title": "OSSChat",
+      "desc": "ChatGPT mejorado con documentación, problemas, publicaciones de blog, preguntas y respuestas de la comunidad como bases de conocimiento. Construido para cada comunidad y desarrollador."
+    },
+    "chemicalSearch": {
+      "title": "Búsqueda de Estructuras Químicas",
+      "desc": "Búsqueda por similitud, subestructura o superestructura extremadamente rápida para una molécula especificada."
+    },
+    "askAi": {
+      "title": "Generación Aumentada por Recuperación (RAG)",
+      "desc": "Ask AI es un chatbot RAG para la documentación y artículos de ayuda de Milvus. La base de datos de vectores que alimenta la recuperación es Zilliz Cloud (Milvus totalmente gestionado).",
+      "ctaLabel1": "Pregunta a la IA",
+      "ctaLabel2": "Aprende cómo lo construimos"
+    }
+  },
+  "prompts": {
+    "success": "¡Gracias, has sido añadido a nuestra lista de correo!",
+    "warning": "¡Un segundo! Te estamos llevando allí...",
+    "waiting": "Antes de que te vayas..."
+  },
+  "tryDemo": "Prueba la Demo",
+  "watchDemo": "Mira la Demo"
+}

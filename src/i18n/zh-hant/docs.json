@@ -1,0 +1,36 @@
+{
+  "title": "Milvus 文檔",
+  "metaTitle": "Milvus 向量數據庫文檔",
+  "homepageDesc": "Milvus {{version}} 文檔",
+  "feedback": {
+    "title": "反饋",
+    "prompt": "這個頁面有幫助嗎？",
+    "comment": {
+      "title": "發送你的反饋",
+      "desc": "感謝你幫助我們改進 Milvus 文檔。",
+      "inputLabel": "附加評論（可選）",
+      "cancel": "取消",
+      "send": "發送"
+    },
+    "thanks": "感謝你寶貴的反饋！"
+  },
+  "docAction": {
+    "edit": "編輯此頁",
+    "issue": "創建問題"
+  },
+  "anchors": {
+    "title": "目錄"
+  },
+  "navigation": {
+    "title": "主頁"
+  },
+  "translate": {
+    "by": "翻譯者"
+  },
+  "advertise": {
+    "content": "Zilliz Cloud 無縫接入，由 Milvus 提供動力，速度提升 10 倍。",
+    "ctaLabel": "開始使用",
+    "titleA": "免費嘗試托管的 Milvus",
+    "titleB": "免費嘗試 Zilliz Cloud"
+  }
+}

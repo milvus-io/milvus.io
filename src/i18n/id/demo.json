@@ -1,0 +1,39 @@
+{
+  "title": "Milvus memudahkan penambahan pencarian keserupaan ke aplikasi Anda.",
+  "desc": "Simpan, indeks, dan kelola vektor penanaman massif yang dihasilkan oleh jaringan saraf dalam dan model pembelajaran mesin (ML) lainnya.",
+  "demos": {
+    "multimodal": {
+      "title": "Pencarian Gambar Multimodal",
+      "desc": "Unggah gambar dan edit teks untuk meningkatkan pencarian gambar intuitif menggunakan teknologi pemulihan canggih."
+    },
+    "imgSearch": {
+      "title": "Pencarian Gambar",
+      "desc": "Gambar yang dapat dicari. Secara instan mengembalikan gambar paling serupa dari basis data yang besar."
+    },
+    "hybridSearch": {
+      "title": "Pencarian Hibrida",
+      "desc": "Rasakan pencarian teks canggih dengan model BGE-M3, menghasilkan hasil Dense, Sparse, dan Hybrid yang presisi untuk relevansi kueri yang diperbaiki."
+    },
+    "ossChat": {
+      "title": "OSSChat",
+      "desc": "Perbaiki ChatGPT dengan dokumentasi, masalah, postingan blog, Q&A komunitas sebagai basis pengetahuan. Dibangun untuk setiap komunitas dan pengembang."
+    },
+    "chemicalSearch": {
+      "title": "Pencarian Struktur Kimia",
+      "desc": "Pencarian keserupaan cepat, pencarian substruktur, atau pencarian superstruktur untuk molekul tertentu."
+    },
+    "askAi": {
+      "title": "Generasi yang Ditingkatkan dengan Pemulihan (RAG)",
+      "desc": "Tanya AI adalah chatbot RAG untuk dokumentasi dan artikel bantuan Milvus. Basis data vektor yang memacu pemulihan adalah Zilliz Cloud (Milvus yang dikelola sepenuhnya).",
+      "ctaLabel1": "Tanya AI",
+      "ctaLabel2": "Pelajari cara kami membangunnya"
+    }
+  },
+  "prompts": {
+    "success": "Terima kasih, Anda telah ditambahkan ke daftar email kami!",
+    "warning": "Satu detik! Kami akan membawa Anda ke sana...",
+    "waiting": "Sebelum Anda pergi..."
+  },
+  "tryDemo": "Coba Demo",
+  "watchDemo": "Tonton Demo"
+}

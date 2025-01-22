@@ -1,10 +1,12 @@
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 export default function LovedSection() {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
 
   const cards = [
     {

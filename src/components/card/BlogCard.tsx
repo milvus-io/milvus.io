@@ -4,6 +4,8 @@ import styles from './BlogCard.module.less';
 import Tags from '../tags';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { LanguageEnum } from '@/types/localization';
+import { getBlogPath } from '@/utils/localization';
 
 interface Props {
   title: string;
@@ -11,6 +13,7 @@ interface Props {
   tags: string[];
   cover: string;
   path: string;
+  locale: LanguageEnum;
   className?: string;
   direction?: 'row' | 'column';
   disableWrapperLink?: boolean;
@@ -18,6 +21,7 @@ interface Props {
 
 const BlogCard: React.FC<Props> = props => {
   const {
+    locale,
     title,
     desc,
     tags,
@@ -27,7 +31,7 @@ const BlogCard: React.FC<Props> = props => {
     className,
     disableWrapperLink = false,
   } = props;
-  const to = `/blog/${path}`;
+  const to = `${getBlogPath(locale)}/${path}`;
   const router = useRouter();
 
   const handleWrapperClick = () => {

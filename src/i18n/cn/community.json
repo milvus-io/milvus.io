@@ -1,0 +1,48 @@
+{
+  "title": "加入社区",
+  "ctaLabel": "立即加入",
+  "officeHours": {
+    "title": "在 Milvus 办公时间获取专家帮助",
+    "content": "预约免费的 1:1 会话，从 Milvus 专家 Zilliz 那里获取生产部署的帮助。",
+    "button": "预约会话"
+  },
+  "community": {
+    "title": "欢迎加入 Milvus 社区",
+    "content": "Milvus 社区由用户和开源贡献者组成，他们分享新想法、合作开发项目并促进学习。我们的开源社区成员贡献代码、参加活动、倡导 Milvus 的广泛采用，并做出许多其他有价值的贡献。继续阅读，了解如何参与并成为这个令人惊叹的社区的一部分。",
+    "features": {
+      "learn": {
+        "title": "学习",
+        "content": "扩展您在向量数据库技术方面的知识和技能。"
+      },
+      "build": {
+        "title": "构建",
+        "content": "通过开源协作为 Milvus 的开发做出贡献。"
+      },
+      "share": {
+        "title": "分享",
+        "content": "与整个社区分享最佳实践和经验教训。"
+      }
+    }
+  },
+  "resource": "资源",
+  "mail": {
+    "title": "邮件列表",
+    "mailList": {
+      "meeting": {
+        "title": "Milvus 技术会议",
+        "content": "加入我们的下一次会议，参与 Milvus 最新功能和开发时间表的讨论和决策。",
+        "cta": "了解更多"
+      },
+      "event": {
+        "title": "活动",
+        "content": "我们经常举办活动。点击查看您附近即将举办的活动。",
+        "cta": "更多活动"
+      },
+      "video": {
+        "title": "视频",
+        "content": "我们经常上传视频。点击观看视频教程、网络研讨会回放和其他视频内容。",
+        "cta": "更多视频"
+      }
+    }
+  }
+}

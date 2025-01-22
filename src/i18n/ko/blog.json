@@ -1,0 +1,40 @@
+{
+  "trending": "트렌딩",
+  "recent": {
+    "most": "최신",
+    "release": "릴리스 및 이벤트"
+  },
+  "subscribe": {
+    "title": "먼저 알아보세요",
+    "desc": "Zilliz에서 Milvus 릴리스 및 튜토리얼 업데이트를 받으세요. Milvus의 창시자이자 주요 유지보수자입니다."
+  },
+  "filter": {
+    "all": "전체",
+    "engineering": "엔지니어링",
+    "announcements": "공지사항",
+    "tutorials": "튜토리얼",
+    "usecases": "사용 사례"
+  },
+  "aiService": {
+    "title": "Milvus에 대해 무엇이든 물어보세요!",
+    "desc": "문서, 도움말 문서 및 기타 콘텐츠에 대해 학습한 AI 보조자입니다."
+  },
+  "zillizAdv": {
+    "title": "Milvus보다 10배 빠르고 번거롭지 않음",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "워크로드에 최적화된 사용 사례 컴퓨팅 유닛",
+    "feature2": "엔터프라이즈 급 보안",
+    "feature3": "AWS, GCP 및 Azure에서 사용 가능",
+    "btn": "완전히 관리되는 Milvus 무료 체험"
+  },
+  "authors": {
+    "title": "가장 많이 기여한 작가"
+  },
+  "homepage": {
+    "title": "Milvus 학습: 벡터 DB 기술의 통찰력 및 혁신",
+    "desc": "벡터 데이터베이스의 기본 사항, Milvus의 기능 및 기능, 그리고 최신 AI 앱에 대한 벡터 검색 관리 및 최적화에 대한 기술 튜토리얼을 학습하세요."
+  },
+  "detail": {
+    "keepReading": "계속 읽기"
+  }
+}

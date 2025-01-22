@@ -1,0 +1,38 @@
+{
+  "intro": {
+    "label": "なぜMilvusなのか",
+    "definition": "Milvusとは",
+    "cases": "ユースケース"
+  },
+  "docs": "ドキュメント",
+  "tutorials": {
+    "label": "チュートリアル",
+    "codelabs": "コードラボ",
+    "bootcamp": "ブートキャンプ",
+    "demo": "デモ",
+    "video": "ビデオ"
+  },
+  "tools": {
+    "label": "ツール",
+    "attu": "Attu",
+    "cli": "Milvus CLI",
+    "sizing": "サイジングツール",
+    "backup": "Milvusバックアップ",
+    "vts": "VTS"
+  },
+  "blog": "ブログ",
+  "community": "コミュニティ",
+  "start": "始める",
+  "star": "スター",
+  "contact": "お問い合わせ",
+  "footer": {
+    "resource": {
+      "managed": "マネージド Milvus"
+    },
+    "tools": {
+      "sizing": "Milvus サイジングツール",
+      "backup": "Milvus バックアップツール",
+      "vts": "ベクトル転送サービス (VTS)"
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "title": "高性能<0 /> <1>ベクトルデータベース</1> スケール対応",
+  "subTitle": "Milvusは、GenAIアプリケーション向けに構築されたオープンソースのベクトルデータベースです。pipでインストールし、高速検索を実行し、最小限のパフォーマンス低下で数百億のベクトルにスケーリングできます。",
+  "news": "ニュース",
+  "buttons": {
+    "download": "ダウンロード",
+    "star": "スター",
+    "pipInstall": "pip install pymilvus",
+    "start": "始める",
+    "tryCloud": "Zilliz Cloudを無料で試す",
+    "getStarted": "始める",
+    "learnMore": "もっと詳しく",
+    "quickStart": "Milvusクイックスタート",
+    "tryFree": "無料で試す",
+    "rsvp": "今すぐRSVP",
+    "subscribe": "購読",
+    "tryNow": "今すぐ試す"
+  },
+  "codeSection": {
+    "title": "数秒でMilvusを実行開始",
+    "tabs": {
+      "createCollection": "コレクションを作成",
+      "insertData": "データを挿入",
+      "search": "検索",
+      "product": "本番環境",
+      "delete": "データを削除"
+    }
+  },
+  "trySection": {
+    "title": "運用負荷を最小限に抑える管理型Milvusをお探しですか？",
+    "subTitle": "お気に入りのAI開発ツールとシームレスに連携"
+  },
+  "lovedSection": {
+    "title": "GenAI開発者に愛されています",
+    "cards": {
+      "nandula": {
+        "content": "私たちの調査に基づいて、Milvusがベクトルデータベースとして選ばれました（ChromaやPineconeを上回りました）。Milvusは、高次元ベクトルの大規模データセットに対する類似性検索に特化して設計されたオープンソースのベクトルデータベースです。",
+        "author": "ナンドゥラ・アセル",
+        "title": "シニアデータサイエンティスト"
+      },
+      "bhargav": {
+        "content": "効率的なベクトル類似性検索に焦点を当てたMilvusは、堅牢でスケーラブルな画像検索システムを構築する力を与えます。個人の写真ライブラリを管理している場合でも、商用の画像検索アプリケーションを開発している場合でも、Milvusは画像コレクション内の隠れた可能性を引き出すための強力な基盤を提供します。",
+        "author": "バルガヴ・マンカド",
+        "title": "シニアソリューションアーキテクト"
+      },
+      "igor": {
+        "content": "Milvusは、大規模なベクトルデータの処理と検索に特化した強力なベクトルデータベースです。その高いパフォーマンスとスケーラビリティが際立っており、機械学習、深層学習、類似性検索タスク、およびレコメンデーションシステムに最適です。",
+        "author": "イゴール・ゴルベンコ",
+        "title": "ビッグデータアーキテクト"
+      }
+    }
+  },
+  "vdbSection": {
+    "title": "開発者がMilvusをベクトルデータベースに選ぶ理由",
+    "features": {
+      "scale": {
+        "title": "必要に応じてスケーリング",
+        "desc": "完全に分散された環境で数百億のベクトルをサポートするために弾力的にスケーリング"
+      },
+      "fast": {
+        "title": "非常に高速",
+        "desc": "Global Indexを使用して、規模に関係なく迅速かつ正確にデータを取得します。"
+      },
+      "reusable": {
+        "title": "再利用可能なコード",
+        "desc": "一度書いて、1行のコードで本番環境にデプロイします。"
+      },
+      "community": {
+        "title": "サポートのあるコミュニティ",
+        "desc": "豊富なリソースとサポートのある貢献者を持つ、ファンに人気のベクトルデータベース。"
+      },
+      "featureRich": {
+        "title": "機能豊富",
+        "desc": "メタデータフィルタリング、ハイブリッド検索、マルチベクトルなど。"
+      }
+    },
+    "prompt": "Milvusについてもっと知りたいですか？<0>ドキュメントを参照</0>"
+  },
+  "deploySection": {
+    "title": "あなたの独自の旅に合わせた展開オプション",
+    "lite": {
+      "title": "Milvus Lite",
+      "advantage": "軽量、簡単に始められる",
+      "features": [
+        "VectorDB-as-a-libraryは、pipインストールでノートブック/ラップトップで実行",
+        "学習とプロトタイピングに最適"
+      ]
+    },
+    "milvusStandalone": {
+      "title": "Milvus Standalone",
+      "advantage": "堅牢な単一マシン展開",
+      "features": [
+        "本番環境またはテスト用の完全なベクトルデータベース",
+        "数百万のベクトルまでのデータセットに最適"
+      ]
+    },
+    "milvusDistributed": {
+      "title": "Milvus Distributed",
+      "advantage": "スケーラブルなエンタープライズグレードソリューション",
+      "features": [
+        "高度に信頼性が高く分散されたベクトルデータベースと包括的なツールキット",
+        "水平スケーリングで数十億のベクトルを処理"
+      ]
+    },
+    "cloud": {
+      "title": "Zilliz Cloud",
+      "advantage": "最小限の運用で完全管理",
+      "features": [
+        "サーバーレスと専用クラスターの両方で利用可能",
+        "さまざまなセキュリティとコンプライアンス要件に対応するSaaSとBYOCオプション"
+      ]
+    },
+    "deployModels": "さまざまな<0>Milvus展開モデル</0>について詳しく知る"
+  },
+  "developSection": {
+    "title": "GenAIアプリの構築を始めよう",
+    "subTitle": "私たちとコミュニティが開発したノートブックでガイド付き",
+    "rag": "RAG",
+    "imgSearch": "画像検索",
+    "multimodal": "マルチモーダル検索",
+    "hybridSearch": "ハイブリッド検索",
+    "graphRag": "Graph RAG",
+    "meetup": {
+      "title": "非構造化データミートアップ",
+      "desc": "Gen AIに情熱を注ぐ開発者やエンジニアのコミュニティに参加しましょう。"
+    }
+  },
+  "subscribeSection": {
+    "title": "Milvusを使用してGenAIアプリを構築する開発者コミュニティに参加しましょう。現在<0>2,500万回以上</0>のダウンロードを突破！",
+    "subscribe": {
+      "title": "Milvusの更新を取得",
+      "desc": "Milvusの最新リリース、チュートリアル、トレーニングの更新を購読して、Milvusの作成者および主要メンテナであるZillizからの情報を入手しましょう。",
+      "email": "メール"
+    }
+  },
+  "productionSection": {
+    "title": "本番ワークロードで信頼されています"
+  },
+  "banner": "🚀 Zilliz Cloudを無料で試す、完全管理型のMilvus—10倍の高速パフォーマンスを体験しよう！<0>今すぐ試す>></0>"
+}

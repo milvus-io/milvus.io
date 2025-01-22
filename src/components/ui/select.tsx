@@ -14,8 +14,9 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
     open?: boolean;
+    endIcon?: React.ReactNode;
   }
->(({ className, children, open, ...props }, ref) => (
+>(({ className, children, open, endIcon, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -26,12 +27,14 @@ const SelectTrigger = React.forwardRef<
   >
     {children as React.ReactNode}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown
-        strokeWidth={1.3}
-        className={cn('h-5 w-5 transition-all', {
-          'transform rotate-180': open,
-        })}
-      />
+      {endIcon ?? (
+        <ChevronDown
+          strokeWidth={1.3}
+          className={cn('h-5 w-5 transition-all', {
+            'transform rotate-180': open,
+          })}
+        />
+      )}
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));

@@ -1,0 +1,17 @@
+{
+  "title": "404: Halaman Tidak Ditemukan",
+  "content": "Ups! Sepertinya Anda mengambil jalan yang salah.<0></0>Halaman yang Anda cari sepertinya tidak ada.",
+  "subtitle": "Tapi jangan khawatir, Anda bisa kembali ke tempat yang Anda tuju:",
+  "docs": "Dokumentasi Milvus",
+  "homepage": "Beranda",
+  "tutorial": "Tutorial Milvus & GenAI",
+  "explore": {
+    "title": "Atau, jelajahi sesuatu yang baru:",
+    "desc": "Sementara Anda di sini, lihat sumber daya terbaru ini.",
+    "whatIsMilvus": {
+      "title": "Apa itu Milvus?",
+      "desc": "Semua yang perlu Anda ketahui tentang Milvus dalam waktu kurang dari 10 menit.",
+      "learnMore": "Pelajari Lebih Lanjut"
+    }
+  }
+}

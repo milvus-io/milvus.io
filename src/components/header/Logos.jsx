@@ -4,12 +4,14 @@ import Link from 'next/link';
 import GitHubButton from '../githubButton';
 import { useState, useEffect } from 'react';
 import { getGithubStatics } from '@/http/milvus';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export const LogoSection = props => {
   const foundationLogo = '/images/lf_logo.png';
+  const { getLocalePath } = useGlobalLocale();
   return (
     <div className={classes.logoSection}>
-      <Link href="/" className="inline-flex items-center">
+      <Link href={getLocalePath('/')} className="inline-flex items-center">
         <img src="/images/milvus_logo.svg" height={24} alt="milvus-logo" />
       </Link>
       <div className="w-[1px] h-[20px] bg-black3 mx-[8px]" />

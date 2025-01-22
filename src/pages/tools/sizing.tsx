@@ -16,6 +16,7 @@ import {
 import { InfoFilled } from '@/components/icons';
 import ZillizAdv from '@/parts/blogs/zillizAdv';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
+import { LanguageEnum } from '@/types/localization';
 
 const etcdBaseValue = {
   cpu: 0,
@@ -69,8 +70,13 @@ const kafkaBaseValue = {
   },
 };
 
-export default function SizingTool() {
-  const { t } = useTranslation('sizingTool');
+type Props = {
+  locale: LanguageEnum;
+};
+
+export default function SizingTool(props: Props) {
+  const { locale = LanguageEnum.ENGLISH } = props;
+  const { t } = useTranslation('sizingTool', { lng: locale });
   const [calculatedResult, setCalculatedResult] = useState<ICalculateResult>({
     rawDataSize: 0,
     memorySize: 0,

@@ -1,0 +1,17 @@
+{
+  "title": "404: 页面未找到",
+  "content": "糟糕！看起来你走错了路。<0></0>你寻找的页面似乎不存在。",
+  "subtitle": "但不用担心，你可以回到你需要的地方：",
+  "docs": "Milvus 文档",
+  "homepage": "首页",
+  "tutorial": "Milvus 与 GenAI 教程",
+  "explore": {
+    "title": "或者，探索一些新东西：",
+    "desc": "既然你在这里，不妨看看这些最新的资源。",
+    "whatIsMilvus": {
+      "title": "什么是 Milvus？",
+      "desc": "在不到 10 分钟内了解你需要知道的有关 Milvus 的一切。",
+      "learnMore": "了解更多"
+    }
+  }
+}

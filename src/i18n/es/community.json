@@ -1,0 +1,48 @@
+{
+  "title": "Únete a la Comunidad",
+  "ctaLabel": "Únete ahora",
+  "officeHours": {
+    "title": "Obtén Ayuda de Expertos en las Horas de Oficina de Milvus",
+    "content": "Reserva una sesión gratuita 1:1 para obtener ayuda con tu implementación de producción de Zilliz, los expertos en Milvus.",
+    "button": "Reserva Tu Sesión"
+  },
+  "community": {
+    "title": "Bienvenido a la Comunidad de Milvus",
+    "content": "La comunidad de Milvus está compuesta por usuarios y colaboradores de código abierto que comparten nuevas ideas, colaboran en proyectos y promueven el aprendizaje. Nuestros miembros de la comunidad de código abierto contribuyen con código, asisten a eventos, abogan por una mayor adopción de Milvus y realizan muchas otras contribuciones valiosas. Sigue leyendo para aprender cómo puedes involucrarte y formar parte de esta increíble comunidad.",
+    "features": {
+      "learn": {
+        "title": "Aprende",
+        "content": "Amplía tus conocimientos y habilidades en tecnologías de bases de datos vectoriales."
+      },
+      "build": {
+        "title": "Construye",
+        "content": "Contribuye al desarrollo de Milvus a través de la colaboración de código abierto."
+      },
+      "share": {
+        "title": "Comparte",
+        "content": "Comparte las mejores prácticas y lecciones aprendidas con la comunidad en general."
+      }
+    }
+  },
+  "resource": "Recursos",
+  "mail": {
+    "title": "Listas de Correo",
+    "mailList": {
+      "meeting": {
+        "title": "Reunión Técnica de Milvus",
+        "content": "Únete a nuestra próxima reunión para participar en la discusión y toma de decisiones sobre las últimas características y la línea de tiempo de desarrollo de Milvus.",
+        "cta": "Aprende más"
+      },
+      "event": {
+        "title": "Evento",
+        "content": "Organizamos eventos con frecuencia. Haz clic para encontrar los próximos eventos cerca de ti.",
+        "cta": "Más Eventos"
+      },
+      "video": {
+        "title": "Video",
+        "content": "Subimos videos con frecuencia. Haz clic para ver tutoriales en video, repeticiones de seminarios web y otros contenidos de video.",
+        "cta": "Más Videos"
+      }
+    }
+  }
+}

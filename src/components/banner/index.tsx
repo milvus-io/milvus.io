@@ -1,9 +1,11 @@
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import classes from './index.module.less';
 import { useTranslation, Trans } from 'react-i18next';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function CloudBanner() {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
 
   return (
     <div className={classes.bannerContainer}>

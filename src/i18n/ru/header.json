@@ -1,0 +1,38 @@
+{
+  "intro": {
+    "label": "Почему Milvus",
+    "definition": "Что такое Milvus",
+    "cases": "Варианты использования"
+  },
+  "docs": "Документы",
+  "tutorials": {
+    "label": "Учебные пособия",
+    "codelabs": "Codelabs",
+    "bootcamp": "Bootcamp",
+    "demo": "Демо",
+    "video": "Видео"
+  },
+  "tools": {
+    "label": "Инструменты",
+    "attu": "Attu",
+    "cli": "Milvus CLI",
+    "sizing": "Инструмент размещения",
+    "backup": "Резервное копирование Milvus",
+    "vts": "VTS"
+  },
+  "blog": "Блог",
+  "community": "Сообщество",
+  "start": "Начать",
+  "star": "Звезда",
+  "contact": "Связаться с нами",
+  "footer": {
+    "resource": {
+      "managed": "Управляемый Milvus"
+    },
+    "tools": {
+      "sizing": "Инструмент для расчета размера Milvus",
+      "backup": "Инструмент для резервного копирования Milvus",
+      "vts": "Сервис передачи векторов (VTS)"
+    }
+  }
+}

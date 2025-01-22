@@ -1,0 +1,40 @@
+{
+  "trending": "TRENDING",
+  "recent": {
+    "most": "NEUESTE",
+    "release": "VERÖFFENTLICHUNGEN & VERANSTALTUNGEN"
+  },
+  "subscribe": {
+    "title": "Seien Sie der Erste, der es erfährt",
+    "desc": "Erhalten Sie Updates zu Milvus-Veröffentlichungen und Tutorials von Zilliz, dem Schöpfer und Hauptverantwortlichen von Milvus."
+  },
+  "filter": {
+    "all": "ALLE",
+    "engineering": "Technik",
+    "announcements": "Ankündigungen",
+    "tutorials": "Tutorials",
+    "usecases": "Anwendungsfälle"
+  },
+  "aiService": {
+    "title": "Fragen Sie mich alles über Milvus!",
+    "desc": "Ein KI-Assistent, der auf Dokumentationen, Hilfeartikeln und anderen Inhalten trainiert wurde."
+  },
+  "zillizAdv": {
+    "title": "Problemlos und 10x schneller als Milvus",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "Anwendungsfalloptimierte Recheneinheiten für Ihre Arbeitslast",
+    "feature2": "Sicherheit auf Unternehmensebene",
+    "feature3": "Verfügbar auf AWS, GCP und Azure",
+    "btn": "Vollständig verwaltetes Milvus kostenlos testen"
+  },
+  "authors": {
+    "title": "Hauptbeitragende Autoren"
+  },
+  "homepage": {
+    "title": "Lernen Sie Milvus kennen: Einblicke und Innovationen in der VectorDB-Technologie",
+    "desc": "Erfahren Sie die Grundlagen von Vektordatenbanken, die Funktionen und Fähigkeiten von Milvus sowie technische Tutorials zur Verwaltung und Optimierung der Vektorsuche für moderne KI-Anwendungen."
+  },
+  "detail": {
+    "keepReading": "Weiterlesen"
+  }
+}

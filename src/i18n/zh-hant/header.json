@@ -1,0 +1,38 @@
+{
+  "intro": {
+    "label": "為什麼選擇 Milvus",
+    "definition": "什麼是 Milvus",
+    "cases": "使用案例"
+  },
+  "docs": "文檔",
+  "tutorials": {
+    "label": "教程",
+    "codelabs": "代碼實驗室",
+    "bootcamp": "訓練營",
+    "demo": "演示",
+    "video": "視頻"
+  },
+  "tools": {
+    "label": "工具",
+    "attu": "Attu",
+    "cli": "Milvus CLI",
+    "sizing": "配置工具",
+    "backup": "Milvus 備份",
+    "vts": "VTS"
+  },
+  "blog": "博客",
+  "community": "社區",
+  "start": "開始使用",
+  "star": "星標",
+  "contact": "聯繫我們",
+  "footer": {
+    "resource": {
+      "managed": "託管 Milvus"
+    },
+    "tools": {
+      "sizing": "Milvus 容量計算工具",
+      "backup": "Milvus 備份工具",
+      "vts": "向量傳輸服務 (VTS)"
+    }
+  }
+}

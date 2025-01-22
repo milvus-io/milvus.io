@@ -3,9 +3,11 @@ import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation, Trans } from 'react-i18next';
 import Link from 'next/link';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function VectorDatabaseSection() {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
 
   const featureList = [
     {

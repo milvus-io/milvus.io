@@ -5,8 +5,8 @@ import CustomInput from '../customInput/customInput';
 import CustomButton from '../customButton';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
-const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 const REGEX =
   /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-z]{2,}$/;
 
@@ -30,13 +30,14 @@ interface Props {
 }
 
 const SubscribeNewsletter: React.FC<Props> = props => {
+  const { locale } = useGlobalLocale();
   const {
     className: classNameProp = '',
     showAddress = false,
     withoutTitle = false,
     classes: customClasses = {},
   } = props;
-  const { t } = useTranslation(['common', 'home']);
+  const { t } = useTranslation(['common', 'home'], { lng: locale });
   const [value, setValue] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<SubscribeEnum>(
     SubscribeEnum.INIT
@@ -104,7 +105,7 @@ const SubscribeNewsletter: React.FC<Props> = props => {
               ),
               input: clsx(classes.customInput, customClasses.input),
             }}
-            placeholder="Email"
+            placeholder={t('common:email')}
             fullWidth
           />
           <p className={clsx(classes.errorMessage, customClasses.errorMessage)}>
@@ -115,7 +116,11 @@ const SubscribeNewsletter: React.FC<Props> = props => {
           onClick={handleSubmitInfo}
           size="large"
           classes={{
-            root: clsx(classes.customSubscribeButton, customClasses.button),
+            root: clsx(
+              classes.customSubscribeButton,
+              customClasses.button,
+              'whitespace-nowrap'
+            ),
           }}
         >
           {btnTextMap[subscribeStatus]}

@@ -6,9 +6,11 @@ import { RightWholeArrow } from '@/components/icons';
 import CustomButton from '@/components/customButton';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import Link from 'next/link';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function DeploySection() {
-  const { t } = useTranslation('home');
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('home', { lng: locale });
 
   const milvusTypes = [
     {

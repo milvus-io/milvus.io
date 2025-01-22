@@ -24,9 +24,9 @@ export default function Homepage(props: {
         <CodeExampleSection />
         <DeploySection />
         <AIToolsSection />
+        <DevelopSection />
         <LovedSection />
         <ProductionSection />
-        <DevelopSection />
         <MeetupsSection />
         <VectorDatabaseSection />
       </main>

@@ -103,8 +103,8 @@
       ]
     },
     "cloud": {
-      "title": "Zilliz Cloud",
-      "advantage": "完全托管，最小化運營",
+      "title": "Zilliz Cloud（完全託管的 Milvus）",
+      "advantage": "無煩惱，比 Milvus 快 10 倍",
       "features": [
         "提供無服務器和專用集群兩種選項",
         "SaaS 和 BYOC 選項以滿足不同的安全和合規要求"

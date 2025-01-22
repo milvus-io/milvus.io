@@ -103,8 +103,8 @@
       ]
     },
     "cloud": {
-      "title": "Zilliz Cloud",
-      "advantage": "Sepenuhnya terkelola dengan operasi minimal",
+      "title": "Zilliz Cloud (Milvus dikelola sepenuhnya)",
+      "advantage": "Tanpa repot dan 10 kali lebih cepat dari Milvus",
       "features": [
         "Tersedia dalam serverless dan kluster khusus",
         "Opsi SaaS dan BYOC untuk persyaratan keamanan dan kepatuhan yang berbeda"

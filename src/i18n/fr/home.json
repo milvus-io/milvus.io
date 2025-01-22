@@ -103,8 +103,8 @@
       ]
     },
     "cloud": {
-      "title": "Zilliz Cloud",
-      "advantage": "Entièrement géré avec un minimum d'opérations",
+      "title": "Zilliz Cloud (Milvus entièrement géré)",
+      "advantage": "Sans problème et 10 fois plus rapide que Milvus",
       "features": [
         "Disponible en version serverless et en cluster dédié",
         "Options SaaS et BYOC pour différents besoins de sécurité et de conformité"

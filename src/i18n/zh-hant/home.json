@@ -136,5 +136,9 @@
   "productionSection": {
     "title": "值得信賴的生產工作負擔"
   },
-  "banner": "🚀 免費嘗試 Zilliz Cloud，完全托管的 Milvus，體驗速度提升 10 倍！<0>立即嘗試</0>"
+  "banner": "🚀 免費嘗試 Zilliz Cloud，完全托管的 Milvus，體驗速度提升 10 倍！<0>立即嘗試</0>",
+  "meta": {
+    "title": "Milvus | 高性能向量資料庫，為規模而構建",
+    "description": "Milvus 是一個為 GenAI 應用構建的開源向量資料庫。使用 pip 安裝，執行高速搜索，並擴展到數十億個向量。"
+  }
 }

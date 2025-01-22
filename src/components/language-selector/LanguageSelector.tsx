@@ -208,7 +208,7 @@ export const LanguageSelector: FC<Props> = props => {
           <LanguageIcon className="transition-all" />
           {!hiddenSelectValue && <SelectValue placeholder="Language" />}
         </SelectTrigger>
-        <SelectContent className="z-[1000]">
+        <SelectContent className="z-[1000] shadow-nav-menu mt-[8px]">
           <SelectGroup>
             {options.map(option => {
               return (

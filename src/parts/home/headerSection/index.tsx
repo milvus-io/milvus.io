@@ -59,7 +59,7 @@ export default function HomePageHeaderSection(props: {
             {t('buttons.quickStart')}
           </CustomButton>
           <CustomButton
-            href="/intro"
+            href="/docs/overview.md"
             size="large"
             variant="outlined"
             classes={{

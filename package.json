@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/migrateAssets.js && next dev -p 8000",
+    "dev": "concurrently --names \"next,i18n\" --prefix-colors \"bgBlack.bold,bgCyan.bold\" \"npm run dev:fe\" \"npm run i18n:watch\"",
+    "dev:fe": "node scripts/migrateAssets.js && next dev -p 8000",
     "build": "node scripts/migrateAssets.js && next build",
     "postbuild": "next-sitemap --config sitemap.config.js",
     "start": "http-server ./out",
     "lint": "next lint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "i18n:watch": "node i18n-watcher/index.js",
+    "i18n:scan": "node i18n-watcher/scan.js",
+    "i18n:sync": "NODE_ENV=development node i18n-watcher/translate-changes.js"
   },
   "dependencies": {
     "@docsearch/react": "^3.2.1",
@@ -83,6 +87,10 @@
     "@types/node": "^20.11.26",
     "@types/react": "^18.2.65",
     "autoprefixer": "^10.4.19",
+    "chalk": "4.1.2",
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.1.2",
+    "dotenv": "^16.4.7",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.2",
     "http-server": "^14.1.1",

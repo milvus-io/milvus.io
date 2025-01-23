@@ -1,0 +1,46 @@
+name: I18n Sync Translation
+
+on:
+  push:
+    branches:
+      - master
+      - preview
+    paths:
+      - 'i18n-watcher/changes/**'
+  workflow_dispatch:
+
+jobs:
+  i18n_sync_translation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Sync translation
+        run: |
+          node i18n-watcher/translate-changes.js
+        env:
+          NODE_ENV: production
+          DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
+
+      - name: Commit and push
+        run: |
+          git config --global user.email "Milvus-doc-bot@zilliz.com"
+          git config --global user.name "Milvus-doc-bot"
+          git add .
+          git commit -m "i18n: sync translation"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true

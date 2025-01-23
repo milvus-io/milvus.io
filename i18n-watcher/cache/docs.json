@@ -1,0 +1,36 @@
+{
+  "title": "Milvus Documentation",
+  "metaTitle": "Milvus vector database documentation",
+  "homepageDesc": "Milvus {{version}} documentation",
+  "feedback": {
+    "title": "Feedback",
+    "prompt": "Was this page helpful?",
+    "comment": {
+      "title": "Send us your feedback",
+      "desc": "Thank you for helping us improve Milvus documentation.",
+      "inputLabel": "Additional comment (optional)",
+      "cancel": "Cancel",
+      "send": "Send"
+    },
+    "thanks": "Thanks for your valuable feedback!"
+  },
+  "docAction": {
+    "edit": "Edit this page",
+    "issue": "Create an issue"
+  },
+  "anchors": {
+    "title": "Table of contents"
+  },
+  "navigation": {
+    "title": "Home"
+  },
+  "translate": {
+    "by": "Translated by"
+  },
+  "advertise": {
+    "content": "Zilliz Cloud is hassle-free, powered by Milvus and 10x faster.",
+    "ctaLabel": "Get Started",
+    "titleA": "Try Managed Milvus for Free",
+    "titleB": "Try Zilliz Cloud for Free"
+  }
+}

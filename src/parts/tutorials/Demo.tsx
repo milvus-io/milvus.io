@@ -4,7 +4,7 @@ import classes from '@/styles/milvusDemos.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import DemoCard from '@/components/card/DemoCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { CustomizedSnackbars } from '@/components/snackBar';
 import { ABSOLUTE_BASE_URL } from '@/consts';
@@ -121,6 +121,18 @@ export function MilvusDemos(props: Props) {
       message: '',
     });
   };
+
+  useEffect(() => {
+    const test = async () => {
+      try {
+        await fetch('http://localhost:8000/_next/data/health');
+      } catch (error) {
+        console.log('error--', error);
+      }
+    };
+
+    test();
+  }, []);
 
   return (
     <main>

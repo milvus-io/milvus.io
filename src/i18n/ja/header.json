@@ -27,7 +27,8 @@
   "contact": "お問い合わせ",
   "footer": {
     "resource": {
-      "managed": "マネージド Milvus"
+      "managed": "マネージド Milvus",
+      "contact": "お問い合わせ"
     },
     "tools": {
       "sizing": "Milvus サイジングツール",

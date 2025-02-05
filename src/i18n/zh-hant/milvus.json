@@ -1,5 +1,11 @@
 {
   "v3trans": {
+    "404": {
+      "title": "哎呀...出了點問題！",
+      "desc1": "看起來你走得太遠了！",
+      "desc2": "我們找不到你要找的頁面:(",
+      "gobtn": "前往首頁"
+    },
     "desc": "所有 V3 翻譯內容將放在這裡",
     "home": {
       "banner": {
@@ -118,12 +124,6 @@
       "communitytitle": "加入我們的社區",
       "customer": "最受企業用戶歡迎的向量數據庫"
     },
-    "404": {
-      "title": "哎呀...出了點問題！",
-      "desc1": "看起來你走得太遠了！",
-      "desc2": "我們找不到你要找的頁面:(",
-      "gobtn": "前往首頁"
-    },
     "signup": {
       "emailerror": "電子郵件格式錯誤",
       "thankyou": "謝謝，你已加入我們的郵件列表！",
@@ -178,86 +178,6 @@
     "cookie": {
       "title": "我們如何使用 Cookie",
       "desc": "本網站將 Cookie 存儲在你的計算機上。繼續瀏覽或點擊“接受”，即表示你同意在設備上存儲 Cookie 以增強你的網站體驗並用於分析目的。"
-    },
-    "sizingTool": {
-      "title": "Milvus 規模計算工具",
-      "subTitle": "注意：所有建議均基於我們的實驗室數據計算，你應在部署到生產環境之前根據自己的測試進行調整。",
-
-      "labels": {
-        "dataSize": "選擇數據大小",
-        "vector": "向量數量（百萬）",
-        "dimension": "維度",
-        "index": "索引類型",
-        "indexType": "選擇索引類型",
-        "indexParam": "選擇索引參數",
-        "m": "M（節點的最大度數）",
-        "segmentSize": "選擇段大小",
-        "segment": "段（MB）"
-      },
-
-      "capacity": "近似容量",
-      "memory": "加載內存",
-      "fileSize": "原始文件大小",
-      "setups": {
-        "title": "最小 Milvus 集群設置",
-        "rootCoord": {
-          "title": "根協調器",
-          "tooltip": "根協調器處理數據定義語言（DDL）和數據控制語言（DCL）請求，例如創建或刪除集合、分區或索引，以及管理 TSO（時間戳 Oracle）和時間滴答發行。"
-        },
-        "queryCoord": {
-          "title": "查詢協調器",
-          "tootip": "查詢協調器管理查詢節點的拓撲和負載平衡，並處理從增長段到封閉段的切換。"
-        },
-        "dataCoord": {
-          "title": "數據協調器",
-          "tooltip": "數據協調器管理數據節點的拓撲，維護元數據，並觸發刷新、壓縮和其他後台數據操作。"
-        },
-        "indexCoord": {
-          "title": "索引協調器",
-          "tooltip": "索引協調器管理索引節點的拓撲，構建索引，並維護索引元數據。"
-        },
-        "proxy": {
-          "title": "代理",
-          "tooltip": "代理是系統的訪問層和用戶的端點。它驗證客戶端請求並減少返回的結果。"
-        },
-        "queryNode": {
-          "title": "查詢節點",
-          "tooltip": "查詢節點通過訂閱日誌代理檢索增量日誌數據並將其轉換為增長段，從對象存儲加載歷史數據，並在向量和標量數據之間運行混合搜索。"
-        },
-        "dataNode": {
-          "title": "數據節點",
-          "tooltip": "數據節點通過訂閱日誌代理檢索增量日誌數據，處理變更請求，並將日誌數據打包成日誌快照並存儲在對象存儲中。"
-        },
-        "indexNode": {
-          "title": "索引節點",
-          "tooltip": "索引節點構建索引。索引節點不需要常駐內存，可以使用無服務器框架實現。"
-        },
-        "etcd": {
-          "title": "ETCD"
-        },
-        "minio": {
-          "title": "Minio"
-        },
-        "pulsar": {
-          "title": "Pulsar"
-        },
-        "kafka": {
-          "title": "Kafka"
-        },
-        "bookie": "Bookie",
-        "broker": "Broker",
-        "proxyLabel": "Proxy",
-        "zookeeper": "Zookeeper"
-      },
-      "buttons": {
-        "helm": "下載 Helm Chart 配置 yml",
-        "operator": "下載 Milvus Operator 配置 yml",
-        "guide": "查看安裝指南"
-      },
-      "installGuide": {
-        "helm": "Helm 安裝指南",
-        "operator": "Operator 安裝指南"
-      }
     },
     "slack": {
       "title": "Milvus Slack 社區",

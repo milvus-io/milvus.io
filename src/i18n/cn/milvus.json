@@ -1,5 +1,11 @@
 {
   "v3trans": {
+    "404": {
+      "title": "哎呀...出错了！",
+      "desc1": "看起来你走得太远了！",
+      "desc2": "我们找不到你要找的页面:(",
+      "gobtn": "前往首页"
+    },
     "desc": "所有 V3 翻译内容将放在这里",
     "home": {
       "banner": {
@@ -118,12 +124,6 @@
       "communitytitle": "加入我们的社区",
       "customer": "最受企业用户欢迎的向量数据库"
     },
-    "404": {
-      "title": "哎呀...出错了！",
-      "desc1": "看起来你走得太远了！",
-      "desc2": "我们找不到你要找的页面:(",
-      "gobtn": "前往首页"
-    },
     "signup": {
       "emailerror": "邮箱格式错误",
       "thankyou": "谢谢你，你已加入我们的邮件列表！",
@@ -178,86 +178,6 @@
     "cookie": {
       "title": "我们如何使用 Cookie",
       "desc": "本网站在你的计算机上存储 Cookie。继续浏览或点击“接受”，即表示你同意在你的设备上存储 Cookie 以增强你的网站体验并用于分析目的。"
-    },
-    "sizingTool": {
-      "title": "Milvus 容量计算工具",
-      "subTitle": "注意：所有建议均基于我们的实验室数据计算，你在部署到生产环境之前应根据自己的测试进行调整。",
-
-      "labels": {
-        "dataSize": "选择数据大小",
-        "vector": "向量数量（百万）",
-        "dimension": "维度",
-        "index": "索引类型",
-        "indexType": "选择索引类型",
-        "indexParam": "选择索引参数",
-        "m": "M（节点的最大度数）",
-        "segmentSize": "选择段大小",
-        "segment": "段（MB）"
-      },
-
-      "capacity": "近似容量",
-      "memory": "加载内存",
-      "fileSize": "原始文件大小",
-      "setups": {
-        "title": "最小 Milvus 集群设置",
-        "rootCoord": {
-          "title": "根协调器",
-          "tooltip": "根协调器处理数据定义语言（DDL）和数据控制语言（DCL）请求，例如创建或删除集合、分区或索引，以及管理 TSO（时间戳 Oracle）和时间戳发放。"
-        },
-        "queryCoord": {
-          "title": "查询协调器",
-          "tootip": "查询协调器管理查询节点的拓扑和负载均衡，并处理从增长段到密封段的切换。"
-        },
-        "dataCoord": {
-          "title": "数据协调器",
-          "tooltip": "数据协调器管理数据节点的拓扑，维护元数据，并触发刷新、压缩和其他后台数据操作。"
-        },
-        "indexCoord": {
-          "title": "索引协调器",
-          "tooltip": "索引协调器管理索引节点的拓扑，构建索引并维护索引元数据。"
-        },
-        "proxy": {
-          "title": "代理",
-          "tooltip": "代理是系统的访问层和用户的端点。它验证客户端请求并减少返回的结果。"
-        },
-        "queryNode": {
-          "title": "查询节点",
-          "tooltip": "查询节点通过订阅日志代理检索增量日志数据并将其转换为增长段，从对象存储加载历史数据，并在向量和标量数据之间运行混合搜索。"
-        },
-        "dataNode": {
-          "title": "数据节点",
-          "tooltip": "数据节点通过订阅日志代理检索增量日志数据，处理变更请求，并将日志数据打包为日志快照并存储在对象存储中。"
-        },
-        "indexNode": {
-          "title": "索引节点",
-          "tooltip": "索引节点构建索引。索引节点不需要常驻内存，可以使用无服务器框架实现。"
-        },
-        "etcd": {
-          "title": "ETCD"
-        },
-        "minio": {
-          "title": "Minio"
-        },
-        "pulsar": {
-          "title": "Pulsar"
-        },
-        "kafka": {
-          "title": "Kafka"
-        },
-        "bookie": "Bookie",
-        "broker": "Broker",
-        "proxyLabel": "代理",
-        "zookeeper": "Zookeeper"
-      },
-      "buttons": {
-        "helm": "下载 Helm Chart 配置 yml",
-        "operator": "下载 Milvus Operator 配置 yml",
-        "guide": "查看安装指南"
-      },
-      "installGuide": {
-        "helm": "Helm 安装指南",
-        "operator": "Operator 安装指南"
-      }
     },
     "slack": {
       "title": "Milvus Slack 社区",

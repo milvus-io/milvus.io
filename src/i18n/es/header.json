@@ -27,7 +27,8 @@
   "contact": "Contáctenos",
   "footer": {
     "resource": {
-      "managed": "Milvus Gestionado"
+      "managed": "Milvus Gestionado",
+      "contact": "Contacte con nosotros"
     },
     "tools": {
       "sizing": "Herramienta de Dimensionamiento de Milvus",

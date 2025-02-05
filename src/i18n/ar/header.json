@@ -27,7 +27,8 @@
   "contact": "تواصل معنا",
   "footer": {
     "resource": {
-      "managed": "Milvus المدار"
+      "managed": "Milvus المدار",
+      "contact": "اتصل بنا"
     },
     "tools": {
       "sizing": "أداة تحديد حجم Milvus",

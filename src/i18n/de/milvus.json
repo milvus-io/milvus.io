@@ -394,7 +394,11 @@
     },
     "banner": {
       "entry": "Hacktoberfest ist da! Tauchen Sie mit Milvus in Open Source ein. Jetzt beitreten",
-      "title": ["Cloud-nativ.", "Hochskalierbar.", "Blitzschnell."],
+      "title": [
+        "Cloud-nativ.",
+        "Hochskalierbar.",
+        "Blitzschnell."
+      ],
       "subTitle": "Milvus",
       "text": "Open-Source-Vektordatenbank für unstrukturierte Daten",
       "startBtn": {
@@ -590,7 +594,11 @@
     },
     "fifthSection": {
       "title": "Probleme",
-      "listHeader": ["Komponente", "Beschreibung", "Problem / Richtlinien"],
+      "listHeader": [
+        "Komponente",
+        "Beschreibung",
+        "Problem / Richtlinien"
+      ],
       "list": [
         {
           "cate": "Milvus-Code",
@@ -679,6 +687,12 @@
     }
   },
   "v3trans": {
+    "404": {
+      "title": "Hoppla... etwas ist schiefgelaufen!",
+      "desc1": "Sieht so aus, als wären Sie zu weit abgekommen!",
+      "desc2": "Wir können die gesuchte Seite nicht finden:(",
+      "gobtn": "Zur Startseite gehen"
+    },
     "desc": "Alles für die V3-Übersetzung wird hier abgelegt",
     "home": {
       "banner": {
@@ -797,12 +811,6 @@
       "communitytitle": "Treten Sie unserer Community bei",
       "customer": "Die beliebteste Vektordatenbank für Unternehmensbenutzer"
     },
-    "404": {
-      "title": "Hoppla... etwas ist schiefgelaufen!",
-      "desc1": "Sieht so aus, als wären Sie zu weit abgekommen!",
-      "desc2": "Wir können die gesuchte Seite nicht finden:(",
-      "gobtn": "Zur Startseite gehen"
-    },
     "signup": {
       "emailerror": "E-Mail-Formatfehler",
       "thankyou": "Vielen Dank, Sie wurden unserer Mailingliste hinzugefügt!",
@@ -857,86 +865,6 @@
     "cookie": {
       "title": "Wie wir Cookies verwenden",
       "desc": "Diese Website speichert Cookies auf Ihrem Computer. Durch das weitere Surfen oder Klicken auf „Akzeptieren“ erklären Sie sich mit der Speicherung von Cookies auf Ihrem Gerät einverstanden, um Ihre Website-Erfahrung zu verbessern und für analytische Zwecke."
-    },
-    "sizingTool": {
-      "title": "Milvus Dimensionierungstool",
-      "subTitle": "Hinweis: Alle Empfehlungen basieren auf unseren Labordaten. Sie sollten sie mit Ihren eigenen Tests anpassen, bevor Sie sie in der Produktion einsetzen.",
-
-      "labels": {
-        "dataSize": "Datenmenge auswählen",
-        "vector": "Anzahl der Vektoren (Millionen)",
-        "dimension": "Dimensionen",
-        "index": "Indextyp",
-        "indexType": "Indextyp auswählen",
-        "indexParam": "Indexparameter auswählen",
-        "m": "M (Maximaler Grad des Knotens)",
-        "segmentSize": "Segmentgröße auswählen",
-        "segment": "Segment (MB)"
-      },
-
-      "capacity": "Ungefähre Kapazität",
-      "memory": "Ladespeicher",
-      "fileSize": "Rohdatengröße",
-      "setups": {
-        "title": "Minimale Milvus-Cluster-Einrichtung",
-        "rootCoord": {
-          "title": "Root Coord",
-          "tooltip": "Root Coord verarbeitet Datenbeschreibungssprache (DDL) und Datenkontrollsprache (DCL) Anfragen, wie das Erstellen oder Löschen von Sammlungen, Partitionen oder Indizes, sowie die Verwaltung von TSO (Timestamp Oracle) und Zeitgeberausgabe."
-        },
-        "queryCoord": {
-          "title": "Query Coord",
-          "tootip": "Query Coord verwaltet die Topologie und den Lastenausgleich für die Abfrageknoten und übergibt wachsende Segmente an versiegelte Segmente."
-        },
-        "dataCoord": {
-          "title": "Data Coord",
-          "tooltip": "Data Coord verwaltet die Topologie der Datenknoten, pflegt Metadaten und löst Hintergrunddatenoperationen wie Flush, Compact und andere aus."
-        },
-        "indexCoord": {
-          "title": "Index Coord",
-          "tooltip": "Index Coord verwaltet die Topologie der Indexknoten, baut Indizes auf und pflegt Indexmetadaten."
-        },
-        "proxy": {
-          "title": "Proxy",
-          "tooltip": "Proxy ist die Zugriffsschicht des Systems und der Endpunkt für Benutzer. Es validiert Client-Anfragen und reduziert die zurückgegebenen Ergebnisse."
-        },
-        "queryNode": {
-          "title": "Query Node",
-          "tooltip": "Query Node ruft inkrementelle Protokolldaten ab und wandelt sie in wachsende Segmente um, indem es den Log-Broker abonniert, lädt historische Daten aus dem Objektspeicher und führt Hybridsuchen zwischen Vektor- und Skalardaten durch."
-        },
-        "dataNode": {
-          "title": "Data Node",
-          "tooltip": "Data Node ruft inkrementelle Protokolldaten ab, indem es den Log-Broker abonniert, verarbeitet Mutationsanfragen und packt Protokolldaten in Protokoll-Snapshots und speichert sie im Objektspeicher."
-        },
-        "indexNode": {
-          "title": "Index Node",
-          "tooltip": "Index Node baut Indizes auf. Indexknoten müssen nicht im Speicher resident sein und können mit dem serverlosen Framework implementiert werden."
-        },
-        "etcd": {
-          "title": "ETCD"
-        },
-        "minio": {
-          "title": "Minio"
-        },
-        "pulsar": {
-          "title": "Pulsar"
-        },
-        "kafka": {
-          "title": "Kafka"
-        },
-        "bookie": "Bookie",
-        "broker": "Broker",
-        "proxyLabel": "Proxy",
-        "zookeeper": "Zookeeper"
-      },
-      "buttons": {
-        "helm": "Helm Chart Konfigurations-YML herunterladen",
-        "operator": "Milvus Operator Konfigurations-YML herunterladen",
-        "guide": "Installationsanleitung anzeigen"
-      },
-      "installGuide": {
-        "helm": "Helm Installationsanleitung",
-        "operator": "Operator Installationsanleitung"
-      }
     },
     "slack": {
       "title": "Milvus Slack-Community",

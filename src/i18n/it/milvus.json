@@ -1,5 +1,11 @@
 {
   "v3trans": {
+    "404": {
+      "title": "Uoops...qualcosa è andato storto!",
+      "desc1": "Sembra che tu ti sia allontanato troppo!",
+      "desc2": "Non riusciamo a trovare la pagina che stai cercando:(",
+      "gobtn": "Vai alla pagina principale"
+    },
     "desc": "tutto per la traduzione V3 sarà messo qui",
     "home": {
       "banner": {
@@ -118,12 +124,6 @@
       "communitytitle": "Unisciti alla nostra comunità",
       "customer": "Il database vettoriale più popolare per gli utenti aziendali"
     },
-    "404": {
-      "title": "Uoops...qualcosa è andato storto!",
-      "desc1": "Sembra che tu ti sia allontanato troppo!",
-      "desc2": "Non riusciamo a trovare la pagina che stai cercando:(",
-      "gobtn": "Vai alla pagina principale"
-    },
     "signup": {
       "emailerror": "Errore nel formato dell'email",
       "thankyou": "Grazie, sei stato aggiunto alla nostra mailing list!",
@@ -178,86 +178,6 @@
     "cookie": {
       "title": "Come utilizziamo i cookie",
       "desc": "Questo sito web memorizza i cookie sul tuo computer. Continuando a navigare o cliccando su 'Accetta', accetti la memorizzazione dei cookie sul tuo dispositivo per migliorare la tua esperienza sul sito e per scopi analitici."
-    },
-    "sizingTool": {
-      "title": "Strumento di Dimensionamento Milvus",
-      "subTitle": "Nota: tutte le raccomandazioni sono calcolate in base ai dati del nostro laboratorio, dovresti adattarle con i tuoi test prima di distribuire in produzione.",
-
-      "labels": {
-        "dataSize": "Scegli la dimensione dei dati",
-        "vector": "Numero di vettori (Milioni)",
-        "dimension": "Dimensioni",
-        "index": "Tipo di Indice",
-        "indexType": "Scegli il tipo di indice",
-        "indexParam": "Scegli i parametri dell'indice",
-        "m": "M (Grado massimo del nodo)",
-        "segmentSize": "Scegli la dimensione del segmento",
-        "segment": "Segmento (MB)"
-      },
-
-      "capacity": "Capacità approssimativa",
-      "memory": "Memoria di Caricamento",
-      "fileSize": "Dimensione del file grezzo",
-      "setups": {
-        "title": "Configurazione minima del cluster Milvus",
-        "rootCoord": {
-          "title": "Root Coord",
-          "tooltip": "Root coord gestisce le richieste di linguaggio di definizione dei dati (DDL) e di linguaggio di controllo dei dati (DCL), come creare o eliminare collezioni, partizioni o indici, oltre a gestire TSO (timestamp Oracle) e l'emissione del time ticker."
-        },
-        "queryCoord": {
-          "title": "Query Coord",
-          "tootip": "Query coord gestisce la topologia e il bilanciamento del carico per i nodi di query e il passaggio dai segmenti in crescita ai segmenti sigillati."
-        },
-        "dataCoord": {
-          "title": "Data Coord",
-          "tooltip": "Data coord gestisce la topologia dei nodi di dati, mantiene i metadati e attiva flush, compact e altre operazioni di dati in background."
-        },
-        "indexCoord": {
-          "title": "Index Coord",
-          "tooltip": "Index coord gestisce la topologia dei nodi di indice, costruisce l'indice e mantiene i metadati dell'indice."
-        },
-        "proxy": {
-          "title": "Proxy",
-          "tooltip": "Proxy è il livello di accesso del sistema e l'endpoint per gli utenti. Convalida le richieste dei client e riduce i risultati restituiti."
-        },
-        "queryNode": {
-          "title": "Query Node",
-          "tooltip": "Query node recupera i dati di log incrementali e li trasforma in segmenti in crescita sottoscrivendo il log broker, carica i dati storici dall'object storage ed esegue ricerche ibride tra dati vettoriali e scalari."
-        },
-        "dataNode": {
-          "title": "Data Node",
-          "tooltip": "Data node recupera i dati di log incrementali sottoscrivendo il log broker, elabora le richieste di mutazione e impacchetta i dati di log in snapshot di log e li memorizza nell'object storage."
-        },
-        "indexNode": {
-          "title": "Index Node",
-          "tooltip": "Index node costruisce gli indici. I nodi di indice non devono risiedere in memoria e possono essere implementati con il framework serverless."
-        },
-        "etcd": {
-          "title": "ETCD"
-        },
-        "minio": {
-          "title": "Minio"
-        },
-        "pulsar": {
-          "title": "Pulsar"
-        },
-        "kafka": {
-          "title": "Kafka"
-        },
-        "bookie": "Bookie",
-        "broker": "Broker",
-        "proxyLabel": "Proxy",
-        "zookeeper": "Zookeeper"
-      },
-      "buttons": {
-        "helm": "Scarica la configurazione yml di Helm Chart",
-        "operator": "Scarica la configurazione yml di Milvus Operator",
-        "guide": "Visualizza la guida all'installazione"
-      },
-      "installGuide": {
-        "helm": "Guida all'installazione di Helm",
-        "operator": "Guida all'installazione di Operator"
-      }
     },
     "slack": {
       "title": "Comunità Slack di Milvus",

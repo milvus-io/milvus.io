@@ -27,7 +27,8 @@
   "contact": "Связаться с нами",
   "footer": {
     "resource": {
-      "managed": "Управляемый Milvus"
+      "managed": "Управляемый Milvus",
+      "contact": "Свяжитесь с нами"
     },
     "tools": {
       "sizing": "Инструмент для расчета размера Milvus",

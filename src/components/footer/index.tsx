@@ -21,6 +21,7 @@ import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 type Props = {
   classes?: {
+    container?: string;
     root?: string;
     content?: string;
     nav?: string;
@@ -30,7 +31,7 @@ type Props = {
 
 const Footer = (props: Props) => {
   const { classes: customClasses = {} } = props;
-  const { root = '', content = '', nav } = customClasses;
+  const { container = '', root = '', content = '', nav } = customClasses;
   const { locale, getLocalePath } = useGlobalLocale();
   const { t } = useTranslation(['common', 'header'], { lng: locale });
 
@@ -112,7 +113,8 @@ const Footer = (props: Props) => {
     <footer
       className={clsx(
         pageClasses.homeContainer,
-        'min-h-[390px] box-border bg-[#fff] border-t-[1px] border-solid border-[#ECECEE] font-mono'
+        'min-h-[390px] box-border bg-[#fff] border-t-[1px] border-solid border-[#ECECEE] font-mono',
+        container
       )}
     >
       <div className={clsx('py-[80px]', root)}>

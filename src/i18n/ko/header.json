@@ -27,7 +27,8 @@
   "contact": "문의하기",
   "footer": {
     "resource": {
-      "managed": "관리형 Milvus"
+      "managed": "관리형 Milvus",
+      "contact": "문의하기"
     },
     "tools": {
       "sizing": "Milvus 크기 계산 도구",

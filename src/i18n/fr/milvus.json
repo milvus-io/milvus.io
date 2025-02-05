@@ -1,5 +1,11 @@
 {
   "v3trans": {
+    "404": {
+      "title": "Oups... quelque chose s'est mal passé !",
+      "desc1": "On dirait que vous vous êtes égaré trop loin !",
+      "desc2": "Nous ne trouvons pas la page que vous recherchez :(",
+      "gobtn": "Aller à la page d'accueil"
+    },
     "desc": "tout ce qui concerne la traduction V3 sera mis ici",
     "home": {
       "banner": {
@@ -118,12 +124,6 @@
       "communitytitle": "Rejoignez notre communauté",
       "customer": "La base de données vectorielle la plus populaire pour les utilisateurs entreprises"
     },
-    "404": {
-      "title": "Oups... quelque chose s'est mal passé !",
-      "desc1": "On dirait que vous vous êtes égaré trop loin !",
-      "desc2": "Nous ne trouvons pas la page que vous recherchez :(",
-      "gobtn": "Aller à la page d'accueil"
-    },
     "signup": {
       "emailerror": "Erreur de format d'email",
       "thankyou": "Merci, vous avez été ajouté à notre liste de diffusion !",
@@ -176,86 +176,6 @@
     "cookie": {
       "title": "Comment nous utilisons les cookies",
       "desc": "Ce site web stocke des cookies sur votre ordinateur. En continuant à naviguer ou en cliquant sur 'Accepter', vous acceptez le stockage de cookies sur votre appareil pour améliorer votre expérience sur le site et à des fins analytiques."
-    },
-    "sizingTool": {
-      "title": "Outil de dimensionnement de Milvus",
-      "subTitle": "Remarque : toutes les recommandations sont calculées sur la base de nos données de laboratoire, vous devriez les ajuster avec vos propres tests avant de les déployer en production.",
-
-      "labels": {
-        "dataSize": "Choisir la taille des données",
-        "vector": "Nombre de vecteurs (Millions)",
-        "dimension": "Dimensions",
-        "index": "Type d'index",
-        "indexType": "Choisir le type d'index",
-        "indexParam": "Choisir les paramètres d'index",
-        "m": "M (Degré maximum du nœud)",
-        "segmentSize": "Choisir la taille du segment",
-        "segment": "Segment (MB)"
-      },
-
-      "capacity": "Capacité approximative",
-      "memory": "Mémoire de chargement",
-      "fileSize": "Taille du fichier brut",
-      "setups": {
-        "title": "Configuration minimale du cluster Milvus",
-        "rootCoord": {
-          "title": "Coordinateur racine",
-          "tooltip": "Le coordinateur racine gère les requêtes de langage de définition de données (DDL) et de langage de contrôle de données (DCL), telles que la création ou la suppression de collections, de partitions ou d'index, ainsi que la gestion de TSO (Oracle de timestamp) et l'émission de ticks temporels."
-        },
-        "queryCoord": {
-          "title": "Coordinateur de requête",
-          "tootip": "Le coordinateur de requête gère la topologie et l'équilibrage de charge pour les nœuds de requête, et le transfert des segments en croissance vers les segments scellés."
-        },
-        "dataCoord": {
-          "title": "Coordinateur de données",
-          "tooltip": "Le coordinateur de données gère la topologie des nœuds de données, maintient les métadonnées et déclenche le flush, la compaction et d'autres opérations de données en arrière-plan."
-        },
-        "indexCoord": {
-          "title": "Coordinateur d'index",
-          "tooltip": "Le coordinateur d'index gère la topologie des nœuds d'index, construit les index et maintient les métadonnées d'index."
-        },
-        "proxy": {
-          "title": "Proxy",
-          "tooltip": "Le proxy est la couche d'accès du système et le point de terminaison pour les utilisateurs. Il valide les requêtes des clients et réduit les résultats retournés."
-        },
-        "queryNode": {
-          "title": "Nœud de requête",
-          "tooltip": "Le nœud de requête récupère les données de journal incrémentielles et les transforme en segments en croissance en s'abonnant au courtier de journaux, charge les données historiques depuis le stockage d'objets et exécute des recherches hybrides entre les données vectorielles et scalaires."
-        },
-        "dataNode": {
-          "title": "Nœud de données",
-          "tooltip": "Le nœud de données récupère les données de journal incrémentielles en s'abonnant au courtier de journaux, traite les requêtes de mutation et regroupe les données de journal en instantanés de journaux et les stocke dans le stockage d'objets."
-        },
-        "indexNode": {
-          "title": "Nœud d'index",
-          "tooltip": "Le nœud d'index construit les index. Les nœuds d'index n'ont pas besoin d'être résidents en mémoire et peuvent être implémentés avec le framework serverless."
-        },
-        "etcd": {
-          "title": "ETCD"
-        },
-        "minio": {
-          "title": "Minio"
-        },
-        "pulsar": {
-          "title": "Pulsar"
-        },
-        "kafka": {
-          "title": "Kafka"
-        },
-        "bookie": "Bookie",
-        "broker": "Broker",
-        "proxyLabel": "Proxy",
-        "zookeeper": "Zookeeper"
-      },
-      "buttons": {
-        "helm": "Télécharger la configuration yml du Helm Chart",
-        "operator": "Télécharger la configuration yml de Milvus Operator",
-        "guide": "Voir le guide d'installation"
-      },
-      "installGuide": {
-        "helm": "Guide d'installation Helm",
-        "operator": "Guide d'installation Operator"
-      }
     },
     "slack": {
       "title": "Communauté Slack Milvus",

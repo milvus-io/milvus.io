@@ -25,7 +25,8 @@
   "contact": "联系我们",
   "footer": {
     "resource": {
-      "managed": "托管 Milvus"
+      "managed": "托管 Milvus",
+      "contact": "联系我们"
     },
     "tools": {
       "sizing": "Milvus 容量计算工具",

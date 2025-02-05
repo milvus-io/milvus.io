@@ -45,6 +45,10 @@ const Footer = (props: Props) => {
           to: CLOUD_SIGNUP_LINK,
           isExternal: true,
         },
+        {
+          name: t('header:footer.resource.contact'),
+          to: getLocalePath('/contact'),
+        },
       ],
     },
     {

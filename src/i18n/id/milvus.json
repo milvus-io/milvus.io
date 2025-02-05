@@ -1,5 +1,11 @@
 {
   "v3trans": {
+    "404": {
+      "title": "Ups... ada yang salah!",
+      "desc1": "Sepertinya Anda telah tersesat terlalu jauh!",
+      "desc2": "Kami tidak dapat menemukan halaman yang Anda cari:(",
+      "gobtn": "Pergi ke halaman utama"
+    },
     "desc": "semua hal untuk terjemahan V3 akan ditempatkan di sini",
     "home": {
       "banner": {
@@ -118,12 +124,6 @@
       "communitytitle": "Bergabunglah dengan komunitas kami",
       "customer": "Database vektor paling populer untuk pengguna perusahaan"
     },
-    "404": {
-      "title": "Ups... ada yang salah!",
-      "desc1": "Sepertinya Anda telah tersesat terlalu jauh!",
-      "desc2": "Kami tidak dapat menemukan halaman yang Anda cari:(",
-      "gobtn": "Pergi ke halaman utama"
-    },
     "signup": {
       "emailerror": "Format email salah",
       "thankyou": "Terima kasih, Anda telah ditambahkan ke daftar email kami!",
@@ -178,86 +178,6 @@
     "cookie": {
       "title": "Bagaimana kami menggunakan cookie",
       "desc": "Situs web ini menyimpan cookie di komputer Anda. Dengan melanjutkan penelusuran atau dengan mengklik ‘Terima’, Anda setuju dengan penyimpanan cookie di perangkat Anda untuk meningkatkan pengalaman situs Anda dan untuk tujuan analitis."
-    },
-    "sizingTool": {
-      "title": "Alat Ukur Milvus",
-      "subTitle": "Catatan: semua rekomendasi dihitung berdasarkan data lab kami, Anda harus menyesuaikannya dengan pengujian Anda sendiri sebelum menyebarkan ke produksi.",
-
-      "labels": {
-        "dataSize": "Pilih ukuran data",
-        "vector": "Jumlah vektor (Juta)",
-        "dimension": "Dimensi",
-        "index": "Jenis Indeks",
-        "indexType": "Pilih jenis indeks",
-        "indexParam": "Pilih parameter indeks",
-        "m": "M (Derajat maksimum node)",
-        "segmentSize": "Pilih ukuran segmen",
-        "segment": "Segmen (MB)"
-      },
-
-      "capacity": "Perkiraan kapasitas",
-      "memory": "Memori Pemuatan",
-      "fileSize": "Ukuran file mentah",
-      "setups": {
-        "title": "Pengaturan kluster Milvus minimum",
-        "rootCoord": {
-          "title": "Root Coord",
-          "tooltip": "Root coord menangani permintaan bahasa definisi data (DDL) dan bahasa kontrol data (DCL), seperti membuat atau menghapus koleksi, partisi, atau indeks, serta mengelola TSO (timestamp Oracle) dan penerbit time ticker."
-        },
-        "queryCoord": {
-          "title": "Query Coord",
-          "tootip": "Query coord mengelola topologi dan penyeimbangan beban untuk node kueri, dan handoff dari segmen yang tumbuh ke segmen yang disegel."
-        },
-        "dataCoord": {
-          "title": "Data Coord",
-          "tooltip": "Data coord mengelola topologi node data, memelihara metadata, dan memicu flush, compact, dan operasi data latar belakang lainnya."
-        },
-        "indexCoord": {
-          "title": "Index Coord",
-          "tooltip": "Index coord mengelola topologi node indeks, membangun indeks, dan memelihara metadata indeks."
-        },
-        "proxy": {
-          "title": "Proxy",
-          "tooltip": "Proxy adalah lapisan akses sistem dan titik akhir bagi pengguna. Ini memvalidasi permintaan klien dan mengurangi hasil yang dikembalikan."
-        },
-        "queryNode": {
-          "title": "Query Node",
-          "tooltip": "Query node mengambil data log inkremental dan mengubahnya menjadi segmen yang tumbuh dengan berlangganan ke log broker, memuat data historis dari penyimpanan objek, dan menjalankan pencarian hibrida antara data vektor dan skalar."
-        },
-        "dataNode": {
-          "title": "Data Node",
-          "tooltip": "Data node mengambil data log inkremental dengan berlangganan ke log broker, memproses permintaan mutasi, dan mengemas data log ke dalam snapshot log dan menyimpannya di penyimpanan objek."
-        },
-        "indexNode": {
-          "title": "Index Node",
-          "tooltip": "Index node membangun indeks. Node indeks tidak perlu berada di memori, dan dapat diimplementasikan dengan kerangka kerja serverless."
-        },
-        "etcd": {
-          "title": "ETCD"
-        },
-        "minio": {
-          "title": "Minio"
-        },
-        "pulsar": {
-          "title": "Pulsar"
-        },
-        "kafka": {
-          "title": "Kafka"
-        },
-        "bookie": "Bookie",
-        "broker": "Broker",
-        "proxyLabel": "Proxy",
-        "zookeeper": "Zookeeper"
-      },
-      "buttons": {
-        "helm": "Unduh konfigurasi yml Helm Chart",
-        "operator": "Unduh konfigurasi yml Milvus Operator",
-        "guide": "Lihat panduan instalasi"
-      },
-      "installGuide": {
-        "helm": "Panduan Instalasi Helm",
-        "operator": "Panduan Instalasi Operator"
-      }
     },
     "slack": {
       "title": "Komunitas Slack Milvus",

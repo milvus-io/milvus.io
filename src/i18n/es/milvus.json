@@ -1,5 +1,11 @@
 {
   "v3trans": {
+    "404": {
+      "title": "Uoops...¡algo salió mal!",
+      "desc1": "¡Parece que te has desviado demasiado!",
+      "desc2": "No podemos encontrar la página que estás buscando:(",
+      "gobtn": "Ir a la página de inicio"
+    },
     "desc": "todo lo relacionado con la traducción de V3 se colocará aquí",
     "home": {
       "banner": {
@@ -118,12 +124,6 @@
       "communitytitle": "Únete a nuestra comunidad",
       "customer": "La base de datos vectorial más popular para usuarios empresariales"
     },
-    "404": {
-      "title": "Uoops...¡algo salió mal!",
-      "desc1": "¡Parece que te has desviado demasiado!",
-      "desc2": "No podemos encontrar la página que estás buscando:(",
-      "gobtn": "Ir a la página de inicio"
-    },
     "signup": {
       "emailerror": "Error en el formato del correo electrónico",
       "thankyou": "¡Gracias, has sido añadido a nuestra lista de correo!",
@@ -178,86 +178,6 @@
     "cookie": {
       "title": "Cómo usamos las cookies",
       "desc": "Este sitio web almacena cookies en tu computadora. Al continuar navegando o al hacer clic en ‘Aceptar’, aceptas el almacenamiento de cookies en tu dispositivo para mejorar tu experiencia en el sitio y con fines analíticos."
-    },
-    "sizingTool": {
-      "title": "Herramienta de dimensionamiento de Milvus",
-      "subTitle": "Nota: todas las recomendaciones se calculan en base a nuestros datos de laboratorio, debes ajustarlas con tus propias pruebas antes de implementar en producción.",
-
-      "labels": {
-        "dataSize": "Elige el tamaño de los datos",
-        "vector": "Número de vectores (Millones)",
-        "dimension": "Dimensiones",
-        "index": "Tipo de índice",
-        "indexType": "Elige el tipo de índice",
-        "indexParam": "Elige los parámetros del índice",
-        "m": "M (Grado máximo del nodo)",
-        "segmentSize": "Elige el tamaño del segmento",
-        "segment": "Segmento (MB)"
-      },
-
-      "capacity": "Capacidad aproximada",
-      "memory": "Memoria de carga",
-      "fileSize": "Tamaño del archivo sin procesar",
-      "setups": {
-        "title": "Configuración mínima del clúster de Milvus",
-        "rootCoord": {
-          "title": "Root Coord",
-          "tooltip": "Root coord maneja solicitudes de lenguaje de definición de datos (DDL) y lenguaje de control de datos (DCL), como crear o eliminar colecciones, particiones o índices, así como gestionar TSO (Oracle de marca de tiempo) y la emisión de ticks de tiempo."
-        },
-        "queryCoord": {
-          "title": "Query Coord",
-          "tootip": "Query coord gestiona la topología y el equilibrio de carga para los nodos de consulta, y la transferencia de segmentos en crecimiento a segmentos sellados."
-        },
-        "dataCoord": {
-          "title": "Data Coord",
-          "tooltip": "Data coord gestiona la topología de los nodos de datos, mantiene los metadatos y activa operaciones de fondo como flush, compact y otras operaciones de datos."
-        },
-        "indexCoord": {
-          "title": "Index Coord",
-          "tooltip": "Index coord gestiona la topología de los nodos de índice, construye índices y mantiene los metadatos de los índices."
-        },
-        "proxy": {
-          "title": "Proxy",
-          "tooltip": "Proxy es la capa de acceso del sistema y el punto final para los usuarios. Valida las solicitudes de los clientes y reduce los resultados devueltos."
-        },
-        "queryNode": {
-          "title": "Query Node",
-          "tooltip": "Query node recupera datos de registro incrementales y los convierte en segmentos en crecimiento al suscribirse al broker de registro, carga datos históricos desde el almacenamiento de objetos y ejecuta búsquedas híbridas entre datos vectoriales y escalares."
-        },
-        "dataNode": {
-          "title": "Data Node",
-          "tooltip": "Data node recupera datos de registro incrementales al suscribirse al broker de registro, procesa solicitudes de mutación y empaqueta datos de registro en instantáneas de registro y las almacena en el almacenamiento de objetos."
-        },
-        "indexNode": {
-          "title": "Index Node",
-          "tooltip": "Index node construye índices. Los nodos de índice no necesitan residir en memoria y pueden implementarse con el marco sin servidor."
-        },
-        "etcd": {
-          "title": "ETCD"
-        },
-        "minio": {
-          "title": "Minio"
-        },
-        "pulsar": {
-          "title": "Pulsar"
-        },
-        "kafka": {
-          "title": "Kafka"
-        },
-        "bookie": "Bookie",
-        "broker": "Broker",
-        "proxyLabel": "Proxy",
-        "zookeeper": "Zookeeper"
-      },
-      "buttons": {
-        "helm": "Descargar configuración yml de Helm Chart",
-        "operator": "Descargar configuración yml de Milvus Operator",
-        "guide": "Ver guía de instalación"
-      },
-      "installGuide": {
-        "helm": "Guía de instalación de Helm",
-        "operator": "Guía de instalación de Operator"
-      }
     },
     "slack": {
       "title": "Comunidad de Slack de Milvus",

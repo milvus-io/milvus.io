@@ -1,5 +1,11 @@
 {
   "v3trans": {
+    "404": {
+      "title": "Opa... algo deu errado!",
+      "desc1": "Parece que você se perdeu!",
+      "desc2": "Não conseguimos encontrar a página que você está procurando:(",
+      "gobtn": "Vá para a página inicial"
+    },
     "desc": "tudo para a tradução V3 será colocado aqui",
     "home": {
       "banner": {
@@ -118,12 +124,6 @@
       "communitytitle": "Junte-se à nossa comunidade",
       "customer": "O banco de dados vetorial mais popular para usuários corporativos"
     },
-    "404": {
-      "title": "Opa... algo deu errado!",
-      "desc1": "Parece que você se perdeu!",
-      "desc2": "Não conseguimos encontrar a página que você está procurando:(",
-      "gobtn": "Vá para a página inicial"
-    },
     "signup": {
       "emailerror": "Erro de formato de email",
       "thankyou": "Obrigado, você foi adicionado à nossa lista de e-mails!",
@@ -178,86 +178,6 @@
     "cookie": {
       "title": "Como usamos cookies",
       "desc": "Este site armazena cookies no seu computador. Ao continuar a navegar ou clicar em 'Aceitar', você concorda com o armazenamento de cookies no seu dispositivo para melhorar sua experiência no site e para fins analíticos."
-    },
-    "sizingTool": {
-      "title": "Ferramenta de Dimensionamento do Milvus",
-      "subTitle": "Nota: todas as recomendações são calculadas com base em dados do nosso laboratório, você deve ajustá-las com seus próprios testes antes de implantar em produção.",
-
-      "labels": {
-        "dataSize": "Escolha o tamanho dos dados",
-        "vector": "Número de vetores (Milhões)",
-        "dimension": "Dimensões",
-        "index": "Tipo de Índice",
-        "indexType": "Escolha o tipo de índice",
-        "indexParam": "Escolha os parâmetros do índice",
-        "m": "M (Grau máximo do nó)",
-        "segmentSize": "Escolha o tamanho do segmento",
-        "segment": "Segmento (MB)"
-      },
-
-      "capacity": "Capacidade aproximada",
-      "memory": "Memória de Carregamento",
-      "fileSize": "Tamanho do arquivo bruto",
-      "setups": {
-        "title": "Configuração mínima do cluster Milvus",
-        "rootCoord": {
-          "title": "Root Coord",
-          "tooltip": "Root coord lida com solicitações de linguagem de definição de dados (DDL) e linguagem de controle de dados (DCL), como criar ou excluir coleções, partições ou índices, além de gerenciar TSO (timestamp Oracle) e a emissão do time ticker."
-        },
-        "queryCoord": {
-          "title": "Query Coord",
-          "tootip": "Query coord gerencia a topologia e o balanceamento de carga para os nós de consulta e a transferência de segmentos em crescimento para segmentos selados."
-        },
-        "dataCoord": {
-          "title": "Data Coord",
-          "tooltip": "Data coord gerencia a topologia dos nós de dados, mantém metadados e aciona flush, compact e outras operações de dados em segundo plano."
-        },
-        "indexCoord": {
-          "title": "Index Coord",
-          "tooltip": "Index coord gerencia a topologia dos nós de índice, constrói índices e mantém metadados de índice."
-        },
-        "proxy": {
-          "title": "Proxy",
-          "tooltip": "Proxy é a camada de acesso do sistema e o ponto de extremidade para os usuários. Ele valida as solicitações dos clientes e reduz os resultados retornados."
-        },
-        "queryNode": {
-          "title": "Query Node",
-          "tooltip": "Query node recupera dados de log incrementais e os transforma em segmentos em crescimento assinando o log broker, carrega dados históricos do armazenamento de objetos e executa pesquisas híbridas entre dados vetoriais e escalares."
-        },
-        "dataNode": {
-          "title": "Data Node",
-          "tooltip": "Data node recupera dados de log incrementais assinando o log broker, processa solicitações de mutação e empacota dados de log em snapshots de log e os armazena no armazenamento de objetos."
-        },
-        "indexNode": {
-          "title": "Index Node",
-          "tooltip": "Index node constrói índices. Os nós de índice não precisam residir na memória e podem ser implementados com o framework serverless."
-        },
-        "etcd": {
-          "title": "ETCD"
-        },
-        "minio": {
-          "title": "Minio"
-        },
-        "pulsar": {
-          "title": "Pulsar"
-        },
-        "kafka": {
-          "title": "Kafka"
-        },
-        "bookie": "Bookie",
-        "broker": "Broker",
-        "proxyLabel": "Proxy",
-        "zookeeper": "Zookeeper"
-      },
-      "buttons": {
-        "helm": "Baixe a configuração yml do Helm Chart",
-        "operator": "Baixe a configuração yml do Milvus Operator",
-        "guide": "Veja o guia de instalação"
-      },
-      "installGuide": {
-        "helm": "Guia de Instalação do Helm",
-        "operator": "Guia de Instalação do Operator"
-      }
     },
     "slack": {
       "title": "Comunidade Slack do Milvus",

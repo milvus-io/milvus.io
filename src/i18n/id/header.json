@@ -27,7 +27,8 @@
   "contact": "Hubungi Kami",
   "footer": {
     "resource": {
-      "managed": "Milvus Terkelola"
+      "managed": "Milvus Terkelola",
+      "contact": "Hubungi Kami"
     },
     "tools": {
       "sizing": "Alat Penentuan Ukuran Milvus",

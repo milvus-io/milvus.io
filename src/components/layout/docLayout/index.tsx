@@ -96,6 +96,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
               <Footer
                 lang={lang}
                 classes={{
+                  container: classes.docFooterContainer,
                   root: classes.docFooter,
                   content: classes.docFooterContent,
                   nav: classes.docFooterNav,

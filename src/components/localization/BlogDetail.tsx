@@ -108,6 +108,17 @@ export function BlogDetail(props) {
     </svg>
   );
 
+  const jsonLd = {
+    '@context': 'http://schema.org',
+    '@type': 'Article',
+    headline: title,
+    datePublished: dateTime,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': shareUrl,
+    },
+  };
+
   return (
     <main>
       <Layout>
@@ -123,6 +134,7 @@ export function BlogDetail(props) {
             rel="stylesheet"
             href="https://assets.zilliz.com/katex/katex.min.css"
           />
+          <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         </Head>
         <div>
           <div className={clsx(pageClasses.docContainer, styles.upLayout)}>

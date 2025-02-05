@@ -1,0 +1,40 @@
+{
+  "trending": "TRENDING",
+  "recent": {
+    "most": "MOST RECENT",
+    "release": "RELEASES & EVENTS"
+  },
+  "subscribe": {
+    "title": "Be the first to know",
+    "desc": "Get updates on Milvus releases and tutorials from Zilliz, Milvus' creator and key maintainer."
+  },
+  "filter": {
+    "all": "ALL",
+    "engineering": "Engineering",
+    "announcements": "Announcements",
+    "tutorials": "Tutorials",
+    "usecases": "Use Cases"
+  },
+  "aiService": {
+    "title": "Ask me anything about Milvus!",
+    "desc": "An AI assistant trained on documentation, help articles, and other content."
+  },
+  "zillizAdv": {
+    "title": "Hassle-free and 10x faster than Milvus",
+    "smallTitle": "Zilliz Cloud",
+    "feature1": "Use-case optimized compute units for your workload",
+    "feature2": "Enterprise-grade security",
+    "feature3": "Available on AWS, GCP, and Azure",
+    "btn": "Try Fully Managed Milvus Free"
+  },
+  "authors": {
+    "title": "Most Contributing Authors"
+  },
+  "homepage": {
+    "title": "Learn Milvus: Insights and Innovations in VectorDB Technology",
+    "desc": "Learn vector database fundamentals, Milvus features and capabilities, and technical tutorials on managing and optimizing vector search for modern AI apps."
+  },
+  "detail": {
+    "keepReading": "Keep Reading"
+  }
+}

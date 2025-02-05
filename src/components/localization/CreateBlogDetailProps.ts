@@ -15,7 +15,14 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
   const getBlogDetailStaticProps = async ({ params }) => {
     const { id } = params;
     const allData = blogUtils.getAllData(lang);
-    const { content, tags, metaData, ...rest } = allData.find(v => v.id === id);
+    const { content, tags, metaData, ...rest } = allData.find(
+      v => v.id === id
+    ) || {
+      tags: [],
+      metaData: {},
+      title: id,
+      content: 'Blog Translation Not Provided.',
+    };
 
     const {
       tree: newHtml,

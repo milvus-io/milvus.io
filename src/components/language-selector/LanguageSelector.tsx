@@ -64,7 +64,7 @@ const ArrowDownIcon = ({ className }: { className?: string }) => {
       fill="none"
       className={className}
     >
-      <g clip-path="url(#clip0_3441_107)">
+      <g clipPath="url(#clip0_3441_107)">
         <path
           d="M1.85228 5.0569L7 10.2046L12.1477 5.0569"
           stroke="#667176"

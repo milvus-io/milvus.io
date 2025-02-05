@@ -122,18 +122,6 @@ export function MilvusDemos(props: Props) {
     });
   };
 
-  useEffect(() => {
-    const test = async () => {
-      try {
-        await fetch('http://localhost:8000/_next/data/health');
-      } catch (error) {
-        console.log('error--', error);
-      }
-    };
-
-    test();
-  }, []);
-
   return (
     <main>
       <Layout darkMode={true}>

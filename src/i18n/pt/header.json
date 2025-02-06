@@ -31,7 +31,7 @@
       "contact": "Contactar-nos"
     },
     "tools": {
-      "sizing": "Ferramenta de Dimensionamento do Milvus",
+      "sizing": "Ferramenta de dimensionamento Milvus",
       "backup": "Ferramenta de Backup do Milvus",
       "vts": "Serviço de Transporte de Vetores (VTS)"
     }

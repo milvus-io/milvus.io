@@ -8,6 +8,10 @@ const os = require('os');
 const { copyEnToBackup } = require('./utils');
 const { CHANGES_DIR, LOCALE_DIR } = require('./const');
 
+if (!fs.existsSync(CHANGES_DIR)) {
+  fs.mkdirSync(CHANGES_DIR);
+}
+
 const envFile = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env';
 dotenv.config({ path: envFile });
 

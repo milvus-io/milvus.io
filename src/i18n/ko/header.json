@@ -31,7 +31,7 @@
       "contact": "문의하기"
     },
     "tools": {
-      "sizing": "밀버스 사이징 도구",
+      "sizing": "Milvus 크기 계산 도구",
       "backup": "Milvus 백업 도구",
       "vts": "벡터 전송 서비스 (VTS)"
     }

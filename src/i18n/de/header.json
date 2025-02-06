@@ -31,7 +31,7 @@
       "contact": "Kontakt"
     },
     "tools": {
-      "sizing": "Milvus Größenberechnungs-Tool",
+      "sizing": "Milvus Dimensionierungstool",
       "backup": "Milvus Backup-Tool",
       "vts": "Vektor-Transportdienst (VTS)"
     }

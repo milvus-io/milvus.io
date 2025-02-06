@@ -31,7 +31,7 @@
       "contact": "聯絡我們"
     },
     "tools": {
-      "sizing": "Milvus 尺寸工具",
+      "sizing": "Milvus 容量計算工具",
       "backup": "Milvus 備份工具",
       "vts": "向量傳輸服務 (VTS)"
     }

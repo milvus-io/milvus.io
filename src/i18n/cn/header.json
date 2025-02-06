@@ -29,7 +29,7 @@
       "contact": "联系我们"
     },
     "tools": {
-      "sizing": "Milvus 容量计算工具",
+      "sizing": "米尔沃斯尺寸工具",
       "backup": "Milvus 备份工具",
       "vts": "向量传输服务 (VTS)"
     }

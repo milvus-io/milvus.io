@@ -543,3 +543,18 @@ export const ListItemTickIcon: FC<HTMLAttributes<SVGViewElement>> = props => {
     </svg>
   );
 };
+
+export const BreadcrumbIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="13"
+    height="12"
+    viewBox="0 0 13 12"
+    fill="none"
+  >
+    <path
+      d="M4.955 9L4.25 8.295L6.54 6L4.25 3.705L4.955 3L7.955 6L4.955 9Z"
+      fill="#2E373B"
+    />
+  </svg>
+);

@@ -29,6 +29,8 @@ import {
 
 import classes from '@/styles/docDetail.module.less';
 import styles from '@/styles/restful.module.less';
+import Breadcrumb from '@/components/breadcrumb';
+import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 
 export default function RestfulApiReference(props: {
   mdxSource: MDXRemoteSerializeResult;
@@ -72,6 +74,11 @@ export default function RestfulApiReference(props: {
     ? `${headingContent} - Milvus Documentation ${suffix}/${metaPath}`
     : `${headingContent} - Milvus Documentation ${suffix}`;
 
+  const activeLabels = useBreadcrumbLabels({
+    currentId,
+    menu: menus,
+  });
+
   return (
     <DocLayout
       seo={{
@@ -102,6 +109,23 @@ export default function RestfulApiReference(props: {
       center={
         <section className={classes.docDetailContainer}>
           <div className={classes.contentSection}>
+            <Breadcrumb
+              list={[
+                {
+                  label: 'Docs',
+                  href:
+                    version === latestVersion ? '/docs' : `/docs/${version}`,
+                },
+                {
+                  label: 'API Reference',
+                  href: `/api-reference/restful/${version}/About.md`,
+                },
+                ...activeLabels.map(v => ({
+                  label: v,
+                })),
+              ]}
+              className={styles.breadcrumbContainer}
+            />
             <div className={clsx(styles.restfulContainer)}>
               {mdxSource && (
                 <MDXRemote {...mdxSource} components={components} />

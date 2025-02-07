@@ -140,5 +140,6 @@
   "meta": {
     "title": "Milvus | Base de datos de vectores de alto rendimiento construida para escalar",
     "description": "Milvus es una base de datos de vectores de código abierto construida para aplicaciones GenAI. Instale con pip, realice búsquedas de alta velocidad y escale a decenas de miles de millones de vectores."
-  }
+  },
+  "home": "Inicio"
 }

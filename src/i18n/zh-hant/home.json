@@ -140,5 +140,6 @@
   "meta": {
     "title": "Milvus | 高性能向量資料庫，為規模而構建",
     "description": "Milvus 是一個為 GenAI 應用構建的開源向量資料庫。使用 pip 安裝，執行高速搜索，並擴展到數十億個向量。"
-  }
+  },
+  "home": "首頁"
 }

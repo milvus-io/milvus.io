@@ -140,5 +140,6 @@
   "meta": {
     "title": "Milvus | Hochleistungs-Vektordatenbank, für Skalierung gebaut",
     "description": "Milvus ist eine Open-Source-Vektordatenbank, die für GenAI-Anwendungen entwickelt wurde. Installieren Sie sie mit pip, führen Sie Hochgeschwindigkeitssuchen durch und skalieren Sie auf zehn Milliarden Vektoren."
-  }
+  },
+  "home": "Startseite"
 }

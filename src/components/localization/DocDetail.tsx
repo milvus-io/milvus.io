@@ -18,6 +18,7 @@ import clsx from 'clsx';
 import { DocDetailPageProps } from '@/types/docs';
 import { LanguageEnum } from '@/types/localization';
 import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
+import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 
 // contains the latest version's detail pages and other versions' home pages
 export function DocDetailPage(props: DocDetailPageProps) {
@@ -112,6 +113,10 @@ export function DocDetailPage(props: DocDetailPageProps) {
   });
   useGenAnchor(version, editPath);
 
+  const activeLabels = useBreadcrumbLabels({
+    currentId,
+    menu: menus,
+  });
   return (
     <DocLayout
       version={version}
@@ -149,6 +154,8 @@ export function DocDetailPage(props: DocDetailPageProps) {
               mdId={currentId}
               commitPath={editPath}
               type="doc"
+              activeLabels={activeLabels}
+              latestVersion={latestVersion}
             />
           </div>
 

@@ -4,6 +4,7 @@ import { useGithubCommits } from '../../../http/hooks';
 import classes from './index.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
+import Breadcrumb from '@/components/breadcrumb';
 
 interface DocContentPropsType {
   commitPath?: string;
@@ -11,11 +12,41 @@ interface DocContentPropsType {
   htmlContent: string;
   mdId: string;
   type: 'doc' | 'api';
+  activeLabels: string[];
+  latestVersion: string;
+  apiCategory?: string;
 }
 
 export default function DocContent(props: DocContentPropsType) {
-  const { commitPath = '', version, htmlContent, mdId, type } = props;
+  const {
+    commitPath = '',
+    version,
+    htmlContent,
+    mdId,
+    type,
+    activeLabels,
+    latestVersion,
+    apiCategory,
+  } = props;
   const { t } = useTranslation('common');
+
+  const prefixDocCrumbItems = [
+    {
+      label: 'Docs',
+      href: version === latestVersion ? '/docs' : `/docs/${version}`,
+    },
+  ];
+
+  const prefixApiCrumbItems = [
+    ...prefixDocCrumbItems,
+    {
+      label: 'API Reference',
+      href: `/api-reference/${apiCategory}/${version}/About.md`,
+    },
+  ];
+
+  const prefixCrumbItems =
+    type === 'doc' ? prefixDocCrumbItems : prefixApiCrumbItems;
 
   // const contact = {
   //   slack: {
@@ -47,6 +78,14 @@ export default function DocContent(props: DocContentPropsType) {
 
   return (
     <div className={classes.docPostWrapper}>
+      <Breadcrumb
+        list={[
+          ...prefixCrumbItems,
+          ...activeLabels.map(v => ({
+            label: v,
+          })),
+        ]}
+      />
       <div
         className={clsx('doc-style', 'doc-post-content', {
           'api-reference-wrapper': type === 'api',

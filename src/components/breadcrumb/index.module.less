@@ -1,0 +1,54 @@
+@import (reference) '../../styles/global.module.less';
+
+.breadcrumbWrapper {
+  list-style: none;
+  display: flex;
+  gap: 2px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  color: @color-black2;
+  font-size: 14px;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    path {
+      fill: currentColor;
+    }
+  }
+}
+
+.linkItem {
+  .paragraph4;
+  color: @color-black1-5;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+}
+
+.textItem {
+  .paragraph4;
+  color: @color-black2;
+  text-decoration: none;
+}
+
+.lastItem {
+  color: @color-black2;
+  cursor: default;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

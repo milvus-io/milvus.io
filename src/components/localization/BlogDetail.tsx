@@ -19,6 +19,7 @@ import { checkIconTpl, linkIconTpl } from '@/components/icons';
 import { useRouter } from 'next/navigation';
 import { LanguageEnum } from '@/types/localization';
 import { getBlogPath } from '@/utils/localization';
+import Breadcrumb from '../breadcrumb';
 
 export function BlogDetail(props) {
   const {
@@ -93,31 +94,9 @@ export function BlogDetail(props) {
 
   const metaTitle = `${title} - Milvus Blog`;
 
-  const sepIcon = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="13"
-      height="12"
-      viewBox="0 0 13 12"
-      fill="none"
-    >
-      <path
-        d="M4.955 9L4.25 8.295L6.54 6L4.25 3.705L4.955 3L7.955 6L4.955 9Z"
-        fill="#2E373B"
-      />
-    </svg>
-  );
-
-  const jsonLd = {
-    '@context': 'http://schema.org',
-    '@type': 'Article',
-    headline: title,
-    datePublished: dateTime,
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': shareUrl,
-    },
-  };
+  const ldJson = `{"@context": "http://schema.org", "@id": "${shareUrl}", "@type": "Article", "headline": "${title}", "description": "${desc}", "datePublished": "${new Date(
+    date
+  ).toJSON()}", "name": "${title}", "url": "${shareUrl}"}`;
 
   return (
     <main>
@@ -134,18 +113,25 @@ export function BlogDetail(props) {
             rel="stylesheet"
             href="https://assets.zilliz.com/katex/katex.min.css"
           />
-          <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: ldJson }}
+          ></script>
         </Head>
         <div>
           <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
             <section className={styles.blogHeader}>
-              <p className={styles.breadcrumb}>
-                <a href={homePath}>Home</a>
-                {sepIcon}
-                <a href={blogPath}>Blogs</a>
-                {sepIcon}
-                {title}
-              </p>
+              <Breadcrumb
+                list={[
+                  {
+                    label: 'Blog',
+                    href: '/blog',
+                  },
+                  {
+                    label: title,
+                  },
+                ]}
+              />
 
               <h1 className={styles.title}>{title}</h1>
 

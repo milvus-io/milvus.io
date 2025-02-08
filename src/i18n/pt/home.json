@@ -140,5 +140,6 @@
   "meta": {
     "title": "Milvus | Banco de dados vetorial de alto desempenho construído para escala",
     "description": "Milvus é um banco de dados vetorial de código aberto construído para aplicativos GenAI. Instale com pip, realize buscas de alta velocidade e escale para dezenas de bilhões de vetores."
-  }
+  },
+  "home": "Início"
 }

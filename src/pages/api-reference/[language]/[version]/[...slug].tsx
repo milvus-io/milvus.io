@@ -35,6 +35,7 @@ import {
 } from '@/consts/externalLinks';
 import { formatApiRelativePath } from '@/utils';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 
 interface ApiDetailPageProps {
   doc: string;
@@ -70,6 +71,8 @@ export default function Template(props: ApiDetailPageProps) {
     latestVersion,
     meta,
   } = props;
+
+  console.log(category, languageCategory);
 
   const { t } = useTranslation('common');
   const { title: metaTitle, path: metaPath } = meta;
@@ -172,6 +175,11 @@ export default function Template(props: ApiDetailPageProps) {
     };
   }, [headingContent, metaPath, languageCategory, relativePath, version]);
 
+  const activeLabels = useBreadcrumbLabels({
+    currentId,
+    menu: menus,
+  });
+
   return (
     <DocLayout
       seo={{
@@ -208,6 +216,9 @@ export default function Template(props: ApiDetailPageProps) {
               mdId={currentId}
               commitPath={apiReferenceData.editPath}
               type="api"
+              activeLabels={activeLabels}
+              latestVersion={latestVersion}
+              apiCategory={category}
             />
           </div>
 

@@ -72,8 +72,6 @@ export default function Template(props: ApiDetailPageProps) {
     meta,
   } = props;
 
-  console.log(category, languageCategory);
-
   const { t } = useTranslation('common');
   const { title: metaTitle, path: metaPath } = meta;
 

@@ -1,4 +1,4 @@
-export const DISCORD_INVITE_URL = `https://milvus.io/discord`;
+export const DISCORD_INVITE_URL = `https://discord.gg/xwqmFDURcz`;
 export const MEETUP_URL = 'https://www.meetup.com/pro/unstructureddata';
 export const SHARE_YOUR_STORY_URL = 'https://zilliz.com/share-your-story';
 

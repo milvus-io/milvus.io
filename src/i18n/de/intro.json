@@ -33,7 +33,7 @@
     ]
   },
   "milvusIsAVdb": {
-    "title": "Milvus ist eine Vektordatenbank. Was bedeutet das?",
+    "title": "Was sind Vektordatenbanken? ",
     "desc1": "Vektordatenbanken sind spezialisierte Systeme, die für die Verwaltung und den Abruf unstrukturierter Daten durch Vektoreinbettungen und numerische Darstellungen entwickelt wurden, die das Wesen von Datenobjekten wie Bildern, Audio, Videos und Textinhalten erfassen. Im Gegensatz zu traditionellen relationalen Datenbanken, die strukturierte Daten mit präzisen Suchoperationen verarbeiten, zeichnen sich Vektordatenbanken durch semantische Ähnlichkeitssuchen aus, die Techniken wie den Approximate Nearest Neighbor (ANN)-Algorithmus verwenden. Diese Fähigkeit ist entscheidend für die Entwicklung von Anwendungen in verschiedenen Bereichen, einschließlich Empfehlungssystemen, Chatbots und Multimedia-Inhaltssuchwerkzeugen, und für die Bewältigung der Herausforderungen, die KI und große Sprachmodelle wie ChatGPT mit sich bringen, wie das Verständnis von Kontext und Nuancen sowie KI-Halluzinationen.",
     "desc2": "Die Einführung von Vektordatenbanken wie Milvus verändert Branchen, indem sie inhaltsbasierte Suchen über eine Vielzahl unstrukturierter Daten ermöglichen und über die Grenzen menschlich generierter Labels hinausgehen. Wichtige Merkmale, die Vektordatenbanken auszeichnen, sind:",
     "features": [

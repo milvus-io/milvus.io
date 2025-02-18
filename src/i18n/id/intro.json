@@ -33,7 +33,7 @@
     ]
   },
   "milvusIsAVdb": {
-    "title": "Milvus adalah basis data vektor. Apa maksudnya?",
+    "title": "Apa yang dimaksud dengan basis data vektor? ",
     "desc1": "Basis data vektor adalah sistem khusus yang dirancang untuk mengelola dan mengambil kembali data tak terstruktur melalui embedding vektor dan representasi numerik yang menangkap esensi item data seperti gambar, audio, video, dan konten teks. Berbeda dengan basis data relasional tradisional yang menangani data terstruktur dengan operasi pencarian yang presisi, basis data vektor unggul dalam pencarian kemiripan semantik menggunakan algoritma Tetangga Terdekat Aproksimasi (ANN). Kemampuan ini sangat penting untuk mengembangkan aplikasi di berbagai domain, termasuk sistem rekomendasi, chatbot, dan alat pencarian konten multimedia, serta untuk menangani tantangan yang diajukan oleh AI dan model bahasa besar seperti ChatGPT, seperti memahami konteks dan nuansa serta halusinasi AI.",
     "desc2": "Kemunculan basis data vektor seperti Milvus mengubah industri dengan memungkinkan pencarian berbasis konten di sekala besar data tak terstruktur, melampaui batasan label yang dihasilkan manusia. Fitur kunci yang membedakan basis data vektor termasuk ",
     "features": [

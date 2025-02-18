@@ -33,7 +33,7 @@
     ]
   },
   "milvusIsAVdb": {
-    "title": "Milvus è un database vettoriale. Cosa significa?",
+    "title": "Cosa sono i database vettoriali? ",
     "desc1": "I database vettoriali sono sistemi specializzati progettati per gestire e recuperare dati non strutturati attraverso embedding vettoriali e rappresentazioni numeriche che catturano l'essenza degli elementi dati come immagini, audio, video e contenuti testuali. A differenza dei database relazionali tradizionali che gestiscono dati strutturati con operazioni di ricerca precise, i database vettoriali eccellono nelle ricerche di somiglianza semantica utilizzando tecniche come l'algoritmo Approximate Nearest Neighbor (ANN). Questa capacità è cruciale per lo sviluppo di applicazioni in vari domini, inclusi sistemi di raccomandazione, chatbot e strumenti di ricerca di contenuti multimediali, e per affrontare le sfide poste dall'AI e dai grandi modelli linguistici come ChatGPT, come comprendere il contesto e le sfumature e l'allucinazione AI.",
     "desc2": "L'avvento di database vettoriali come Milvus sta trasformando le industrie permettendo ricerche basate su contenuti su una vasta gamma di dati non strutturati, superando i limiti delle etichette generate dall'uomo. Le caratteristiche chiave che distinguono i database vettoriali includono",
     "features": [

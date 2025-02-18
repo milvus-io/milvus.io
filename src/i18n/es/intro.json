@@ -33,7 +33,7 @@
     ]
   },
   "milvusIsAVdb": {
-    "title": "Milvus es una base de datos de vectores. ¿Qué significa eso?",
+    "title": "¿Qué son las bases de datos vectoriales? ",
     "desc1": "Las bases de datos de vectores son sistemas especializados diseñados para gestionar y recuperar datos no estructurados a través de embeddings de vectores y representaciones numéricas que capturan la esencia de los elementos de datos como imágenes, audio, videos y contenido textual. A diferencia de las bases de datos relacionales tradicionales que manejan datos estructurados con operaciones de búsqueda precisas, las bases de datos de vectores sobresalen en búsquedas de similitud semántica utilizando técnicas como el algoritmo de Vecino Más Cercano Aproximado (ANN). Esta capacidad es crucial para desarrollar aplicaciones en diversos dominios, incluyendo sistemas de recomendación, chatbots y herramientas de búsqueda de contenido multimedia, y para abordar los desafíos planteados por la IA y los grandes modelos de lenguaje como ChatGPT, como comprender el contexto y las sutilezas y la alucinación de la IA.",
     "desc2": "La aparición de bases de datos de vectores como Milvus está transformando industrias al permitir búsquedas basadas en contenido en una amplia gama de datos no estructurados, superando las limitaciones de las etiquetas generadas por humanos. Las características clave que distinguen a las bases de datos de vectores incluyen",
     "features": [

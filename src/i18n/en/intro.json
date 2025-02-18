@@ -33,7 +33,7 @@
     ]
   },
   "milvusIsAVdb": {
-    "title": "Milvus is a vector database. What does that mean?",
+    "title": "What are vector databases? ",
     "desc1": "Vector databases are specialized systems designed for managing and retrieving unstructured data through vector embeddings and numerical representations that capture the essence of data items like images, audio, videos, and textual content. Unlike traditional relational databases that handle structured data with precise search operations, vector databases excel in semantic similarity searches using techniques such as the Approximate Nearest Neighbor (ANN) algorithm. This capability is crucial for developing applications across various domains, including recommender systems, chatbots, and multimedia content search tools, and for addressing the challenges posed by AI and large language models like ChatGPT, such as understanding context and nuances and AI hallucination.",
     "desc2": "The advent of vector databases like Milvus is transforming industries by enabling content-based searches across a vast array of unstructured data, moving beyond the constraints of human-generated labels. Key features that set vector databases apart include ",
     "features": [

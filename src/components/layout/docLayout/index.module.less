@@ -11,14 +11,14 @@ div.mainContainer {
   .flexibleContainer {
     position: sticky;
     top: @header-height-desktop;
-    bottom: 0;
+    height: calc(100vh - @header-height-desktop);
     background-color: #fff;
     z-index: 998;
     min-width: 24px;
     flex-shrink: 0;
     flex-grow: 0;
 
-    @media @tablet, @phone {
+    @media (max-width: 640px) {
       top: @header-height-tablet;
       height: calc(100vh - @header-height-tablet);
     }

@@ -5,12 +5,14 @@
 @screen-desktop1024: 1025px;
 @screen-desktop1440: 1441px;
 @screen-desktop1920: 1920px;
+@header-switch-break-point: 1280px;
 
 @phone: ~'only screen and (max-width: @{screen-tablet})';
 @tablet: ~'only screen and (max-width: @{screen-desktop1024})  and (min-width: @{screen-tablet})';
 @desktop1024: ~'only screen and (max-width: @{screen-desktop1440})  and (min-width: @{screen-desktop1024})';
 @desktop1440: ~'only screen and (max-width: @{screen-desktop1920})  and (min-width: @{screen-desktop1440})';
 @desktop1920: ~'only screen and (min-width: @{screen-desktop1920})';
+@headerSwitch: ~'only screen and (max-width: @{header-switch-break-point})';
 
 .button {
   border-radius: 40px;

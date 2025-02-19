@@ -15,18 +15,27 @@
     height: 0px;
     left: 0;
     right: 0;
-    top: @header-height-tablet;
+    top: @header-height-desktop;
     overflow: hidden;
     transition: height linear 0.3s, top linear 0.3s;
     background-color: #fff;
     z-index: 100;
+
+    @media @bannerBreak {
+      top: @header-height-tablet;
+    }
   }
 
   .activeMenu {
-    top: @header-height-tablet;
+    top: @header-height-desktop;
     left: 0;
     right: 0;
-    height: calc(100vh - @header-height-tablet);
+    height: calc(100vh - @header-height-desktop);
+
+    @media @bannerBreak {
+      top: @header-height-tablet;
+      height: calc(100vh - @header-height-tablet);
+    }
   }
 
   .listWrapper {

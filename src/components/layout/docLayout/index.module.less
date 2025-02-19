@@ -18,7 +18,7 @@ div.mainContainer {
     flex-shrink: 0;
     flex-grow: 0;
 
-    @media (max-width: 640px) {
+    @media @bannerBreak {
       top: @header-height-tablet;
       height: calc(100vh - @header-height-tablet);
     }

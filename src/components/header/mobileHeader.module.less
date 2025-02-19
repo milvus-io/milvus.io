@@ -21,7 +21,7 @@
     background-color: #fff;
     z-index: 100;
 
-    @media (max-width: 640px) {
+    @media @bannerBreak {
       top: @header-height-tablet;
     }
   }
@@ -32,7 +32,7 @@
     right: 0;
     height: calc(100vh - @header-height-desktop);
 
-    @media (max-width: 640px) {
+    @media @bannerBreak {
       top: @header-height-tablet;
       height: calc(100vh - @header-height-tablet);
     }

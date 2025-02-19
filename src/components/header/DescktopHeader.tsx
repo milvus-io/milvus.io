@@ -111,7 +111,7 @@ export default function DesktopHeader(props: Props) {
   ];
 
   return (
-    <div className="bg-white border-b-black4 border-b-[1px] border-solid ">
+    <div className="bg-white border-b-black4 border-b-[1px] border-solid max-[1280px]:border-none">
       <div
         className={clsx(
           'hidden xl:flex h-[58px] px-10 items-center justify-between mx-auto',

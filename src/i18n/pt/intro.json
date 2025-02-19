@@ -33,7 +33,7 @@
     ]
   },
   "milvusIsAVdb": {
-    "title": "Milvus é um banco de dados vetorial. O que isso significa?",
+    "title": "O que são bases de dados vectoriais? ",
     "desc1": "Bancos de dados vetoriais são sistemas especializados projetados para gerenciar e recuperar dados não estruturados por meio de embeddings vetoriais e representações numéricas que capturam a essência de itens de dados como imagens, áudio, vídeos e conteúdo textual. Ao contrário dos bancos de dados relacionais tradicionais que lidam com dados estruturados com operações de busca precisas, os bancos de dados vetoriais se destacam em buscas de semelhança semântica usando técnicas como o algoritmo Approximate Nearest Neighbor (ANN). Essa capacidade é crucial para o desenvolvimento de aplicações em vários domínios, incluindo sistemas de recomendação, chatbots e ferramentas de busca de conteúdo multimídia, e para abordar os desafios impostos pela IA e grandes modelos de linguagem como o ChatGPT, como entender o contexto e nuances e alucinação de IA.",
     "desc2": "A chegada de bancos de dados vetoriais como Milvus está transformando indústrias ao permitir buscas baseadas em conteúdo em uma vasta gama de dados não estruturados, ultrapassando as limitações de rótulos gerados por humanos. As características-chave que diferenciam os bancos de dados vetoriais incluem",
     "features": [

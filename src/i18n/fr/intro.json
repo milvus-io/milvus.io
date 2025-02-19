@@ -33,7 +33,7 @@
     ]
   },
   "milvusIsAVdb": {
-    "title": "Milvus est une base de données vectorielle. Qu'est-ce que cela signifie ?",
+    "title": "Qu'est-ce qu'une base de données vectorielle ? ",
     "desc1": "Les bases de données vectorielles sont des systèmes spécialisés conçus pour gérer et récupérer des données non structurées via des embeddings vectoriels et des représentations numériques qui capturent l'essence des éléments de données tels que les images, l'audio, les vidéos et le contenu textuel. Contrairement aux bases de données relationnelles traditionnelles qui gèrent des données structurées avec des opérations de recherche précises, les bases de données vectorielles excellent dans les recherches de similarité sémantique en utilisant des techniques telles que l'algorithme du Plus Proche Voisin Approximatif (ANN). Cette capacité est cruciale pour développer des applications dans divers domaines, y compris les systèmes de recommandation, les chatbots et les outils de recherche de contenu multimédia, et pour relever les défis posés par l'IA et les grands modèles linguistiques comme ChatGPT, tels que la compréhension du contexte et des nuances et les hallucinations de l'IA.",
     "desc2": "L'avènement de bases de données vectorielles comme Milvus transforme les industries en permettant des recherches basées sur le contenu à travers un vaste ensemble de données non structurées, dépassant les contraintes des étiquettes générées par l'homme. Les caractéristiques clés qui distinguent les bases de données vectorielles comprennent :",
     "features": [

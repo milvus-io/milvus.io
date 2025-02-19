@@ -9,7 +9,7 @@
     z-index: 1;
     position: relative;
   }
-  
+
   &:before {
     content: '';
     position: absolute;
@@ -17,8 +17,21 @@
     height: 43.6%;
     top: 0;
     left: 0;
-    background: linear-gradient(316deg, rgba(228, 255, 238, 0.00) 44.6%, #E4FFEE 119.52%);
-    z-index: 0!important;
+    background: linear-gradient(
+      316deg,
+      rgba(228, 255, 238, 0) 44.6%,
+      #e4ffee 119.52%
+    );
+    z-index: 0 !important;
+
+    @media @tablet {
+      width: 41%;
+      height: 53.6%;
+    }
+
+    @media @phone {
+      display: none;
+    }
   }
 
   &:after {
@@ -28,8 +41,21 @@
     height: 55%;
     right: 0;
     bottom: 0;
-    background: linear-gradient(323deg, #E2F6FF -3.58%, rgba(226, 246, 255, 0.00) 50.14%);
-    z-index: 0!important;
+    background: linear-gradient(
+      323deg,
+      #e2f6ff -3.58%,
+      rgba(226, 246, 255, 0) 50.14%
+    );
+    z-index: 0 !important;
+
+    @media @tablet {
+      width: 50%;
+      height: 65%;
+    }
+
+    @media @phone {
+      display: none;
+    }
   }
 }
 
@@ -49,7 +75,7 @@
   height: 428px;
   padding: 36px;
   border-radius: 16px;
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   flex: 0 1 auto;
@@ -59,7 +85,7 @@
   }
 
   .trending {
-    color: #FFAA00;
+    color: #ffaa00;
     font-family: 'Geist Mono';
     font-size: 14px;
     font-weight: 600;
@@ -72,7 +98,7 @@
   }
 
   &-title {
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 32px;
     font-style: normal;
     font-weight: 600;
@@ -176,7 +202,7 @@
       width: 100%;
     }
   }
-  
+
   &-title {
     font-size: 24px;
     font-style: normal;
@@ -210,8 +236,8 @@
   }
 
   &-button {
-    padding: 14px 40px!important;
-    font-size: 16px!important;
+    padding: 14px 40px !important;
+    font-size: 16px !important;
     font-weight: 500;
     line-height: 1.5;
     text-transform: uppercase;
@@ -224,16 +250,16 @@
   }
 
   &-input-container {
-    padding: 0!important;
+    padding: 0 !important;
     overflow: hidden;
   }
 
   &-input {
     height: 50px;
-    padding: 17px 20px!important;
+    padding: 17px 20px !important;
     font-size: 14px;
     font-weight: 400;
-    line-height: 1.3!important;
+    line-height: 1.3 !important;
     font-family: 'Geist Mono';
   }
 
@@ -321,7 +347,7 @@
   height: 40px;
   box-sizing: border-box;
   font-family: 'Geist Mono';
-  transition: all .1s ease;
+  transition: all 0.1s ease;
 
   &:focus-within {
     border-color: @color-black1;
@@ -398,9 +424,9 @@
 
   &-wrapper {
     border-radius: 12px;
-    border: 2px solid rgba(0, 179, 255, 0.50);
+    border: 2px solid rgba(0, 179, 255, 0.5);
     background: @color-white;
-    box-shadow: 0px 6px 20px 0px rgba(0, 179, 255, 0.10);
+    box-shadow: 0px 6px 20px 0px rgba(0, 179, 255, 0.1);
     transition: background 0.1s linear;
     cursor: pointer;
     position: relative;
@@ -410,7 +436,7 @@
     justify-content: space-between;
 
     &:hover {
-      background: linear-gradient(180deg, #FFF 0%, #ADE6FF 100%);
+      background: linear-gradient(180deg, #fff 0%, #ade6ff 100%);
       border-width: 1px;
       padding: 21px 37px;
 
@@ -511,7 +537,7 @@
       display: flex;
       align-items: center;
       font-family: 'Geist Mono';
-      
+
       &:not(:first-of-type) {
         margin-top: 8px;
       }

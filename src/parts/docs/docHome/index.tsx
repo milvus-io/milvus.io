@@ -13,14 +13,17 @@ interface HomeContentProps {
   lang?: LanguageEnum;
 }
 export default function HomeContent(props: HomeContentProps) {
-  const {
-    homeData = '',
-    latestBlog,
-  } = props;
+  const { homeData = '', latestBlog, lang } = props;
 
   return (
     <section className={classes.container}>
-      <div className={classes.langSelector}>{<DeepLogo />}</div>
+      <div
+        className={clsx(classes.langSelector, {
+          [classes.specialSelector]: lang === LanguageEnum.ARABIC,
+        })}
+      >
+        {<DeepLogo />}
+      </div>
 
       <div
         className={clsx('doc-style', classes.docHomeHtmlWrapper)}

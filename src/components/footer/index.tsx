@@ -135,7 +135,7 @@ const Footer = (props: Props) => {
                 objectFit: 'cover',
               }}
             />
-            <div className="flex items-center gap-[4px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2 whitespace-nowrap flex-wrap">
+            <div className="flex items-center mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2 whitespace-nowrap flex-wrap">
               <Trans
                 t={t}
                 i18nKey="v3trans.footnote.maintainer"
@@ -145,12 +145,13 @@ const Footer = (props: Props) => {
                     height={16}
                     src="/images/blue-heart.png"
                     alt="Blue Heart Emoji"
+                    className="mr-[4px] ml-[4px]"
                   />,
                   <a
                     href="https://zilliz.com/"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-black2 hover:underline"
+                    className="text-black2 hover:underline ml-[8px]"
                   ></a>,
                 ]}
               />

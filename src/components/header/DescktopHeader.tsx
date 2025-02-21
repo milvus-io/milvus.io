@@ -16,6 +16,7 @@ import {
   GITHUB_VTS_LINK,
   CLOUD_SIGNUP_LINK,
   MILVUS_VIDEO_LINK,
+  GITHUB_DEEP_SEARCHER_LINK,
 } from '@/consts/links';
 import { LanguageSelector } from '@/components/language-selector';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
@@ -99,6 +100,11 @@ export default function DesktopHeader(props: Props) {
         {
           label: t('tools.vts'),
           link: GITHUB_VTS_LINK,
+          rel: 'noopener noreferrer',
+        },
+        {
+          label: t('tools.deepSearcher'),
+          link: GITHUB_DEEP_SEARCHER_LINK,
           rel: 'noopener noreferrer',
         },
       ],

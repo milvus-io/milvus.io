@@ -20,6 +20,8 @@ import {
   GITHUB_VTS_LINK,
   GITHUB_MILVUS_CLI_LINK,
   CLOUD_SIGNUP_LINK,
+  GITHUB_DEEP_SEARCHER_LINK,
+  GITHUB_MILVUS_BACKUP_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '../icons';
 
@@ -160,7 +162,7 @@ export default function MobileHeader(props) {
                       rel="noopener noreferrer"
                       className={classes.externalLinkButton}
                     >
-                      Attu
+                      {t('tools.attu')}
                       <RightTopArrowIcon />
                     </a>
                     <a
@@ -169,21 +171,32 @@ export default function MobileHeader(props) {
                       rel="noopener noreferrer"
                       className={classes.externalLinkButton}
                     >
-                      Milvus_CLI
+                      {t('tools.cli')}
                       <RightTopArrowIcon />
                     </a>
                     <a
                       href="/tools/sizing"
                       className={classes.externalLinkButton}
                     >
-                      Sizing Tool <RightTopArrowIcon />
+                      {t('tools.sizing')} <RightTopArrowIcon />
                     </a>
-
+                    <a
+                      href={GITHUB_MILVUS_BACKUP_LINK}
+                      className={classes.externalLinkButton}
+                    >
+                      {t('tools.backup')} <RightTopArrowIcon />
+                    </a>
                     <a
                       href={GITHUB_VTS_LINK}
                       className={classes.externalLinkButton}
                     >
-                      VTS <RightTopArrowIcon />
+                      {t('tools.vts')} <RightTopArrowIcon />
+                    </a>
+                    <a
+                      href={GITHUB_DEEP_SEARCHER_LINK}
+                      className={classes.externalLinkButton}
+                    >
+                      {t('tools.deepSearcher')} <RightTopArrowIcon />
                     </a>
                   </List>
                 </Collapse>

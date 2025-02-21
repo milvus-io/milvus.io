@@ -18,7 +18,8 @@
     "cli": "Milvus CLI",
     "sizing": "配置工具",
     "backup": "Milvus 備份",
-    "vts": "VTS"
+    "vts": "VTS",
+    "deepSearcher": "深度搜尋器"
   },
   "blog": "博客",
   "community": "社區",

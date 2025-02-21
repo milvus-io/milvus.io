@@ -18,7 +18,8 @@
     "cli": "Milvus CLI",
     "sizing": "Dimensionierungstool",
     "backup": "Milvus Backup",
-    "vts": "VTS"
+    "vts": "VTS",
+    "deepSearcher": "Deep Searcher"
   },
   "blog": "Blog",
   "community": "Community",

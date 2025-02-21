@@ -18,7 +18,8 @@
     "cli": "Milvus CLI",
     "sizing": "Инструмент размещения",
     "backup": "Резервное копирование Milvus",
-    "vts": "VTS"
+    "vts": "VTS",
+    "deepSearcher": "Глубокий искатель"
   },
   "blog": "Блог",
   "community": "Сообщество",

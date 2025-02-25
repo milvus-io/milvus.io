@@ -13,11 +13,12 @@ import {
   GITHUB_MILVUS_BACKUP_LINK,
   GITHUB_VTS_LINK,
 } from '@/consts/links';
-import { RightTopArrowIcon } from '@/components/icons';
+import { NewZilliz, RightTopArrowIcon } from '@/components/icons';
 import SocialMedias from '../socialMedias';
 import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
+import { Divider } from '@mui/material';
 
 type Props = {
   classes?: {
@@ -125,16 +126,30 @@ const Footer = (props: Props) => {
           )}
         >
           <div className="flex  flex-col items-center max-phone:items-start sm:items-start lg:items-start flex-shrink-0 flex-grow-0 flex-[390px]">
-            <img
-              alt="Milvus logo"
-              height="30"
-              width="131"
-              src="/images/milvus_logo.svg"
-              style={{
-                aspectRatio: '120/40',
-                objectFit: 'cover',
-              }}
-            />
+            <div className="flex items-center gap-[8px] max-phone:flex-col">
+              <img
+                alt="Milvus logo"
+                height="30"
+                width="131"
+                src="/images/milvus_logo.svg"
+                style={{
+                  aspectRatio: '120/40',
+                  objectFit: 'cover',
+                }}
+              />
+              <span className="h-[20px] w-[1px] bg-black3 max-phone:hidden"></span>
+              <NewZilliz
+                id="footer-logo"
+                theme="colorful"
+                className="h-[30px] w-[auto]"
+              />
+              <span className="h-[20px] w-[1px] bg-black3 max-phone:hidden"></span>
+              <img
+                src="/images/lf_logo.png"
+                alt="LF_AI"
+                className="h-[30px] w-[auto]"
+              />
+            </div>
             <div className="flex items-center gap-[8px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2 whitespace-nowrap flex-wrap">
               <Trans
                 t={t}

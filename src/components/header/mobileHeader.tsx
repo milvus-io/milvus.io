@@ -71,7 +71,7 @@ export default function MobileHeader(props) {
           }
         )}
       >
-        <LogoSection />
+        <LogoSection equipment="tablet" />
         <nav
           className={clsx(classes.navWrapper, {
             [classes.activeMenu]: isMenuOpen,

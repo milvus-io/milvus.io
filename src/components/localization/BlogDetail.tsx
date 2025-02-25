@@ -93,7 +93,7 @@ export function BlogDetail(props) {
   }, [id]);
 
   const metaTitle = `${title} - Milvus Blog`;
-  const formattedDesc = desc.replaceAll(/\"/g, '\\"');
+  const formattedDesc = desc?desc.replaceAll(/\"/g, '\\"'): '';
 
   const ldJson = `{"@context": "http://schema.org", "@id": "${shareUrl}", "@type": "Article", "headline": "${title}", "description": "${formattedDesc}", "datePublished": "${new Date(
     date

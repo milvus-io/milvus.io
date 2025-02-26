@@ -100,7 +100,12 @@ export default function ResultSection(props: {
   const totalMemory = unitBYTE2Any(
     (milvusMemory + dependencyMemory) * 1024 * 1024 * 1024
   );
-  const { size: diskSize, unit: diskUnit } = unitBYTE2Any(localDiskSize);
+  const { size: singleNodeDiskSize, unit: singleNodeDiskUnit } =
+    unitBYTE2Any(localDiskSize);
+
+  const { size: diskSize, unit: diskUnit } = unitBYTE2Any(
+    localDiskSize * queryNode.count
+  );
 
   const [isMilvusOpen, setIsMilvusOpen] = useState(true);
   const [isDependencyOpen, setIsDependencyOpen] = useState(true);
@@ -384,8 +389,8 @@ export default function ResultSection(props: {
                   standaloneNodeConfig={standaloneNodeConfig}
                   clusterNodeConfig={clusterNodeConfig}
                   isOutOfCalculate={isOutOfCalculate}
-                  diskSize={diskSize}
-                  diskUnit={diskUnit}
+                  diskSize={singleNodeDiskSize}
+                  diskUnit={singleNodeDiskUnit}
                   mode={mode}
                   rawDataSize={rawDataSize}
                   memorySize={memorySize}

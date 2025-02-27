@@ -19,6 +19,7 @@ import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { Divider } from '@mui/material';
+import { ZILLIZ_OFFICIAL_WEBSITE } from '@/consts/externalLinks';
 
 type Props = {
   classes?: {
@@ -132,17 +133,25 @@ const Footer = (props: Props) => {
               className="h-[16px] w-[auto] mb-[10px]"
             />
             <div className="flex items-center gap-[8px] ">
-              <img
-                alt="Milvus"
-                className="h-[40px] w-[auto] max-phone:h-[30px]"
-                src="/images/layout/milvus-logo.svg"
-              />
+              <Link href="/">
+                <img
+                  alt="Milvus"
+                  className="h-[40px] w-[auto] max-phone:h-[30px]"
+                  src="/images/layout/milvus-logo.svg"
+                />
+              </Link>
               <span className="h-[40px] w-[1px] bg-black3"></span>
-              <img
-                src="/images/layout/zilliz-logo.svg"
-                alt="Zilliz"
-                className="h-[50px] w-[auto] max-phone:h-[40px]"
-              />
+              <a
+                href={ZILLIZ_OFFICIAL_WEBSITE}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <img
+                  src="/images/layout/zilliz-logo.svg"
+                  alt="Zilliz"
+                  className="h-[50px] w-[auto] max-phone:h-[40px]"
+                />
+              </a>
             </div>
             <div className="flex items-center gap-[8px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2 whitespace-nowrap flex-wrap">
               <Trans

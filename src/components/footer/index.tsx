@@ -18,6 +18,7 @@ import SocialMedias from '../socialMedias';
 import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
+import { Divider } from '@mui/material';
 
 type Props = {
   classes?: {
@@ -126,15 +127,23 @@ const Footer = (props: Props) => {
         >
           <div className="flex  flex-col items-center max-phone:items-start sm:items-start lg:items-start flex-shrink-0 flex-grow-0 flex-[390px]">
             <img
-              alt="Milvus logo"
-              height="30"
-              width="131"
-              src="/images/milvus_logo.svg"
-              style={{
-                aspectRatio: '120/40',
-                objectFit: 'cover',
-              }}
+              src="/images/layout/lf-ai-logo.svg"
+              alt="LF_AI"
+              className="h-[16px] w-[auto] mb-[10px]"
             />
+            <div className="flex items-center gap-[8px] ">
+              <img
+                alt="Milvus"
+                className="h-[40px] w-[auto] max-phone:h-[30px]"
+                src="/images/layout/milvus-logo.svg"
+              />
+              <span className="h-[40px] w-[1px] bg-black3"></span>
+              <img
+                src="/images/layout/zilliz-logo.svg"
+                alt="Zilliz"
+                className="h-[50px] w-[auto] max-phone:h-[40px]"
+              />
+            </div>
             <div className="flex items-center gap-[8px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2 whitespace-nowrap flex-wrap">
               <Trans
                 t={t}

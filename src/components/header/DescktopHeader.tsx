@@ -125,7 +125,7 @@ export default function DesktopHeader(props: Props) {
         )}
       >
         <div className="flex items-center gap-[40px] max-[1240px]:gap-[10px]">
-          <LogoSection lightMode={true} />
+          <LogoSection />
 
           <ul className="flex items-center list-none gap-[16px] max-[1080px]:gap-[10px]">
             {menuConfigs.map(config => {

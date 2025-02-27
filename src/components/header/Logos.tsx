@@ -5,19 +5,24 @@ import GitHubButton from '../githubButton';
 import { useState, useEffect } from 'react';
 import { getGithubStatics } from '@/http/milvus';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
+import { ZILLIZ_OFFICIAL_WEBSITE } from '@/consts/externalLinks';
 
-export const LogoSection = props => {
-  const foundationLogo = '/images/lf_logo.png';
+export const LogoSection = (props: { equipment?: 'desktop' | 'tablet' }) => {
+  const { equipment = 'desktop' } = props;
   const { getLocalePath } = useGlobalLocale();
   return (
     <div className={classes.logoSection}>
       <Link href={getLocalePath('/')} className="inline-flex items-center">
-        <img src="/images/milvus_logo.svg" height={24} alt="milvus-logo" />
+        <img src="/images/layout/milvus-logo.svg" height={24} alt="Milvus" />
       </Link>
       <div className="w-[1px] h-[20px] bg-black3 mx-[8px]" />
-      <span className="inline-flex items-center justify-center">
-        <img src={foundationLogo} height={20} alt="LFAI" />
-      </span>
+      <a
+        href={ZILLIZ_OFFICIAL_WEBSITE}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <img src="/images/layout/zilliz-logo.svg" alt="Zilliz" height={30} />
+      </a>
     </div>
   );
 };

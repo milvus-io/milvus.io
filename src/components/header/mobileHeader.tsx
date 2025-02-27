@@ -24,6 +24,8 @@ import {
   GITHUB_MILVUS_BACKUP_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '../icons';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
+import { LanguageSelector } from '../language-selector';
 
 export default function MobileHeader(props) {
   const { className } = props;
@@ -34,6 +36,15 @@ export default function MobileHeader(props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const size = useWindowSize();
+
+  const {
+    locale,
+    disabled,
+    disabledLanguages,
+    localeSuffix,
+    onLocaleChange,
+    getLocalePath,
+  } = useGlobalLocale();
 
   useEffect(() => {
     if (!['tablet', 'phone'].includes(size)) {
@@ -71,7 +82,8 @@ export default function MobileHeader(props) {
           }
         )}
       >
-        <LogoSection />
+        <LogoSection equipment="tablet" />
+
         <nav
           className={clsx(classes.navWrapper, {
             [classes.activeMenu]: isMenuOpen,
@@ -238,12 +250,21 @@ export default function MobileHeader(props) {
           </div>
         </nav>
 
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={classes.menuIconBtn}
-        >
-          {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
+        <div className="flex items-center gap-[12px]">
+          <LanguageSelector
+            value={locale}
+            onChange={onLocaleChange}
+            disabled={disabled}
+            disabledLanguages={disabledLanguages}
+            hiddenSelectValue={true}
+          />
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={classes.menuIconBtn}
+          >
+            {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
+        </div>
       </div>
     </div>
   );

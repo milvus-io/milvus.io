@@ -27,3 +27,5 @@ export const MEETUP_UNSTRUCTURED_DATA_URL =
 export const DEMO_MULTIMODAL_SEARCH_URL = 'https://multimodal-demo.milvus.io/';
 
 export const DEMO_HYBRID_SEARCH_URL = 'https://demos.milvus.io/hybrid-search/';
+
+export const ZILLIZ_OFFICIAL_WEBSITE = 'https://zilliz.com/';

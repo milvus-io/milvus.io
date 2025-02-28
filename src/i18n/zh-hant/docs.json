@@ -32,5 +32,10 @@
     "ctaLabel": "開始使用",
     "titleA": "免費嘗試托管的 Milvus",
     "titleB": "免費嘗試 Zilliz Cloud"
+  },
+  "communityBanner": {
+    "title": "Milvus 辦公時間",
+    "desc": "從 Milvus 的專家 Zilliz 取得生產部署的協助。",
+    "ctaLabel": "預約免費 1:1 課程"
   }
 }

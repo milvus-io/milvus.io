@@ -26,5 +26,10 @@
   },
   "translate": {
     "by": "Tradotto da"
+  },
+  "communityBanner": {
+    "title": "Orari d'ufficio di Milvus",
+    "desc": "Chiedete aiuto per la distribuzione in produzione a Zilliz, gli esperti di Milvus.",
+    "ctaLabel": "Prenota una sessione gratuita 1:1"
   }
 }

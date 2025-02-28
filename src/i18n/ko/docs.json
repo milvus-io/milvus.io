@@ -26,5 +26,10 @@
   },
   "translate": {
     "by": "번역"
+  },
+  "communityBanner": {
+    "title": "밀버스 영업 시간",
+    "desc": "Milvus의 전문가인 질리즈의 프로덕션 배포에 대한 도움을 받으세요.",
+    "ctaLabel": "무료 1:1 세션 예약하기"
   }
 }

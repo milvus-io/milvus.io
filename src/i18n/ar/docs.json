@@ -32,5 +32,10 @@
     "ctaLabel": "ابدأ",
     "titleA": "جرب Managed Milvus مجاناً",
     "titleB": "جرب Zilliz Cloud مجاناً"
+  },
+  "communityBanner": {
+    "title": "ساعات عمل مكتب ميلفوس",
+    "desc": "احصل على المساعدة في نشر الإنتاج من Zilliz، الخبراء في ميلفوس.",
+    "ctaLabel": "احجز جلسة مجانية 1:1"
   }
 }

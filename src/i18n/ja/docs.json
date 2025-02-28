@@ -26,5 +26,10 @@
   },
   "translate": {
     "by": "翻訳"
+  },
+  "communityBanner": {
+    "title": "ミルバス営業時間",
+    "desc": "Milvusの専門家であるZillizから、本番導入の支援を受けましょう。",
+    "ctaLabel": "無料1:1セッションを予約する"
   }
 }

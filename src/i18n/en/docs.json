@@ -32,5 +32,10 @@
     "ctaLabel": "Get Started",
     "titleA": "Try Managed Milvus for Free",
     "titleB": "Try Zilliz Cloud for Free"
+  },
+  "communityBanner": {
+    "title": "Milvus Office Hours",
+    "desc": "Get help with production deployment from Zilliz, the experts on Milvus.",
+    "ctaLabel": "Book a free 1:1 session"
   }
 }

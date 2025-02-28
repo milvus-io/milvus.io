@@ -89,7 +89,6 @@ const Aside = (props: AsidePropsType) => {
   });
 
   const displayCommunityBanner = useMemo(() => {
-    console.log('mdId--', mdId);
     return DisplayCommunityBannerMdIds.includes(mdId);
   }, [mdId]);
 

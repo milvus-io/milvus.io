@@ -172,6 +172,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
               activeAnchor={activeAnchor}
               lang={lang}
               isShowBtnGroup={isEN}
+              mdId={currentId}
             />
           </div>
         </section>

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
@@ -15,6 +15,8 @@ import FeedbackSection from './feedback';
 import styles from './index.module.less';
 import CloudAdvertisementCard from '../card/advCard';
 import { DeepLogo } from '../localization/DeepLogo';
+import CustomButton from '../customButton';
+import { RightTopArrowIcon } from '../icons';
 
 interface DocData {
   editPath: string;
@@ -36,7 +38,7 @@ interface AsidePropsType {
   docData?: DocData;
   activeAnchor?: string;
   lang?: LanguageEnum;
-
+  mdId: string;
   classes?: {
     root?: string;
     btnGroup?: string;
@@ -51,6 +53,19 @@ export interface DialogPropsType {
   actions?: React.ReactNode;
 }
 
+const DisplayCommunityBannerMdIds = [
+  'prerequisite-docker.md',
+  'install_standalone-docker.md',
+  'install_standalone-docker-compose.md',
+  'install_standalone-windows.md',
+  'prerequisite-helm.md',
+  'install_cluster-milvusoperator.md',
+  'install_cluster-helm.md',
+  'prerequisite-gpu.md',
+  'install_cluster-helm-gpu.md',
+  'install_standalone-docker-compose-gpu.md',
+];
+
 const Aside = (props: AsidePropsType) => {
   const {
     category = 'doc',
@@ -61,6 +76,7 @@ const Aside = (props: AsidePropsType) => {
     apiReferenceData,
     activeAnchor = '',
     lang,
+    mdId,
   } = props;
   const { t } = useTranslation('docs', { lng: lang });
   const { root, btnGroup, anchorTree } = classes;
@@ -71,6 +87,11 @@ const Aside = (props: AsidePropsType) => {
     children: <></>,
     actions: undefined,
   });
+
+  const displayCommunityBanner = useMemo(() => {
+    console.log('mdId--', mdId);
+    return DisplayCommunityBannerMdIds.includes(mdId);
+  }, [mdId]);
 
   const handleCloseDialog = () => {
     setDialogConfig(v => ({
@@ -165,6 +186,21 @@ const Aside = (props: AsidePropsType) => {
             className={clsx(anchorTree)}
             lang={lang}
           />
+        )}
+        {displayCommunityBanner && (
+          <div className={styles.communityBannerCard}>
+            <img src="/images/docs/office-hours.svg" alt="Office Hours" />
+            <h3 className="">{t('communityBanner.title')}</h3>
+            <p className="">{t('communityBanner.desc')}</p>
+            <CustomButton
+              endIcon={<RightTopArrowIcon />}
+              variant="outlined"
+              className={styles.bookButton}
+              href="https://meetings.hubspot.com/chloe-williams1/milvus-office-hours"
+            >
+              {t('communityBanner.ctaLabel')}
+            </CustomButton>
+          </div>
         )}
         <CloudAdvertisementCard
           language={lang}

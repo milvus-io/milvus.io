@@ -227,6 +227,7 @@ export default function Template(props: ApiDetailPageProps) {
               classes={{
                 root: classes.rightAnchorTreeWrapper,
               }}
+              mdId={currentId}
             />
           </div>
         </section>

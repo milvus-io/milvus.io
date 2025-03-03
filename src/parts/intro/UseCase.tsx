@@ -35,11 +35,6 @@ export function UseCase(props: Props) {
           content="Discover Milvus use cases across various industries to unveil the power of purpose-built vector databases. "
         />
         <meta name="keywords" content="Milvus, vector search, use cases" />
-        <link
-          rel="alternate"
-          href={`${ABSOLUTE_BASE_URL}/use-cases`}
-          hrefLang="en"
-        />
       </Head>
       <main>
         <div className={styles.casePageContainer} ref={scrollContainer}>

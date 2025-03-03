@@ -132,11 +132,6 @@ export default function ReverseImageSearch() {
         <Head>
           <title>{TITLE}</title>
           <meta name="description" content={DESC} />
-          <link
-            rel="alternate"
-            href={`${ABSOLUTE_BASE_URL}/milvus-demos/reverse-image-search`}
-            hrefLang="en"
-          />
         </Head>
         <div className={clsx(pageClasses.container, classes.pageContainer)}>
           {/* for seo */}

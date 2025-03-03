@@ -112,11 +112,6 @@ export function IntroMilvus(props: Props) {
           name="keywords"
           content="Milvus, Vector Database, Vector Search"
         />
-        <link
-          rel="alternate"
-          href={`${ABSOLUTE_BASE_URL}/intro`}
-          hrefLang="en"
-        />
       </Head>
 
       <main>

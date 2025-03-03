@@ -19,7 +19,6 @@ export default function Homepage(props: {
   return (
     <Layout>
       <main className={classes.homepageContainer}>
-        <HomeMeta locale={LanguageEnum.ENGLISH} />
         <HomePageHeaderSection {...headline} locale={LanguageEnum.ENGLISH} />
         <CodeExampleSection />
         <DeploySection />

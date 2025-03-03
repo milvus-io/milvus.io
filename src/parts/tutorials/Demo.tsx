@@ -128,11 +128,6 @@ export function MilvusDemos(props: Props) {
         <Head>
           <title>{TITLE}</title>
           <meta name="description" content={DESC} />
-          <link
-            rel="alternate"
-            href={`${ABSOLUTE_BASE_URL}/milvus-demos`}
-            hrefLang="en"
-          />
         </Head>
 
         <section className={classes.headerSection}>

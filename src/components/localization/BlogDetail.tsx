@@ -93,7 +93,7 @@ export function BlogDetail(props) {
   }, [id]);
 
   const metaTitle = `${title} - Milvus Blog`;
-  const formattedDesc = desc?desc.replaceAll(/\"/g, '\\"'): '';
+  const formattedDesc = desc ? desc.replaceAll(/\"/g, '\\"') : '';
 
   const ldJson = `{"@context": "http://schema.org", "@id": "${shareUrl}", "@type": "Article", "headline": "${title}", "description": "${formattedDesc}", "datePublished": "${new Date(
     date
@@ -109,7 +109,6 @@ export function BlogDetail(props) {
           <meta property="og:description" content={desc} />
           <meta property="og:url" content={shareUrl} />
           <meta property="og:image" content={`https://${cover}`} />
-          <link rel="alternate" href={shareUrl} hrefLang="en" />
           <link
             rel="stylesheet"
             href="https://assets.zilliz.com/katex/katex.min.css"

@@ -145,11 +145,6 @@ export default function SizingTool(props: Props) {
             search
           </title>
           <meta name="description" content="Sizing tool" />
-          <link
-            rel="alternate"
-            href={`${ABSOLUTE_BASE_URL}/tools/sizing`}
-            hrefLang="en"
-          />
         </Head>
 
         <div

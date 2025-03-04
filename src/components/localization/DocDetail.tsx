@@ -154,6 +154,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
               mdId={currentId}
               commitPath={editPath}
               type="doc"
+              lang={lang}
               activeLabels={activeLabels}
               latestVersion={latestVersion}
             />

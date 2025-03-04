@@ -10,10 +10,10 @@ export default function Breadcrumb(props: {
     href?: string;
     disabled?: boolean;
   }[];
-  lang: string;
+  lang?: string;
   className?: string;
 }) {
-  const { list, className = '', lang } = props;
+  const { list, className = '', lang = 'en' } = props;
   const { t } = useTranslation('home');
 
   const length = list.length;
@@ -39,7 +39,7 @@ export default function Breadcrumb(props: {
     );
   };
 
-  const homeLink = lang == 'en' ? '' : `/${lang}`;
+  const homeLink = lang == 'en' ? '/' : `/${lang}`;
 
   return (
     <ul className={clsx(classes.breadcrumbWrapper, className)}>

@@ -2,7 +2,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import classes from './index.module.less';
-import { GET_START_LINK } from '@/consts/links';
+import { GET_START_LINK, LEARN_MORE_LINK } from '@/consts/links';
 import CustomButton from '@/components/customButton';
 import Link from 'next/link';
 import { LanguageEnum } from '@/types/localization';
@@ -50,7 +50,7 @@ export default function HomePageHeaderSection(props: {
 
         <div className="flex justify-center items-center gap-[20px] max-sm:flex-col">
           <CustomButton
-            href={GET_START_LINK}
+            href={GET_START_LINK(locale)}
             size="large"
             classes={{
               root: classes.startButton,
@@ -59,7 +59,7 @@ export default function HomePageHeaderSection(props: {
             {t('buttons.quickStart')}
           </CustomButton>
           <CustomButton
-            href="/docs/overview.md"
+            href={LEARN_MORE_LINK(locale)}
             size="large"
             variant="outlined"
             classes={{

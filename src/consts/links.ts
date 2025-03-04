@@ -48,4 +48,7 @@ export const MILVUS_INTEGRATION_RAGAS_LINK =
 export const MILVUS_INTEGRATION_MEMGPT_LINK =
   'https://milvus.io/docs/integrate_with_memgpt.md';
 
-export const GET_START_LINK = '/docs/quickstart.md';
+export const GET_START_LINK = (lang: string) =>
+  `/docs/${lang !== 'en' ? `${lang}/` : ''}quickstart.md`;
+export const LEARN_MORE_LINK = (lang: string) =>
+  `/docs/${lang !== 'en' ? `${lang}/` : ''}overview.md`;

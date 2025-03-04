@@ -11,15 +11,19 @@ import { getHomepageHeadline } from '@/utils/blogs';
 import classes from '@/styles/home.module.less';
 import { LanguageEnum } from '@/types/localization';
 import { HomeMeta } from '@/parts/home/meta/HomeMeta';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function Homepage(props: {
   headline: { label: string; link: string };
 }) {
   const { headline } = props;
+  const { locale } = useGlobalLocale();
+
   return (
     <Layout>
       <main className={classes.homepageContainer}>
-        <HomePageHeaderSection {...headline} locale={LanguageEnum.ENGLISH} />
+        <HomeMeta locale={locale || LanguageEnum.ENGLISH} />
+        <HomePageHeaderSection {...headline} locale={locale} />
         <CodeExampleSection />
         <DeploySection />
         <AIToolsSection />

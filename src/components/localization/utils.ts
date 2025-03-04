@@ -21,6 +21,6 @@ export const getSeoUrl = (params: {
   const { lang, version, latestVersion, docId } = params;
   const versionSuffix = version === latestVersion ? '' : `/${version}`;
   const langSuffix = lang === LanguageEnum.ENGLISH ? '' : `/${lang}`;
-  const docIdSuffix = docId ? '' : `/${docId}`;
+  const docIdSuffix = docId ? `/${docId}` : '';
   return `${ABSOLUTE_BASE_URL}/docs${langSuffix}${versionSuffix}${docIdSuffix}`;
 };

@@ -581,7 +581,6 @@ export const BlogHome: React.FC<Props> = props => {
         <meta property="og:title" content={t('blog:homepage.title')}></meta>
         <meta property="og:description" content={t('blog:homepage.desc')} />
         <meta property="og:url" content={absoluteUrl} />
-        <link rel="alternate" href={absoluteUrl} hrefLang="en" />
       </Head>
       <main>
         <section className={styles['banner']}>

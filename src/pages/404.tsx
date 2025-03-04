@@ -60,11 +60,6 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
             name="keywords"
             content="Open source vector databases, GenAI, Milvus, RAG, Vector Similarity Search"
           />
-          <link
-            rel="alternate"
-            href={`${ABSOLUTE_BASE_URL}/404`}
-            hrefLang="en"
-          />
         </Head>
 
         <section

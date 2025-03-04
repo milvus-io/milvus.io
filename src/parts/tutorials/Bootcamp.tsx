@@ -27,11 +27,6 @@ export function Bootcamp(props) {
         <Head>
           <title>Milvus Bootcamp</title>
           <meta name="description" content="Join Milvus Bootcamp" />
-          <link
-            rel="alternate"
-            href={`${ABSOLUTE_BASE_URL}/bootcamp`}
-            hrefLang="en"
-          />
         </Head>
 
         <div

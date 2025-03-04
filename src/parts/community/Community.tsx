@@ -119,11 +119,6 @@ export const Community: FC<Props> = (props: Props) => {
             name="description"
             content="Join an open-source community of passionate developers and engineers dedicated to GenAI"
           />
-          <link
-            rel="alternate"
-            href={`${ABSOLUTE_BASE_URL}/community`}
-            hrefLang="en"
-          />
         </Head>
 
         <div className={classes.communityPageContainer}>

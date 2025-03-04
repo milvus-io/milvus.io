@@ -8,7 +8,6 @@ import {
   RightTopArrowIcon,
 } from '@/components/icons';
 import {
-  GET_START_LINK,
   GITHUB_ATTU_LINK,
   GITHUB_MILVUS_BACKUP_LINK,
   GITHUB_MILVUS_CLI_LINK,

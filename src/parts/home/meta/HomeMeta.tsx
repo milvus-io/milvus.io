@@ -10,15 +10,11 @@ type Props = {
 export const HomeMeta = (props: Props) => {
   const { locale } = props;
   const { t } = useTranslation('home', { lng: locale });
-  const href =
-    locale === LanguageEnum.ENGLISH
-      ? ABSOLUTE_BASE_URL
-      : `${ABSOLUTE_BASE_URL}/${locale}`;
+
   return (
     <Head>
       <title>{t('meta.title')}</title>
       <meta name="description" content={t('meta.description')} />
-      <link rel="alternate" href={href} hrefLang={locale} />
     </Head>
   );
 };

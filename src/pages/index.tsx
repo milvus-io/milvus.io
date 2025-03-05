@@ -18,7 +18,6 @@ export default function Homepage(props: {
 }) {
   const { headline } = props;
   const { locale } = useGlobalLocale();
-
   return (
     <Layout>
       <main className={classes.homepageContainer}>

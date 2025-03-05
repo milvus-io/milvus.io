@@ -12,15 +12,18 @@ import classes from '@/styles/home.module.less';
 import { getAllLanguageSlugs } from '@/i18n';
 import { LanguageEnum } from '@/types/localization';
 import { HomeMeta } from '@/parts/home/meta/HomeMeta';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function Homepage(props: {
   headline: { label: string; link: string };
   lang: LanguageEnum;
 }) {
   const { headline, lang } = props;
+  const { locale } = useGlobalLocale();
   return (
     <Layout>
       <main className={classes.homepageContainer}>
+        <HomeMeta locale={locale || LanguageEnum.ENGLISH} />
         <HomePageHeaderSection {...headline} locale={lang} />
         <CodeExampleSection />
         <DeploySection />

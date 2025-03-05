@@ -14,6 +14,7 @@ export default function HomePageHeaderSection(props: {
 }) {
   const { label, link, locale } = props;
   const { t } = useTranslation('home', { lng: locale });
+  const { t: milvusTrans } = useTranslation('common', { lng: locale });
 
   return (
     <section
@@ -59,14 +60,14 @@ export default function HomePageHeaderSection(props: {
             {t('buttons.quickStart')}
           </CustomButton>
           <CustomButton
-            href={LEARN_MORE_LINK(locale)}
+            href="https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2025-03-05_center"
             size="large"
             variant="outlined"
             classes={{
               root: classes.startButton,
             }}
           >
-            {t('buttons.learnMore')}
+            {milvusTrans('v3trans.home.banner.tryManaged')}
           </CustomButton>
         </div>
       </div>

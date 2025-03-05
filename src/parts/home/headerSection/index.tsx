@@ -57,18 +57,18 @@ export default function HomePageHeaderSection(props: {
               root: classes.startButton,
             }}
           >
-            {milvusTrans('v3trans.home.banner.tryManaged')}
+            {t('buttons.quickStart')}
           </CustomButton>
-          {/* <CustomButton
-            href={LEARN_MORE_LINK(locale)}
+          <CustomButton
+            href="https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2025-03-05_center"
             size="large"
             variant="outlined"
             classes={{
               root: classes.startButton,
             }}
           >
-            {t('buttons.learnMore')}
-          </CustomButton> */}
+            {milvusTrans('v3trans.home.banner.tryManaged')}
+          </CustomButton>
         </div>
       </div>
     </section>

@@ -58,7 +58,7 @@ export default function HomePageHeaderSection(props: {
           >
             {t('buttons.quickStart')}
           </CustomButton>
-          <CustomButton
+          {/* <CustomButton
             href={LEARN_MORE_LINK(locale)}
             size="large"
             variant="outlined"
@@ -67,7 +67,7 @@ export default function HomePageHeaderSection(props: {
             }}
           >
             {t('buttons.learnMore')}
-          </CustomButton>
+          </CustomButton> */}
         </div>
       </div>
     </section>

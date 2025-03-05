@@ -15,7 +15,6 @@ import { CloseIcon, MenuIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
 import { Button } from '@/components/ui/button';
 import {
-  GET_START_LINK,
   GITHUB_ATTU_LINK,
   GITHUB_VTS_LINK,
   GITHUB_MILVUS_CLI_LINK,

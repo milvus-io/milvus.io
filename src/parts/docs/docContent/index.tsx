@@ -15,6 +15,7 @@ interface DocContentPropsType {
   activeLabels: string[];
   latestVersion: string;
   apiCategory?: string;
+  lang?: string;
 }
 
 export default function DocContent(props: DocContentPropsType) {
@@ -27,13 +28,17 @@ export default function DocContent(props: DocContentPropsType) {
     activeLabels,
     latestVersion,
     apiCategory,
+    lang = 'en',
   } = props;
   const { t } = useTranslation('common');
+  const { t: headerTrans } = useTranslation('header');
+
+  const docLink = lang == 'en' ? `/docs` : `/docs/${lang}`;
 
   const prefixDocCrumbItems = [
     {
-      label: 'Docs',
-      href: version === latestVersion ? '/docs' : `/docs/${version}`,
+      label: headerTrans('docs'),
+      href: version === latestVersion ? docLink : `${docLink}/${version}`,
     },
   ];
 
@@ -85,6 +90,7 @@ export default function DocContent(props: DocContentPropsType) {
             label: v,
           })),
         ]}
+        lang={lang}
       />
       <div
         className={clsx('doc-style', 'doc-post-content', {

@@ -9,6 +9,7 @@ import {
   DISABLED_LANGUAGE_SELECTOR_VERSIONS,
 } from '@/components/localization/const';
 import { useStore } from '@/hooks/use-store';
+import Cookies from 'js-cookie';
 
 const LANGUAGES = Object.values(LanguageEnum);
 
@@ -68,6 +69,13 @@ export const useGlobalLocale = () => {
   };
 
   const changeLocale = (newLocale: LanguageEnum) => {
+    // write local to coolie, replace or add lang=newLocal;
+    Cookies.set('lang', newLocale, {
+      expires: 365,
+      secure: true,
+      sameSite: 'Lax',
+    }); // Expires in 1 year
+
     i18n.changeLanguage(newLocale);
     dispatch({ type: 'SET_LOCALE', payload: newLocale });
   };

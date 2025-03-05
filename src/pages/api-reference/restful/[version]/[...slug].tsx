@@ -124,6 +124,7 @@ export default function RestfulApiReference(props: {
                   label: v,
                 })),
               ]}
+              lang={'en'}
               className={styles.breadcrumbContainer}
             />
             <div className={clsx(styles.restfulContainer)}>

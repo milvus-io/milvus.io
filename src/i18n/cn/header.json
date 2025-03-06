@@ -21,7 +21,12 @@
     "deepSearcher": "深度搜索器"
   },
   "blog": "博客",
-  "community": "社区",
+  "community": {
+    "label": "社区",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "更多社区"
+  },
   "start": "开始使用",
   "contact": "联系我们",
   "footer": {

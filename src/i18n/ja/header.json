@@ -22,7 +22,12 @@
     "deepSearcher": "ディープ・サーチャー"
   },
   "blog": "ブログ",
-  "community": "コミュニティ",
+  "community": {
+    "label": "コミュニティ",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "その他のチャンネル"
+  },
   "start": "始める",
   "star": "スター",
   "contact": "お問い合わせ",

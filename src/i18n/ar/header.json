@@ -22,7 +22,12 @@
     "deepSearcher": "باحث عميق"
   },
   "blog": "المدونة",
-  "community": "المجتمع",
+  "community": {
+    "label": "المجتمع",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "المزيد من القنوات"
+  },
   "start": "ابدأ",
   "star": "نجمة",
   "contact": "تواصل معنا",

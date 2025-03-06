@@ -22,7 +22,12 @@
     "deepSearcher": "Глубокий искатель"
   },
   "blog": "Блог",
-  "community": "Сообщество",
+  "community": {
+    "label": "Сообщество",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "Другие каналы"
+  },
   "start": "Начать",
   "star": "Звезда",
   "contact": "Связаться с нами",

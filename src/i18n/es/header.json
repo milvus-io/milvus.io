@@ -22,7 +22,12 @@
     "deepSearcher": "Buscador profundo"
   },
   "blog": "Blog",
-  "community": "Comunidad",
+  "community": {
+    "label": "Comunidad",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "Más Canales"
+  },
   "start": "Empezar",
   "star": "Estrella",
   "contact": "Contáctenos",

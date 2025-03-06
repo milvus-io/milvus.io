@@ -22,7 +22,12 @@
     "deepSearcher": "Deep Searcher"
   },
   "blog": "Blog",
-  "community": "Community",
+  "community": {
+    "label": "Community",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "Weitere Kanäle"
+  },
   "start": "Verwaltetes Milvus",
   "star": "Stern",
   "contact": "Kontakt",

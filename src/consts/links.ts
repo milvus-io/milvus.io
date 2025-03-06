@@ -19,6 +19,8 @@ export const GITHUB_MILVUS_CLI_LINK =
 export const GITHUB_MILVUS_BACKUP_LINK =
   'https://github.com/zilliztech/milvus-backup';
 export const GITHUB_MILVUS_LINK = 'https://github.com/milvus-io/milvus';
+export const GITHUB_MILVUS_COMMUNITY_LINK =
+  'https://github.com/milvus-io/milvus/discussions';
 
 export const CLOUD_SIGNUP_LINK = 'https://cloud.zilliz.com/signup';
 export const CLOUD_SIGNIN_LINK = 'https://cloud.zilliz.com/signin';

@@ -23,6 +23,7 @@ import {
   GITHUB_MILVUS_BACKUP_LINK,
   GITHUB_MILVUS_LINK,
   DISCORD_INVITE_URL,
+  GITHUB_MILVUS_COMMUNITY_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '../icons';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
@@ -265,7 +266,7 @@ export default function MobileHeader(props) {
                       <RightTopArrowIcon />
                     </a>
                     <a
-                      href={GITHUB_MILVUS_LINK}
+                      href={GITHUB_MILVUS_COMMUNITY_LINK}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={classes.externalLinkButton}

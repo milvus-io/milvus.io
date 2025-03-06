@@ -22,7 +22,12 @@
     "deepSearcher": "深度搜尋器"
   },
   "blog": "博客",
-  "community": "社區",
+  "community": {
+    "label": "社區",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "更多頻道"
+  },
   "start": "開始使用",
   "star": "星標",
   "contact": "聯繫我們",

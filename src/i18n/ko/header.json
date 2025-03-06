@@ -22,7 +22,12 @@
     "deepSearcher": "딥 서처"
   },
   "blog": "블로그",
-  "community": "커뮤니티",
+  "community": {
+    "label": "커뮤니티",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "더 많은 채널"
+  },
   "start": "시작하기",
   "star": "별표",
   "contact": "문의하기",

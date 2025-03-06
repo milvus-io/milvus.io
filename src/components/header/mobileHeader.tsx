@@ -21,6 +21,8 @@ import {
   CLOUD_SIGNUP_LINK,
   GITHUB_DEEP_SEARCHER_LINK,
   GITHUB_MILVUS_BACKUP_LINK,
+  GITHUB_MILVUS_LINK,
+  DISCORD_INVITE_URL,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '../icons';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
@@ -31,7 +33,7 @@ export default function MobileHeader(props) {
   const { t } = useTranslation('header');
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
-
+  const [isCommunityOpen, setIsCommunityOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const size = useWindowSize();
@@ -65,6 +67,14 @@ export default function MobileHeader(props) {
       isOpen = !isToolOpen;
     }
     setIsToolOpen(isOpen);
+  };
+
+  const openCommunity = open => {
+    let isOpen = open;
+    if (isOpen === undefined) {
+      isOpen = !isCommunityOpen;
+    }
+    setIsCommunityOpen(isOpen);
   };
 
   return (
@@ -221,13 +231,53 @@ export default function MobileHeader(props) {
                 </Link>
 
                 <Divider variant="fullWidth" />
-                <Link href="/community" className={classes.menuLink}>
-                  <ListItemButton>
-                    <ListItemText primary="Community" />
-                  </ListItemButton>
-                </Link>
 
-                <Divider variant="fullWidth" />
+                <ListItemButton
+                  onClick={() => {
+                    openCommunity(!isCommunityOpen);
+                  }}
+                >
+                  <ListItemText primary="Community" />
+                  {isCommunityOpen ? (
+                    <ExpandMore
+                      className={clsx(classes.expendIcon, classes.turnDown)}
+                    />
+                  ) : (
+                    <ExpandMore
+                      className={clsx(classes.expendIcon, classes.static)}
+                    />
+                  )}
+                </ListItemButton>
+
+                <Collapse in={isCommunityOpen} timeout="auto" unmountOnExit>
+                  <List
+                    component="div"
+                    disablePadding
+                    classes={{ root: classes.subMenuList }}
+                  >
+                    <a
+                      href={DISCORD_INVITE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={classes.externalLinkButton}
+                    >
+                      {t('community.discord')}
+                      <RightTopArrowIcon />
+                    </a>
+                    <a
+                      href={GITHUB_MILVUS_LINK}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={classes.externalLinkButton}
+                    >
+                      {t('community.github')}
+                      <RightTopArrowIcon />
+                    </a>
+                    <a href="/community" className={classes.externalLinkButton}>
+                      {t('community.more')}
+                    </a>
+                  </List>
+                </Collapse>
               </List>
             </div>
 

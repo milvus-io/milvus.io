@@ -16,6 +16,7 @@ import {
   CLOUD_SIGNUP_LINK,
   MILVUS_VIDEO_LINK,
   GITHUB_DEEP_SEARCHER_LINK,
+  DISCORD_INVITE_URL,
 } from '@/consts/links';
 import { LanguageSelector } from '@/components/language-selector';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
@@ -110,8 +111,24 @@ export default function DesktopHeader(props: Props) {
     },
     { label: t('blog'), link: getLocalePath('/blog') },
     {
-      label: t('community'),
+      label: t('community.label'),
       link: getLocalePath('/community'),
+      list: [
+        {
+          label: t('community.discord'),
+          link: DISCORD_INVITE_URL,
+          rel: 'noopener noreferrer',
+        },
+        {
+          label: t('community.github'),
+          link: GITHUB_MILVUS_LINK,
+          rel: 'noopener noreferrer',
+        },
+        {
+          label: t('community.more'),
+          link: getLocalePath('/community'),
+        },
+      ],
     },
   ];
 

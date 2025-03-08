@@ -45,7 +45,7 @@ const Footer = (props: Props) => {
         { name: t('header:blog'), to: getLocalePath('/blog') },
         {
           name: t('header:footer.resource.managed'),
-          to: CLOUD_SIGNUP_LINK,
+          to: `https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2025-03-07_footer_milvusio`,
           isExternal: true,
         },
         {

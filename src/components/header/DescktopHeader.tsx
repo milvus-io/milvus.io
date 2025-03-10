@@ -25,14 +25,14 @@ import { useGlobalLocale } from '@/hooks/use-global-locale';
 import milvusStats from '../../../global-stats.json';
 import { LogoSection } from './Logos';
 
-type Props = { className?: string };
+type Props = { className?: string; disableLangSelector?: boolean };
 
 const startNum = `${(Number(milvusStats?.milvusStars || 0) / 1000).toFixed(
   1
 )}K`;
 
 export default function DesktopHeader(props: Props) {
-  const { className } = props;
+  const { className, disableLangSelector = false } = props;
   const {
     locale,
     disabled,
@@ -196,13 +196,15 @@ export default function DesktopHeader(props: Props) {
         </div>
 
         <div className="flex gap-[20px] max-[1240px]:gap-[12px] max-[1080px]:gap-[10px] items-center font-mono">
-          <LanguageSelector
-            value={locale}
-            onChange={onLocaleChange}
-            disabled={disabled}
-            disabledLanguages={disabledLanguages}
-            hiddenSelectValue={true}
-          />
+          {!disableLangSelector && (
+            <LanguageSelector
+              value={locale}
+              onChange={onLocaleChange}
+              disabled={disabled}
+              disabledLanguages={disabledLanguages}
+              hiddenSelectValue={true}
+            />
+          )}
           <a
             href={GITHUB_MILVUS_LINK}
             className={

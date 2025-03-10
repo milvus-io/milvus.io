@@ -56,7 +56,9 @@ export function UseCase(props: Props) {
                   columnWidth={280}
                   renderItem={({ data }) => <UseCaseCard useCase={data} />}
                   gutterWidth={30}
-                  scrollContainer={scrollContainer.current}
+                  scrollContainer={() => {
+                    return document.getElementsByTagName('body')[0];
+                  }}
                   virtualize
                   minCols={1}
                 />

@@ -153,3 +153,9 @@ button {
   border-style: solid;
   cursor: pointer;
 }
+
+body {
+  height: auto;
+  min-height: 100vh;
+  overflow: auto;
+}

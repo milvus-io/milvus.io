@@ -7,7 +7,8 @@ import CloudBanner from '../banner';
 const Header: React.FC<{
   darkMode?: Boolean;
   className?: string;
-}> = ({ darkMode = false, className = '' }) => {
+  disableLangSelector?: boolean;
+}> = ({ darkMode = false, className = '', disableLangSelector = false }) => {
   return (
     <header
       className={clsx(classes.headerContainer, {
@@ -16,8 +17,14 @@ const Header: React.FC<{
       })}
     >
       <CloudBanner />
-      <DesktopHeader className={className} />
-      <MobileHeader className={className} />
+      <DesktopHeader
+        className={className}
+        disableLangSelector={disableLangSelector}
+      />
+      <MobileHeader
+        className={className}
+        disableLangSelector={disableLangSelector}
+      />
     </header>
   );
 };

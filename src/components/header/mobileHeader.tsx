@@ -29,8 +29,11 @@ import { RightTopArrowIcon } from '../icons';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { LanguageSelector } from '../language-selector';
 
-export default function MobileHeader(props) {
-  const { className } = props;
+export default function MobileHeader(props: {
+  className?: string;
+  disableLangSelector?: boolean;
+}) {
+  const { className = '', disableLangSelector = false } = props;
   const { t } = useTranslation('header');
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
@@ -301,13 +304,15 @@ export default function MobileHeader(props) {
         </nav>
 
         <div className="flex items-center gap-[12px]">
-          <LanguageSelector
-            value={locale}
-            onChange={onLocaleChange}
-            disabled={disabled}
-            disabledLanguages={disabledLanguages}
-            hiddenSelectValue={true}
-          />
+          {!disableLangSelector && (
+            <LanguageSelector
+              value={locale}
+              onChange={onLocaleChange}
+              disabled={disabled}
+              disabledLanguages={disabledLanguages}
+              hiddenSelectValue={true}
+            />
+          )}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={classes.menuIconBtn}

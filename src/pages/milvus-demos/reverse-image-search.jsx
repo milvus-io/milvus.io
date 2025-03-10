@@ -128,7 +128,7 @@ export default function ReverseImageSearch() {
 
   return (
     <main ref={scrollContainerRef} className={classes.outerContainer}>
-      <Layout showFooter={false}>
+      <Layout showFooter={false} disableLangSelector>
         <Head>
           <title>{TITLE}</title>
           <meta name="description" content={DESC} />

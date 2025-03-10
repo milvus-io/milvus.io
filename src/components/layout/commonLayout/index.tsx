@@ -11,7 +11,14 @@ const Layout: React.FC<{
   children: React.ReactNode;
   showFooter?: boolean;
   headerClassName?: string;
-}> = ({ darkMode, children, showFooter = true, headerClassName = '' }) => {
+  disableLangSelector?: boolean;
+}> = ({
+  darkMode,
+  children,
+  showFooter = true,
+  headerClassName = '',
+  disableLangSelector = false,
+}) => {
   const { locale } = useGlobalLocale();
   const { asPath } = useRouter();
   return (
@@ -23,7 +30,11 @@ const Layout: React.FC<{
           href={`${ABSOLUTE_BASE_URL}${asPath}`}
         />
       </Head>
-      <Header darkMode={darkMode} className={headerClassName} />
+      <Header
+        darkMode={darkMode}
+        className={headerClassName}
+        disableLangSelector={disableLangSelector}
+      />
       {children}
       {showFooter && <Footer />}
     </>

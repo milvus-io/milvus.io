@@ -162,7 +162,7 @@ export const Community: FC<Props> = (props: Props) => {
             </div>
           </section>
 
-          <section
+          {/* <section
             className={clsx(pageClasses.homeContainer, classes.contentSection)}
           >
             <h2>{t('community.title')}</h2>
@@ -177,7 +177,7 @@ export const Community: FC<Props> = (props: Props) => {
                 </li>
               ))}
             </ul>
-          </section>
+          </section> */}
 
           <section
             className={clsx(pageClasses.homeContainer, classes.mailListSection)}

@@ -179,7 +179,7 @@ export const Community: FC<Props> = (props: Props) => {
             </ul>
           </section> */}
 
-          <section
+          {/* <section
             className={clsx(pageClasses.homeContainer, classes.mailListSection)}
           >
             <h2>{t('mail.title')}</h2>
@@ -191,7 +191,7 @@ export const Community: FC<Props> = (props: Props) => {
                 </Link>
               ))}
             </div>
-          </section>
+          </section> */}
         </div>
       </Layout>
     </main>

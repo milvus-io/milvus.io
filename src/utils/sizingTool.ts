@@ -631,8 +631,8 @@ export const milvusOverviewDataCalculator = (params: {
         indexNode.memory * indexNode.count;
 
   return {
-    milvusCpu,
-    milvusMemory,
+    milvusCpu: milvusCpu || 0,
+    milvusMemory: milvusMemory || 0,
   };
 };
 

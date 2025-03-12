@@ -6,7 +6,6 @@ const fs = require('fs');
 const axios = require('axios');
 
 const nextConfig = {
-  output: 'export',
   images: {
     loader: 'akamai',
     path: '',
@@ -14,21 +13,24 @@ const nextConfig = {
 };
 
 module.exports = async () => {
-  const fetchMilvusStats = async () => {
-    const result = await axios.get(
-      `${
-        process.env.MSERVICE_URL || process.env.NEXT_PUBLIC_MSERVICE_URL
-      }/milvus-stats`
-    );
+  try {
+    const host =
+      process.env.MSERVICE_URL || process.env.NEXT_PUBLIC_MSERVICE_URL;
+    if (!fs.existsSync('./global-stats.json')) {
+      const fetchMilvusStats = async () => {
+        const result = await axios.get(`${host}/milvus-stats`);
+        return {
+          pipInstall: result.data.body?.pipInstall || 0,
+          milvusStars: result.data.body?.milvusStars || 0,
+        };
+      };
 
-    return {
-      pipInstall: result.data.body?.pipInstall || 0,
-      milvusStars: result.data.body?.milvusStars || 0,
-    };
-  };
-
-  const result = await fetchMilvusStats();
-  fs.writeFileSync('./global-stats.json', JSON.stringify(result), 'utf8');
+      const result = await fetchMilvusStats();
+      fs.writeFileSync('./global-stats.json', JSON.stringify(result), 'utf8');
+    }
+  } catch (error) {
+    console.error('Failed to fetch milvus stats:', error);
+  }
 
   return withLess({
     lessLoaderOptions: {

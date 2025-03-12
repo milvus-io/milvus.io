@@ -38,10 +38,12 @@ yarn-error.log*
 /src/docs/*
 /src/doc/*
 
-/public/docs/*
-/public/doc/*
-
-/public/blogs/*
+public/*
+!public/fonts
+!public/images
+!public/inkeep
+!public/favicon.ico
+!public/favicon-32x32.png
 
 /menu.json
 
@@ -50,3 +52,5 @@ yarn-error.log*
 .env.development.local
 
 global-stats.json
+
+bin/build.sh

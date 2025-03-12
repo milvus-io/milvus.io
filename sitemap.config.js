@@ -15,5 +15,8 @@ module.exports = {
       },
     ],
   },
-  outDir: './out',
+  additionalPaths: async config => {
+    return [];
+  },
+  outDir: './public',
 };

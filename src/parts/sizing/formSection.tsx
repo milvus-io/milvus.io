@@ -45,6 +45,8 @@ import { TooltipArrow } from '@radix-ui/react-tooltip';
 import { ExternalLinkIcon } from '@/components/icons';
 import { KafkaIcon, PulsarIcon } from './components';
 
+const MODE_CHANGE_THRESHOLD = $10M768D;
+
 export default function FormSection(props: {
   className: string;
   updateCalculatedResult: (params: ICalculateResult) => void;
@@ -54,6 +56,11 @@ export default function FormSection(props: {
 
   // const [collapseHeight, setCollapseHeight] = useState(0);
   const collapseEle = useRef<HTMLDivElement | null>(null);
+
+  const [manuallySelectedMode, setManuallySelectedMode] = useState<
+    ModeEnum | undefined
+  >(undefined);
+  const [rawDataSize, setRawDataSize] = useState(0);
 
   const [form, setForm] = useState({
     vector: VECTOR_RANGE_CONFIG.defaultValue,
@@ -78,7 +85,7 @@ export default function FormSection(props: {
     m: M_RANGE_CONFIG.defaultValue,
   });
 
-  const [disableStandalone, setDisableStandalone] = useState(false);
+  // const [disableStandalone, setDisableStandalone] = useState(false);
 
   const handleFormChange = (key: string, value: any) => {
     setForm({
@@ -174,21 +181,37 @@ export default function FormSection(props: {
   }, [form.widthScalar]);
 
   useEffect(() => {
-    let currentMode = form.mode;
     const rawDataSize = rawDataSizeCalculator({
       num: form.vector,
       d: form.dimension,
       withScalar: form.widthScalar,
       scalarAvg: form.scalarData.averageNum,
     });
+    setRawDataSize(rawDataSize);
+  }, [
+    form.vector,
+    form.dimension,
+    form.widthScalar,
+    form.scalarData.averageNum,
+  ]);
 
-    if (rawDataSize > $10M768D) {
-      currentMode = ModeEnum.Cluster;
-
-      setDisableStandalone(true);
-    } else if (rawDataSize < $10M768D) {
-      setDisableStandalone(false);
+  useEffect(() => {
+    let mode =
+      rawDataSize > MODE_CHANGE_THRESHOLD
+        ? ModeEnum.Cluster
+        : ModeEnum.Standalone;
+    // if manually selected cluster mode, can't change to standalone automatically
+    if (manuallySelectedMode === ModeEnum.Cluster) {
+      mode = ModeEnum.Cluster;
     }
+    setForm({
+      ...form,
+      mode: manuallySelectedMode || mode,
+    });
+  }, [rawDataSize]);
+
+  useEffect(() => {
+    const currentMode = form.mode;
 
     const { memory, disk: localDisk } = memoryAndDiskCalculator({
       rawDataSize,
@@ -231,14 +254,9 @@ export default function FormSection(props: {
     });
   }, [form, indexTypeParams]);
 
-  useEffect(() => {
-    if (disableStandalone) {
-      setForm({
-        ...form,
-        mode: ModeEnum.Cluster,
-      });
-    }
-  }, [disableStandalone]);
+  const disableStandalone = useMemo(() => {
+    return rawDataSize > MODE_CHANGE_THRESHOLD;
+  }, [rawDataSize]);
 
   return (
     <section className={clsx(className, classes.formSection)}>
@@ -426,6 +444,7 @@ export default function FormSection(props: {
                 if (disableStandalone) {
                   return;
                 }
+                setManuallySelectedMode(modeOptions[0].value);
                 handleFormChange('mode', modeOptions[0].value);
               }}
             >
@@ -453,6 +472,7 @@ export default function FormSection(props: {
                 [classes.activeCard]: form.mode === modeOptions[1].value,
               })}
               onClick={() => {
+                setManuallySelectedMode(modeOptions[1].value);
                 handleFormChange('mode', modeOptions[1].value);
               }}
             >

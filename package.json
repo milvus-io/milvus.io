@@ -7,7 +7,7 @@
     "dev:fe": "node scripts/migrateAssets.js && next dev -p 8000",
     "build": "node scripts/migrateAssets.js && next build",
     "postbuild": "next-sitemap --config sitemap.config.js",
-    "start": "http-server ./out",
+    "start": "npx next start",
     "lint": "next lint",
     "prepare": "husky",
     "i18n:watch": "node i18n-watcher/index.js",
@@ -15,6 +15,7 @@
     "i18n:sync": "NODE_ENV=development node i18n-watcher/translate-changes.js"
   },
   "dependencies": {
+    "@docsearch/css": "^3.6.0",
     "@docsearch/react": "^3.2.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -48,6 +49,7 @@
     "gestalt": "^146.5.4",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.6.0",
+    "husky": "^9.0.11",
     "i18next": "^23.2.3",
     "instantsearch.css": "^7.4.5",
     "js-cookie": "^3.0.5",
@@ -94,8 +96,6 @@
     "dotenv": "^16.4.7",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.2",
-    "http-server": "^14.1.1",
-    "husky": "^9.0.11",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.2"

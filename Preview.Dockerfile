@@ -1,5 +1,7 @@
-FROM node:18 as builder
+FROM node:18 AS base
 WORKDIR /app
+
+RUN npm install -g pnpm
 
 ARG MSERVICE_URL
 ARG CMS_BASE_URL
@@ -16,30 +18,37 @@ ENV NEXT_PUBLIC_INKEEP_API_KEY=$INKEEP_API_KEY
 ENV NEXT_PUBLIC_INKEEP_INTEGRATION_ID=$INKEEP_INTEGRATION_ID
 ENV NEXT_PUBLIC_INKEEP_ORGANIZATION_ID=$INKEEP_ORGANIZATION_ID
 
-FROM builder AS frontend_deps
+FROM base AS dependency
 COPY package.json pnpm-lock.yaml .npmrc ./
-RUN npm install -g pnpm
 RUN pnpm install --prefer-offline --frozen-lockfile
 
-FROM frontend_deps AS frontend_builder
-COPY . .
+FROM base AS dependency_prod
+COPY package.json pnpm-lock.yaml .npmrc ./
+RUN pnpm install --prod --prefer-offline --frozen-lockfile
+
+FROM dependency AS builder
+COPY src ./src
+COPY public ./public
+COPY scripts ./scripts
+COPY next.config.js next-env.d.ts sitemap.config.js ./
+COPY tsconfig.json typings.d.ts ./
+COPY .prettierrc tailwind.config.js postcss.config.js components.json ./
 RUN pnpm build
 
 # => Run container
-FROM anroe/nginx-geoip2:1.22.1-alpine-geoip2-3.4
+FROM zilliz/zilliz-web-runner
 
-# Nginx config
-RUN rm -rf /etc/nginx/conf.d
-COPY conf /etc/nginx
+RUN apk add --no-cache bash
+RUN npm install -g next
+RUN rm -rf /etc/nginx/conf.d/default.conf
 
-# Static build
-COPY --from=frontend_builder /app/out /usr/share/nginx/html/
+COPY conf/conf.d /etc/nginx/conf.d
+COPY --from=builder /app/.next /app/.next
+COPY --from=builder /app/public /app/public
+COPY --from=builder /app/global-stats.json /app/global-stats.json
+COPY --from=dependency_prod /app/node_modules /app/node_modules
+COPY bin/start.sh /app/bin/
 
-# Default port exposure
 EXPOSE 80
 
-# Add bash
-RUN apk add --no-cache bash
-
-# Start Nginx server
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+CMD ["/bin/sh", "/app/bin/start.sh"]

@@ -1,7 +1,6 @@
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import { useTranslation } from 'react-i18next';
 import Aside from '@/components/aside';
-// import { useCodeCopy } from '../hooks/doc-dom-operation';
 import { markdownToHtml } from '@/utils/common';
 import classes from '@/styles/docDetail.module.less';
 import DocLayout from '@/components/layout/docLayout';
@@ -36,6 +35,7 @@ import {
 import { formatApiRelativePath } from '@/utils';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
+import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
 
 interface ApiDetailPageProps {
   doc: string;
@@ -73,26 +73,13 @@ export default function Template(props: ApiDetailPageProps) {
   } = props;
 
   const { t } = useTranslation('common');
-  const { title: metaTitle, path: metaPath } = meta;
+  const { path: metaPath } = meta;
 
   // https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
   // Specify supported languages to fix Java doc code layout.
 
   useCopyCode(codeList);
-
-  // get version links on version change
-  // const getApiVersionLink = version => {
-  //   const currentApiMenu = allApiMenus[category][version];
-  //   const hasSamePage = currentApiMenu.some(
-  //     v =>
-  //       // pId: some.md  v.id: language_some.id
-  //       v.id === `${category}_${pageContext.pId}`
-  //   );
-
-  //   return hasSamePage
-  //     ? `/api-reference/${category}/${version}/${pageContext.pId}`
-  //     : `/docs`;
-  // };
+  useAnchorEventListener(currentId);
 
   // Generate apiReferenceData.sourceUrl for final page's Edit Button.
   const apiReferenceData = useMemo(() => {
@@ -329,7 +316,9 @@ export const getStaticProps: GetStaticProps = async context => {
       return targetSlug === sourceSlug;
     }) || {};
 
-  const { tree: doc, codeList } = markdownToHtml(apiContent || '');
+  const { tree: doc, codeList } = markdownToHtml(apiContent || '', {
+    showAnchor: true,
+  });
 
   const headingRegex = /^#\s+(.*)$/m;
   const match = headingRegex.exec(apiContent);

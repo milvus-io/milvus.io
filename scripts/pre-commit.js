@@ -5,15 +5,10 @@ const execOptions = { encoding: 'utf8' };
 
 // Paths
 const confDir = path.resolve(__dirname, '../conf');
-const dockerfilePath = path.resolve(__dirname, '../Nginx.Dockerfile');
-const imageName = 'nginx-geoip2-test';
+const imageName = 'zilliz/zilliz-web-runner';
 const containerName = 'nginx-test-container';
 
 try {
-  // Build Docker image using Nginx.Dockerfile
-  console.info('Building Docker image...');
-  execSync(`docker build -f ${dockerfilePath} -t ${imageName} .`, execOptions);
-
   // Run container to test Nginx configuration
   console.info('Running container to test Nginx configuration...');
   execSync(

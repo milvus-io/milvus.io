@@ -15,8 +15,6 @@ env:
 jobs:
   build:
     runs-on: 'ubuntu-latest'
-    outputs:
-      docker-image-tag: ${{ steps.generate-tag-name.outputs.docker_tag }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -55,13 +53,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME}}
           password: ${{ secrets.DOCKER_PWD}}
 
-      - name: Generate docker image tag name
-        id: generate-tag-name
-        run: |
-          export tag=${{ github.sha }}-$GITHUB_RUN_NUMBER
-          echo $tag
-          echo "docker_tag=$tag" >> $GITHUB_OUTPUT
-
       - name: Building Milvus site and push to docker hub
         id: build-image
         uses: nick-invision/retry@v2
@@ -78,11 +69,8 @@ jobs:
             --build-arg INKEEP_INTEGRATION_ID=${{ secrets.INKEEP_INTEGRATION_ID }} \
             --build-arg INKEEP_ORGANIZATION_ID=${{ secrets.INKEEP_ORGANIZATION_ID }} \
             --build-arg IS_PREVIEW=${{ secrets.PREVIEW_SITE }} \
-            -t milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
-            docker push milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
-      #         env:
-      #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
-      #           CI: true
+            -t milvusdb/milvus-io-dev
+            docker push milvusdb/milvus-io-dev
 
   deploy:
     runs-on: amazon-linux-2
@@ -92,4 +80,4 @@ jobs:
         run: |
           echo ${{ secrets.kubeconfig }} > config64
           base64 -d config64 > kubeconfig
-          kubectl set image deployment/milvus-io-dev milvus-io-dev=milvusdb/milvus-io-dev:${{ needs.build.outputs.docker-image-tag }} -n ued --kubeconfig=kubeconfig
+          kubectl set image deployment/milvus-io-dev milvus-io-dev=milvusdb/milvus-io-dev -n ued --kubeconfig=kubeconfig

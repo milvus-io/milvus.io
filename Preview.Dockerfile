@@ -22,10 +22,6 @@ FROM base AS dependency
 COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm install --prefer-offline --frozen-lockfile
 
-FROM base AS dependency_prod
-COPY package.json pnpm-lock.yaml .npmrc ./
-RUN pnpm install --prod --prefer-offline --frozen-lockfile
-
 FROM dependency AS builder
 COPY src ./src
 COPY public ./public
@@ -46,7 +42,7 @@ COPY conf/conf.d /etc/nginx/conf.d
 COPY --from=builder /app/.next /app/.next
 COPY --from=builder /app/public /app/public
 COPY --from=builder /app/global-stats.json /app/global-stats.json
-COPY --from=dependency_prod /app/node_modules /app/node_modules
+COPY --from=dependency /app/node_modules /app/node_modules
 COPY bin/start.sh /app/bin/
 
 EXPOSE 80

@@ -20,7 +20,13 @@ function MyApp({ Component, pageProps }) {
       <StoreProvider>
         <HubspotProvider>
           <Head>
-            <link rel="icon" href="/favicon-32x32.png" />
+            <link rel="shortcut icon" href="/favicon.ico" />
+            <link
+              rel="icon"
+              type="image/png"
+              sizes="32x32"
+              href="/favicon-32x32.png"
+            />
             <meta
               name="image"
               property="og:image"

@@ -16,6 +16,7 @@ export default function BlogAnchorSection(props) {
     container,
     imgUrl,
     id,
+    customAdvConfig,
   } = props;
   const { root = '' } = customClasses;
 
@@ -29,14 +30,14 @@ export default function BlogAnchorSection(props) {
     setActiveAnchor(href);
   };
 
-  const handleAnchorClick = (href) => {
+  const handleAnchorClick = href => {
     document.querySelector(`#${href}`).scrollIntoView({
       behavior: 'smooth',
       block: 'start',
-    })
+    });
     handleChooseAnchor(href);
     history.pushState(null, null, `#${href}`);
-  }
+  };
 
   useEffect(() => {
     if (anchors[0]) {
@@ -76,7 +77,10 @@ export default function BlogAnchorSection(props) {
         })}
       </ul>
 
-      <CloudAdvertisementCard className={classes.advCard} />
+      <CloudAdvertisementCard
+        className={classes.advCard}
+        customAdvConfig={customAdvConfig}
+      />
 
       <div className="">
         <Share

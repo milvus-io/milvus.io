@@ -17,23 +17,38 @@ const CLOUD_UTM_CTA_LINK =
 export default function CloudAdvertisementCard(props: {
   language?: LanguageEnum;
   className?: string;
+  customAdvConfig?: {
+    advTitle: string;
+    advContent: string;
+    advCtaLabel: string;
+    advCtaLink: string;
+  };
 }) {
-  const { language = LanguageEnum.ENGLISH, className = '' } = props;
+  const {
+    language = LanguageEnum.ENGLISH,
+    className = '',
+    customAdvConfig,
+  } = props;
   const { t } = useTranslation('docs', { lng: language });
   const isCnAdv = language === LanguageEnum.CHINESE;
 
   const [random, setRandom] = useState(Math.random());
+  const { advTitle, advContent, advCtaLabel, advCtaLink } =
+    customAdvConfig || {};
 
-  const { enTitle, enCtaLink } = useMemo(() => {
-    const manageMilvusTitle = t('advertise.titleA');
+  const { enTitle, enCtaLink, ctaLabel, advertiseContent } = useMemo(() => {
     // const tryCloudTitle = t('advertise.titleB');
-    const title = manageMilvusTitle;
-    const ctaLink = MANAGE_MILVUS_CTA_LINK;
+    const title = advTitle || t('advertise.titleA');
+    const ctaLink = advCtaLink || MANAGE_MILVUS_CTA_LINK;
+    const ctaLabel = advCtaLabel || t('advertise.ctaLabel');
+    const advertiseContent = advContent || t('advertise.content');
     return {
       enTitle: title,
       enCtaLink: ctaLink,
+      advertiseContent,
+      ctaLabel,
     };
-  }, [random]);
+  }, [random, advTitle, advContent, advCtaLabel, advCtaLink, t]);
 
   useEffect(() => {
     const randomValue = Number(
@@ -75,13 +90,13 @@ export default function CloudAdvertisementCard(props: {
         <div className={clsx(classes.advCardContainer, className)}>
           {renderZillizLogo()}
           <h2 className={classes.advTitle}>{enTitle}</h2>
-          <p className={classes.advAbstract}>{t('advertise.content')}</p>
+          <p className={classes.advAbstract}>{advertiseContent}</p>
           <CustomButton
             href={enCtaLink}
             endIcon={<RightTopArrowIcon />}
             className={classes.ctaButton}
           >
-            {t('advertise.ctaLabel')}
+            {ctaLabel}
           </CustomButton>
         </div>
       )}

@@ -52,6 +52,11 @@ const Footer = (props: Props) => {
           name: t('header:footer.resource.contact'),
           to: getLocalePath('/contact'),
         },
+        {
+          name: t('header:footer.resource.faq'),
+          to: getLocalePath('/ai-quick-reference'),
+          invisibleItem: true,
+        },
       ],
     },
     {
@@ -205,7 +210,12 @@ const Footer = (props: Props) => {
                           <li key={index} className="list-none">
                             <a
                               key={`${index}-c.name`}
-                              className="inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
+                              className={clsx(
+                                'inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
+                                {
+                                  ['text-transparent']: child.invisibleItem,
+                                }
+                              )}
                               href={child.to}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -221,7 +231,12 @@ const Footer = (props: Props) => {
                           <Link
                             key={`${index}-c.name`}
                             href={child.to}
-                            className="text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
+                            className={clsx(
+                              'text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
+                              {
+                                ['text-transparent']: child.invisibleItem,
+                              }
+                            )}
                           >
                             {child.name}
                           </Link>

@@ -61,6 +61,33 @@ const generateBlogData = (locale: LanguageEnum = LanguageEnum.ENGLISH) => {
   return blogsData;
 };
 
+const generateSimpleBlogList = (
+  locale: LanguageEnum = LanguageEnum.ENGLISH
+) => {
+  const BASE_BLOG_DIR =
+    locale === LanguageEnum.ENGLISH
+      ? join(process.cwd(), 'src/blogs/blog/en')
+      : join(process.cwd(), `src/blogs/localization/blog/${locale}`);
+  const blogsData = fs.readdirSync(BASE_BLOG_DIR).map(v => {
+    const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
+    const { data } = matter(file);
+    const { title = '' } = data;
+
+    return {
+      id: v,
+      date: new Date(data.date).toJSON(),
+      href: `/blog/${v}`,
+      title,
+    };
+  });
+
+  blogsData.sort(
+    (x, y) => new Date(y.date).getTime() - new Date(x.date).getTime()
+  );
+
+  return blogsData;
+};
+
 const generateBlogRouter = (locale: LanguageEnum) => {
   const data = generateBlogData(locale);
   const router = data.map(v => ({
@@ -74,6 +101,7 @@ const generateBlogRouter = (locale: LanguageEnum) => {
 const blogUtils = {
   getAllData: generateBlogData,
   getRouter: generateBlogRouter,
+  getSimpleList: generateSimpleBlogList,
 };
 
 export default blogUtils;

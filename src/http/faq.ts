@@ -20,7 +20,7 @@ export interface FAQDetailType {
   canonical_rel: string;
 }
 
-const FAQ_PATH = 'src/parts/faq';
+const FAQ_PATH = 'public';
 const FAQ_FILE_NAME = 'Milvus FAQ - Milvus FAQ.csv';
 
 const faqCache: FAQDetailType[] = [];

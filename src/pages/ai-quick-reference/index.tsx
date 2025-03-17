@@ -67,7 +67,12 @@ export default function AiFaq(props: {
     setKeyWords(e.target.value);
   };
 
-  const handlePaging = (index: number) => {
+  const handlePaging = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    index: number
+  ) => {
+    e.preventDefault();
+
     setPaginationData({
       ...paginationData,
       pageIndex: index,
@@ -148,8 +153,8 @@ export default function AiFaq(props: {
               <PaginationItem>
                 <PaginationPrevious
                   scroll={false}
-                  onClick={() => handlePaging(paginationData.pageIndex - 1)}
-                  href="javascript:void(0)"
+                  onClick={e => handlePaging(e, paginationData.pageIndex - 1)}
+                  href="#"
                   disabled={!hasPrevious}
                   className={clsx(styles.paginationLink, {
                     [styles.disabledNavigationLink]: !hasPrevious,
@@ -165,8 +170,8 @@ export default function AiFaq(props: {
                     ) : (
                       <PaginationLink
                         scroll={false}
-                        onClick={() => handlePaging(v as number)}
-                        href="javascript:void(0)"
+                        onClick={e => handlePaging(e, v as number)}
+                        href="#"
                         isActive={paginationData.pageIndex === v}
                         className={clsx(styles.paginationLink, {
                           [styles.activePaginationLink]:
@@ -182,9 +187,9 @@ export default function AiFaq(props: {
 
               <PaginationItem>
                 <PaginationNext
-                  href="javascript:void(0)"
+                  href="#"
                   scroll={false}
-                  onClick={() => handlePaging(paginationData.pageIndex + 1)}
+                  onClick={e => handlePaging(e, paginationData.pageIndex + 1)}
                   disabled={!hasNext}
                   className={clsx(styles.paginationLink, {
                     [styles.disabledNavigationLink]: !hasNext,

@@ -56,6 +56,7 @@ const Footer = (props: Props) => {
           name: t('header:footer.resource.faq'),
           to: getLocalePath('/ai-quick-reference'),
           invisibleItem: true,
+          display: locale === LanguageEnum.ENGLISH,
         },
       ],
     },
@@ -205,6 +206,9 @@ const Footer = (props: Props) => {
                   </h3>
                   <ul className="mt-[20px] space-y-[8px]">
                     {item.children.map((child, index) => {
+                      if (child.display === false) {
+                        return null;
+                      }
                       if (child.to.startsWith('http')) {
                         return (
                           <li key={index} className="list-none">

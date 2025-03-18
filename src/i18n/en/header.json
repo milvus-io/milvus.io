@@ -34,7 +34,8 @@
   "footer": {
     "resource": {
       "managed": "Managed Milvus",
-      "contact": "Contact Us"
+      "contact": "Contact Us",
+      "faq": "AI Quick Reference "
     },
     "tools": {
       "sizing": "Milvus Sizing Tool",

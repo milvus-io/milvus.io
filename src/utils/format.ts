@@ -1,3 +1,5 @@
+import { ELLIPSIS, ELLIPSIS_2 } from '@/consts/blog';
+
 // Converts a number to a string with commas separating groups of three digits.
 export const convertNumToString = (params: {
   amount: number;
@@ -26,4 +28,50 @@ export const convertNumToString = (params: {
 export const convertStringToNum = (value: string, scale?: number): number => {
   const scaleNum = scale || 1;
   return Number(value.replace(/[^0-9.-]+/g, '')) * scaleNum;
+};
+
+export const generatePaginationNavigators = (
+  currentPage: number,
+  totalPages: number
+) => {
+  if (totalPages <= 4) {
+    // [1,2,3,4]
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  if (currentPage <= 2) {
+    // [1,2,3,...,5]
+    return [1, 2, 3, ELLIPSIS, totalPages];
+  }
+  if (currentPage <= 3) {
+    // [1,2,3,...,5];
+    return [1, 2, 3, 4, ELLIPSIS, totalPages];
+  }
+
+  if (currentPage === totalPages - 2) {
+    // [1,...,4,5,6,7]
+    return [
+      1,
+      ELLIPSIS,
+      totalPages - 3,
+      totalPages - 2,
+      totalPages - 1,
+      totalPages,
+    ];
+  }
+
+  if (currentPage > totalPages - 2) {
+    // [1,...,3,4,5]
+    return [1, ELLIPSIS, totalPages - 2, totalPages - 1, totalPages];
+  }
+  // [1,...,3,4,5,...,7]
+  return [
+    1,
+    ELLIPSIS,
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    ELLIPSIS_2,
+    totalPages,
+  ];
 };

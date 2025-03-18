@@ -39,52 +39,7 @@ import {
   SEARCH_QUERY_KEY,
 } from '@/consts/blog';
 import { LanguageEnum } from '@/types/localization';
-
-const generatePaginationNavigators = (
-  currentPage: number,
-  totalPages: number
-) => {
-  if (totalPages <= 4) {
-    // [1,2,3,4]
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
-  }
-
-  if (currentPage <= 2) {
-    // [1,2,3,...,5]
-    return [1, 2, 3, ELLIPSIS, totalPages];
-  }
-  if (currentPage <= 3) {
-    // [1,2,3,...,5];
-    return [1, 2, 3, 4, ELLIPSIS, totalPages];
-  }
-
-  if (currentPage === totalPages - 2) {
-    // [1,...,4,5,6,7]
-    return [
-      1,
-      ELLIPSIS,
-      totalPages - 3,
-      totalPages - 2,
-      totalPages - 1,
-      totalPages,
-    ];
-  }
-
-  if (currentPage > totalPages - 2) {
-    // [1,...,3,4,5]
-    return [1, ELLIPSIS, totalPages - 2, totalPages - 1, totalPages];
-  }
-  // [1,...,3,4,5,...,7]
-  return [
-    1,
-    ELLIPSIS,
-    currentPage - 1,
-    currentPage,
-    currentPage + 1,
-    ELLIPSIS_2,
-    totalPages,
-  ];
-};
+import { generatePaginationNavigators } from '@/utils/format';
 
 interface Props {
   locale: LanguageEnum;
@@ -648,16 +603,18 @@ interface BlogCardProps {
 const BlogCard: React.FC<BlogCardProps> = props => {
   const { data, locale } = props;
   return (
-    <section className={styles['blog-card']}>
+    <Link
+      className={styles['blog-card']}
+      href={getBlogLink(data, locale)}
+      title={data.title}
+    >
       <div
         className={styles['blog-card-img']}
         style={{ backgroundImage: `url(${data.cover})` }}
       />
       <BlogExtra className={styles['blog-card-extra']} data={data} />
-      <Link href={getBlogLink(data, locale)} title={data.title}>
-        <h3 className={styles['blog-card-title']}>{data.title}</h3>
-      </Link>
-    </section>
+      <h3 className={styles['blog-card-title']}>{data.title}</h3>
+    </Link>
   );
 };
 

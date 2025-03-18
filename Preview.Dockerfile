@@ -40,6 +40,7 @@ RUN rm -rf /etc/nginx/conf.d/default.conf
 
 COPY conf/conf.d /etc/nginx/conf.d
 COPY --from=builder /app/.next /app/.next
+COPY --from=builder /app/src/blogs /app/src/blogs
 COPY --from=builder /app/public /app/public
 COPY --from=builder /app/global-stats.json /app/global-stats.json
 COPY --from=dependency /app/node_modules /app/node_modules

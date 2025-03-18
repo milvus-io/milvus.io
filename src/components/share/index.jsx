@@ -22,13 +22,13 @@ const Share = props => {
 
         <meta property="og:title" content={quote}></meta>
         <meta property="og:description" content={desc} />
-        <meta property="og:image" content={image} />
+        {image && <meta property="og:image" content={image} />}
         <meta property="og:url" content={url} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={quote} />
         <meta name="twitter:description" content={desc} />
-        <meta name="twitter:image" content={image} />
+        {image && <meta name="twitter:image" content={image} />}
       </Helmet>
       <LinkedinShareButton url={url} title={quote}>
         <img

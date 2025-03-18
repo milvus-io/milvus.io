@@ -6,4 +6,5 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     root?: string;
     input?: string;
   };
+  startIcon?: JSX.Element;
 }

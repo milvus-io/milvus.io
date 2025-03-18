@@ -92,7 +92,13 @@ export const useGlobalLocale = () => {
   };
 
   const getLocalePath = (path: string) => {
-    return locale === LanguageEnum.ENGLISH ? path : `/${locale}${path}`;
+    if (locale === LanguageEnum.ENGLISH) {
+      return path;
+    }
+    if (path === '/docs') {
+      return `${path}/${locale}`;
+    }
+    return `/${locale}${path}`;
   };
 
   return {

@@ -52,6 +52,7 @@ i18n.use(initReactI18next).init({
     'notFound',
     'blog',
     'contact',
+    'faq',
   ],
   keySeparator: '.',
   interpolation: {

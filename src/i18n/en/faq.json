@@ -14,5 +14,6 @@
       "content": "Zilliz Cloud is a managed vector database built on Milvus perfect for building GenAI applications.",
       "ctaLabel": "Try Free"
     }
-  }
+  },
+  "noData": "No search result: {{keyword}}"
 }

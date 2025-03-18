@@ -32,7 +32,7 @@ export default function FaqDetail(props: {
 }) {
   const { t } = useTranslation('faq');
   const { data, html, recommendFaq, recommendBlogs } = props;
-  const { id, title, description, canonical_rel } = data;
+  const { id, content, title, description, canonical_rel } = data;
 
   const docContainer = useRef<HTMLDivElement>(null);
 
@@ -40,7 +40,12 @@ export default function FaqDetail(props: {
     <Layout>
       <main>
         <Head>
-          <title></title>
+          <title>{title}</title>
+          <meta name="description" content={description} />
+          <meta
+            name="keywords"
+            content={`${title}, zilliz，vector databases，milvus, managed vector databases`}
+          />
         </Head>
       </main>
       <section className={classes.detailContainer}>

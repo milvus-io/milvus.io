@@ -50,7 +50,7 @@ export default function Breadcrumb(props: {
         <BreadcrumbIcon />
       </li>
       {list.map((v, i) => (
-        <li className={classes.breadcrumbItem}>
+        <li className={classes.breadcrumbItem} key={v.label}>
           <BreadcrumbItem
             {...v}
             className={clsx({

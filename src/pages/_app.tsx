@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }) {
               property="og:image"
               content="https://assets.zilliz.com/meta_image_milvus_d6510e10e0.png"
             />
+            <meta name="baidu-site-verification" content="codeva-bAvzh4ipX4" />
             <meta property="og:type" content="WebSite" />
             <meta
               name="keywords"

@@ -44,6 +44,7 @@ public/*
 !public/inkeep
 !public/favicon.ico
 !public/favicon-32x32.png
+!public/assets
 
 /menu.json
 

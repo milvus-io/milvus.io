@@ -603,16 +603,18 @@ interface BlogCardProps {
 const BlogCard: React.FC<BlogCardProps> = props => {
   const { data, locale } = props;
   return (
-    <section className={styles['blog-card']}>
+    <Link
+      className={styles['blog-card']}
+      href={getBlogLink(data, locale)}
+      title={data.title}
+    >
       <div
         className={styles['blog-card-img']}
         style={{ backgroundImage: `url(${data.cover})` }}
       />
       <BlogExtra className={styles['blog-card-extra']} data={data} />
-      <Link href={getBlogLink(data, locale)} title={data.title}>
-        <h3 className={styles['blog-card-title']}>{data.title}</h3>
-      </Link>
-    </section>
+      <h3 className={styles['blog-card-title']}>{data.title}</h3>
+    </Link>
   );
 };
 

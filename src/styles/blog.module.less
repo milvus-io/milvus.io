@@ -735,6 +735,13 @@
     width: 100%;
   }
 
+  &:hover {
+    .blog-card-title {
+      text-decoration: underline;
+      text-underline-position: from-font;
+    }
+  }
+
   &-img {
     width: 100%;
     padding-top: 62.57%;
@@ -764,10 +771,5 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-
-    &:hover {
-      text-decoration: underline;
-      text-underline-position: from-font;
-    }
   }
 }

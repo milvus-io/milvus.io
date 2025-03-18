@@ -73,10 +73,16 @@
       a {
         display: block;
         .paragraph4-regular();
+        .overflowEllipsis2Row;
         color: inherit;
+        height: 44px;
 
         &:hover {
           color: @color-primary;
+        }
+
+        @media @tablet, @phone {
+          height: 40px;
         }
       }
 
@@ -112,7 +118,6 @@
 
     .recommendBlogList {
       list-style: none;
-      border-left: 1px solid @color-black3;
 
       li {
         padding: 8px 10px;

@@ -20,6 +20,7 @@ import {
 } from '@/components/ui';
 import { generatePaginationNavigators } from '@/utils/format';
 import { ELLIPSIS } from '@/consts/blog';
+import { useRouter } from 'next/router';
 
 const SearchIcon = () => (
   <svg
@@ -47,46 +48,113 @@ const SearchIcon = () => (
 );
 
 const DEFAULT_PAGE_SIZE = 99;
+const PAGEINDEX_QUERY_KEY = 'page';
+
+const generatePagingHref = (
+  curIndex: number,
+  index: number,
+  totalPages: number
+) => {
+  if (curIndex === 1 && index === -1) {
+    return '';
+  }
+  if (curIndex === totalPages && index === 1) {
+    return '';
+  }
+  return `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${curIndex + index}`;
+};
 
 export default function AiFaq(props: {
   list: Pick<FAQDetailType, 'title' | 'url'>[];
 }) {
   const { t } = useTranslation('faq');
   const { list } = props;
+  const { query } = useRouter();
+  const currentPageIndex = Number(query[PAGEINDEX_QUERY_KEY] || 1);
 
-  const [keywords, setKeyWords] = useState('');
-  const [filteredList, setFilteredList] = useState(list);
+  const [searchData, setSearchData] = useState({
+    keyword: '',
+    filteredList: list,
+  });
 
   const [paginationData, setPaginationData] = useState({
-    total: filteredList.length,
+    total: searchData.filteredList.length,
     pageSize: DEFAULT_PAGE_SIZE,
-    pageIndex: 1,
+    pageIndex: currentPageIndex,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyWords(e.target.value);
+    const keyword = e.target.value;
+    const trimmedKeyword = keyword.trim();
+    if (trimmedKeyword === '') {
+      setSearchData({
+        keyword: '',
+        filteredList: list,
+      });
+      setPaginationData(v => ({
+        ...v,
+        total: list.length,
+        pageIndex: 1,
+      }));
+    } else {
+      const newList = list.filter(v =>
+        v.title.toLowerCase().includes(keyword.toLowerCase())
+      );
+      setSearchData({
+        keyword: keyword,
+        filteredList: newList,
+      });
+      setPaginationData(v => ({
+        ...v,
+        total: newList.length,
+        pageIndex: 1,
+      }));
+    }
+
+    window.history.pushState(
+      null,
+      '',
+      `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=1`
+    );
   };
 
   const handlePaging = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    index: number
+    index: number,
+    disabled?: boolean
   ) => {
-    e.preventDefault();
-
+    if (disabled) {
+      return;
+    }
     setPaginationData({
       ...paginationData,
       pageIndex: index,
     });
   };
 
-  const navigators = useMemo(() => {
+  const { totalPages, navigators, pagingFilterList } = useMemo(() => {
+    const dataListLength = searchData.filteredList.length;
     const totalPages =
-      filteredList.length % DEFAULT_PAGE_SIZE === 0
-        ? filteredList.length / DEFAULT_PAGE_SIZE
-        : Math.ceil(filteredList.length / DEFAULT_PAGE_SIZE);
+      dataListLength % DEFAULT_PAGE_SIZE === 0
+        ? dataListLength / DEFAULT_PAGE_SIZE
+        : Math.ceil(dataListLength / DEFAULT_PAGE_SIZE);
 
-    return generatePaginationNavigators(paginationData.pageIndex, totalPages);
-  }, [filteredList, paginationData.pageIndex]);
+    const pagingFilterList = searchData.filteredList.slice(
+      paginationData.pageSize * (paginationData.pageIndex - 1),
+      paginationData.pageSize * paginationData.pageIndex
+    );
+
+    const navigators = generatePaginationNavigators(
+      paginationData.pageIndex,
+      totalPages
+    );
+
+    return {
+      totalPages,
+      navigators,
+      pagingFilterList,
+    };
+  }, [searchData.filteredList, paginationData.pageIndex]);
 
   const { hasPrevious, hasNext } = useMemo(() => {
     const hasPrevious = paginationData.pageIndex > 1;
@@ -94,24 +162,6 @@ export default function AiFaq(props: {
       paginationData.pageIndex < (navigators[navigators.length - 1] as number);
     return { hasPrevious, hasNext };
   }, [paginationData.pageIndex, navigators]);
-
-  const pagingFilterList = useMemo(() => {
-    return filteredList.slice(
-      paginationData.pageSize * (paginationData.pageIndex - 1),
-      paginationData.pageSize * paginationData.pageIndex
-    );
-  }, [filteredList, paginationData.pageIndex]);
-
-  useEffect(() => {
-    const keyword = keywords.trim();
-    if (keyword === '') {
-      setFilteredList(list);
-    } else {
-      setFilteredList(
-        list.filter(v => v.title.toLowerCase().includes(keywords.toLowerCase()))
-      );
-    }
-  }, [keywords, list]);
 
   return (
     <Layout>
@@ -129,7 +179,7 @@ export default function AiFaq(props: {
           <p className="">{t('desc')}</p>
 
           <CustomInput
-            value={keywords}
+            value={searchData.keyword}
             onChange={handleInputChange}
             placeholder={t('search')}
             startIcon={<SearchIcon />}
@@ -140,64 +190,85 @@ export default function AiFaq(props: {
             fullWidth
           />
 
-          <ul className={classes.listWrapper}>
-            {pagingFilterList.map(v => (
-              <li className="" key={v.url}>
-                <Link href={`/ai-quick-reference/${v.url}`}>{v.title}</Link>
-              </li>
-            ))}
-          </ul>
+          {pagingFilterList.length > 0 ? (
+            <ul className={classes.listWrapper}>
+              {pagingFilterList.map(v => (
+                <li className="" key={v.url}>
+                  <Link href={`/ai-quick-reference/${v.url}`}>{v.title}</Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="">{t('noData', { keyword: searchData.keyword })}</p>
+          )}
 
-          <Pagination className={styles.paginationWrapper}>
-            <PaginationContent className="list-none">
-              <PaginationItem>
-                <PaginationPrevious
-                  scroll={false}
-                  onClick={e => handlePaging(e, paginationData.pageIndex - 1)}
-                  href="#"
-                  disabled={!hasPrevious}
-                  className={clsx(styles.paginationLink, {
-                    [styles.disabledNavigationLink]: !hasPrevious,
-                  })}
-                />
-              </PaginationItem>
-
-              {navigators.map((v, i) => {
-                return (
-                  <PaginationItem key={v}>
-                    {String(v).includes(ELLIPSIS) ? (
-                      <PaginationEllipsis />
-                    ) : (
-                      <PaginationLink
-                        scroll={false}
-                        onClick={e => handlePaging(e, v as number)}
-                        href="#"
-                        isActive={paginationData.pageIndex === v}
-                        className={clsx(styles.paginationLink, {
-                          [styles.activePaginationLink]:
-                            paginationData.pageIndex === v,
-                        })}
-                      >
-                        {v}
-                      </PaginationLink>
+          {pagingFilterList.length > 0 ? (
+            <Pagination className={styles.paginationWrapper}>
+              <PaginationContent className="list-none">
+                <PaginationItem>
+                  <PaginationPrevious
+                    scroll={false}
+                    onClick={e => handlePaging(e, paginationData.pageIndex - 1)}
+                    href={generatePagingHref(
+                      paginationData.pageIndex,
+                      -1,
+                      totalPages
                     )}
-                  </PaginationItem>
-                );
-              })}
+                    disabled={!hasPrevious}
+                    className={clsx(styles.paginationLink, {
+                      [styles.disabledNavigationLink]: !hasPrevious,
+                    })}
+                  />
+                </PaginationItem>
 
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  scroll={false}
-                  onClick={e => handlePaging(e, paginationData.pageIndex + 1)}
-                  disabled={!hasNext}
-                  className={clsx(styles.paginationLink, {
-                    [styles.disabledNavigationLink]: !hasNext,
-                  })}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+                {navigators.map((v, i) => {
+                  return (
+                    <PaginationItem key={v}>
+                      {String(v).includes(ELLIPSIS) ? (
+                        <PaginationEllipsis />
+                      ) : (
+                        <PaginationLink
+                          scroll={false}
+                          disabled={paginationData.pageIndex === v}
+                          onClick={e =>
+                            handlePaging(
+                              e,
+                              v as number,
+                              paginationData.pageIndex === v
+                            )
+                          }
+                          href={`/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${v}`}
+                          isActive={paginationData.pageIndex === v}
+                          className={clsx(styles.paginationLink, {
+                            [styles.activePaginationLink]:
+                              paginationData.pageIndex === v,
+                          })}
+                        >
+                          {v}
+                        </PaginationLink>
+                      )}
+                    </PaginationItem>
+                  );
+                })}
+
+                <PaginationItem>
+                  <PaginationNext
+                    href={generatePagingHref(
+                      paginationData.pageIndex,
+                      1,
+                      totalPages
+                    )}
+                    scroll={false}
+                    onClick={e => handlePaging(e, paginationData.pageIndex + 1)}
+                    disabled={!hasNext}
+                    className={clsx(styles.paginationLink, {
+                      [styles.disabledNavigationLink]: !hasNext,
+                    })}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          ) : null}
         </section>
       </main>
     </Layout>

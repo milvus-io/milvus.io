@@ -5,7 +5,8 @@ export default function useUtmTrackPath() {
   const { asPath } = useRouter();
 
   const trackPath = useMemo(() => {
-    return asPath === '/' ? 'homepage' : asPath.replace(/\//, '');
+    const route = asPath.split('?')[0];
+    return asPath === '/' ? 'homepage' : route.replace(/\//, '');
   }, [asPath]);
   return trackPath;
 }

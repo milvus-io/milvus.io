@@ -169,7 +169,7 @@ export default function SizingTool(props: Props) {
 
           <ZillizAdv
             className={classes.zillizAdv}
-            ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_resources_milvus-sizing-tool_milvusio`}
+            ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=bottom_banner&utm_content=tools/sizing`}
           />
         </div>
       </Layout>

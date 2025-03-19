@@ -18,6 +18,7 @@ import { CLOUD_SIGNUP_LINK } from '@/consts';
 import blogUtils from '@/utils/blog.utils';
 import { LanguageEnum } from '@/types/localization';
 import CloudAdvertisementCard from '@/components/card/advCard';
+import useUtmTrackPath from '@/hooks/use-utm-track-path';
 
 export default function FaqDetail(props: {
   data: FAQDetailType;
@@ -35,6 +36,7 @@ export default function FaqDetail(props: {
   const { id, content, title, description, canonical_rel } = data;
 
   const docContainer = useRef<HTMLDivElement>(null);
+  const trackPath = useUtmTrackPath();
 
   return (
     <Layout>
@@ -84,7 +86,7 @@ export default function FaqDetail(props: {
                   advTitle: t('detail.adv.title'),
                   advContent: t('detail.adv.content'),
                   advCtaLabel: t('detail.adv.ctaLabel'),
-                  advCtaLink: CLOUD_SIGNUP_LINK,
+                  advCtaLink: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=right_card&utm_content=${trackPath}`,
                 }}
               />
 

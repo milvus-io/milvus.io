@@ -28,6 +28,7 @@ import {
 import { RightTopArrowIcon } from '../icons';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { LanguageSelector } from '../language-selector';
+import useUtmTrackPath from '@/hooks/use-utm-track-path';
 
 export default function MobileHeader(props: {
   className?: string;
@@ -35,6 +36,7 @@ export default function MobileHeader(props: {
 }) {
   const { className = '', disableLangSelector = false } = props;
   const { t } = useTranslation('header');
+
   const [isTutOpen, setIsTutOpen] = useState(false);
   const [isToolOpen, setIsToolOpen] = useState(false);
   const [isCommunityOpen, setIsCommunityOpen] = useState(false);
@@ -80,6 +82,8 @@ export default function MobileHeader(props: {
     }
     setIsCommunityOpen(isOpen);
   };
+
+  const trackPath = useUtmTrackPath();
 
   return (
     <div className="block xl:hidden bg-white border-b border-solid border-gray-300">
@@ -294,7 +298,7 @@ export default function MobileHeader(props: {
                 {t('contact')}
               </Link>
               <Link
-                href={`${CLOUD_SIGNUP_LINK}?utm_source=partner&utm_medium=referral&utm_campaign=2025-01-16_resource_top-home-nav_milvusio`}
+                href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=nav_right&utm_content=${trackPath}`}
                 target="_blank"
               >
                 <Button className="w-full">{t('start')}</Button>

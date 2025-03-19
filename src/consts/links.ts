@@ -24,6 +24,8 @@ export const GITHUB_MILVUS_COMMUNITY_LINK =
 
 export const CLOUD_SIGNUP_LINK = 'https://cloud.zilliz.com/signup';
 export const CLOUD_SIGNIN_LINK = 'https://cloud.zilliz.com/signin';
+export const CN_CLOUD_SIGNUP_LINK = 'https://cloud.zilliz.com.cn/signup';
+export const CN_CLOUD_SIGNIN_LINK = 'https://cloud.zilliz.com.cn/signin';
 
 export const ZILLIZ_LEARN_LINK = 'https://zilliz.com/learn';
 

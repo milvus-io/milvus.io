@@ -53,7 +53,7 @@ export default function DeploySection() {
     }) as string[],
     class: classes.cloudDb,
     cta: t('buttons.tryFree'),
-    tryLink: `https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2025-03-07_homepage_middle-milvusio`,
+    tryLink: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=homepage_try_free&utm_content=homepage`,
   };
 
   return (

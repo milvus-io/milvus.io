@@ -2,10 +2,12 @@ import { CLOUD_SIGNUP_LINK } from '@/consts';
 import classes from './index.module.less';
 import { useTranslation, Trans } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
+import useUtmTrackPath from '@/hooks/use-utm-track-path';
 
 export default function CloudBanner() {
   const { locale } = useGlobalLocale();
   const { t } = useTranslation('home', { lng: locale });
+  const trackPath = useUtmTrackPath();
 
   return (
     <div className={classes.bannerContainer}>
@@ -15,7 +17,7 @@ export default function CloudBanner() {
           i18nKey="banner"
           components={[
             <a
-              href={`${CLOUD_SIGNUP_LINK}?utm_source=partner&utm_medium=referral&utm_campaign=2024_12_23_top_banner_milvusio`}
+              href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=top_banner&utm_content=${trackPath}`}
               key="zilliz-cloud"
             ></a>,
           ]}

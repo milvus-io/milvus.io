@@ -2,7 +2,11 @@ import { useTranslation, Trans } from 'react-i18next';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import classes from './index.module.less';
-import { GET_START_LINK, LEARN_MORE_LINK } from '@/consts/links';
+import {
+  CLOUD_SIGNUP_LINK,
+  GET_START_LINK,
+  LEARN_MORE_LINK,
+} from '@/consts/links';
 import CustomButton from '@/components/customButton';
 import Link from 'next/link';
 import { LanguageEnum } from '@/types/localization';
@@ -60,7 +64,7 @@ export default function HomePageHeaderSection(props: {
             {t('buttons.quickStart')}
           </CustomButton>
           <CustomButton
-            href="https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2025-03-05_center"
+            href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=homepage_center&utm_content=homepage`}
             size="large"
             variant="outlined"
             classes={{

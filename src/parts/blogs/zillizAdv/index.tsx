@@ -3,16 +3,17 @@ import styles from './index.module.less';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import clsx from 'clsx';
-
-const CTA_LINK =
-  'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-12-19_blog_overview-page_milvusio';
+import { CLOUD_SIGNUP_LINK } from '@/consts';
 
 export default function ZillizAdv(props: {
   className?: string;
   ctaLink?: string;
 }) {
   const { t } = useTranslation('blog');
-  const { className = '', ctaLink = CTA_LINK } = props;
+  const {
+    className = '',
+    ctaLink = `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=bottom_banner&utm_content=blog`,
+  } = props;
   const features = [
     t('blog:zillizAdv.feature1'),
     t('blog:zillizAdv.feature2'),

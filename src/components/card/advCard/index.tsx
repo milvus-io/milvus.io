@@ -3,16 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { LanguageEnum } from '@/types/localization';
 import CustomButton from '@/components/customButton';
 import { RightTopArrowIcon } from '@/components/icons';
-import { useEffect, useMemo, useState } from 'react';
+import { use, useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
-
-const CN_CTA_LINK =
-  'https://cloud.zilliz.com.cn/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-09-30_display_milvus-docs_zilliz';
-
-const MANAGE_MILVUS_CTA_LINK =
-  'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-10-17_display_manged-milvus-docs_milvusio';
-const CLOUD_UTM_CTA_LINK =
-  'https://cloud.zilliz.com/signup?utm_source=partner&utm_medium=referral&utm_campaign=2024-10-17_display_zilliz-milvus-docs_milvusio';
+import useUtmTrackPath from '@/hooks/use-utm-track-path';
+import { CLOUD_SIGNUP_LINK, CN_CLOUD_SIGNUP_LINK } from '@/consts';
 
 export default function CloudAdvertisementCard(props: {
   language?: LanguageEnum;
@@ -32,14 +26,16 @@ export default function CloudAdvertisementCard(props: {
   const { t } = useTranslation('docs', { lng: language });
   const isCnAdv = language === LanguageEnum.CHINESE;
 
+  const trackPath = useUtmTrackPath();
   const [random, setRandom] = useState(Math.random());
   const { advTitle, advContent, advCtaLabel, advCtaLink } =
     customAdvConfig || {};
 
   const { enTitle, enCtaLink, ctaLabel, advertiseContent } = useMemo(() => {
-    // const tryCloudTitle = t('advertise.titleB');
     const title = advTitle || t('advertise.titleA');
-    const ctaLink = advCtaLink || MANAGE_MILVUS_CTA_LINK;
+    const ctaLink =
+      advCtaLink ||
+      `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=right_card&utm_content=${trackPath}`;
     const ctaLabel = advCtaLabel || t('advertise.ctaLabel');
     const advertiseContent = advContent || t('advertise.content');
     return {
@@ -48,7 +44,11 @@ export default function CloudAdvertisementCard(props: {
       advertiseContent,
       ctaLabel,
     };
-  }, [random, advTitle, advContent, advCtaLabel, advCtaLink, t]);
+  }, [random, advTitle, advContent, advCtaLabel, advCtaLink, t, trackPath]);
+
+  const cnCloudLink = useMemo(() => {
+    return `${CN_CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=right_card&utm_content=${trackPath}`;
+  }, [trackPath]);
 
   useEffect(() => {
     const randomValue = Number(
@@ -79,7 +79,7 @@ export default function CloudAdvertisementCard(props: {
           <h2 className={classes.advTitle}>{t('advertise.title')}</h2>
           <p className={classes.advAbstract}>{t('advertise.content')}</p>
           <CustomButton
-            href={CN_CTA_LINK}
+            href={cnCloudLink}
             endIcon={<RightTopArrowIcon />}
             className={classes.ctaButton}
           >

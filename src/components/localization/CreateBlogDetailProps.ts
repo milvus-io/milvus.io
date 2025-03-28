@@ -46,9 +46,10 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
         newHtml,
         anchorList: anchorList.filter(item => item.label !== rest.title),
         codeList,
-        moreBlogs: moreBlogs.length
-          ? moreBlogs
-          : allData.filter(item => item.id !== id).slice(0, 4),
+        moreBlogs: [
+          ...moreBlogs,
+          ...allData.filter(item => item.id !== id),
+        ].slice(0, 4),
         tags,
         ...rest,
       },

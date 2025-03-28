@@ -24,7 +24,8 @@ export const SLACK_INVITE_URL = '/slack';
 export const MEETUP_UNSTRUCTURED_DATA_URL =
   'https://zilliz.com/community/unstructured-data-meetup';
 
-export const DEMO_MULTIMODAL_SEARCH_URL = 'https://multimodal-demo.milvus.io/';
+export const DEMO_MULTIMODAL_SEARCH_URL =
+  'https://demos.milvus.io/multimodal-image-search/';
 
 export const DEMO_HYBRID_SEARCH_URL = 'https://demos.milvus.io/hybrid-search/';
 

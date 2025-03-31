@@ -1,6 +1,6 @@
 {
-  "title": "Milvus facilita a adição de busca por similaridade aos seus aplicativos.",
-  "desc": "Armazene, indexe e gerencie vetores de incorporação massivos gerados por redes neurais profundas e outros modelos de aprendizado de máquina (ML).",
+  "title": "Centro de Demonstração Milvus: Explore a Pesquisa Vetorial com IA em ação",
+  "desc": "Curioso sobre a pesquisa vetorial? Experimente estas demonstrações práticas para ver como o Milvus potencia a pesquisa de imagens orientada por IA, a recuperação multimodal, a RAG (Retrieval-Augmented Generation) e a pesquisa de estruturas químicas.",
   "demos": {
     "multimodal": {
       "title": "Busca de Imagens Multimodal",
@@ -35,5 +35,9 @@
     "waiting": "Antes de você ir..."
   },
   "tryDemo": "Experimentar Demonstração",
-  "watchDemo": "Assistir Demonstração"
+  "watchDemo": "Assistir Demonstração",
+  "meta": {
+    "title": "Centro de Demonstração Milvus: Explore a Pesquisa Vetorial com IA em ação",
+    "desc": "Experimente estas demonstrações práticas para ver como o Milvus potencia a pesquisa de imagens orientada por IA, a recuperação multimodal, o RAG e a pesquisa de estruturas químicas."
+  }
 }

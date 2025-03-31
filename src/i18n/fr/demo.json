@@ -1,6 +1,6 @@
 {
-  "title": "Milvus facilite l'ajout de recherche de similarité à vos applications.",
-  "desc": "Stockez, indexez et gérez des vecteurs d'incorporation massifs générés par des réseaux de neurones profonds et d'autres modèles d'apprentissage automatique (ML).",
+  "title": "Milvus Demo Hub : Découvrez la recherche vectorielle alimentée par l'IA en action",
+  "desc": "Curieux d'en savoir plus sur la recherche vectorielle ? Essayez ces démonstrations pratiques pour voir comment Milvus permet la recherche d'images pilotée par l'IA, la recherche multimodale, la RAG (Retrieval-Augmented Generation) et la recherche de structures chimiques.",
   "demos": {
     "multimodal": {
       "title": "Recherche d'images multimodale",
@@ -35,5 +35,9 @@
     "waiting": "Avant de partir..."
   },
   "tryDemo": "Essayer la démo",
-  "watchDemo": "Regarder la démo"
+  "watchDemo": "Regarder la démo",
+  "meta": {
+    "title": "Milvus Demo Hub : Découvrez la recherche vectorielle alimentée par l'IA en action",
+    "desc": "Essayez ces démonstrations pratiques pour voir comment Milvus permet la recherche d'images pilotée par l'IA, la recherche multimodale, le RAG et la recherche de structures chimiques."
+  }
 }

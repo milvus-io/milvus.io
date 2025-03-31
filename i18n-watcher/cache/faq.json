@@ -1,0 +1,19 @@
+{
+  "title": "AI Quick Reference",
+  "desc": "Looking for fast answers or a quick refresher on AI-related topics? The AI Quick Reference has everything you need—straightforward explanations, practical solutions, and insights on the latest trends like LLMs, vector databases, RAG, and more to supercharge your AI projects!",
+  "search": "Search",
+  "detail": {
+    "home": "Home",
+    "name": "AI Reference",
+    "readMore": "Read More",
+    "keepReading": "Keep Reading",
+    "recommend": "Recommended Tech Blogs & Tutorials",
+    "allBlog": "Check all the blog posts →",
+    "adv": {
+      "title": "Need a VectorDB for Your GenAI Apps?",
+      "content": "Zilliz Cloud is a managed vector database built on Milvus perfect for building GenAI applications.",
+      "ctaLabel": "Try Free"
+    }
+  },
+  "noData": "No search result: {{keyword}}"
+}

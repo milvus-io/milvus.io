@@ -1,6 +1,6 @@
 {
-  "title": "Milvus rende facile aggiungere la ricerca per similarità alle tue applicazioni.",
-  "desc": "Memorizza, indicizza e gestisci vettori di embedding massivi generati da reti neurali profonde e altri modelli di machine learning (ML).",
+  "title": "Milvus Demo Hub: Esplora la ricerca vettoriale potenziata dall'intelligenza artificiale in azione",
+  "desc": "Siete curiosi di conoscere la ricerca vettoriale? Provate queste dimostrazioni pratiche per vedere come Milvus alimenta la ricerca di immagini guidata dall'intelligenza artificiale, il recupero multimodale, il RAG (Retrieval-Augmented Generation) e la ricerca di strutture chimiche.",
   "demos": {
     "multimodal": {
       "title": "Ricerca di Immagini Multimodali",
@@ -35,5 +35,9 @@
     "waiting": "Prima di andare..."
   },
   "tryDemo": "Prova la Demo",
-  "watchDemo": "Guarda la Demo"
+  "watchDemo": "Guarda la Demo",
+  "meta": {
+    "title": "Milvus Demo Hub: Esplora la ricerca vettoriale potenziata dall'intelligenza artificiale in azione",
+    "desc": "Provate queste dimostrazioni pratiche per vedere come Milvus alimenta la ricerca di immagini guidata dall'intelligenza artificiale, il recupero multimodale, il RAG e la ricerca di strutture chimiche."
+  }
 }

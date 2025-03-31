@@ -12,7 +12,8 @@
     "prepare": "husky",
     "i18n:watch": "node i18n-watcher/index.js",
     "i18n:scan": "node i18n-watcher/scan.js",
-    "i18n:sync": "NODE_ENV=development node i18n-watcher/translate-changes.js"
+    "i18n:sync": "NODE_ENV=development node i18n-watcher/translate-changes.js",
+    "generate:docs": "node scripts/generate-docs.js"
   },
   "dependencies": {
     "@docsearch/css": "^3.6.0",

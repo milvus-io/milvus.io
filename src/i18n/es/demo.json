@@ -1,6 +1,6 @@
 {
-  "title": "Milvus facilita la adición de búsqueda por similitud a tus aplicaciones.",
-  "desc": "Almacena, indexa y gestiona grandes vectores de incrustación generados por redes neuronales profundas y otros modelos de aprendizaje automático (ML).",
+  "title": "Demostración de Milvus: Explore la búsqueda vectorial con IA en acción",
+  "desc": "¿Siente curiosidad por la búsqueda vectorial? Pruebe estas demostraciones prácticas para ver cómo Milvus potencia la búsqueda de imágenes basada en IA, la recuperación multimodal, la RAG (Retrieval-Augmented Generation) y la búsqueda de estructuras químicas.",
   "demos": {
     "multimodal": {
       "title": "Búsqueda de Imágenes Multimodal",
@@ -35,5 +35,9 @@
     "waiting": "Antes de que te vayas..."
   },
   "tryDemo": "Prueba la Demo",
-  "watchDemo": "Mira la Demo"
+  "watchDemo": "Mira la Demo",
+  "meta": {
+    "title": "Demostración de Milvus: Explore la búsqueda vectorial con IA en acción",
+    "desc": "Pruebe estas demostraciones prácticas para ver cómo Milvus potencia la búsqueda de imágenes basada en IA, la recuperación multimodal, la RAG y la búsqueda de estructuras químicas."
+  }
 }

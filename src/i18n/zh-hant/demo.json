@@ -1,6 +1,6 @@
 {
-  "title": "Milvus 使添加相似性搜索变得容易",
-  "desc": "存儲、索引和管理由深度神經網絡和其他機器學習（ML）模型生成的大量嵌入向量。",
+  "title": "Milvus 演示中心：探索人工智能驅動的矢量搜尋行動",
+  "desc": "對向量搜尋感到好奇嗎？嘗試這些實作示範，看看 Milvus 如何為 AI 驅動的圖像搜尋、多模態檢索、RAG (Retrieval-Augmented Generation) 以及化學結構搜尋提供動力。",
   "demos": {
     "multimodal": {
       "title": "多模態圖像搜索",
@@ -35,5 +35,9 @@
     "waiting": "在你離開之前..."
   },
   "tryDemo": "嘗試 Demo",
-  "watchDemo": "觀看 Demo"
+  "watchDemo": "觀看 Demo",
+  "meta": {
+    "title": "Milvus 演示中心：探索人工智能驅動的矢量搜尋行動",
+    "desc": "嘗試這些實際操作的示範，看看 Milvus 如何為人工智能驅動的圖像搜尋、多模態檢索、RAG 和化學結構搜尋提供動力。"
+  }
 }

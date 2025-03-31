@@ -1,6 +1,6 @@
 {
-  "title": "Milvus macht es einfach, Ähnlichkeitssuche zu Ihren Anwendungen hinzuzufügen.",
-  "desc": "Speichern, indizieren und verwalten Sie massive Embedding-Vektoren, die von tiefen neuronalen Netzwerken und anderen Machine-Learning (ML)-Modellen generiert werden.",
+  "title": "Milvus Demo Hub: Erleben Sie AI-gestützte Vektorsuche in Aktion",
+  "desc": "Neugierig auf die Vektorsuche? Probieren Sie diese praktischen Demos aus, um zu sehen, wie Milvus die KI-gesteuerte Bildsuche, das multimodale Retrieval, RAG (Retrieval-Augmented Generation) und die Suche nach chemischen Strukturen unterstützt.",
   "demos": {
     "multimodal": {
       "title": "Multimodale Bildersuche",
@@ -35,5 +35,9 @@
     "waiting": "Bevor Sie gehen..."
   },
   "tryDemo": "Demo ausprobieren",
-  "watchDemo": "Demo ansehen"
+  "watchDemo": "Demo ansehen",
+  "meta": {
+    "title": "Milvus Demo Hub: Erleben Sie AI-gestützte Vektorsuche in Aktion",
+    "desc": "Probieren Sie diese praktischen Demos aus, um zu sehen, wie Milvus die KI-gesteuerte Bildsuche, das multimodale Retrieval, RAG und die Suche nach chemischen Strukturen unterstützt."
+  }
 }

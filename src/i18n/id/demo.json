@@ -1,6 +1,6 @@
 {
-  "title": "Milvus memudahkan penambahan pencarian keserupaan ke aplikasi Anda.",
-  "desc": "Simpan, indeks, dan kelola vektor penanaman massif yang dihasilkan oleh jaringan saraf dalam dan model pembelajaran mesin (ML) lainnya.",
+  "title": "Pusat Demo Milvus: Jelajahi Pencarian Vektor Bertenaga AI dalam Aksi",
+  "desc": "Penasaran dengan pencarian vektor? Cobalah demo langsung ini untuk melihat bagaimana Milvus mendukung pencarian gambar berbasis AI, pencarian multimodal, RAG (Retrieval-Augmented Generation), dan pencarian struktur kimia.",
   "demos": {
     "multimodal": {
       "title": "Pencarian Gambar Multimodal",
@@ -35,5 +35,9 @@
     "waiting": "Sebelum Anda pergi..."
   },
   "tryDemo": "Coba Demo",
-  "watchDemo": "Tonton Demo"
+  "watchDemo": "Tonton Demo",
+  "meta": {
+    "title": "Pusat Demo Milvus: Jelajahi Pencarian Vektor Bertenaga AI dalam Aksi",
+    "desc": "Cobalah demo langsung ini untuk melihat bagaimana Milvus mendukung pencarian gambar yang digerakkan oleh AI, pencarian multimodal, RAG, dan pencarian struktur kimia."
+  }
 }

@@ -22,14 +22,20 @@
     "deepSearcher": "Deep Searcher"
   },
   "blog": "Blog",
-  "community": "Community",
+  "community": {
+    "label": "Community",
+    "discord": "Discord",
+    "github": "GitHub",
+    "more": "More Channels"
+  },
   "start": "Try Managed Milvus",
   "star": "Star",
   "contact": "Contact Us",
   "footer": {
     "resource": {
       "managed": "Managed Milvus",
-      "contact": "Contact Us"
+      "contact": "Contact Us",
+      "faq": "AI Quick Reference "
     },
     "tools": {
       "sizing": "Milvus Sizing Tool",

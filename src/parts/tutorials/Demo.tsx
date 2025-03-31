@@ -4,10 +4,11 @@ import classes from '@/styles/milvusDemos.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import DemoCard from '@/components/card/DemoCard';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { CustomizedSnackbars } from '@/components/snackBar';
-import { ABSOLUTE_BASE_URL } from '@/consts';
+import { GET_START_LINK } from '@/consts/links';
+import { CLOUD_SIGNUP_LINK } from '@/consts/links';
 import {
   DEMO_MULTIMODAL_SEARCH_URL,
   DEMO_HYBRID_SEARCH_URL,
@@ -18,10 +19,6 @@ import CustomButton from '@/components/customButton';
 import { RightWholeArrow } from '@/components/icons';
 import { LanguageEnum } from '@/types/localization';
 
-const TITLE = 'Similarity Search Demos Powered by Milvus';
-const DESC =
-  'Milvus vector database makes it easy to add similarity search to your AI applications. Try demos powered by Milvus and learn how to build them yourself.';
-
 type Props = {
   locale: LanguageEnum;
 };
@@ -29,6 +26,8 @@ type Props = {
 export function MilvusDemos(props: Props) {
   const { locale = LanguageEnum.ENGLISH } = props;
   const { t } = useTranslation('demo', { lng: locale });
+  const { t: homeTrans } = useTranslation('home', { lng: locale });
+  const { t: milvusTrans } = useTranslation('common', { lng: locale });
 
   const DEMOS = [
     {
@@ -126,8 +125,12 @@ export function MilvusDemos(props: Props) {
     <main>
       <Layout darkMode={true}>
         <Head>
-          <title>{TITLE}</title>
-          <meta name="description" content={DESC} />
+          <title>{t('meta.title')}</title>
+          <meta name="description" content={t('meta.description')} />
+          <meta
+            name="keywords"
+            content="Milvus demos, AI search, multimodal image search, image search, RAG"
+          />
         </Head>
 
         <section className={classes.headerSection}>
@@ -136,6 +139,28 @@ export function MilvusDemos(props: Props) {
           >
             <h1 className={classes.title}>{t('title')}</h1>
             <p className={classes.desc}>{t('desc')}</p>
+          </div>
+
+          <div className="flex justify-center items-center gap-[20px] max-sm:flex-col">
+            <CustomButton
+              href={GET_START_LINK(locale)}
+              size="large"
+              classes={{
+                root: classes.startButton,
+              }}
+            >
+              {homeTrans('buttons.quickStart')}
+            </CustomButton>
+            <CustomButton
+              href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=center&utm_content=demo-page`}
+              size="large"
+              variant="outlined"
+              classes={{
+                root: classes.startButton,
+              }}
+            >
+              {milvusTrans('v3trans.home.banner.tryManaged')}
+            </CustomButton>
           </div>
         </section>
 

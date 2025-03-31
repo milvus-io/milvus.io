@@ -2,6 +2,7 @@ import * as babel from '@babel/core';
 import { compile } from '@mdx-js/mdx';
 import traverse from '@babel/traverse';
 import { visit } from 'unist-util-visit';
+import { getBetaTagProperties, matchTitleBetaTag } from '@zilliz/toolkit';
 
 function extractValue(node) {
   if (node.type === 'StringLiteral') {
@@ -98,3 +99,44 @@ export const rehypeCodeBlockHighlightPlugin = () => {
     });
   };
 };
+
+export const getRehypeHeadingTagPlugin =
+  (params: { betaTag?: string }) => () => {
+    const commonHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
+    const getTagElement = (tagCaption: string, tagColor: string) => {
+      return {
+        type: 'element',
+        tagName: 'span',
+        children: [{ type: 'text', value: tagCaption }],
+        properties: {
+          className: ['beta-tag'],
+          style: `background-color:${tagColor};color:white`,
+          translate: 'no',
+        },
+      };
+    };
+
+    return function (tree) {
+      visit(tree, 'element', (node, index, parent) => {
+        if (
+          commonHeadings.includes(node.tagName) &&
+          node.children &&
+          node.children.length > 0
+        ) {
+          const content = node.children[0].value;
+          const { matched, title, tagCaption, tagColor } =
+            matchTitleBetaTag(content);
+          if (matched) {
+            node.children[0].value = title;
+            node.children.push(getTagElement(tagCaption, tagColor));
+          } else if (node.tagName === 'h1' && params.betaTag) {
+            const { tagCaption, tagColor } = getBetaTagProperties(
+              params.betaTag
+            );
+            node.children.push(getTagElement(tagCaption, tagColor));
+          }
+        }
+      });
+    };
+  };

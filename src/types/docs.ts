@@ -10,6 +10,7 @@ export interface DocFrontMatterType {
   related_key?: string;
   order?: number;
   deprecate?: boolean;
+  beta?: string;
 }
 
 export interface DocFileDataInfoType {

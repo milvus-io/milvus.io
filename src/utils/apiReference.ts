@@ -4,6 +4,7 @@ import {
   ApiFileDateInfoType,
   FinalMenuStructureType,
   ApiReferenceRouteEnum,
+  DocFrontMatterType,
 } from '@/types/docs';
 import { VERSION_REG } from '@/consts/regexp';
 import {
@@ -18,6 +19,7 @@ import { getCacheData, setCacheData } from './index';
 const fs = require('fs');
 const path = require('path');
 const { join } = path;
+const matter = require('gray-matter');
 
 const API_REFERENCE_WRAPPER_MENU_ID = 'api-reference';
 const API_REFERENCE_WRAPPER_MENU_LABEL = 'API Reference';
@@ -77,7 +79,11 @@ const readApiFile = (params: {
       })
     );
   } else if (fileStat.isFile()) {
-    const content = fs.readFileSync(filePath, 'utf-8');
+    const fileData = fs.readFileSync(filePath, 'utf-8');
+    const { data, content } = matter(fileData) as {
+      data: DocFrontMatterType;
+      content: string;
+    };
     const id = path.basename(filePath);
     /**
      * id: xxx.md,
@@ -87,6 +93,7 @@ const readApiFile = (params: {
      * */
     fileDataList.push({
       frontMatter: {
+        ...data,
         id,
         parentIds: parentIds.filter(v => !!v),
         relativePath: filePath.match(/\/v\d.*$/)?.[0] || '',

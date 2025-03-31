@@ -1,4 +1,3 @@
-import matter from 'gray-matter';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import clsx from 'clsx';
@@ -18,6 +17,7 @@ import {
 import { formatApiRelativePath } from '@/utils';
 import {
   getVariablesFromMDX,
+  getRehypeHeadingTagPlugin,
   rehypeCodeBlockHighlightPlugin,
 } from '@/utils/mdx';
 import {
@@ -195,7 +195,7 @@ export async function getStaticProps({ params }) {
 
   const { menuData, contentList: contentData } =
     curCategoryData.find(v => v.version === version) || {};
-  const { frontMatter, content: markdown } =
+  const { frontMatter, content } =
     contentData.find(v => {
       const {
         frontMatter: { id, parentIds },
@@ -204,13 +204,15 @@ export async function getStaticProps({ params }) {
       const sourceSlug = [...parentIds, id].join('/');
       return targetSlug === sourceSlug;
     }) || {};
-  const { data = {}, content } = matter(markdown);
 
   const { exports } = await getVariablesFromMDX(content);
   const mdxSource = await serialize(content, {
     scope: exports,
     mdxOptions: {
-      rehypePlugins: [rehypeCodeBlockHighlightPlugin],
+      rehypePlugins: [
+        rehypeCodeBlockHighlightPlugin,
+        getRehypeHeadingTagPlugin({ betaTag: frontMatter.beta }),
+      ],
     },
   });
 

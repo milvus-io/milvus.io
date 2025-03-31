@@ -318,6 +318,7 @@ export const getStaticProps: GetStaticProps = async context => {
 
   const { tree: doc, codeList } = markdownToHtml(apiContent || '', {
     showAnchor: true,
+    betaTag: frontMatter.beta,
   });
 
   const headingRegex = /^#\s+(.*)$/m;

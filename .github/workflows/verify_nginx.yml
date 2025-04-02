@@ -1,6 +1,10 @@
 name: Verify Nginx Conf
 
-on: [pull_request]
+on:
+  pull_request:
+    paths:
+      - 'conf/conf.d/**'
+      - '.github/workflows/verify_nginx.yml'
 
 jobs:
   build:

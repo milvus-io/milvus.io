@@ -195,7 +195,7 @@ const Aside = (props: AsidePropsType) => {
               endIcon={<RightTopArrowIcon />}
               variant="outlined"
               className={styles.bookButton}
-              href="https://meetings.hubspot.com/chloe-williams1/milvus-office-hours"
+              href="https://meetings.hubspot.com/chloe-williams1/milvus-office-hour"
             >
               {t('communityBanner.ctaLabel')}
             </CustomButton>

@@ -22,6 +22,11 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME}}
+          password: ${{ secrets.DOCKER_PWD}}
+
       - uses: actions/checkout@v3
         with:
           ref: 'master'
@@ -49,11 +54,6 @@ jobs:
         run: |
           git submodule init
           git submodule update --remote
-
-      - uses: azure/docker-login@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME}}
-          password: ${{ secrets.DOCKER_PWD}}
 
       - name: Generate docker image tag name
         id: generate-tag-name

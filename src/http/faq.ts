@@ -18,6 +18,7 @@ export interface FAQDetailType {
   content: string;
   url: string;
   canonical_rel: string;
+  curIndex?: number;
 }
 
 const FAQ_PATH = 'public/assets';
@@ -96,15 +97,27 @@ export const generateSimpleFaqList = async (): Promise<
 
 export const getFAQById = async (
   url: string
-): Promise<FAQDetailType | null> => {
+): Promise<{
+  list: FAQDetailType[];
+  item: FAQDetailType;
+}> => {
   const faqs = await getFAQs();
-  let target: FAQDetailType | null = null;
+  let curIndex = 0;
 
-  faqs.forEach((faq, index) => {
+  const target = faqs.find((faq, index) => {
     if (faq.url === url) {
-      target = faq;
+      curIndex = index;
+      return true;
     }
+    return false;
   });
 
-  return target ? { ...(target as FAQDetailType) } : null;
+  if (!target) {
+    throw new Error(`FAQ with URL ${url} not found`);
+  }
+
+  return {
+    list: faqs,
+    item: { ...(target as FAQDetailType), curIndex },
+  };
 };

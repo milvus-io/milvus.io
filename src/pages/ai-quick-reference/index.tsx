@@ -156,6 +156,23 @@ export default function AiFaq(props: {
     };
   }, [searchData.filteredList, paginationData.pageIndex]);
 
+  useEffect(() => {
+    const handler = (e: PopStateEvent) => {
+      const pageIndex = Number(
+        new URL(window.location.href).searchParams.get(PAGEINDEX_QUERY_KEY) || 1
+      );
+      setPaginationData(v => ({
+        ...v,
+        pageIndex,
+      }));
+    };
+
+    window.addEventListener('popstate', handler);
+    return () => {
+      window.removeEventListener('popstate', handler);
+    };
+  }, []);
+
   const { hasPrevious, hasNext } = useMemo(() => {
     const hasPrevious = paginationData.pageIndex > 1;
     const hasNext =

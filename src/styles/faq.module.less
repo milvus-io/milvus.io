@@ -191,4 +191,37 @@
       }
     }
   }
+
+  .navButtonsWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 40px;
+
+    & > div {
+      flex: 0 1 50%;
+    }
+
+    .navButton {
+      width: 100%;
+      border-color: #ececee;
+      color: #000;
+      justify-content: center;
+
+      svg path {
+        fill: #000;
+      }
+
+      &:hover {
+        background-color: @color-grey-03;
+      }
+
+      &.previousBtn {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
 }

@@ -13,7 +13,7 @@ import Breadcrumb from '@/components/breadcrumb';
 import { markdownToHtml } from '@/utils/common';
 import Share from '@/components/share';
 import CustomButton from '@/components/customButton';
-import { RightWholeArrow } from '@/components/icons';
+import { RightArrow, RightWholeArrow } from '@/components/icons';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import blogUtils from '@/utils/blog.utils';
 import { LanguageEnum } from '@/types/localization';
@@ -30,9 +30,12 @@ export default function FaqDetail(props: {
     id: string;
     href: string;
   }[];
+  previousUrl?: string;
+  nextUrl?: string;
 }) {
   const { t } = useTranslation('faq');
-  const { data, html, recommendFaq, recommendBlogs } = props;
+  const { data, html, recommendFaq, recommendBlogs, previousUrl, nextUrl } =
+    props;
   const { id, content, title, description, canonical_rel } = data;
 
   const docContainer = useRef<HTMLDivElement>(null);
@@ -69,15 +72,43 @@ export default function FaqDetail(props: {
           </section>
 
           <section className={styles.blogContent}>
-            <div
-              className={clsx(
-                'doc-style',
-                'scroll-padding',
-                styles.articleContainer
-              )}
-              ref={docContainer}
-              dangerouslySetInnerHTML={{ __html: html }}
-            ></div>
+            <div>
+              <article
+                className={clsx(
+                  'doc-style',
+                  'scroll-padding',
+                  styles.articleContainer
+                )}
+                ref={docContainer}
+                dangerouslySetInnerHTML={{ __html: html }}
+              ></article>
+              <div className={classes.navButtonsWrapper}>
+                <div className="">
+                  {previousUrl && (
+                    <CustomButton
+                      variant="outlined"
+                      href={previousUrl}
+                      className={clsx(classes.navButton, classes.previousBtn)}
+                      startIcon={<RightArrow />}
+                    >
+                      {t('nav.previous')}
+                    </CustomButton>
+                  )}
+                </div>
+                <div className="">
+                  {nextUrl && (
+                    <CustomButton
+                      variant="outlined"
+                      href={nextUrl}
+                      className={classes.navButton}
+                      endIcon={<RightArrow />}
+                    >
+                      {t('nav.next')}
+                    </CustomButton>
+                  )}
+                </div>
+              </div>
+            </div>
 
             <div className={styles.anchorsContainer}>
               <CloudAdvertisementCard
@@ -162,45 +193,54 @@ export default function FaqDetail(props: {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id as string;
-  const faqDetail = await getFAQById(id);
-  const simpleList = await generateSimpleFaqList();
+  try {
+    const { item } = await getFAQById(id);
+    const currentArticleIndex = item?.curIndex || 0;
+    const simpleList = await generateSimpleFaqList();
 
-  const locale = LanguageEnum.ENGLISH;
-  const blogList = blogUtils.getSimpleList(locale);
-  const recentlyBlogs = blogList.filter(
-    v =>
-      new Date().getTime() - new Date(v.date).getTime() <
-      12 * 30 * 24 * 60 * 60 * 1000
-  );
-  const blogLength = recentlyBlogs.length;
-  let blogRandomIndexes: number[] = [];
+    const locale = LanguageEnum.ENGLISH;
+    const blogList = blogUtils.getSimpleList(locale);
+    const recentlyBlogs = blogList.filter(
+      v =>
+        new Date().getTime() - new Date(v.date).getTime() <
+        12 * 30 * 24 * 60 * 60 * 1000
+    );
+    const blogLength = recentlyBlogs.length;
+    let blogRandomIndexes: number[] = [];
 
-  while (blogRandomIndexes.length < 5) {
-    const index = Math.floor(Math.random() * blogLength);
-    if (!blogRandomIndexes.includes(index)) {
-      blogRandomIndexes.push(index);
+    while (blogRandomIndexes.length < 5) {
+      const index = Math.floor(Math.random() * blogLength);
+      if (!blogRandomIndexes.includes(index)) {
+        blogRandomIndexes.push(index);
+      }
     }
-  }
-  blogRandomIndexes.sort((a, b) => a - b);
-  const content = faqDetail?.content || '';
-  const { tree } = markdownToHtml(content);
+    blogRandomIndexes.sort((a, b) => a - b);
+    const content = item?.content || '';
+    const { tree } = markdownToHtml(content);
 
-  const length = simpleList.length;
-  let randomIndexes: number[] = [];
+    const length = simpleList.length;
+    let randomIndexes: number[] = [];
 
-  while (randomIndexes.length < 4) {
-    const index = Math.floor(Math.random() * length);
-    if (!randomIndexes.includes(index)) {
-      randomIndexes.push(index);
+    while (randomIndexes.length < 4) {
+      const index = Math.floor(Math.random() * length);
+      if (!randomIndexes.includes(index)) {
+        randomIndexes.push(index);
+      }
     }
+    randomIndexes.sort((a, b) => a - b);
+    return {
+      props: {
+        data: item,
+        html: tree,
+        recommendFaq: randomIndexes.map(index => simpleList[index]),
+        recommendBlogs: blogRandomIndexes.map(index => recentlyBlogs[index]),
+        previousUrl: simpleList[currentArticleIndex - 1]?.url || '',
+        nextUrl: simpleList[currentArticleIndex + 1]?.url || '',
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
   }
-  randomIndexes.sort((a, b) => a - b);
-  return {
-    props: {
-      data: faqDetail,
-      html: tree,
-      recommendFaq: randomIndexes.map(index => simpleList[index]),
-      recommendBlogs: blogRandomIndexes.map(index => recentlyBlogs[index]),
-    },
-  };
 };

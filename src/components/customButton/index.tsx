@@ -63,6 +63,9 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
           target={target}
           className={clsx(classes.linkButton, className, root, computedClasses)}
         >
+          {startIcon && (
+            <span className={clsx(classes.iconWrapper, icon)}>{startIcon}</span>
+          )}
           {children}
           {endIcon && (
             <span className={clsx(classes.iconWrapper, icon)}>{endIcon}</span>

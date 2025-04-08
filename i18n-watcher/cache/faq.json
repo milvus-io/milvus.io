@@ -15,5 +15,9 @@
       "ctaLabel": "Try Free"
     }
   },
-  "noData": "No search result: {{keyword}}"
+  "noData": "No search result: {{keyword}}",
+  "nav": {
+    "previous": "Previous",
+    "next": "Next"
+  }
 }

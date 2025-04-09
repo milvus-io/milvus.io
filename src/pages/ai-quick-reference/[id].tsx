@@ -6,8 +6,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
-import { FAQDetailType, generateSimpleFaqList, getFAQById } from '@/http/faq';
-import { useRef } from 'react';
+import { generateSimpleFaqList, getFAQById } from '@/http/faq';
+import { DemoTypeEnum, FAQDetailType } from '@/types/faq';
+import { useMemo, useRef } from 'react';
 import { GetServerSideProps } from 'next';
 import Breadcrumb from '@/components/breadcrumb';
 import { markdownToHtml } from '@/utils/common';
@@ -19,6 +20,12 @@ import blogUtils from '@/utils/blog.utils';
 import { LanguageEnum } from '@/types/localization';
 import CloudAdvertisementCard from '@/components/card/advCard';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
+import DemoCard from '@/components/card/DemoCard';
+import {
+  DEMO_HYBRID_SEARCH_URL,
+  DEMO_MULTIMODAL_SEARCH_URL,
+} from '@/consts/externalLinks';
+import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
 
 export default function FaqDetail(props: {
   data: FAQDetailType;
@@ -32,14 +39,71 @@ export default function FaqDetail(props: {
   }[];
   previousUrl?: string;
   nextUrl?: string;
+  demo?: DemoTypeEnum;
+  demoDescription?: string;
 }) {
-  const { t } = useTranslation('faq');
+  const { t } = useTranslation(['faq', 'demo']);
   const { data, html, recommendFaq, recommendBlogs, previousUrl, nextUrl } =
     props;
-  const { id, content, title, description, canonical_rel } = data;
+  const {
+    id,
+    content,
+    title,
+    description,
+    canonical_rel,
+    demo,
+    demoDescription,
+  } = data;
 
   const docContainer = useRef<HTMLDivElement>(null);
   const trackPath = useUtmTrackPath();
+
+  const DEMOS = [
+    {
+      name: t('demo:demos.askAi.title'),
+      desc: t('demo:demos.askAi.desc'),
+      cover: '/images/demos/ask-ai.png',
+      renderButton1: () => (
+        <InkeepCustomTriggerWrapper>
+          <CustomButton className="" variant="outlined">
+            {t('demos.askAi.ctaLabel1')}
+          </CustomButton>
+        </InkeepCustomTriggerWrapper>
+      ),
+      renderButton2: () => (
+        <CustomButton
+          href="https://zilliz.com/blog/how-inkeep-and-milvus-built-rag-driven-ai-assisstant-for-smarter-interaction"
+          variant="text"
+          endIcon={<RightWholeArrow />}
+        >
+          {t('demos.askAi.ctaLabel2')}
+        </CustomButton>
+      ),
+      lowerCaseName: 'ask-ai',
+      id: DemoTypeEnum.Rag,
+    },
+    {
+      name: t('demo:demos.multimodal.title'),
+      desc: t('demo:demos.multimodal.desc'),
+      href: DEMO_MULTIMODAL_SEARCH_URL,
+      cover: '/images/demos/multimodal-image-search.png',
+      lowerCaseName: 'multimodal image search',
+      id: DemoTypeEnum.imageSearch,
+    },
+    {
+      name: t('demo:demos.hybridSearch.title'),
+      desc: t('demo:demos.hybridSearch.desc'),
+      href: DEMO_HYBRID_SEARCH_URL,
+      cover: '/images/demos/hybrid-search.png',
+      // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
+      lowerCaseName: 'hybrid search',
+      id: DemoTypeEnum.HybridSearch,
+    },
+  ];
+
+  const demoCardData = useMemo(() => {
+    return DEMOS.find(item => item.id === demo);
+  }, [demo, DEMOS]);
 
   return (
     <Layout>
@@ -59,7 +123,7 @@ export default function FaqDetail(props: {
             <Breadcrumb
               list={[
                 {
-                  label: t('detail.name'),
+                  label: t('faq:detail.name'),
                   href: '/ai-quick-reference',
                 },
                 {
@@ -82,6 +146,17 @@ export default function FaqDetail(props: {
                 ref={docContainer}
                 dangerouslySetInnerHTML={{ __html: html }}
               ></article>
+              {demo && (
+                <div className="">
+                  <p className="mb-[24px] text-black2">{demoDescription}</p>
+                  <DemoCard
+                    {...demoCardData}
+                    handelOpenDialog={() => {
+                      return;
+                    }}
+                  />
+                </div>
+              )}
               <div className={classes.navButtonsWrapper}>
                 <div className="">
                   {previousUrl && (
@@ -91,7 +166,7 @@ export default function FaqDetail(props: {
                       className={clsx(classes.navButton, classes.previousBtn)}
                       startIcon={<RightArrow />}
                     >
-                      {t('nav.previous')}
+                      {t('faq:nav.previous')}
                     </CustomButton>
                   )}
                 </div>
@@ -103,7 +178,7 @@ export default function FaqDetail(props: {
                       className={classes.navButton}
                       endIcon={<RightArrow />}
                     >
-                      {t('nav.next')}
+                      {t('faq:nav.next')}
                     </CustomButton>
                   )}
                 </div>
@@ -114,9 +189,9 @@ export default function FaqDetail(props: {
               <CloudAdvertisementCard
                 className={classes.advCard}
                 customAdvConfig={{
-                  advTitle: t('detail.adv.title'),
-                  advContent: t('detail.adv.content'),
-                  advCtaLabel: t('detail.adv.ctaLabel'),
+                  advTitle: t('faq:detail.adv.title'),
+                  advContent: t('faq:detail.adv.content'),
+                  advCtaLabel: t('faq:detail.adv.ctaLabel'),
                   advCtaLink: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=right_card&utm_content=${trackPath}`,
                 }}
               />
@@ -132,7 +207,7 @@ export default function FaqDetail(props: {
               </div>
 
               <div className={classes.recommendBlogWrapper}>
-                <h4 className={classes.title}>{t('detail.recommend')}</h4>
+                <h4 className={classes.title}>{t('faq:detail.recommend')}</h4>
                 <ul className={classes.recommendBlogList}>
                   {recommendBlogs.map(item => (
                     <li className="" key={item.title}>
@@ -140,7 +215,7 @@ export default function FaqDetail(props: {
                     </li>
                   ))}
                   <li className={classes.allBlogBtn}>
-                    <Link href="/blog">{t('detail.allBlog')}</Link>
+                    <Link href="/blog">{t('faq:detail.allBlog')}</Link>
                   </li>
                 </ul>
               </div>
@@ -165,7 +240,9 @@ export default function FaqDetail(props: {
             classes.recommendSection
           )}
         >
-          <h2 className={classes.sectionTitle}>{t('detail.keepReading')}</h2>
+          <h2 className={classes.sectionTitle}>
+            {t('faq:detail.keepReading')}
+          </h2>
           <ul className={classes.listWrapper}>
             {recommendFaq.map(item => (
               <li className="" key={item.url}>
@@ -179,7 +256,7 @@ export default function FaqDetail(props: {
                     variant="text"
                     className={classes.readMoreBtn}
                   >
-                    {t('detail.readMore')}
+                    {t('faq:detail.readMore')}
                   </CustomButton>
                 </Link>
               </li>
@@ -196,6 +273,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const { item } = await getFAQById(id);
     const currentArticleIndex = item?.curIndex || 0;
+    console.log('currentArticleIndex--', currentArticleIndex);
     const simpleList = await generateSimpleFaqList();
 
     const locale = LanguageEnum.ENGLISH;

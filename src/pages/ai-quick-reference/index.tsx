@@ -6,7 +6,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
-import { FAQDetailType, generateSimpleFaqList } from '@/http/faq';
+import { generateSimpleFaqList } from '@/http/faq';
+import { FAQDetailType } from '@/types/faq';
 import { useState, useMemo, useEffect } from 'react';
 import CustomInput from '@/components/customInput/customInput';
 import {

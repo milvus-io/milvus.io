@@ -2,24 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
 import { ABSOLUTE_BASE_URL } from '@/consts';
-
-interface OriginalFAQDetailType {
-  Order: number;
-  Questions: string;
-  Answers: string;
-  URL: string;
-  Meta_title: string;
-}
-
-export interface FAQDetailType {
-  id: string;
-  title: string;
-  description: string;
-  content: string;
-  url: string;
-  canonical_rel: string;
-  curIndex?: number;
-}
+import {
+  OriginalFAQDetailType,
+  FAQDetailType,
+  DemoTypeEnum,
+} from '@/types/faq';
 
 const FAQ_PATH = 'public/assets';
 const FAQ_FILE_NAME = 'Milvus FAQ - Milvus FAQ.csv';
@@ -51,6 +38,9 @@ export const getFAQs = async (): Promise<FAQDetailType[]> => {
             url: row.URL,
             description: row.Answers.slice(0, 120),
             canonical_rel: `${ABSOLUTE_BASE_URL}/ai-quick-reference/${row.URL}`,
+            demo: (row.Demo?.match(/'([^']*)'/g)?.[0]?.slice(1, -1) ||
+              '') as DemoTypeEnum,
+            demoDescription: row.Demo_description || '',
           });
         }
       })

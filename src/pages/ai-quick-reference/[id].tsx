@@ -273,7 +273,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const { item } = await getFAQById(id);
     const currentArticleIndex = item?.curIndex || 0;
-    console.log('currentArticleIndex--', currentArticleIndex);
+
     const simpleList = await generateSimpleFaqList();
 
     const locale = LanguageEnum.ENGLISH;

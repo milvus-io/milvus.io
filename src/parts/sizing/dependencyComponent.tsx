@@ -64,7 +64,7 @@ export const DependencyComponent = (props: {
               desc={
                 <>
                   <div className="flex items-center">
-                    {t('setup.basic.journal')}:&nbsp;
+                    {t('setup.basic.journal')}:&nbsp;&lt;=
                     <span className="text-black1 font-[500]">
                       {formatOutOfCalData({
                         data: t('setup.basic.gb', {

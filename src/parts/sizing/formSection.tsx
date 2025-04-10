@@ -239,6 +239,7 @@ export default function FormSection(props: {
       withScalar: form.widthScalar,
       scalarAvg: form.scalarData.averageNum,
       mode: currentMode,
+      loadingMemory: memory,
     });
 
     updateCalculatedResult({

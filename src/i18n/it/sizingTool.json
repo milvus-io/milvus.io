@@ -27,7 +27,8 @@
     "standalone": "Standalone",
     "standaloneDesc": "Adatto per piccola e media scala.",
     "cluster": "Distribuito",
-    "clusterDesc": "Adatto per grande scala."
+    "clusterDesc": "Adatto per grande scala.",
+    "segmentTooltip": "datacoord.segment.maxSize è un importante parametro di configurazione della memorizzazione in Milvus. Definisce la dimensione di un singolo segmento, che è l'unità fisica di archiviazione di Milvus. L'aumento di questo valore può migliorare le prestazioni delle query, ma consuma anche più risorse. <0>Per saperne di più.</0>"
   },
   "overview": {
     "title": "Requisiti di Risorse",

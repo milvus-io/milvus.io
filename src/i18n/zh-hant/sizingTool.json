@@ -27,7 +27,8 @@
     "standalone": "獨立",
     "standaloneDesc": "適合小到中等規模。",
     "cluster": "分佈式",
-    "clusterDesc": "適合大規模。"
+    "clusterDesc": "適合大規模。",
+    "segmentTooltip": "datacoord.segment.maxSize 是 Milvus 中一個重要的儲存配置參數。它定義了單一區段的大小，也就是 Milvus 中的實體儲存單位。增加此值可提高查詢效能，但也會消耗更多的資源。<0>檢視更多。</0>"
   },
   "overview": {
     "title": "資源需求",

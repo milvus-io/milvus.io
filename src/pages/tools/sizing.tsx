@@ -153,7 +153,14 @@ export default function SizingTool(props: Props) {
             classes.sizingToolContainer
           )}
         >
-          <h1 className={classes.title}>{t('title')}</h1>
+          <h1 className={classes.title}>
+            <a
+              href="https://zilliz.com/blog/demystify-milvus-sizing-tool"
+              target="_blank"
+            >
+              {t('title')}
+            </a>
+          </h1>
           <p className={classes.desc}>{t('content')}</p>
 
           <div className={classes.contentContainer}>

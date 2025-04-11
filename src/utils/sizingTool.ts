@@ -348,15 +348,34 @@ export const dependencyCalculator = (params: {
   mode: ModeEnum;
   withScalar: boolean;
   scalarAvg: number;
+  loadingMemory: number;
 }): DependencyConfigType => {
-  const { num, d, mode, scalarAvg, withScalar } = params;
+  const { num, d, mode, scalarAvg, withScalar, loadingMemory } = params;
+  const MINIMUM_MINIO_PVC_SIZE = 30; //GB
+  const MINIMUM_PULSAR_LEDGERS = 20; //GB
+  const MAXIMUM_PULSAR_JOURNAL = 50; //GB
 
+  // unit: bytes
   const rawDataSize = rawDataSizeCalculator({
     num,
     d,
     withScalar,
     scalarAvg,
   });
+
+  const minioPvc = Math.max(
+    Math.ceil((rawDataSize + loadingMemory) / 1024 / 1024 / 1024),
+    MINIMUM_MINIO_PVC_SIZE
+  ); // GB
+
+  const pulsarLedgers = Math.max(
+    Math.ceil(rawDataSize / 1024 / 1024 / 1024),
+    MINIMUM_PULSAR_LEDGERS
+  ); // GB
+
+  const pulsarJournal = Math.min(pulsarLedgers * 0.5, MAXIMUM_PULSAR_JOURNAL); // GB
+
+  const kafkaBrokerPvc = pulsarLedgers;
 
   let etcdBaseConfig = {
     cpu: 0,
@@ -421,14 +440,13 @@ export const dependencyCalculator = (params: {
       minioBaseConfig = {
         cpu: 1,
         memory: 4,
-        pvc: 20,
+        pvc: minioPvc,
         count: 1,
       };
 
       if (rawDataSize >= $1M768D) {
         etcdBaseConfig.memory = 2;
         minioBaseConfig.memory = 8;
-        minioBaseConfig.pvc = 120;
       }
 
       return {
@@ -447,7 +465,7 @@ export const dependencyCalculator = (params: {
       minioBaseConfig = {
         cpu: 1,
         memory: 8,
-        pvc: 30,
+        pvc: minioPvc,
         count: 4,
       };
 
@@ -456,8 +474,8 @@ export const dependencyCalculator = (params: {
           cpu: 1,
           memory: 8,
           count: 3,
-          journal: 30,
-          ledgers: 40,
+          journal: pulsarLedgers,
+          ledgers: pulsarJournal,
         },
         broker: {
           cpu: 1,
@@ -482,7 +500,7 @@ export const dependencyCalculator = (params: {
           cpu: 2,
           memory: 8,
           count: 3,
-          pvc: 100,
+          pvc: kafkaBrokerPvc,
         },
         zookeeper: {
           cpu: 0.5,
@@ -496,7 +514,7 @@ export const dependencyCalculator = (params: {
         minioBaseConfig = {
           cpu: 1,
           memory: 8,
-          pvc: 300,
+          pvc: minioPvc,
           count: 4,
         };
         pulsarBaseConfig = {
@@ -504,8 +522,8 @@ export const dependencyCalculator = (params: {
             cpu: 1,
             memory: 8,
             count: 3,
-            journal: 50,
-            ledgers: 400,
+            journal: pulsarLedgers,
+            ledgers: pulsarJournal,
           },
           broker: {
             cpu: 1,
@@ -530,7 +548,7 @@ export const dependencyCalculator = (params: {
             cpu: 2,
             memory: 8,
             count: 3,
-            pvc: 400,
+            pvc: kafkaBrokerPvc,
           },
           zookeeper: {
             cpu: 0.5,
@@ -550,7 +568,7 @@ export const dependencyCalculator = (params: {
         minioBaseConfig = {
           cpu: 1,
           memory: 8,
-          pvc: 3000,
+          pvc: minioPvc,
           count: 4,
         };
 
@@ -559,8 +577,8 @@ export const dependencyCalculator = (params: {
             cpu: 2,
             memory: 16,
             count: 3,
-            journal: 100,
-            ledgers: 4000,
+            journal: pulsarLedgers,
+            ledgers: pulsarJournal,
           },
           broker: {
             cpu: 2,
@@ -585,7 +603,7 @@ export const dependencyCalculator = (params: {
             cpu: 4,
             memory: 16,
             count: 3,
-            pvc: 4000,
+            pvc: kafkaBrokerPvc,
           },
           zookeeper: {
             cpu: 0.5,

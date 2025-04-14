@@ -373,7 +373,10 @@ export const dependencyCalculator = (params: {
     MINIMUM_PULSAR_LEDGERS
   ); // GB
 
-  const pulsarJournal = Math.min(pulsarLedgers * 0.5, MAXIMUM_PULSAR_JOURNAL); // GB
+  const pulsarJournal = Math.min(
+    Math.ceil(rawDataSize / 1024 / 1024 / 1024) * 0.5,
+    MAXIMUM_PULSAR_JOURNAL
+  ); // GB
 
   const kafkaBrokerPvc = pulsarLedgers;
 
@@ -474,8 +477,8 @@ export const dependencyCalculator = (params: {
           cpu: 1,
           memory: 8,
           count: 3,
-          journal: pulsarLedgers,
-          ledgers: pulsarJournal,
+          journal: pulsarJournal,
+          ledgers: pulsarLedgers,
         },
         broker: {
           cpu: 1,
@@ -522,8 +525,8 @@ export const dependencyCalculator = (params: {
             cpu: 1,
             memory: 8,
             count: 3,
-            journal: pulsarLedgers,
-            ledgers: pulsarJournal,
+            journal: pulsarJournal,
+            ledgers: pulsarLedgers,
           },
           broker: {
             cpu: 1,
@@ -577,8 +580,8 @@ export const dependencyCalculator = (params: {
             cpu: 2,
             memory: 16,
             count: 3,
-            journal: pulsarLedgers,
-            ledgers: pulsarJournal,
+            journal: pulsarJournal,
+            ledgers: pulsarLedgers,
           },
           broker: {
             cpu: 2,

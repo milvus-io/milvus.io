@@ -14,7 +14,7 @@ body:has(.lock-scroll) {
 }
 
 html:has(.scroll-padding) {
-  scroll-padding-top: 74px;
+  scroll-padding-top: 108px;
 }
 
 .DocSearch.DocSearch-Container {

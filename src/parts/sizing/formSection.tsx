@@ -239,6 +239,7 @@ export default function FormSection(props: {
       withScalar: form.widthScalar,
       scalarAvg: form.scalarData.averageNum,
       mode: currentMode,
+      loadingMemory: memory,
     });
 
     updateCalculatedResult({
@@ -382,8 +383,33 @@ export default function FormSection(props: {
       </div>
       <div className={clsx(classes.singlePart, 'pb-[24px]')}>
         <div className="mb-[24px]">
-          <h4 className="text-[14px] font-[600] leading-[22px] mb-[8px]">
-            {t('form.segmentSize')}
+          <h4 className="">
+            <TooltipProvider>
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger
+                  className={clsx(
+                    'text-[14px] font-[600] leading-[22px] mb-[8px]',
+                    classes.tooltipTrigger
+                  )}
+                >
+                  {t('form.segmentSize')}
+                </TooltipTrigger>
+                <TooltipContent className="w-[280px]">
+                  <Trans
+                    t={t}
+                    i18nKey="form.segmentTooltip"
+                    components={[
+                      <a
+                        href="/docs/multi-storage-backup-and-restore.md"
+                        key="backup-restore"
+                        className={classes.tooltipLink}
+                      ></a>,
+                    ]}
+                  />
+                  <TooltipArrow />
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </h4>
           <Select
             value={form.segmentSize}

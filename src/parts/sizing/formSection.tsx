@@ -400,7 +400,7 @@ export default function FormSection(props: {
                     i18nKey="form.segmentTooltip"
                     components={[
                       <a
-                        href="/docs/multi-storage-backup-and-restore.md"
+                        href="/docs/configure_datacoord.md#dataCoordsegmentmaxSize"
                         key="backup-restore"
                         className={classes.tooltipLink}
                       ></a>,

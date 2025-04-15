@@ -612,7 +612,7 @@ export const dependencyCalculator = (params: {
             cpu: 0.5,
             memory: 4,
             count: 3,
-            pvc: 100,
+            pvc: 50,
           },
         };
       }

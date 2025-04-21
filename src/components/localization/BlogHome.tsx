@@ -163,6 +163,7 @@ export const BlogHome: React.FC<Props> = props => {
 
   const filteredBlogs = useMemo(() => {
     return blogs.all.filter((b, i) => {
+      const { author = '', title = '' } = b;
       const isMatchTag =
         !filter[TAG_QUERY_KEY] ||
         filter[TAG_QUERY_KEY] === DEFAULT_TAG ||
@@ -170,7 +171,10 @@ export const BlogHome: React.FC<Props> = props => {
 
       const isMatchSearch =
         !filter[SEARCH_QUERY_KEY] ||
-        b.title
+        title
+          .toLowerCase()
+          .includes(filter[SEARCH_QUERY_KEY].trim().toLowerCase()) ||
+        author
           .toLowerCase()
           .includes(filter[SEARCH_QUERY_KEY].trim().toLowerCase());
 

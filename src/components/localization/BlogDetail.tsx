@@ -35,6 +35,8 @@ export function BlogDetail(props) {
     anchorList,
     codeList,
     moreBlogs,
+    meta_title,
+    meta_keywords = 'vector databases, milvus, open-source vector database, vector search',
   } = props;
   const router = useRouter();
   const docContainer = useRef(null);
@@ -93,7 +95,7 @@ export function BlogDetail(props) {
     // eslint-disable-next-line
   }, [id]);
 
-  const metaTitle = `${title} - Milvus Blog`;
+  const metaTitle = `${meta_title || title} - Milvus Blog`;
   const formattedDesc = desc ? desc.replaceAll(/\"/g, '\\"') : '';
 
   const ldJson = `{"@context": "http://schema.org", "@id": "${shareUrl}", "@type": "Article", "headline": "${title}", "description": "${formattedDesc}", "datePublished": "${new Date(
@@ -113,6 +115,7 @@ export function BlogDetail(props) {
           <meta property="og:description" content={desc} />
           <meta property="og:url" content={shareUrl} />
           <meta property="og:image" content={`https://${cover}`} />
+          <meta name="keywords" content={meta_keywords} />
           <link
             rel="stylesheet"
             href="https://assets.zilliz.com/katex/katex.min.css"

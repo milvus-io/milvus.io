@@ -154,6 +154,12 @@ export default function FaqDetail(props: {
                     handelOpenDialog={() => {
                       return;
                     }}
+                    classes={{
+                      root: classes.demoCardRoot,
+                      name: classes.demoCardName,
+                      desc: classes.demoCardDesc,
+                      button: classes.demoCardButton,
+                    }}
                   />
                 </div>
               )}

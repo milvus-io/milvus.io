@@ -4,6 +4,7 @@ import VideoPlayer from '../videoPlayer';
 import InfoSubmitter from '../infoSubmitter';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '@/components/customButton';
+import clsx from 'clsx';
 
 const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 
@@ -16,6 +17,13 @@ const DemoCard: React.FC<{
   name: string;
   desc: string;
   handelOpenDialog: (content: JSX.Element, title: string) => void;
+  classes?: {
+    root?: string;
+    name?: string;
+    desc?: string;
+    cover?: string;
+    button?: string;
+  };
 }> = ({
   href,
   videoSrc,
@@ -25,8 +33,16 @@ const DemoCard: React.FC<{
   handelOpenDialog,
   renderButton1,
   renderButton2,
+  classes: customClasses,
 }) => {
   const { t } = useTranslation('demo');
+  const {
+    root,
+    name: nameClass,
+    desc: descClass,
+    cover: coverClass,
+    button: buttonClass,
+  } = customClasses || {};
 
   const handleWatchVideo = () => {
     const { innerWidth } = window;
@@ -43,17 +59,17 @@ const DemoCard: React.FC<{
   };
 
   return (
-    <div className={styles.demoCard}>
-      <div className={styles.coverWrapper}>
+    <div className={clsx(styles.demoCard, root)}>
+      <div className={clsx(styles.coverWrapper, coverClass)}>
         <img src={cover} alt={name} />
       </div>
       <div className={styles.contentWrapper}>
-        <h3>{name}</h3>
-        <p>{desc}</p>
+        <h3 className={nameClass}>{name}</h3>
+        <p className={descClass}>{desc}</p>
         <div className={styles.btnGroup}>
           {href && (
             <CustomButton
-              className={styles.tryBtn}
+              className={clsx(styles.tryBtn, buttonClass)}
               variant="outlined"
               href={href}
             >
@@ -63,7 +79,7 @@ const DemoCard: React.FC<{
 
           {videoSrc && (
             <CustomButton
-              className={styles.watchBtn}
+              className={clsx(styles.watchBtn, buttonClass)}
               variant="outlined"
               onClick={handleWatchVideo}
               endIcon={

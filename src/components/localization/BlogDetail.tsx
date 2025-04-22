@@ -161,6 +161,7 @@ export function BlogDetail(props) {
                 className={clsx(
                   'doc-style',
                   'scroll-padding',
+                  'blog-style',
                   styles.articleContainer
                 )}
                 ref={docContainer}

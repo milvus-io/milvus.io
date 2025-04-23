@@ -38,7 +38,7 @@
     "@radix-ui/react-slot": "^1.2.0",
     "@radix-ui/react-switch": "^1.1.4",
     "@radix-ui/react-tooltip": "^1.2.0",
-    "@zilliz/toolkit": "^0.2.2",
+    "@zilliz/toolkit": "^0.2.3",
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^1.2.1",

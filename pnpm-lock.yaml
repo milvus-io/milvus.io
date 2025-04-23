@@ -75,8 +75,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(@types/react@18.3.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@zilliz/toolkit':
-        specifier: ^0.2.2
-        version: 0.2.2
+        specifier: ^0.2.3
+        version: 0.2.3
       axios:
         specifier: ^1.8.4
         version: 1.8.4
@@ -2051,8 +2051,8 @@ packages:
   '@zag-js/visually-hidden@0.20.0':
     resolution: {integrity: sha512-TrAoiymPNoBgx1f9pOyaM6j0xlxBgGDX209WZvphJDg4616S8KICUSqmC2u0c6gtahkypxGdYDfyj6I83hVuzQ==}
 
-  '@zilliz/toolkit@0.2.2':
-    resolution: {integrity: sha512-liktpjC5GJZOb3SAkmOgXIjD4/PhM2+s+9zvJ5hEaY/XJX23zBmlRrNUUTNW4RnWoyRCQy+yjTvvBWuL+4E3Hg==}
+  '@zilliz/toolkit@0.2.3':
+    resolution: {integrity: sha512-706FgH+O2vo7W3sGdi3WGUusYmYkselttzQ7ySj3t/49s80JLFE2m6eOxwatiRsMqJHsz/Ns2YU3T+e+Ls1M6g==}
 
   acorn-import-assertions@1.9.0:
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
@@ -7860,7 +7860,7 @@ snapshots:
 
   '@zag-js/visually-hidden@0.20.0': {}
 
-  '@zilliz/toolkit@0.2.2': {}
+  '@zilliz/toolkit@0.2.3': {}
 
   acorn-import-assertions@1.9.0(acorn@8.14.1):
     dependencies:

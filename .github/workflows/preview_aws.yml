@@ -53,6 +53,7 @@ jobs:
       - name: update submodules from preview branch
         run: |
           git submodule init
+          git submodule set-branch --branch preview -- src/docs
           git submodule update --remote
 
       - name: Generate docker image tag name

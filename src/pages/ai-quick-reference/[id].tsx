@@ -189,6 +189,10 @@ export default function FaqDetail(props: {
                   )}
                 </div>
               </div>
+
+              <p className="text-transparent text-[12px] mt-[24px]">
+                {t('faq:announcement')}
+              </p>
             </div>
 
             <div className={styles.anchorsContainer}>

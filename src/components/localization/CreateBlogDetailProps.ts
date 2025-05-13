@@ -14,21 +14,28 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
 
   const getBlogDetailStaticProps = async ({ params }) => {
     const { id } = params;
+
     const allData = blogUtils.getAllData(lang);
-    const { content, tags, metaData, ...rest } = allData.find(
-      v => v.id === id
-    ) || {
+    const enData = blogUtils.getAllData(LanguageEnum.ENGLISH);
+
+    const langData = allData.find(v => v.id === id);
+    const fallbackData = enData.find(v => v.id === id);
+    const noTranslationData = {
       tags: [],
       metaData: {},
       title: id,
       content: 'Blog Translation Not Provided.',
     };
 
+    const sourceData = langData || fallbackData || noTranslationData;
+
+    const { content, tags, metaData, ...rest } = sourceData;
+
     const {
       tree: newHtml,
       codeList = [],
       anchorList = [],
-    } = lang === LanguageEnum.ENGLISH
+    } = sourceData === langData || sourceData === fallbackData
       ? markdownToHtml(content, {
           showAnchor: true,
           version: 'blog',
@@ -36,7 +43,7 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
         })
       : { ...metaData, tree: content };
 
-    const moreBlogs = allData
+      const moreBlogs = allData
       .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
       .slice(0, 4);
 

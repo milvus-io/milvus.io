@@ -314,7 +314,7 @@ export default function MobileHeader(props: {
               onChange={onLocaleChange}
               disabled={disabled}
               disabledLanguages={disabledLanguages}
-              hiddenSelectValue={true}
+              hiddenSelectValue={false}
             />
           )}
           <button

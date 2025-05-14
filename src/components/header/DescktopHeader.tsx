@@ -205,7 +205,7 @@ export default function DesktopHeader(props: Props) {
               onChange={onLocaleChange}
               disabled={disabled}
               disabledLanguages={disabledLanguages}
-              hiddenSelectValue={true}
+              hiddenSelectValue={false}
             />
           )}
           <a

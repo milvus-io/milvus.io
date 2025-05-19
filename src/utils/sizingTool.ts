@@ -733,6 +733,8 @@ export const helmYmlGenerator: (
     proxy: NodesValueType;
     mixCoord: NodesValueType;
     indexNode: NodesValueType;
+    queryNode: NodesValueType;
+    dataNode: NodesValueType;
     etcdData: NodesValueType & {
       pvc: number;
     };
@@ -745,7 +747,17 @@ export const helmYmlGenerator: (
   apacheType: DependencyComponentEnum,
   mode: ModeEnum
 ) => any = (
-  { proxy, mixCoord, indexNode, etcdData, minioData, pulsarData, kafkaData },
+  {
+    proxy,
+    mixCoord,
+    indexNode,
+    queryNode,
+    dataNode,
+    etcdData,
+    minioData,
+    pulsarData,
+    kafkaData,
+  },
   apacheType,
   mode
 ) => {
@@ -753,7 +765,7 @@ export const helmYmlGenerator: (
     mode === ModeEnum.Standalone
       ? ''
       : `
-pulsar:
+pulsarv3:
   enabled: true
   proxy:
     resources:
@@ -803,7 +815,7 @@ pulsar:
     mode === ModeEnum.Standalone
       ? ''
       : `
-pulsar:
+pulsarv3:
   enabled: false
 kafka:
   enabled: true
@@ -849,6 +861,18 @@ indexNode:
     limits:
       cpu: ${indexNode.cpu}
       memory: ${indexNode.memory}Gi
+dataNode:
+  replicas: ${dataNode.count}
+  resources:
+    limits:
+      cpu: ${dataNode.cpu}
+      memory: ${dataNode.memory}Gi
+queryNode:
+  replicas: ${queryNode.count}
+  resources:
+    limits:
+      cpu: ${queryNode.cpu}
+      memory: ${queryNode.memory}Gi
 etcd:
   autoCompactionMode: revision
   autoCompactionRetention: "1000"
@@ -894,6 +918,8 @@ export const operatorYmlGenerator: (
     proxy: NodesValueType;
     mixCoord: NodesValueType;
     indexNode: NodesValueType;
+    queryNode: NodesValueType;
+    dataNode: NodesValueType;
     etcdData: NodesValueType & {
       pvc: number;
     };
@@ -906,7 +932,17 @@ export const operatorYmlGenerator: (
   apacheType: DependencyComponentEnum,
   mode: ModeEnum
 ) => string = (
-  { mixCoord, proxy, indexNode, etcdData, minioData, pulsarData, kafkaData },
+  {
+    mixCoord,
+    proxy,
+    indexNode,
+    queryNode,
+    dataNode,
+    etcdData,
+    minioData,
+    pulsarData,
+    kafkaData,
+  },
   apacheType,
   mode
 ) => {
@@ -914,7 +950,7 @@ export const operatorYmlGenerator: (
     mode === ModeEnum.Standalone
       ? ''
       : `
-    pulsar:
+    pulsarv3:
       inCluster:
         values:
           proxy:
@@ -1018,6 +1054,18 @@ spec:
         limits:
           cpu: ${proxy.cpu}
           memory: ${proxy.memory}Gi
+    queryNode:
+      replicas: ${queryNode.count}
+      resources:
+        limits:
+          cpu: ${queryNode.cpu}
+          memory: ${queryNode.memory}Gi
+    dataNode:
+      replicas: ${dataNode.count}
+      resources:
+        limits:
+          cpu: ${dataNode.cpu}
+          memory: ${dataNode.memory}Gi
   config: {}
   dependencies:
     etcd:

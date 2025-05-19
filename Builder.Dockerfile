@@ -29,7 +29,6 @@ COPY scripts ./scripts
 COPY next.config.js next-env.d.ts sitemap.config.js ./
 COPY tsconfig.json typings.d.ts ./
 COPY .prettierrc tailwind.config.js postcss.config.js components.json ./
-COPY llms.txt ./llms.txt
 RUN pnpm build
 
 # => Run container

@@ -149,6 +149,8 @@ export default function ResultSection(props: {
         proxy,
         mixCoord,
         indexNode,
+        queryNode,
+        dataNode,
         etcdData: dependencyConfig.etcd,
         minioData: dependencyConfig.minio,
         pulsarData: dependencyConfig.pulsar,

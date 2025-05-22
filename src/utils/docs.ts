@@ -73,21 +73,23 @@ export const generateDocVersionInfo = (params?: {
   const { versionNum: minVersionNum } =
     convertVersionStringToVersionNum(minVersion);
 
+  const releaseInfoPath = join(BASE_DOC_DIR, 'version.json');
+  const releaseNote = JSON.parse(fs.readFileSync(releaseInfoPath, 'utf-8'));
+
+  const { version: releaseVersion, released } = releaseNote;
+
   const allVersions = folders
     .filter(folder => VERSION_REG.test(folder))
+    .filter(folder => folder <= releaseVersion)
     .map(folder => {
       const version = convertVersionStringToVersionNum(folder);
       return version;
     })
     .sort((a, b) => b.versionNum - a.versionNum);
 
-  const releaseInfoPath = join(BASE_DOC_DIR, 'version.json');
-  const releaseNote = JSON.parse(fs.readFileSync(releaseInfoPath, 'utf-8'));
-
   let usableVersions = allVersions.filter(
     v => v.versionNum >= minVersionNum && !IGNORE_VERSIONS.includes(v.version)
   );
-  const { version: releaseVersion, released } = releaseNote;
 
   if (released === 'no') {
     usableVersions = usableVersions.filter(v => v.version !== releaseVersion);

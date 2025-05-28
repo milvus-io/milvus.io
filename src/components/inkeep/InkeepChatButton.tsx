@@ -1,7 +1,7 @@
-import { InkeepModalChat } from '@inkeep/cxkit-react';
+import { InkeepModalChat, InkeepChatButton } from '@inkeep/cxkit-react';
 import { useInkeepSettings } from '@/hooks/use-inkeep-settings';
 
-function InkeepChatButton() {
+export default function InkeepChatButtonContainer() {
   const { baseSettings, aiChatSettings, searchSettings, modalSettings } =
     useInkeepSettings({
       isOpen: false,
@@ -14,10 +14,5 @@ function InkeepChatButton() {
     searchSettings,
     modalSettings,
   };
-
-  return <InkeepModalChat {...chatButtonProps} />;
-}
-
-export default function InkeepChatButtonContainer() {
-  return <InkeepChatButton />;
+  return <InkeepChatButton {...chatButtonProps} />;
 }

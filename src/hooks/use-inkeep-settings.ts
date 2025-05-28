@@ -28,7 +28,7 @@ export const useInkeepSettings = ({
   onOpenChange,
 }: {
   isOpen: boolean;
-  onOpenChange: () => void;
+  onOpenChange: (param: boolean) => void;
 }): InkeepSharedSettings => {
   const baseSettings: InkeepBaseSettings = {
     apiKey: process.env.NEXT_PUBLIC_INKEEP_API_KEY,
@@ -39,8 +39,55 @@ export const useInkeepSettings = ({
       styles: [
         {
           key: 'custom-styles',
-          type: 'link',
-          value: '/inkeep/inkeep-overrides.css',
+          type: 'style',
+          value: `
+          .ikp-ai-chat-footer__footer {
+  align-items: center;
+}
+
+.ikp-tagline {
+  align-items: center;
+  position: relative;
+}
+
+.ikp-tagline > div {
+  display: none;
+}
+
+.ikp-tagline > a > div:before {
+  content: 'By';
+  font-weight: normal;
+}
+
+.ikp-tagline:after {
+  content: '';
+  margin-left: 1.35rem;
+  width: 54px;
+  height: 22px;
+  background: url('/inkeep/zilliz-grayscale.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ikp-tagline:before {
+  content: '&';
+  position: absolute;
+  right: 54px;
+  color: #889096;
+  margin-left: 0.35rem;
+  margin-right: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+.ikp-content-parser__text > code {
+  color: #fff !important;
+}
+
+          `,
         },
       ],
     },
@@ -49,9 +96,7 @@ export const useInkeepSettings = ({
   const modalSettings: InkeepModalSettings = useMemo(() => {
     return {
       isOpen: isOpen,
-      onOpenChange: () => {
-        console.log('open', open);
-      },
+      onOpenChange: onOpenChange,
     };
   }, [isOpen, onOpenChange]);
 
@@ -61,8 +106,7 @@ export const useInkeepSettings = ({
 
   const aiChatSettings: InkeepAIChatSettings = {
     chatSubjectName: 'Milvus',
-    aiAssistantAvatar:
-      'https://milvus.io/icons/icon-48x48.png?v=587ea7d315fa8ebc198a8c112e054ef6',
+    // aiAssistantAvatar: '/inkeep/milvus-icon-white.png',
     getHelpOptions: [
       {
         name: 'Discord',

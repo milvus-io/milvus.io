@@ -28,7 +28,7 @@ export const useInkeepSettings = ({
   onOpenChange,
 }: {
   isOpen: boolean;
-  onOpenChange: () => void;
+  onOpenChange: (param: boolean) => void;
 }): InkeepSharedSettings => {
   const baseSettings: InkeepBaseSettings = {
     apiKey: process.env.NEXT_PUBLIC_INKEEP_API_KEY,
@@ -49,9 +49,7 @@ export const useInkeepSettings = ({
   const modalSettings: InkeepModalSettings = useMemo(() => {
     return {
       isOpen: isOpen,
-      onOpenChange: () => {
-        console.log('open', open);
-      },
+      onOpenChange: onOpenChange,
     };
   }, [isOpen, onOpenChange]);
 
@@ -61,8 +59,7 @@ export const useInkeepSettings = ({
 
   const aiChatSettings: InkeepAIChatSettings = {
     chatSubjectName: 'Milvus',
-    aiAssistantAvatar:
-      'https://milvus.io/icons/icon-48x48.png?v=587ea7d315fa8ebc198a8c112e054ef6',
+    // aiAssistantAvatar: '/inkeep/milvus-icon-white.png',
     getHelpOptions: [
       {
         name: 'Discord',

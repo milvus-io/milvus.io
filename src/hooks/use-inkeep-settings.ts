@@ -5,7 +5,12 @@ import type {
   InkeepModalSettings,
   ToolFunction,
 } from '@inkeep/cxkit-react';
-import { salesSignalType, detectedSalesSignal } from '@/utils/inkeep';
+import {
+  answerConfidence,
+  provideAnswerConfidenceSchema,
+  salesSignalType,
+  detectedSalesSignal,
+} from '@/utils/inkeep';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { CONTACT_SALES_URL } from '@/consts/externalLinks';
 import { useMemo } from 'react';
@@ -91,6 +96,34 @@ export const useInkeepSettings = ({
       {
         type: 'function',
         function: {
+          name: 'provideAnswerConfidence',
+          description:
+            'Determine how confident the AI assistant was and whether or not to escalate to humans.',
+          parameters: zodToJsonSchema(provideAnswerConfidenceSchema),
+        },
+        renderMessageButtons: ({ args }) => {
+          const confidence = args.answerConfidence;
+          if (['not_confident', 'no_sources', 'other'].includes(confidence)) {
+            return [
+              {
+                label: 'Get Help',
+                icon: { builtIn: 'IoHelpBuoyOutline' },
+                action: {
+                  type: 'open_link',
+                  url: 'https://github.com/milvus-io/milvus/issues',
+                },
+              },
+            ];
+          }
+          return [];
+        },
+      } as ToolFunction<{
+        answerConfidence: string;
+        explanation: string;
+      }>,
+      {
+        type: 'function',
+        function: {
           name: 'detectSalesSignal',
           description:
             'Identify when users express interest in potentially purchasing a product.',
@@ -101,11 +134,11 @@ export const useInkeepSettings = ({
           if (args.type && validSalesSignalTypes.includes(args.type)) {
             return [
               {
-                label: 'Talk to sales',
+                label: 'Talk to Sales',
                 icon: { builtIn: 'LuCalendar' },
                 action: {
                   type: 'open_link',
-                  url: CONTACT_SALES_URL,
+                  url: `${CONTACT_SALES_URL}?contact_sales_traffic_source=milvusBot`,
                 },
               },
             ];

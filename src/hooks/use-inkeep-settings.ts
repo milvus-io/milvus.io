@@ -106,7 +106,7 @@ export const useInkeepSettings = ({
           if (['not_confident', 'no_sources', 'other'].includes(confidence)) {
             return [
               {
-                label: 'Get Help',
+                label: 'New Issue',
                 icon: { builtIn: 'IoHelpBuoyOutline' },
                 action: {
                   type: 'open_link',

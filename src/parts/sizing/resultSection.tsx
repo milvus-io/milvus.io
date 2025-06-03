@@ -42,6 +42,7 @@ import {
 } from '@/consts/sizing';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
 import { MilvusComponent } from './milvusComponent';
+import { CONTACT_SALES_URL } from '@/consts/externalLinks';
 
 enum InstallTypeEnum {
   Docker = 'docker',
@@ -195,12 +196,7 @@ export default function ResultSection(props: {
               <Trans
                 t={t}
                 i18nKey="setup.outOfRange"
-                components={[
-                  <a
-                    href="https://zilliz.com/contact-sales"
-                    key="contact-us"
-                  ></a>,
-                ]}
+                components={[<a href={CONTACT_SALES_URL} key="contact-us"></a>]}
               />
             }
           </p>

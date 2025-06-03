@@ -1,0 +1,28 @@
+@import url('./global.module.less');
+
+.inkeepChatButton {
+  .resetNativeButton();
+  .paragraph3();
+  display: flex;
+  position: fixed;
+  align-items: center;
+  gap: 8px;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  background-color: @color-primary;
+  padding: 12px 18px;
+  border-radius: 24px;
+  color: #fff;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  will-change: transform;
+
+  img {
+    width: 24px;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

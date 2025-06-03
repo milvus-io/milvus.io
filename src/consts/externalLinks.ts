@@ -30,3 +30,5 @@ export const DEMO_MULTIMODAL_SEARCH_URL =
 export const DEMO_HYBRID_SEARCH_URL = 'https://demos.milvus.io/hybrid-search/';
 
 export const ZILLIZ_OFFICIAL_WEBSITE = 'https://zilliz.com/';
+
+export const CONTACT_SALES_URL = 'https://zilliz.com/contact-sales';

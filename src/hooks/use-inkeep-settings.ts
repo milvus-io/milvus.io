@@ -86,6 +86,16 @@ export const useInkeepSettings = ({
           builtIn: 'FaGithub',
         },
       },
+      {
+        name: 'Contact Us',
+        action: {
+          type: 'open_link',
+          url: 'https://zilliz.com/contact-sales?contact_sales_traffic_source=milvusBot',
+        },
+        icon: {
+          builtIn: 'IoMail',
+        },
+      },
     ],
     exampleQuestions: [
       "What's new in Milvus 2.5?",
@@ -134,7 +144,7 @@ export const useInkeepSettings = ({
           if (args.type && validSalesSignalTypes.includes(args.type)) {
             return [
               {
-                label: 'Talk to Sales',
+                label: 'Talk to Us',
                 icon: { builtIn: 'LuCalendar' },
                 action: {
                   type: 'open_link',

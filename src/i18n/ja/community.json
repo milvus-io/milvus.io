@@ -1,6 +1,5 @@
 {
   "title": "コミュニティに参加",
-  "ctaLabel": "今すぐ参加",
   "officeHours": {
     "title": "Milvus Office Hoursで専門家の助けを得る",
     "content": "Zilliz、Milvusの専門家から製品展開のサポートを受けるために、無料の1対1セッションを予約してください。",
@@ -44,5 +43,7 @@
         "cta": "もっと動画"
       }
     }
-  }
+  },
+  "join": "今すぐ参加する",
+  "apply": "今すぐ応募してメリットを知る"
 }

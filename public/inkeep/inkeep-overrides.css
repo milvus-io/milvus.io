@@ -41,3 +41,55 @@
 .ikp-markdown-code {
   color: #fff !important;
 }
+
+.ikp-ai-chat-message-sources {
+  .ikp-ai-chat-message-sources__header {
+    color: #5d6d85;
+    margin-bottom: 8px;
+  }
+
+  .ikp-ai-chat-message-sources__list {
+    gap: 0px;
+
+    .ikp-ai-chat-message-source-item {
+      width: fit-content;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start;
+      align-items: center;
+      border: none;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      padding-right: 0px;
+      padding-left: 0px;
+      background-color: #fff;
+
+      &:hover {
+        background-color: #fff;
+      }
+
+      .ikp-ai-chat-message-source-item__breadcrumbs {
+        display: none;
+      }
+
+      .ikp-ai-chat-message-source-item__title {
+        font-size: 12px;
+        font-weight: 400;
+        color: #1d2939;
+      }
+
+      .ikp-ai-chat-message-source-item__tag {
+        display: none;
+      }
+
+      .ikp-ai-chat-message-source-item__indicator {
+        margin-left: 0px;
+        stroke: #1d2939;
+      }
+
+      .ikp-ai-chat-message-source-item__icon {
+        stroke: #1d2939;
+      }
+    }
+  }
+}

@@ -1,6 +1,5 @@
 {
   "title": "Bergabung dengan Komunitas",
-  "ctaLabel": "Bergabung sekarang",
   "officeHours": {
     "title": "Dapatkan Bantuan Ahli di Jam Kantor Milvus",
     "content": "Pesan sesi 1:1 gratis untuk mendapatkan bantuan dengan deployment produksi Anda dari Zilliz, ahli di Milvus.",
@@ -44,5 +43,7 @@
         "cta": "Lebih Banyak Video"
       }
     }
-  }
+  },
+  "join": "Bergabung sekarang",
+  "apply": "DAFTAR SEKARANG dan pelajari manfaatnya"
 }

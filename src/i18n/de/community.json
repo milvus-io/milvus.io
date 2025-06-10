@@ -1,6 +1,5 @@
 {
   "title": "Treten Sie der Community bei",
-  "ctaLabel": "Jetzt beitreten",
   "officeHours": {
     "title": "Erhalten Sie Expertenhilfe bei Milvus Office Hours",
     "content": "Buchen Sie eine kostenlose 1:1-Session, um Hilfe bei Ihrer Produktionsimplementierung von Zilliz, den Experten für Milvus, zu erhalten.",
@@ -44,5 +43,7 @@
         "cta": "Weitere Videos"
       }
     }
-  }
+  },
+  "join": "Jetzt beitreten",
+  "apply": "Bewerben Sie sich jetzt und erfahren Sie die Vorteile"
 }

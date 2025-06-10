@@ -1,6 +1,5 @@
 {
   "title": "Junte-se à Comunidade",
-  "ctaLabel": "Junte-se agora",
   "officeHours": {
     "title": "Obtenha Ajuda de Especialistas nas Sessões do Milvus",
     "content": "Agende uma sessão gratuita 1:1 para obter ajuda com sua implantação de produção da Zilliz, os especialistas em Milvus.",
@@ -44,5 +43,7 @@
         "cta": "Mais Vídeos"
       }
     }
-  }
+  },
+  "join": "Aderir agora",
+  "apply": "Candidate-se agora e conheça as vantagens"
 }

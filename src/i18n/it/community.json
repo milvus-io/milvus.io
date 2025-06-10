@@ -1,6 +1,5 @@
 {
   "title": "Unisciti alla Community",
-  "ctaLabel": "Unisciti ora",
   "officeHours": {
     "title": "Ottieni Aiuto dagli Esperti durante le Ore di Ufficio di Milvus",
     "content": "Prenota una sessione gratuita 1:1 per ottenere aiuto con la tua implementazione di produzione da Zilliz, gli esperti di Milvus.",
@@ -44,5 +43,7 @@
         "cta": "Altri Video"
       }
     }
-  }
+  },
+  "join": "Iscriviti ora",
+  "apply": "Candidatevi ora e scoprite i vantaggi"
 }

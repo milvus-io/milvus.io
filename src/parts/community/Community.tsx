@@ -26,31 +26,38 @@ export const Community: FC<Props> = (props: Props) => {
       label: 'GitHub',
       imgUrl: '/images/community/socialMedia/github.svg',
       href: 'https://github.com/milvus-io/milvus/discussions',
+      catLabel: t('join'),
     },
     {
       label: 'Discord',
       imgUrl: '/images/community/socialMedia/discord.svg',
       href: DISCORD_INVITE_URL,
-    },
-    {
-      label: 'Reddit',
-      imgUrl: '/images/community/socialMedia/reddit.svg',
-      href: 'https://www.reddit.com/r/vectordatabase/',
-    },
-    {
-      label: 'Youtube',
-      imgUrl: '/images/community/socialMedia/youtube.svg',
-      href: 'https://www.youtube.com/@MilvusVectorDatabase/playlists',
-    },
-    {
-      label: 'Twitter',
-      imgUrl: '/images/community/socialMedia/twitter.svg',
-      href: 'https://twitter.com/milvusio',
+      catLabel: t('join'),
     },
     {
       label: 'LinkedIn',
       imgUrl: '/images/community/socialMedia/linkedin.svg',
       href: 'https://www.linkedin.com/company/the-milvus-project/',
+      catLabel: t('join'),
+    },
+
+    {
+      label: 'Twitter',
+      imgUrl: '/images/community/socialMedia/twitter.svg',
+      href: 'https://twitter.com/milvusio',
+      catLabel: t('join'),
+    },
+    {
+      label: 'Youtube',
+      imgUrl: '/images/community/socialMedia/youtube.svg',
+      href: 'https://www.youtube.com/@MilvusVectorDatabase/playlists',
+      catLabel: t('join'),
+    },
+    {
+      label: 'Ambassador',
+      imgUrl: '/images/community/socialMedia/milvus-ambassador.svg',
+      href: 'https://docs.google.com/forms/d/e/1FAIpQLSfkVTYObayOaND8M1ci9eF_YWvoKDb-xQjLJYZ-LhbCdLAt2Q/viewform',
+      catLabel: t('apply'),
     },
   ];
 
@@ -137,7 +144,7 @@ export const Community: FC<Props> = (props: Props) => {
                     href={v.href}
                     className={classes.linkBtn}
                   >
-                    {t('ctaLabel')}
+                    {v.catLabel}
                     <RightTopArrowIcon />
                   </CustomButton>
                 </li>

@@ -196,14 +196,11 @@ async function generateDocs() {
       const dir = dirs[i];
       const lang = langs[i];
 
-      if (fs.existsSync(dir)) {
-        throw new Error(
-          `Lang: ${lang}, version: ${version}: docs already exists!`
-        );
+      if (!fs.existsSync(dir)) {
+        // Create dir
+        fs.mkdirSync(dir, { recursive: true });
       }
 
-      // Create dir
-      fs.mkdirSync(dir, { recursive: true });
       // Create index.tsx
       const indexTemplate = getIndexTemplate(version, lang);
       fs.writeFileSync(path.join(dir, 'index.tsx'), indexTemplate);

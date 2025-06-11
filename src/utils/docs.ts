@@ -15,7 +15,7 @@ import { LanguageEnum } from '@/types/localization';
 const matter = require('gray-matter');
 
 export const BASE_DOC_DIR = join(process.cwd(), 'src/docs');
-export const DOCS_MINIMUM_VERSION = 'v2.0.1';
+export const DOCS_MINIMUM_VERSION = 'v2.2.x';
 const IGNORE_VERSIONS = ['v2.3.0-beta'];
 export const IGNORE_FILES = [
   'README.md',

@@ -23,7 +23,7 @@
     grid-gap: 30px;
     margin-bottom: 30px;
 
-    @media @tablet {
+    @media (max-width: 1240px) {
       grid-template-columns: repeat(2, 1fr);
     }
 
@@ -69,7 +69,6 @@
     background: #030c34;
     border-radius: 8px;
     overflow: hidden;
-    height: 220px;
 
     @media @tablet, @phone {
       flex-direction: column;
@@ -80,7 +79,8 @@
 
     .imgWrapper {
       flex: 0 0 528px;
-      height: 100%;
+      min-height: 220px;
+      height: auto;
       background: url('/images/community/office-hour.svg') no-repeat center
         center;
 
@@ -93,8 +93,8 @@
 
     .contentWrapper {
       flex: 1;
-
       color: #fff;
+      padding: 24px 32px 24px 0;
 
       @media @tablet, @phone {
         flex: auto;

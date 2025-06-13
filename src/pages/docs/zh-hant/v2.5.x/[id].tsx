@@ -7,16 +7,16 @@ export default DocDetailPage;
 
 export const getStaticPaths = () => {
   const { getPageStaticPaths } = createDocDetailProps(
-    LanguageEnum.ENGLISH,
-    'v2.0.x'
+    LanguageEnum.CHINESE_TW,
+    'v2.5.x'
   );
   return getPageStaticPaths();
 };
 
 export const getStaticProps: GetStaticProps = async context => {
   const { getPageStaticProps } = createDocDetailProps(
-    LanguageEnum.ENGLISH,
-    'v2.0.x'
+    LanguageEnum.CHINESE_TW,
+    'v2.5.x'
   );
   return getPageStaticProps(context);
 };

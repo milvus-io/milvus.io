@@ -98,9 +98,11 @@ export const useInkeepSettings = ({
       },
     ],
     exampleQuestions: [
-      "What's new in Milvus 2.5?",
-      'How to use full text search in Milvus?',
-      'How do I perform hybrid search and how does it work?',
+      "What's new in Milvus 2.6?",
+      'Architecture changes',
+      'Analyzers and Tokenizers',
+      'Embedding & Reranking Functions',
+      'Pharse Match',
     ],
     getTools: () => [
       {

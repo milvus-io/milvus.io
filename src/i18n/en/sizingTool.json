@@ -101,6 +101,6 @@
     "adv2": "Setting up a Milvus cluster for performance testing or benchmarking? Refer to <0>VDB Bench</0> for detailed guidance.",
     "tip1": "How to run Milvus with Docker Compose?",
     "tip2": "How to run Milvus with Helm Chart?",
-    "tip3": "HHow to run Milvus with Milvus Operator?"
+    "tip3": "How to run Milvus with Milvus Operator?"
   }
 }

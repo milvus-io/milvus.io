@@ -134,7 +134,7 @@ export const BlogHome: React.FC<Props> = props => {
 
       if (shouldSetRecommend) {
         acc.recommend = cur;
-        acc.all = props.blogList.filter(v => v.id !== cur.id);
+        // acc.all = props.blogList.filter(v => v.id !== cur.id);
       }
       return acc;
     }, defaultData);

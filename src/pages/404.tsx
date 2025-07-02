@@ -135,14 +135,18 @@ export const getStaticProps = async () => {
   const blogList = [
     list.find(
       v =>
-        v.frontMatter.id ===
-        'milvus-2-4-nvidia-cagra-gpu-index-multivector-search-sparse-vector-support.md'
+        v.frontMatter.id.trim() ===
+        'introduce-milvus-2-6-built-for-scale-designed-to-reduce-costs.md'
     ),
-    list.find(v => v.frontMatter.id === 'introducing-milvus-lite.md'),
     list.find(
       v =>
-        v.frontMatter.id ===
-        'introducing-pymilvus-integrations-with-embedding-models.md'
+        v.frontMatter.id.trim() ===
+        'journey-to-35k-github-stars-story-of-building-milvus-from-scratch.md'
+    ),
+    list.find(
+      v =>
+        v.frontMatter.id.trim() ===
+        'benchmarks-lie-vector-dbs-deserve-a-real-test.md'
     ),
   ];
 

@@ -31,7 +31,7 @@ import {
 } from '@/utils/sizingTool';
 import { DependencyComponent } from './dependencyComponent';
 import { Trans, useTranslation } from 'react-i18next';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import CustomButton from '@/components/customButton';
 import {
   helmCodeExample,
@@ -40,15 +40,17 @@ import {
   OPERATOR_CONFIG_FILE_NAME,
   dockerComposeExample,
 } from '@/consts/sizing';
-import { useCopyCode } from '@/hooks/enhanceCodeBlock';
 import { MilvusComponent } from './milvusComponent';
 import { CONTACT_SALES_URL } from '@/consts/externalLinks';
+import { checkIconTpl, copyIconTpl } from '@/components/icons';
 
 enum InstallTypeEnum {
   Docker = 'docker',
   Helm = 'helm',
   Operator = 'operator',
 }
+
+let timer: NodeJS.Timeout | null = null;
 
 export default function ResultSection(props: {
   className?: string;
@@ -173,7 +175,25 @@ export default function ResultSection(props: {
     downloadLink.click();
   };
 
-  useCopyCode([helmCodeExample, operatorCodeExample]);
+  const exampleCode = useMemo(() => {
+    return installInfo.options.find(v => v.value === installInfo.value)?.code;
+  }, [installInfo]);
+
+  const handleCopyCode = useCallback(() => {
+    if (timer) {
+      return;
+    }
+    navigator.clipboard.writeText(exampleCode);
+    const copyBtn = document.querySelector('.copy-code-btn');
+    if (copyBtn) {
+      copyBtn.innerHTML = checkIconTpl;
+    }
+    timer = setTimeout(() => {
+      copyBtn.innerHTML = copyIconTpl;
+      timer && clearTimeout(timer);
+      timer = null;
+    }, 3000);
+  }, [exampleCode]);
 
   useEffect(() => {
     const installOptions =
@@ -514,7 +534,11 @@ export default function ResultSection(props: {
           <code>
             {installInfo.options.find(v => v.value === installInfo.value)?.code}
           </code>
-          <button className={clsx('copy-code-btn', classes.copyBtn)}></button>
+          <button
+            className={clsx('copy-code-btn', classes.copyBtn)}
+            onClick={handleCopyCode}
+            dangerouslySetInnerHTML={{ __html: copyIconTpl }}
+          ></button>
         </pre>
 
         <a

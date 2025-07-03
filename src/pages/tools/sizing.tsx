@@ -17,6 +17,7 @@ import { InfoFilled } from '@/components/icons';
 import ZillizAdv from '@/parts/blogs/zillizAdv';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
+import { fetchMilvusReleases } from '@/http/milvus';
 
 const etcdBaseValue = {
   cpu: 0,
@@ -72,10 +73,11 @@ const kafkaBaseValue = {
 
 type Props = {
   locale: LanguageEnum;
+  latestTag: string;
 };
 
 export default function SizingTool(props: Props) {
-  const { locale = LanguageEnum.ENGLISH } = props;
+  const { locale = LanguageEnum.ENGLISH, latestTag } = props;
   const { t } = useTranslation('sizingTool', { lng: locale });
   const [calculatedResult, setCalculatedResult] = useState<ICalculateResult>({
     rawDataSize: 0,
@@ -171,6 +173,7 @@ export default function SizingTool(props: Props) {
             <ResultSection
               className={classes.rightSection}
               calculatedResult={calculatedResult}
+              latestMilvusTag={latestTag}
             />
           </div>
 
@@ -183,3 +186,12 @@ export default function SizingTool(props: Props) {
     </main>
   );
 }
+
+export const getStaticProps = async () => {
+  const latestTag = await fetchMilvusReleases();
+  return {
+    props: {
+      latestTag,
+    },
+  };
+};

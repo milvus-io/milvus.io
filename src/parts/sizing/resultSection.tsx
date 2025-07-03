@@ -55,9 +55,10 @@ let timer: NodeJS.Timeout | null = null;
 export default function ResultSection(props: {
   className?: string;
   calculatedResult: ICalculateResult;
+  latestMilvusTag: string;
 }) {
   const { t } = useTranslation('sizingTool');
-  const { className, calculatedResult } = props;
+  const { className, calculatedResult, latestMilvusTag } = props;
 
   const {
     rawDataSize,
@@ -116,7 +117,8 @@ export default function ResultSection(props: {
     {
       label: t('install.docker'),
       value: InstallTypeEnum.Docker,
-      code: dockerComposeExample,
+      code: `wget https://github.com/milvus-io/milvus/releases/download/${latestMilvusTag}/milvus-standalone-docker-compose.yml -O docker-compose.yml
+sudo docker compose up -d`,
       tip: t('install.tip1'),
       document: '/docs/install_standalone-docker-compose.md',
     },

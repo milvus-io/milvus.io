@@ -1,24 +1,47 @@
 @import (reference) '../../styles/global.module.less';
 
 .bannerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: @header-banner-height;
   padding: 10px 25px;
-  background-color: #e0f2fc;
+  background-color: #000;
   overflow: hidden;
-  max-height: 62px;
-  overflow: hidden;
+  color: #fff;
+
+  &:hover {
+    .bannerText {
+      text-decoration: underline;
+    }
+
+    .bannerButton {
+      background: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0.3) 100%
+        ),
+        linear-gradient(91deg, #d083ff 0.09%, var(--Blue-100, #00b3ff) 100.63%);
+    }
+  }
 
   .bannerText {
-    height: 100%;
-    .paragraph4-regular();
-    text-align: center;
-    color: #000;
+    flex-grow: 0;
+    flex-shrink: 1;
+    .paragraph3();
+  }
 
-    a {
-      color: @color-blue1;
-      margin-left: 4px;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+  .bannerButton {
+    flex: 0 0 124px;
+    color: #fff;
+    .paragraph4-bold();
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: linear-gradient(
+      91deg,
+      #d083ff 0.09%,
+      var(--Blue-100, #00b3ff) 100.63%
+    );
   }
 }

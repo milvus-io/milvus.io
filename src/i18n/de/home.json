@@ -136,10 +136,11 @@
   "productionSection": {
     "title": "Vertrauenswürdig für Produktionsworkloads"
   },
-  "banner": "🚀 Testen Sie Zilliz Cloud, die vollständig verwaltete Milvus, kostenlos – erleben Sie 10x schnellere Leistung! <0>Jetzt testen>></0>",
+  "banner": "🚀 Zilliz Cloud: vollständig verwaltetes Milvus - 10x schneller. Kein Ärger. Gebaut für KI.",
   "meta": {
     "title": "Milvus | Hochleistungs-Vektordatenbank, für Skalierung gebaut",
     "description": "Milvus ist eine Open-Source-Vektordatenbank, die für GenAI-Anwendungen entwickelt wurde. Installieren Sie sie mit pip, führen Sie Hochgeschwindigkeitssuchen durch und skalieren Sie auf zehn Milliarden Vektoren."
   },
-  "home": "Startseite"
+  "home": "Startseite",
+  "bannerButton": "Jetzt kostenlos testen →"
 }

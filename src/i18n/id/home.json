@@ -136,10 +136,11 @@
   "productionSection": {
     "title": "Dipercaya untuk beban kerja produksi"
   },
-  "banner": "🚀 Coba Zilliz Cloud, Milvus yang sepenuhnya terkelola, secara gratis—rasakan performa 10x lebih cepat! <0>Coba Sekarang>></0>",
+  "banner": "🚀 Zilliz Cloud: Milvus yang dikelola sepenuhnya - 10x lebih cepat. Tanpa kerumitan. Dibangun untuk AI.",
   "meta": {
     "title": "Milvus | Basis Data Vektor Berperforma Tinggi Dibangun untuk Skala",
     "description": "Milvus adalah basis data vektor sumber terbuka yang dibangun untuk aplikasi GenAI. Pasang dengan pip, lakukan pencarian berkecepatan tinggi, dan skalakan hingga puluhan miliar vektor."
   },
-  "home": "Beranda"
+  "home": "Beranda",
+  "bannerButton": "Coba Gratis Sekarang →"
 }

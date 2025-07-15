@@ -136,11 +136,11 @@
   "productionSection": {
     "title": "프로덕션 워크로드에서 신뢰받음"
   },
-  "banner": "🚀 Zilliz Cloud: 완전 관리형 Milvus - 10배 더 빠릅니다. 번거로움이 없습니다. AI를 위해 구축되었습니다.",
   "meta": {
     "title": "Milvus | 확장성을 위해 구축된 고성능 벡터 데이터베이스",
     "description": "Milvus는 GenAI 애플리케이션을 위해 구축된 오픈 소스 벡터 데이터베이스입니다. pip로 설치하고 고속 검색을 수행하며 수십억 개의 벡터로 확장합니다."
   },
   "home": "홈",
-  "bannerButton": "지금 무료 체험하기 →"
+  "bannerButton": "지금 무료 체험하기 →",
+  "bannerText": "🚀 Zilliz Cloud: 완전 관리형 Milvus - 10배 더 빠릅니다. 번거로움이 없습니다. AI를 위해 구축되었습니다."
 }

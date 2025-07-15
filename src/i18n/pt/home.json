@@ -136,11 +136,11 @@
   "productionSection": {
     "title": "Confiável para cargas de trabalho de produção"
   },
-  "banner": "Zilliz Cloud: Milvus totalmente gerido - 10x mais rápido. Sem complicações. Construído para IA.",
   "meta": {
     "title": "Milvus | Banco de dados vetorial de alto desempenho construído para escala",
     "description": "Milvus é um banco de dados vetorial de código aberto construído para aplicativos GenAI. Instale com pip, realize buscas de alta velocidade e escale para dezenas de bilhões de vetores."
   },
   "home": "Início",
-  "bannerButton": "Experimente grátis agora →"
+  "bannerButton": "Experimente grátis agora →",
+  "bannerText": "Zilliz Cloud: Milvus totalmente gerido - 10x mais rápido. Sem complicações. Construído para IA."
 }

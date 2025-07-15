@@ -136,11 +136,11 @@
   "productionSection": {
     "title": "本番ワークロードで信頼されています"
   },
-  "banner": "🚀 Zillizクラウド：フルマネージドMilvus - 10倍速い。手間いらず。AIのために構築。",
   "meta": {
     "title": "Milvus | スケールに最適化された高性能ベクトルデータベース",
     "description": "Milvus は GenAI アプリケーション向けに構築されたオープンソースのベクトルデータベースです。pip でインストールし、高速検索を実行し、数十億のベクトルにスケールします。"
   },
   "home": "ホーム",
-  "bannerButton": "今すぐ無料でお試しください。"
+  "bannerButton": "今すぐ無料でお試しください。",
+  "bannerText": "🚀 Zillizクラウド：フルマネージドMilvus - 10倍速い。手間いらず。AIのために構築。"
 }

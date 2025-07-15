@@ -15,7 +15,7 @@ export default function CloudBanner() {
       className={classes.bannerContainer}
       href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=top_banner&utm_content=${trackPath}`}
     >
-      <p className={classes.bannerText}>{t('banner')}</p>
+      <p className={classes.bannerText}>{t('bannerText')}</p>
       <button className={classes.bannerButton}>{t('bannerButton')}</button>
     </Link>
   );

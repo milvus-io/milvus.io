@@ -136,11 +136,11 @@
   "productionSection": {
     "title": "Fidato per carichi di lavoro di produzione"
   },
-  "banner": "🚀 Zilliz Cloud: Milvus completamente gestito - 10 volte più veloce. Zero problemi. Costruito per l'intelligenza artificiale.",
   "meta": {
     "title": "Milvus | Database vettoriale ad alte prestazioni costruito per la scalabilità",
     "description": "Milvus è un database vettoriale open-source costruito per applicazioni GenAI. Installa con pip, esegui ricerche ad alta velocità e scalare a decine di miliardi di vettori."
   },
   "home": "Casa",
-  "bannerButton": "Prova gratis ora →"
+  "bannerButton": "Prova gratis ora →",
+  "bannerText": "🚀 Zilliz Cloud: Milvus completamente gestito - 10 volte più veloce. Zero problemi. Costruito per l'intelligenza artificiale."
 }

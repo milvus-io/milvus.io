@@ -136,7 +136,7 @@
   "productionSection": {
     "title": "Trusted for production workloads"
   },
-  "banner": "🚀 Zilliz Cloud: fully managed Milvus — 10x faster. Zero hassle. Built for AI.",
+  "bannerText": "🚀 Zilliz Cloud: fully managed Milvus — 10x faster. Zero hassle. Built for AI.",
   "bannerButton": "Try Free Now →",
   "meta": {
     "title": "Milvus | High-Performance Vector Database Built for Scale",

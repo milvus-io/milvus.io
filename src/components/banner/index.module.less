@@ -37,7 +37,8 @@
   }
 
   .bannerButton {
-    flex: 0 0 126px;
+    flex-shrink: 0;
+    flex-grow: 0;
     color: #fff;
     .paragraph4-bold();
     padding: 4px 12px;
@@ -47,5 +48,10 @@
       #d083ff 0.09%,
       var(--Blue-100, #00b3ff) 100.63%
     );
+
+    @media @phone {
+      .paragraph6-regular();
+      transform: scale(0.9);
+    }
   }
 }

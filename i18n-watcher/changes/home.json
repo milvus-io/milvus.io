@@ -1,9 +1,10 @@
 {
   "added": {
+    "bannerText": "🚀 Zilliz Cloud: fully managed Milvus — 10x faster. Zero hassle. Built for AI.",
     "bannerButton": "Try Free Now →"
   },
-  "modified": {
-    "banner": "🚀 Zilliz Cloud: fully managed Milvus — 10x faster. Zero hassle. Built for AI."
-  },
-  "deleted": {}
+  "modified": {},
+  "deleted": {
+    "banner": "🚀 Try Zilliz Cloud, the fully managed Milvus, for free—experience 10x faster performance! <0>Try Now>></0>"
+  }
 }

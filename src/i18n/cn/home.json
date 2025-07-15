@@ -136,11 +136,11 @@
   "productionSection": {
     "title": "值得信赖的生产工作负载"
   },
-  "banner": "🚀 Zilliz 云：全面管理 Milvus - 速度快 10 倍。零烦恼。专为人工智能打造。",
   "meta": {
     "title": "Milvus | 高性能向量数据库，为规模而构建",
     "description": "Milvus 是一个为 GenAI 应用构建的开源向量数据库。使用 pip 安装，执行高速搜索，并扩展到数十亿个向量。"
   },
   "home": "首页",
-  "bannerButton": "立即免费试用 →"
+  "bannerButton": "立即免费试用 →",
+  "bannerText": "🚀 Zilliz 云：全面管理 Milvus - 速度快 10 倍。零烦恼。专为人工智能打造。"
 }

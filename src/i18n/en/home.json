@@ -136,7 +136,8 @@
   "productionSection": {
     "title": "Trusted for production workloads"
   },
-  "banner": "🚀 Try Zilliz Cloud, the fully managed Milvus, for free—experience 10x faster performance! <0>Try Now>></0>",
+  "banner": "🚀 Zilliz Cloud: fully managed Milvus — 10x faster. Zero hassle. Built for AI.",
+  "bannerButton": "Try Free Now →",
   "meta": {
     "title": "Milvus | High-Performance Vector Database Built for Scale",
     "description": "Milvus is an open-source vector database built for GenAI applications. Install with pip, perform high-speed searches, and scale to tens of billions of vectors."

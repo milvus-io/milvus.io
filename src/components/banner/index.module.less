@@ -5,10 +5,14 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: @header-banner-height;
+  min-height: @desktop-header-banner-height;
   padding: 10px 25px;
   background-color: #000;
   overflow: hidden;
+
+  @media @tablet {
+    min-height: @tablet-header-banner-height;
+  }
 
   .bannerText {
     flex-grow: 0;

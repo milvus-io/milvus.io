@@ -18,7 +18,6 @@ import SocialMedias from '../socialMedias';
 import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
-import { Divider } from '@mui/material';
 import { ZILLIZ_OFFICIAL_WEBSITE } from '@/consts/externalLinks';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
 
@@ -175,9 +174,9 @@ const Footer = (props: Props) => {
                     className="mx-[-4px]"
                   />,
                   <a
-                    href="https://zilliz.com/"
+                    href={ZILLIZ_OFFICIAL_WEBSITE}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noreferrer noopener"
                     className="text-black2 hover:underline"
                   ></a>,
                 ]}

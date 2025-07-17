@@ -9,8 +9,6 @@ export default function CloudBanner() {
   const { t } = useTranslation('home', { lng: locale });
   const trackPath = useUtmTrackPath();
 
-  const handleRegister = (e: React.MouseEvent<HTMLButtonElement>) => {};
-
   return (
     <a
       className={classes.bannerContainer}

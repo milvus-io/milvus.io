@@ -12,7 +12,8 @@ export const getGithubCommits = async (path: string, version: string) => {
 };
 
 export const getGithubStatics = async () => {
-  const auth = process.env.NEXT_PUBLIC_REPO_STATICS_KEY;
+  const auth =
+    process.env.REPO_STATICS_KEY || process.env.NEXT_PUBLIC_REPO_STATICS_KEY;
   const octokit = new Octokit({
     auth,
   });
@@ -32,7 +33,8 @@ export const getGithubStatics = async () => {
 };
 
 export const fetchMilvusReleases = async () => {
-  const auth = process.env.NEXT_PUBLIC_REPO_STATICS_KEY;
+  const auth =
+    process.env.REPO_STATICS_KEY || process.env.NEXT_PUBLIC_REPO_STATICS_KEY;
   const octokit = new Octokit({
     auth,
   });

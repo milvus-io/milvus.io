@@ -29,10 +29,11 @@
 @color-black4: #ececee;
 @color-black5: #9ca6b4;
 
-@header-banner-height: 52px;
+@desktop-header-banner-height: 52px;
+@tablet-header-banner-height: 60px;
 
-@header-height-desktop: calc(59px + 52px);
-@header-height-tablet: calc(59px + 52px);
+@header-height-desktop: calc(59px + @desktop-header-banner-height);
+@header-height-tablet: calc(59px + @tablet-header-banner-height);
 
 @footer-height-desktop: 467px;
 @footer-height-tablet: 676px;

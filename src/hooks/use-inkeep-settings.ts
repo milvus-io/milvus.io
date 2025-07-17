@@ -14,6 +14,9 @@ import {
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { CONTACT_SALES_URL } from '@/consts/externalLinks';
 import { useMemo } from 'react';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 type InkeepSharedSettings = {
   baseSettings: InkeepBaseSettings;
@@ -36,9 +39,9 @@ export const useInkeepSettings = ({
   onOpenChange: (param: boolean) => void;
 }): InkeepSharedSettings => {
   const baseSettings: InkeepBaseSettings = {
-    apiKey: process.env.NEXT_PUBLIC_INKEEP_API_KEY,
-    // integrationId: process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID,
-    // organizationId: process.env.NEXT_PUBLIC_INKEEP_ORGANIZATION_ID,
+    apiKey:
+      publicRuntimeConfig.inkeepApiKey ||
+      process.env.NEXT_PUBLIC_INKEEP_API_KEY,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
     theme: {
       styles: [

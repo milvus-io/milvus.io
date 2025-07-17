@@ -12,6 +12,7 @@ import CustomButton from '@/components/customButton';
 import { RightTopArrowIcon } from '@/components/icons/RightTopArrow';
 import { LanguageEnum } from '@/types/localization';
 import { FC } from 'react';
+import { MilvusWechatQRCode } from '@/components/socialMedias';
 
 type Props = {
   locale: LanguageEnum;
@@ -20,6 +21,8 @@ type Props = {
 export const Community: FC<Props> = (props: Props) => {
   const { locale = LanguageEnum.ENGLISH } = props;
   const { t } = useTranslation('community', { lng: locale });
+
+  const isCnSite = locale === LanguageEnum.CHINESE;
 
   const socialMediaList = [
     {
@@ -33,7 +36,15 @@ export const Community: FC<Props> = (props: Props) => {
       imgUrl: '/images/community/socialMedia/discord.svg',
       href: DISCORD_INVITE_URL,
       catLabel: t('join'),
+      show: !isCnSite,
     },
+    // {
+    //   label: 'Discord',
+    //   imgUrl: '/images/community/socialMedia/discord.svg',
+    //   href: DISCORD_INVITE_URL,
+    //   catLabel: t('join'),
+    //   show: isCnSite,
+    // },
     {
       label: 'LinkedIn',
       imgUrl: '/images/community/socialMedia/linkedin.svg',

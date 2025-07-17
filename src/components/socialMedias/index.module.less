@@ -10,6 +10,24 @@
   margin: 0;
 }
 
+.cnIconButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid @color-black3;
+
+  &:hover {
+    border-color: @color-black2;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 a.iconButton {
   border-radius: 12px;
   padding: 10px;
@@ -32,5 +50,23 @@ a.iconButton {
     svg rect {
       stroke: @color-black2;
     }
+  }
+}
+
+.popperContainer {
+  position: relative;
+  z-index: 0;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.12);
+
+  &::after {
+    border-radius: 12px;
+    position: absolute;
+    content: '';
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    z-index: -1;
+    background: linear-gradient(257deg, #00ceb9 0.46%, #3f80ff 76.96%);
   }
 }

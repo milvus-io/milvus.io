@@ -4,10 +4,10 @@ import {
   MILVUS_TWITTER_LINK,
   MILVUS_YOUTUBE_CHANNEL_LINK,
   MILVUS_LINKEDIN_URL,
+  MILVUS_BILIBILI_LINK,
 } from '@/consts/links';
 import clsx from 'clsx';
-import Popper from '@mui/material/Popper';
-import Fade from '@mui/material/Fade';
+import Popper, { PopperPlacementType } from '@mui/material/Popper';
 import styles from './index.module.less';
 import CustomButton from '../customButton';
 import {
@@ -108,7 +108,7 @@ export const SocialMediasCN = (props: {
     {
       icon: <MediaBilibili />,
       name: 'BiliBili',
-      link: 'https://space.bilibili.com/1058892339/upload/video',
+      link: MILVUS_BILIBILI_LINK,
     },
     {
       icon: <MediaGit />,
@@ -137,20 +137,13 @@ export const SocialMediasCN = (props: {
               onMouseLeave={handleClick}
             >
               {s.icon}
-              <Popper
+              <MilvusWechatQRCodePopper
+                image={s.image}
+                name={s.name}
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
-                placement="top"
-                modifiers={[
-                  {
-                    name: 'offset',
-                    options: { offset: [0, 12] },
-                  },
-                ]}
-              >
-                <MilvusWechatQRCode image={s.image} name={s.name} />
-              </Popper>
+              />
             </CustomButton>
           );
         }
@@ -171,13 +164,42 @@ export const SocialMediasCN = (props: {
   );
 };
 
-export const MilvusWechatQRCode = (props: { image: string; name: string }) => (
-  <div className={clsx(styles.popperContainer)}>
-    <div className="bg-white p-[20px] rounded-[11px] flex flex-col items-center justify-center gap-[20px]">
-      <img src={props.image} alt={props.name} className="w-[200px] h-[200px]" />
-      <p className="text-[14px] leading-[20px] text-black1 font-[600]">
-        扫一扫，加入 Milvus 交流群
-      </p>
-    </div>
-  </div>
-);
+export const MilvusWechatQRCodePopper = (props: {
+  image: string;
+  name: string;
+  id: string;
+  open: boolean;
+  anchorEl: HTMLElement;
+  placement?: PopperPlacementType;
+  offset?: [number, number];
+}) => {
+  const { placement = 'top', offset = [0, 12] } = props;
+
+  return (
+    <Popper
+      id={props.id}
+      open={props.open}
+      anchorEl={props.anchorEl}
+      placement={placement}
+      modifiers={[
+        {
+          name: 'offset',
+          options: { offset },
+        },
+      ]}
+    >
+      <div className={clsx(styles.popperContainer)}>
+        <div className="bg-white p-[20px] rounded-[11px] flex flex-col items-center justify-center gap-[20px]">
+          <img
+            src={props.image}
+            alt={props.name}
+            className="w-[200px] h-[200px]"
+          />
+          <p className="text-[14px] leading-[20px] text-black1 font-[600]">
+            扫一扫，加入 Milvus 交流群
+          </p>
+        </div>
+      </div>
+    </Popper>
+  );
+};

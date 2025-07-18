@@ -14,7 +14,7 @@ import {
   GITHUB_VTS_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
-import SocialMedias from '../socialMedias';
+import { SocialMedias, SocialMediasCN } from '../socialMedias';
 import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
@@ -38,6 +38,7 @@ const Footer = (props: Props) => {
   const { t } = useTranslation(['common', 'header'], { lng: locale });
 
   const trackPath = useUtmTrackPath();
+  const isCNSite = locale === LanguageEnum.CHINESE;
 
   const footerJson = [
     {
@@ -186,7 +187,7 @@ const Footer = (props: Props) => {
               <SubscribeNewsletter />
             </div>
             <div className="flex mt-[40px] space-x-[12px]">
-              <SocialMedias />
+              {isCNSite ? <SocialMediasCN /> : <SocialMedias />}
             </div>
             <p className="mt-3 text-sm text-black1">
               {t('common:v3trans.footnote.copyright', {

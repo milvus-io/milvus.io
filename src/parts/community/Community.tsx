@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '@/components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
-import { DISCORD_INVITE_URL } from '@/consts';
+import { DISCORD_INVITE_URL, MILVUS_BILIBILI_LINK } from '@/consts';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import classes from '@/styles/community.module.less';
 import pageClasses from '@/styles/responsive.module.less';
@@ -11,7 +11,8 @@ import { ABSOLUTE_BASE_URL } from '@/consts';
 import CustomButton from '@/components/customButton';
 import { RightTopArrowIcon } from '@/components/icons/RightTopArrow';
 import { LanguageEnum } from '@/types/localization';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { MilvusWechatQRCodePopper } from '@/components/socialMedias';
 
 type Props = {
   locale: LanguageEnum;
@@ -21,24 +22,57 @@ export const Community: FC<Props> = (props: Props) => {
   const { locale = LanguageEnum.ENGLISH } = props;
   const { t } = useTranslation('community', { lng: locale });
 
+  const isCnSite = locale === LanguageEnum.CHINESE;
+
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const canBeOpen = open && Boolean(anchorEl);
+  const id = canBeOpen ? 'transition-popper' : undefined;
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    setOpen(previousOpen => !previousOpen);
+  };
+
   const socialMediaList = [
     {
       label: 'GitHub',
       imgUrl: '/images/community/socialMedia/github.svg',
       href: 'https://github.com/milvus-io/milvus/discussions',
       catLabel: t('join'),
+      show: true,
     },
     {
       label: 'Discord',
       imgUrl: '/images/community/socialMedia/discord.svg',
       href: DISCORD_INVITE_URL,
       catLabel: t('join'),
+      show: !isCnSite,
+    },
+    {
+      label: '微信',
+      imgUrl: '/images/community/socialMedia/wechat.png',
+      catLabel: t('join'),
+      show: isCnSite,
+      children: (
+        <MilvusWechatQRCodePopper
+          image="/images/milvus-wechat-code.png"
+          name={'微信'}
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          placement="top-end"
+          offset={[80, 12]}
+        />
+      ),
     },
     {
       label: 'LinkedIn',
       imgUrl: '/images/community/socialMedia/linkedin.svg',
       href: 'https://www.linkedin.com/company/the-milvus-project/',
       catLabel: t('join'),
+      show: true,
     },
 
     {
@@ -46,18 +80,35 @@ export const Community: FC<Props> = (props: Props) => {
       imgUrl: '/images/community/socialMedia/twitter.svg',
       href: 'https://twitter.com/milvusio',
       catLabel: t('join'),
+      show: true,
     },
     {
       label: 'Youtube',
       imgUrl: '/images/community/socialMedia/youtube.svg',
       href: 'https://www.youtube.com/@MilvusVectorDatabase/playlists',
       catLabel: t('join'),
+      show: !isCnSite,
+    },
+    {
+      label: 'Bilibili',
+      imgUrl: '/images/community/socialMedia/bilibili.png',
+      href: MILVUS_BILIBILI_LINK,
+      catLabel: t('join'),
+      show: isCnSite,
     },
     {
       label: 'Ambassador',
       imgUrl: '/images/community/socialMedia/milvus-ambassador.svg',
       href: 'https://docs.google.com/forms/d/e/1FAIpQLSfkVTYObayOaND8M1ci9eF_YWvoKDb-xQjLJYZ-LhbCdLAt2Q/viewform',
       catLabel: t('apply'),
+      show: !isCnSite,
+    },
+    {
+      label: 'Milvus 北辰大使',
+      imgUrl: '/images/community/socialMedia/milvus-ambassador.svg',
+      href: 'https://zilliz.com.cn/northstar',
+      catLabel: '大使计划',
+      show: isCnSite,
     },
   ];
 
@@ -135,20 +186,38 @@ export const Community: FC<Props> = (props: Props) => {
             <h1 className="">{t('title')}</h1>
 
             <ul className={classes.mediaWrapper}>
-              {socialMediaList.map(v => (
-                <li key={v.label}>
-                  <img src={v.imgUrl} alt={v.label} />
-                  <p className="">{v.label}</p>
-                  <CustomButton
-                    variant="outlined"
-                    href={v.href}
-                    className={classes.linkBtn}
-                  >
-                    {v.catLabel}
-                    <RightTopArrowIcon />
-                  </CustomButton>
-                </li>
-              ))}
+              {socialMediaList.map(v => {
+                if (!v.show) {
+                  return null;
+                }
+                return (
+                  <li key={v.label}>
+                    <img src={v.imgUrl} alt={v.label} />
+                    <p className="">{v.label}</p>
+                    {v.href ? (
+                      <CustomButton
+                        variant="outlined"
+                        href={v.href}
+                        className={classes.linkBtn}
+                      >
+                        {v.catLabel}
+                        <RightTopArrowIcon />
+                      </CustomButton>
+                    ) : (
+                      <CustomButton
+                        variant="outlined"
+                        className={classes.linkBtn}
+                        onMouseEnter={handleClick}
+                        onMouseLeave={handleClick}
+                      >
+                        {v.catLabel}
+                        <RightTopArrowIcon />
+                        {v.children && v.children}
+                      </CustomButton>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
 
             <div className={classes.officeHoursContainer}>

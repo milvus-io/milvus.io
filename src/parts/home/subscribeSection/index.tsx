@@ -3,7 +3,7 @@ import classes from './index.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import { useTranslation, Trans } from 'react-i18next';
-import SocialMedias from '@/components/socialMedias';
+import { SocialMedias } from '@/components/socialMedias';
 import SubscribeNewsletter from '@/components/subscribe';
 
 export default function SubscribeSection() {

@@ -56,3 +56,6 @@ export const GET_START_LINK = (lang: string) =>
   `/docs/${lang !== 'en' ? `${lang}/` : ''}quickstart.md`;
 export const LEARN_MORE_LINK = (lang: string) =>
   `/docs/${lang !== 'en' ? `${lang}/` : ''}overview.md`;
+
+export const MILVUS_BILIBILI_LINK =
+  'https://space.bilibili.com/1058892339/upload/video';

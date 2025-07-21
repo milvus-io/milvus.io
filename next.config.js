@@ -46,5 +46,10 @@ module.exports = async () => {
     experimental: {
       scrollRestoration: true,
     },
+    publicRuntimeConfig: {
+      inkeepApiKey: process.env.INKEEP_API_KEY,
+      inkeepIntegrationId: process.env.INKEEP_INTEGRATION_ID,
+      inkeepOrganizationId: process.env.INKEEP_ORGANIZATION_ID,
+    },
   });
 };

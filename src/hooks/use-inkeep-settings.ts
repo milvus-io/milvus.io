@@ -13,7 +13,10 @@ import {
 } from '@/utils/inkeep';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { CONTACT_SALES_URL } from '@/consts/externalLinks';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 type InkeepSharedSettings = {
   baseSettings: InkeepBaseSettings;
@@ -35,8 +38,10 @@ export const useInkeepSettings = ({
   isOpen: boolean;
   onOpenChange: (param: boolean) => void;
 }): InkeepSharedSettings => {
-  const [baseSettings, setBaseSettings] = useState<InkeepBaseSettings>({
-    apiKey: '',
+  const baseSettings: InkeepBaseSettings = {
+    apiKey:
+      publicRuntimeConfig.inkeepApiKey ||
+      process.env.NEXT_PUBLIC_INKEEP_API_KEY,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
     theme: {
       styles: [
@@ -47,23 +52,7 @@ export const useInkeepSettings = ({
         },
       ],
     },
-  });
-
-  // const baseSettings: InkeepBaseSettings = {
-  //   apiKey:
-  //     publicRuntimeConfig.inkeepApiKey ||
-  //     process.env.NEXT_PUBLIC_INKEEP_API_KEY,
-  //   primaryBrandColor: INKEEP_PRIMARY_COLOR,
-  //   theme: {
-  //     styles: [
-  //       {
-  //         key: 'custom-styles',
-  //         type: 'link',
-  //         value: '/inkeep/inkeep-overrides.css',
-  //       },
-  //     ],
-  //   },
-  // };
+  };
 
   const modalSettings: InkeepModalSettings = useMemo(() => {
     return {
@@ -174,15 +163,6 @@ export const useInkeepSettings = ({
       } as ToolFunction<{ type: string }>,
     ],
   };
-
-  useEffect(() => {
-    const fetchInkeepApiKey = async () => {
-      const res = await fetch('/api/env');
-      const data = await res.json();
-      setBaseSettings({ ...baseSettings, apiKey: data.inkeepApiKey });
-    };
-    fetchInkeepApiKey();
-  }, []);
 
   return {
     baseSettings,

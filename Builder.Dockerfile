@@ -8,11 +8,6 @@ ARG INKEEP_API_KEY
 ARG MSERVICE_URL
 ARG CMS_BASE_URL
 
-ENV REPO_STATICS_KEY=$REPO_STATICS_KEY
-ENV INKEEP_API_KEY=$INKEEP_API_KEY
-ENV MSERVICE_URL=$MSERVICE_URL
-ENV CMS_BASE_URL=$CMS_BASE_URL
-
 FROM base AS dependency
 COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm install --prefer-offline --frozen-lockfile

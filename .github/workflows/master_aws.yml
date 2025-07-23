@@ -75,8 +75,6 @@ jobs:
             --build-arg CMS_BASE_URL=${{ secrets.CMS_BASE_URL }} \
             --build-arg REPO_STATICS_KEY=${{ secrets.REPO_STATICS_KEY }} \
             --build-arg INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY }} \
-            --build-arg INKEEP_INTEGRATION_ID=${{ secrets.INKEEP_INTEGRATION_ID }} \
-            --build-arg INKEEP_ORGANIZATION_ID=${{ secrets.INKEEP_ORGANIZATION_ID }} \
             -t milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
             docker push milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
       #         env:

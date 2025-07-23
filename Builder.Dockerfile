@@ -3,19 +3,10 @@ WORKDIR /app
 
 RUN npm install -g pnpm
 
-ARG MSERVICE_URL
-ARG CMS_BASE_URL
 ARG REPO_STATICS_KEY
 ARG INKEEP_API_KEY
-ARG INKEEP_INTEGRATION_ID
-ARG INKEEP_ORGANIZATION_ID
-
-ENV MSERVICE_URL=$MSERVICE_URL
-ENV CMS_BASE_URL=$CMS_BASE_URL
-ENV REPO_STATICS_KEY=$REPO_STATICS_KEY
-ENV INKEEP_API_KEY=$INKEEP_API_KEY
-ENV INKEEP_INTEGRATION_ID=$INKEEP_INTEGRATION_ID
-ENV INKEEP_ORGANIZATION_ID=$INKEEP_ORGANIZATION_ID
+ARG MSERVICE_URL
+ARG CMS_BASE_URL
 
 FROM base AS dependency
 COPY package.json pnpm-lock.yaml .npmrc ./
@@ -28,7 +19,7 @@ COPY scripts ./scripts
 COPY next.config.js next-env.d.ts sitemap.config.js ./
 COPY tsconfig.json typings.d.ts ./
 COPY .prettierrc tailwind.config.js postcss.config.js components.json ./
-RUN pnpm build
+RUN pnpm build --env=REPO_STATICS_KEY=$REPO_STATICS_KEY --env=INKEEP_API_KEY=$INKEEP_API_KEY --env=MSERVICE_URL=$MSERVICE_URL --env=CMS_BASE_URL=$CMS_BASE_URL
 
 # => Run container
 FROM zilliz/zilliz-web-runner

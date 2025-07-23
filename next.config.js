@@ -14,8 +14,7 @@ const nextConfig = {
 
 module.exports = async () => {
   try {
-    const host =
-      process.env.MSERVICE_URL || process.env.NEXT_PUBLIC_MSERVICE_URL;
+    const host = process.env.NEXT_PUBLIC_MSERVICE_URL;
     if (!fs.existsSync('./global-stats.json')) {
       const fetchMilvusStats = async () => {
         const result = await axios.get(`${host}/milvus-stats`);
@@ -45,11 +44,6 @@ module.exports = async () => {
     },
     experimental: {
       scrollRestoration: true,
-    },
-    publicRuntimeConfig: {
-      inkeepApiKey: process.env.INKEEP_API_KEY,
-      inkeepIntegrationId: process.env.INKEEP_INTEGRATION_ID,
-      inkeepOrganizationId: process.env.INKEEP_ORGANIZATION_ID,
     },
   });
 };

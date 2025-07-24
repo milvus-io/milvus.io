@@ -99,8 +99,8 @@
     "chokidar": "^4.0.3",
     "concurrently": "^9.1.2",
     "dotenv": "^16.5.0",
-    "eslint": "8.19.0",
-    "eslint-config-next": "12.2.2",
+    "eslint": "9.31.0",
+    "eslint-config-next": "14.2.30",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3"

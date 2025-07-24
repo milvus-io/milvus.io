@@ -80,6 +80,7 @@
     "remarkable-katex": "^1.2.1",
     "rooks": "^5.14.1",
     "showdown": "^2.1.0",
+    "swiper": "^11.2.10",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "unist-util-visit": "^5.0.0",

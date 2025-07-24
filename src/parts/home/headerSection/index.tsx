@@ -22,14 +22,14 @@ import { useRef, useMemo } from 'react';
 
 const RightArrowIcon = () => (
   <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M6.44 4L5.5 4.94L8.55333 8L5.5 11.06L6.44 12L10.44 8L6.44 4Z"
+      d="M12.0459 16L13 15.0531L7.91831 10L13 4.94687L12.0459 4L6 10L12.0459 16Z"
       fill="#667176"
     />
   </svg>

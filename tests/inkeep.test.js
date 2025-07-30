@@ -43,7 +43,6 @@ test('Zilliz chat interaction with API monitoring', async ({ page }) => {
 
   try {
     const chatButton = page.locator('#inkeep-chat-button');
-    console.log('chatButton: ', chatButton);
     await chatButton.click();
 
     // Wait for chat interface to appear

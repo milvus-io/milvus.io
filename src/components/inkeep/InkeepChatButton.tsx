@@ -35,7 +35,11 @@ export default function InkeepChatButtonContainer() {
   };
   return (
     <>
-      <button className={classes.inkeepChatButton} onClick={handleOpen}>
+      <button
+        className={classes.inkeepChatButton}
+        id="inkeep-chat-button"
+        onClick={handleOpen}
+      >
         Ask AI
         <img src="/inkeep/milvus-icon-white.png" alt="" />
       </button>

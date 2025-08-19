@@ -56,7 +56,9 @@
       "queryNodeTip": "查詢節點負責數據查詢和搜索。提示：分配更多資源來處理讀寫密集的工作負載。",
       "dataNodeTip": "數據節點通過訂閱日誌代理來檢索增量日誌數據，處理變異請求，並將日誌數據打包成日誌快照並存儲在對象存儲中。提示：分配更多資源來處理寫密集的工作負載。",
       "indexNodeTip": "索引節點負責構建索引。資源量可能影響索引構建速度。你可以根據實際需求增加或減少這個資源。",
-      "standaloneNode": "獨立節點"
+      "standaloneNode": "獨立節點",
+      "streamNode": "串流節點",
+      "streamNodeTip": "StreamingNode 負責處理所有的串流任務。資源的數量直接影響 Milvus 所有串流作業的吞吐量和延遲，包括成長中的資料搜尋、資料寫入、從 wal 到 binlog 的資料慣例 (串流資料到歷史資料)。"
     },
     "dependency": {
       "title": "依賴",
@@ -102,5 +104,6 @@
     "tip1": "如何使用 Docker Compose 運行 Milvus？",
     "tip2": "如何使用 Helm Chart 運行 Milvus？",
     "tip3": "如何使用 Milvus Operator 運行 Milvus？"
-  }
+  },
+  "woodpeckerTip": "<0>啄木鳥</0>負責處理所有的串流任務。資源的數量直接影響 Milvus 所有串流作業的吞吐量和延遲，包括成長中的資料搜尋、資料寫入、從 wal 到 binlog 的資料慣例 (串流資料到歷史資料)"
 }

@@ -56,7 +56,9 @@
       "queryNodeTip": "El nodo de consulta es responsable de la consulta y búsqueda de datos. Consejo: Asigna más recursos para manejar una carga de trabajo intensiva en lectura.",
       "dataNodeTip": "El nodo de datos recupera datos de registro incrementales suscribiéndose al broker de registros, procesa solicitudes de mutación y empaqueta datos de registro en instantáneas de registro y los almacena en el almacenamiento de objetos. Consejo: Asigna más recursos para manejar una carga de trabajo intensiva en escritura.",
       "indexNodeTip": "El nodo de índice es responsable de construir índices. La cantidad de recursos puede afectar la velocidad de construcción del índice. Puedes aumentar o disminuir este recurso según las necesidades reales.",
-      "standaloneNode": "Nodo Independiente"
+      "standaloneNode": "Nodo Independiente",
+      "streamNode": "Nodo Stream",
+      "streamNodeTip": "El StreamingNode es responsable de manejar todas las tareas de streaming. El número de recursos afecta directamente al rendimiento y la latencia de Milvus para todas las operaciones de streaming, incluida la búsqueda de datos crecientes, la escritura de datos, la convención de datos de wal a binlog (datos de streaming a datos históricos)."
     },
     "dependency": {
       "title": "Dependencia",
@@ -102,5 +104,6 @@
     "tip1": "¿Cómo ejecutar Milvus con Docker Compose?",
     "tip2": "¿Cómo ejecutar Milvus con Helm Chart?",
     "tip3": "¿Cómo ejecutar Milvus con Milvus Operator?"
-  }
+  },
+  "woodpeckerTip": "El <0>Woodpecker</0> es responsable de gestionar todas las tareas de streaming. El número de recursos afecta directamente al rendimiento y la latencia de Milvus para todas las operaciones de streaming, incluida la búsqueda de datos crecientes, la escritura de datos, la convención de datos de wal a binlog (datos de streaming a datos históricos)"
 }

@@ -85,6 +85,10 @@ export const INDEX_TYPE_OPTIONS = [
     value: IndexTypeEnum.IVFSQ8,
   },
   {
+    label: 'IVF_RABITQ',
+    value: IndexTypeEnum.IVFRABITQ,
+  },
+  {
     label: 'DISKANN',
     value: IndexTypeEnum.DISKANN,
   },
@@ -99,6 +103,10 @@ export const DEPENDENCY_COMPONENTS = [
     label: 'Kafka',
     value: DependencyComponentEnum.Kafka,
   },
+  {
+    label: 'Woodpecker',
+    value: DependencyComponentEnum.Woodpecker,
+  },
 ];
 
 export const MODE_OPTIONS = [
@@ -109,205 +117,6 @@ export const MODE_OPTIONS = [
   {
     label: 'Distributed',
     value: ModeEnum.Cluster,
-  },
-];
-
-export const FIXED_QUERY_NODE_CONFIG = [
-  {
-    memory: [0, 8],
-    queryNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    proxy: {
-      cpu: 1,
-      memory: 4,
-      count: 1,
-    },
-    mixCoord: {
-      cpu: 1,
-      memory: 4,
-      count: 1,
-    },
-    dataNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    indexNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-  },
-  {
-    memory: [8, 16],
-    queryNode: {
-      cpu: 4,
-      memory: 16,
-      count: 1,
-    },
-    proxy: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    mixCoord: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    dataNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    indexNode: {
-      cpu: 4,
-      memory: 16,
-      count: 1,
-    },
-  },
-  {
-    memory: [16, 32],
-    queryNode: {
-      cpu: 4,
-      memory: 16,
-      count: 2,
-    },
-    proxy: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    mixCoord: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    dataNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    indexNode: {
-      cpu: 4,
-      memory: 16,
-      count: 2,
-    },
-  },
-  {
-    memory: [32, 48],
-    queryNode: {
-      cpu: 4,
-      memory: 16,
-      count: 3,
-    },
-    proxy: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    mixCoord: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    dataNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    indexNode: {
-      cpu: 4,
-      memory: 16,
-      count: 2,
-    },
-  },
-  {
-    memory: [48, 64],
-    queryNode: {
-      cpu: 4,
-      memory: 16,
-      count: 4,
-    },
-    proxy: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    mixCoord: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    dataNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    indexNode: {
-      cpu: 4,
-      memory: 16,
-      count: 2,
-    },
-  },
-  {
-    memory: [64, 80],
-    queryNode: {
-      cpu: 4,
-      memory: 16,
-      count: 5,
-    },
-    proxy: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    mixCoord: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    dataNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    indexNode: {
-      cpu: 4,
-      memory: 16,
-      count: 4,
-    },
-  },
-  {
-    memory: [80, 96],
-    queryNode: {
-      cpu: 4,
-      memory: 16,
-      count: 6,
-    },
-    proxy: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    mixCoord: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    dataNode: {
-      cpu: 2,
-      memory: 8,
-      count: 1,
-    },
-    indexNode: {
-      cpu: 4,
-      memory: 16,
-      count: 4,
-    },
   },
 ];
 

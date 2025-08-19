@@ -109,7 +109,7 @@ export default function SizingTool(props: Props) {
         memory: 0,
         count: 0,
       },
-      indexNode: {
+      streamNode: {
         cpu: 0,
         memory: 0,
         count: 0,
@@ -134,7 +134,7 @@ export default function SizingTool(props: Props) {
     isOutOfCalculate: false,
   });
 
-  const updateCalculatedResult = (result: ICalculateResult) => {
+  const asyncCalculatedResult = (result: ICalculateResult) => {
     setCalculatedResult(result);
   };
 
@@ -168,7 +168,7 @@ export default function SizingTool(props: Props) {
           <div className={classes.contentContainer}>
             <FormSection
               className={classes.leftSection}
-              updateCalculatedResult={updateCalculatedResult}
+              asyncCalculatedResult={asyncCalculatedResult}
             />
             <ResultSection
               className={classes.rightSection}

@@ -163,6 +163,26 @@ const IVFSQ8Component = (props: IndexTypeComponentProps) => {
   );
 };
 
+const RABITQComponent = (props: IndexTypeComponentProps) => {
+  const { t } = useTranslation('sizingTool');
+  const { data, onChange } = props;
+  return (
+    <div className="mt-[16px]">
+      <p className={'text-[12px] font-[500] leading-[16px]'}>
+        {t('form.nlist')}
+      </p>
+      <SizingRange
+        rangeConfig={N_LIST_RANGE_CONFIG}
+        value={data.rabitqNList}
+        onRangeChange={value => {
+          onChange('rabitqNList', value);
+        }}
+        placeholder={`[${N_LIST_RANGE_CONFIG.min}, ${N_LIST_RANGE_CONFIG.max}]`}
+      />
+    </div>
+  );
+};
+
 export const IndexTypeComponent = (props: {
   data: IIndexType;
   onChange: (key: string, value: any) => void;
@@ -181,6 +201,8 @@ export const IndexTypeComponent = (props: {
       return <IVFFlatComponent {...props} />;
     case IndexTypeEnum.IVFSQ8:
       return <IVFSQ8Component {...props} />;
+    case IndexTypeEnum.IVFRABITQ:
+      return <RABITQComponent {...props} />;
     default:
       return null;
   }

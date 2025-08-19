@@ -1,0 +1,9 @@
+{
+  "added": {
+    "woodpeckerTip": "The <0>Woodpecker</0> is responsible for handling all streaming tasks. The number of resources directly affects Milvus's throughput and latency for all streaming operations, including growing data search, data writing, data convention from wal to binlog (streaming data to historical data)",
+    "setup.milvus.streamNode": "Stream Node",
+    "setup.milvus.streamNodeTip": "The StreamingNode is responsible for handling all streaming tasks. The number of resources directly affects Milvus's throughput and latency for all streaming operations, including growing data search, data writing, data convention from wal to binlog (streaming data to historical data)."
+  },
+  "modified": {},
+  "deleted": {}
+}

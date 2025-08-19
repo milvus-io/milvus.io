@@ -1,4 +1,4 @@
-import { ONE_MILLION, FIXED_QUERY_NODE_CONFIG } from '@/consts/sizing';
+import { ONE_MILLION } from '@/consts/sizing';
 import {
   NodesValueType,
   DependencyComponentEnum,
@@ -168,10 +168,18 @@ export const memoryAndDiskCalculator = (params: {
     segSize,
     mode,
   } = params;
-  const { indexType, widthRawData, maxDegree, m, flatNList, sq8NList } =
-    indexTypeParams;
+  const {
+    indexType,
+    widthRawData,
+    maxDegree,
+    m,
+    flatNList,
+    sq8NList,
+    rabitqNList,
+  } = indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
   const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
+  const N = 8;
 
   let result = {
     memory: 0,
@@ -195,6 +203,12 @@ export const memoryAndDiskCalculator = (params: {
     case IndexTypeEnum.IVFSQ8:
       result = {
         memory: vectorRawDataSize / 4 + sq8NList * rowSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.IVFRABITQ:
+      result = {
+        memory: vectorRawDataSize * (1 / 32 + N / 32) + rabitqNList * rowSize,
         disk: 0,
       };
       break;
@@ -264,6 +278,222 @@ export const standaloneNodeConfigCalculator = (params: { memory: number }) => {
   };
 };
 
+const streamNodeConfigCalculator = (qnCores: number) => {
+  const snCus = Math.ceil(qnCores / 16);
+  const snCores = snCus * 2;
+
+  switch (snCus) {
+    case 0:
+    case 1:
+      return {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      };
+    case 2:
+      return {
+        cpu: 4,
+        memory: 16,
+        count: 1,
+      };
+    case 3:
+    case 4:
+      return {
+        cpu: 4,
+        memory: 16,
+        count: 2,
+      };
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+      return {
+        cpu: 8,
+        memory: 32,
+        count: 2,
+      };
+    default:
+      return {
+        cpu: 8,
+        memory: 32,
+        count: Math.ceil(snCores / 8),
+      };
+  }
+};
+
+const generateFixedQueryNodeConfig = () => {
+  return [
+    {
+      memory: [0, 8],
+      queryNode: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      proxy: {
+        cpu: 1,
+        memory: 4,
+        count: 1,
+      },
+      mixCoord: {
+        cpu: 1,
+        memory: 4,
+        count: 1,
+      },
+      dataNode: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      streamNode: streamNodeConfigCalculator(2),
+    },
+    {
+      memory: [8, 16],
+      queryNode: {
+        cpu: 4,
+        memory: 16,
+        count: 1,
+      },
+      proxy: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      mixCoord: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      dataNode: {
+        cpu: 4,
+        memory: 16,
+        count: 1,
+      },
+      streamNode: streamNodeConfigCalculator(4),
+    },
+    {
+      memory: [16, 32],
+      queryNode: {
+        cpu: 4,
+        memory: 16,
+        count: 2,
+      },
+      proxy: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      mixCoord: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      dataNode: {
+        cpu: 4,
+        memory: 16,
+        count: 2,
+      },
+      streamNode: streamNodeConfigCalculator(8),
+    },
+    {
+      memory: [32, 48],
+      queryNode: {
+        cpu: 4,
+        memory: 16,
+        count: 3,
+      },
+      proxy: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      mixCoord: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      dataNode: {
+        cpu: 4,
+        memory: 16,
+        count: 2,
+      },
+      streamNode: streamNodeConfigCalculator(12),
+    },
+    {
+      memory: [48, 64],
+      queryNode: {
+        cpu: 4,
+        memory: 16,
+        count: 4,
+      },
+      proxy: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      mixCoord: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      dataNode: {
+        cpu: 4,
+        memory: 16,
+        count: 2,
+      },
+      streamNode: streamNodeConfigCalculator(16),
+    },
+    {
+      memory: [64, 80],
+      queryNode: {
+        cpu: 4,
+        memory: 16,
+        count: 5,
+      },
+      proxy: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      mixCoord: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      dataNode: {
+        cpu: 4,
+        memory: 16,
+        count: 4,
+      },
+      streamNode: streamNodeConfigCalculator(20),
+    },
+    {
+      memory: [80, 96],
+      queryNode: {
+        cpu: 4,
+        memory: 16,
+        count: 6,
+      },
+      proxy: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      mixCoord: {
+        cpu: 2,
+        memory: 8,
+        count: 1,
+      },
+      dataNode: {
+        cpu: 4,
+        memory: 16,
+        count: 4,
+      },
+      streamNode: streamNodeConfigCalculator(24),
+    },
+  ];
+};
+
 // query nodes calculator
 export const clusterNodesConfigCalculator = (params: { memory: number }) => {
   const { size: memoryGB } = unitBYTE2Any(params.memory, 'GB');
@@ -290,17 +520,17 @@ export const clusterNodesConfigCalculator = (params: { memory: number }) => {
     },
     dataNode: {
       cpu: 8,
-      memory: 32,
-      count: 1,
-    },
-    indexNode: {
-      cpu: 8,
       memory: 16,
       count: 8,
     },
+    streamNode: {
+      cpu: 0,
+      memory: 0,
+      count: 0,
+    },
   };
   const queryNodesConfig = [
-    ...FIXED_QUERY_NODE_CONFIG,
+    ...generateFixedQueryNodeConfig(),
     {
       memory: [96, 512],
       queryNode: {
@@ -309,6 +539,7 @@ export const clusterNodesConfigCalculator = (params: { memory: number }) => {
         count: queryNodeCount,
       },
       ...basicLargeNodeConfig,
+      streamNode: streamNodeConfigCalculator(queryNodeCount * 8),
     },
     {
       memory: [512, 2048],
@@ -318,6 +549,7 @@ export const clusterNodesConfigCalculator = (params: { memory: number }) => {
         count: queryNodeCount,
       },
       ...basicLargeNodeConfig,
+      streamNode: streamNodeConfigCalculator(queryNodeCount * 16),
     },
     {
       memory: [2048, Infinity],
@@ -327,6 +559,7 @@ export const clusterNodesConfigCalculator = (params: { memory: number }) => {
         count: queryNodeCount,
       },
       ...basicLargeNodeConfig,
+      streamNode: streamNodeConfigCalculator(queryNodeCount * 32),
     },
   ];
 
@@ -338,7 +571,7 @@ export const clusterNodesConfigCalculator = (params: { memory: number }) => {
     proxy: properMemorySection?.proxy,
     mixCoord: properMemorySection?.mixCoord,
     dataNode: properMemorySection?.dataNode,
-    indexNode: properMemorySection?.indexNode,
+    streamNode: properMemorySection?.streamNode,
   };
 };
 
@@ -349,8 +582,10 @@ export const dependencyCalculator = (params: {
   withScalar: boolean;
   scalarAvg: number;
   loadingMemory: number;
+  dependency: DependencyComponentEnum;
 }): DependencyConfigType => {
-  const { num, d, mode, scalarAvg, withScalar, loadingMemory } = params;
+  const { num, d, mode, scalarAvg, withScalar, loadingMemory, dependency } =
+    params;
   const MINIMUM_MINIO_PVC_SIZE = 30; //GB
   const MINIMUM_PULSAR_LEDGERS = 20; //GB
   const MAXIMUM_PULSAR_JOURNAL = 50; //GB
@@ -620,8 +855,14 @@ export const dependencyCalculator = (params: {
       return {
         etcd: etcdBaseConfig,
         minio: minioBaseConfig,
-        pulsar: pulsarBaseConfig,
-        kafka: kafkaBaseConfig,
+        pulsar:
+          dependency === DependencyComponentEnum.Pulsar
+            ? pulsarBaseConfig
+            : undefined,
+        kafka:
+          dependency === DependencyComponentEnum.Kafka
+            ? kafkaBaseConfig
+            : undefined,
       };
   }
 };
@@ -632,7 +873,8 @@ export const milvusOverviewDataCalculator = (params: {
   mode: ModeEnum;
 }) => {
   const { standaloneNodeConfig, clusterNodeConfig, mode } = params;
-  const { queryNode, proxy, mixCoord, dataNode, indexNode } = clusterNodeConfig;
+  const { queryNode, proxy, mixCoord, dataNode, streamNode } =
+    clusterNodeConfig;
   const milvusCpu =
     mode === ModeEnum.Standalone
       ? standaloneNodeConfig.cpu
@@ -640,7 +882,7 @@ export const milvusOverviewDataCalculator = (params: {
         proxy.cpu * proxy.count +
         mixCoord.cpu * mixCoord.count +
         dataNode.cpu * dataNode.count +
-        indexNode.cpu * indexNode.count;
+        streamNode.cpu * streamNode.count;
 
   const milvusMemory =
     mode === ModeEnum.Standalone
@@ -649,7 +891,7 @@ export const milvusOverviewDataCalculator = (params: {
         proxy.memory * proxy.count +
         mixCoord.memory * mixCoord.count +
         dataNode.memory * dataNode.count +
-        indexNode.memory * indexNode.count;
+        streamNode.memory * streamNode.count;
 
   return {
     milvusCpu: milvusCpu || 0,
@@ -658,42 +900,39 @@ export const milvusOverviewDataCalculator = (params: {
 };
 
 export const dependencyOverviewDataCalculator = (params: {
-  mode: ModeEnum;
   dependency: DependencyComponentEnum;
   dependencyConfig: DependencyConfigType;
 }) => {
-  const { mode, dependency, dependencyConfig } = params;
+  const { dependency, dependencyConfig } = params;
   const { etcd, minio, pulsar, kafka } = dependencyConfig;
 
-  const pulsarCpu =
-    mode === ModeEnum.Standalone
-      ? 0
-      : pulsar.bookie.cpu * pulsar.bookie.count +
-        pulsar.broker.cpu * pulsar.broker.count +
-        pulsar.zookeeper.cpu * pulsar.zookeeper.count +
-        pulsar.proxy.cpu * pulsar.proxy.count;
-  const kafkaCpu =
-    mode === ModeEnum.Standalone
-      ? 0
-      : kafka.broker.cpu * kafka.broker.count +
-        kafka.zookeeper.cpu * kafka.zookeeper.count;
+  const pulsarCpu = pulsar
+    ? pulsar.bookie.cpu * pulsar.bookie.count +
+      pulsar.broker.cpu * pulsar.broker.count +
+      pulsar.zookeeper.cpu * pulsar.zookeeper.count +
+      pulsar.proxy.cpu * pulsar.proxy.count
+    : 0;
+
+  const kafkaCpu = kafka
+    ? kafka.broker.cpu * kafka.broker.count +
+      kafka.zookeeper.cpu * kafka.zookeeper.count
+    : 0;
   const streamPlatformCpu =
     dependency === DependencyComponentEnum.Pulsar ? pulsarCpu : kafkaCpu;
   const dependencyCpu =
     etcd.cpu * etcd.count + minio.cpu * minio.count + streamPlatformCpu;
 
-  const pulsarMemory =
-    mode === ModeEnum.Standalone
-      ? 0
-      : pulsar.bookie.memory * pulsar.bookie.count +
-        pulsar.broker.memory * pulsar.broker.count +
-        pulsar.zookeeper.memory * pulsar.zookeeper.count +
-        pulsar.proxy.memory * pulsar.proxy.count;
-  const kafkaMemory =
-    mode === ModeEnum.Standalone
-      ? 0
-      : kafka.broker.memory * kafka.broker.count +
-        kafka.zookeeper.memory * kafka.zookeeper.count;
+  const pulsarMemory = pulsar
+    ? pulsar.bookie.memory * pulsar.bookie.count +
+      pulsar.broker.memory * pulsar.broker.count +
+      pulsar.zookeeper.memory * pulsar.zookeeper.count +
+      pulsar.proxy.memory * pulsar.proxy.count
+    : 0;
+
+  const kafkaMemory = kafka
+    ? kafka.broker.memory * kafka.broker.count +
+      kafka.zookeeper.memory * kafka.zookeeper.count
+    : 0;
 
   const streamPlatformMemory =
     dependency === DependencyComponentEnum.Pulsar ? pulsarMemory : kafkaMemory;
@@ -703,16 +942,16 @@ export const dependencyOverviewDataCalculator = (params: {
     minio.memory * minio.count +
     streamPlatformMemory;
 
-  const pulsarStorage =
-    mode === ModeEnum.Standalone
-      ? 0
-      : (pulsar.bookie.journal + pulsar.bookie.ledgers) * pulsar.bookie.count +
-        pulsar.zookeeper.pvc * pulsar.zookeeper.count;
-  const kafkaStorage =
-    mode === ModeEnum.Standalone
-      ? 0
-      : kafka.broker.pvc * kafka.broker.count +
-        kafka.zookeeper.pvc * kafka.zookeeper.count;
+  const pulsarStorage = pulsar
+    ? (pulsar.bookie.journal + pulsar.bookie.ledgers) * pulsar.bookie.count +
+      pulsar.zookeeper.pvc * pulsar.zookeeper.count
+    : 0;
+
+  const kafkaStorage = kafka
+    ? kafka.broker.pvc * kafka.broker.count +
+      kafka.zookeeper.pvc * kafka.zookeeper.count
+    : 0;
+
   const streamPlatformStorage =
     dependency === DependencyComponentEnum.Pulsar
       ? pulsarStorage
@@ -732,7 +971,7 @@ export const helmYmlGenerator: (
   params: {
     proxy: NodesValueType;
     mixCoord: NodesValueType;
-    indexNode: NodesValueType;
+    streamNode: NodesValueType;
     queryNode: NodesValueType;
     dataNode: NodesValueType;
     etcdData: NodesValueType & {
@@ -750,7 +989,7 @@ export const helmYmlGenerator: (
   {
     proxy,
     mixCoord,
-    indexNode,
+    streamNode,
     queryNode,
     dataNode,
     etcdData,
@@ -761,10 +1000,13 @@ export const helmYmlGenerator: (
   apacheType,
   mode
 ) => {
-  const pulsarConfig =
-    mode === ModeEnum.Standalone
-      ? ''
-      : `
+  const showPulsar =
+    mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Pulsar;
+  const showKafka =
+    mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Kafka;
+  const pulsarConfig = !showPulsar
+    ? ''
+    : `
 pulsarv3:
   enabled: true
   proxy:
@@ -811,10 +1053,9 @@ pulsarv3:
         cpu: ${pulsarData.broker.cpu}
   `;
 
-  const kafkaConfig =
-    mode === ModeEnum.Standalone
-      ? ''
-      : `
+  const kafkaConfig = !showKafka
+    ? ''
+    : `
 pulsarv3:
   enabled: false
 kafka:
@@ -855,12 +1096,12 @@ proxy:
     limits:
       cpu: ${proxy.cpu}
       memory: ${proxy.memory}Gi
-indexNode:
-  replicas: ${indexNode.count}
+streamNode:
+  replicas: ${streamNode.count}
   resources: 
     limits:
-      cpu: ${indexNode.cpu}
-      memory: ${indexNode.memory}Gi
+      cpu: ${streamNode.cpu}
+      memory: ${streamNode.memory}Gi
 dataNode:
   replicas: ${dataNode.count}
   resources:
@@ -917,7 +1158,7 @@ export const operatorYmlGenerator: (
   params: {
     proxy: NodesValueType;
     mixCoord: NodesValueType;
-    indexNode: NodesValueType;
+    streamNode: NodesValueType;
     queryNode: NodesValueType;
     dataNode: NodesValueType;
     etcdData: NodesValueType & {
@@ -935,7 +1176,7 @@ export const operatorYmlGenerator: (
   {
     mixCoord,
     proxy,
-    indexNode,
+    streamNode,
     queryNode,
     dataNode,
     etcdData,
@@ -946,10 +1187,13 @@ export const operatorYmlGenerator: (
   apacheType,
   mode
 ) => {
-  const pulsarConfig =
-    mode === ModeEnum.Standalone
-      ? ''
-      : `
+  const showPulsar =
+    mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Pulsar;
+  const showKafka =
+    mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Kafka;
+  const pulsarConfig = !showPulsar
+    ? ''
+    : `
     pulsarv3:
       inCluster:
         values:
@@ -993,10 +1237,9 @@ export const operatorYmlGenerator: (
                 cpu: ${pulsarData.broker.cpu}
   `;
 
-  const kafkaConfig =
-    mode === ModeEnum.Standalone
-      ? ''
-      : `
+  const kafkaConfig = !showKafka
+    ? ''
+    : `
     msgStreamType: kafka
     kafka:
       inCluster:
@@ -1042,12 +1285,12 @@ spec:
         limits:
           cpu: ${mixCoord.cpu}
           memory: ${mixCoord.memory}Gi
-    indexNode:
-      replicas: ${indexNode.count}
+    streamNode:
+      replicas: ${streamNode.count}
       resources:
         limits:
-          cpu: ${indexNode.cpu}
-          memory: ${indexNode.memory}Gi
+          cpu: ${streamNode.cpu}
+          memory: ${streamNode.memory}Gi
     proxy:
       replicas: ${proxy.count}
       resources:

@@ -11,6 +11,7 @@ export enum IndexTypeEnum {
   HNSW = 'HNSW',
   IVF_FLAT = 'IVF_FLAT',
   IVFSQ8 = 'IVFSQ8',
+  IVFRABITQ = 'IVFRABITQ',
   DISKANN = 'DISKANN',
 }
 
@@ -20,12 +21,14 @@ export interface IIndexType {
   maxDegree: number;
   flatNList: number;
   sq8NList: number;
+  rabitqNList: number;
   m: number;
 }
 
 export enum DependencyComponentEnum {
-  Pulsar,
-  Kafka,
+  Pulsar = 'pulsar',
+  Kafka = 'kafka',
+  Woodpecker = 'woodpecker',
 }
 
 export enum ModeEnum {
@@ -38,7 +41,7 @@ const NodesType = {
   proxy: 'Proxy',
   mixCoord: 'Mix Coord',
   dataNode: 'Data Node',
-  indexNode: 'Index Node',
+  streamNode: 'Stream Node',
 } as const;
 
 export type NodesKeyType = keyof typeof NodesType;

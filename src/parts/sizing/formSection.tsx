@@ -1,6 +1,11 @@
 import { use, useEffect, useMemo, useRef, useState } from 'react';
 import classes from './index.module.less';
-import { SizingInput, SizingRange, SizingSwitch } from '@/components/sizing';
+import {
+  SizingInput,
+  SizingRange,
+  SizingSwitch,
+  ThreeOptionSwitch,
+} from '@/components/sizing';
 import {
   Collapsible,
   Checkbox,
@@ -29,7 +34,12 @@ import {
   MAXIMUM_AVERAGE_LENGTH,
 } from '@/consts/sizing';
 import clsx from 'clsx';
-import { ICalculateResult, IIndexType, ModeEnum } from '@/types/sizing';
+import {
+  DependencyComponentEnum,
+  ICalculateResult,
+  IIndexType,
+  ModeEnum,
+} from '@/types/sizing';
 import { IndexTypeComponent } from './indexTypeComponent';
 import {
   memoryAndDiskCalculator,
@@ -44,15 +54,16 @@ import { Trans, useTranslation } from 'react-i18next';
 import { TooltipArrow } from '@radix-ui/react-tooltip';
 import { ExternalLinkIcon } from '@/components/icons';
 import { KafkaIcon, PulsarIcon } from './components';
+import Link from 'next/link';
 
 const MODE_CHANGE_THRESHOLD = $10M768D;
 
 export default function FormSection(props: {
   className: string;
-  updateCalculatedResult: (params: ICalculateResult) => void;
+  asyncCalculatedResult: (params: ICalculateResult) => void;
 }) {
   const { t } = useTranslation('sizingTool');
-  const { className, updateCalculatedResult } = props;
+  const { className, asyncCalculatedResult } = props;
 
   // const [collapseHeight, setCollapseHeight] = useState(0);
   const collapseEle = useRef<HTMLDivElement | null>(null);
@@ -82,6 +93,7 @@ export default function FormSection(props: {
     maxDegree: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
     flatNList: N_LIST_RANGE_CONFIG.defaultValue,
     sq8NList: N_LIST_RANGE_CONFIG.defaultValue,
+    rabitqNList: N_LIST_RANGE_CONFIG.defaultValue,
     m: M_RANGE_CONFIG.defaultValue,
   });
 
@@ -144,17 +156,6 @@ export default function FormSection(props: {
   const selectedSegmentSize = useMemo(() => {
     return SEGMENT_SIZE_OPTIONS.find(v => v.value === form.segmentSize);
   }, [form.segmentSize]);
-
-  const dependencyOptions = [
-    {
-      ...DEPENDENCY_COMPONENTS[0],
-      icon: <PulsarIcon />,
-    },
-    {
-      ...DEPENDENCY_COMPONENTS[1],
-      icon: <KafkaIcon />,
-    },
-  ];
 
   const modeOptions = [
     {
@@ -239,10 +240,11 @@ export default function FormSection(props: {
       withScalar: form.widthScalar,
       scalarAvg: form.scalarData.averageNum,
       mode: currentMode,
+      dependency: form.dependency,
       loadingMemory: memory,
     });
 
-    updateCalculatedResult({
+    asyncCalculatedResult({
       rawDataSize,
       memorySize: memory,
       localDiskSize: localDisk,
@@ -517,24 +519,31 @@ export default function FormSection(props: {
               {t('form.dependencyComp')}
             </h4>
             <div className={classes.cardsWrapper}>
-              {dependencyOptions.map(v => (
-                <button
-                  className={clsx(classes.card, classes.dependencyCard, {
-                    [classes.activeCard]: form.dependency === v.value,
-                  })}
-                  onClick={() => {
-                    handleFormChange('dependency', v.value);
-                  }}
-                  key={v.label}
-                >
-                  {v.icon}
-                  <span className="text-[14px] font-[600] leading-[22px]">
-                    {v.label}
-                  </span>
-                </button>
-              ))}
+              <ThreeOptionSwitch
+                options={DEPENDENCY_COMPONENTS}
+                value={form.dependency}
+                onChange={(value: string) => {
+                  handleFormChange('dependency', value);
+                }}
+              />
             </div>
           </div>
+        )}
+
+        {form.dependency === DependencyComponentEnum.Woodpecker && (
+          <p className="mt-[36px] text-[12px]  leading-[18px] text-black2">
+            <Trans
+              t={t}
+              i18nKey="woodpeckerTip"
+              components={[
+                <Link
+                  key="link"
+                  className="font-[600] text-[#00b3ff] hover:underline"
+                  href="/docs/woodpecker_architecture.md#Woodpecker"
+                ></Link>,
+              ]}
+            />
+          </p>
         )}
 
         <p className="mt-[36px] text-[12px]  leading-[18px] text-black2">

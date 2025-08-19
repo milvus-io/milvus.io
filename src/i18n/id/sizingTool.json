@@ -56,7 +56,9 @@
       "queryNodeTip": "Node kueri bertanggung jawab atas kueri data dan pencarian. Tips: Alokasikan lebih banyak sumber daya untuk menangani beban kerja baca yang berat.",
       "dataNodeTip": "Node data mengambil data log incremental dengan berlangganan ke broker log, memproses permintaan mutasi, dan memasukkan data log ke snapshot log dan menyimpannya di penyimpanan objek. Tips: Alokasikan lebih banyak sumber daya untuk menangani beban kerja tulis yang berat.",
       "indexNodeTip": "Node indeks bertanggung jawab atas pembangunan indeks. Jumlah sumber daya dapat mempengaruhi kecepatan pembangunan indeks. Anda dapat meningkatkan atau mengurangi sumber daya ini sesuai dengan kebutuhan aktual.",
-      "standaloneNode": "Node Standalone"
+      "standaloneNode": "Node Standalone",
+      "streamNode": "Stream Node",
+      "streamNodeTip": "StreamingNode bertanggung jawab untuk menangani semua tugas streaming. Jumlah sumber daya secara langsung memengaruhi throughput dan latensi Milvus untuk semua operasi streaming, termasuk pencarian data yang terus bertambah, penulisan data, konvensi data dari wal ke binlog (streaming data ke data historis)."
     },
     "dependency": {
       "title": "Ketergantungan",
@@ -102,5 +104,6 @@
     "tip1": "Bagaimana menjalankan Milvus dengan Docker Compose?",
     "tip2": "Bagaimana menjalankan Milvus dengan Helm Chart?",
     "tip3": "Bagaimana menjalankan Milvus dengan Operator Milvus?"
-  }
+  },
+  "woodpeckerTip": "<0>Woodpecker</0> bertanggung jawab untuk menangani semua tugas streaming. Jumlah sumber daya secara langsung memengaruhi throughput dan latensi Milvus untuk semua operasi streaming, termasuk pencarian data yang terus bertambah, penulisan data, konvensi data dari wal ke binlog (streaming data ke data historis)"
 }

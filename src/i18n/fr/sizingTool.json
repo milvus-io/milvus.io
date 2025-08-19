@@ -56,7 +56,9 @@
       "queryNodeTip": "Le nœud de requête est responsable de la requête et de la recherche de données. Astuce : Allouez plus de ressources pour gérer une charge de travail intensive en lecture.",
       "dataNodeTip": "Le nœud de données récupère les données de journal incrémentielles en s'abonnant au courtier de journal, traite les demandes de mutation et emballe les données de journal dans des instantanés de journal et les stocke dans le stockage d'objets. Astuce : Allouez plus de ressources pour gérer une charge de travail intensive en écriture.",
       "indexNodeTip": "Le nœud d'index est responsable de la construction des index. La quantité de ressources peut affecter la vitesse de construction de l'index. Vous pouvez augmenter ou diminuer cette ressource en fonction des besoins réels.",
-      "standaloneNode": "Nœud autonome"
+      "standaloneNode": "Nœud autonome",
+      "streamNode": "Nœud de flux",
+      "streamNodeTip": "Le StreamingNode est responsable de la gestion de toutes les tâches de diffusion en continu. Le nombre de ressources affecte directement le débit et la latence de Milvus pour toutes les opérations de diffusion en continu, y compris la recherche de données croissantes, l'écriture de données, la convention de données de wal à binlog (données de diffusion en continu vers des données historiques)."
     },
     "dependency": {
       "title": "Dépendance",
@@ -102,5 +104,6 @@
     "tip1": "Comment exécuter Milvus avec Docker Compose ?",
     "tip2": "Comment exécuter Milvus avec Helm Chart ?",
     "tip3": "Comment exécuter Milvus avec l'opérateur Milvus ?"
-  }
+  },
+  "woodpeckerTip": "Le <0>pivert</0> est responsable de la gestion de toutes les tâches de diffusion en continu. Le nombre de ressources affecte directement le débit et la latence de Milvus pour toutes les opérations de diffusion en continu, y compris la recherche de données croissantes, l'écriture de données, la convention de données de wal à binlog (données de diffusion en continu vers des données historiques)."
 }

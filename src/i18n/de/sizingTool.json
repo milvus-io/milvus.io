@@ -56,7 +56,9 @@
       "queryNodeTip": "Abfrageknoten ist für Datenabfragen und -suchen verantwortlich. Tipps: Weisen Sie mehr Ressourcen zu, um leseintensive Arbeitslasten zu bewältigen.",
       "dataNodeTip": "Datenknoten ruft inkrementelle Protokolldaten ab, indem er den Log-Broker abonniert, verarbeitet Mutationsanfragen und packt Protokolldaten in Protokoll-Snapshots und speichert sie im Objektspeicher. Tipps: Weisen Sie mehr Ressourcen zu, um schreibintensive Arbeitslasten zu bewältigen.",
       "indexNodeTip": "Indexknoten ist für den Aufbau von Indizes verantwortlich. Die Menge der Ressourcen kann die Geschwindigkeit des Indexaufbaus beeinflussen. Sie können diese Ressource je nach Bedarf erhöhen oder verringern.",
-      "standaloneNode": "Standalone-Knoten"
+      "standaloneNode": "Standalone-Knoten",
+      "streamNode": "Stream-Knoten",
+      "streamNodeTip": "Der StreamingNode ist für die Abwicklung aller Streaming-Aufgaben zuständig. Die Anzahl der Ressourcen wirkt sich direkt auf den Durchsatz und die Latenz von Milvus für alle Streaming-Operationen aus, einschließlich der Suche nach wachsenden Daten, dem Schreiben von Daten und der Konvention von wal zu binlog (Streaming-Daten zu historischen Daten)."
     },
     "dependency": {
       "title": "Abhängigkeit",
@@ -102,5 +104,6 @@
     "tip1": "Wie führt man Milvus mit Docker Compose aus?",
     "tip2": "Wie führt man Milvus mit Helm Chart aus?",
     "tip3": "Wie führt man Milvus mit Milvus Operator aus?"
-  }
+  },
+  "woodpeckerTip": "Der <0>Woodpecker</0> ist für die Abwicklung aller Streaming-Aufgaben zuständig. Die Anzahl der Ressourcen wirkt sich direkt auf den Durchsatz und die Latenz von Milvus für alle Streaming-Operationen aus, einschließlich der Suche nach wachsenden Daten, des Schreibens von Daten, der Datenkonvention von wal zu binlog (Streaming-Daten zu historischen Daten)"
 }

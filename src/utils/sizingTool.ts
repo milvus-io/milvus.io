@@ -10,6 +10,8 @@ import {
   KafkaDataType,
   NodesKeyType,
   DataSizeUnit,
+  REFINE_VALUE_TO_N_MAP,
+  RefineValueEnum,
 } from '@/types/sizing';
 /**
  * params list:
@@ -156,6 +158,7 @@ export const memoryAndDiskCalculator = (params: {
   scalarAvg: number;
   segSize: number;
   mode: ModeEnum;
+  refineType: RefineValueEnum;
 }) => {
   const {
     rawDataSize,
@@ -167,6 +170,7 @@ export const memoryAndDiskCalculator = (params: {
     indexTypeParams,
     segSize,
     mode,
+    refineType,
   } = params;
   const {
     indexType,
@@ -179,7 +183,7 @@ export const memoryAndDiskCalculator = (params: {
   } = indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
   const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
-  const N = 8;
+  const N = REFINE_VALUE_TO_N_MAP[refineType];
 
   let result = {
     memory: 0,
@@ -1000,13 +1004,16 @@ export const helmYmlGenerator: (
   apacheType,
   mode
 ) => {
-  const showPulsar =
+  const usePulsar =
     mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Pulsar;
-  const showKafka =
+  const useKafka =
     mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Kafka;
-  const pulsarConfig = !showPulsar
-    ? ''
-    : `
+  const useWoodpecker =
+    mode === ModeEnum.Cluster &&
+    apacheType === DependencyComponentEnum.Woodpecker;
+
+  const pulsarConfig = usePulsar
+    ? `
 pulsarv3:
   enabled: true
   proxy:
@@ -1051,11 +1058,11 @@ pulsarv3:
       requests:
         memory: ${pulsarData.broker.memory}Gi
         cpu: ${pulsarData.broker.cpu}
-  `;
+  `
+    : undefined;
 
-  const kafkaConfig = !showKafka
-    ? ''
-    : `
+  const kafkaConfig = useKafka
+    ? `
 pulsarv3:
   enabled: false
 kafka:
@@ -1082,7 +1089,16 @@ kafka:
       limits:
         cpu: ${kafkaData.zookeeper.cpu}
         memory: ${kafkaData.zookeeper.memory}Gi
-  `;
+  `
+    : undefined;
+
+  const woodpeckerConfig = useWoodpecker
+    ? `
+pulsarv3:
+  enabled: false
+    `
+    : undefined;
+  const apacheConfig = pulsarConfig || kafkaConfig || woodpeckerConfig || '';
 
   return `mixCoordinator:
   replicas: ${mixCoord.count}
@@ -1141,7 +1157,7 @@ etcd:
     requests:
       cpu: ${etcdData.cpu}
       memory: ${etcdData.memory}Gi
-${apacheType === DependencyComponentEnum.Pulsar ? pulsarConfig : kafkaConfig}
+${apacheConfig}
 minio:
   resources:
     limits:
@@ -1187,13 +1203,16 @@ export const operatorYmlGenerator: (
   apacheType,
   mode
 ) => {
-  const showPulsar =
+  const usePulsar =
     mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Pulsar;
-  const showKafka =
+  const useKafka =
     mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Kafka;
-  const pulsarConfig = !showPulsar
-    ? ''
-    : `
+  const useWoodpecker =
+    mode === ModeEnum.Cluster &&
+    apacheType === DependencyComponentEnum.Woodpecker;
+
+  const pulsarConfig = usePulsar
+    ? `
     pulsarv3:
       inCluster:
         values:
@@ -1235,11 +1254,11 @@ export const operatorYmlGenerator: (
               requests:
                 memory: ${pulsarData.broker.memory}Gi
                 cpu: ${pulsarData.broker.cpu}
-  `;
+  `
+    : undefined;
 
-  const kafkaConfig = !showKafka
-    ? ''
-    : `
+  const kafkaConfig = useKafka
+    ? `
     msgStreamType: kafka
     kafka:
       inCluster:
@@ -1266,10 +1285,17 @@ export const operatorYmlGenerator: (
               limits:
                 cpu: ${kafkaData.zookeeper.cpu}
                 memory: ${kafkaData.zookeeper.memory}Gi
-  `;
+  `
+    : undefined;
 
-  const apacheConfig =
-    apacheType === DependencyComponentEnum.Pulsar ? pulsarConfig : kafkaConfig;
+  const woodpeckerConfig = useWoodpecker
+    ? `
+pulsarv3:
+  enabled: false
+    `
+    : undefined;
+
+  const apacheConfig = pulsarConfig || kafkaConfig || woodpeckerConfig || '';
 
   return `apiVersion: milvus.io/v1beta1
 kind: Milvus

@@ -1,4 +1,4 @@
-import { IIndexType, IndexTypeEnum } from '@/types/sizing';
+import { IIndexType, IndexTypeEnum, RefineValueEnum } from '@/types/sizing';
 import {
   RadioGroupItem,
   RadioGroup,
@@ -7,14 +7,20 @@ import {
   Tooltip,
   TooltipContent,
   TooltipArrow,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui';
 import classes from './index.module.less';
 import clsx from 'clsx';
-import { SizingInput, SizingRange } from '@/components/sizing';
+import { SizingInput, SizingRange, SizingSwitch } from '@/components/sizing';
 import {
   MAX_NODE_DEGREE_RANGE_CONFIG,
   N_LIST_RANGE_CONFIG,
   M_RANGE_CONFIG,
+  REFINE_OPTIONS,
 } from '@/consts/sizing';
 import { Trans, useTranslation } from 'react-i18next';
 import { useState } from 'react';
@@ -163,22 +169,78 @@ const IVFSQ8Component = (props: IndexTypeComponentProps) => {
   );
 };
 
-const RABITQComponent = (props: IndexTypeComponentProps) => {
+const RABITQComponent = (
+  props: IndexTypeComponentProps & {
+    refine?: string;
+    onRefineChange?: (value: RefineValueEnum) => void;
+  }
+) => {
   const { t } = useTranslation('sizingTool');
-  const { data, onChange } = props;
+  const { data, onChange, refine = '', onRefineChange = () => {} } = props;
+
+  const [displayRefine, setDisplayRefine] = useState(false);
+
+  const handleRefineDisplayChange = (display: boolean) => {
+    if (!display) {
+      onRefineChange(RefineValueEnum.None);
+    } else {
+      onRefineChange(RefineValueEnum.SQ6);
+    }
+    setDisplayRefine(display);
+  };
+
   return (
     <div className="mt-[16px]">
-      <p className={'text-[12px] font-[500] leading-[16px]'}>
-        {t('form.nlist')}
-      </p>
-      <SizingRange
-        rangeConfig={N_LIST_RANGE_CONFIG}
-        value={data.rabitqNList}
-        onRangeChange={value => {
-          onChange('rabitqNList', value);
-        }}
-        placeholder={`[${N_LIST_RANGE_CONFIG.min}, ${N_LIST_RANGE_CONFIG.max}]`}
-      />
+      <div className="flex items-center gap-[8px] mb-[16px]">
+        <p className="text-[12px] font-[500] leading-[16px]">
+          {t('form.refine')}
+        </p>
+        <SizingSwitch
+          checked={displayRefine}
+          onCheckedChange={handleRefineDisplayChange}
+        />
+      </div>
+      {displayRefine && (
+        <div className="">
+          <p className="text-[12px] font-[500] leading-[16px] mb-[8px]">
+            {t('form.refineType')}
+          </p>
+          <Select
+            value={refine}
+            onValueChange={val => {
+              onRefineChange(val as RefineValueEnum);
+            }}
+          >
+            <SelectTrigger className={clsx(classes.selectTrigger, 'mb-[16px]')}>
+              {refine}
+            </SelectTrigger>
+            <SelectContent>
+              {REFINE_OPTIONS.map(v => (
+                <SelectItem
+                  key={v.value}
+                  value={v.value}
+                  className={classes.selectItem}
+                >
+                  {v.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+      <div className="">
+        <p className={'text-[12px] font-[500] leading-[16px]'}>
+          {t('form.nlist')}
+        </p>
+        <SizingRange
+          rangeConfig={N_LIST_RANGE_CONFIG}
+          value={data.rabitqNList}
+          onRangeChange={value => {
+            onChange('rabitqNList', value);
+          }}
+          placeholder={`[${N_LIST_RANGE_CONFIG.min}, ${N_LIST_RANGE_CONFIG.max}]`}
+        />
+      </div>
     </div>
   );
 };
@@ -186,6 +248,8 @@ const RABITQComponent = (props: IndexTypeComponentProps) => {
 export const IndexTypeComponent = (props: {
   data: IIndexType;
   onChange: (key: string, value: any) => void;
+  refine?: string;
+  onRefineChange?: (value: RefineValueEnum) => void;
 }) => {
   const { data } = props;
   switch (data.indexType) {

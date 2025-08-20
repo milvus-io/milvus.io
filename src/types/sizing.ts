@@ -10,8 +10,8 @@ export enum IndexTypeEnum {
   SCANN = 'SCANN',
   HNSW = 'HNSW',
   IVF_FLAT = 'IVF_FLAT',
-  IVFSQ8 = 'IVFSQ8',
-  IVFRABITQ = 'IVFRABITQ',
+  IVFSQ8 = 'IVF_SQ8',
+  IVFRABITQ = 'IVF_RABITQ',
   DISKANN = 'DISKANN',
 }
 
@@ -24,6 +24,24 @@ export interface IIndexType {
   rabitqNList: number;
   m: number;
 }
+
+export enum RefineValueEnum {
+  None = 'None',
+  SQ6 = 'SQ6',
+  SQ8 = 'SQ8',
+  FP16 = 'FP16',
+  BF16 = 'BF16',
+  SQ32 = 'SQ32',
+}
+
+export const REFINE_VALUE_TO_N_MAP = {
+  [RefineValueEnum.SQ6]: 6,
+  [RefineValueEnum.SQ8]: 8,
+  [RefineValueEnum.FP16]: 16,
+  [RefineValueEnum.BF16]: 16,
+  [RefineValueEnum.SQ32]: 32,
+  [RefineValueEnum.None]: 0,
+} as const;
 
 export enum DependencyComponentEnum {
   Pulsar = 'pulsar',

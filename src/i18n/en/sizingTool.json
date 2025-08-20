@@ -2,7 +2,7 @@
   "title": "Milvus Sizing Tool",
   "content": "A tool for estimating resource requirements and generating a configuration for your Milvus deployment.",
   "tooltip": "<0>Note</0>: the config is our best estimation based on the experience but we suggest to test with your data and traffic pattern before launching to production.",
-  "woodpeckerTip": "The <0>Woodpecker</0> is responsible for handling all streaming tasks. The number of resources directly affects Milvus's throughput and latency for all streaming operations, including growing data search, data writing, data convention from wal to binlog (streaming data to historical data)",
+  "woodpeckerTip": "<0>Woodpecker</0> is a cloud-native write-ahead log (WAL) system since Milvus 2.6.0. It is designed to replace Kafka and Pulsar as MQ in Milvus to simplify operations, maximize throughput, and scale effortlessly. For now it is running embedded in the streaming nodes.",
   "form": {
     "num": "Number of Vectors",
     "dim": "Vector Dimension",
@@ -29,7 +29,9 @@
     "standalone": "Standalone",
     "standaloneDesc": "Suitable for small to medium scale.",
     "cluster": "Distributed",
-    "clusterDesc": "Suitable for large scale."
+    "clusterDesc": "Suitable for large scale.",
+    "refine": "Refine",
+    "refineType": "Refine Type"
   },
   "overview": {
     "title": "Resource Requirements",

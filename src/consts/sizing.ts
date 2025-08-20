@@ -3,6 +3,7 @@ import {
   IndexTypeEnum,
   DependencyComponentEnum,
   ModeEnum,
+  RefineValueEnum,
 } from '@/types/sizing';
 
 export const ONE_MILLION = Math.pow(10, 6);
@@ -81,7 +82,7 @@ export const INDEX_TYPE_OPTIONS = [
     value: IndexTypeEnum.IVF_FLAT,
   },
   {
-    label: 'IVFSQ8',
+    label: 'IVF_SQ8',
     value: IndexTypeEnum.IVFSQ8,
   },
   {
@@ -106,6 +107,33 @@ export const DEPENDENCY_COMPONENTS = [
   {
     label: 'Woodpecker',
     value: DependencyComponentEnum.Woodpecker,
+  },
+];
+
+export const REFINE_OPTIONS = [
+  {
+    label: 'None',
+    value: RefineValueEnum.None,
+  },
+  {
+    label: 'SQ6',
+    value: RefineValueEnum.SQ6,
+  },
+  {
+    label: 'SQ8',
+    value: RefineValueEnum.SQ8,
+  },
+  {
+    label: 'FP16',
+    value: RefineValueEnum.FP16,
+  },
+  {
+    label: 'BF16',
+    value: RefineValueEnum.BF16,
+  },
+  {
+    label: 'SQ32',
+    value: RefineValueEnum.SQ32,
   },
 ];
 

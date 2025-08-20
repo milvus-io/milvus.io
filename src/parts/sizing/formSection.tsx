@@ -32,6 +32,7 @@ import {
   N_LIST_RANGE_CONFIG,
   M_RANGE_CONFIG,
   MAXIMUM_AVERAGE_LENGTH,
+  REFINE_OPTIONS,
 } from '@/consts/sizing';
 import clsx from 'clsx';
 import {
@@ -39,6 +40,7 @@ import {
   ICalculateResult,
   IIndexType,
   ModeEnum,
+  RefineValueEnum,
 } from '@/types/sizing';
 import { IndexTypeComponent } from './indexTypeComponent';
 import {
@@ -53,7 +55,6 @@ import {
 import { Trans, useTranslation } from 'react-i18next';
 import { TooltipArrow } from '@radix-ui/react-tooltip';
 import { ExternalLinkIcon } from '@/components/icons';
-import { KafkaIcon, PulsarIcon } from './components';
 import Link from 'next/link';
 
 const MODE_CHANGE_THRESHOLD = $10M768D;
@@ -72,6 +73,8 @@ export default function FormSection(props: {
     ModeEnum | undefined
   >(undefined);
   const [rawDataSize, setRawDataSize] = useState(0);
+
+  const [refine, setRefine] = useState(REFINE_OPTIONS[0].value);
 
   const [form, setForm] = useState({
     vector: VECTOR_RANGE_CONFIG.defaultValue,
@@ -98,6 +101,10 @@ export default function FormSection(props: {
   });
 
   // const [disableStandalone, setDisableStandalone] = useState(false);
+
+  const handleRefineChange = (value: RefineValueEnum) => {
+    setRefine(value);
+  };
 
   const handleFormChange = (key: string, value: any) => {
     setForm({
@@ -224,6 +231,7 @@ export default function FormSection(props: {
       scalarAvg: form.scalarData.averageNum,
       segSize: Number(form.segmentSize),
       mode: currentMode,
+      refineType: refine,
     });
 
     const standaloneNodeConfig = standaloneNodeConfigCalculator({
@@ -255,7 +263,7 @@ export default function FormSection(props: {
       dependency: form.dependency,
       isOutOfCalculate: rawDataSize > $1B768D,
     });
-  }, [form, indexTypeParams]);
+  }, [form, indexTypeParams, refine]);
 
   const disableStandalone = useMemo(() => {
     return rawDataSize > MODE_CHANGE_THRESHOLD;
@@ -327,6 +335,8 @@ export default function FormSection(props: {
           <IndexTypeComponent
             data={indexTypeParams}
             onChange={handleIndexTypeParamsChange}
+            refine={refine}
+            onRefineChange={handleRefineChange}
           />
         </div>
         <div className="">

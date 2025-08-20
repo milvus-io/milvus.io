@@ -28,7 +28,9 @@
     "standaloneDesc": "Cocok untuk skala kecil hingga menengah.",
     "cluster": "Terdistribusi",
     "clusterDesc": "Cocok untuk skala besar.",
-    "segmentTooltip": "datacoord.segment.maxSize adalah parameter konfigurasi penyimpanan yang penting dalam Milvus. Parameter ini mendefinisikan ukuran satu segmen, yang merupakan unit penyimpanan fisik di Milvus. Meningkatkan nilai ini dapat meningkatkan kinerja kueri, tetapi juga akan menghabiskan lebih banyak sumber daya. <0>Lihat Lebih Lanjut.</0>"
+    "segmentTooltip": "datacoord.segment.maxSize adalah parameter konfigurasi penyimpanan yang penting dalam Milvus. Parameter ini mendefinisikan ukuran satu segmen, yang merupakan unit penyimpanan fisik di Milvus. Meningkatkan nilai ini dapat meningkatkan kinerja kueri, tetapi juga akan menghabiskan lebih banyak sumber daya. <0>Lihat Lebih Lanjut.</0>",
+    "refine": "Memurnikan",
+    "refineType": "Perbaiki Jenis"
   },
   "overview": {
     "title": "Kebutuhan Sumber Daya",
@@ -105,5 +107,5 @@
     "tip2": "Bagaimana menjalankan Milvus dengan Helm Chart?",
     "tip3": "Bagaimana menjalankan Milvus dengan Operator Milvus?"
   },
-  "woodpeckerTip": "<0>Woodpecker</0> bertanggung jawab untuk menangani semua tugas streaming. Jumlah sumber daya secara langsung memengaruhi throughput dan latensi Milvus untuk semua operasi streaming, termasuk pencarian data yang terus bertambah, penulisan data, konvensi data dari wal ke binlog (streaming data ke data historis)"
+  "woodpeckerTip": "<0>Woodpecker</0> adalah sistem write-ahead log (WAL) asli cloud sejak Milvus 2.6.0. Sistem ini dirancang untuk menggantikan Kafka dan Pulsar sebagai MQ di Milvus untuk menyederhanakan operasi, memaksimalkan throughput, dan menskalakan dengan mudah. Untuk saat ini, MQ ini berjalan tertanam dalam node streaming."
 }

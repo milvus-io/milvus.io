@@ -28,7 +28,9 @@
     "standaloneDesc": "Adapté pour les petites à moyennes échelles.",
     "cluster": "Distribué",
     "clusterDesc": "Adapté pour les grandes échelles.",
-    "segmentTooltip": "datacoord.segment.maxSize est un paramètre de configuration de stockage important dans Milvus. Il définit la taille d'un segment unique, qui est l'unité de stockage physique dans Milvus. L'augmentation de cette valeur peut améliorer les performances des requêtes, mais elle consomme également plus de ressources. <0>En savoir plus.</0>"
+    "segmentTooltip": "datacoord.segment.maxSize est un paramètre de configuration de stockage important dans Milvus. Il définit la taille d'un segment unique, qui est l'unité de stockage physique dans Milvus. L'augmentation de cette valeur peut améliorer les performances des requêtes, mais elle consomme également plus de ressources. <0>En savoir plus.</0>",
+    "refine": "Affiner",
+    "refineType": "Affiner le type"
   },
   "overview": {
     "title": "Besoins en ressources",
@@ -105,5 +107,5 @@
     "tip2": "Comment exécuter Milvus avec Helm Chart ?",
     "tip3": "Comment exécuter Milvus avec l'opérateur Milvus ?"
   },
-  "woodpeckerTip": "Le <0>pivert</0> est responsable de la gestion de toutes les tâches de diffusion en continu. Le nombre de ressources affecte directement le débit et la latence de Milvus pour toutes les opérations de diffusion en continu, y compris la recherche de données croissantes, l'écriture de données, la convention de données de wal à binlog (données de diffusion en continu vers des données historiques)."
+  "woodpeckerTip": "<0>Woodpecker</0> est un système WAL (write-ahead log) natif pour le cloud depuis Milvus 2.6.0. Il est conçu pour remplacer Kafka et Pulsar en tant que MQ dans Milvus afin de simplifier les opérations, de maximiser le débit et d'évoluer sans effort. Pour l'instant, il fonctionne de manière intégrée dans les nœuds de streaming."
 }

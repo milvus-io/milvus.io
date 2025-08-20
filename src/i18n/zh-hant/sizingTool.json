@@ -28,7 +28,9 @@
     "standaloneDesc": "適合小到中等規模。",
     "cluster": "分佈式",
     "clusterDesc": "適合大規模。",
-    "segmentTooltip": "datacoord.segment.maxSize 是 Milvus 中一個重要的儲存配置參數。它定義了單一區段的大小，也就是 Milvus 中的實體儲存單位。增加此值可提高查詢效能，但也會消耗更多的資源。<0>檢視更多。</0>"
+    "segmentTooltip": "datacoord.segment.maxSize 是 Milvus 中一個重要的儲存配置參數。它定義了單一區段的大小，也就是 Milvus 中的實體儲存單位。增加此值可提高查詢效能，但也會消耗更多的資源。<0>檢視更多。</0>",
+    "refine": "精煉",
+    "refineType": "精煉類型"
   },
   "overview": {
     "title": "資源需求",
@@ -105,5 +107,5 @@
     "tip2": "如何使用 Helm Chart 運行 Milvus？",
     "tip3": "如何使用 Milvus Operator 運行 Milvus？"
   },
-  "woodpeckerTip": "<0>啄木鳥</0>負責處理所有的串流任務。資源的數量直接影響 Milvus 所有串流作業的吞吐量和延遲，包括成長中的資料搜尋、資料寫入、從 wal 到 binlog 的資料慣例 (串流資料到歷史資料)"
+  "woodpeckerTip": "<0>Woodpecker</0>是自 Milvus 2.6.0 起推出的雲原生寫入日誌 (WAL) 系統。它旨在取代 Kafka 和 Pulsar 作為 Milvus 中的 MQ，以簡化作業、最大化吞吐量，並毫不費力地進行擴充。目前，它嵌入在串流節點中執行。"
 }

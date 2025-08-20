@@ -28,7 +28,9 @@
     "standaloneDesc": "Adequado para pequeno e médio porte.",
     "cluster": "Distribuído",
     "clusterDesc": "Adequado para grande porte.",
-    "segmentTooltip": "datacoord.segment.maxSize é um importante parâmetro de configuração de armazenamento em Milvus. Ele define o tamanho de um único segmento, que é a unidade de armazenamento físico em Milvus. Aumentar esse valor pode melhorar o desempenho da consulta, mas também consumirá mais recursos. <0>Veja mais.</0>"
+    "segmentTooltip": "datacoord.segment.maxSize é um importante parâmetro de configuração de armazenamento em Milvus. Ele define o tamanho de um único segmento, que é a unidade de armazenamento físico em Milvus. Aumentar esse valor pode melhorar o desempenho da consulta, mas também consumirá mais recursos. <0>Veja mais.</0>",
+    "refine": "Refinar",
+    "refineType": "Refinar tipo"
   },
   "overview": {
     "title": "Requisitos de Recursos",
@@ -105,5 +107,5 @@
     "tip2": "Como executar o Milvus com Helm Chart?",
     "tip3": "Como executar o Milvus com Operador do Milvus?"
   },
-  "woodpeckerTip": "O <0>Pica-pau</0> é responsável por lidar com todas as tarefas de streaming. O número de recursos afecta diretamente o débito e a latência do Milvus em todas as operações de streaming, incluindo a pesquisa de dados crescentes, a escrita de dados, a convenção de dados de wal para binlog (dados de streaming para dados históricos)"
+  "woodpeckerTip": "<0>O Woodpecker</0> é um sistema de registo de escrita antecipada (WAL) nativo da nuvem desde o Milvus 2.6.0. Ele foi projetado para substituir o Kafka e o Pulsar como MQ no Milvus para simplificar as operações, maximizar a taxa de transferência e escalar sem esforço. Por enquanto, ele está sendo executado incorporado nos nós de streaming."
 }

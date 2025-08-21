@@ -1096,8 +1096,11 @@ kafka:
     ? `
 pulsarv3:
   enabled: false
+woodpecker:
+  enabled: true
     `
     : undefined;
+
   const apacheConfig = pulsarConfig || kafkaConfig || woodpeckerConfig || '';
 
   return `mixCoordinator:
@@ -1294,6 +1297,9 @@ pulsarv3:
   enabled: false
     `
     : undefined;
+  const woodpeckerMsg = `
+  msgStreamType: woodpecker
+  `;
 
   const apacheConfig = pulsarConfig || kafkaConfig || woodpeckerConfig || '';
 
@@ -1337,6 +1343,7 @@ spec:
           memory: ${dataNode.memory}Gi
   config: {}
   dependencies:
+${useWoodpecker ? woodpeckerMsg : ''}
     etcd:
       inCluster:
         values:

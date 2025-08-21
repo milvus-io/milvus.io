@@ -23,7 +23,7 @@ import {
   REFINE_OPTIONS,
 } from '@/consts/sizing';
 import { Trans, useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 type IndexTypeComponentProps = {
   data: IIndexType;
@@ -180,6 +180,13 @@ const RABITQComponent = (
 
   const [displayRefine, setDisplayRefine] = useState(false);
 
+  const refineTypeOptions = useMemo(() => {
+    if (displayRefine) {
+      return REFINE_OPTIONS.filter(v => v.value !== RefineValueEnum.None);
+    }
+    return REFINE_OPTIONS;
+  }, [displayRefine]);
+
   const handleRefineDisplayChange = (display: boolean) => {
     if (!display) {
       onRefineChange(RefineValueEnum.None);
@@ -215,7 +222,7 @@ const RABITQComponent = (
               {refine}
             </SelectTrigger>
             <SelectContent>
-              {REFINE_OPTIONS.map(v => (
+              {refineTypeOptions.map(v => (
                 <SelectItem
                   key={v.value}
                   value={v.value}

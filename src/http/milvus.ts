@@ -43,7 +43,10 @@ export const fetchMilvusReleases = async () => {
       owner: OWNER,
       repo: REPOSITORY,
     });
-    const latestTag = res.data[0].tag_name;
+    const validReleases = res.data.filter(
+      item => !item.tag_name.includes('client')
+    );
+    const latestTag = validReleases[0].tag_name;
     return latestTag;
   } catch (error) {
     console.log(error);

@@ -26,7 +26,8 @@
     "label": "コミュニティ",
     "discord": "Discord",
     "github": "GitHub",
-    "more": "その他のチャンネル"
+    "more": "その他のチャンネル",
+    "officeHours": "ミルバス営業時間"
   },
   "start": "始める",
   "star": "スター",

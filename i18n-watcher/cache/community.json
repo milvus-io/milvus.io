@@ -4,7 +4,7 @@
   "apply": "Ambassador program",
   "officeHours": {
     "title": "Get Expert Help at Milvus Office Hours",
-    "content": "Book a free 1:1 session to get help with your production deployment from Zilliz, the experts on Milvus.",
+    "content": "Book a free 1:1 session to get help with your Milvus deployment or any other needs about vector searches.",
     "button": "Book Your Session"
   },
   "community": {

@@ -26,6 +26,7 @@
     "label": "Community",
     "discord": "Discord",
     "github": "GitHub",
+    "officeHours": "Milvus Office Hours",
     "more": "More Channels"
   },
   "start": "Try Managed Milvus",

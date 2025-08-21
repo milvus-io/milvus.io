@@ -18,7 +18,10 @@ import { SocialMedias, SocialMediasCN } from '../socialMedias';
 import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
-import { ZILLIZ_OFFICIAL_WEBSITE } from '@/consts/externalLinks';
+import {
+  MILVUS_OFFICE_HOURS_URL,
+  ZILLIZ_OFFICIAL_WEBSITE,
+} from '@/consts/externalLinks';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
 
 type Props = {
@@ -114,6 +117,11 @@ const Footer = (props: Props) => {
         {
           name: 'Github',
           to: GITHUB_MILVUS_LINK,
+          isExternal: true,
+        },
+        {
+          name: t('header:community.officeHours'),
+          to: MILVUS_OFFICE_HOURS_URL,
           isExternal: true,
         },
       ],

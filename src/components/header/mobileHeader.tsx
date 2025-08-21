@@ -25,6 +25,7 @@ import {
   DISCORD_INVITE_URL,
   GITHUB_MILVUS_COMMUNITY_LINK,
 } from '@/consts/links';
+import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 import { RightTopArrowIcon } from '../icons';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { LanguageSelector } from '../language-selector';
@@ -279,6 +280,15 @@ export default function MobileHeader(props: {
                       className={classes.externalLinkButton}
                     >
                       {t('community.github')}
+                      <RightTopArrowIcon />
+                    </a>
+                    <a
+                      href={MILVUS_OFFICE_HOURS_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={classes.externalLinkButton}
+                    >
+                      {t('community.officeHours')}
                       <RightTopArrowIcon />
                     </a>
                     <a href="/community" className={classes.externalLinkButton}>

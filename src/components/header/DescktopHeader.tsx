@@ -19,6 +19,7 @@ import {
   DISCORD_INVITE_URL,
   GITHUB_MILVUS_COMMUNITY_LINK,
 } from '@/consts/links';
+import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 import { LanguageSelector } from '@/components/language-selector';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 
@@ -126,6 +127,11 @@ export default function DesktopHeader(props: Props) {
         {
           label: t('community.github'),
           link: GITHUB_MILVUS_COMMUNITY_LINK,
+          rel: 'noopener noreferrer',
+        },
+        {
+          label: t('community.officeHours'),
+          link: MILVUS_OFFICE_HOURS_URL,
           rel: 'noopener noreferrer',
         },
         {

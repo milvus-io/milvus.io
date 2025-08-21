@@ -13,6 +13,7 @@ import { RightTopArrowIcon } from '@/components/icons/RightTopArrow';
 import { LanguageEnum } from '@/types/localization';
 import { FC, useState } from 'react';
 import { MilvusWechatQRCodePopper } from '@/components/socialMedias';
+import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 
 type Props = {
   locale: LanguageEnum;
@@ -229,7 +230,7 @@ export const Community: FC<Props> = (props: Props) => {
                 <CustomButton
                   variant="contained"
                   className={classes.linkBtn}
-                  href="/blog/join-milvus-office-hours-to-get-support-from-vectordb-experts.md"
+                  href={MILVUS_OFFICE_HOURS_URL}
                   endIcon={<RightTopArrowIcon />}
                 >
                   {t('officeHours.button')}

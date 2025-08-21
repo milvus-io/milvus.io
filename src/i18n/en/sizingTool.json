@@ -2,6 +2,7 @@
   "title": "Milvus Sizing Tool",
   "content": "A tool for estimating resource requirements and generating a configuration for your Milvus deployment.",
   "tooltip": "<0>Note</0>: the config is our best estimation based on the experience but we suggest to test with your data and traffic pattern before launching to production.",
+  "woodpeckerTip": "<0>Woodpecker</0> is a cloud-native write-ahead log (WAL) system since Milvus 2.6.0. It is designed to replace Kafka and Pulsar as MQ in Milvus to simplify operations, maximize throughput, and scale effortlessly. For now it is running embedded in the streaming nodes.",
   "form": {
     "num": "Number of Vectors",
     "dim": "Vector Dimension",
@@ -28,7 +29,9 @@
     "standalone": "Standalone",
     "standaloneDesc": "Suitable for small to medium scale.",
     "cluster": "Distributed",
-    "clusterDesc": "Suitable for large scale."
+    "clusterDesc": "Suitable for large scale.",
+    "refine": "Refine",
+    "refineType": "Refine Type"
   },
   "overview": {
     "title": "Resource Requirements",
@@ -50,13 +53,15 @@
       "dataNode": "Data Node",
       "indexNode": "Index Node",
       "queryNode": "Query Node",
+      "streamNode": "Stream Node",
       "diskSize": "<0>Local Disk</0>: <1>{{size}}</1>",
       "proxyTip": "Proxy is the access layer of the system and endpoint for users. Tips: Allocate more resources to handle higher QPS workload.",
       "mixCoordTip": "Mix coord is responsible for scheduling cluster background tasks, maintaining metadata topology, handling DDL, DCL, and TSO allocation.",
       "queryNodeTip": "Query node is responsible for data query and search. Tips: Allocate more resources to handle read-heavy workload. ",
       "dataNodeTip": "Data node retrieves incremental log data by subscribing to the log broker, processes mutation requests, and packs log data into log snapshots and stores them in the object storage. Tips: Allocate more resources to handle write-heavy workload.",
       "indexNodeTip": "Index node is responsible for building indexes. The amount of resources may affect the speed of index building. You can increase or decrease this resource according to actual needs.",
-      "standaloneNode": "Standalone Node"
+      "standaloneNode": "Standalone Node",
+      "streamNodeTip": "The StreamingNode is responsible for handling all streaming tasks. The number of resources directly affects Milvus's throughput and latency for all streaming operations, including growing data search, data writing, data convention from wal to binlog (streaming data to historical data)."
     },
     "dependency": {
       "title": "Dependency",

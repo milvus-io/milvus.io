@@ -26,7 +26,8 @@
     "label": "社區",
     "discord": "Discord",
     "github": "GitHub",
-    "more": "更多頻道"
+    "more": "更多頻道",
+    "officeHours": "Milvus 辦公時間"
   },
   "start": "開始使用",
   "star": "星標",

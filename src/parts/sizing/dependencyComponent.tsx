@@ -15,6 +15,7 @@ import {
 } from '@/components/ui';
 import { formatOutOfCalData } from '@/utils/sizingTool';
 import { DataCard, PulsarIcon, KafkaIcon } from './components';
+import { useMemo } from 'react';
 
 export const DependencyComponent = (props: {
   data: DependencyConfigType;
@@ -24,6 +25,13 @@ export const DependencyComponent = (props: {
 }) => {
   const { t } = useTranslation('sizingTool');
   const { data, mode, dependency, isOutOfCalculate } = props;
+
+  const showApacheComponent = useMemo(() => {
+    return (
+      mode === ModeEnum.Cluster &&
+      dependency !== DependencyComponentEnum.Woodpecker
+    );
+  }, [mode, dependency]);
 
   const { etcd, minio, pulsar, kafka } = data;
 
@@ -37,7 +45,9 @@ export const DependencyComponent = (props: {
     return (
       <div className={classes.configContainer}>
         <h5 className="flex items-center gap-[4px] mb-[12px]">
-          <PulsarIcon color="#188FFF" />
+          <span className={classes.iconWrapper}>
+            <PulsarIcon color="#188FFF" />
+          </span>
           <TooltipProvider>
             <Tooltip delayDuration={0}>
               <TooltipTrigger
@@ -152,7 +162,9 @@ export const DependencyComponent = (props: {
     return (
       <div className={classes.configContainer}>
         <h5 className="flex items-center gap-[4px] mb-[12px]">
-          <KafkaIcon color="#188FFF" />
+          <span className={classes.iconWrapper}>
+            <KafkaIcon color="#188FFF" />
+          </span>
           <TooltipProvider>
             <Tooltip delayDuration={0}>
               <TooltipTrigger
@@ -289,7 +301,7 @@ export const DependencyComponent = (props: {
           isOutOfCalculate={isOutOfCalculate}
         />
       </div>
-      {mode === ModeEnum.Cluster && (
+      {showApacheComponent && (
         <>
           {dependency === DependencyComponentEnum.Pulsar ? (
             <PulsarInfo pulsar={pulsar} isOutOfCalculate={isOutOfCalculate} />

@@ -1293,8 +1293,8 @@ export const operatorYmlGenerator: (
 
   const woodpeckerConfig = useWoodpecker
     ? `
-pulsarv3:
-  enabled: false
+    pulsarv3:
+      enabled: false
     `
     : undefined;
   const woodpeckerMsg = `

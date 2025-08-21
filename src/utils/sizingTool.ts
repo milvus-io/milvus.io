@@ -1298,7 +1298,7 @@ pulsarv3:
     `
     : undefined;
   const woodpeckerMsg = `
-  msgStreamType: woodpecker
+    msgStreamType: woodpecker
   `;
 
   const apacheConfig = pulsarConfig || kafkaConfig || woodpeckerConfig || '';

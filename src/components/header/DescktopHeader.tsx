@@ -18,6 +18,7 @@ import {
   GITHUB_DEEP_SEARCHER_LINK,
   DISCORD_INVITE_URL,
   GITHUB_MILVUS_COMMUNITY_LINK,
+  GITHUB_CLAUDE_CONTEXT_LINK,
 } from '@/consts/links';
 import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 import { LanguageSelector } from '@/components/language-selector';
@@ -110,6 +111,11 @@ export default function DesktopHeader(props: Props) {
         {
           label: t('tools.deepSearcher'),
           link: GITHUB_DEEP_SEARCHER_LINK,
+          rel: 'noopener noreferrer',
+        },
+        {
+          label: t('tools.claudeContext'),
+          link: GITHUB_CLAUDE_CONTEXT_LINK,
           rel: 'noopener noreferrer',
         },
       ],

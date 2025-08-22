@@ -24,6 +24,7 @@ import {
   GITHUB_MILVUS_LINK,
   DISCORD_INVITE_URL,
   GITHUB_MILVUS_COMMUNITY_LINK,
+  GITHUB_CLAUDE_CONTEXT_LINK,
 } from '@/consts/links';
 import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 import { RightTopArrowIcon } from '../icons';
@@ -204,29 +205,43 @@ export default function MobileHeader(props: {
                       {t('tools.cli')}
                       <RightTopArrowIcon />
                     </a>
-                    <a
+                    <Link
                       href="/tools/sizing"
                       className={classes.externalLinkButton}
                     >
-                      {t('tools.sizing')} <RightTopArrowIcon />
-                    </a>
+                      {t('tools.sizing')}
+                    </Link>
                     <a
                       href={GITHUB_MILVUS_BACKUP_LINK}
                       className={classes.externalLinkButton}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {t('tools.backup')} <RightTopArrowIcon />
                     </a>
                     <a
                       href={GITHUB_VTS_LINK}
                       className={classes.externalLinkButton}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {t('tools.vts')} <RightTopArrowIcon />
                     </a>
                     <a
                       href={GITHUB_DEEP_SEARCHER_LINK}
                       className={classes.externalLinkButton}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {t('tools.deepSearcher')} <RightTopArrowIcon />
+                    </a>
+                    <a
+                      href={GITHUB_CLAUDE_CONTEXT_LINK}
+                      className={classes.externalLinkButton}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t('tools.claudeContext')} <RightTopArrowIcon />
                     </a>
                   </List>
                 </Collapse>

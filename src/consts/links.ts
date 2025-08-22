@@ -14,6 +14,8 @@ export const GITHUB_ATTU_LINK = 'https://github.com/zilliztech/attu';
 export const GITHUB_VTS_LINK = 'https://github.com/zilliztech/vts';
 export const GITHUB_DEEP_SEARCHER_LINK =
   'https://github.com/zilliztech/deep-searcher';
+export const GITHUB_CLAUDE_CONTEXT_LINK =
+  'https://github.com/zilliztech/claude-context';
 export const GITHUB_MILVUS_CLI_LINK =
   'https://github.com/zilliztech/milvus_cli';
 export const GITHUB_MILVUS_BACKUP_LINK =

@@ -19,7 +19,8 @@
     "sizing": "사이징 도구",
     "backup": "Milvus 백업",
     "vts": "VTS",
-    "deepSearcher": "딥 서처"
+    "deepSearcher": "딥 서처",
+    "claudeContext": "클로드 컨텍스트"
   },
   "blog": "블로그",
   "community": {

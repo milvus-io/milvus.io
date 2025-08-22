@@ -19,7 +19,8 @@
     "sizing": "Инструмент размещения",
     "backup": "Резервное копирование Milvus",
     "vts": "VTS",
-    "deepSearcher": "Глубокий искатель"
+    "deepSearcher": "Глубокий искатель",
+    "claudeContext": "Клод Контекст"
   },
   "blog": "Блог",
   "community": {

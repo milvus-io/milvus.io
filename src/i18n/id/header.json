@@ -19,7 +19,8 @@
     "sizing": "Alat Ukuran",
     "backup": "Cadangan Milvus",
     "vts": "VTS",
-    "deepSearcher": "Deep Searcher"
+    "deepSearcher": "Deep Searcher",
+    "claudeContext": "Konteks Claude"
   },
   "blog": "Blog",
   "community": {

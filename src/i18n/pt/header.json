@@ -19,7 +19,8 @@
     "sizing": "Ferramenta de Dimensionamento",
     "backup": "Backup Milvus",
     "vts": "VTS",
-    "deepSearcher": "Pesquisador profundo"
+    "deepSearcher": "Pesquisador profundo",
+    "claudeContext": "Contexto de Claude"
   },
   "blog": "Blog",
   "community": {

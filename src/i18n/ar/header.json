@@ -19,7 +19,8 @@
     "sizing": "أداة التحجيم",
     "backup": "نسخ احتياطي Milvus",
     "vts": "VTS",
-    "deepSearcher": "باحث عميق"
+    "deepSearcher": "باحث عميق",
+    "claudeContext": "سياق كلود كلود"
   },
   "blog": "المدونة",
   "community": {

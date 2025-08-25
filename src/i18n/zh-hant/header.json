@@ -19,7 +19,8 @@
     "sizing": "配置工具",
     "backup": "Milvus 備份",
     "vts": "VTS",
-    "deepSearcher": "深度搜尋器"
+    "deepSearcher": "深度搜尋器",
+    "claudeContext": "Claude Context"
   },
   "blog": "博客",
   "community": {

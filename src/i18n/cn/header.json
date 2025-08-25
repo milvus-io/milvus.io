@@ -18,7 +18,8 @@
     "cli": "Milvus CLI",
     "sizing": "配置工具",
     "backup": "Milvus 备份",
-    "deepSearcher": "深度搜索器"
+    "deepSearcher": "深度搜索器",
+    "claudeContext": "Claude Context"
   },
   "blog": "博客",
   "community": {

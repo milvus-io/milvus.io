@@ -75,7 +75,7 @@ jobs:
             --build-arg MSERVICE_URL=${{ secrets.MSERVICE_URL }} \
             --build-arg CMS_BASE_URL=${{ secrets.CMS_BASE_URL }} \
             --build-arg REPO_STATICS_KEY=${{ secrets.REPO_STATICS_KEY }} \
-            --build-arg INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY }} \
+            --build-arg INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY_DEV }} \
             --build-arg IS_PREVIEW=${{ secrets.PREVIEW_SITE }} \
             -t milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
             docker push milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}

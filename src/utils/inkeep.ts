@@ -126,9 +126,86 @@ const detectedSalesSignal = z.object({
   type: salesSignalType,
 });
 
+const supportSignalType = z
+  .union([
+    z.literal('technical_issue').describe(`
+      The user is reporting a bug, error, crash, timeout, or unexpected system behavior that blocks or disrupts usage.
+      Examples:
+      • "Request timed out."
+      • "Fail to start with docker compose."
+      • "Pod crashes due to panics when syncing segment"
+      • "RootCoordClient message key not exist"
+      • "Failed to load collection."
+      • "Quota exceeded"
+      • "Fail to connect S3 with CA certs."
+      • "Inconsistent search results when topK is large."
+    `),
+
+    z.literal('deployment_and_setup').describe(`
+      The user is asking about how to install, configure, or tune Milvus.
+      Examples:
+      • "How do I configure Milvus to use external MinIO?"
+      • "How to upgrade from Milvus 2.4 to 2.6?"
+      • "How do I set resource limits for index nodes?"
+    `),
+
+    z.literal('system_operations').describe(`
+      The user is asking about managing or operating a running Milvus system, including monitoring, scaling, and maintenance.
+      • "How do I monitor Milvus metrics in Prometheus/Grafana?"
+      • "What’s the best way to scale query nodes horizontally?"
+      • "How can I back up and restore Milvus data?"
+      • "How to perform rolling upgrades without downtime?"
+    `),
+
+    z.literal('data_and_performance').describe(`
+      The user is experiencing missing data, incorrect query results, or performance problems.
+      Examples:
+      • "Inserted data not returned in query results."
+      • "Deleted entities still appear in search results."
+      • "Index building takes 10x longer than expected."
+      • "Queries take several seconds instead of milliseconds."
+    `),
+
+    z.literal('integration_and_solutions').describe(`
+      The user is blocked or has questions while integrating Milvus with external systems, frameworks, or building/operating solutions on top of it.
+      Examples:
+      • "LangChain integration throws connection errors."
+      • "Building a semantic search solution but results are poor."
+      • "Do you support Pinecone migration?"
+      • "How do I design schema for a product search pipeline?"
+    `),
+
+    z.literal('ai_low_confidence_or_docs_missing').describe(`
+      The AI assistant was unable to provide a confident or complete answer due to vague input or lack of documentation.
+      Examples:
+      • "I don't know."
+      • "I can't find relevant information in the documentation."
+      • "You should reach out the community."
+      • "Let's try something else."
+    `),
+
+    z.literal('direct_support_request').describe(`
+      The user is explicitly requesting to contact support or asking for human assistance.
+      Examples:
+      • "Can I talk to support?"
+      • "I need help"
+      • "Is there someone I can speak to?"
+    `),
+  ])
+  .describe("General type of support signal detected in the user's message.");
+
+const detectedSupportSignal = z.object({
+  explanation: z
+    .string()
+    .describe('Short justification for why this is a support-related message.'),
+  type: supportSignalType,
+});
+
 export {
   answerConfidence,
   provideAnswerConfidenceSchema,
   salesSignalType,
   detectedSalesSignal,
+  supportSignalType,
+  detectedSupportSignal,
 };

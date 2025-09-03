@@ -181,7 +181,7 @@ export const useInkeepSettings = ({
           ) {
             return [
               {
-                label: 'Talk to Us',
+                label: 'Book Milvus Office Hours',
                 icon: { builtIn: 'IoHelpBuoyOutline' },
                 action: {
                   type: 'open_link',

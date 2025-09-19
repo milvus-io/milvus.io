@@ -1115,7 +1115,7 @@ proxy:
     limits:
       cpu: ${proxy.cpu}
       memory: ${proxy.memory}Gi
-streamNode:
+streamingNode:
   replicas: ${streamNode.count}
   resources: 
     limits:
@@ -1216,6 +1216,7 @@ export const operatorYmlGenerator: (
 
   const pulsarConfig = usePulsar
     ? `
+    msgStreamType: pulsar
     pulsarv3:
       inCluster:
         values:
@@ -1291,17 +1292,11 @@ export const operatorYmlGenerator: (
   `
     : undefined;
 
-  const woodpeckerConfig = useWoodpecker
-    ? `
-    pulsarv3:
-      enabled: false
-    `
-    : undefined;
   const woodpeckerMsg = `
     msgStreamType: woodpecker
   `;
 
-  const apacheConfig = pulsarConfig || kafkaConfig || woodpeckerConfig || '';
+  const apacheConfig = pulsarConfig || kafkaConfig || '';
 
   return `apiVersion: milvus.io/v1beta1
 kind: Milvus
@@ -1310,6 +1305,7 @@ metadata:
   labels:
     app: milvus
 spec:
+  mode: ${mode === ModeEnum.Cluster ? 'cluster' : 'standalone'}
   components:
     mixCoord:
       replicas: ${mixCoord.count}
@@ -1317,7 +1313,7 @@ spec:
         limits:
           cpu: ${mixCoord.cpu}
           memory: ${mixCoord.memory}Gi
-    streamNode:
+    streamingNode:
       replicas: ${streamNode.count}
       resources:
         limits:

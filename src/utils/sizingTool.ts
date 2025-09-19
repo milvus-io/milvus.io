@@ -1217,7 +1217,7 @@ export const operatorYmlGenerator: (
   const pulsarConfig = usePulsar
     ? `
     msgStreamType: pulsar
-    pulsarv3:
+    pulsar:
       inCluster:
         values:
           proxy:

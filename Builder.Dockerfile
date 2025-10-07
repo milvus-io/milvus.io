@@ -1,4 +1,4 @@
-FROM node:18 AS base
+FROM node:22-slim AS base
 WORKDIR /app
 
 RUN npm install -g pnpm

@@ -56,6 +56,18 @@ jobs:
           git submodule set-branch --branch preview -- src/docs
           git submodule update --remote
 
+      - name: Clean up unnecessary version folders
+        run: |
+          # Remove old version folders from /docs/localization/
+          rm -rf src/docs/localization/v2.0.x
+          rm -rf src/docs/localization/v2.1.x
+          
+          # Remove old version folders from /docs/
+          rm -rf src/docs/v0.x
+          rm -rf src/docs/v1.1.1
+          rm -rf src/docs/v2.0.x
+          rm -rf src/docs/v2.1.x
+
       - name: Generate docker image tag name
         id: generate-tag-name
         run: |

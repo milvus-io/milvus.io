@@ -1,25 +1,32 @@
-FROM node:18 AS base
+FROM node:18-alpine AS base
 WORKDIR /app
 
+# Install pnpm and dependencies
 RUN npm install -g pnpm
+RUN apk add --no-cache git
 
 ARG REPO_STATICS_KEY
 ARG INKEEP_API_KEY
 ARG MSERVICE_URL
 ARG CMS_BASE_URL
+ARG IS_PREVIEW
 
 FROM base AS dependency
+# Copy only package files first for better caching
 COPY package.json pnpm-lock.yaml .npmrc ./
-RUN pnpm install --prefer-offline --frozen-lockfile
+RUN pnpm install --prefer-offline --frozen-lockfile --prod=false
 
 FROM dependency AS builder
-COPY src ./src
-COPY public ./public
-COPY scripts ./scripts
-COPY next.config.js next-env.d.ts sitemap.config.js ./
+# Copy source files in order of change frequency (least to most)
 COPY tsconfig.json typings.d.ts ./
 COPY .prettierrc tailwind.config.js postcss.config.js components.json ./
-RUN pnpm build --env=REPO_STATICS_KEY=$REPO_STATICS_KEY --env=INKEEP_API_KEY=$INKEEP_API_KEY --env=MSERVICE_URL=$MSERVICE_URL --env=CMS_BASE_URL=$CMS_BASE_URL
+COPY next.config.js next-env.d.ts sitemap.config.js ./
+COPY scripts ./scripts
+COPY public ./public
+COPY src ./src
+
+# Build with optimizations
+RUN pnpm build --env=REPO_STATICS_KEY=$REPO_STATICS_KEY --env=INKEEP_API_KEY=$INKEEP_API_KEY --env=MSERVICE_URL=$MSERVICE_URL --env=CMS_BASE_URL=$CMS_BASE_URL --env=IS_PREVIEW=$IS_PREVIEW
 
 # => Run container
 FROM zilliz/zilliz-web-runner

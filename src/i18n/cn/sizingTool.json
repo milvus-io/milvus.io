@@ -108,5 +108,6 @@
     "tip3": "如何使用 Milvus 操作员运行 Milvus？"
   },
   "woodpeckerTip": "<0>啄木鸟</0>（<0>Woodpecker</0>）是 Milvus 2.6.0 推出的云原生写日志（WAL）系统。它旨在取代 Kafka 和 Pulsar 作为 Milvus 中的 MQ，以简化操作、最大化吞吐量并轻松扩展。目前，它嵌入在流节点中运行。",
-  "previousVersion": "上一版本的尺寸工具在<0>这里</0>。"
+  "previousVersion": "上一版本的尺寸工具在<0>这里</0>。",
+  "titleV250": "用于 Milvus 的 Milvus 尺寸工具 v2.5.x"
 }

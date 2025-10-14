@@ -1,5 +1,6 @@
 {
   "title": "Milvus Sizing Tool",
+  "titleV250": "Milvus Sizing Tool for Milvus v2.5.x",
   "content": "A tool for estimating resource requirements and generating a configuration for your Milvus deployment.",
   "previousVersion": "Previous version of the sizing tool is <0>here</0>.",
   "tooltip": "<0>Note</0>: the config is our best estimation based on the experience but we suggest to test with your data and traffic pattern before launching to production.",

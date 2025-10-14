@@ -108,5 +108,6 @@
     "tip3": "如何使用 Milvus Operator 運行 Milvus？"
   },
   "woodpeckerTip": "<0>Woodpecker</0>是自 Milvus 2.6.0 起推出的雲原生寫入日誌 (WAL) 系統。它旨在取代 Kafka 和 Pulsar 作為 Milvus 中的 MQ，以簡化作業、最大化吞吐量，並毫不費力地進行擴充。目前，它嵌入在串流節點中執行。",
-  "previousVersion": "上一版本的尺寸工具在<0>這裡</0>。"
+  "previousVersion": "上一版本的尺寸工具在<0>這裡</0>。",
+  "titleV250": "Milvus Sizing Tool for Milvus v2.5.x"
 }

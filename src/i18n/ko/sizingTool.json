@@ -108,5 +108,6 @@
     "tip3": "Milvus Operator로 Milvus를 실행하는 방법은?"
   },
   "woodpeckerTip": "<0>딱따구리는</0> Milvus 2.6.0부터 클라우드 네이티브 WAL(미리 쓰기 로그) 시스템입니다. 운영을 간소화하고, 처리량을 극대화하며, 손쉽게 확장할 수 있도록 Milvus에서 Kafka와 Pulsar를 MQ로 대체하도록 설계되었습니다. 현재는 스트리밍 노드에 임베디드되어 실행되고 있습니다.",
-  "previousVersion": "이전 버전의 크기 조정 도구는 <0>여기에서</0> 확인할 수 있습니다."
+  "previousVersion": "이전 버전의 크기 조정 도구는 <0>여기에서</0> 확인할 수 있습니다.",
+  "titleV250": "Milvus v2.5.x용 Milvus 사이징 도구"
 }

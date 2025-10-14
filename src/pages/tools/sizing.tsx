@@ -18,6 +18,7 @@ import ZillizAdv from '@/parts/blogs/zillizAdv';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
 import { fetchMilvusReleases } from '@/http/milvus';
+import Link from 'next/link';
 
 const etcdBaseValue = {
   cpu: 0,
@@ -156,14 +157,21 @@ export default function SizingTool(props: Props) {
           )}
         >
           <h1 className={classes.title}>
-            <a
+            <Link
               href="https://zilliz.com/blog/demystify-milvus-sizing-tool"
               target="_blank"
             >
               {t('title')}
-            </a>
+            </Link>
           </h1>
-          <p className={classes.desc}>{t('content')}</p>
+          <p className={classes.content}>{t('content')}</p>
+          <p className={classes.desc}>
+            <Trans
+              t={t}
+              i18nKey="previousVersion"
+              components={[<Link key="link" href="/tools/sizing-v250"></Link>]}
+            />
+          </p>
 
           <div className={classes.contentContainer}>
             <FormSection

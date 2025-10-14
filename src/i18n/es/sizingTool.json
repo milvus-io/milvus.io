@@ -107,5 +107,6 @@
     "tip2": "¿Cómo ejecutar Milvus con Helm Chart?",
     "tip3": "¿Cómo ejecutar Milvus con Milvus Operator?"
   },
-  "woodpeckerTip": "<0>Woodpecker</0> es un sistema de registro de escritura anticipada (WAL) nativo de la nube desde Milvus 2.6.0. Está diseñado para sustituir a Kafka y Pulsar como MQ en Milvus para simplificar las operaciones, maximizar el rendimiento y escalar sin esfuerzo. Por ahora se ejecuta integrado en los nodos de streaming."
+  "woodpeckerTip": "<0>Woodpecker</0> es un sistema de registro de escritura anticipada (WAL) nativo de la nube desde Milvus 2.6.0. Está diseñado para sustituir a Kafka y Pulsar como MQ en Milvus para simplificar las operaciones, maximizar el rendimiento y escalar sin esfuerzo. Por ahora se ejecuta integrado en los nodos de streaming.",
+  "previousVersion": "La versión anterior de la herramienta de dimensionamiento está <0>aquí</0>."
 }

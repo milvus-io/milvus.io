@@ -165,3 +165,16 @@ export const HELM_CONFIG_FILE_NAME = 'helmConfigYml.yml';
 export const OPERATOR_CONFIG_FILE_NAME = 'operatorConfigYml.yml';
 
 export const MAXIMUM_AVERAGE_LENGTH = 60 * ONE_MILLION;
+
+export const SIZING_TOOL_VERSION_OPTIONS = [
+  {
+    label: 'Milvus 2.6.x',
+    value: 'Milvus 2.6.x',
+    href: '/tools/sizing',
+  },
+  {
+    label: 'Milvus 2.5.x',
+    value: 'Milvus 2.5.x',
+    href: '/tools/sizing-v250',
+  },
+];

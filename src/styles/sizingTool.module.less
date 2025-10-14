@@ -10,17 +10,48 @@
   font-family: 'Geist Mono';
   color: @color-black1;
 
-  .title {
-    text-align: center;
-    a {
-      .heading2();
-      margin-bottom: 12px;
+  .titleContainer {
+    position: relative;
+    margin-bottom: 12px;
 
-      font-family: 'Geist';
-      color: #000;
+    @media @tablet, @phone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-      &:hover {
-        text-decoration: underline;
+    .title {
+      text-align: center;
+      a {
+        .heading2();
+
+        font-family: 'Geist';
+        color: #000;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .selectContainer {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+
+      @media @tablet, @phone {
+        position: unset;
+        transform: translateY(0);
+      }
+
+      .selectTrigger {
+        padding: 6px 24px;
+        width: 100%;
+        height: fit-content;
       }
     }
   }

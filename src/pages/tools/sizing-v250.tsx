@@ -5,20 +5,17 @@ import classes from '@/styles/sizingTool.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
 import Head from 'next/head';
-import { ABSOLUTE_BASE_URL } from '@/consts';
-import FormSection from '@/parts/sizing/formSection';
-import ResultSection from '@/parts/sizing/resultSection';
+import FormSection from '@/parts/sizingV250/formSection';
+import ResultSection from '@/parts/sizingV250/resultSection';
 import {
   DependencyComponentEnum,
   ICalculateResult,
   ModeEnum,
-} from '@/types/sizing';
-import { InfoFilled } from '@/components/icons';
+} from '@/types/sizingV250';
 import ZillizAdv from '@/parts/blogs/zillizAdv';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
 import { fetchMilvusReleases } from '@/http/milvus';
-import Link from 'next/link';
 
 const etcdBaseValue = {
   cpu: 0,
@@ -110,7 +107,7 @@ export default function SizingTool(props: Props) {
         memory: 0,
         count: 0,
       },
-      streamNode: {
+      indexNode: {
         cpu: 0,
         memory: 0,
         count: 0,
@@ -135,7 +132,7 @@ export default function SizingTool(props: Props) {
     isOutOfCalculate: false,
   });
 
-  const asyncCalculatedResult = (result: ICalculateResult) => {
+  const updateCalculatedResult = (result: ICalculateResult) => {
     setCalculatedResult(result);
   };
 
@@ -144,10 +141,10 @@ export default function SizingTool(props: Props) {
       <Layout darkMode={false}>
         <Head>
           <title>
-            Milvus Sizing Tool · Vector Database built for scalable similarity
-            search
+            Milvus Sizing Tool for v2.5.0 · Vector Database built for scalable
+            similarity search
           </title>
-          <meta name="description" content="Sizing tool" />
+          <meta name="description" content="Sizing tool v2.5.0" />
         </Head>
 
         <div
@@ -157,26 +154,19 @@ export default function SizingTool(props: Props) {
           )}
         >
           <h1 className={classes.title}>
-            <Link
+            <a
               href="https://zilliz.com/blog/demystify-milvus-sizing-tool"
               target="_blank"
             >
               {t('title')}
-            </Link>
+            </a>
           </h1>
-          <p className={classes.content}>{t('content')}</p>
-          <p className={classes.desc}>
-            <Trans
-              t={t}
-              i18nKey="previousVersion"
-              components={[<Link key="link" href="/tools/sizing-v250"></Link>]}
-            />
-          </p>
+          <p className={classes.desc}>{t('content')}</p>
 
           <div className={classes.contentContainer}>
             <FormSection
               className={classes.leftSection}
-              asyncCalculatedResult={asyncCalculatedResult}
+              updateCalculatedResult={updateCalculatedResult}
             />
             <ResultSection
               className={classes.rightSection}

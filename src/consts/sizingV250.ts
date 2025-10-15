@@ -3,8 +3,7 @@ import {
   IndexTypeEnum,
   DependencyComponentEnum,
   ModeEnum,
-  RefineValueEnum,
-} from '@/types/sizing';
+} from '@/types/sizingV250';
 
 export const ONE_MILLION = Math.pow(10, 6);
 export const ONE_BILLION = Math.pow(10, 9);
@@ -82,12 +81,8 @@ export const INDEX_TYPE_OPTIONS = [
     value: IndexTypeEnum.IVF_FLAT,
   },
   {
-    label: 'IVF_SQ8',
+    label: 'IVFSQ8',
     value: IndexTypeEnum.IVFSQ8,
-  },
-  {
-    label: 'IVF_RABITQ',
-    value: IndexTypeEnum.IVFRABITQ,
   },
   {
     label: 'DISKANN',
@@ -104,37 +99,6 @@ export const DEPENDENCY_COMPONENTS = [
     label: 'Kafka',
     value: DependencyComponentEnum.Kafka,
   },
-  {
-    label: 'Woodpecker',
-    value: DependencyComponentEnum.Woodpecker,
-  },
-];
-
-export const REFINE_OPTIONS = [
-  {
-    label: 'None',
-    value: RefineValueEnum.None,
-  },
-  {
-    label: 'SQ6',
-    value: RefineValueEnum.SQ6,
-  },
-  {
-    label: 'SQ8',
-    value: RefineValueEnum.SQ8,
-  },
-  {
-    label: 'FP16',
-    value: RefineValueEnum.FP16,
-  },
-  {
-    label: 'BF16',
-    value: RefineValueEnum.BF16,
-  },
-  {
-    label: 'SQ32',
-    value: RefineValueEnum.SQ32,
-  },
 ];
 
 export const MODE_OPTIONS = [
@@ -145,6 +109,205 @@ export const MODE_OPTIONS = [
   {
     label: 'Distributed',
     value: ModeEnum.Cluster,
+  },
+];
+
+export const FIXED_QUERY_NODE_CONFIG = [
+  {
+    memory: [0, 8],
+    queryNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    proxy: {
+      cpu: 1,
+      memory: 4,
+      count: 1,
+    },
+    mixCoord: {
+      cpu: 1,
+      memory: 4,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+  },
+  {
+    memory: [8, 16],
+    queryNode: {
+      cpu: 4,
+      memory: 16,
+      count: 1,
+    },
+    proxy: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    mixCoord: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 4,
+      memory: 16,
+      count: 1,
+    },
+  },
+  {
+    memory: [16, 32],
+    queryNode: {
+      cpu: 4,
+      memory: 16,
+      count: 2,
+    },
+    proxy: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    mixCoord: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 4,
+      memory: 16,
+      count: 2,
+    },
+  },
+  {
+    memory: [32, 48],
+    queryNode: {
+      cpu: 4,
+      memory: 16,
+      count: 3,
+    },
+    proxy: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    mixCoord: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 4,
+      memory: 16,
+      count: 2,
+    },
+  },
+  {
+    memory: [48, 64],
+    queryNode: {
+      cpu: 4,
+      memory: 16,
+      count: 4,
+    },
+    proxy: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    mixCoord: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 4,
+      memory: 16,
+      count: 2,
+    },
+  },
+  {
+    memory: [64, 80],
+    queryNode: {
+      cpu: 4,
+      memory: 16,
+      count: 5,
+    },
+    proxy: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    mixCoord: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 4,
+      memory: 16,
+      count: 4,
+    },
+  },
+  {
+    memory: [80, 96],
+    queryNode: {
+      cpu: 4,
+      memory: 16,
+      count: 6,
+    },
+    proxy: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    mixCoord: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    dataNode: {
+      cpu: 2,
+      memory: 8,
+      count: 1,
+    },
+    indexNode: {
+      cpu: 4,
+      memory: 16,
+      count: 4,
+    },
   },
 ];
 
@@ -165,16 +328,3 @@ export const HELM_CONFIG_FILE_NAME = 'helmConfigYml.yml';
 export const OPERATOR_CONFIG_FILE_NAME = 'operatorConfigYml.yml';
 
 export const MAXIMUM_AVERAGE_LENGTH = 60 * ONE_MILLION;
-
-export const SIZING_TOOL_VERSION_OPTIONS = [
-  {
-    label: 'Milvus 2.6.x',
-    value: 'Milvus 2.6.x',
-    href: '/tools/sizing',
-  },
-  {
-    label: 'Milvus 2.5.x and earlier',
-    value: 'Milvus 2.5.x and earlier',
-    href: '/tools/sizing-v250',
-  },
-];

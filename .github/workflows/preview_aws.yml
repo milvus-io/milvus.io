@@ -30,6 +30,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: 'preview'
+          fetch-depth: 1
 
       - name: Verify Nginx configuration
         uses: addnab/docker-run-action@v3
@@ -48,13 +49,25 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: update submodules from preview branch
         run: |
           git submodule init
           git submodule set-branch --branch preview -- src/docs
           git submodule update --remote
+
+      - name: Clean up unnecessary version folders
+        run: |
+          # Remove old version folders from /docs/localization/
+          rm -rf src/docs/localization/v2.0.x
+          rm -rf src/docs/localization/v2.1.x
+          
+          # Remove old version folders from /docs/
+          rm -rf src/docs/v0.x
+          rm -rf src/docs/v1.1.1
+          rm -rf src/docs/v2.0.x
+          rm -rf src/docs/v2.1.x
 
       - name: Generate docker image tag name
         id: generate-tag-name

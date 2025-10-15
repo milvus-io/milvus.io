@@ -107,5 +107,7 @@
     "tip2": "Bagaimana menjalankan Milvus dengan Helm Chart?",
     "tip3": "Bagaimana menjalankan Milvus dengan Operator Milvus?"
   },
-  "woodpeckerTip": "<0>Woodpecker</0> adalah sistem write-ahead log (WAL) asli cloud sejak Milvus 2.6.0. Sistem ini dirancang untuk menggantikan Kafka dan Pulsar sebagai MQ di Milvus untuk menyederhanakan operasi, memaksimalkan throughput, dan menskalakan dengan mudah. Untuk saat ini, MQ ini berjalan tertanam dalam node streaming."
+  "woodpeckerTip": "<0>Woodpecker</0> adalah sistem write-ahead log (WAL) asli cloud sejak Milvus 2.6.0. Sistem ini dirancang untuk menggantikan Kafka dan Pulsar sebagai MQ di Milvus untuk menyederhanakan operasi, memaksimalkan throughput, dan menskalakan dengan mudah. Untuk saat ini, MQ ini berjalan tertanam dalam node streaming.",
+  "previousVersion": "Versi terdahulu dari alat pengukur ukuran ada <0>di sini</0>.",
+  "titleV250": "Alat Pengukur Ukuran Milvus untuk Milvus v2.5.x"
 }

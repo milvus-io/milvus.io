@@ -168,8 +168,8 @@ export default function SizingTool(props: Props) {
       <Layout darkMode={false}>
         <Head>
           <title>
-            Milvus Sizing Tool for Milvus v2.5.x · Vector Database built for
-            scalable similarity search
+            Milvus Sizing Tool for Milvus v2.5.x and earlier· Vector Database
+            built for scalable similarity search
           </title>
           <meta name="description" content="Sizing tool v2.5.x" />
         </Head>

@@ -29,12 +29,20 @@ import {
   MAXIMUM_AVERAGE_LENGTH,
 } from '@/consts/sizingV250';
 import clsx from 'clsx';
-import { ICalculateResult, IIndexType, ModeEnum } from '@/types/sizingV250';
+import {
+  ICalculateResult,
+  IIndexType,
+  IndexTypeEnum,
+  ModeEnum,
+} from '@/types/sizingV250';
 import { IndexTypeComponent } from './indexTypeComponent';
 import {
   memoryAndDiskCalculator,
   rawDataSizeCalculator,
   $10M768D,
+  $50M768D,
+  $500M768D,
+  $100M768D,
   dependencyCalculator,
   $1B768D,
   clusterNodesConfigCalculator,
@@ -45,7 +53,8 @@ import { TooltipArrow } from '@radix-ui/react-tooltip';
 import { ExternalLinkIcon } from '@/components/icons';
 import { KafkaIcon, PulsarIcon } from './components';
 
-const MODE_CHANGE_THRESHOLD = $10M768D;
+const NORMAL_CHANGE_THRESHOLD = $10M768D;
+const DISKANN_MODE_CHANGE_THRESHOLD = $50M768D;
 
 export default function FormSection(props: {
   className: string;
@@ -86,6 +95,11 @@ export default function FormSection(props: {
   });
 
   // const [disableStandalone, setDisableStandalone] = useState(false);
+  const modeChangeThreshold = useMemo(() => {
+    return indexTypeParams.indexType === IndexTypeEnum.DISKANN
+      ? DISKANN_MODE_CHANGE_THRESHOLD
+      : NORMAL_CHANGE_THRESHOLD;
+  }, [indexTypeParams.indexType]);
 
   const handleFormChange = (key: string, value: any) => {
     setForm({
@@ -197,7 +211,7 @@ export default function FormSection(props: {
 
   useEffect(() => {
     let mode =
-      rawDataSize > MODE_CHANGE_THRESHOLD
+      rawDataSize > modeChangeThreshold
         ? ModeEnum.Cluster
         : ModeEnum.Standalone;
     // if manually selected cluster mode, can't change to standalone automatically
@@ -208,7 +222,7 @@ export default function FormSection(props: {
       ...form,
       mode: manuallySelectedMode || mode,
     });
-  }, [rawDataSize]);
+  }, [rawDataSize, modeChangeThreshold]);
 
   useEffect(() => {
     const currentMode = form.mode;
@@ -256,8 +270,12 @@ export default function FormSection(props: {
   }, [form, indexTypeParams]);
 
   const disableStandalone = useMemo(() => {
-    return rawDataSize > MODE_CHANGE_THRESHOLD;
-  }, [rawDataSize]);
+    const disableThreshold =
+      indexTypeParams.indexType === IndexTypeEnum.DISKANN
+        ? $500M768D
+        : $100M768D;
+    return rawDataSize > disableThreshold;
+  }, [rawDataSize, indexTypeParams.indexType]);
 
   return (
     <section className={clsx(className, classes.formSection)}>

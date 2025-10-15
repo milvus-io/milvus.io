@@ -134,12 +134,28 @@ export const $10M768D = rawDataSizeCalculator({
   withScalar: false,
   scalarAvg: 0,
 });
-const $100M768D = rawDataSizeCalculator({
+
+export const $50M768D = rawDataSizeCalculator({
+  num: 50,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+
+export const $100M768D = rawDataSizeCalculator({
   num: 100,
   d: 768,
   withScalar: false,
   scalarAvg: 0,
 });
+
+export const $500M768D = rawDataSizeCalculator({
+  num: 500,
+  d: 768,
+  withScalar: false,
+  scalarAvg: 0,
+});
+
 export const $1B768D = rawDataSizeCalculator({
   num: 1000,
   d: 768,
@@ -271,8 +287,15 @@ export const memoryAndDiskCalculator = (params: {
 
 export const standaloneNodeConfigCalculator = (params: { memory: number }) => {
   const { size: memoryGb } = unitBYTE2Any(params.memory, 'GB');
-  const MEMORY_SIZE_OPTIONS = [8, 16, 32, 64];
-  const properMemorySize = MEMORY_SIZE_OPTIONS.find(item => item >= memoryGb);
+
+  let properMemorySize = 0;
+  if (memoryGb <= 8) {
+    properMemorySize = 8;
+  } else if (memoryGb <= 16) {
+    properMemorySize = 16;
+  } else {
+    properMemorySize = Math.ceil(memoryGb / 32) * 32;
+  }
   const properCoreSize = properMemorySize / 4;
 
   return {

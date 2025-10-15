@@ -173,8 +173,8 @@ export const SIZING_TOOL_VERSION_OPTIONS = [
     href: '/tools/sizing',
   },
   {
-    label: 'Milvus 2.5.x',
-    value: 'Milvus 2.5.x',
+    label: 'Milvus 2.5.x and earlier',
+    value: 'Milvus 2.5.x and earlier',
     href: '/tools/sizing-v250',
   },
 ];

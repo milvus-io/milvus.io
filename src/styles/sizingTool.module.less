@@ -14,7 +14,7 @@
     position: relative;
     margin-bottom: 12px;
 
-    @media @tablet, @phone {
+    @media (max-width: 1280px) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,6 +29,10 @@
 
         font-family: 'Geist';
         color: #000;
+        display: block;
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
 
         &:hover {
           text-decoration: underline;
@@ -41,9 +45,9 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 200px;
+      width: 250px;
 
-      @media @tablet, @phone {
+      @media (max-width: 1280px) {
         position: unset;
         transform: translateY(0);
       }

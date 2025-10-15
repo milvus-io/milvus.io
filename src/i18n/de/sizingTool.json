@@ -107,5 +107,7 @@
     "tip2": "Wie führt man Milvus mit Helm Chart aus?",
     "tip3": "Wie führt man Milvus mit Milvus Operator aus?"
   },
-  "woodpeckerTip": "<0>Woodpecker</0> ist seit Milvus 2.6.0 ein Cloud-natives Write-Ahead-Log-System (WAL). Es wurde entwickelt, um Kafka und Pulsar als MQ in Milvus zu ersetzen, um den Betrieb zu vereinfachen, den Durchsatz zu maximieren und mühelos zu skalieren. Zurzeit läuft es eingebettet in den Streaming-Knoten."
+  "woodpeckerTip": "<0>Woodpecker</0> ist seit Milvus 2.6.0 ein Cloud-natives Write-Ahead-Log-System (WAL). Es wurde entwickelt, um Kafka und Pulsar als MQ in Milvus zu ersetzen, um den Betrieb zu vereinfachen, den Durchsatz zu maximieren und mühelos zu skalieren. Zurzeit läuft es eingebettet in den Streaming-Knoten.",
+  "previousVersion": "Die vorherige Version des Größenbestimmungstools finden Sie <0>hier</0>.",
+  "titleV250": "Milvus Sizing Tool für Milvus v2.5.x"
 }

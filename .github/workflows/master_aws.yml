@@ -68,9 +68,6 @@ jobs:
           rm -rf src/docs/v2.0.x
           rm -rf src/docs/v2.1.x
 
-          # Remove unused json files
-          find src/docs/localization -type f -name "*.json" -delete
-
       - name: Generate docker image tag name
         id: generate-tag-name
         run: |

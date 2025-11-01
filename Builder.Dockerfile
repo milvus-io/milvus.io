@@ -10,7 +10,9 @@ ARG CMS_BASE_URL
 
 FROM base AS dependency
 COPY package.json pnpm-lock.yaml .npmrc ./
-RUN pnpm install --prefer-offline --frozen-lockfile
+RUN pnpm install --frozen-lockfile --prefer-offline \
+ && pnpm store prune \
+ && rm -rf /root/.pnpm-store
 
 FROM dependency AS builder
 COPY src ./src

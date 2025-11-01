@@ -61,12 +61,15 @@ jobs:
           # Remove old version folders from /docs/localization/
           rm -rf src/docs/localization/v2.0.x
           rm -rf src/docs/localization/v2.1.x
-          
+
           # Remove old version folders from /docs/
           rm -rf src/docs/v0.x
           rm -rf src/docs/v1.1.1
           rm -rf src/docs/v2.0.x
           rm -rf src/docs/v2.1.x
+
+          # Remove unused json files
+          find src/docs/localization -type f -name "*.json" -delete
 
       - name: Generate docker image tag name
         id: generate-tag-name

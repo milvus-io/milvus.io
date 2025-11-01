@@ -39,6 +39,7 @@ import {
   DependencyComponentEnum,
   ICalculateResult,
   IIndexType,
+  IndexTypeEnum,
   ModeEnum,
   RefineValueEnum,
 } from '@/types/sizing';
@@ -47,6 +48,9 @@ import {
   memoryAndDiskCalculator,
   rawDataSizeCalculator,
   $10M768D,
+  $50M768D,
+  $500M768D,
+  $100M768D,
   dependencyCalculator,
   $1B768D,
   clusterNodesConfigCalculator,
@@ -57,7 +61,8 @@ import { TooltipArrow } from '@radix-ui/react-tooltip';
 import { ExternalLinkIcon } from '@/components/icons';
 import Link from 'next/link';
 
-const MODE_CHANGE_THRESHOLD = $10M768D;
+const NORMAL_CHANGE_THRESHOLD = $10M768D;
+const DISKANN_MODE_CHANGE_THRESHOLD = $50M768D;
 
 export default function FormSection(props: {
   className: string;
@@ -99,6 +104,12 @@ export default function FormSection(props: {
     rabitqNList: N_LIST_RANGE_CONFIG.defaultValue,
     m: M_RANGE_CONFIG.defaultValue,
   });
+
+  const modeChangeThreshold = useMemo(() => {
+    return indexTypeParams.indexType === IndexTypeEnum.DISKANN
+      ? DISKANN_MODE_CHANGE_THRESHOLD
+      : NORMAL_CHANGE_THRESHOLD;
+  }, [indexTypeParams.indexType]);
 
   // const [disableStandalone, setDisableStandalone] = useState(false);
 
@@ -205,7 +216,7 @@ export default function FormSection(props: {
 
   useEffect(() => {
     let mode =
-      rawDataSize > MODE_CHANGE_THRESHOLD
+      rawDataSize > modeChangeThreshold
         ? ModeEnum.Cluster
         : ModeEnum.Standalone;
     // if manually selected cluster mode, can't change to standalone automatically
@@ -216,7 +227,7 @@ export default function FormSection(props: {
       ...form,
       mode: manuallySelectedMode || mode,
     });
-  }, [rawDataSize]);
+  }, [rawDataSize, modeChangeThreshold]);
 
   useEffect(() => {
     const currentMode = form.mode;
@@ -266,8 +277,12 @@ export default function FormSection(props: {
   }, [form, indexTypeParams, refine]);
 
   const disableStandalone = useMemo(() => {
-    return rawDataSize > MODE_CHANGE_THRESHOLD;
-  }, [rawDataSize]);
+    const disableThreshold =
+      indexTypeParams.indexType === IndexTypeEnum.DISKANN
+        ? $500M768D
+        : $100M768D;
+    return rawDataSize > disableThreshold;
+  }, [rawDataSize, indexTypeParams.indexType]);
 
   return (
     <section className={clsx(className, classes.formSection)}>

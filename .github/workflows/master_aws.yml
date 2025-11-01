@@ -22,9 +22,9 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - name: Free up space
+      - name: Free up disk space (fast)
         run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo rm -rf /usr/share/dotnet || true
           df -h
 
       - uses: azure/docker-login@v1

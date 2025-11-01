@@ -22,6 +22,11 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      - name: Free up space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          df -h
+
       - uses: azure/docker-login@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME}}

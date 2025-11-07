@@ -10,11 +10,11 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_OPTIONS: '--max_old_space_size=8192'
+  NODE_OPTIONS: "--max_old_space_size=8192"
 
 jobs:
   build:
-    runs-on: 'ubuntu-latest'
+    runs-on: "ubuntu-latest"
     outputs:
       docker-image-tag: ${{ steps.generate-tag-name.outputs.docker_tag }}
     concurrency:
@@ -22,6 +22,11 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      - name: Free up disk space (fast)
+        run: |
+          sudo rm -rf /usr/share/dotnet || true
+          df -h
+
       - uses: azure/docker-login@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME}}
@@ -29,7 +34,7 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-          ref: 'preview'
+          ref: "preview"
           fetch-depth: 1
 
       - name: Verify Nginx configuration
@@ -49,7 +54,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: update submodules from preview branch
         run: |
@@ -62,7 +67,7 @@ jobs:
           # Remove old version folders from /docs/localization/
           rm -rf src/docs/localization/v2.0.x
           rm -rf src/docs/localization/v2.1.x
-          
+
           # Remove old version folders from /docs/
           rm -rf src/docs/v0.x
           rm -rf src/docs/v1.1.1

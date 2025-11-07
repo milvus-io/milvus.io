@@ -19,14 +19,16 @@
     "sizing": "أداة التحجيم",
     "backup": "نسخ احتياطي Milvus",
     "vts": "VTS",
-    "deepSearcher": "باحث عميق"
+    "deepSearcher": "باحث عميق",
+    "claudeContext": "سياق كلود كلود"
   },
   "blog": "المدونة",
   "community": {
     "label": "المجتمع",
     "discord": "Discord",
     "github": "GitHub",
-    "more": "المزيد من القنوات"
+    "more": "المزيد من القنوات",
+    "officeHours": "ساعات عمل مكتب ميلفوس"
   },
   "start": "ابدأ",
   "star": "نجمة",

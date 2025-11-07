@@ -19,14 +19,16 @@
     "sizing": "配置工具",
     "backup": "Milvus 備份",
     "vts": "VTS",
-    "deepSearcher": "深度搜尋器"
+    "deepSearcher": "深度搜尋器",
+    "claudeContext": "Claude Context"
   },
   "blog": "博客",
   "community": {
     "label": "社區",
     "discord": "Discord",
     "github": "GitHub",
-    "more": "更多頻道"
+    "more": "更多頻道",
+    "officeHours": "Milvus 辦公時間"
   },
   "start": "開始使用",
   "star": "星標",

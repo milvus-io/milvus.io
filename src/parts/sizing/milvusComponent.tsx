@@ -34,7 +34,8 @@ export const MilvusComponent = (props: {
     memorySize,
     rawDataSize,
   } = props;
-  const { proxy, mixCoord, dataNode, indexNode, queryNode } = clusterNodeConfig;
+  const { proxy, mixCoord, dataNode, streamNode, queryNode } =
+    clusterNodeConfig;
 
   return (
     <div className={classes.milvusDataDetail}>
@@ -156,20 +157,20 @@ export const MilvusComponent = (props: {
                       classes.tooltipTrigger
                     )}
                   >
-                    {t('setup.milvus.indexNode')}
+                    {t('setup.milvus.streamNode')}
                   </TooltipTrigger>
                   <TooltipContent sideOffset={5} className="w-[280px]">
-                    {t('setup.milvus.indexNodeTip')}
+                    {t('setup.milvus.streamNodeTip')}
                     <TooltipArrow />
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             }
             data={t('setup.basic.config', {
-              cpu: indexNode.cpu,
-              memory: indexNode.memory,
+              cpu: streamNode.cpu,
+              memory: streamNode.memory,
             })}
-            count={indexNode.count}
+            count={streamNode.count}
             classname={classes.detailCard}
             isOutOfCalculate={isOutOfCalculate}
           />

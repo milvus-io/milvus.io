@@ -19,13 +19,15 @@
     "sizing": "Sizing Tool",
     "backup": "Milvus Backup",
     "vts": "VTS",
-    "deepSearcher": "Deep Searcher"
+    "deepSearcher": "Deep Searcher",
+    "claudeContext": "Claude Context"
   },
   "blog": "Blog",
   "community": {
     "label": "Community",
     "discord": "Discord",
     "github": "GitHub",
+    "officeHours": "Milvus Office Hours",
     "more": "More Channels"
   },
   "start": "Try Managed Milvus",

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UseCaseType, FinalUserCaseType } from '../types/useCase';
 
-const cmsUrl = process.env.CMS_BASE_URL || process.env.NEXT_PUBLIC_CMS_BASE_URL;
+const cmsUrl = process.env.NEXT_PUBLIC_CMS_BASE_URL;
 
 const fetchCustomers = async () => {
   try {

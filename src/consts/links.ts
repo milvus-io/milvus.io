@@ -14,6 +14,8 @@ export const GITHUB_ATTU_LINK = 'https://github.com/zilliztech/attu';
 export const GITHUB_VTS_LINK = 'https://github.com/zilliztech/vts';
 export const GITHUB_DEEP_SEARCHER_LINK =
   'https://github.com/zilliztech/deep-searcher';
+export const GITHUB_CLAUDE_CONTEXT_LINK =
+  'https://github.com/zilliztech/claude-context';
 export const GITHUB_MILVUS_CLI_LINK =
   'https://github.com/zilliztech/milvus_cli';
 export const GITHUB_MILVUS_BACKUP_LINK =
@@ -56,3 +58,6 @@ export const GET_START_LINK = (lang: string) =>
   `/docs/${lang !== 'en' ? `${lang}/` : ''}quickstart.md`;
 export const LEARN_MORE_LINK = (lang: string) =>
   `/docs/${lang !== 'en' ? `${lang}/` : ''}overview.md`;
+
+export const MILVUS_BILIBILI_LINK =
+  'https://space.bilibili.com/1058892339/upload/video';

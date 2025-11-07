@@ -18,6 +18,17 @@ import ZillizAdv from '@/parts/blogs/zillizAdv';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
 import { fetchMilvusReleases } from '@/http/milvus';
+import Link from 'next/link';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useRouter } from 'next/router';
+import { SIZING_TOOL_VERSION_OPTIONS } from '@/consts/sizing';
 
 const etcdBaseValue = {
   cpu: 0,
@@ -79,6 +90,10 @@ type Props = {
 export default function SizingTool(props: Props) {
   const { locale = LanguageEnum.ENGLISH, latestTag } = props;
   const { t } = useTranslation('sizingTool', { lng: locale });
+  const router = useRouter();
+  const currentVersion = SIZING_TOOL_VERSION_OPTIONS.find(
+    option => option.href === router.pathname
+  );
   const [calculatedResult, setCalculatedResult] = useState<ICalculateResult>({
     rawDataSize: 0,
     memorySize: 0,
@@ -109,7 +124,7 @@ export default function SizingTool(props: Props) {
         memory: 0,
         count: 0,
       },
-      indexNode: {
+      streamNode: {
         cpu: 0,
         memory: 0,
         count: 0,
@@ -134,8 +149,20 @@ export default function SizingTool(props: Props) {
     isOutOfCalculate: false,
   });
 
-  const updateCalculatedResult = (result: ICalculateResult) => {
+  const [selectedVersion, setSelectedVersion] = useState<string>(
+    currentVersion?.value || SIZING_TOOL_VERSION_OPTIONS[0].value
+  );
+
+  const asyncCalculatedResult = (result: ICalculateResult) => {
     setCalculatedResult(result);
+  };
+
+  const handleSelectVersion = (value: string) => {
+    setSelectedVersion(value);
+    router.push(
+      SIZING_TOOL_VERSION_OPTIONS.find(option => option.value === value)
+        ?.href || '/tools/sizing'
+    );
   };
 
   return (
@@ -155,20 +182,42 @@ export default function SizingTool(props: Props) {
             classes.sizingToolContainer
           )}
         >
-          <h1 className={classes.title}>
-            <a
-              href="https://zilliz.com/blog/demystify-milvus-sizing-tool"
-              target="_blank"
-            >
-              {t('title')}
-            </a>
-          </h1>
+          <div className={classes.titleContainer}>
+            <h1 className={classes.title}>
+              <Link
+                href="https://zilliz.com/blog/demystify-milvus-sizing-tool"
+                target="_blank"
+              >
+                {t('title')}
+              </Link>
+            </h1>
+            <div className={classes.selectContainer}>
+              <Select
+                value={selectedVersion}
+                onValueChange={handleSelectVersion}
+              >
+                <SelectTrigger className={classes.selectTrigger}>
+                  <SelectValue placeholder="Select a Milvus version">
+                    {selectedVersion}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {SIZING_TOOL_VERSION_OPTIONS.map(option => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
           <p className={classes.desc}>{t('content')}</p>
 
           <div className={classes.contentContainer}>
             <FormSection
               className={classes.leftSection}
-              updateCalculatedResult={updateCalculatedResult}
+              asyncCalculatedResult={asyncCalculatedResult}
             />
             <ResultSection
               className={classes.rightSection}

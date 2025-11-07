@@ -19,14 +19,16 @@
     "sizing": "Alat Ukuran",
     "backup": "Cadangan Milvus",
     "vts": "VTS",
-    "deepSearcher": "Deep Searcher"
+    "deepSearcher": "Deep Searcher",
+    "claudeContext": "Konteks Claude"
   },
   "blog": "Blog",
   "community": {
     "label": "Komunitas",
     "discord": "Discord",
     "github": "GitHub",
-    "more": "Lebih Banyak Channel"
+    "more": "Lebih Banyak Channel",
+    "officeHours": "Jam Kantor Milvus"
   },
   "start": "Mulai",
   "star": "Bintang",

@@ -28,7 +28,9 @@
     "standaloneDesc": "适用于小到中规模。",
     "cluster": "分布式",
     "clusterDesc": "适用于大规模。",
-    "segmentTooltip": "datacoord.segment.maxSize 是 Milvus 中一个重要的存储配置参数。它定义了单个段的大小，也就是 Milvus 中的物理存储单元。增加该值可以提高查询性能，但也会消耗更多资源。<0>查看更多。</0>"
+    "segmentTooltip": "datacoord.segment.maxSize 是 Milvus 中一个重要的存储配置参数。它定义了单个段的大小，也就是 Milvus 中的物理存储单元。增加该值可以提高查询性能，但也会消耗更多资源。<0>查看更多。</0>",
+    "refine": "细化",
+    "refineType": "细化类型"
   },
   "overview": {
     "title": "资源需求",
@@ -56,7 +58,9 @@
       "queryNodeTip": "查询节点负责数据查询和搜索。提示：分配更多资源以处理读密集型负载。",
       "dataNodeTip": "数据节点通过订阅日志代理检索增量日志数据，处理变异请求，并将日志数据打包成日志快照并存储在对象存储中。提示：分配更多资源以处理写密集型负载。",
       "indexNodeTip": "索引节点负责构建索引。资源量可能会影响索引构建的速度。您可以根据实际需求增加或减少此资源。",
-      "standaloneNode": "独立节点"
+      "standaloneNode": "独立节点",
+      "streamNode": "流节点",
+      "streamNodeTip": "流节点（StreamingNode）负责处理所有流任务。资源数量直接影响 Milvus 所有流操作的吞吐量和延迟，包括增长数据搜索、数据写入、从 wal 到 binlog 的数据约定（流数据到历史数据）。"
     },
     "dependency": {
       "title": "依赖",
@@ -102,5 +106,8 @@
     "tip1": "如何使用 Docker Compose 运行 Milvus？",
     "tip2": "如何使用 Helm 图表运行 Milvus？",
     "tip3": "如何使用 Milvus 操作员运行 Milvus？"
-  }
+  },
+  "woodpeckerTip": "<0>啄木鸟</0>（<0>Woodpecker</0>）是 Milvus 2.6.0 推出的云原生写日志（WAL）系统。它旨在取代 Kafka 和 Pulsar 作为 Milvus 中的 MQ，以简化操作、最大化吞吐量并轻松扩展。目前，它嵌入在流节点中运行。",
+  "previousVersion": "上一版本的尺寸工具在<0>这里</0>。",
+  "titleV250": "用于 Milvus 的 Milvus 尺寸工具 v2.5.x"
 }

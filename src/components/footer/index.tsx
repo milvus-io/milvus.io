@@ -12,13 +12,18 @@ import {
   CLOUD_SIGNUP_LINK,
   GITHUB_MILVUS_BACKUP_LINK,
   GITHUB_VTS_LINK,
+  GITHUB_DEEP_SEARCHER_LINK,
+  GITHUB_CLAUDE_CONTEXT_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
-import SocialMedias from '../socialMedias';
+import { SocialMedias, SocialMediasCN } from '../socialMedias';
 import { LanguageEnum } from '@/types/localization';
 import SubscribeNewsletter from '../subscribe';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
-import { ZILLIZ_OFFICIAL_WEBSITE } from '@/consts/externalLinks';
+import {
+  MILVUS_OFFICE_HOURS_URL,
+  ZILLIZ_OFFICIAL_WEBSITE,
+} from '@/consts/externalLinks';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
 
 type Props = {
@@ -38,6 +43,7 @@ const Footer = (props: Props) => {
   const { t } = useTranslation(['common', 'header'], { lng: locale });
 
   const trackPath = useUtmTrackPath();
+  const isCNSite = locale === LanguageEnum.CHINESE;
 
   const footerJson = [
     {
@@ -96,6 +102,14 @@ const Footer = (props: Props) => {
           name: t('header:footer.tools.vts'),
           to: GITHUB_VTS_LINK,
         },
+        {
+          name: t('header:tools.deepSearcher'),
+          to: GITHUB_DEEP_SEARCHER_LINK,
+        },
+        {
+          name: t('header:tools.claudeContext'),
+          to: GITHUB_CLAUDE_CONTEXT_LINK,
+        },
       ],
     },
     {
@@ -113,6 +127,11 @@ const Footer = (props: Props) => {
         {
           name: 'Github',
           to: GITHUB_MILVUS_LINK,
+          isExternal: true,
+        },
+        {
+          name: t('header:community.officeHours'),
+          to: MILVUS_OFFICE_HOURS_URL,
           isExternal: true,
         },
       ],
@@ -186,7 +205,7 @@ const Footer = (props: Props) => {
               <SubscribeNewsletter />
             </div>
             <div className="flex mt-[40px] space-x-[12px]">
-              <SocialMedias />
+              {isCNSite ? <SocialMediasCN /> : <SocialMedias />}
             </div>
             <p className="mt-3 text-sm text-black1">
               {t('common:v3trans.footnote.copyright', {
@@ -227,7 +246,9 @@ const Footer = (props: Props) => {
                               rel="noopener noreferrer"
                             >
                               {child.name}
-                              {child.isExternal && <RightTopArrowIcon />}
+                              <span className="grow-0 shrink-0 basis-[14px] h-[14px]">
+                                <RightTopArrowIcon />
+                              </span>
                             </a>
                           </li>
                         );

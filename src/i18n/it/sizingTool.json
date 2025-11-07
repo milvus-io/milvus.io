@@ -28,7 +28,9 @@
     "standaloneDesc": "Adatto per piccola e media scala.",
     "cluster": "Distribuito",
     "clusterDesc": "Adatto per grande scala.",
-    "segmentTooltip": "datacoord.segment.maxSize è un importante parametro di configurazione della memorizzazione in Milvus. Definisce la dimensione di un singolo segmento, che è l'unità fisica di archiviazione di Milvus. L'aumento di questo valore può migliorare le prestazioni delle query, ma consuma anche più risorse. <0>Per saperne di più.</0>"
+    "segmentTooltip": "datacoord.segment.maxSize è un importante parametro di configurazione della memorizzazione in Milvus. Definisce la dimensione di un singolo segmento, che è l'unità fisica di archiviazione di Milvus. L'aumento di questo valore può migliorare le prestazioni delle query, ma consuma anche più risorse. <0>Per saperne di più.</0>",
+    "refine": "Raffinare",
+    "refineType": "Raffinare il tipo"
   },
   "overview": {
     "title": "Requisiti di Risorse",
@@ -56,7 +58,9 @@
       "queryNodeTip": "Il nodo query è responsabile della query e della ricerca dei dati. Suggerimento: Allocare più risorse per gestire un carico di lavoro intenso in lettura.",
       "dataNodeTip": "Il nodo dati recupera i dati di log incrementali sottoscrivendo il broker di log, elabora le richieste di mutazione e impacchetta i dati di log in snapshot di log e li memorizza nello storage di oggetti. Suggerimento: Allocare più risorse per gestire un carico di lavoro intenso in scrittura.",
       "indexNodeTip": "Il nodo indice è responsabile della costruzione degli indici. La quantità di risorse può influenzare la velocità di costruzione dell'indice. È possibile aumentare o diminuire questa risorsa in base alle esigenze effettive.",
-      "standaloneNode": "Nodo Standalone"
+      "standaloneNode": "Nodo Standalone",
+      "streamNode": "Nodo di flusso",
+      "streamNodeTip": "Lo StreamingNode è responsabile della gestione di tutte le attività di streaming. Il numero di risorse influisce direttamente sul throughput e sulla latenza di Milvus per tutte le operazioni di streaming, tra cui la ricerca di dati in crescita, la scrittura di dati, la convenzione di dati da wal a binlog (dati in streaming a dati storici)."
     },
     "dependency": {
       "title": "Dipendenza",
@@ -102,5 +106,8 @@
     "tip1": "Come eseguire Milvus con Docker Compose?",
     "tip2": "Come eseguire Milvus con Helm Chart?",
     "tip3": "Come eseguire Milvus con Milvus Operator?"
-  }
+  },
+  "woodpeckerTip": "<0>Woodpecker</0> è un sistema di log write-ahead (WAL) cloud-native a partire da Milvus 2.6.0. È stato progettato per sostituire Kafka e Pulsar come MQ in Milvus per semplificare le operazioni, massimizzare il throughput e scalare senza sforzo. Per ora è integrato nei nodi di streaming.",
+  "previousVersion": "La versione precedente dello strumento di dimensionamento è <0>qui</0>.",
+  "titleV250": "Strumento di dimensionamento Milvus per Milvus v2.5.x"
 }

@@ -19,14 +19,16 @@
     "sizing": "사이징 도구",
     "backup": "Milvus 백업",
     "vts": "VTS",
-    "deepSearcher": "딥 서처"
+    "deepSearcher": "딥 서처",
+    "claudeContext": "클로드 컨텍스트"
   },
   "blog": "블로그",
   "community": {
     "label": "커뮤니티",
     "discord": "Discord",
     "github": "GitHub",
-    "more": "더 많은 채널"
+    "more": "더 많은 채널",
+    "officeHours": "밀버스 영업 시간"
   },
   "start": "시작하기",
   "star": "별표",

@@ -10,15 +10,44 @@ import {
 import CustomButton from '@/components/customButton';
 import Link from 'next/link';
 import { LanguageEnum } from '@/types/localization';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { useRef, useMemo } from 'react';
+
+const RightArrowIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12.0459 16L13 15.0531L7.91831 10L13 4.94687L12.0459 4L6 10L12.0459 16Z"
+      fill="#667176"
+    />
+  </svg>
+);
 
 export default function HomePageHeaderSection(props: {
-  label: string;
-  link: string;
+  headlines: { label: string; link: string; tag: string }[];
   locale: LanguageEnum;
 }) {
-  const { label, link, locale } = props;
+  const { headlines, locale } = props;
   const { t } = useTranslation('home', { lng: locale });
   const { t: milvusTrans } = useTranslation('common', { lng: locale });
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const prevButtonRef = useRef<HTMLButtonElement>(null);
+
+  const showSwiper = useMemo(() => {
+    return headlines.length > 1;
+  }, [headlines]);
 
   return (
     <section
@@ -28,16 +57,67 @@ export default function HomePageHeaderSection(props: {
       )}
     >
       <div className={pageClasses.homeContainer}>
-        <div className="flex items-center gap-[8px] justify-center mb-[12px]">
-          <p className="px-[8px] py-[2px] box-border border-[1px] rounded-[8px] border-[rgba(0,179,255,0.30)] border-solid bg-[#00B3FF]/[0.15] text-[12px] font-mono font-[500] leading-[18px]">
-            {t('news')}
-          </p>
-          <Link
-            className="text-black2 text-[12px] leading-[18px] hover:underline font-mono"
-            href={link}
+        <div className={classes.headlinesContainer}>
+          <Swiper
+            // install Swiper modules
+            modules={showSwiper ? [Navigation, Autoplay, Pagination] : []}
+            navigation={{
+              prevEl: prevButtonRef.current,
+              nextEl: nextButtonRef.current,
+            }}
+            pagination={{
+              clickable: true,
+              horizontalClass: clsx(classes.customPagination, {
+                [classes.hiddenPagination]: !showSwiper,
+              }),
+              bulletActiveClass: classes.customBulletActive,
+              bulletClass: classes.customBullet,
+            }}
+            autoplay={
+              showSwiper
+                ? {
+                    delay: 8000,
+                    disableOnInteraction: false,
+                  }
+                : false
+            }
+            spaceBetween={50}
+            slidesPerView={1}
+            loop={true}
+            className={classes.headlinesSwiperContainer}
           >
-            {label}
-          </Link>
+            {headlines.map(item => (
+              <SwiperSlide key={item.label}>
+                <div className={classes.headlineItem}>
+                  <p className={classes.headlineTag}>{item.tag}</p>
+                  <Link
+                    href={item.link}
+                    className={clsx(classes.headlineLink, {
+                      [classes.noPadding]: !showSwiper,
+                    })}
+                  >
+                    {item.label}
+                  </Link>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {showSwiper && (
+            <div className={classes.navigatorContainer}>
+              <button
+                ref={prevButtonRef}
+                className={clsx(classes.navigatorButton, classes.prevButton)}
+              >
+                <RightArrowIcon />
+              </button>
+              <button
+                ref={nextButtonRef}
+                className={clsx(classes.navigatorButton, classes.nextButton)}
+              >
+                <RightArrowIcon />
+              </button>
+            </div>
+          )}
         </div>
         <h1
           className={clsx(

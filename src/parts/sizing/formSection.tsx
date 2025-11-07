@@ -1,6 +1,11 @@
 import { use, useEffect, useMemo, useRef, useState } from 'react';
 import classes from './index.module.less';
-import { SizingInput, SizingRange, SizingSwitch } from '@/components/sizing';
+import {
+  SizingInput,
+  SizingRange,
+  SizingSwitch,
+  ThreeOptionSwitch,
+} from '@/components/sizing';
 import {
   Collapsible,
   Checkbox,
@@ -27,14 +32,25 @@ import {
   N_LIST_RANGE_CONFIG,
   M_RANGE_CONFIG,
   MAXIMUM_AVERAGE_LENGTH,
+  REFINE_OPTIONS,
 } from '@/consts/sizing';
 import clsx from 'clsx';
-import { ICalculateResult, IIndexType, ModeEnum } from '@/types/sizing';
+import {
+  DependencyComponentEnum,
+  ICalculateResult,
+  IIndexType,
+  IndexTypeEnum,
+  ModeEnum,
+  RefineValueEnum,
+} from '@/types/sizing';
 import { IndexTypeComponent } from './indexTypeComponent';
 import {
   memoryAndDiskCalculator,
   rawDataSizeCalculator,
   $10M768D,
+  $50M768D,
+  $500M768D,
+  $100M768D,
   dependencyCalculator,
   $1B768D,
   clusterNodesConfigCalculator,
@@ -43,16 +59,17 @@ import {
 import { Trans, useTranslation } from 'react-i18next';
 import { TooltipArrow } from '@radix-ui/react-tooltip';
 import { ExternalLinkIcon } from '@/components/icons';
-import { KafkaIcon, PulsarIcon } from './components';
+import Link from 'next/link';
 
-const MODE_CHANGE_THRESHOLD = $10M768D;
+const NORMAL_CHANGE_THRESHOLD = $10M768D;
+const DISKANN_MODE_CHANGE_THRESHOLD = $50M768D;
 
 export default function FormSection(props: {
   className: string;
-  updateCalculatedResult: (params: ICalculateResult) => void;
+  asyncCalculatedResult: (params: ICalculateResult) => void;
 }) {
   const { t } = useTranslation('sizingTool');
-  const { className, updateCalculatedResult } = props;
+  const { className, asyncCalculatedResult } = props;
 
   // const [collapseHeight, setCollapseHeight] = useState(0);
   const collapseEle = useRef<HTMLDivElement | null>(null);
@@ -61,6 +78,8 @@ export default function FormSection(props: {
     ModeEnum | undefined
   >(undefined);
   const [rawDataSize, setRawDataSize] = useState(0);
+
+  const [refine, setRefine] = useState(REFINE_OPTIONS[0].value);
 
   const [form, setForm] = useState({
     vector: VECTOR_RANGE_CONFIG.defaultValue,
@@ -82,10 +101,21 @@ export default function FormSection(props: {
     maxDegree: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
     flatNList: N_LIST_RANGE_CONFIG.defaultValue,
     sq8NList: N_LIST_RANGE_CONFIG.defaultValue,
+    rabitqNList: N_LIST_RANGE_CONFIG.defaultValue,
     m: M_RANGE_CONFIG.defaultValue,
   });
 
+  const modeChangeThreshold = useMemo(() => {
+    return indexTypeParams.indexType === IndexTypeEnum.DISKANN
+      ? DISKANN_MODE_CHANGE_THRESHOLD
+      : NORMAL_CHANGE_THRESHOLD;
+  }, [indexTypeParams.indexType]);
+
   // const [disableStandalone, setDisableStandalone] = useState(false);
+
+  const handleRefineChange = (value: RefineValueEnum) => {
+    setRefine(value);
+  };
 
   const handleFormChange = (key: string, value: any) => {
     setForm({
@@ -145,17 +175,6 @@ export default function FormSection(props: {
     return SEGMENT_SIZE_OPTIONS.find(v => v.value === form.segmentSize);
   }, [form.segmentSize]);
 
-  const dependencyOptions = [
-    {
-      ...DEPENDENCY_COMPONENTS[0],
-      icon: <PulsarIcon />,
-    },
-    {
-      ...DEPENDENCY_COMPONENTS[1],
-      icon: <KafkaIcon />,
-    },
-  ];
-
   const modeOptions = [
     {
       ...MODE_OPTIONS[0],
@@ -197,7 +216,7 @@ export default function FormSection(props: {
 
   useEffect(() => {
     let mode =
-      rawDataSize > MODE_CHANGE_THRESHOLD
+      rawDataSize > modeChangeThreshold
         ? ModeEnum.Cluster
         : ModeEnum.Standalone;
     // if manually selected cluster mode, can't change to standalone automatically
@@ -208,7 +227,7 @@ export default function FormSection(props: {
       ...form,
       mode: manuallySelectedMode || mode,
     });
-  }, [rawDataSize]);
+  }, [rawDataSize, modeChangeThreshold]);
 
   useEffect(() => {
     const currentMode = form.mode;
@@ -223,6 +242,7 @@ export default function FormSection(props: {
       scalarAvg: form.scalarData.averageNum,
       segSize: Number(form.segmentSize),
       mode: currentMode,
+      refineType: refine,
     });
 
     const standaloneNodeConfig = standaloneNodeConfigCalculator({
@@ -239,10 +259,11 @@ export default function FormSection(props: {
       withScalar: form.widthScalar,
       scalarAvg: form.scalarData.averageNum,
       mode: currentMode,
+      dependency: form.dependency,
       loadingMemory: memory,
     });
 
-    updateCalculatedResult({
+    asyncCalculatedResult({
       rawDataSize,
       memorySize: memory,
       localDiskSize: localDisk,
@@ -253,11 +274,15 @@ export default function FormSection(props: {
       dependency: form.dependency,
       isOutOfCalculate: rawDataSize > $1B768D,
     });
-  }, [form, indexTypeParams]);
+  }, [form, indexTypeParams, refine]);
 
   const disableStandalone = useMemo(() => {
-    return rawDataSize > MODE_CHANGE_THRESHOLD;
-  }, [rawDataSize]);
+    const disableThreshold =
+      indexTypeParams.indexType === IndexTypeEnum.DISKANN
+        ? $500M768D
+        : $100M768D;
+    return rawDataSize > disableThreshold;
+  }, [rawDataSize, indexTypeParams.indexType]);
 
   return (
     <section className={clsx(className, classes.formSection)}>
@@ -325,6 +350,8 @@ export default function FormSection(props: {
           <IndexTypeComponent
             data={indexTypeParams}
             onChange={handleIndexTypeParamsChange}
+            refine={refine}
+            onRefineChange={handleRefineChange}
           />
         </div>
         <div className="">
@@ -517,24 +544,31 @@ export default function FormSection(props: {
               {t('form.dependencyComp')}
             </h4>
             <div className={classes.cardsWrapper}>
-              {dependencyOptions.map(v => (
-                <button
-                  className={clsx(classes.card, classes.dependencyCard, {
-                    [classes.activeCard]: form.dependency === v.value,
-                  })}
-                  onClick={() => {
-                    handleFormChange('dependency', v.value);
-                  }}
-                  key={v.label}
-                >
-                  {v.icon}
-                  <span className="text-[14px] font-[600] leading-[22px]">
-                    {v.label}
-                  </span>
-                </button>
-              ))}
+              <ThreeOptionSwitch
+                options={DEPENDENCY_COMPONENTS}
+                value={form.dependency}
+                onChange={(value: string) => {
+                  handleFormChange('dependency', value);
+                }}
+              />
             </div>
           </div>
+        )}
+
+        {form.dependency === DependencyComponentEnum.Woodpecker && (
+          <p className="mt-[36px] text-[12px]  leading-[18px] text-black2">
+            <Trans
+              t={t}
+              i18nKey="woodpeckerTip"
+              components={[
+                <Link
+                  key="link"
+                  className="font-[600] text-[#00b3ff] hover:underline"
+                  href="/docs/woodpecker_architecture.md#Woodpecker"
+                ></Link>,
+              ]}
+            />
+          </p>
         )}
 
         <p className="mt-[36px] text-[12px]  leading-[18px] text-black2">

@@ -72,7 +72,8 @@ export default function ResultSection(props: {
     isOutOfCalculate,
   } = calculatedResult;
 
-  const { queryNode, proxy, mixCoord, dataNode, indexNode } = clusterNodeConfig;
+  const { queryNode, proxy, mixCoord, dataNode, streamNode } =
+    clusterNodeConfig;
 
   // Approximate Capacity
   const { size: totalRawDataSize, unit: rawDataUnit } =
@@ -91,7 +92,7 @@ export default function ResultSection(props: {
 
   // dependency data
   const { dependencyCpu, dependencyMemory, dependencyStorage } =
-    dependencyOverviewDataCalculator({ mode, dependency, dependencyConfig });
+    dependencyOverviewDataCalculator({ dependency, dependencyConfig });
   const dependencyCpuData = formatNumber(dependencyCpu);
   const dependencyMemoryData = unitBYTE2Any(
     dependencyMemory * 1024 * 1024 * 1024
@@ -153,7 +154,7 @@ sudo docker compose up -d`,
       {
         proxy,
         mixCoord,
-        indexNode,
+        streamNode,
         queryNode,
         dataNode,
         etcdData: dependencyConfig.etcd,

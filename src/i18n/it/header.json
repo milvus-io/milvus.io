@@ -19,14 +19,16 @@
     "sizing": "Strumento di Dimensionamento",
     "backup": "Backup Milvus",
     "vts": "VTS",
-    "deepSearcher": "Cercatore profondo"
+    "deepSearcher": "Cercatore profondo",
+    "claudeContext": "Contesto Claude"
   },
   "blog": "Blog",
   "community": {
     "label": "Comunità",
     "discord": "Discord",
     "github": "GitHub",
-    "more": "Altri Canali"
+    "more": "Altri Canali",
+    "officeHours": "Orari d'ufficio di Milvus"
   },
   "start": "Inizia",
   "star": "Stella",

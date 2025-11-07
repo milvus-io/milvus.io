@@ -28,7 +28,9 @@
     "standaloneDesc": "Cocok untuk skala kecil hingga menengah.",
     "cluster": "Terdistribusi",
     "clusterDesc": "Cocok untuk skala besar.",
-    "segmentTooltip": "datacoord.segment.maxSize adalah parameter konfigurasi penyimpanan yang penting dalam Milvus. Parameter ini mendefinisikan ukuran satu segmen, yang merupakan unit penyimpanan fisik di Milvus. Meningkatkan nilai ini dapat meningkatkan kinerja kueri, tetapi juga akan menghabiskan lebih banyak sumber daya. <0>Lihat Lebih Lanjut.</0>"
+    "segmentTooltip": "datacoord.segment.maxSize adalah parameter konfigurasi penyimpanan yang penting dalam Milvus. Parameter ini mendefinisikan ukuran satu segmen, yang merupakan unit penyimpanan fisik di Milvus. Meningkatkan nilai ini dapat meningkatkan kinerja kueri, tetapi juga akan menghabiskan lebih banyak sumber daya. <0>Lihat Lebih Lanjut.</0>",
+    "refine": "Memurnikan",
+    "refineType": "Perbaiki Jenis"
   },
   "overview": {
     "title": "Kebutuhan Sumber Daya",
@@ -56,7 +58,9 @@
       "queryNodeTip": "Node kueri bertanggung jawab atas kueri data dan pencarian. Tips: Alokasikan lebih banyak sumber daya untuk menangani beban kerja baca yang berat.",
       "dataNodeTip": "Node data mengambil data log incremental dengan berlangganan ke broker log, memproses permintaan mutasi, dan memasukkan data log ke snapshot log dan menyimpannya di penyimpanan objek. Tips: Alokasikan lebih banyak sumber daya untuk menangani beban kerja tulis yang berat.",
       "indexNodeTip": "Node indeks bertanggung jawab atas pembangunan indeks. Jumlah sumber daya dapat mempengaruhi kecepatan pembangunan indeks. Anda dapat meningkatkan atau mengurangi sumber daya ini sesuai dengan kebutuhan aktual.",
-      "standaloneNode": "Node Standalone"
+      "standaloneNode": "Node Standalone",
+      "streamNode": "Stream Node",
+      "streamNodeTip": "StreamingNode bertanggung jawab untuk menangani semua tugas streaming. Jumlah sumber daya secara langsung memengaruhi throughput dan latensi Milvus untuk semua operasi streaming, termasuk pencarian data yang terus bertambah, penulisan data, konvensi data dari wal ke binlog (streaming data ke data historis)."
     },
     "dependency": {
       "title": "Ketergantungan",
@@ -102,5 +106,8 @@
     "tip1": "Bagaimana menjalankan Milvus dengan Docker Compose?",
     "tip2": "Bagaimana menjalankan Milvus dengan Helm Chart?",
     "tip3": "Bagaimana menjalankan Milvus dengan Operator Milvus?"
-  }
+  },
+  "woodpeckerTip": "<0>Woodpecker</0> adalah sistem write-ahead log (WAL) asli cloud sejak Milvus 2.6.0. Sistem ini dirancang untuk menggantikan Kafka dan Pulsar sebagai MQ di Milvus untuk menyederhanakan operasi, memaksimalkan throughput, dan menskalakan dengan mudah. Untuk saat ini, MQ ini berjalan tertanam dalam node streaming.",
+  "previousVersion": "Versi terdahulu dari alat pengukur ukuran ada <0>di sini</0>.",
+  "titleV250": "Alat Pengukur Ukuran Milvus untuk Milvus v2.5.x"
 }

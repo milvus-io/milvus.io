@@ -10,13 +10,12 @@ import {
   provideAnswerConfidenceSchema,
   salesSignalType,
   detectedSalesSignal,
+  supportSignalType,
+  detectedSupportSignal,
 } from '@/utils/inkeep';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { CONTACT_SALES_URL } from '@/consts/externalLinks';
 import { useMemo } from 'react';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
 
 type InkeepSharedSettings = {
   baseSettings: InkeepBaseSettings;
@@ -39,9 +38,7 @@ export const useInkeepSettings = ({
   onOpenChange: (param: boolean) => void;
 }): InkeepSharedSettings => {
   const baseSettings: InkeepBaseSettings = {
-    apiKey:
-      publicRuntimeConfig.inkeepApiKey ||
-      process.env.NEXT_PUBLIC_INKEEP_API_KEY,
+    apiKey: process.env.NEXT_PUBLIC_INKEEP_API_KEY,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
     theme: {
       styles: [
@@ -108,34 +105,34 @@ export const useInkeepSettings = ({
       'Pharse Match',
     ],
     getTools: () => [
-      {
-        type: 'function',
-        function: {
-          name: 'provideAnswerConfidence',
-          description:
-            'Determine how confident the AI assistant was and whether or not to escalate to humans.',
-          parameters: zodToJsonSchema(provideAnswerConfidenceSchema),
-        },
-        renderMessageButtons: ({ args }) => {
-          const confidence = args.answerConfidence;
-          if (['not_confident', 'no_sources', 'other'].includes(confidence)) {
-            return [
-              {
-                label: 'New Issue',
-                icon: { builtIn: 'IoHelpBuoyOutline' },
-                action: {
-                  type: 'open_link',
-                  url: 'https://github.com/milvus-io/milvus/issues',
-                },
-              },
-            ];
-          }
-          return [];
-        },
-      } as ToolFunction<{
-        answerConfidence: string;
-        explanation: string;
-      }>,
+      // {
+      //   type: 'function',
+      //   function: {
+      //     name: 'provideAnswerConfidence',
+      //     description:
+      //       'Determine how confident the AI assistant was and whether or not to escalate to humans.',
+      //     parameters: zodToJsonSchema(provideAnswerConfidenceSchema),
+      //   },
+      //   renderMessageButtons: ({ args }) => {
+      //     const confidence = args.answerConfidence;
+      //     if (['not_confident', 'no_sources', 'other'].includes(confidence)) {
+      //       return [
+      //         {
+      //           label: 'New Issue',
+      //           icon: { builtIn: 'IoHelpBuoyOutline' },
+      //           action: {
+      //             type: 'open_link',
+      //             url: 'https://github.com/milvus-io/milvus/issues',
+      //           },
+      //         },
+      //       ];
+      //     }
+      //     return [];
+      //   },
+      // } as ToolFunction<{
+      //   answerConfidence: string;
+      //   explanation: string;
+      // }>,
       {
         type: 'function',
         function: {
@@ -149,7 +146,7 @@ export const useInkeepSettings = ({
           if (args.type && validSalesSignalTypes.includes(args.type)) {
             return [
               {
-                label: 'Talk to Us',
+                label: 'Contact Sales',
                 icon: { builtIn: 'LuCalendar' },
                 action: {
                   type: 'open_link',
@@ -161,6 +158,44 @@ export const useInkeepSettings = ({
           return [];
         },
       } as ToolFunction<{ type: string }>,
+      {
+        type: 'function',
+        function: {
+          name: 'detectSupportSignal',
+          description:
+            'Detect whether the user is requesting technical support or reporting an issue.',
+          parameters: zodToJsonSchema(detectedSupportSignal),
+        },
+        renderMessageButtons: ({ args }) => {
+          const signal = args?.type;
+          if (
+            [
+              'technical_issue',
+              'deployment_and_setup',
+              'system_operations',
+              'data_and_performance',
+              'integration_and_solutions',
+              'ai_low_confidence_or_docs_missing',
+              'direct_support_request',
+            ].includes(signal)
+          ) {
+            return [
+              {
+                label: 'Book Milvus Office Hours',
+                icon: { builtIn: 'IoHelpBuoyOutline' },
+                action: {
+                  type: 'open_link',
+                  url: 'https://meetings.hubspot.com/chloe-williams1/milvus-office-hour',
+                },
+              },
+            ];
+          }
+          return [];
+        },
+      } as ToolFunction<{
+        type: string;
+        explanation: string;
+      }>,
     ],
   };
 

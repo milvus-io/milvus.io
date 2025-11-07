@@ -28,7 +28,9 @@
     "standaloneDesc": "소규모에서 중규모에 적합합니다.",
     "cluster": "분산형",
     "clusterDesc": "대규모에 적합합니다.",
-    "segmentTooltip": "datacoord.segment.maxSize는 Milvus에서 중요한 스토리지 구성 매개변수입니다. 이 매개변수는 Milvus의 물리적 저장 단위인 단일 세그먼트의 크기를 정의합니다. 이 값을 높이면 쿼리 성능이 향상될 수 있지만 리소스도 더 많이 소모됩니다. <0>자세히 보기.</0>"
+    "segmentTooltip": "datacoord.segment.maxSize는 Milvus에서 중요한 스토리지 구성 매개변수입니다. 이 매개변수는 Milvus의 물리적 저장 단위인 단일 세그먼트의 크기를 정의합니다. 이 값을 높이면 쿼리 성능이 향상될 수 있지만 리소스도 더 많이 소모됩니다. <0>자세히 보기.</0>",
+    "refine": "수정",
+    "refineType": "유형 세분화"
   },
   "overview": {
     "title": "리소스 요구 사항",
@@ -56,7 +58,9 @@
       "queryNodeTip": "쿼리 노드는 데이터 쿼리 및 검색을 담당합니다. 팁: 읽기 작업이 많은 부하를 처리하기 위해 더 많은 리소스를 할당하세요.",
       "dataNodeTip": "데이터 노드는 로그 브로커에 구독하여 증분 로그 데이터를 검색하고, 변이 요청을 처리하며, 로그 데이터를 로그 스냅샷으로 패키징하여 객체 저장소에 저장합니다. 팁: 쓰기 작업이 많은 부하를 처리하기 위해 더 많은 리소스를 할당하세요.",
       "indexNodeTip": "인덱스 노드는 인덱스 구축을 담당합니다. 리소스 양은 인덱스 구축 속도에 영향을 미칠 수 있습니다. 실제 필요에 따라 이 리소스를 늘리거나 줄일 수 있습니다.",
-      "standaloneNode": "Standalone 노드"
+      "standaloneNode": "Standalone 노드",
+      "streamNode": "스트림 노드",
+      "streamNodeTip": "스트리밍 노드는 모든 스트리밍 작업을 처리합니다. 리소스 수는 증가하는 데이터 검색, 데이터 쓰기, wal에서 binlog로의 데이터 변환(스트리밍 데이터에서 기록 데이터로의 변환) 등 모든 스트리밍 작업의 처리량과 지연 시간에 직접적인 영향을 미칩니다."
     },
     "dependency": {
       "title": "의존성",
@@ -102,5 +106,8 @@
     "tip1": "Docker Compose로 Milvus를 실행하는 방법은?",
     "tip2": "Helm 차트로 Milvus를 실행하는 방법은?",
     "tip3": "Milvus Operator로 Milvus를 실행하는 방법은?"
-  }
+  },
+  "woodpeckerTip": "<0>딱따구리는</0> Milvus 2.6.0부터 클라우드 네이티브 WAL(미리 쓰기 로그) 시스템입니다. 운영을 간소화하고, 처리량을 극대화하며, 손쉽게 확장할 수 있도록 Milvus에서 Kafka와 Pulsar를 MQ로 대체하도록 설계되었습니다. 현재는 스트리밍 노드에 임베디드되어 실행되고 있습니다.",
+  "previousVersion": "이전 버전의 크기 조정 도구는 <0>여기에서</0> 확인할 수 있습니다.",
+  "titleV250": "Milvus v2.5.x용 Milvus 사이징 도구"
 }

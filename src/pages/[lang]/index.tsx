@@ -15,16 +15,16 @@ import { HomeMeta } from '@/parts/home/meta/HomeMeta';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function Homepage(props: {
-  headline: { label: string; link: string };
+  headlines: { label: string; link: string; tag: string }[];
   lang: LanguageEnum;
 }) {
-  const { headline, lang } = props;
+  const { headlines, lang } = props;
   const { locale } = useGlobalLocale();
   return (
     <Layout>
       <main className={classes.homepageContainer}>
         <HomeMeta locale={locale || LanguageEnum.ENGLISH} />
-        <HomePageHeaderSection {...headline} locale={lang} />
+        <HomePageHeaderSection headlines={headlines} locale={lang} />
         <CodeExampleSection />
         <DeploySection />
         <AIToolsSection />
@@ -47,13 +47,13 @@ export function getStaticPaths() {
 
 export const getStaticProps = async ({ params }) => {
   const { lang } = params;
-  const headline = getHomepageHeadline(
+  const { headlines } = getHomepageHeadline(
     `src/blogs/localization/homepage/${lang}/index.json`
   );
   return {
     props: {
       lang,
-      headline,
+      headlines,
     },
   };
 };

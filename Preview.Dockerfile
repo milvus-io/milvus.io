@@ -3,11 +3,6 @@ WORKDIR /app
 
 RUN npm install -g pnpm
 
-# Install supervisor
-RUN apk add --no-cache bash supervisor
-
-# Create supervisor log directory
-RUN mkdir -p /var/log/supervisor
 
 ARG REPO_STATICS_KEY
 ARG INKEEP_API_KEY
@@ -32,6 +27,12 @@ FROM zilliz/zilliz-web-runner
 
 RUN apk add --no-cache bash
 RUN npm install -g next
+
+# Install supervisor
+RUN apk add --no-cache bash supervisor
+
+# Create supervisor log directory
+RUN mkdir -p /var/log/supervisor
 RUN rm -rf /etc/nginx/conf.d/default.conf
 
 COPY conf/conf.d /etc/nginx/conf.d

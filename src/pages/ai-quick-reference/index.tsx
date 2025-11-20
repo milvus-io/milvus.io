@@ -294,10 +294,16 @@ export default function AiFaq(props: {
 }
 
 export const getServerSideProps = async () => {
-  const simpleFaqList = await generateSimpleFaqList();
-  return {
-    props: {
-      list: simpleFaqList,
-    },
-  };
+  try {
+    const simpleFaqList = await generateSimpleFaqList();
+    return {
+      props: {
+        list: simpleFaqList,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };

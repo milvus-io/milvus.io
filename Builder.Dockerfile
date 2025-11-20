@@ -1,7 +1,8 @@
-FROM node:22-slim AS base
+FROM node:22-alpine AS base
 WORKDIR /app
 
 RUN npm install -g pnpm
+
 
 ARG REPO_STATICS_KEY
 ARG INKEEP_API_KEY
@@ -28,16 +29,24 @@ FROM zilliz/zilliz-web-runner
 
 RUN apk add --no-cache bash
 RUN npm install -g next
+
+# Install supervisor
+RUN apk add --no-cache bash supervisor
+
+# Create supervisor log directory
+RUN mkdir -p /var/log/supervisor
 RUN rm -rf /etc/nginx/conf.d/default.conf
 
 COPY conf/conf.d /etc/nginx/conf.d
+COPY supervisord.conf /etc/supervisord.conf
+
 COPY --from=builder /app/.next /app/.next
 COPY --from=builder /app/src/blogs /app/src/blogs
 COPY --from=builder /app/public /app/public
 COPY --from=builder /app/global-stats.json /app/global-stats.json
 COPY --from=dependency /app/node_modules /app/node_modules
-COPY bin/start.sh /app/bin/
 
 EXPOSE 80
 
-CMD ["/bin/sh", "/app/bin/start.sh"]
+# Run supervisor
+CMD ["supervisord", "-c", "/etc/supervisord.conf"]

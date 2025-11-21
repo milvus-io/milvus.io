@@ -242,7 +242,7 @@ export default function DesktopHeader(props: Props) {
             {t('contact')}
           </Link>
           <Link
-            href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=nav_right&utm_content=${trackPath}`}
+            href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_nav_right&utm_content=${trackPath}`}
             target="_blank"
           >
             <div className="h-9 px-3 py-1.5 rounded-md  bg-blue1 hover:bg-[#008DC8] justify-start items-center gap-1 inline-flex cursor-pointer transition duration-200 ease-in-out">

@@ -12,7 +12,7 @@ export default function ZillizAdv(props: {
   const { t } = useTranslation('blog');
   const {
     className = '',
-    ctaLink = `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=bottom_banner&utm_content=blog`,
+    ctaLink = `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_bottom_banner&utm_content=blog`,
   } = props;
   const features = [
     t('blog:zillizAdv.feature1'),

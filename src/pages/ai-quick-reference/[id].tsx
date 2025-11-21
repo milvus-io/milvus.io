@@ -202,7 +202,7 @@ export default function FaqDetail(props: {
                   advTitle: t('faq:detail.adv.title'),
                   advContent: t('faq:detail.adv.content'),
                   advCtaLabel: t('faq:detail.adv.ctaLabel'),
-                  advCtaLink: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=right_card&utm_content=${trackPath}`,
+                  advCtaLink: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_right_card&utm_content=${trackPath}`,
                 }}
               />
 

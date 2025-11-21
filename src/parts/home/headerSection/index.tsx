@@ -151,7 +151,7 @@ export default function HomePageHeaderSection(props: {
             {t('buttons.quickStart')}
           </CustomButton>
           <CustomButton
-            href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=homepage_center&utm_content=homepage`}
+            href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_homepage_center&utm_content=homepage`}
             size="large"
             variant="outlined"
             classes={{

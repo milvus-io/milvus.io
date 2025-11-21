@@ -53,7 +53,7 @@ export default function DeploySection() {
     }) as string[],
     class: classes.cloudDb,
     cta: t('buttons.tryFree'),
-    tryLink: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=homepage_try_free&utm_content=homepage`,
+    tryLink: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_homepage_try_free&utm_content=homepage`,
   };
 
   return (

@@ -323,7 +323,7 @@ export default function MobileHeader(props: {
                 {t('contact')}
               </Link>
               <Link
-                href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=nav_right&utm_content=${trackPath}`}
+                href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_nav_right&utm_content=${trackPath}`}
                 target="_blank"
               >
                 <Button className="w-full">{t('start')}</Button>

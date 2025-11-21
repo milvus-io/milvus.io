@@ -12,7 +12,7 @@ export default function CloudBanner() {
   return (
     <a
       className={classes.bannerContainer}
-      href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=top_banner&utm_content=${trackPath}`}
+      href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_top_banner&utm_content=${trackPath}`}
       target="_blank"
     >
       <button className={classes.bannerText} role="link">

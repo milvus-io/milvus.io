@@ -53,7 +53,7 @@ const Footer = (props: Props) => {
         { name: t('header:blog'), to: getLocalePath('/blog') },
         {
           name: t('header:footer.resource.managed'),
-          to: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=footer&utm_content=${trackPath}`,
+          to: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_footer&utm_content=${trackPath}`,
           isExternal: true,
         },
         {

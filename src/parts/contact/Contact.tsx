@@ -62,7 +62,7 @@ export function Contact(props: Props) {
               components={[
                 <a
                   key="cloud"
-                  href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=contact_us&utm_content=contact`}
+                  href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_contact_us&utm_content=contact`}
                   target="_blank"
                   className="underline text-black1"
                 ></a>,

@@ -225,7 +225,7 @@ export default function SizingTool(props: Props) {
 
           <ZillizAdv
             className={classes.zillizAdv}
-            ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=bottom_banner&utm_content=tools/sizing`}
+            ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_bottom_banner&utm_content=tools/sizing`}
           />
         </div>
       </Layout>

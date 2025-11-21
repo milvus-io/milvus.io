@@ -35,7 +35,7 @@ export default function CloudAdvertisementCard(props: {
     const title = advTitle || t('advertise.titleA');
     const ctaLink =
       advCtaLink ||
-      `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=right_card&utm_content=${trackPath}`;
+      `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_right_card&utm_content=${trackPath}`;
     const ctaLabel = advCtaLabel || t('advertise.ctaLabel');
     const advertiseContent = advContent || t('advertise.content');
     return {
@@ -47,7 +47,7 @@ export default function CloudAdvertisementCard(props: {
   }, [random, advTitle, advContent, advCtaLabel, advCtaLink, t, trackPath]);
 
   const cnCloudLink = useMemo(() => {
-    return `${CN_CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=right_card&utm_content=${trackPath}`;
+    return `${CN_CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_right_card&utm_content=${trackPath}`;
   }, [trackPath]);
 
   useEffect(() => {

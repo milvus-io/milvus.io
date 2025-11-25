@@ -5,6 +5,10 @@ const CHAT_INPUT = 'Pharse Match';
 const API_URL = 'https://api.inkeep.com/v1/chat/completions';
 
 test('Zilliz chat interaction with API monitoring', async ({ page }) => {
+  await page.setExtraHTTPHeaders({
+    'User-Agent': 'Playwright-Test/1.0',
+  });
+
   // Array to store API responses
   const apiResponses = [];
   let apiRequestFound = false;

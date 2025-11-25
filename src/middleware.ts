@@ -28,6 +28,11 @@ const ALLOWED_BOTS = [
   /MJ12bot/i,
 ];
 
+const ALLOWED_TEST_UA = [
+  /Playwright/i,
+  /Playwright-Test/i,
+];
+
 const BLOCKED_UA = [
   /HeadlessChrome/i,
   /node-fetch/i,
@@ -73,6 +78,10 @@ export function middleware(request: NextRequest) {
     pathname === '/robots.txt' ||
     pathname === '/sitemap.xml'
   ) {
+    return NextResponse.next();
+  }
+
+  if (ALLOWED_TEST_UA.some(r => r.test(ua))) {
     return NextResponse.next();
   }
 

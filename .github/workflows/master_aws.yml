@@ -22,10 +22,18 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - name: Free up disk space (fast)
+      - name: Free up disk space (comprehensive)
         run: |
+          echo "=== Before cleanup ==="
+          df -h / 
+
+          # Essential cleanup for GitHub Actions runner
           sudo rm -rf /usr/share/dotnet || true
-          df -h
+          sudo rm -rf /usr/local/lib/android || true
+
+          echo "=== After cleanup ==="
+          df -h / 
+          echo "Root filesystem available: $(df -h / | awk 'NR==2{print $4}')"
 
       - uses: azure/docker-login@v1
         with:
@@ -60,6 +68,17 @@ jobs:
         run: |
           git submodule init
           git submodule update --remote
+
+      - name: Check disk space after submodule update
+        run: |
+          echo "=== Disk Space Information ==="
+          df -h
+          echo ""
+          echo "=== Disk Usage Summary ==="
+          df -h --total | grep total
+          echo ""
+          echo "=== Available Space on Root Filesystem ==="
+          df -h / | awk 'NR==2{printf "Total: %s, Used: %s, Available: %s, Usage: %s\n", $2, $3, $4, $5}'
 
       - name: Clean up unnecessary version folders
         run: |

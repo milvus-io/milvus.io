@@ -117,6 +117,16 @@ jobs:
       #         env:
       #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
       #           CI: true
+      - name: Check disk space after build
+        run: |
+          echo "=== Disk Space Information ==="
+          df -h
+          echo ""
+          echo "=== Disk Usage Summary ==="
+          df -h --total | grep total
+          echo ""
+          echo "=== Available Space on Root Filesystem ==="
+          df -h / | awk 'NR==2{printf "Total: %s, Used: %s, Available: %s, Usage: %s\n", $2, $3, $4, $5}'
 
   deploy:
     runs-on: amazon-linux-2

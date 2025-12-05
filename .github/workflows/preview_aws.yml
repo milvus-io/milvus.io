@@ -24,8 +24,35 @@ jobs:
     steps:
       - name: Free up disk space (comprehensive)
         run: |
+          echo "=== Before cleanup ==="
+          df -h / 
+
+          # Essential cleanup for GitHub Actions runner
           sudo rm -rf /usr/share/dotnet || true
-          df -h
+          sudo rm -rf /usr/local/lib/android || true  
+          sudo rm -rf /opt/android || true
+          sudo rm -rf /usr/lib/google-cloud-sdk || true
+          sudo rm -rf /opt/mssql-tools || true
+          sudo rm -rf /opt/microsoft || true
+          sudo rm -rf /opt/hostedtoolcache/CodeQL || true
+
+          # Clean package cache
+          sudo apt-get clean
+          sudo apt-get autoremove -y
+
+          # Utilize /mnt for Docker if available  
+          if [ -d "/mnt" ] && [ $(df /mnt | awk 'NR==2{print $4}') -gt 10000000 ]; then
+            echo "Setting Docker to use /mnt for more space"
+            sudo mkdir -p /mnt/docker
+            sudo systemctl stop docker || true
+            sudo mkdir -p /etc/docker
+            echo '{"data-root": "/mnt/docker"}' | sudo tee /etc/docker/daemon.json
+            sudo systemctl start docker || true
+          fi
+
+          echo "=== After cleanup ==="
+          df -h / 
+          echo "Root filesystem available: $(df -h / | awk 'NR==2{print $4}')"
 
       - uses: azure/docker-login@v1
         with:

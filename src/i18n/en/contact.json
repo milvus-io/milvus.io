@@ -1,5 +1,5 @@
 {
-  "title": "Contact Us",
+  "title": "Book a Demo",
   "desc": "Need help getting Milvus deployed in production or have questions about if <0>Zilliz Cloud</0> (Managed Milvus) is right for you? Fill out the form to get in touch with the team at <1>Zilliz</1>, the creators and key maintainers of Milvus. A friendly member of the team will be in touch soon to help.",
   "form": {
     "error": "Error",

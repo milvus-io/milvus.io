@@ -1,5 +1,5 @@
 {
-  "title": "Contactez-nous",
+  "title": "Réserver une démonstration",
   "desc": "Besoin d'aide pour déployer Milvus en production ou avez-vous des questions sur <0>Zilliz Cloud</0> (Milvus géré) est fait pour vous ? Remplissez le formulaire pour entrer en contact avec l'équipe de <1>Zilliz</1>, les créateurs et principaux mainteneurs de Milvus. Un membre sympathique de l'équipe vous contactera bientôt pour vous aider.",
   "form": {
     "error": "Erreur",

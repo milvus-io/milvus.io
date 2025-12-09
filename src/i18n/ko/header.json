@@ -32,11 +32,11 @@
   },
   "start": "시작하기",
   "star": "별표",
-  "contact": "문의하기",
+  "contact": "데모 예약하기",
   "footer": {
     "resource": {
       "managed": "관리형 Milvus",
-      "contact": "문의하기"
+      "contact": "데모 예약하기"
     },
     "tools": {
       "sizing": "Milvus 크기 계산 도구",

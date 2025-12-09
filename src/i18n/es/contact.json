@@ -1,9 +1,8 @@
 {
-  "title": "Contáctanos",
+  "title": "Reserve una demostración",
   "desc": "¿Necesitas ayuda para implementar Milvus en producción o tienes preguntas sobre si <0>Zilliz Cloud</0> (Milvus Gestionado) es adecuado para ti? Completa el formulario para ponerte en contacto con el equipo de <1>Zilliz</1>, los creadores y mantenedores clave de Milvus. Pronto, un miembro amigable del equipo se pondrá en contacto contigo para ayudarte.",
   "form": {
     "error": "Error",
     "loading": "Cargando..."
   }
 }
-

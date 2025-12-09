@@ -32,11 +32,11 @@
   },
   "start": "開始使用",
   "star": "星標",
-  "contact": "聯繫我們",
+  "contact": "預約示範",
   "footer": {
     "resource": {
       "managed": "託管 Milvus",
-      "contact": "聯絡我們"
+      "contact": "預約示範"
     },
     "tools": {
       "sizing": "Milvus 容量計算工具",

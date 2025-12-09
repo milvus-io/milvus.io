@@ -32,11 +32,11 @@
   },
   "start": "ابدأ",
   "star": "نجمة",
-  "contact": "تواصل معنا",
+  "contact": "احجز عرضاً تجريبياً",
   "footer": {
     "resource": {
       "managed": "Milvus المدار",
-      "contact": "اتصل بنا"
+      "contact": "احجز عرضاً تجريبياً"
     },
     "tools": {
       "sizing": "أداة تحديد حجم Milvus",

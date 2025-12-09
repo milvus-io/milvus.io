@@ -32,11 +32,11 @@
   },
   "start": "始める",
   "star": "スター",
-  "contact": "お問い合わせ",
+  "contact": "デモを予約する",
   "footer": {
     "resource": {
       "managed": "マネージド Milvus",
-      "contact": "お問い合わせ"
+      "contact": "デモを予約する"
     },
     "tools": {
       "sizing": "ミルバス・サイジング・ツール",

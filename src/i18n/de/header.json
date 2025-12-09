@@ -32,11 +32,11 @@
   },
   "start": "Verwaltetes Milvus",
   "star": "Stern",
-  "contact": "Kontakt",
+  "contact": "Demo buchen",
   "footer": {
     "resource": {
       "managed": "Verwaltetes Milvus",
-      "contact": "Kontakt"
+      "contact": "Demo buchen"
     },
     "tools": {
       "sizing": "Milvus Dimensionierungstool",

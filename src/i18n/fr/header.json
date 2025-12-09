@@ -32,11 +32,11 @@
   },
   "start": "Commencer",
   "star": "Étoile",
-  "contact": "Contactez-nous",
+  "contact": "Réserver une démonstration",
   "footer": {
     "resource": {
       "managed": "Milvus Géré",
-      "contact": "Nous contacter"
+      "contact": "Réserver une démonstration"
     },
     "tools": {
       "sizing": "Outil de dimensionnement Milvus",

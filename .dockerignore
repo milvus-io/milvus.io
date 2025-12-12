@@ -1,0 +1,33 @@
+# GitHub workflows and secrets
+.github/
+
+# Git files
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD files
+ci/
+
+# Test files
+tests/
+test-results/
+coverage/
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db

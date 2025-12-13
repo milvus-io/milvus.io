@@ -141,20 +141,20 @@ importers:
         specifier: ^0.379.0
         version: 0.379.0(react@18.2.0)
       next:
-        specifier: ^14.2.33
-        version: 14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^14.2.35
+        version: 14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-hubspot:
         specifier: ^1.3.0
-        version: 1.3.0(next@14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 1.3.0(next@14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@18.3.23)(acorn@8.15.0)(react@18.2.0)
       next-sitemap:
         specifier: ^4.2.3
-        version: 4.2.3(next@14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
+        version: 4.2.3(next@14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       next-with-less:
         specifier: ^3.0.1
-        version: 3.0.1(less-loader@11.1.4(less@4.3.0)(webpack@5.99.8))(less@4.3.0)(next@14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
+        version: 3.0.1(less-loader@11.1.4(less@4.3.0)(webpack@5.99.8))(less@4.3.0)(next@14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       prism-react-renderer:
         specifier: ^2.4.1
         version: 2.4.1(react@18.2.0)
@@ -657,6 +657,7 @@ packages:
 
   '@fortawesome/react-fontawesome@0.2.2':
     resolution: {integrity: sha512-EnkrprPNqI6SXJl//m29hpaNzOp1bruISWaOiRtkMi/xSvHJlzc2j2JAYS7egxt/EbjSNV/k6Xy0AQI6vB2+1g==}
+    deprecated: v0.2.x is no longer supported. Unless you are still using FontAwesome 5, please update to v3.1.1 or greater.
     peerDependencies:
       '@fortawesome/fontawesome-svg-core': ~1 || ~6
       react: '>=16.3'
@@ -884,8 +885,8 @@ packages:
   '@next/env@13.5.11':
     resolution: {integrity: sha512-fbb2C7HChgM7CemdCY+y3N1n8pcTKdqtQLbC7/EQtPdLvlMUT9JX/dBYl8MMZAtYG4uVMyPFHXckb68q/NRwqg==}
 
-  '@next/env@14.2.33':
-    resolution: {integrity: sha512-CgVHNZ1fRIlxkLhIX22flAZI/HmpDaZ8vwyJ/B0SDPTBuLZ1PJ+DWMjCHhqnExfmSQzA/PbZi8OAc7PAq2w9IA==}
+  '@next/env@14.2.35':
+    resolution: {integrity: sha512-DuhvCtj4t9Gwrx80dmz2F4t/zKQ4ktN8WrMwOuVzkJfBilwAwGr6v16M5eI8yCuZ63H9TTuEU09Iu2HqkzFPVQ==}
 
   '@next/eslint-plugin-next@16.0.7':
     resolution: {integrity: sha512-hFrTNZcMEG+k7qxVxZJq3F32Kms130FAhG8lvw2zkKBgAcNOJIxlljNiCjGygvBshvaGBdf88q2CqWtnqezDHA==}
@@ -1797,8 +1798,8 @@ packages:
   '@types/node@20.19.21':
     resolution: {integrity: sha512-CsGG2P3I5y48RPMfprQGfy4JPRZ6csfC3ltBZSRItG3ngggmNY/qs2uZKp4p9VbrpqNNSMzUZNFZKzgOGnd/VA==}
 
-  '@types/node@20.19.25':
-    resolution: {integrity: sha512-ZsJzA5thDQMSQO788d7IocwwQbI8B5OPzmqNvpf3NY/+MHDAS759Wo0gd2WQeXYt5AAAQjzcrTVC6SKCuYgoCQ==}
+  '@types/node@20.19.26':
+    resolution: {integrity: sha512-0l6cjgF0XnihUpndDhk+nyD3exio3iKaYROSgvh/qSevPXax3L8p5DBRFjbvalnwatGgHEQn2R88y2fA3g4irg==}
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -2234,8 +2235,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  baseline-browser-mapping@2.9.4:
-    resolution: {integrity: sha512-ZCQ9GEWl73BVm8bu5Fts8nt7MHdbt5vY9bP6WGnUh+r3l8M7CgfyTlwsgCbMC66BNxPr6Xoce3j66Ms5YUQTNA==}
+  baseline-browser-mapping@2.9.7:
+    resolution: {integrity: sha512-k9xFKplee6KIio3IDbwj+uaCLpqzOwakOgmqzPezM0sFJlFKcg30vk2wOiAJtkTSfx0SSQDSe8q+mWA/fSH5Zg==}
     hasBin: true
 
   before-after-hook@2.2.3:
@@ -2295,11 +2296,8 @@ packages:
   caniuse-lite@1.0.30001718:
     resolution: {integrity: sha512-AflseV1ahcSunK53NfEs9gFWgOEmzr0f+kaMFA4xiLZlr9Hzt7HxcSpIFcnNCUkz6R6dWKa54rUz3HUmI3nVcw==}
 
-  caniuse-lite@1.0.30001750:
-    resolution: {integrity: sha512-cuom0g5sdX6rw00qOoLNSFCJ9/mYIsuSOA+yzpDw8eopiFqcVwQvZHqov0vmEighRxX++cfC0Vg1G+1Iy/mSpQ==}
-
-  caniuse-lite@1.0.30001759:
-    resolution: {integrity: sha512-Pzfx9fOKoKvevQf8oCXoyNRQ5QyxJj+3O0Rqx2V5oxT61KGx8+n6hV/IUyJeifUci2clnmmKVpvtiqRzgiWjSw==}
+  caniuse-lite@1.0.30001760:
+    resolution: {integrity: sha512-7AAMPcueWELt1p3mi13HR/LHH0TJLT11cnwDJEs3xA4+CK/PLKeO9Kl1oru24htkyUKtkGCvAx4ohB0Ttry8Dw==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -2591,8 +2589,8 @@ packages:
   electron-to-chromium@1.5.159:
     resolution: {integrity: sha512-CEvHptWAMV5p6GJ0Lq8aheyvVbfzVrv5mmidu1D3pidoVNkB3tTBsTMVtPJ+rzRK5oV229mCLz9Zj/hNvU8GBA==}
 
-  electron-to-chromium@1.5.266:
-    resolution: {integrity: sha512-kgWEglXvkEfMH7rxP5OSZZwnaDWT7J9EoZCujhnpLbfi0bbNtRkgdX2E3gt0Uer11c61qCYktB3hwkAS325sJg==}
+  electron-to-chromium@1.5.267:
+    resolution: {integrity: sha512-0Drusm6MVRXSOJpGbaSVgcQsuB4hEkMpHXaVstcPmhu5LIedxs1xNK/nIxmQIU/RPC0+1/o0AVZfBTkTNJOdUw==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -2600,8 +2598,8 @@ packages:
   emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
 
-  enhanced-resolve@5.18.3:
-    resolution: {integrity: sha512-d4lC8xfavMeBjzGr2vECC3fsGXziXZQyJxD868h2M/mBI3PwAuODxAkLkq5HYuvrPYcUtiLzsTo8U3PgX3Ocww==}
+  enhanced-resolve@5.18.4:
+    resolution: {integrity: sha512-LgQMM4WXU3QI+SYgEc2liRgznaD5ojbmY3sb8LxyguVkIg5FxdpTkvk72te2R38/TGKxH634oLxXRGY6d7AP+Q==}
     engines: {node: '>=10.13.0'}
 
   entities@6.0.0:
@@ -3767,8 +3765,8 @@ packages:
       less-loader: '>= 7.0.0'
       next: '>= 11.0.1'
 
-  next@14.2.33:
-    resolution: {integrity: sha512-GiKHLsD00t4ACm1p00VgrI0rUFAC9cRDGReKyERlM57aeEZkOQGcZTpIbsGn0b562FTPJWmYfKwplfO9EaT6ng==}
+  next@14.2.35:
+    resolution: {integrity: sha512-KhYd2Hjt/O1/1aZVX3dCwGXM1QmOV4eNM2UTacK5gipDdPN/oHHK/4oVGy7X8GMfPMsUTUEmGlsy0EY1YGAkig==}
     engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
@@ -4574,8 +4572,8 @@ packages:
     resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
     engines: {node: '>=6'}
 
-  terser-webpack-plugin@5.3.15:
-    resolution: {integrity: sha512-PGkOdpRFK+rb1TzVz+msVhw4YMRT9txLF4kRqvJhGhCM324xuR3REBSHALN+l+sAhKUmz0aotnjp5D+P83mLhQ==}
+  terser-webpack-plugin@5.3.16:
+    resolution: {integrity: sha512-h9oBFCWrq78NyWWVcSwZarJkZ01c2AyGrzs1crmHZO3QUg9D61Wu4NPjBy69n7JqylFF5y+CsUZYmYEIZ3mR+Q==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       '@swc/core': '*'
@@ -5764,7 +5762,7 @@ snapshots:
 
   '@next/env@13.5.11': {}
 
-  '@next/env@14.2.33': {}
+  '@next/env@14.2.35': {}
 
   '@next/eslint-plugin-next@16.0.7':
     dependencies:
@@ -6608,7 +6606,7 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/node@20.19.25':
+  '@types/node@20.19.26':
     dependencies:
       undici-types: 6.21.0
 
@@ -7113,7 +7111,7 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  baseline-browser-mapping@2.9.4: {}
+  baseline-browser-mapping@2.9.7: {}
 
   before-after-hook@2.2.3: {}
 
@@ -7141,9 +7139,9 @@ snapshots:
 
   browserslist@4.28.1:
     dependencies:
-      baseline-browser-mapping: 2.9.4
-      caniuse-lite: 1.0.30001759
-      electron-to-chromium: 1.5.266
+      baseline-browser-mapping: 2.9.7
+      caniuse-lite: 1.0.30001760
+      electron-to-chromium: 1.5.267
       node-releases: 2.0.27
       update-browserslist-db: 1.2.2(browserslist@4.28.1)
 
@@ -7176,9 +7174,7 @@ snapshots:
 
   caniuse-lite@1.0.30001718: {}
 
-  caniuse-lite@1.0.30001750: {}
-
-  caniuse-lite@1.0.30001759: {}
+  caniuse-lite@1.0.30001760: {}
 
   ccount@2.0.1: {}
 
@@ -7440,13 +7436,13 @@ snapshots:
 
   electron-to-chromium@1.5.159: {}
 
-  electron-to-chromium@1.5.266: {}
+  electron-to-chromium@1.5.267: {}
 
   emoji-regex@8.0.0: {}
 
   emoji-regex@9.2.2: {}
 
-  enhanced-resolve@5.18.3:
+  enhanced-resolve@5.18.4:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.0
@@ -7628,7 +7624,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.48.1(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.31.0(jiti@1.21.7)))(eslint@9.31.0(jiti@1.21.7)):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.48.1(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.31.0(jiti@1.21.7)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -7650,7 +7646,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.31.0(jiti@1.21.7)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.48.1(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.31.0(jiti@1.21.7)))(eslint@9.31.0(jiti@1.21.7))
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.48.1(eslint@9.31.0(jiti@1.21.7))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.31.0(jiti@1.21.7))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -8394,7 +8390,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.19.25
+      '@types/node': 20.19.26
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -9041,9 +9037,9 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-hubspot@1.3.0(next@14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next-hubspot@1.3.0(next@14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      next: 14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next: 14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
     optionalDependencies:
       react-dom: 18.2.0(react@18.2.0)
@@ -9062,27 +9058,27 @@ snapshots:
       - acorn
       - supports-color
 
-  next-sitemap@4.2.3(next@14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
+  next-sitemap@4.2.3(next@14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
     dependencies:
       '@corex/deepmerge': 4.0.43
       '@next/env': 13.5.11
       fast-glob: 3.3.3
       minimist: 1.2.8
-      next: 14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next: 14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
-  next-with-less@3.0.1(less-loader@11.1.4(less@4.3.0)(webpack@5.99.8))(less@4.3.0)(next@14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
+  next-with-less@3.0.1(less-loader@11.1.4(less@4.3.0)(webpack@5.99.8))(less@4.3.0)(next@14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
     dependencies:
       clone-deep: 4.0.1
       less: 4.3.0
       less-loader: 11.1.4(less@4.3.0)(webpack@5.99.8)
-      next: 14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next: 14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
-  next@14.2.33(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next@14.2.35(@babel/core@7.27.3)(@playwright/test@1.57.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      '@next/env': 14.2.33
+      '@next/env': 14.2.35
       '@swc/helpers': 0.5.5
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001750
+      caniuse-lite: 1.0.30001760
       graceful-fs: 4.2.11
       postcss: 8.4.31
       react: 18.2.0
@@ -10007,7 +10003,7 @@ snapshots:
 
   tapable@2.3.0: {}
 
-  terser-webpack-plugin@5.3.15(webpack@5.99.8):
+  terser-webpack-plugin@5.3.16(webpack@5.99.8):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
@@ -10325,7 +10321,7 @@ snapshots:
       acorn: 8.15.0
       browserslist: 4.28.1
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.18.3
+      enhanced-resolve: 5.18.4
       es-module-lexer: 1.7.0
       eslint-scope: 5.1.1
       events: 3.3.0
@@ -10337,7 +10333,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.3.15(webpack@5.99.8)
+      terser-webpack-plugin: 5.3.16(webpack@5.99.8)
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     transitivePeerDependencies:

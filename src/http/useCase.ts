@@ -9,7 +9,7 @@ const fetchCustomers = async () => {
     const result = response.data.map(v => {
       return {
         name: v.customer_name,
-        logo: v.home_page_logo.url,
+        logo: v.home_page_logo.url || '',
       };
     });
     return result;
@@ -26,7 +26,7 @@ export const fetchUseCases = async (): Promise<FinalUserCaseType[]> => {
     const result = response.data[0].use_case_list.map((v: UseCaseType) => {
       return {
         ...v,
-        logo: v.logo?.url,
+        logo: v.logo?.url || '',
       };
     });
     return result;

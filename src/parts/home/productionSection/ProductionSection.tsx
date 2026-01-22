@@ -8,120 +8,120 @@ export const ProductionSection = () => {
   const { locale } = useGlobalLocale();
   const { t } = useTranslation('home', { lng: locale });
 
-  const brans = [
+  const brands = [
     {
-      name: 'IKEA',
-      icon: '/images/home/brands/ikea.png',
+      name: 'Salesforce',
+      icon: '/images/home/brands/salesforce.svg',
       class: 'col-span-1 row-span-1',
     },
     {
-      name: 'NVIDIA',
-      icon: '/images/home/brands/nvidia.png',
+      name: 'Exa.ai',
+      icon: '/images/home/brands/exa-ai.svg',
       class: 'col-start-2 col-end-4 row-start-1 row-end-3',
     },
     {
-      name: 'Smart News',
-      icon: '/images/home/brands/smart-news.png',
+      name: 'Walmart',
+      icon: '/images/home/brands/walmart.svg',
       class: 'col-start-4 col-end-6 row-start-1 row-end-1',
     },
     {
-      name: 'Walmart',
-      icon: '/images/home/brands/walmart.png',
+      name: 'Doordash',
+      icon: '/images/home/brands/doordash.svg',
       class: 'col-start-6 col-end-8 row-start-1 row-end-1',
     },
     {
-      name: 'Shopee',
-      icon: '/images/home/brands/shopee.png',
+      name: 'Reddit',
+      icon: '/images/home/brands/reddit.svg',
       class: 'col-start-8 col-end-9 row-span-1',
     },
     {
-      name: 'Tokopedia',
-      icon: '/images/home/brands/tokopedia.png',
+      name: 'Accenture',
+      icon: '/images/home/brands/accenture.svg',
       class: 'col-start-9 col-end-11 row-start-1 row-end-1',
     },
     {
-      name: 'Shutterstock',
-      icon: '/images/home/brands/shutter-stock.png',
+      name: 'Open Evidence',
+      icon: '/images/home/brands/open-evidence.svg',
       class: 'col-start-11 col-end-13 row-start-1 row-end-1',
     },
     {
-      name: 'AT&T',
-      icon: '/images/home/brands/at&t.png',
+      name: 'Shell',
+      icon: '/images/home/brands/shell.svg',
       class: 'col-span-1 row-start-2 row-end-3',
     },
     {
-      name: 'ZipRecruiter',
-      icon: '/images/home/brands/zip-recruiter.png',
+      name: 'Doximity',
+      icon: '/images/home/brands/doximity.svg',
       class: 'col-start-10 col-end-12 row-start-2 row-end-3',
     },
     {
-      name: 'IBM',
-      icon: '/images/home/brands/ibm.png',
+      name: 'Fiverr',
+      icon: '/images/home/brands/fiverr.svg',
       class: 'col-start-12 col-end-13 row-start-2 row-end-3',
     },
     {
-      name: 'Bosch',
-      icon: '/images/home/brands/bosch.png',
+      name: 'Read.ai',
+      icon: '/images/home/brands/read-ai.svg',
       class: 'col-start-1 col-end-3 row-start-3 row-end-4',
     },
     {
       name: 'ebay',
-      icon: '/images/home/brands/ebay.png',
+      icon: '/images/home/brands/ebay.svg',
       class: 'col-start-3 col-end-4 row-start-3 row-end-4',
     },
     {
-      name: 'Inflection',
-      icon: '/images/home/brands/inflection.png',
+      name: 'Notta.ai',
+      icon: '/images/home/brands/notta-ai.svg',
       class: 'col-start-10 col-end-11 row-start-3 row-end-4',
     },
     {
-      name: 'Intuit',
-      icon: '/images/home/brands/intuit.png',
+      name: 'Bosch',
+      icon: '/images/home/brands/bosch.svg',
       class: 'col-start-11 col-end-13 row-start-3 row-end-4',
     },
     {
-      name: 'New Relic',
-      icon: '/images/home/brands/new-relic.png',
+      name: 'NVIDIA',
+      icon: '/images/home/brands/nvidia.svg',
       class: 'col-start-1 col-end-3 row-start-4 row-end-6',
     },
     {
-      name: 'Salesforce',
-      icon: '/images/home/brands/sales-force.png',
+      name: 'Cisco',
+      icon: '/images/home/brands/cisco.svg',
       class: 'col-start-3 col-end-4 row-start-4 row-end-5',
     },
     {
-      name: 'PayPal',
-      icon: '/images/home/brands/paypal.png',
+      name: 'Filevine',
+      icon: '/images/home/brands/filevine.svg',
       class: 'col-start-10 col-end-12 row-start-4 row-end-6',
     },
     {
-      name: 'OMERS',
-      icon: '/images/home/brands/omers.png',
+      name: 'Fanatics',
+      icon: '/images/home/brands/fanatics.svg',
       class: 'col-start-12 col-end-13 row-start-4 row-end-5',
     },
     {
       name: 'LINE',
-      icon: '/images/home/brands/line.png',
+      icon: '/images/home/brands/line.svg',
       class: 'col-start-3 col-end-4 row-start-5 row-end-6',
     },
     {
       name: 'ROBLOX',
-      icon: '/images/home/brands/roblox.png',
+      icon: '/images/home/brands/roblox.svg',
       class: 'col-start-4 col-end-6 row-start-5 row-end-6',
     },
     {
-      name: 'TREND',
-      icon: '/images/home/brands/trend.png',
+      name: 'Airtable',
+      icon: '/images/home/brands/airtable.svg',
       class: 'col-start-6 col-end-8 row-start-5 row-end-6',
     },
     {
-      name: 'COMPASS',
-      icon: '/images/home/brands/compass.png',
+      name: 'Pluad',
+      icon: '/images/home/brands/plaud-ai.svg',
       class: 'col-start-8 col-end-10 row-start-5 row-end-6',
     },
     {
-      name: 'MOJ',
-      icon: '/images/home/brands/moj.png',
+      name: 'IBM',
+      icon: '/images/home/brands/ibm.svg',
       class: 'col-start-12 col-end-13 row-start-5 row-end-6',
     },
   ];
@@ -133,13 +133,15 @@ export const ProductionSection = () => {
           classes.logosWrapper
         )}
       >
-        {brans.map(item => {
+        {brands.map(item => {
           return (
             <li
               key={item.name}
-              className={clsx('bg-white rounded-[8px]', item.class)}
+              className={clsx(item.class)}
             >
-              <img src={item.icon} alt={item.name} className="w-full h-full" />
+              <span className="inline-block bg-white leading-[0px] rounded-[8px]">
+                <img src={item.icon} alt={item.name} className="w-full h-full" />
+              </span>
             </li>
           );
         })}

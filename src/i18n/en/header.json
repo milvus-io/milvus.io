@@ -28,7 +28,8 @@
     "discord": "Discord",
     "github": "GitHub",
     "officeHours": "Milvus Office Hours",
-    "more": "More Channels"
+    "more": "More Channels",
+    "slack": "Slack"
   },
   "start": "Try Managed Milvus",
   "star": "Star",

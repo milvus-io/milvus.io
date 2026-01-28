@@ -19,6 +19,7 @@ import {
   DISCORD_INVITE_URL,
   GITHUB_MILVUS_COMMUNITY_LINK,
   GITHUB_CLAUDE_CONTEXT_LINK,
+  MILVUS_SLACK_LINK
 } from '@/consts/links';
 import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 import { LanguageSelector } from '@/components/language-selector';
@@ -28,7 +29,7 @@ import milvusStats from '../../../global-stats.json';
 import { LogoSection } from './Logos';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
 
-type Props = { className?: string; disableLangSelector?: boolean };
+type Props = { className?: string; disableLangSelector?: boolean; };
 
 const startNum = `${(Number(milvusStats?.milvusStars || 0) / 1000).toFixed(
   1
@@ -126,6 +127,16 @@ export default function DesktopHeader(props: Props) {
       link: getLocalePath('/community'),
       list: [
         {
+          label: t('community.officeHours'),
+          link: MILVUS_OFFICE_HOURS_URL,
+          rel: 'noopener noreferrer',
+        },
+        {
+          label: t("community.slack"),
+          link: MILVUS_SLACK_LINK,
+          rel: 'noopener noreferrer',
+        },
+        {
           label: t('community.discord'),
           link: DISCORD_INVITE_URL,
           rel: 'noopener noreferrer',
@@ -133,11 +144,6 @@ export default function DesktopHeader(props: Props) {
         {
           label: t('community.github'),
           link: GITHUB_MILVUS_COMMUNITY_LINK,
-          rel: 'noopener noreferrer',
-        },
-        {
-          label: t('community.officeHours'),
-          link: MILVUS_OFFICE_HOURS_URL,
           rel: 'noopener noreferrer',
         },
         {

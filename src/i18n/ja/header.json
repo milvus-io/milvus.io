@@ -28,7 +28,8 @@
     "discord": "Discord",
     "github": "GitHub",
     "more": "その他のチャンネル",
-    "officeHours": "ミルバス営業時間"
+    "officeHours": "ミルバス営業時間",
+    "slack": "スラック"
   },
   "start": "始める",
   "star": "スター",

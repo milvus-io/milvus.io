@@ -28,7 +28,8 @@
     "discord": "Discord",
     "github": "GitHub",
     "more": "Weitere Kanäle",
-    "officeHours": "Milvus Bürozeiten"
+    "officeHours": "Milvus Bürozeiten",
+    "slack": "Slack"
   },
   "start": "Verwaltetes Milvus",
   "star": "Stern",

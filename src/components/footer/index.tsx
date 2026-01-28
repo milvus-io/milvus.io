@@ -14,6 +14,7 @@ import {
   GITHUB_VTS_LINK,
   GITHUB_DEEP_SEARCHER_LINK,
   GITHUB_CLAUDE_CONTEXT_LINK,
+  MILVUS_SLACK_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
 import { SocialMedias, SocialMediasCN } from '../socialMedias';
@@ -116,8 +117,14 @@ const Footer = (props: Props) => {
       title: t(`common:v3trans.main.nav.community`),
       children: [
         {
-          name: t(`common:v3trans.main.nav.getinvolved`),
-          to: getLocalePath('/community'),
+          name: t('header:community.officeHours'),
+          to: MILVUS_OFFICE_HOURS_URL,
+          isExternal: true,
+        },
+        {
+          name: t('header:community.slack'),
+          to: MILVUS_SLACK_LINK,
+          isExternal: true,
         },
         {
           name: 'Discord',
@@ -127,11 +134,6 @@ const Footer = (props: Props) => {
         {
           name: 'Github',
           to: GITHUB_MILVUS_LINK,
-          isExternal: true,
-        },
-        {
-          name: t('header:community.officeHours'),
-          to: MILVUS_OFFICE_HOURS_URL,
           isExternal: true,
         },
       ],
@@ -215,7 +217,7 @@ const Footer = (props: Props) => {
           </div>
           <div
             className={clsx(
-              'grid grid-cols-2 gap-8 text-sm sm:gap-x-0 flex-shrink-0 flex-grow-0 flex-[420px] max-tablet:flex-auto',
+              'grid grid-cols-2 gap-8 text-sm sm:gap-x-[20px] flex-shrink-0 flex-grow-0 flex-[420px] max-tablet:flex-auto',
               nav
             )}
           >

@@ -5,6 +5,7 @@ import {
   MILVUS_YOUTUBE_CHANNEL_LINK,
   MILVUS_LINKEDIN_URL,
   MILVUS_BILIBILI_LINK,
+  MILVUS_SLACK_LINK,
 } from '@/consts/links';
 import clsx from 'clsx';
 import Popper, { PopperPlacementType } from '@mui/material/Popper';
@@ -19,6 +20,7 @@ import {
   MediaWechat,
   MediaBilibili,
   MediaGit,
+  MediaSlack
 } from '@/components/icons';
 import { useRef, useState } from 'react';
 
@@ -29,6 +31,7 @@ const socialJson = [
     link: GITHUB_MILVUS_LINK,
   },
   { icon: <MediaX />, name: 'X', link: MILVUS_TWITTER_LINK },
+  { icon: <MediaSlack />, name: 'Slack', link: MILVUS_SLACK_LINK },
   {
     icon: <MediaDiscord />,
     name: 'Discord',

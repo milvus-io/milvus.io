@@ -25,6 +25,7 @@ import {
   DISCORD_INVITE_URL,
   GITHUB_MILVUS_COMMUNITY_LINK,
   GITHUB_CLAUDE_CONTEXT_LINK,
+  MILVUS_SLACK_LINK,
 } from '@/consts/links';
 import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 import { RightTopArrowIcon } from '../icons';
@@ -280,6 +281,24 @@ export default function MobileHeader(props: {
                     classes={{ root: classes.subMenuList }}
                   >
                     <a
+                      href={MILVUS_OFFICE_HOURS_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={classes.externalLinkButton}
+                    >
+                      {t('community.officeHours')}
+                      <RightTopArrowIcon />
+                    </a>
+                    <a
+                      href={MILVUS_SLACK_LINK}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={classes.externalLinkButton}
+                    >
+                      {t('community.slack')}
+                      <RightTopArrowIcon />
+                    </a>
+                    <a
                       href={DISCORD_INVITE_URL}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -297,15 +316,7 @@ export default function MobileHeader(props: {
                       {t('community.github')}
                       <RightTopArrowIcon />
                     </a>
-                    <a
-                      href={MILVUS_OFFICE_HOURS_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.officeHours')}
-                      <RightTopArrowIcon />
-                    </a>
+
                     <a href="/community" className={classes.externalLinkButton}>
                       {t('community.more')}
                     </a>

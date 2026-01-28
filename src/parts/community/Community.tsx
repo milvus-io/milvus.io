@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '@/components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
-import { DISCORD_INVITE_URL, MILVUS_BILIBILI_LINK } from '@/consts';
+import { DISCORD_INVITE_URL, MILVUS_BILIBILI_LINK, MILVUS_SLACK_LINK } from '@/consts';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import classes from '@/styles/community.module.less';
 import pageClasses from '@/styles/responsive.module.less';
@@ -41,6 +41,13 @@ export const Community: FC<Props> = (props: Props) => {
       label: 'GitHub',
       imgUrl: '/images/community/socialMedia/github.svg',
       href: 'https://github.com/milvus-io/milvus/discussions',
+      catLabel: t('join'),
+      show: true,
+    },
+    {
+      label: 'Slack',
+      imgUrl: '/images/community/socialMedia/slack.svg',
+      href: MILVUS_SLACK_LINK,
       catLabel: t('join'),
       show: true,
     },

@@ -5,6 +5,7 @@ import classes from './index.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import Breadcrumb from '@/components/breadcrumb';
+import DocPageActions from './DocPageActions';
 
 interface DocContentPropsType {
   commitPath?: string;
@@ -83,15 +84,18 @@ export default function DocContent(props: DocContentPropsType) {
 
   return (
     <div className={classes.docPostWrapper}>
-      <Breadcrumb
-        list={[
-          ...prefixCrumbItems,
-          ...activeLabels.map(v => ({
-            label: v,
-          })),
-        ]}
-        lang={lang}
-      />
+      <div className={classes.topBar}>
+        <Breadcrumb
+          list={[
+            ...prefixCrumbItems,
+            ...activeLabels.map(v => ({
+              label: v,
+            })),
+          ]}
+          lang={lang}
+        />
+        <DocPageActions githubLink={commitPath} />
+      </div>
       <div
         className={clsx('doc-style', 'doc-post-content', {
           'api-reference-wrapper': type === 'api',

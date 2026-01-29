@@ -3,8 +3,13 @@ import { Milvus } from '@zilliz/toolkit';
 export const markdownToHtml = Milvus.md2html;
 
 export const copyToCommand = async (value: string, callback = () => {}) => {
-  await navigator.clipboard.writeText(value);
-  callback();
+  try {
+    await navigator.clipboard.writeText(value);
+    callback();
+  } catch (error) {
+    console.error('Error copying to clipboard:', error);
+    await navigator.clipboard.writeText('Error copying to clipboard');
+  }
 };
 
 export const resetCookie = () => {

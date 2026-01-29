@@ -68,7 +68,7 @@ async function translateText(text, targetLang) {
   } catch (err) {
     const errorMessage =
       chalk.red('Error translating text: ') +
-      `${text} to ${targetLang}, message: ${err.response.data.message}`;
+      `${text} to ${targetLang}, message: ${err.response?.data?.message}`;
     console.error(errorMessage);
     return text;
   }

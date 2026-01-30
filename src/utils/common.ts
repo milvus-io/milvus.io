@@ -8,7 +8,7 @@ export const copyToCommand = async (value: string, callback = () => {}) => {
     callback();
   } catch (error) {
     console.error('Error copying to clipboard:', error);
-    await navigator.clipboard.writeText('Error copying to clipboard');
+    throw error;
   }
 };
 

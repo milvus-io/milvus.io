@@ -61,3 +61,6 @@ export const LEARN_MORE_LINK = (lang: string) =>
 
 export const MILVUS_BILIBILI_LINK =
   'https://space.bilibili.com/1058892339/upload/video';
+
+export const MILVUS_RAW_DOCS_BASE_URL =
+  'https://raw.githubusercontent.com/milvus-io/milvus-docs/refs/heads';

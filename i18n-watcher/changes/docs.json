@@ -9,7 +9,8 @@
     "pageActions.chatClaude.label": "Chat in Claude",
     "pageActions.chatClaude.desc": "Ask questions about this page",
     "pageActions.chatGemini.label": "Chat in Gemini",
-    "pageActions.chatGemini.desc": "Ask questions about this page"
+    "pageActions.chatGemini.desc": "Ask questions about this page",
+    "pageActions.prompt": "Use the following documentation as a reference: {{url}} and answer my following questions."
   },
   "modified": {},
   "deleted": {}

@@ -22,7 +22,8 @@
     "chatGemini": {
       "label": "Chat in Gemini",
       "desc": "Ask questions about this page"
-    }
+    },
+    "prompt": "Use the following documentation as a reference: {{url}} and answer my following questions."
   },
   "feedback": {
     "title": "Feedback",

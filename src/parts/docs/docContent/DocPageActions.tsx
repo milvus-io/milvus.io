@@ -118,7 +118,6 @@ export default function DocPageActions(props: DocPageActionsProps) {
   const handleAction = async (value: PageAction) => {
 
     const preFilledPrompt = t('pageActions.prompt', { url: `${ABSOLUTE_BASE_URL}${asPath}` });
-    console.log('preFilledPrompt', preFilledPrompt);
 
     switch (value) {
       case PageAction.CopyPage: {

@@ -9,6 +9,8 @@ import { OpenAIIcon, ClaudeAIIcon, GeminiAIIcon } from '@/components/icons/AI';
 import { copyToCommand } from '@/utils/common';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { LanguageEnum } from '@/types/localization';
+import { useRouter } from 'next/router';
+import { ABSOLUTE_BASE_URL, MILVUS_RAW_DOCS_BASE_URL } from '@/consts';
 
 interface DocPageActionsProps {
   githubLink?: string;
@@ -68,6 +70,7 @@ export default function DocPageActions(props: DocPageActionsProps) {
   const { githubLink } = props;
   const { t } = useTranslation('docs');
   const { locale } = useGlobalLocale();
+  const { asPath } = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState<CopyStatus>('idle');
@@ -75,7 +78,7 @@ export default function DocPageActions(props: DocPageActionsProps) {
   const [mdContent, setMdContent] = useState<string>('');
 
   const defaultOption = options[0];
-  const originalDocUrl = `https://raw.githubusercontent.com/milvus-io/milvus-docs/refs/heads${githubLink}`;
+  const rawDocUrl = `${MILVUS_RAW_DOCS_BASE_URL}${githubLink}`;
 
 
   // Close dropdown when clicking outside
@@ -113,7 +116,9 @@ export default function DocPageActions(props: DocPageActionsProps) {
   };
 
   const handleAction = async (value: PageAction) => {
-    const currentUrl = window.location.href;
+
+    const preFilledPrompt = t('pageActions.prompt', { url: `${ABSOLUTE_BASE_URL}${asPath}` });
+    console.log('preFilledPrompt', preFilledPrompt);
 
     switch (value) {
       case PageAction.CopyPage: {
@@ -122,27 +127,27 @@ export default function DocPageActions(props: DocPageActionsProps) {
       }
       case PageAction.ViewMarkdown: {
         if (githubLink) {
-          window.open(originalDocUrl, '_blank');
+          window.open(rawDocUrl, '_blank');
         }
         break;
       }
       case PageAction.ChatGPT: {
         window.open(
-          `https://chatgpt.com/?q=${encodeURIComponent(currentUrl)}`,
+          `https://chatgpt.com/?q=${encodeURIComponent(preFilledPrompt)}`,
           '_blank'
         );
         break;
       }
       case PageAction.ChatClaude: {
         window.open(
-          `https://claude.ai/new?q=${encodeURIComponent(currentUrl)}`,
+          `https://claude.ai/new?q=${encodeURIComponent(preFilledPrompt)}`,
           '_blank'
         );
         break;
       }
       case PageAction.ChatGemini: {
         window.open(
-          `https://gemini.google.com/app?q=${encodeURIComponent(currentUrl)}`,
+          `https://gemini.google.com/app?q=${encodeURIComponent(preFilledPrompt)}`,
           '_blank'
         );
         break;
@@ -173,7 +178,7 @@ export default function DocPageActions(props: DocPageActionsProps) {
 
   useEffect(() => {
     if (githubLink) {
-      fetch(originalDocUrl)
+      fetch(rawDocUrl)
         .then(response => response.text())
         .then(data => setMdContent(data))
         .catch(error => console.error('Error fetching MD file:', error));

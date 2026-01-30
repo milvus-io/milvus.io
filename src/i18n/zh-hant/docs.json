@@ -37,5 +37,28 @@
     "title": "Milvus 辦公時間",
     "desc": "從 Milvus 的專家 Zilliz 取得生產部署的協助。",
     "ctaLabel": "預約免費 1:1 課程"
+  },
+  "pageActions": {
+    "copyPage": {
+      "label": "複製頁面",
+      "desc": "以 Markdown 方式複製頁面給法學碩士"
+    },
+    "viewMarkdown": {
+      "label": "檢視為 Markdown",
+      "desc": "以純文字檢視本網頁"
+    },
+    "chatGPT": {
+      "label": "在 ChatGPT 聊天",
+      "desc": "詢問有關此頁的問題"
+    },
+    "chatClaude": {
+      "label": "在克勞德聊天",
+      "desc": "詢問有關此頁的問題"
+    },
+    "chatGemini": {
+      "label": "在雙子座聊天",
+      "desc": "詢問有關此頁的問題"
+    },
+    "prompt": "以下列文件為參考：{{url}} 並回答我以下的問題。"
   }
 }

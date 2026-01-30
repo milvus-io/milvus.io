@@ -2,6 +2,29 @@
   "title": "Milvus Documentation",
   "metaTitle": "Milvus vector database documentation",
   "homepageDesc": "Milvus {{version}} documentation",
+  "pageActions": {
+    "copyPage": {
+      "label": "Copy page",
+      "desc": "Copy page as Markdown for LLMs"
+    },
+    "viewMarkdown": {
+      "label": "View as Markdown",
+      "desc": "View this page as plain text"
+    },
+    "chatGPT": {
+      "label": "Chat in ChatGPT",
+      "desc": "Ask questions about this page"
+    },
+    "chatClaude": {
+      "label": "Chat in Claude",
+      "desc": "Ask questions about this page"
+    },
+    "chatGemini": {
+      "label": "Chat in Gemini",
+      "desc": "Ask questions about this page"
+    },
+    "prompt": "Use the following documentation as a reference: {{url}} and answer my following questions."
+  },
   "feedback": {
     "title": "Feedback",
     "prompt": "Was this page helpful?",

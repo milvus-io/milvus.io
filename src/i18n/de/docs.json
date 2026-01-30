@@ -31,5 +31,28 @@
     "title": "Milvus Bürozeiten",
     "desc": "Holen Sie sich Hilfe bei der Produktionsbereitstellung von Zilliz, den Experten für Milvus.",
     "ctaLabel": "Buchen Sie eine kostenlose 1:1-Sitzung"
+  },
+  "pageActions": {
+    "copyPage": {
+      "label": "Seite kopieren",
+      "desc": "Seite als Markdown für LLMs kopieren"
+    },
+    "viewMarkdown": {
+      "label": "Als Markdown anzeigen",
+      "desc": "Diese Seite als reinen Text anzeigen"
+    },
+    "chatGPT": {
+      "label": "Chatten im ChatGPT",
+      "desc": "Stellen Sie Fragen zu dieser Seite"
+    },
+    "chatClaude": {
+      "label": "Chatten in Claude",
+      "desc": "Stellen Sie Fragen zu dieser Seite"
+    },
+    "chatGemini": {
+      "label": "Chat in Zwillinge",
+      "desc": "Stellen Sie Fragen zu dieser Seite"
+    },
+    "prompt": "Verwenden Sie die folgende Dokumentation als Referenz: {{url}} und beantworten Sie meine folgenden Fragen."
   }
 }

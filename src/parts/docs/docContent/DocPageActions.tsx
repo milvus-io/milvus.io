@@ -195,7 +195,7 @@ export default function DocPageActions(props: DocPageActionsProps) {
           className={classes.mainButton}
           onClick={handleDefaultClick}
           title={t(defaultOption.descKey)}
-          disabled={copyStatus === 'loading'}
+          disabled={copyStatus === 'loading' || !mdContent}
         >
           <span
             className={clsx(classes.buttonIcon, {

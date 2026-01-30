@@ -31,5 +31,28 @@
     "title": "Horário de expediente de Milvus",
     "desc": "Obtenha ajuda com a implementação de produção de Zilliz, os especialistas em Milvus.",
     "ctaLabel": "Marcar uma sessão 1:1 gratuita"
+  },
+  "pageActions": {
+    "copyPage": {
+      "label": "Copiar página",
+      "desc": "Copiar página como Markdown para LLMs"
+    },
+    "viewMarkdown": {
+      "label": "Ver como Markdown",
+      "desc": "Ver esta página como texto simples"
+    },
+    "chatGPT": {
+      "label": "Conversar no ChatGPT",
+      "desc": "Fazer perguntas sobre esta página"
+    },
+    "chatClaude": {
+      "label": "Chat em Claude",
+      "desc": "Fazer perguntas sobre esta página"
+    },
+    "chatGemini": {
+      "label": "Chat em Gémeos",
+      "desc": "Fazer perguntas sobre esta página"
+    },
+    "prompt": "Utilize a seguinte documentação como referência: {{url}} e responda às seguintes perguntas."
   }
 }

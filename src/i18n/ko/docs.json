@@ -31,5 +31,28 @@
     "title": "밀버스 영업 시간",
     "desc": "Milvus의 전문가인 질리즈의 프로덕션 배포에 대한 도움을 받으세요.",
     "ctaLabel": "무료 1:1 세션 예약하기"
+  },
+  "pageActions": {
+    "copyPage": {
+      "label": "페이지 복사",
+      "desc": "LLM용 마크다운으로 페이지 복사"
+    },
+    "viewMarkdown": {
+      "label": "마크다운으로 보기",
+      "desc": "이 페이지를 일반 텍스트로 보기"
+    },
+    "chatGPT": {
+      "label": "ChatGPT에서 채팅",
+      "desc": "이 페이지에 대해 질문하기"
+    },
+    "chatClaude": {
+      "label": "클로드에서 채팅하기",
+      "desc": "이 페이지에 대해 질문하기"
+    },
+    "chatGemini": {
+      "label": "쌍둥이자리 채팅",
+      "desc": "이 페이지에 대해 질문하기"
+    },
+    "prompt": "다음 문서를 참조하세요: {URL}}을 참조하여 다음 질문에 답하세요."
   }
 }

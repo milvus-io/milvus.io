@@ -444,7 +444,7 @@ export const dependencyCalculator = (params: {
           },
         };
       }
-      if (rawDataSize >= $100M768D && rawDataSize <= $1B768D) {
+      if (rawDataSize >= $100M768D) {
         etcdBaseConfig = {
           cpu: 1,
           memory: 8,

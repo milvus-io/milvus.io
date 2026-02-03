@@ -42,6 +42,7 @@ import {
   formatOutOfCalData,
 } from '@/utils/sizingTool';
 import { SizingVersionConfig } from '@/parts/sizingCommon';
+export { baseValues } from '@/parts/sizingCommon';
 
 export const sizingV3Config: SizingVersionConfig = {
   version: 'v3',

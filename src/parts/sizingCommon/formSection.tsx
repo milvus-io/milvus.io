@@ -31,11 +31,12 @@ interface FormSectionProps {
   className: string;
   config: SizingVersionConfig;
   onCalculatedResult: (params: any) => void;
+  disableCalculationThreshold?: boolean;
 }
 
 export default function FormSection(props: FormSectionProps) {
   const { t } = useTranslation('sizingTool');
-  const { className, config, onCalculatedResult } = props;
+  const { className, config, onCalculatedResult, disableCalculationThreshold = false } = props;
 
   const {
     VECTOR_RANGE_CONFIG,
@@ -313,7 +314,7 @@ export default function FormSection(props: FormSectionProps) {
       dependencyConfig: dependencyConfig,
       mode: currentMode,
       dependency: form.dependency,
-      isOutOfCalculate: rawDataSize > $1B768D,
+      isOutOfCalculate: disableCalculationThreshold ? false : rawDataSize > $1B768D,
     });
   }, [form, indexTypeParams, refine]);
 

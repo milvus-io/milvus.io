@@ -9,155 +9,37 @@ import {
   PulsarDataType,
   KafkaDataType,
   NodesKeyType,
-  DataSizeUnit,
 } from '@/types/sizingV250';
-/**
- * params list:
- * num: number: number of vectors
- * d: number: dimension of vectors
- * withScalar: boolean: whether with scalar data
- * scalarAvg: number: average length of scalar data
- * maxDegree: number: maximum degree of the node
- * segSize: number: segment size
- *
- */
 
-export const unitBYTE2Any = (size: number, unit?: DataSizeUnit) => {
-  const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB'];
-  if (unit) {
-    const base = units.findIndex(v => v === unit.toUpperCase());
-    return {
-      unit,
-      size: size / Math.pow(1024, base),
-    };
-  }
+// Re-export common utilities
+export {
+  unitBYTE2Any,
+  unitAny2BYTE,
+  formatNumber,
+  formatOutOfCalData,
+  standaloneNodeConfigCalculator,
+  createRawDataSizeCalculator,
+  createDataSizeConstants,
+} from './sizingToolCommon';
 
-  let sizeStatus = 0;
-  let baseUnit = 'BYTE';
-  while (sizeStatus < units.length - 1 && size > 1024) {
-    size = size / 1024;
-    sizeStatus++;
-  }
-  baseUnit = units[sizeStatus];
-  const decimal = sizeStatus >= 4 ? 100 : 10;
-  size = Math.round(size * decimal) / decimal;
-  return {
-    size,
-    unit: baseUnit,
-  };
-};
+import {
+  unitBYTE2Any,
+  unitAny2BYTE,
+  createRawDataSizeCalculator,
+  createDataSizeConstants,
+} from './sizingToolCommon';
 
-export const unitAny2BYTE = (size: number, unit: DataSizeUnit) => {
-  const charts = [
-    {
-      label: 'B',
-      value: 0,
-    },
-    {
-      label: 'KB',
-      value: 1,
-    },
-    {
-      label: 'MB',
-      value: 2,
-    },
-    {
-      label: 'GB',
-      value: 3,
-    },
-    {
-      label: 'TB',
-      value: 4,
-    },
-    {
-      label: 'PB',
-      value: 5,
-    },
-    {
-      label: 'EB',
-      value: 6,
-    },
-  ];
-  const value = charts.find(v => v.label === unit.toUpperCase())?.value || 0;
-  return Math.pow(1024, value) * size;
-};
+// Create rawDataSizeCalculator with version-specific ONE_MILLION
+export const rawDataSizeCalculator = createRawDataSizeCalculator(ONE_MILLION);
 
-export const formatNumber = (num: number) => {
-  const units = ['', 'K', 'M', 'B', 'T'];
-  let i = 0;
-  let number = num;
-  while (number > 1000 && i < 4) {
-    number = Math.round((number / 1000) * 10) / 10;
-    i += 1;
-  }
-
-  return {
-    num: number,
-    unit: units[i],
-  };
-};
-
-export const formatOutOfCalData = <T>(params: { data: T; isOut: boolean }) => {
-  const { data, isOut } = params;
-  if (isOut) {
-    return '--';
-  }
-  return data;
-};
-
-// raw data size calculator
-export const rawDataSizeCalculator = (params: {
-  num: number;
-  d: number;
-  withScalar: boolean;
-  scalarAvg: number;
-}) => {
-  const { num, d, withScalar, scalarAvg } = params;
-
-  const vectorRaw = (num * d * ONE_MILLION * 32) / 8; // bytes
-  const scalarRaw = withScalar ? num * scalarAvg * ONE_MILLION : 0; // bytes
-
-  return vectorRaw + scalarRaw;
-};
-
-const $1M768D = rawDataSizeCalculator({
-  num: 1,
-  d: 768,
-  withScalar: false,
-  scalarAvg: 0,
-});
-export const $10M768D = rawDataSizeCalculator({
-  num: 10,
-  d: 768,
-  withScalar: false,
-  scalarAvg: 0,
-});
-export const $50M768D = rawDataSizeCalculator({
-  num: 50,
-  d: 768,
-  withScalar: false,
-  scalarAvg: 0,
-});
-
-export const $100M768D = rawDataSizeCalculator({
-  num: 100,
-  d: 768,
-  withScalar: false,
-  scalarAvg: 0,
-});
-
-export const $500M768D = rawDataSizeCalculator({
-  num: 500,
-  d: 768,
-  withScalar: false,
-  scalarAvg: 0,
-});
-export const $1B768D = rawDataSizeCalculator({
-  num: 1000,
-  d: 768,
-  withScalar: false,
-  scalarAvg: 0,
-});
+// Create data size constants
+const dataSizeConstants = createDataSizeConstants(rawDataSizeCalculator);
+const $1M768D = dataSizeConstants.$1M768D;
+export const $10M768D = dataSizeConstants.$10M768D;
+export const $50M768D = dataSizeConstants.$50M768D;
+export const $100M768D = dataSizeConstants.$100M768D;
+export const $500M768D = dataSizeConstants.$500M768D;
+export const $1B768D = dataSizeConstants.$1B768D;
 
 // loading memory and disk calculator
 export const memoryAndDiskCalculator = (params: {
@@ -262,26 +144,6 @@ export const memoryAndDiskCalculator = (params: {
   return {
     memory: vectorLoadingMemory + scalarLoadingMemory, // bytes
     disk: scalarLocalDisk + result.disk, // bytes
-  };
-};
-
-export const standaloneNodeConfigCalculator = (params: { memory: number }) => {
-  const { size: memoryGb } = unitBYTE2Any(params.memory, 'GB');
-
-  let properMemorySize = 0;
-  if (memoryGb <= 8) {
-    properMemorySize = 8;
-  } else if (memoryGb <= 16) {
-    properMemorySize = 16;
-  } else {
-    properMemorySize = Math.ceil(memoryGb / 32) * 32;
-  }
-  const properCoreSize = properMemorySize / 4;
-
-  return {
-    cpu: properCoreSize,
-    memory: properMemorySize,
-    count: 1,
   };
 };
 

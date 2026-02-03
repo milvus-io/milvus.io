@@ -35,6 +35,31 @@ export const KafkaIcon = (props: { color?: string }) => {
   );
 };
 
+export const WoodpeckerIcon = (props: { color?: string }) => {
+  return (
+    <svg
+      width="29"
+      height="29"
+      viewBox="0 0 29 29"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.5 4L6 12.5L8.5 15L14.5 9L20.5 15L23 12.5L14.5 4Z"
+        fill={props.color || '#00131A'}
+      />
+      <path
+        d="M14.5 12L9 17.5L11.5 20L14.5 17L17.5 20L20 17.5L14.5 12Z"
+        fill={props.color || '#00131A'}
+      />
+      <path
+        d="M14.5 20L12 22.5L14.5 25L17 22.5L14.5 20Z"
+        fill={props.color || '#00131A'}
+      />
+    </svg>
+  );
+};
+
 export const DataCard = (props: {
   name: React.ReactNode;
   data: string;

@@ -1,8 +1,3 @@
-import {
-  ModeEnum,
-  DependencyComponentEnum,
-  DependencyConfigType,
-} from '@/types/sizing';
 import classes from './index.module.less';
 import { Trans, useTranslation } from 'react-i18next';
 import clsx from 'clsx';
@@ -13,34 +8,100 @@ import {
   TooltipContent,
   TooltipArrow,
 } from '@/components/ui';
-import { formatOutOfCalData } from '@/utils/sizingTool';
 import { DataCard, PulsarIcon, KafkaIcon } from './components';
 import { useMemo } from 'react';
+import { SizingVersionConfig } from './types';
+
+interface DependencyConfigType {
+  etcd: {
+    cpu: number;
+    memory: number;
+    pvc: number;
+    count: number;
+  };
+  minio: {
+    cpu: number;
+    memory: number;
+    pvc: number;
+    count: number;
+  };
+  pulsar?: {
+    bookie: {
+      cpu: number;
+      memory: number;
+      count: number;
+      journal: number;
+      ledgers: number;
+    };
+    broker: {
+      cpu: number;
+      memory: number;
+      count: number;
+    };
+    proxy: {
+      cpu: number;
+      memory: number;
+      count: number;
+    };
+    zookeeper: {
+      cpu: number;
+      memory: number;
+      count: number;
+      pvc: number;
+    };
+  };
+  kafka?: {
+    broker: {
+      cpu: number;
+      memory: number;
+      count: number;
+      pvc: number;
+    };
+    zookeeper: {
+      cpu: number;
+      memory: number;
+      count: number;
+      pvc: number;
+    };
+  };
+}
 
 export const DependencyComponent = (props: {
   data: DependencyConfigType;
-  mode: ModeEnum;
-  dependency: DependencyComponentEnum;
+  mode: any;
+  dependency: any;
   isOutOfCalculate: boolean;
+  config: SizingVersionConfig;
 }) => {
   const { t } = useTranslation('sizingTool');
-  const { data, mode, dependency, isOutOfCalculate } = props;
+  const { data, mode, dependency, isOutOfCalculate, config } = props;
+
+  const { ModeEnum, DependencyComponentEnum } = config.types;
+
+  const formatOutOfCalData = (params: { data: string; isOut: boolean }) => {
+    return params.isOut ? '--' : params.data;
+  };
 
   const showApacheComponent = useMemo(() => {
+    if (!config.supportsWoodpecker) {
+      return mode === ModeEnum.Cluster;
+    }
     return (
       mode === ModeEnum.Cluster &&
-      dependency !== DependencyComponentEnum.Woodpecker
+      dependency !== DependencyComponentEnum?.Woodpecker
     );
-  }, [mode, dependency]);
+  }, [mode, dependency, config.supportsWoodpecker, ModeEnum, DependencyComponentEnum]);
 
   const { etcd, minio, pulsar, kafka } = data;
 
   const PulsarInfo = (
-    props: Pick<DependencyConfigType, 'pulsar'> & {
+    props: {
+      pulsar: DependencyConfigType['pulsar'];
       isOutOfCalculate: boolean;
     }
   ) => {
     const { pulsar, isOutOfCalculate } = props;
+    if (!pulsar) return null;
 
     return (
       <div className={classes.configContainer}>
@@ -153,11 +214,13 @@ export const DependencyComponent = (props: {
   };
 
   const KafkaInfo = (
-    props: Pick<DependencyConfigType, 'kafka'> & {
+    props: {
+      kafka: DependencyConfigType['kafka'];
       isOutOfCalculate: boolean;
     }
   ) => {
     const { kafka, isOutOfCalculate } = props;
+    if (!kafka) return null;
 
     return (
       <div className={classes.configContainer}>
@@ -234,6 +297,11 @@ export const DependencyComponent = (props: {
     );
   };
 
+  // Determine which Apache component to show based on dependency
+  const isPulsar = config.supportsWoodpecker
+    ? dependency === DependencyComponentEnum?.Pulsar
+    : dependency === DependencyComponentEnum?.Pulsar || dependency === 0;
+
   return (
     <div className={classes.dependencyDetailContainer}>
       <div className="flex items-center justify-between gap-[24px] pl-[24px] pr-[24px] mb-[16px]">
@@ -303,7 +371,7 @@ export const DependencyComponent = (props: {
       </div>
       {showApacheComponent && (
         <>
-          {dependency === DependencyComponentEnum.Pulsar ? (
+          {isPulsar ? (
             <PulsarInfo pulsar={pulsar} isOutOfCalculate={isOutOfCalculate} />
           ) : (
             <KafkaInfo kafka={kafka} isOutOfCalculate={isOutOfCalculate} />

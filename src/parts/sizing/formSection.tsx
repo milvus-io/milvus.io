@@ -5,14 +5,16 @@ import { ICalculateResult } from '@/types/sizing';
 export default function FormSection(props: {
   className: string;
   asyncCalculatedResult: (params: ICalculateResult) => void;
+  disableCalculationThreshold?: boolean;
 }) {
-  const { className, asyncCalculatedResult } = props;
+  const { className, asyncCalculatedResult, disableCalculationThreshold } = props;
 
   return (
     <BaseFormSection
       className={className}
       config={sizingV3Config}
       onCalculatedResult={asyncCalculatedResult}
+      disableCalculationThreshold={disableCalculationThreshold}
     />
   );
 }

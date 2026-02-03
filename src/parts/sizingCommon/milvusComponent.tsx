@@ -9,17 +9,24 @@ import {
   TooltipArrow,
 } from '@/components/ui/tooltip';
 import clsx from 'clsx';
-import { ModeEnum, NodesKeyType, NodesValueType } from '@/types/sizingV250';
+import { SizingVersionConfig } from './types';
+
+interface NodesValueType {
+  cpu: number;
+  memory: number;
+  count: number;
+}
 
 export const MilvusComponent = (props: {
   isOutOfCalculate: boolean;
-  clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
+  clusterNodeConfig: Record<string, NodesValueType>;
   standaloneNodeConfig: NodesValueType;
   diskSize: number;
   diskUnit: string;
-  mode: ModeEnum;
+  mode: any;
   memorySize: number;
   rawDataSize: number;
+  config: SizingVersionConfig;
 }) => {
   const { t } = useTranslation('sizingTool');
 
@@ -30,10 +37,14 @@ export const MilvusComponent = (props: {
     diskSize,
     diskUnit,
     mode,
-    memorySize,
-    rawDataSize,
+    config,
   } = props;
-  const { proxy, mixCoord, dataNode, indexNode, queryNode } = clusterNodeConfig;
+
+  const { ModeEnum } = config.types;
+  const { extraNodeKey, extraNodeLabelKey, extraNodeTipKey } = config;
+
+  const { proxy, mixCoord, dataNode, queryNode } = clusterNodeConfig;
+  const extraNode = clusterNodeConfig[extraNodeKey];
 
   return (
     <div className={classes.milvusDataDetail}>
@@ -155,20 +166,20 @@ export const MilvusComponent = (props: {
                       classes.tooltipTrigger
                     )}
                   >
-                    {t('setup.milvus.indexNode')}
+                    {t(extraNodeLabelKey)}
                   </TooltipTrigger>
                   <TooltipContent sideOffset={5} className="w-[280px]">
-                    {t('setup.milvus.indexNodeTip')}
+                    {t(extraNodeTipKey)}
                     <TooltipArrow />
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             }
             data={t('setup.basic.config', {
-              cpu: indexNode.cpu,
-              memory: indexNode.memory,
+              cpu: extraNode?.cpu || 0,
+              memory: extraNode?.memory || 0,
             })}
-            count={indexNode.count}
+            count={extraNode?.count || 0}
             classname={classes.detailCard}
             isOutOfCalculate={isOutOfCalculate}
           />

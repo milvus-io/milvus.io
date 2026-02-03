@@ -1,27 +1,34 @@
-import { IIndexType, IndexTypeEnum } from '@/types/sizingV250';
 import {
   RadioGroupItem,
   RadioGroup,
-  TooltipProvider,
-  TooltipTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipArrow,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
 } from '@/components/ui';
 import classes from './index.module.less';
 import clsx from 'clsx';
-import { SizingInput, SizingRange } from '@/components/sizing';
-import {
-  MAX_NODE_DEGREE_RANGE_CONFIG,
-  N_LIST_RANGE_CONFIG,
-  M_RANGE_CONFIG,
-} from '@/consts/sizingV250';
-import { Trans, useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { SizingInput, SizingRange, SizingSwitch } from '@/components/sizing';
+import { useTranslation } from 'react-i18next';
+import { useState, useMemo } from 'react';
+import { SizingVersionConfig } from './types';
+
+interface IIndexTypeBase {
+  indexType: string;
+  widthRawData: boolean;
+  maxDegree: number;
+  flatNList: number;
+  sq8NList: number;
+  m: number;
+  rabitqNList?: number;
+}
 
 type IndexTypeComponentProps = {
-  data: IIndexType;
+  data: IIndexTypeBase;
   onChange: (key: string, value: any) => void;
+  config: SizingVersionConfig;
+  refine?: string;
+  onRefineChange?: (value: any) => void;
 };
 
 const SCANNComponent = (props: IndexTypeComponentProps) => {
@@ -55,7 +62,8 @@ const SCANNComponent = (props: IndexTypeComponentProps) => {
 
 const HNSWComponent = (props: IndexTypeComponentProps) => {
   const { t } = useTranslation('sizingTool');
-  const { data, onChange } = props;
+  const { data, onChange, config } = props;
+  const { M_RANGE_CONFIG } = config.consts;
   const [inputString, setInputString] = useState<string>(data.m.toString());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +113,9 @@ const HNSWComponent = (props: IndexTypeComponentProps) => {
 
 const DISKANNComponent = (props: IndexTypeComponentProps) => {
   const { t } = useTranslation('sizingTool');
-  const { data, onChange } = props;
+  const { data, onChange, config } = props;
+  const { MAX_NODE_DEGREE_RANGE_CONFIG } = config.consts;
+
   return (
     <div className="mt-[16px]">
       <p className={'text-[12px] font-[500] leading-[16px]'}>
@@ -125,7 +135,9 @@ const DISKANNComponent = (props: IndexTypeComponentProps) => {
 
 const IVFFlatComponent = (props: IndexTypeComponentProps) => {
   const { t } = useTranslation('sizingTool');
-  const { data, onChange } = props;
+  const { data, onChange, config } = props;
+  const { N_LIST_RANGE_CONFIG } = config.consts;
+
   return (
     <div className="mt-[16px]">
       <p className={'text-[12px] font-[500] leading-[16px]'}>
@@ -145,7 +157,9 @@ const IVFFlatComponent = (props: IndexTypeComponentProps) => {
 
 const IVFSQ8Component = (props: IndexTypeComponentProps) => {
   const { t } = useTranslation('sizingTool');
-  const { data, onChange } = props;
+  const { data, onChange, config } = props;
+  const { N_LIST_RANGE_CONFIG } = config.consts;
+
   return (
     <div className="mt-[16px]">
       <p className={'text-[12px] font-[500] leading-[16px]'}>
@@ -163,11 +177,91 @@ const IVFSQ8Component = (props: IndexTypeComponentProps) => {
   );
 };
 
-export const IndexTypeComponent = (props: {
-  data: IIndexType;
-  onChange: (key: string, value: any) => void;
-}) => {
-  const { data } = props;
+const RABITQComponent = (props: IndexTypeComponentProps) => {
+  const { t } = useTranslation('sizingTool');
+  const { data, onChange, config, refine = '', onRefineChange = () => {} } = props;
+  const { N_LIST_RANGE_CONFIG, REFINE_OPTIONS } = config.consts;
+  const { RefineValueEnum } = config.types;
+
+  const [displayRefine, setDisplayRefine] = useState(false);
+
+  const refineTypeOptions = useMemo(() => {
+    if (!REFINE_OPTIONS) return [];
+    if (displayRefine) {
+      return REFINE_OPTIONS.filter((v: any) => v.value !== RefineValueEnum?.None);
+    }
+    return REFINE_OPTIONS;
+  }, [displayRefine, REFINE_OPTIONS, RefineValueEnum]);
+
+  const handleRefineDisplayChange = (display: boolean) => {
+    if (!display) {
+      onRefineChange(RefineValueEnum?.None);
+    } else {
+      onRefineChange(RefineValueEnum?.SQ6);
+    }
+    setDisplayRefine(display);
+  };
+
+  return (
+    <div className="mt-[16px]">
+      <div className="flex items-center gap-[8px] mb-[16px]">
+        <p className="text-[12px] font-[500] leading-[16px]">
+          {t('form.refine')}
+        </p>
+        <SizingSwitch
+          checked={displayRefine}
+          onCheckedChange={handleRefineDisplayChange}
+        />
+      </div>
+      {displayRefine && REFINE_OPTIONS && (
+        <div className="">
+          <p className="text-[12px] font-[500] leading-[16px] mb-[8px]">
+            {t('form.refineType')}
+          </p>
+          <Select
+            value={refine}
+            onValueChange={val => {
+              onRefineChange(val);
+            }}
+          >
+            <SelectTrigger className={clsx(classes.selectTrigger, 'mb-[16px]')}>
+              {refine}
+            </SelectTrigger>
+            <SelectContent>
+              {refineTypeOptions.map((v: any) => (
+                <SelectItem
+                  key={v.value}
+                  value={v.value}
+                  className={classes.selectItem}
+                >
+                  {v.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+      <div className="">
+        <p className={'text-[12px] font-[500] leading-[16px]'}>
+          {t('form.nlist')}
+        </p>
+        <SizingRange
+          rangeConfig={N_LIST_RANGE_CONFIG}
+          value={data.rabitqNList || N_LIST_RANGE_CONFIG.defaultValue}
+          onRangeChange={value => {
+            onChange('rabitqNList', value);
+          }}
+          placeholder={`[${N_LIST_RANGE_CONFIG.min}, ${N_LIST_RANGE_CONFIG.max}]`}
+        />
+      </div>
+    </div>
+  );
+};
+
+export const IndexTypeComponent = (props: IndexTypeComponentProps) => {
+  const { data, config } = props;
+  const { IndexTypeEnum } = config.types;
+
   switch (data.indexType) {
     case IndexTypeEnum.FLAT:
       return null;
@@ -181,6 +275,11 @@ export const IndexTypeComponent = (props: {
       return <IVFFlatComponent {...props} />;
     case IndexTypeEnum.IVFSQ8:
       return <IVFSQ8Component {...props} />;
+    case IndexTypeEnum.IVFRABITQ:
+      if (config.supportsRabitq) {
+        return <RABITQComponent {...props} />;
+      }
+      return null;
     default:
       return null;
   }

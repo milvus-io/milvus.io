@@ -92,6 +92,12 @@ jobs:
           rm -rf src/docs/v2.0.x
           rm -rf src/docs/v2.1.x
 
+      - name: Remove enterprise pages before build
+        run: |
+          # Remove enterprise pages that should not be deployed to production
+          rm -f src/pages/tools/sizing-v250-enterprise.tsx
+          rm -f src/pages/tools/sizing-enterprise.tsx
+
       - name: Generate docker image tag name
         id: generate-tag-name
         run: |

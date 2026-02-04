@@ -3,7 +3,7 @@ export interface UseCaseType {
   logo: { url: string };
   description: string;
   link: string;
-  Cta_label: string;
+  cta_label: string;
 }
 
 export interface FinalUserCaseType extends Omit<UseCaseType, 'logo'> {

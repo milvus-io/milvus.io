@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import Layout from '@/components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
 import styles from '@/styles/useCase.module.less';
@@ -6,13 +5,11 @@ import pageClasses from '@/styles/responsive.module.less';
 import UseCaseCard from '@/parts/useCase/useCaseCard';
 import clsx from 'clsx';
 import { Typography } from '@mui/material';
-import { Masonry } from 'gestalt';
-import 'gestalt/dist/gestalt.css';
+import Masonry from 'react-masonry-css';
 import { RightArrow } from '@/components/icons';
 import { SHARE_YOUR_STORY_URL } from '@/consts/externalLinks';
 import Head from 'next/head';
 import { FinalUserCaseType } from '@/types/useCase';
-import { ABSOLUTE_BASE_URL } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
 
 type Props = {
@@ -23,8 +20,6 @@ type Props = {
 export function UseCase(props: Props) {
   const { useCaseList, locale = LanguageEnum.ENGLISH } = props;
   const { t } = useTranslation('useCase', { lng: locale });
-
-  const scrollContainer = useRef(null);
 
   return (
     <Layout>
@@ -37,7 +32,7 @@ export function UseCase(props: Props) {
         <meta name="keywords" content="Milvus, vector search, use cases" />
       </Head>
       <main>
-        <div className={styles.casePageContainer} ref={scrollContainer}>
+        <div className={styles.casePageContainer}>
           <div
             className={clsx(pageClasses.homeContainer, styles.contentContainer)}
           >
@@ -52,16 +47,20 @@ export function UseCase(props: Props) {
             <div className={styles.listSection}>
               {useCaseList.length ? (
                 <Masonry
-                  items={useCaseList}
-                  columnWidth={280}
-                  renderItem={({ data }) => <UseCaseCard useCase={data} />}
-                  gutterWidth={30}
-                  scrollContainer={() => {
-                    return document.getElementsByTagName('body')[0];
+                  breakpointCols={{
+                    default: 5,
+                    1680: 4,
+                    1440: 3,
+                    1024: 2,
+                    0: 1,
                   }}
-                  virtualize
-                  minCols={1}
-                />
+                  className={styles.masonryGrid}
+                  columnClassName={styles.masonryGridColumn}
+                >
+                  {useCaseList.map((useCase) => (
+                    <UseCaseCard key={useCase.name} useCase={useCase} />
+                  ))}
+                </Masonry>
               ) : null}
             </div>
           </div>

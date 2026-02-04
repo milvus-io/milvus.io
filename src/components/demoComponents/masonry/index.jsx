@@ -1,8 +1,7 @@
 import * as styles from './index.module.less';
 import Item from '../item/item';
-import 'gestalt/dist/gestalt.css';
 import clsx from 'clsx';
-import { Masonry } from 'gestalt';
+import Masonry from 'react-masonry-css';
 
 export default function CustomMasonry({
   images,
@@ -11,8 +10,6 @@ export default function CustomMasonry({
   isShowCode,
   onSearch,
   setModal,
-  loadMore,
-  scrollContainer,
 }) {
   return (
     <div
@@ -29,21 +26,25 @@ export default function CustomMasonry({
       </div>
 
       <Masonry
-        items={images}
-        renderItem={data => (
+        breakpointCols={{
+          default: 4,
+          1200: 3,
+          900: 2,
+          600: 1,
+        }}
+        className={styles.masonryGrid}
+        columnClassName={styles.masonryGridColumn}
+      >
+        {images.map((item, index) => (
           <Item
-            data={data.data}
+            key={index}
+            data={item}
             isSelected={isSelected}
             onSearch={onSearch}
             setModal={setModal}
           />
-        )}
-        gutterWidth={16}
-        layout="flexible"
-        loadItems={loadMore}
-        scrollContainer={scrollContainer}
-        virtualize
-      />
+        ))}
+      </Masonry>
       {loading ? (
         <div className={styles.loadingTip}>Loading More...</div>
       ) : null}

@@ -16,7 +16,7 @@ export function Contact(props: Props) {
   const { locale = LanguageEnum.ENGLISH } = props;
   const { t } = useTranslation('contact', { lng: locale });
 
-  const { loaded, error, formCreated } = useHubspotForm({
+  const { isFormCreated, isError, error } = useHubspotForm({
     portalId: '24054828',
     formId: '502c706c-5251-4d2f-8209-aad5da707115',
     target: '#hubspot-form',
@@ -26,12 +26,12 @@ export function Contact(props: Props) {
     if (error) {
       return <p className={classes.prompt}>{t('form.error')}</p>;
     }
-    return formCreated ? null : (
+    return isFormCreated ? null : (
       <p className="text-[16px] leading-[24px] text-center mt-[150px]">
         {t('form.loading')}
       </p>
     );
-  }, [formCreated, error, t]);
+  }, [isFormCreated, error, t]);
 
   return (
     <Layout>

@@ -1,6 +1,6 @@
-import { GetStaticProps } from 'next';
 import { fetchUseCases } from '@/http/useCase';
 import { UseCase } from '@/parts/intro/UseCase';
+import { GetStaticProps } from 'next';
 
 export default UseCase;
 

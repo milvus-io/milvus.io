@@ -110,9 +110,6 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
-      gestalt:
-        specifier: ^146.13.3
-        version: 146.13.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -182,6 +179,9 @@ importers:
       react-i18next:
         specifier: ^14.1.3
         version: 14.1.3(i18next@23.16.8)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react-masonry-css:
+        specifier: ^1.0.16
+        version: 1.0.16(react@19.2.4)
       react-player:
         specifier: ^2.16.0
         version: 2.16.0(react@19.2.4)
@@ -635,15 +635,6 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
-
-  '@floating-ui/react@0.25.4':
-    resolution: {integrity: sha512-lWRQ/UiTvSIBxohn0/2HFHEmnmOVRjl7j6XcRJuLH0ls6f/9AyHMWVzkAJFuwx0n9gaEeCmg9VccCSCJzbEJig==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-
-  '@floating-ui/utils@0.1.6':
-    resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==}
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
@@ -3190,17 +3181,6 @@ packages:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
 
-  gestalt-design-tokens@177.0.0:
-    resolution: {integrity: sha512-/jw7XGH8uG0j3WFupN2EoGKt3HZf1TwH8yRaBG7pxByq9+6YwkVS2O1JFP1SS9Xacfosrsji5/VNnV0TLBV7xw==}
-    peerDependencies:
-      gestalt: '>0.0.0'
-
-  gestalt@146.13.3:
-    resolution: {integrity: sha512-28U1sqViqFJ85FNUCBUkUighlRvqEDvUnhIV3OiMyWp6QtZF3tzzuzrZnrh5BJM8viVrtx/NIzf9bCtJaEoujQ==}
-    peerDependencies:
-      react: ^18.0
-      react-dom: ^18.0
-
   get-caller-file@2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
     engines: {node: 6.* || 8.* || >= 10.*}
@@ -4342,6 +4322,11 @@ packages:
       '@types/react': '>=18'
       react: '>=18'
 
+  react-masonry-css@1.0.16:
+    resolution: {integrity: sha512-KSW0hR2VQmltt/qAa3eXOctQDyOu7+ZBevtKgpNDSzT7k5LA/0XntNa9z9HKCdz3QlxmJHglTZ18e4sX4V8zZQ==}
+    peerDependencies:
+      react: '>=16.0.0'
+
   react-player@2.16.0:
     resolution: {integrity: sha512-mAIPHfioD7yxO0GNYVFD1303QFtI3lyyQZLY229UEAp/a10cSW+hPcakg0Keq8uWJxT2OiT/4Gt+Lc9bD6bJmQ==}
     peerDependencies:
@@ -4758,9 +4743,6 @@ packages:
   swiper@11.2.10:
     resolution: {integrity: sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==}
     engines: {node: '>= 4.7.0'}
-
-  tabbable@6.2.0:
-    resolution: {integrity: sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==}
 
   tailwind-merge@2.6.0:
     resolution: {integrity: sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==}
@@ -5618,16 +5600,6 @@ snapshots:
       '@floating-ui/dom': 1.7.5
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
-
-  '@floating-ui/react@0.25.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      '@floating-ui/react-dom': 2.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@floating-ui/utils': 0.1.6
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-      tabbable: 6.2.0
-
-  '@floating-ui/utils@0.1.6': {}
 
   '@floating-ui/utils@0.2.10': {}
 
@@ -8348,18 +8320,6 @@ snapshots:
 
   gensync@1.0.0-beta.2: {}
 
-  gestalt-design-tokens@177.0.0(gestalt@146.13.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
-    dependencies:
-      gestalt: 146.13.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-
-  gestalt@146.13.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
-    dependencies:
-      '@floating-ui/react': 0.25.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      classnames: 2.5.1
-      gestalt-design-tokens: 177.0.0(gestalt@146.13.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-
   get-caller-file@2.0.5: {}
 
   get-intrinsic@1.3.0:
@@ -9797,6 +9757,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  react-masonry-css@1.0.16(react@19.2.4):
+    dependencies:
+      react: 19.2.4
+
   react-player@2.16.0(react@19.2.4):
     dependencies:
       deepmerge: 4.3.1
@@ -10344,8 +10308,6 @@ snapshots:
   supports-preserve-symlinks-flag@1.0.0: {}
 
   swiper@11.2.10: {}
-
-  tabbable@6.2.0: {}
 
   tailwind-merge@2.6.0: {}
 

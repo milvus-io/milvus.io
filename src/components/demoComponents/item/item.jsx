@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box, Image } from 'gestalt';
 import PreviewItem from './previewItem';
 import * as styles from './item.module.less';
 
@@ -41,13 +40,11 @@ const Item = props => {
   };
 
   return (
-    <Box
-      position="relative"
-      className="ui-item"
-      alignItems="center"
-      // key={data.id}
-      fit={true}
-      padding={0}
+    <div
+      className="relative w-full p-0 block items-center ui-item "
+      style={{
+        aspectRatio: `${width} / ${height}`,
+      }}
     >
       <div
         className={styles.imgWrapper}
@@ -57,15 +54,17 @@ const Item = props => {
         role="button"
         tabIndex="-1"
       >
-        <Image
+        <img
           alt="Test"
-          color="#fff"
-          naturalHeight={height}
-          naturalWidth={width}
           src={src}
+          style={{
+            width: '100%',
+            height: 'auto',
+            aspectRatio: `${width} / ${height}`,
+            backgroundColor: '#fff',
+          }}
         />
 
-        {/* <div className="icon-mask"> */}
         <span
           className={styles.iconWrapper}
           onClick={e => searchThisPic(e, src)}
@@ -75,7 +74,6 @@ const Item = props => {
         >
           <img src="/images/demos/search-black.svg" alt="search-icon" />
         </span>
-        {/* </div> */}
       </div>
       {isSelected ? (
         <div className={styles.textWrapper}>
@@ -83,7 +81,7 @@ const Item = props => {
           <h5>{distance}</h5>
         </div>
       ) : null}
-    </Box>
+    </div>
   );
 };
 

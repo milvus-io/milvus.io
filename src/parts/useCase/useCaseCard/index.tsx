@@ -1,7 +1,8 @@
 import styles from './index.module.less';
 import CustomButton from '@/components/customButton';
+import { FinalUserCaseType, UseCaseType } from '@/types/useCase';
 
-export default function UseCaseCard({ useCase }) {
+export default function UseCaseCard({ useCase }: { useCase: FinalUserCaseType; }) {
   const { name, logo, description, link, cta_label } = useCase;
 
   return (

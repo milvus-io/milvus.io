@@ -4,14 +4,13 @@ import Layout from '@/components/layout/commonLayout';
 import classes from '@/styles/imgSearch.module.less';
 import pageClasses from '@/styles/responsive.module.less';
 import clsx from 'clsx';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useWindowSize } from '@/http/hooks';
 import { convertBase64UrlToBlob, getBase64Image } from '@/utils/demo-helper';
 import CustomMasonry from '@/components/demoComponents/masonry';
 import { search } from '@/http/imageSearch';
 import UploaderHeader from '@/components/demoComponents/uploader';
 import Modal from '@/components/demoComponents/modal';
-import 'gestalt/dist/gestalt.css';
 import FloatBoard from '@/components/demoComponents/floatBoard';
 import Loading from '@/components/demoComponents/loading';
 import { LeftArrow } from '@/components/githubButton/icons';
@@ -126,6 +125,23 @@ export default function ReverseImageSearch() {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (partialLoading || noData || !file || !searchResult.length) return;
+
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      if (documentHeight - scrollTop - windowHeight < 200) {
+        loadMoreImages();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [partialLoading, noData, file, searchResult.length, pageIndex]);
+
   return (
     <main ref={scrollContainerRef} className={classes.outerContainer}>
       <Layout showFooter={false} disableLangSelector>
@@ -167,7 +183,6 @@ export default function ReverseImageSearch() {
                 isShowCode={isShowCode}
                 setModal={setModalConfig}
                 onSearch={handleSearch}
-                loadMore={loadMoreImages}
                 scrollContainer={scrollContainerRef.current}
               />
             )}

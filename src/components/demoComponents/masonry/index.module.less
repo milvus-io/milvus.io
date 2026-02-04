@@ -26,6 +26,7 @@
   display: flex;
   align-items: center;
   visibility: hidden;
+  margin-bottom: 24px;
 
   &.open {
     visibility: visible;
@@ -88,4 +89,19 @@
   font-size: 24px;
   line-height: 32px;
   text-align: center;
+}
+
+.masonryGrid {
+  display: flex;
+  margin-left: -16px;
+  width: auto;
+}
+
+.masonryGridColumn {
+  padding-left: 16px;
+  background-clip: padding-box;
+
+  > * {
+    margin-bottom: 16px;
+  }
 }

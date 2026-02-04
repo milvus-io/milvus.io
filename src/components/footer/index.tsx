@@ -234,9 +234,8 @@ const Footer = (props: Props) => {
                       }
                       if (child.to.startsWith('http')) {
                         return (
-                          <li key={index} className="list-none">
+                          <li key={item.title} className="list-none">
                             <a
-                              key={`${index}-c.name`}
                               className={clsx(
                                 'inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
                                 {
@@ -256,9 +255,8 @@ const Footer = (props: Props) => {
                         );
                       }
                       return (
-                        <li key={index} className="list-none">
+                        <li key={item.title} className="list-none">
                           <Link
-                            key={`${index}-c.name`}
                             href={child.to}
                             className={clsx(
                               'text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',

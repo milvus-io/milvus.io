@@ -5,11 +5,7 @@ const csv = require('csv-parser');
 let simpleFaqCache = [];
 
 const generateFaqPaths = () => {
-  const filePath = join(
-    process.cwd(),
-    'public/assets',
-    'Milvus FAQ - Milvus FAQ.csv'
-  );
+  const filePath = join(process.cwd(), 'public/assets', 'milvus-faq.csv');
 
   if (simpleFaqCache.length > 0) {
     return simpleFaqCache;

@@ -9,7 +9,7 @@ import {
 } from '@/types/faq';
 
 const FAQ_PATH = 'public/assets';
-const FAQ_FILE_NAME = 'Milvus FAQ - Milvus FAQ.csv';
+const FAQ_FILE_NAME = 'milvus-faq.csv';
 
 const faqCache: FAQDetailType[] = [];
 const simpleFaqCache: Pick<FAQDetailType, 'title' | 'url'>[] = [];

@@ -5,7 +5,41 @@ import classes from './index.module.less';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import Breadcrumb from '@/components/breadcrumb';
-import DocPageActions from './DocPageActions';
+import LLMActions, {
+  PageAction,
+  OptionItem,
+} from '@/components/LLMActions';
+import { CopyIcon } from '@/components/icons';
+import { RightTopArrowIcon } from '@/components/icons/RightTopArrow';
+import { OpenAIIcon, ClaudeAIIcon } from '@/components/icons/AI';
+import { MILVUS_RAW_DOCS_BASE_URL } from '@/consts/links';
+
+const docPageOptions: OptionItem[] = [
+  {
+    value: PageAction.CopyPage,
+    labelKey: 'pageActions.copyPage.label',
+    descKey: 'pageActions.copyPage.desc',
+    icon: <CopyIcon />,
+  },
+  {
+    value: PageAction.ViewMarkdown,
+    labelKey: 'pageActions.viewMarkdown.label',
+    descKey: 'pageActions.viewMarkdown.desc',
+    icon: <RightTopArrowIcon />,
+  },
+  {
+    value: PageAction.ChatGPT,
+    labelKey: 'pageActions.chatGPT.label',
+    descKey: 'pageActions.chatGPT.desc',
+    icon: <OpenAIIcon />,
+  },
+  {
+    value: PageAction.ChatClaude,
+    labelKey: 'pageActions.chatClaude.label',
+    descKey: 'pageActions.chatClaude.desc',
+    icon: <ClaudeAIIcon />,
+  },
+];
 
 interface DocContentPropsType {
   commitPath?: string;
@@ -94,7 +128,7 @@ export default function DocContent(props: DocContentPropsType) {
           ]}
           lang={lang}
         />
-        <DocPageActions githubLink={commitPath} />
+        <LLMActions options={docPageOptions} githubLink={`${MILVUS_RAW_DOCS_BASE_URL}${commitPath}`} />
       </div>
       <div
         className={clsx('doc-style', 'doc-post-content', {

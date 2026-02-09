@@ -36,28 +36,5 @@
     "title": "米尔沃斯办公时间",
     "desc": "向 Milvus 专家 Zilliz 寻求生产部署方面的帮助。",
     "ctaLabel": "预订免费的 1:1 课程"
-  },
-  "pageActions": {
-    "copyPage": {
-      "label": "复制页面",
-      "desc": "以 Markdown 格式为法律硕士复制页面"
-    },
-    "viewMarkdown": {
-      "label": "以 Markdown 格式查看",
-      "desc": "以纯文本格式查看本页"
-    },
-    "chatGPT": {
-      "label": "在 ChatGPT 中聊天",
-      "desc": "询问有关本页的问题"
-    },
-    "chatClaude": {
-      "label": "在克劳德聊天",
-      "desc": "询问有关本页的问题"
-    },
-    "chatGemini": {
-      "label": "双子座聊天",
-      "desc": "询问有关本页的问题"
-    },
-    "prompt": "请参考以下文档：{{url}} 并回答以下问题。"
   }
 }

@@ -26,6 +26,30 @@ import {
   DEMO_MULTIMODAL_SEARCH_URL,
 } from '@/consts/externalLinks';
 import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
+import LLMActions, { PageAction, OptionItem } from '@/components/LLMActions';
+import { CopyIcon } from '@/components/icons';
+import { OpenAIIcon, ClaudeAIIcon } from '@/components/icons/AI';
+
+const faqPageOptions: OptionItem[] = [
+  {
+    value: PageAction.CopyPage,
+    labelKey: 'pageActions.copyPage.label',
+    descKey: 'pageActions.copyPage.desc',
+    icon: <CopyIcon />,
+  },
+  {
+    value: PageAction.ChatGPT,
+    labelKey: 'pageActions.chatGPT.label',
+    descKey: 'pageActions.chatGPT.desc',
+    icon: <OpenAIIcon />,
+  },
+  {
+    value: PageAction.ChatClaude,
+    labelKey: 'pageActions.chatClaude.label',
+    descKey: 'pageActions.chatClaude.desc',
+    icon: <ClaudeAIIcon />,
+  },
+];
 
 export default function FaqDetail(props: {
   data: FAQDetailType;
@@ -43,7 +67,7 @@ export default function FaqDetail(props: {
   demoDescription?: string;
 }) {
   const { t } = useTranslation(['faq', 'demo']);
-  const { data, html, recommendFaq, recommendBlogs, previousUrl, nextUrl } =
+  const { data, recommendFaq, recommendBlogs, previousUrl, nextUrl } =
     props;
   const {
     id,
@@ -57,6 +81,8 @@ export default function FaqDetail(props: {
 
   const docContainer = useRef<HTMLDivElement>(null);
   const trackPath = useUtmTrackPath();
+
+  const { tree: html } = markdownToHtml(content);
 
   const DEMOS = [
     {
@@ -120,17 +146,20 @@ export default function FaqDetail(props: {
       <section className={classes.detailContainer}>
         <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
           <section className={styles.blogHeader}>
-            <Breadcrumb
-              list={[
-                {
-                  label: t('faq:detail.name'),
-                  href: '/ai-quick-reference',
-                },
-                {
-                  label: title,
-                },
-              ]}
-            />
+            <div className={styles.pageHeaderContainer}>
+              <Breadcrumb
+                list={[
+                  {
+                    label: t('faq:detail.name'),
+                    href: '/ai-quick-reference',
+                  },
+                  {
+                    label: title,
+                  },
+                ]}
+              />
+              <LLMActions options={faqPageOptions} mdContent={content} />
+            </div>
 
             <h1 className={styles.title}>{title}</h1>
           </section>
@@ -303,8 +332,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       }
     }
     blogRandomIndexes.sort((a, b) => a - b);
-    const content = item?.content || '';
-    const { tree } = markdownToHtml(content);
 
     const length = simpleList.length;
     let randomIndexes: number[] = [];
@@ -319,7 +346,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return {
       props: {
         data: item,
-        html: tree,
         recommendFaq: randomIndexes.map(index => simpleList[index]),
         recommendBlogs: blogRandomIndexes.map(index => recentlyBlogs[index]),
         previousUrl: simpleList[currentArticleIndex - 1]?.url || '',

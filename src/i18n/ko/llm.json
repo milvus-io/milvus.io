@@ -1,0 +1,25 @@
+{
+  "pageActions": {
+    "copyPage": {
+      "label": "페이지 복사",
+      "desc": "LLM용 마크다운으로 페이지 복사"
+    },
+    "viewMarkdown": {
+      "label": "마크다운으로 보기",
+      "desc": "이 페이지를 일반 텍스트로 보기"
+    },
+    "chatGPT": {
+      "label": "ChatGPT에서 채팅",
+      "desc": "이 페이지에 대해 질문하기"
+    },
+    "chatClaude": {
+      "label": "클로드에서 채팅하기",
+      "desc": "이 페이지에 대해 질문하기"
+    },
+    "chatGemini": {
+      "label": "쌍둥이자리 채팅",
+      "desc": "이 페이지에 대해 질문하기"
+    },
+    "prompt": "다음 문서를 참조하세요: {URL}}을 참조하여 다음 질문에 답하세요."
+  }
+}

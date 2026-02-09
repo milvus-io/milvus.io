@@ -10,6 +10,7 @@ import community from './community.json';
 import notFound from './404.json';
 import blog from './blog.json';
 import contact from './contact.json';
+import llm from './llm.json';
 
 export {
   demo,
@@ -24,4 +25,5 @@ export {
   notFound,
   blog,
   contact,
+  llm,
 };

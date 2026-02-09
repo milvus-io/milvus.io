@@ -1,0 +1,25 @@
+{
+  "pageActions": {
+    "copyPage": {
+      "label": "Salin halaman",
+      "desc": "Salin halaman sebagai Penurunan Harga untuk LLM"
+    },
+    "viewMarkdown": {
+      "label": "Lihat sebagai Penurunan Harga",
+      "desc": "Lihat halaman ini sebagai teks biasa"
+    },
+    "chatGPT": {
+      "label": "Mengobrol di ChatGPT",
+      "desc": "Ajukan pertanyaan tentang halaman ini"
+    },
+    "chatClaude": {
+      "label": "Mengobrol di Claude",
+      "desc": "Ajukan pertanyaan tentang halaman ini"
+    },
+    "chatGemini": {
+      "label": "Mengobrol di Gemini",
+      "desc": "Ajukan pertanyaan tentang halaman ini"
+    },
+    "prompt": "Gunakan dokumentasi berikut sebagai referensi: {{url}} dan jawab pertanyaan-pertanyaan berikut."
+  }
+}

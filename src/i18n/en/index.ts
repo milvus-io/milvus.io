@@ -11,6 +11,7 @@ import notFound from './404.json';
 import blog from './blog.json';
 import contact from './contact.json';
 import faq from './faq.json';
+import llm from './llm.json';
 
 export {
   demo,
@@ -26,4 +27,5 @@ export {
   blog,
   contact,
   faq,
+  llm,
 };

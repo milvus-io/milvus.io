@@ -2,19 +2,13 @@ import React, { useState, useRef, useEffect, ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import classes from './DocPageActions.module.less';
+import classes from './index.module.less';
 import { CopyIcon, CheckIcon, LoadingIcon } from '@/components/icons';
-import { RightTopArrowIcon } from '@/components/icons/RightTopArrow';
-import { OpenAIIcon, ClaudeAIIcon, GeminiAIIcon } from '@/components/icons/AI';
 import { copyToCommand } from '@/utils/common';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { LanguageEnum } from '@/types/localization';
 import { useRouter } from 'next/router';
 import { ABSOLUTE_BASE_URL, MILVUS_RAW_DOCS_BASE_URL } from '@/consts';
-
-interface DocPageActionsProps {
-  githubLink?: string;
-}
 
 enum PageAction {
   CopyPage = 'copy-page',
@@ -26,60 +20,37 @@ enum PageAction {
 
 type CopyStatus = 'idle' | 'loading' | 'success';
 
-interface OptionItem {
+export interface OptionItem {
   value: PageAction;
   labelKey: string;
   descKey: string;
   icon?: ReactNode;
 }
 
-const options: OptionItem[] = [
-  {
-    value: PageAction.CopyPage,
-    labelKey: 'pageActions.copyPage.label',
-    descKey: 'pageActions.copyPage.desc',
-    icon: <CopyIcon />,
-  },
-  {
-    value: PageAction.ViewMarkdown,
-    labelKey: 'pageActions.viewMarkdown.label',
-    descKey: 'pageActions.viewMarkdown.desc',
-    icon: <RightTopArrowIcon />,
-  },
-  {
-    value: PageAction.ChatGPT,
-    labelKey: 'pageActions.chatGPT.label',
-    descKey: 'pageActions.chatGPT.desc',
-    icon: <OpenAIIcon />,
-  },
-  {
-    value: PageAction.ChatClaude,
-    labelKey: 'pageActions.chatClaude.label',
-    descKey: 'pageActions.chatClaude.desc',
-    icon: <ClaudeAIIcon />,
-  },
-  // {
-  //   value: PageAction.ChatGemini,
-  //   labelKey: 'pageActions.chatGemini.label',
-  //   descKey: 'pageActions.chatGemini.desc',
-  //   icon: <GeminiAIIcon />,
-  // },
-];
+interface LLMActionsProps {
+  options: OptionItem[];
+  githubLink?: string;
+  classes?: {
+    root?: string;
+  };
+  mdContent?: string;
+}
 
-export default function DocPageActions(props: DocPageActionsProps) {
-  const { githubLink } = props;
-  const { t } = useTranslation('docs');
+export { PageAction };
+
+export default function LLMActions(props: LLMActionsProps) {
+  const { options, githubLink, classes: customClasses, mdContent: propsMdContent = '' } = props;
+  const { root = '' } = customClasses || {};
+  const { t } = useTranslation('llm');
   const { locale } = useGlobalLocale();
   const { asPath } = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState<CopyStatus>('idle');
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mdContent, setMdContent] = useState<string>('');
+  const [mdContent, setMdContent] = useState<string>(propsMdContent);
 
   const defaultOption = options[0];
-  const rawDocUrl = `${MILVUS_RAW_DOCS_BASE_URL}${githubLink}`;
-
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -99,7 +70,6 @@ export default function DocPageActions(props: DocPageActionsProps) {
   }, []);
 
   const handleCopyPage = async () => {
-
     try {
       if (!mdContent) {
         throw new Error('No Markdown content found');
@@ -116,8 +86,9 @@ export default function DocPageActions(props: DocPageActionsProps) {
   };
 
   const handleAction = async (value: PageAction) => {
-
-    const preFilledPrompt = t('pageActions.prompt', { url: `${ABSOLUTE_BASE_URL}${asPath}` });
+    const preFilledPrompt = t('pageActions.prompt', {
+      url: `${ABSOLUTE_BASE_URL}${asPath}`,
+    });
 
     switch (value) {
       case PageAction.CopyPage: {
@@ -126,7 +97,7 @@ export default function DocPageActions(props: DocPageActionsProps) {
       }
       case PageAction.ViewMarkdown: {
         if (githubLink) {
-          window.open(rawDocUrl, '_blank');
+          window.open(githubLink, '_blank');
         }
         break;
       }
@@ -177,7 +148,7 @@ export default function DocPageActions(props: DocPageActionsProps) {
 
   useEffect(() => {
     if (githubLink) {
-      fetch(rawDocUrl)
+      fetch(githubLink)
         .then(response => response.text())
         .then(data => setMdContent(data))
         .catch(error => console.error('Error fetching MD file:', error));
@@ -189,7 +160,7 @@ export default function DocPageActions(props: DocPageActionsProps) {
   }
 
   return (
-    <div className={classes.container} ref={containerRef}>
+    <div className={clsx(classes.container, root)} ref={containerRef}>
       <div className={classes.splitButton}>
         <button
           className={classes.mainButton}

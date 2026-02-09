@@ -11,7 +11,7 @@ import { copyToCommand } from '@/utils/common';
 import clsx from 'clsx';
 import BlogAnchorSection from '@/parts/blogs/blogAnchors';
 import pageClasses from '@/styles/responsive.module.less';
-import { ABSOLUTE_BASE_URL } from '@/consts';
+import { ABSOLUTE_BASE_URL, MILVUS_RAW_BLOGS_BASE_URL } from '@/consts';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
 import 'highlight.js/styles/atom-one-dark.css';
 import { useEffect } from 'react';
@@ -20,9 +20,34 @@ import { useRouter } from 'next/navigation';
 import { LanguageEnum } from '@/types/localization';
 import { getBlogPath } from '@/utils/localization';
 import Breadcrumb from '../breadcrumb';
+import LLMActions, { PageAction, OptionItem } from '@/components/LLMActions';
+import { CopyIcon } from '@/components/icons';
+import { OpenAIIcon, ClaudeAIIcon } from '@/components/icons/AI';
 
-export function BlogDetail(props) {
+const blogPageOptions: OptionItem[] = [
+  {
+    value: PageAction.CopyPage,
+    labelKey: 'pageActions.copyPage.label',
+    descKey: 'pageActions.copyPage.desc',
+    icon: <CopyIcon />,
+  },
+  {
+    value: PageAction.ChatGPT,
+    labelKey: 'pageActions.chatGPT.label',
+    descKey: 'pageActions.chatGPT.desc',
+    icon: <OpenAIIcon />,
+  },
+  {
+    value: PageAction.ChatClaude,
+    labelKey: 'pageActions.chatClaude.label',
+    descKey: 'pageActions.chatClaude.desc',
+    icon: <ClaudeAIIcon />,
+  },
+];
+
+export function BlogDetail(props: any) {
   const {
+    blogId,
     locale,
     newHtml,
     author,
@@ -128,18 +153,24 @@ export function BlogDetail(props) {
         <div>
           <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
             <section className={styles.blogHeader}>
-              <Breadcrumb
-                list={[
-                  {
-                    label: blogLabel,
-                    href: blogLink,
-                  },
-                  {
-                    label: title,
-                  },
-                ]}
-                lang={locale}
-              />
+              <div className={styles.pageHeaderContainer}>
+                <Breadcrumb
+                  list={[
+                    {
+                      label: blogLabel,
+                      href: blogLink,
+                    },
+                    {
+                      label: title,
+                    },
+                  ]}
+                  lang={locale}
+                />
+                <LLMActions
+                  options={blogPageOptions}
+                  githubLink={`${MILVUS_RAW_BLOGS_BASE_URL}/${blogId}`}
+                />
+              </div>
 
               <h1 className={styles.title}>{title}</h1>
 

@@ -31,28 +31,5 @@
     "title": "Orari d'ufficio di Milvus",
     "desc": "Chiedete aiuto per la distribuzione in produzione a Zilliz, gli esperti di Milvus.",
     "ctaLabel": "Prenota una sessione gratuita 1:1"
-  },
-  "pageActions": {
-    "copyPage": {
-      "label": "Copia della pagina",
-      "desc": "Copiare la pagina come Markdown per gli LLM"
-    },
-    "viewMarkdown": {
-      "label": "Visualizza come Markdown",
-      "desc": "Visualizza questa pagina come testo normale"
-    },
-    "chatGPT": {
-      "label": "Chat in ChatGPT",
-      "desc": "Fate domande su questa pagina"
-    },
-    "chatClaude": {
-      "label": "Chat in Claude",
-      "desc": "Fate domande su questa pagina"
-    },
-    "chatGemini": {
-      "label": "Chat in Gemelli",
-      "desc": "Fate domande su questa pagina"
-    },
-    "prompt": "Utilizzare la seguente documentazione come riferimento: {{url}} e rispondete alle seguenti domande."
   }
 }

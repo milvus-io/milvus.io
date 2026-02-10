@@ -1,0 +1,25 @@
+{
+  "pageActions": {
+    "copyPage": {
+      "label": "Copier la page",
+      "desc": "Copier la page en Markdown pour les LLM"
+    },
+    "viewMarkdown": {
+      "label": "Voir comme Markdown",
+      "desc": "Voir cette page en texte clair"
+    },
+    "chatGPT": {
+      "label": "Chat dans ChatGPT",
+      "desc": "Poser des questions sur cette page"
+    },
+    "chatClaude": {
+      "label": "Chat à Claude",
+      "desc": "Poser des questions sur cette page"
+    },
+    "chatGemini": {
+      "label": "Chat en Gémeaux",
+      "desc": "Poser des questions sur cette page"
+    },
+    "prompt": "Utilisez la documentation suivante comme référence : {{url}} et répondez aux questions suivantes."
+  }
+}

@@ -43,12 +43,13 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
         })
       : { ...metaData, tree: content };
 
-      const moreBlogs = allData
+    const moreBlogs = allData
       .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
       .slice(0, 4);
 
     return {
       props: {
+        blogId: id,
         locale: lang,
         newHtml,
         anchorList: anchorList.filter(item => item.label !== rest.title),

@@ -31,28 +31,5 @@
     "title": "ミルバス営業時間",
     "desc": "Milvusの専門家であるZillizから、本番導入の支援を受けましょう。",
     "ctaLabel": "無料1:1セッションを予約する"
-  },
-  "pageActions": {
-    "copyPage": {
-      "label": "コピーページ",
-      "desc": "LLMのためのMarkdownとしてのコピーページ"
-    },
-    "viewMarkdown": {
-      "label": "マークダウンとして表示",
-      "desc": "このページをプレーンテキストで表示する"
-    },
-    "chatGPT": {
-      "label": "ChatGPTでチャット",
-      "desc": "このページについて質問する"
-    },
-    "chatClaude": {
-      "label": "クロードのチャット",
-      "desc": "このページについて質問する"
-    },
-    "chatGemini": {
-      "label": "双子座のチャット",
-      "desc": "このページについて質問する"
-    },
-    "prompt": "以下のドキュメントを参考にしてください：{url}}を参照し、以下の質問に答えてください。"
   }
 }

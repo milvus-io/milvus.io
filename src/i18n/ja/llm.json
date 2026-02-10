@@ -1,0 +1,25 @@
+{
+  "pageActions": {
+    "copyPage": {
+      "label": "コピーページ",
+      "desc": "LLMのためのMarkdownとしてのコピーページ"
+    },
+    "viewMarkdown": {
+      "label": "マークダウンとして表示",
+      "desc": "このページをプレーンテキストで表示する"
+    },
+    "chatGPT": {
+      "label": "ChatGPTでチャット",
+      "desc": "このページについて質問する"
+    },
+    "chatClaude": {
+      "label": "クロードのチャット",
+      "desc": "このページについて質問する"
+    },
+    "chatGemini": {
+      "label": "双子座のチャット",
+      "desc": "このページについて質問する"
+    },
+    "prompt": "以下のドキュメントを参考にしてください：{url}}を参照し、以下の質問に答えてください。"
+  }
+}

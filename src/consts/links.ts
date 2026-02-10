@@ -64,3 +64,5 @@ export const MILVUS_BILIBILI_LINK =
 
 export const MILVUS_RAW_DOCS_BASE_URL =
   'https://raw.githubusercontent.com/milvus-io/milvus-docs/refs/heads';
+export const MILVUS_RAW_BLOGS_BASE_URL =
+  'https://raw.githubusercontent.com/milvus-io/community/refs/heads/master/blog/en/';

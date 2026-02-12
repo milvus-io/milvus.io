@@ -30,7 +30,8 @@
     "clusterDesc": "Cocok untuk skala besar.",
     "segmentTooltip": "datacoord.segment.maxSize adalah parameter konfigurasi penyimpanan yang penting dalam Milvus. Parameter ini mendefinisikan ukuran satu segmen, yang merupakan unit penyimpanan fisik di Milvus. Meningkatkan nilai ini dapat meningkatkan kinerja kueri, tetapi juga akan menghabiskan lebih banyak sumber daya. <0>Lihat Lebih Lanjut.</0>",
     "refine": "Memurnikan",
-    "refineType": "Perbaiki Jenis"
+    "refineType": "Perbaiki Jenis",
+    "inlinePq": "inline_pq"
   },
   "overview": {
     "title": "Kebutuhan Sumber Daya",

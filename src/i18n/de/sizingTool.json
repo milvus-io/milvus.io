@@ -30,7 +30,8 @@
     "clusterDesc": "Geeignet für große Umgebungen.",
     "segmentTooltip": "datacoord.segment.maxSize ist ein wichtiger Speicherkonfigurationsparameter in Milvus. Er definiert die Größe eines einzelnen Segments, das die physische Speichereinheit in Milvus darstellt. Eine Erhöhung dieses Wertes kann die Abfrageleistung verbessern, verbraucht aber auch mehr Ressourcen. <0>Mehr sehen.</0>",
     "refine": "Verfeinern Sie",
-    "refineType": "Typ verfeinern"
+    "refineType": "Typ verfeinern",
+    "inlinePq": "inline_pq"
   },
   "overview": {
     "title": "Ressourcenanforderungen",

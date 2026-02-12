@@ -30,7 +30,8 @@
     "clusterDesc": "适用于大规模。",
     "segmentTooltip": "datacoord.segment.maxSize 是 Milvus 中一个重要的存储配置参数。它定义了单个段的大小，也就是 Milvus 中的物理存储单元。增加该值可以提高查询性能，但也会消耗更多资源。<0>查看更多。</0>",
     "refine": "细化",
-    "refineType": "细化类型"
+    "refineType": "细化类型",
+    "inlinePq": "inline_pq"
   },
   "overview": {
     "title": "资源需求",

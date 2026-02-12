@@ -30,7 +30,8 @@
     "clusterDesc": "大規模に適しています。",
     "segmentTooltip": "datacoord.segment.maxSizeはMilvusの重要なストレージ設定パラメータです。これはMilvusの物理ストレージ単位である1セグメントのサイズを定義します。この値を大きくするとクエリのパフォーマンスが向上しますが、リソースの消費量も増えます。<0>もっと見る.</0>",
     "refine": "リファイン",
-    "refineType": "絞り込みタイプ"
+    "refineType": "絞り込みタイプ",
+    "inlinePq": "inline_pq"
   },
   "overview": {
     "title": "リソース要件",

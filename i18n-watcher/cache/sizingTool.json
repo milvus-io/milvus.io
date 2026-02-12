@@ -20,6 +20,7 @@
     "m": "M(Maximum degree of the node)",
     "nlist": "nlist",
     "maxDegree": "max_degree",
+    "inlinePq": "inline_pq",
     "segmentSize": "Segment Size",
     "segmentTooltip": "datacoord.segment.maxSize is an important storage configuration parameter in Milvus. It defines the size of a single segment, which is the physical storage unit in Milvus. Increasing this value can improve query performance, but it will also consume more resources. <0>View More.</0>",
     "dependencyComp": "Dependency Component",

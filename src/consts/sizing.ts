@@ -93,6 +93,10 @@ export const INDEX_TYPE_OPTIONS = [
     label: 'DISKANN',
     value: IndexTypeEnum.DISKANN,
   },
+  {
+    label: 'AISAQ',
+    value: IndexTypeEnum.AISAQ,
+  },
 ];
 
 export const DEPENDENCY_COMPONENTS = [

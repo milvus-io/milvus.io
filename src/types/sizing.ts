@@ -13,6 +13,7 @@ export enum IndexTypeEnum {
   IVFSQ8 = 'IVF_SQ8',
   IVFRABITQ = 'IVF_RABITQ',
   DISKANN = 'DISKANN',
+  AISAQ = 'AISAQ',
 }
 
 export interface IIndexType {
@@ -23,6 +24,7 @@ export interface IIndexType {
   sq8NList: number;
   rabitqNList: number;
   m: number;
+  inlinePq: number;
 }
 
 export enum RefineValueEnum {

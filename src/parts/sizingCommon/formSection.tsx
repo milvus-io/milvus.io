@@ -103,6 +103,7 @@ export default function FormSection(props: FormSectionProps) {
       indexType: INDEX_TYPE_OPTIONS[0].value,
       widthRawData: false,
       maxDegree: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
+      inlinePq: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
       flatNList: N_LIST_RANGE_CONFIG.defaultValue,
       sq8NList: N_LIST_RANGE_CONFIG.defaultValue,
       m: M_RANGE_CONFIG.defaultValue,

@@ -21,6 +21,7 @@ interface IIndexTypeBase {
   sq8NList: number;
   m: number;
   rabitqNList?: number;
+  inlinePq?: number;
 }
 
 type IndexTypeComponentProps = {
@@ -179,7 +180,7 @@ const IVFSQ8Component = (props: IndexTypeComponentProps) => {
 
 const RABITQComponent = (props: IndexTypeComponentProps) => {
   const { t } = useTranslation('sizingTool');
-  const { data, onChange, config, refine = '', onRefineChange = () => {} } = props;
+  const { data, onChange, config, refine = '', onRefineChange = () => { } } = props;
   const { N_LIST_RANGE_CONFIG, REFINE_OPTIONS } = config.consts;
   const { RefineValueEnum } = config.types;
 
@@ -258,6 +259,43 @@ const RABITQComponent = (props: IndexTypeComponentProps) => {
   );
 };
 
+const AISAQComponent = (props: IndexTypeComponentProps) => {
+  const { t } = useTranslation('sizingTool');
+  const { data, onChange, config } = props;
+  const { MAX_NODE_DEGREE_RANGE_CONFIG } = config.consts;
+
+  return (
+    <div className="">
+      <div className="mt-[16px]">
+        <p className={'text-[12px] font-[500] leading-[16px]'}>
+          {t('form.maxDegree')}
+        </p>
+        <SizingRange
+          rangeConfig={MAX_NODE_DEGREE_RANGE_CONFIG}
+          value={data.maxDegree}
+          onRangeChange={value => {
+            onChange('maxDegree', value);
+          }}
+          placeholder={`[${MAX_NODE_DEGREE_RANGE_CONFIG.min}, ${MAX_NODE_DEGREE_RANGE_CONFIG.max}]`}
+        />
+      </div>
+      <div className="mt-[16px]">
+        <p className={'text-[12px] font-[500] leading-[16px]'}>
+          {t('form.inlinePq')}
+        </p>
+        <SizingRange
+          rangeConfig={MAX_NODE_DEGREE_RANGE_CONFIG}
+          value={data.inlinePq}
+          onRangeChange={value => {
+            onChange('inlinePq', value);
+          }}
+          placeholder={`[${MAX_NODE_DEGREE_RANGE_CONFIG.min}, ${MAX_NODE_DEGREE_RANGE_CONFIG.max}]`}
+        />
+      </div>
+    </div>
+  );
+};
+
 export const IndexTypeComponent = (props: IndexTypeComponentProps) => {
   const { data, config } = props;
   const { IndexTypeEnum } = config.types;
@@ -280,6 +318,8 @@ export const IndexTypeComponent = (props: IndexTypeComponentProps) => {
         return <RABITQComponent {...props} />;
       }
       return null;
+    case IndexTypeEnum.AISAQ:
+      return <AISAQComponent {...props} />;
     default:
       return null;
   }

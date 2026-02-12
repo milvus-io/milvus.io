@@ -76,10 +76,13 @@ export const memoryAndDiskCalculator = (params: {
     flatNList,
     sq8NList,
     rabitqNList,
+    inlinePq,
   } = indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
   const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
   const N = REFINE_VALUE_TO_N_MAP[refineType];
+  const PQ_CODE_BUDGET_GB_RATIO = 0.125;
+  const AISAQ_MEMORY_BYTE = unitAny2BYTE(16, 'MB'); // 16 MB
 
   let result = {
     memory: 0,
@@ -131,6 +134,14 @@ export const memoryAndDiskCalculator = (params: {
       result = {
         memory: vectorRawDataSize / 4,
         disk: (1 + maxDegree / d) * vectorRawDataSize,
+      };
+      break;
+    case IndexTypeEnum.AISAQ:
+      result = {
+        memory: AISAQ_MEMORY_BYTE,
+        disk:
+          vectorRawDataSize *
+          (1 + inlinePq * PQ_CODE_BUDGET_GB_RATIO + maxDegree / d),
       };
       break;
     default:

@@ -8,9 +8,9 @@ import {
 } from '@/components/ui';
 import classes from './index.module.less';
 import clsx from 'clsx';
-import { SizingInput, SizingRange, SizingSwitch } from '@/components/sizing';
+import { SizingInput, SizingRange, SizingSwitch, } from '@/components/sizing';
 import { useTranslation } from 'react-i18next';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { SizingVersionConfig } from './types';
 
 interface IIndexTypeBase {
@@ -264,6 +264,61 @@ const AISAQComponent = (props: IndexTypeComponentProps) => {
   const { data, onChange, config } = props;
   const { MAX_NODE_DEGREE_RANGE_CONFIG } = config.consts;
 
+  const [inlinePqInput, setInlinePqInput] = useState<string>(
+    String(data.inlinePq ?? MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue)
+  );
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clampInlinePq = useCallback(
+    (value: number) => {
+      const min = MAX_NODE_DEGREE_RANGE_CONFIG.min;
+      const max = data.maxDegree;
+      return Math.min(Math.max(value, min), max);
+    },
+    [MAX_NODE_DEGREE_RANGE_CONFIG.min, data.maxDegree]
+  );
+
+  const commitInlinePq = useCallback(
+    (raw: string) => {
+      const num = Number(raw);
+      if (isNaN(num) || raw === '') return;
+      const clamped = clampInlinePq(num);
+      setInlinePqInput(String(clamped));
+      onChange('inlinePq', clamped);
+    },
+    [clampInlinePq, onChange]
+  );
+
+  const handleMaxDegreeChange = (value: number) => {
+    onChange('maxDegree', value);
+    if ((data.inlinePq ?? 0) > value) {
+      onChange('inlinePq', value);
+      setInlinePqInput(String(value));
+    }
+  };
+
+  const handleInlinePqInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    if (raw !== '' && isNaN(Number(raw))) return;
+    setInlinePqInput(raw);
+
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      commitInlinePq(raw);
+    }, 500);
+  };
+
+  const handleInlinePqBlur = () => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    commitInlinePq(inlinePqInput);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
+
   return (
     <div className="">
       <div className="mt-[16px]">
@@ -273,23 +328,20 @@ const AISAQComponent = (props: IndexTypeComponentProps) => {
         <SizingRange
           rangeConfig={MAX_NODE_DEGREE_RANGE_CONFIG}
           value={data.maxDegree}
-          onRangeChange={value => {
-            onChange('maxDegree', value);
-          }}
+          onRangeChange={handleMaxDegreeChange}
           placeholder={`[${MAX_NODE_DEGREE_RANGE_CONFIG.min}, ${MAX_NODE_DEGREE_RANGE_CONFIG.max}]`}
         />
       </div>
-      <div className="mt-[16px]">
+      <div className="mt-[16px] flex items-center gap-[8px] justify-between">
         <p className={'text-[12px] font-[500] leading-[16px]'}>
           {t('form.inlinePq')}
         </p>
-        <SizingRange
-          rangeConfig={MAX_NODE_DEGREE_RANGE_CONFIG}
-          value={data.inlinePq}
-          onRangeChange={value => {
-            onChange('inlinePq', value);
-          }}
-          placeholder={`[${MAX_NODE_DEGREE_RANGE_CONFIG.min}, ${MAX_NODE_DEGREE_RANGE_CONFIG.max}]`}
+        <SizingInput
+          customSize="small"
+          value={inlinePqInput}
+          placeholder={`[${MAX_NODE_DEGREE_RANGE_CONFIG.min}, ${data.maxDegree}]`}
+          onChange={handleInlinePqInput}
+          onBlur={handleInlinePqBlur}
         />
       </div>
     </div>

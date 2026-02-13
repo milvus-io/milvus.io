@@ -42,7 +42,7 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@zilliz/toolkit": "^0.2.7",
     "autoprefixer": "^10.4.24",
-    "axios": "^1.12.0",
+    "axios": "^1.13.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^1.2.1",
     "cropperjs": "^1.6.2",

@@ -15,15 +15,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Verify Nginx configuration
-        uses: addnab/docker-run-action@v3
-        with:
-          image: zilliz/zilliz-web-runner
-          options: -v ${{ github.workspace }}/conf/conf.d/client.conf:/etc/nginx/conf.d/client.conf
-          run: |
-            if nginx -t -c /etc/nginx/nginx.conf; then
-              echo "Nginx configuration is valid."
-            else
-              echo "Nginx configuration is invalid."
-              exit 1
-            fi
         if: always()
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/conf/conf.d/client.conf:/etc/nginx/conf.d/client.conf \
+            zilliz/zilliz-web-runner \
+            sh -c 'if nginx -t -c /etc/nginx/nginx.conf; then echo "Nginx configuration is valid."; else echo "Nginx configuration is invalid."; exit 1; fi'

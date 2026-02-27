@@ -46,7 +46,7 @@ module.exports = {
     policies: [
       {
         userAgent: '*',
-        allow: '*',
+        allow: '/',
         // disallow: '*[id]*',
         host: 'https://milvus.io',
         sitemap: 'https://milvus.io/sitemap.xml',

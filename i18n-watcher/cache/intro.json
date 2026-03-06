@@ -56,7 +56,7 @@
   },
   "difference": {
     "title": "How does Milvus differentiate from other vector databases?",
-    "desc": "Milvus stands out as a vector database with its scalable architecture and diverse capabilities designed to accelerate and unify search experiences across various applications. The key feature highlights are:",
+    "desc": "Milvus is the most popular vector database with more than 43K+ stars on GitHub (at the time of writing). It stands out as a vector database with its scalable architecture and diverse capabilities designed to accelerate and unify search experiences across various applications. The key feature highlights are:",
     "keys": [
       {
         "title": "Scalable and Elastic Architecture",

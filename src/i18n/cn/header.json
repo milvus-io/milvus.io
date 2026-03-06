@@ -41,6 +41,8 @@
       "sizing": "Milvus 容量计算工具",
       "backup": "Milvus 备份工具",
       "vts": "向量传输服务 (VTS)"
-    }
+    },
+    "followUs": "关注我们",
+    "askAI": "向 AI 了解 Milvus"
   }
 }

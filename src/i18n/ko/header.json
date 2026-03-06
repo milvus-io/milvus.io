@@ -43,6 +43,8 @@
       "sizing": "Milvus 크기 계산 도구",
       "backup": "Milvus 백업 도구",
       "vts": "벡터 전송 서비스 (VTS)"
-    }
+    },
+    "followUs": "팔로우하기",
+    "askAI": "밀버스에 대해 AI에게 질문하기"
   }
 }

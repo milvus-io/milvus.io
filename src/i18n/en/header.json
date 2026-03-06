@@ -44,6 +44,8 @@
       "sizing": "Milvus Sizing Tool",
       "backup": "Milvus Backup Tool",
       "vts": "Vector Transport Service (VTS)"
-    }
+    },
+    "followUs": "Follow Us",
+    "askAI": "Ask AI about Milvus"
   }
 }

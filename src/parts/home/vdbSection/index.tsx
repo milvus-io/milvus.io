@@ -54,7 +54,7 @@ export default function VectorDatabaseSection() {
             className={clsx(classes.featureItem, feature.class)}
           >
             <div>
-              <img src={feature.src} alt={feature.title} />
+              <img src={feature.src} alt={feature.title} loading="lazy" />
             </div>
             <div className={classes.descriptionWrapper}>
               <h4>{feature.title}</h4>

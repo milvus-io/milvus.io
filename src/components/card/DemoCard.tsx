@@ -61,7 +61,7 @@ const DemoCard: React.FC<{
   return (
     <div className={clsx(styles.demoCard, root)}>
       <div className={clsx(styles.coverWrapper, coverClass)}>
-        <img src={cover} alt={name} />
+        <img src={cover} alt={name} loading="lazy" />
       </div>
       <div className={styles.contentWrapper}>
         <h3 className={nameClass}>{name}</h3>

@@ -48,7 +48,7 @@ export default function LovedSection() {
 
               <div className={classes.authorWrapper}>
                 <div className={classes.detailWrapper}>
-                  <img src={v.avatar} alt={v.author} />
+                  <img src={v.avatar} alt={v.author} width={50} height={50} loading="lazy" />
                   <div className="">
                     <p className={classes.author}>{v.author}</p>
                     <p className={classes.jobTitle}>{v.jobTitle}</p>

@@ -142,6 +142,7 @@ export interface DocDetailPageProps {
   menus: FinalMenuStructureType[];
   id: string;
   mdListData: AllMdVersionIdType[];
+  availableLanguages: LanguageEnum[];
 }
 
 export interface DocAnchorItemType {

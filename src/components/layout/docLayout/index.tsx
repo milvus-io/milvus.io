@@ -20,6 +20,8 @@ interface DocLayoutPropsType {
     title: string;
     desc: string;
     url: string;
+    canonicalUrl?: string;
+    hreflangUrls?: { lang: string; url: string }[];
     docSearchLanguage?: string;
     docSearchVersion?: string;
     lang?: LanguageEnum;
@@ -47,6 +49,8 @@ export default function DocLayout(props: DocLayoutPropsType) {
     title = '',
     desc = '',
     url = '',
+    canonicalUrl,
+    hreflangUrls = [],
     docSearchLanguage,
     docSearchVersion,
     lang,
@@ -71,8 +75,15 @@ export default function DocLayout(props: DocLayoutPropsType) {
           {docSearchVersion && (
             <meta name="docsearch:version" content={docSearchVersion} />
           )}
-          {/* {!isLatestVersion && <meta name="robots" content="noindex" />} */}
-          <link rel="alternate" href={url} hrefLang={lang} />
+          {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+          {hreflangUrls.map(entry => (
+            <link
+              key={entry.lang}
+              rel="alternate"
+              hrefLang={entry.lang}
+              href={entry.url}
+            />
+          ))}
         </Head>
         <Header className={classes.docHeader} />
         <div className={clsx(classes.mainContainer, main)}>

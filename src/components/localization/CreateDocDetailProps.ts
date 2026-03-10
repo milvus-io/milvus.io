@@ -3,6 +3,7 @@ import {
   generateAllContentDataOfSingleVersion,
   generateMenuDataOfCurrentVersion,
   generateAllContentDataOfAllVersion,
+  getAvailableLanguagesForDoc,
 } from '@/utils/docs';
 import { GetStaticProps } from 'next';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
@@ -45,6 +46,12 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
     // used to detect has same page of current md
     const mdListData = generateAllContentDataOfAllVersion();
 
+    // languages that have this doc for hreflang tags
+    const availableLanguages = getAvailableLanguagesForDoc({
+      version: currentVersion,
+      docId: id,
+    });
+
     // xxx.md of latest version
     const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
       docVersion: currentVersion,
@@ -86,6 +93,7 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
         menus: menu,
         id,
         mdListData,
+        availableLanguages,
       },
     };
   };

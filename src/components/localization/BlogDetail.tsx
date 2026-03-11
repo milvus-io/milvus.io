@@ -167,10 +167,6 @@ export function BlogDetail(props: any) {
               href={entry.url}
             />
           ))}
-          <link
-            rel="stylesheet"
-            href="https://assets.zilliz.com/katex/katex.min.css"
-          />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: ldJson }}

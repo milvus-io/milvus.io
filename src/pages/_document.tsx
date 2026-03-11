@@ -32,7 +32,7 @@ export default function Document(props) {
         />
         <script
           dangerouslySetInnerHTML={{
-            __html: `requestAnimationFrame(function(){document.querySelectorAll('link[media="print"][href*="fonts.googleapis"]').forEach(function(l){l.media="all"})})`,
+            __html: `requestAnimationFrame(function(){document.querySelectorAll('link[rel="stylesheet"][media="print"]').forEach(function(l){l.media="all"})})`,
           }}
         />
         <noscript>
@@ -48,10 +48,16 @@ export default function Document(props) {
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap"
             rel="stylesheet"
           />
+          <link
+            rel="stylesheet"
+            href="https://assets.zilliz.com/katex/katex.min.css"
+          />
         </noscript>
+        {/* KaTeX CSS: non-render-blocking, only needed for pages with math formulas */}
         <link
           rel="stylesheet"
           href="https://assets.zilliz.com/katex/katex.min.css"
+          media="print"
         />
       </Head>
       <body>

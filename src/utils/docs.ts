@@ -256,6 +256,34 @@ export const generateAllContentDataOfAllVersion = (lang?: LanguageEnum) => {
   return allFileDataOfAllVersion;
 };
 
+// Returns the list of languages that have a given doc (or homepage) for a version.
+// Used at build time to generate hreflang tags.
+export const getAvailableLanguagesForDoc = (params: {
+  version: string;
+  docId?: string;
+}): LanguageEnum[] => {
+  const { version, docId } = params;
+  const allLanguages = Object.values(LanguageEnum);
+
+  return allLanguages.filter(lang => {
+    const langDir = join(BASE_DOC_DIR, `localization/${version}/site/${lang}`);
+    if (!fs.existsSync(langDir)) {
+      return false;
+    }
+    if (!docId) {
+      // homepage — just check if the language directory exists
+      return true;
+    }
+    // Check if any file in this language dir has frontMatter.id === docId
+    const data = generateAllContentDataOfSingleVersion({
+      version,
+      lang,
+      withContent: false,
+    });
+    return data.some(d => d.frontMatter.id === docId);
+  });
+};
+
 export const generateHomePageDataOfSingleVersion = (params: {
   version: string;
   lang?: LanguageEnum;

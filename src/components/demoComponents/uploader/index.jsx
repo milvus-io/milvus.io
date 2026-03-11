@@ -5,9 +5,9 @@ import { getImgUrl } from '@/utils/demo-helper';
 import { FileDrop } from 'react-file-drop';
 import Cropper from '../cropper';
 import { useWindowSize } from '@/http/hooks';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
+
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
 
 const UploaderHeader = ({
   handleImgSearch,
@@ -140,19 +140,13 @@ const UploaderHeader = ({
                     link="https://github.com/milvus-io/milvus"
                     className={styles.linkBtn}
                   >
-                    <FontAwesomeIcon
-                      className={styles.global}
-                      icon={faGithub}
-                    />
+                    <GitHubIcon />
                   </Button>
                   <Button
                     link="mailto:info@milvus.com"
                     className={styles.linkBtn}
                   >
-                    <FontAwesomeIcon
-                      className={styles.global}
-                      icon={faEnvelope}
-                    />
+                    <EmailIcon />
                   </Button>
 
                   {/* <IconButton type="button" onClick={toggleIsShowCode}>
@@ -169,10 +163,7 @@ const UploaderHeader = ({
                   </div>
                   <div className={styles.iconWrapper}>
                     <Button link="https://github.com/milvus-io/milvus">
-                      <FontAwesomeIcon
-                        className={styles.global}
-                        icon={faGithub}
-                      />
+                      <GitHubIcon />
                     </Button>
                   </div>
                 </div>

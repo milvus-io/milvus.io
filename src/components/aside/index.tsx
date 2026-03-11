@@ -6,9 +6,9 @@ import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { LanguageSelector } from '@/components/language-selector';
 import { LanguageEnum } from '@/types/localization';
 import { DocAnchorItemType } from '@/types/docs';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import EditIcon from '@mui/icons-material/Edit';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 import AnchorTree from '../../parts/docs/anchorTree';
 import FeedbackSection from './feedback';
@@ -108,25 +108,25 @@ const Aside = (props: AsidePropsType) => {
       {
         label: t('docAction.edit'),
         link: `https://github.com/milvus-io/milvus-docs/edit${docData?.editPath}`,
-        icon: faPencilAlt,
+        icon: EditIcon,
       },
 
       {
         label: t('docAction.issue'),
         link: 'https://github.com/milvus-io/milvus-docs/issues/new/choose',
-        icon: faGithub,
+        icon: GitHubIcon,
       },
     ],
     api: [
       {
         label: t('docAction.edit'),
         link: apiReferenceData?.editPath,
-        icon: faPencilAlt,
+        icon: EditIcon,
       },
       {
         label: t('docAction.issue'),
         link: 'https://github.com/milvus-io/web-content/issues/new/choose',
-        icon: faGithub,
+        icon: GitHubIcon,
       },
     ],
     // community: ({ locale, editPath, id }) => {
@@ -164,7 +164,7 @@ const Aside = (props: AsidePropsType) => {
               className={styles.link}
             >
               <span className={styles.iconWrapper}>
-                <FontAwesomeIcon className={styles.global} icon={btn.icon} />
+                {btn.icon && <btn.icon />}
               </span>
               <span className={styles.label}>{btn.label}</span>
             </a>

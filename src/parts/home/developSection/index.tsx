@@ -83,7 +83,7 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
               <li className={classes.stackItem} key={v.id}>
                 <div>
                   <span className={classes.logoWrapper}>
-                    <img src={v.logo} alt={v.title} />
+                    <img src={v.logo} alt={v.title} loading="lazy" />
                   </span>
                   <h3 className={classes.stackTitle}>{v.title}</h3>
                 </div>
@@ -143,6 +143,7 @@ export const MeetupsSection = () => {
               <img
                 src="/images/home/meetup-logo.png"
                 alt="Unstructured Data Meetups"
+                loading="lazy"
               />
               <div>
                 <h3>{t('developSection.meetup.title')}</h3>

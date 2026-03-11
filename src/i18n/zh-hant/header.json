@@ -43,6 +43,8 @@
       "sizing": "Milvus 容量計算工具",
       "backup": "Milvus 備份工具",
       "vts": "向量傳輸服務 (VTS)"
-    }
+    },
+    "followUs": "追蹤我們",
+    "askAI": "詢問 AI 關於 Milvus"
   }
 }

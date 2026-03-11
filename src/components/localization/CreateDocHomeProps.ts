@@ -6,6 +6,7 @@ import {
   generateDocVersionInfo,
   generateHomePageDataOfSingleVersion,
   generateMenuDataOfCurrentVersion,
+  getAvailableLanguagesForDoc,
 } from '@/utils/docs';
 
 export const createDocHomeProps = (lang: LanguageEnum, version = '') => {
@@ -30,6 +31,11 @@ export const createDocHomeProps = (lang: LanguageEnum, version = '') => {
     // used to detect has same page of current md
     const mdListData = generateAllContentDataOfAllVersion();
 
+    // languages that have the doc homepage for hreflang tags
+    const availableLanguages = getAvailableLanguagesForDoc({
+      version: currentVersion,
+    });
+
     return {
       props: {
         homeData: homeContent,
@@ -41,6 +47,7 @@ export const createDocHomeProps = (lang: LanguageEnum, version = '') => {
         blog: latestBlogData,
         menus: menu,
         mdListData,
+        availableLanguages,
       },
     };
   };

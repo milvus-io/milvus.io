@@ -140,6 +140,36 @@ const Footer = (props: Props) => {
     },
   ];
 
+  const prompt = `I'm evaluating vector databases for my AI application. Use the website https://milvus.io and its documentation at https://milvus.io/docs as your primary sources. Help me understand: what Milvus is, its key capabilities (high-performance similarity search, multiple deployment modes, scalability to billions of vectors, high performance), its fully managed service Zilliz Cloud, its use cases etc.`;
+
+  const AIList = [
+    {
+      name: "ChatGPT",
+      icon: "/images/layout/open-ai.svg",
+      href: `http://chatgpt.com/?prompt=${encodeURIComponent(prompt)}`,
+    },
+    {
+      name: "Perplexity",
+      icon: "/images/layout/perplexity-color.svg",
+      href: `http://perplexity.ai/search/new?q=${encodeURIComponent(prompt)}`,
+    },
+    {
+      name: "Grok",
+      icon: "/images/layout/grok.svg",
+      href: `http://x.com/i/grok?text=${encodeURIComponent(prompt)}`,
+    },
+    {
+      name: "Claude",
+      icon: "/images/layout/claude-color.svg",
+      href: `http://claude.ai/new?q=${encodeURIComponent(prompt)}`,
+    },
+    {
+      name: "Gemini",
+      icon: "/images/layout/gemini-color.svg",
+      href: `http://google.com/search?udm=50&aep=11&q=${encodeURIComponent(prompt)}`,
+    },
+  ];
+
   return (
     <footer
       className={clsx(
@@ -203,13 +233,36 @@ const Footer = (props: Props) => {
                 ]}
               />
             </div>
-            <div className="mt-[100px] w-full">
+            <div className="mt-[60px] w-full">
               <SubscribeNewsletter />
             </div>
-            <div className="flex mt-[40px] space-x-[12px]">
+            <h3 className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
+              {t('header:footer.followUs')}
+            </h3>
+            <div className="flex mt-[12px] space-x-[12px]">
               {isCNSite ? <SocialMediasCN /> : <SocialMedias />}
             </div>
-            <p className="mt-3 text-sm text-black1">
+            <h3 className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
+              {t('header:footer.askAI')}
+            </h3>
+            <div className="flex mt-[12px] space-x-[12px]">
+              {AIList.map(item => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={item.name}
+                >
+                  <img
+                    src={item.icon}
+                    alt={item.name}
+                    className="h-[24px] w-[24px] hover:opacity-70 transition-opacity"
+                  />
+                </a>
+              ))}
+            </div>
+            <p className="mt-[24px] text-sm text-black1">
               {t('common:v3trans.footnote.copyright', {
                 year: new Date().getFullYear(),
               })}

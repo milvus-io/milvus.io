@@ -51,7 +51,7 @@ const BlogCard: React.FC<Props> = props => {
       onClick={handleWrapperClick}
     >
       <div className="w-full aspect-[1.59817/1] overflow-hidden rounded-[12px] mb-[28px] cover-container">
-        <img className={styles.cover} src={cover} alt={title} />
+        <img className={styles.cover} src={cover} alt={title} loading="lazy" />
       </div>
       <div className={styles.descWrapper}>
         <div className={styles.bottomWrapper}>

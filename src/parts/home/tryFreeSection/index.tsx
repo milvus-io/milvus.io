@@ -110,7 +110,7 @@ export const AIToolsSection = () => {
                 target="_blank"
                 className={clsx(classes.toolButton, 'group')}
               >
-                <img src={tool.logo} alt={tool.name} />
+                <img src={tool.logo} alt={tool.name} width={80} height={80} loading="lazy" />
               </a>
             </li>
           ))}

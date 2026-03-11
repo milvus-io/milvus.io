@@ -8,7 +8,12 @@ import LeftNavSection from '@/parts/docs/leftNavTree';
 import classes from '@/styles/docs.module.less';
 import { BlogFrontMatterType } from '@/types/blogs';
 import { AllMdVersionIdType, FinalMenuStructureType } from '@/types/docs';
-import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
+import {
+  getHomePageLink,
+  getSeoUrl,
+  getDocCanonicalUrl,
+  getDocHreflangUrls,
+} from '@/components/localization/utils';
 
 export interface DocHomePageProps {
   homeData: string;
@@ -20,6 +25,7 @@ export interface DocHomePageProps {
   blog: BlogFrontMatterType;
   menus: FinalMenuStructureType[];
   mdListData: AllMdVersionIdType[];
+  availableLanguages: LanguageEnum[];
 }
 
 // latest version's home page
@@ -34,8 +40,15 @@ export function DocHomepage(props: DocHomePageProps) {
     mdListData,
     lang,
     latestVersion,
+    availableLanguages,
   } = props;
   const seoUrl = getSeoUrl({ lang, version, latestVersion });
+  const canonicalUrl = getDocCanonicalUrl({ lang, version, latestVersion });
+  const hreflangUrls = getDocHreflangUrls({
+    version,
+    latestVersion,
+    availableLanguages,
+  });
   const homePageLink = getHomePageLink({ lang, version, latestVersion });
 
   return (
@@ -50,6 +63,8 @@ export function DocHomepage(props: DocHomePageProps) {
         title: t('metaTitle'),
         desc: t('homepageDesc', { version }),
         url: seoUrl,
+        canonicalUrl,
+        hreflangUrls,
         lang,
         docSearchLanguage: lang,
         docSearchVersion: version,

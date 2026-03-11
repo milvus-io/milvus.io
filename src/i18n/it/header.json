@@ -43,6 +43,8 @@
       "sizing": "Strumento di dimensionamento Milvus",
       "backup": "Strumento di Backup Milvus",
       "vts": "Servizio di Trasporto Vettoriale (VTS)"
-    }
+    },
+    "followUs": "Seguiteci",
+    "askAI": "Chiedete ad AI di Milvus"
   }
 }

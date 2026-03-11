@@ -62,6 +62,7 @@ export function BlogDetail(props: any) {
     moreBlogs,
     meta_title,
     meta_keywords = 'vector databases, milvus, open-source vector database, vector search',
+    canonicalUrl,
   } = props;
   const router = useRouter();
   const docContainer = useRef(null);
@@ -127,6 +128,22 @@ export function BlogDetail(props: any) {
     date
   ).toJSON()}", "name": "${title}", "url": "${shareUrl}"}`;
 
+  const hreflangUrls = useMemo(() => {
+    const allLangs = Object.values(LanguageEnum);
+    const entries: { lang: string; url: string }[] = allLangs.map(lang => {
+      const prefix = lang === LanguageEnum.ENGLISH ? '' : `/${lang}`;
+      return {
+        lang,
+        url: `${ABSOLUTE_BASE_URL}${prefix}/blog/${id}`,
+      };
+    });
+    const enEntry = entries.find(e => e.lang === LanguageEnum.ENGLISH);
+    if (enEntry) {
+      entries.push({ lang: 'x-default', url: enEntry.url });
+    }
+    return entries;
+  }, [id]);
+
   const blogLink = locale === 'en' ? '/blog' : `/${locale}/blog`;
   const blogLabel = headerTrans('blog');
 
@@ -141,10 +158,15 @@ export function BlogDetail(props: any) {
           <meta property="og:url" content={shareUrl} />
           <meta property="og:image" content={`https://${cover}`} />
           <meta name="keywords" content={meta_keywords} />
-          <link
-            rel="stylesheet"
-            href="https://assets.zilliz.com/katex/katex.min.css"
-          />
+          <link rel="canonical" href={canonicalUrl || shareUrl} />
+          {hreflangUrls.map(entry => (
+            <link
+              key={entry.lang}
+              rel="alternate"
+              hrefLang={entry.lang}
+              href={entry.url}
+            />
+          ))}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: ldJson }}

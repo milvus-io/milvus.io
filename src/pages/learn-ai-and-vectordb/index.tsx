@@ -4,10 +4,9 @@ import styles from '@/styles/blog.module.less';
 import clsx from 'clsx';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
-import { generateSimpleFaqList } from '@/http/faq';
-import { FAQDetailType } from '@/types/faq';
+import { generateSimpleLearnAiList } from '@/http/learnAi';
+import { LearnAiDetailType } from '@/types/learnAi';
 import { useState, useMemo, useEffect } from 'react';
 import CustomInput from '@/components/customInput/customInput';
 import {
@@ -62,13 +61,12 @@ const generatePagingHref = (
   if (curIndex === totalPages && index === 1) {
     return '';
   }
-  return `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${curIndex + index}`;
+  return `/learn-ai-and-vectordb?${PAGEINDEX_QUERY_KEY}=${curIndex + index}`;
 };
 
-export default function AiFaq(props: {
-  list: Pick<FAQDetailType, 'title' | 'url'>[];
+export default function LearnAi(props: {
+  list: Pick<LearnAiDetailType, 'title' | 'url'>[];
 }) {
-  const { t } = useTranslation('faq');
   const { list } = props;
   const { query } = useRouter();
   const currentPageIndex = Number(query[PAGEINDEX_QUERY_KEY] || 1);
@@ -115,7 +113,7 @@ export default function AiFaq(props: {
     window.history.pushState(
       null,
       '',
-      `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=1`
+      `/learn-ai-and-vectordb?${PAGEINDEX_QUERY_KEY}=1`
     );
   };
 
@@ -135,7 +133,7 @@ export default function AiFaq(props: {
     window.history.pushState(
       null,
       '',
-      `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${index}`
+      `/learn-ai-and-vectordb?${PAGEINDEX_QUERY_KEY}=${index}`
     );
   };
 
@@ -191,21 +189,24 @@ export default function AiFaq(props: {
     <Layout>
       <main>
         <Head>
-          <title>AI Quick Reference | Milvus</title>
+          <title>Learn AI | Milvus</title>
           <meta
             name="description"
-            content="Looking for fast answers or a quick refresher on AI-related topics? The AI Quick Reference has everything you need—straightforward explanations, practical solutions, and insights on the latest trends."
+            content="Learn about AI concepts, vector databases, and modern AI technologies. Explore our comprehensive collection of articles covering everything from basics to advanced topics."
           />
         </Head>
 
         <section className={clsx(pageClasses.container, classes.pageContainer)}>
-          <h1 className="">{t('title')}</h1>
-          <p className="">{t('desc')}</p>
+          <h1 className="">Learn AI</h1>
+          <p className="">
+            Explore our comprehensive collection of articles about AI concepts,
+            vector databases, and modern AI technologies.
+          </p>
 
           <CustomInput
             value={searchData.keyword}
             onChange={handleInputChange}
-            placeholder={t('search')}
+            placeholder="Search articles..."
             startIcon={<SearchIcon />}
             classes={{
               root: classes.inputWrapper,
@@ -218,12 +219,14 @@ export default function AiFaq(props: {
             <ul className={classes.listWrapper}>
               {pagingFilterList.map(v => (
                 <li className="" key={v.url}>
-                  <Link href={`/ai-quick-reference/${v.url}`}>{v.title}</Link>
+                  <Link href={`/learn-ai-and-vectordb/${v.url}`}>{v.title}</Link>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="">{t('noData', { keyword: searchData.keyword })}</p>
+            <p className="">
+              No results found for &quot;{searchData.keyword}&quot;
+            </p>
           )}
 
           {pagingFilterList.length > 0 ? (
@@ -261,7 +264,7 @@ export default function AiFaq(props: {
                               paginationData.pageIndex === v
                             )
                           }
-                          href={`/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${v}`}
+                          href={`/learn-ai-and-vectordb?${PAGEINDEX_QUERY_KEY}=${v}`}
                           isActive={paginationData.pageIndex === v}
                           className={clsx(styles.paginationLink, {
                             [styles.activePaginationLink]:
@@ -301,10 +304,10 @@ export default function AiFaq(props: {
 
 export const getServerSideProps = async () => {
   try {
-    const simpleFaqList = await generateSimpleFaqList();
+    const simpleLearnAiList = await generateSimpleLearnAiList();
     return {
       props: {
-        list: simpleFaqList,
+        list: simpleLearnAiList,
       },
     };
   } catch (error) {

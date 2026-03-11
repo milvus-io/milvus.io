@@ -130,7 +130,7 @@ export function BlogDetail(props: any) {
 
   const hreflangUrls = useMemo(() => {
     const allLangs = Object.values(LanguageEnum);
-    const entries: { lang: string; url: string }[] = allLangs.map(lang => {
+    const entries: { lang: string; url: string; }[] = allLangs.map(lang => {
       const prefix = lang === LanguageEnum.ENGLISH ? '' : `/${lang}`;
       return {
         lang,

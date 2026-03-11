@@ -27,7 +27,7 @@ export const OutLinkIcon = () => (
   </svg>
 );
 
-export const InfoFilled = (props?: { color?: string }) => (
+export const InfoFilled = (props?: { color?: string; }) => (
   <svg
     width="24"
     height="24"
@@ -120,7 +120,7 @@ export const Star = () => (
 export const checkIconTpl = `
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path 
-      fill="#000000" 
+      fill="#667176"
       d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"
     />
   </svg>
@@ -216,7 +216,7 @@ export const RightArrow = () => (
   </svg>
 );
 
-export const CopyIcon: React.FC<{ color?: string }> = ({ color }) => (
+export const CopyIcon: React.FC<{ color?: string; }> = ({ color }) => (
   <svg
     width="18"
     height="18"
@@ -239,7 +239,7 @@ export const CopyIcon: React.FC<{ color?: string }> = ({ color }) => (
   </svg>
 );
 
-export const CheckIcon: React.FC<{ color?: string }> = ({ color }) => (
+export const CheckIcon: React.FC<{ color?: string; }> = ({ color }) => (
   <svg focusable="false" aria-hidden="true" viewBox="0 0 14 14">
     <path
       fillRule="evenodd"
@@ -273,7 +273,7 @@ export const GitHubIcon = () => (
   </svg>
 );
 
-export const RightWholeArrow: React.FC<{ color?: string; size?: number }> = ({
+export const RightWholeArrow: React.FC<{ color?: string; size?: number; }> = ({
   color,
   size = 14,
 }) => (
@@ -317,7 +317,7 @@ export const TOCIcon = () => (
   </svg>
 );
 
-export const ThumbUpIcon: FC<{ color?: string }> = ({ color = '#4C5A67' }) => (
+export const ThumbUpIcon: FC<{ color?: string; }> = ({ color = '#4C5A67' }) => (
   <svg
     width="16"
     height="17"
@@ -335,7 +335,7 @@ export const ThumbUpIcon: FC<{ color?: string }> = ({ color = '#4C5A67' }) => (
   </svg>
 );
 
-export const ThumbDownIcon: FC<{ color?: string }> = ({
+export const ThumbDownIcon: FC<{ color?: string; }> = ({
   color = '#4C5A67',
 }) => (
   <svg
@@ -355,7 +355,7 @@ export const ThumbDownIcon: FC<{ color?: string }> = ({
   </svg>
 );
 
-export const ExternalLinkIcon: FC<{ color?: string }> = ({ color }) => (
+export const ExternalLinkIcon: FC<{ color?: string; }> = ({ color }) => (
   <svg
     width="15"
     height="15"

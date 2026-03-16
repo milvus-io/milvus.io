@@ -140,6 +140,9 @@ export default function Template(props: ApiDetailPageProps) {
       case ApiReferenceRouteEnum.Python:
         suffix = `${ApiReferenceMetaInfoEnum.Python} sdk ${version}`;
         break;
+      case ApiReferenceRouteEnum.Cplus:
+        suffix = `${ApiReferenceMetaInfoEnum.Cplus} sdk ${version}`;
+        break;
       default:
         suffix = `${ApiReferenceMetaInfoEnum.Restful} sdk ${version}`;
         break;
@@ -286,6 +289,7 @@ export const getStaticProps: GetStaticProps = async context => {
     ApiReferenceLanguageEnum
   > = {
     [ApiReferenceRouteEnum.Csharp]: ApiReferenceLanguageEnum.Csharp,
+    [ApiReferenceRouteEnum.Cplus]: ApiReferenceLanguageEnum.Cplus,
     [ApiReferenceRouteEnum.Go]: ApiReferenceLanguageEnum.Go,
     [ApiReferenceRouteEnum.Java]: ApiReferenceLanguageEnum.Java,
     [ApiReferenceRouteEnum.Node]: ApiReferenceLanguageEnum.Node,

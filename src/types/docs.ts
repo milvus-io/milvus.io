@@ -86,7 +86,7 @@ export enum ApiReferenceRouteEnum {
   Java = 'java',
   Node = 'node',
   Python = 'pymilvus',
-  Cplus = 'cplusplus',
+  Cplus = 'cpp',
 }
 
 export enum ApiReferenceMetaInfoEnum {
@@ -96,7 +96,7 @@ export enum ApiReferenceMetaInfoEnum {
   Java = 'java',
   Node = 'nodejs',
   Python = 'pymilvus',
-  Cplus = 'cplusplus',
+  Cplus = 'cpp',
 }
 
 export interface ApiContentFrontMatterType {

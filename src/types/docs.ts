@@ -66,6 +66,7 @@ export enum ApiReferenceLanguageEnum {
   Java = 'milvus-sdk-java',
   Node = 'milvus-sdk-node',
   Python = 'pymilvus',
+  Cplus = 'milvus-sdk-cpp',
 }
 
 export enum ApiReferenceLabelEnum {
@@ -75,6 +76,7 @@ export enum ApiReferenceLabelEnum {
   Java = 'Java',
   Node = 'Node',
   Python = 'Python',
+  Cplus = 'C++',
 }
 
 export enum ApiReferenceRouteEnum {
@@ -84,6 +86,7 @@ export enum ApiReferenceRouteEnum {
   Java = 'java',
   Node = 'node',
   Python = 'pymilvus',
+  Cplus = 'cpp',
 }
 
 export enum ApiReferenceMetaInfoEnum {
@@ -93,6 +96,7 @@ export enum ApiReferenceMetaInfoEnum {
   Java = 'java',
   Node = 'nodejs',
   Python = 'pymilvus',
+  Cplus = 'cpp',
 }
 
 export interface ApiContentFrontMatterType {

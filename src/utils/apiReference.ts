@@ -13,6 +13,7 @@ import {
   validationFileFilter,
   DOCS_MINIMUM_VERSION,
   sortVersionDir,
+  CPP_DOCS_MINIMUM_VERSION,
 } from './docs';
 import { getCacheData, setCacheData } from './index';
 
@@ -187,17 +188,23 @@ const API_REFERENCE_CONFIG = {
     minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Node,
   },
-  [ApiReferenceLanguageEnum.Csharp]: {
-    name: ApiReferenceLabelEnum.Csharp,
-    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Csharp}`,
-    minVersion: DOCS_MINIMUM_VERSION,
-    category: ApiReferenceRouteEnum.Csharp,
+  [ApiReferenceLanguageEnum.Cplus]: {
+    name: ApiReferenceLabelEnum.Cplus,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Cplus}`,
+    minVersion: CPP_DOCS_MINIMUM_VERSION,
+    category: ApiReferenceRouteEnum.Cplus,
   },
   [ApiReferenceLanguageEnum.Restful]: {
     name: ApiReferenceLabelEnum.Restful,
     path: `${BASE_DOC_DIR}/API_Reference_MDX/${ApiReferenceLanguageEnum.Restful}`,
     minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Restful,
+  },
+  [ApiReferenceLanguageEnum.Csharp]: {
+    name: ApiReferenceLabelEnum.Csharp,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Csharp}`,
+    minVersion: DOCS_MINIMUM_VERSION,
+    category: ApiReferenceRouteEnum.Csharp,
   },
 };
 

@@ -188,11 +188,11 @@ const API_REFERENCE_CONFIG = {
     minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Node,
   },
-  [ApiReferenceLanguageEnum.Csharp]: {
-    name: ApiReferenceLabelEnum.Csharp,
-    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Csharp}`,
-    minVersion: DOCS_MINIMUM_VERSION,
-    category: ApiReferenceRouteEnum.Csharp,
+  [ApiReferenceLanguageEnum.Cplus]: {
+    name: ApiReferenceLabelEnum.Cplus,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Cplus}`,
+    minVersion: CPP_DOCS_MINIMUM_VERSION,
+    category: ApiReferenceRouteEnum.Cplus,
   },
   [ApiReferenceLanguageEnum.Restful]: {
     name: ApiReferenceLabelEnum.Restful,
@@ -200,11 +200,11 @@ const API_REFERENCE_CONFIG = {
     minVersion: DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Restful,
   },
-  [ApiReferenceLanguageEnum.Cplus]: {
-    name: ApiReferenceLabelEnum.Cplus,
-    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Cplus}`,
-    minVersion: CPP_DOCS_MINIMUM_VERSION,
-    category: ApiReferenceRouteEnum.Cplus,
+  [ApiReferenceLanguageEnum.Csharp]: {
+    name: ApiReferenceLabelEnum.Csharp,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Csharp}`,
+    minVersion: DOCS_MINIMUM_VERSION,
+    category: ApiReferenceRouteEnum.Csharp,
   },
 };
 

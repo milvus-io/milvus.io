@@ -86,7 +86,11 @@ export function MilvusDemos(props: Props) {
     },
   ];
 
-  const [dialogConfig, setDialogConfig] = useState({
+  const [dialogConfig, setDialogConfig] = useState<{
+    open: boolean;
+    title: string;
+    content: React.ReactNode;
+  }>({
     open: false,
     title: '',
     content: <></>,
@@ -98,7 +102,7 @@ export function MilvusDemos(props: Props) {
     message: '',
   });
 
-  const handelOpenDialog = (content: JSX.Element, title: string) => {
+  const handelOpenDialog = (content: React.ReactNode, title: string) => {
     setDialogConfig({
       open: true,
       title,

@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   fullWidth?: boolean;
@@ -6,5 +6,5 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     root?: string;
     input?: string;
   };
-  startIcon?: JSX.Element;
+  startIcon?: React.ReactNode;
 }

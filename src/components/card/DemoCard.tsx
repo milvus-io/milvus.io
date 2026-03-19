@@ -11,12 +11,12 @@ const UNIQUE_EMAIL_ID = 'UNIQUE_EMAIL_ID';
 const DemoCard: React.FC<{
   href?: string;
   videoSrc?: string;
-  renderButton1?: () => JSX.Element;
-  renderButton2?: () => JSX.Element;
+  renderButton1?: () => React.ReactNode;
+  renderButton2?: () => React.ReactNode;
   cover: string;
   name: string;
   desc: string;
-  handelOpenDialog: (content: JSX.Element, title: string) => void;
+  handelOpenDialog: (content: React.ReactNode, title: string) => void;
   classes?: {
     root?: string;
     name?: string;

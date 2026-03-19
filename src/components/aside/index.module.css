@@ -86,13 +86,7 @@
     gap: 10px;
 
     .feedbackBtn {
-      border: none;
-      outline: none;
-      margin: 0;
-      padding: 0;
-      background-color: transparent;
-      cursor: pointer;
-      text-align: left;
+      @mixin resetNativeButton;
 
       background-color: var(--color-grey-05);
       padding: 8px;
@@ -149,13 +143,7 @@ div.customRootClass {
     padding: 4px 24px;
 
     button {
-      border: none;
-      outline: none;
-      margin: 0;
-      padding: 0;
-      background-color: transparent;
-      cursor: pointer;
-      text-align: left;
+      @mixin resetNativeButton;
       background-color: var(--color-grey-03);
       padding: 10px 20px;
       border-radius: 4px;
@@ -226,32 +214,16 @@ input.customInputField {
   }
 
   h3 {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
-    font-weight: 600;
+    @mixin paragraph4-bold;
     margin-bottom: 4px;
   }
   p {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 400;
+    @mixin paragraph6-regular;
     margin-bottom: 20px;
   }
 
   .bookButton {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     padding: 8px 20px;
   }
 }

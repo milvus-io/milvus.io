@@ -24,23 +24,14 @@
   }
 
   h3 {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     color: var(--color-black1);
     margin-bottom: 6px;
     font-family: Geist !important;
   }
 
   p {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 400;
+    @mixin paragraph6-regular;
     color: var(--color-black2);
     font-family: Geist !important;
   }

@@ -39,25 +39,12 @@
 }
 
 .tag {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  @media (--tablet), (--phone) {
-    font-size: 14px;
-    line-height: 22px;
-  }
-  font-weight: 400;
+  @mixin paragraph3-regular;
   color: var(--color-text-primary);
 }
 
 .title {
-  font-size: 32px;
-  font-weight: 600;
-  line-height: 40px;
-  @media (--tablet), (--phone) {
-    font-size: 28px;
-    line-height: 36px;
-  }
+  @mixin heading3;
   margin: 0;
   color: var(--color-black);
 
@@ -68,13 +55,6 @@
 }
 
 .desc {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  @media (--tablet), (--phone) {
-    font-size: 14px;
-    line-height: 22px;
-  }
-  font-weight: 400;
+  @mixin paragraph3-regular;
   color: var(--color-grey-01);
 }

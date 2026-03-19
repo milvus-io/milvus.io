@@ -1,13 +1,6 @@
 
 div.docHeader {
-  margin: 0 auto;
-  max-width: 100%;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
-  @media (--phone) {
-    padding-left: 25px !important;
-    padding-right: 25px !important;
-  }
+  @mixin docContainer;
 }
 
 div.mainContainer {

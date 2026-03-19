@@ -8,13 +8,7 @@
   }
 
   .title {
-    font-size: 42px;
-    font-weight: 600;
-    line-height: 54px;
-    @media (--tablet), (--phone) {
-      font-size: 38px;
-      line-height: 46px;
-    }
+    @mixin heading2;
     color: var(--color-black1);
     max-width: 840px;
     text-align: center;
@@ -110,13 +104,7 @@
     }
 
     .dbName {
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 32px;
-      @media (--tablet), (--phone) {
-        font-size: 20px;
-        line-height: 28px;
-      }
+      @mixin heading4;
       padding-bottom: 8px;
       position: relative;
       margin-bottom: 20px;
@@ -136,13 +124,7 @@
       flex: 1;
     }
     .dbAdvantage {
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 26px;
-      @media (--tablet), (--phone) {
-        font-size: 16px;
-        line-height: 24px;
-      }
+      @mixin paragraph2;
       font-family: 'Geist Mono';
       margin-bottom: 12px;
       height: 54px;
@@ -154,14 +136,7 @@
       font-family: 'Geist Mono';
 
       li {
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 24px;
-        @media (--tablet), (--phone) {
-          font-size: 14px;
-          line-height: 22px;
-        }
-        font-weight: 400;
+        @mixin paragraph3-regular;
         color: var(--color-black2);
 
         &::marker {
@@ -173,13 +148,7 @@
     .startLinkButton,
     .containedLinkButton,
     .linkButton {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
+      @mixin paragraph4;
       font-weight: 500;
     }
 
@@ -207,14 +176,7 @@
   }
 
   .learnMore {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
-    font-weight: 400;
+    @mixin paragraph4-regular;
     color: var(--color-black1);
     text-align: center;
     padding: 8px 24px;

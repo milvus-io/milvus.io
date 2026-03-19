@@ -48,25 +48,13 @@
   }
 
   .demoBtn {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     color: var(--color-doc-primary);
     padding: 0;
   }
 
   .LearnBtn {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     color: var(--color-doc-primary);
     padding: 4px 12px;
   }

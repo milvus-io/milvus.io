@@ -18,13 +18,7 @@
 }
 
 a.startButton {
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 26px;
-  @media (--tablet), (--phone) {
-    font-size: 16px;
-    line-height: 24px;
-  }
+  @mixin paragraph2;
   min-width: 240px;
   justify-content: center;
   height: 60px;
@@ -76,13 +70,7 @@ a.startButton {
     }
 
     .navigatorButton {
-      border: none;
-      outline: none;
-      margin: 0;
-      padding: 0;
-      background-color: transparent;
-      cursor: pointer;
-      text-align: left;
+      @mixin resetNativeButton;
       width: 20px;
       height: 20px;
       border-radius: 4px;
@@ -115,9 +103,7 @@ a.startButton {
   .headlineTag {
     font-family: 'Geist Mono';
     flex-grow: 0;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
+    @mixin paragraph6;
     border-radius: 4px;
     border: 1px solid rgba(0, 179, 255, 0.3);
     background: rgba(0, 179, 255, 0.15);
@@ -126,10 +112,7 @@ a.startButton {
 
   .headlineLink {
     font-family: 'Geist Mono';
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 400;
+    @mixin paragraph6-regular;
     color: var(--color-black2);
 
     &:hover {

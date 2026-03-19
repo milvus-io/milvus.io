@@ -4,13 +4,7 @@
   padding-bottom: 80px;
 
   .title {
-    font-size: 42px;
-    font-weight: 600;
-    line-height: 54px;
-    @media (--tablet), (--phone) {
-      font-size: 38px;
-      line-height: 46px;
-    }
+    @mixin heading2;
     max-width: 840px;
     text-align: center;
     margin: 0 auto 40px;
@@ -71,13 +65,7 @@
       }
 
       .cardContent {
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 24px;
-        @media (--tablet), (--phone) {
-          font-size: 14px;
-          line-height: 22px;
-        }
+        @mixin paragraph3;
         line-height: 1.5;
         font-weight: 400;
         height: calc(11 * 1.5 * 16px);
@@ -112,19 +100,11 @@
       gap: 12px;
 
       .author {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 22px;
-        @media (--tablet), (--phone) {
-          font-size: 13px;
-          line-height: 21px;
-        }
+        @mixin paragraph4;
         color: var(--color-black1);
       }
       .jobTitle {
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 20px;
+        @mixin paragraph6;
         color: var(--color-black2);
       }
     }

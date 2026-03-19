@@ -4,14 +4,7 @@
   width: 100%;
 
   .title {
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 28px;
-    @media (--tablet), (--phone) {
-      font-size: 18px;
-      line-height: 26px;
-    }
-    font-weight: 600;
+    @mixin paragraph1-bold;
     margin-bottom: 8px;
     color: var(--color-black1);
   }
@@ -39,14 +32,7 @@
     width: 100%;
 
     .errorMessage {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
-      font-weight: 400;
+      @mixin paragraph4-regular;
       color: var(--color-warning);
       margin-top: 8px;
     }
@@ -72,14 +58,7 @@
     }
 
     .customInput {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
-      font-weight: 400;
+      @mixin paragraph4-regular;
       border-bottom: none;
       padding: 0;
 
@@ -91,13 +70,7 @@
   }
 
   .customSubscribeButton {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     padding: 9px 28px;
     border: none;
     @media (--phone) {

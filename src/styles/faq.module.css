@@ -4,26 +4,13 @@
   padding-bottom: 80px;
 
   h1 {
-    font-size: 42px;
-    font-weight: 600;
-    line-height: 54px;
-    @media (--tablet), (--phone) {
-      font-size: 38px;
-      line-height: 46px;
-    }
+    @mixin heading2;
     margin-bottom: 12px;
     text-align: center;
   }
 
   p {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 26px;
-    @media (--tablet), (--phone) {
-      font-size: 16px;
-      line-height: 24px;
-    }
-    font-weight: 400;
+    @mixin paragraph2-regular;
     text-align: center;
     color: var(--color-black2);
     max-width: 1074px;
@@ -46,14 +33,7 @@
     }
 
     .input {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
-      font-weight: 400;
+      @mixin paragraph4-regular;
       color: var(--color-black2);
       border: none;
       outline: none;
@@ -91,19 +71,8 @@
 
       a {
         display: block;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 22px;
-        @media (--tablet), (--phone) {
-          font-size: 13px;
-          line-height: 21px;
-        }
-        font-weight: 400;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+        @mixin paragraph4-regular;
+        @mixin overflowEllipsis2Row;
         color: inherit;
         height: 44px;
 
@@ -142,14 +111,7 @@
 
   .recommendBlogWrapper {
     .title {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
-      font-weight: 600;
+      @mixin paragraph4-bold;
       margin-bottom: 12px;
     }
 
@@ -159,14 +121,7 @@
       li {
         padding: 8px 10px;
         a {
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 22px;
-          @media (--tablet), (--phone) {
-            font-size: 13px;
-            line-height: 21px;
-          }
-          font-weight: 400;
+          @mixin paragraph4-regular;
           color: var(--color-black2);
 
           &:hover {
@@ -190,13 +145,7 @@
     margin-top: 80px;
 
     .sectionTitle {
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 32px;
-      @media (--tablet), (--phone) {
-        font-size: 20px;
-        line-height: 28px;
-      }
+      @mixin heading4;
       margin-bottom: 40px;
     }
 
@@ -226,19 +175,8 @@
       }
 
       .recommendTitle {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 26px;
-        @media (--tablet), (--phone) {
-          font-size: 16px;
-          line-height: 24px;
-        }
-        font-weight: 600;
+        @mixin overflowEllipsis2Row;
+        @mixin paragraph2-bold;
         margin-bottom: 24px;
         height: 52px;
 
@@ -288,29 +226,14 @@
 
   .demoCardRoot {
     .demoCardName {
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 32px;
-      @media (--tablet), (--phone) {
-        font-size: 20px;
-        line-height: 28px;
-      }
+      @mixin heading4;
     }
     .demoCardDesc {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
-      font-weight: 400;
+      @mixin paragraph4-regular;
     }
 
     a.demoCardButton {
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 20px;
+      @mixin paragraph6;
       padding: 6px 12px;
       border-color: var(--color-black3);
       background-color: #fff !important;

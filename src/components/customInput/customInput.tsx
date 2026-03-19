@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import clsx from 'clsx';
-import classes from './customInput.module.less';
+import classes from './customInput.module.css';
 import { InputProps } from './Types';
 
 const CustomInput: FC<InputProps> = ({

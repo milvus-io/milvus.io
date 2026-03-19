@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Head from 'next/head';
 import Layout from '../../components/layout/commonLayout';
-import styles from '../../styles/blog.module.less';
-import pageClasses from '../../styles/responsive.module.less';
+import styles from '../../styles/blog.module.css';
+import pageClasses from '../../styles/responsive.module.css';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { ABSOLUTE_BASE_URL } from '@/consts';

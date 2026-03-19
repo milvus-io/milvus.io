@@ -1,4 +1,4 @@
-import classes from './index.module.less';
+import classes from './index.module.css';
 import MenuTreeGroup from './treeGroup';
 import MenuTreeItem from './treeItem';
 import { useEffect, useRef } from 'react';

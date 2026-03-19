@@ -5,7 +5,7 @@ import { LanguageEnum } from '@/types/localization';
 import DocLayout from '@/components/layout/docLayout';
 import HomeContent from '@/parts/docs/docHome';
 import LeftNavSection from '@/parts/docs/leftNavTree';
-import classes from '@/styles/docs.module.less';
+import classes from '@/styles/docs.module.css';
 import { BlogFrontMatterType } from '@/types/blogs';
 import { AllMdVersionIdType, FinalMenuStructureType } from '@/types/docs';
 import {

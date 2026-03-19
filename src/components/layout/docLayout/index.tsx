@@ -1,4 +1,4 @@
-import classes from './index.module.less';
+import classes from './index.module.css';
 import Head from 'next/head';
 import clsx from 'clsx';
 import FlexibleSectionContainer from '../../flexibleSection';

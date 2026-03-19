@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from './index.module.less';
+import * as styles from './index.module.css';
 import LinkIcon from '..//images/docs/link.svg';
 
 const LinkCard = ({ label, href, className = '' }) => {

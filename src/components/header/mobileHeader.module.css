@@ -1,0 +1,105 @@
+
+.mobileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 58px;
+
+  &.open {
+    background-color: #fff;
+  }
+
+  .navWrapper {
+    position: absolute;
+    height: 0px;
+    left: 0;
+    right: 0;
+    top: var(--header-height-desktop);
+    overflow: hidden;
+    transition: height linear 0.3s, top linear 0.3s;
+    background-color: #fff;
+    z-index: 100;
+
+    @media (--bannerBreak) {
+      top: var(--header-height-tablet);
+    }
+  }
+
+  .activeMenu {
+    top: var(--header-height-desktop);
+    left: 0;
+    right: 0;
+    height: calc(100vh - var(--header-height-desktop));
+
+    @media (--bannerBreak) {
+      top: var(--header-height-tablet);
+      height: calc(100vh - var(--header-height-tablet));
+    }
+  }
+
+  .listWrapper {
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .mobileStartBtnWrapper {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 24px 0 124px 0;
+  }
+
+  .menuIconBtn {
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.menuLink {
+  color: #000;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.subMenuList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 16px;
+  margin-bottom: 8px;
+
+  a {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000;
+    display: inline-block;
+    padding: 4px 16px;
+  }
+
+  .externalLinkButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.expendIcon {
+  transition: transform linear 0.25s;
+}
+
+.static {
+  transform: rotate(0deg);
+}
+
+.turnDown {
+  transform: rotate(-180deg);
+}

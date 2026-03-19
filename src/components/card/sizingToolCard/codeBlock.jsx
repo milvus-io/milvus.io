@@ -1,6 +1,6 @@
 import hljs from 'highlight.js';
 import React from 'react';
-import * as classes from './index.module.less';
+import * as classes from './index.module.css';
 import clsx from 'clsx';
 import { HELM_CONFIG_FILE_NAME, OPERATOR_CONFIG_FILE_NAME } from './constants';
 import { useTranslation } from 'react-i18next';

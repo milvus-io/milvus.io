@@ -1,0 +1,137 @@
+
+.codeExampleSection {
+  padding-top: 100px;
+  font-family: Geist;
+
+  .contentContainer {
+    display: flex;
+    gap: 70px;
+
+    @media (--desktop1024) {
+      gap: 24px;
+    }
+
+    @media (--tablet), (--phone) {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    h2 {
+      flex: 1;
+      color: var(--color-black1);
+      font-size: 42px;
+      font-weight: 600;
+      line-height: 54px;
+
+      @media (--tablet), (--phone) {
+        font-size: 32px;
+        line-height: 42px;
+      }
+    }
+
+    .codeContainer {
+      flex: 0 1 580px;
+      max-width: 100%;
+      min-height: 268px;
+
+      @media (--tablet), (--phone) {
+        flex: auto;
+      }
+    }
+  }
+
+  .customTabsWrapper {
+    margin-bottom: 16px;
+    max-width: 100%;
+    overflow: auto;
+
+    :global(.tab-item) {
+      flex: 1 1 auto;
+
+      button {
+        text-transform: uppercase!important;
+        font-family: 'Geist Mono';
+      }
+    }
+
+  }
+
+  .codeBlock {
+    border-radius: 16px;
+    padding: 20px 34px 18px 20px;
+    background-color: var(--color-black1);
+    position: relative;
+    width: 580px;
+    max-width: 100%;
+    overflow: hidden;
+
+    .codePre {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 12px;
+
+      code {
+        font-family: 'Geist Mono';
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+
+        :global(.hljs-keyword) {
+          color: #a856ff;
+        }
+        :global(.hljs-string) {
+          color: #87eeab;
+        }
+        :global(.hljs-number) {
+          color: #fa0;
+        }
+        :global(.hljs-title.class) {
+          color: #6fa0ff;
+        }
+      }
+
+      &::-webkit-scrollbar {
+        width: 9px;
+        height: 9px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #2e2929; /* 滚动条滑块颜色 */
+        border-radius: 5px; /* 滑块圆角 */
+        border: none; /* 滑块边框 */
+      }
+    }
+
+    .copyButton {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      line-height: 0;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+
+      svg {
+        width: 14px;
+        height: 14px;
+
+        path {
+          stroke: #fff;
+        }
+      }
+
+      &:hover {
+        background-color: rgba(243, 245, 252, 0.1);
+      }
+    }
+  }
+}

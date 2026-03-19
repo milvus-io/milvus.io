@@ -1,6 +1,6 @@
 import React from 'react';
 import PreviewItem from './previewItem';
-import * as styles from './item.module.less';
+import * as styles from './item.module.css';
 
 const Item = props => {
   const {

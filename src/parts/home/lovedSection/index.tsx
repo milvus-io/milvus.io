@@ -1,6 +1,6 @@
 import { useGlobalLocale } from '@/hooks/use-global-locale';
-import classes from './index.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from './index.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 

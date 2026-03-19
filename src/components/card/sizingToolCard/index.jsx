@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from './index.module.less';
+import * as styles from './index.module.css';
 import Tooltip from '@mui/material/Tooltip';
 import clsx from 'clsx';
 import { ToolTipFilled } from '../../icons';

@@ -1,0 +1,97 @@
+
+.linkButton {
+  font-family: 'Geist Mono';
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  @media (--tablet), (--phone) {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.iconWrapper {
+  line-height: 0;
+  font-size: 0;
+}
+
+.contained {
+  &.primaryColor {
+    background-color: var(--color-black1);
+    color: #fff;
+    border: 1px solid var(--color-black1);
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &.secondaryColor {
+    background-color: #fff;
+    color: #000;
+
+    &:hover {
+      color: #000;
+      background-color: var(--color-white1);
+    }
+  }
+}
+
+.outlined {
+  &.primaryColor {
+    border: 1px solid var(--color-black1);
+    color: var(--color-black1);
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  &.disabledButton {
+    border-color: #e4eaf1;
+    color: #ccc;
+    cursor: not-allowed;
+
+    svg path {
+      fill: #ccc;
+    }
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
+}
+
+.text {
+  padding: 0;
+
+  &.primaryColor {
+    color: var(--color-black1);
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.smallSize {
+  padding: 0;
+  border-radius: 0;
+}
+.mediumSize {
+  padding: 7px 28px;
+  border-radius: 6px;
+}
+.largeSize {
+  padding: 14px 32px;
+  border-radius: 10px;
+}

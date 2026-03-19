@@ -1,0 +1,78 @@
+
+.consentContainer {
+  padding: 20px 20px 12px 20px;
+  width: 460px !important;
+  border-radius: 12px;
+  border: 1px solid var(--color-black3);
+  background-color: #fff !important;
+  bottom: 1rem !important;
+  left: 1rem !important;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+
+  @media (--phone) {
+    padding: 12px;
+    width: auto !important;
+    min-width: 250px;
+    right: 1rem !important;
+  }
+
+  .contentWrapper {
+    margin: 0 !important;
+    flex: auto !important;
+    width: 100%;
+    margin-bottom: 12px !important;
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    color: var(--color-black1);
+    margin-bottom: 6px;
+    font-family: Geist !important;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--color-black2);
+    font-family: Geist !important;
+  }
+}
+.buttonsWrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 12px;
+}
+
+.acceptButton,
+.declineButton {
+  font-size: 12px;
+  line-height: 18px;
+  padding: 0 !important;
+  margin: 0 !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  font-family: Geist !important;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.acceptButton {
+  background-color: var(--color-black1) !important;
+  color: #fff !important;
+}
+.declineButton {
+  background-color: #fff !important;
+  border: 1px solid var(--color-black3) !important;
+  color: var(--color-black1) !important;
+}

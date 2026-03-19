@@ -10,7 +10,7 @@ import {
 import { useActivateAnchorWhenScroll, useGenAnchor } from '@/hooks/doc-anchor';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import DocLayout from '@/components/layout/docLayout';
-import classes from '@/styles/docDetail.module.less';
+import classes from '@/styles/docDetail.module.css';
 import clsx from 'clsx';
 import { DocDetailPageProps } from '@/types/docs';
 import { LanguageEnum } from '@/types/localization';

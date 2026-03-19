@@ -1,6 +1,6 @@
 import CustomLink from '@/components/customButton';
-import classes from './index.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from './index.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import { useTranslation, Trans } from 'react-i18next';
 import { SocialMedias } from '@/components/socialMedias';

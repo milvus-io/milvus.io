@@ -7,7 +7,7 @@ import {
 } from 'react-share';
 import HackerNewsShareButton from './hackerNewsShareButton';
 import { Helmet } from 'react-helmet';
-import * as styles from './index.module.less';
+import * as styles from './index.module.css';
 
 const Share = props => {
   const { url, quote, desc, image, wrapperClass, vertical = false } = props;

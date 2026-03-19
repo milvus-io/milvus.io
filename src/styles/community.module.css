@@ -1,0 +1,319 @@
+
+.communityPageContainer {
+  margin: 0 auto;
+  padding-bottom: 40px;
+  font-family: 'Geist';
+  background-color: var(--color-white1);
+}
+
+.headSection {
+  padding: 80px 0 40px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 54px;
+    @media (--tablet), (--phone) {
+      font-size: 38px;
+      line-height: 46px;
+    }
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .mediaWrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+    margin-bottom: 30px;
+
+    @media (max-width: 1240px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (--phone) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    li {
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-radius: 12px;
+      align-items: center;
+      background-color: var(--color-white);
+
+      img {
+        width: 50px;
+        height: 55px;
+      }
+
+      p {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 26px;
+        @media (--tablet), (--phone) {
+          font-size: 16px;
+          line-height: 24px;
+        }
+        font-weight: 600;
+      }
+
+      .linkBtn {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        @media (--tablet), (--phone) {
+          font-size: 13px;
+          line-height: 21px;
+        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 20px;
+        height: 40px;
+        width: 100%;
+      }
+    }
+  }
+
+  .officeHoursContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    background: #030c34;
+    border-radius: 8px;
+    overflow: hidden;
+
+    @media (--tablet), (--phone) {
+      flex-direction: column;
+      gap: 24px;
+      height: auto;
+      padding: 24px;
+    }
+
+    .imgWrapper {
+      flex: 0 0 528px;
+      min-height: 220px;
+      height: auto;
+      background: url('/images/community/office-hour.svg') no-repeat center
+        center;
+
+      @media (--tablet), (--phone) {
+        flex: 0 0 220px;
+        width: 528px;
+        text-align: center;
+      }
+    }
+
+    .contentWrapper {
+      flex: 1;
+      color: #fff;
+      padding: 24px 32px 24px 0;
+
+      @media (--tablet), (--phone) {
+        flex: auto;
+      }
+
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 32px;
+        @media (--tablet), (--phone) {
+          font-size: 20px;
+          line-height: 28px;
+        }
+        margin-bottom: 4px;
+
+        @media (--tablet), (--phone) {
+          text-align: center;
+        }
+      }
+
+      .desc {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        @media (--tablet), (--phone) {
+          font-size: 13px;
+          line-height: 21px;
+        }
+        font-weight: 400;
+        font-family: 'Geist Mono';
+        margin-bottom: 20px;
+        max-width: 600px;
+
+        @media (--tablet), (--phone) {
+          text-align: center;
+        }
+      }
+
+      .linkBtn {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        @media (--tablet), (--phone) {
+          font-size: 13px;
+          line-height: 21px;
+        }
+        font-family: 'Geist Mono';
+        color: #fff;
+        border-color: #fff;
+        background-color: transparent;
+        color: #fff;
+        width: fit-content;
+
+        &:hover {
+          background-color: transparent;
+        }
+
+        svg path {
+          stroke: #fff;
+        }
+
+        @media (--tablet), (--phone) {
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}
+
+.contentSection {
+  padding: 40px 0;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 40px;
+    @media (--tablet), (--phone) {
+      font-size: 28px;
+      line-height: 36px;
+    }
+    margin: 0 auto 12px;
+    max-width: 900px;
+    text-align: center;
+  }
+
+  .sectionDesc {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    @media (--tablet), (--phone) {
+      font-size: 14px;
+      line-height: 22px;
+    }
+    font-weight: 400;
+    font-family: 'Geist Mono';
+
+    margin: 0 auto 40px;
+    max-width: 880px;
+    text-align: center;
+  }
+
+  .featureWrapper {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+
+    @media (--tablet) {
+      gap: 24px;
+    }
+
+    @media (--phone) {
+      flex-direction: column;
+    }
+
+    li {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background-color: var(--color-white);
+      padding: 20px;
+      border-radius: 12px;
+
+      img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .label {
+        font-family: 'Geist Mono';
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 26px;
+        @media (--tablet), (--phone) {
+          font-size: 16px;
+          line-height: 24px;
+        }
+        font-weight: 600;
+      }
+
+      .desc {
+        font-family: 'Geist Mono';
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        @media (--tablet), (--phone) {
+          font-size: 13px;
+          line-height: 21px;
+        }
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.mailListSection {
+  padding: 40px 0 80px 0;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 40px;
+    @media (--tablet), (--phone) {
+      font-size: 28px;
+      line-height: 36px;
+    }
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .mailListWrapper {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .linkBtn {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 22px;
+      @media (--tablet), (--phone) {
+        font-size: 13px;
+        line-height: 21px;
+      }
+      flex: 1;
+      font-family: 'Geist Mono';
+      display: flex;
+      padding: 11px 28px;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-black1);
+      border-radius: 6px;
+      border-radius: 6px;
+      border: 1px solid var(--color-black1);
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}

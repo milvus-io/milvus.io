@@ -1,0 +1,74 @@
+
+.container {
+  position: relative;
+  margin: 0 auto;
+
+  .langSelector {
+    display: inline-block;
+    position: absolute;
+    top: 46px;
+    right: 48px;
+
+    @media (--tablet), (--phone) {
+      display: none;
+    }
+  }
+  .specialSelector {
+    right: unset;
+    left: 48px;
+  }
+}
+
+.docHomeHtmlWrapper {
+  font-family: 'Geist';
+  display: block;
+  margin-right: 0;
+  max-width: calc(var(--doc-content-width) + var(--doc-aside-width));
+  padding: 0 48px;
+
+  @media (--tablet), (--phone) {
+    padding: 0 25px;
+  }
+
+  h2 {
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 40px;
+    line-height: 50px;
+  }
+
+  p:empty {
+    margin: 0;
+  }
+
+  :global(.doc-home-what-is-new) {
+    h2 {
+      font-size: 24px;
+      line-height: 34px;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.docHomeBlog {
+  padding: 0 48px;
+  box-shadow: none;
+  max-width: 950px;
+  padding-bottom: 212px;
+
+  @media (--phone) {
+    padding: 0 25px;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: bold;
+  }
+
+  img {
+    margin: 0;
+  }
+}

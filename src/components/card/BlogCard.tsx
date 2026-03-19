@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import styles from './BlogCard.module.less';
+import styles from './BlogCard.module.css';
 import Tags from '../tags';
 import clsx from 'clsx';
 import Link from 'next/link';

@@ -1,4 +1,4 @@
-import classes from './index.module.less';
+import classes from './index.module.css';
 import clsx from 'clsx';
 
 export const PulsarIcon = (props: { color?: string }) => {

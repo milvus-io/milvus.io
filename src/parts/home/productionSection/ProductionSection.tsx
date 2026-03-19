@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import pageClasses from '@/styles/responsive.module.less';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export const ProductionSection = () => {

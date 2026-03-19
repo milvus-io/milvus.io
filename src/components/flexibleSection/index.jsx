@@ -1,4 +1,4 @@
-import styles from './index.module.less';
+import styles from './index.module.css';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import clsx from 'clsx';

@@ -1,4 +1,4 @@
-import styles from './index.module.less';
+import styles from './index.module.css';
 import CustomButton from '@/components/customButton';
 import { FinalUserCaseType, UseCaseType } from '@/types/useCase';
 

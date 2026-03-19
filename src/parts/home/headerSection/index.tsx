@@ -1,7 +1,7 @@
 import { useTranslation, Trans } from 'react-i18next';
-import pageClasses from '@/styles/responsive.module.less';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import {
   CLOUD_SIGNUP_LINK,
   GET_START_LINK,

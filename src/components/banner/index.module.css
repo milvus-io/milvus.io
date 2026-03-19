@@ -1,0 +1,81 @@
+
+.bannerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: var(--desktop-header-banner-height);
+  padding: 10px 25px;
+  background-color: #000;
+  overflow: hidden;
+
+  @media (--tablet) {
+    min-height: var(--tablet-header-banner-height);
+  }
+
+  .bannerText {
+    flex-grow: 0;
+    flex-shrink: 1;
+    color: #fff;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    @media (--tablet), (--phone) {
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    @media (--phone) {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      font-weight: 400;
+
+      font-size: 11px;
+    }
+  }
+
+  .bannerButton {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    font-weight: 600;
+    flex-shrink: 0;
+    flex-grow: 0;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: linear-gradient(
+      91deg,
+      #d083ff 0.09%,
+      var(--Blue-100, #00b3ff) 100.63%
+    );
+    text-align: center;
+
+    &:hover {
+      background: linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0.3) 100%
+        ),
+        linear-gradient(91deg, #d083ff 0.09%, var(--Blue-100, #00b3ff) 100.63%);
+    }
+
+    @media (--phone) {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+  }
+}

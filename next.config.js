@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const withLess = require('next-with-less');
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
@@ -31,10 +30,7 @@ module.exports = async () => {
     console.error('Failed to fetch milvus stats:', error);
   }
 
-  return withLess({
-    lessLoaderOptions: {
-      /* ... */
-    },
+  return {
     ...nextConfig,
     webpack(config) {
       config.resolve.alias['@'] = path.resolve(__dirname, 'src');
@@ -45,5 +41,5 @@ module.exports = async () => {
     experimental: {
       scrollRestoration: true,
     },
-  });
+  };
 };

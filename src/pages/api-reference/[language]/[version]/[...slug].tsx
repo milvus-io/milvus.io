@@ -231,8 +231,10 @@ export const getStaticPaths = () => {
 
   const result = apiData
     .map(data => {
-      const { language, versions } = data;
-      const ApiDataOfCurLang = versions.map(version =>
+      const { language, versions, latestVersion } = data;
+      // Only pre-generate the latest version at build time
+      const versionsToPreGenerate = [latestVersion];
+      const ApiDataOfCurLang = versionsToPreGenerate.map(version =>
         generateApiMenuAndContentDataOfSingleVersion({
           version,
           language,
@@ -254,10 +256,6 @@ export const getStaticPaths = () => {
     });
   });
 
-  /**
-   * 1. /pymilvus/v2.4.x/DataImport/LocalBulkWriter/append_row.md
-   * 2. /pymilvus/v2.4.x/append_rows.md
-   */
   const paths = routers.map(v => {
     const {
       frontMatter: { id, parentIds, category, version },
@@ -274,7 +272,7 @@ export const getStaticPaths = () => {
 
   return {
     paths: paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 };
 
@@ -307,18 +305,24 @@ export const getStaticProps: GetStaticProps = async context => {
     withContent: true,
   });
 
-  const { menuData, contentList: contentData } =
-    curCategoryData.find(v => v.version === version) || {};
+  const versionData = curCategoryData.find(v => v.version === version);
+  if (!versionData) {
+    return { notFound: true };
+  }
+  const { menuData, contentList: contentData } = versionData;
 
-  const { frontMatter, content: apiContent } =
-    contentData.find(v => {
-      const {
-        frontMatter: { id, parentIds },
-      } = v;
-      const targetSlug = slug.join('/');
-      const sourceSlug = [...parentIds, id].join('/');
-      return targetSlug === sourceSlug;
-    }) || {};
+  const fileData = contentData.find(v => {
+    const {
+      frontMatter: { id, parentIds },
+    } = v;
+    const targetSlug = slug.join('/');
+    const sourceSlug = [...parentIds, id].join('/');
+    return targetSlug === sourceSlug;
+  });
+  if (!fileData) {
+    return { notFound: true };
+  }
+  const { frontMatter, content: apiContent } = fileData;
 
   const { tree: doc, codeList } = markdownToHtml(apiContent || '', {
     showAnchor: true,

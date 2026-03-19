@@ -16,18 +16,26 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
   const getPageStaticPaths = () => {
     const { latestVersion } = generateDocVersionInfo();
     const currentVersion = version || latestVersion;
-    const latestDocContentList = generateAllContentDataOfSingleVersion({
-      version: currentVersion,
-      lang,
-    });
 
-    const paths = latestDocContentList.map(v => ({
-      params: { id: v.frontMatter.id },
-    }));
+    // Only pre-generate pages for the latest version at build time.
+    // Older versions will be generated on-demand via fallback: 'blocking'.
+    const isLatestVersion = currentVersion === latestVersion;
+    let paths = [];
+
+    if (isLatestVersion) {
+      const latestDocContentList = generateAllContentDataOfSingleVersion({
+        version: currentVersion,
+        lang,
+      });
+
+      paths = latestDocContentList.map(v => ({
+        params: { id: v.frontMatter.id },
+      }));
+    }
 
     return {
       paths,
-      fallback: false,
+      fallback: 'blocking',
     };
   };
 
@@ -64,12 +72,19 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
       lang,
     });
 
+    const docData = docDetailContentList.find(v => v.frontMatter.id === id);
+
+    // Return 404 if document not found (e.g. invalid id in fallback mode)
+    if (!docData) {
+      return { notFound: true };
+    }
+
     const {
       content: docDetailContent,
       frontMatter,
       editPath,
       propsInfo,
-    } = docDetailContentList.find(v => v.frontMatter.id === id);
+    } = docData;
 
     const { codeList, anchorList } = propsInfo;
     const headingContent = anchorList?.[0]?.label;

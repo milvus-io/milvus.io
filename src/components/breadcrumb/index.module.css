@@ -26,13 +26,7 @@
 }
 
 .linkItem {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  @media (--tablet), (--phone) {
-    font-size: 13px;
-    line-height: 21px;
-  }
+  @mixin paragraph4;
   color: var(--color-black1-5);
   text-decoration: none;
   cursor: pointer;
@@ -44,13 +38,7 @@
 }
 
 .textItem {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  @media (--tablet), (--phone) {
-    font-size: 13px;
-    line-height: 21px;
-  }
+  @mixin paragraph4;
   color: var(--color-black2);
   text-decoration: none;
 }

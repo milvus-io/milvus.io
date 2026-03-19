@@ -21,13 +21,7 @@
   }
 
   .prompt {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 26px;
-    @media (--tablet), (--phone) {
-      font-size: 16px;
-      line-height: 24px;
-    }
+    @mixin paragraph2;
     color: var(--color-black1);
   }
 }

@@ -1,20 +1,8 @@
 
 .linkButton {
   font-family: 'Geist Mono';
-  border: none;
-  outline: none;
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  cursor: pointer;
-  text-align: left;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  @media (--tablet), (--phone) {
-    font-size: 14px;
-    line-height: 22px;
-  }
+  @mixin resetNativeButton;
+  @mixin paragraph3;
   display: flex;
   gap: 8px;
   align-items: center;

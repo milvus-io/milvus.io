@@ -30,16 +30,7 @@
   }
 
   .cardsWrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 32px;
-    list-style-type: none;
-    @media (--tablet) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (--phone) {
-      grid-template-columns: 1fr;
-    }
+    @mixin commonGridLayout;
     grid-gap: 16px;
     list-style-type: none;
   }

@@ -21,13 +21,7 @@
   .startLinkButton {
     padding: 8px 28px;
     width: 100%;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     font-weight: 500;
     justify-content: center;
   }

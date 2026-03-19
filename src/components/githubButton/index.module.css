@@ -18,10 +18,7 @@
     line-height: 20px;
     text-decoration: none;
 
-    transition: all 0.5s;
-    &:hover {
-      opacity: 0.8;
-    }
+    @mixin hover;
 
     .iconWrapper {
       display: inline-block;

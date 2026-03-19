@@ -10,9 +10,7 @@
 }
 
 .inputLabel {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
+  @mixin paragraph6;
   margin-bottom: 10px;
 }
 
@@ -31,9 +29,7 @@
   }
 
   input {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
+    @mixin paragraph6;
     width: 100%;
     height: 100%;
     border: none;
@@ -57,10 +53,7 @@
   padding-right: 52px;
 }
 .unit {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
-  font-weight: 400;
+  @mixin paragraph6-regular;
   position: absolute;
   display: flex;
   align-items: center;

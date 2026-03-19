@@ -206,31 +206,11 @@
         width: 100%;
       }
 
-      transition: all 0.5s;
-      &:hover {
-        opacity: 0.8;
-      }
+      @mixin hover;
     }
 
     .btn-start {
-      background-color: var(--color-primary);
-      color: white;
-      border-radius: 40px;
-      cursor: pointer;
-      height: 58px;
-      padding: 20px 40px;
-      font-family: 'Roboto Mono';
-      font-size: 16px;
-      line-height: 18px;
-      border: 0;
-      @media (--phone), (--tablet), (--desktop1024) {
-        height: 38px;
-        padding: 10px 20px;
-        font-size: 14px;
-      }
-      &:hover {
-        background-color: var(--color-text-primary);
-      }
+      @mixin primaryBtn;
       background-color: var(--color-white);
       color: var(--color-black);
       /* higher than bucket svg */
@@ -242,26 +222,7 @@
     }
 
     .btn-watch {
-      background: transparent;
-      color: var(--color-black);
-      border-radius: 40px;
-      cursor: pointer;
-      height: 58px;
-      padding: 20px 40px;
-      font-family: 'Roboto Mono';
-      font-size: 16px;
-      line-height: 18px;
-      border: 0;
-      @media (--phone), (--tablet), (--desktop1024) {
-        height: 38px;
-        padding: 10px 20px;
-        font-size: 14px;
-      }
-      border: 1px solid var(--color-black);
-      &:hover {
-        border-color: var(--color-primary);
-        color: var(--color-text-primary);
-      }
+      @mixin secondaryBtn;
       /* background: #000000; */
       background: transparent;
       border: 0;

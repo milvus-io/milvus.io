@@ -5,42 +5,18 @@
   padding-bottom: 120px;
 
   .pageTitle {
-    font-size: 72px;
-    font-weight: 700;
-    line-height: 80px;
-    @media (--tablet) {
-      font-size: 64px;
-      line-height: 72px;
-    }
-    @media (--phone) {
-      font-size: 56px;
-      line-height: 64px;
-    }
+    @mixin heading1;
     margin-bottom: 12px;
   }
 
   .abstract {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 26px;
-    @media (--tablet), (--phone) {
-      font-size: 16px;
-      line-height: 24px;
-    }
-    font-weight: 400;
+    @mixin paragraph2-regular;
     color: var(--color-black2);
     margin-bottom: 40px;
   }
 
   .subtitle {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 26px;
-    @media (--tablet), (--phone) {
-      font-size: 16px;
-      line-height: 24px;
-    }
-    font-weight: 400;
+    @mixin paragraph2-regular;
     color: var(--color-black2);
     margin-bottom: 20px;
   }
@@ -64,13 +40,7 @@
     }
 
     .navButton {
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 26px;
-      @media (--tablet), (--phone) {
-        font-size: 16px;
-        line-height: 24px;
-      }
+      @mixin paragraph2;
       justify-content: center;
       width: 100%;
       padding: 16px;
@@ -84,42 +54,20 @@
   margin-bottom: 80px;
 
   h2 {
-    font-size: 42px;
-    font-weight: 600;
-    line-height: 54px;
-    @media (--tablet), (--phone) {
-      font-size: 38px;
-      line-height: 46px;
-    }
+    @mixin heading2;
     margin-bottom: 12px;
     text-align: center;
   }
 
   p {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 26px;
-    @media (--tablet), (--phone) {
-      font-size: 16px;
-      line-height: 24px;
-    }
-    font-weight: 400;
+    @mixin paragraph2-regular;
     color: var(--color-black2);
     margin-bottom: 40px;
     text-align: center;
   }
 
   .blogList {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 32px;
-    list-style-type: none;
-    @media (--tablet) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (--phone) {
-      grid-template-columns: 1fr;
-    }
+    @mixin commonGridLayout;
     margin-bottom: 30px;
   }
 

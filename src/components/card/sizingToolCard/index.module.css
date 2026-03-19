@@ -118,13 +118,7 @@
   }
 
   .copyButton {
-    border: none;
-    outline: none;
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    cursor: pointer;
-    text-align: left;
+    @mixin resetNativeButton;
     display: flex;
     justify-content: center;
     width: 18px;

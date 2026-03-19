@@ -14,14 +14,7 @@
 }
 
 .mainButton {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  @media (--tablet), (--phone) {
-    font-size: 13px;
-    line-height: 21px;
-  }
-  font-weight: 400;
+  @mixin paragraph4-regular;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -133,21 +126,11 @@
 }
 
 .itemLabel {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  @media (--tablet), (--phone) {
-    font-size: 13px;
-    line-height: 21px;
-  }
-  font-weight: 400;
+  @mixin paragraph4-regular;
   color: #1a1a1a;
 }
 
 .itemDesc {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
-  font-weight: 400;
+  @mixin paragraph6-regular;
   color: var(--color-black1-5);
 }

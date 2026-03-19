@@ -379,10 +379,7 @@
   }
 
   .paginationLink {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 600;
+    @mixin paragraph6-bold;
     width: 32px;
     height: 32px;
     text-align: center;

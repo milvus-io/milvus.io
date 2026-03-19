@@ -7,34 +7,18 @@
   margin-top: 32px;
 
   .advTitle {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
-    font-weight: 600;
+    @mixin paragraph4-bold;
     margin-bottom: 12px;
   }
 
   .advAbstract {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 400;
+    @mixin paragraph6-regular;
     color: var(--color-black1-5);
     margin-bottom: 24px;
   }
 
   .ctaButton {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     justify-content: center;
     svg path {
       stroke: #fff;

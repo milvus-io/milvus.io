@@ -4,20 +4,11 @@
 }
 
 .label {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  @media (--tablet), (--phone) {
-    font-size: 13px;
-    line-height: 21px;
-  }
-  font-weight: 600;
+  @mixin paragraph4-bold;
 }
 
 .customMarkLabel {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
+  @mixin paragraph6;
   top: 20px;
   color: var(--color-black2);
 }

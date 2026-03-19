@@ -16,29 +16,17 @@
 
 .commonLabel {
   font-family: 'Geist Mono';
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  @media (--tablet), (--phone) {
-    font-size: 13px;
-    line-height: 21px;
-  }
-  font-weight: 600;
+  @mixin paragraph4-bold;
 }
 
 .selectItem {
   font-family: 'Geist Mono';
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
+  @mixin paragraph6;
 }
 
 .selectTrigger {
   font-family: 'Geist Mono';
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
-  font-weight: 400;
+  @mixin paragraph6-regular;
   padding: 9px 12px;
   height: 36px;
   border-radius: 8px;
@@ -83,25 +71,11 @@ div.averageLabel {
 }
 
 .font14Bold {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  @media (--tablet), (--phone) {
-    font-size: 13px;
-    line-height: 21px;
-  }
-  font-weight: 600;
+  @mixin paragraph4-bold;
 }
 
 .font16Bold {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  @media (--tablet), (--phone) {
-    font-size: 14px;
-    line-height: 22px;
-  }
-  font-weight: 600;
+  @mixin paragraph3-bold;
 }
 
 .formSection {
@@ -123,24 +97,12 @@ div.averageLabel {
   }
 
   .commonLabel {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     margin-bottom: 8px;
   }
 
   .smallerLabel {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
   }
 
   .innerRow {
@@ -148,10 +110,7 @@ div.averageLabel {
   }
 
   .offLoadingDesc {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 400;
+    @mixin paragraph6-regular;
     color: #2e373b;
 
     a {
@@ -178,10 +137,7 @@ div.averageLabel {
   }
 
   .indexParamLabel {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 400;
+    @mixin paragraph6-regular;
   }
 
   .radioGroup {
@@ -190,14 +146,7 @@ div.averageLabel {
     align-items: center;
 
     .radioItemLabel {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
-      font-weight: 400;
+      @mixin paragraph4-regular;
     }
   }
 
@@ -218,9 +167,7 @@ div.averageLabel {
     }
 
     .dependencyCard {
-      display: flex;
-      gap: 8px;
-      align-items: center;
+      @mixin flexRow;
       padding: 3px 12px;
       justify-content: center;
       align-items: center;
@@ -232,37 +179,19 @@ div.averageLabel {
       }
 
       .depName {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 22px;
-        @media (--tablet), (--phone) {
-          font-size: 13px;
-          line-height: 21px;
-        }
-        font-weight: 400;
+        @mixin paragraph4-regular;
       }
     }
     .modeCard {
       padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      @mixin flexColumn;
 
       .modeName {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 22px;
-        @media (--tablet), (--phone) {
-          font-size: 13px;
-          line-height: 21px;
-        }
+        @mixin paragraph4;
       }
 
       .modeDesc {
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 20px;
-        font-weight: 400;
+        @mixin paragraph6-regular;
         text-align: left;
       }
 
@@ -304,13 +233,7 @@ div.averageLabel {
     }
 
     .switchLabel {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
+      @mixin paragraph4;
     }
   }
 }
@@ -319,17 +242,11 @@ div.averageLabel {
   font-family: 'Geist Mono';
 
   .commonKeyLabel {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 400;
+    @mixin paragraph6-regular;
     color: var(--color-black2);
   }
   .commonValueLabel {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    font-weight: 600;
+    @mixin paragraph6-bold;
     color: var(--color-black1);
     width: var(--sizing-result-cell-width);
   }
@@ -344,10 +261,7 @@ div.averageLabel {
     border-radius: 12px;
 
     .substantialTip {
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 20px;
-      font-weight: 400;
+      @mixin paragraph6-regular;
 
       a {
         color: #000;
@@ -361,46 +275,23 @@ div.averageLabel {
   }
 
   .sectionLabel {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    @media (--tablet), (--phone) {
-      font-size: 14px;
-      line-height: 22px;
-    }
-    font-weight: 600;
+    @mixin paragraph3-bold;
     margin-bottom: 16px;
   }
 
   .dataCardName {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
-    font-weight: 600;
+    @mixin paragraph4-bold;
     margin-bottom: 4px;
   }
 
   .sectionLabelBar {
-    display: flex;
-    gap: 8px;
-    align-items: center;
+    @mixin flexRow;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 16px;
 
     .title {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      @media (--tablet), (--phone) {
-        font-size: 14px;
-        line-height: 22px;
-      }
-      font-weight: 600;
+      @mixin paragraph3-bold;
     }
 
     .buttonWrapper {
@@ -413,13 +304,7 @@ div.averageLabel {
       }
 
       span {
-        font-size: 13px;
-        font-weight: 500;
-        line-height: 21px;
-        @media (--tablet), (--phone) {
-          font-size: 12px;
-          line-height: 20px;
-        }
+        @mixin paragraph5;
         color: #000;
       }
     }
@@ -464,33 +349,13 @@ div.averageLabel {
       }
 
       .titleName {
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 24px;
-        @media (--tablet), (--phone) {
-          font-size: 14px;
-          line-height: 22px;
-        }
-        font-weight: 600;
+        @mixin paragraph3-bold;
       }
       .titleOverview {
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 24px;
-        @media (--tablet), (--phone) {
-          font-size: 14px;
-          line-height: 22px;
-        }
+        @mixin paragraph3;
 
         .valueInfo {
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 24px;
-          @media (--tablet), (--phone) {
-            font-size: 14px;
-            line-height: 22px;
-          }
-          font-weight: 600;
+          @mixin paragraph3-bold;
           color: var(--color-blue2);
           letter-spacing: 150%;
         }
@@ -521,35 +386,16 @@ div.averageLabel {
     }
 
     .descLabel {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      @media (--tablet), (--phone) {
-        font-size: 14px;
-        line-height: 22px;
-      }
-      font-weight: 400;
+      @mixin paragraph3-regular;
     }
 
     .descValue {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      @media (--tablet), (--phone) {
-        font-size: 14px;
-        line-height: 22px;
-      }
+      @mixin paragraph3;
       color: var(--color-blue2);
     }
 
     .valueInfo {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      @media (--tablet), (--phone) {
-        font-size: 14px;
-        line-height: 22px;
-      }
+      @mixin paragraph3;
       color: var(--color-blue2);
       letter-spacing: 150%;
     }
@@ -559,13 +405,7 @@ div.averageLabel {
     flex: 1;
   }
   .installButton {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
+    @mixin paragraph4;
     padding: 8px 0;
     width: 100%;
     justify-content: center;
@@ -580,10 +420,7 @@ div.averageLabel {
     margin-bottom: 8px;
 
     code {
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 20px;
-      font-weight: 400;
+      @mixin paragraph6-regular;
       display: block;
       width: 100%;
       overflow-x: auto;
@@ -610,26 +447,12 @@ div.averageLabel {
   }
   .installationSection {
     .sectionTitle {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      @media (--tablet), (--phone) {
-        font-size: 14px;
-        line-height: 22px;
-      }
-      font-weight: 600;
+      @mixin paragraph3-bold;
       margin-bottom: 16px;
     }
 
     .advCard {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 22px;
-      @media (--tablet), (--phone) {
-        font-size: 13px;
-        line-height: 21px;
-      }
-      font-weight: 400;
+      @mixin paragraph4-regular;
       padding: 12px 24px;
       border-radius: 12px;
       background: linear-gradient(
@@ -655,25 +478,12 @@ div.averageLabel {
   border-radius: 12px;
 
   .dataName {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
-    font-weight: 600;
+    @mixin paragraph4-bold;
     margin-bottom: 6px;
   }
 
   .dataInfo {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    @media (--tablet), (--phone) {
-      font-size: 14px;
-      line-height: 22px;
-    }
+    @mixin paragraph3;
     color: #008dc8;
   }
 
@@ -681,27 +491,14 @@ div.averageLabel {
   }
 
   .dataCount {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    @media (--tablet), (--phone) {
-      font-size: 14px;
-      line-height: 22px;
-    }
-    font-weight: 400;
+    @mixin paragraph3-regular;
     margin-top: 6px;
   }
 
   .largeName {
   }
   .largeData {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 32px;
-    @media (--tablet), (--phone) {
-      font-size: 20px;
-      line-height: 28px;
-    }
+    @mixin heading4;
   }
 }
 
@@ -717,14 +514,7 @@ div.averageLabel {
       padding: 0 16px;
 
       .dataDesc {
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 24px;
-        @media (--tablet), (--phone) {
-          font-size: 14px;
-          line-height: 22px;
-        }
-        font-weight: 400;
+        @mixin paragraph3-regular;
 
         span {
           font-weight: 500;
@@ -749,14 +539,7 @@ div.averageLabel {
   }
 
   .configName {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
-    font-weight: 600;
+    @mixin paragraph4-bold;
     margin-bottom: 8px;
   }
 
@@ -771,24 +554,12 @@ div.averageLabel {
       flex-direction: column;
 
       .columnName {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 22px;
-        @media (--tablet), (--phone) {
-          font-size: 13px;
-          line-height: 21px;
-        }
+        @mixin paragraph4;
         margin-bottom: 4px;
       }
 
       .columnValue {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 22px;
-        @media (--tablet), (--phone) {
-          font-size: 13px;
-          line-height: 21px;
-        }
+        @mixin paragraph4;
         color: var(--color-blue2);
       }
 
@@ -799,14 +570,7 @@ div.averageLabel {
           margin-right: 4px;
 
           .columnLabel {
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 22px;
-            @media (--tablet), (--phone) {
-              font-size: 13px;
-              line-height: 21px;
-            }
-            font-weight: 400;
+            @mixin paragraph4-regular;
             margin-right: 6px;
           }
         }

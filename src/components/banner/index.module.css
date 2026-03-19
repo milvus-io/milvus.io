@@ -18,37 +18,21 @@
     flex-shrink: 1;
     color: #fff;
     text-align: left;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    @media (--tablet), (--phone) {
-      font-size: 14px;
-      line-height: 22px;
-    }
+    @mixin paragraph3;
 
     &:hover {
       text-decoration: underline;
     }
 
     @media (--phone) {
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 20px;
-      font-weight: 400;
+      @mixin paragraph6-regular;
 
       font-size: 11px;
     }
   }
 
   .bannerButton {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    @media (--tablet), (--phone) {
-      font-size: 13px;
-      line-height: 21px;
-    }
-    font-weight: 600;
+    @mixin paragraph4-bold;
     flex-shrink: 0;
     flex-grow: 0;
     color: #fff;
@@ -71,10 +55,7 @@
     }
 
     @media (--phone) {
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 20px;
-      font-weight: 600;
+      @mixin paragraph6-bold;
       font-size: 11px;
     }
   }

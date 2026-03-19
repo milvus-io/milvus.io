@@ -27,8 +27,8 @@ import {
   SPLIT_FLAG,
 } from '@/utils/restful';
 
-import classes from '@/styles/docDetail.module.less';
-import styles from '@/styles/restful.module.less';
+import classes from '@/styles/docDetail.module.css';
+import styles from '@/styles/restful.module.css';
 import Breadcrumb from '@/components/breadcrumb';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 

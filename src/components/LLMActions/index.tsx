@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import { CopyIcon, CheckIcon, LoadingIcon } from '@/components/icons';
 import { copyToCommand } from '@/utils/common';
 import { useGlobalLocale } from '@/hooks/use-global-locale';

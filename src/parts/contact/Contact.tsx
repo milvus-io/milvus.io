@@ -1,10 +1,10 @@
 import Layout from '@/components/layout/commonLayout';
-import pageClasses from '@/styles/responsive.module.less';
+import pageClasses from '@/styles/responsive.module.css';
 import Head from 'next/head';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHubspotForm } from 'next-hubspot';
 import { useMemo } from 'react';
-import classes from '@/styles/responsive.module.less';
+import classes from '@/styles/responsive.module.css';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
 

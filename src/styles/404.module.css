@@ -1,0 +1,97 @@
+
+.navContainer {
+  text-align: center;
+  padding-top: 120px;
+  padding-bottom: 120px;
+
+  .pageTitle {
+    @mixin heading1;
+    margin-bottom: 12px;
+  }
+
+  .abstract {
+    @mixin paragraph2-regular;
+    color: var(--color-black2);
+    margin-bottom: 40px;
+  }
+
+  .subtitle {
+    @mixin paragraph2-regular;
+    color: var(--color-black2);
+    margin-bottom: 20px;
+  }
+
+  .navList {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 12px;
+
+    @media (--tablet), (--phone) {
+      flex-direction: column;
+    }
+
+    li {
+      flex: 0 0 327px;
+
+      @media (--tablet), (--phone) {
+        flex: auto;
+      }
+    }
+
+    .navButton {
+      @mixin paragraph2;
+      justify-content: center;
+      width: 100%;
+      padding: 16px;
+    }
+  }
+}
+
+.exploreContainer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 80px;
+
+  h2 {
+    @mixin heading2;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  p {
+    @mixin paragraph2-regular;
+    color: var(--color-black2);
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .blogList {
+    @mixin commonGridLayout;
+    margin-bottom: 30px;
+  }
+
+  .whatIsMilvusWrapper {
+    padding: 44px 0;
+    background-image: url('/images/404/big-milvus-logo.png'),
+      linear-gradient(var(--color-blue1), var(--color-blue1));
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100%;
+    color: #fff;
+    border-radius: 16px;
+
+    p {
+      color: #fff;
+    }
+
+    .learnMoreButton {
+      margin: 0 auto;
+      width: fit-content;
+
+      svg path {
+        stroke: #fff;
+      }
+    }
+  }
+}

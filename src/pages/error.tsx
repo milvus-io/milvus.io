@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { LoadingIcon } from '@/components/icons';
-import classes from '@/styles/error.module.less';
+import classes from '@/styles/error.module.css';
 import { redirect } from 'next/navigation';
 
 const RELOAD_LIMIT = 3;

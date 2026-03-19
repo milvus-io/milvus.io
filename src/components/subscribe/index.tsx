@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { submitHubspotForm } from '@/http/submitEmail';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import CustomInput from '../customInput/customInput';
 import CustomButton from '../customButton';
 import { useTranslation } from 'react-i18next';

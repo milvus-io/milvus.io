@@ -1,0 +1,160 @@
+
+.downloadButton {
+  border: 1px solid rgba(0, 179, 255, 0.2);
+  background-color: rgba(0, 179, 255, 0.1);
+
+  &:hover {
+    border-color: rgba(0, 179, 255, 0.5);
+    background-color: rgba(0, 179, 255, 0.1);
+  }
+}
+.starButton {
+  border: 1px solid var(--color-black3);
+  background: #fff;
+
+  &:hover {
+    border-color: rgba(102, 113, 118, 0.5);
+  }
+}
+
+a.startButton {
+  @mixin paragraph2;
+  min-width: 240px;
+  justify-content: center;
+  height: 60px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.headerSectionContainer {
+  background-image: url(/images/home/header-background-image.svg);
+  background-color: #fafafa;
+  height: calc(100vh - var(--header-height-desktop));
+  min-height: 700px;
+
+  @media (--phone) {
+    height: auto;
+  }
+}
+
+.headlinesSwiperContainer {
+  div:global(.swiper-wrapper) {
+    align-items: center;
+  }
+}
+
+.headlinesContainer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px;
+  max-width: 684px;
+  margin: 0 auto 40px;
+  border-radius: 6px;
+  border: 1px solid var(--color-black3);
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.5);
+
+  @media (--tablet), (--phone) {
+    padding: 12px 8px;
+  }
+
+  .navigatorContainer {
+    flex: 0 0 43px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+
+    @media (--tablet), (--phone) {
+      display: none;
+    }
+
+    .navigatorButton {
+      @mixin resetNativeButton;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      font-size: 0;
+
+      &:hover {
+        background-color: #fff;
+
+        svg path {
+          fill: var(--color-black1);
+        }
+      }
+    }
+
+    .nextButton {
+      transform: rotate(180deg);
+    }
+  }
+
+  .headlineItem {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    @media (--tablet), (--phone) {
+      flex-direction: column;
+    }
+  }
+  .headlineTag {
+    font-family: 'Geist Mono';
+    flex-grow: 0;
+    @mixin paragraph6;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 179, 255, 0.3);
+    background: rgba(0, 179, 255, 0.15);
+    padding: 2px 8px;
+  }
+
+  .headlineLink {
+    font-family: 'Geist Mono';
+    @mixin paragraph6-regular;
+    color: var(--color-black2);
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    @media (--tablet), (--phone) {
+      padding-bottom: 16px;
+      text-align: center;
+    }
+  }
+
+  .noPadding {
+    @media (--tablet), (--phone) {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.customPagination {
+  display: none;
+  bottom: 0 !important;
+  text-align: center;
+
+  @media (--tablet), (--phone) {
+    display: block;
+  }
+}
+.hiddenPagination {
+  display: none;
+}
+
+.customBullet {
+  background: #d0d6df;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  display: inline-block;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.customBulletActive {
+  background: #9ca6b4 !important;
+}

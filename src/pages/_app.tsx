@@ -7,8 +7,10 @@ import { HubspotProvider } from 'next-hubspot';
 import { StoreProvider } from '@/hooks/use-store';
 
 import '../i18n';
+import '../styles/variables.css';
+import '../styles/media.css';
 import '../styles/common.css';
-import '../styles/docsStyle.less';
+import '../styles/docsStyle.css';
 
 function MyApp({ Component, pageProps }) {
   return (

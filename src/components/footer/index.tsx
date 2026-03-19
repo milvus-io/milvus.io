@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import Link from 'next/link';
 import clsx from 'clsx';
-import pageClasses from '@/styles/responsive.module.less';
+import pageClasses from '@/styles/responsive.module.css';
 import {
   DISCORD_INVITE_URL,
   MILVUS_VIDEO_LINK,

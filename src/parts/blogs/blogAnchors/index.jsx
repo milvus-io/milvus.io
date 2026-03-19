@@ -1,4 +1,4 @@
-import * as classes from './index.module.less';
+import * as classes from './index.module.css';
 import clsx from 'clsx';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import styles from './ExpansionTreeView.module.less';
+import styles from './ExpansionTreeView.module.css';
 import { ApiReferenceRouteEnum, FinalMenuStructureType } from '@/types/docs';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';

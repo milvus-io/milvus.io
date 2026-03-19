@@ -1,0 +1,60 @@
+
+.root {
+  display: flex;
+  gap: 32px;
+
+  border: 1px solid #dee8f1;
+  border-radius: 4px;
+  padding: 16px;
+
+  &:hover {
+    border: 1px solid #b8ccde;
+  }
+
+  @media (--phone) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cardImg {
+    margin: 10px;
+    max-width: 200px;
+    height: auto;
+  }
+
+  .cardContent {
+    padding: 0 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 10px;
+  }
+}
+
+.tag,
+.title,
+.desc {
+  font-style: normal;
+  font-weight: normal;
+}
+
+.tag {
+  @mixin paragraph3-regular;
+  color: var(--color-text-primary);
+}
+
+.title {
+  @mixin heading3;
+  margin: 0;
+  color: var(--color-black);
+
+  @media (--phone) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.desc {
+  @mixin paragraph3-regular;
+  color: var(--color-grey-01);
+}

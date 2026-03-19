@@ -1,4 +1,4 @@
-import classes from './index.module.less';
+import classes from './index.module.css';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import clsx from 'clsx';

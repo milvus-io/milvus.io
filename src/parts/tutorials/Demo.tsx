@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Layout from '@/components/layout/commonLayout';
-import classes from '@/styles/milvusDemos.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from '@/styles/milvusDemos.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import DemoCard from '@/components/card/DemoCard';
 import { useState } from 'react';
@@ -86,7 +86,11 @@ export function MilvusDemos(props: Props) {
     },
   ];
 
-  const [dialogConfig, setDialogConfig] = useState({
+  const [dialogConfig, setDialogConfig] = useState<{
+    open: boolean;
+    title: string;
+    content: React.ReactNode;
+  }>({
     open: false,
     title: '',
     content: <></>,
@@ -98,7 +102,7 @@ export function MilvusDemos(props: Props) {
     message: '',
   });
 
-  const handelOpenDialog = (content: JSX.Element, title: string) => {
+  const handelOpenDialog = (content: React.ReactNode, title: string) => {
     setDialogConfig({
       open: true,
       title,

@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './gitCommit.module.less';
+import classes from './gitCommit.module.css';
 
 export default function GitCommitInfo(props) {
   const { commitInfo = {}, mdId, commitTrans = 'was last updated at' } = props;

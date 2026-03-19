@@ -1,5 +1,5 @@
 import { ListItemTickIcon, RightTopArrowIcon } from '@/components/icons';
-import styles from './index.module.less';
+import styles from './index.module.css';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import clsx from 'clsx';

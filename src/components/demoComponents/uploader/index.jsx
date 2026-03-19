@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import styles from './index.module.less';
+import styles from './index.module.css';
 import Button from '../button';
 import { getImgUrl } from '@/utils/demo-helper';
 import { FileDrop } from 'react-file-drop';

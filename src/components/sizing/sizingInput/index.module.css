@@ -1,0 +1,64 @@
+
+.inputContainer {
+  width: 140px;
+  max-width: 140px;
+}
+
+.fullWidth {
+  width: 100%;
+  max-width: 100%;
+}
+
+.inputLabel {
+  @mixin paragraph6;
+  margin-bottom: 10px;
+}
+
+.inputWrapper {
+  border-radius: 8px;
+  border: 1px solid var(--color-black3);
+  background: #fff;
+  position: relative;
+
+  &:hover {
+    border-color: var(--color-black2);
+  }
+
+  &:focus-within {
+    border-color: var(--color-black1);
+  }
+
+  input {
+    @mixin paragraph6;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    color: var(--color-black1);
+  }
+}
+
+.mediumSize {
+  height: 36px;
+  padding: 9px 8px;
+}
+.smallSize {
+  height: 28px;
+  padding: 5px 8px;
+}
+
+.largePadding {
+  padding-right: 52px;
+}
+.unit {
+  @mixin paragraph6-regular;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 8px;
+  top: 0;
+  bottom: 0;
+  color: var(--color-black2);
+}

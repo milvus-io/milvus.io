@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
-import * as styles from './index.module.less';
+import * as styles from './index.module.css';
 
 let timer = null;
 const CropperDemo = props => {

@@ -1,4 +1,4 @@
-import classes from './index.module.less';
+import classes from './index.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { DataCard } from './components';
 import {

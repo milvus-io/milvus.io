@@ -1,0 +1,6 @@
+@custom-media --phone only screen and (max-width: 744px);
+@custom-media --tablet only screen and (max-width: 1025px) and (min-width: 744px);
+@custom-media --desktop1024 only screen and (max-width: 1441px) and (min-width: 1025px);
+@custom-media --desktop1440 only screen and (max-width: 1920px) and (min-width: 1441px);
+@custom-media --desktop1920 only screen and (min-width: 1920px);
+@custom-media --bannerBreak only screen and (max-width: 640px);

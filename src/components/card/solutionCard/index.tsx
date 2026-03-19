@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './index.module.less';
+import styles from './index.module.css';
 import Link from 'next/link';
 import clsx from 'clsx';
 import CustomButton from '@/components/customButton';

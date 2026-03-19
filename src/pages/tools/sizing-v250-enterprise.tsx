@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
-import classes from '@/styles/sizingTool.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from '@/styles/sizingTool.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import Head from 'next/head';
 import FormSection from '@/parts/sizingV250/formSection';

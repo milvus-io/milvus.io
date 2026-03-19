@@ -12,7 +12,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 import AnchorTree from '../../parts/docs/anchorTree';
 import FeedbackSection from './feedback';
-import styles from './index.module.less';
+import styles from './index.module.css';
 import CloudAdvertisementCard from '../card/advCard';
 import { DeepLogo } from '../localization/DeepLogo';
 import CustomButton from '../customButton';
@@ -49,7 +49,7 @@ interface AsidePropsType {
 export interface DialogPropsType {
   open: boolean;
   title: string;
-  children: JSX.Element;
+  children: React.ReactNode;
   actions?: React.ReactNode;
 }
 

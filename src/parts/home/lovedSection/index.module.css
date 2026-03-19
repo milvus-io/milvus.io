@@ -1,0 +1,117 @@
+
+.sectionContainer {
+  padding-top: 80px;
+  padding-bottom: 80px;
+
+  .title {
+    @mixin heading2;
+    max-width: 840px;
+    text-align: center;
+    margin: 0 auto 40px;
+  }
+
+  .cardList {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 12px;
+
+    @media (--tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (--phone) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cardItem {
+    border-radius: 16px;
+    border: 1px solid var(--color-black4);
+    padding: 30px;
+    background-color: #fff;
+    font-family: 'Geist Mono';
+    a {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .contentWrapper {
+      position: relative;
+      padding-top: 22px;
+      padding-bottom: 22px;
+
+      &::before {
+        content: '“';
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #d0d7dc;
+        font-size: 42px;
+        line-height: 42px;
+        height: 22px;
+      }
+      &::after {
+        content: '”';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color: #d0d7dc;
+        font-size: 42px;
+        line-height: 42px;
+        display: block;
+        height: 22px;
+      }
+
+      .cardContent {
+        @mixin paragraph3;
+        line-height: 1.5;
+        font-weight: 400;
+        height: calc(11 * 1.5 * 16px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 11;
+        -webkit-box-orient: vertical;
+        color: var(--color-black1);
+
+        &:hover {
+          text-decoration-line: underline;
+        }
+
+        @media (--phone) {
+          height: auto;
+          max-height: 216px;
+        }
+      }
+    }
+  }
+
+  .authorWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+
+    .detailWrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .author {
+        @mixin paragraph4;
+        color: var(--color-black1);
+      }
+      .jobTitle {
+        @mixin paragraph6;
+        color: var(--color-black2);
+      }
+    }
+
+    .mediumLogo {
+      flex: 0 0 20px;
+      height: 20px;
+    }
+  }
+}

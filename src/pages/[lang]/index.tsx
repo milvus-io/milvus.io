@@ -8,7 +8,7 @@ import DevelopSection, { MeetupsSection } from '@/parts/home/developSection';
 import Layout from '@/components/layout/commonLayout';
 import { ProductionSection } from '@/parts/home/productionSection/ProductionSection';
 import { getHomepageHeadline } from '@/utils/blogs';
-import classes from '@/styles/home.module.less';
+import classes from '@/styles/home.module.css';
 import { getAllLanguageSlugs } from '@/i18n';
 import { LanguageEnum } from '@/types/localization';
 import { HomeMeta } from '@/parts/home/meta/HomeMeta';

@@ -1,5 +1,5 @@
-import classes from './index.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from './index.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/atom-one-dark.css';
 import javascript from 'highlight.js/lib/languages/javascript';

@@ -49,7 +49,7 @@ interface AsidePropsType {
 export interface DialogPropsType {
   open: boolean;
   title: string;
-  children: JSX.Element;
+  children: React.ReactNode;
   actions?: React.ReactNode;
 }
 

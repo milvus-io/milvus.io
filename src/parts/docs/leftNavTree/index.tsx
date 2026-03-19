@@ -12,7 +12,7 @@ import clsx from 'clsx';
 import '@docsearch/css';
 import 'instantsearch.css/themes/reset.css';
 
-import classes from './index.module.less';
+import classes from './index.module.css';
 
 interface LeftNavSectionProps {
   tree: FinalMenuStructureType[];

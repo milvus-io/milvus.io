@@ -1,4 +1,4 @@
-import classes from './index.module.less';
+import classes from './index.module.css';
 import { useTranslation } from 'react-i18next';
 import { LanguageEnum } from '@/types/localization';
 import CustomButton from '@/components/customButton';

@@ -1,7 +1,7 @@
 import React from 'react';
 import GitCommitInfo from '../GitCommitInfo';
 import { useGithubCommits } from '../../../http/hooks';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import Breadcrumb from '@/components/breadcrumb';

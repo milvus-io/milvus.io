@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import * as styles from './code.module.less';
+import * as styles from './code.module.css';
 import CheckIcon from '@mui/icons-material/Check';
 import Tooltip from '@mui/material/Tooltip';
 import { formatCodeContent } from '@/utils/code';

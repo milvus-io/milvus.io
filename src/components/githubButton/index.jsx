@@ -1,5 +1,5 @@
 import React from 'react';
-import * as styles from './index.module.less';
+import * as styles from './index.module.css';
 import { useMemo } from 'react';
 import { GithubIcon, SlackIcon } from './icons';
 import clsx from 'clsx';

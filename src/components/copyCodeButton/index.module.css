@@ -1,0 +1,36 @@
+
+.copyButtonContainer {
+  width: 280px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--color-black3);
+  background: #fff;
+}
+
+.installPy {
+  font-family: 'Geist Mono';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.copyButton {
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+  text-align: left;
+  width: 14px;
+  height: 14px;
+  line-height: 0;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

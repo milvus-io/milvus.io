@@ -1,0 +1,237 @@
+
+.deploySection {
+  padding-top: 120px;
+  padding-bottom: 60px;
+
+  @media (--tablet) {
+    padding-top: 60px;
+  }
+
+  .title {
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 54px;
+    @media (--tablet), (--phone) {
+      font-size: 38px;
+      line-height: 46px;
+    }
+    color: var(--color-black1);
+    max-width: 840px;
+    text-align: center;
+    margin: 0 auto 40px;
+  }
+
+  .dbsWrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 'lite standalone contributed' 'cloud cloud cloud';
+    gap: 12px;
+    list-style: none;
+
+    @media (--tablet) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas: 'lite standalone' 'contributed .' 'cloud cloud';
+    }
+
+    @media (--phone) {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-areas: 'lite' 'standalone' 'contributed' 'cloud';
+    }
+
+    .zillizCloud,
+    .commonMilvusDb {
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      border-radius: 16px;
+      border: 1px solid var(--color-black4);
+      padding: 30px;
+      background-color: #fff;
+    }
+
+    .commonMilvusDb {
+      flex-direction: column;
+
+      .buttonsWrapper {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+    }
+
+    .zillizCloud {
+      align-items: center;
+
+      @media (--phone) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .liteDb {
+      grid-area: lite;
+
+      .dbName::after {
+        background: #41d4cb;
+      }
+    }
+    .standaloneDb {
+      grid-area: standalone;
+
+      .dbName::after {
+        background: #6fa0ff;
+      }
+    }
+    .contributedDb {
+      grid-area: contributed;
+
+      .dbName::after {
+        background: #ae5eff;
+      }
+    }
+    .cloudDb {
+      grid-area: cloud;
+      margin-bottom: 12px;
+
+      .dbName {
+        max-width: 410px;
+        a {
+          color: var(--color-black1);
+        }
+
+        @media (--phone) {
+          max-width: 100%;
+        }
+
+        &::after {
+          background: linear-gradient(to right, #d083ff 0%, #8eddff 100%);
+        }
+      }
+    }
+
+    .dbName {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 32px;
+      @media (--tablet), (--phone) {
+        font-size: 20px;
+        line-height: 28px;
+      }
+      padding-bottom: 8px;
+      position: relative;
+      margin-bottom: 20px;
+
+      &::after {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        height: 2px;
+      }
+    }
+
+    .dbContent {
+      flex: 1;
+    }
+    .dbAdvantage {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 26px;
+      @media (--tablet), (--phone) {
+        font-size: 16px;
+        line-height: 24px;
+      }
+      font-family: 'Geist Mono';
+      margin-bottom: 12px;
+      height: 54px;
+    }
+
+    .dbFeatures {
+      list-style-type: disc;
+      padding-left: 20px;
+      font-family: 'Geist Mono';
+
+      li {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        @media (--tablet), (--phone) {
+          font-size: 14px;
+          line-height: 22px;
+        }
+        font-weight: 400;
+        color: var(--color-black2);
+
+        &::marker {
+          font-size: 10px;
+        }
+      }
+    }
+
+    .startLinkButton,
+    .containedLinkButton,
+    .linkButton {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 22px;
+      @media (--tablet), (--phone) {
+        font-size: 13px;
+        line-height: 21px;
+      }
+      font-weight: 500;
+    }
+
+    .startLinkButton {
+      padding: 12px 20px;
+      line-height: 14px;
+    }
+
+    .linkButton {
+      padding: 0;
+    }
+
+    .containedLinkButton {
+      padding: 8px 28px;
+      flex-shrink: 0;
+    }
+
+    .linkButtonIcon {
+      transform: rotate(315deg);
+
+      svg path {
+        stroke: #fff;
+      }
+    }
+  }
+
+  .learnMore {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    font-weight: 400;
+    color: var(--color-black1);
+    text-align: center;
+    padding: 8px 24px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--color-black4);
+    max-width: 479px;
+    margin: 0 auto;
+    font-family: 'Geist Mono';
+    font-weight: 500;
+
+    a {
+      color: var(--color-blue2);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

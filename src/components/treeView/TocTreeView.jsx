@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import { Typography } from '@mui/material';
-import * as styles from './TocTreeView.module.less';
+import * as styles from './TocTreeView.module.css';
 
 const title2hash = (title = '') => {
   const normalVal = title.replace(/[.｜,｜/｜'｜?｜？｜、|，|(|)|:]/g, '');

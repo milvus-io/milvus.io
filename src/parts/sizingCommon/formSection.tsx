@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import {
   SizingInput,
   SizingRange,

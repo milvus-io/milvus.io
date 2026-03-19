@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWindowSize } from '../../../http/hooks';
 import { SearchIcon } from './searchIcon';
-import styles from './preview.module.less';
+import styles from './preview.module.css';
 
 const PreviewItem = ({ src, distance, handleSearch }) => {
   const currentSize = useWindowSize();

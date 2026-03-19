@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import clsx from 'clsx';
 import { scaleLinear, scalePow } from 'd3-scale';
 import { SizingInput } from '../sizingInput';

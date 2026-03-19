@@ -1,6 +1,6 @@
 import CookieConsent from 'react-cookie-consent';
 import { useTranslation } from 'react-i18next';
-import classes from './index.module.less';
+import classes from './index.module.css';
 
 export default function CustomCookieConsent() {
   const { t } = useTranslation('common');

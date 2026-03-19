@@ -9,7 +9,7 @@ import {
 } from '@/consts/links';
 import clsx from 'clsx';
 import Popper, { PopperPlacementType } from '@mui/material/Popper';
-import styles from './index.module.less';
+import styles from './index.module.css';
 import CustomButton from '../customButton';
 import {
   MediaGithub,

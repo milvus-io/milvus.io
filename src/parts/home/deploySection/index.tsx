@@ -1,5 +1,5 @@
-import classes from './index.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from './index.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import { Trans, useTranslation } from 'react-i18next';
 import { RightWholeArrow } from '@/components/icons';

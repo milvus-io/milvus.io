@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Layout from '@/components/layout/commonLayout';
 import SolutionCard from '@/components/card/solutionCard';
-import classes from '@/styles/bootcamp.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from '@/styles/bootcamp.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 

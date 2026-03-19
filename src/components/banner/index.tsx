@@ -1,5 +1,5 @@
 import { CLOUD_SIGNUP_LINK } from '@/consts';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import { useTranslation } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';

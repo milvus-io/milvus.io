@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import {
   TooltipProvider,
   Tooltip,

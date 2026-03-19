@@ -1,0 +1,166 @@
+
+.pageContainer {
+  background-color: #fff;
+}
+
+.sizingToolContainer {
+  padding-top: 80px;
+  padding-bottom: 40px;
+  font-family: 'Geist Mono';
+  color: var(--color-black1);
+
+  .titleContainer {
+    position: relative;
+    margin-bottom: 12px;
+
+    @media (max-width: 1280px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .title {
+      text-align: center;
+      a {
+        font-size: 42px;
+        font-weight: 600;
+        line-height: 54px;
+        @media (--tablet), (--phone) {
+          font-size: 38px;
+          line-height: 46px;
+        }
+
+        font-family: 'Geist';
+        color: #000;
+        display: block;
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .selectContainer {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 250px;
+
+      @media (max-width: 1280px) {
+        position: unset;
+        transform: translateY(0);
+      }
+
+      .selectTrigger {
+        padding: 6px 24px;
+        width: 100%;
+        height: fit-content;
+      }
+    }
+  }
+
+  .content {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    @media (--tablet), (--phone) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    font-weight: 400;
+    text-align: center;
+    color: var(--color-black1-5);
+    margin-bottom: 8px;
+  }
+
+  .desc {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    @media (--tablet), (--phone) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    font-weight: 400;
+    margin-bottom: 80px;
+    text-align: center;
+    color: var(--color-black1-5);
+
+    a {
+      color: var(--color-black1-5);
+      text-decoration: underline;
+    }
+  }
+
+  .tipWrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background-color: var(--color-white1);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 36px;
+
+    .iconWrapper {
+      flex: 0 0 20px;
+      height: 20px;
+      line-height: 0;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .tip {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      font-weight: 400;
+
+      a {
+        color: #000;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .contentContainer {
+    display: flex;
+    border-radius: 24px;
+    margin-bottom: 80px;
+    gap: 60px;
+
+    @media (max-width: 1280px) {
+      gap: 24px;
+    }
+
+    @media (max-width: 1180px) {
+      flex-direction: column;
+    }
+
+    .leftSection {
+      flex: 0 1 386px;
+    }
+
+    .rightSection {
+      flex: 1;
+      min-width: 650px;
+
+      @media (--tablet), (--phone) {
+        min-width: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  .zillizAdv {
+    margin-bottom: 50px;
+  }
+}

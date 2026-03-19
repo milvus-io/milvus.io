@@ -1,4 +1,4 @@
-import * as styles from './index.module.less';
+import * as styles from './index.module.css';
 import Item from '../item/item';
 import clsx from 'clsx';
 import Masonry from 'react-masonry-css';

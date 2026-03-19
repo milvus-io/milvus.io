@@ -1,4 +1,4 @@
-import styles from './index.module.less';
+import styles from './index.module.css';
 import { ThumbUpIcon, ThumbDownIcon } from '../icons';
 import type { DialogPropsType } from './index';
 import { useEffect, useRef, useState } from 'react';

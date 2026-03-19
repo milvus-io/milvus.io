@@ -1,0 +1,73 @@
+
+.demoCard {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 60px;
+  border: 1px solid var(--color-black3);
+  background-color: var(--color-white1);
+  padding: 30px;
+  border-radius: 16px;
+
+  @media (--tablet), (--phone) {
+    flex-direction: column;
+  }
+
+  .coverWrapper {
+    flex: 1;
+    border-radius: 12px;
+    text-align: center;
+    overflow: hidden;
+    aspect-ratio: 55 / 27;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .contentWrapper {
+    flex: 1;
+
+    h3 {
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 40px;
+      @media (--tablet), (--phone) {
+        font-size: 28px;
+        line-height: 36px;
+      }
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 26px;
+      @media (--tablet), (--phone) {
+        font-size: 16px;
+        line-height: 24px;
+      }
+      font-weight: 400;
+      color: var(--color-black2);
+      margin-bottom: 20px;
+    }
+
+    .btnGroup {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+
+      .tryBtn {
+        background-color: transparent;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+
+      .watchBtn {
+      }
+    }
+  }
+}

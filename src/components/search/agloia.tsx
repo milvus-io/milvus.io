@@ -1,5 +1,5 @@
 import { DocSearch, DocSearchTranslations } from '@docsearch/react';
-import classes from './agloia.module.less';
+import classes from './agloia.module.css';
 import { useTranslation } from 'react-i18next';
 import { LanguageEnum } from '@/types/localization';
 import { useEffect } from 'react';

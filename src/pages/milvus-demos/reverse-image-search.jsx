@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '@/components/layout/commonLayout';
-import classes from '@/styles/imgSearch.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from '@/styles/imgSearch.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useWindowSize } from '@/http/hooks';

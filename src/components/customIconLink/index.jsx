@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
-import * as styles from './CustomIconLink.module.less';
+import * as styles from './CustomIconLink.module.css';
 import Link from 'next/link';
 
 export default function CustomIconLink(props) {

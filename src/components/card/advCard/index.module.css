@@ -1,0 +1,50 @@
+
+.advCardContainer {
+  padding: 30px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-black3);
+  background: #fff;
+  margin-top: 32px;
+
+  .advTitle {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .advAbstract {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--color-black1-5);
+    margin-bottom: 24px;
+  }
+
+  .ctaButton {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    justify-content: center;
+    svg path {
+      stroke: #fff;
+    }
+  }
+
+  .logo {
+    width: 100px;
+    height: 41px;
+    background-size: contain;
+    margin-bottom: 12px;
+  }
+}

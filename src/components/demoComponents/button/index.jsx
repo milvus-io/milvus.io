@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import * as styles from './index.module.less';
+import * as styles from './index.module.css';
 
 // type = 'link' || 'button'
 // variant = 'text' | 'outline' | contained

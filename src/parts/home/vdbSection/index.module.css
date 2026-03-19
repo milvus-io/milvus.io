@@ -1,0 +1,147 @@
+
+.sectionContainer {
+  padding-top: 40px;
+  padding-bottom: 60px;
+
+  .sectionTitle {
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 54px;
+    @media (--tablet), (--phone) {
+      font-size: 38px;
+      line-height: 46px;
+    }
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto 40px;
+  }
+
+  .featuresList {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+      'scale scale scale fast fast fast'
+      'reusable reusable community community featureRich featureRich';
+    grid-gap: 12px;
+    margin-bottom: 20px;
+
+    @media (--tablet) {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        'scale fast'
+        'reusable community'
+        'featureRich .';
+    }
+
+    @media (--phone) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'scale'
+        'fast'
+        'reusable'
+        'community'
+        'featureRich';
+    }
+
+    .featureItem {
+      border-radius: 16px;
+      border: 1px solid var(--color-black4);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 4px;
+
+      .topPart {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 80px;
+        padding-bottom: 80px;
+
+        .customCopyButton {
+          background-color: #fafafa;
+          border-style: dotted;
+          gap: 40px;
+          padding: 16px 20px;
+          width: auto;
+        }
+      }
+
+      img {
+        width: 100%;
+      }
+
+      .descriptionWrapper {
+        padding: 0 30px 30px;
+
+        h4 {
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 32px;
+          @media (--tablet), (--phone) {
+            font-size: 20px;
+            line-height: 28px;
+          }
+          color: var(--color-black1);
+        }
+        p {
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 22px;
+          @media (--tablet), (--phone) {
+            font-size: 13px;
+            line-height: 21px;
+          }
+          font-weight: 400;
+          color: var(--color-black2);
+          font-family: 'Geist Mono';
+        }
+      }
+    }
+
+    .scale {
+      grid-area: scale;
+    }
+    .fast {
+      grid-area: fast;
+    }
+    .reusable {
+      grid-area: reusable;
+    }
+    .featureRich {
+      grid-area: featureRich;
+    }
+    .community {
+      grid-area: community;
+    }
+  }
+
+  .docPrompt {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    font-weight: 400;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 8px 24px;
+    border-radius: 12px;
+    border: 1px solid var(--color-black4);
+    background: #fff;
+    font-family: 'Geist Mono';
+    font-weight: 500;
+
+    a {
+      color: var(--color-blue2);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

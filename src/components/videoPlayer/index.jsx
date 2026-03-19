@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as styles from './index.module.less';
+import * as styles from './index.module.css';
 import ReactPlayer from 'react-player';
 
 const VideoPlayer = ({ clientWidth, videoSrc }) => {

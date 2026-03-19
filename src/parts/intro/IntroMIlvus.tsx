@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from '@/styles/intro.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import styles from '@/styles/intro.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import Layout from '@/components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';

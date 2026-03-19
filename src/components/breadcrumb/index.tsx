@@ -1,4 +1,4 @@
-import classes from './index.module.less';
+import classes from './index.module.css';
 import { BreadcrumbIcon } from '../icons';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';

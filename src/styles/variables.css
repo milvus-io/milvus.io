@@ -1,0 +1,48 @@
+:root {
+  --color-primary: #00a1ea;
+  --color-secondary: #65f8c3;
+  --color-default-text: #191919;
+  --color-text-primary: #1493cc;
+  --color-overlay: rgba(0, 0, 0, 0.12);
+  --color-dark: #010e29;
+  --color-highlight: #4fc4f9;
+  --color-btn-hover: #0077ad;
+  --color-btn-press: #009ade;
+  --color-card-border: #e9e9ed;
+  --color-gray: #999;
+  --color-tag-gray: #afafaf;
+  --color-grey-01: #4c5a67;
+  --color-grey-02: #9ca6b2;
+  --color-grey-03: #c5ccd6;
+  --color-grey-04: #eaeef2;
+  --color-grey-05: #f5f8fb;
+  --color-caution: #f25c05;
+  --color-warning: #d51f00;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-white1: #f9f9f9;
+  --color-black1: #00131a;
+  --color-black1-5: #2e373b;
+  --color-black2: #667176;
+  --color-black3: #d0d7dc;
+  --color-blue1: #00b3ff;
+  --color-blue2: #008dc8;
+  --color-black4: #ececee;
+  --color-black5: #9ca6b4;
+
+  --desktop-header-banner-height: 52px;
+  --tablet-header-banner-height: 60px;
+  --header-height-desktop: calc(59px + var(--desktop-header-banner-height));
+  --header-height-tablet: calc(59px + var(--tablet-header-banner-height));
+  --footer-height-desktop: 467px;
+  --footer-height-tablet: 676px;
+
+  --doc-content-width: 950px;
+  --doc-aside-width: 316px;
+  --doc-menu-width: 232px;
+  --doc-menu-container-width: 282px;
+  --doc-content-padding: 64px;
+  --doc-collapse-width: 40px;
+
+  --homepage-content-width: 1170px;
+}

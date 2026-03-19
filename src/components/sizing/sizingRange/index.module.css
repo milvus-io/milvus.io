@@ -1,0 +1,60 @@
+
+.rangeContainer {
+  width: 100%;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  @media (--tablet), (--phone) {
+    font-size: 13px;
+    line-height: 21px;
+  }
+  font-weight: 600;
+}
+
+.customMarkLabel {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  top: 20px;
+  color: var(--color-black2);
+}
+
+.customMark {
+  background-color: #00b3ff;
+}
+
+.customRail {
+  height: 4px;
+  background-color: #e0f2fc;
+}
+
+.customTrack {
+  background-color: #00b3ff;
+  border: none;
+}
+
+.customThumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #00b3ff;
+  border: 2px solid #fff;
+}
+
+.rangeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.customRangeRoot {
+  flex: 1;
+  margin-bottom: 8px;
+}
+.inputWrapper {
+  flex: 0 0 110px;
+  box-sizing: border-box;
+}

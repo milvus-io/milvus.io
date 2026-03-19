@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from '@/components/ui';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import clsx from 'clsx';
 import { SizingInput, SizingRange, SizingSwitch, } from '@/components/sizing';
 import { useTranslation } from 'react-i18next';

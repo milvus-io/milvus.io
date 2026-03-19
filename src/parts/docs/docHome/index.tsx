@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import HorizontalBlogCard from '../../../components/card/HorizontalBlogCard';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import clsx from 'clsx';
 import { BlogFrontMatterType } from '@/types/blogs';
 import { LanguageEnum } from '@/types/localization';

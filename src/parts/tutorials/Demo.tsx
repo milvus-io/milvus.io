@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Layout from '@/components/layout/commonLayout';
-import classes from '@/styles/milvusDemos.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import classes from '@/styles/milvusDemos.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import DemoCard from '@/components/card/DemoCard';
 import { useState } from 'react';

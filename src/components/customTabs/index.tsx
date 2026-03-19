@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import clsx from 'clsx';
 
 export interface CustomTabsProps {

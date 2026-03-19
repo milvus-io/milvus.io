@@ -1,0 +1,80 @@
+
+.root {
+  display: flex;
+  gap: 32px;
+
+  border: 1px solid #dee8f1;
+  border-radius: 4px;
+  padding: 16px;
+
+  &:hover {
+    border: 1px solid #b8ccde;
+  }
+
+  @media (--phone) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cardImg {
+    margin: 10px;
+    max-width: 200px;
+    height: auto;
+  }
+
+  .cardContent {
+    padding: 0 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 10px;
+  }
+}
+
+.tag,
+.title,
+.desc {
+  font-style: normal;
+  font-weight: normal;
+}
+
+.tag {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  @media (--tablet), (--phone) {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  font-weight: 400;
+  color: var(--color-text-primary);
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 40px;
+  @media (--tablet), (--phone) {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  margin: 0;
+  color: var(--color-black);
+
+  @media (--phone) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.desc {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  @media (--tablet), (--phone) {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  font-weight: 400;
+  color: var(--color-grey-01);
+}

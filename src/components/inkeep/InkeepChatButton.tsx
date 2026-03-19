@@ -1,6 +1,6 @@
 import { useInkeepSettings } from '@/hooks/use-inkeep-settings';
 import dynamic from 'next/dynamic';
-import classes from '@/styles/inkeepButton.module.less';
+import classes from '@/styles/inkeepButton.module.css';
 import { useState } from 'react';
 import { useCallback } from 'react';
 

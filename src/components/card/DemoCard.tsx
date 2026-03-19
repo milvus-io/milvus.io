@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './DemoCard.module.less';
+import styles from './DemoCard.module.css';
 import VideoPlayer from '../videoPlayer';
 import InfoSubmitter from '../infoSubmitter';
 import { useTranslation } from 'react-i18next';

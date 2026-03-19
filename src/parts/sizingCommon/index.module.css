@@ -1,0 +1,816 @@
+
+
+.tooltipTrigger {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-bottom: 1px dashed var(--color-black3);
+  }
+}
+
+.commonLabel {
+  font-family: 'Geist Mono';
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  @media (--tablet), (--phone) {
+    font-size: 13px;
+    line-height: 21px;
+  }
+  font-weight: 600;
+}
+
+.selectItem {
+  font-family: 'Geist Mono';
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.selectTrigger {
+  font-family: 'Geist Mono';
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  font-weight: 400;
+  padding: 9px 12px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--color-black3);
+  background: #fff;
+
+  &:hover {
+    border-color: var(--color-black2);
+  }
+
+  &:focus {
+    border-color: var(--color-black1);
+  }
+}
+
+.flexRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.marginBtm20 {
+  margin-bottom: 20px;
+}
+
+.marginBtm0 {
+  margin-bottom: 0;
+}
+
+.paddingBtm20 {
+  padding-bottom: 20px;
+}
+
+div.averageLabel {
+  margin-bottom: 8px;
+}
+
+.font14Bold {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  @media (--tablet), (--phone) {
+    font-size: 13px;
+    line-height: 21px;
+  }
+  font-weight: 600;
+}
+
+.font16Bold {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  @media (--tablet), (--phone) {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  font-weight: 600;
+}
+
+.formSection {
+  .tooltipLink {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .singlePart {
+    border-bottom: 1px solid #ececee;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+
+    &:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .commonLabel {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    margin-bottom: 8px;
+  }
+
+  .smallerLabel {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+  }
+
+  .innerRow {
+    margin-top: 20px;
+  }
+
+  .offLoadingDesc {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    font-weight: 400;
+    color: #2e373b;
+
+    a {
+      color: #2e373b;
+      text-decoration: underline;
+    }
+  }
+
+  .switchRow {
+    margin-bottom: 20px;
+  }
+
+  .collapsible {
+    overflow: hidden;
+    height: fit-content;
+    padding-top: 16px;
+  }
+
+  .visibleCollapse {
+  }
+  .invisibleCollapse {
+    height: 0;
+    padding-top: 0;
+  }
+
+  .indexParamLabel {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  .radioGroup {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+    .radioItemLabel {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 22px;
+      @media (--tablet), (--phone) {
+        font-size: 13px;
+        line-height: 21px;
+      }
+      font-weight: 400;
+    }
+  }
+
+  .cardsWrapper {
+    display: flex;
+    gap: 12px;
+
+    .card {
+      flex: 1;
+      border-radius: 10px;
+      border: 1px solid var(--color-black3);
+      background: #fff;
+      cursor: pointer;
+
+      &:hover {
+        border-color: var(--color-black2);
+      }
+    }
+
+    .dependencyCard {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 3px 12px;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .depName {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        @media (--tablet), (--phone) {
+          font-size: 13px;
+          line-height: 21px;
+        }
+        font-weight: 400;
+      }
+    }
+    .modeCard {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .modeName {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        @media (--tablet), (--phone) {
+          font-size: 13px;
+          line-height: 21px;
+        }
+      }
+
+      .modeDesc {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 20px;
+        font-weight: 400;
+        text-align: left;
+      }
+
+      .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -99;
+        visibility: hidden;
+        pointer-events: none;
+      }
+    }
+
+    .disabledCard {
+      position: relative;
+      color: var(--color-gray);
+      cursor: not-allowed;
+
+      .mask {
+        cursor: not-allowed;
+        z-index: 1;
+        visibility: visible;
+        pointer-events: all;
+      }
+    }
+
+    .activeCard {
+      border-color: var(--color-blue1);
+
+      &:hover {
+        border-color: var(--color-blue1);
+      }
+
+      svg path {
+        fill: var(--color-blue1);
+      }
+    }
+
+    .switchLabel {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 22px;
+      @media (--tablet), (--phone) {
+        font-size: 13px;
+        line-height: 21px;
+      }
+    }
+  }
+}
+
+.resultContainer {
+  font-family: 'Geist Mono';
+
+  .commonKeyLabel {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--color-black2);
+  }
+  .commonValueLabel {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    font-weight: 600;
+    color: var(--color-black1);
+    width: var(--sizing-result-cell-width);
+  }
+
+  .substantialWrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+    background-color: #e0f2fc;
+    border-radius: 12px;
+
+    .substantialTip {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      font-weight: 400;
+
+      a {
+        color: #000;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .dataSection {
+    margin-bottom: 40px;
+  }
+
+  .sectionLabel {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    @media (--tablet), (--phone) {
+      font-size: 14px;
+      line-height: 22px;
+    }
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .dataCardName {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .sectionLabelBar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    .title {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      @media (--tablet), (--phone) {
+        font-size: 14px;
+        line-height: 22px;
+      }
+      font-weight: 600;
+    }
+
+    .buttonWrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      &:hover {
+        text-decoration: underline solid #000;
+      }
+
+      span {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 21px;
+        @media (--tablet), (--phone) {
+          font-size: 12px;
+          line-height: 20px;
+        }
+        color: #000;
+      }
+    }
+  }
+
+  .totalDataContent {
+    background-color: var(--color-white1);
+    border-radius: 12px;
+    padding: 20px 0;
+    margin-bottom: 40px;
+  }
+  .dataSummary {
+    display: flex;
+    border-bottom: 1px solid var(--color-black4);
+    padding: 0 20px 20px 20px;
+    gap: 20px;
+
+    .summaryCard {
+      flex: 1;
+      padding: 0px;
+    }
+  }
+
+  .commonCollapseTitle {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    cursor: pointer;
+
+    .collapseTitle {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media (--phone) {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .titleName {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        @media (--tablet), (--phone) {
+          font-size: 14px;
+          line-height: 22px;
+        }
+        font-weight: 600;
+      }
+      .titleOverview {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        @media (--tablet), (--phone) {
+          font-size: 14px;
+          line-height: 22px;
+        }
+
+        .valueInfo {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 24px;
+          @media (--tablet), (--phone) {
+            font-size: 14px;
+            line-height: 22px;
+          }
+          font-weight: 600;
+          color: var(--color-blue2);
+          letter-spacing: 150%;
+        }
+      }
+    }
+    .collapseIcon {
+      flex: 0 0 21px;
+      transform: rotate(0deg);
+      transition: transform 0.2s linear;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .activeIcon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .milvusDataDetail {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding: 0 24px;
+
+    .detailCard {
+      flex: 1;
+    }
+
+    .descLabel {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      @media (--tablet), (--phone) {
+        font-size: 14px;
+        line-height: 22px;
+      }
+      font-weight: 400;
+    }
+
+    .descValue {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      @media (--tablet), (--phone) {
+        font-size: 14px;
+        line-height: 22px;
+      }
+      color: var(--color-blue2);
+    }
+
+    .valueInfo {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      @media (--tablet), (--phone) {
+        font-size: 14px;
+        line-height: 22px;
+      }
+      color: var(--color-blue2);
+      letter-spacing: 150%;
+    }
+  }
+
+  .depDataItem {
+    flex: 1;
+  }
+  .installButton {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    padding: 8px 0;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 8px;
+    border-color: var(--color-black3);
+  }
+  .installCodeWrapper {
+    padding: 24px 38px 24px 24px;
+    background-color: var(--color-white1);
+    border-radius: 16px;
+    position: relative;
+    margin-bottom: 8px;
+
+    code {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      font-weight: 400;
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .copyBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      margin: 0;
+      outline: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+  .installationSection {
+    .sectionTitle {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      @media (--tablet), (--phone) {
+        font-size: 14px;
+        line-height: 22px;
+      }
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .advCard {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 22px;
+      @media (--tablet), (--phone) {
+        font-size: 13px;
+        line-height: 21px;
+      }
+      font-weight: 400;
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: linear-gradient(
+        91deg,
+        rgba(208, 131, 255, 0.2) 0.09%,
+        rgba(142, 221, 255, 0.2) 100.63%
+      );
+
+      a {
+        color: #000;
+        text-decoration: underline;
+      }
+    }
+
+    .advCard + .advCard {
+      margin-top: 40px;
+    }
+  }
+}
+
+.dataCard {
+  width: 100%;
+  border-radius: 12px;
+
+  .dataName {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .dataInfo {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    @media (--tablet), (--phone) {
+      font-size: 14px;
+      line-height: 22px;
+    }
+    color: #008dc8;
+  }
+
+  .dataDesc {
+  }
+
+  .dataCount {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    @media (--tablet), (--phone) {
+      font-size: 14px;
+      line-height: 22px;
+    }
+    font-weight: 400;
+    margin-top: 6px;
+  }
+
+  .largeName {
+  }
+  .largeData {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+    @media (--tablet), (--phone) {
+      font-size: 20px;
+      line-height: 28px;
+    }
+  }
+}
+
+.dependencyDetailContainer {
+  margin-top: 16px;
+  .firstRow {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    .card {
+      flex: 1;
+      padding: 0 16px;
+
+      .dataDesc {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        @media (--tablet), (--phone) {
+          font-size: 14px;
+          line-height: 22px;
+        }
+        font-weight: 400;
+
+        span {
+          font-weight: 500;
+          color: var(--color-blue2);
+        }
+      }
+    }
+  }
+}
+
+.configContainer {
+  padding: 0 24px;
+
+  .iconWrapper {
+    width: 18px;
+    height: 18px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .configName {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+    @media (--tablet), (--phone) {
+      font-size: 13px;
+      line-height: 21px;
+    }
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .configList {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+
+    .configItem {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .columnName {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        @media (--tablet), (--phone) {
+          font-size: 13px;
+          line-height: 21px;
+        }
+        margin-bottom: 4px;
+      }
+
+      .columnValue {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        @media (--tablet), (--phone) {
+          font-size: 13px;
+          line-height: 21px;
+        }
+        color: var(--color-blue2);
+      }
+
+      .columnList {
+        list-style: none;
+
+        .columnItem {
+          margin-right: 4px;
+
+          .columnLabel {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 22px;
+            @media (--tablet), (--phone) {
+              font-size: 13px;
+              line-height: 21px;
+            }
+            font-weight: 400;
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+  }
+}

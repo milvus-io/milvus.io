@@ -1,6 +1,6 @@
 import { CopyIcon, CheckIcon } from '../icons';
 import { useState } from 'react';
-import classes from './index.module.less';
+import classes from './index.module.css';
 import clsx from 'clsx';
 
 const REST_DURATION = 3000;

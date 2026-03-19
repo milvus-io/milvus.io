@@ -1,7 +1,7 @@
 import Layout from '@/components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
-import styles from '@/styles/useCase.module.less';
-import pageClasses from '@/styles/responsive.module.less';
+import styles from '@/styles/useCase.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import UseCaseCard from '@/parts/useCase/useCaseCard';
 import clsx from 'clsx';
 import { Typography } from '@mui/material';

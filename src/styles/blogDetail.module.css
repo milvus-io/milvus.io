@@ -2,7 +2,7 @@
 
 .upLayout {
   margin: 60px auto 80px;
-  max-width: var(--content-width);
+  max-width: var(--blog-content-width);
 
   .blogHeader {
     margin-top: 60px;
@@ -126,7 +126,7 @@
 
 .bottomLayout {
   margin-bottom: 80px;
-  max-width: var(--content-width);
+  max-width: var(--blog-content-width);
   padding: 0 40px;
 
   .title {

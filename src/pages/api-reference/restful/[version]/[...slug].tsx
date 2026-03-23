@@ -142,10 +142,8 @@ export default function RestfulApiReference(props: {
 export async function getStaticPaths() {
   const restfulInfo = generateRestfulVersionsInfo();
   const result = restfulInfo.map(data => {
-    const { language, latestVersion } = data;
-    // Only pre-generate the latest version at build time
-    const versionsToPreGenerate = [latestVersion];
-    const ApiDataOfCurLang = versionsToPreGenerate.map(version =>
+    const { language, versions } = data;
+    const ApiDataOfCurLang = versions.map(version =>
       generateRestfulMenuAndContentDataOfSingleVersion({
         version,
         language,
@@ -153,6 +151,7 @@ export async function getStaticPaths() {
     );
     return {
       language,
+      versions,
       data: ApiDataOfCurLang,
     };
   });
@@ -179,7 +178,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: 'blocking',
+    fallback: false,
   };
 }
 
@@ -194,24 +193,17 @@ export async function getStaticProps({ params }) {
     withContent: true,
   });
 
-  const versionData = curCategoryData.find(v => v.version === version);
-  if (!versionData) {
-    return { notFound: true };
-  }
-  const { menuData, contentList: contentData } = versionData;
-
-  const fileData = contentData.find(v => {
-    const {
-      frontMatter: { id, parentIds },
-    } = v;
-    const targetSlug = slug.join('/');
-    const sourceSlug = [...parentIds, id].join('/');
-    return targetSlug === sourceSlug;
-  });
-  if (!fileData) {
-    return { notFound: true };
-  }
-  const { frontMatter, content } = fileData;
+  const { menuData, contentList: contentData } =
+    curCategoryData.find(v => v.version === version) || {};
+  const { frontMatter, content } =
+    contentData.find(v => {
+      const {
+        frontMatter: { id, parentIds },
+      } = v;
+      const targetSlug = slug.join('/');
+      const sourceSlug = [...parentIds, id].join('/');
+      return targetSlug === sourceSlug;
+    }) || {};
 
   const { exports } = await getVariablesFromMDX(content);
   const mdxSource = await serialize(content, {

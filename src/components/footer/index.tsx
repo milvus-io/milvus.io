@@ -100,7 +100,6 @@ const Footer = (props: Props) => {
       children: [
         { id: 'tool-1', name: 'Attu', to: GITHUB_ATTU_LINK },
         { id: 'tool-2', name: 'Milvus CLI', to: GITHUB_MILVUS_CLI_LINK },
-        { id: 'tool-3', name: 'Milvus CLI', to: GITHUB_MILVUS_CLI_LINK },
         {
           id: 'tool-4',
           name: t('header:footer.tools.sizing'),

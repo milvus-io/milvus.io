@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }) {
               content="milvus, vector database, milvus docs, milvus blogs"
             />
           </Head>
-          <Component cl {...pageProps} />
+          <Component {...pageProps} />
           <Script
             dangerouslySetInnerHTML={{
               __html: `(function (w, d, s, l, i) {

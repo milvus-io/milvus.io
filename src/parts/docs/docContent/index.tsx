@@ -41,6 +41,23 @@ const docPageOptions: OptionItem[] = [
   },
 ];
 
+const DocHtmlContent = React.memo(function DocHtmlContent({
+  htmlContent,
+  type,
+}: {
+  htmlContent: string;
+  type: 'doc' | 'api';
+}) {
+  return (
+    <div
+      className={clsx('doc-style', 'doc-post-content', {
+        'api-reference-wrapper': type === 'api',
+      })}
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
+    />
+  );
+});
+
 interface DocContentPropsType {
   commitPath?: string;
   version: string;
@@ -130,12 +147,7 @@ export default function DocContent(props: DocContentPropsType) {
         />
         <LLMActions options={docPageOptions} githubLink={`${MILVUS_RAW_DOCS_BASE_URL}${commitPath}`} />
       </div>
-      <div
-        className={clsx('doc-style', 'doc-post-content', {
-          'api-reference-wrapper': type === 'api',
-        })}
-        dangerouslySetInnerHTML={{ __html: htmlContent }}
-      ></div>
+      <DocHtmlContent htmlContent={htmlContent} type={type} />
       {commitInfo?.message && (
         <GitCommitInfo
           commitInfo={commitInfo}

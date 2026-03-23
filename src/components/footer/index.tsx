@@ -48,20 +48,24 @@ const Footer = (props: Props) => {
 
   const footerJson = [
     {
+      id: 'resources',
       title: t(`common:v3trans.main.nav.resources`),
       children: [
-        { name: t('header:docs'), to: getLocalePath('/docs') },
-        { name: t('header:blog'), to: getLocalePath('/blog') },
+        { id: 'resource-1',name: t('header:docs'), to: getLocalePath('/docs') },
+        { id: 'resource-2',name: t('header:blog'), to: getLocalePath('/blog') },
         {
+          id: 'resource-3',
           name: t('header:footer.resource.managed'),
           to: `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_footer&utm_content=${trackPath}`,
           isExternal: true,
         },
         {
+          id: 'resource-4',
           name: t('header:footer.resource.contact'),
           to: getLocalePath('/contact'),
         },
         {
+          id: 'resource-5',
           name: t('header:footer.resource.faq'),
           to: getLocalePath('/ai-quick-reference'),
           invisibleItem: true,
@@ -70,68 +74,83 @@ const Footer = (props: Props) => {
       ],
     },
     {
+      id: 'tutorials',
       title: t(`common:v3trans.main.nav.tutorials`),
       children: [
         {
+          id: 'tutorial-1',
           name: t(`common:v3trans.main.nav.bootcamp`),
           to: getLocalePath('/bootcamp'),
         },
         {
+          id: 'tutorial-2',
           name: t(`common:v3trans.main.nav.demo`),
           to: getLocalePath('/milvus-demos'),
         },
         {
+          id: 'tutorial-3',
           name: t(`common:v3trans.main.nav.video`),
           to: MILVUS_VIDEO_LINK,
         },
       ],
     },
     {
+      id: 'tools',
       title: t(`common:v3trans.main.nav.tools`),
       children: [
-        { name: 'Attu', to: GITHUB_ATTU_LINK },
-        { name: 'Milvus CLI', to: GITHUB_MILVUS_CLI_LINK },
+        { id: 'tool-1', name: 'Attu', to: GITHUB_ATTU_LINK },
+        { id: 'tool-2', name: 'Milvus CLI', to: GITHUB_MILVUS_CLI_LINK },
         {
+          id: 'tool-4',
           name: t('header:footer.tools.sizing'),
           to: getLocalePath('/tools/sizing'),
         },
         {
+          id: 'tool-5',
           name: t('header:footer.tools.backup'),
           to: GITHUB_MILVUS_BACKUP_LINK,
         },
         {
+          id: 'tool-6',
           name: t('header:footer.tools.vts'),
           to: GITHUB_VTS_LINK,
         },
         {
+          id: 'tool-7',
           name: t('header:tools.deepSearcher'),
           to: GITHUB_DEEP_SEARCHER_LINK,
         },
         {
+          id: 'tool-8',
           name: t('header:tools.claudeContext'),
           to: GITHUB_CLAUDE_CONTEXT_LINK,
         },
       ],
     },
     {
+      id: 'community',
       title: t(`common:v3trans.main.nav.community`),
       children: [
         {
+          id: 'community-1',
           name: t('header:community.officeHours'),
           to: MILVUS_OFFICE_HOURS_URL,
           isExternal: true,
         },
         {
+          id: 'community-2',
           name: t('header:community.slack'),
           to: MILVUS_SLACK_LINK,
           isExternal: true,
         },
         {
+          id: 'community-3',
           name: 'Discord',
           to: DISCORD_INVITE_URL,
           isExternal: true,
         },
         {
+          id: 'community-4',
           name: 'Github',
           to: GITHUB_MILVUS_LINK,
           isExternal: true,
@@ -223,12 +242,14 @@ const Footer = (props: Props) => {
                     src="/images/blue-heart.png"
                     alt="Blue Heart Emoji"
                     className="mx-[-4px]"
+                    key="blue-heart-emoji"
                   />,
                   <a
                     href={ZILLIZ_OFFICIAL_WEBSITE}
                     target="_blank"
                     rel="noreferrer noopener"
                     className="text-black2 hover:underline"
+                    key="zilliz-official-website"
                   ></a>,
                 ]}
               />
@@ -276,7 +297,7 @@ const Footer = (props: Props) => {
           >
             {footerJson.map(item => {
               return (
-                <div key={item.title}>
+                <div key={item.id}>
                   <h3 className="text-[16px] font-[500] leading-[24px]">
                     {item.title}
                   </h3>
@@ -287,7 +308,7 @@ const Footer = (props: Props) => {
                       }
                       if (child.to.startsWith('http')) {
                         return (
-                          <li key={child.name} className="list-none">
+                          <li key={child.id} className="list-none">
                             <a
                               className={clsx(
                                 'inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
@@ -308,7 +329,7 @@ const Footer = (props: Props) => {
                         );
                       }
                       return (
-                        <li key={child.name} className="list-none">
+                        <li key={child.id} className="list-none">
                           <Link
                             href={child.to}
                             className={clsx(

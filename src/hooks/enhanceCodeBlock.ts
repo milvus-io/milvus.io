@@ -146,7 +146,6 @@ export const useMultipleCodeFilter = () => {
     let firstSearch = '';
     filterWrappers.forEach(fw => {
       const fs = fw.querySelectorAll('a');
-
       fs.forEach(f => {
         if (!firstSearch) {
           // <a href='#node' >xxx</a>

@@ -27,7 +27,7 @@ export default function CloudAdvertisementCard(props: {
   const isCnAdv = language === LanguageEnum.CHINESE;
 
   const trackPath = useUtmTrackPath();
-  const [random, setRandom] = useState(Math.random());
+  const [random, setRandom] = useState(0);
   const { advTitle, advContent, advCtaLabel, advCtaLink } =
     customAdvConfig || {};
 
@@ -51,15 +51,17 @@ export default function CloudAdvertisementCard(props: {
   }, [trackPath]);
 
   useEffect(() => {
-    const randomValue = Number(
+    const stored = Number(
       window.localStorage.getItem('A_B_TEST_RANDOM') ?? NaN
     );
 
-    if (isNaN(randomValue)) {
-      window.localStorage.setItem('A_B_TEST_RANDOM', `${random}`);
-      return;
+    if (isNaN(stored)) {
+      const newRandom = Math.random();
+      window.localStorage.setItem('A_B_TEST_RANDOM', `${newRandom}`);
+      setRandom(newRandom);
+    } else {
+      setRandom(stored);
     }
-    setRandom(randomValue);
   }, []);
 
   const renderZillizLogo = () => {

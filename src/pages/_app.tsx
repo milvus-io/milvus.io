@@ -1,4 +1,5 @@
 import CustomCookieConsent from '@/components/cookieConsent';
+import InkeepChatButtonContainer from '@/components/inkeep/InkeepChatButton';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import Head from 'next/head';
 import Script from 'next/script';
@@ -54,6 +55,7 @@ function MyApp({ Component, pageProps }) {
             id="google-tag-manager"
             defer
           />
+          <InkeepChatButtonContainer />
           <CustomCookieConsent />
         </HubspotProvider>
       </StoreProvider>

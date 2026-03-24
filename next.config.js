@@ -41,6 +41,5 @@ module.exports = async () => {
     experimental: {
       scrollRestoration: true,
     },
-    reactStrictMode: false
   };
 };

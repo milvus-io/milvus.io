@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import FlexibleSectionContainer from '../../flexibleSection';
 import Header from '../../header';
 import Footer from '../../footer';
-import InkeepChatButtonContainer from '@/components/inkeep/InkeepChatButton';
 import 'highlight.js/styles/atom-one-dark.css';
 import { LanguageEnum } from '@/types/localization';
 
@@ -116,7 +115,6 @@ export default function DocLayout(props: DocLayoutPropsType) {
             )}
           </div>
         </div>
-        <InkeepChatButtonContainer />
       </main>
     </>
   );

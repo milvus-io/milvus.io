@@ -158,14 +158,14 @@ export default function DesktopHeader(props: Props) {
     <div className="bg-white border-b-black4 border-b-[1px] border-solid max-[1280px]:border-none">
       <div
         className={clsx(
-          'hidden xl:flex h-[58px] px-10 items-center justify-between mx-auto',
+          'hidden xl:flex h-[58px] items-center justify-between mx-auto',
           className
         )}
       >
-        <div className="flex items-center gap-[40px] max-[1240px]:gap-[10px]">
+        <div className="flex items-center gap-[40px] max-[1540px]:gap-[12px]">
           <LogoSection />
 
-          <ul className="flex items-center list-none gap-[16px] max-[1080px]:gap-[10px]">
+          <ul className="flex items-center list-none gap-[16px] max-[1540px]:gap-[10px]">
             {menuConfigs.map(config => {
               if (config.list) {
                 return (
@@ -216,7 +216,7 @@ export default function DesktopHeader(props: Props) {
           </ul>
         </div>
 
-        <div className="flex gap-[20px] max-[1240px]:gap-[12px] max-[1080px]:gap-[10px] items-center font-mono">
+        <div className="flex gap-[20px] max-[1540px]:gap-[10px] items-center font-mono">
           {!disableLangSelector && (
             <LanguageSelector
               value={locale}

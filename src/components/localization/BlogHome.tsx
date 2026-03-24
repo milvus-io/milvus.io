@@ -533,7 +533,7 @@ export const BlogHome: React.FC<Props> = props => {
   };
 
   return (
-    <Layout>
+    <Layout headerClassName={pageClasses.blogContainer}>
       <Head>
         <title>{t('blog:homepage.title')}</title>
         <meta name="description" content={t('blog:homepage.desc')} />

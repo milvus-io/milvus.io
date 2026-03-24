@@ -9,6 +9,7 @@ import Layout from '@/components/layout/commonLayout';
 import { ProductionSection } from '@/parts/home/productionSection/ProductionSection';
 import { getHomepageHeadline } from '@/utils/blogs';
 import classes from '@/styles/home.module.css';
+import pageClasses from '@/styles/responsive.module.css';
 import { getAllLanguageSlugs } from '@/i18n';
 import { LanguageEnum } from '@/types/localization';
 import { HomeMeta } from '@/parts/home/meta/HomeMeta';
@@ -21,7 +22,7 @@ export default function Homepage(props: {
   const { headlines, lang } = props;
   const { locale } = useGlobalLocale();
   return (
-    <Layout>
+    <Layout headerClassName={pageClasses.homeContainer}>
       <main className={classes.homepageContainer}>
         <HomeMeta locale={locale || LanguageEnum.ENGLISH} />
         <HomePageHeaderSection headlines={headlines} locale={lang} />

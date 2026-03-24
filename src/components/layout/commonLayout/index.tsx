@@ -16,7 +16,7 @@ const Layout: React.FC<{
   darkMode,
   children,
   showFooter = true,
-  headerClassName = '',
+  headerClassName,
   disableLangSelector = false,
 }) => {
   const { locale } = useGlobalLocale();

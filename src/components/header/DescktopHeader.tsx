@@ -28,6 +28,7 @@ import { useGlobalLocale } from '@/hooks/use-global-locale';
 import milvusStats from '../../../global-stats.json';
 import { LogoSection } from './Logos';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
+import responsiveClasses from '@/styles/responsive.module.css';
 
 type Props = { className?: string; disableLangSelector?: boolean; };
 
@@ -36,7 +37,7 @@ const startNum = `${(Number(milvusStats?.milvusStars || 0) / 1000).toFixed(
 )}K`;
 
 export default function DesktopHeader(props: Props) {
-  const { className, disableLangSelector = false } = props;
+  const { className = responsiveClasses.homeContainer, disableLangSelector = false } = props;
   const {
     locale,
     disabled,
@@ -159,6 +160,7 @@ export default function DesktopHeader(props: Props) {
       <div
         className={clsx(
           'hidden xl:flex h-[58px] items-center justify-between mx-auto',
+          
           className
         )}
       >

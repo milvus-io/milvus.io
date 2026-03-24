@@ -8,7 +8,7 @@ const Header: React.FC<{
   darkMode?: Boolean;
   className?: string;
   disableLangSelector?: boolean;
-}> = ({ darkMode = false, className = '', disableLangSelector = false }) => {
+}> = ({ darkMode = false, className, disableLangSelector = false }) => {
   return (
     <header
       className={clsx(classes.headerContainer, {

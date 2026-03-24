@@ -4,9 +4,9 @@ import clsx from 'clsx';
 import FlexibleSectionContainer from '../../flexibleSection';
 import Header from '../../header';
 import Footer from '../../footer';
-import InkeepChatButtonContainer from '@/components/inkeep/InkeepChatButton';
 import 'highlight.js/styles/atom-one-dark.css';
 import { LanguageEnum } from '@/types/localization';
+import pageClasses from '@/styles/responsive.module.css';
 
 const MENU_MINIMUM_WIDTH = 22;
 const MENU_MAXIMUM_WIDTH = 283;
@@ -85,7 +85,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
             />
           ))}
         </Head>
-        <Header className={classes.docHeader} />
+        <Header className={pageClasses.docContainer} />
         <div className={clsx(classes.mainContainer, main)}>
           <FlexibleSectionContainer
             minWidth={MENU_MINIMUM_WIDTH}
@@ -116,7 +116,6 @@ export default function DocLayout(props: DocLayoutPropsType) {
             )}
           </div>
         </div>
-        <InkeepChatButtonContainer />
       </main>
     </>
   );

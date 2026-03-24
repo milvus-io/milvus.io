@@ -214,6 +214,7 @@ export async function getStaticProps({ params }) {
         getRehypeHeadingTagPlugin({ betaTag: frontMatter.beta }),
       ],
     },
+    blockJS: false,
   });
 
   const headingRegex = /^#\s+(.*)$/m;

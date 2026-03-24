@@ -1,7 +1,4 @@
 
-div.docHeader {
-  @mixin docContainer;
-}
 
 div.mainContainer {
   display: flex;

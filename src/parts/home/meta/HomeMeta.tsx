@@ -15,6 +15,11 @@ export const HomeMeta = (props: Props) => {
     <Head>
       <title>{t('meta.title')}</title>
       <meta name="description" content={t('meta.description')} />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/home/header-background-image.svg"
+      />
     </Head>
   );
 };

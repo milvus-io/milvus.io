@@ -13,7 +13,7 @@ export const LogoSection = (props: { equipment?: 'desktop' | 'tablet' }) => {
   return (
     <div className={classes.logoSection}>
       <Link href={getLocalePath('/')} className="inline-flex items-center">
-        <img src="/images/layout/milvus-logo.svg" height={24} alt="Milvus" />
+        <img src="/images/layout/milvus-logo.svg" width={105} height={24} alt="Milvus" />
       </Link>
       <div className="w-[1px] h-[20px] bg-black3 mx-[8px]" />
       <a
@@ -21,7 +21,7 @@ export const LogoSection = (props: { equipment?: 'desktop' | 'tablet' }) => {
         target="_blank"
         rel="noreferrer noopener"
       >
-        <img src="/images/layout/zilliz-logo.svg" alt="Zilliz" height={30} />
+        <img src="/images/layout/zilliz-logo.svg" width={75} height={30} alt="Zilliz" />
       </a>
     </div>
   );

@@ -67,7 +67,7 @@ export default function VectorDatabaseSection() {
         <Trans
           t={t}
           i18nKey="vdbSection.prompt"
-          components={[<Link href="/docs"></Link>]}
+          components={[<Link href="/docs" key="docs-link"></Link>]}
         />
       </p>
     </section>

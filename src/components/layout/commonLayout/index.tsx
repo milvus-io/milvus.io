@@ -21,13 +21,17 @@ const Layout: React.FC<{
 }) => {
   const { locale } = useGlobalLocale();
   const { asPath } = useRouter();
+  // Strip query strings for canonical and hreflang to avoid
+  // duplicate-content issues from tracking params (__hstc, utm_*, etc.)
+  const cleanPath = asPath.split('?')[0];
   return (
     <>
       <Head>
+        <link rel="canonical" href={`${ABSOLUTE_BASE_URL}${cleanPath}`} />
         <link
           rel="alternate"
           hrefLang={locale}
-          href={`${ABSOLUTE_BASE_URL}${asPath}`}
+          href={`${ABSOLUTE_BASE_URL}${cleanPath}`}
         />
       </Head>
       <Header

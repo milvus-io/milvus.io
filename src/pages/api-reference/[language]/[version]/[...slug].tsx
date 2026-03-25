@@ -34,6 +34,7 @@ import {
 } from '@/consts/externalLinks';
 import { formatApiRelativePath } from '@/utils';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import { getApiCanonicalUrl } from '@/components/localization/utils';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
 
@@ -122,6 +123,19 @@ export default function Template(props: ApiDetailPageProps) {
     }
   }, [category, relativePath, version]);
 
+  const canonicalUrl = useMemo(() => {
+    const latestVersionData = curCategoryContentData.find(
+      v => v.version === latestVersion
+    );
+    return getApiCanonicalUrl({
+      languageCategory,
+      version,
+      latestVersion,
+      relativePath,
+      latestVersionMds: latestVersionData?.mds,
+    });
+  }, [languageCategory, version, latestVersion, relativePath, curCategoryContentData]);
+
   const { pageTitle, absoluteUrl, pageDesc } = useMemo(() => {
     let suffix = '';
     switch (languageCategory) {
@@ -174,6 +188,7 @@ export default function Template(props: ApiDetailPageProps) {
         title: pageTitle,
         desc: pageDesc,
         url: absoluteUrl,
+        canonicalUrl,
       }}
       version={version}
       latestVersion={latestVersion}

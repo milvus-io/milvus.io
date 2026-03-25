@@ -9,8 +9,10 @@ import {
 import { BaseURL } from './BaseURL';
 import { i18n } from './i18n';
 import { CodeBlock } from './CodeBlock';
+import { TryItOut } from './TryItOut';
 
 import styles from './RestSpace.module.css';
+import tryItStyles from './TryItOut.module.css';
 
 const primitiveConstants = ['boolean', 'integer', 'number', 'string'];
 
@@ -815,6 +817,7 @@ export const RestSpecs = props => {
   const responseExample =
     responses?.['200']?.content['application/json']?.examples;
 
+  const [showTryIt, setShowTryIt] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState('OPTION 1');
   const [selectedResponse, setSelectedResponse] = useState('OPTION 1');
 
@@ -833,9 +836,26 @@ export const RestSpecs = props => {
       >
         <div>
           <div dangerouslySetInnerHTML={{ __html: short }} />
-          <RestHeader method={props.method} endpoint={props.endpoint} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <RestHeader method={props.method} endpoint={props.endpoint} />
+            <button
+              className={`${tryItStyles.tryItButton} ${showTryIt ? tryItStyles.tryItButtonActive : ''}`}
+              onClick={() => setShowTryIt(!showTryIt)}
+            >
+              {showTryIt ? 'Close' : 'Try it out'}
+            </button>
+          </div>
         </div>
       </div>
+      {showTryIt && (
+        <TryItOut
+          specs={props.specs}
+          endpoint={props.endpoint}
+          method={props.method}
+          target={target}
+          lang={lang}
+        />
+      )}
       <div
         style={{
           display: 'grid',

@@ -31,6 +31,7 @@ import classes from '@/styles/docDetail.module.css';
 import styles from '@/styles/restful.module.css';
 import Breadcrumb from '@/components/breadcrumb';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
+import { getApiCanonicalUrl } from '@/components/localization/utils';
 
 export default function RestfulApiReference(props: {
   mdxSource: MDXRemoteSerializeResult;
@@ -74,6 +75,20 @@ export default function RestfulApiReference(props: {
     ? `${headingContent} - Milvus Documentation ${suffix}/${metaPath}`
     : `${headingContent} - Milvus Documentation ${suffix}`;
 
+  const latestVersionData = curCategoryContentData.find(
+    v => v.version === latestVersion
+  );
+  // Use route category ('restful') not languageCategory ('milvus-restful') for URL,
+  // and convert .mdx extension to .md to match the actual route.
+  const routeRelativePath = relativePath.replace(/\.mdx$/, '.md');
+  const canonicalUrl = getApiCanonicalUrl({
+    languageCategory: category,
+    version,
+    latestVersion,
+    relativePath: routeRelativePath,
+    latestVersionMds: latestVersionData?.mds,
+  });
+
   const activeLabels = useBreadcrumbLabels({
     currentId,
     menu: menus,
@@ -85,6 +100,7 @@ export default function RestfulApiReference(props: {
         title: pageTitle,
         desc: pageDesc,
         url: absoluteUrl,
+        canonicalUrl,
       }}
       version={version}
       latestVersion={latestVersion}

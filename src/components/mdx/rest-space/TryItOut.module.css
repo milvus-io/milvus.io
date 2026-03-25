@@ -1,0 +1,191 @@
+.container {
+  margin-top: 1.5rem;
+  border: 2px solid rgba(223, 225, 236, 0.7);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.fieldRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.fieldLabel {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgb(74, 83, 104);
+  min-width: 80px;
+}
+
+.fieldInput {
+  flex: 1;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(223, 225, 236, 0.9);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+  color: var(--color-text-primary);
+}
+
+.fieldInput:focus {
+  border-color: #026aca;
+}
+
+.editorWrapper {
+  border: 1px solid rgba(223, 225, 236, 0.9);
+  border-radius: 6px;
+  overflow: auto;
+  max-height: 400px;
+  background: #fafafa;
+}
+
+.editorWrapper textarea,
+.editorWrapper pre {
+  font-family: 'Geist Mono', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  padding: 12px !important;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.sendButton {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #026aca;
+  color: #fff;
+  transition: background 0.2s;
+}
+
+.sendButton:hover {
+  background: #0254a0;
+}
+
+.sendButton:disabled {
+  background: #9cc0e8;
+  cursor: not-allowed;
+}
+
+.resetButton {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid rgba(223, 225, 236, 0.9);
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  color: rgb(74, 83, 104);
+  transition: background 0.2s;
+}
+
+.resetButton:hover {
+  background: rgb(240, 244, 249);
+}
+
+.responseSection {
+  margin-top: 1.25rem;
+}
+
+.responseMeta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.statusBadge {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2em 0.6em;
+  border-radius: 5px;
+}
+
+.statusSuccess {
+  color: #0d8d67;
+  background-color: rgba(13, 141, 103, 0.15);
+}
+
+.statusError {
+  color: #b91926;
+  background-color: rgba(185, 25, 38, 0.15);
+}
+
+.timeBadge {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.8rem;
+  color: rgb(74, 83, 104);
+}
+
+.corsHint {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: rgb(74, 83, 104);
+  background: rgb(255, 251, 235);
+  border: 1px solid rgb(253, 230, 138);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  line-height: 1.5;
+}
+
+.errorMessage {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #b91926;
+  background: rgba(185, 25, 38, 0.08);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  font-family: 'Geist Mono', monospace;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid rgba(223, 225, 236, 0.7);
+  margin: 1rem 0;
+}
+
+.tryItButton {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 1rem;
+  border: 2px solid #026aca;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  color: #026aca;
+  transition: all 0.2s;
+}
+
+.tryItButton:hover {
+  background: #026aca;
+  color: #fff;
+}
+
+.tryItButtonActive {
+  background: #026aca;
+  color: #fff;
+}

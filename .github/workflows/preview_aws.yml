@@ -46,7 +46,7 @@ jobs:
           fetch-depth: 1
 
       - name: Verify Nginx configuration
-        if: false # temporarily disabled
+        if: always()
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/conf/conf.d/client.conf:/etc/nginx/conf.d/client.conf \

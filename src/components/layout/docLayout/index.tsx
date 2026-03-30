@@ -75,7 +75,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
           {docSearchVersion && (
             <meta name="docsearch:version" content={docSearchVersion} />
           )}
-          {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+          <link rel="canonical" href={canonicalUrl || url} />
           {hreflangUrls.map(entry => (
             <link
               key={entry.lang}

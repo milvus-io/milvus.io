@@ -245,7 +245,7 @@ const Footer = (props: Props) => {
                   <img
                     width={16}
                     height={16}
-                    src="/images/blue-heart.png"
+                    src="/images/blue-heart.webp"
                     alt="Blue Heart Emoji"
                     className="mx-[-4px]"
                     key="blue-heart-emoji"

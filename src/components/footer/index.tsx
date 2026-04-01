@@ -208,12 +208,16 @@ const Footer = (props: Props) => {
             <img
               src="/images/layout/lf-ai-logo.svg"
               alt="LF_AI"
+              width={83}
+              height={16}
               className="h-[16px] w-[auto] mb-[10px]"
             />
             <div className="flex items-center gap-[8px] ">
               <Link href="/">
                 <img
                   alt="Milvus"
+                  width={175}
+                  height={40}
                   className="h-[40px] w-[auto] max-phone:h-[30px]"
                   src="/images/layout/milvus-logo.svg"
                 />
@@ -227,6 +231,8 @@ const Footer = (props: Props) => {
                 <img
                   src="/images/layout/zilliz-logo.svg"
                   alt="Zilliz"
+                  width={75}
+                  height={50}
                   className="h-[50px] w-[auto] max-phone:h-[40px]"
                 />
               </a>
@@ -257,15 +263,15 @@ const Footer = (props: Props) => {
             <div className="mt-[60px] w-full">
               <SubscribeNewsletter />
             </div>
-            <h3 className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
+            <p className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
               {t('header:footer.followUs')}
-            </h3>
+            </p>
             <div className="flex mt-[12px] space-x-[12px]">
               {isCNSite ? <SocialMediasCN /> : <SocialMedias />}
             </div>
-            <h3 className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
+            <p className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
               {t('header:footer.askAI')}
-            </h3>
+            </p>
             <div className="flex mt-[12px] space-x-[12px]">
               {AIList.map(item => (
                 <a
@@ -298,9 +304,9 @@ const Footer = (props: Props) => {
             {footerJson.map(item => {
               return (
                 <div key={item.id}>
-                  <h3 className="text-[16px] font-[500] leading-[24px]">
+                  <p className="text-[16px] font-[500] leading-[24px]">
                     {item.title}
-                  </h3>
+                  </p>
                   <ul className="mt-[20px] space-y-[8px]">
                     {item.children.map((child) => {
                       if (child.display === false) {

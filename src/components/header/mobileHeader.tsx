@@ -356,6 +356,8 @@ export default function MobileHeader(props: {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={classes.menuIconBtn}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>

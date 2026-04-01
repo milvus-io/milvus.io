@@ -38,6 +38,7 @@ const SolutionCard: React.FC<{
               endIcon={<RightWholeArrow />}
               variant="outlined"
               target="_blank"
+              aria-label={`${ctaLabel} - ${title}`}
             >
               {ctaLabel}
             </CustomButton>

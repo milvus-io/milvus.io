@@ -477,9 +477,9 @@ export const BlogHome: React.FC<Props> = props => {
             style={{ backgroundImage: `url(/images/ai-bird.png)` }}
           />
           <div className={styles['ai-service-main']}>
-            <h3 className={styles['ai-service-title']}>
+            <h2 className={styles['ai-service-title']}>
               {t('blog:aiService.title')}
-            </h3>
+            </h2>
             <p className={styles['ai-service-desc']}>
               {t('blog:aiService.desc')}
             </p>

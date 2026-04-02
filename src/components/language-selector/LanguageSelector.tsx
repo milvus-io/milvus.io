@@ -190,6 +190,7 @@ export const LanguageSelector: FC<Props> = props => {
         onOpenChange={handleOpenChange}
       >
         <SelectTrigger
+          aria-label="Select language"
           className={clsx(
             `border-0 pl-0 gap-[4px] justify-start font-[600] text-black1 hover:text-black2`,
             {

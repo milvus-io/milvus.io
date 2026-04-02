@@ -1,5 +1,4 @@
-import hljs from 'highlight.js';
-import React from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import * as classes from './index.module.css';
 import clsx from 'clsx';
 import { HELM_CONFIG_FILE_NAME, OPERATOR_CONFIG_FILE_NAME } from './constants';
@@ -22,7 +21,14 @@ kubectl create -f ${OPERATOR_CONFIG_FILE_NAME}.yml
     `;
 
   const { t } = useTranslation();
-  const highlightCode = hljs.highlightAuto(content);
+  const [highlightedHtml, setHighlightedHtml] = useState(content);
+
+  useEffect(() => {
+    import('highlight.js').then(({ default: hljs }) => {
+      const result = hljs.highlightAuto(content);
+      setHighlightedHtml(result.value);
+    });
+  }, [content]);
 
   useCopyCode([content]);
 
@@ -30,7 +36,7 @@ kubectl create -f ${OPERATOR_CONFIG_FILE_NAME}.yml
     <pre className={classes.guideWrapper}>
       <code
         className={clsx('hljs', classes.codeWrapper)}
-        dangerouslySetInnerHTML={{ __html: highlightCode.value }}
+        dangerouslySetInnerHTML={{ __html: highlightedHtml }}
       ></code>
 
       <button className={clsx('copy-code-btn', classes.copyButton)}></button>

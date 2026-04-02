@@ -66,11 +66,11 @@ export function SocialMedias(props: {
             variant="text"
             key={s.name}
             href={s.link}
+            aria-label={s.name}
             classes={{
               root: clsx(styles.iconButton, link),
             }}
           >
-            {/* <span className={clsx(styles.iconWrapper, icon)}></span> */}
             {s.icon}
           </CustomButton>
         );
@@ -133,6 +133,7 @@ export const SocialMediasCN = (props: {
             <CustomButton
               variant="text"
               key={s.name}
+              aria-label={s.name}
               classes={{
                 root: clsx(styles.cnIconButton, link),
               }}
@@ -155,6 +156,7 @@ export const SocialMediasCN = (props: {
             variant="text"
             key={s.name}
             href={s.link}
+            aria-label={s.name}
             classes={{
               root: clsx(styles.cnIconButton, link),
             }}

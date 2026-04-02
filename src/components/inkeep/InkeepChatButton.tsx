@@ -39,9 +39,10 @@ export default function InkeepChatButtonContainer() {
         className={classes.inkeepChatButton}
         id="inkeep-chat-button"
         onClick={handleOpen}
+        aria-label="Ask AI"
       >
         Ask AI
-        <img src="/inkeep/milvus-icon-white.png" alt="" />
+        <img src="/inkeep/milvus-icon-white.png" alt="Ask AI" width={24} height={24} />
       </button>
       <InkeepModalChat {...chatButtonProps} />
     </>

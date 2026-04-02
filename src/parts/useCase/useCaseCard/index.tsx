@@ -14,6 +14,7 @@ export default function UseCaseCard({ useCase }: { useCase: FinalUserCaseType; }
           href={link}
           target="_blank"
           variant="outlined"
+          aria-label={`${cta_label} - ${name}`}
           classes={{
             root: styles.startLinkButton,
           }}

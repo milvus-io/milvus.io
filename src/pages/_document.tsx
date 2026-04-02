@@ -11,10 +11,6 @@ export default function Document(props) {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        {/* Font loading: stylesheets load normally (render-blocking) so
-            fonts start downloading immediately with the page. This minimizes
-            the swap window compared to the old media="print" hack which
-            delayed font download until after first paint. */}
         <link
           href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap"
           rel="stylesheet"

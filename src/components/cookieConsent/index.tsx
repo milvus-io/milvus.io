@@ -10,6 +10,8 @@ export default function CustomCookieConsent() {
       hideOnAccept
       buttonText={t('cookie.accept')}
       declineButtonText={t('cookie.reject')}
+      ariaAcceptLabel={t('cookie.accept')}
+      ariaDeclineLabel={t('cookie.reject')}
       enableDeclineButton
       containerClasses={classes.consentContainer}
       contentClasses={classes.contentWrapper}
@@ -17,7 +19,7 @@ export default function CustomCookieConsent() {
       buttonClasses={classes.acceptButton}
       declineButtonClasses={classes.declineButton}
     >
-      <h3 className="">{t('cookie.title')}</h3>
+      <p className="font-[600]">{t('cookie.title')}</p>
       <p className="">{t('cookie.consent')}</p>
     </CookieConsent>
   );

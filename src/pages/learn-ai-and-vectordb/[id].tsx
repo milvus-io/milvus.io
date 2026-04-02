@@ -44,7 +44,7 @@ const learnAiPageOptions: OptionItem[] = [
 export default function LearnAiDetail(props: {
   data: LearnAiDetailType;
   html: string;
-  anchorList: { label: string; href: string; }[];
+  anchorList: { label: string; href: string; type: number; isActive: boolean }[];
   recommendArticles: Pick<LearnAiDetailType, 'title' | 'url'>[];
   previousUrl?: string;
   nextUrl?: string;

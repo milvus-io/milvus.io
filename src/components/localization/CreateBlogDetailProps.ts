@@ -52,7 +52,7 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
         blogId: id,
         locale: lang,
         newHtml,
-        anchorList: anchorList.filter(item => item.label !== rest.title),
+        anchorList: anchorList.filter(item => item.label !== rest.title && item.type === 2),
         codeList,
         moreBlogs: [
           ...moreBlogs,

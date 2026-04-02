@@ -1,6 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.css';
 import * as styles from './index.module.css';
 
 let timer = null;
@@ -9,7 +7,12 @@ const CropperDemo = props => {
   const myCropper = useRef(null);
   const { propSend, src, className, imgClassName } = props;
 
-  const handleImgLoaded = e => {
+  const handleImgLoaded = async e => {
+    const [{ default: Cropper }, _] = await Promise.all([
+      import('cropperjs'),
+      import('cropperjs/dist/cropper.css'),
+    ]);
+
     let latestSrc = null;
     const cropper = new Cropper(imgRef.current, {
       viewMode: 3,
@@ -60,9 +63,6 @@ const CropperDemo = props => {
             onLoad={handleImgLoaded}
           ></img>
         )}
-
-        {/* <button onClick={handleDownload}>download</button>
-      <button onClick={handleSend}>send</button> */}
       </div>
     </div>
   );

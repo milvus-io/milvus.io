@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Code from '../components/code/code';
-import hljs from 'highlight.js';
 import ReactDOM from 'react-dom';
 import { useRouter } from 'next/router';
 // import { drawZChart } from '@zilliz/zui';

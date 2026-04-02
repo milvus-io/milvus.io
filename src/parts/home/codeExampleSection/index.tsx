@@ -1,12 +1,9 @@
 import classes from './index.module.css';
 import pageClasses from '@/styles/responsive.module.css';
-import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/atom-one-dark.css';
-import javascript from 'highlight.js/lib/languages/javascript';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import CustomTabs from '@/components/customTabs';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import {
@@ -15,8 +12,6 @@ import {
   CODE_SEARCH,
   CODE_DELETE_COLLECTION,
 } from './const';
-
-hljs.registerLanguage('javascript', javascript);
 
 export default function CodeExampleSection() {
   const { locale } = useGlobalLocale();
@@ -59,9 +54,25 @@ export default function CodeExampleSection() {
     code,
     codeList,
   }) => {
-    const highlightedCode = hljs.highlight(code, {
-      language: 'javascript',
-    }).value;
+    const [highlightedCode, setHighlightedCode] = useState(code);
+
+    useEffect(() => {
+      let cancelled = false;
+      Promise.all([
+        import('highlight.js/lib/core'),
+        import('highlight.js/lib/languages/javascript'),
+      ]).then(([{ default: hljs }, { default: javascript }]) => {
+        require('highlight.js/styles/atom-one-dark.css');
+        if (cancelled) return;
+        hljs.registerLanguage('javascript', javascript);
+        setHighlightedCode(
+          hljs.highlight(code, { language: 'javascript' }).value
+        );
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, [code]);
 
     useCopyCode(codeList);
 

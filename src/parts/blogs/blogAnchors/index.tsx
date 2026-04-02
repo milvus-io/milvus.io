@@ -1,12 +1,37 @@
-import * as classes from './index.module.css';
+import classes from './index.module.css';
 import clsx from 'clsx';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, RefObject } from 'react';
 import { useActivateAnchorWhenScroll } from '../../../hooks/blog';
 import Share from '../../../components/share';
 import CloudAdvertisementCard from '@/components/card/advCard';
 
-export default function BlogAnchorSection(props) {
+
+
+interface BlogAnchorSectionProps {
+  classes?: {
+    root?: string;
+  };
+  anchors?: {
+    label: string;
+    href: string;
+    type: number;
+    isActive: boolean;
+}[];
+  shareUrl: string;
+  title: string;
+  description: string;
+  container: RefObject<HTMLElement>;
+  imgUrl?: string;
+  id: string;
+  customAdvConfig?: {
+    advTitle: string;
+    advContent: string;
+    advCtaLabel: string;
+    advCtaLink: string;
+  };
+}
+
+export default function BlogAnchorSection(props: BlogAnchorSectionProps) {
   const {
     classes: customClasses = {},
     anchors = [],
@@ -18,25 +43,26 @@ export default function BlogAnchorSection(props) {
     id,
     customAdvConfig,
   } = props;
+
   const { root = '' } = customClasses;
 
   // label maybe duplicate, we use href as unique key to show active style
   const [activeAnchor, setActiveAnchor] = useState('');
 
-  const handleChooseAnchor = href => {
+  const handleChooseAnchor = (href: string) => {
     if (!href) {
       return;
     }
     setActiveAnchor(href);
   };
 
-  const handleAnchorClick = href => {
-    document.querySelector(`#${href}`).scrollIntoView({
+  const handleAnchorClick = (href: string) => {
+    document.querySelector(`#${href}`)?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
     handleChooseAnchor(href);
-    history.pushState(null, null, `#${href}`);
+    history.pushState(null, '', `#${href}`);
   };
 
   useEffect(() => {

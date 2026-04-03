@@ -25,7 +25,6 @@ import {
   DISCORD_INVITE_URL,
   GITHUB_MILVUS_COMMUNITY_LINK,
   GITHUB_CLAUDE_CONTEXT_LINK,
-  MILVUS_SLACK_LINK,
 } from '@/consts/links';
 import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 import { RightTopArrowIcon } from '../icons';
@@ -289,7 +288,7 @@ export default function MobileHeader(props: {
                       {t('community.officeHours')}
                       <RightTopArrowIcon />
                     </a>
-                    <a
+                    {/* <a
                       href={MILVUS_SLACK_LINK}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -297,7 +296,7 @@ export default function MobileHeader(props: {
                     >
                       {t('community.slack')}
                       <RightTopArrowIcon />
-                    </a>
+                    </a> */}
                     <a
                       href={DISCORD_INVITE_URL}
                       target="_blank"

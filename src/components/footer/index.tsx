@@ -14,7 +14,6 @@ import {
   GITHUB_VTS_LINK,
   GITHUB_DEEP_SEARCHER_LINK,
   GITHUB_CLAUDE_CONTEXT_LINK,
-  MILVUS_SLACK_LINK,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
 import { SocialMedias, SocialMediasCN } from '../socialMedias';
@@ -137,12 +136,12 @@ const Footer = (props: Props) => {
           to: MILVUS_OFFICE_HOURS_URL,
           isExternal: true,
         },
-        {
-          id: 'community-2',
-          name: t('header:community.slack'),
-          to: MILVUS_SLACK_LINK,
-          isExternal: true,
-        },
+        // {
+        //   id: 'community-2',
+        //   name: t('header:community.slack'),
+        //   to: MILVUS_SLACK_LINK,
+        //   isExternal: true,
+        // },
         {
           id: 'community-3',
           name: 'Discord',

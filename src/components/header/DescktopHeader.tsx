@@ -19,7 +19,6 @@ import {
   DISCORD_INVITE_URL,
   GITHUB_MILVUS_COMMUNITY_LINK,
   GITHUB_CLAUDE_CONTEXT_LINK,
-  MILVUS_SLACK_LINK
 } from '@/consts/links';
 import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
 import { LanguageSelector } from '@/components/language-selector';
@@ -132,11 +131,11 @@ export default function DesktopHeader(props: Props) {
           link: MILVUS_OFFICE_HOURS_URL,
           rel: 'noopener noreferrer',
         },
-        {
-          label: t("community.slack"),
-          link: MILVUS_SLACK_LINK,
-          rel: 'noopener noreferrer',
-        },
+        // {
+        //   label: t("community.slack"),
+        //   link: MILVUS_SLACK_LINK,
+        //   rel: 'noopener noreferrer',
+        // },
         {
           label: t('community.discord'),
           link: DISCORD_INVITE_URL,

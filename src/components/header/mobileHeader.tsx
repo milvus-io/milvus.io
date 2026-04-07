@@ -3,11 +3,12 @@ import classes from './mobileHeader.module.css';
 import pageClasses from '../../styles/responsive.module.css';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { LogoSection } from './Logos';
 import { CloseIcon, MenuIcon, ExpandMoreIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
 import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import {
   GITHUB_ATTU_LINK,
   GITHUB_VTS_LINK,
@@ -25,41 +26,6 @@ import { RightTopArrowIcon } from '../icons';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { LanguageSelector } from '../language-selector';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
-
-function CollapseSection({
-  open,
-  children,
-}: {
-  open: boolean;
-  children: React.ReactNode;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number | undefined>(open ? undefined : 0);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    if (open) {
-      setHeight(ref.current.scrollHeight);
-      const timer = setTimeout(() => setHeight(undefined), 300);
-      return () => clearTimeout(timer);
-    } else {
-      setHeight(ref.current.scrollHeight);
-      requestAnimationFrame(() => setHeight(0));
-    }
-  }, [open]);
-
-  return (
-    <div
-      style={{
-        height: height !== undefined ? height : 'auto',
-        overflow: 'hidden',
-        transition: 'height 300ms ease',
-      }}
-    >
-      <div ref={ref}>{open ? children : null}</div>
-    </div>
-  );
-}
 
 export default function MobileHeader(props: {
   className?: string;
@@ -150,21 +116,23 @@ export default function MobileHeader(props: {
                   </button>
                 </li>
 
-                <CollapseSection open={isTutOpen}>
-                  <div className={classes.subMenuList}>
-                    <Link href="/bootcamp">Bootcamp</Link>
-                    <Link href="/milvus-demos">Demo</Link>
-                    <a
-                      href="https://www.youtube.com/c/MilvusVectorDatabase"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      Video
-                      <RightTopArrowIcon />
-                    </a>
-                  </div>
-                </CollapseSection>
+                <Collapsible open={isTutOpen}>
+                  <CollapsibleContent className={classes.collapsibleContent}>
+                    <div className={classes.subMenuList}>
+                      <Link href="/bootcamp">Bootcamp</Link>
+                      <Link href="/milvus-demos">Demo</Link>
+                      <a
+                        href="https://www.youtube.com/c/MilvusVectorDatabase"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        Video
+                        <RightTopArrowIcon />
+                      </a>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
 
                 <hr className={classes.divider} />
 
@@ -183,66 +151,68 @@ export default function MobileHeader(props: {
                   </button>
                 </li>
 
-                <CollapseSection open={isToolOpen}>
-                  <div className={classes.subMenuList}>
-                    <a
-                      href={GITHUB_ATTU_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('tools.attu')}
-                      <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_MILVUS_CLI_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('tools.cli')}
-                      <RightTopArrowIcon />
-                    </a>
-                    <Link
-                      href="/tools/sizing"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('tools.sizing')}
-                    </Link>
-                    <a
-                      href={GITHUB_MILVUS_BACKUP_LINK}
-                      className={classes.externalLinkButton}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('tools.backup')} <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_VTS_LINK}
-                      className={classes.externalLinkButton}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('tools.vts')} <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_DEEP_SEARCHER_LINK}
-                      className={classes.externalLinkButton}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('tools.deepSearcher')} <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_CLAUDE_CONTEXT_LINK}
-                      className={classes.externalLinkButton}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('tools.claudeContext')} <RightTopArrowIcon />
-                    </a>
-                  </div>
-                </CollapseSection>
+                <Collapsible open={isToolOpen}>
+                  <CollapsibleContent className={classes.collapsibleContent}>
+                    <div className={classes.subMenuList}>
+                      <a
+                        href={GITHUB_ATTU_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('tools.attu')}
+                        <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_MILVUS_CLI_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('tools.cli')}
+                        <RightTopArrowIcon />
+                      </a>
+                      <Link
+                        href="/tools/sizing"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('tools.sizing')}
+                      </Link>
+                      <a
+                        href={GITHUB_MILVUS_BACKUP_LINK}
+                        className={classes.externalLinkButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('tools.backup')} <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_VTS_LINK}
+                        className={classes.externalLinkButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('tools.vts')} <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_DEEP_SEARCHER_LINK}
+                        className={classes.externalLinkButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('tools.deepSearcher')} <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_CLAUDE_CONTEXT_LINK}
+                        className={classes.externalLinkButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('tools.claudeContext')} <RightTopArrowIcon />
+                      </a>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
 
                 <hr className={classes.divider} />
 
@@ -269,41 +239,46 @@ export default function MobileHeader(props: {
                   </button>
                 </li>
 
-                <CollapseSection open={isCommunityOpen}>
-                  <div className={classes.subMenuList}>
-                    <a
-                      href={MILVUS_OFFICE_HOURS_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.officeHours')}
-                      <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={DISCORD_INVITE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.discord')}
-                      <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_MILVUS_COMMUNITY_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.github')}
-                      <RightTopArrowIcon />
-                    </a>
+                <Collapsible open={isCommunityOpen}>
+                  <CollapsibleContent className={classes.collapsibleContent}>
+                    <div className={classes.subMenuList}>
+                      <a
+                        href={MILVUS_OFFICE_HOURS_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('community.officeHours')}
+                        <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={DISCORD_INVITE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('community.discord')}
+                        <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_MILVUS_COMMUNITY_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('community.github')}
+                        <RightTopArrowIcon />
+                      </a>
 
-                    <a href="/community" className={classes.externalLinkButton}>
-                      {t('community.more')}
-                    </a>
-                  </div>
-                </CollapseSection>
+                      <a
+                        href="/community"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('community.more')}
+                      </a>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
               </ul>
             </div>
 

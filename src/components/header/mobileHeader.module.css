@@ -119,6 +119,36 @@
   }
 }
 
+.collapsibleContent {
+  overflow: hidden;
+}
+
+.collapsibleContent[data-state='open'] {
+  animation: mobileHeaderSlideDown 0.25s ease-out;
+}
+
+.collapsibleContent[data-state='closed'] {
+  animation: mobileHeaderSlideUp 0.25s ease-out;
+}
+
+@keyframes mobileHeaderSlideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes mobileHeaderSlideUp {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
 .expendIcon {
   transition: transform linear 0.25s;
 }

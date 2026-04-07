@@ -5,9 +5,7 @@ import { getImgUrl } from '@/utils/demo-helper';
 import { FileDrop } from 'react-file-drop';
 import Cropper from '../cropper';
 import { useWindowSize } from '@/http/hooks';
-
-import GitHubIcon from '@mui/icons-material/GitHub';
-import EmailIcon from '@mui/icons-material/Email';
+import { MuiGitHubIcon as GitHubIcon, EmailIcon } from '@/components/icons';
 
 const UploaderHeader = ({
   handleImgSearch,

@@ -144,13 +144,11 @@ div.customRootClass {
 
     button {
       @mixin resetNativeButton;
+      @mixin paragraph4-bold;
       background-color: var(--color-grey-03);
       padding: 10px 20px;
       border-radius: 4px;
       color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 20px;
 
       &:hover {
         background-color: var(--color-primary);
@@ -159,38 +157,32 @@ div.customRootClass {
   }
 
   .customTitleClass {
+    @mixin heading3;
     font-family: 'Geist';
     color: var(--color-dark);
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 42px;
+   
   }
 }
 
 p.dialogSubTitle {
   font-family: 'Geist';
   color: var(--color-dark);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
+  @mixin paragraph3-regular;
   margin-bottom: 24px;
 }
 
 label.inputLabel {
   font-family: 'Geist';
   color: var(--color-dark);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 14px;
+  @mixin paragraph6-bold;
   letter-spacing: 0.24px;
-  margin-bottom: 8px;
+  font-weight: 700;
 }
 
 input.customInputField {
   font-family: 'Geist';
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
+  @mixin paragraph4-regular;
+  margin-top: 8px;
 }
 
 .advContainer {

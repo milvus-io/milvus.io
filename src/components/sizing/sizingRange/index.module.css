@@ -12,38 +12,79 @@
   gap: 32px;
 }
 
-.customRangeRoot {
+.sliderWrapper {
   flex: 1;
+  /* leave room above for thumb (7px) and below for mark labels */
+  padding: 8px 7px 28px 7px;
   margin-bottom: 8px;
-
-  .customMarkLabel {
-    @mixin paragraph6;
-    top: 30px;
-    color: var(--color-black2);
-  }
-
-  .customMark {
-    background-color: #00b3ff;
-  }
-
-  .customRail {
-    height: 4px;
-    background-color: #e0f2fc;
-  }
-
-  .customTrack {
-    background-color: #00b3ff;
-    border: none;
-  }
-
-  .customThumb {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background-color: #00b3ff;
-    border: 2px solid #fff;
-  }
+  box-sizing: border-box;
 }
+
+.trackOuter {
+  width: 100%;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.trackInner {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #e0f2fc;
+}
+
+.trackFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 2px;
+  background-color: #00b3ff;
+  pointer-events: none;
+}
+
+.mark {
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #00b3ff;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.markLabel {
+  @mixin paragraph6;
+  position: absolute;
+  top: 14px;
+  transform: translateX(-50%);
+  color: var(--color-black2);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #00b3ff;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  outline: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.thumb:focus-visible {
+  box-shadow: 0 0 0 4px rgba(0, 179, 255, 0.16);
+}
+
 .inputWrapper {
   flex: 0 0 110px;
   box-sizing: border-box;

@@ -3,9 +3,9 @@ import { ThumbUpIcon, ThumbDownIcon } from '../icons';
 import type { DialogPropsType } from './index';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, Typography, InputLabel } from '@mui/material';
 import { useRouter } from 'next/router';
 import { LanguageEnum } from '@/types/localization';
+import { Textarea } from '@/components/ui/textarea';
 
 declare global {
   interface Window {
@@ -19,29 +19,19 @@ const FeedbackComment: React.FC<{
   const { t } = useTranslation('docs');
   return (
     <div>
-      <Typography
-        classes={{
-          root: styles.dialogSubTitle,
-        }}
-      >
+      <p className={styles.dialogSubTitle}>
         {t('feedback.comment.desc')}
-      </Typography>
-      <InputLabel
-        id="extra-comment-label"
-        classes={{
-          root: styles.inputLabel,
-        }}
+      </p>
+      <label
+        htmlFor="extra-comment"
+        className={styles.inputLabel}
       >
         {t('feedback.comment.inputLabel')}
-      </InputLabel>
-      <TextField
+      </label>
+      <Textarea
         id="extra-comment"
-        multiline
         rows={4}
-        fullWidth
-        classes={{
-          root: styles.customInputField,
-        }}
+        className={styles.customInputField}
         onChange={onUpdateComment}
       />
     </div>

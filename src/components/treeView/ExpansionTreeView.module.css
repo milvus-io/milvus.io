@@ -1,75 +1,95 @@
-
 .mv3TreeView {
-  div:global(.MuiTreeItem-content.Mui-selected) {
-    background-color: transparent;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.treeItemChildren {
+  list-style: none;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.treeItemLabel {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-grey-01);
+  font-family: Geist;
+  white-space: nowrap;
+  overflow: hidden;
+
+  &:hover {
+    background-color: #f5f8fb;
   }
 
-  div:global(.MuiTreeItem-content.Mui-focused) {
-    background-color: transparent;
-  }
+  a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
 
-  div:global(.MuiTreeItem-content) {
-    padding-top: 6px;
-    padding-bottom: 6px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #f5f8fb;
-    }
-
-    :global(.MuiTreeItem-label),
-    a {
-      display: flex;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 24px;
-      width: 100%;
-      height: 100%;
-      color: var(--color-grey-01);
-      font-family: Geist;
-
-      span {
-        font-size: inherit;
-        line-height: inherit;
-      }
-    }
-  }
-
-  :global(.Mui-selected) {
-    .mv3-item-link,
-    :global(.MuiTreeItem-label) {
-      & > a {
-        color: var(--color-text-primary);
-      }
-    }
-  }
-
-  div:global(.MuiTreeItem-iconContainer) {
-    svg {
-      opacity: 0.3;
-    }
-  }
-
-  div:global(.MuiTreeItem-label) {
-    svg {
-      width: 16px;
-      height: 16px;
-      margin-right: 4px;
+    span {
+      font-size: inherit;
+      line-height: inherit;
     }
   }
 }
 
-.mv3-item-link {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
+.treeItemLeaf {
+  padding-left: 28px;
+}
 
-  svg {
-    display: inline-block;
-    vertical-align: middle;
+.treeItemIcon {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+  opacity: 0.3;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.treeItemIconExpanded {
+  transform: rotate(90deg);
+}
+
+.collapsibleContent {
+  overflow: hidden;
+}
+
+.collapsibleContent[data-state='open'] {
+  animation: treeViewSlideDown 0.2s ease-out;
+}
+
+.collapsibleContent[data-state='closed'] {
+  animation: treeViewSlideUp 0.2s ease-out;
+}
+
+@keyframes treeViewSlideDown {
+  from {
+    height: 0;
   }
-  svg {
-    margin-right: 8px;
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes treeViewSlideUp {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+.selected {
+  a {
+    color: var(--color-text-primary);
   }
 }

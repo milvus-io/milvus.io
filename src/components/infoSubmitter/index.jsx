@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import * as styles from './index.module.css';
-import { TextField } from '@mui/material';
 import { submitHubspotForm } from '@/http/submitEmail';
 
 const InfoSubmitter = ({ submitCb = () => {}, source, href = '' }) => {
@@ -38,10 +37,11 @@ const InfoSubmitter = ({ submitCb = () => {}, source, href = '' }) => {
       </p>
 
       <div>
-        <TextField
-          fullWidth
-          variant="standard"
-          label="EMAIL"
+        <label htmlFor="info-email" className={styles.inputLabel}>EMAIL</label>
+        <input
+          id="info-email"
+          type="email"
+          className={styles.emailInput}
           value={value}
           onChange={handleChange}
         />

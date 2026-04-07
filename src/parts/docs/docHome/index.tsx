@@ -1,4 +1,3 @@
-import Typography from '@mui/material/Typography';
 import HorizontalBlogCard from '../../../components/card/HorizontalBlogCard';
 import classes from './index.module.css';
 import clsx from 'clsx';
@@ -32,12 +31,10 @@ export default function HomeContent(props: HomeContentProps) {
         }}
       ></div>
 
-      <Typography component="section" className={classes.docHomeBlog}>
-        <Typography variant="h2" component="h2">
-          Blog
-        </Typography>
+      <div className={classes.docHomeBlog}>
+        <h2>Blog</h2>
         <HorizontalBlogCard blogData={latestBlog} />
-      </Typography>
+      </div>
     </section>
   );
 }

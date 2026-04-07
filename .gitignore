@@ -56,3 +56,8 @@ public/*
 global-stats.json
 
 bin/build.sh
+
+marketing-automation-plan.md
+
+# playwright
+/.playwright-mcp/

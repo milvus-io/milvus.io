@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Layout from '@/components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
 import { DISCORD_INVITE_URL, MILVUS_BILIBILI_LINK } from '@/consts';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import classes from '@/styles/community.module.css';
 import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';

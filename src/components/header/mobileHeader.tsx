@@ -1,17 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import classes from './mobileHeader.module.css';
 import pageClasses from '../../styles/responsive.module.css';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { LogoSection } from './Logos';
-import { CloseIcon, MenuIcon } from '../icons';
+import { CloseIcon, MenuIcon, ExpandMoreIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
 import { Button } from '@/components/ui/button';
 import {
@@ -31,6 +25,41 @@ import { RightTopArrowIcon } from '../icons';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { LanguageSelector } from '../language-selector';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
+
+function CollapseSection({
+  open,
+  children,
+}: {
+  open: boolean;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number | undefined>(open ? undefined : 0);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    if (open) {
+      setHeight(ref.current.scrollHeight);
+      const timer = setTimeout(() => setHeight(undefined), 300);
+      return () => clearTimeout(timer);
+    } else {
+      setHeight(ref.current.scrollHeight);
+      requestAnimationFrame(() => setHeight(0));
+    }
+  }, [open]);
+
+  return (
+    <div
+      style={{
+        height: height !== undefined ? height : 'auto',
+        overflow: 'hidden',
+        transition: 'height 300ms ease',
+      }}
+    >
+      <div ref={ref}>{open ? children : null}</div>
+    </div>
+  );
+}
 
 export default function MobileHeader(props: {
   className?: string;
@@ -61,28 +90,16 @@ export default function MobileHeader(props: {
     }
   }, [size]);
 
-  const openTutorial = open => {
-    let isOpen = open;
-    if (isOpen === undefined) {
-      isOpen = !isTutOpen;
-    }
-    setIsTutOpen(isOpen);
+  const openTutorial = (open?: boolean) => {
+    setIsTutOpen(open !== undefined ? open : !isTutOpen);
   };
 
-  const openTool = open => {
-    let isOpen = open;
-    if (isOpen === undefined) {
-      isOpen = !isToolOpen;
-    }
-    setIsToolOpen(isOpen);
+  const openTool = (open?: boolean) => {
+    setIsToolOpen(open !== undefined ? open : !isToolOpen);
   };
 
-  const openCommunity = open => {
-    let isOpen = open;
-    if (isOpen === undefined) {
-      isOpen = !isCommunityOpen;
-    }
-    setIsCommunityOpen(isOpen);
+  const openCommunity = (open?: boolean) => {
+    setIsCommunityOpen(open !== undefined ? open : !isCommunityOpen);
   };
 
   const trackPath = useUtmTrackPath();
@@ -96,7 +113,6 @@ export default function MobileHeader(props: {
           className,
           {
             [classes.open]: isMenuOpen,
-            // stop scrolling when menu is open
             'lock-scroll': isMenuOpen,
           }
         )}
@@ -110,44 +126,32 @@ export default function MobileHeader(props: {
         >
           <div className={clsx(pageClasses.container, classes.listWrapper)}>
             <div>
-              <List
-                sx={{ width: '100%' }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-              >
-                <Link href="/docs" className={classes.menuLink}>
-                  <ListItemButton>
-                    <ListItemText primary="Docs" />
-                  </ListItemButton>
-                </Link>
+              <ul className={classes.menuList}>
+                <li>
+                  <Link href="/docs" className={classes.menuLink}>
+                    <span className={classes.menuItemBtn}>Docs</span>
+                  </Link>
+                </li>
 
-                <Divider variant="fullWidth" />
+                <hr className={classes.divider} />
 
-                <ListItemButton
-                  onClick={() => {
-                    openTutorial(!isTutOpen);
-                  }}
-                >
-                  <ListItemText primary="Tutorials" />
-                  {isTutOpen ? (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.turnDown)}
-                    />
-                  ) : (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.static)}
-                    />
-                  )}
-                </ListItemButton>
-
-                <Collapse in={isTutOpen} timeout="auto" unmountOnExit>
-                  <List
-                    component="div"
-                    disablePadding
-                    classes={{
-                      root: classes.subMenuList,
-                    }}
+                <li>
+                  <button
+                    className={classes.menuItemBtn}
+                    onClick={() => openTutorial(!isTutOpen)}
                   >
+                    <span>Tutorials</span>
+                    <ExpandMoreIcon
+                      className={clsx(
+                        classes.expendIcon,
+                        isTutOpen ? classes.turnDown : classes.static
+                      )}
+                    />
+                  </button>
+                </li>
+
+                <CollapseSection open={isTutOpen}>
+                  <div className={classes.subMenuList}>
                     <Link href="/bootcamp">Bootcamp</Link>
                     <Link href="/milvus-demos">Demo</Link>
                     <a
@@ -159,34 +163,28 @@ export default function MobileHeader(props: {
                       Video
                       <RightTopArrowIcon />
                     </a>
-                  </List>
-                </Collapse>
+                  </div>
+                </CollapseSection>
 
-                <Divider variant="fullWidth" />
+                <hr className={classes.divider} />
 
-                <ListItemButton
-                  onClick={() => {
-                    openTool(!isToolOpen);
-                  }}
-                >
-                  <ListItemText primary="Tools" />
-                  {isToolOpen ? (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.turnDown)}
-                    />
-                  ) : (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.static)}
-                    />
-                  )}
-                </ListItemButton>
-
-                <Collapse in={isToolOpen} timeout="auto" unmountOnExit>
-                  <List
-                    component="div"
-                    disablePadding
-                    classes={{ root: classes.subMenuList }}
+                <li>
+                  <button
+                    className={classes.menuItemBtn}
+                    onClick={() => openTool(!isToolOpen)}
                   >
+                    <span>Tools</span>
+                    <ExpandMoreIcon
+                      className={clsx(
+                        classes.expendIcon,
+                        isToolOpen ? classes.turnDown : classes.static
+                      )}
+                    />
+                  </button>
+                </li>
+
+                <CollapseSection open={isToolOpen}>
+                  <div className={classes.subMenuList}>
                     <a
                       href={GITHUB_ATTU_LINK}
                       target="_blank"
@@ -243,42 +241,36 @@ export default function MobileHeader(props: {
                     >
                       {t('tools.claudeContext')} <RightTopArrowIcon />
                     </a>
-                  </List>
-                </Collapse>
+                  </div>
+                </CollapseSection>
 
-                <Divider variant="fullWidth" />
+                <hr className={classes.divider} />
 
-                <Link href="/blog" className={classes.menuLink}>
-                  <ListItemButton>
-                    <ListItemText primary="Blog" />
-                  </ListItemButton>
-                </Link>
+                <li>
+                  <Link href="/blog" className={classes.menuLink}>
+                    <span className={classes.menuItemBtn}>Blog</span>
+                  </Link>
+                </li>
 
-                <Divider variant="fullWidth" />
+                <hr className={classes.divider} />
 
-                <ListItemButton
-                  onClick={() => {
-                    openCommunity(!isCommunityOpen);
-                  }}
-                >
-                  <ListItemText primary="Community" />
-                  {isCommunityOpen ? (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.turnDown)}
-                    />
-                  ) : (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.static)}
-                    />
-                  )}
-                </ListItemButton>
-
-                <Collapse in={isCommunityOpen} timeout="auto" unmountOnExit>
-                  <List
-                    component="div"
-                    disablePadding
-                    classes={{ root: classes.subMenuList }}
+                <li>
+                  <button
+                    className={classes.menuItemBtn}
+                    onClick={() => openCommunity(!isCommunityOpen)}
                   >
+                    <span>Community</span>
+                    <ExpandMoreIcon
+                      className={clsx(
+                        classes.expendIcon,
+                        isCommunityOpen ? classes.turnDown : classes.static
+                      )}
+                    />
+                  </button>
+                </li>
+
+                <CollapseSection open={isCommunityOpen}>
+                  <div className={classes.subMenuList}>
                     <a
                       href={MILVUS_OFFICE_HOURS_URL}
                       target="_blank"
@@ -288,15 +280,6 @@ export default function MobileHeader(props: {
                       {t('community.officeHours')}
                       <RightTopArrowIcon />
                     </a>
-                    {/* <a
-                      href={MILVUS_SLACK_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.slack')}
-                      <RightTopArrowIcon />
-                    </a> */}
                     <a
                       href={DISCORD_INVITE_URL}
                       target="_blank"
@@ -319,9 +302,9 @@ export default function MobileHeader(props: {
                     <a href="/community" className={classes.externalLinkButton}>
                       {t('community.more')}
                     </a>
-                  </List>
-                </Collapse>
-              </List>
+                  </div>
+                </CollapseSection>
+              </ul>
             </div>
 
             <div className={classes.mobileStartBtnWrapper}>

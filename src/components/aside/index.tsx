@@ -6,9 +6,7 @@ import { CustomizedContentDialogs } from '@/components/dialog/Dialog';
 import { LanguageSelector } from '@/components/language-selector';
 import { LanguageEnum } from '@/types/localization';
 import { DocAnchorItemType } from '@/types/docs';
-
-import EditIcon from '@mui/icons-material/Edit';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import { EditIcon, MuiGitHubIcon as GitHubIcon } from '@/components/icons';
 
 import AnchorTree from '../../parts/docs/anchorTree';
 import FeedbackSection from './feedback';

@@ -1,6 +1,7 @@
 export * from './RightTopArrow';
 export * from './DownArrow';
 export * from './SocialMedia';
+export * from './MuiReplacements';
 import { FC, HTMLAttributes } from 'react';
 
 export const Triangle = () => (

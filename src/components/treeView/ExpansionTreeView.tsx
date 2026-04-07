@@ -1,17 +1,14 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { TreeView } from '@mui/x-tree-view/TreeView';
-import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import styles from './ExpansionTreeView.module.css';
 import { ApiReferenceRouteEnum, FinalMenuStructureType } from '@/types/docs';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { ExternalDocLinkIcon } from '@/components/icons';
+import { ExternalDocLinkIcon, ChevronRightIcon } from '@/components/icons';
 import { findActiveMenuItem } from '@/utils';
 import { useRouter } from 'next/router';
 import { LanguageEnum } from '@/types/localization';
 import { getLinkPrefix } from './utils';
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 
 const SCROLL_TOP = '@@scroll|menu';
 
@@ -39,8 +36,6 @@ interface ExpansionTreeViewPropsType {
 }
 
 const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
-  // https://mui.com/components/tree-view/
-  // itemList = [ { id='', children = [], label='', link='' }, ...]
   const {
     itemList,
     homepageConf,
@@ -49,7 +44,7 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     type,
     version,
     groupId = '',
-    classes,
+    classes: customClasses,
     lang,
     category,
   } = props;
@@ -60,9 +55,9 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     tree: treeClassName,
     item: itemClassName,
     link: linkClassName,
-  } = classes;
+  } = customClasses;
   const linkPrefix = getLinkPrefix({ type, lang, category });
-  const treeView = useRef(null);
+  const treeView = useRef<HTMLUListElement>(null);
   const [expandedIds, setExpandedIds] = useState<string[]>(
     findActiveMenuItem({
       groupId,
@@ -76,7 +71,7 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
   const handleClickMenuLink = () => {
     const menuTree = treeView.current;
     if (!menuTree) return;
-    window.sessionStorage.setItem(SCROLL_TOP, menuTree.scrollTop);
+    window.sessionStorage.setItem(SCROLL_TOP, `${menuTree.scrollTop}`);
   };
 
   useEffect(() => {
@@ -91,14 +86,12 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
   useEffect(() => {
     const menuTree = treeView.current;
     if (!menuTree) return;
-    const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || 0;
+    const scrollTop = window.sessionStorage.getItem(SCROLL_TOP) || '0';
 
-    // mutationObserver can't be disconnected,it leads to container scrolls as long as menu item be clicked
-    // todo: find another way to replace setTimeout
     setTimeout(() => {
       if (menuTree) {
         menuTree.scrollTo({
-          top: scrollTop,
+          top: Number(scrollTop),
           behavior: 'smooth',
         });
       }
@@ -114,7 +107,6 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     const curNodeId = groupId || nodeId;
     const curExpandNodeIndex = expandedIds.indexOf(curNodeId);
     if (curExpandNodeIndex !== -1) {
-      // close menu
       setExpandedIds(v => v.slice(0, curExpandNodeIndex));
       return;
     }
@@ -155,10 +147,10 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
           : `${linkPrefix}/${version}/${href}`;
       }
       return `${linkPrefix}/${version}/${href}`;
-    }, [externalLink, linkPrefix, href, type, latestVersion, version]);
+    }, [externalLink, linkPrefix, href, version, latestVersion]);
 
     if (!href) {
-      return <>label</>;
+      return <>{label}</>;
     }
 
     return (
@@ -184,73 +176,77 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     );
   };
 
-  const generateTreeItem = (props: FinalMenuStructureType) => {
-    const { id, label, href, children, parentIds, externalLink = '' } = props;
-    return children?.length ? (
-      <TreeItem
-        key={id}
-        className={itemClassName}
-        nodeId={id}
-        label={label}
-        onClick={() => {
-          handleClickParentTree({
-            nodeId: id,
-            parentIds,
-          });
-        }}
-      >
-        {children.map(i => generateTreeItem(i))}
-      </TreeItem>
-    ) : (
-      <TreeItem
-        key={`child-${id}-${href}`}
-        className={itemClassName}
-        nodeId={id}
-        onClick={() => {
-          handleClickParentTree({
-            nodeId: id,
-            groupId,
-            parentIds,
-          });
-        }}
-        label={
-          <TreeItemLink
-            href={href}
-            label={label}
-            onClick={handleClickMenuLink}
-            className={linkClassName}
-            version={version}
-            linkPrefix={linkPrefix}
-            externalLink={externalLink}
-            latestVersion={latestVersion}
-            id={id}
-          />
-        }
-      />
+  const generateTreeItem = (item: FinalMenuStructureType) => {
+    const { id, label, href, children, parentIds, externalLink = '' } = item;
+    const isExpanded = expandedIds.includes(id);
+    const isSelected = selectedId === id;
+    const hasChildren = children?.length > 0;
+
+    return (
+      <li key={hasChildren ? id : `child-${id}-${href}`} className={itemClassName}>
+        {hasChildren ? (
+          <Collapsible open={isExpanded}>
+            <div
+              className={clsx(styles.treeItemLabel, {
+                [styles.selected]: isSelected,
+              })}
+              onClick={() => handleClickParentTree({ nodeId: id, parentIds })}
+            >
+              <span
+                className={clsx(styles.treeItemIcon, {
+                  [styles.treeItemIconExpanded]: isExpanded,
+                })}
+              >
+                <ChevronRightIcon />
+              </span>
+              <span>{label}</span>
+            </div>
+            <CollapsibleContent className={styles.collapsibleContent}>
+              <ul className={styles.treeItemChildren}>
+                {children.map(child => generateTreeItem(child))}
+              </ul>
+            </CollapsibleContent>
+          </Collapsible>
+        ) : (
+          <div
+            className={clsx(styles.treeItemLabel, styles.treeItemLeaf, {
+              [styles.selected]: isSelected,
+            })}
+            onClick={() =>
+              handleClickParentTree({ nodeId: id, groupId, parentIds })
+            }
+          >
+            <TreeItemLink
+              href={href}
+              label={label}
+              onClick={handleClickMenuLink}
+              className={linkClassName}
+              version={version}
+              linkPrefix={linkPrefix}
+              externalLink={externalLink}
+              latestVersion={latestVersion}
+              id={id}
+            />
+          </div>
+        )}
+      </li>
     );
   };
 
   useEffect(() => {
-    // reset active menu item when route change
     setSelectedId(groupId || currentMdId);
   }, [asPath]);
 
   return (
-    <TreeView
-      defaultCollapseIcon={<ExpandMoreIcon />}
-      defaultExpandIcon={<ChevronRightIcon />}
+    <ul
       ref={treeView}
       className={clsx(styles.mv3TreeView, {
         [treeClassName]: treeClassName,
       })}
-      selected={
-        currentMdId === 'home' ? [`home-${homepageConf.label}`] : [selectedId]
-      }
-      expanded={expandedIds}
       onClick={handleClickMenuLink}
     >
       {itemList.map(i => generateTreeItem(i))}
-    </TreeView>
+    </ul>
   );
 };
 

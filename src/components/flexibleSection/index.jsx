@@ -1,5 +1,5 @@
 import styles from './index.module.css';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { KeyboardArrowRightIcon } from '@/components/icons';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { useWindowSize } from '../../http/hooks';

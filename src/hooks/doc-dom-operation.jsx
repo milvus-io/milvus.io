@@ -1,23 +1,5 @@
 import React, { useEffect } from 'react';
-import Code from '../components/code/code';
-import ReactDOM from 'react-dom';
-import { useRouter } from 'next/router';
-// import { drawZChart } from '@zilliz/zui';
-// import "@zilliz/zui/ZChart.css";
 
-/**
- * connect to local enterprise manager
- * example:
- * <code>asdasd</code>
-
-<div class="query-button-panel">
-<span class="copy">copy</span>
-<span class="console">console</span>
-<span class="setting">setting</span>
-
-</div>
- * 
- */
 export const useEmPanel = setShowModal => {
   const getRequestAsCURL = code => {
     const [header, ...data] = code.split('\n');

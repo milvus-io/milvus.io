@@ -23,22 +23,91 @@
   .apiHomeButton {
     font-weight: 400;
   }
+}
 
-  .selectRoot {
-    width: 64px;
-    padding: 3px 8px 3px 14px;
-    font-size: 12px;
-    line-height: 1.5em;
+.selectRoot {
+  position: relative;
+  display: inline-block;
+}
+
+.selectTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: 110px;
+  padding: 3px 8px;
+  font-size: 12px;
+  line-height: 1.5em;
+  background-color: #fff;
+  border: 1px solid var(--color-border, #d9d9d9);
+  border-radius: 4px;
+  color: #000;
+  cursor: pointer;
+
+  & > span {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    border-color: var(--color-text-primary, #00b3ff);
   }
 }
+
+.chevron {
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.selectMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+  min-width: 100%;
+  max-height: 240px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid var(--color-border, #d9d9d9);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  /*
+    Hidden but still rendered so the version <a href> links are present in
+    SSR HTML for crawlers. `display: none` keeps Googlebot able to discover
+    the links via DOM while suppressing visual + interactive presence.
+  */
+  display: none;
+}
+
+.selectMenuOpen {
+  display: block;
+}
+
 .versionLink {
   display: block;
   width: 100%;
+  padding: 4px 12px;
   font-size: 12px;
   line-height: 1.5em;
   color: #000;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
 }
 
-.disabledLink {
-  pointer-events: none;
+.versionLinkActive {
+  font-weight: 600;
+  color: var(--color-text-primary, #00b3ff);
 }

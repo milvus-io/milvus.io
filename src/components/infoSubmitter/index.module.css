@@ -32,6 +32,27 @@
     margin-bottom: 40px;
   }
 
+  .inputLabel {
+    display: block;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 4px;
+  }
+
+  .emailInput {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    padding: 4px 0;
+    font-size: 16px;
+    outline: none;
+    background: transparent;
+  }
+
+  .emailInput:focus {
+    border-bottom-color: var(--color-primary);
+  }
+
   .prompt {
     font-size: 14px;
     line-height: 22px;

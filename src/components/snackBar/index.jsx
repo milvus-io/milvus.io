@@ -1,10 +1,5 @@
-import React from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import React, { useEffect } from 'react';
+import styles from './index.module.css';
 
 export const CustomizedSnackbars = ({
   open,
@@ -13,18 +8,22 @@ export const CustomizedSnackbars = ({
   type = 'info',
   message = '',
 }) => {
-  const [vertical, horizontal] = ['top', 'right'];
+  useEffect(() => {
+    if (!open) return;
+    const timer = setTimeout(() => {
+      handleClose();
+    }, duration);
+    return () => clearTimeout(timer);
+  }, [open, duration, handleClose]);
+
+  if (!open) return null;
 
   return (
-    <Snackbar
-      open={open}
-      autoHideDuration={duration}
-      onClose={handleClose}
-      anchorOrigin={{ vertical, horizontal }}
-    >
-      <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
-        {message}
-      </Alert>
-    </Snackbar>
+    <div className={`${styles.snackbar} ${styles[type] || ''}`}>
+      <span className={styles.message}>{message}</span>
+      <button className={styles.closeBtn} onClick={handleClose} aria-label="close">
+        &times;
+      </button>
+    </div>
   );
 };

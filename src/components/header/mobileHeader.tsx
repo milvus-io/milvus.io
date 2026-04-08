@@ -1,19 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import classes from './mobileHeader.module.css';
 import pageClasses from '../../styles/responsive.module.css';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 import { LogoSection } from './Logos';
-import { CloseIcon, MenuIcon } from '../icons';
+import { CloseIcon, MenuIcon, ExpandMoreIcon } from '../icons';
 import { useWindowSize } from '@/http/hooks';
 import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import {
   GITHUB_ATTU_LINK,
   GITHUB_VTS_LINK,
@@ -61,28 +56,16 @@ export default function MobileHeader(props: {
     }
   }, [size]);
 
-  const openTutorial = open => {
-    let isOpen = open;
-    if (isOpen === undefined) {
-      isOpen = !isTutOpen;
-    }
-    setIsTutOpen(isOpen);
+  const openTutorial = (open?: boolean) => {
+    setIsTutOpen(open !== undefined ? open : !isTutOpen);
   };
 
-  const openTool = open => {
-    let isOpen = open;
-    if (isOpen === undefined) {
-      isOpen = !isToolOpen;
-    }
-    setIsToolOpen(isOpen);
+  const openTool = (open?: boolean) => {
+    setIsToolOpen(open !== undefined ? open : !isToolOpen);
   };
 
-  const openCommunity = open => {
-    let isOpen = open;
-    if (isOpen === undefined) {
-      isOpen = !isCommunityOpen;
-    }
-    setIsCommunityOpen(isOpen);
+  const openCommunity = (open?: boolean) => {
+    setIsCommunityOpen(open !== undefined ? open : !isCommunityOpen);
   };
 
   const trackPath = useUtmTrackPath();
@@ -96,7 +79,6 @@ export default function MobileHeader(props: {
           className,
           {
             [classes.open]: isMenuOpen,
-            // stop scrolling when menu is open
             'lock-scroll': isMenuOpen,
           }
         )}
@@ -110,218 +92,194 @@ export default function MobileHeader(props: {
         >
           <div className={clsx(pageClasses.container, classes.listWrapper)}>
             <div>
-              <List
-                sx={{ width: '100%' }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-              >
-                <Link href="/docs" className={classes.menuLink}>
-                  <ListItemButton>
-                    <ListItemText primary="Docs" />
-                  </ListItemButton>
-                </Link>
+              <ul className={classes.menuList}>
+                <li>
+                  <Link href="/docs" className={classes.menuLink}>
+                    <span className={classes.menuItemBtn}>Docs</span>
+                  </Link>
+                </li>
 
-                <Divider variant="fullWidth" />
+                <hr className={classes.divider} />
 
-                <ListItemButton
-                  onClick={() => {
-                    openTutorial(!isTutOpen);
-                  }}
-                >
-                  <ListItemText primary="Tutorials" />
-                  {isTutOpen ? (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.turnDown)}
-                    />
-                  ) : (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.static)}
-                    />
-                  )}
-                </ListItemButton>
-
-                <Collapse in={isTutOpen} timeout="auto" unmountOnExit>
-                  <List
-                    component="div"
-                    disablePadding
-                    classes={{
-                      root: classes.subMenuList,
-                    }}
+                <li>
+                  <button
+                    className={classes.menuItemBtn}
+                    onClick={() => openTutorial(!isTutOpen)}
                   >
-                    <Link href="/bootcamp">Bootcamp</Link>
-                    <Link href="/milvus-demos">Demo</Link>
-                    <a
-                      href="https://www.youtube.com/c/MilvusVectorDatabase"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      Video
-                      <RightTopArrowIcon />
-                    </a>
-                  </List>
-                </Collapse>
-
-                <Divider variant="fullWidth" />
-
-                <ListItemButton
-                  onClick={() => {
-                    openTool(!isToolOpen);
-                  }}
-                >
-                  <ListItemText primary="Tools" />
-                  {isToolOpen ? (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.turnDown)}
+                    <span>Tutorials</span>
+                    <ExpandMoreIcon
+                      className={clsx(
+                        classes.expendIcon,
+                        isTutOpen ? classes.turnDown : classes.static
+                      )}
                     />
-                  ) : (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.static)}
-                    />
-                  )}
-                </ListItemButton>
+                  </button>
+                </li>
 
-                <Collapse in={isToolOpen} timeout="auto" unmountOnExit>
-                  <List
-                    component="div"
-                    disablePadding
-                    classes={{ root: classes.subMenuList }}
+                <Collapsible open={isTutOpen}>
+                  <CollapsibleContent className={classes.collapsibleContent}>
+                    <div className={classes.subMenuList}>
+                      <Link href="/bootcamp">Bootcamp</Link>
+                      <Link href="/milvus-demos">Demo</Link>
+                      <a
+                        href="https://www.youtube.com/c/MilvusVectorDatabase"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        Video
+                        <RightTopArrowIcon />
+                      </a>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                <hr className={classes.divider} />
+
+                <li>
+                  <button
+                    className={classes.menuItemBtn}
+                    onClick={() => openTool(!isToolOpen)}
                   >
-                    <a
-                      href={GITHUB_ATTU_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('tools.attu')}
-                      <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_MILVUS_CLI_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('tools.cli')}
-                      <RightTopArrowIcon />
-                    </a>
-                    <Link
-                      href="/tools/sizing"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('tools.sizing')}
-                    </Link>
-                    <a
-                      href={GITHUB_MILVUS_BACKUP_LINK}
-                      className={classes.externalLinkButton}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('tools.backup')} <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_VTS_LINK}
-                      className={classes.externalLinkButton}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('tools.vts')} <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_DEEP_SEARCHER_LINK}
-                      className={classes.externalLinkButton}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('tools.deepSearcher')} <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_CLAUDE_CONTEXT_LINK}
-                      className={classes.externalLinkButton}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('tools.claudeContext')} <RightTopArrowIcon />
-                    </a>
-                  </List>
-                </Collapse>
-
-                <Divider variant="fullWidth" />
-
-                <Link href="/blog" className={classes.menuLink}>
-                  <ListItemButton>
-                    <ListItemText primary="Blog" />
-                  </ListItemButton>
-                </Link>
-
-                <Divider variant="fullWidth" />
-
-                <ListItemButton
-                  onClick={() => {
-                    openCommunity(!isCommunityOpen);
-                  }}
-                >
-                  <ListItemText primary="Community" />
-                  {isCommunityOpen ? (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.turnDown)}
+                    <span>Tools</span>
+                    <ExpandMoreIcon
+                      className={clsx(
+                        classes.expendIcon,
+                        isToolOpen ? classes.turnDown : classes.static
+                      )}
                     />
-                  ) : (
-                    <ExpandMore
-                      className={clsx(classes.expendIcon, classes.static)}
-                    />
-                  )}
-                </ListItemButton>
+                  </button>
+                </li>
 
-                <Collapse in={isCommunityOpen} timeout="auto" unmountOnExit>
-                  <List
-                    component="div"
-                    disablePadding
-                    classes={{ root: classes.subMenuList }}
+                <Collapsible open={isToolOpen}>
+                  <CollapsibleContent className={classes.collapsibleContent}>
+                    <div className={classes.subMenuList}>
+                      <a
+                        href={GITHUB_ATTU_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('tools.attu')}
+                        <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_MILVUS_CLI_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('tools.cli')}
+                        <RightTopArrowIcon />
+                      </a>
+                      <Link
+                        href="/tools/sizing"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('tools.sizing')}
+                      </Link>
+                      <a
+                        href={GITHUB_MILVUS_BACKUP_LINK}
+                        className={classes.externalLinkButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('tools.backup')} <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_VTS_LINK}
+                        className={classes.externalLinkButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('tools.vts')} <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_DEEP_SEARCHER_LINK}
+                        className={classes.externalLinkButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('tools.deepSearcher')} <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_CLAUDE_CONTEXT_LINK}
+                        className={classes.externalLinkButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('tools.claudeContext')} <RightTopArrowIcon />
+                      </a>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                <hr className={classes.divider} />
+
+                <li>
+                  <Link href="/blog" className={classes.menuLink}>
+                    <span className={classes.menuItemBtn}>Blog</span>
+                  </Link>
+                </li>
+
+                <hr className={classes.divider} />
+
+                <li>
+                  <button
+                    className={classes.menuItemBtn}
+                    onClick={() => openCommunity(!isCommunityOpen)}
                   >
-                    <a
-                      href={MILVUS_OFFICE_HOURS_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.officeHours')}
-                      <RightTopArrowIcon />
-                    </a>
-                    {/* <a
-                      href={MILVUS_SLACK_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.slack')}
-                      <RightTopArrowIcon />
-                    </a> */}
-                    <a
-                      href={DISCORD_INVITE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.discord')}
-                      <RightTopArrowIcon />
-                    </a>
-                    <a
-                      href={GITHUB_MILVUS_COMMUNITY_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={classes.externalLinkButton}
-                    >
-                      {t('community.github')}
-                      <RightTopArrowIcon />
-                    </a>
+                    <span>Community</span>
+                    <ExpandMoreIcon
+                      className={clsx(
+                        classes.expendIcon,
+                        isCommunityOpen ? classes.turnDown : classes.static
+                      )}
+                    />
+                  </button>
+                </li>
 
-                    <a href="/community" className={classes.externalLinkButton}>
-                      {t('community.more')}
-                    </a>
-                  </List>
-                </Collapse>
-              </List>
+                <Collapsible open={isCommunityOpen}>
+                  <CollapsibleContent className={classes.collapsibleContent}>
+                    <div className={classes.subMenuList}>
+                      <a
+                        href={MILVUS_OFFICE_HOURS_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('community.officeHours')}
+                        <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={DISCORD_INVITE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('community.discord')}
+                        <RightTopArrowIcon />
+                      </a>
+                      <a
+                        href={GITHUB_MILVUS_COMMUNITY_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('community.github')}
+                        <RightTopArrowIcon />
+                      </a>
+
+                      <a
+                        href="/community"
+                        className={classes.externalLinkButton}
+                      >
+                        {t('community.more')}
+                      </a>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </ul>
             </div>
 
             <div className={classes.mobileStartBtnWrapper}>

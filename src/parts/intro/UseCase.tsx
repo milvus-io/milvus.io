@@ -4,7 +4,6 @@ import styles from '@/styles/useCase.module.css';
 import pageClasses from '@/styles/responsive.module.css';
 import UseCaseCard from '@/parts/useCase/useCaseCard';
 import clsx from 'clsx';
-import { Typography } from '@mui/material';
 import Masonry from 'react-masonry-css';
 import { RightArrow } from '@/components/icons';
 import { SHARE_YOUR_STORY_URL } from '@/consts/externalLinks';
@@ -37,12 +36,8 @@ export function UseCase(props: Props) {
             className={clsx(pageClasses.homeContainer, styles.contentContainer)}
           >
             <section className={styles.headerSection}>
-              <Typography variant="h2" component="h1">
-                {t('title')}
-              </Typography>
-              <Typography variant="h5" component="p" className={styles.desc}>
-                {t('desc')}
-              </Typography>
+              <h1>{t('title')}</h1>
+              <p className={styles.desc}>{t('desc')}</p>
             </section>
             <div className={styles.listSection}>
               {useCaseList.length ? (

@@ -1,6 +1,8 @@
 [submodule "src/blogs"]
 	path = src/blogs
 	url = https://github.com/milvus-io/community.git
+	ignore = all
 [submodule "src/docs"]
 	path = src/docs
 	url = https://github.com/milvus-io/web-content.git
+	ignore = all

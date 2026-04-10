@@ -1,0 +1,1178 @@
+/* ===== Learn Milvus — Light Theme ===== */
+
+/* ===== Home Page ===== */
+.home {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.homeHeader {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.homeHeader h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00a1ea, #0077ad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+
+.homeHeader p {
+  font-size: 1.1rem;
+  color: #667176;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.homeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.homeCard {
+  display: block;
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.2s;
+  position: relative;
+  color: #191919;
+  text-decoration: none;
+}
+
+.homeCard:hover {
+  border-color: #00a1ea;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 161, 234, 0.1);
+}
+
+.homeCard h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #191919;
+}
+
+.homeCard p {
+  font-size: 0.9rem;
+  color: #667176;
+  line-height: 1.5;
+}
+
+/* ===== Playground Layout ===== */
+.playground {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.playgroundHeader {
+  margin-bottom: 24px;
+}
+
+.playgroundHeader h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 8px 0 8px;
+  color: #191919;
+}
+
+.playgroundHeader p {
+  color: #667176;
+  font-size: 0.95rem;
+}
+
+.backLink {
+  font-size: 0.85rem;
+  color: #667176;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #00a1ea;
+}
+
+.playgroundBody {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.playgroundCanvas {
+  flex-shrink: 0;
+}
+
+.playgroundCanvas svg {
+  border-radius: 12px;
+  border: 1px solid #e9e9ed;
+}
+
+.playgroundSide {
+  flex: 1;
+  min-width: 260px;
+}
+
+/* ===== Metric Switch ===== */
+.metricSwitch {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.metricBtn {
+  flex: 1;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  color: #667176;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-family: inherit;
+}
+
+.metricBtn:hover {
+  border-color: #00a1ea;
+  color: #191919;
+}
+
+.metricBtnActive {
+  background: #f0f9ff;
+  border-color: #00a1ea;
+  color: #191919;
+  box-shadow: 0 0 0 1px #00a1ea;
+}
+
+.metricLabel {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.metricDesc {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+
+/* ===== Stats Panel ===== */
+.statsPanel {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.statsPanel h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: #191919;
+}
+
+.statsHint {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #667176;
+}
+
+.statsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statsRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  background: #f5f8fb;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.statsRank {
+  font-weight: 700;
+  color: #667176;
+  width: 28px;
+}
+
+.statsDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statsId {
+  font-weight: 600;
+  flex: 1;
+  color: #191919;
+}
+
+.statsScore {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #00a1ea;
+}
+
+.statsMeta {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e9e9ed;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  font-size: 0.8rem;
+}
+
+.statsMetaLabel {
+  color: #667176;
+}
+
+.statsMetaValue {
+  font-weight: 600;
+  color: #191919;
+}
+
+/* ===== Metric Info ===== */
+.metricInfo {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.metricInfo h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #00a1ea;
+}
+
+.metricInfo p {
+  font-size: 0.85rem;
+  color: #667176;
+  line-height: 1.6;
+}
+
+/* ===== IVF Lab ===== */
+.ivfLab {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.ivfControls {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.ivfButtons {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btnPrimary,
+.btnSecondary {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #e9e9ed;
+  transition: all 0.15s;
+}
+
+.btnPrimary {
+  background: #00a1ea;
+  color: #fff;
+  border-color: #00a1ea;
+}
+
+.btnPrimary:hover {
+  filter: brightness(1.1);
+}
+
+.btnSecondary {
+  background: #f5f8fb;
+  color: #191919;
+}
+
+.btnSecondary:hover {
+  border-color: #00a1ea;
+}
+
+.ivfSliders {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  min-width: 300px;
+}
+
+.paramSlider {
+  display: flex;
+  flex-direction: column;
+}
+
+.paramSliderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.paramSliderLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #191919;
+}
+
+.paramSliderValue {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: #00a1ea;
+  font-weight: 600;
+}
+
+.paramSlider input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: #e9e9ed;
+  outline: none;
+}
+
+.paramSlider input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #00a1ea;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #00a1ea;
+}
+
+.paramSlider input[type='range']::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #00a1ea;
+  cursor: pointer;
+  border: 2px solid #fff;
+}
+
+.paramSliderHint {
+  font-size: 0.72rem;
+  color: #667176;
+  margin-top: 6px;
+}
+
+.ivfSplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.ivfSide {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.ivfTitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.ivfTitle h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #191919;
+}
+
+.ivfTag {
+  font-size: 0.72rem;
+  color: #667176;
+  font-style: italic;
+}
+
+.ivfSide svg {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #e9e9ed;
+  display: block;
+}
+
+.ivfStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.stat {
+  background: #f5f8fb;
+  border-radius: 8px;
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.statLabel {
+  font-size: 0.7rem;
+  color: #667176;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #191919;
+}
+
+.explainer {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+
+.explainer h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #00a1ea;
+}
+
+.explainer ol,
+.explainer ul {
+  padding-left: 22px;
+  color: #667176;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.explainer ol li,
+.explainer ul li {
+  margin-bottom: 6px;
+}
+
+.explainer ol strong,
+.explainer ul strong {
+  color: #191919;
+}
+
+.explainer h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #191919;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.explainerLead {
+  font-size: 0.88rem;
+  color: #667176;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.explainerLead strong {
+  color: #191919;
+}
+
+.explainer em {
+  color: #191919;
+  font-style: italic;
+}
+
+.takeaway {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e9e9ed;
+  font-size: 0.85rem;
+  color: #667176;
+  line-height: 1.7;
+}
+
+.takeaway strong {
+  color: #191919;
+}
+
+.codeInline {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  background: #f0f9ff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: #00a1ea;
+}
+
+/* ===== HNSW Explorer ===== */
+.hnswExplorer {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.hnswSliders {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  min-width: 320px;
+}
+
+.hnswBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.hnswCanvasWrap {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.hnswCanvasWrap svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.hnswSide {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hnswStepCard {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.hnswStepLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #667176;
+}
+
+.hnswStepCounter {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #00a1ea;
+  margin: 4px 0 8px;
+}
+
+.hnswStepDesc {
+  font-size: 0.82rem;
+  color: #191919;
+  line-height: 1.5;
+  min-height: 2.4em;
+}
+
+.hnswLayerBars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hnswLayerBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hnswLayerBarLabel {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #667176;
+  width: 24px;
+}
+
+.hnswLayerBarTrack {
+  flex: 1;
+  height: 8px;
+  background: #eaeef2;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.hnswLayerBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00a1ea, #4fc4f9);
+  border-radius: 4px;
+}
+
+.hnswLayerBarCount {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #191919;
+  width: 24px;
+  text-align: right;
+}
+
+/* ===== DiskANN Explorer ===== */
+.diskannPage {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.diskannMemoryCard {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+}
+
+.diskannMemoryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.diskannMemoryHeader h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #191919;
+}
+
+.diskannMemoryNote {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: #667176;
+  line-height: 1.6;
+}
+
+.memoryLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.memoryRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.memoryRowHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+}
+
+.memoryTag {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.memoryTagRam {
+  background: rgba(34, 139, 34, 0.1);
+  color: #228b22;
+  border: 1px solid rgba(34, 139, 34, 0.25);
+}
+
+.memoryTagDisk {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.25);
+}
+
+.memoryRowTitle {
+  flex: 1;
+  color: #667176;
+}
+
+.memoryRowValue {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-weight: 700;
+  color: #191919;
+}
+
+.memoryBarTrack {
+  height: 14px;
+  background: #eaeef2;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.memoryBarFillRam {
+  height: 100%;
+  border-radius: 7px;
+  transition: width 0.35s ease;
+  background: linear-gradient(90deg, #228b22, #3cb371);
+}
+
+.memoryBarFillDisk {
+  height: 100%;
+  border-radius: 7px;
+  transition: width 0.35s ease;
+  background: linear-gradient(90deg, #dc3545, #e57373);
+}
+
+.memorySummary {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #667176;
+  padding-top: 4px;
+}
+
+.memoryRatio strong {
+  color: #00a1ea;
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+}
+
+.diskannSliders {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  min-width: 320px;
+}
+
+.diskannLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: #f5f8fb;
+  border-radius: 8px;
+  font-size: 0.74rem;
+  color: #667176;
+}
+
+.diskannLegend .dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.diskannCost {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diskannCostRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: #f5f8fb;
+  border-radius: 6px;
+  font-size: 0.78rem;
+}
+
+.diskannCostLabel {
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.diskannCostLabelRam {
+  color: #228b22;
+}
+
+.diskannCostLabelDisk {
+  color: #dc3545;
+}
+
+.diskannCostValue {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-weight: 700;
+  color: #191919;
+}
+
+.diskannCostSub {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: #667176;
+}
+
+.diskannCostTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid #e9e9ed;
+  font-size: 0.85rem;
+  color: #191919;
+}
+
+.diskannCostTotal strong {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 1rem;
+  color: #00a1ea;
+}
+
+.diskannNote {
+  margin-top: 10px;
+  font-size: 0.7rem;
+  color: #667176;
+  line-height: 1.5;
+}
+
+/* ===== Scale Selector ===== */
+.scaleSelector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+}
+
+.scaleLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #667176;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.scaleButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.scaleBtn {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: #f5f8fb;
+  color: #667176;
+  border: 1px solid #e9e9ed;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.scaleBtn:hover {
+  color: #191919;
+  border-color: #00a1ea;
+}
+
+.scaleBtnActive {
+  background: #00a1ea;
+  color: #fff;
+  border-color: #00a1ea;
+}
+
+/* ===== Tradeoff Dashboard ===== */
+.tradeoffPage {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.tradeoffChartWrap {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+}
+
+.tradeoffChartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tradeoffChartHeader h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #191919;
+}
+
+.tradeoffChartSub {
+  font-size: 0.78rem;
+  color: #667176;
+}
+
+.tradeoffChartSub strong {
+  color: #191919;
+}
+
+.tradeoffChartLegend {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #667176;
+  background: #f5f8fb;
+  border: 1px solid #e9e9ed;
+  border-radius: 16px;
+  padding: 4px 10px 4px 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.legendItem:hover,
+.legendItemActive {
+  color: #191919;
+  border-color: #00a1ea;
+}
+
+.legendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.tradeoffChartWrap svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.tradeoffCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.tradeoffCard {
+  background: #ffffff;
+  border: 1px solid #e9e9ed;
+  border-top: 3px solid #e9e9ed;
+  border-radius: 12px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tradeoffCard:hover,
+.tradeoffCardActive {
+  border-color: #00a1ea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.tradeoffCardFaded {
+  opacity: 0.45;
+}
+
+.tradeoffCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.tradeoffCardHeader h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #191919;
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+}
+
+.tradeoffCardDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.tradeoffCardTag {
+  font-size: 0.78rem;
+  color: #667176;
+  margin-bottom: 14px;
+  line-height: 1.45;
+  min-height: 2.2em;
+}
+
+.tradeoffCardMetrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.metric {
+  background: #f5f8fb;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.metricLabelSmall {
+  font-size: 0.65rem;
+  color: #667176;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.metricValueSmall {
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #191919;
+}
+
+.tradeoffCardFooter {
+  border-top: 1px solid #e9e9ed;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tradeoffCardRow {
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: #667176;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowLabel {
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.rowLabelGood {
+  color: #228b22;
+}
+
+.rowLabelBad {
+  color: #dc3545;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 860px) {
+  .playgroundBody {
+    flex-direction: column;
+  }
+
+  .playgroundCanvas {
+    width: 100%;
+  }
+
+  .playgroundCanvas svg {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 640 / 520;
+  }
+
+  .playgroundSide {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .ivfSplit {
+    grid-template-columns: 1fr;
+  }
+  .ivfSliders {
+    grid-template-columns: 1fr;
+  }
+  .hnswBody {
+    grid-template-columns: 1fr;
+  }
+  .hnswSliders {
+    grid-template-columns: 1fr;
+  }
+  .diskannSliders {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .metricSwitch {
+    flex-direction: column;
+  }
+
+  .homeHeader h1 {
+    font-size: 1.8rem;
+  }
+
+  .ivfStats {
+    grid-template-columns: 1fr;
+  }
+}

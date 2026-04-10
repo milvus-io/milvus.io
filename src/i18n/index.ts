@@ -54,6 +54,7 @@ i18n.use(initReactI18next).init({
     'contact',
     'faq',
     'llm',
+    'learnMilvus',
   ],
   keySeparator: '.',
   interpolation: {

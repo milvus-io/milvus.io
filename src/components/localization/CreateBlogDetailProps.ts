@@ -1,6 +1,7 @@
 import blogUtils from '@/utils/blog.utils';
 import { LanguageEnum } from '@/types/localization';
 import { markdownToHtml } from '@/utils/common';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 export const createBlogDetailProps = (lang: LanguageEnum) => {
   const getBlogDetailStaticPaths = () => {
@@ -47,6 +48,15 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
       .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
       .slice(0, 4);
 
+    // For non-English locales, derive canonical from the English blog:
+    // - If English blog has canonicalUrl (e.g., zilliz.com cross-post), use it
+    // - Otherwise, point to the English milvus.io blog URL
+    let canonicalUrl = (rest as Record<string, any>).canonicalUrl;
+    if (lang !== LanguageEnum.ENGLISH) {
+      const enBlog = enData.find(v => v.id === id) as Record<string, any> | undefined;
+      canonicalUrl = enBlog?.canonicalUrl || `${ABSOLUTE_BASE_URL}/blog/${id}`;
+    }
+
     return {
       props: {
         blogId: id,
@@ -60,6 +70,7 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
         ].slice(0, 4),
         tags,
         ...rest,
+        canonicalUrl,
       },
     };
   };

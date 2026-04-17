@@ -51,7 +51,7 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
     // For non-English locales, derive canonical from the English blog:
     // - If English blog has canonicalUrl (e.g., zilliz.com cross-post), use it
     // - Otherwise, point to the English milvus.io blog URL
-    let canonicalUrl = (rest as Record<string, any>).canonicalUrl;
+    let canonicalUrl = (rest as Record<string, any>).canonicalUrl ?? null;
     if (lang !== LanguageEnum.ENGLISH) {
       const enBlog = enData.find(v => v.id === id) as Record<string, any> | undefined;
       canonicalUrl = enBlog?.canonicalUrl || `${ABSOLUTE_BASE_URL}/blog/${id}`;

@@ -2,6 +2,7 @@ import demo from './demo.json';
 import docs from './docs.json';
 import header from './header.json';
 import home from './home.json';
+import home2 from './home2.json';
 import intro from './intro.json';
 import common from './milvus.json';
 import sizingTool from './sizingTool.json';
@@ -19,6 +20,7 @@ export {
   docs,
   header,
   home,
+  home2,
   intro,
   common,
   sizingTool,

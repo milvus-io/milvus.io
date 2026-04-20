@@ -46,6 +46,7 @@ i18n.use(initReactI18next).init({
     'header',
     'sizingTool',
     'home',
+    'home2',
     'docs',
     'demo',
     'community',

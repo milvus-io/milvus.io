@@ -251,7 +251,8 @@
 
 .copyCommandPlaceholder {
   color: #ffffff;
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -297,6 +298,19 @@
 
 .secondaryCta:active {
   background: var(--brut-accent-deep);
+}
+
+/* Mobile button reset — in a column flex parent, flex-basis applies to
+   the main (vertical) axis, so `flex: 1 1 360px` on .copyCommand would
+   otherwise make the button 360px TALL. Placed after base button rules
+   so specificity-equal rules inside @media win. */
+@media (max-width: 640px) {
+  .copyCommand,
+  .secondaryCta {
+    flex: 0 0 auto;
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* Stats strip: divided by vertical rules, mono, with lower-case labels */

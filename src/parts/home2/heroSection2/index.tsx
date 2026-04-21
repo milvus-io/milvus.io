@@ -56,7 +56,8 @@ export default function HeroSection2(props: Props) {
                   {headlines.map(item => (
                     <SwiperSlide key={item.label}>
                       <Link href={item.link}>
-                        [{item.tag}] {item.label}
+                        {item.tag ? `[${item.tag}] ` : ''}
+                        {item.label}
                       </Link>
                     </SwiperSlide>
                   ))}

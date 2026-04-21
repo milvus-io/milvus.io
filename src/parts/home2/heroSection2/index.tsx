@@ -1,5 +1,5 @@
 import { useTranslation, Trans } from 'react-i18next';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Autoplay } from 'swiper/modules';
@@ -25,6 +25,11 @@ const ATTU_SLIDES = [
     label: 'overview',
     meta: 'CLUSTER: production',
   },
+  {
+    src: '/images/home2/hero-attu-data.png',
+    label: 'data',
+    meta: 'SCHEMA: agent_memory',
+  },
 ];
 const ATTU_CYCLE_MS = 5000;
 
@@ -38,28 +43,20 @@ export default function HeroSection2(props: Props) {
   const { t } = useTranslation('home2', { lng: locale });
   const { copied, copy } = useCopyFeedback();
   const [activeSlide, setActiveSlide] = useState(0);
-  const slideTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const showSwiper = headlines.length > 1;
   const placeholderCmd = t('hero.ctaPlaceholder');
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return;
-    }
-    slideTimerRef.current = setInterval(() => {
+    const reduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    if (reduced) return;
+    const id = setInterval(() => {
       setActiveSlide(i => (i + 1) % ATTU_SLIDES.length);
     }, ATTU_CYCLE_MS);
-    return () => {
-      if (slideTimerRef.current) clearInterval(slideTimerRef.current);
-    };
+    return () => clearInterval(id);
   }, []);
-
-  const activateSlide = (i: number) => {
-    setActiveSlide(i);
-    if (slideTimerRef.current) clearInterval(slideTimerRef.current);
-  };
 
   const active = ATTU_SLIDES[activeSlide];
 
@@ -206,26 +203,6 @@ export default function HeroSection2(props: Props) {
                     height={1532}
                     fetchPriority={i === 0 ? 'high' : undefined}
                     aria-hidden={i !== activeSlide}
-                  />
-                ))}
-              </div>
-              <div
-                className={classes.attuDots}
-                role="tablist"
-                aria-label="Attu view"
-              >
-                {ATTU_SLIDES.map((slide, i) => (
-                  <button
-                    key={slide.src}
-                    type="button"
-                    role="tab"
-                    aria-selected={i === activeSlide}
-                    aria-label={`Show ${slide.label} view`}
-                    onClick={() => activateSlide(i)}
-                    className={clsx(
-                      classes.attuDot,
-                      i === activeSlide && classes.attuDotActive
-                    )}
                   />
                 ))}
               </div>

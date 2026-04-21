@@ -222,6 +222,9 @@
   }
 }
 
+/* Copy-command — subdued secondary: paper background, ink text, ghost
+   border. Reads as "here's the code you'll run" rather than a primary
+   CTA so it doesn't compete with the Cloud signup. */
 .copyCommand {
   flex: 1 1 360px;
   min-width: 0;
@@ -230,31 +233,33 @@
   gap: 10px;
   height: 36px;
   padding: 6px 12px;
-  background: var(--brut-accent);
-  color: #ffffff;
-  border: none;
+  background: var(--brut-paper);
+  color: var(--brut-ink);
+  border: 1px solid rgba(10, 10, 10, 0.18);
   border-radius: 6px;
   font-family: var(--brut-font-mono);
   font-size: 13px;
   letter-spacing: 0;
   cursor: pointer;
   text-align: left;
-  transition: background 200ms ease-in-out;
+  transition: background 200ms ease-in-out, border-color 200ms;
 }
 
 .copyCommand:hover {
-  background: var(--brut-accent-deep);
+  background: #f1f1f1;
+  border-color: rgba(10, 10, 10, 0.35);
 }
 
 .copyCommandPrompt {
-  color: #ffffff;
-  opacity: 0.7;
+  color: var(--brut-ink);
+  opacity: 0.45;
   font-weight: 600;
   user-select: none;
 }
 
 .copyCommandPlaceholder {
-  color: #ffffff;
+  color: var(--brut-ink);
+  opacity: 0.85;
   flex: 1 1 0;
   min-width: 0;
   overflow: hidden;
@@ -264,44 +269,50 @@
 
 .copyCommandHint {
   font-size: 11px;
-  color: #ffffff;
-  opacity: 0.75;
+  color: var(--brut-ink);
+  opacity: 0.5;
   margin-left: auto;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-/* Primary CTA — matches the site nav's "Get started" button
-   (h-9 px-3 py-1.5 rounded-md bg-blue1 hover:#008DC8 white 14/500) */
+/* Primary CTA — Milvus brand blue, bigger than the site nav button so it
+   dominates against the subdued copy-command next to it. */
 .secondaryCta {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 36px;
-  padding: 6px 12px;
+  gap: 8px;
+  height: 44px;
+  padding: 10px 22px;
   background: var(--brut-accent);
   color: #ffffff;
   border: none;
   border-radius: 6px;
   font-family: inherit;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 15px;
   line-height: 21px;
   letter-spacing: 0;
   text-transform: none;
   text-decoration: none;
   cursor: pointer;
-  transition: background 200ms ease-in-out;
+  transition: background 200ms ease-in-out, transform 120ms ease-out,
+    box-shadow 200ms ease-out;
   white-space: nowrap;
+  box-shadow: 0 1px 0 rgba(10, 10, 10, 0.08);
 }
 
 .secondaryCta:hover {
   background: var(--brut-accent-deep);
   color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 179, 255, 0.28);
 }
 
 .secondaryCta:active {
   background: var(--brut-accent-deep);
+  transform: translateY(0);
+  box-shadow: 0 1px 0 rgba(10, 10, 10, 0.08);
 }
 
 /* Mobile button reset — in a column flex parent, flex-basis applies to

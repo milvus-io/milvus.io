@@ -88,5 +88,18 @@
       "eval": "Eval & Observability"
     },
     "emptyGap": "⚠️ Coming soon — integrations being finalized"
+  },
+  "production": {
+    "sectionTitle": "Trusted in production by the teams building AI",
+    "metrics": {
+      "downloads": "downloads",
+      "stars": "GitHub stars",
+      "customers": "Fortune 500 customers",
+      "scale": "vectors served"
+    },
+    "placeholders": {
+      "customers": "XX+",
+      "scale": "XX billion"
+    }
   }
 }

@@ -96,3 +96,15 @@ test.describe('/index2 ecosystem', () => {
     ).toBeVisible();
   });
 });
+
+test.describe('/index2 production', () => {
+  test('renders trusted-in-production heading and numbers strip', async ({ page }) => {
+    await page.goto(`${BASE_URL}/index2`);
+    await expect(
+      page.getByRole('heading', { level: 2, name: /Trusted in production/i })
+    ).toBeVisible();
+    // Scope to exact text to avoid collision with hero stats ("📥 25M+ downloads").
+    await expect(page.getByText('25M+', { exact: true })).toBeVisible();
+    await expect(page.getByText('35K+', { exact: true })).toBeVisible();
+  });
+});

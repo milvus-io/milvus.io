@@ -3,16 +3,19 @@ import { useGlobalLocale } from '@/hooks/use-global-locale';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
 
-type Metric = {
-  value: string;
-  labelKey: 'downloads' | 'stars' | 'customers' | 'scale';
-};
+type MetricKey = 'downloads' | 'stars' | 'customers' | 'scale';
 
+type Metric =
+  | { key: MetricKey; value: string }
+  | { key: MetricKey; placeholderKey: string };
+
+// Fixed values for community stats; placeholder keys read from i18n so that
+// when engineering supplies real numbers, a translation edit is enough.
 const METRICS: Metric[] = [
-  { value: '25M+', labelKey: 'downloads' },
-  { value: '35K+', labelKey: 'stars' },
-  { value: 'XX+', labelKey: 'customers' },
-  { value: 'XX billion', labelKey: 'scale' },
+  { key: 'downloads', value: '25M+' },
+  { key: 'stars', value: '35K+' },
+  { key: 'customers', placeholderKey: 'production.placeholders.customers' },
+  { key: 'scale', placeholderKey: 'production.placeholders.scale' },
 ];
 
 // Logo list mirrored from src/parts/home/productionSection/ProductionSection.tsx
@@ -54,10 +57,12 @@ export default function ProductionSection2() {
 
         <div className={classes.numbersStrip}>
           {METRICS.map(m => (
-            <div className={classes.metric} key={m.labelKey}>
-              <span className={classes.metricValue}>{m.value}</span>
+            <div className={classes.metric} key={m.key}>
+              <span className={classes.metricValue}>
+                {'value' in m ? m.value : t(m.placeholderKey)}
+              </span>
               <span className={classes.metricLabel}>
-                {t(`production.metrics.${m.labelKey}`)}
+                {t(`production.metrics.${m.key}`)}
               </span>
             </div>
           ))}

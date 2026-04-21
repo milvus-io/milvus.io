@@ -230,15 +230,15 @@
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   height: 36px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   background: var(--brut-paper);
   color: var(--brut-ink);
   border: 1px solid rgba(10, 10, 10, 0.18);
   border-radius: 6px;
   font-family: var(--brut-font-mono);
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: 0;
   cursor: pointer;
   text-align: left;
@@ -268,12 +268,13 @@
 }
 
 .copyCommandHint {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--brut-ink);
   opacity: 0.5;
   margin-left: auto;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 
 /* Primary CTA — Milvus brand blue, bigger than the site nav button so it

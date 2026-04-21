@@ -6,7 +6,7 @@
   "hero": {
     "title": "The<1 /><0>Vector Database</0><1 /> That Powers AI",
     "subtitle": "Open-source Milvus gives RAG and agents hybrid search, built-in embeddings, blazing-fast retrieval, and elastic scale to 100B+ vectors.",
-    "ctaPlaceholder": "⚠️ PLACEHOLDER: Agent-ready CLI command TBD",
+    "ctaPlaceholder": "curl -fsSL https://zilliz.com/cli/install.sh | bash",
     "ctaSecondary": "Try Zilliz Cloud Free",
     "attuAlt": "Attu — Milvus management UI, vector search results",
     "starsLabel": "GitHub stars",
@@ -139,7 +139,7 @@
     "title": "Start building in minutes",
     "python": {
       "label": "Python",
-      "body": "⚠️ PLACEHOLDER: Agent-ready CLI command TBD",
+      "body": "curl -fsSL https://zilliz.com/cli/install.sh | bash",
       "button": "Copy",
       "copied": "Copied"
     },

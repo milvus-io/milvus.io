@@ -14,15 +14,17 @@ test.describe('/index2 shell', () => {
 });
 
 test.describe('/index2 hero', () => {
-  test('renders headline, subtitle, and primary CTA placeholder', async ({ page }) => {
+  test('renders headline, subtitle, and primary CTA', async ({ page }) => {
     await page.goto(`${BASE_URL}/index2`);
     await expect(
       page.getByRole('heading', { level: 1, name: /Vector Database That Powers AI/i })
     ).toBeVisible();
     await expect(page.getByText(/hybrid search, built-in embeddings/i)).toBeVisible();
-    // Placeholder appears in both hero and final CTA (by design — they share copy
-    // until the real CLI command is decided). Scope to the first occurrence.
-    await expect(page.getByText(/⚠️ PLACEHOLDER/i).first()).toBeVisible();
+    // Install command appears in both hero and final CTA (by design — they
+    // share copy). Scope to the first occurrence.
+    await expect(
+      page.getByText(/curl -fsSL https:\/\/zilliz\.com\/cli\/install\.sh/i).first()
+    ).toBeVisible();
     await expect(page.locator('img[alt*="Attu"]').first()).toBeVisible();
   });
 });

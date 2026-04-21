@@ -108,6 +108,24 @@
   border-bottom: none;
 }
 
+.statRowLink {
+  text-decoration: none;
+  color: inherit;
+  transition: background 120ms;
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.statRowLink:hover {
+  background: var(--brut-accent-soft, rgba(0, 179, 255, 0.08));
+}
+
+.statRowLink:hover .statLabel {
+  color: var(--brut-accent-deep);
+  opacity: 1;
+}
+
 .statValue {
   font-family: var(--brut-font-mono);
   font-size: 22px;

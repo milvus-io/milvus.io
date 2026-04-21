@@ -5,6 +5,7 @@ import classes from './index.module.css';
 import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
 
 const MEETUPS_URL = 'https://zilliz.com/community/unstructured-data-meetup';
+const DISCORD_URL = 'https://milvus.io/discord';
 
 export default function CommunityMeetups() {
   const { locale } = useGlobalLocale();
@@ -32,10 +33,17 @@ export default function CommunityMeetups() {
                 📥 {t('community.stats.downloads')}
               </span>
             </div>
-            <div className={classes.statRow}>
+            <a
+              href={DISCORD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${classes.statRow} ${classes.statRowLink}`}
+            >
               <span className={classes.statValue} aria-hidden>💬</span>
-              <span className={classes.statLabel}>{t('community.stats.chat')}</span>
-            </div>
+              <span className={classes.statLabel}>
+                {t('community.stats.chat')}
+              </span>
+            </a>
           </article>
 
           <article className={classes.card}>

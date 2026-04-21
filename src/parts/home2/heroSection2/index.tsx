@@ -162,11 +162,11 @@ export default function HeroSection2(props: Props) {
                 </span>
               </figcaption>
               <img
-                src="/images/home2/hero-attu-search.svg"
+                src="/images/home2/hero-attu-search.png"
                 alt={t('hero.attuAlt')}
                 className={classes.attuImage}
-                width={640}
-                height={400}
+                width={3024}
+                height={1532}
                 fetchPriority="high"
                 loading="eager"
               />

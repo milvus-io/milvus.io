@@ -32,5 +32,21 @@
       "title": "MCP-Native",
       "body": "Expose Milvus as an MCP server with one command. LangGraph, CrewAI, Claude Desktop, Cursor — all speak MCP."
     }
+  },
+  "walkthrough": {
+    "sectionTitle": "Start building your AI app in minutes",
+    "sectionSubtitle": "Four snippets that cover the real Agent workflow.",
+    "tabs": {
+      "addMemory": "Add Memory",
+      "semanticRecall": "Semantic Recall",
+      "multiTenant": "Multi-tenant Isolation",
+      "mcpServer": "Serve as MCP Server"
+    },
+    "notes": {
+      "addMemory": "Start a local Milvus with docker-compose and you're running in under a minute.",
+      "semanticRecall": "Hybrid search, filters, and rerank are one flag away when you need better recall.",
+      "multiTenant": "Partition Key + Resource Groups give you per-tenant isolation without running a cluster per customer.",
+      "mcpServer": "Any MCP-aware agent can now read and write your Milvus data as tools."
+    }
   }
 }

@@ -48,6 +48,8 @@
   text-transform: uppercase;
   color: var(--brut-ink);
   min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .statusBadge {
@@ -151,8 +153,8 @@
 
 @media (max-width: 1024px) {
   .grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
     padding-bottom: 48px;
   }
 }
@@ -209,9 +211,16 @@
   flex-wrap: wrap;
 }
 
+@media (max-width: 640px) {
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
 .copyCommand {
   flex: 1 1 360px;
-  min-width: 280px;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 10px;

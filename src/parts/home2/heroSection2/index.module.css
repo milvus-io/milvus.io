@@ -444,11 +444,66 @@
   opacity: 0.75;
 }
 
+/* Slideshow stack — each slide layered absolutely, crossfade via opacity. */
+.attuImageStack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3024 / 1532;
+  background: var(--brut-paper);
+  overflow: hidden;
+}
+
 .attuImage {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
-  background: var(--brut-paper);
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 600ms ease-in-out;
+  pointer-events: none;
+}
+
+.attuImageActive {
+  opacity: 1;
+}
+
+/* Dot indicators + manual jump */
+.attuDots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.attuDot {
+  width: 22px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.45);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 200ms, width 200ms;
+}
+
+.attuDot:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.attuDot:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.attuDotActive {
+  background: var(--brut-accent);
+  width: 34px;
 }
 
 /* Corner tick marks — CAD-ish detail */

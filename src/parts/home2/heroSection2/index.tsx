@@ -1,5 +1,7 @@
 import { useTranslation, Trans } from 'react-i18next';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import clsx from 'clsx';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -12,6 +14,20 @@ import classes from './index.module.css';
 import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
 import { useCopyFeedback } from '../components/useCopyFeedback';
 
+const ATTU_SLIDES = [
+  {
+    src: '/images/home2/hero-attu-search.png',
+    label: 'vector_search',
+    meta: 'COLLECTION: agent_memory',
+  },
+  {
+    src: '/images/home2/hero-attu-overview.png',
+    label: 'overview',
+    meta: 'CLUSTER: production',
+  },
+];
+const ATTU_CYCLE_MS = 5000;
+
 type Props = {
   headlines: { label: string; link: string; tag: string }[];
   locale: LanguageEnum;
@@ -21,9 +37,31 @@ export default function HeroSection2(props: Props) {
   const { headlines, locale } = props;
   const { t } = useTranslation('home2', { lng: locale });
   const { copied, copy } = useCopyFeedback();
+  const [activeSlide, setActiveSlide] = useState(0);
+  const slideTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const showSwiper = headlines.length > 1;
   const placeholderCmd = t('hero.ctaPlaceholder');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) return;
+    }
+    slideTimerRef.current = setInterval(() => {
+      setActiveSlide(i => (i + 1) % ATTU_SLIDES.length);
+    }, ATTU_CYCLE_MS);
+    return () => {
+      if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+    };
+  }, []);
+
+  const activateSlide = (i: number) => {
+    setActiveSlide(i);
+    if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+  };
+
+  const active = ATTU_SLIDES[activeSlide];
 
   return (
     <section className={classes.heroSection}>
@@ -145,21 +183,52 @@ export default function HeroSection2(props: Props) {
               />
               <figcaption className={classes.attuFrameHeader}>
                 <span className={classes.attuFrameTitle}>
-                  attu ▸ vector_search
+                  attu ▸ {active.label}
                 </span>
-                <span className={classes.attuFrameMeta}>
-                  COLLECTION: agent_memory
-                </span>
+                <span className={classes.attuFrameMeta}>{active.meta}</span>
               </figcaption>
-              <img
-                src="/images/home2/hero-attu-search.png"
-                alt={t('hero.attuAlt')}
-                className={classes.attuImage}
-                width={3024}
-                height={1532}
-                fetchPriority="high"
-                loading="eager"
-              />
+              <div
+                className={classes.attuImageStack}
+                role="group"
+                aria-roledescription="slideshow"
+                aria-label={t('hero.attuAlt')}
+              >
+                {ATTU_SLIDES.map((slide, i) => (
+                  <img
+                    key={slide.src}
+                    src={slide.src}
+                    alt={t('hero.attuAlt')}
+                    className={clsx(
+                      classes.attuImage,
+                      i === activeSlide && classes.attuImageActive
+                    )}
+                    width={3024}
+                    height={1532}
+                    fetchPriority={i === 0 ? 'high' : undefined}
+                    aria-hidden={i !== activeSlide}
+                  />
+                ))}
+              </div>
+              <div
+                className={classes.attuDots}
+                role="tablist"
+                aria-label="Attu view"
+              >
+                {ATTU_SLIDES.map((slide, i) => (
+                  <button
+                    key={slide.src}
+                    type="button"
+                    role="tab"
+                    aria-selected={i === activeSlide}
+                    aria-label={`Show ${slide.label} view`}
+                    onClick={() => activateSlide(i)}
+                    className={clsx(
+                      classes.attuDot,
+                      i === activeSlide && classes.attuDotActive
+                    )}
+                  />
+                ))}
+              </div>
             </figure>
           </div>
         </div>

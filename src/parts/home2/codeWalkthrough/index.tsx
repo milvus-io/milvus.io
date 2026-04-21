@@ -35,12 +35,17 @@ export default function CodeWalkthrough() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
+          <span className={classes.eyebrow}>Quickstart</span>
           <h2 className={classes.title}>{t('walkthrough.sectionTitle')}</h2>
           <p className={classes.subtitle}>{t('walkthrough.sectionSubtitle')}</p>
         </div>
 
         <div className={classes.container}>
-          <div className={classes.tabs} role="tablist" aria-label={t('walkthrough.sectionTitle')}>
+          <div
+            className={classes.tabs}
+            role="tablist"
+            aria-label={t('walkthrough.sectionTitle')}
+          >
             {TAB_ORDER.map(tabId => {
               const selected = active === tabId;
               return (
@@ -61,18 +66,30 @@ export default function CodeWalkthrough() {
             })}
           </div>
 
-          <pre
-            className={classes.codeBlock}
-            role="tabpanel"
-            id={panelId}
-            aria-labelledby={`walkthrough-tab-${active}`}
-          >
-            <code>{code}</code>
-          </pre>
+          <div className={classes.panelHeader}>
+            <span className={classes.panelHeaderTitle}>
+              milvus ▸ {t(`walkthrough.tabs.${active}`)}
+            </span>
+            <span className={classes.panelHeaderMeta}>
+              {active === 'mcpServer' ? 'SHELL' : 'PYTHON'}
+            </span>
+          </div>
 
-          <p className={classes.note} aria-live="polite">
-            {note}
-          </p>
+          <div className={classes.panelBody}>
+            <pre
+              className={classes.codeBlock}
+              role="tabpanel"
+              id={panelId}
+              aria-labelledby={`walkthrough-tab-${active}`}
+            >
+              <code>{code}</code>
+            </pre>
+
+            <aside className={classes.note} aria-live="polite">
+              <span className={classes.noteLabel}>// note</span>
+              {note}
+            </aside>
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,10 @@
+/* Brutalist ecosystem matrix — category rows separated by 2px rules,
+   logos in bordered tiles, mobile accordion preserved */
+
 .section {
   padding: 96px 0;
-  background: #ffffff;
+  background: var(--brut-paper);
+  border-bottom: var(--brut-rule);
 }
 
 @media (max-width: 768px) {
@@ -10,40 +14,93 @@
 }
 
 .header {
-  text-align: center;
   margin-bottom: 48px;
+  max-width: 820px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--brut-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brut-ink);
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+.eyebrow::before {
+  content: '///';
+  color: var(--brut-accent);
+  font-weight: 700;
 }
 
 .title {
-  font-size: 36px;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 12px;
+  font-family: var(--brut-font-mono);
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--brut-ink);
+  margin: 0 0 16px;
 }
 
 .subtitle {
-  font-size: 17px;
-  color: #475569;
+  font-family: var(--brut-font-mono);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--brut-ink);
+  opacity: 0.75;
   max-width: 640px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .category {
-  border-top: 1px solid #e2e8f0;
-  padding: 24px 0;
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+  gap: 32px;
+  align-items: flex-start;
+  padding: 28px 0;
+  border-top: var(--brut-rule);
+}
+
+.category:last-child {
+  border-bottom: var(--brut-rule);
+}
+
+@media (max-width: 768px) {
+  .category {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 20px 0;
+  }
 }
 
 .categoryHeader {
-  font-size: 18px;
+  font-family: var(--brut-font-mono);
+  font-size: 16px;
   font-weight: 600;
-  color: #0f172a;
-  margin-bottom: 16px;
+  color: var(--brut-ink);
+  margin: 0;
+  padding: 0;
   background: transparent;
   border: none;
-  padding: 0;
-  width: 100%;
   text-align: left;
-  font-family: inherit;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  font-family: var(--brut-font-mono);
+}
+
+.categoryHeader::before {
+  content: '>';
+  color: var(--brut-accent);
+  font-weight: 700;
 }
 
 .categoryHeader:disabled {
@@ -59,7 +116,7 @@
 .logoRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -67,36 +124,48 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  padding: 10px 16px;
+  min-width: 96px;
+  min-height: 56px;
+  background: var(--brut-paper);
+  border: var(--brut-rule);
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out,
+    background 80ms;
 }
 
 .logoLink:hover {
-  border-color: #cbd5e1;
-  background: #ffffff;
+  background: #fff;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--brut-accent);
 }
 
 .logoImg {
-  height: 40px;
+  height: 32px;
   width: auto;
   object-fit: contain;
+  filter: grayscale(1) contrast(1.1);
+  transition: filter 120ms;
+}
+
+.logoLink:hover .logoImg {
+  filter: grayscale(0) contrast(1);
 }
 
 .emptyNote {
-  color: #94a3b8;
-  font-size: 14px;
-  font-style: italic;
+  font-family: var(--brut-font-mono);
+  color: var(--brut-ink);
+  opacity: 0.5;
+  font-size: 13px;
+  font-style: normal;
+  padding: 14px 16px;
+  border: 2px dashed rgba(10, 10, 10, 0.2);
 }
 
-/* mobile: accordion */
+/* mobile: accordion behavior */
 @media (max-width: 768px) {
   .categoryHeader {
     cursor: pointer;
-    display: flex;
     justify-content: space-between;
-    align-items: center;
   }
 
   .category[data-open='false'] .logoRow {
@@ -105,14 +174,17 @@
 
   .chevron {
     display: inline-block;
+    margin-left: auto;
+    color: var(--brut-accent);
   }
 
   .chevron::after {
-    content: '▸';
+    content: '[+]';
     display: inline-block;
+    font-weight: 700;
   }
 
   .category[data-open='true'] .chevron::after {
-    content: '▾';
+    content: '[-]';
   }
 }

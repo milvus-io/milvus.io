@@ -80,6 +80,8 @@ export default function ProductionSection2() {
                 src={l.src}
                 alt={l.alt}
                 className={classes.logoItem}
+                width={100}
+                height={40}
                 loading="lazy"
               />
             </div>

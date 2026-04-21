@@ -1,4 +1,5 @@
-import { Highlight, themes } from 'prism-react-renderer';
+import { useMemo } from 'react';
+import { Highlight, themes, type PrismTheme } from 'prism-react-renderer';
 import classes from './CodeHighlight.module.css';
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 // - base background stays transparent so the host panel's bg shows through
 // - keywords / functions pick up Milvus accent blue
 // - strings are a muted lime, numbers warn-yellow, comments dim
-const THEME = {
+const THEME: PrismTheme = {
   ...themes.vsDark,
   plain: {
     color: '#e6e6e6',
@@ -19,7 +20,7 @@ const THEME = {
   },
   styles: [
     ...themes.vsDark.styles,
-    { types: ['keyword', 'builtin'], style: { color: '#00b3ff', fontWeight: 600 } },
+    { types: ['keyword', 'builtin'], style: { color: '#00b3ff', fontWeight: 'bold' } },
     { types: ['function'], style: { color: '#00b3ff' } },
     { types: ['string', 'attr-value'], style: { color: '#c8e678' } },
     { types: ['number'], style: { color: '#faff00' } },
@@ -32,8 +33,9 @@ const THEME = {
 };
 
 export default function CodeHighlight({ code, language = 'python', className }: Props) {
+  const trimmed = useMemo(() => code.trim(), [code]);
   return (
-    <Highlight code={code.trim()} language={language} theme={THEME}>
+    <Highlight code={trimmed} language={language} theme={THEME}>
       {({ className: hlClassName, tokens, getLineProps, getTokenProps }) => (
         <pre className={`${classes.pre} ${hlClassName} ${className ?? ''}`}>
           {tokens.map((line, i) => (

@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
+import { DISCORD_INVITE_URL } from '@/consts/links';
+import { MEETUP_UNSTRUCTURED_DATA_URL } from '@/consts/externalLinks';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
 import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
-
-const MEETUPS_URL = 'https://zilliz.com/community/unstructured-data-meetup';
-const DISCORD_URL = 'https://milvus.io/discord';
 
 export default function CommunityMeetups() {
   const { locale } = useGlobalLocale();
@@ -34,7 +33,7 @@ export default function CommunityMeetups() {
               </span>
             </div>
             <a
-              href={DISCORD_URL}
+              href={DISCORD_INVITE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className={`${classes.statRow} ${classes.statRowLink}`}
@@ -50,7 +49,7 @@ export default function CommunityMeetups() {
             <h3 className={classes.cardTitle}>{t('community.meetups.title')}</h3>
             <p className={classes.meetupDesc}>{t('community.meetups.desc')}</p>
             <a
-              href={MEETUPS_URL}
+              href={MEETUP_UNSTRUCTURED_DATA_URL}
               className={classes.meetupCta}
               target="_blank"
               rel="noopener noreferrer"

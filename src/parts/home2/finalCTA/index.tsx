@@ -1,27 +1,17 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { CLOUD_SIGNUP_LINK } from '@/consts/links';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
+import { useCopyFeedback } from '../components/useCopyFeedback';
 
 export default function FinalCTA() {
   const { locale } = useGlobalLocale();
   const { t } = useTranslation('home2', { lng: locale });
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyFeedback();
 
   const pythonBody = t('finalCta.python.body');
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(pythonBody);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* no-op */
-    }
-  };
 
   return (
     <section className={classes.section}>
@@ -40,7 +30,7 @@ export default function FinalCTA() {
             <code className={classes.pythonBody}>{pythonBody}</code>
             <button
               type="button"
-              onClick={handleCopy}
+              onClick={() => copy(pythonBody)}
               className={clsx(classes.button, copied && classes.buttonCopied)}
               aria-label={`Copy ${t('finalCta.python.label')} command`}
             >

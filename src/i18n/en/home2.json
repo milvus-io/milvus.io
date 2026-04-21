@@ -8,6 +8,7 @@
     "subtitle": "Open-source Milvus gives RAG and agents hybrid search, built-in embeddings, blazing-fast retrieval, and elastic scale to 100B+ vectors.",
     "ctaPlaceholder": "curl -fsSL https://zilliz.com/cli/install.sh | bash",
     "ctaSecondary": "Try Zilliz Cloud Free",
+    "copyAriaLabel": "Copy install command",
     "attuAlt": "Attu — Milvus management UI, vector search results",
     "starsLabel": "GitHub stars",
     "downloadsLabel": "downloads"

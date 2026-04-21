@@ -1,5 +1,4 @@
 import { useTranslation, Trans } from 'react-i18next';
-import { useState } from 'react';
 import Link from 'next/link';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,74 +10,20 @@ import { LanguageEnum } from '@/types/localization';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
 import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
+import { useCopyFeedback } from '../components/useCopyFeedback';
 
 type Props = {
   headlines: { label: string; link: string; tag: string }[];
   locale: LanguageEnum;
-  stars?: string;
-  downloads?: string;
 };
 
 export default function HeroSection2(props: Props) {
-  const {
-    headlines,
-    locale,
-    stars = MILVUS_STARS,
-    downloads = MILVUS_DOWNLOADS,
-  } = props;
+  const { headlines, locale } = props;
   const { t } = useTranslation('home2', { lng: locale });
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyFeedback();
 
   const showSwiper = headlines.length > 1;
   const placeholderCmd = t('hero.ctaPlaceholder');
-
-  const handleCopy = async () => {
-    const text = placeholderCmd;
-    let ok = false;
-
-    // Preferred path: async Clipboard API (requires secure context, works on
-    // https + localhost; fails silently on plain-IP dev servers like
-    // http://192.168.x.x, which is why we fall back).
-    try {
-      if (
-        typeof navigator !== 'undefined' &&
-        navigator.clipboard?.writeText &&
-        typeof window !== 'undefined' &&
-        window.isSecureContext
-      ) {
-        await navigator.clipboard.writeText(text);
-        ok = true;
-      }
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn('[home2] clipboard.writeText failed, falling back', err);
-    }
-
-    // Legacy fallback: off-screen textarea + execCommand('copy').
-    if (!ok && typeof document !== 'undefined') {
-      try {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.position = 'fixed';
-        ta.style.top = '-1000px';
-        ta.style.left = '0';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        ok = document.execCommand('copy');
-        document.body.removeChild(ta);
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.warn('[home2] execCommand copy fallback failed', err);
-      }
-    }
-
-    if (ok) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    }
-  };
 
   return (
     <section className={classes.heroSection}>
@@ -139,9 +84,9 @@ export default function HeroSection2(props: Props) {
             <div className={classes.ctaRow}>
               <button
                 type="button"
-                onClick={handleCopy}
+                onClick={() => copy(placeholderCmd)}
                 className={classes.copyCommand}
-                aria-label="Copy install command"
+                aria-label={t('hero.copyAriaLabel')}
               >
                 <span className={classes.copyCommandPrompt} aria-hidden>
                   $
@@ -165,13 +110,13 @@ export default function HeroSection2(props: Props) {
 
             <div className={classes.socialProof}>
               <div className={classes.stat}>
-                <span className={classes.statValue}>{stars}</span>
+                <span className={classes.statValue}>{MILVUS_STARS}</span>
                 <span className={classes.statLabel}>
                   ★ {t('hero.starsLabel')}
                 </span>
               </div>
               <div className={classes.stat}>
-                <span className={classes.statValue}>{downloads}</span>
+                <span className={classes.statValue}>{MILVUS_DOWNLOADS}</span>
                 <span className={classes.statLabel}>
                   ↓ {t('hero.downloadsLabel')}
                 </span>

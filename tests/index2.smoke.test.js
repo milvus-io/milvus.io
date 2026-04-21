@@ -105,13 +105,14 @@ test.describe('/index2 production', () => {
     });
     await expect(heading).toBeVisible();
     // Scope stats to the production section (sibling of its heading) to avoid
-    // collision with hero stats ("📥 25M+ downloads") and the community card.
+    // collision with hero stats and the community card. Values are now pulled
+    // live from global-stats.json so assert on the format not the exact number.
     const productionSection = page.locator('section').filter({ has: heading });
     await expect(
-      productionSection.getByText('25M+', { exact: true })
+      productionSection.getByText(/^\d+M\+$/).first()
     ).toBeVisible();
     await expect(
-      productionSection.getByText('35K+', { exact: true })
+      productionSection.getByText(/^\d+(\.\d+)?K$/).first()
     ).toBeVisible();
   });
 });

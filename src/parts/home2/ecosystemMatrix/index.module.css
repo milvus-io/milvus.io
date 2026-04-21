@@ -143,12 +143,6 @@
   height: 32px;
   width: auto;
   object-fit: contain;
-  filter: grayscale(1) contrast(1.1);
-  transition: filter 120ms;
-}
-
-.logoLink:hover .logoImg {
-  filter: grayscale(0) contrast(1);
 }
 
 .emptyNote {

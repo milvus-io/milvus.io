@@ -33,12 +33,50 @@ export default function HeroSection2(props: Props) {
   const placeholderCmd = t('hero.ctaPlaceholder');
 
   const handleCopy = async () => {
+    const text = placeholderCmd;
+    let ok = false;
+
+    // Preferred path: async Clipboard API (requires secure context, works on
+    // https + localhost; fails silently on plain-IP dev servers like
+    // http://192.168.x.x, which is why we fall back).
     try {
-      await navigator.clipboard.writeText(placeholderCmd);
+      if (
+        typeof navigator !== 'undefined' &&
+        navigator.clipboard?.writeText &&
+        typeof window !== 'undefined' &&
+        window.isSecureContext
+      ) {
+        await navigator.clipboard.writeText(text);
+        ok = true;
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn('[home2] clipboard.writeText failed, falling back', err);
+    }
+
+    // Legacy fallback: off-screen textarea + execCommand('copy').
+    if (!ok && typeof document !== 'undefined') {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.top = '-1000px';
+        ta.style.left = '0';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.warn('[home2] execCommand copy fallback failed', err);
+      }
+    }
+
+    if (ok) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* clipboard unsupported — no-op */
     }
   };
 

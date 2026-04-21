@@ -12,14 +12,20 @@ export default function LovedSection2() {
   return (
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
-        <h2 className={classes.title}>{t('loved.title')}</h2>
+        <div className={classes.header}>
+          <span className={classes.eyebrow}>Developers</span>
+          <h2 className={classes.title}>{t('loved.title')}</h2>
+        </div>
         <div className={classes.grid}>
           {CARD_KEYS.map(key => (
             <article className={classes.card} key={key}>
+              <span className={classes.quoteMark} aria-hidden>
+                &ldquo;
+              </span>
               <p className={classes.content}>
                 {t(`loved.cards.${key}.content`)}
               </p>
-              <div>
+              <div className={classes.byline}>
                 <div className={classes.author}>
                   {t(`loved.cards.${key}.author`)}
                 </div>

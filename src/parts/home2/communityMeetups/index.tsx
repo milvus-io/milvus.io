@@ -12,7 +12,10 @@ export default function CommunityMeetups() {
   return (
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
-        <h2 className={classes.sectionTitle}>{t('community.sectionTitle')}</h2>
+        <div className={classes.header}>
+          <span className={classes.eyebrow}>Community</span>
+          <h2 className={classes.sectionTitle}>{t('community.sectionTitle')}</h2>
+        </div>
         <div className={classes.grid}>
           <article className={classes.card}>
             <h3 className={classes.cardTitle}>{t('community.stats.title')}</h3>

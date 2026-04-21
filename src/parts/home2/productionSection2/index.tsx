@@ -53,30 +53,36 @@ export default function ProductionSection2() {
   return (
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
-        <h2 className={classes.title}>{t('production.sectionTitle')}</h2>
+        <div className={classes.header}>
+          <span className={classes.eyebrow}>In Production</span>
+          <h2 className={classes.title}>{t('production.sectionTitle')}</h2>
+        </div>
 
         <div className={classes.numbersStrip}>
           {METRICS.map(m => (
             <div className={classes.metric} key={m.key}>
+              <span className={classes.metricLabel}>
+                // {t(`production.metrics.${m.key}`)}
+              </span>
               <span className={classes.metricValue}>
                 {'value' in m ? m.value : t(m.placeholderKey)}
-              </span>
-              <span className={classes.metricLabel}>
-                {t(`production.metrics.${m.key}`)}
               </span>
             </div>
           ))}
         </div>
 
+        <div className={classes.logoWallHeader}>customers shipping milvus</div>
+
         <div className={classes.logoWall}>
           {LOGO_PATHS.map(l => (
-            <img
-              key={l.src}
-              src={l.src}
-              alt={l.alt}
-              className={classes.logoItem}
-              loading="lazy"
-            />
+            <div className={classes.logoCell} key={l.src}>
+              <img
+                src={l.src}
+                alt={l.alt}
+                className={classes.logoItem}
+                loading="lazy"
+              />
+            </div>
           ))}
         </div>
       </div>

@@ -27,14 +27,6 @@ export default function CommunityMeetups() {
               </span>
             </div>
             <div className={classes.statRow}>
-              <span className={classes.statValue}>
-                {t('community.contributorsPlaceholder')}
-              </span>
-              <span className={classes.statLabel}>
-                👥 {t('community.stats.contributors')}
-              </span>
-            </div>
-            <div className={classes.statRow}>
               <span className={classes.statValue}>{MILVUS_DOWNLOADS}</span>
               <span className={classes.statLabel}>
                 📥 {t('community.stats.downloads')}

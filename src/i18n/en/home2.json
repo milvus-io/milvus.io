@@ -126,11 +126,9 @@
     "stats": {
       "title": "Join the community",
       "stars": "GitHub stars",
-      "contributors": "contributors",
       "downloads": "downloads",
       "chat": "Discord / Forum"
     },
-    "contributorsPlaceholder": "XXX+",
     "meetups": {
       "title": "Unstructured Data Meetups",
       "desc": "Join a community of passionate developers and engineers dedicated to Gen AI.",

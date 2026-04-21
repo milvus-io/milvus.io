@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
+import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
 
 const MEETUPS_URL = 'https://zilliz.com/community/unstructured-data-meetup';
 
@@ -20,7 +21,7 @@ export default function CommunityMeetups() {
           <article className={classes.card}>
             <h3 className={classes.cardTitle}>{t('community.stats.title')}</h3>
             <div className={classes.statRow}>
-              <span className={classes.statValue}>35K+</span>
+              <span className={classes.statValue}>{MILVUS_STARS}</span>
               <span className={classes.statLabel}>
                 ⭐ {t('community.stats.stars')}
               </span>
@@ -34,7 +35,7 @@ export default function CommunityMeetups() {
               </span>
             </div>
             <div className={classes.statRow}>
-              <span className={classes.statValue}>25M+</span>
+              <span className={classes.statValue}>{MILVUS_DOWNLOADS}</span>
               <span className={classes.statLabel}>
                 📥 {t('community.stats.downloads')}
               </span>

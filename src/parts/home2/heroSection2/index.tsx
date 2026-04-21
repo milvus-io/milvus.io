@@ -10,6 +10,7 @@ import { CLOUD_SIGNUP_LINK } from '@/consts/links';
 import { LanguageEnum } from '@/types/localization';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
+import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
 
 type Props = {
   headlines: { label: string; link: string; tag: string }[];
@@ -19,7 +20,12 @@ type Props = {
 };
 
 export default function HeroSection2(props: Props) {
-  const { headlines, locale, stars = '35K+', downloads = '25M+' } = props;
+  const {
+    headlines,
+    locale,
+    stars = MILVUS_STARS,
+    downloads = MILVUS_DOWNLOADS,
+  } = props;
   const { t } = useTranslation('home2', { lng: locale });
   const [copied, setCopied] = useState(false);
 

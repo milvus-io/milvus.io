@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
+import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
 
 type MetricKey = 'downloads' | 'stars' | 'customers' | 'scale';
 
@@ -9,11 +10,12 @@ type Metric =
   | { key: MetricKey; value: string }
   | { key: MetricKey; placeholderKey: string };
 
-// Fixed values for community stats; placeholder keys read from i18n so that
-// when engineering supplies real numbers, a translation edit is enough.
+// Real community numbers come from global-stats.json via consts/stats;
+// engineering-pending metrics (customers, scale) stay as i18n placeholders
+// so a translation edit can swap them in once the real numbers ship.
 const METRICS: Metric[] = [
-  { key: 'downloads', value: '25M+' },
-  { key: 'stars', value: '35K+' },
+  { key: 'downloads', value: MILVUS_DOWNLOADS },
+  { key: 'stars', value: MILVUS_STARS },
   { key: 'customers', placeholderKey: 'production.placeholders.customers' },
   { key: 'scale', placeholderKey: 'production.placeholders.scale' },
 ];

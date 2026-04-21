@@ -108,3 +108,15 @@ test.describe('/index2 production', () => {
     await expect(page.getByText('35K+', { exact: true })).toBeVisible();
   });
 });
+
+test.describe('/index2 loved', () => {
+  test('renders Loved by Developers and three authors', async ({ page }) => {
+    await page.goto(`${BASE_URL}/index2`);
+    await expect(
+      page.getByRole('heading', { level: 2, name: /Loved by GenAI developers/i })
+    ).toBeVisible();
+    await expect(page.getByText(/Nandula Asel/)).toBeVisible();
+    await expect(page.getByText(/Bhargav Mankad/)).toBeVisible();
+    await expect(page.getByText(/Igor Gorbenko/)).toBeVisible();
+  });
+});

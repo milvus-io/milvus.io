@@ -1,0 +1,58 @@
+.section {
+  padding: 96px 0;
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 48px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.content {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #334155;
+  flex: 1;
+}
+
+.author {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.jobTitle {
+  font-size: 13px;
+  color: #64748b;
+}

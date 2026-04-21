@@ -101,5 +101,25 @@
       "customers": "XX+",
       "scale": "XX billion"
     }
+  },
+  "loved": {
+    "title": "Loved by GenAI developers",
+    "cards": {
+      "nandula": {
+        "content": "Based on our research, Milvus was selected as the vector database of choice (over Chroma and Pinecone). Milvus is an open-source vector database designed specifically for similarity search on massive datasets of high-dimensional vectors.",
+        "author": "Nandula Asel",
+        "title": "Senior Data Scientist"
+      },
+      "bhargav": {
+        "content": "With its focus on efficient vector similarity search, Milvus empowers you to build robust and scalable image retrieval systems. Whether you're managing a personal photo library or developing a commercial image search application, Milvus offers a powerful foundation for unlocking the hidden potential within your image collections.",
+        "author": "Bhargav Mankad",
+        "title": "Senior Solution Architect"
+      },
+      "igor": {
+        "content": "Milvus is a powerful vector database tailored for processing and searching extensive vector data. It stands out for its high performance and scalability, rendering it perfect for machine learning, deep learning, similarity search tasks, and recommendation systems.",
+        "author": "Igor Gorbenko",
+        "title": "Big Data Architect"
+      }
+    }
   }
 }

@@ -211,26 +211,21 @@
 }
 
 /* CTA row: copy command is a terminal-framed block */
+/* Always stack the primary copy-command above the Cloud CTA — per user,
+   the Try Zilliz Cloud button must sit on its own line. */
 .ctaRow {
   display: flex;
-  gap: 12px;
-  align-items: stretch;
-  flex-wrap: wrap;
-}
-
-@media (max-width: 640px) {
-  .ctaRow {
-    flex-direction: column;
-    align-items: stretch;
-  }
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
 }
 
 /* Copy-command — subdued secondary: paper background, ink text, ghost
    border. Reads as "here's the code you'll run" rather than a primary
    CTA so it doesn't compete with the Cloud signup. */
 .copyCommand {
-  flex: 1 1 360px;
-  min-width: 0;
+  width: 100%;
+  max-width: 480px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -287,8 +282,11 @@
 }
 
 /* Primary CTA — Milvus brand blue, bigger than the site nav button so it
-   dominates against the subdued copy-command next to it. */
-.secondaryCta {
+   dominates against the subdued copy-command next to it.
+   Specificity note: the `.ctaRow a.secondaryCta` (0,2,1) selector beats
+   the `.homepageContainer :global(a) { color: inherit }` rule (0,1,1)
+   in home2.module.css so the explicit white text stays on top. */
+.ctaRow a.secondaryCta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -312,27 +310,28 @@
   box-shadow: 0 1px 0 rgba(10, 10, 10, 0.08);
 }
 
-.secondaryCta:hover {
+.ctaRow a.secondaryCta:hover {
   background: var(--brut-accent-deep);
   color: #ffffff;
   transform: translateY(-1px);
   box-shadow: 0 6px 14px rgba(0, 179, 255, 0.28);
 }
 
-.secondaryCta:active {
+.ctaRow a.secondaryCta:active {
   background: var(--brut-accent-deep);
+  color: #ffffff;
   transform: translateY(0);
   box-shadow: 0 1px 0 rgba(10, 10, 10, 0.08);
 }
 
-/* Mobile button reset — in a column flex parent, flex-basis applies to
-   the main (vertical) axis, so `flex: 1 1 360px` on .copyCommand would
-   otherwise make the button 360px TALL. Placed after base button rules
-   so specificity-equal rules inside @media win. */
+/* Mobile: stretch both buttons to full width for tap-target ergonomics.
+   (On desktop the copy-command is max-width 480 and the Cloud CTA stays
+   content-sized; on mobile both fill the column.) */
 @media (max-width: 640px) {
-  .copyCommand,
-  .secondaryCta {
-    flex: 0 0 auto;
+  .copyCommand {
+    max-width: none;
+  }
+  .ctaRow a.secondaryCta {
     width: 100%;
     justify-content: center;
   }

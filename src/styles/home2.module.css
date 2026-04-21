@@ -1,12 +1,15 @@
 .homepageContainer {
   overflow: hidden;
 
-  /* Brutalist design tokens — scoped to home2 only */
+  /* Design tokens — scoped to home2 only. Milvus brand blue #00B3FF is the
+     single accent; everything else is black/near-white with hazard yellow
+     reserved for ⚠️ PLACEHOLDER markers. */
   --brut-ink: #0a0a0a;
   --brut-paper: #fafafa;
   --brut-paper-warm: #f2ede4;
-  --brut-accent: #0066ff;
-  --brut-accent-hot: #ff4500;
+  --brut-accent: #00b3ff;
+  --brut-accent-deep: #0091d6;
+  --brut-accent-soft: rgba(0, 179, 255, 0.12);
   --brut-warn: #faff00;
   --brut-rule: 2px solid var(--brut-ink);
   --brut-rule-thin: 1px solid var(--brut-ink);

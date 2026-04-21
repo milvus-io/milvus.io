@@ -84,7 +84,6 @@
       "agent": "Agent Frameworks",
       "model": "Model APIs",
       "rag": "RAG Stacks",
-      "protocols": "Protocols",
       "eval": "Eval & Observability"
     },
     "emptyGap": "⚠️ Coming soon — integrations being finalized"

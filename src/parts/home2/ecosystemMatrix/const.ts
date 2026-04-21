@@ -11,7 +11,7 @@ import {
 
 export type Logo = { name: string; logo: string; href: string };
 
-export type CategoryId = 'agent' | 'model' | 'rag' | 'protocols' | 'eval';
+export type CategoryId = 'agent' | 'model' | 'rag' | 'eval';
 
 export const CATEGORIES: { id: CategoryId; logos: Logo[] }[] = [
   {
@@ -63,12 +63,6 @@ export const CATEGORIES: { id: CategoryId; logos: Logo[] }[] = [
         logo: '/images/home/dspy.png',
         href: MILVUS_INTEGRATION_DSPY_LINK,
       },
-    ],
-  },
-  {
-    id: 'protocols',
-    logos: [
-      // ⚠️ Gap: add MCP, A2A before public launch (spec §11).
     ],
   },
   {

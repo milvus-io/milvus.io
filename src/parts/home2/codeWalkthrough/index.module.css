@@ -88,15 +88,28 @@
   border-right: 1px solid var(--brut-ink);
   cursor: pointer;
   opacity: 0.55;
-  transition: opacity 120ms, background 120ms;
+  outline: none;
+  transition: opacity 120ms, background 120ms, color 120ms;
 }
 
-.tab:hover {
+/* Hover only affects inactive tabs — don't wash out the active tab. */
+.tab:hover:not(.tabActive) {
   opacity: 0.9;
   background: #f0f0f0;
 }
 
-.tabActive {
+/* Keyboard focus — accent outline, don't change background so the
+   active state stays legible. */
+.tab:focus-visible {
+  outline: 2px solid var(--brut-accent);
+  outline-offset: -4px;
+}
+
+/* Active tab — ink background wins over hover & focus backgrounds. */
+.tabActive,
+.tabActive:hover,
+.tabActive:focus,
+.tabActive:active {
   opacity: 1;
   background: var(--brut-ink);
   color: var(--brut-paper);

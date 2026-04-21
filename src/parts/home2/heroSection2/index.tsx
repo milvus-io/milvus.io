@@ -1,12 +1,10 @@
 import { useTranslation, Trans } from 'react-i18next';
-import { useRef, useMemo, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 import CustomButton from '@/components/customButton';
 import { CLOUD_SIGNUP_LINK } from '@/consts/links';
@@ -26,10 +24,7 @@ export default function HeroSection2(props: Props) {
   const { t } = useTranslation('home2', { lng: locale });
   const [copied, setCopied] = useState(false);
 
-  const showSwiper = useMemo(() => headlines.length > 1, [headlines]);
-  const nextBtn = useRef<HTMLButtonElement>(null);
-  const prevBtn = useRef<HTMLButtonElement>(null);
-
+  const showSwiper = headlines.length > 1;
   const placeholderCmd = t('hero.ctaPlaceholder');
 
   const handleCopy = async () => {
@@ -50,8 +45,7 @@ export default function HeroSection2(props: Props) {
             {headlines.length > 0 && (
               <div className={classes.swiperWrap}>
                 <Swiper
-                  modules={showSwiper ? [Navigation, Autoplay, Pagination] : []}
-                  navigation={{ prevEl: prevBtn.current, nextEl: nextBtn.current }}
+                  modules={showSwiper ? [Autoplay] : []}
                   autoplay={showSwiper ? { delay: 8000, disableOnInteraction: false } : false}
                   loop={showSwiper}
                   slidesPerView={1}
@@ -113,6 +107,8 @@ export default function HeroSection2(props: Props) {
               className={classes.attuImage}
               width={640}
               height={400}
+              fetchPriority="high"
+              loading="eager"
             />
           </div>
         </div>

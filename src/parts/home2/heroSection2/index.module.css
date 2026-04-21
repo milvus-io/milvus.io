@@ -345,16 +345,12 @@
   opacity: 0.6;
 }
 
-/* Attu frame — mimics a spec-sheet/technical window. Tilted perspective
-   + 20% oversize so the screenshot reads at a usable size without
-   pinning everything to the grid column width. */
+/* Attu frame — brutalist "poster" treatment: oversize the frame so the
+   screenshot reads at a usable size, then plant it with a single flat
+   hard-shadow offset (no perspective / tilt / blur). */
 .rightColumn {
   position: relative;
-  perspective: 1600px;
-  perspective-origin: left center;
   overflow: visible;
-  /* Give the tilted frame room to breathe without cropping */
-  padding: 16px 0;
 }
 
 .attuFrame {
@@ -364,28 +360,29 @@
   border: var(--brut-rule);
   background: var(--brut-paper);
   margin: 0;
-  transform: rotateY(-6deg) rotateX(3deg);
-  transform-origin: left center;
-  box-shadow: -14px 18px 0 -2px rgba(10, 10, 10, 0.08);
-  transition: transform 400ms ease-out;
+  box-shadow: 12px 12px 0 0 var(--brut-ink);
+  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
 }
 
 .attuFrame:hover {
-  transform: rotateY(-3deg) rotateX(1deg) scale(1.02);
+  transform: translate(-3px, -3px);
+  box-shadow: 15px 15px 0 0 var(--brut-accent);
 }
 
 @media (max-width: 1024px) {
-  .rightColumn {
-    perspective: none;
-    padding: 0;
-  }
   .attuFrame {
     width: 100%;
-    transform: none;
-    box-shadow: none;
+    box-shadow: 8px 8px 0 0 var(--brut-ink);
   }
   .attuFrame:hover {
     transform: none;
+    box-shadow: 8px 8px 0 0 var(--brut-ink);
+  }
+}
+
+@media (max-width: 640px) {
+  .attuFrame {
+    box-shadow: 6px 6px 0 0 var(--brut-ink);
   }
 }
 

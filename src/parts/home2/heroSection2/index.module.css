@@ -52,14 +52,11 @@
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
-  padding-bottom: 20px;
-  margin-bottom: 40px;
-  border-bottom: var(--brut-rule-thin);
+  margin-bottom: 32px;
 }
 
 @media (max-width: 768px) {
   .eyebrowRow {
-    padding-bottom: 14px;
     margin-bottom: 24px;
   }
 }

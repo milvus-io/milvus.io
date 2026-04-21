@@ -54,3 +54,14 @@ test.describe('/index2 code walkthrough', () => {
     await expect(page.getByRole('tab', { name: /Serve as MCP Server/i })).toBeVisible();
   });
 });
+
+test.describe('/index2 architecture', () => {
+  test('renders architecture header and pillars', async ({ page }) => {
+    await page.goto(`${BASE_URL}/index2`);
+    await expect(page.getByText(/Built for the Real Scale of AI/i)).toBeVisible();
+    await expect(page.getByText(/Storage–Compute Disaggregation/)).toBeVisible();
+    await expect(page.getByText(/Billion-Scale at a Fraction of the Cost/)).toBeVisible();
+    await expect(page.getByText(/Multi-Tenant by Design/)).toBeVisible();
+    await expect(page.getByText(/Deploy Anywhere, Same API/)).toBeVisible();
+  });
+});

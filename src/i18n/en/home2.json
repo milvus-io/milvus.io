@@ -48,5 +48,33 @@
       "multiTenant": "Partition Key + Resource Groups give you per-tenant isolation without running a cluster per customer.",
       "mcpServer": "Any MCP-aware agent can now read and write your Milvus data as tools."
     }
+  },
+  "architecture": {
+    "sectionTitle": "Built for the Real Scale of AI — Without the Real Cost",
+    "sectionSubtitle": "Milvus 2.6 rebuilt the streaming and storage layers from the ground up to run billion-scale vector workloads on cheap object storage.",
+    "pillars": {
+      "disaggregation": {
+        "title": "Storage–Compute Disaggregation",
+        "body": "Query, data, and streaming nodes scale independently on top of cheap object storage."
+      },
+      "scale": {
+        "title": "Billion-Scale at a Fraction of the Cost",
+        "body": "Milvus 2.6's new Woodpecker WAL replaces Kafka/Pulsar — zero-disk, cloud-native, dramatically cheaper at scale."
+      },
+      "tenant": {
+        "title": "Multi-Tenant by Design",
+        "body": "Partition Key + Resource Groups — one cluster, thousands of tenants, full isolation."
+      },
+      "deploy": {
+        "title": "Deploy Anywhere, Same API",
+        "body": "Standalone on a single box, Distributed on Kubernetes, or Zilliz Cloud — same MilvusClient code."
+      }
+    },
+    "benchmark": {
+      "latency": "Sub-XX ms p99",
+      "scale": "Billion-scale tested",
+      "cost": "~XX% lower infra cost vs 2.5",
+      "clouds": "AWS · GCP · Azure · BYOC"
+    }
   }
 }

@@ -39,46 +39,46 @@ export default function HeroSection2(props: Props) {
   return (
     <section className={classes.heroSection}>
       <div className={pageClasses.homeContainer}>
-        <div className={classes.grid}>
-          <div className={classes.leftColumn}>
-            <div className={classes.eyebrowRow}>
-              <span className={classes.statusBadge}>
-                <span className={classes.statusDot} aria-hidden />
-                MILVUS//LIVE
-              </span>
+        <div className={classes.eyebrowRow}>
+          <span className={classes.statusBadge}>
+            <span className={classes.statusDot} aria-hidden />
+            MILVUS//LIVE
+          </span>
+          <span className={classes.eyebrowDivider} aria-hidden>
+            /
+          </span>
+          <span className={classes.buildTag}>v2.6.x</span>
+          {headlines.length > 0 && (
+            <>
               <span className={classes.eyebrowDivider} aria-hidden>
                 /
               </span>
-              <span className={classes.buildTag}>v2.6.x</span>
-              {headlines.length > 0 && (
-                <>
-                  <span className={classes.eyebrowDivider} aria-hidden>
-                    /
-                  </span>
-                  <div className={classes.eyebrowHeadline}>
-                    <Swiper
-                      modules={showSwiper ? [Autoplay] : []}
-                      autoplay={
-                        showSwiper
-                          ? { delay: 8000, disableOnInteraction: false }
-                          : false
-                      }
-                      loop={showSwiper}
-                      slidesPerView={1}
-                    >
-                      {headlines.map(item => (
-                        <SwiperSlide key={item.label}>
-                          <Link href={item.link}>
-                            [{item.tag}] {item.label}
-                          </Link>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </div>
-                </>
-              )}
-            </div>
+              <div className={classes.eyebrowHeadline}>
+                <Swiper
+                  modules={showSwiper ? [Autoplay] : []}
+                  autoplay={
+                    showSwiper
+                      ? { delay: 8000, disableOnInteraction: false }
+                      : false
+                  }
+                  loop={showSwiper}
+                  slidesPerView={1}
+                >
+                  {headlines.map(item => (
+                    <SwiperSlide key={item.label}>
+                      <Link href={item.link}>
+                        [{item.tag}] {item.label}
+                      </Link>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </>
+          )}
+        </div>
 
+        <div className={classes.grid}>
+          <div className={classes.leftColumn}>
             <h1 className={classes.title}>
               <Trans
                 t={t}

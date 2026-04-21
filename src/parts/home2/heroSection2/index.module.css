@@ -37,7 +37,9 @@
   );
 }
 
-/* Eyebrow row: inline LIVE badge + build tag + rolling headline link */
+/* Eyebrow row: inline LIVE badge + build tag + rolling headline link.
+   Sits above the grid at full container width so the headline has room
+   to breathe (the grid's left column is too narrow for long news). */
 .eyebrowRow {
   display: flex;
   align-items: center;
@@ -50,6 +52,16 @@
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
+  padding-bottom: 20px;
+  margin-bottom: 40px;
+  border-bottom: var(--brut-rule-thin);
+}
+
+@media (max-width: 768px) {
+  .eyebrowRow {
+    padding-bottom: 14px;
+    margin-bottom: 24px;
+  }
 }
 
 .statusBadge {

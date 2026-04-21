@@ -4,6 +4,7 @@ import HeroSection2 from '@/parts/home2/heroSection2';
 import CapabilityPillars from '@/parts/home2/capabilityPillars';
 import CodeWalkthrough from '@/parts/home2/codeWalkthrough';
 import ArchitectureSection from '@/parts/home2/architectureSection';
+import EcosystemMatrix from '@/parts/home2/ecosystemMatrix';
 import classes from '@/styles/home2.module.css';
 import pageClasses from '@/styles/responsive.module.css';
 import { LanguageEnum } from '@/types/localization';
@@ -27,6 +28,7 @@ export default function Homepage2(props: Props) {
         <CapabilityPillars />
         <CodeWalkthrough />
         <ArchitectureSection />
+        <EcosystemMatrix />
         {/* Sections 2-9 added in later tasks */}
       </main>
     </Layout>

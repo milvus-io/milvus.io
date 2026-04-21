@@ -76,5 +76,17 @@
       "cost": "~XX% lower infra cost vs 2.5",
       "clouds": "AWS · GCP · Azure · BYOC"
     }
+  },
+  "ecosystem": {
+    "sectionTitle": "Plugs Into Your Entire AI Stack",
+    "sectionSubtitle": "Drop Milvus into the agent framework, model API, RAG tool, or protocol you already use.",
+    "categories": {
+      "agent": "Agent Frameworks",
+      "model": "Model APIs",
+      "rag": "RAG Stacks",
+      "protocols": "Protocols",
+      "eval": "Eval & Observability"
+    },
+    "emptyGap": "⚠️ Coming soon — integrations being finalized"
   }
 }

@@ -75,3 +75,24 @@ test.describe('/index2 architecture', () => {
     ).toBeVisible();
   });
 });
+
+test.describe('/index2 ecosystem', () => {
+  test('renders all five category headers', async ({ page }) => {
+    await page.goto(`${BASE_URL}/index2`);
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Agent Frameworks' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Model APIs' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'RAG Stacks' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Protocols' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Eval & Observability' })
+    ).toBeVisible();
+  });
+});

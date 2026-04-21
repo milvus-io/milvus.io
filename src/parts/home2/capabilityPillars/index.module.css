@@ -1,0 +1,78 @@
+.section {
+  padding: 96px 0;
+  background: #f8fafc;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #475569;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.cardBody {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.codeBlock {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.learnMore {
+  color: #1d4ed8;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.learnMore:hover {
+  text-decoration: underline;
+}

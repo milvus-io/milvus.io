@@ -11,5 +11,26 @@
     "attuAlt": "Attu — Milvus management UI, vector search results",
     "starsLabel": "GitHub stars",
     "downloadsLabel": "downloads"
+  },
+  "pillars": {
+    "sectionTitle": "Built for the Agent Era",
+    "sectionSubtitle": "Four capabilities that make Milvus drop-in for modern AI applications.",
+    "learnMore": "Learn more →",
+    "hybrid": {
+      "title": "Hybrid Search, Built-in",
+      "body": "Combine semantic (dense), keyword (BM25 sparse), and rerankers in one query. No external Elasticsearch. Better RAG answers out of the box."
+    },
+    "embeddings": {
+      "title": "Embeddings Without the Pipeline",
+      "body": "Call OpenAI, Cohere, BGE, Jina, or local models directly inside Milvus. No separate embedding service to run and scale."
+    },
+    "memory": {
+      "title": "Memory That Scales With Your Agent",
+      "body": "Partition per user, per session, per tool. Session memory today, billions of long-term memories tomorrow — same API."
+    },
+    "mcp": {
+      "title": "MCP-Native",
+      "body": "Expose Milvus as an MCP server with one command. LangGraph, CrewAI, Claude Desktop, Cursor — all speak MCP."
+    }
   }
 }

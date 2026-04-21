@@ -1,6 +1,7 @@
 import Layout from '@/components/layout/commonLayout';
 import { HomeMeta2 } from '@/parts/home2/meta/HomeMeta2';
 import HeroSection2 from '@/parts/home2/heroSection2';
+import CapabilityPillars from '@/parts/home2/capabilityPillars';
 import classes from '@/styles/home2.module.css';
 import pageClasses from '@/styles/responsive.module.css';
 import { LanguageEnum } from '@/types/localization';
@@ -21,6 +22,7 @@ export default function Homepage2(props: Props) {
       <main className={classes.homepageContainer}>
         <HomeMeta2 locale={resolvedLocale} />
         <HeroSection2 headlines={headlines} locale={resolvedLocale} />
+        <CapabilityPillars />
         {/* Sections 2-9 added in later tasks */}
       </main>
     </Layout>

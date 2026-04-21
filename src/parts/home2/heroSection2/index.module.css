@@ -105,8 +105,6 @@
 
 .eyebrowHeadline :global(.swiper-slide) {
   font-size: 11px;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -115,9 +113,6 @@
   opacity: 0.75;
   text-decoration: none;
   display: inline-block;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   text-transform: none;
   letter-spacing: 0;

@@ -9,6 +9,14 @@
   }
 }
 
+.sectionTitle {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 40px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -123,6 +123,7 @@
     }
   },
   "community": {
+    "sectionTitle": "Community & Meetups",
     "stats": {
       "title": "Join the community",
       "stars": "GitHub stars",

@@ -1,0 +1,15 @@
+.pre {
+  margin: 0;
+  padding: 0;
+  font-family: var(--brut-font-mono);
+  font-size: inherit;
+  line-height: inherit;
+  background: transparent !important;
+  white-space: pre;
+  overflow-x: auto;
+  color: inherit;
+}
+
+.line {
+  line-height: 1.55;
+}

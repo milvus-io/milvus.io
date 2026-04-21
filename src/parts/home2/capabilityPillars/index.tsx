@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
+import CodeHighlight from '../components/CodeHighlight';
 import { PILLARS } from './const';
 
 export default function CapabilityPillars() {
@@ -28,9 +29,9 @@ export default function CapabilityPillars() {
                   {t(`pillars.${pillar.id}.title`)}
                 </h3>
                 <p className={classes.cardBody}>{t(`pillars.${pillar.id}.body`)}</p>
-                <pre className={classes.codeBlock}>
-                  <code>{pillar.code}</code>
-                </pre>
+                <div className={classes.codeBlock}>
+                  <CodeHighlight code={pillar.code} language={pillar.language} />
+                </div>
                 <a
                   href={pillar.learnMoreHref}
                   className={classes.learnMore}

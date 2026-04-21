@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
+import CodeHighlight from '../components/CodeHighlight';
 import {
   CODE_ADD_MEMORY,
   CODE_SEMANTIC_RECALL,
@@ -76,14 +77,17 @@ export default function CodeWalkthrough() {
           </div>
 
           <div className={classes.panelBody}>
-            <pre
+            <div
               className={classes.codeBlock}
               role="tabpanel"
               id={panelId}
               aria-labelledby={`walkthrough-tab-${active}`}
             >
-              <code>{code}</code>
-            </pre>
+              <CodeHighlight
+                code={code}
+                language={active === 'mcpServer' ? 'bash' : 'python'}
+              />
+            </div>
 
             <aside className={classes.note} aria-live="polite">
               <span className={classes.noteLabel}>// note</span>

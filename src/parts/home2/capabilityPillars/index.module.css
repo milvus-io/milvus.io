@@ -125,28 +125,12 @@
 
 .codeBlock {
   background: var(--brut-ink);
-  color: #e5e7eb;
   padding: 18px;
   border: var(--brut-rule);
-  font-family: var(--brut-font-mono);
   font-size: 12.5px;
   line-height: 1.55;
-  white-space: pre;
-  overflow-x: auto;
+  overflow: hidden;
   margin: 0;
-}
-
-.codeBlock::before {
-  content: '$';
-  display: inline;
-  color: var(--brut-accent);
-  margin-right: 10px;
-  font-weight: 700;
-}
-
-.codeBlock code {
-  color: inherit;
-  font-family: inherit;
 }
 
 .learnMore {

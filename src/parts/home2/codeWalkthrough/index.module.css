@@ -173,16 +173,13 @@
 
 .codeBlock {
   background: var(--brut-ink);
-  color: var(--brut-paper);
   padding: 20px;
-  font-family: var(--brut-font-mono);
   font-size: 13px;
   line-height: 1.55;
-  white-space: pre;
-  overflow-x: auto;
   min-height: 280px;
   margin: 0;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 
 @media (max-width: 900px) {
@@ -190,11 +187,6 @@
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-}
-
-.codeBlock code {
-  color: inherit;
-  font-family: inherit;
 }
 
 .note {

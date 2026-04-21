@@ -58,10 +58,20 @@ test.describe('/index2 code walkthrough', () => {
 test.describe('/index2 architecture', () => {
   test('renders architecture header and pillars', async ({ page }) => {
     await page.goto(`${BASE_URL}/index2`);
-    await expect(page.getByText(/Built for the Real Scale of AI/i)).toBeVisible();
-    await expect(page.getByText(/Storage–Compute Disaggregation/)).toBeVisible();
-    await expect(page.getByText(/Billion-Scale at a Fraction of the Cost/)).toBeVisible();
-    await expect(page.getByText(/Multi-Tenant by Design/)).toBeVisible();
-    await expect(page.getByText(/Deploy Anywhere, Same API/)).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 2, name: /Built for the Real Scale of AI/i })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Storage–Compute Disaggregation' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Billion-Scale at a Fraction of the Cost' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Multi-Tenant by Design' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Deploy Anywhere, Same API' })
+    ).toBeVisible();
   });
 });

@@ -1,5 +1,7 @@
 // ⚠️ PLACEHOLDER: final design should produce an animated SVG/Lottie asset
 // per spec §5.4. This is a simplified static version for the /index2 preview.
+// TODO(i18n): SVG text labels are hardcoded pending the final diagram asset;
+// externalize into home2.json when the animated version ships.
 
 export default function ArchitectureDiagram() {
   return (
@@ -8,7 +10,7 @@ export default function ArchitectureDiagram() {
       xmlns="http://www.w3.org/2000/svg"
       width="100%"
       role="img"
-      aria-label="Milvus 2.6 four-layer architecture: Access, Coordinator, Worker, Storage"
+      aria-label="Milvus 2.6 architecture with four layers: Access (Proxy Service), Coordinator, Workers (QueryNode, DataNode, StreamingNode), and Storage (Object Storage, etcd, Woodpecker WAL)"
     >
       {/* Access Layer */}
       <rect x="260" y="20" width="200" height="48" rx="6" fill="#dbeafe" stroke="#1d4ed8" />

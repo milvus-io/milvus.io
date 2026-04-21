@@ -38,6 +38,22 @@
   font-weight: 600;
   color: #0f172a;
   margin-bottom: 16px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+
+.categoryHeader:disabled {
+  cursor: default;
+  opacity: 1;
+  color: inherit;
+}
+
+.chevron {
+  display: none;
 }
 
 .logoRow {
@@ -81,17 +97,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: transparent;
-    border: none;
-    width: 100%;
-    padding: 0;
-    text-align: left;
-    font: inherit;
-    color: inherit;
   }
 
   .category[data-open='false'] .logoRow {
     display: none;
+  }
+
+  .chevron {
+    display: inline-block;
   }
 
   .chevron::after {

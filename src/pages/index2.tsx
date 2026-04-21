@@ -8,6 +8,7 @@ import EcosystemMatrix from '@/parts/home2/ecosystemMatrix';
 import ProductionSection2 from '@/parts/home2/productionSection2';
 import LovedSection2 from '@/parts/home2/lovedSection2';
 import CommunityMeetups from '@/parts/home2/communityMeetups';
+import FinalCTA from '@/parts/home2/finalCTA';
 import classes from '@/styles/home2.module.css';
 import pageClasses from '@/styles/responsive.module.css';
 import { LanguageEnum } from '@/types/localization';
@@ -35,6 +36,7 @@ export default function Homepage2(props: Props) {
         <ProductionSection2 />
         <LovedSection2 />
         <CommunityMeetups />
+        <FinalCTA />
         {/* Sections 2-9 added in later tasks */}
       </main>
     </Layout>

@@ -20,7 +20,9 @@ test.describe('/index2 hero', () => {
       page.getByRole('heading', { level: 1, name: /Vector Database That Powers AI/i })
     ).toBeVisible();
     await expect(page.getByText(/hybrid search, built-in embeddings/i)).toBeVisible();
-    await expect(page.getByText(/⚠️ PLACEHOLDER/i)).toBeVisible();
+    // Placeholder appears in both hero and final CTA (by design — they share copy
+    // until the real CLI command is decided). Scope to the first occurrence.
+    await expect(page.getByText(/⚠️ PLACEHOLDER/i).first()).toBeVisible();
     await expect(page.locator('img[alt*="Attu"]').first()).toBeVisible();
   });
 });
@@ -137,6 +139,24 @@ test.describe('/index2 community', () => {
     ).toBeVisible();
     await expect(
       page.getByRole('heading', { level: 3, name: /Unstructured Data Meetups/i })
+    ).toBeVisible();
+  });
+});
+
+test.describe('/index2 final CTA', () => {
+  test('renders three start paths', async ({ page }) => {
+    await page.goto(`${BASE_URL}/index2`);
+    await expect(
+      page.getByRole('heading', { level: 2, name: /Start building in minutes/i })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Python' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Cloud' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Docs' })
     ).toBeVisible();
   });
 });

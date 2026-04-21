@@ -137,5 +137,24 @@
       "desc": "Join a community of passionate developers and engineers dedicated to Gen AI.",
       "cta": "Explore meetups →"
     }
+  },
+  "finalCta": {
+    "title": "Start building in minutes",
+    "python": {
+      "label": "Python",
+      "body": "⚠️ PLACEHOLDER: Agent-ready CLI command TBD",
+      "button": "Copy",
+      "copied": "Copied"
+    },
+    "cloud": {
+      "label": "Cloud",
+      "body": "Try Zilliz Cloud Free",
+      "button": "Sign up"
+    },
+    "docs": {
+      "label": "Docs",
+      "body": "Read the docs",
+      "button": "Browse"
+    }
   }
 }

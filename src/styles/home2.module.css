@@ -1,3 +1,25 @@
 .homepageContainer {
   overflow: hidden;
+
+  /* Brutalist design tokens — scoped to home2 only */
+  --brut-ink: #0a0a0a;
+  --brut-paper: #fafafa;
+  --brut-paper-warm: #f2ede4;
+  --brut-accent: #0066ff;
+  --brut-accent-hot: #ff4500;
+  --brut-warn: #faff00;
+  --brut-rule: 2px solid var(--brut-ink);
+  --brut-rule-thin: 1px solid var(--brut-ink);
+  --brut-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono',
+    Menlo, Consolas, monospace;
+
+  font-family: var(--brut-font-mono);
+  color: var(--brut-ink);
+  background: var(--brut-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.homepageContainer :global(a) {
+  color: inherit;
 }

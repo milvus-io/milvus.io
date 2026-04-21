@@ -364,8 +364,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  background: var(--brut-ink);
-  color: var(--brut-paper);
+  background: #0ace82; /* Attu brand green, per attu/DESIGN.md */
+  color: #ffffff;
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -383,13 +383,13 @@
   display: inline-block;
   width: 10px;
   height: 10px;
-  background: var(--brut-accent);
+  background: #ffffff;
   transform: rotate(45deg);
 }
 
 .attuFrameMeta {
-  color: var(--brut-paper);
-  opacity: 0.55;
+  color: #ffffff;
+  opacity: 0.75;
 }
 
 .attuImage {

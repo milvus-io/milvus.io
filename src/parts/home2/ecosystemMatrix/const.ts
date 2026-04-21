@@ -11,7 +11,11 @@ import {
 
 export type Logo = { name: string; logo: string; href: string };
 
-export type CategoryId = 'agent' | 'model' | 'rag' | 'eval';
+export type CategoryId = 'agent' | 'model' | 'rag' | 'data' | 'eval';
+
+// Milvus docs host — each href resolves to the tutorial for that
+// integration, per src/docs/v2.6.x/site/en/integrations/integrations_overview.md.
+const DOC = 'https://milvus.io/docs';
 
 export const CATEGORIES: { id: CategoryId; logos: Logo[] }[] = [
   {
@@ -22,7 +26,16 @@ export const CATEGORIES: { id: CategoryId; logos: Logo[] }[] = [
         logo: '/images/home/mem-gpt.png',
         href: MILVUS_INTEGRATION_MEMGPT_LINK,
       },
-      // ⚠️ Gap: add LangGraph, CrewAI, AutoGen, Mastra, Pydantic AI before public launch (spec §11).
+      {
+        name: 'Mem0',
+        logo: '/images/home2/logos/mem0.svg',
+        href: `${DOC}/quickstart_mem0_with_milvus.md`,
+      },
+      {
+        name: 'MCP',
+        logo: '/images/home2/logos/mcp.svg',
+        href: `${DOC}/milvus_and_mcp.md`,
+      },
     ],
   },
   {
@@ -37,6 +50,26 @@ export const CATEGORIES: { id: CategoryId; logos: Logo[] }[] = [
         name: 'Hugging Face',
         logo: '/images/home/hugging-face.png',
         href: MILVUS_INTEGRATION_HUGGING_FACE_LINK,
+      },
+      {
+        name: 'Cohere',
+        logo: '/images/home/cohere.png',
+        href: `${DOC}/integrate_with_cohere.md`,
+      },
+      {
+        name: 'Gemini',
+        logo: '/images/home2/logos/googlegemini.svg',
+        href: `${DOC}/build_RAG_with_milvus_and_gemini.md`,
+      },
+      {
+        name: 'Ollama',
+        logo: '/images/home2/logos/ollama.svg',
+        href: `${DOC}/build_RAG_with_milvus_and_ollama.md`,
+      },
+      {
+        name: 'DeepSeek',
+        logo: '/images/home2/logos/deepseek.svg',
+        href: `${DOC}/build_RAG_with_milvus_and_deepseek.md`,
       },
     ],
   },
@@ -63,6 +96,41 @@ export const CATEGORIES: { id: CategoryId; logos: Logo[] }[] = [
         logo: '/images/home/dspy.png',
         href: MILVUS_INTEGRATION_DSPY_LINK,
       },
+      {
+        name: 'Dify',
+        logo: '/images/home2/logos/dify.svg',
+        href: `${DOC}/dify_with_milvus.md`,
+      },
+      {
+        name: 'Langflow',
+        logo: '/images/home2/logos/langflow.svg',
+        href: `${DOC}/rag_with_langflow.md`,
+      },
+      {
+        name: 'BentoML',
+        logo: '/images/home2/logos/bentoml.svg',
+        href: `${DOC}/integrate_with_bentoml.md`,
+      },
+      {
+        name: 'n8n',
+        logo: '/images/home2/logos/n8n.svg',
+        href: `${DOC}/milvus_and_n8n.md`,
+      },
+    ],
+  },
+  {
+    id: 'data',
+    logos: [
+      {
+        name: 'Airbyte',
+        logo: '/images/home2/logos/airbyte.svg',
+        href: `${DOC}/integrate_with_airbyte.md`,
+      },
+      {
+        name: 'Apache Kafka',
+        logo: '/images/home2/logos/apachekafka.svg',
+        href: `${DOC}/kafka-connect-milvus.md`,
+      },
     ],
   },
   {
@@ -72,6 +140,11 @@ export const CATEGORIES: { id: CategoryId; logos: Logo[] }[] = [
         name: 'Ragas',
         logo: '/images/home/ragas.png',
         href: MILVUS_INTEGRATION_RAGAS_LINK,
+      },
+      {
+        name: 'Langfuse',
+        logo: '/images/home2/logos/langfuse.svg',
+        href: `${DOC}/integrate_with_langfuse.md`,
       },
     ],
   },

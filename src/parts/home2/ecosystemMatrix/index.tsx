@@ -15,6 +15,7 @@ export default function EcosystemMatrix() {
     agent: true,
     model: false,
     rag: false,
+    data: false,
     eval: false,
   });
 

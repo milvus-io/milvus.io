@@ -84,7 +84,8 @@
     "categories": {
       "agent": "Agent Frameworks",
       "model": "Model APIs",
-      "rag": "RAG Stacks",
+      "rag": "RAG & Orchestration",
+      "data": "Data & Connectors",
       "eval": "Eval & Observability"
     },
     "emptyGap": "⚠️ Coming soon — integrations being finalized"

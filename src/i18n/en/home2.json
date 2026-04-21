@@ -4,7 +4,7 @@
     "description": "Open-source Milvus gives AI applications — from RAG to agents — production-grade hybrid search, built-in embeddings, and scale to 100B+ vectors."
   },
   "hero": {
-    "title": "The <0>Vector Database</0><1 /> That Powers AI",
+    "title": "The<1 /><0>Vector Database</0><1 /> That Powers AI",
     "subtitle": "Open-source Milvus gives AI applications — from RAG to agents — production-grade hybrid search, built-in embeddings, and scale to 100B+ vectors.",
     "ctaPlaceholder": "⚠️ PLACEHOLDER: Agent-ready CLI command TBD",
     "ctaSecondary": "Try Zilliz Cloud Free",

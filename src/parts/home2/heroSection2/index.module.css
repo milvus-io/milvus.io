@@ -138,13 +138,13 @@
   }
 }
 
-/* Asymmetric grid: copy left, big Attu frame right. Right column dominates
-   so the real screenshot reads at size. minmax(0, Nfr) so long unbreakable
-   content (swiper slide / mono URL) can't blow the track. */
+/* Grid: balanced left / slightly-wider right so the H1 stays on <=3 lines
+   (mono chars are wide) while the Attu screenshot still reads at size.
+   minmax(0, Nfr) so long unbreakable content can't blow a track. */
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 60px;
   align-items: center;
   padding-bottom: 80px;
 }
@@ -170,11 +170,12 @@
   display: none;
 }
 
-/* H1: large but not shouting, tight, left-aligned */
+/* H1: sized so "The Vector Database" fits on one line at typical desktop
+   widths (mono chars are ~0.6em wide, so max ~36px for a ~420px column). */
 .title {
   font-family: var(--brut-font-mono);
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: 1.02;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.1;
   letter-spacing: -0.035em;
   font-weight: 600;
   color: var(--brut-ink);
@@ -189,14 +190,14 @@
 
 .subtitle {
   font-family: var(--brut-font-mono);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--brut-ink);
   font-weight: 400;
-  max-width: 60ch;
+  max-width: 52ch;
   margin: 0;
   border-left: 2px solid var(--brut-accent);
-  padding-left: 16px;
+  padding-left: 14px;
   opacity: 0.85;
 }
 

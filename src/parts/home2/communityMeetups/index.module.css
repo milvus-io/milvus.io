@@ -1,0 +1,77 @@
+.section {
+  padding: 96px 0;
+  background: #f8fafc;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.cardTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+.statRow {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.statRow:last-child {
+  border-bottom: none;
+}
+
+.statValue {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+  min-width: 80px;
+}
+
+.statLabel {
+  color: #475569;
+  font-size: 14px;
+}
+
+.meetupDesc {
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.meetupCta {
+  color: #1d4ed8;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.meetupCta:hover {
+  text-decoration: underline;
+}

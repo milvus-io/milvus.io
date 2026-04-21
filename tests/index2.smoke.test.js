@@ -100,12 +100,20 @@ test.describe('/index2 ecosystem', () => {
 test.describe('/index2 production', () => {
   test('renders trusted-in-production heading and numbers strip', async ({ page }) => {
     await page.goto(`${BASE_URL}/index2`);
+    const heading = page.getByRole('heading', {
+      level: 2,
+      name: /Trusted in production/i,
+    });
+    await expect(heading).toBeVisible();
+    // Scope stats to the production section (sibling of its heading) to avoid
+    // collision with hero stats ("📥 25M+ downloads") and the community card.
+    const productionSection = page.locator('section').filter({ has: heading });
     await expect(
-      page.getByRole('heading', { level: 2, name: /Trusted in production/i })
+      productionSection.getByText('25M+', { exact: true })
     ).toBeVisible();
-    // Scope to exact text to avoid collision with hero stats ("📥 25M+ downloads").
-    await expect(page.getByText('25M+', { exact: true })).toBeVisible();
-    await expect(page.getByText('35K+', { exact: true })).toBeVisible();
+    await expect(
+      productionSection.getByText('35K+', { exact: true })
+    ).toBeVisible();
   });
 });
 
@@ -118,5 +126,17 @@ test.describe('/index2 loved', () => {
     await expect(page.getByText(/Nandula Asel/)).toBeVisible();
     await expect(page.getByText(/Bhargav Mankad/)).toBeVisible();
     await expect(page.getByText(/Igor Gorbenko/)).toBeVisible();
+  });
+});
+
+test.describe('/index2 community', () => {
+  test('renders community stats and meetups card', async ({ page }) => {
+    await page.goto(`${BASE_URL}/index2`);
+    await expect(
+      page.getByRole('heading', { level: 3, name: /Join the community/i })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: /Unstructured Data Meetups/i })
+    ).toBeVisible();
   });
 });

@@ -140,37 +140,37 @@
   font-weight: 700;
 }
 
+/* Matches site nav's primary CTA (h-9 px-3 py-1.5 rounded-md bg-blue1) */
 .button {
   margin-top: auto;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 18px;
-  background: var(--brut-paper);
-  color: var(--brut-ink);
-  border: 2px solid var(--brut-paper);
-  font-family: var(--brut-font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  gap: 6px;
+  height: 36px;
+  padding: 6px 12px;
+  background: var(--brut-accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0;
+  text-transform: none;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 80ms ease-out, box-shadow 80ms ease-out,
-    background 80ms;
+  transition: background 200ms ease-in-out;
+  white-space: nowrap;
 }
 
 .button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--brut-accent);
-}
-
-.button:active {
-  transform: translate(0, 0);
-  box-shadow: none;
+  background: var(--brut-accent-deep);
+  color: #ffffff;
 }
 
 .buttonCopied {
-  background: var(--brut-accent);
-  color: var(--brut-ink);
+  background: var(--brut-ink);
+  color: var(--brut-paper);
 }
+

@@ -215,26 +215,22 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px 16px;
+  height: 36px;
+  padding: 6px 12px;
   background: var(--brut-ink);
   color: var(--brut-paper);
-  border: var(--brut-rule);
+  border: none;
+  border-radius: 6px;
   font-family: var(--brut-font-mono);
   font-size: 13px;
   letter-spacing: 0;
   cursor: pointer;
   text-align: left;
-  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+  transition: background 200ms ease-in-out;
 }
 
 .copyCommand:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--brut-accent);
-}
-
-.copyCommand:active {
-  transform: translate(0, 0);
-  box-shadow: none;
+  background: #1a1a1a;
 }
 
 .copyCommandPrompt {
@@ -260,35 +256,37 @@
   text-transform: uppercase;
 }
 
+/* Primary CTA — matches the site nav's "Get started" button
+   (h-9 px-3 py-1.5 rounded-md bg-blue1 hover:#008DC8 white 14/500) */
 .secondaryCta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 20px;
-  background: var(--brut-paper);
-  color: var(--brut-ink);
-  border: var(--brut-rule);
-  font-family: var(--brut-font-mono);
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  gap: 6px;
+  height: 36px;
+  padding: 6px 12px;
+  background: var(--brut-accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0;
+  text-transform: none;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 80ms ease-out, background 80ms, color 80ms,
-    box-shadow 80ms ease-out;
+  transition: background 200ms ease-in-out;
+  white-space: nowrap;
 }
 
 .secondaryCta:hover {
-  background: var(--brut-ink);
-  color: var(--brut-paper);
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--brut-accent);
+  background: var(--brut-accent-deep);
+  color: #ffffff;
 }
 
 .secondaryCta:active {
-  transform: translate(0, 0);
-  box-shadow: none;
+  background: var(--brut-accent-deep);
 }
 
 /* Stats strip: divided by vertical rules, mono, with lower-case labels */

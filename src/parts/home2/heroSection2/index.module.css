@@ -1,0 +1,114 @@
+.heroSection {
+  padding: 98px 0 100px;
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 48px 0 60px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.swiperWrap {
+  max-width: 520px;
+}
+
+.title {
+  font-size: 64px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #0f172a;
+  opacity: 0.9;
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 36px;
+  }
+}
+
+.titleAccent {
+  color: #1d4ed8;
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #334155;
+  max-width: 560px;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.copyCommand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #0f172a;
+  color: #f8fafc;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #0f172a;
+}
+
+.copyCommand:hover {
+  opacity: 0.9;
+}
+
+.copyCommandPlaceholder {
+  color: #fbbf24;
+}
+
+.socialProof {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  color: #475569;
+}
+
+.rightColumn {
+  display: flex;
+  justify-content: center;
+}
+
+.attuImage {
+  width: 100%;
+  max-width: 640px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+  border: 1px solid #e2e8f0;
+}

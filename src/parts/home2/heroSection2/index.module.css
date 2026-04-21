@@ -2,10 +2,16 @@
 
 .heroSection {
   position: relative;
-  padding: 0 0 0;
+  padding: 56px 0 0;
   background: var(--brut-paper);
   border-bottom: var(--brut-rule);
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 32px 0 0;
+  }
 }
 
 /* Background CAD-style grid — subtle, decorative */
@@ -31,38 +37,25 @@
   );
 }
 
-/* Top status bar: [SYSTEM] / [BUILD xxxx] / latest headline */
-.statusBar {
-  position: relative;
-  border-bottom: var(--brut-rule-thin);
-  background: var(--brut-ink);
-  color: var(--brut-paper);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 8px 0;
-  margin-bottom: 80px;
-}
-
-@media (max-width: 768px) {
-  .statusBar {
-    margin-bottom: 48px;
-  }
-}
-
-.statusBarInner {
+/* Eyebrow row: inline LIVE badge + build tag + rolling headline link */
+.eyebrowRow {
   display: flex;
   align-items: center;
-  gap: 32px;
-  white-space: nowrap;
-  overflow: hidden;
+  gap: 14px;
+  font-family: var(--brut-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brut-ink);
+  min-width: 0;
 }
 
 .statusBadge {
-  font-weight: 600;
-  color: var(--brut-accent);
   display: inline-flex;
   align-items: center;
+  font-weight: 600;
+  color: var(--brut-ink);
+  white-space: nowrap;
 }
 
 .statusDot {
@@ -70,8 +63,8 @@
   width: 8px;
   height: 8px;
   background: var(--brut-accent);
-  margin-right: 6px;
-  transform: translateY(1px);
+  margin-right: 8px;
+  transform: translateY(0);
   animation: blink 1.6s infinite step-end;
 }
 
@@ -82,40 +75,75 @@
   }
   51%,
   100% {
-    opacity: 0.2;
+    opacity: 0.25;
   }
 }
 
-.statusHeadline {
-  flex: 1;
+.buildTag {
+  color: var(--brut-ink);
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+.eyebrowDivider {
+  color: var(--brut-accent);
+  opacity: 0.6;
+  font-weight: 700;
+}
+
+.eyebrowHeadline {
+  flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
 }
 
-.statusHeadline :global(.swiper-slide) {
+.eyebrowHeadline :global(.swiper) {
+  width: 100%;
+}
+
+.eyebrowHeadline :global(.swiper-slide) {
   font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.statusHeadline a {
-  color: var(--brut-paper);
+.eyebrowHeadline a {
+  color: var(--brut-ink);
+  opacity: 0.75;
   text-decoration: none;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-.statusHeadline a:hover {
+.eyebrowHeadline a:hover {
   color: var(--brut-accent);
+  opacity: 1;
 }
 
 @media (max-width: 640px) {
-  .statusBarInner {
-    gap: 12px;
+  .eyebrowRow {
+    gap: 10px;
     font-size: 10px;
+  }
+
+  .buildTag,
+  .eyebrowDivider:nth-of-type(1) {
+    display: none;
   }
 }
 
-/* Asymmetric grid: copy left (7 cols), Attu frame right (5 cols) */
+/* Asymmetric grid: copy left (7 cols), Attu frame right (5 cols). Use
+   minmax(0, Nfr) so long unbreakable content (swiper slide / mono URL)
+   can't blow the track and collapse its sibling column. */
 .grid {
   display: grid;
-  grid-template-columns: 7fr 5fr;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: 48px;
   align-items: start;
   padding-bottom: 80px;
@@ -138,22 +166,9 @@
 }
 
 /* Eyebrow: /// VECTOR DATABASE */
+/* Legacy .eyebrow kept so stray className references degrade quietly */
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--brut-ink);
-  opacity: 0.75;
-}
-
-.eyebrow::before {
-  content: '///';
-  color: var(--brut-accent);
-  font-weight: 700;
+  display: none;
 }
 
 /* H1: large but not shouting, tight, left-aligned */
@@ -316,8 +331,11 @@
 
 .attuFrame {
   position: relative;
+  display: block;
+  width: 100%;
   border: var(--brut-rule);
   background: var(--brut-paper);
+  margin: 0;
 }
 
 .attuFrameHeader {

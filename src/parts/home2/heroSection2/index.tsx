@@ -38,44 +38,46 @@ export default function HeroSection2(props: Props) {
 
   return (
     <section className={classes.heroSection}>
-      {headlines.length > 0 && (
-        <div className={classes.statusBar}>
-          <div className={pageClasses.homeContainer}>
-            <div className={classes.statusBarInner}>
+      <div className={pageClasses.homeContainer}>
+        <div className={classes.grid}>
+          <div className={classes.leftColumn}>
+            <div className={classes.eyebrowRow}>
               <span className={classes.statusBadge}>
                 <span className={classes.statusDot} aria-hidden />
                 MILVUS//LIVE
               </span>
-              <span>BUILD 2.6.x</span>
-              <div className={classes.statusHeadline}>
-                <Swiper
-                  modules={showSwiper ? [Autoplay] : []}
-                  autoplay={
-                    showSwiper
-                      ? { delay: 8000, disableOnInteraction: false }
-                      : false
-                  }
-                  loop={showSwiper}
-                  slidesPerView={1}
-                >
-                  {headlines.map(item => (
-                    <SwiperSlide key={item.label}>
-                      <Link href={item.link}>
-                        [{item.tag}] {item.label}
-                      </Link>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
+              <span className={classes.eyebrowDivider} aria-hidden>
+                /
+              </span>
+              <span className={classes.buildTag}>v2.6.x</span>
+              {headlines.length > 0 && (
+                <>
+                  <span className={classes.eyebrowDivider} aria-hidden>
+                    /
+                  </span>
+                  <div className={classes.eyebrowHeadline}>
+                    <Swiper
+                      modules={showSwiper ? [Autoplay] : []}
+                      autoplay={
+                        showSwiper
+                          ? { delay: 8000, disableOnInteraction: false }
+                          : false
+                      }
+                      loop={showSwiper}
+                      slidesPerView={1}
+                    >
+                      {headlines.map(item => (
+                        <SwiperSlide key={item.label}>
+                          <Link href={item.link}>
+                            [{item.tag}] {item.label}
+                          </Link>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                </>
+              )}
             </div>
-          </div>
-        </div>
-      )}
-
-      <div className={pageClasses.homeContainer}>
-        <div className={classes.grid}>
-          <div className={classes.leftColumn}>
-            <span className={classes.eyebrow}>Open-source · 2026</span>
 
             <h1 className={classes.title}>
               <Trans

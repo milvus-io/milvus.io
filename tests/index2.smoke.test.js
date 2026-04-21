@@ -48,9 +48,9 @@ test.describe('/index2 capability pillars', () => {
 test.describe('/index2 code walkthrough', () => {
   test('renders tab labels', async ({ page }) => {
     await page.goto(`${BASE_URL}/index2`);
-    await expect(page.getByRole('button', { name: /Add Memory/i })).toBeVisible();
-    await expect(page.getByRole('button', { name: /Semantic Recall/i })).toBeVisible();
-    await expect(page.getByRole('button', { name: /Multi-tenant/i })).toBeVisible();
-    await expect(page.getByRole('button', { name: /MCP Server/i })).toBeVisible();
+    await expect(page.getByRole('tab', { name: /Add Memory/i })).toBeVisible();
+    await expect(page.getByRole('tab', { name: /Semantic Recall/i })).toBeVisible();
+    await expect(page.getByRole('tab', { name: /Multi-tenant/i })).toBeVisible();
+    await expect(page.getByRole('tab', { name: /Serve as MCP Server/i })).toBeVisible();
   });
 });

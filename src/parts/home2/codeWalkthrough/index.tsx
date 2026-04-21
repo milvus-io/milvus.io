@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
@@ -27,8 +27,9 @@ export default function CodeWalkthrough() {
   const { t } = useTranslation('home2', { lng: locale });
   const [active, setActive] = useState<TabId>('addMemory');
 
-  const code = useMemo(() => CODE_MAP[active], [active]);
-  const note = useMemo(() => t(`walkthrough.notes.${active}`), [active, t]);
+  const code = CODE_MAP[active];
+  const note = t(`walkthrough.notes.${active}`);
+  const panelId = `walkthrough-panel-${active}`;
 
   return (
     <section className={classes.section}>
@@ -39,24 +40,39 @@ export default function CodeWalkthrough() {
         </div>
 
         <div className={classes.container}>
-          <div className={classes.tabs}>
-            {TAB_ORDER.map(tabId => (
-              <button
-                key={tabId}
-                type="button"
-                onClick={() => setActive(tabId)}
-                className={clsx(classes.tab, active === tabId && classes.tabActive)}
-              >
-                {t(`walkthrough.tabs.${tabId}`)}
-              </button>
-            ))}
+          <div className={classes.tabs} role="tablist" aria-label={t('walkthrough.sectionTitle')}>
+            {TAB_ORDER.map(tabId => {
+              const selected = active === tabId;
+              return (
+                <button
+                  key={tabId}
+                  type="button"
+                  role="tab"
+                  id={`walkthrough-tab-${tabId}`}
+                  aria-selected={selected}
+                  aria-controls={panelId}
+                  tabIndex={selected ? 0 : -1}
+                  onClick={() => setActive(tabId)}
+                  className={clsx(classes.tab, selected && classes.tabActive)}
+                >
+                  {t(`walkthrough.tabs.${tabId}`)}
+                </button>
+              );
+            })}
           </div>
 
-          <pre className={classes.codeBlock}>
+          <pre
+            className={classes.codeBlock}
+            role="tabpanel"
+            id={panelId}
+            aria-labelledby={`walkthrough-tab-${active}`}
+          >
             <code>{code}</code>
           </pre>
 
-          <aside className={classes.note}>{note}</aside>
+          <p className={classes.note} aria-live="polite">
+            {note}
+          </p>
         </div>
       </div>
     </section>

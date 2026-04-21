@@ -138,14 +138,14 @@
   }
 }
 
-/* Asymmetric grid: copy left (7 cols), Attu frame right (5 cols). Use
-   minmax(0, Nfr) so long unbreakable content (swiper slide / mono URL)
-   can't blow the track and collapse its sibling column. */
+/* Asymmetric grid: copy left, big Attu frame right. Right column dominates
+   so the real screenshot reads at size. minmax(0, Nfr) so long unbreakable
+   content (swiper slide / mono URL) can't blow the track. */
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: 48px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  gap: 56px;
+  align-items: center;
   padding-bottom: 80px;
 }
 
@@ -160,8 +160,7 @@
 .leftColumn {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  padding-top: 16px;
+  gap: 32px;
   position: relative;
 }
 
@@ -325,7 +324,6 @@
 /* Attu frame — mimics a spec-sheet/technical window */
 .rightColumn {
   position: relative;
-  padding-top: 16px;
 }
 
 .attuFrame {

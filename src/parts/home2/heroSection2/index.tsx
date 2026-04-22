@@ -30,6 +30,11 @@ const ATTU_SLIDES = [
     label: 'data',
     meta: 'SCHEMA: agent_memory',
   },
+  {
+    src: '/images/home2/hero-attu-api.png',
+    label: 'api',
+    meta: 'PLAYGROUND: REST',
+  },
 ];
 const ATTU_CYCLE_MS = 5000;
 

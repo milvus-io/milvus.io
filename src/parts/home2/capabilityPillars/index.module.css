@@ -58,15 +58,38 @@
   margin: 0;
 }
 
+/* 5 cards laid out as 3 + 2 via a 6-col grid: row 1 = three cards each
+   spanning 2 cols (3 × 2 = 6); row 2 = two cards each spanning 3 cols
+   (2 × 3 = 6). All cards keep the shared 2px-border treatment. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 0;
   border-top: var(--brut-rule);
   border-left: var(--brut-rule);
 }
 
-@media (max-width: 768px) {
+.card {
+  grid-column: span 2;
+}
+
+.card:nth-child(4),
+.card:nth-child(5) {
+  grid-column: span 3;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card,
+  .card:nth-child(4),
+  .card:nth-child(5) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;
   }

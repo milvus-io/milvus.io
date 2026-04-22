@@ -2,7 +2,7 @@
 // Do not modify without updating the spec first.
 
 export type Pillar = {
-  id: 'hybrid' | 'embeddings' | 'memory' | 'mcp';
+  id: 'hybrid' | 'embeddings' | 'memory' | 'namespace' | 'mcp';
   code: string;
   language: 'python' | 'bash';
   learnMoreHref: string;
@@ -41,6 +41,17 @@ export const PILLARS: Pillar[] = [
 
 client.search("agent_memory", queries=[...],
     filter='user_id == "u_123"')`,
+  },
+  {
+    id: 'namespace',
+    language: 'python',
+    learnMoreHref: '/docs/partition-key.md', // ⚠️ verify
+    code: `client.create_collection(
+    "agent_memory",
+    dimension=1536,
+    partition_key_field="user_id",
+    num_partitions=64,
+)`,
   },
   {
     id: 'mcp',

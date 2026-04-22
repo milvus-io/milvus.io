@@ -65,7 +65,11 @@
     },
     "memory": {
       "title": "Memory That Scales With Your Agent",
-      "body": "Partition per user, per session, per tool. Session memory today, billions of long-term memories tomorrow — same API."
+      "body": "Short-term scratch, per-session context, and billions of long-term memories — one API, one store. Recall the right moments at conversation time."
+    },
+    "namespace": {
+      "title": "Namespace per User",
+      "body": "Partition Key gives every user, agent, or workspace a real namespace inside one collection. Isolated storage, isolated queries, one cluster."
     },
     "mcp": {
       "title": "MCP-Native",

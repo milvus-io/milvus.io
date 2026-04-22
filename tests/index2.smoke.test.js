@@ -67,7 +67,7 @@ test.describe('/index2 highlights', () => {
 });
 
 test.describe('/index2 capability pillars', () => {
-  test('renders all four pillar titles', async ({ page }) => {
+  test('renders all five pillar titles', async ({ page }) => {
     await page.goto(`${BASE_URL}/index2`);
     // Use heading-level queries to avoid collision with hero subtitle copy
     // (the hero subtitle mentions "hybrid search, built-in embeddings").
@@ -79,6 +79,9 @@ test.describe('/index2 capability pillars', () => {
     ).toBeVisible();
     await expect(
       page.getByRole('heading', { level: 3, name: 'Memory That Scales With Your Agent' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Namespace per User' })
     ).toBeVisible();
     await expect(
       page.getByRole('heading', { level: 3, name: 'MCP-Native' })

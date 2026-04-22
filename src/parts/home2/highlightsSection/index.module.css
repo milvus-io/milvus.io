@@ -1,0 +1,141 @@
+/* Highlights — wide-angle "what Milvus actually is" right after Hero.
+   Sits visually between Hero and Capability Pillars: hairline divider,
+   declarative 3-line title, then a 3x2 grid of capability cards using
+   the same shared-2px-border treatment as Architecture pillars. */
+
+.section {
+  position: relative;
+  padding: 96px 0;
+  background: var(--brut-paper);
+  border-bottom: var(--brut-rule);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+}
+
+.header {
+  margin-bottom: 56px;
+  max-width: 920px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--brut-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brut-ink);
+  opacity: 0.7;
+  margin-bottom: 24px;
+}
+
+.eyebrow::before {
+  content: '///';
+  color: var(--brut-accent);
+  font-weight: 700;
+}
+
+/* Three-line declarative headline. Each clause is its own block; middle
+   line ("Vector lake.") gets the accent color so the lake angle reads
+   as the news of the section. */
+.title {
+  font-family: var(--brut-font-mono);
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  color: var(--brut-ink);
+  margin: 0;
+}
+
+.titleLine {
+  display: block;
+}
+
+.titleLineAccent {
+  color: var(--brut-accent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: var(--brut-rule);
+  border-left: var(--brut-rule);
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  position: relative;
+  background: var(--brut-paper);
+  border-right: var(--brut-rule);
+  border-bottom: var(--brut-rule);
+  padding: 28px 26px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: background 120ms;
+}
+
+.card:hover {
+  background: #ffffff;
+}
+
+.card:hover .cardTitle {
+  color: var(--brut-accent-deep);
+}
+
+.cardTag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--brut-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brut-ink);
+  opacity: 0.85;
+}
+
+.cardIndex {
+  color: var(--brut-accent);
+  font-weight: 700;
+}
+
+.cardTitle {
+  font-family: var(--brut-font-mono);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--brut-ink);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  margin: 0;
+  transition: color 120ms;
+}
+
+.cardBody {
+  font-family: var(--brut-font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--brut-ink);
+  opacity: 0.7;
+  margin: 0;
+}

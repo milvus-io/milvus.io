@@ -1,6 +1,7 @@
 import Layout from '@/components/layout/commonLayout';
 import { HomeMeta2 } from '@/parts/home2/meta/HomeMeta2';
 import HeroSection2 from '@/parts/home2/heroSection2';
+import HighlightsSection from '@/parts/home2/highlightsSection';
 import CapabilityPillars from '@/parts/home2/capabilityPillars';
 import CodeWalkthrough from '@/parts/home2/codeWalkthrough';
 import ArchitectureSection from '@/parts/home2/architectureSection';
@@ -28,6 +29,7 @@ export default function Homepage2(props: Props) {
       <main className={classes.homepageContainer}>
         <HomeMeta2 locale={resolvedLocale} />
         <HeroSection2 headlines={headlines} locale={resolvedLocale} />
+        <HighlightsSection />
         <CapabilityPillars />
         <CodeWalkthrough />
         <ArchitectureSection />

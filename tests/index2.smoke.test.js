@@ -29,6 +29,43 @@ test.describe('/index2 hero', () => {
   });
 });
 
+test.describe('/index2 highlights', () => {
+  test('renders the lake-base headline and the six highlight titles', async ({
+    page,
+  }) => {
+    await page.goto(`${BASE_URL}/index2`);
+    // H2 is split across three block spans; accessible-name flattening varies
+    // by browser, so match the unique "Vector lake" line via regex.
+    await expect(
+      page.getByRole('heading', { level: 2, name: /Vector lake/ })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Database + Vector Lake' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Multi-vector & Multimodal' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'GPU-accelerated indexes' })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', {
+        level: 3,
+        name: 'Tiered storage at petabyte scale',
+      })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', {
+        level: 3,
+        name: 'Streaming writes, queryable in ms',
+      })
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 3, name: 'Security & governance' })
+    ).toBeVisible();
+  });
+});
+
 test.describe('/index2 capability pillars', () => {
   test('renders all four pillar titles', async ({ page }) => {
     await page.goto(`${BASE_URL}/index2`);

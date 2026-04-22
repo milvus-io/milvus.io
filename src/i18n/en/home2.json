@@ -6,12 +6,50 @@
   "hero": {
     "title": "The<1 /><0>Vector Database</0><1 /> That Powers AI",
     "subtitle": "Open-source Milvus gives RAG and agents hybrid search, built-in embeddings, blazing-fast retrieval, and elastic scale to 100B+ vectors.",
-    "ctaPlaceholder": "curl -fsSL https://zilliz.com/cli/install.sh | bash",
+    "ctaPlaceholder": "curl -fsSL something",
     "ctaSecondary": "Try Zilliz Cloud Free",
     "copyAriaLabel": "Copy install command",
     "attuAlt": "Attu — Milvus management UI, vector search results",
     "starsLabel": "GitHub stars",
     "downloadsLabel": "downloads"
+  },
+  "highlights": {
+    "eyebrow": "Capabilities",
+    "titleLine1": "Vector search.",
+    "titleLine2": "Vector lake.",
+    "titleLine3": "One database.",
+    "cards": {
+      "lake": {
+        "tag": "Lake + Base",
+        "title": "Database + Vector Lake",
+        "body": "Real-time search and offline analytics on the same Parquet — Spark, DuckDB, and DataFusion read it directly via FFI."
+      },
+      "multivector": {
+        "tag": "Multi-vector",
+        "title": "Multi-vector & Multimodal",
+        "body": "Tensor and StructList types make ColBERT, CoLQwen, image, text, and video first-class — multi-vector without bolt-ons."
+      },
+      "hardware": {
+        "tag": "Hardware Accel",
+        "title": "GPU-accelerated indexes",
+        "body": "NVIDIA CAGRA plus the full CPU catalog — HNSW, IVF, DiskANN, SCANN. Up to 10× faster vector search on GPU."
+      },
+      "tiering": {
+        "tag": "Hot / Cold",
+        "title": "Tiered storage at petabyte scale",
+        "body": "Cold partitions land on S3 Glacier; hot segments stay on SSD. Same MilvusClient.search call — no code change."
+      },
+      "streaming": {
+        "tag": "Real-time",
+        "title": "Streaming writes, queryable in ms",
+        "body": "Woodpecker WAL + StreamNode replace Kafka/Pulsar. Inserts are visible to search in milliseconds."
+      },
+      "enterprise": {
+        "tag": "Enterprise",
+        "title": "Security & governance",
+        "body": "TLS everywhere, mandatory auth, fine-grained RBAC, OIDC SSO, BYOC deployment for compliance."
+      }
+    }
   },
   "pillars": {
     "sectionTitle": "Built for the Agent Era",

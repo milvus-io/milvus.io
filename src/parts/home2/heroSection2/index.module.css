@@ -446,13 +446,19 @@
   opacity: 0.78;
 }
 
-/* Slideshow stack — same crossfade behavior, just the new container shell. */
+/* Slideshow stack — clickable area; advances to next slide. */
 .attuImageStack {
   position: relative;
   width: 100%;
   aspect-ratio: 3024 / 1532;
   background: var(--m-surface);
   overflow: hidden;
+  cursor: pointer;
+}
+
+.attuImageStack:focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: -2px;
 }
 
 .attuImage {

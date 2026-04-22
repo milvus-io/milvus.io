@@ -144,19 +144,19 @@
 
 .logoWall {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
 }
 
 .logoCell {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px 28px;
   background: var(--m-bg);
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-card);
-  min-height: 80px;
+  min-height: 104px;
   transition: border-color 200ms;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .logoItem {
-  height: 32px;
+  height: 44px;
   width: auto;
   max-width: 100%;
   object-fit: contain;

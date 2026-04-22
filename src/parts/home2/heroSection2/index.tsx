@@ -1,5 +1,5 @@
 import { useTranslation, Trans } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Autoplay } from 'swiper/modules';
@@ -43,20 +43,36 @@ export default function HeroSection2(props: Props) {
   const { t } = useTranslation('home2', { lng: locale });
   const { copied, copy } = useCopyFeedback();
   const [activeSlide, setActiveSlide] = useState(0);
+  const slideTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const reducedMotionRef = useRef(false);
 
   const showSwiper = headlines.length > 1;
   const placeholderCmd = t('hero.ctaPlaceholder');
 
   useEffect(() => {
-    const reduced = window.matchMedia(
+    reducedMotionRef.current = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches;
-    if (reduced) return;
-    const id = setInterval(() => {
+    if (reducedMotionRef.current) return;
+    slideTimerRef.current = setInterval(() => {
       setActiveSlide(i => (i + 1) % ATTU_SLIDES.length);
     }, ATTU_CYCLE_MS);
-    return () => clearInterval(id);
+    return () => {
+      if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+    };
   }, []);
+
+  /** Advance to the next Attu slide and reset the auto-cycle timer so the
+   *  next auto-tick happens 5 s after this manual click (rather than being
+   *  almost immediate if the auto timer was about to fire). */
+  const advanceSlide = () => {
+    setActiveSlide(i => (i + 1) % ATTU_SLIDES.length);
+    if (reducedMotionRef.current) return;
+    if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+    slideTimerRef.current = setInterval(() => {
+      setActiveSlide(i => (i + 1) % ATTU_SLIDES.length);
+    }, ATTU_CYCLE_MS);
+  };
 
   const active = ATTU_SLIDES[activeSlide];
 
@@ -194,9 +210,17 @@ export default function HeroSection2(props: Props) {
               </figcaption>
               <div
                 className={classes.attuImageStack}
-                role="group"
+                role="button"
+                tabIndex={0}
                 aria-roledescription="slideshow"
-                aria-label={t('hero.attuAlt')}
+                aria-label={`${t('hero.attuAlt')} — click to see the next view`}
+                onClick={advanceSlide}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    advanceSlide();
+                  }
+                }}
               >
                 {ATTU_SLIDES.map((slide, i) => (
                   <img

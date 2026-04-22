@@ -154,8 +154,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  column-gap: 64px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  column-gap: 56px;
   align-items: center;
 }
 
@@ -178,7 +178,7 @@
 
 .title {
   font-family: var(--m-font-sans);
-  font-size: clamp(40px, 4.6vw, 60px);
+  font-size: clamp(34px, 3.6vw, 52px);
   line-height: 1.1;
   letter-spacing: -0.02em;
   font-weight: 700;

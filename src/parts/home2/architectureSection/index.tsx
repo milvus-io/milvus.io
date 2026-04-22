@@ -21,35 +21,36 @@ export default function ArchitectureSection() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
-          <span className={classes.eyebrow}>Infrastructure</span>
           <h2 className={classes.title}>{t('architecture.sectionTitle')}</h2>
           <p className={classes.subtitle}>{t('architecture.sectionSubtitle')}</p>
         </div>
 
-        <div className={classes.diagramWrap}>
-          <div className={classes.diagramHeader}>
-            <span className={classes.diagramHeaderTitle}>
-              milvus ▸ architecture
-            </span>
-            <span className={classes.diagramHeaderMeta}>v2.6.x · 4 layers</span>
+        <div className={classes.split}>
+          <div className={classes.diagramWrap}>
+            <div className={classes.diagramHeader}>
+              <a
+                href="/docs/architecture_overview.md"
+                className={classes.diagramHeaderTitle}
+              >
+                milvus ▸ architecture
+              </a>
+              <span className={classes.diagramHeaderMeta}>4 layers</span>
+            </div>
+            <ArchitectureDiagram />
           </div>
-          <ArchitectureDiagram />
-        </div>
 
-        <div className={classes.pillarGrid}>
-          {PILLAR_KEYS.map((key, idx) => (
-            <article className={classes.pillarCard} key={key}>
-              <span className={classes.pillarIndex} aria-hidden>
-                0{idx + 1}
-              </span>
-              <h3 className={classes.pillarTitle}>
-                {t(`architecture.pillars.${key}.title`)}
-              </h3>
-              <p className={classes.pillarBody}>
-                {t(`architecture.pillars.${key}.body`)}
-              </p>
-            </article>
-          ))}
+          <div className={classes.pillarGrid}>
+            {PILLAR_KEYS.map(key => (
+              <article className={classes.pillarCard} key={key}>
+                <h3 className={classes.pillarTitle}>
+                  {t(`architecture.pillars.${key}.title`)}
+                </h3>
+                <p className={classes.pillarBody}>
+                  {t(`architecture.pillars.${key}.body`)}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div className={classes.benchmarkStrip}>

@@ -1,10 +1,10 @@
 /*
- * Milvus 2.6 architecture — data-flow diagram.
+ * Milvus architecture — data-flow diagram.
  *
  * Brutalist hairline schematic with two animated request paths (WRITE and
  * READ) that circulate through the stack. Blue particle glow marks the
  * "live" path; everything else stays black line-art. StreamingNode and
- * Woodpecker (the 2.6-new components) get breathing status LEDs.
+ * Woodpecker components get breathing status LEDs to draw the eye.
  *
  * TODO(i18n): SVG text labels are hardcoded. Externalize into home2.json
  *   when the final diagram ships.
@@ -36,7 +36,7 @@ export default function ArchitectureDiagram() {
       xmlns="http://www.w3.org/2000/svg"
       width="100%"
       role="img"
-      aria-label="Milvus 2.6 architecture data flow: a write request travels SDK to Proxy to StreamingNode to Woodpecker WAL in object storage; a read request fans out from Proxy to QueryNode and StreamingNode and returns."
+      aria-label="Milvus architecture data flow: a write request travels SDK to Proxy to StreamingNode to Woodpecker WAL in object storage; a read request fans out from Proxy to QueryNode and StreamingNode and returns."
     >
       <defs>
         {/* Glow filter for the live particle */}
@@ -163,8 +163,8 @@ export default function ArchitectureDiagram() {
         sub="WAL · growing data"
         accent
       />
-      {/* 2.6 NEW status LED */}
-      <StatusDot cx={830} cy={262} label="2.6" />
+      {/* Status LED — pulsing dot to indicate "live" component. */}
+      <StatusDot cx={830} cy={262} label="" />
 
       {/* ─── Layer 4: Storage ─────────────────────────────────────────── */}
       <LayerLabel y={384} index="04" name="STORAGE" />
@@ -195,7 +195,7 @@ export default function ArchitectureDiagram() {
         sub="WAL · zero-disk"
         accent
       />
-      <StatusDot cx={830} cy={398} label="2.6" />
+      <StatusDot cx={830} cy={398} label="" />
 
       {/* ─── Path stroke (faint dashed, shows the write route) ────────── */}
       <path

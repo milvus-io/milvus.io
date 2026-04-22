@@ -14,7 +14,6 @@ export default function CommunityMeetups() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
-          <span className={classes.eyebrow}>Community</span>
           <h2 className={classes.sectionTitle}>{t('community.sectionTitle')}</h2>
         </div>
         <div className={classes.grid}>

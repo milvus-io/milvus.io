@@ -37,7 +37,6 @@ export default function EcosystemMatrix() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
-          <span className={classes.eyebrow}>Integrations</span>
           <h2 className={classes.title}>{t('ecosystem.sectionTitle')}</h2>
           <p className={classes.subtitle}>{t('ecosystem.sectionSubtitle')}</p>
         </div>

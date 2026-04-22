@@ -2,23 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
-import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
-
-type MetricKey = 'downloads' | 'stars' | 'customers' | 'scale';
-
-type Metric =
-  | { key: MetricKey; value: string }
-  | { key: MetricKey; placeholderKey: string };
-
-// Real community numbers come from global-stats.json via consts/stats;
-// engineering-pending metrics (customers, scale) stay as i18n placeholders
-// so a translation edit can swap them in once the real numbers ship.
-const METRICS: Metric[] = [
-  { key: 'downloads', value: MILVUS_DOWNLOADS },
-  { key: 'stars', value: MILVUS_STARS },
-  { key: 'customers', placeholderKey: 'production.placeholders.customers' },
-  { key: 'scale', placeholderKey: 'production.placeholders.scale' },
-];
 
 // Logo list mirrored from src/parts/home/productionSection/ProductionSection.tsx
 // Update both together if the production customer list changes.
@@ -59,24 +42,8 @@ export default function ProductionSection2() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
-          <span className={classes.eyebrow}>In Production</span>
           <h2 className={classes.title}>{t('production.sectionTitle')}</h2>
         </div>
-
-        <div className={classes.numbersStrip}>
-          {METRICS.map(m => (
-            <div className={classes.metric} key={m.key}>
-              <span className={classes.metricLabel}>
-                // {t(`production.metrics.${m.key}`)}
-              </span>
-              <span className={classes.metricValue}>
-                {'value' in m ? m.value : t(m.placeholderKey)}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className={classes.logoWallHeader}>customers shipping milvus</div>
 
         <div className={classes.logoWall}>
           {LOGO_PATHS.map(l => (

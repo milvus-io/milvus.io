@@ -74,13 +74,38 @@
   margin: 0;
 }
 
+/* Two-column "feature row": diagram (~58%) on the left, 4-pillar 2x2
+   grid on the right. Stacks below 1024px. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 1024px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .diagramWrap {
   position: relative;
   background: var(--m-surface);
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-card);
-  padding: 24px 32px 32px;
-  margin-bottom: 32px;
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.diagramWrap svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .diagramHeader {
@@ -103,6 +128,12 @@
   gap: 10px;
   font-weight: 600;
   color: var(--m-ink);
+  text-decoration: none;
+  transition: color 160ms;
+}
+
+.diagramHeaderTitle:hover {
+  color: var(--m-accent);
 }
 
 .diagramHeaderTitle::before {
@@ -118,17 +149,13 @@
   opacity: 0.6;
 }
 
+/* Inside the right column: 2 columns × 2 rows. Below 1024px the split
+   collapses, so pillars become a 2-col then 1-col grid full-width. */
 .pillarGrid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-@media (max-width: 1024px) {
-  .pillarGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-content: stretch;
 }
 
 @media (max-width: 640px) {
@@ -141,8 +168,11 @@
   background: var(--m-surface);
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-card);
-  padding: 22px;
+  padding: 18px;
   transition: border-color 200ms;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .pillarCard:hover {
@@ -161,18 +191,18 @@
 
 .pillarTitle {
   font-family: var(--m-font-sans);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--m-ink);
-  margin: 0 0 8px;
+  margin: 0;
   letter-spacing: -0.01em;
   line-height: 1.3;
 }
 
 .pillarBody {
   font-family: var(--m-font-sans);
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 12.5px;
+  line-height: 1.5;
   color: var(--m-ink-3);
   margin: 0;
 }

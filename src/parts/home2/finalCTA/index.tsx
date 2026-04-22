@@ -17,15 +17,12 @@ export default function FinalCTA() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
-          <span className={classes.eyebrow}>Get Started</span>
           <h2 className={classes.title}>{t('finalCta.title')}</h2>
         </div>
 
         <div className={classes.grid}>
           <article className={classes.card}>
-            <span className={classes.cardIndex} aria-hidden>
-              01 / PYTHON
-            </span>
+            <span className={classes.cardIndex} aria-hidden>PYTHON</span>
             <h3 className={classes.cardTitle}>{t('finalCta.python.label')}</h3>
             <code className={classes.pythonBody}>{pythonBody}</code>
             <button
@@ -41,9 +38,7 @@ export default function FinalCTA() {
           </article>
 
           <article className={classes.card}>
-            <span className={classes.cardIndex} aria-hidden>
-              02 / CLOUD
-            </span>
+            <span className={classes.cardIndex} aria-hidden>CLOUD</span>
             <h3 className={classes.cardTitle}>{t('finalCta.cloud.label')}</h3>
             <p className={classes.cardBody}>{t('finalCta.cloud.body')}</p>
             <a
@@ -57,9 +52,7 @@ export default function FinalCTA() {
           </article>
 
           <article className={classes.card}>
-            <span className={classes.cardIndex} aria-hidden>
-              03 / DOCS
-            </span>
+            <span className={classes.cardIndex} aria-hidden>DOCS</span>
             <h3 className={classes.cardTitle}>{t('finalCta.docs.label')}</h3>
             <p className={classes.cardBody}>{t('finalCta.docs.body')}</p>
             <a href="/docs" className={classes.button}>

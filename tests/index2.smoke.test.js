@@ -121,23 +121,18 @@ test.describe('/index2 architecture', () => {
 });
 
 test.describe('/index2 production', () => {
-  test('renders trusted-in-production heading and numbers strip', async ({ page }) => {
+  test('renders trusted-in-production heading and customer logo wall', async ({ page }) => {
     await page.goto(`${BASE_URL}/index2`);
     const heading = page.getByRole('heading', {
       level: 2,
       name: /Trusted in production/i,
     });
     await expect(heading).toBeVisible();
-    // Scope stats to the production section (sibling of its heading) to avoid
-    // collision with hero stats and the community card. Values are now pulled
-    // live from global-stats.json so assert on the format not the exact number.
+    // Section is logos-only now; spot-check a couple of well-known brands
+    // by their alt text to confirm the wall rendered.
     const productionSection = page.locator('section').filter({ has: heading });
-    await expect(
-      productionSection.getByText(/^\d+M\+$/).first()
-    ).toBeVisible();
-    await expect(
-      productionSection.getByText(/^\d+(\.\d+)?K$/).first()
-    ).toBeVisible();
+    await expect(productionSection.getByAltText('Salesforce')).toBeVisible();
+    await expect(productionSection.getByAltText('NVIDIA')).toBeVisible();
   });
 });
 

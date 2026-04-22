@@ -13,7 +13,6 @@ export default function LovedSection2() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
-          <span className={classes.eyebrow}>Developers</span>
           <h2 className={classes.title}>{t('loved.title')}</h2>
         </div>
         <div className={classes.grid}>

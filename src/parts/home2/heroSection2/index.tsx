@@ -89,10 +89,6 @@ export default function HeroSection2(props: Props) {
             <span className={classes.statusDot} aria-hidden />
             MILVUS//LIVE
           </span>
-          <span className={classes.eyebrowDivider} aria-hidden>
-            /
-          </span>
-          <span className={classes.buildTag}>v2.6.x</span>
           {headlines.length > 0 && (
             <>
               <span className={classes.eyebrowDivider} aria-hidden>

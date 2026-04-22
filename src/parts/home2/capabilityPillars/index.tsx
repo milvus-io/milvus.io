@@ -13,18 +13,14 @@ export default function CapabilityPillars() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
-          <span className={classes.eyebrow}>Capabilities</span>
           <h2 className={classes.title}>{t('pillars.sectionTitle')}</h2>
           <p className={classes.subtitle}>{t('pillars.sectionSubtitle')}</p>
         </div>
         <div className={classes.grid}>
-          {PILLARS.map((pillar, idx) => {
+          {PILLARS.map(pillar => {
             const isExternal = /^https?:\/\//i.test(pillar.learnMoreHref);
             return (
               <article className={classes.card} key={pillar.id}>
-                <span className={classes.cardIndex} aria-hidden>
-                  0{idx + 1}
-                </span>
                 <h3 className={classes.cardTitle}>
                   {t(`pillars.${pillar.id}.title`)}
                 </h3>

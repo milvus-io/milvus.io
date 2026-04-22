@@ -23,32 +23,32 @@
     "cards": {
       "lake": {
         "tag": "Lake + Base",
-        "title": "Database + Vector Lake",
+        "title": "Database + <0>Vector Lake</0>",
         "body": "Real-time search and offline analytics on the same Parquet — Spark, DuckDB, and DataFusion read it directly via FFI."
       },
       "multivector": {
         "tag": "Multi-vector",
-        "title": "Multi-vector & Multimodal",
+        "title": "<0>Multi-vector</0> & Multimodal",
         "body": "Tensor and StructList types make ColBERT, CoLQwen, image, text, and video first-class — multi-vector without bolt-ons."
       },
       "hardware": {
         "tag": "Hardware Accel",
-        "title": "GPU-accelerated indexes",
+        "title": "<0>GPU-accelerated</0> indexes",
         "body": "NVIDIA CAGRA plus the full CPU catalog — HNSW, IVF, DiskANN, SCANN. Up to 10× faster vector search on GPU."
       },
       "tiering": {
         "tag": "Hot / Cold",
-        "title": "Tiered storage at petabyte scale",
+        "title": "Tiered storage at <0>petabyte scale</0>",
         "body": "Cold partitions land on S3 Glacier; hot segments stay on SSD. Same MilvusClient.search call — no code change."
       },
       "streaming": {
         "tag": "Real-time",
-        "title": "Streaming writes, queryable in ms",
+        "title": "Streaming writes, <0>queryable in ms</0>",
         "body": "Woodpecker WAL + StreamNode replace Kafka/Pulsar. Inserts are visible to search in milliseconds."
       },
       "enterprise": {
         "tag": "Enterprise",
-        "title": "Security & governance",
+        "title": "<0>Security</0> & governance",
         "body": "TLS everywhere, mandatory auth, fine-grained RBAC, OIDC SSO, BYOC deployment for compliance."
       }
     }
@@ -96,7 +96,7 @@
   },
   "architecture": {
     "sectionTitle": "Built for the Real Scale of AI — Without the Real Cost",
-    "sectionSubtitle": "Milvus 2.6 rebuilt the streaming and storage layers from the ground up to run billion-scale vector workloads on cheap object storage.",
+    "sectionSubtitle": "Milvus separates streaming, query, and storage layers so billion-scale vector workloads run on cheap object storage.",
     "pillars": {
       "disaggregation": {
         "title": "Storage–Compute Disaggregation",
@@ -104,7 +104,7 @@
       },
       "scale": {
         "title": "Billion-Scale at a Fraction of the Cost",
-        "body": "Milvus 2.6's new Woodpecker WAL replaces Kafka/Pulsar — zero-disk, cloud-native, dramatically cheaper at scale."
+        "body": "Milvus's Woodpecker WAL replaces Kafka/Pulsar — zero-disk, cloud-native, dramatically cheaper at scale."
       },
       "tenant": {
         "title": "Multi-Tenant by Design",
@@ -118,7 +118,7 @@
     "benchmark": {
       "latency": "Sub-XX ms p99",
       "scale": "Billion-scale tested",
-      "cost": "~XX% lower infra cost vs 2.5",
+      "cost": "~XX% lower infra cost",
       "clouds": "AWS · GCP · Azure · BYOC"
     }
   },
@@ -135,17 +135,7 @@
     "emptyGap": "⚠️ Coming soon — integrations being finalized"
   },
   "production": {
-    "sectionTitle": "Trusted in production by the teams building AI",
-    "metrics": {
-      "downloads": "downloads",
-      "stars": "GitHub stars",
-      "customers": "Fortune 500 customers",
-      "scale": "vectors served"
-    },
-    "placeholders": {
-      "customers": "XX+",
-      "scale": "XX billion"
-    }
+    "sectionTitle": "Trusted in production by the teams building AI"
   },
   "loved": {
     "title": "Loved by GenAI developers",

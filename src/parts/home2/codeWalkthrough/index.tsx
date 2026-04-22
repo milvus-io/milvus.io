@@ -36,7 +36,6 @@ export default function CodeWalkthrough() {
     <section className={classes.section}>
       <div className={pageClasses.homeContainer}>
         <div className={classes.header}>
-          <span className={classes.eyebrow}>Quickstart</span>
           <h2 className={classes.title}>{t('walkthrough.sectionTitle')}</h2>
           <p className={classes.subtitle}>{t('walkthrough.sectionSubtitle')}</p>
         </div>

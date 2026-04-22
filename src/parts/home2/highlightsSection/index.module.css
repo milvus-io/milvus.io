@@ -5,31 +5,31 @@
 
 .section {
   position: relative;
-  padding: 100px 120px;
+  padding: 72px 120px;
   background: var(--m-surface);
   border-bottom: var(--m-rule);
 }
 
 @media (max-width: 1280px) {
   .section {
-    padding: 80px 80px;
+    padding: 64px 80px;
   }
 }
 
 @media (max-width: 1024px) {
   .section {
-    padding: 72px 48px;
+    padding: 56px 48px;
   }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 56px 24px;
+    padding: 48px 24px;
   }
 }
 
 .header {
-  margin-bottom: 56px;
+  margin-bottom: 36px;
   max-width: 920px;
 }
 
@@ -43,7 +43,7 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--m-accent);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .eyebrow::before {
@@ -56,9 +56,9 @@
 
 .title {
   font-family: var(--m-font-sans);
-  font-size: clamp(36px, 4.4vw, 56px);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: clamp(26px, 3.2vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   font-weight: 700;
   color: var(--m-ink);
   margin: 0;
@@ -72,15 +72,27 @@
   color: var(--m-accent);
 }
 
+/* Bento — 4 columns desktop, wide cards span 2. Layout pattern (per
+   Zilliz Web 2026 reference 763-1233):
+     row 1:  [LAKE — 2] [MULTI — 1] [HARDWARE — 1]
+     row 2:  [TIER — 1] [STREAM — 1] [ENTERPRISE — 2]
+   At ≤1024 collapses to 2 cols (all cards span 1); ≤640 stacks. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
+}
+
+.cardWide {
+  grid-column: span 2;
 }
 
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cardWide {
+    grid-column: span 2;
   }
 }
 
@@ -88,21 +100,80 @@
   .grid {
     grid-template-columns: 1fr;
   }
+  .cardWide {
+    grid-column: span 1;
+  }
 }
 
 .card {
   background: var(--m-bg);
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-card);
-  padding: 24px 24px 28px;
+  padding: 20px 20px 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   transition: border-color 200ms;
+  min-height: 280px;
 }
 
 .card:hover {
   border-color: var(--m-ink-muted);
+}
+
+.cardCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 100%;
+}
+
+/* Visual sits flush to the bottom-right, mirroring the Zilliz Web 2026
+   "card with decorative glyph" pattern. */
+.cardVisual {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  height: 110px;
+}
+
+.cardVisual svg {
+  width: 110px;
+  height: 110px;
+  display: block;
+}
+
+/* Wide cards (Lake, Enterprise) lay out horizontally so the visual fills
+   the extra width. Body text sits in a constrained left column.
+   Only applies above the bento break-point. */
+@media (min-width: 1025px) {
+  .cardWide {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .cardWide .cardCopy {
+    flex: 1 1 0;
+    max-width: 360px;
+    justify-content: center;
+  }
+
+  .cardWide .cardVisual {
+    margin-top: 0;
+    align-self: stretch;
+    align-items: center;
+    height: auto;
+    flex: 0 0 180px;
+  }
+
+  .cardWide .cardVisual svg {
+    width: 180px;
+    height: 180px;
+  }
 }
 
 .cardTag {
@@ -117,14 +188,9 @@
   color: var(--m-ink-2);
 }
 
-.cardIndex {
-  color: var(--m-accent);
-  font-weight: 700;
-}
-
 .cardTitle {
   font-family: var(--m-font-sans);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--m-ink);
   letter-spacing: -0.01em;
@@ -132,10 +198,15 @@
   margin: 0;
 }
 
+.titleAccent {
+  color: var(--m-accent);
+  font-weight: 700;
+}
+
 .cardBody {
   font-family: var(--m-font-sans);
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--m-ink-3);
   margin: 0;
 }

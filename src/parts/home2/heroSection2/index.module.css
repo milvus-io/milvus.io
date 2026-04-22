@@ -207,9 +207,47 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
+  gap: 14px;
   max-width: 480px;
   width: 100%;
+}
+
+/* Top row — two pills side by side. */
+.ctaPair {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Outlined "Quick Start" pill — secondary action, ink border on white. */
+.ctaRow a.quickStartCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 22px;
+  background: var(--m-bg);
+  color: var(--m-ink);
+  border: 1px solid var(--m-ink);
+  border-radius: var(--m-r-pill);
+  font-family: var(--m-font-sans);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 200ms ease-in-out;
+  white-space: nowrap;
+}
+
+.ctaRow a.quickStartCta:hover {
+  background: var(--m-ink);
+  color: var(--m-ink-on-accent);
+}
+
+.ctaRow a.quickStartCta:focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 2px;
 }
 
 /* Primary CTA — Milvus brand blue pill (matches the site nav). */

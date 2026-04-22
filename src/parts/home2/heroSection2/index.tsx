@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 
-import { CLOUD_SIGNUP_LINK } from '@/consts/links';
+import { CLOUD_SIGNUP_LINK, GET_START_LINK } from '@/consts/links';
 import { LanguageEnum } from '@/types/localization';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
@@ -118,14 +118,22 @@ export default function HeroSection2(props: Props) {
             <p className={classes.subtitle}>{t('hero.subtitle')}</p>
 
             <div className={classes.ctaRow}>
-              <a
-                href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_homepage_hero&utm_content=home2`}
-                className={classes.secondaryCta}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t('hero.ctaSecondary')} →
-              </a>
+              <div className={classes.ctaPair}>
+                <a
+                  href={GET_START_LINK(locale)}
+                  className={classes.quickStartCta}
+                >
+                  {t('hero.ctaQuickStart')}
+                </a>
+                <a
+                  href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_homepage_hero&utm_content=home2`}
+                  className={classes.secondaryCta}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t('hero.ctaSecondary')} →
+                </a>
+              </div>
               <button
                 type="button"
                 onClick={() => copy(placeholderCmd)}
@@ -133,7 +141,7 @@ export default function HeroSection2(props: Props) {
                 aria-label={t('hero.copyAriaLabel')}
               >
                 <span className={classes.copyCommandLabel}>
-                  {t('hero.quickstartLabel')}
+                  {t('hero.installLabel')}
                 </span>
                 <span className={classes.copyCommandPlaceholder}>
                   {placeholderCmd}

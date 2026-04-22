@@ -148,9 +148,16 @@
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  /* Left column gets enough room to feel substantial; right column is a
+     viewport that lets the (large, fixed-width) Attu screenshot bleed
+     off-screen on narrower viewports so the eye still gets a usable
+     "live product" preview rather than a tiny thumbnail. */
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.5fr);
   column-gap: 56px;
-  align-items: center;
+  /* Top-align so the Attu screenshot sits next to the headline rather
+     than getting pushed down on shorter viewports (e.g. 14" laptops)
+     where the text column is taller than the image. */
+  align-items: start;
 }
 
 @media (max-width: 1024px) {
@@ -405,41 +412,6 @@
   }
 }
 
-/* Attu green title bar — keep, it's the product brand cue. */
-.attuFrameHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  background: #0ace82;
-  color: #ffffff;
-  font-family: var(--m-font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.attuFrameTitle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-}
-
-.attuFrameTitle::before {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: #ffffff;
-  transform: rotate(45deg);
-}
-
-.attuFrameMeta {
-  color: #ffffff;
-  opacity: 0.78;
-}
-
 /* Slideshow stack — clickable area; advances to next slide. */
 .attuImageStack {
   position: relative;
@@ -455,6 +427,10 @@
   outline-offset: -2px;
 }
 
+/* Image content is scaled up ~12% with the zoom anchored to the
+   top-left corner — the most informative region of each Attu
+   screenshot. The frame itself stays at 100% column width and clips
+   the bottom-right edge of the over-scaled image. */
 .attuImage {
   position: absolute;
   inset: 0;
@@ -462,6 +438,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top left;
+  transform: scale(1.12);
+  transform-origin: top left;
   opacity: 0;
   transition: opacity 600ms ease-in-out;
   pointer-events: none;

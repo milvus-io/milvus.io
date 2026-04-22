@@ -15,26 +15,10 @@ import { MILVUS_STARS, MILVUS_DOWNLOADS } from '../consts/stats';
 import { useCopyFeedback } from '../components/useCopyFeedback';
 
 const ATTU_SLIDES = [
-  {
-    src: '/images/home2/hero-attu-search.png',
-    label: 'vector_search',
-    meta: 'COLLECTION: agent_memory',
-  },
-  {
-    src: '/images/home2/hero-attu-overview.png',
-    label: 'overview',
-    meta: 'CLUSTER: production',
-  },
-  {
-    src: '/images/home2/hero-attu-data.png',
-    label: 'data',
-    meta: 'SCHEMA: agent_memory',
-  },
-  {
-    src: '/images/home2/hero-attu-api.png',
-    label: 'api',
-    meta: 'PLAYGROUND: REST',
-  },
+  { src: '/images/home2/hero-attu-search.png' },
+  { src: '/images/home2/hero-attu-overview.png' },
+  { src: '/images/home2/hero-attu-data.png' },
+  { src: '/images/home2/hero-attu-api.png' },
 ];
 const ATTU_CYCLE_MS = 5000;
 
@@ -78,8 +62,6 @@ export default function HeroSection2(props: Props) {
       setActiveSlide(i => (i + 1) % ATTU_SLIDES.length);
     }, ATTU_CYCLE_MS);
   };
-
-  const active = ATTU_SLIDES[activeSlide];
 
   return (
     <section className={classes.heroSection}>
@@ -203,12 +185,6 @@ export default function HeroSection2(props: Props) {
                 className={`${classes.cornerTick} ${classes.cornerBottomRight}`}
                 aria-hidden
               />
-              <figcaption className={classes.attuFrameHeader}>
-                <span className={classes.attuFrameTitle}>
-                  attu ▸ {active.label}
-                </span>
-                <span className={classes.attuFrameMeta}>{active.meta}</span>
-              </figcaption>
               <div
                 className={classes.attuImageStack}
                 role="button"

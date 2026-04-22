@@ -1,6 +1,8 @@
 /*
  * Final CTA — "Start building in minutes"
- * Centered headline + Cloud signup pill, then 3 path tiles below.
+ * Two paths: self-host (open source) on the left, managed (Zilliz Cloud)
+ * on the right. The Cloud card carries the accent treatment so the eye
+ * is drawn to the conversion path.
  * Soft cyan glow backdrop matches Zilliz's Final CTA pattern.
  */
 
@@ -12,8 +14,7 @@
   overflow: hidden;
 }
 
-/* Soft cyan glow blooming behind the centered card — sibling-product
-   nod to Zilliz's "Ready to start building?" backdrop. */
+/* Soft cyan glow blooming behind the centered card. */
 .section::before {
   content: '';
   position: absolute;
@@ -54,32 +55,11 @@
   text-align: center;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--m-font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--m-accent);
-  margin-bottom: 18px;
-}
-
-.eyebrow::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background: var(--m-accent);
-  border-radius: 50%;
-}
-
 .title {
   font-family: var(--m-font-sans);
-  font-size: clamp(36px, 4.4vw, 56px);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   font-weight: 700;
   color: var(--m-ink);
   margin: 0;
@@ -89,13 +69,13 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-  max-width: 1100px;
+  max-width: 880px;
   margin: 0 auto;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
   }
@@ -106,16 +86,39 @@
   background: var(--m-bg);
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-card);
-  padding: 28px 26px 24px;
+  padding: 32px 30px 28px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   align-items: flex-start;
   transition: border-color 200ms;
+  min-height: 240px;
 }
 
 .card:hover {
   border-color: var(--m-ink-muted);
+}
+
+/* Cloud card — accent ink panel with cyan border glow. */
+.cardAccent {
+  background: var(--m-ink);
+  border-color: var(--m-ink);
+}
+
+.cardAccent .cardIndex {
+  color: var(--m-cyan);
+}
+
+.cardAccent .cardTitle {
+  color: #ffffff;
+}
+
+.cardAccent .cardBody {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.cardAccent:hover {
+  border-color: var(--m-accent);
 }
 
 .cardIndex {
@@ -123,6 +126,7 @@
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--m-ink-muted);
 }
 
@@ -132,6 +136,7 @@
   font-weight: 700;
   color: var(--m-ink);
   letter-spacing: -0.015em;
+  line-height: 1.25;
   margin: 0;
 }
 
@@ -139,60 +144,57 @@
   font-family: var(--m-font-sans);
   font-size: 14px;
   color: var(--m-ink-2);
-  line-height: 1.6;
-  margin: 0;
-  word-break: break-word;
-}
-
-.pythonBody {
-  display: block;
-  background: var(--m-ink);
-  color: #ededed;
-  padding: 12px 14px;
-  border-radius: var(--m-r-chip);
-  font-family: var(--m-font-mono);
-  font-size: 12.5px;
-  width: 100%;
-  word-break: break-all;
-  white-space: normal;
   line-height: 1.55;
+  margin: 0;
 }
 
-/* Match the Hero / nav primary CTA recipe. Use a.button to outweigh
-   any inherited link colors. */
+/* Default button — outlined ink (matches the Hero "Quick Start" pill).
+   Sits on the light card. */
 .button {
   margin-top: auto;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 36px;
-  padding: 0 18px;
-  background: var(--m-accent);
-  color: var(--m-ink-on-accent);
-  border: none;
+  height: 40px;
+  padding: 0 20px;
+  background: var(--m-bg);
+  color: var(--m-ink);
+  border: 1px solid var(--m-ink);
   border-radius: var(--m-r-pill);
   font-family: var(--m-font-sans);
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
-  letter-spacing: 0;
   text-decoration: none;
   cursor: pointer;
-  transition: background 200ms ease-in-out;
+  transition: background 200ms ease-in-out, color 200ms ease-in-out;
   white-space: nowrap;
 }
 
 a.button {
-  color: var(--m-ink-on-accent);
+  color: var(--m-ink);
 }
 
 .button:hover,
 a.button:hover {
-  background: var(--m-accent-deep);
+  background: var(--m-ink);
   color: var(--m-ink-on-accent);
 }
 
-.buttonCopied {
-  background: var(--m-ink);
-  color: #ffffff;
+/* Primary button — Milvus blue pill. Used on the Cloud (accent) card. */
+.buttonPrimary {
+  background: var(--m-accent);
+  border-color: var(--m-accent);
+  color: var(--m-ink-on-accent);
+}
+
+a.buttonPrimary {
+  color: var(--m-ink-on-accent);
+}
+
+.buttonPrimary:hover,
+a.buttonPrimary:hover {
+  background: var(--m-accent-deep);
+  border-color: var(--m-accent-deep);
+  color: var(--m-ink-on-accent);
 }

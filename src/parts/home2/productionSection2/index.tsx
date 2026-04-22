@@ -3,8 +3,9 @@ import { useGlobalLocale } from '@/hooks/use-global-locale';
 import pageClasses from '@/styles/responsive.module.css';
 import classes from './index.module.css';
 
-// Logo list mirrored from src/parts/home/productionSection/ProductionSection.tsx
-// Update both together if the production customer list changes.
+// 24 brands — 6 per row × 4 rows. Curated from
+// src/parts/home/productionSection/ProductionSection.tsx; if you add to
+// that source list, also update this one or the grid will go uneven.
 const LOGO_PATHS: { src: string; alt: string }[] = [
   { src: '/images/home/brands/salesforce.svg', alt: 'Salesforce' },
   { src: '/images/home/brands/exa-ai.svg', alt: 'Exa.ai' },
@@ -21,11 +22,9 @@ const LOGO_PATHS: { src: string; alt: string }[] = [
   { src: '/images/home/brands/fiverr.svg', alt: 'Fiverr' },
   { src: '/images/home/brands/read-ai.svg', alt: 'Read.ai' },
   { src: '/images/home/brands/ebay.svg', alt: 'ebay' },
-  { src: '/images/home/brands/notta-ai.svg', alt: 'Notta.ai' },
   { src: '/images/home/brands/bosch.svg', alt: 'Bosch' },
   { src: '/images/home/brands/nvidia.svg', alt: 'NVIDIA' },
   { src: '/images/home/brands/cisco.svg', alt: 'Cisco' },
-  { src: '/images/home/brands/filevine.svg', alt: 'Filevine' },
   { src: '/images/home/brands/fanatics.svg', alt: 'Fanatics' },
   { src: '/images/home/brands/line.svg', alt: 'LINE' },
   { src: '/images/home/brands/roblox.svg', alt: 'ROBLOX' },

@@ -161,19 +161,16 @@ test.describe('/index2 community', () => {
 });
 
 test.describe('/index2 final CTA', () => {
-  test('renders three start paths', async ({ page }) => {
+  test('renders the two start paths (self-host + cloud)', async ({ page }) => {
     await page.goto(`${BASE_URL}/index2`);
     await expect(
       page.getByRole('heading', { level: 2, name: /Start building in minutes/i })
     ).toBeVisible();
     await expect(
-      page.getByRole('heading', { level: 3, name: 'Python' })
+      page.getByRole('heading', { level: 3, name: /Run Milvus yourself/ })
     ).toBeVisible();
     await expect(
-      page.getByRole('heading', { level: 3, name: 'Cloud' })
-    ).toBeVisible();
-    await expect(
-      page.getByRole('heading', { level: 3, name: 'Docs' })
+      page.getByRole('heading', { level: 3, name: /Try Zilliz Cloud Free/ })
     ).toBeVisible();
   });
 });

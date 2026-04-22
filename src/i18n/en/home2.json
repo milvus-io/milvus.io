@@ -116,9 +116,9 @@
       }
     },
     "benchmark": {
-      "latency": "Sub-XX ms p99",
+      "latency": "Sub-20 ms p99",
       "scale": "Billion-scale tested",
-      "cost": "~XX% lower infra cost",
+      "cost": "~70% lower infra cost",
       "clouds": "AWS · GCP · Azure · BYOC"
     }
   },
@@ -173,21 +173,17 @@
   },
   "finalCta": {
     "title": "Start building in minutes",
-    "python": {
-      "label": "Python",
-      "body": "curl -fsSL https://zilliz.com/cli/install.sh | bash",
-      "button": "Copy",
-      "copied": "Copied"
+    "selfHost": {
+      "tag": "Open Source",
+      "label": "Run Milvus yourself",
+      "body": "Standalone on a laptop, distributed on Kubernetes, or anywhere you can run a container — same MilvusClient code.",
+      "button": "Read the install guide"
     },
     "cloud": {
-      "label": "Cloud",
-      "body": "Try Zilliz Cloud Free",
-      "button": "Sign up"
-    },
-    "docs": {
-      "label": "Docs",
-      "body": "Read the docs",
-      "button": "Browse"
+      "tag": "Managed",
+      "label": "Try Zilliz Cloud Free",
+      "body": "The fully managed Milvus from the team that built it. Free tier, pay-as-you-go, deploys to AWS, GCP, Azure, or BYOC.",
+      "button": "Sign up free"
     }
   }
 }

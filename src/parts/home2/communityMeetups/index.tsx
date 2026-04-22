@@ -45,6 +45,12 @@ export default function CommunityMeetups() {
           </article>
 
           <article className={classes.card}>
+            <img
+              src="/images/home/meetup-logo.png"
+              alt="Unstructured Data Meetup"
+              className={classes.meetupLogo}
+              loading="lazy"
+            />
             <h3 className={classes.cardTitle}>{t('community.meetups.title')}</h3>
             <p className={classes.meetupDesc}>{t('community.meetups.desc')}</p>
             <a

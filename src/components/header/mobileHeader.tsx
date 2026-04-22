@@ -71,7 +71,7 @@ export default function MobileHeader(props: {
   const trackPath = useUtmTrackPath();
 
   return (
-    <div className="block xl:hidden bg-white border-b border-solid border-gray-300">
+    <div className="block lg:hidden bg-white border-b border-solid border-gray-300">
       <div
         className={clsx(
           pageClasses.container,

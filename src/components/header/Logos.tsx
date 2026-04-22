@@ -20,8 +20,11 @@ export const LogoSection = (props: { equipment?: 'desktop' | 'tablet' }) => {
         href={ZILLIZ_OFFICIAL_WEBSITE}
         target="_blank"
         rel="noreferrer noopener"
+        className="inline-flex items-center"
       >
-        <img src="/images/layout/zilliz-logo.svg" width={75} height={30} alt="Zilliz" />
+        {/* Render Zilliz at 24px to match Milvus optical height; viewBox stays
+            75x30 so the SVG scales proportionally (width = 24/30 * 75 = 60). */}
+        <img src="/images/layout/zilliz-logo.svg" width={60} height={24} alt="Zilliz" />
       </a>
     </div>
   );

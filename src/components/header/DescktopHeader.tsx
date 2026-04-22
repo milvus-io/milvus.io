@@ -155,24 +155,24 @@ export default function DesktopHeader(props: Props) {
   ];
 
   return (
-    <div className="bg-white border-b-black4 border-b-[1px] border-solid max-[1280px]:border-none">
+    <div className="bg-white border-b-black4 border-b-[1px] border-solid max-[1024px]:border-none">
       <div
         className={clsx(
-          'hidden xl:flex h-[58px] items-center justify-between mx-auto',
-          
+          'hidden lg:flex h-[58px] items-center justify-between mx-auto',
+
           className
         )}
       >
-        <div className="flex items-center gap-[40px] max-[1540px]:gap-[12px]">
+        <div className="flex items-center gap-[64px] max-[1540px]:gap-[40px] max-[1280px]:gap-[24px]">
           <LogoSection />
 
-          <ul className="flex items-center list-none gap-[16px] max-[1540px]:gap-[10px]">
+          <ul className="flex items-center list-none gap-[20px] max-[1540px]:gap-[12px]">
             {menuConfigs.map(config => {
               if (config.list) {
                 return (
                   <li key={config.label} className="shrink-0">
                     <div className="group relative">
-                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] h-[21px] text-black2 hover:text-black1 cursor-pointer font-mono uppercase text-[#667176]">
+                      <button className="group flex items-center gap-[4px] text-[14px] font-[500] h-[21px] hover:text-black1 cursor-pointer text-[#667176]">
                         <span className="inline-block leading-[16px]">
                           {config.label}
                         </span>
@@ -189,7 +189,7 @@ export default function DesktopHeader(props: Props) {
                               <Link
                                 href={item.link}
                                 rel={item.rel}
-                                className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] no whitespace-nowrap cursor-pointer hover:bg-black/[0.04] font-mono uppercase text-[#667176]"
+                                className="flex items-center gap-[4px] text-[14px] leading-[40px] font-[400] px-[16px] no whitespace-nowrap cursor-pointer hover:bg-black/[0.04] text-[#667176]"
                                 target={item.rel ? '_blank' : undefined}
                               >
                                 {item.label}
@@ -207,7 +207,7 @@ export default function DesktopHeader(props: Props) {
                 <li key={config.label}>
                   <Link
                     href={config.link}
-                    className="block text-[14px] leading-[21px] font-[500]  hover:text-black1 cursor-pointer font-mono uppercase text-black2"
+                    className="block text-[14px] leading-[21px] font-[500] hover:text-black1 cursor-pointer text-[#667176]"
                   >
                     {config.label}
                   </Link>
@@ -217,34 +217,36 @@ export default function DesktopHeader(props: Props) {
           </ul>
         </div>
 
-        <div className="flex gap-[20px] max-[1540px]:gap-[10px] items-center font-mono">
+        <div className="flex gap-[14px] max-[1540px]:gap-[10px] items-center">
           {!disableLangSelector && (
-            <LanguageSelector
-              value={locale}
-              onChange={onLocaleChange}
-              disabled={disabled}
-              disabledLanguages={disabledLanguages}
-              hiddenSelectValue={false}
-            />
+            <div className="hidden min-[1400px]:flex items-center">
+              <LanguageSelector
+                value={locale}
+                onChange={onLocaleChange}
+                disabled={disabled}
+                disabledLanguages={disabledLanguages}
+                hiddenSelectValue={false}
+              />
+            </div>
           )}
+          <span aria-hidden className="hidden min-[1400px]:inline-block h-4 w-px bg-black/10" />
           <a
             href={GITHUB_MILVUS_LINK}
-            className={
-              'h-9 rounded-md flex items-center basis-[77px] flex-shrink-0 flex-grow-0 px-[6px] py-[3px] transition duration-200 ease-in-out text-black hover:text-black2'
-            }
+            className="hidden min-[1400px]:flex items-center flex-shrink-0 flex-grow-0 transition duration-200 ease-in-out text-black1 hover:text-black2"
             target="_blank"
           >
             <GitHubIcon />
-            <span className="text-[12px] leading-[18px] ml-[2px] mr-[4px] whitespace-nowrap">
+            <span className="text-[13px] leading-[18px] ml-[4px] mr-[4px] whitespace-nowrap">
               {t('star')}
             </span>
-            <span className="text-[12px] font-[500] leading-[18px]">
+            <span className="text-[13px] font-[500] leading-[18px]">
               {startNum}
             </span>
           </a>
+          <span aria-hidden className="hidden min-[1400px]:inline-block h-4 w-px bg-black/10" />
           <Link
             href={getLocalePath('/contact')}
-            className="text-[12px] font-[500] leading-[18px] text-black1 hover:text-black2 transition duration-200 ease-in-out whitespace-pre"
+            className="hidden min-[1400px]:block text-[13px] font-[500] leading-[18px] text-black1 hover:text-black2 transition duration-200 ease-in-out whitespace-pre"
           >
             {t('contact')}
           </Link>
@@ -252,7 +254,7 @@ export default function DesktopHeader(props: Props) {
             href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_nav_right&utm_content=${trackPath}`}
             target="_blank"
           >
-            <div className="h-9 px-3 py-1.5 rounded-md  bg-blue1 hover:bg-[#008DC8] justify-start items-center gap-1 inline-flex cursor-pointer transition duration-200 ease-in-out">
+            <div className="h-9 px-[18px] rounded-full bg-blue1 hover:bg-[#008DC8] justify-start items-center gap-1 inline-flex cursor-pointer transition duration-200 ease-in-out">
               <div className="text-center text-white text-sm font-medium leading-[21px] whitespace-nowrap">
                 {t('start')}
               </div>

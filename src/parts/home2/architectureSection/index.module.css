@@ -237,6 +237,21 @@
   border-right: none;
 }
 
+/* Anchor variant — subtle hover so it reads as clickable. */
+a.benchmarkItem {
+  color: inherit;
+  text-decoration: none;
+  transition: background 160ms;
+}
+
+a.benchmarkItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+a.benchmarkItem:hover .benchmarkValue {
+  color: var(--m-cyan);
+}
+
 @media (max-width: 768px) {
   .benchmarkItem:nth-child(2) {
     border-right: none;

@@ -147,6 +147,13 @@
   text-transform: uppercase;
 }
 
+.meetupLogo {
+  display: block;
+  width: 88px;
+  height: auto;
+  margin: 0 0 18px;
+}
+
 .meetupDesc {
   font-family: var(--m-font-sans);
   font-size: 14px;

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import pageClasses from '@/styles/responsive.module.css';
+import { CLOUD_SIGNUP_LINK } from '@/consts/links';
 import classes from './index.module.css';
 import ArchitectureDiagram from './diagram';
 
@@ -54,14 +55,33 @@ export default function ArchitectureSection() {
         </div>
 
         <div className={classes.benchmarkStrip}>
-          {BENCHMARK_ITEMS.map(item => (
-            <div className={classes.benchmarkItem} key={item.key}>
-              <span className={classes.benchmarkLabel}>// {item.label}</span>
-              <span className={classes.benchmarkValue}>
-                {t(`architecture.benchmark.${item.key}`)}
-              </span>
-            </div>
-          ))}
+          {BENCHMARK_ITEMS.map(item => {
+            const value = t(`architecture.benchmark.${item.key}`);
+            const inner = (
+              <>
+                <span className={classes.benchmarkLabel}>// {item.label}</span>
+                <span className={classes.benchmarkValue}>{value}</span>
+              </>
+            );
+            if (item.key === 'clouds') {
+              return (
+                <a
+                  key={item.key}
+                  className={classes.benchmarkItem}
+                  href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_homepage_architecture&utm_content=clouds_strip`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {inner}
+                </a>
+              );
+            }
+            return (
+              <div className={classes.benchmarkItem} key={item.key}>
+                {inner}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -43,21 +43,36 @@
   margin: 0;
 }
 
+/* Locked to 6 columns × 4 rows so the wall stays a clean 6-up grid at
+   every desktop/tablet width. Mobile collapses to 3 cols (still even
+   rows: 8 × 3 = 24). */
 .logoWall {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 1024px) {
+  .logoWall {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .logoWall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .logoCell {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 28px;
+  padding: 28px 24px;
   background: var(--m-bg);
   border: 1px solid var(--m-line);
   border-radius: var(--m-r-card);
-  min-height: 104px;
+  min-height: 120px;
   transition: border-color 200ms;
 }
 
@@ -66,7 +81,7 @@
 }
 
 .logoItem {
-  height: 44px;
+  height: 52px;
   width: auto;
   max-width: 100%;
   object-fit: contain;

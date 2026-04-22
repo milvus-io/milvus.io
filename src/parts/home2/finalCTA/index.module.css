@@ -1,20 +1,56 @@
-/* Brutalist final CTA — 3 bordered cards on ink, terminal-style copy card */
+/*
+ * Final CTA — "Start building in minutes"
+ * Centered headline + Cloud signup pill, then 3 path tiles below.
+ * Soft cyan glow backdrop matches Zilliz's Final CTA pattern.
+ */
 
 .section {
-  padding: 96px 0;
-  background: var(--brut-ink);
-  color: var(--brut-paper);
-  border-bottom: var(--brut-rule);
+  position: relative;
+  padding: 100px 120px;
+  background: var(--m-bg);
+  border-bottom: var(--m-rule);
+  overflow: hidden;
+}
+
+/* Soft cyan glow blooming behind the centered card — sibling-product
+   nod to Zilliz's "Ready to start building?" backdrop. */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 480px;
+  transform: translateY(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    var(--m-cyan-soft) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 1280px) {
+  .section {
+    padding: 80px 80px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 72px 48px;
+  }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 64px 0;
+    padding: 56px 24px;
   }
 }
 
 .header {
-  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 40px;
   text-align: center;
 }
 
@@ -22,39 +58,41 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brut-paper);
-  opacity: 0.6;
+  color: var(--m-accent);
   margin-bottom: 18px;
 }
 
 .eyebrow::before {
-  content: '///';
-  color: var(--brut-accent);
-  font-weight: 700;
-  opacity: 1;
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--m-accent);
+  border-radius: 50%;
 }
 
 .title {
-  font-family: var(--brut-font-mono);
-  font-size: clamp(32px, 4.4vw, 56px);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  font-weight: 600;
-  color: var(--brut-paper);
+  font-family: var(--m-font-sans);
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  color: var(--m-ink);
   margin: 0;
 }
 
 .grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  border: var(--brut-rule);
-  border-color: var(--brut-paper);
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 @media (max-width: 900px) {
@@ -65,57 +103,42 @@
 
 .card {
   position: relative;
-  background: var(--brut-ink);
-  color: var(--brut-paper);
-  border-right: 2px solid var(--brut-paper);
-  padding: 32px 28px;
+  background: var(--m-bg);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-card);
+  padding: 28px 26px 24px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
   align-items: flex-start;
-  transition: background 120ms;
-}
-
-.card:last-child {
-  border-right: none;
+  transition: border-color 200ms;
 }
 
 .card:hover {
-  background: #141414;
-}
-
-@media (max-width: 900px) {
-  .card {
-    border-right: none;
-    border-bottom: 2px solid var(--brut-paper);
-  }
-  .card:last-child {
-    border-bottom: none;
-  }
+  border-color: var(--m-ink-muted);
 }
 
 .cardIndex {
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  color: var(--brut-accent);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--m-ink-muted);
 }
 
 .cardTitle {
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-sans);
   font-size: 22px;
-  font-weight: 600;
-  color: var(--brut-paper);
+  font-weight: 700;
+  color: var(--m-ink);
   letter-spacing: -0.015em;
   margin: 0;
 }
 
 .cardBody {
-  font-family: var(--brut-font-mono);
-  font-size: 13px;
-  color: var(--brut-paper);
-  opacity: 0.7;
+  font-family: var(--m-font-sans);
+  font-size: 14px;
+  color: var(--m-ink-2);
   line-height: 1.6;
   margin: 0;
   word-break: break-word;
@@ -123,54 +146,53 @@
 
 .pythonBody {
   display: block;
-  background: #000;
-  color: var(--brut-warn);
+  background: var(--m-ink);
+  color: #ededed;
   padding: 12px 14px;
-  border: 1px solid rgba(250, 250, 250, 0.25);
-  font-family: var(--brut-font-mono);
+  border-radius: var(--m-r-chip);
+  font-family: var(--m-font-mono);
   font-size: 12.5px;
   width: 100%;
   word-break: break-all;
   white-space: normal;
+  line-height: 1.55;
 }
 
-.pythonBody::before {
-  content: '$ ';
-  color: var(--brut-accent);
-  font-weight: 700;
-}
-
-/* Matches site nav's primary CTA (h-9 px-3 py-1.5 rounded-md bg-blue1) */
+/* Match the Hero / nav primary CTA recipe. Use a.button to outweigh
+   any inherited link colors. */
 .button {
   margin-top: auto;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   height: 36px;
-  padding: 6px 12px;
-  background: var(--brut-accent);
-  color: #ffffff;
+  padding: 0 18px;
+  background: var(--m-accent);
+  color: var(--m-ink-on-accent);
   border: none;
-  border-radius: 6px;
-  font-family: inherit;
+  border-radius: var(--m-r-pill);
+  font-family: var(--m-font-sans);
   font-size: 14px;
   font-weight: 500;
-  line-height: 21px;
+  line-height: 1;
   letter-spacing: 0;
-  text-transform: none;
   text-decoration: none;
   cursor: pointer;
   transition: background 200ms ease-in-out;
   white-space: nowrap;
 }
 
-.button:hover {
-  background: var(--brut-accent-deep);
-  color: #ffffff;
+a.button {
+  color: var(--m-ink-on-accent);
+}
+
+.button:hover,
+a.button:hover {
+  background: var(--m-accent-deep);
+  color: var(--m-ink-on-accent);
 }
 
 .buttonCopied {
-  background: var(--brut-ink);
-  color: var(--brut-paper);
+  background: var(--m-ink);
+  color: #ffffff;
 }
-

@@ -1,14 +1,30 @@
-/* Brutalist testimonials — 3 bordered cards, mono quotes with " prefix */
+/*
+ * Loved by Developers — testimonial cards.
+ * 3 cards, each: large quote glyph, body, byline at bottom.
+ */
 
 .section {
-  padding: 96px 0;
-  background: var(--brut-paper);
-  border-bottom: var(--brut-rule);
+  position: relative;
+  padding: 100px 120px;
+  background: var(--m-bg);
+  border-bottom: var(--m-rule);
+}
+
+@media (max-width: 1280px) {
+  .section {
+    padding: 80px 80px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 72px 48px;
+  }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 64px 0;
+    padding: 56px 24px;
   }
 }
 
@@ -21,29 +37,30 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brut-ink);
-  opacity: 0.7;
+  color: var(--m-accent);
   margin-bottom: 20px;
 }
 
 .eyebrow::before {
-  content: '///';
-  color: var(--brut-accent);
-  font-weight: 700;
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--m-accent);
+  border-radius: 50%;
 }
 
 .title {
-  font-family: var(--brut-font-mono);
-  font-size: clamp(28px, 3.6vw, 44px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  font-weight: 600;
-  color: var(--brut-ink);
+  font-family: var(--m-font-sans);
+  font-size: clamp(32px, 3.8vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--m-ink);
   margin: 0;
   text-align: left;
 }
@@ -51,9 +68,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  border-top: var(--brut-rule);
-  border-left: var(--brut-rule);
+  gap: 16px;
 }
 
 @media (max-width: 1024px) {
@@ -64,60 +79,59 @@
 
 .card {
   position: relative;
-  background: var(--brut-paper);
-  border-right: var(--brut-rule);
-  border-bottom: var(--brut-rule);
-  padding: 32px 28px 24px;
+  background: var(--m-surface);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-card);
+  padding: 28px 24px 24px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  transition: background 120ms;
+  gap: 16px;
+  transition: border-color 200ms;
 }
 
 .card:hover {
-  background: #fff;
+  border-color: var(--m-ink-muted);
 }
 
 .quoteMark {
-  font-family: var(--brut-font-mono);
-  font-size: 48px;
+  font-family: var(--m-font-sans);
+  font-size: 36px;
   line-height: 1;
   font-weight: 700;
-  color: var(--brut-accent);
-  margin: 0 0 -12px;
+  color: var(--m-ink-muted);
+  margin: -4px 0 -16px;
+  opacity: 0.5;
 }
 
 .content {
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-sans);
   font-size: 14px;
-  line-height: 1.65;
-  color: var(--brut-ink);
-  opacity: 0.85;
+  line-height: 1.6;
+  color: var(--m-ink);
   flex: 1;
   margin: 0;
 }
 
 .byline {
   padding-top: 16px;
-  border-top: var(--brut-rule-thin);
+  border-top: 1px solid var(--m-line);
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
 .author {
-  font-family: var(--brut-font-mono);
-  font-size: 13px;
+  font-family: var(--m-font-sans);
+  font-size: 14px;
   font-weight: 600;
-  color: var(--brut-ink);
+  color: var(--m-ink);
   letter-spacing: -0.005em;
 }
 
 .jobTitle {
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  color: var(--brut-ink);
-  opacity: 0.6;
+  color: var(--m-ink-2);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }

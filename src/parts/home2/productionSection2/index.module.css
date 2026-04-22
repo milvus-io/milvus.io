@@ -1,14 +1,30 @@
-/* Brutalist production section — dark numbers strip + bordered logo wall */
+/*
+ * Production — "Trusted in production by the teams building AI"
+ * Light section: dark inset numbers strip + customer logo wall.
+ */
 
 .section {
-  padding: 96px 0;
-  background: var(--brut-paper);
-  border-bottom: var(--brut-rule);
+  position: relative;
+  padding: 100px 120px;
+  background: var(--m-surface);
+  border-bottom: var(--m-rule);
+}
+
+@media (max-width: 1280px) {
+  .section {
+    padding: 80px 80px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 72px 48px;
+  }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 64px 0;
+    padding: 56px 24px;
   }
 }
 
@@ -21,29 +37,30 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brut-ink);
-  opacity: 0.7;
-  margin-bottom: 20px;
+  color: var(--m-accent);
+  margin-bottom: 18px;
 }
 
 .eyebrow::before {
-  content: '///';
-  color: var(--brut-accent);
-  font-weight: 700;
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--m-accent);
+  border-radius: 50%;
 }
 
 .title {
-  font-family: var(--brut-font-mono);
-  font-size: clamp(24px, 3vw, 36px);
+  font-family: var(--m-font-sans);
+  font-size: clamp(28px, 3.4vw, 40px);
   line-height: 1.15;
   letter-spacing: -0.02em;
-  font-weight: 600;
-  color: var(--brut-ink);
+  font-weight: 700;
+  color: var(--m-ink);
   margin: 0;
 }
 
@@ -51,9 +68,10 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
-  background: var(--brut-ink);
-  color: var(--brut-paper);
-  border: var(--brut-rule);
+  background: var(--m-ink);
+  color: #ededed;
+  border-radius: var(--m-r-card);
+  overflow: hidden;
   margin-bottom: 48px;
 }
 
@@ -64,8 +82,8 @@
 }
 
 .metric {
-  padding: 24px 20px;
-  border-right: 1px solid rgba(250, 250, 250, 0.12);
+  padding: 26px 24px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -81,40 +99,39 @@
   }
   .metric:nth-child(1),
   .metric:nth-child(2) {
-    border-bottom: 1px solid rgba(250, 250, 250, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 
 .metricValue {
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-sans);
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--brut-paper);
+  color: #ffffff;
   line-height: 1;
 }
 
 .metricLabel {
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brut-accent);
+  color: var(--m-cyan);
 }
 
 .logoWallHeader {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brut-ink);
-  opacity: 0.55;
-  margin-bottom: 20px;
+  color: var(--m-ink-2);
+  margin-bottom: 24px;
 }
 
 .logoWallHeader::before,
@@ -122,16 +139,13 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: var(--brut-ink);
-  opacity: 0.3;
+  background: var(--m-line);
 }
 
 .logoWall {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 0;
-  border-top: var(--brut-rule-thin);
-  border-left: var(--brut-rule-thin);
+  gap: 12px;
 }
 
 .logoCell {
@@ -139,26 +153,20 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  min-height: 92px;
-  border-right: 1px solid rgba(10, 10, 10, 0.18);
-  border-bottom: 1px solid rgba(10, 10, 10, 0.18);
-  background: var(--brut-paper);
-  transition: background 120ms;
+  background: var(--m-bg);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-card);
+  min-height: 80px;
+  transition: border-color 200ms;
 }
 
 .logoCell:hover {
-  background: #fff;
+  border-color: var(--m-ink-muted);
 }
 
 .logoItem {
-  height: 40px;
+  height: 32px;
   width: auto;
   max-width: 100%;
   object-fit: contain;
-  transition: opacity 120ms;
-  opacity: 0.85;
-}
-
-.logoCell:hover .logoItem {
-  opacity: 1;
 }

@@ -1,15 +1,32 @@
-/* Brutalist pillars — 4 cards, 2x2, 2px black rules, mono throughout */
+/*
+ * Capability Pillars — "Built for the Agent Era"
+ * 5 cards in 3+2 layout via 6-col grid. Each card: tag + title + body
+ * + dark code chip (Zilliz "floating dark chip" pattern, ported to
+ * inline) + Learn more link.
+ */
 
 .section {
   position: relative;
-  padding: 96px 0;
-  background: var(--brut-paper);
-  border-bottom: var(--brut-rule);
+  padding: 100px 120px;
+  background: var(--m-bg);
+  border-bottom: var(--m-rule);
+}
+
+@media (max-width: 1280px) {
+  .section {
+    padding: 80px 80px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 72px 48px;
+  }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 64px 0;
+    padding: 56px 24px;
   }
 }
 
@@ -22,60 +39,69 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brut-ink);
-  opacity: 0.7;
+  color: var(--m-accent);
   margin-bottom: 20px;
 }
 
 .eyebrow::before {
-  content: '///';
-  color: var(--brut-accent);
-  font-weight: 700;
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--m-accent);
+  border-radius: 50%;
 }
 
 .title {
-  font-family: var(--brut-font-mono);
-  font-size: clamp(28px, 3.6vw, 44px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  font-weight: 600;
-  color: var(--brut-ink);
-  margin: 0 0 16px;
+  font-family: var(--m-font-sans);
+  font-size: clamp(32px, 3.8vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--m-ink);
+  margin: 0 0 14px;
 }
 
 .subtitle {
-  font-family: var(--brut-font-mono);
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--brut-ink);
-  opacity: 0.75;
+  font-family: var(--m-font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--m-ink-2);
   max-width: 640px;
   margin: 0;
 }
 
-/* 5 cards laid out as 3 + 2 via a 6-col grid: row 1 = three cards each
-   spanning 2 cols (3 × 2 = 6); row 2 = two cards each spanning 3 cols
-   (2 × 3 = 6). All cards keep the shared 2px-border treatment. */
+/* 3 + 2 over a 6-col underlying grid; each card is a discrete tile. */
 .grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 0;
-  border-top: var(--brut-rule);
-  border-left: var(--brut-rule);
+  gap: 16px;
 }
 
 .card {
   grid-column: span 2;
+  position: relative;
+  background: var(--m-surface);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-card);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: border-color 200ms;
 }
 
 .card:nth-child(4),
 .card:nth-child(5) {
   grid-column: span 3;
+}
+
+.card:hover {
+  border-color: var(--m-ink-muted);
 }
 
 @media (max-width: 1024px) {
@@ -95,82 +121,62 @@
   }
 }
 
-.card {
-  position: relative;
-  background: var(--brut-paper);
-  border-right: var(--brut-rule);
-  border-bottom: var(--brut-rule);
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  transition: background 120ms ease-out;
-}
-
-.card:hover {
-  background: #fff;
-}
-
-.card:hover .learnMore {
-  color: var(--brut-accent-deep);
-}
-
 .cardIndex {
   position: absolute;
-  top: 14px;
-  right: 18px;
-  font-family: var(--brut-font-mono);
+  top: 18px;
+  right: 22px;
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.16em;
-  color: var(--brut-ink);
-  opacity: 0.35;
+  color: var(--m-ink-muted);
 }
 
 .cardTitle {
-  font-family: var(--brut-font-mono);
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--brut-ink);
+  font-family: var(--m-font-sans);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--m-ink);
   letter-spacing: -0.015em;
+  line-height: 1.3;
   margin: 0;
-  padding-right: 48px;
+  padding-right: 56px;
 }
 
 .cardBody {
-  font-family: var(--brut-font-mono);
-  font-size: 14px;
+  font-family: var(--m-font-sans);
+  font-size: 13px;
   line-height: 1.6;
-  color: var(--brut-ink);
-  opacity: 0.75;
+  color: var(--m-ink-3);
   margin: 0;
 }
 
 .codeBlock {
-  background: var(--brut-ink);
-  padding: 18px;
-  border: var(--brut-rule);
+  background: var(--m-ink);
+  border: 1px solid var(--m-ink);
+  border-radius: var(--m-r-chip);
+  padding: 14px 16px;
   font-size: 12.5px;
-  line-height: 1.55;
-  overflow: hidden;
+  line-height: 1.5;
   margin: 0;
+  overflow: hidden;
 }
 
 .learnMore {
   align-self: flex-start;
-  font-family: var(--brut-font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--brut-ink);
-  text-decoration: none;
-  border-bottom: 2px solid var(--brut-accent);
-  padding-bottom: 2px;
-  transition: color 120ms;
   margin-top: auto;
+  font-family: var(--m-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--m-accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 160ms, gap 160ms;
 }
 
 .learnMore:hover {
-  color: var(--brut-accent-deep);
+  color: var(--m-accent-deep);
+  gap: 8px;
 }

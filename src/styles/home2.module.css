@@ -73,7 +73,12 @@
   --brut-warn: var(--m-warn);
   --brut-rule: var(--m-rule);
   --brut-rule-thin: var(--m-rule-soft);
-  --brut-font-mono: var(--m-font-sans); /* old "mono everywhere" -> sans */
+  /* Old --brut-font-mono was used as the default font for EVERYTHING
+     (headings, body, code). We can't resolve it to both sans and mono
+     at once, so we keep it as sans (everything that ported to new CSS
+     uses --m-font-* directly now) and require code-rendering components
+     to reference --m-font-mono explicitly. */
+  --brut-font-mono: var(--m-font-sans);
 
   font-family: var(--m-font-sans);
   color: var(--m-ink);

@@ -118,22 +118,6 @@ export default function HeroSection2(props: Props) {
             <p className={classes.subtitle}>{t('hero.subtitle')}</p>
 
             <div className={classes.ctaRow}>
-              <button
-                type="button"
-                onClick={() => copy(placeholderCmd)}
-                className={classes.copyCommand}
-                aria-label={t('hero.copyAriaLabel')}
-              >
-                <span className={classes.copyCommandPrompt} aria-hidden>
-                  $
-                </span>
-                <span className={classes.copyCommandPlaceholder}>
-                  {placeholderCmd}
-                </span>
-                <span className={classes.copyCommandHint}>
-                  {copied ? '[copied]' : '[copy]'}
-                </span>
-              </button>
               <a
                 href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_homepage_hero&utm_content=home2`}
                 className={classes.secondaryCta}
@@ -142,6 +126,22 @@ export default function HeroSection2(props: Props) {
               >
                 {t('hero.ctaSecondary')} →
               </a>
+              <button
+                type="button"
+                onClick={() => copy(placeholderCmd)}
+                className={classes.copyCommand}
+                aria-label={t('hero.copyAriaLabel')}
+              >
+                <span className={classes.copyCommandLabel}>
+                  {t('hero.quickstartLabel')}
+                </span>
+                <span className={classes.copyCommandPlaceholder}>
+                  {placeholderCmd}
+                </span>
+                <span className={classes.copyCommandHint}>
+                  {copied ? '[copied]' : '[copy]'}
+                </span>
+              </button>
             </div>
 
             <div className={classes.socialProof}>

@@ -21,8 +21,11 @@ export const HomeMeta2 = (props: Props) => {
         href="https://fonts.gstatic.com"
         crossOrigin="anonymous"
       />
+      {/* Geist + Geist Mono. The site nav already loads Geist, but home2
+          may render before that depending on bundle order; re-declare so
+          home2 never falls back to system sans. */}
       <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
     </Head>

@@ -1,54 +1,57 @@
-/* Brutalist Hero — raw, monospace, 2px black rules, single electric-blue accent */
+/*
+ * Hero — Zilliz Web 2026 design language, ported to Milvus light palette.
+ *
+ * Two-column row, padded section, no shadows, hairline borders, 6px radii
+ * on cards / 32px on pill CTAs, Geist sans typography. Right column hosts
+ * the existing Attu screenshot slideshow (kept — it's stronger than an
+ * iso illustration because it's the real product).
+ */
+
+/* ─── Section ────────────────────────────────────────────────────────── */
 
 .heroSection {
   position: relative;
-  padding: 56px 0 0;
-  background: var(--brut-paper);
-  border-bottom: var(--brut-rule);
-  overflow: hidden;
+  padding: 48px 120px 80px;
+  background: var(--m-bg);
+  border-bottom: var(--m-rule);
+}
+
+@media (max-width: 1280px) {
+  .heroSection {
+    padding: 40px 80px 64px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .heroSection {
+    padding: 36px 48px 56px;
+  }
 }
 
 @media (max-width: 768px) {
   .heroSection {
-    padding: 32px 0 0;
+    padding: 28px 24px 40px;
   }
 }
 
-/* Background CAD-style grid — subtle, decorative */
-.heroSection::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(
-      to right,
-      rgba(10, 10, 10, 0.06) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgba(10, 10, 10, 0.06) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-  mask-image: linear-gradient(180deg, transparent 0, #000 120px, #000 80%, transparent);
-  -webkit-mask-image: linear-gradient(
-    180deg,
-    transparent 0,
-    #000 120px,
-    #000 80%,
-    transparent
-  );
+@media (max-width: 480px) {
+  .heroSection {
+    padding: 24px 20px 32px;
+  }
 }
 
-/* Eyebrow row: inline LIVE badge + build tag + rolling headline link.
-   Sits above the grid at full container width so the headline has room
-   to breathe (the grid's left column is too narrow for long news). */
+/* ─── Eyebrow status row ─────────────────────────────────────────────── */
+
 .eyebrowRow {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-family: var(--brut-font-mono);
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--brut-ink);
+  color: var(--m-ink-2);
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
@@ -57,7 +60,7 @@
 
 @media (max-width: 768px) {
   .eyebrowRow {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 }
 
@@ -65,7 +68,7 @@
   display: inline-flex;
   align-items: center;
   font-weight: 600;
-  color: var(--brut-ink);
+  color: var(--m-ink);
   white-space: nowrap;
 }
 
@@ -73,13 +76,13 @@
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: var(--brut-accent);
+  border-radius: 50%;
+  background: var(--m-accent);
   margin-right: 8px;
-  transform: translateY(0);
-  animation: blink 1.6s infinite step-end;
+  animation: heroLivePulse 1.6s infinite step-end;
 }
 
-@keyframes blink {
+@keyframes heroLivePulse {
   0%,
   50% {
     opacity: 1;
@@ -91,15 +94,13 @@
 }
 
 .buildTag {
-  color: var(--brut-ink);
-  opacity: 0.6;
+  color: var(--m-ink-2);
   white-space: nowrap;
 }
 
 .eyebrowDivider {
-  color: var(--brut-accent);
-  opacity: 0.6;
-  font-weight: 700;
+  color: var(--m-ink-muted);
+  font-weight: 600;
 }
 
 .eyebrowHeadline {
@@ -118,8 +119,7 @@
 }
 
 .eyebrowHeadline a {
-  color: var(--brut-ink);
-  opacity: 0.75;
+  color: var(--m-ink-2);
   text-decoration: none;
   display: inline-block;
   white-space: nowrap;
@@ -128,17 +128,14 @@
 }
 
 .eyebrowHeadline a:hover {
-  color: var(--brut-accent);
-  opacity: 1;
+  color: var(--m-accent);
 }
 
-/* Narrow viewports: stack the eyebrow vertically so the headline gets the
-   full container width instead of sharing 325px with the LIVE badge. */
 @media (max-width: 640px) {
   .eyebrowRow {
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
+    gap: 8px;
     font-size: 10px;
   }
 
@@ -153,117 +150,149 @@
   }
 }
 
-/* Grid: balanced left / slightly-wider right so the H1 stays on <=3 lines
-   (mono chars are wide) while the Attu screenshot still reads at size.
-   minmax(0, Nfr) so long unbreakable content can't blow a track. */
+/* ─── Grid ───────────────────────────────────────────────────────────── */
+
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: 60px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  column-gap: 64px;
   align-items: center;
-  padding-bottom: 80px;
 }
 
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
-    padding-bottom: 48px;
+    row-gap: 48px;
   }
 }
 
 .leftColumn {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 28px;
   position: relative;
+  max-width: 560px;
 }
 
-/* H1: sized so "The Vector Database" fits on one line at typical desktop
-   widths (mono chars are ~0.6em wide, so max ~36px for a ~420px column). */
+/* ─── Headline + body ────────────────────────────────────────────────── */
+
 .title {
-  font-family: var(--brut-font-mono);
-  font-size: clamp(28px, 3vw, 40px);
+  font-family: var(--m-font-sans);
+  font-size: clamp(40px, 4.6vw, 60px);
   line-height: 1.1;
-  letter-spacing: -0.035em;
-  font-weight: 600;
-  color: var(--brut-ink);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--m-ink);
   margin: 0;
 }
 
 .titleAccent {
-  color: var(--brut-accent);
+  color: var(--m-accent);
   font-weight: 700;
-  display: inline-block;
 }
 
 .subtitle {
-  font-family: var(--brut-font-mono);
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--brut-ink);
+  font-family: var(--m-font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--m-ink-2);
   font-weight: 400;
-  max-width: 52ch;
+  max-width: 540px;
   margin: 0;
-  border-left: 2px solid var(--brut-accent);
-  padding-left: 14px;
-  opacity: 0.85;
 }
 
-/* CTA row: copy command is a terminal-framed block */
-/* Always stack the primary copy-command above the Cloud CTA — per user,
-   the Try Zilliz Cloud button must sit on its own line. */
+/* ─── CTA stack ──────────────────────────────────────────────────────── */
+
 .ctaRow {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-/* Copy-command — subdued secondary: paper background, ink text, ghost
-   border. Reads as "here's the code you'll run" rather than a primary
-   CTA so it doesn't compete with the Cloud signup. */
-.copyCommand {
-  width: 100%;
+  align-items: stretch;
+  gap: 12px;
   max-width: 480px;
-  display: flex;
+  width: 100%;
+}
+
+/* Primary CTA — Milvus brand blue pill (matches the site nav). */
+.ctaRow a.secondaryCta {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  height: 36px;
-  padding: 6px 10px;
-  background: var(--brut-paper);
-  color: var(--brut-ink);
-  border: 1px solid rgba(10, 10, 10, 0.18);
-  border-radius: 6px;
-  font-family: var(--brut-font-mono);
-  font-size: 11px;
+  height: 44px;
+  padding: 0 22px;
+  background: var(--m-accent);
+  color: var(--m-ink-on-accent);
+  border: none;
+  border-radius: var(--m-r-pill);
+  font-family: var(--m-font-sans);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1;
   letter-spacing: 0;
+  text-decoration: none;
   cursor: pointer;
-  text-align: left;
-  transition: background 200ms ease-in-out, border-color 200ms;
+  transition: background 200ms ease-in-out;
+  white-space: nowrap;
+  align-self: flex-start;
 }
 
-.copyCommand:hover {
-  background: #f1f1f1;
-  border-color: rgba(10, 10, 10, 0.35);
+.ctaRow a.secondaryCta:hover {
+  background: var(--m-accent-deep);
+  color: var(--m-ink-on-accent);
 }
 
-.copyCommand:focus-visible,
-.secondaryCta:focus-visible {
-  outline: 2px solid var(--brut-accent);
+.ctaRow a.secondaryCta:focus-visible {
+  outline: 2px solid var(--m-accent);
   outline-offset: 2px;
 }
 
-.copyCommandPrompt {
-  color: var(--brut-ink);
-  opacity: 0.45;
+/* Quickstart card — wide outlined module like Zilliz "Build with CLI":
+     [Quickstart]   curl -fsSL https://...   [copy]
+   Reads as a "here's how to start" module, not a button. */
+.copyCommand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 16px 12px 18px;
+  background: var(--m-bg);
+  color: var(--m-ink);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-chip);
+  font-family: var(--m-font-sans);
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 160ms, background 160ms;
+}
+
+.copyCommand:hover {
+  border-color: var(--m-ink-2);
+  background: var(--m-surface);
+}
+
+.copyCommand:focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 2px;
+}
+
+.copyCommandLabel {
+  font-family: var(--m-font-sans);
+  font-size: 12px;
   font-weight: 600;
-  user-select: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--m-ink);
+  flex-shrink: 0;
+  padding-right: 14px;
+  border-right: 1px solid var(--m-line);
 }
 
 .copyCommandPlaceholder {
-  color: var(--brut-ink);
-  opacity: 0.85;
+  color: var(--m-ink-2);
+  font-family: var(--m-font-mono);
+  font-size: 13px;
   flex: 1 1 0;
   min-width: 0;
   overflow: hidden;
@@ -272,78 +301,22 @@
 }
 
 .copyCommandHint {
-  font-size: 10px;
-  color: var(--brut-ink);
-  opacity: 0.5;
+  font-family: var(--m-font-mono);
+  font-size: 11px;
+  color: var(--m-ink-muted);
   margin-left: auto;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   flex-shrink: 0;
 }
 
-/* Primary CTA — Milvus brand blue, bigger than the site nav button so it
-   dominates against the subdued copy-command next to it.
-   Specificity note: the `.ctaRow a.secondaryCta` (0,2,1) selector beats
-   the `.homepageContainer :global(a) { color: inherit }` rule (0,1,1)
-   in home2.module.css so the explicit white text stays on top. */
-.ctaRow a.secondaryCta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 44px;
-  padding: 10px 22px;
-  background: var(--brut-accent);
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 21px;
-  letter-spacing: 0;
-  text-transform: none;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 200ms ease-in-out, transform 120ms ease-out,
-    box-shadow 200ms ease-out;
-  white-space: nowrap;
-  box-shadow: 0 1px 0 rgba(10, 10, 10, 0.08);
-}
+/* ─── Stats strip ────────────────────────────────────────────────────── */
 
-.ctaRow a.secondaryCta:hover {
-  background: var(--brut-accent-deep);
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0, 179, 255, 0.28);
-}
-
-.ctaRow a.secondaryCta:active {
-  background: var(--brut-accent-deep);
-  color: #ffffff;
-  transform: translateY(0);
-  box-shadow: 0 1px 0 rgba(10, 10, 10, 0.08);
-}
-
-/* Mobile: stretch both buttons to full width for tap-target ergonomics.
-   (On desktop the copy-command is max-width 480 and the Cloud CTA stays
-   content-sized; on mobile both fill the column.) */
-@media (max-width: 640px) {
-  .copyCommand {
-    max-width: none;
-  }
-  .ctaRow a.secondaryCta {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* Stats strip: divided by vertical rules, mono, with lower-case labels */
 .socialProof {
   display: flex;
   align-items: baseline;
-  border-top: var(--brut-rule-thin);
-  padding-top: 20px;
-  gap: 32px;
+  gap: 36px;
+  margin-top: 12px;
 }
 
 .stat {
@@ -353,102 +326,94 @@
 }
 
 .statValue {
-  font-size: 24px;
+  font-family: var(--m-font-sans);
+  font-size: 22px;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--brut-ink);
+  letter-spacing: -0.01em;
+  color: var(--m-ink);
   line-height: 1;
 }
 
 .statLabel {
+  font-family: var(--m-font-mono);
   font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--brut-ink);
-  opacity: 0.6;
+  color: var(--m-ink-2);
 }
 
-/* Attu frame — brutalist "poster" treatment: oversize the frame so the
-   screenshot reads at a usable size, then plant it with a single flat
-   hard-shadow offset (no perspective / tilt / blur). */
+/* ─── Right column: Attu frame ───────────────────────────────────────── */
+
 .rightColumn {
   position: relative;
-  overflow: visible;
+  width: 100%;
 }
 
 .attuFrame {
   position: relative;
   display: block;
-  width: 120%;
-  border: var(--brut-rule);
-  background: var(--brut-paper);
+  width: 100%;
+  background: var(--m-surface);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-r-card);
   margin: 0;
-  box-shadow: 12px 12px 0 0 var(--brut-ink);
-  transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+  overflow: hidden;
+  transition: border-color 200ms;
 }
 
 .attuFrame:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 15px 15px 0 0 var(--brut-accent);
+  border-color: var(--m-ink-muted);
 }
 
 @media (max-width: 1024px) {
   .attuFrame {
-    width: 100%;
-    box-shadow: 8px 8px 0 0 var(--brut-ink);
-  }
-  .attuFrame:hover {
-    transform: none;
-    box-shadow: 8px 8px 0 0 var(--brut-ink);
+    max-width: 720px;
+    margin: 0 auto;
   }
 }
 
-@media (max-width: 640px) {
-  .attuFrame {
-    box-shadow: 6px 6px 0 0 var(--brut-ink);
-  }
-}
-
+/* Attu green title bar — keep, it's the product brand cue. */
 .attuFrameHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  background: #0ace82; /* Attu brand green, per attu/DESIGN.md */
+  padding: 10px 14px;
+  background: #0ace82;
   color: #ffffff;
+  font-family: var(--m-font-mono);
   font-size: 11px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  border-bottom: var(--brut-rule-thin);
 }
 
 .attuFrameTitle {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-weight: 600;
 }
 
 .attuFrameTitle::before {
   content: '';
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background: #ffffff;
   transform: rotate(45deg);
 }
 
 .attuFrameMeta {
   color: #ffffff;
-  opacity: 0.75;
+  opacity: 0.78;
 }
 
-/* Slideshow stack — each slide layered absolutely, crossfade via opacity. */
+/* Slideshow stack — same crossfade behavior, just the new container shell. */
 .attuImageStack {
   position: relative;
   width: 100%;
   aspect-ratio: 3024 / 1532;
-  background: var(--brut-paper);
+  background: var(--m-surface);
   overflow: hidden;
 }
 
@@ -466,40 +431,4 @@
 
 .attuImageActive {
   opacity: 1;
-}
-
-/* Corner tick marks — CAD-ish detail */
-.cornerTick {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  pointer-events: none;
-}
-
-.cornerTopLeft {
-  top: -7px;
-  left: -7px;
-  border-top: 2px solid var(--brut-accent);
-  border-left: 2px solid var(--brut-accent);
-}
-
-.cornerTopRight {
-  top: -7px;
-  right: -7px;
-  border-top: 2px solid var(--brut-accent);
-  border-right: 2px solid var(--brut-accent);
-}
-
-.cornerBottomLeft {
-  bottom: -7px;
-  left: -7px;
-  border-bottom: 2px solid var(--brut-accent);
-  border-left: 2px solid var(--brut-accent);
-}
-
-.cornerBottomRight {
-  bottom: -7px;
-  right: -7px;
-  border-bottom: 2px solid var(--brut-accent);
-  border-right: 2px solid var(--brut-accent);
 }

@@ -1,28 +1,88 @@
 .homepageContainer {
   overflow: hidden;
 
-  /* Design tokens — scoped to home2 only. Milvus brand blue #00B3FF is the
-     single accent; everything else is black/near-white with hazard yellow
-     reserved for ⚠️ PLACEHOLDER markers. */
-  --brut-ink: #0a0a0a;
-  --brut-paper: #fafafa;
-  --brut-paper-warm: #f2ede4;
-  --brut-accent: #00b3ff;
-  --brut-accent-deep: #0091d6;
-  --brut-accent-soft: rgba(0, 179, 255, 0.12);
-  --brut-warn: #faff00;
-  --brut-rule: 2px solid var(--brut-ink);
-  --brut-rule-thin: 1px solid var(--brut-ink);
-  --brut-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono',
-    Menlo, Consolas, monospace;
+  /* === Light theme adapted from Zilliz Web 2026 ============================
+   * Light surface palette + thin hairline borders, no shadows. Brand accent
+   * is Milvus blue (matches the existing site nav button); Zilliz cyan is
+   * kept as a sibling-product nod for soft glows / decoration only.
+   * ====================================================================== */
 
-  font-family: var(--brut-font-mono);
-  color: var(--brut-ink);
-  background: var(--brut-paper);
+  /* Surfaces */
+  --m-bg: #ffffff;
+  --m-surface: #fafafa;
+  --m-surface-soft: #f4f4f4;
+  --m-surface-deep: #ededed;
+
+  /* Ink (text) */
+  --m-ink: #0e0e0e;
+  --m-ink-2: #5e5e5e;
+  --m-ink-3: #6c6c6c;
+  --m-ink-muted: #a5a5a5;
+  --m-ink-on-accent: #ffffff;
+
+  /* Lines */
+  --m-line: #e5e5e5;
+  --m-line-soft: #ededed;
+
+  /* Accent — Milvus brand blue (primary) + Zilliz cyan (secondary / sibling). */
+  --m-accent: #00b3ff;
+  --m-accent-deep: #008dc8;
+  --m-accent-soft: rgba(0, 179, 255, 0.12);
+  --m-cyan: #97fdff;
+  --m-cyan-soft: rgba(151, 253, 255, 0.5);
+
+  /* Reserved warning marker (only for genuinely placeholder text) */
+  --m-warn: #faff00;
+
+  /* Brand gradient — Zilliz cross-product anchor, used very sparingly */
+  --m-brand-gradient: linear-gradient(
+    148deg,
+    #9d41ff 11%,
+    #2858ff 50%,
+    #29b8ff 75%,
+    #00f0ff 94%
+  );
+
+  /* Type — Geist (sans) + Geist Mono. Already loaded by main site nav. */
+  --m-font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --m-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo,
+    Consolas, monospace;
+
+  /* Radii */
+  --m-r-card: 6px;
+  --m-r-pill: 32px;
+  --m-r-chip: 8px;
+
+  /* Borders */
+  --m-rule: 1px solid var(--m-line);
+  --m-rule-soft: 1px solid var(--m-line-soft);
+
+  /* === Backwards-compat aliases ===========================================
+   * Old --brut-* tokens point at the new values so existing section CSS
+   * keeps rendering while we sweep section-by-section. As each section is
+   * rewritten it should reference the --m-* tokens directly and drop the
+   * brut-* alias usage.
+   * ====================================================================== */
+  --brut-ink: var(--m-ink);
+  --brut-paper: var(--m-bg);
+  --brut-paper-warm: var(--m-surface);
+  --brut-accent: var(--m-accent);
+  --brut-accent-deep: var(--m-accent-deep);
+  --brut-accent-soft: var(--m-accent-soft);
+  --brut-warn: var(--m-warn);
+  --brut-rule: var(--m-rule);
+  --brut-rule-thin: var(--m-rule-soft);
+  --brut-font-mono: var(--m-font-sans); /* old "mono everywhere" -> sans */
+
+  font-family: var(--m-font-sans);
+  color: var(--m-ink);
+  background: var(--m-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.homepageContainer :global(a) {
-  color: inherit;
-}
+/* Don't override link colors site-wide; defer to each component. The previous
+   .homepageContainer :global(a) { color: inherit } rule lost specificity
+   battles inside CTAs (Hero "Try Zilliz Cloud Free" rendered black). Each
+   component now owns its own link styling. */

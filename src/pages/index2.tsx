@@ -4,7 +4,6 @@ import HeroSection2 from '@/parts/home2/heroSection2';
 import CapabilityPillars from '@/parts/home2/capabilityPillars';
 import CodeWalkthrough from '@/parts/home2/codeWalkthrough';
 import ArchitectureSection from '@/parts/home2/architectureSection';
-import EcosystemMatrix from '@/parts/home2/ecosystemMatrix';
 import ProductionSection2 from '@/parts/home2/productionSection2';
 import LovedSection2 from '@/parts/home2/lovedSection2';
 import CommunityMeetups from '@/parts/home2/communityMeetups';
@@ -32,7 +31,6 @@ export default function Homepage2(props: Props) {
         <CapabilityPillars />
         <CodeWalkthrough />
         <ArchitectureSection />
-        <EcosystemMatrix />
         <ProductionSection2 />
         <LovedSection2 />
         <CommunityMeetups />

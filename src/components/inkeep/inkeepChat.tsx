@@ -1,9 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { useInkeepSettings } from '@/hooks/use-inkeep-settings';
 import dynamic from 'next/dynamic';
 
 const InkeepModalSearchAndChat = dynamic(
-  () => import('@inkeep/cxkit-react').then(mod => mod.InkeepModalSearchAndChat),
+  () => import('./InkeepModalSearchAndChat'),
   {
     ssr: false,
   }
@@ -25,17 +24,17 @@ export const InkeepCustomTriggerWrapper: React.FC<Props> = props => {
     setIsOpen(open);
   };
 
-  const settings = useInkeepSettings({
-    isOpen,
-    onOpenChange: handleOpenChange,
-  });
-
   return (
     <div className="inkeep-custom-trigger-wrapper">
       <div className={props.className} onClick={handleOpen}>
         {props.children}
       </div>
-      <InkeepModalSearchAndChat {...settings} />
+      {isOpen ? (
+        <InkeepModalSearchAndChat
+          isOpen={isOpen}
+          onOpenChange={handleOpenChange}
+        />
+      ) : null}
     </div>
   );
 };

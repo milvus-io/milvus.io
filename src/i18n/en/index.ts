@@ -12,6 +12,7 @@ import blog from './blog.json';
 import contact from './contact.json';
 import faq from './faq.json';
 import llm from './llm.json';
+import learnMilvus from './learnMilvus.json';
 
 export {
   demo,
@@ -28,4 +29,5 @@ export {
   contact,
   faq,
   llm,
+  learnMilvus,
 };

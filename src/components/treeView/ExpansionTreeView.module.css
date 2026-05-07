@@ -62,32 +62,6 @@
   overflow: hidden;
 }
 
-.collapsibleContent[data-state='open'] {
-  animation: treeViewSlideDown 0.2s ease-out;
-}
-
-.collapsibleContent[data-state='closed'] {
-  animation: treeViewSlideUp 0.2s ease-out;
-}
-
-@keyframes treeViewSlideDown {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--radix-collapsible-content-height);
-  }
-}
-
-@keyframes treeViewSlideUp {
-  from {
-    height: var(--radix-collapsible-content-height);
-  }
-  to {
-    height: 0;
-  }
-}
-
 .selected {
   a {
     color: var(--color-text-primary);

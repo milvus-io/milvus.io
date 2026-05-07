@@ -21,7 +21,7 @@ export default function Document(props) {
           dangerouslySetInnerHTML={{
             __html: `!function(){var hrefs=${JSON.stringify(
               FONT_STYLESHEET_HREFS
-            )};function loadFonts(){hrefs.forEach(function(href){var link=document.createElement('link');link.rel='stylesheet';link.href=href;document.head.appendChild(link);});}if('requestIdleCallback'in window){requestIdleCallback(loadFonts,{timeout:1500});}else{setTimeout(loadFonts,0);}}();`,
+            )};function loadFonts(){hrefs.forEach(function(href){var link=document.createElement('link');link.rel='stylesheet';link.href=href;document.head.appendChild(link);});}if('requestIdleCallback'in window){requestIdleCallback(loadFonts,{timeout:3000});}else{setTimeout(loadFonts,2000);}}();`,
           }}
         />
         <noscript>

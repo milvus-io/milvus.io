@@ -13,6 +13,11 @@ html[lang='ar'] {
   width: 100%;
 }
 
+.searchPlaceholder {
+  height: 44px;
+  flex: 0 0 auto;
+}
+
 .tree {
   overflow: auto;
 }

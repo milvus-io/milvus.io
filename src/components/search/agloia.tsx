@@ -1,4 +1,6 @@
 import { DocSearch, DocSearchTranslations } from '@docsearch/react';
+import '@docsearch/css';
+import 'instantsearch.css/themes/reset.css';
 import classes from './agloia.module.css';
 import { useTranslation } from 'react-i18next';
 import { LanguageEnum } from '@/types/localization';

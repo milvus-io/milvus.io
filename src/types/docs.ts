@@ -44,12 +44,13 @@ export interface OriginMenuStructureType {
 export interface FinalMenuStructureType {
   label: string;
   id: string;
-  isMenu: boolean;
-  externalLink: string;
+  isMenu?: boolean;
+  externalLink?: string;
   href: string;
-  parentId: string;
+  parentId?: string;
   parentIds: string[];
-  level: number;
+  level?: number;
+  order?: number;
   children: FinalMenuStructureType[];
 }
 
@@ -138,6 +139,7 @@ export interface DocDetailPageProps {
     editPath: string;
     frontMatter: DocFrontMatterType;
   };
+  canonicalUrl: string;
   blog: BlogFrontMatterType | null;
   version: string;
   lang: LanguageEnum;
@@ -146,7 +148,7 @@ export interface DocDetailPageProps {
   menus: FinalMenuStructureType[];
   id: string;
   mdListData: AllMdVersionIdType[];
-  availableLanguages: LanguageEnum[];
+  hreflangUrls: { lang: string; url: string }[];
 }
 
 export interface DocAnchorItemType {

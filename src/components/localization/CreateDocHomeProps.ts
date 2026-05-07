@@ -8,16 +8,20 @@ import {
   generateMenuDataOfCurrentVersion,
   getAvailableLanguagesForDoc,
 } from '@/utils/docs';
+import { getDocHreflangUrls } from '@/components/localization/utils';
+import {
+  stripMdListDataForClient,
+  stripMenuForClient,
+} from '@/utils/client-doc-data';
 
 export const createDocHomeProps = (lang: LanguageEnum, version = '') => {
   const getPageStaticProps = async () => {
     const { versions, latestVersion } = generateDocVersionInfo();
     const currentVersion = version || latestVersion;
-    const { content: homeContent, filePath } =
-      generateHomePageDataOfSingleVersion({
-        version: currentVersion,
-        lang,
-      });
+    const { content: homeContent } = generateHomePageDataOfSingleVersion({
+      version: currentVersion,
+      lang,
+    });
     const { frontMatter: latestBlogData } = generateAllBlogContentList()[0];
     const docMenu = generateMenuDataOfCurrentVersion({
       docVersion: currentVersion,
@@ -35,6 +39,11 @@ export const createDocHomeProps = (lang: LanguageEnum, version = '') => {
     const availableLanguages = getAvailableLanguagesForDoc({
       version: currentVersion,
     });
+    const hreflangUrls = getDocHreflangUrls({
+      version: currentVersion,
+      latestVersion,
+      availableLanguages,
+    });
 
     return {
       props: {
@@ -45,9 +54,9 @@ export const createDocHomeProps = (lang: LanguageEnum, version = '') => {
         lang,
         versions,
         blog: latestBlogData,
-        menus: menu,
-        mdListData,
-        availableLanguages,
+        menus: stripMenuForClient(menu),
+        mdListData: stripMdListDataForClient(mdListData, 'home'),
+        hreflangUrls,
       },
     };
   };

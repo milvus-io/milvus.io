@@ -1,7 +1,3 @@
-import { Milvus } from '@zilliz/toolkit';
-
-export const markdownToHtml = Milvus.md2html;
-
 export const copyToCommand = async (value: string, callback = () => {}) => {
   try {
     await navigator.clipboard.writeText(value);

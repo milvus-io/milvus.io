@@ -1,5 +1,11 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
+const FONT_STYLESHEET_HREFS = [
+  'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Geist%20Mono:wght@400;500;600;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap',
+];
+
 export default function Document(props) {
   const lang = props.__NEXT_DATA__.props.pageProps.lang || 'en';
   return (
@@ -11,18 +17,18 @@ export default function Document(props) {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `!function(){var hrefs=${JSON.stringify(
+              FONT_STYLESHEET_HREFS
+            )};function loadFonts(){hrefs.forEach(function(href){var link=document.createElement('link');link.rel='stylesheet';link.href=href;document.head.appendChild(link);});}if('requestIdleCallback'in window){requestIdleCallback(loadFonts,{timeout:1500});}else{setTimeout(loadFonts,0);}}();`,
+          }}
         />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Geist%20Mono:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap"
-          rel="stylesheet"
-        />
+        <noscript>
+          {FONT_STYLESHEET_HREFS.map(href => (
+            <link key={`${href}-noscript`} href={href} rel="stylesheet" />
+          ))}
+        </noscript>
         {/* KaTeX CSS: non-render-blocking, only needed for pages with math formulas */}
         <link
           rel="stylesheet"

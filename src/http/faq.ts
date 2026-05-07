@@ -90,6 +90,16 @@ export const generateSimpleFaqList = async (): Promise<
     return simpleFaqCache;
   }
 
+  if (faqCache.length > 0) {
+    simpleFaqCache.push(
+      ...faqCache.map(faq => ({
+        title: faq.title,
+        url: faq.url,
+      }))
+    );
+    return simpleFaqCache;
+  }
+
   if (simpleFaqPromise) {
     return simpleFaqPromise;
   }

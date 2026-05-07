@@ -1,4 +1,4 @@
-import CustomCookieConsent from '@/components/cookieConsent';
+import LazyCookieConsent from '@/components/cookieConsent/LazyCookieConsent';
 import InkeepChatButtonContainer from '@/components/inkeep/InkeepChatButton';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import Head from 'next/head';
@@ -56,7 +56,7 @@ function MyApp({ Component, pageProps }) {
             defer
           />
           <InkeepChatButtonContainer />
-          <CustomCookieConsent />
+          <LazyCookieConsent />
         </HubspotProvider>
       </StoreProvider>
     </ErrorBoundary>

@@ -14,12 +14,7 @@ import classes from '@/styles/docDetail.module.css';
 import clsx from 'clsx';
 import { DocDetailPageProps } from '@/types/docs';
 import { LanguageEnum } from '@/types/localization';
-import {
-  getHomePageLink,
-  getSeoUrl,
-  getDocCanonicalUrl,
-  getDocHreflangUrls,
-} from '@/components/localization/utils';
+import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
 
@@ -34,7 +29,8 @@ export function DocDetailPage(props: DocDetailPageProps) {
     id: currentId,
     mdListData,
     lang,
-    availableLanguages,
+    hreflangUrls,
+    canonicalUrl,
   } = props;
 
   const {
@@ -47,22 +43,6 @@ export function DocDetailPage(props: DocDetailPageProps) {
     frontMatter,
   } = homeData;
   const seoUrl = getSeoUrl({ lang, version, latestVersion, docId: currentId });
-  const latestVersionMds = mdListData?.find(
-    item => item.version === latestVersion
-  )?.mds;
-  const canonicalUrl = getDocCanonicalUrl({
-    lang,
-    version,
-    latestVersion,
-    docId: currentId,
-    latestVersionMds,
-  });
-  const hreflangUrls = getDocHreflangUrls({
-    version,
-    latestVersion,
-    docId: currentId,
-    availableLanguages,
-  });
   const homePageLink = getHomePageLink({ lang, version, latestVersion });
 
   const isEN = lang === LanguageEnum.ENGLISH;

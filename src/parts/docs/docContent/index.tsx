@@ -1,14 +1,9 @@
 import React from 'react';
-import GitCommitInfo from '../GitCommitInfo';
-import { useGithubCommits } from '../../../http/hooks';
 import classes from './index.module.css';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import Breadcrumb from '@/components/breadcrumb';
-import LLMActions, {
-  PageAction,
-  OptionItem,
-} from '@/components/LLMActions';
+import LLMActions, { PageAction, OptionItem } from '@/components/LLMActions';
 import { CopyIcon } from '@/components/icons';
 import { RightTopArrowIcon } from '@/components/icons/RightTopArrow';
 import { OpenAIIcon, ClaudeAIIcon } from '@/components/icons/AI';
@@ -82,7 +77,6 @@ export default function DocContent(props: DocContentPropsType) {
     apiCategory,
     lang = 'en',
   } = props;
-  const { t } = useTranslation('common');
   const { t: headerTrans } = useTranslation('header');
 
   const docLink = lang == 'en' ? `/docs` : `/docs/${lang}`;
@@ -128,11 +122,6 @@ export default function DocContent(props: DocContentPropsType) {
   //   title: "Didn't find what you need?",
   // };
 
-  const commitInfo = useGithubCommits({
-    commitPath,
-    version,
-  });
-
   return (
     <div className={classes.docPostWrapper}>
       <div className={classes.topBar}>
@@ -145,16 +134,12 @@ export default function DocContent(props: DocContentPropsType) {
           ]}
           lang={lang}
         />
-        <LLMActions options={docPageOptions} githubLink={`${MILVUS_RAW_DOCS_BASE_URL}${commitPath}`} />
+        <LLMActions
+          options={docPageOptions}
+          githubLink={`${MILVUS_RAW_DOCS_BASE_URL}${commitPath}`}
+        />
       </div>
       <DocHtmlContent htmlContent={htmlContent} type={type} />
-      {commitInfo?.message && (
-        <GitCommitInfo
-          commitInfo={commitInfo}
-          mdId={mdId}
-          commitTrans={t('v3trans.docs.commitTrans')}
-        />
-      )}
       {/* <ScoredFeedback trans={trans} pageId={mdId} /> */}
     </div>
   );

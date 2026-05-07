@@ -9,6 +9,14 @@ import { GetStaticProps } from 'next';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
 import { LanguageEnum } from '@/types/localization';
 import { DocDetailPage } from '@/components/localization/DocDetail';
+import {
+  getDocHreflangUrls,
+  getDocCanonicalUrl,
+} from '@/components/localization/utils';
+import {
+  stripMdListDataForClient,
+  stripMenuForClient,
+} from '@/utils/client-doc-data';
 
 export default DocDetailPage;
 
@@ -57,6 +65,22 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
       docVersion: currentVersion,
     });
     const menu = [...docMenu, outerApiMenuItem];
+    const latestVersionMds = mdListData.find(
+      item => item.version === latestVersion
+    )?.mds;
+    const hreflangUrls = getDocHreflangUrls({
+      version: currentVersion,
+      latestVersion,
+      docId: id,
+      availableLanguages,
+    });
+    const canonicalUrl = getDocCanonicalUrl({
+      lang,
+      version: currentVersion,
+      latestVersion,
+      docId: id,
+      latestVersionMds,
+    });
 
     const docDetailContentList = generateAllContentDataOfSingleVersion({
       version: currentVersion,
@@ -90,10 +114,11 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
         latestVersion,
         lang,
         versions,
-        menus: menu,
+        menus: stripMenuForClient(menu),
         id,
-        mdListData,
-        availableLanguages,
+        mdListData: stripMdListDataForClient(mdListData, id),
+        hreflangUrls,
+        canonicalUrl,
       },
     };
   };

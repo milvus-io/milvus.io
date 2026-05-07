@@ -8,7 +8,6 @@ import { findActiveMenuItem } from '@/utils';
 import { useRouter } from 'next/router';
 import { LanguageEnum } from '@/types/localization';
 import { getLinkPrefix } from './utils';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 
 const SCROLL_TOP = '@@scroll|menu';
 
@@ -185,7 +184,7 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
     return (
       <li key={hasChildren ? id : `child-${id}-${href}`} className={itemClassName}>
         {hasChildren ? (
-          <Collapsible open={isExpanded}>
+          <>
             <div
               className={clsx(styles.treeItemLabel, {
                 [styles.selected]: isSelected,
@@ -201,12 +200,14 @@ const ExpansionTreeView = (props: ExpansionTreeViewPropsType) => {
               </span>
               <span>{label}</span>
             </div>
-            <CollapsibleContent className={styles.collapsibleContent}>
-              <ul className={styles.treeItemChildren}>
-                {children.map(child => generateTreeItem(child))}
-              </ul>
-            </CollapsibleContent>
-          </Collapsible>
+            {isExpanded && (
+              <div className={styles.collapsibleContent}>
+                <ul className={styles.treeItemChildren}>
+                  {children.map(child => generateTreeItem(child))}
+                </ul>
+              </div>
+            )}
+          </>
         ) : (
           <div
             className={clsx(styles.treeItemLabel, styles.treeItemLeaf, {

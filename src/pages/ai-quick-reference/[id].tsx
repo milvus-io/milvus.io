@@ -5,30 +5,26 @@ import clsx from 'clsx';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import dynamic from 'next/dynamic';
 import Layout from '@/components/layout/commonLayout';
 import { generateSimpleFaqList, getFAQById } from '@/http/faq';
 import { DemoTypeEnum, FAQDetailType } from '@/types/faq';
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { GetServerSideProps } from 'next';
 import Breadcrumb from '@/components/breadcrumb';
-import { markdownToHtml } from '@/utils/common';
+import { markdownToHtml } from '@/utils/markdown';
 import Share from '@/components/share';
 import CustomButton from '@/components/customButton';
 import { RightArrow, RightWholeArrow } from '@/components/icons';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
-import blogUtils from '@/utils/blog.utils';
-import { LanguageEnum } from '@/types/localization';
+import generateSimpleBlogList from '@/utils/simple-blog-list';
 import CloudAdvertisementCard from '@/components/card/advCard';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
-import DemoCard from '@/components/card/DemoCard';
-import {
-  DEMO_HYBRID_SEARCH_URL,
-  DEMO_MULTIMODAL_SEARCH_URL,
-} from '@/consts/externalLinks';
-import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
 import LLMActions, { PageAction, OptionItem } from '@/components/LLMActions';
 import { CopyIcon } from '@/components/icons';
 import { OpenAIIcon, ClaudeAIIcon } from '@/components/icons/AI';
+
+const FaqDemoCard = dynamic(() => import('@/components/faq/FaqDemoCard'));
 
 const faqPageOptions: OptionItem[] = [
   {
@@ -66,8 +62,8 @@ export default function FaqDetail(props: {
   demo?: DemoTypeEnum;
   demoDescription?: string;
 }) {
-  const { t } = useTranslation(['faq', 'demo']);
-  const { data, recommendFaq, recommendBlogs, previousUrl, nextUrl } =
+  const { t } = useTranslation('faq');
+  const { data, html, recommendFaq, recommendBlogs, previousUrl, nextUrl } =
     props;
   const {
     id,
@@ -81,55 +77,6 @@ export default function FaqDetail(props: {
 
   const docContainer = useRef<HTMLDivElement>(null);
   const trackPath = useUtmTrackPath();
-
-  const { tree: html } = markdownToHtml(content);
-
-  const DEMOS = [
-    {
-      name: t('demo:demos.askAi.title'),
-      desc: t('demo:demos.askAi.desc'),
-      cover: '/images/demos/ask-ai.png',
-      renderButton1: () => (
-        <InkeepCustomTriggerWrapper>
-          <CustomButton className="" variant="outlined">
-            {t('demos.askAi.ctaLabel1')}
-          </CustomButton>
-        </InkeepCustomTriggerWrapper>
-      ),
-      renderButton2: () => (
-        <CustomButton
-          href="https://zilliz.com/blog/how-inkeep-and-milvus-built-rag-driven-ai-assisstant-for-smarter-interaction"
-          variant="text"
-          endIcon={<RightWholeArrow />}
-        >
-          {t('demos.askAi.ctaLabel2')}
-        </CustomButton>
-      ),
-      lowerCaseName: 'ask-ai',
-      id: DemoTypeEnum.Rag,
-    },
-    {
-      name: t('demo:demos.multimodal.title'),
-      desc: t('demo:demos.multimodal.desc'),
-      href: DEMO_MULTIMODAL_SEARCH_URL,
-      cover: '/images/demos/multimodal-image-search.png',
-      lowerCaseName: 'multimodal image search',
-      id: DemoTypeEnum.imageSearch,
-    },
-    {
-      name: t('demo:demos.hybridSearch.title'),
-      desc: t('demo:demos.hybridSearch.desc'),
-      href: DEMO_HYBRID_SEARCH_URL,
-      cover: '/images/demos/hybrid-search.png',
-      // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
-      lowerCaseName: 'hybrid search',
-      id: DemoTypeEnum.HybridSearch,
-    },
-  ];
-
-  const demoCardData = useMemo(() => {
-    return DEMOS.find(item => item.id === demo);
-  }, [demo, DEMOS]);
 
   return (
     <Layout>
@@ -175,23 +122,9 @@ export default function FaqDetail(props: {
                 ref={docContainer}
                 dangerouslySetInnerHTML={{ __html: html }}
               ></article>
-              {demo && (
-                <div className="">
-                  <p className="mb-[24px] text-black2">{demoDescription}</p>
-                  <DemoCard
-                    {...demoCardData}
-                    handelOpenDialog={() => {
-                      return;
-                    }}
-                    classes={{
-                      root: classes.demoCardRoot,
-                      name: classes.demoCardName,
-                      desc: classes.demoCardDesc,
-                      button: classes.demoCardButton,
-                    }}
-                  />
-                </div>
-              )}
+              {demo ? (
+                <FaqDemoCard demo={demo} demoDescription={demoDescription} />
+              ) : null}
               <div className={classes.navButtonsWrapper}>
                 <div className="">
                   {previousUrl && (
@@ -303,16 +236,21 @@ export default function FaqDetail(props: {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
   const id = params?.id as string;
   try {
     const { item } = await getFAQById(id);
     const currentArticleIndex = item?.curIndex || 0;
+    const { tree: html } = markdownToHtml(item.content);
 
     const simpleList = await generateSimpleFaqList();
+    const previousUrl = simpleList[currentArticleIndex - 1]?.url || '';
+    const nextUrl = simpleList[currentArticleIndex + 1]?.url || '';
 
-    const locale = LanguageEnum.ENGLISH;
-    const blogList = blogUtils.getSimpleList(locale);
+    const blogList = generateSimpleBlogList();
     const recentlyBlogs = blogList.filter(
       v =>
         new Date().getTime() - new Date(v.date).getTime() <
@@ -339,13 +277,19 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       }
     }
     randomIndexes.sort((a, b) => a - b);
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=86400, stale-while-revalidate=604800'
+    );
+
     return {
       props: {
         data: item,
+        html,
         recommendFaq: randomIndexes.map(index => simpleList[index]),
         recommendBlogs: blogRandomIndexes.map(index => recentlyBlogs[index]),
-        previousUrl: simpleList[currentArticleIndex - 1]?.url || '',
-        nextUrl: simpleList[currentArticleIndex + 1]?.url || '',
+        previousUrl,
+        nextUrl,
       },
     };
   } catch (error) {

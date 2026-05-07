@@ -1,15 +1,10 @@
-import { useInkeepSettings } from '@/hooks/use-inkeep-settings';
 import dynamic from 'next/dynamic';
 import classes from '@/styles/inkeepButton.module.css';
 import { useState } from 'react';
-import { useCallback } from 'react';
 
-const InkeepModalChat = dynamic(
-  () => import('@inkeep/cxkit-react').then(mod => mod.InkeepModalChat),
-  {
-    ssr: false,
-  }
-);
+const InkeepModalChat = dynamic(() => import('./InkeepModalChat'), {
+  ssr: false,
+});
 
 export default function InkeepChatButtonContainer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,18 +16,6 @@ export default function InkeepChatButtonContainer() {
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
   };
-  const { baseSettings, aiChatSettings, searchSettings, modalSettings } =
-    useInkeepSettings({
-      isOpen: isOpen,
-      onOpenChange: handleOpenChange,
-    });
-
-  const chatButtonProps = {
-    baseSettings,
-    aiChatSettings,
-    searchSettings,
-    modalSettings,
-  };
   return (
     <>
       <button
@@ -42,9 +25,16 @@ export default function InkeepChatButtonContainer() {
         aria-label="Ask AI"
       >
         Ask AI
-        <img src="/inkeep/milvus-icon-white.png" alt="Ask AI" width={24} height={24} />
+        <img
+          src="/inkeep/milvus-icon-white.png"
+          alt="Ask AI"
+          width={24}
+          height={24}
+        />
       </button>
-      <InkeepModalChat {...chatButtonProps} />
+      {isOpen ? (
+        <InkeepModalChat isOpen={isOpen} onOpenChange={handleOpenChange} />
+      ) : null}
     </>
   );
 }

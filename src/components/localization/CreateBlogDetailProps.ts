@@ -1,6 +1,6 @@
 import blogUtils from '@/utils/blog.utils';
 import { LanguageEnum } from '@/types/localization';
-import { markdownToHtml } from '@/utils/common';
+import { markdownToHtml } from '@/utils/markdown';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 
 export const createBlogDetailProps = (lang: LanguageEnum) => {

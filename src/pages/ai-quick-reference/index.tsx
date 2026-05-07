@@ -1,6 +1,5 @@
 import classes from '@/styles/faq.module.css';
 import pageClasses from '@/styles/responsive.module.css';
-import styles from '@/styles/blog.module.css';
 import clsx from 'clsx';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -8,20 +7,9 @@ import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
 import { generateSimpleFaqList } from '@/http/faq';
 import { FAQDetailType } from '@/types/faq';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import CustomInput from '@/components/customInput/customInput';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui';
-import { generatePaginationNavigators } from '@/utils/format';
-import { ELLIPSIS } from '@/consts/blog';
-import { useRouter } from 'next/router';
+import FaqPagination from '@/components/faq/FaqPagination';
 
 const SearchIcon = () => (
   <svg
@@ -50,82 +38,116 @@ const SearchIcon = () => (
 
 const DEFAULT_PAGE_SIZE = 99;
 const PAGEINDEX_QUERY_KEY = 'page';
+const API_ROUTE = '/api/ai-quick-reference';
 
-const generatePagingHref = (
-  curIndex: number,
-  index: number,
-  totalPages: number
-) => {
-  if (curIndex === 1 && index === -1) {
-    return '';
+type FaqListItem = Pick<FAQDetailType, 'title' | 'url'>;
+
+type FaqListResponse = {
+  list: FaqListItem[];
+  total: number;
+  pageIndex: number;
+  pageSize: number;
+};
+
+const normalizePageIndex = (page: unknown, total: number) => {
+  const pageIndex = Number(Array.isArray(page) ? page[0] : page || 1);
+  const totalPages = Math.max(1, Math.ceil(total / DEFAULT_PAGE_SIZE));
+
+  if (!Number.isFinite(pageIndex) || pageIndex < 1) {
+    return 1;
   }
-  if (curIndex === totalPages && index === 1) {
-    return '';
-  }
-  return `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${curIndex + index}`;
+
+  return Math.min(Math.floor(pageIndex), totalPages);
 };
 
 export default function AiFaq(props: {
-  list: Pick<FAQDetailType, 'title' | 'url'>[];
+  list: FaqListItem[];
+  total: number;
+  pageIndex: number;
 }) {
   const { t } = useTranslation('faq');
-  const { list } = props;
-  const { query } = useRouter();
-  const currentPageIndex = Number(query[PAGEINDEX_QUERY_KEY] || 1);
+  const { list, total, pageIndex } = props;
+  const currentPageIndex = pageIndex;
 
-  const [searchData, setSearchData] = useState({
+  const [searchData, setSearchData] = useState<{
+    keyword: string;
+    list: FaqListItem[];
+    isLoading: boolean;
+  }>({
     keyword: '',
-    filteredList: list,
+    list,
+    isLoading: false,
   });
 
   const [paginationData, setPaginationData] = useState({
-    total: searchData.filteredList.length,
+    total,
     pageSize: DEFAULT_PAGE_SIZE,
     pageIndex: currentPageIndex,
   });
 
+  const fetchFaqPage = useCallback(async (pageIndex: number, keyword = '') => {
+    setSearchData(v => ({
+      ...v,
+      isLoading: true,
+    }));
+
+    try {
+      const params = new URLSearchParams({
+        [PAGEINDEX_QUERY_KEY]: String(pageIndex),
+      });
+
+      if (keyword) {
+        params.set('keyword', keyword);
+      }
+
+      const response = await fetch(`${API_ROUTE}?${params}`);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch AI Quick Reference list');
+      }
+
+      const data: FaqListResponse = await response.json();
+      setSearchData(v => ({
+        keyword: v.keyword,
+        list: data.list,
+        isLoading: false,
+      }));
+      setPaginationData({
+        total: data.total,
+        pageSize: data.pageSize,
+        pageIndex: data.pageIndex,
+      });
+    } catch (error) {
+      setSearchData(v => ({
+        ...v,
+        isLoading: false,
+      }));
+      console.error(error);
+    }
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
     const trimmedKeyword = keyword.trim();
-    if (trimmedKeyword === '') {
-      setSearchData({
-        keyword: '',
-        filteredList: list,
-      });
-      setPaginationData(v => ({
-        ...v,
-        total: list.length,
-        pageIndex: 1,
-      }));
-    } else {
-      const newList = list.filter(v =>
-        v.title.toLowerCase().includes(keyword.toLowerCase())
-      );
-      setSearchData({
-        keyword: keyword,
-        filteredList: newList,
-      });
-      setPaginationData(v => ({
-        ...v,
-        total: newList.length,
-        pageIndex: 1,
-      }));
-    }
 
+    setSearchData(v => ({
+      ...v,
+      keyword,
+    }));
     window.history.pushState(
       null,
       '',
       `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=1`
     );
+    fetchFaqPage(1, trimmedKeyword);
   };
 
   const handlePaging = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    index: number,
-    disabled?: boolean
+    index: number
   ) => {
     e.preventDefault();
-    if (disabled) {
+    if (index === paginationData.pageIndex) {
       return;
     }
     setPaginationData({
@@ -137,55 +159,34 @@ export default function AiFaq(props: {
       '',
       `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${index}`
     );
+    fetchFaqPage(index, searchData.keyword.trim());
   };
 
-  const { totalPages, navigators, pagingFilterList } = useMemo(() => {
-    const dataListLength = searchData.filteredList.length;
-    const totalPages =
-      dataListLength % DEFAULT_PAGE_SIZE === 0
-        ? dataListLength / DEFAULT_PAGE_SIZE
-        : Math.ceil(dataListLength / DEFAULT_PAGE_SIZE);
-
-    const pagingFilterList = searchData.filteredList.slice(
-      paginationData.pageSize * (paginationData.pageIndex - 1),
-      paginationData.pageSize * paginationData.pageIndex
-    );
-
-    const navigators = generatePaginationNavigators(
-      paginationData.pageIndex,
-      totalPages
+  const { totalPages, pagingFilterList } = useMemo(() => {
+    const totalPages = Math.max(
+      1,
+      Math.ceil(paginationData.total / paginationData.pageSize)
     );
 
     return {
       totalPages,
-      navigators,
-      pagingFilterList,
+      pagingFilterList: searchData.list,
     };
-  }, [searchData.filteredList, paginationData.pageIndex]);
+  }, [searchData.list, paginationData.total, paginationData.pageSize]);
 
   useEffect(() => {
     const handler = (e: PopStateEvent) => {
       const pageIndex = Number(
         new URL(window.location.href).searchParams.get(PAGEINDEX_QUERY_KEY) || 1
       );
-      setPaginationData(v => ({
-        ...v,
-        pageIndex,
-      }));
+      fetchFaqPage(pageIndex, searchData.keyword.trim());
     };
 
     window.addEventListener('popstate', handler);
     return () => {
       window.removeEventListener('popstate', handler);
     };
-  }, []);
-
-  const { hasPrevious, hasNext } = useMemo(() => {
-    const hasPrevious = paginationData.pageIndex > 1;
-    const hasNext =
-      paginationData.pageIndex < (navigators[navigators.length - 1] as number);
-    return { hasPrevious, hasNext };
-  }, [paginationData.pageIndex, navigators]);
+  }, [fetchFaqPage, searchData.keyword]);
 
   return (
     <Layout>
@@ -214,7 +215,9 @@ export default function AiFaq(props: {
             fullWidth
           />
 
-          {pagingFilterList.length > 0 ? (
+          {searchData.isLoading ? (
+            <p className="">{t('loading', { defaultValue: 'Loading...' })}</p>
+          ) : pagingFilterList.length > 0 ? (
             <ul className={classes.listWrapper}>
               {pagingFilterList.map(v => (
                 <li className="" key={v.url}>
@@ -226,72 +229,12 @@ export default function AiFaq(props: {
             <p className="">{t('noData', { keyword: searchData.keyword })}</p>
           )}
 
-          {pagingFilterList.length > 0 ? (
-            <Pagination className={styles.paginationWrapper}>
-              <PaginationContent className="list-none">
-                <PaginationItem>
-                  <PaginationPrevious
-                    scroll={false}
-                    onClick={e => handlePaging(e, paginationData.pageIndex - 1)}
-                    href={generatePagingHref(
-                      paginationData.pageIndex,
-                      -1,
-                      totalPages
-                    )}
-                    disabled={!hasPrevious}
-                    className={clsx(styles.paginationLink, {
-                      [styles.disabledNavigationLink]: !hasPrevious,
-                    })}
-                  />
-                </PaginationItem>
-
-                {navigators.map((v, i) => {
-                  return (
-                    <PaginationItem key={v}>
-                      {String(v).includes(ELLIPSIS) ? (
-                        <PaginationEllipsis />
-                      ) : (
-                        <PaginationLink
-                          scroll={false}
-                          disabled={paginationData.pageIndex === v}
-                          onClick={e =>
-                            handlePaging(
-                              e,
-                              v as number,
-                              paginationData.pageIndex === v
-                            )
-                          }
-                          href={`/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${v}`}
-                          isActive={paginationData.pageIndex === v}
-                          className={clsx(styles.paginationLink, {
-                            [styles.activePaginationLink]:
-                              paginationData.pageIndex === v,
-                          })}
-                        >
-                          {v}
-                        </PaginationLink>
-                      )}
-                    </PaginationItem>
-                  );
-                })}
-
-                <PaginationItem>
-                  <PaginationNext
-                    href={generatePagingHref(
-                      paginationData.pageIndex,
-                      1,
-                      totalPages
-                    )}
-                    scroll={false}
-                    onClick={e => handlePaging(e, paginationData.pageIndex + 1)}
-                    disabled={!hasNext}
-                    className={clsx(styles.paginationLink, {
-                      [styles.disabledNavigationLink]: !hasNext,
-                    })}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+          {!searchData.isLoading && pagingFilterList.length > 0 ? (
+            <FaqPagination
+              pageIndex={paginationData.pageIndex}
+              totalPages={totalPages}
+              onPageChange={handlePaging}
+            />
           ) : null}
         </section>
       </main>
@@ -299,12 +242,24 @@ export default function AiFaq(props: {
   );
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ query, res }) => {
   try {
     const simpleFaqList = await generateSimpleFaqList();
+    const pageIndex = normalizePageIndex(
+      query?.[PAGEINDEX_QUERY_KEY],
+      simpleFaqList.length
+    );
+    const start = DEFAULT_PAGE_SIZE * (pageIndex - 1);
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=86400, stale-while-revalidate=604800'
+    );
+
     return {
       props: {
-        list: simpleFaqList,
+        list: simpleFaqList.slice(start, start + DEFAULT_PAGE_SIZE),
+        total: simpleFaqList.length,
+        pageIndex,
       },
     };
   } catch (error) {

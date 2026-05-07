@@ -1,7 +1,7 @@
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import { useTranslation } from 'react-i18next';
 import Aside from '@/components/aside';
-import { markdownToHtml } from '@/utils/common';
+import { markdownToHtml } from '@/utils/markdown';
 import classes from '@/styles/docDetail.module.css';
 import DocLayout from '@/components/layout/docLayout';
 import DocContent from '@/parts/docs/docContent';

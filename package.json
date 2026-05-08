@@ -2,6 +2,7 @@
   "name": "milvus_next",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "concurrently --names \"next,i18n\" --prefix-colors \"bgBlack.bold,bgCyan.bold\" \"npm run dev:fe\" \"npm run i18n:watch\"",
     "dev:fe": "node scripts/migrateAssets.js && next dev -p 8000",

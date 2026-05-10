@@ -1,39 +1,4 @@
 import { useState, useEffect } from 'react';
-import { getGithubCommits } from '@/http/milvus';
-import dayjs from 'dayjs';
-
-export function useGithubCommits({ commitPath, version }) {
-  const [commitInfo, setCommitInfo] = useState({
-    message: '',
-    date: '',
-    commitUrl: '',
-    source: '',
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getGithubCommits(commitPath, version);
-        if (res.status === 200 && res.data.length) {
-          const lastCommit = res.data[0];
-          const message = lastCommit.commit.message.split('\n')[0];
-          const date = lastCommit.commit.committer.date;
-          const commitUrl = lastCommit.html_url;
-          const formatDate = dayjs(date).format('YYYY-MM-DD HH:mm:ss');
-          const source = commitPath.startWidth('http')
-            ? commitPath
-            : `https://github.com/milvus-io/milvus-docs/blob${commitPath}`;
-          setCommitInfo({ commitUrl, date: formatDate, source, message });
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [commitPath, version]);
-
-  return commitInfo;
-}
 
 export function getCurrentSize() {
   if (typeof window !== 'undefined') {

@@ -10,7 +10,7 @@ ARG MSERVICE_URL
 ARG CMS_BASE_URL
 
 FROM base AS dependency
-COPY package.json pnpm-lock.yaml .npmrc ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 RUN pnpm install --prefer-offline --frozen-lockfile
 
 FROM dependency AS builder

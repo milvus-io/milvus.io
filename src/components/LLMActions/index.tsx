@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, ReactNode } from 'react';
-import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import classes from './index.module.css';
@@ -8,7 +7,7 @@ import { copyToCommand } from '@/utils/common';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { LanguageEnum } from '@/types/localization';
 import { useRouter } from 'next/router';
-import { ABSOLUTE_BASE_URL, MILVUS_RAW_DOCS_BASE_URL } from '@/consts';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 enum PageAction {
   CopyPage = 'copy-page',
@@ -39,7 +38,12 @@ interface LLMActionsProps {
 export { PageAction };
 
 export default function LLMActions(props: LLMActionsProps) {
-  const { options, githubLink, classes: customClasses, mdContent: propsMdContent = '' } = props;
+  const {
+    options,
+    githubLink,
+    classes: customClasses,
+    mdContent: propsMdContent = '',
+  } = props;
   const { root = '' } = customClasses || {};
   const { t } = useTranslation('llm');
   const { locale } = useGlobalLocale();
@@ -71,10 +75,23 @@ export default function LLMActions(props: LLMActionsProps) {
 
   const handleCopyPage = async () => {
     try {
-      if (!mdContent) {
+      setCopyStatus('loading');
+      let content = mdContent;
+
+      if (!content && githubLink) {
+        const response = await fetch(githubLink);
+        if (!response.ok) {
+          throw new Error('Failed to fetch Markdown content');
+        }
+        content = await response.text();
+        setMdContent(content);
+      }
+
+      if (!content) {
         throw new Error('No Markdown content found');
       }
-      await copyToCommand(mdContent);
+
+      await copyToCommand(content);
       setCopyStatus('success');
       setTimeout(() => {
         setCopyStatus('idle');
@@ -146,15 +163,6 @@ export default function LLMActions(props: LLMActionsProps) {
     return <CopyIcon />;
   };
 
-  useEffect(() => {
-    if (githubLink) {
-      fetch(githubLink)
-        .then(response => response.text())
-        .then(data => setMdContent(data))
-        .catch(error => console.error('Error fetching MD file:', error));
-    }
-  }, [githubLink]);
-
   if (locale !== LanguageEnum.ENGLISH) {
     return null;
   }
@@ -166,7 +174,7 @@ export default function LLMActions(props: LLMActionsProps) {
           className={classes.mainButton}
           onClick={handleDefaultClick}
           title={t(defaultOption.descKey)}
-          disabled={copyStatus === 'loading' || !mdContent}
+          disabled={copyStatus === 'loading' || (!mdContent && !githubLink)}
         >
           <span
             className={clsx(classes.buttonIcon, {
@@ -182,12 +190,14 @@ export default function LLMActions(props: LLMActionsProps) {
           onClick={toggleDropdown}
           aria-expanded={isOpen}
         >
-          <ChevronDown
-            size={16}
+          <span
             className={clsx(classes.chevron, {
               [classes.chevronOpen]: isOpen,
             })}
-          />
+            aria-hidden="true"
+          >
+            ▾
+          </span>
         </button>
       </div>
 

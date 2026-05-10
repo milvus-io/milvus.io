@@ -1,4 +1,4 @@
-import { AlgoliaSearch } from '@/components/search/agloia';
+import dynamic from 'next/dynamic';
 import ExpansionTreeView from '@/components/treeView/ExpansionTreeView';
 import VersionSelector from '@/components/versionSelector';
 import { LanguageEnum } from '@/types/localization';
@@ -9,10 +9,42 @@ import {
 } from '@/types/docs';
 import clsx from 'clsx';
 
-import '@docsearch/css';
-import 'instantsearch.css/themes/reset.css';
-
 import classes from './index.module.css';
+
+const AlgoliaSearch = dynamic(
+  () =>
+    new Promise<typeof import('@/components/search/agloia').AlgoliaSearch>(
+      resolve => {
+        const load = () => {
+          import('@/components/search/agloia').then(mod => {
+            resolve(mod.AlgoliaSearch);
+          });
+        };
+
+        if (typeof window === 'undefined') {
+          load();
+          return;
+        }
+
+        const browserWindow = window as Window & {
+          requestIdleCallback?: (
+            callback: IdleRequestCallback,
+            options?: IdleRequestOptions
+          ) => number;
+        };
+
+        if (browserWindow.requestIdleCallback) {
+          browserWindow.requestIdleCallback(load, { timeout: 2500 });
+        } else {
+          setTimeout(load, 1500);
+        }
+      }
+    ),
+  {
+    ssr: false,
+    loading: () => <div className={classes.searchPlaceholder} />,
+  }
+);
 
 interface LeftNavSectionProps {
   tree: FinalMenuStructureType[];

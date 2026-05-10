@@ -12,7 +12,6 @@ import {
   getHomePageLink,
   getSeoUrl,
   getDocCanonicalUrl,
-  getDocHreflangUrls,
 } from '@/components/localization/utils';
 
 export interface DocHomePageProps {
@@ -25,7 +24,7 @@ export interface DocHomePageProps {
   blog: BlogFrontMatterType;
   menus: FinalMenuStructureType[];
   mdListData: AllMdVersionIdType[];
-  availableLanguages: LanguageEnum[];
+  hreflangUrls: { lang: string; url: string }[];
 }
 
 // latest version's home page
@@ -40,15 +39,10 @@ export function DocHomepage(props: DocHomePageProps) {
     mdListData,
     lang,
     latestVersion,
-    availableLanguages,
+    hreflangUrls,
   } = props;
   const seoUrl = getSeoUrl({ lang, version, latestVersion });
   const canonicalUrl = getDocCanonicalUrl({ lang, version, latestVersion });
-  const hreflangUrls = getDocHreflangUrls({
-    version,
-    latestVersion,
-    availableLanguages,
-  });
   const homePageLink = getHomePageLink({ lang, version, latestVersion });
 
   return (

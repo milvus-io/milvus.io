@@ -15,7 +15,7 @@ export function getStaticPaths() {
 export const getStaticProps = props => {
   const { lang } = props.params;
   const locale = lang as LanguageEnum;
-  const blogList = blogUtils.getAllData(locale);
+  const blogList = blogUtils.getListData(locale);
 
   return {
     props: {

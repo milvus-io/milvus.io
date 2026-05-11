@@ -43,13 +43,19 @@ export const getBaseUrl = (endpoint, lang, pubTarget) => {
 };
 
 export const textFilter = (text, targets) => {
+  if (text === null || text === undefined) {
+    return '';
+  }
+
+  text = String(text);
+  const targetList = targets ? String(targets).split('.') : [];
   const matches = text ? matchFilterTags(text) : [];
 
   if (matches.length > 0) {
     var preText = text.slice(0, matches[0].startIndex);
     var matchText = text.slice(matches[0].startIndex, matches[0].endIndex);
     var postText = text.slice(matches[0].endIndex);
-    var isTargetValid = targets.split('.').includes(matches[0].target.trim());
+    var isTargetValid = targetList.includes(matches[0].target.trim());
     var startTagLength = `<${matches[0].tag} target="${matches[0].target}">`
       .length;
     var endTagLength = `</${matches[0].tag}>`.length;

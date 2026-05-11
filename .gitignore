@@ -46,6 +46,7 @@ public/*
 !public/favicon-32x32.png
 !public/assets
 !public/llms.txt
+!public/robots.txt
 
 /menu.json
 

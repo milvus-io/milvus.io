@@ -1,9 +1,12 @@
 
+.tabsOuterWrapper {
+  font-family: Geist;
+  position: relative;
+}
+
 .tabsWrapper {
   list-style-type: none;
   display: flex;
-  font-family: Geist;
-  position: relative;
 }
 
 .tabItem {

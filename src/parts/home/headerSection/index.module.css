@@ -29,6 +29,8 @@ a.startButton {
 .headerSectionContainer {
   background-image: url(/images/home/header-background-image.svg);
   background-color: #fafafa;
+  content-visibility: auto;
+  contain-intrinsic-size: 700px;
   height: calc(100vh - var(--header-height-desktop));
   min-height: 700px;
 

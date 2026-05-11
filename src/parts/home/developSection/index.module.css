@@ -2,6 +2,8 @@
 .sectionContainer {
   padding-top: 60px;
   padding-bottom: 60px;
+  content-visibility: auto;
+  contain-intrinsic-size: 720px;
 
   .titleWrapper {
     max-width: 900px;

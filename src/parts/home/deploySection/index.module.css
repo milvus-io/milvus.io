@@ -2,6 +2,8 @@
 .deploySection {
   padding-top: 120px;
   padding-bottom: 60px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1240px;
 
   @media (--tablet) {
     padding-top: 60px;
@@ -189,7 +191,7 @@
     font-weight: 500;
 
     a {
-      color: var(--color-blue2);
+      color: #0077ad;
 
       &:hover {
         text-decoration: underline;

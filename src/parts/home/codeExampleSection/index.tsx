@@ -3,8 +3,9 @@ import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import CustomTabs from '@/components/customTabs';
-import { useEffect, useMemo, useState } from 'react';
-import { useCopyCode } from '@/hooks/enhanceCodeBlock';
+import { useMemo, useState } from 'react';
+import { copyToCommand } from '@/utils/common';
+import { checkIconTpl, copyIconTpl } from '@/components/icons';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import {
   CODE_CREATE_COLLECTION,
@@ -50,38 +51,33 @@ export default function CodeExampleSection() {
     return tabs.find(tab => tab.id === activeTab)?.code || '';
   }, [activeTab]);
 
-  const CodeBlock: React.FC<{ code: string; codeList: string[] }> = ({
-    code,
-    codeList,
-  }) => {
-    const [highlightedCode, setHighlightedCode] = useState(code);
+  const CodeBlock: React.FC<{ code: string }> = ({ code }) => {
+    const [copied, setCopied] = useState(false);
 
-    useEffect(() => {
-      let cancelled = false;
-      Promise.all([
-        import('highlight.js/lib/core'),
-        import('highlight.js/lib/languages/javascript'),
-      ]).then(([{ default: hljs }, { default: javascript }]) => {
-        require('highlight.js/styles/atom-one-dark.css');
-        if (cancelled) return;
-        hljs.registerLanguage('javascript', javascript);
-        setHighlightedCode(
-          hljs.highlight(code, { language: 'javascript' }).value
-        );
-      });
-      return () => {
-        cancelled = true;
-      };
-    }, [code]);
-
-    useCopyCode(codeList);
+    const handleCopy = async () => {
+      try {
+        await copyToCommand(code);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 3000);
+      } catch (error) {
+        // copyToCommand already logs the error.
+      }
+    };
 
     return (
       <div className={classes.codeBlock}>
         <pre className={classes.codePre}>
-          <code dangerouslySetInnerHTML={{ __html: highlightedCode }}></code>
+          <code>{code}</code>
         </pre>
-        <button className={clsx(classes.copyButton, 'copy-code-btn')}></button>
+        <button
+          className={classes.copyButton}
+          type="button"
+          aria-label="Copy code"
+          onClick={handleCopy}
+          dangerouslySetInnerHTML={{
+            __html: copied ? checkIconTpl : copyIconTpl,
+          }}
+        />
       </div>
     );
   };
@@ -101,7 +97,7 @@ export default function CodeExampleSection() {
               root: classes.customTabsWrapper,
             }}
           />
-          <CodeBlock code={code} codeList={tabs.map(v => v.code)} />
+          <CodeBlock code={code} />
         </div>
       </div>
     </section>

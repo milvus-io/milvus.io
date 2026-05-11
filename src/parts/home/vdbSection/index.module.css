@@ -2,6 +2,8 @@
 .sectionContainer {
   padding-top: 40px;
   padding-bottom: 60px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
 
   .sectionTitle {
     @mixin heading2;
@@ -70,7 +72,7 @@
       .descriptionWrapper {
         padding: 0 30px 30px;
 
-        h4 {
+        h3 {
           @mixin heading4;
           color: var(--color-black1);
         }
@@ -111,7 +113,7 @@
     font-weight: 500;
 
     a {
-      color: var(--color-blue2);
+      color: #0077ad;
 
       &:hover {
         text-decoration: underline;

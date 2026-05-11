@@ -2,6 +2,8 @@
 .codeExampleSection {
   padding-top: 100px;
   font-family: Geist;
+  content-visibility: auto;
+  contain-intrinsic-size: 480px;
 
   .contentContainer {
     display: flex;
@@ -50,11 +52,10 @@
       flex: 1 1 auto;
 
       button {
-        text-transform: uppercase!important;
+        text-transform: uppercase !important;
         font-family: 'Geist Mono';
       }
     }
-
   }
 
   .codeBlock {
@@ -77,16 +78,17 @@
         font-size: 14px;
         line-height: 20px;
 
-        :global(.hljs-keyword) {
+        :global(.home-code-keyword) {
           color: #a856ff;
         }
-        :global(.hljs-string) {
+        :global(.home-code-string) {
           color: #87eeab;
         }
-        :global(.hljs-number) {
+        :global(.home-code-number) {
           color: #fa0;
         }
-        :global(.hljs-title.class) {
+        :global(.home-code-function),
+        :global(.home-code-property) {
           color: #6fa0ff;
         }
       }

@@ -94,6 +94,7 @@ export default function DeploySection() {
               <CustomButton
                 href={type.startLink}
                 variant="text"
+                aria-label={`${t('buttons.learnMore')} about ${type.title}`}
                 classes={{
                   root: classes.linkButton,
                 }}

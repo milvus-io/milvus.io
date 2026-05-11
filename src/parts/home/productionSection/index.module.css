@@ -1,4 +1,11 @@
 
+.sectionContainer {
+  content-visibility: auto;
+  contain-intrinsic-size: 500px;
+  margin-top: 80px !important;
+  margin-bottom: 80px !important;
+}
+
 .usersBgWrapper {
   width: 100%;
   aspect-ratio: 2 / 1;

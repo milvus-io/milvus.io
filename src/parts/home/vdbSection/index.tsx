@@ -14,30 +14,40 @@ export default function VectorDatabaseSection() {
       src: '/images/home/scale-as-needed.png',
       title: t('vdbSection.features.scale.title'),
       desc: t('vdbSection.features.scale.desc'),
+      width: 1122,
+      height: 500,
       class: classes.scale,
     },
     {
       src: '/images/home/blazing-fast.png',
       title: t('vdbSection.features.fast.title'),
       desc: t('vdbSection.features.fast.desc'),
+      width: 1122,
+      height: 500,
       class: classes.fast,
     },
     {
       src: '/images/home/reusable-code.png',
       title: t('vdbSection.features.reusable.title'),
       desc: t('vdbSection.features.reusable.desc'),
+      width: 740,
+      height: 460,
       class: classes.reusable,
     },
     {
       src: '/images/home/vibrant-community.png',
       title: t('vdbSection.features.community.title'),
       desc: t('vdbSection.features.community.desc'),
+      width: 740,
+      height: 460,
       class: classes.community,
     },
     {
       src: '/images/home/feature-rich.png',
       title: t('vdbSection.features.featureRich.title'),
       desc: t('vdbSection.features.featureRich.desc'),
+      width: 740,
+      height: 460,
       class: classes.featureRich,
     },
   ];
@@ -54,10 +64,16 @@ export default function VectorDatabaseSection() {
             className={clsx(classes.featureItem, feature.class)}
           >
             <div>
-              <img src={feature.src} alt={feature.title} loading="lazy" />
+              <img
+                src={feature.src}
+                alt={feature.title}
+                width={feature.width}
+                height={feature.height}
+                loading="lazy"
+              />
             </div>
             <div className={classes.descriptionWrapper}>
-              <h4>{feature.title}</h4>
+              <h3>{feature.title}</h3>
               <p>{feature.desc}</p>
             </div>
           </li>

@@ -71,7 +71,13 @@ export default function TryFreeSection() {
       <div className={classes.tryCloudContainer}>
         <div className={classes.leftPart}>
           <span className={classes.logoWrapper}>
-            <img src="/images/home/zilliz-logo.png" alt="Zilliz" />
+            <img
+              src="/images/home/zilliz-logo.png"
+              alt="Zilliz"
+              width={324}
+              height={132}
+              loading="lazy"
+            />
           </span>
           <h3 className="">{t('trySection.title')}</h3>
         </div>
@@ -110,7 +116,13 @@ export const AIToolsSection = () => {
                 target="_blank"
                 className={clsx(classes.toolButton, 'group')}
               >
-                <img src={tool.logo} alt={tool.name} width={80} height={80} loading="lazy" />
+                <img
+                  src={tool.logo}
+                  alt={tool.name}
+                  width={80}
+                  height={80}
+                  loading="lazy"
+                />
               </a>
             </li>
           ))}

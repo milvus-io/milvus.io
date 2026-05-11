@@ -1,5 +1,7 @@
+import MarkdownIt from 'markdown-it';
 import { i18n } from './i18n';
-import Showdown from 'showdown';
+
+const markdown = new MarkdownIt({ html: true });
 
 export const getBaseUrl = (endpoint, lang, pubTarget) => {
   const condition = isControlPlane(endpoint);
@@ -69,8 +71,7 @@ export const textFilter = (text, targets) => {
     text = textFilter(preText + matchText + postText, targets);
   }
 
-  const converter = new Showdown.Converter();
-  text = converter.makeHtml(text);
+  text = markdown.render(text).trim();
 
   return text;
 };

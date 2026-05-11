@@ -14,6 +14,45 @@ import {
   CODE_DELETE_COLLECTION,
 } from './const';
 
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+const highlightCode = (source: string) => {
+  const tokenPattern =
+    /("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|(\b(?:from|import|return|if|else|for|while|in|as|with|None|True|False)\b)|(\b\d+(?:\.\d+)?\b)|(\.[A-Za-z_]\w*)|(\b[A-Za-z_]\w*(?=\())/g;
+
+  let result = '';
+  let lastIndex = 0;
+
+  for (const match of source.matchAll(tokenPattern)) {
+    const index = match.index || 0;
+    const token = match[0];
+
+    result += escapeHtml(source.slice(lastIndex, index));
+
+    if (match[1]) {
+      result += `<span class="home-code-string">${escapeHtml(token)}</span>`;
+    } else if (match[2]) {
+      result += `<span class="home-code-keyword">${escapeHtml(token)}</span>`;
+    } else if (match[3]) {
+      result += `<span class="home-code-number">${escapeHtml(token)}</span>`;
+    } else if (match[4]) {
+      result += `.<span class="home-code-property">${escapeHtml(token.slice(1))}</span>`;
+    } else if (match[5]) {
+      result += `<span class="home-code-function">${escapeHtml(token)}</span>`;
+    }
+
+    lastIndex = index + token.length;
+  }
+
+  return result + escapeHtml(source.slice(lastIndex));
+};
+
 export default function CodeExampleSection() {
   const { locale } = useGlobalLocale();
   const { t } = useTranslation('home', { lng: locale });
@@ -53,6 +92,7 @@ export default function CodeExampleSection() {
 
   const CodeBlock: React.FC<{ code: string }> = ({ code }) => {
     const [copied, setCopied] = useState(false);
+    const highlightedCode = useMemo(() => highlightCode(code), [code]);
 
     const handleCopy = async () => {
       try {
@@ -67,7 +107,7 @@ export default function CodeExampleSection() {
     return (
       <div className={classes.codeBlock}>
         <pre className={classes.codePre}>
-          <code>{code}</code>
+          <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
         </pre>
         <button
           className={classes.copyButton}

@@ -78,6 +78,19 @@
         font-size: 14px;
         line-height: 20px;
 
+        :global(.home-code-keyword) {
+          color: #a856ff;
+        }
+        :global(.home-code-string) {
+          color: #87eeab;
+        }
+        :global(.home-code-number) {
+          color: #fa0;
+        }
+        :global(.home-code-function),
+        :global(.home-code-property) {
+          color: #6fa0ff;
+        }
       }
 
       &::-webkit-scrollbar {

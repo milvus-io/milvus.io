@@ -83,7 +83,13 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
               <li className={classes.stackItem} key={v.id}>
                 <div>
                   <span className={classes.logoWrapper}>
-                    <img src={v.logo} alt={v.title} loading="lazy" />
+                    <img
+                      src={v.logo}
+                      alt={v.title}
+                      width={v.id === 'rag' || v.id === 'imgSearch' ? 620 : 644}
+                      height={344}
+                      loading="lazy"
+                    />
                   </span>
                   <h3 className={classes.stackTitle}>{v.title}</h3>
                 </div>
@@ -111,6 +117,8 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
             transformRight(-2);
           }}
           disabled={moveRightSteps === 0}
+          type="button"
+          aria-label="Show previous use cases"
         >
           <RightArrow />
         </button>
@@ -120,6 +128,8 @@ export default function DevelopSection(props: { showMeetup?: boolean }) {
             transformRight(2);
           }}
           disabled={moveRightSteps === techStacks.length - 3}
+          type="button"
+          aria-label="Show next use cases"
         >
           <RightArrow />
         </button>
@@ -143,6 +153,8 @@ export const MeetupsSection = () => {
               <img
                 src="/images/home/meetup-logo.png"
                 alt="Unstructured Data Meetups"
+                width={200}
+                height={200}
                 loading="lazy"
               />
               <div>

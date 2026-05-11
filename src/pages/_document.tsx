@@ -3,7 +3,6 @@ import { Html, Head, Main, NextScript } from 'next/document';
 const FONT_STYLESHEET_HREFS = [
   'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap',
   'https://fonts.googleapis.com/css2?family=Geist%20Mono:wght@400;500;600;700&display=swap',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap',
 ];
 
 export default function Document(props) {

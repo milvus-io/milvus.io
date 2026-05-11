@@ -22,7 +22,7 @@ export default function InkeepChatButtonContainer() {
         className={classes.inkeepChatButton}
         id="inkeep-chat-button"
         onClick={handleOpen}
-        aria-label="Ask AI"
+        aria-label="Ask AI chat"
       >
         Ask AI
         <img

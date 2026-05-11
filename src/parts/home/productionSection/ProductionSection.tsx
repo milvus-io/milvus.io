@@ -12,121 +12,169 @@ export const ProductionSection = () => {
     {
       name: 'Salesforce',
       icon: '/images/home/brands/salesforce.svg',
+      width: 68,
+      height: 68,
       class: 'col-span-1 row-span-1',
     },
     {
       name: 'Exa.ai',
       icon: '/images/home/brands/exa-ai.svg',
+      width: 168,
+      height: 168,
       class: 'col-start-2 col-end-4 row-start-1 row-end-3',
     },
     {
       name: 'Walmart',
       icon: '/images/home/brands/walmart.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-4 col-end-6 row-start-1 row-end-1',
     },
     {
       name: 'Doordash',
       icon: '/images/home/brands/doordash.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-6 col-end-8 row-start-1 row-end-1',
     },
     {
       name: 'Reddit',
       icon: '/images/home/brands/reddit.svg',
+      width: 68,
+      height: 68,
       class: 'col-start-8 col-end-9 row-span-1',
     },
     {
       name: 'Accenture',
       icon: '/images/home/brands/accenture.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-9 col-end-11 row-start-1 row-end-1',
     },
     {
       name: 'Open Evidence',
       icon: '/images/home/brands/open-evidence.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-11 col-end-13 row-start-1 row-end-1',
     },
     {
       name: 'Shell',
       icon: '/images/home/brands/shell.svg',
+      width: 68,
+      height: 68,
       class: 'col-span-1 row-start-2 row-end-3',
     },
     {
       name: 'Doximity',
       icon: '/images/home/brands/doximity.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-10 col-end-12 row-start-2 row-end-3',
     },
     {
       name: 'Fiverr',
       icon: '/images/home/brands/fiverr.svg',
+      width: 68,
+      height: 68,
       class: 'col-start-12 col-end-13 row-start-2 row-end-3',
     },
     {
       name: 'Read.ai',
       icon: '/images/home/brands/read-ai.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-1 col-end-3 row-start-3 row-end-4',
     },
     {
       name: 'ebay',
       icon: '/images/home/brands/ebay.svg',
+      width: 68,
+      height: 68,
       class: 'col-start-3 col-end-4 row-start-3 row-end-4',
     },
     {
       name: 'Notta.ai',
       icon: '/images/home/brands/notta-ai.svg',
+      width: 68,
+      height: 68,
       class: 'col-start-10 col-end-11 row-start-3 row-end-4',
     },
     {
       name: 'Bosch',
       icon: '/images/home/brands/bosch.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-11 col-end-13 row-start-3 row-end-4',
     },
     {
       name: 'NVIDIA',
       icon: '/images/home/brands/nvidia.svg',
+      width: 168,
+      height: 168,
       class: 'col-start-1 col-end-3 row-start-4 row-end-6',
     },
     {
       name: 'Cisco',
       icon: '/images/home/brands/cisco.svg',
+      width: 68,
+      height: 68,
       class: 'col-start-3 col-end-4 row-start-4 row-end-5',
     },
     {
       name: 'Filevine',
       icon: '/images/home/brands/filevine.svg',
+      width: 168,
+      height: 168,
       class: 'col-start-10 col-end-12 row-start-4 row-end-6',
     },
     {
       name: 'Fanatics',
       icon: '/images/home/brands/fanatics.svg',
+      width: 68,
+      height: 68,
       class: 'col-start-12 col-end-13 row-start-4 row-end-5',
     },
     {
       name: 'LINE',
       icon: '/images/home/brands/line.svg',
+      width: 68,
+      height: 68,
       class: 'col-start-3 col-end-4 row-start-5 row-end-6',
     },
     {
       name: 'ROBLOX',
       icon: '/images/home/brands/roblox.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-4 col-end-6 row-start-5 row-end-6',
     },
     {
       name: 'Airtable',
       icon: '/images/home/brands/airtable.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-6 col-end-8 row-start-5 row-end-6',
     },
     {
       name: 'Pluad',
       icon: '/images/home/brands/plaud-ai.svg',
+      width: 168,
+      height: 68,
       class: 'col-start-8 col-end-10 row-start-5 row-end-6',
     },
     {
       name: 'IBM',
       icon: '/images/home/brands/ibm.svg',
+      width: 68,
+      height: 68,
       class: 'col-start-12 col-end-13 row-start-5 row-end-6',
     },
   ];
   return (
-    <section className={clsx(pageClasses.homeContainer, '!my-[80px]')}>
+    <section
+      className={clsx(pageClasses.homeContainer, classes.sectionContainer)}
+    >
       <ul
         className={clsx(
           'grid grid-cols-12 grid-rows-5 gap-[32px] max-[1022px]:gap-[20px] list-none max-phone:hidden',
@@ -135,12 +183,16 @@ export const ProductionSection = () => {
       >
         {brands.map(item => {
           return (
-            <li
-              key={item.name}
-              className={clsx(item.class)}
-            >
+            <li key={item.name} className={clsx(item.class)}>
               <span className="inline-block bg-white leading-[0px] rounded-[8px]">
-                <img src={item.icon} alt={item.name} className="w-full h-full" />
+                <img
+                  src={item.icon}
+                  alt={item.name}
+                  width={item.width}
+                  height={item.height}
+                  className="w-full h-full"
+                  loading="lazy"
+                />
               </span>
             </li>
           );

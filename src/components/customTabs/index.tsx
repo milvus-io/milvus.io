@@ -69,31 +69,33 @@ export default function CustomTabs(props: CustomTabsProps) {
   }, []);
 
   return (
-    <ul className={clsx(classes.tabsWrapper, root)}>
-      {tabs.map(tab => (
-        <li
-          className={clsx(classes.tabItem, tabItem, 'tab-item', {
-            [classes.active]: tab.id === activeTab,
-          })}
-          key={tab.id}
-          data-id={tab.id}
-        >
-          {tab.link ? (
-            <a href={tab.link} className={classes.itemText}>
-              {tab.label}
-            </a>
-          ) : (
-            <button
-              className={classes.itemText}
-              onClick={() => {
-                handleTabChange(tab.id);
-              }}
-            >
-              {tab.label}
-            </button>
-          )}
-        </li>
-      ))}
+    <div className={clsx(classes.tabsOuterWrapper, root)}>
+      <ul className={classes.tabsWrapper}>
+        {tabs.map(tab => (
+          <li
+            className={clsx(classes.tabItem, tabItem, 'tab-item', {
+              [classes.active]: tab.id === activeTab,
+            })}
+            key={tab.id}
+            data-id={tab.id}
+          >
+            {tab.link ? (
+              <a href={tab.link} className={classes.itemText}>
+                {tab.label}
+              </a>
+            ) : (
+              <button
+                className={classes.itemText}
+                onClick={() => {
+                  handleTabChange(tab.id);
+                }}
+              >
+                {tab.label}
+              </button>
+            )}
+          </li>
+        ))}
+      </ul>
 
       <span
         className={classes.activeBar}
@@ -102,6 +104,6 @@ export default function CustomTabs(props: CustomTabsProps) {
           left: `${activeTabStyles.translate}px`,
         }}
       ></span>
-    </ul>
+    </div>
   );
 }

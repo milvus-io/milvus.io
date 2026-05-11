@@ -2,6 +2,8 @@
 .sectionContainer {
   padding-top: 80px;
   padding-bottom: 80px;
+  content-visibility: auto;
+  contain-intrinsic-size: 760px;
 
   .title {
     @mixin heading2;

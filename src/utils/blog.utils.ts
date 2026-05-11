@@ -16,12 +16,47 @@ const generateBlogCover = (cover: string, date: Date) => {
   return `https://${defaultCover}`;
 };
 
+const getBlogDir = (locale: LanguageEnum = LanguageEnum.ENGLISH) =>
+  locale === LanguageEnum.ENGLISH
+    ? join(process.cwd(), 'src/blogs/blog/en')
+    : join(process.cwd(), `src/blogs/localization/blog/${locale}`);
+
+const getBlogFileNames = (blogDir: string) =>
+  fs.readdirSync(blogDir).filter(fileName => fileName.endsWith('.md'));
+
+const sortBlogsByDateDesc = <T extends { date: string }>(blogsData: T[]) => {
+  blogsData.sort(
+    (x, y) => new Date(y.date).getTime() - new Date(x.date).getTime()
+  );
+  return blogsData;
+};
+
+const generateBlogListData = (
+  locale: LanguageEnum = LanguageEnum.ENGLISH
+) => {
+  const BASE_BLOG_DIR = getBlogDir(locale);
+  const blogsData = getBlogFileNames(BASE_BLOG_DIR).map(v => {
+    const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
+    const { data } = matter(file);
+    const { tag, date, cover, title = '', content, metaData, ...rest } = data;
+
+    return {
+      ...rest,
+      id: v,
+      date: new Date(data.date).toJSON(),
+      cover: generateBlogCover(cover, new Date(data.date)),
+      tags: tag ? tag.split(',') : [],
+      href: `/blog/${v}`,
+      title,
+    };
+  });
+
+  return sortBlogsByDateDesc(blogsData);
+};
+
 const generateBlogData = (locale: LanguageEnum = LanguageEnum.ENGLISH) => {
-  const BASE_BLOG_DIR =
-    locale === LanguageEnum.ENGLISH
-      ? join(process.cwd(), 'src/blogs/blog/en')
-      : join(process.cwd(), `src/blogs/localization/blog/${locale}`);
-  const blogsData = fs.readdirSync(BASE_BLOG_DIR).map(v => {
+  const BASE_BLOG_DIR = getBlogDir(locale);
+  const blogsData = getBlogFileNames(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
     const { data, content } = matter(file);
     const { tag, date, cover, title = '', ...rest } = data;
@@ -54,21 +89,14 @@ const generateBlogData = (locale: LanguageEnum = LanguageEnum.ENGLISH) => {
     };
   });
 
-  blogsData.sort(
-    (x, y) => new Date(y.date).getTime() - new Date(x.date).getTime()
-  );
-
-  return blogsData;
+  return sortBlogsByDateDesc(blogsData);
 };
 
 const generateSimpleBlogList = (
   locale: LanguageEnum = LanguageEnum.ENGLISH
 ) => {
-  const BASE_BLOG_DIR =
-    locale === LanguageEnum.ENGLISH
-      ? join(process.cwd(), 'src/blogs/blog/en')
-      : join(process.cwd(), `src/blogs/localization/blog/${locale}`);
-  const blogsData = fs.readdirSync(BASE_BLOG_DIR).map(v => {
+  const BASE_BLOG_DIR = getBlogDir(locale);
+  const blogsData = getBlogFileNames(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
     const { data } = matter(file);
     const { title = '' } = data;
@@ -81,18 +109,14 @@ const generateSimpleBlogList = (
     };
   });
 
-  blogsData.sort(
-    (x, y) => new Date(y.date).getTime() - new Date(x.date).getTime()
-  );
-
-  return blogsData;
+  return sortBlogsByDateDesc(blogsData);
 };
 
 const generateBlogRouter = (locale: LanguageEnum) => {
-  const data = generateBlogData(locale);
-  const router = data.map(v => ({
+  const BASE_BLOG_DIR = getBlogDir(locale);
+  const router = getBlogFileNames(BASE_BLOG_DIR).map(v => ({
     params: {
-      id: v.id,
+      id: v,
     },
   }));
   return router;
@@ -100,6 +124,7 @@ const generateBlogRouter = (locale: LanguageEnum) => {
 
 const blogUtils = {
   getAllData: generateBlogData,
+  getListData: generateBlogListData,
   getRouter: generateBlogRouter,
   getSimpleList: generateSimpleBlogList,
 };

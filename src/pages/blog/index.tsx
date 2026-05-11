@@ -6,7 +6,7 @@ export default BlogHome;
 
 export const getStaticProps = () => {
   const locale = LanguageEnum.ENGLISH;
-  const blogList = blogUtils.getAllData(locale);
+  const blogList = blogUtils.getListData(locale);
   return {
     props: {
       locale,

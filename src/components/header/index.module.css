@@ -1,4 +1,3 @@
-
 .headerContainer {
   left: 0;
   right: 0;
@@ -21,6 +20,242 @@
   @media (--tablet), (--phone) {
     position: sticky;
   }
+}
+
+.navBarWrapper {
+  background: #fff;
+  border-bottom: 1px solid #ececee;
+}
+
+.navBar {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.leftSection {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.desktopNav {
+  display: block;
+}
+
+.desktopNavList {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.desktopNavItem {
+  flex-shrink: 0;
+}
+
+.desktopDropdown {
+  position: relative;
+}
+
+.desktopNavButton,
+.desktopNavLink {
+  height: 21px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #667176;
+  cursor: pointer;
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.desktopNavButton:hover,
+.desktopNavButton:focus-visible,
+.desktopDropdown:focus-within .desktopNavButton,
+.desktopDropdown:hover .desktopNavButton,
+.desktopNavLink:hover,
+.desktopNavLink:focus-visible {
+  color: #00131a;
+}
+
+.desktopNavButton:focus-visible,
+.desktopNavLink:focus-visible,
+.desktopDropdownLink:focus-visible,
+.menuIconBtn:focus-visible,
+.contactLink:focus-visible,
+.githubLink:focus-visible,
+.mobileContactLink:focus-visible {
+  outline: 2px solid #00131a;
+  outline-offset: 3px;
+}
+
+.desktopArrow {
+  transition: transform 0.2s ease;
+}
+
+.desktopDropdown:hover .desktopArrow,
+.desktopDropdown:focus-within .desktopArrow {
+  transform: rotate(180deg);
+}
+
+.desktopDropdownPanel {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  padding-top: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
+  z-index: 10;
+}
+
+.desktopDropdown:hover .desktopDropdownPanel,
+.desktopDropdown:focus-within .desktopDropdownPanel {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.desktopDropdownList {
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 8px 0;
+  margin: 0;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 5px 5px -3px,
+    rgba(0, 0, 0, 0.04) 0 8px 10px 1px, rgba(0, 0, 0, 0.03) 0 3px 14px 2px;
+  list-style: none;
+}
+
+.desktopDropdownLink {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 16px;
+  color: #667176;
+  cursor: pointer;
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 40px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.desktopDropdownLink:hover,
+.desktopDropdownLink:focus-visible {
+  background: rgba(0, 0, 0, 0.04);
+  color: #00131a;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+}
+
+.languageSelector {
+  flex-shrink: 0;
+}
+
+.githubLink {
+  height: 36px;
+  flex: 0 0 77px;
+  display: flex;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 6px;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.githubLink:hover {
+  color: #667176;
+}
+
+.githubText {
+  margin-left: 2px;
+  margin-right: 4px;
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.githubCount {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.contactLink {
+  color: #00131a;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-decoration: none;
+  white-space: pre;
+  transition: color 0.2s ease;
+}
+
+.contactLink:hover {
+  color: #667176;
+}
+
+.startButton {
+  height: 36px;
+  padding: 6px 12px;
+  background: #00b3ff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+.startButton:hover {
+  background: #008dc8;
+}
+
+.menuIconBtn {
+  display: none;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: #000;
+  cursor: pointer;
+}
+
+.mobileNav {
+  display: none;
 }
 
 .logoSection {
@@ -59,4 +294,224 @@
 .zillizLogo {
   height: 24px;
   width: auto;
+}
+
+@media (max-width: 1540px) {
+  .leftSection {
+    gap: 12px;
+  }
+
+  .desktopNavList {
+    gap: 10px;
+  }
+
+  .actions {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .navBarWrapper {
+    border-bottom-color: #d1d5db;
+  }
+
+  .navBar {
+    gap: 12px;
+  }
+
+  .leftSection {
+    flex: 1 1 auto;
+    gap: 0;
+  }
+
+  .desktopNav,
+  .githubLink,
+  .contactLink,
+  .startButton {
+    display: none;
+  }
+
+  .actions {
+    flex-shrink: 0;
+    gap: 12px;
+  }
+
+  .menuIconBtn {
+    display: flex;
+  }
+
+  .mobileNav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--header-height-desktop);
+    z-index: 100;
+    display: block;
+    height: calc(100vh - var(--header-height-desktop));
+    height: calc(100dvh - var(--header-height-desktop));
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .mobileNavOpen {
+    animation: mobileNavSlideDown 0.2s ease-out;
+  }
+
+  .mobileNavInner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .mobileNavList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobileNavItem {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .mobileNavButton,
+  .mobileNavLink,
+  .mobileNavButtonGroup {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0;
+    background: transparent;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+    text-align: left;
+    text-decoration: none;
+  }
+
+  .mobileNavButton,
+  .mobileNavLink {
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+
+  .mobileNavLinkWithChildren,
+  .mobileNavGroupLabel {
+    flex: 1 1 auto;
+    padding: 10px 16px;
+    border: 0;
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+  }
+
+  .mobileSubMenuToggle {
+    width: 44px;
+    min-height: 44px;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+  }
+
+  .mobileArrow {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .mobileArrowOpen {
+    transform: rotate(180deg);
+  }
+
+  .mobileSubMenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.25s ease;
+  }
+
+  .mobileSubMenuOpen {
+    grid-template-rows: 1fr;
+  }
+
+  .mobileSubMenuList {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    list-style: none;
+    padding: 0 0 8px 16px;
+    margin: 0;
+  }
+
+  .mobileSubMenuLink {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 16px;
+    color: #000;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-decoration: none;
+  }
+
+  .mobileActions {
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px 0 calc(24px + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    background: #fff;
+  }
+
+  .mobileContactLink {
+    display: block;
+    height: 40px;
+    padding: 0 16px;
+    color: #00131a;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .mobileStartButton {
+    width: 100%;
+  }
+}
+
+@media (--bannerBreak) {
+  .mobileNav {
+    top: var(--header-height-tablet);
+    height: calc(100vh - var(--header-height-tablet));
+    height: calc(100dvh - var(--header-height-tablet));
+  }
+}
+
+@keyframes mobileNavSlideDown {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: calc(100vh - var(--header-height-desktop));
+    height: calc(100dvh - var(--header-height-desktop));
+  }
 }

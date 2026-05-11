@@ -9,6 +9,7 @@ html[lang='ar'] {
   direction: rtl;
 }
 
+body.lock-scroll,
 body:has(.lock-scroll) {
   overflow: hidden;
 }

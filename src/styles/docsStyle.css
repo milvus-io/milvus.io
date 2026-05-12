@@ -174,7 +174,7 @@ html[lang='ar'] {
   code {
     font-size: 14px;
     line-height: 1.4rem;
-    font-family: 'SourceCodePro';
+    font-family: 'Geist Mono';
     background-color: var(--code-bg-color);
     border-radius: 4px;
     padding: 0 8px;
@@ -235,7 +235,7 @@ html[lang='ar'] {
       display: block;
       font-size: 14px;
       line-height: 20px;
-      font-family: 'SourceCodePro';
+      font-family: 'Geist Mono';
       border: none;
       background-color: transparent;
       font-weight: 400;

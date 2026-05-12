@@ -115,7 +115,7 @@ export const CodeBlock: FC<Props> = props => {
             )}
             style={style}
           >
-            <code className="p-[16px] inline-block w-full text-[14px] font-[500] font-['SourceCodePro']">
+            <code className="p-[16px] inline-block w-full text-[14px] font-[500] font-['Geist Mono']">
               {tokens.map((line, i) => {
                 const lineProps = getLineProps({ line });
                 const shouldExclude = highlightLine(line, lineProps);

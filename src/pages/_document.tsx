@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
+import { resources } from '@/i18n/server';
 
 const FONT_STYLESHEET_HREFS = [
   'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap',
@@ -6,7 +7,9 @@ const FONT_STYLESHEET_HREFS = [
 ];
 
 export default function Document(props) {
-  const lang = props.__NEXT_DATA__.props.pageProps.lang || 'en';
+  const pageProps = props.__NEXT_DATA__.props.pageProps || {};
+  const lang = pageProps.lang || pageProps.locale || 'en';
+  const i18nResources = resources[lang] || resources.en;
   return (
     <Html lang={lang}>
       <Head>
@@ -40,6 +43,13 @@ export default function Document(props) {
             href="https://assets.zilliz.com/katex/katex.min.css"
           />
         </noscript>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__I18N_RESOURCES__=${JSON.stringify({
+              [lang]: i18nResources,
+            }).replace(/</g, '\\u003c')};`,
+          }}
+        />
       </Head>
       <body>
         <Main />

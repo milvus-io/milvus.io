@@ -1,4 +1,4 @@
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 import { Community } from '@/parts/community/Community';
 
 export default Community;

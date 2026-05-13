@@ -1,4 +1,4 @@
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 import { MilvusDemos } from '@/parts/tutorials/Demo';
 
 export default MilvusDemos;

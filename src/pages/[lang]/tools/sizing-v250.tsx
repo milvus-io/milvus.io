@@ -1,4 +1,4 @@
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 import SizingTool from '@/pages/tools/sizing-v250';
 
 export default SizingTool;

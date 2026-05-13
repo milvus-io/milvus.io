@@ -6,11 +6,6 @@ const FONT_STYLESHEET_HREFS = [
   'https://fonts.googleapis.com/css2?family=Geist%20Mono:wght@400;500;600;700&display=swap',
 ];
 
-const FONT_STYLESHEET_HREFS = [
-  'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap',
-  'https://fonts.googleapis.com/css2?family=Geist%20Mono:wght@400;500;600;700&display=swap',
-];
-
 export default function Document(props) {
   const pageProps = props.__NEXT_DATA__.props.pageProps || {};
   const lang = pageProps.lang || pageProps.locale || 'en';

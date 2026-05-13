@@ -8,9 +8,11 @@ import DocContent from '@/parts/docs/docContent';
 import { useMemo } from 'react';
 import {
   generateApiMenuAndContentDataOfAllVersions,
+  generateApiMenuAndContentDataOfSingleVersion,
   generateApiReferenceVersionsInfo,
 } from '@/utils/apiReference';
 import {
+  ApiFileDateInfoType,
   ApiReferenceLanguageEnum,
   ApiReferenceRouteEnum,
   FinalMenuStructureType,
@@ -240,34 +242,63 @@ export default function Template(props: ApiDetailPageProps) {
 }
 
 export const getStaticPaths = () => {
+  const apiData = generateApiReferenceVersionsInfo();
+
+  const result = apiData
+    .map(data => {
+      const { language, versions } = data;
+      const ApiDataOfCurLang = versions.map(version =>
+        generateApiMenuAndContentDataOfSingleVersion({
+          version,
+          language,
+        })
+      );
+      return {
+        language,
+        versions,
+        data: ApiDataOfCurLang,
+      };
+    })
+    // Restful paths have been moved to api-reference/restful/[version]/[...slug].tsx
+    .filter(item => item.language !== ApiReferenceLanguageEnum.Restful);
+
+  let routers: ApiFileDateInfoType[] = [];
+  result.forEach(({ data }) => {
+    data.forEach(v => {
+      routers = routers.concat(v.contentList);
+    });
+  });
+
+  /**
+   * 1. /pymilvus/v2.4.x/DataImport/LocalBulkWriter/append_row.md
+   * 2. /pymilvus/v2.4.x/append_rows.md
+   */
+  const paths = routers.map(v => {
+    const {
+      frontMatter: { id, parentIds, category, version },
+    } = v;
+    const slug = [...parentIds, id];
+    return {
+      params: {
+        language: category,
+        version,
+        slug,
+      },
+    };
+  });
+
   return {
-    paths: [],
-    fallback: 'blocking',
+    paths: paths,
+    fallback: false,
   };
 };
 
 export const getStaticProps: GetStaticProps = async context => {
-  const { params } = context;
+  const { version } = context.params;
+  const languageCategory: ApiReferenceRouteEnum = context.params
+    .language as ApiReferenceRouteEnum;
 
-  if (
-    !params?.version ||
-    Array.isArray(params.version) ||
-    !params?.language ||
-    Array.isArray(params.language) ||
-    !params?.slug ||
-    !Array.isArray(params.slug)
-  ) {
-    return {
-      notFound: true,
-      revalidate: 60,
-    };
-  }
-
-  const { version } = params;
-  const languageCategory: ApiReferenceRouteEnum =
-    params.language as ApiReferenceRouteEnum;
-
-  const slug = params.slug as string[];
+  const slug = context.params.slug as string[];
   const routeCategoryToLanguage: Record<
     ApiReferenceRouteEnum,
     ApiReferenceLanguageEnum
@@ -281,51 +312,28 @@ export const getStaticProps: GetStaticProps = async context => {
     [ApiReferenceRouteEnum.Restful]: ApiReferenceLanguageEnum.Restful,
   };
 
-  const apiLanguage = routeCategoryToLanguage[languageCategory];
-
-  if (!apiLanguage || apiLanguage === ApiReferenceLanguageEnum.Restful) {
-    return {
-      notFound: true,
-      revalidate: 60,
-    };
-  }
-
   const apiData = generateApiReferenceVersionsInfo();
   const { versions, latestVersion } =
-    apiData.find(v => v.language === apiLanguage) || {};
-
-  if (!versions?.includes(version)) {
-    return {
-      notFound: true,
-      revalidate: 60,
-    };
-  }
-
+    apiData.find(
+      v => v.language === routeCategoryToLanguage[languageCategory]
+    ) || {};
   const curCategoryData = generateApiMenuAndContentDataOfAllVersions({
-    language: apiLanguage,
+    language: routeCategoryToLanguage[languageCategory],
     withContent: true,
   });
 
   const { menuData, contentList: contentData } =
     curCategoryData.find(v => v.version === version) || {};
 
-  const targetContent = contentData?.find(v => {
-    const {
-      frontMatter: { id, parentIds },
-    } = v;
-    const targetSlug = slug.join('/');
-    const sourceSlug = [...parentIds, id].join('/');
-    return targetSlug === sourceSlug;
-  });
-
-  if (!targetContent) {
-    return {
-      notFound: true,
-      revalidate: 60,
-    };
-  }
-
-  const { frontMatter, content: apiContent } = targetContent;
+  const { frontMatter, content: apiContent } =
+    contentData.find(v => {
+      const {
+        frontMatter: { id, parentIds },
+      } = v;
+      const targetSlug = slug.join('/');
+      const sourceSlug = [...parentIds, id].join('/');
+      return targetSlug === sourceSlug;
+    }) || {};
 
   const { tree: doc, codeList } = markdownToHtml(apiContent || '', {
     showAnchor: true,
@@ -338,7 +346,7 @@ export const getStaticProps: GetStaticProps = async context => {
 
   const curCategoryContentDataOfAllVersion =
     generateApiMenuAndContentDataOfAllVersions({
-      language: apiLanguage,
+      language: routeCategoryToLanguage[languageCategory],
       withContent: false,
     }).map(v => ({
       version: v.version,
@@ -371,6 +379,5 @@ export const getStaticProps: GetStaticProps = async context => {
         path: metaPath,
       },
     },
-    revalidate: 86400,
   };
 };

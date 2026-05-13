@@ -22,21 +22,25 @@ export default DocDetailPage;
 
 export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
   const getPageStaticPaths = () => {
+    const { latestVersion } = generateDocVersionInfo();
+    const currentVersion = version || latestVersion;
+    const latestDocContentList = generateAllContentDataOfSingleVersion({
+      version: currentVersion,
+      lang,
+    });
+
+    const paths = latestDocContentList.map(v => ({
+      params: { id: v.frontMatter.id },
+    }));
+
     return {
-      paths: [],
-      fallback: 'blocking',
+      paths,
+      fallback: false,
     };
   };
 
   const getPageStaticProps: GetStaticProps = async context => {
     const { params } = context;
-
-    if (!params?.id || Array.isArray(params.id)) {
-      return {
-        notFound: true,
-        revalidate: 60,
-      };
-    }
 
     const id = params.id as string;
     const { versions, latestVersion } = generateDocVersionInfo();
@@ -80,21 +84,12 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
       lang,
     });
 
-    const targetDoc = docDetailContentList.find(v => v.frontMatter.id === id);
-
-    if (!targetDoc) {
-      return {
-        notFound: true,
-        revalidate: 60,
-      };
-    }
-
     const {
       content: docDetailContent,
       frontMatter,
       editPath,
       propsInfo,
-    } = targetDoc;
+    } = docDetailContentList.find(v => v.frontMatter.id === id);
 
     const { codeList, anchorList } = propsInfo;
     const headingContent = anchorList?.[0]?.label;
@@ -121,7 +116,6 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
         hreflangUrls,
         canonicalUrl,
       },
-      revalidate: 86400,
     };
   };
 

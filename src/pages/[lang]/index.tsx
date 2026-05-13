@@ -10,7 +10,7 @@ import { ProductionSection } from '@/parts/home/productionSection/ProductionSect
 import { getHomepageHeadline } from '@/utils/blogs';
 import classes from '@/styles/home.module.css';
 import pageClasses from '@/styles/responsive.module.css';
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 import { LanguageEnum } from '@/types/localization';
 import { HomeMeta } from '@/parts/home/meta/HomeMeta';
 import { useGlobalLocale } from '@/hooks/use-global-locale';

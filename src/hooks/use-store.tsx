@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer, useEffect } from 'react';
 import { LanguageEnum } from '@/types/localization';
 import { useDefaultLocale } from '@/hooks/use-default-locale';
 import { useTranslation } from 'react-i18next';
+import { loadI18nResources } from '@/i18n/client';
 
 interface State {
   locale: LanguageEnum;
@@ -42,8 +43,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    i18n.changeLanguage(defaultLocale);
-  }, []);
+    loadI18nResources(defaultLocale).then(() => {
+      i18n.changeLanguage(defaultLocale);
+    });
+  }, [defaultLocale, i18n]);
 
   return (
     <StoreContext.Provider value={{ state, dispatch }}>

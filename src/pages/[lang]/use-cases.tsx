@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 import { fetchUseCases } from '@/http/useCase';
 import { UseCase } from '@/parts/intro/UseCase';
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 
 export default UseCase;
 

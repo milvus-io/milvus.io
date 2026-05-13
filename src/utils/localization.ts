@@ -1,5 +1,11 @@
 import { LanguageEnum } from '@/types/localization';
 
+export const getAllLanguageSlugs = () => {
+  return Object.values(LanguageEnum)
+    .filter(lang => lang !== LanguageEnum.ENGLISH)
+    .map(lang => ({ params: { lang } }));
+};
+
 export const getBlogPath = (locale: LanguageEnum) => {
   return locale === LanguageEnum.ENGLISH ? '/blog' : `/${locale}/blog`;
 };

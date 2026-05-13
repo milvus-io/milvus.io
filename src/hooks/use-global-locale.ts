@@ -10,6 +10,7 @@ import {
 } from '@/components/localization/const';
 import { useStore } from '@/hooks/use-store';
 import Cookies from 'js-cookie';
+import { loadI18nResources } from '@/i18n/client';
 
 const LANGUAGES = Object.values(LanguageEnum);
 
@@ -76,7 +77,9 @@ export const useGlobalLocale = () => {
       sameSite: 'Lax',
     }); // Expires in 1 year
 
-    i18n.changeLanguage(newLocale);
+    loadI18nResources(newLocale).then(() => {
+      i18n.changeLanguage(newLocale);
+    });
     dispatch({ type: 'SET_LOCALE', payload: newLocale });
   };
 

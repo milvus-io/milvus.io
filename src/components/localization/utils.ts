@@ -96,23 +96,20 @@ export const getApiCanonicalUrl = (params: {
   return `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${targetRelativePath}`;
 };
 
-// Canonical URL points to the latest version (same language) to consolidate
-// link equity across versioned docs. Falls back to current version URL if
-// the doc doesn't exist in the latest version (e.g. removed/renamed pages).
+// Canonical URL should represent the current docs version. The latest
+// version uses the unversioned docs URL, while archived versions keep their
+// version segment (for example, /docs/v2.6.x) so search engines don't treat
+// them as duplicates of the latest docs.
 export const getDocCanonicalUrl = (params: {
   lang: LanguageEnum;
   version: string;
   latestVersion: string;
   docId?: string;
-  latestVersionMds?: string[];
 }): string => {
-  const { lang, version, latestVersion, docId, latestVersionMds } = params;
+  const { lang, version, latestVersion, docId } = params;
   const langSuffix = lang === LanguageEnum.ENGLISH ? '' : `/${lang}`;
+  const versionSuffix = version === latestVersion ? '' : `/${version}`;
   const docIdSuffix = docId ? `/${docId}` : '';
 
-  const existsInLatest =
-    !docId || version === latestVersion || latestVersionMds?.includes(docId);
-
-  const versionSuffix = existsInLatest ? '' : `/${version}`;
   return `${ABSOLUTE_BASE_URL}/docs${langSuffix}${versionSuffix}${docIdSuffix}`;
 };

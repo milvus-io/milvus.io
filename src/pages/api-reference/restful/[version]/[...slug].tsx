@@ -8,7 +8,6 @@ import { ABSOLUTE_BASE_URL } from '@/consts';
 import LeftNavSection from '@/parts/docs/leftNavTree';
 import {
   AllMdVersionIdType,
-  ApiFileDateInfoType,
   ApiReferenceLanguageEnum,
   ApiReferenceMetaInfoEnum,
   ApiReferenceRouteEnum,
@@ -22,7 +21,6 @@ import {
 } from '@/utils/mdx';
 import {
   generateRestfulMenuAndContentDataOfAllVersions,
-  generateRestfulMenuAndContentDataOfSingleVersion,
   generateRestfulVersionsInfo,
   SPLIT_FLAG,
 } from '@/utils/restful';
@@ -156,54 +154,38 @@ export default function RestfulApiReference(props: {
 }
 
 export async function getStaticPaths() {
-  const restfulInfo = generateRestfulVersionsInfo();
-  const result = restfulInfo.map(data => {
-    const { language, versions } = data;
-    const ApiDataOfCurLang = versions.map(version =>
-      generateRestfulMenuAndContentDataOfSingleVersion({
-        version,
-        language,
-      })
-    );
-    return {
-      language,
-      versions,
-      data: ApiDataOfCurLang,
-    };
-  });
-
-  let routers: ApiFileDateInfoType[] = [];
-  result.forEach(({ data }) => {
-    data.forEach(v => {
-      routers = routers.concat(v.contentList);
-    });
-  });
-
-  const paths = routers.map(v => {
-    const {
-      frontMatter: { id, parentIds, version },
-    } = v;
-    const slug = [...parentIds, id.replace('.mdx', '.md')];
-    return {
-      params: {
-        version,
-        slug,
-      },
-    };
-  });
-
   return {
-    paths,
-    fallback: false,
+    paths: [],
+    fallback: 'blocking',
   };
 }
 
 export async function getStaticProps({ params }) {
+  if (
+    !params?.version ||
+    Array.isArray(params.version) ||
+    !params?.slug ||
+    !Array.isArray(params.slug)
+  ) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    };
+  }
+
   const { version, slug } = params;
   const restfulInfo = generateRestfulVersionsInfo();
   const { versions, latestVersion } =
     restfulInfo.find(v => v.language === ApiReferenceLanguageEnum.Restful) ||
     {};
+
+  if (!versions?.includes(version)) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    };
+  }
+
   const curCategoryData = generateRestfulMenuAndContentDataOfAllVersions({
     language: ApiReferenceLanguageEnum.Restful,
     withContent: true,
@@ -211,15 +193,23 @@ export async function getStaticProps({ params }) {
 
   const { menuData, contentList: contentData } =
     curCategoryData.find(v => v.version === version) || {};
-  const { frontMatter, content } =
-    contentData.find(v => {
-      const {
-        frontMatter: { id, parentIds },
-      } = v;
-      const targetSlug = slug.join('/');
-      const sourceSlug = [...parentIds, id].join('/');
-      return targetSlug === sourceSlug;
-    }) || {};
+  const targetContent = contentData?.find(v => {
+    const {
+      frontMatter: { id, parentIds },
+    } = v;
+    const targetSlug = slug.join('/');
+    const sourceSlug = [...parentIds, id].join('/');
+    return targetSlug === sourceSlug;
+  });
+
+  if (!targetContent) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    };
+  }
+
+  const { frontMatter, content } = targetContent;
 
   const { exports } = await getVariablesFromMDX(content);
   const mdxSource = await serialize(content, {
@@ -273,5 +263,6 @@ export async function getStaticProps({ params }) {
         path: metaPath,
       },
     },
+    revalidate: 86400,
   };
 }

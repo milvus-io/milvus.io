@@ -42,6 +42,7 @@ COPY supervisord.conf /etc/supervisord.conf
 
 COPY --from=builder /app/.next /app/.next
 COPY --from=builder /app/src/blogs /app/src/blogs
+COPY --from=builder /app/src/docs /app/src/docs
 COPY --from=builder /app/public /app/public
 COPY --from=builder /app/global-stats.json /app/global-stats.json
 COPY --from=dependency /app/node_modules /app/node_modules

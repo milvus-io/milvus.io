@@ -1,4 +1,4 @@
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 import { IntroMilvus } from '@/parts/intro/IntroMIlvus';
 
 export default IntroMilvus;

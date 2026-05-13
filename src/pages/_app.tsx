@@ -6,7 +6,7 @@ import Script from 'next/script';
 import Error from './error';
 import { StoreProvider } from '@/hooks/use-store';
 
-import '../i18n';
+import '../i18n/client';
 import '../styles/variables.css';
 import '../styles/media.css';
 import '../styles/common.css';

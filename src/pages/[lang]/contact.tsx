@@ -1,5 +1,5 @@
 import { Contact } from '@/parts/contact/Contact';
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 
 export default Contact;
 

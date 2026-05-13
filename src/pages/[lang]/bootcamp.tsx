@@ -1,4 +1,4 @@
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 import { Bootcamp } from '@/parts/tutorials/Bootcamp';
 import { generateBootCampData } from '@/utils/bootcamp';
 

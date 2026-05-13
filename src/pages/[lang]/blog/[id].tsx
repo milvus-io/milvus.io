@@ -1,7 +1,7 @@
 import { LanguageEnum } from '@/types/localization';
 import { BlogDetail } from '@/components/localization/BlogDetail';
 import { createBlogDetailProps } from '@/components/localization/CreateBlogDetailProps';
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 
 export default BlogDetail;
 

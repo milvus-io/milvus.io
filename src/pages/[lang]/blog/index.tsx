@@ -1,7 +1,7 @@
 import { BlogHome } from '@/components/localization/BlogHome';
 import blogUtils from '@/utils/blog.utils';
 import { LanguageEnum } from '@/types/localization';
-import { getAllLanguageSlugs } from '@/i18n';
+import { getAllLanguageSlugs } from '@/utils/localization';
 
 export default BlogHome;
 

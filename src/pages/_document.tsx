@@ -1,11 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 import { resources } from '@/i18n/server';
 
-const FONT_STYLESHEET_HREFS = [
-  'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap',
-  'https://fonts.googleapis.com/css2?family=Geist%20Mono:wght@400;500;600;700&display=swap',
-];
-
 export default function Document(props) {
   const pageProps = props.__NEXT_DATA__.props.pageProps || {};
   const lang = pageProps.lang || pageProps.locale || 'en';
@@ -13,24 +8,20 @@ export default function Document(props) {
   return (
     <Html lang={lang}>
       <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
+          rel="preload"
+          href="/fonts/geist/geist-v5-latin.woff2"
+          as="font"
+          type="font/woff2"
           crossOrigin="anonymous"
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `!function(){var hrefs=${JSON.stringify(
-              FONT_STYLESHEET_HREFS
-            )};function loadFonts(){hrefs.forEach(function(href){var link=document.createElement('link');link.rel='stylesheet';link.href=href;document.head.appendChild(link);});}if('requestIdleCallback'in window){requestIdleCallback(loadFonts,{timeout:3000});}else{setTimeout(loadFonts,2000);}}();`,
-          }}
+        <link
+          rel="preload"
+          href="/fonts/geist/geist-mono-v5-latin.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
         />
-        <noscript>
-          {FONT_STYLESHEET_HREFS.map(href => (
-            <link key={`${href}-noscript`} href={href} rel="stylesheet" />
-          ))}
-        </noscript>
         {/* KaTeX CSS: non-render-blocking, only needed for pages with math formulas */}
         <link
           rel="stylesheet"

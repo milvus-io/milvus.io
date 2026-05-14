@@ -2,7 +2,6 @@
 @tailwind utilities;
 
 @import url('./reset.css');
-@import url('./fonts.css');
 
 /* handle arabic layout */
 html[lang='ar'] {

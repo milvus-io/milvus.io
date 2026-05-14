@@ -9,6 +9,7 @@ import { StoreProvider } from '@/hooks/use-store';
 import '../i18n/client';
 import '../styles/variables.css';
 import '../styles/media.css';
+import '../styles/fonts.css';
 import '../styles/common.css';
 import '../styles/docsStyle.css';
 

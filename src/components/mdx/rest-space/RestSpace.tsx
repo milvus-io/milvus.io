@@ -959,7 +959,7 @@ export const RestSpecs = props => {
                           style={{
                             color: 'rgb(74, 83, 104)',
                             fontSize: '0.8rem',
-                            fontFamily: 'GeistMono, monospace',
+                            fontFamily: 'Geist Mono, monospace',
                           }}
                         >
                           application/json

@@ -621,11 +621,18 @@ const ExampleResponses = ({
     return condition;
   });
 
-  const defaultValue = examples[validKeys[0]].summary.toUpperCase();
+  const defaultValue = examples[validKeys[0]]?.summary?.toUpperCase();
   const availableLabels = validKeys.map(key =>
     examples[key].summary.toUpperCase()
   );
   const [selected, setSelected] = useState(defaultValue);
+
+  // No example matches the current target/lang/response selection.
+  // Render nothing instead of dereferencing `undefined`, which would
+  // crash the whole static export (see Import (v2)/Create).
+  if (validKeys.length === 0) {
+    return null;
+  }
 
   if (!availableLabels.includes(selected)) {
     setSelected(availableLabels[0]);
@@ -714,11 +721,19 @@ const ExampleRequests = ({
       return condition;
     });
 
-    const defaultValue = examples[validKeys[0]].summary.toUpperCase();
+    const defaultValue = examples[validKeys[0]]?.summary?.toUpperCase();
     const availableLabels = validKeys.map(key =>
       examples[key].summary.toUpperCase()
     );
     const [selected, setSelected] = useState(defaultValue);
+
+    // No request example matches the current target/lang/request
+    // selection. Fall back to the bare curl command (same as the
+    // no-requestBody branch above) instead of dereferencing
+    // `undefined`, which would crash the whole static export.
+    if (validKeys.length === 0) {
+      return <CodeBlock className="language-bash" children={req} />;
+    }
 
     if (!availableLabels.includes(selected)) {
       setSelected(availableLabels[0]);

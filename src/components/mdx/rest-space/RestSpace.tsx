@@ -10,11 +10,52 @@ import { BaseURL } from './BaseURL';
 import { i18n } from './i18n';
 import { CodeBlock } from './CodeBlock';
 import { TryItOut } from './TryItOut';
+import { Admonition } from './Admonition';
 
 import styles from './RestSpace.module.css';
 import tryItStyles from './TryItOut.module.css';
 
 const primitiveConstants = ['boolean', 'integer', 'number', 'string'];
+
+// The local Admonition requires an `icon`; upstream (Docusaurus) omits it.
+// Provide a sensible default per admonition type.
+const admonitionIcons: Record<string, string> = {
+  note: '📝',
+  tip: '💡',
+  info: '📘',
+  warning: '⚠️',
+  danger: '🛑',
+};
+
+const Admonitions = ({ admonitions, lang }: any) => {
+  if (!admonitions || admonitions.length === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      {admonitions.map((item, index) => {
+        const title = item['x-i18n']?.[lang]?.title
+          ? item['x-i18n'][lang].title
+          : item.title;
+        const content = item['x-i18n']?.[lang]?.content
+          ? item['x-i18n'][lang].content
+          : item.content;
+        const type = item.type || 'info';
+        return (
+          <Admonition
+            key={index}
+            type={type}
+            icon={admonitionIcons[type] || admonitionIcons.info}
+            title={title || item.type || 'Note'}
+          >
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </Admonition>
+        );
+      })}
+    </>
+  );
+};
 
 const Enums = ({
   enums,
@@ -56,7 +97,7 @@ const Enums = ({
             .map((enumValue, index) => {
               enumValue = enumValue
                 .replace(/<\/?p>/g, '')
-                .replace(/<\/?em>/g, '-');
+                .replace(/<\/?em>/g, '_');
               return (
                 <option key={index} value={enumValue}>
                   {enumValue}
@@ -80,8 +121,13 @@ const Param = ({
   enums,
   lang,
   target,
+  x_i18n,
+  admonitions,
 }: any) => {
   enums = enums ? enums : [];
+  const translatedDescription = x_i18n?.[lang]?.description
+    ? x_i18n[lang].description
+    : description;
 
   return (
     <div className={styles.paramContainer}>
@@ -96,12 +142,15 @@ const Param = ({
       <div
         className={styles.description}
         dangerouslySetInnerHTML={{
-          __html: description
-            ? textFilter(description, target)
+          __html: translatedDescription
+            ? textFilter(translatedDescription, target)
             : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
         }}
       ></div>
       <div>
+        {admonitions && admonitions.length > 0 && (
+          <Admonitions admonitions={admonitions} lang={lang} />
+        )}
         {enums.length > 0 && (
           <Enums enums={enums} lang={lang} target={target} />
         )}
@@ -119,11 +168,15 @@ const Param = ({
 };
 
 const Primitive = ({ name, obj, required, lang, target }: any) => {
-  const { type, format, minimum, maximum, defaultValue, example } = obj;
+  const { type, format, minimum, maximum, defaultValue } = obj;
   const description = obj['x-i18n']?.[lang]?.description
     ? obj['x-i18n'][lang].description
     : obj.description;
+  const example = obj['x-i18n']?.[lang]?.example
+    ? obj['x-i18n'][lang].example
+    : obj.example;
   const enums = obj.enum ? obj.enum : [];
+  const admonitions = obj['x-admonition'];
 
   return (
     <div className={styles.paramContainer}>
@@ -147,6 +200,9 @@ const Primitive = ({ name, obj, required, lang, target }: any) => {
         }}
       ></div>
       <div>
+        {admonitions && admonitions.length > 0 && (
+          <Admonitions admonitions={admonitions} lang={lang} />
+        )}
         {(minimum || maximum) && (
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             <span className={styles.paramExample}>
@@ -193,13 +249,35 @@ const Primitive = ({ name, obj, required, lang, target }: any) => {
   );
 };
 
-const Tab = ({ name, id, content, lang, target, selected, setSelected }) => {
-  const value = (
-    content.label ? content.label : `${i18n[lang]['tab.option']} ${id}`
-  ).toUpperCase();
+const Tab = ({
+  name,
+  id,
+  content,
+  lang,
+  target,
+  selected,
+  setSelected,
+  optionValue,
+}: any) => {
+  // Handle undefined content
+  if (!content) {
+    return null;
+  }
+
+  const value =
+    optionValue ||
+    (content.label
+      ? content.label
+      : `${i18n[lang]['tab.option']} ${id}`
+    ).toUpperCase();
   const label = (
     content?.['x-tab-label'] ? content['x-tab-label'] : value
   ).toUpperCase();
+
+  // Handle x-i18n for content description
+  const translatedDescription = content?.['x-i18n']?.[lang]?.description
+    ? content['x-i18n'][lang].description
+    : content?.description;
 
   return (
     <>
@@ -219,7 +297,7 @@ const Tab = ({ name, id, content, lang, target, selected, setSelected }) => {
       <div className={styles.tabPanel}>
         {content?.type === 'object' && (
           <Properties
-            description={content.description}
+            description={translatedDescription}
             properties={content.properties}
             requiredFields={content.required}
             lang={lang}
@@ -228,19 +306,23 @@ const Tab = ({ name, id, content, lang, target, selected, setSelected }) => {
         )}
         {content?.type === 'array' && (
           <Items
-            description={content.description}
+            description={translatedDescription}
             obj={content.items}
             required={content.items.required}
             lang={lang}
             target={target}
           />
         )}
-        {content?.type === 'string' ||
+        {(content?.type === 'string' ||
           content?.type === 'number' ||
           content?.type === 'integer' ||
-          (content?.type === 'boolean' && (
-            <Primitive obj={content} lang={lang} target={target} />
-          ))}
+          content?.type === 'boolean') && (
+          <Primitive
+            obj={{ ...content, description: translatedDescription }}
+            lang={lang}
+            target={target}
+          />
+        )}
         {content?.type === 'code' && (
           <CodeBlock
             className="language-json"
@@ -263,12 +345,23 @@ const AnyOf = ({
   lang,
   target,
   onValueChange,
+  x_i18n,
 }: any) => {
   const r = getRandomString(5);
+  const translatedDescription = x_i18n?.[lang]?.description
+    ? x_i18n[lang].description
+    : description;
 
-  const defaultValue = (
-    arr[0].label ? arr[0].label : `${i18n[lang]['tab.option']} 1`
-  ).toUpperCase();
+  // Map tab labels to option values for responses and requestBody
+  const getOptionValue = (label, index) => {
+    if (name === 'responses' || name === 'requestBody') {
+      // For responses and requestBody, map labels to OPTION 1, OPTION 2, etc.
+      return `OPTION ${index + 1}`;
+    }
+    return (label ? label : `${i18n[lang]['tab.option']} ${index + 1}`).toUpperCase();
+  };
+
+  const defaultValue = getOptionValue(arr[0].label, 0);
   const [selected, setSelected] = useState(defaultValue);
 
   const setSelectedOption = value => {
@@ -290,8 +383,8 @@ const AnyOf = ({
           <div
             className={styles.description}
             dangerouslySetInnerHTML={{
-              __html: description
-                ? textFilter(description, target)
+              __html: translatedDescription
+                ? textFilter(translatedDescription, target)
                 : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
             }}
           ></div>
@@ -307,6 +400,7 @@ const AnyOf = ({
       >
         <div className={styles.tabs} style={{ marginTop: '1rem' }}>
           {arr.map((item, index) => {
+            const optionValue = getOptionValue(item.label, index);
             return (
               <Tab
                 key={index}
@@ -317,6 +411,7 @@ const AnyOf = ({
                 target={target}
                 selected={selected}
                 setSelected={setSelectedOption}
+                optionValue={optionValue}
               />
             );
           })}
@@ -334,12 +429,23 @@ const OneOf = ({
   lang,
   target,
   onValueChange,
+  x_i18n,
 }: any) => {
   const r = getRandomString(5);
+  const translatedDescription = x_i18n?.[lang]?.description
+    ? x_i18n[lang].description
+    : description;
 
-  const defaultValue = (
-    arr[0].label ? arr[0].label : `${i18n[lang]['tab.option']} 1`
-  ).toUpperCase();
+  // Map tab labels to option values for responses and requestBody
+  const getOptionValue = (label, index) => {
+    if (name === 'responses' || name === 'requestBody') {
+      // For responses and requestBody, map labels to OPTION 1, OPTION 2, etc.
+      return `OPTION ${index + 1}`;
+    }
+    return (label ? label : `${i18n[lang]['tab.option']} ${index + 1}`).toUpperCase();
+  };
+
+  const defaultValue = getOptionValue(arr[0].label, 0);
   const [selected, setSelected] = useState(defaultValue);
 
   const setSelectedOption = value => {
@@ -361,8 +467,8 @@ const OneOf = ({
           <div
             className={styles.description}
             dangerouslySetInnerHTML={{
-              __html: description
-                ? textFilter(description, target)
+              __html: translatedDescription
+                ? textFilter(translatedDescription, target)
                 : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
             }}
           ></div>
@@ -378,6 +484,7 @@ const OneOf = ({
       >
         <div className={styles.tabs} style={{ marginTop: '1rem' }}>
           {arr.map((item, index) => {
+            const optionValue = getOptionValue(item.label, index);
             return (
               <Tab
                 key={index}
@@ -388,6 +495,7 @@ const OneOf = ({
                 target={target}
                 selected={selected}
                 setSelected={setSelectedOption}
+                optionValue={optionValue}
               />
             );
           })}
@@ -425,7 +533,11 @@ const Items = ({ name, description, obj, required, lang, target }: any) => {
         {obj.items && Object.keys(obj.items).includes('anyOf') && (
           <AnyOf
             name={`[]${name}`}
-            description={obj.items.description}
+            description={
+              obj.items['x-i18n']?.[lang]?.description
+                ? obj.items['x-i18n'][lang].description
+                : obj.items.description
+            }
             arr={obj.items.anyOf}
             required={obj.items.required}
             lang={lang}
@@ -435,7 +547,11 @@ const Items = ({ name, description, obj, required, lang, target }: any) => {
         {obj.items && Object.keys(obj.items).includes('oneOf') && (
           <OneOf
             name={`[]${name}`}
-            description={obj.items.description}
+            description={
+              obj.items['x-i18n']?.[lang]?.description
+                ? obj.items['x-i18n'][lang].description
+                : obj.items.description
+            }
             arr={obj.items.oneOf}
             required={obj.items.required}
             lang={lang}
@@ -445,7 +561,11 @@ const Items = ({ name, description, obj, required, lang, target }: any) => {
         {obj.items?.type === 'object' && (
           <Properties
             name={`[]${name}`}
-            description={obj.items.description}
+            description={
+              obj.items['x-i18n']?.[lang]?.description
+                ? obj.items['x-i18n'][lang].description
+                : obj.items.description
+            }
             properties={obj.items.properties}
             requiredFields={obj.items.required}
             required={required}
@@ -456,7 +576,11 @@ const Items = ({ name, description, obj, required, lang, target }: any) => {
         {obj.items?.type === 'array' && (
           <Items
             name={`[]${name}`}
-            description={obj.items.description}
+            description={
+              obj.items['x-i18n']?.[lang]?.description
+                ? obj.items['x-i18n'][lang].description
+                : obj.items.description
+            }
             obj={obj.items.items}
             required={obj.items.items.required}
             lang={lang}
@@ -682,7 +806,9 @@ const ExampleRequests = ({
   req = (queryExample ? `${req}?${queryExample}` : req) + `"`;
   req = headersExample
     ? `${req} \\\n${
-        headersExample + ` \\\n--header "Content-Type: application/json"`
+        headersExample +
+        ` \\\n--header "Request-Timeout: 5"` +
+        ` \\\n--header "Content-Type: application/json"`
       }`
     : req;
 
@@ -792,6 +918,7 @@ export const RestSpecs = props => {
 
   const target = props.target;
   const lang = props.lang ? props.lang : 'en-US';
+  const admonitions = props.specs['x-admonition'];
   const endpoint = props.endpoint.replaceAll('{', '${');
   const validParams = parameters
     ? parameters.filter(
@@ -850,6 +977,20 @@ export const RestSpecs = props => {
         style={{ display: 'grid', gap: '2rem', gridTemplateColumns: '60% 40%' }}
       >
         <div>
+          <Admonitions admonitions={admonitions} lang={lang} />
+          {deprecated && (
+            <Admonition
+              type="danger"
+              icon={admonitionIcons.danger}
+              title={i18n[lang]['admonition.title']}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: i18n[lang]['admonition.deprecated'],
+                }}
+              />
+            </Admonition>
+          )}
           <div dangerouslySetInnerHTML={{ __html: short }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <RestHeader method={props.method} endpoint={props.endpoint} />
@@ -896,16 +1037,14 @@ export const RestSpecs = props => {
                           lang={lang}
                           target={target}
                           name={param.name}
-                          description={
-                            param['x-i18n']?.[lang]?.description
-                              ? param['x-i18n']?.[lang]?.description
-                              : param.description
-                          }
+                          description={param.description}
                           type={param.schema.type}
                           required={param.required}
                           example={param.example}
                           inProp={param.in}
                           enums={param.schema.enum}
+                          x_i18n={param['x-i18n']}
+                          admonitions={param['x-admonition']}
                         />
                       );
                     })}
@@ -919,8 +1058,8 @@ export const RestSpecs = props => {
                           target={target}
                           name={param.name}
                           description={
-                            param.i18n?.[lang]?.description
-                              ? param.i18n[lang].description
+                            param['x-i18n']?.[lang]?.description
+                              ? param['x-i18n'][lang].description
                               : param.description
                           }
                           type={param.schema.type}
@@ -928,6 +1067,7 @@ export const RestSpecs = props => {
                           example={param.example}
                           inProp={param.in}
                           enums={param.schema.enum}
+                          admonitions={param['x-admonition']}
                         />
                       );
                     })}
@@ -941,8 +1081,8 @@ export const RestSpecs = props => {
                           target={target}
                           name={param.name}
                           description={
-                            param.i18n?.[lang]?.description
-                              ? param.i18n[lang].description
+                            param['x-i18n']?.[lang]?.description
+                              ? param['x-i18n'][lang].description
                               : param.description
                           }
                           type={param.schema.type}
@@ -950,6 +1090,7 @@ export const RestSpecs = props => {
                           example={param.example}
                           inProp={param.in}
                           enums={param.schema.enum}
+                          admonitions={param['x-admonition']}
                         />
                       );
                     })}
@@ -1025,6 +1166,11 @@ export const RestSpecs = props => {
                         lang={lang}
                         target={target}
                         onValueChange={handleMultipleRequests}
+                        x_i18n={
+                          requestBody.content['application/json'].schema[
+                            'x-i18n'
+                          ]
+                        }
                       />
                     )}
                     {requestBody.content['application/json']?.schema?.oneOf && (
@@ -1036,6 +1182,11 @@ export const RestSpecs = props => {
                         lang={lang}
                         target={target}
                         onValueChange={handleMultipleRequests}
+                        x_i18n={
+                          requestBody.content['application/json'].schema[
+                            'x-i18n'
+                          ]
+                        }
                       />
                     )}
                     {requestBody.content['application/json']?.schema?.type !==
@@ -1116,6 +1267,9 @@ export const RestSpecs = props => {
                 lang={lang}
                 target={target}
                 onValueChange={handleMultipleResponses}
+                x_i18n={
+                  responses['200'].content['application/json'].schema['x-i18n']
+                }
               />
             )}
             {responses['200']?.content['application/json']?.schema?.oneOf && (
@@ -1125,6 +1279,9 @@ export const RestSpecs = props => {
                 lang={lang}
                 target={target}
                 onValueChange={handleMultipleResponses}
+                x_i18n={
+                  responses['200'].content['application/json'].schema['x-i18n']
+                }
               />
             )}
             {responses['200']?.content['application/json']?.schema?.type ===

@@ -192,6 +192,23 @@ export const Community: FC<Props> = (props: Props) => {
           >
             <h1 className="">{t('title')}</h1>
 
+            <div className={classes.officeHoursContainer}>
+              <div className={classes.imgWrapper}></div>
+              <div className={classes.contentWrapper}>
+                <h2 className={classes.title}>{t('officeHours.title')}</h2>
+                <p className={classes.desc}>{t('officeHours.content')}</p>
+
+                <CustomButton
+                  variant="contained"
+                  className={classes.linkBtn}
+                  href={MILVUS_OFFICE_HOURS_URL}
+                  endIcon={<RightTopArrowIcon />}
+                >
+                  {t('officeHours.button')}
+                </CustomButton>
+              </div>
+            </div>
+
             <ul className={classes.mediaWrapper}>
               {socialMediaList.map(v => {
                 if (!v.show) {
@@ -226,23 +243,6 @@ export const Community: FC<Props> = (props: Props) => {
                 );
               })}
             </ul>
-
-            <div className={classes.officeHoursContainer}>
-              <div className={classes.imgWrapper}></div>
-              <div className={classes.contentWrapper}>
-                <h2 className={classes.title}>{t('officeHours.title')}</h2>
-                <p className={classes.desc}>{t('officeHours.content')}</p>
-
-                <CustomButton
-                  variant="contained"
-                  className={classes.linkBtn}
-                  href={MILVUS_OFFICE_HOURS_URL}
-                  endIcon={<RightTopArrowIcon />}
-                >
-                  {t('officeHours.button')}
-                </CustomButton>
-              </div>
-            </div>
           </section>
 
           {/* <section

@@ -196,7 +196,7 @@ export const useInkeepSettings = ({
                 icon: { builtIn: 'IoHelpBuoyOutline' },
                 action: {
                   type: 'open_link',
-                  url: 'https://meetings.hubspot.com/chloe-williams1/milvus-office-hour',
+                  url: 'https://meetings.hubspot.com/chloe-williams1/milvus-meeting',
                 },
               },
             ];

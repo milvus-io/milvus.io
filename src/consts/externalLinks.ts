@@ -33,6 +33,5 @@ export const ZILLIZ_OFFICIAL_WEBSITE = 'https://zilliz.com/';
 
 export const CONTACT_SALES_URL = 'https://zilliz.com/contact-sales';
 
-// https://meetings.hubspot.com/chloe-williams1/milvus-office-hour?uuid=4cb203e5-482a-47e0-90a6-7acc511d61f4
 export const MILVUS_OFFICE_HOURS_URL =
-  'https://meetings.hubspot.com/chloe-williams1/milvus-office-hour?uuid=4cb203e5-482a-47e0-90a6-7acc511d61f4';
+  'https://meetings.hubspot.com/chloe-williams1/milvus-meeting';

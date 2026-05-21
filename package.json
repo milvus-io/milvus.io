@@ -49,7 +49,7 @@
     "husky": "^9.1.7",
     "i18next": "^23.16.8",
     "instantsearch.css": "^7.4.5",
-    "js-cookie": "^3.0.5",
+    "js-cookie": "^3.0.7",
     "katex": "^0.16.40",
     "lucide-react": "^0.379.0",
     "markdown-it": "^14.1.1",

@@ -1,6 +1,8 @@
 export const i18n = {
   'en-US': {
     'admonition.title': 'Notes',
+    'admonition.deprecated':
+      'This API is deprecated and may be removed in a future release.',
     'admonition.cloud.region':
       '<ul><li>You need to replace <code>${CLOUD_REGION}</code> with the appropriate region for your deployment.</li><li>To get the cloud region ID, refer to <a href="/docs/on-zilliz-cloud-console">On Zilliz Cloud Console</a> or <a href="/reference/restful/list-cloud-regions">List Cloud Regions</a>.</li></ul>',
     'admonition.cluster.endpoint.v1':
@@ -23,6 +25,7 @@ export const i18n = {
   },
   'zh-CN': {
     'admonition.title': '说明',
+    'admonition.deprecated': '该 API 已弃用，可能在未来版本中移除。',
     'admonition.cloud.region':
       '<ul><li>你需要将 <code>${CLOUD_REGION}</code> 替换为您的集群所在区域。</li><li>获取云区域 ID 请参考 <a href="/docs/on-zilliz-cloud-console">Zilliz Cloud 控制台</a> 或使用<a href="/reference/restful/list-cloud-regions">查看云区域</a>接口。</li></ul>',
     'admonition.cluster.endpoint.v1':

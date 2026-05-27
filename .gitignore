@@ -62,3 +62,6 @@ marketing-automation-plan.md
 
 # playwright
 /.playwright-mcp/
+
+openspec/
+.claude/

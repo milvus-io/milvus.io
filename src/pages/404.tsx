@@ -132,23 +132,14 @@ export const getStaticProps = async () => {
   const list = generateAllBlogContentList();
 
   // they want to display the blogs in specific order
-  const blogList = [
-    list.find(
-      v =>
-        v.frontMatter.id.trim() ===
-        'introduce-milvus-2-6-built-for-scale-designed-to-reduce-costs.md'
-    ),
-    list.find(
-      v =>
-        v.frontMatter.id.trim() ===
-        'journey-to-35k-github-stars-story-of-building-milvus-from-scratch.md'
-    ),
-    list.find(
-      v =>
-        v.frontMatter.id.trim() ===
-        'benchmarks-lie-vector-dbs-deserve-a-real-test.md'
-    ),
+  const featuredIds = [
+    'introduce-milvus-2-6-built-for-scale-designed-to-reduce-costs.md',
+    'journey-to-35k-github-stars-story-of-building-milvus-from-scratch.md',
+    'benchmarks-lie-vector-dbs-deserve-a-real-test.md',
   ];
+  const blogList = featuredIds
+    .map(id => list.find(v => v.frontMatter.id?.trim() === id))
+    .filter(Boolean);
 
   return {
     props: {

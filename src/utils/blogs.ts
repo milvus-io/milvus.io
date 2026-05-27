@@ -30,22 +30,24 @@ export const generateAllBlogContentList = (params?: {
     .readdirSync(directoryPath)
     .filter(validationFileFilter)
     .map((v: string) => join(directoryPath, v));
-  const blogList: BlogDataType[] = paths.map((p: string) => {
-    const fileData = fs.readFileSync(p, 'utf-8');
-    const { data, content } = matter(fileData) as {
-      data: OriginBlogFrontMatterType;
-      content: string;
-    };
+  const blogList: BlogDataType[] = paths
+    .map((p: string) => {
+      const fileData = fs.readFileSync(p, 'utf-8');
+      const { data, content } = matter(fileData) as {
+        data: OriginBlogFrontMatterType;
+        content: string;
+      };
 
-    return {
-      frontMatter: {
-        ...data,
-        date: `${data.date}`,
-        tags: data.tags ? data.tags.split(',').map(t => t.trim()) : [],
-      },
-      content,
-    };
-  });
+      return {
+        frontMatter: {
+          ...data,
+          date: `${data.date}`,
+          tags: data.tags ? data.tags.split(',').map(t => t.trim()) : [],
+        },
+        content,
+      };
+    })
+    .filter((b: BlogDataType) => typeof b.frontMatter.id === 'string');
   blogList.sort((a, b) => {
     return (
       new Date(b.frontMatter.date).getTime() -

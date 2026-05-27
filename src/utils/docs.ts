@@ -96,7 +96,6 @@ export const generateDocVersionInfo = (params?: {
     usableVersions = usableVersions.filter(v => v.version !== releaseVersion);
   }
 
-  console.log({ usableVersions });
   const latestVersion = usableVersions[0]?.version || '';
 
   const restVersions = usableVersions

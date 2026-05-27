@@ -15,7 +15,7 @@ import { LanguageEnum } from '@/types/localization';
 const matter = require('gray-matter');
 
 export const BASE_DOC_DIR = join(process.cwd(), 'src/docs');
-export const DOCS_MINIMUM_VERSION = 'v2.2.x';
+export const DOCS_MINIMUM_VERSION = 'v2.4.x';
 export const CPP_DOCS_MINIMUM_VERSION = 'v2.6.x';
 const IGNORE_VERSIONS = ['v2.3.0-beta'];
 export const IGNORE_FILES = [
@@ -96,7 +96,8 @@ export const generateDocVersionInfo = (params?: {
     usableVersions = usableVersions.filter(v => v.version !== releaseVersion);
   }
 
-  const latestVersion = usableVersions[0].version;
+  console.log({ usableVersions });
+  const latestVersion = usableVersions[0]?.version || '';
 
   const restVersions = usableVersions
     .map(v => v.version)

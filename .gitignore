@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# build-time doc sitemap segments
+/.doc-sitemap/
+
 # production
 /build
 

@@ -10,6 +10,7 @@ import {
   generateApiMenuAndContentDataOfAllVersions,
   generateApiMenuAndContentDataOfSingleVersion,
   generateApiReferenceVersionsInfo,
+  generateSingleApiDocContent,
 } from '@/utils/apiReference';
 import {
   ApiFileDateInfoType,
@@ -334,18 +335,20 @@ export const getStaticProps: GetStaticProps = async context => {
     [ApiReferenceRouteEnum.Restful]: ApiReferenceLanguageEnum.Restful,
   };
 
+  const language = routeCategoryToLanguage[languageCategory];
   const apiData = generateApiReferenceVersionsInfo();
   const { versions, latestVersion } =
-    apiData.find(
-      v => v.language === routeCategoryToLanguage[languageCategory]
-    ) || {};
-  const curCategoryData = generateApiMenuAndContentDataOfAllVersions({
-    language: routeCategoryToLanguage[languageCategory],
-    withContent: true,
-  });
+    apiData.find(v => v.language === language) || {};
 
+  // Load only the requested version's menu + a frontmatter-only content index,
+  // then read the single matched file, so an on-demand render does not pull
+  // every version's content into memory.
   const { menuData, contentList: contentData } =
-    curCategoryData.find(v => v.version === version) || {};
+    generateApiMenuAndContentDataOfSingleVersion({
+      language,
+      version: version as string,
+      withContent: false,
+    }) as any;
 
   // Under the blocking fallback getStaticProps runs for arbitrary params, so an
   // unknown version/slug must 404 instead of throwing during destructuring.
@@ -353,19 +356,24 @@ export const getStaticProps: GetStaticProps = async context => {
     return { notFound: true };
   }
 
-  const { frontMatter, content: apiContent } =
-    contentData.find(v => {
-      const {
-        frontMatter: { id, parentIds },
-      } = v;
-      const targetSlug = slug.join('/');
-      const sourceSlug = [...parentIds, id].join('/');
-      return targetSlug === sourceSlug;
-    }) || {};
+  const matchedDoc = contentData.find(v => {
+    const {
+      frontMatter: { id, parentIds },
+    } = v;
+    const targetSlug = slug.join('/');
+    const sourceSlug = [...parentIds, id].join('/');
+    return targetSlug === sourceSlug;
+  });
 
-  if (!frontMatter) {
+  if (!matchedDoc) {
     return { notFound: true };
   }
+
+  const { frontMatter } = matchedDoc;
+  const apiContent = generateSingleApiDocContent({
+    language,
+    relativePath: frontMatter.relativePath,
+  });
 
   const { tree: doc, codeList } = markdownToHtml(apiContent || '', {
     showAnchor: true,

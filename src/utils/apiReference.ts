@@ -297,6 +297,27 @@ export const generateApiMenuAndContentDataOfSingleVersion = (params: {
   return result;
 };
 
+// Reads only the requested api doc's raw content instead of loading every
+// version's content into memory. The single-version menu/index (withContent
+// false) resolves the slug to a file's relativePath; this reads that one file.
+// Used on the on-demand render path to keep runtime memory bounded.
+export const generateSingleApiDocContent = (params: {
+  language: ApiReferenceLanguageEnum;
+  relativePath: string;
+}): string => {
+  const base = API_REFERENCE_CONFIG[params.language].path;
+  const filePath = join(base, params.relativePath);
+
+  try {
+    const fileData = fs.readFileSync(filePath, 'utf-8');
+    const { content } = matter(fileData) as { content: string };
+    return content;
+  } catch (error) {
+    console.error('generateSingleApiDocContent error:', error);
+    return '';
+  }
+};
+
 // 4. file data list of each language for all versions to generate dynamic routes
 export const generateApiMenuAndContentDataOfAllVersions = (params: {
   language: ApiReferenceLanguageEnum;

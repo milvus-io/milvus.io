@@ -232,6 +232,57 @@ export const generateContentDataOfSingleFile = (params: {
   return targetFileData;
 };
 
+// Reads only the requested doc's full content (and propsInfo) instead of loading
+// the entire version's content into memory. The frontmatter-only index (cached,
+// no content/propsInfo) resolves id -> file path, then a single file is read.
+// Used on the on-demand (blocking) render path to keep runtime memory bounded:
+// without this, every visited version/language would cache hundreds of docs'
+// full content in docCache, which can grow until the process is OOM-killed.
+export const generateSingleDocContent = (params: {
+  version: string;
+  lang?: LanguageEnum;
+  id: string;
+}) => {
+  const { version, lang = LanguageEnum.ENGLISH, id } = params;
+
+  const index = generateAllContentDataOfSingleVersion({
+    version,
+    lang,
+    withContent: false,
+  });
+  const meta = index.find(v => v.frontMatter.id === id);
+  if (!meta) {
+    return undefined;
+  }
+
+  // editPath is the version-relative path captured in readFile, e.g.
+  // "/v2.5.x/site/zh/userGuide/x.md"; it maps back under localization/.
+  const filePath = join(BASE_DOC_DIR, 'localization', meta.editPath);
+
+  try {
+    const fileData = fs.readFileSync(filePath, 'utf-8');
+    const { data, content } = matter(fileData) as {
+      data: DocFrontMatterType;
+      content: string;
+    };
+    const propsInfo = JSON.parse(
+      removeZeroWidthSpacesFromString(
+        fs.readFileSync(filePath.replace('.md', '.json'), 'utf-8')
+      )
+    );
+
+    return {
+      frontMatter: data,
+      content: removeZeroWidthSpacesFromString(content),
+      editPath: meta.editPath,
+      propsInfo,
+    };
+  } catch (error) {
+    console.error('generateSingleDocContent error:', error);
+    return undefined;
+  }
+};
+
 export const generateAllContentDataOfAllVersion = (lang?: LanguageEnum) => {
   const language = lang || LanguageEnum.ENGLISH;
   const cacheKey = `all-content-${language}`;

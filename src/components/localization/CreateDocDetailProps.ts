@@ -1,6 +1,7 @@
 import {
   generateDocVersionInfo,
   generateAllContentDataOfSingleVersion,
+  generateSingleDocContent,
   generateMenuDataOfCurrentVersion,
   generateAllContentDataOfAllVersion,
   getAvailableLanguagesForDoc,
@@ -66,15 +67,13 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
     const { versions, latestVersion } = generateDocVersionInfo();
     const currentVersion = version || latestVersion;
 
-    const docDetailContentList = generateAllContentDataOfSingleVersion({
+    // Load only the requested doc instead of the whole version's content, so an
+    // on-demand render keeps runtime memory bounded.
+    const matchedDoc = generateSingleDocContent({
       version: currentVersion,
-      withContent: true,
       lang,
+      id,
     });
-
-    const matchedDoc = docDetailContentList.find(
-      v => v.frontMatter.id === id
-    );
 
     // Under the blocking fallback getStaticProps runs for arbitrary ids, so an
     // unknown id must 404 instead of throwing during destructuring.

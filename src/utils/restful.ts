@@ -190,6 +190,26 @@ const generateApiMenuData = (params: {
   }
 };
 
+// Reads only the requested restful doc's raw content instead of loading every
+// version's content into memory. relativePath points at the actual .mdx file.
+// Used on the on-demand render path to keep runtime memory bounded.
+export const generateSingleRestfulDocContent = (params: {
+  language: ApiReferenceLanguageEnum;
+  relativePath: string;
+}): string => {
+  const base = API_RESTFUL_CONFIG[params.language].path;
+  const filePath = join(base, params.relativePath);
+
+  try {
+    const fileData = fs.readFileSync(filePath, 'utf-8');
+    const { content } = matter(fileData) as { content: string };
+    return content;
+  } catch (error) {
+    console.error('generateSingleRestfulDocContent error:', error);
+    return '';
+  }
+};
+
 export const generateRestfulMenuAndContentDataOfSingleVersion = (params: {
   language: ApiReferenceLanguageEnum;
   version: string;

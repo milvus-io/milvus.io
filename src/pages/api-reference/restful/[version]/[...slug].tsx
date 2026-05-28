@@ -24,6 +24,7 @@ import {
   generateRestfulMenuAndContentDataOfAllVersions,
   generateRestfulMenuAndContentDataOfSingleVersion,
   generateRestfulVersionsInfo,
+  generateSingleRestfulDocContent,
   SPLIT_FLAG,
 } from '@/utils/restful';
 import { writeSitemapSegment } from '@/utils/doc-sitemap-segments';
@@ -225,13 +226,15 @@ export async function getStaticProps({ params }) {
   const { versions, latestVersion } =
     restfulInfo.find(v => v.language === ApiReferenceLanguageEnum.Restful) ||
     {};
-  const curCategoryData = generateRestfulMenuAndContentDataOfAllVersions({
-    language: ApiReferenceLanguageEnum.Restful,
-    withContent: true,
-  });
-
+  // Load only the requested version's menu + a frontmatter-only content index,
+  // then read the single matched .mdx file, so an on-demand render does not pull
+  // every version's content into memory.
   const { menuData, contentList: contentData } =
-    curCategoryData.find(v => v.version === version) || {};
+    generateRestfulMenuAndContentDataOfSingleVersion({
+      language: ApiReferenceLanguageEnum.Restful,
+      version,
+      withContent: false,
+    }) as any;
 
   // Under the blocking fallback getStaticProps runs for arbitrary params, so an
   // unknown version/slug must 404 instead of throwing during destructuring.
@@ -239,19 +242,24 @@ export async function getStaticProps({ params }) {
     return { notFound: true };
   }
 
-  const { frontMatter, content } =
-    contentData.find(v => {
-      const {
-        frontMatter: { id, parentIds },
-      } = v;
-      const targetSlug = slug.join('/');
-      const sourceSlug = [...parentIds, id].join('/');
-      return targetSlug === sourceSlug;
-    }) || {};
+  const matchedDoc = contentData.find(v => {
+    const {
+      frontMatter: { id, parentIds },
+    } = v;
+    const targetSlug = slug.join('/');
+    const sourceSlug = [...parentIds, id].join('/');
+    return targetSlug === sourceSlug;
+  });
 
-  if (!frontMatter) {
+  if (!matchedDoc) {
     return { notFound: true };
   }
+
+  const { frontMatter } = matchedDoc;
+  const content = generateSingleRestfulDocContent({
+    language: ApiReferenceLanguageEnum.Restful,
+    relativePath: frontMatter.relativePath,
+  });
 
   const { exports } = await getVariablesFromMDX(content);
   const mdxSource = await serialize(content, {

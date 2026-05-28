@@ -66,38 +66,6 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
     const { versions, latestVersion } = generateDocVersionInfo();
     const currentVersion = version || latestVersion;
 
-    const docMenu = generateMenuDataOfCurrentVersion({
-      docVersion: currentVersion,
-      lang,
-    });
-
-    // used to detect has same page of current md
-    const mdListData = generateAllContentDataOfAllVersion();
-
-    // languages that have this doc for hreflang tags
-    const availableLanguages = getAvailableLanguagesForDoc({
-      version: currentVersion,
-      docId: id,
-    });
-
-    // xxx.md of latest version
-    const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
-      docVersion: currentVersion,
-    });
-    const menu = [...docMenu, outerApiMenuItem];
-    const hreflangUrls = getDocHreflangUrls({
-      version: currentVersion,
-      latestVersion,
-      docId: id,
-      availableLanguages,
-    });
-    const canonicalUrl = getDocCanonicalUrl({
-      lang,
-      version: currentVersion,
-      latestVersion,
-      docId: id,
-    });
-
     const docDetailContentList = generateAllContentDataOfSingleVersion({
       version: currentVersion,
       withContent: true,
@@ -120,6 +88,42 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
       editPath,
       propsInfo,
     } = matchedDoc;
+
+    const docMenu = generateMenuDataOfCurrentVersion({
+      docVersion: currentVersion,
+      lang,
+    });
+
+    // used to detect has same page of current md
+    const mdListData = generateAllContentDataOfAllVersion();
+
+    // languages that have this doc for hreflang tags. Pass the matched file's
+    // relative path so this resolves via cheap existsSync checks instead of
+    // parsing every language's frontmatter on the on-demand render path.
+    const availableLanguages = getAvailableLanguagesForDoc({
+      version: currentVersion,
+      docId: id,
+      relativePath: editPath,
+      lang,
+    });
+
+    // xxx.md of latest version
+    const outerApiMenuItem = generateApiMenuDataOfCurrentVersion({
+      docVersion: currentVersion,
+    });
+    const menu = [...docMenu, outerApiMenuItem];
+    const hreflangUrls = getDocHreflangUrls({
+      version: currentVersion,
+      latestVersion,
+      docId: id,
+      availableLanguages,
+    });
+    const canonicalUrl = getDocCanonicalUrl({
+      lang,
+      version: currentVersion,
+      latestVersion,
+      docId: id,
+    });
 
     const { codeList, anchorList } = propsInfo;
     const headingContent = anchorList?.[0]?.label;

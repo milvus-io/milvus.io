@@ -270,12 +270,33 @@ export const generateAllContentDataOfAllVersion = (lang?: LanguageEnum) => {
 export const getAvailableLanguagesForDoc = (params: {
   version: string;
   docId?: string;
+  // Relative path of the matched doc (e.g. "/v2.5.x/site/zh/userGuide/x.md")
+  // plus its language. Localized docs mirror the same file tree across
+  // languages, so when these are supplied we can check sibling files with
+  // existsSync instead of parsing every language's frontmatter — the latter is
+  // far too slow on the on-demand (blocking) render path.
+  relativePath?: string;
+  lang?: LanguageEnum;
 }): LanguageEnum[] => {
-  const { version, docId } = params;
+  const { version, docId, relativePath, lang } = params;
   const allLanguages = Object.values(LanguageEnum);
 
-  return allLanguages.filter(lang => {
-    const langDir = join(BASE_DOC_DIR, `localization/${version}/site/${lang}`);
+  if (docId && relativePath && lang) {
+    return allLanguages.filter(targetLang => {
+      const targetPath = join(
+        BASE_DOC_DIR,
+        'localization',
+        relativePath.replace(`/site/${lang}/`, `/site/${targetLang}/`)
+      );
+      return fs.existsSync(targetPath);
+    });
+  }
+
+  return allLanguages.filter(language => {
+    const langDir = join(
+      BASE_DOC_DIR,
+      `localization/${version}/site/${language}`
+    );
     if (!fs.existsSync(langDir)) {
       return false;
     }
@@ -286,7 +307,7 @@ export const getAvailableLanguagesForDoc = (params: {
     // Check if any file in this language dir has frontMatter.id === docId
     const data = generateAllContentDataOfSingleVersion({
       version,
-      lang,
+      lang: language,
       withContent: false,
     });
     return data.some(d => d.frontMatter.id === docId);

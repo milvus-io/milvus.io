@@ -17,6 +17,7 @@ import {
   stripMdListDataForClient,
   stripMenuForClient,
 } from '@/utils/client-doc-data';
+import { writeSitemapSegment } from '@/utils/doc-sitemap-segments';
 
 export default DocDetailPage;
 
@@ -33,9 +34,28 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
       params: { id: v.frontMatter.id },
     }));
 
+    // Only the English latest version is prerendered at build time. Every other
+    // language/version is generated on demand via the blocking fallback and then
+    // cached by the running server, which keeps build time and memory low.
+    const isCorePrerender =
+      lang === LanguageEnum.ENGLISH && version === '';
+
+    // next-sitemap auto-discovers prerendered pages from the prerender manifest,
+    // so only on-demand routes need their URLs recorded here. This keeps the
+    // sitemap complete without duplicating the prerendered English latest URLs.
+    if (!isCorePrerender) {
+      const langSegment =
+        lang === LanguageEnum.ENGLISH ? '' : `/${lang}`;
+      const versionSegment = version ? `/${version}` : '';
+      writeSitemapSegment(
+        `docs__${lang}__${version || 'latest'}`,
+        paths.map(p => `/docs${langSegment}${versionSegment}/${p.params.id}`)
+      );
+    }
+
     return {
-      paths,
-      fallback: false,
+      paths: isCorePrerender ? paths : [],
+      fallback: 'blocking' as const,
     };
   };
 
@@ -84,12 +104,22 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
       lang,
     });
 
+    const matchedDoc = docDetailContentList.find(
+      v => v.frontMatter.id === id
+    );
+
+    // Under the blocking fallback getStaticProps runs for arbitrary ids, so an
+    // unknown id must 404 instead of throwing during destructuring.
+    if (!matchedDoc) {
+      return { notFound: true };
+    }
+
     const {
       content: docDetailContent,
       frontMatter,
       editPath,
       propsInfo,
-    } = docDetailContentList.find(v => v.frontMatter.id === id);
+    } = matchedDoc;
 
     const { codeList, anchorList } = propsInfo;
     const headingContent = anchorList?.[0]?.label;

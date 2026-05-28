@@ -35,6 +35,7 @@ import {
 import { formatApiRelativePath } from '@/utils';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { getApiCanonicalUrl } from '@/components/localization/utils';
+import { writeSitemapSegment } from '@/utils/doc-sitemap-segments';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
 
@@ -269,27 +270,48 @@ export const getStaticPaths = () => {
     });
   });
 
+  // Only the latest version of each SDK is prerendered at build time; archived
+  // versions are generated on demand via the blocking fallback and cached by the
+  // running server, which keeps build time and memory low.
+  const latestVersionByCategory = new Map<string, string>();
+  apiData.forEach(({ category, latestVersion }) => {
+    latestVersionByCategory.set(category, latestVersion);
+  });
+
   /**
    * 1. /pymilvus/v2.4.x/DataImport/LocalBulkWriter/append_row.md
    * 2. /pymilvus/v2.4.x/append_rows.md
    */
-  const paths = routers.map(v => {
+  const corePaths: { params: { language: string; version: string; slug: string[] } }[] = [];
+  const onDemandUrlsByKey = new Map<string, string[]>();
+
+  routers.forEach(v => {
     const {
       frontMatter: { id, parentIds, category, version },
     } = v;
     const slug = [...parentIds, id];
-    return {
-      params: {
-        language: category,
-        version,
-        slug,
-      },
-    };
+
+    if (latestVersionByCategory.get(category) === version) {
+      corePaths.push({ params: { language: category, version, slug } });
+    } else {
+      const key = `api__${category}__${version}`;
+      const url = `/api-reference/${category}/${version}/${slug.join('/')}`;
+      const list = onDemandUrlsByKey.get(key) || [];
+      list.push(url);
+      onDemandUrlsByKey.set(key, list);
+    }
+  });
+
+  // next-sitemap auto-discovers prerendered pages from the prerender manifest,
+  // so only on-demand routes need their URLs recorded here. This keeps the
+  // sitemap complete without duplicating the prerendered latest-version URLs.
+  onDemandUrlsByKey.forEach((urls, key) => {
+    writeSitemapSegment(key, urls);
   });
 
   return {
-    paths: paths,
-    fallback: false,
+    paths: corePaths,
+    fallback: 'blocking',
   };
 };
 
@@ -325,6 +347,12 @@ export const getStaticProps: GetStaticProps = async context => {
   const { menuData, contentList: contentData } =
     curCategoryData.find(v => v.version === version) || {};
 
+  // Under the blocking fallback getStaticProps runs for arbitrary params, so an
+  // unknown version/slug must 404 instead of throwing during destructuring.
+  if (!contentData) {
+    return { notFound: true };
+  }
+
   const { frontMatter, content: apiContent } =
     contentData.find(v => {
       const {
@@ -334,6 +362,10 @@ export const getStaticProps: GetStaticProps = async context => {
       const sourceSlug = [...parentIds, id].join('/');
       return targetSlug === sourceSlug;
     }) || {};
+
+  if (!frontMatter) {
+    return { notFound: true };
+  }
 
   const { tree: doc, codeList } = markdownToHtml(apiContent || '', {
     showAnchor: true,

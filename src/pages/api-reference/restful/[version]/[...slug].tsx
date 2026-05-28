@@ -26,6 +26,7 @@ import {
   generateRestfulVersionsInfo,
   SPLIT_FLAG,
 } from '@/utils/restful';
+import { writeSitemapSegment } from '@/utils/doc-sitemap-segments';
 
 import classes from '@/styles/docDetail.module.css';
 import styles from '@/styles/restful.module.css';
@@ -179,22 +180,42 @@ export async function getStaticPaths() {
     });
   });
 
-  const paths = routers.map(v => {
+  // Only the latest version is prerendered at build time; archived versions are
+  // generated on demand via the blocking fallback and cached by the running
+  // server, which keeps build time and memory low.
+  const latestVersion = restfulInfo.find(
+    v => v.language === ApiReferenceLanguageEnum.Restful
+  )?.latestVersion;
+
+  const corePaths: { params: { version: string; slug: string[] } }[] = [];
+  const onDemandUrlsByVersion = new Map<string, string[]>();
+
+  routers.forEach(v => {
     const {
       frontMatter: { id, parentIds, version },
     } = v;
     const slug = [...parentIds, id.replace('.mdx', '.md')];
-    return {
-      params: {
-        version,
-        slug,
-      },
-    };
+
+    if (version === latestVersion) {
+      corePaths.push({ params: { version, slug } });
+    } else {
+      const url = `/api-reference/restful/${version}/${slug.join('/')}`;
+      const list = onDemandUrlsByVersion.get(version) || [];
+      list.push(url);
+      onDemandUrlsByVersion.set(version, list);
+    }
+  });
+
+  // next-sitemap auto-discovers prerendered pages from the prerender manifest,
+  // so only on-demand routes need their URLs recorded here. This keeps the
+  // sitemap complete without duplicating the prerendered latest-version URLs.
+  onDemandUrlsByVersion.forEach((urls, version) => {
+    writeSitemapSegment(`api__restful__${version}`, urls);
   });
 
   return {
-    paths,
-    fallback: false,
+    paths: corePaths,
+    fallback: 'blocking',
   };
 }
 
@@ -211,6 +232,13 @@ export async function getStaticProps({ params }) {
 
   const { menuData, contentList: contentData } =
     curCategoryData.find(v => v.version === version) || {};
+
+  // Under the blocking fallback getStaticProps runs for arbitrary params, so an
+  // unknown version/slug must 404 instead of throwing during destructuring.
+  if (!contentData) {
+    return { notFound: true };
+  }
+
   const { frontMatter, content } =
     contentData.find(v => {
       const {
@@ -220,6 +248,10 @@ export async function getStaticProps({ params }) {
       const sourceSlug = [...parentIds, id].join('/');
       return targetSlug === sourceSlug;
     }) || {};
+
+  if (!frontMatter) {
+    return { notFound: true };
+  }
 
   const { exports } = await getVariablesFromMDX(content);
   const mdxSource = await serialize(content, {

@@ -137,14 +137,22 @@ const readFile = (params: {
       );
     } else if (fileStat.isFile() && path.endsWith('.md')) {
       const fileData = fs.readFileSync(path, 'utf-8');
-      const propsInfo = removeZeroWidthSpacesFromString(
-        fs.readFileSync(path.replace('.md', '.json'), 'utf-8')
-      );
 
       const { data, content } = matter(fileData) as {
         data: DocFrontMatterType;
         content: string;
       };
+
+      // propsInfo (the sibling .json) is only consumed by getStaticProps, which
+      // always passes withContent. Skipping it during getStaticPaths-style scans
+      // avoids parsing tens of thousands of JSON files into the build-long cache.
+      const propsInfo = withContent
+        ? JSON.parse(
+            removeZeroWidthSpacesFromString(
+              fs.readFileSync(path.replace('.md', '.json'), 'utf-8')
+            )
+          )
+        : {};
 
       const cleanedContent = removeZeroWidthSpacesFromString(content);
 
@@ -154,7 +162,7 @@ const readFile = (params: {
           frontMatter: data,
           content: withContent ? cleanedContent : '',
           editPath: relativePath,
-          propsInfo: JSON.parse(propsInfo),
+          propsInfo,
         });
       }
     }

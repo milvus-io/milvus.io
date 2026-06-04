@@ -9,11 +9,6 @@ import type { Scale } from '@/components/learn-milvus/data/indexBenchmarks';
 import TradeoffChart from '@/components/learn-milvus/components/TradeoffChart';
 import styles from '@/components/learn-milvus/learnMilvus.module.css';
 
-function formatMemory(mb: number): string {
-  if (mb >= 1000) return `${(mb / 1000).toFixed(1)} GB`;
-  return `${mb} MB`;
-}
-
 function formatBuild(sec: number): string {
   if (sec === 0) return 'instant';
   if (sec < 60) return `${sec}s`;
@@ -25,6 +20,11 @@ function formatQps(qps: number): string {
   if (qps >= 1000) return `${(qps / 1000).toFixed(1)}k`;
   if (qps >= 10) return `${Math.round(qps)}`;
   return qps.toFixed(1);
+}
+
+// Temporarily hidden: remove getStaticProps below to restore this page
+export function getStaticProps() {
+  return { notFound: true };
 }
 
 export default function TradeoffDashboard() {
@@ -113,10 +113,6 @@ export default function TradeoffDashboard() {
                   <div className={styles.metric}>
                     <div className={styles.metricLabelSmall}>Recall@10</div>
                     <div className={styles.metricValueSmall}>{(b.recall * 100).toFixed(0)}%</div>
-                  </div>
-                  <div className={styles.metric}>
-                    <div className={styles.metricLabelSmall}>{t('tradeoff.memoryLabel')}</div>
-                    <div className={styles.metricValueSmall}>{formatMemory(b.memoryMB)}</div>
                   </div>
                   <div className={styles.metric}>
                     <div className={styles.metricLabelSmall}>{t('tradeoff.buildLabel')}</div>

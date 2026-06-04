@@ -42,11 +42,13 @@ export default function TradeoffChart({
       ...idx,
       qps: idx.perScale[scale].qps,
       recall: idx.perScale[scale].recall,
-      memoryMB: idx.perScale[scale].memoryMB,
+      buildSec: idx.perScale[scale].buildSec,
     }));
 
-    const minQps = Math.max(0.1, d3.min(data, (d) => d.qps)!);
-    const maxQps = d3.max(data, (d) => d.qps)!;
+    // Robust against placeholder/zero data (log scale needs positive domain).
+    const positiveQps = data.map((d) => d.qps).filter((q) => q > 0);
+    const minQps = positiveQps.length ? Math.max(0.1, d3.min(positiveQps)!) : 0.1;
+    const maxQps = positiveQps.length ? d3.max(positiveQps)! : 10000;
 
     const x = d3
       .scaleLog()
@@ -58,12 +60,13 @@ export default function TradeoffChart({
       .domain([0.7, 1.02])
       .range([M.top + innerH, M.top]);
 
-    const maxMem = d3.max(data, (d) => d.memoryMB)!;
-    const minMem = d3.min(data, (d) => d.memoryMB)!;
-    const r = d3
-      .scaleSqrt()
-      .domain([minMem, maxMem])
-      .range([22, 10]);
+    // Bubble size encodes build time — larger bubble = longer to build.
+    const maxBuild = d3.max(data, (d) => d.buildSec)!;
+    const minBuild = d3.min(data, (d) => d.buildSec)!;
+    const r =
+      maxBuild === minBuild
+        ? () => 14
+        : d3.scaleSqrt().domain([minBuild, maxBuild]).range([10, 24]);
 
     // Grid lines
     const recallTicks = [0.7, 0.8, 0.9, 1.0];
@@ -142,13 +145,13 @@ export default function TradeoffChart({
       .text('\u2197 better');
 
     // Bubbles
-    const sortedData = [...data].sort((a, b) => r(b.memoryMB) - r(a.memoryMB));
+    const sortedData = [...data].sort((a, b) => r(b.buildSec) - r(a.buildSec));
     sortedData.forEach((d) => {
       const isHighlighted = highlight === d.id;
       const isFaded = highlight !== null && !isHighlighted;
       const cx = x(d.qps);
       const cy = y(d.recall);
-      const radius = r(d.memoryMB);
+      const radius = r(d.buildSec);
 
       svg
         .append('circle')

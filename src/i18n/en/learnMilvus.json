@@ -162,7 +162,7 @@
     "subtitle": "There is no single \"best\" index. The right choice depends on your data size, latency budget, recall target, and memory constraints. Pick a dataset scale and hover the bubbles or cards to compare.",
     "datasetScale": "Dataset scale",
     "speedVsRecall": "Speed vs. Recall",
-    "bubbleSizeNote": "Bubble size shows memory footprint — <strong>smaller bubble = more memory used</strong>.",
+    "bubbleSizeNote": "Bubble size shows index build time — <strong>larger bubble = slower to build</strong>.",
     "speedLabel": "Speed",
     "memoryLabel": "Memory",
     "buildLabel": "Build",

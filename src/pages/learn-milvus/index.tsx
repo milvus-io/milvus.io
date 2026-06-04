@@ -14,7 +14,8 @@ export default function LearnMilvusHome() {
     { to: '/learn-milvus/ivf', title: t('home.cards.ivf.title'), desc: t('home.cards.ivf.desc') },
     { to: '/learn-milvus/hnsw', title: t('home.cards.hnsw.title'), desc: t('home.cards.hnsw.desc') },
     { to: '/learn-milvus/diskann', title: t('home.cards.diskann.title'), desc: t('home.cards.diskann.desc') },
-    { to: '/learn-milvus/tradeoff', title: t('home.cards.tradeoff.title'), desc: t('home.cards.tradeoff.desc') },
+    // Temporarily hidden: tradeoff page
+    // { to: '/learn-milvus/tradeoff', title: t('home.cards.tradeoff.title'), desc: t('home.cards.tradeoff.desc') },
   ];
 
   return (

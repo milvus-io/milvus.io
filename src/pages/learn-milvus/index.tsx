@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import Head from 'next/head';
 import { useTranslation, Trans } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import Layout from '@/components/layout/commonLayout';
+import LearnMilvusSeo from '@/components/learn-milvus/components/LearnMilvusSeo';
 import styles from '@/components/learn-milvus/learnMilvus.module.css';
 
 export default function LearnMilvusHome() {
@@ -20,10 +20,12 @@ export default function LearnMilvusHome() {
 
   return (
     <Layout disableLangSelector>
-      <Head>
-        <title>{t('home.metaTitle')}</title>
-        <meta name="description" content={t('home.metaDesc')} />
-      </Head>
+      <LearnMilvusSeo
+        path="/learn-milvus"
+        title={t('home.metaTitle')}
+        description={t('home.metaDesc')}
+        ogImage="/images/learn-milvus/og-home.png"
+      />
       <div className={styles.home}>
         <header className={styles.homeHeader}>
           <h1>{t('home.title')}</h1>

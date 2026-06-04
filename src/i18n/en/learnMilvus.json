@@ -19,12 +19,14 @@
     "visited": "Visited",
     "totalLatency": "Total latency",
     "pressRun": "Press ▶ Run Search to start.",
-    "searchComplete": "Search complete."
+    "searchComplete": "Search complete.",
+    "faqTitle": "Frequently asked questions",
+    "relatedTitle": "Keep exploring"
   },
   "home": {
     "title": "Learn Milvus",
     "metaTitle": "Learn Milvus - Interactive Vector Database Visualizations",
-    "metaDesc": "Interactive visualizations that turn abstract vector database concepts into something you can see and touch.",
+    "metaDesc": "Interactive visualizations of vector database concepts: L2, cosine and inner product similarity metrics, plus IVF, HNSW and DiskANN vector indexes.",
     "subtitle": "Interactive visualizations that turn abstract vector database concepts into something you can <strong>see</strong> and <strong>touch</strong>.",
     "cards": {
       "metric": {
@@ -50,8 +52,9 @@
     }
   },
   "metric": {
-    "title": "Metric Playground",
-    "metaTitle": "Metric Playground - Learn Milvus",
+    "title": "Vector Similarity Metrics: L2, Cosine & Inner Product",
+    "metaTitle": "L2 vs Cosine vs IP: Vector Similarity Metrics Visualized | Milvus",
+    "metaDesc": "Drag a query point and watch how L2, cosine, and inner product change which neighbors are \"nearest.\" Learn which similarity metric fits your embedding model.",
     "subtitle": "Drag the <queryPoint>query point</queryPoint> and switch metrics to see how the nearest neighbors change.",
     "topKTitle": "Top-{{k}} Nearest Neighbors",
     "higherCloser": "(higher = closer)",
@@ -80,11 +83,26 @@
     "twoRules": "Two practical rules",
     "matchMetric": "<strong>Match the metric to the model.</strong> Embedding models are <em>trained</em> with a specific metric in mind. Using a different one at search time will silently wreck your recall. Check the model card before picking.",
     "stayConsistent": "<strong>Stay consistent.</strong> All vectors in a collection must use the same metric. You cannot mix them within a single index, and you cannot meaningfully compare scores across different metrics.",
-    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept."
+    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept.",
+    "seo": {
+      "chooseTitle": "Setting the metric type in Milvus",
+      "chooseP1": "In Milvus, the metric is set per index via <code>metric_type</code> — <code>L2</code>, <code>IP</code>, or <code>COSINE</code> for dense vectors — when you create the index. Every search against that collection then uses the same function you just played with above. The single most reliable rule: <strong>use the metric your embedding model was trained with</strong>, which is listed on virtually every model card.",
+      "chooseP2": "Two useful shortcuts. Most modern text-embedding APIs (OpenAI, Cohere, Voyage and most sentence-transformers) produce vectors meant for <strong>cosine similarity</strong>. And if your vectors are normalized to unit length, cosine and inner product return identical rankings — so <code>IP</code> on normalized vectors is a common, slightly cheaper stand-in for <code>COSINE</code>.",
+      "docsCta": "Go deeper: read the <docs>Similarity Metrics documentation</docs> for the full list of metrics Milvus supports, including Hamming and Jaccard for binary vectors and BM25 for full-text search.",
+      "faq1q": "Which similarity metric should I use for OpenAI or other text embeddings?",
+      "faq1a": "Use cosine similarity (metric_type COSINE in Milvus). Almost all modern text-embedding models — including OpenAI's text-embedding-3 family — are trained for cosine similarity. Because OpenAI embeddings are normalized to unit length, inner product (IP) gives identical rankings and is a fine alternative.",
+      "faq2q": "What is the difference between cosine similarity and inner product?",
+      "faq2a": "Cosine similarity measures only the angle between two vectors, ignoring their lengths. Inner product (dot product) rewards both alignment and magnitude, so a longer vector pointing in the same direction scores higher. On unit-normalized vectors the two are mathematically equivalent.",
+      "faq3q": "Can I change the metric type after building an index in Milvus?",
+      "faq3a": "No. The metric is baked into the index at build time. To switch metrics you drop the index and rebuild it with a new metric_type. Scores from different metrics are also not comparable with each other, so don't mix them when post-processing results.",
+      "faq4q": "Does the choice of metric affect recall or search speed?",
+      "faq4a": "Speed is essentially identical — L2, IP, and cosine all cost one pass over the vector. Recall is where it matters: searching with a metric different from the one your embedding model was trained for silently degrades result quality, often dramatically."
+    }
   },
   "ivf": {
-    "title": "FLAT vs IVF",
-    "metaTitle": "FLAT vs IVF - Learn Milvus",
+    "title": "FLAT vs IVF: How the Inverted File Index Works",
+    "metaTitle": "IVF Index Explained: FLAT vs IVF Interactive Visualization | Milvus",
+    "metaDesc": "Watch brute-force FLAT and cluster-based IVF race on the same query. Tune nprobe in real time and learn how nlist and nprobe trade recall for speed in Milvus.",
     "subtitle": "Same data, same query — but a different search strategy. Drag the <queryPoint>query point</queryPoint>, adjust <code>nprobe</code>, and press <strong>Run Search</strong> to see how IVF skips most of the data.",
     "nprobeHint": "Search {{nprobe}} of {{k}} clusters",
     "flatTitle": "FLAT — Brute Force",
@@ -98,11 +116,32 @@
     "step2": "<strong>Step 1 — evaluate centroids:</strong> IVF first computes the distance from the query to every centroid. That's only {{k}} comparisons, regardless of dataset size.",
     "step3": "<strong>Step 2 — pick the closest <code>nprobe</code> clusters:</strong> these light up. All other clusters are skipped entirely.",
     "step4": "<strong>Step 3 — scan points inside the chosen clusters:</strong> only ~{{scanned}} of the {{total}} points.",
-    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop."
+    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop.",
+    "seo": {
+      "whatIsTitle": "What is an IVF index?",
+      "whatIsP1": "<strong>IVF (Inverted File)</strong> is a clustering-based approximate nearest neighbor index. At build time, k-means partitions all vectors into <code>nlist</code> clusters, each represented by its centroid. At query time, the search first compares the query against the centroids only, picks the closest <code>nprobe</code> clusters, and scans just the vectors inside them — skipping everything else.",
+      "whatIsP2": "Milvus ships several IVF variants that trade memory for accuracy: <strong>IVF_FLAT</strong> stores raw vectors (most accurate), <strong>IVF_SQ8</strong> compresses each dimension to one byte (~4× less memory, small recall cost), and <strong>IVF_PQ</strong> applies product quantization for much higher compression with a larger recall cost.",
+      "paramsTitle": "Tuning nlist and nprobe",
+      "param1": "<strong><code>nlist</code> (build time):</strong> the number of k-means clusters. A common starting point is <code>4 × sqrt(N)</code> for N vectors. More clusters mean each one is smaller — faster scans, but the centroid sweep costs more and boundary effects grow.",
+      "param2": "<strong><code>nprobe</code> (query time):</strong> how many clusters to scan per query. This is the main recall/latency knob — exactly what the slider above controls. Start around <code>nlist / 16</code> and increase until recall meets your target.",
+      "param3": "<strong>Variant choice:</strong> start with IVF_FLAT. Move to IVF_SQ8 when memory is tight, and to IVF_PQ only when the dataset is too large for SQ8 — and verify recall on your own data after each step down.",
+      "whenTitle": "IVF vs HNSW vs DiskANN",
+      "whenP1": "IVF builds fast, has a small memory overhead on top of the vectors, and is easy to reason about — but at the same recall target, HNSW usually answers queries faster in memory. Choose IVF when you rebuild indexes often (fast build matters), when memory is constrained (IVF_SQ8/IVF_PQ), or when you want predictable, tunable scan behavior. Choose HNSW for the lowest in-memory query latency, and DiskANN when vectors no longer fit in RAM at all.",
+      "docsCta": "Go deeper: read the <docs>IVF_FLAT documentation</docs> for index params, or see <docsExplained>Index Explained</docsExplained> for the full decision guide.",
+      "faq1q": "What is the difference between IVF_FLAT, IVF_SQ8, and IVF_PQ?",
+      "faq1a": "All three cluster vectors the same way; they differ in how vectors are stored inside clusters. IVF_FLAT keeps raw float vectors (best recall). IVF_SQ8 quantizes each dimension to 8 bits, cutting memory roughly 4× with a small recall loss. IVF_PQ replaces vectors with short product-quantization codes for the highest compression and the largest recall loss.",
+      "faq2q": "How should I choose nlist and nprobe?",
+      "faq2a": "A common rule of thumb is nlist = 4 × sqrt(N) for N vectors, then tune nprobe at query time. Larger nprobe scans more clusters: higher recall, higher latency. Start around nlist/16 and increase until recall on a held-out query set meets your target.",
+      "faq3q": "Why does IVF miss some true nearest neighbors?",
+      "faq3a": "Because of cluster boundaries. If the query lands near the edge of a cluster, some of its true neighbors may sit in an adjacent cluster that wasn't among the nprobe clusters scanned. You can see this in the visualization by dragging the query point near a boundary with nprobe = 1.",
+      "faq4q": "Should I use IVF or HNSW?",
+      "faq4a": "At the same recall, HNSW is usually faster for in-memory search but uses more memory and builds more slowly. IVF builds quickly and pairs well with quantization (SQ8/PQ) when memory is tight. For datasets that exceed RAM entirely, consider DiskANN instead."
+    }
   },
   "hnsw": {
-    "title": "HNSW Explorer",
-    "metaTitle": "HNSW Explorer - Learn Milvus",
+    "title": "HNSW Explorer: Hierarchical Navigable Small World, Visualized",
+    "metaTitle": "HNSW Algorithm Explained: Interactive Visualization | Milvus",
+    "metaDesc": "Step through an HNSW search layer by layer. Tune M and ef to see how the hierarchical graph trades memory for speed, and learn how to set them in Milvus.",
     "subtitle": "Watch a search travel through the layered graph — from the sparse top layer (highways) down to the dense bottom layer (local roads). Drag the <queryPoint>query point</queryPoint> on Layer 0 and tune <code>M</code> / <code>ef</code> to see how the graph changes.",
     "mHint": "Max neighbors per node",
     "efHint": "Layer-0 candidate pool",
@@ -119,11 +158,32 @@
     "step3": "<strong>Search starts at the top:</strong> from a fixed entry point, greedily walk to the neighbor closest to the query, repeat until no improvement.",
     "step4": "<strong>Drop down a layer and repeat:</strong> the position from the previous layer becomes the start of the next layer's walk. Each drop refines the result with finer-grained edges.",
     "step5": "<strong>Layer 0 with <code>ef</code>:</strong> at the bottom layer, instead of stopping at the first local minimum, HNSW maintains a pool of <code>ef</code> best candidates and expands their neighborhoods. Larger <code>ef</code> → more accurate but slower.",
-    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>."
+    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>.",
+    "seo": {
+      "whatIsTitle": "What is HNSW?",
+      "whatIsP1": "<strong>HNSW (Hierarchical Navigable Small World)</strong> is a graph-based approximate nearest neighbor algorithm. It organizes vectors into a stack of navigable small-world graphs: sparse upper layers with long-range edges for coarse routing, and a dense bottom layer with short edges for the final fine-grained walk. A search greedily hops toward the query on each layer, then drops down — visiting roughly <code>O(log N)</code> nodes instead of scanning all N.",
+      "whatIsP2": "HNSW is the most widely used in-memory vector index, and the default graph index in Milvus. Milvus also offers <strong>HNSW_SQ</strong> and <strong>HNSW_PQ</strong> variants that quantize the stored vectors to cut memory at a small recall cost.",
+      "paramsTitle": "HNSW parameters in Milvus",
+      "param1": "<strong><code>M</code> (build time):</strong> the maximum number of edges per node, the same knob as the slider above. Typical values are 8–64. Higher M improves recall and graph connectivity but grows memory linearly and slows construction.",
+      "param2": "<strong><code>efConstruction</code> (build time):</strong> the candidate pool size used while inserting nodes. Higher values build a better-quality graph (higher achievable recall) at the cost of slower index builds. Typical values are 100–500.",
+      "param3": "<strong><code>ef</code> / <code>ef_search</code> (query time):</strong> the candidate pool kept during the Layer-0 walk — the main recall/latency knob at search time. It must be at least your top-K. Increase it until recall plateaus; latency grows roughly linearly with it.",
+      "whenTitle": "HNSW vs IVF vs DiskANN",
+      "whenP1": "HNSW typically delivers the best query latency at high recall for in-memory search — that's why it's the default choice when the dataset (plus graph overhead) fits in RAM. Its costs are memory and build time: the graph adds noticeable overhead per vector, and inserts are slower than IVF's k-means assignment. Pick IVF when you need fast index builds or aggressive quantization, and DiskANN when the dataset is too large for RAM but you still need high recall.",
+      "docsCta": "Go deeper: read the <docs>HNSW documentation</docs> for exact index params, or see <docsExplained>Index Explained</docsExplained> for the full decision guide.",
+      "faq1q": "What does the M parameter in HNSW control?",
+      "faq1a": "M caps how many edges each node keeps per layer. Larger M makes the graph better connected — higher recall and more robust routing — but memory grows linearly with M and index builds slow down. Values between 8 and 64 cover most workloads; 16–32 is a common sweet spot.",
+      "faq2q": "What is the difference between ef and efConstruction?",
+      "faq2a": "Both are candidate-pool sizes, applied at different times. efConstruction is used while building the index: it determines how thoroughly each inserted node searches for neighbors, so it controls graph quality. ef (ef_search) is used at query time: it controls how wide the Layer-0 search is, trading latency for recall on every query.",
+      "faq3q": "How much memory does an HNSW index need?",
+      "faq3a": "Roughly the raw vectors plus the graph: about d × 4 bytes per vector for float32 data, plus on the order of M × 2 × 8 bytes of edges per node. For memory-constrained deployments, Milvus offers HNSW_SQ and HNSW_PQ, which quantize stored vectors, or DiskANN, which moves full vectors to SSD.",
+      "faq4q": "When should I use HNSW instead of IVF?",
+      "faq4a": "Use HNSW when query latency at high recall is the priority and the index fits in memory — it usually wins that race. Prefer IVF when you rebuild indexes frequently (much faster builds), or when combined with SQ8/PQ quantization to fit a tight memory budget."
+    }
   },
   "diskann": {
-    "title": "DiskANN Explorer",
-    "metaTitle": "DiskANN Explorer - Learn Milvus",
+    "title": "DiskANN Explorer: Billion-Scale Vector Search From SSD",
+    "metaTitle": "DiskANN Explained: On-Disk Vector Index Visualized | Milvus",
+    "metaDesc": "Watch DiskANN walk a Vamana graph with PQ codes in RAM and full vectors on SSD. Learn when an on-disk index beats HNSW for billion-scale vector search.",
     "subtitle": "DiskANN keeps a tiny <strong>PQ-compressed</strong> copy of every vector in RAM and the <strong>full vectors + graph</strong> on SSD. Search walks the graph with cheap RAM compares, then re-ranks the top candidates with a handful of expensive disk reads.",
     "memoryWallTitle": "Why DiskANN exists: the memory wall",
     "memoryNote": "A single commodity SSD holds the disk side easily. The RAM side fits in any laptop. Without the PQ trick, you'd need a server with hundreds of GB of RAM to even load the dataset.",
@@ -154,7 +214,27 @@
     "whyScales": "<strong>Why it scales:</strong> RAM only holds compressed codes. A 1B-vector dataset with 32-byte PQ needs ~32 GB RAM — fits on a single workstation.",
     "whySlower": "<strong>Why it's slower than HNSW:</strong> SSD random reads are ~100× slower than RAM. Even with only ~10 reads, query latency is dominated by disk.",
     "whyBeats": "<strong>Why it still beats IVF_PQ for recall:</strong> the re-rank step recovers quantization errors that pure PQ-based methods can't fix.",
-    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test."
+    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test.",
+    "seo": {
+      "whatIsTitle": "What is DiskANN?",
+      "whatIsP1": "<strong>DiskANN</strong> is a graph-based approximate nearest neighbor index designed for datasets that don't fit in RAM. It builds a single-layer <strong>Vamana graph</strong> laid out for efficient disk access, keeps a tiny product-quantized (PQ) code for every vector in memory, and stores the full-precision vectors and graph edges on SSD. Searches navigate the graph using cheap in-RAM PQ comparisons and touch the disk only to re-rank a handful of finalists.",
+      "whatIsP2": "In Milvus, DiskANN powers the on-disk index option: billion-scale collections become searchable on machines with tens — not hundreds — of gigabytes of RAM, while the disk re-rank step keeps recall close to in-memory graph indexes.",
+      "paramsTitle": "What the knobs control",
+      "param1": "<strong><code>R</code> (graph degree, build time):</strong> the maximum number of edges per node in the Vamana graph. Higher R gives better connectivity and recall, at the cost of a bigger graph on disk and slower builds.",
+      "param2": "<strong><code>L</code> / <code>search_list</code> (query time):</strong> the candidate pool maintained during the beam search — the main recall/latency knob, equivalent to HNSW's ef. It must be at least your top-K.",
+      "param3": "<strong>Re-rank budget:</strong> how many finalists get their full vectors fetched from SSD for exact scoring. Each one is a random disk read, so this is where query latency lives — and also where PQ approximation errors get corrected.",
+      "whenTitle": "DiskANN vs HNSW vs IVF",
+      "whenP1": "Choose DiskANN when the dataset (or the memory bill) outgrows RAM: it serves high-recall queries with a fraction of the memory, in exchange for millisecond-level latency dominated by SSD reads. If everything fits comfortably in memory, HNSW answers faster. If you need fast index builds or moderate memory savings without involving disk, IVF variants sit in between.",
+      "docsCta": "Go deeper: read the <docs>DiskANN documentation</docs> for setup requirements, or see <docsExplained>Index Explained</docsExplained> for the full decision guide.",
+      "faq1q": "When should I use DiskANN instead of HNSW?",
+      "faq1a": "When your vectors no longer fit in RAM — or the RAM to hold them costs more than you want to pay. A billion 768-dim float vectors need ~3 TB in memory for HNSW, but only tens of GB of RAM plus an SSD with DiskANN. If the dataset fits in memory comfortably, HNSW remains the lower-latency choice.",
+      "faq2q": "What hardware does DiskANN need?",
+      "faq2a": "A fast NVMe SSD is the key requirement, since query latency is dominated by a handful of random disk reads (each ~100 µs). RAM needs are modest: roughly the PQ codes (e.g. 32–64 bytes per vector) plus working buffers.",
+      "faq3q": "Is DiskANN slower than in-memory indexes like HNSW?",
+      "faq3a": "Per query, yes — typically low single-digit milliseconds versus sub-millisecond for in-memory HNSW, because each disk re-rank is ~100× slower than a RAM access. The trade is cost: DiskANN serves the same dataset with an order of magnitude less RAM while keeping recall above 90–95%.",
+      "faq4q": "How does DiskANN keep recall high despite PQ compression?",
+      "faq4a": "PQ codes are only used to steer the graph walk, not to produce final scores. Before returning results, DiskANN reads the full-precision vectors of the top candidates from SSD and re-ranks them exactly, correcting the quantization error that pure PQ-based indexes like IVF_PQ cannot fix."
+    }
   },
   "tradeoff": {
     "title": "Tradeoff Dashboard",

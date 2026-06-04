@@ -1,6 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import { useTranslation, Trans } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import Layout from '@/components/layout/commonLayout';
@@ -14,6 +13,8 @@ import {
 import IndexCanvas from '@/components/learn-milvus/components/IndexCanvas';
 import type { Progress } from '@/components/learn-milvus/components/IndexCanvas';
 import ParamSlider from '@/components/learn-milvus/components/ParamSlider';
+import LearnMilvusSeo from '@/components/learn-milvus/components/LearnMilvusSeo';
+import DeepDive from '@/components/learn-milvus/components/DeepDive';
 import { useAnimationSteps } from '@/components/learn-milvus/hooks/useAnimationSteps';
 import styles from '@/components/learn-milvus/learnMilvus.module.css';
 
@@ -110,11 +111,25 @@ export default function IVFLab() {
     reset();
   }, [reset]);
 
+  const faq = useMemo(
+    () =>
+      [1, 2, 3, 4].map((i) => ({
+        question: t(`ivf.seo.faq${i}q`),
+        answer: t(`ivf.seo.faq${i}a`),
+      })),
+    [t],
+  );
+
   return (
     <Layout disableLangSelector>
-      <Head>
-        <title>{t('ivf.metaTitle')}</title>
-      </Head>
+      <LearnMilvusSeo
+        path="/learn-milvus/ivf"
+        title={t('ivf.metaTitle')}
+        description={t('ivf.metaDesc')}
+        breadcrumbName={t('ivf.title')}
+        ogImage="/images/learn-milvus/og-ivf.png"
+        faq={faq}
+      />
       <div className={styles.ivfLab}>
         <header className={styles.playgroundHeader}>
           <Link href="/learn-milvus" className={styles.backLink}>&larr; {t('common.back')}</Link>
@@ -240,6 +255,19 @@ export default function IVFLab() {
             <Trans t={t} i18nKey="ivf.takeaway" components={{ strong: <strong key="strong" />, code: <code key="code" className={styles.codeInline} /> }} />
           </p>
         </div>
+
+        <DeepDive
+          sections={[
+            { titleKey: 'ivf.seo.whatIsTitle', paragraphKeys: ['ivf.seo.whatIsP1', 'ivf.seo.whatIsP2'] },
+            { titleKey: 'ivf.seo.paramsTitle', listKeys: ['ivf.seo.param1', 'ivf.seo.param2', 'ivf.seo.param3'] },
+            { titleKey: 'ivf.seo.whenTitle', paragraphKeys: ['ivf.seo.whenP1'] },
+          ]}
+          docsCtaKey="ivf.seo.docsCta"
+          docsHref="/docs/ivf-flat.md"
+          docsExplainedHref="/docs/index-explained.md"
+          faq={faq}
+          related={['hnsw', 'diskann', 'metric']}
+        />
       </div>
     </Layout>
   );

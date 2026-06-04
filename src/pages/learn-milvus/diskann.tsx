@@ -1,6 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import { useTranslation, Trans } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import Layout from '@/components/layout/commonLayout';
@@ -10,6 +9,8 @@ import { seededPoints } from '@/components/learn-milvus/data/generators';
 import DiskANNCanvas from '@/components/learn-milvus/components/DiskANNCanvas';
 import MemoryLayout from '@/components/learn-milvus/components/MemoryLayout';
 import ParamSlider from '@/components/learn-milvus/components/ParamSlider';
+import LearnMilvusSeo from '@/components/learn-milvus/components/LearnMilvusSeo';
+import DeepDive from '@/components/learn-milvus/components/DeepDive';
 import { useAnimationSteps } from '@/components/learn-milvus/hooks/useAnimationSteps';
 import styles from '@/components/learn-milvus/learnMilvus.module.css';
 
@@ -86,11 +87,25 @@ export default function DiskANNExplorer() {
     return { pq, disk, totalUs: pq * PQ_US + disk * DISK_US };
   }, [step, result.steps]);
 
+  const faq = useMemo(
+    () =>
+      [1, 2, 3, 4].map((i) => ({
+        question: t(`diskann.seo.faq${i}q`),
+        answer: t(`diskann.seo.faq${i}a`),
+      })),
+    [t],
+  );
+
   return (
     <Layout disableLangSelector>
-      <Head>
-        <title>{t('diskann.metaTitle')}</title>
-      </Head>
+      <LearnMilvusSeo
+        path="/learn-milvus/diskann"
+        title={t('diskann.metaTitle')}
+        description={t('diskann.metaDesc')}
+        breadcrumbName={t('diskann.title')}
+        ogImage="/images/learn-milvus/og-diskann.png"
+        faq={faq}
+      />
       <div className={styles.diskannPage}>
         <header className={styles.playgroundHeader}>
           <Link href="/learn-milvus" className={styles.backLink}>&larr; {t('common.back')}</Link>
@@ -211,6 +226,19 @@ export default function DiskANNExplorer() {
             <Trans t={t} i18nKey="diskann.takeaway" components={{ strong: <strong key="strong" /> }} />
           </p>
         </div>
+
+        <DeepDive
+          sections={[
+            { titleKey: 'diskann.seo.whatIsTitle', paragraphKeys: ['diskann.seo.whatIsP1', 'diskann.seo.whatIsP2'] },
+            { titleKey: 'diskann.seo.paramsTitle', listKeys: ['diskann.seo.param1', 'diskann.seo.param2', 'diskann.seo.param3'] },
+            { titleKey: 'diskann.seo.whenTitle', paragraphKeys: ['diskann.seo.whenP1'] },
+          ]}
+          docsCtaKey="diskann.seo.docsCta"
+          docsHref="/docs/diskann.md"
+          docsExplainedHref="/docs/index-explained.md"
+          faq={faq}
+          related={['hnsw', 'ivf', 'metric']}
+        />
       </div>
     </Layout>
   );

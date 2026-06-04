@@ -41,6 +41,7 @@ Start here for first-time setup. Begin with the Quickstart for a hands-on tutori
 Core concepts for understanding Milvus's data model, distance metrics, consistency guarantees, and multi-tenancy strategies.
 
 - [Metric Types](https://milvus.io/docs/metric.md): Distance metrics (L2, IP, COSINE, etc.) supported for vector similarity search.
+- [Similarity Metrics Visualized](https://milvus.io/learn-milvus/metric): Interactive playground showing how L2, cosine, and inner product change which neighbors count as nearest.
 - [Multi-tenancy](https://milvus.io/docs/multi_tenancy.md): Multi-tenancy support for isolating data across users or clients.
 - [Terminology](https://milvus.io/docs/glossary.md): Glossary of Milvus-specific terms and definitions.
 - [In-memory Replica](https://milvus.io/docs/replica.md): In-memory replicas for higher availability and read throughput.
@@ -107,6 +108,10 @@ Insert, upsert, and delete entities in a collection. To update existing entities
 Create and manage indexes on vector and scalar fields. An index must be created on vector fields before a collection can be loaded and searched. AUTOINDEX is recommended for most use cases.
 
 - [Index Explained](https://milvus.io/docs/index-explained.md): How indexing works in Milvus, including index types, parameters, and build process.
+- [Learn Milvus: Interactive Index Visualizations](https://milvus.io/learn-milvus): Interactive visualizations of how IVF, HNSW, and DiskANN indexes search, with tunable parameters.
+- [IVF Visualized](https://milvus.io/learn-milvus/ivf): Side-by-side FLAT vs IVF search animation with a live nprobe/recall tradeoff.
+- [HNSW Visualized](https://milvus.io/learn-milvus/hnsw): Step-by-step walk through the HNSW layered graph with tunable M and ef.
+- [DiskANN Visualized](https://milvus.io/learn-milvus/diskann): Animation of DiskANN's PQ-in-RAM beam search and SSD re-ranking.
 - [FLAT](https://milvus.io/docs/flat.md): Brute-force index for exact search on small datasets.
 - [IVF_FLAT](https://milvus.io/docs/ivf-flat.md): Inverted file index for memory-constrained scenarios.
 - [IVF_PQ](https://milvus.io/docs/ivf-pq.md): Inverted file index with product quantization for reduced memory.

@@ -1,6 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import { useTranslation, Trans } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import Layout from '@/components/layout/commonLayout';
@@ -9,6 +8,8 @@ import { buildHNSW, searchHNSW } from '@/components/learn-milvus/algorithms/hnsw
 import { seededPoints } from '@/components/learn-milvus/data/generators';
 import HNSWGraph from '@/components/learn-milvus/components/HNSWGraph';
 import ParamSlider from '@/components/learn-milvus/components/ParamSlider';
+import LearnMilvusSeo from '@/components/learn-milvus/components/LearnMilvusSeo';
+import DeepDive from '@/components/learn-milvus/components/DeepDive';
 import { useAnimationSteps } from '@/components/learn-milvus/hooks/useAnimationSteps';
 import styles from '@/components/learn-milvus/learnMilvus.module.css';
 
@@ -65,11 +66,25 @@ export default function HNSWExplorer() {
     }
   }, [step, result.steps, totalSteps, t]);
 
+  const faq = useMemo(
+    () =>
+      [1, 2, 3, 4].map((i) => ({
+        question: t(`hnsw.seo.faq${i}q`),
+        answer: t(`hnsw.seo.faq${i}a`),
+      })),
+    [t],
+  );
+
   return (
     <Layout disableLangSelector>
-      <Head>
-        <title>{t('hnsw.metaTitle')}</title>
-      </Head>
+      <LearnMilvusSeo
+        path="/learn-milvus/hnsw"
+        title={t('hnsw.metaTitle')}
+        description={t('hnsw.metaDesc')}
+        breadcrumbName={t('hnsw.title')}
+        ogImage="/images/learn-milvus/og-hnsw.png"
+        faq={faq}
+      />
       <div className={styles.hnswExplorer}>
         <header className={styles.playgroundHeader}>
           <Link href="/learn-milvus" className={styles.backLink}>&larr; {t('common.back')}</Link>
@@ -157,6 +172,19 @@ export default function HNSWExplorer() {
             <Trans t={t} i18nKey="hnsw.takeaway" components={{ strong: <strong key="strong" />, code: <code key="code" className={styles.codeInline} /> }} />
           </p>
         </div>
+
+        <DeepDive
+          sections={[
+            { titleKey: 'hnsw.seo.whatIsTitle', paragraphKeys: ['hnsw.seo.whatIsP1', 'hnsw.seo.whatIsP2'] },
+            { titleKey: 'hnsw.seo.paramsTitle', listKeys: ['hnsw.seo.param1', 'hnsw.seo.param2', 'hnsw.seo.param3'] },
+            { titleKey: 'hnsw.seo.whenTitle', paragraphKeys: ['hnsw.seo.whenP1'] },
+          ]}
+          docsCtaKey="hnsw.seo.docsCta"
+          docsHref="/docs/hnsw.md"
+          docsExplainedHref="/docs/index-explained.md"
+          faq={faq}
+          related={['ivf', 'diskann', 'metric']}
+        />
       </div>
     </Layout>
   );

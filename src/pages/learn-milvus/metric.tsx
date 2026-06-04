@@ -1,6 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import { useTranslation, Trans } from 'react-i18next';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import Layout from '@/components/layout/commonLayout';
@@ -10,6 +9,8 @@ import { seededPoints } from '@/components/learn-milvus/data/generators';
 import VectorCanvas from '@/components/learn-milvus/components/VectorCanvas';
 import MetricSwitch from '@/components/learn-milvus/components/MetricSwitch';
 import StatsPanel from '@/components/learn-milvus/components/StatsPanel';
+import LearnMilvusSeo from '@/components/learn-milvus/components/LearnMilvusSeo';
+import DeepDive from '@/components/learn-milvus/components/DeepDive';
 import styles from '@/components/learn-milvus/learnMilvus.module.css';
 
 const NUM_POINTS = 20;
@@ -47,11 +48,25 @@ export default function MetricPlayground() {
 
   const desc = DESCRIPTIONS[metric];
 
+  const faq = useMemo(
+    () =>
+      [1, 2, 3, 4].map((i) => ({
+        question: t(`metric.seo.faq${i}q`),
+        answer: t(`metric.seo.faq${i}a`),
+      })),
+    [t],
+  );
+
   return (
     <Layout disableLangSelector>
-      <Head>
-        <title>{t('metric.metaTitle')}</title>
-      </Head>
+      <LearnMilvusSeo
+        path="/learn-milvus/metric"
+        title={t('metric.metaTitle')}
+        description={t('metric.metaDesc')}
+        breadcrumbName={t('metric.title')}
+        ogImage="/images/learn-milvus/og-metric.png"
+        faq={faq}
+      />
       <div className={styles.playground}>
         <header className={styles.playgroundHeader}>
           <Link href="/learn-milvus" className={styles.backLink}>
@@ -121,6 +136,16 @@ export default function MetricPlayground() {
             <Trans t={t} i18nKey="metric.tryThis" components={{ strong: <strong key="strong" /> }} />
           </p>
         </div>
+
+        <DeepDive
+          sections={[
+            { titleKey: 'metric.seo.chooseTitle', paragraphKeys: ['metric.seo.chooseP1', 'metric.seo.chooseP2'] },
+          ]}
+          docsCtaKey="metric.seo.docsCta"
+          docsHref="/docs/metric.md"
+          faq={faq}
+          related={['ivf', 'hnsw', 'diskann']}
+        />
       </div>
     </Layout>
   );

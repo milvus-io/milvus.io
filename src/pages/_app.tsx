@@ -32,13 +32,15 @@ function MyApp({ Component, pageProps }) {
               sizes="32x32"
               href="/favicon-32x32.png"
             />
+            {/* key allows page-level Head tags to override these defaults */}
             <meta
               name="image"
               property="og:image"
               content="https://assets.zilliz.com/meta_image_milvus_d6510e10e0.png"
+              key="og-image"
             />
             <meta name="baidu-site-verification" content="codeva-bAvzh4ipX4" />
-            <meta property="og:type" content="WebSite" />
+            <meta property="og:type" content="WebSite" key="og-type" />
             <meta
               name="keywords"
               content="milvus, vector database, milvus docs, milvus blogs"

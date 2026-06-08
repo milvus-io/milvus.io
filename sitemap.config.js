@@ -68,6 +68,50 @@ const generateFaqPaths = () => {
   });
 };
 
+// Keep the sitemap focused on high-value canonical URLs: English blog and the
+// English latest-version docs. We stop advertising the localized and
+// old-version long tail — Google discovers those from the sitemap but defers
+// crawling/indexing them ("Discovered/Crawled - currently not indexed"), which
+// just dilutes crawl budget. api-reference, ai-quick-reference and landing
+// pages (incl. localized landing pages) are intentionally left untouched.
+const NON_EN_LANGS = [
+  'zh-hant',
+  'zh',
+  'ja',
+  'ko',
+  'fr',
+  'de',
+  'es',
+  'it',
+  'pt',
+  'ru',
+  'id',
+  'ar',
+  'cn',
+];
+const LOCALIZED_BLOG_RE = new RegExp(`^/(${NON_EN_LANGS.join('|')})/blog(/|$)`);
+const LOCALIZED_DOCS_RE = new RegExp(`^/docs/(${NON_EN_LANGS.join('|')})(/|$)`);
+const VERSIONED_DOCS_RE = /^\/docs\/v\d+\.\d+\.x(\/|$)/;
+
+const toPathname = loc => {
+  try {
+    return loc.startsWith('http') ? new URL(loc).pathname : loc;
+  } catch (error) {
+    return loc;
+  }
+};
+
+// True when a URL should be dropped from the sitemap: non-English blog posts,
+// and any localized or non-latest-version docs.
+const isExcludedFromSitemap = loc => {
+  const pathname = toPathname(loc);
+  return (
+    LOCALIZED_BLOG_RE.test(pathname) ||
+    LOCALIZED_DOCS_RE.test(pathname) ||
+    VERSIONED_DOCS_RE.test(pathname)
+  );
+};
+
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: 'https://milvus.io',
@@ -85,6 +129,19 @@ module.exports = {
       },
     ],
   },
+  // Filters auto-discovered URLs (prerendered English latest docs and all blog
+  // posts come through here). Returns null to drop a URL; otherwise mirrors
+  // next-sitemap's default transform so kept URLs are unchanged.
+  transform: async (config, path) => {
+    if (isExcludedFromSitemap(path)) return null;
+    return {
+      loc: path,
+      changefreq: config.changefreq,
+      priority: config.priority,
+      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+      alternateRefs: config.alternateRefs ?? [],
+    };
+  },
   additionalPaths: async config => {
     const simpleList = await generateFaqPaths();
     const faqPaths = simpleList.map(v => ({
@@ -94,12 +151,17 @@ module.exports = {
       lastmod: new Date().toISOString(),
     }));
 
-    const docPaths = readDocSitemapPaths().map(loc => ({
-      loc,
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date().toISOString(),
-    }));
+    // Localized and old-version docs reach the sitemap through these segments
+    // (English latest is auto-discovered above), so the same filter is applied
+    // here. api-reference URLs also live in these segments and are kept.
+    const docPaths = readDocSitemapPaths()
+      .filter(loc => !isExcludedFromSitemap(loc))
+      .map(loc => ({
+        loc,
+        changefreq: 'weekly',
+        priority: 0.7,
+        lastmod: new Date().toISOString(),
+      }));
 
     return [...faqPaths, ...docPaths];
   },

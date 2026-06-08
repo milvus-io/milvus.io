@@ -14,6 +14,7 @@ import {
   DOCS_MINIMUM_VERSION,
   sortVersionDir,
   CPP_DOCS_MINIMUM_VERSION,
+  CSHARP_DOCS_MINIMUM_VERSION,
 } from './docs';
 import { getCacheData, setCacheData } from './index';
 
@@ -203,7 +204,7 @@ const API_REFERENCE_CONFIG = {
   [ApiReferenceLanguageEnum.Csharp]: {
     name: ApiReferenceLabelEnum.Csharp,
     path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Csharp}`,
-    minVersion: DOCS_MINIMUM_VERSION,
+    minVersion: CSHARP_DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Csharp,
   },
 };

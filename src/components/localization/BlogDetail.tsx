@@ -164,7 +164,10 @@ export function BlogDetail(props: any) {
 
   return (
     <main>
-      <Layout headerClassName={pageClasses.blogContainer}>
+      <Layout
+        headerClassName={pageClasses.blogContainer}
+        canonicalUrl={canonicalUrl || shareUrl}
+      >
         <Head>
           <title>{metaTitle}</title>
           <meta name="description" content={desc} />
@@ -176,7 +179,8 @@ export function BlogDetail(props: any) {
           {firstImageSrc && (
             <link rel="preload" as="image" href={firstImageSrc} />
           )}
-          <link rel="canonical" href={canonicalUrl || shareUrl} />
+          {/* Canonical is emitted once by <Layout canonicalUrl=...> above to
+              avoid two conflicting <link rel="canonical"> on localized posts. */}
           {hreflangUrls.map(entry => (
             <link
               key={entry.lang}

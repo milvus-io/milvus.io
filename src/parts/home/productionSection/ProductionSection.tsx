@@ -31,8 +31,8 @@ export const ProductionSection = () => {
       class: 'col-start-4 col-end-6 row-start-1 row-end-1',
     },
     {
-      name: '',
-      icon: '',
+      name: 'Zillow',
+      icon: '/images/home/brands/zillow.svg',
       width: 168,
       height: 68,
       class: 'col-start-6 col-end-8 row-start-1 row-end-1',

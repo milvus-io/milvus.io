@@ -17,6 +17,9 @@ import { LanguageEnum } from '@/types/localization';
 import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 // contains the latest version's detail pages and other versions' home pages
 export function DocDetailPage(props: DocDetailPageProps) {
@@ -47,6 +50,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
 
   const isEN = lang === LanguageEnum.ENGLISH;
   const { t } = useTranslation('docs', { lng: lang });
+  const { t: headerT } = useTranslation('header', { lng: lang });
 
   const seoInfo = useMemo(() => {
     const title = `${frontMatter?.title || headingContent}`;
@@ -81,8 +85,31 @@ export function DocDetailPage(props: DocDetailPageProps) {
     currentId,
     menu: menus,
   });
+
+  // /docs/* is the largest, highest-value corpus → TechArticle + breadcrumb.
+  // Breadcrumb mirrors the visible trail (Home → Docs → page); intermediate
+  // category labels are omitted since they have no standalone URL.
+  const docTitle = `${frontMatter?.title || headingContent}`;
+  const ldSchemas = useMemo(
+    () => [
+      buildSchema('techArticle', {
+        absoluteUrl: seoUrl,
+        title: docTitle,
+        desc: summary || undefined,
+      }),
+      buildSchema('breadcrumb', [
+        { name: 'Home', url: ABSOLUTE_BASE_URL },
+        { name: headerT('docs'), url: `${ABSOLUTE_BASE_URL}${homePageLink}` },
+        { name: docTitle, url: seoUrl },
+      ]),
+    ],
+    [seoUrl, docTitle, summary, homePageLink, headerT]
+  );
+
   return (
-    <DocLayout
+    <>
+      <JsonLd schema={ldSchemas} />
+      <DocLayout
       version={version}
       latestVersion={latestVersion}
       seo={{
@@ -144,6 +171,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
           </div>
         </section>
       }
-    />
+      />
+    </>
   );
 }

@@ -19,6 +19,9 @@ import BlogAnchorSection from '@/parts/blogs/blogAnchors';
 import LLMActions, { PageAction, OptionItem } from '@/components/LLMActions';
 import { CopyIcon, checkIconTpl, linkIconTpl } from '@/components/icons';
 import { OpenAIIcon, ClaudeAIIcon } from '@/components/icons/AI';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 import 'highlight.js/styles/atom-one-dark.css';
 
 const learnAiPageOptions: OptionItem[] = [
@@ -58,9 +61,19 @@ export default function LearnAiDetail(props: {
   const pageHref = useRef('');
 
   const metaTitle = `${title} | Milvus`;
-  const formattedDesc = description ? description.replaceAll(/\"/g, '\\"') : '';
 
-  const ldJson = `{"@context": "http://schema.org", "@id": "${canonical_rel}", "@type": "Article", "headline": "${title}", "description": "${formattedDesc}", "name": "${title}", "url": "${canonical_rel}"}`;
+  const ldSchemas = [
+    buildSchema('techArticle', {
+      absoluteUrl: canonical_rel,
+      title,
+      desc: description,
+    }),
+    buildSchema('breadcrumb', [
+      { name: 'Home', url: ABSOLUTE_BASE_URL },
+      { name: 'Learn AI', url: `${ABSOLUTE_BASE_URL}/learn-ai-and-vectordb` },
+      { name: title, url: canonical_rel },
+    ]),
+  ];
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -100,11 +113,8 @@ export default function LearnAiDetail(props: {
           <meta name="description" content={description} />
           <meta name="keywords" content={meta_keywords} />
           <link rel="canonical" href={canonical_rel} />
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: ldJson }}
-          ></script>
         </Head>
+        <JsonLd schema={ldSchemas} />
       </main>
       <section className={classes.detailContainer}>
         <div className={clsx(pageClasses.docContainer, styles.upLayout)}>

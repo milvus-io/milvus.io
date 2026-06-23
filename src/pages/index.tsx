@@ -13,6 +13,9 @@ import pageClasses from '@/styles/responsive.module.css';
 import { LanguageEnum } from '@/types/localization';
 import { HomeMeta } from '@/parts/home/meta/HomeMeta';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
+import { CLOUD_SIGNUP_LINK, GITHUB_MILVUS_LINK } from '@/consts';
 
 export default function Homepage(props: {
   headlines: { label: string; link: string; tag: string }[];
@@ -24,6 +27,16 @@ export default function Homepage(props: {
     <Layout headerClassName={pageClasses.homeContainer}>
       <main className={classes.homepageContainer}>
         <HomeMeta locale={locale || LanguageEnum.ENGLISH} />
+        <JsonLd
+          schema={[
+            buildSchema('organization'),
+            buildSchema('website'),
+            buildSchema('softwareApp', {
+              offerUrl: CLOUD_SIGNUP_LINK,
+              codeRepository: GITHUB_MILVUS_LINK,
+            }),
+          ]}
+        />
         <HomePageHeaderSection headlines={headlines} locale={locale} />
         <CodeExampleSection />
         <DeploySection />

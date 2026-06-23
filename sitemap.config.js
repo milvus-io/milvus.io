@@ -68,17 +68,18 @@ const generateFaqPaths = () => {
   });
 };
 
-// Keep the sitemap focused on high-value canonical URLs: English blog and the
-// English latest-version docs. We stop advertising the localized and
-// old-version long tail — Google discovers those from the sitemap but defers
-// crawling/indexing them ("Discovered/Crawled - currently not indexed"), which
-// just dilutes crawl budget. api-reference, ai-quick-reference and landing
+// Keep the sitemap focused on high-value canonical URLs: English plus the
+// non-English languages that carry real GSC traffic (zh/ko/zh-hant/ja), at
+// their latest doc version only. We stop advertising the rest of the localized
+// and old-version long tail — Google discovers those from the sitemap but
+// defers crawling/indexing them ("Discovered/Crawled - currently not indexed"),
+// which just dilutes crawl budget. api-reference, ai-quick-reference and landing
 // pages (incl. localized landing pages) are intentionally left untouched.
-const NON_EN_LANGS = [
-  'zh-hant',
-  'zh',
-  'ja',
-  'ko',
+//
+// INDEXABLE_NON_EN_LANGS must stay in sync with INDEXABLE_LANGUAGES in
+// src/types/localization.ts (this file is CommonJS and cannot import it).
+const INDEXABLE_NON_EN_LANGS = ['zh-hant', 'zh', 'ja', 'ko'];
+const CUT_LANGS = [
   'fr',
   'de',
   'es',
@@ -89,9 +90,15 @@ const NON_EN_LANGS = [
   'ar',
   'cn',
 ];
-const LOCALIZED_BLOG_RE = new RegExp(`^/(${NON_EN_LANGS.join('|')})/blog(/|$)`);
-const LOCALIZED_DOCS_RE = new RegExp(`^/docs/(${NON_EN_LANGS.join('|')})(/|$)`);
-const VERSIONED_DOCS_RE = /^\/docs\/v\d+\.\d+\.x(\/|$)/;
+// Non-indexable languages: their blog and docs URLs never enter the sitemap.
+const LOCALIZED_BLOG_RE = new RegExp(`^/(${CUT_LANGS.join('|')})/blog(/|$)`);
+const LOCALIZED_DOCS_RE = new RegExp(`^/docs/(${CUT_LANGS.join('|')})(/|$)`);
+// Old (non-latest) doc versions are excluded for every kept language, English
+// (/docs/v2.6.x/...) and indexable non-English (/docs/zh/v2.6.x/...) alike.
+// Only the latest version, which uses an unversioned URL, stays in the sitemap.
+const VERSIONED_DOCS_RE = new RegExp(
+  `^/docs/(?:(?:${INDEXABLE_NON_EN_LANGS.join('|')})/)?v\\d+\\.\\d+\\.x(/|$)`
+);
 
 const toPathname = loc => {
   try {

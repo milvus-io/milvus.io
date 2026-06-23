@@ -1,5 +1,5 @@
 import blogUtils from '@/utils/blog.utils';
-import { LanguageEnum } from '@/types/localization';
+import { isIndexableLanguage, LanguageEnum } from '@/types/localization';
 import { markdownToHtml } from '@/utils/markdown';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 
@@ -48,14 +48,29 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
       .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
       .slice(0, 4);
 
-    // For non-English locales, derive canonical from the English blog:
-    // - If English blog has canonicalUrl (e.g., zilliz.com cross-post), use it
-    // - Otherwise, point to the English milvus.io blog URL
-    let canonicalUrl = (rest as Record<string, any>).canonicalUrl ?? null;
+    // Canonical strategy by language:
+    // - A cross-post (English blog has an external canonicalUrl, e.g. a
+    //   zilliz.com original) always wins for every language — none of these
+    //   should be indexed on milvus.io.
+    // - Indexable languages (en/zh/ko/zh-hant/ja) self-reference so each gets
+    //   indexed, paired with the hreflang cluster emitted in BlogDetail.
+    // - Every other language points to the English milvus.io blog URL to
+    //   consolidate it to English instead of competing for the index.
+    const enBlog = enData.find(v => v.id === id) as
+      | Record<string, any>
+      | undefined;
+    const enCanonicalUrl = enBlog?.canonicalUrl as string | undefined;
+    let canonicalUrl: string | null =
+      (rest as Record<string, any>).canonicalUrl ?? null;
     if (lang !== LanguageEnum.ENGLISH) {
-      const enBlog = enData.find(v => v.id === id) as Record<string, any> | undefined;
-      canonicalUrl = enBlog?.canonicalUrl || `${ABSOLUTE_BASE_URL}/blog/${id}`;
+      canonicalUrl =
+        enCanonicalUrl ||
+        (isIndexableLanguage(lang)
+          ? `${ABSOLUTE_BASE_URL}/${lang}/blog/${id}`
+          : `${ABSOLUTE_BASE_URL}/blog/${id}`);
     }
+
+    const availableLanguages = blogUtils.getAvailableLanguages(id);
 
     return {
       props: {
@@ -71,6 +86,7 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
         tags,
         ...rest,
         canonicalUrl,
+        availableLanguages,
       },
     };
   };

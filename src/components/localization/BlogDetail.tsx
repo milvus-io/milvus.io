@@ -65,6 +65,7 @@ export function BlogDetail(props: any) {
     meta_title,
     meta_keywords = 'vector databases, milvus, open-source vector database, vector search',
     canonicalUrl,
+    availableLanguages = [],
   } = props;
   const router = useRouter();
   const docContainer = useRef(null);
@@ -140,9 +141,14 @@ export function BlogDetail(props: any) {
 
   const metaTitle = `${meta_title || title} - Milvus Blog`;
 
+  // hreflang cluster only lists indexable languages that actually have a
+  // translation of this post (availableLanguages is already filtered to the
+  // indexable set in CreateBlogDetailProps), so every entry is a reciprocal,
+  // self-canonical 200 page. x-default points to the English version.
   const hreflangUrls = useMemo(() => {
-    const allLangs = Object.values(LanguageEnum);
-    const entries: { lang: string; url: string; }[] = allLangs.map(lang => {
+    const entries: { lang: string; url: string }[] = (
+      availableLanguages as LanguageEnum[]
+    ).map(lang => {
       const prefix = lang === LanguageEnum.ENGLISH ? '' : `/${lang}`;
       return {
         lang,
@@ -154,7 +160,7 @@ export function BlogDetail(props: any) {
       entries.push({ lang: 'x-default', url: enEntry.url });
     }
     return entries;
-  }, [id]);
+  }, [id, availableLanguages]);
 
   const blogLink = locale === 'en' ? '/blog' : `/${locale}/blog`;
   const blogLabel = headerTrans('blog');
@@ -189,6 +195,7 @@ export function BlogDetail(props: any) {
       <Layout
         headerClassName={pageClasses.blogContainer}
         canonicalUrl={canonicalUrl || shareUrl}
+        disableSelfHreflang
       >
         <Head>
           <title>{metaTitle}</title>

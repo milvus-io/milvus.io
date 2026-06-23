@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
-import { LanguageEnum } from '@/types/localization';
+import { INDEXABLE_LANGUAGES, LanguageEnum } from '@/types/localization';
 
 const generateBlogCover = (cover: string, date: Date) => {
   if (cover) {
@@ -122,11 +122,19 @@ const generateBlogRouter = (locale: LanguageEnum) => {
   return router;
 };
 
+// Indexable languages that actually provide a translation of this blog post,
+// used to build a reciprocal hreflang cluster that never points at a 404.
+const getAvailableLanguagesForBlog = (id: string) =>
+  INDEXABLE_LANGUAGES.filter(locale =>
+    fs.existsSync(join(getBlogDir(locale), id))
+  );
+
 const blogUtils = {
   getAllData: generateBlogData,
   getListData: generateBlogListData,
   getRouter: generateBlogRouter,
   getSimpleList: generateSimpleBlogList,
+  getAvailableLanguages: getAvailableLanguagesForBlog,
 };
 
 export default blogUtils;

@@ -3,6 +3,7 @@ import Header from '../../header';
 import Footer from '../../footer';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
+import { isIndexableLanguage } from '@/types/localization';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
@@ -19,6 +20,10 @@ const Layout: React.FC<{
   // two conflicting tags make Google drop both ("Duplicate without
   // user-selected canonical"). Defaults to self for all other pages.
   canonicalUrl?: string;
+  // Suppress the default self-referential hreflang. Pages that emit their own
+  // complete hreflang cluster (e.g. blog detail) set this so the cluster isn't
+  // duplicated or polluted with a non-indexable self-reference.
+  disableSelfHreflang?: boolean;
 }> = ({
   darkMode,
   children,
@@ -26,6 +31,7 @@ const Layout: React.FC<{
   headerClassName,
   disableLangSelector = false,
   canonicalUrl,
+  disableSelfHreflang = false,
 }) => {
   const { locale } = useGlobalLocale();
   const { asPath } = useRouter();
@@ -37,9 +43,12 @@ const Layout: React.FC<{
     <>
       <Head>
         <link rel="canonical" href={canonicalUrl ?? selfUrl} />
-        {/* hreflang stays self-referential: it declares this page as the
-            alternate for its own language, regardless of canonical target. */}
-        <link rel="alternate" hrefLang={locale} href={selfUrl} />
+        {/* Self-referential hreflang, only for indexable languages so we don't
+            advertise pages that are consolidated to English. Pages owning their
+            full cluster opt out via disableSelfHreflang. */}
+        {!disableSelfHreflang && isIndexableLanguage(locale) && (
+          <link rel="alternate" hrefLang={locale} href={selfUrl} />
+        )}
       </Head>
       <Header
         darkMode={darkMode}

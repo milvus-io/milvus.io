@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import { buildSchema } from '@/schema';
 
 export interface FaqItem {
   question: string;
@@ -32,11 +33,11 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
     : undefined;
 
   const breadcrumbItems = [
-    { name: 'Home', item: ABSOLUTE_BASE_URL },
-    { name: 'Learn Milvus', item: `${ABSOLUTE_BASE_URL}${LEARN_MILVUS_PATH}` },
+    { name: 'Home', url: ABSOLUTE_BASE_URL },
+    { name: 'Learn Milvus', url: `${ABSOLUTE_BASE_URL}${LEARN_MILVUS_PATH}` },
   ];
   if (path !== LEARN_MILVUS_PATH && breadcrumbName) {
-    breadcrumbItems.push({ name: breadcrumbName, item: url });
+    breadcrumbItems.push({ name: breadcrumbName, url });
   }
 
   const learningResourceLd = {
@@ -59,30 +60,16 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
     },
   };
 
-  const breadcrumbLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbItems.map((entry, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: entry.name,
-      item: entry.item,
-    })),
-  };
+  const breadcrumbLd = buildSchema('breadcrumb', breadcrumbItems);
 
   const faqLd = faq?.length
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faq.map(item => ({
-          '@type': 'Question',
-          name: item.question,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer,
-          },
+    ? buildSchema('faq', {
+        absoluteUrl: url,
+        faqItems: faq.map(item => ({
+          question: item.question,
+          answerPlainText: item.answer,
         })),
-      }
+      })
     : null;
 
   return (

@@ -12,6 +12,8 @@ import clsx from 'clsx';
 import BlogAnchorSection from '@/parts/blogs/blogAnchors';
 import pageClasses from '@/styles/responsive.module.css';
 import { ABSOLUTE_BASE_URL, MILVUS_RAW_BLOGS_BASE_URL } from '@/consts';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
 import { useCopyCode } from '@/hooks/enhanceCodeBlock';
 import 'highlight.js/styles/atom-one-dark.css';
 import { useEffect } from 'react';
@@ -137,11 +139,6 @@ export function BlogDetail(props: any) {
   }, [id]);
 
   const metaTitle = `${meta_title || title} - Milvus Blog`;
-  const formattedDesc = desc ? desc.replaceAll(/\"/g, '\\"') : '';
-
-  const ldJson = `{"@context": "http://schema.org", "@id": "${shareUrl}", "@type": "Article", "headline": "${title}", "description": "${formattedDesc}", "datePublished": "${new Date(
-    date
-  ).toJSON()}", "name": "${title}", "url": "${shareUrl}"}`;
 
   const hreflangUrls = useMemo(() => {
     const allLangs = Object.values(LanguageEnum);
@@ -161,6 +158,31 @@ export function BlogDetail(props: any) {
 
   const blogLink = locale === 'en' ? '/blog' : `/${locale}/blog`;
   const blogLabel = headerTrans('blog');
+
+  const ldSchemas = useMemo(
+    () => [
+      buildSchema('blogPosting', {
+        absoluteUrl: shareUrl,
+        title,
+        desc,
+        publishTime: date,
+        imageUrl: cover ? `https://${cover}` : undefined,
+        author: author ? { name: author, type: 'Person' } : undefined,
+      }),
+      buildSchema('breadcrumb', [
+        {
+          name: 'Home',
+          url:
+            locale === LanguageEnum.ENGLISH
+              ? ABSOLUTE_BASE_URL
+              : `${ABSOLUTE_BASE_URL}/${locale}`,
+        },
+        { name: blogLabel, url: `${ABSOLUTE_BASE_URL}${blogLink}` },
+        { name: title, url: shareUrl },
+      ]),
+    ],
+    [shareUrl, title, desc, date, cover, author, locale, blogLabel, blogLink]
+  );
 
   return (
     <main>
@@ -189,11 +211,8 @@ export function BlogDetail(props: any) {
               href={entry.url}
             />
           ))}
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: ldJson }}
-          ></script>
         </Head>
+        <JsonLd schema={ldSchemas} />
         <div>
           <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
             <section className={styles.blogHeader}>

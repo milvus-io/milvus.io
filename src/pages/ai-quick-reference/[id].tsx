@@ -23,6 +23,9 @@ import useUtmTrackPath from '@/hooks/use-utm-track-path';
 import LLMActions, { PageAction, OptionItem } from '@/components/LLMActions';
 import { CopyIcon } from '@/components/icons';
 import { OpenAIIcon, ClaudeAIIcon } from '@/components/icons/AI';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
+import { ABSOLUTE_BASE_URL } from '@/consts';
 
 const FaqDemoCard = dynamic(() => import('@/components/faq/FaqDemoCard'));
 
@@ -78,6 +81,23 @@ export default function FaqDetail(props: {
   const docContainer = useRef<HTMLDivElement>(null);
   const trackPath = useUtmTrackPath();
 
+  // FAQPage is for AI search / machine understanding (no longer a Google rich
+  // result). The page title is the question; the description is its answer.
+  const faqLabel = t('faq:detail.name');
+  const ldSchemas = [
+    description
+      ? buildSchema('faq', {
+          absoluteUrl: canonical_rel,
+          faqItems: [{ question: title, answerPlainText: description }],
+        })
+      : null,
+    buildSchema('breadcrumb', [
+      { name: 'Home', url: ABSOLUTE_BASE_URL },
+      { name: faqLabel, url: `${ABSOLUTE_BASE_URL}/ai-quick-reference` },
+      { name: title, url: canonical_rel },
+    ]),
+  ];
+
   return (
     <Layout>
       <main>
@@ -89,6 +109,7 @@ export default function FaqDetail(props: {
             content={`${title}, zilliz，vector databases，milvus, managed vector databases`}
           />
         </Head>
+        <JsonLd schema={ldSchemas} />
       </main>
       <section className={classes.detailContainer}>
         <div className={clsx(pageClasses.docContainer, styles.upLayout)}>

@@ -21,8 +21,22 @@ const getBlogDir = (locale: LanguageEnum = LanguageEnum.ENGLISH) =>
     ? join(process.cwd(), 'src/blogs/blog/en')
     : join(process.cwd(), `src/blogs/localization/blog/${locale}`);
 
+/** A blog markdown file is routable only if its frontmatter carries a
+ *  non-empty `title`. Empty/placeholder stubs — e.g. the 1-byte untranslated
+ *  files under localization/blog/<locale> — otherwise generate blank-title
+ *  routes that also emit an empty BreadcrumbList `name`, which Google Search
+ *  Console flags as invalid structured data. Skipping them here keeps them out
+ *  of every consumer at once: routes, list, sitemap, hreflang. */
+const hasBlogTitle = (blogDir: string, fileName: string) => {
+  const { data } = matter(fs.readFileSync(`${blogDir}/${fileName}`));
+  return typeof data.title === 'string' && data.title.trim().length > 0;
+};
+
 const getBlogFileNames = (blogDir: string) =>
-  fs.readdirSync(blogDir).filter(fileName => fileName.endsWith('.md'));
+  fs
+    .readdirSync(blogDir)
+    .filter(fileName => fileName.endsWith('.md'))
+    .filter(fileName => hasBlogTitle(blogDir, fileName));
 
 const sortBlogsByDateDesc = <T extends { date: string }>(blogsData: T[]) => {
   blogsData.sort(
@@ -125,9 +139,10 @@ const generateBlogRouter = (locale: LanguageEnum) => {
 // Indexable languages that actually provide a translation of this blog post,
 // used to build a reciprocal hreflang cluster that never points at a 404.
 const getAvailableLanguagesForBlog = (id: string) =>
-  INDEXABLE_LANGUAGES.filter(locale =>
-    fs.existsSync(join(getBlogDir(locale), id))
-  );
+  INDEXABLE_LANGUAGES.filter(locale => {
+    const dir = getBlogDir(locale);
+    return fs.existsSync(join(dir, id)) && hasBlogTitle(dir, id);
+  });
 
 const blogUtils = {
   getAllData: generateBlogData,

@@ -98,12 +98,18 @@ export interface BreadcrumbItem {
   url?: string;
 }
 
-/** BreadcrumbList from a Home→…→current trail. The last item may omit its url. */
+/** BreadcrumbList from a Home→…→current trail. The last item may omit its url.
+ *  Items whose name is empty/blank are dropped and positions are renumbered so
+ *  every ListItem always carries a non-empty `name` — otherwise Google reports
+ *  "Either 'name' or 'item.name' should be specified (in 'itemListElement')". */
 export function breadcrumbSchema(items: BreadcrumbItem[]): SchemaObject {
+  const named = (items ?? [])
+    .map(item => ({ ...item, name: item.name?.trim() }))
+    .filter((item): item is BreadcrumbItem & { name: string } => !!item.name);
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
+    itemListElement: named.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,

@@ -57,8 +57,9 @@ export default function HomePageHeaderSection(props: {
       )}
     >
       <div className={pageClasses.homeContainer}>
-        <div className={classes.headlinesContainer}>
-          <Swiper
+        {headlines.length > 0 && (
+          <div className={classes.headlinesContainer}>
+            <Swiper
             // install Swiper modules
             modules={showSwiper ? [Navigation, Autoplay, Pagination] : []}
             navigation={{
@@ -117,8 +118,9 @@ export default function HomePageHeaderSection(props: {
                 <RightArrowIcon />
               </button>
             </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
         <h1
           className={clsx(
             'w-full opacity-90 text-center text-slate-950 text-[72px] font-[700] leading-[80px] max-tablet:max-w-[600px] max-tablet:text-[56px] max-tablet:leading-[68px] max-phone:text-[42px] max-phone:leading-[60px] mt-[0px] mb-[12px] mx-auto',

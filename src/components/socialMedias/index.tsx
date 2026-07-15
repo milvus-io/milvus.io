@@ -103,12 +103,7 @@ export const SocialMediasCN = (props: {
   ];
 
   return (
-    <div
-      className={clsx(
-        'flex items-center justify-start gap-[12px] relative z-0',
-        root
-      )}
-    >
+    <div className={clsx('flex items-center justify-start gap-[12px]', root)}>
       {CNSocialJson.map(s => {
         if (s.image) {
           return (

@@ -67,7 +67,9 @@ a.iconButton {
   bottom: calc(100% + 12px);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+  /* Matches the docs left nav so this popover, being later in the DOM, paints over it
+     on narrow screens, while staying below the sticky header (999). */
+  z-index: 998;
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.12);
   border-radius: 12px;
 }

@@ -181,6 +181,7 @@ html[lang='ar'] {
     color: var(--color-black1);
     display: inline-block;
     font-weight: 600;
+    font-variant-ligatures: none;
 
     @media (--phone) {
       max-width: calc(100vw - 32px);

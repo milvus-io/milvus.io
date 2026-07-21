@@ -82,7 +82,7 @@ export default function Template(props: ApiDetailPageProps) {
   // Specify supported languages to fix Java doc code layout.
 
   useCopyCode(codeList);
-  useAnchorEventListener(currentId);
+  useAnchorEventListener();
 
   // Generate apiReferenceData.sourceUrl for final page's Edit Button.
   const apiReferenceData = useMemo(() => {

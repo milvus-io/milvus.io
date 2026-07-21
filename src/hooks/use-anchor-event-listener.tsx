@@ -1,45 +1,50 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect } from 'react';
 
-import { checkIconTpl } from '@/components/icons';
-import { linkIconTpl } from '@/components/icons';
+import { checkIconTpl, linkIconTpl } from '@/components/icons';
 import { copyToCommand } from '@/utils/common';
 
-export const useAnchorEventListener = (currentId: string) => {
-  const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
-  const pageHref = useRef('');
-
+/**
+ * Binds the "copy heading link" behaviour for the `.anchor-icon` buttons that
+ * the rehype anchor plugin injects after h1/h2/h3.
+ *
+ * Uses a single delegated listener on `document` instead of attaching a
+ * listener to every button. The buttons live inside a `dangerouslySetInnerHTML`
+ * block, so their DOM nodes are recreated whenever the article content changes
+ * (client-side navigation, version switch that keeps the same doc id, or a
+ * hydration-mismatch regeneration). Per-node listeners are lost on those
+ * recreations and are not re-bound, which made the button "dead" until a full
+ * page refresh. Delegating on `document` — a node that always persists —
+ * survives every recreation, so nothing ever needs re-binding.
+ */
+export const useAnchorEventListener = () => {
   useEffect(() => {
-    // add click event handler for copy icon after headings
-    if (window && typeof window !== 'undefined') {
-      const anchors = Array.from(document.querySelectorAll('.anchor-icon'));
-      const baseHref = window.location.href.split('#')[0];
-
-      anchors.forEach(anchor => {
-        anchor.addEventListener(
-          'click',
-          e => {
-            if (!e.currentTarget) {
-              return;
-            }
-            const {
-              dataset: { href },
-            } = e.currentTarget as HTMLAnchorElement;
-            pageHref.current = `${baseHref}${href}`;
-            copyToCommand(pageHref.current);
-
-            anchor.innerHTML = checkIconTpl;
-
-            setTimeout(() => {
-              anchor.innerHTML = linkIconTpl;
-            }, 3000);
-          },
-          false
-        );
-      });
+    if (typeof window === 'undefined') {
+      return;
     }
 
-    return () => {
-      setIsOpenMobileMenu(false);
+    const handleClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement)?.closest<HTMLElement>(
+        '.anchor-icon'
+      );
+      if (!anchor) {
+        return;
+      }
+
+      // Compute the base href at click time so the copied link always points
+      // at the current page, even after client-side navigation.
+      const baseHref = window.location.href.split('#')[0];
+      const href = anchor.dataset.href ?? '';
+      copyToCommand(`${baseHref}${href}`);
+
+      anchor.innerHTML = checkIconTpl;
+      window.setTimeout(() => {
+        anchor.innerHTML = linkIconTpl;
+      }, 3000);
     };
-  }, [currentId]);
+
+    document.addEventListener('click', handleClick);
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
 };

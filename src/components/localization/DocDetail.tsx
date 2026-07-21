@@ -71,7 +71,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
 
   const articleContainer = useRef<HTMLDivElement>(null);
 
-  useAnchorEventListener(currentId);
+  useAnchorEventListener();
   useFilter();
   useMultipleCodeFilter();
   useCopyCode(codeList);

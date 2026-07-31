@@ -34,7 +34,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@zilliz/toolkit": "^0.2.7",
     "autoprefixer": "^10.4.27",
-    "axios": "^1.16.0",
+    "axios": "^1.19.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^1.2.1",
     "cropperjs": "^1.6.2",
@@ -53,7 +53,7 @@
     "katex": "^0.16.40",
     "lucide-react": "^0.379.0",
     "markdown-it": "^14.1.1",
-    "next": "^15.5.18",
+    "next": "^15.5.22",
     "next-hubspot": "^2.0.1",
     "next-mdx-remote": "^6.0.0",
     "next-sitemap": "^4.2.3",
@@ -111,16 +111,19 @@
     "overrides": {
       "picomatch@<2.3.2": "2.3.2",
       "picomatch@>=4.0.0 <4.0.4": "4.0.4",
-      "brace-expansion@<1.1.13": "1.1.13",
+      "brace-expansion@<1.1.16": "1.1.16",
       "brace-expansion@>=2.0.0 <2.0.3": "2.0.3",
+      "brace-expansion@>=3.0.0 <5.0.7": "5.0.7",
       "postcss@<8.5.10": "8.5.14",
       "minimatch@>=9.0.0 <9.0.7": "9.0.7",
       "ajv@<6.14.0": "6.14.0",
       "flatted@<3.4.2": "3.4.2",
-      "shell-quote@<1.8.4": "1.8.4",
+      "shell-quote@<1.9.0": "1.9.0",
       "form-data@>=4.0.0 <4.0.6": "4.0.6",
-      "linkify-it@<=5.0.0": "5.0.1",
-      "js-cookie@<=3.0.5": "3.0.8"
+      "linkify-it@<=5.0.1": "5.0.2",
+      "js-cookie@<=3.0.5": "3.0.8",
+      "js-yaml@>=3.0.0 <3.15.0": "3.15.0",
+      "js-yaml@>=4.0.0 <4.3.0": "4.3.0"
     }
   }
 }

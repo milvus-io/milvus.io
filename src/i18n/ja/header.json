@@ -37,7 +37,8 @@
   "footer": {
     "resource": {
       "managed": "マネージド Milvus",
-      "contact": "デモを予約する"
+      "contact": "デモを予約する",
+      "faq": "AI クイックリファレンス"
     },
     "tools": {
       "sizing": "ミルバス・サイジング・ツール",

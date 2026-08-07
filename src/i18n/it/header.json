@@ -37,7 +37,8 @@
   "footer": {
     "resource": {
       "managed": "Milvus Gestito",
-      "contact": "Prenota una dimostrazione"
+      "contact": "Prenota una dimostrazione",
+      "faq": "Riferimento rapido AI"
     },
     "tools": {
       "sizing": "Strumento di dimensionamento Milvus",

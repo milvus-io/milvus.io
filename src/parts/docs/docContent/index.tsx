@@ -77,7 +77,7 @@ export default function DocContent(props: DocContentPropsType) {
     apiCategory,
     lang = 'en',
   } = props;
-  const { t: headerTrans } = useTranslation('header');
+  const { t: headerTrans } = useTranslation('header', { lng: lang });
 
   const docLink = lang == 'en' ? `/docs` : `/docs/${lang}`;
 

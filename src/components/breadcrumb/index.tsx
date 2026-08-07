@@ -14,7 +14,10 @@ export default function Breadcrumb(props: {
   className?: string;
 }) {
   const { list, className = '', lang = 'en' } = props;
-  const { t } = useTranslation('home');
+  // Pin the language to the page's own locale: the server-side i18n instance is
+  // always on `en`, so an unpinned `t` renders English on the server and the
+  // page language on the client, which fails hydration.
+  const { t } = useTranslation('home', { lng: lang });
 
   const length = list.length;
 

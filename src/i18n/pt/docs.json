@@ -27,6 +27,12 @@
   "translate": {
     "by": "Traduzido por"
   },
+  "advertise": {
+    "content": "O Zilliz Cloud é descomplicado, powered by Milvus e 10x mais rápido.",
+    "ctaLabel": "Começar",
+    "titleA": "Experimente o Milvus gerenciado gratuitamente",
+    "titleB": "Experimente o Zilliz Cloud gratuitamente"
+  },
   "communityBanner": {
     "title": "Horário de expediente de Milvus",
     "desc": "Obtenha ajuda com a implementação de produção de Zilliz, os especialistas em Milvus.",

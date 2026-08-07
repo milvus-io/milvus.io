@@ -27,6 +27,12 @@
   "translate": {
     "by": "번역"
   },
+  "advertise": {
+    "content": "Zilliz Cloud는 번거로움이 없으며, Milvus 기반으로 10배 더 빠릅니다.",
+    "ctaLabel": "시작하기",
+    "titleA": "관리형 Milvus를 무료로 사용해 보세요",
+    "titleB": "Zilliz Cloud를 무료로 사용해 보세요"
+  },
   "communityBanner": {
     "title": "밀버스 영업 시간",
     "desc": "Milvus의 전문가인 질리즈의 프로덕션 배포에 대한 도움을 받으세요.",

@@ -37,7 +37,8 @@
   "footer": {
     "resource": {
       "managed": "Milvus Terkelola",
-      "contact": "Pesan Demo"
+      "contact": "Pesan Demo",
+      "faq": "Referensi Cepat AI"
     },
     "tools": {
       "sizing": "Alat Pengukur Ukuran Milvus",

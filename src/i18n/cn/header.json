@@ -18,6 +18,7 @@
     "cli": "Milvus CLI",
     "sizing": "配置工具",
     "backup": "Milvus 备份",
+    "vts": "VTS",
     "deepSearcher": "深度搜索器",
     "claudeContext": "Claude Context"
   },
@@ -31,11 +32,13 @@
     "slack": "松弛"
   },
   "start": "开始使用",
+  "star": "Star",
   "contact": "预约演示",
   "footer": {
     "resource": {
       "managed": "托管 Milvus",
-      "contact": "预约演示"
+      "contact": "预约演示",
+      "faq": "AI 快速参考"
     },
     "tools": {
       "sizing": "Milvus 容量计算工具",

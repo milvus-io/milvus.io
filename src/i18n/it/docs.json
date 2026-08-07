@@ -27,6 +27,12 @@
   "translate": {
     "by": "Tradotto da"
   },
+  "advertise": {
+    "content": "Zilliz Cloud è senza problemi, basato su Milvus e 10 volte più veloce.",
+    "ctaLabel": "Inizia",
+    "titleA": "Prova Milvus gestito gratuitamente",
+    "titleB": "Prova Zilliz Cloud gratuitamente"
+  },
   "communityBanner": {
     "title": "Orari d'ufficio di Milvus",
     "desc": "Chiedete aiuto per la distribuzione in produzione a Zilliz, gli esperti di Milvus.",

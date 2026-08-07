@@ -37,7 +37,8 @@
   "footer": {
     "resource": {
       "managed": "Milvus المدار",
-      "contact": "احجز عرضاً تجريبياً"
+      "contact": "احجز عرضاً تجريبياً",
+      "faq": "مرجع سريع للذكاء الاصطناعي"
     },
     "tools": {
       "sizing": "أداة تحديد حجم Milvus",

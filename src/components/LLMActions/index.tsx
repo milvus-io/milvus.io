@@ -45,8 +45,8 @@ export default function LLMActions(props: LLMActionsProps) {
     mdContent: propsMdContent = '',
   } = props;
   const { root = '' } = customClasses || {};
-  const { t } = useTranslation('llm');
   const { locale } = useGlobalLocale();
+  const { t } = useTranslation('llm', { lng: locale });
   const { asPath } = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);

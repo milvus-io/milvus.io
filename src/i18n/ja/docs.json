@@ -27,6 +27,12 @@
   "translate": {
     "by": "翻訳"
   },
+  "advertise": {
+    "content": "Zilliz Cloud は手間いらず、Milvus を基盤に 10 倍高速です。",
+    "ctaLabel": "始める",
+    "titleA": "マネージド Milvus を無料で試す",
+    "titleB": "Zilliz Cloud を無料で試す"
+  },
   "communityBanner": {
     "title": "ミルバス営業時間",
     "desc": "Milvusの専門家であるZillizから、本番導入の支援を受けましょう。",

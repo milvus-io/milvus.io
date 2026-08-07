@@ -174,7 +174,7 @@ const Aside = (props: AsidePropsType) => {
 
   return (
     <div className={clsx(styles.rightNavWrapper, root)}>
-      <DeepLogo className="mb-[32px]" />
+      <DeepLogo className="mb-[32px]" lang={lang} />
       <>
         {category === 'doc' && (
           <AnchorTree

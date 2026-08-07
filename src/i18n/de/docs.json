@@ -27,6 +27,12 @@
   "translate": {
     "by": "Übersetzt von"
   },
+  "advertise": {
+    "content": "Zilliz Cloud ist unkompliziert, basiert auf Milvus und ist 10-mal schneller.",
+    "ctaLabel": "Loslegen",
+    "titleA": "Verwaltetes Milvus kostenlos testen",
+    "titleB": "Zilliz Cloud kostenlos testen"
+  },
   "communityBanner": {
     "title": "Milvus Bürozeiten",
     "desc": "Holen Sie sich Hilfe bei der Produktionsbereitstellung von Zilliz, den Experten für Milvus.",

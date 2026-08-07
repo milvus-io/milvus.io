@@ -7,12 +7,19 @@ import DeepLImg from '../../../public/images/docs/deepl.png';
 
 type Props = {
   className?: string;
+  lang?: LanguageEnum;
 };
 
-export const DeepLogo: FC<Props> = ({ className }) => {
-  const { t, i18n } = useTranslation('docs');
+export const DeepLogo: FC<Props> = ({
+  className,
+  lang = LanguageEnum.ENGLISH,
+}) => {
+  // Driven by the page's locale, not `i18n.language`: the latter is always `en`
+  // on the server, so this block rendered nothing server-side and a paragraph
+  // client-side — a hydration mismatch on every translated page.
+  const { t } = useTranslation('docs', { lng: lang });
 
-  if (i18n.language === LanguageEnum.ENGLISH) {
+  if (lang === LanguageEnum.ENGLISH) {
     return null;
   }
 

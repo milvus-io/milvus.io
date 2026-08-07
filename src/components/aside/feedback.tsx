@@ -15,8 +15,9 @@ declare global {
 
 const FeedbackComment: React.FC<{
   onUpdateComment: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-}> = ({ onUpdateComment }) => {
-  const { t } = useTranslation('docs');
+  lang?: LanguageEnum;
+}> = ({ onUpdateComment, lang = LanguageEnum.ENGLISH }) => {
+  const { t } = useTranslation('docs', { lng: lang });
   return (
     <div>
       <p className={styles.dialogSubTitle}>
@@ -105,7 +106,9 @@ export default function FeedbackSection(props: {
     handleUpdateDialog({
       open: true,
       title: t('feedback.comment.title'),
-      children: <FeedbackComment onUpdateComment={updateComment} />,
+      children: (
+        <FeedbackComment onUpdateComment={updateComment} lang={lang} />
+      ),
       actions: (
         <>
           <button

@@ -26,6 +26,12 @@ type I18nResource = Record<string, unknown>;
 declare global {
   interface Window {
     __I18N_RESOURCES__?: Record<string, I18nResource>;
+    /**
+     * Partial English bundle holding only the keys the current locale is
+     * missing, so `fallbackLng` resolves the same way it does on the server.
+     * Never registered as a fully loaded language — see `loadedLanguages`.
+     */
+    __I18N_FALLBACK_RESOURCES__?: I18nResource | null;
   }
 }
 
@@ -112,6 +118,12 @@ if (isBrowser && !i18n.isInitialized) {
       defaultLanguage
   );
   const initialResources = window.__I18N_RESOURCES__?.[initialLocale];
+  // Untranslated keys must resolve to English on the very first render, the way
+  // they already do on the server, or hydration fails with a text mismatch.
+  const fallbackResources =
+    initialLocale === defaultLanguage
+      ? undefined
+      : window.__I18N_FALLBACK_RESOURCES__;
 
   i18n.use(initReactI18next).init({
     lng: initialLocale,
@@ -125,12 +137,20 @@ if (isBrowser && !i18n.isInitialized) {
     lowerCaseLng: true,
     initImmediate: false,
     partialBundledLanguages: true,
-    resources: initialResources ? { [initialLocale]: initialResources } : {},
+    resources: {
+      ...(initialResources
+        ? { [initialLocale]: normalizeResource(initialResources) }
+        : {}),
+      ...(fallbackResources ? { [defaultLanguage]: fallbackResources } : {}),
+    },
   });
 
   if (initialResources) {
     loadedLanguages.add(initialLocale);
   }
+  // `fallbackResources` is deliberately NOT marked as loaded: it only holds the
+  // gap keys, so switching to English still has to fetch the full bundle, which
+  // then deep-merges over it.
 }
 
 export default i18n;

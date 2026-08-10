@@ -183,7 +183,24 @@ export const LanguageSelector: FC<Props> = props => {
   ].filter(option => !option.disabled);
 
   return (
-    <div className={className}>
+    // Every label below is an endonym -- "English", "简体中文", "日本語で". A page
+    // translator rewriting them is wrong on its own terms (a language picker
+    // must name each language in that language), and it also crashes the app:
+    // the translator detaches the value text node and swaps in a <font>, so
+    // React's later unmount hits `span.removeChild(<detached text node>)` and
+    // throws NotFoundError, which the root error boundary turns into
+    // "Application error: a client-side exception has occurred".
+    //
+    // Measured: with an entire page translated (161 text nodes rewritten), this
+    // value node is the *only* one React removes individually -- everywhere else
+    // it deletes an ancestor element and the injected <font> goes along with it
+    // harmlessly. So opting this one widget out is enough.
+    //
+    // `translate="no"` is the HTML attribute; `notranslate` is Google's older
+    // hook. Chrome's built-in translator honours both, and so do the common
+    // extensions. The dropdown needs its own copy because Radix portals it to
+    // document.body, where it does not inherit the wrapper's attribute.
+    <div className={clsx(className, 'notranslate')} translate="no">
       <Select
         value={value}
         onValueChange={onChange}
@@ -209,7 +226,10 @@ export const LanguageSelector: FC<Props> = props => {
           <LanguageIcon className="transition-all" />
           {!hiddenSelectValue && <SelectValue placeholder="Language" />}
         </SelectTrigger>
-        <SelectContent className="z-[1000] shadow-nav-menu mt-[8px]">
+        <SelectContent
+          className="z-[1000] shadow-nav-menu mt-[8px] notranslate"
+          translate="no"
+        >
           <SelectGroup>
             {options.map(option => {
               return (

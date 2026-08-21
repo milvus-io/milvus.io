@@ -15,7 +15,7 @@
     color: var(--color-black2);
     max-width: 1074px;
     margin: 0 auto 40px;
-    font-family: 'Geist Mono';
+    font-family: 'Geist Mono', monospace;
   }
 
   .inputWrapper {

@@ -24,7 +24,7 @@
     font-weight: 500;
     line-height: 1.5;
     text-transform: uppercase;
-    font-family: 'Geist Mono';
+    font-family: 'Geist Mono', monospace;
   }
 
   &-title {
@@ -44,7 +44,7 @@
       list-style: none;
       display: flex;
       align-items: center;
-      font-family: 'Geist Mono';
+      font-family: 'Geist Mono', monospace;
 
       &:not(:first-of-type) {
         margin-top: 8px;

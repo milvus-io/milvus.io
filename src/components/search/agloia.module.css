@@ -44,7 +44,7 @@
       }
     }
     :global(.DocSearch-Container) * {
-      font-family: Geist;
+      font-family: 'Geist', system-ui, sans-serif;
     }
   }
 }

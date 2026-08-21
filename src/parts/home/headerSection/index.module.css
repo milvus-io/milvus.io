@@ -103,7 +103,7 @@ a.startButton {
     }
   }
   .headlineTag {
-    font-family: 'Geist Mono';
+    font-family: 'Geist Mono', monospace;
     flex-grow: 0;
     @mixin paragraph6;
     border-radius: 4px;
@@ -113,7 +113,7 @@ a.startButton {
   }
 
   .headlineLink {
-    font-family: 'Geist Mono';
+    font-family: 'Geist Mono', monospace;
     @mixin paragraph6-regular;
     color: var(--color-black2);
 

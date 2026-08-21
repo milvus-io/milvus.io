@@ -15,17 +15,17 @@
 }
 
 .commonLabel {
-  font-family: 'Geist Mono';
+  font-family: 'Geist Mono', monospace;
   @mixin paragraph4-bold;
 }
 
 .selectItem {
-  font-family: 'Geist Mono';
+  font-family: 'Geist Mono', monospace;
   @mixin paragraph6;
 }
 
 .selectTrigger {
-  font-family: 'Geist Mono';
+  font-family: 'Geist Mono', monospace;
   @mixin paragraph6-regular;
   padding: 9px 12px;
   height: 36px;
@@ -239,7 +239,7 @@ div.averageLabel {
 }
 
 .resultContainer {
-  font-family: 'Geist Mono';
+  font-family: 'Geist Mono', monospace;
 
   .commonKeyLabel {
     @mixin paragraph6-regular;

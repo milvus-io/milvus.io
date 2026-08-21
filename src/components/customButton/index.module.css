@@ -1,6 +1,6 @@
 
 .linkButton {
-  font-family: 'Geist Mono';
+  font-family: 'Geist Mono', monospace;
   @mixin resetNativeButton;
   @mixin paragraph3;
   display: flex;

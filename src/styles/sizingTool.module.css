@@ -6,7 +6,7 @@
 .sizingToolContainer {
   padding-top: 80px;
   padding-bottom: 40px;
-  font-family: 'Geist Mono';
+  font-family: 'Geist Mono', monospace;
   color: var(--color-black1);
 
   .titleContainer {
@@ -26,7 +26,7 @@
       a {
         @mixin heading2;
 
-        font-family: 'Geist';
+        font-family: 'Geist', system-ui, sans-serif;
         color: #000;
         display: block;
         max-width: 600px;

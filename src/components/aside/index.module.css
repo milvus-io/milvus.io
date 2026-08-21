@@ -1,6 +1,6 @@
 
 .rightNavWrapper {
-  font-family: 'Geist';
+  font-family: 'Geist', system-ui, sans-serif;
 
   .btnsGroup {
     padding: 12px 0;
@@ -158,21 +158,21 @@ div.customRootClass {
 
   .customTitleClass {
     @mixin heading3;
-    font-family: 'Geist';
+    font-family: 'Geist', system-ui, sans-serif;
     color: var(--color-dark);
    
   }
 }
 
 p.dialogSubTitle {
-  font-family: 'Geist';
+  font-family: 'Geist', system-ui, sans-serif;
   color: var(--color-dark);
   @mixin paragraph3-regular;
   margin-bottom: 24px;
 }
 
 label.inputLabel {
-  font-family: 'Geist';
+  font-family: 'Geist', system-ui, sans-serif;
   color: var(--color-dark);
   @mixin paragraph6-bold;
   letter-spacing: 0.24px;
@@ -180,7 +180,7 @@ label.inputLabel {
 }
 
 input.customInputField {
-  font-family: 'Geist';
+  font-family: 'Geist', system-ui, sans-serif;
   @mixin paragraph4-regular;
   margin-top: 8px;
 }

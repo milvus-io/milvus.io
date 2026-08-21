@@ -2,7 +2,7 @@
 .communityPageContainer {
   margin: 0 auto;
   padding-bottom: 40px;
-  font-family: 'Geist';
+  font-family: 'Geist', system-ui, sans-serif;
   background-color: var(--color-white1);
 }
 
@@ -110,7 +110,7 @@
 
       .desc {
         @mixin paragraph4-regular;
-        font-family: 'Geist Mono';
+        font-family: 'Geist Mono', monospace;
         margin-bottom: 20px;
         max-width: 600px;
 
@@ -121,7 +121,7 @@
 
       .linkBtn {
         @mixin paragraph4;
-        font-family: 'Geist Mono';
+        font-family: 'Geist Mono', monospace;
         color: #fff;
         border-color: #fff;
         background-color: transparent;
@@ -157,7 +157,7 @@
 
   .sectionDesc {
     @mixin paragraph3-regular;
-    font-family: 'Geist Mono';
+    font-family: 'Geist Mono', monospace;
 
     margin: 0 auto 40px;
     max-width: 880px;
@@ -192,12 +192,12 @@
       }
 
       .label {
-        font-family: 'Geist Mono';
+        font-family: 'Geist Mono', monospace;
         @mixin paragraph2-bold;
       }
 
       .desc {
-        font-family: 'Geist Mono';
+        font-family: 'Geist Mono', monospace;
         @mixin paragraph4-regular;
       }
     }
@@ -223,7 +223,7 @@
     .linkBtn {
       @mixin paragraph4;
       flex: 1;
-      font-family: 'Geist Mono';
+      font-family: 'Geist Mono', monospace;
       display: flex;
       padding: 11px 28px;
       justify-content: center;

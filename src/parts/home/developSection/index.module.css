@@ -19,7 +19,7 @@
     p {
       @mixin paragraph2-regular;
       color: var(--color-black2);
-      font-family: 'Geist Mono';
+      font-family: 'Geist Mono', monospace;
     }
   }
 

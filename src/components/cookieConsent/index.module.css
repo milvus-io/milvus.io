@@ -27,13 +27,13 @@
     @mixin paragraph4;
     color: var(--color-black1);
     margin-bottom: 6px;
-    font-family: Geist !important;
+    font-family: 'Geist', system-ui, sans-serif !important;
   }
 
   p {
     @mixin paragraph6-regular;
     color: var(--color-black2);
-    font-family: Geist !important;
+    font-family: 'Geist', system-ui, sans-serif !important;
   }
 }
 .buttonsWrapper {
@@ -51,7 +51,7 @@
   margin: 0 !important;
   padding: 8px 12px !important;
   border-radius: 6px !important;
-  font-family: Geist !important;
+  font-family: 'Geist', system-ui, sans-serif !important;
 
   &:hover {
     opacity: 0.7;

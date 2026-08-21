@@ -18,7 +18,7 @@
   font-size: 16px;
   line-height: 24px;
   color: var(--color-grey-01);
-  font-family: Geist;
+  font-family: 'Geist', system-ui, sans-serif;
   white-space: nowrap;
   overflow: hidden;
 

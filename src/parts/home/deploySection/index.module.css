@@ -127,7 +127,7 @@
     }
     .dbAdvantage {
       @mixin paragraph2;
-      font-family: 'Geist Mono';
+      font-family: 'Geist Mono', monospace;
       margin-bottom: 12px;
       height: 54px;
     }
@@ -135,7 +135,7 @@
     .dbFeatures {
       list-style-type: disc;
       padding-left: 20px;
-      font-family: 'Geist Mono';
+      font-family: 'Geist Mono', monospace;
 
       li {
         @mixin paragraph3-regular;
@@ -187,7 +187,7 @@
     border: 1px solid var(--color-black4);
     max-width: 479px;
     margin: 0 auto;
-    font-family: 'Geist Mono';
+    font-family: 'Geist Mono', monospace;
     font-weight: 500;
 
     a {

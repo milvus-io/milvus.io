@@ -1,7 +1,7 @@
 
 .codeExampleSection {
   padding-top: 100px;
-  font-family: Geist;
+  font-family: 'Geist', system-ui, sans-serif;
   content-visibility: auto;
   contain-intrinsic-size: 480px;
 
@@ -53,7 +53,7 @@
 
       button {
         text-transform: uppercase !important;
-        font-family: 'Geist Mono';
+        font-family: 'Geist Mono', monospace;
       }
     }
   }
@@ -73,7 +73,7 @@
       padding-bottom: 12px;
 
       code {
-        font-family: 'Geist Mono';
+        font-family: 'Geist Mono', monospace;
         color: #fff;
         font-size: 14px;
         line-height: 20px;

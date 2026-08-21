@@ -196,7 +196,7 @@
       border-radius: 100px;
       border: transparent;
 
-      font-family: 'Geist Mono';
+      font-family: 'Geist Mono', monospace;
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
@@ -247,7 +247,7 @@
       color: white;
     }
     .num {
-      font-family: 'Geist Mono';
+      font-family: 'Geist Mono', monospace;
       font-weight: 400;
       font-size: 32px;
       line-height: 42.2px;

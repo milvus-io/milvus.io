@@ -20,7 +20,7 @@
 }
 
 .docHomeHtmlWrapper {
-  font-family: 'Geist';
+  font-family: 'Geist', system-ui, sans-serif;
   display: block;
   margin-right: 0;
   max-width: calc(var(--doc-content-width) + var(--doc-aside-width));

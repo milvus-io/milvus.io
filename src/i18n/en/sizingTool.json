@@ -110,5 +110,69 @@
     "tip1": "How to run Milvus with Docker Compose?",
     "tip2": "How to run Milvus with Helm Chart?",
     "tip3": "How to run Milvus with Milvus Operator?"
+  },
+  "tabs": {
+    "cpu": "CPU Sizing",
+    "gpu": "GPU Sizing",
+    "new": "NEW",
+    "cpuHint": "The existing CPU estimation: loading memory, node configuration, dependencies and install commands.",
+    "gpuHint": "VRAM estimation for GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ and GPU_CAGRA, including the full derivation."
+  },
+  "gpu": {
+    "form": {
+      "million": "Million",
+      "averageLengthTip": "Host memory only — not counted into VRAM",
+      "indexDoc": "How to choose a GPU index?",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (m)",
+      "pqDimTip": "0 = cuVS Auto → {{value}}",
+      "pqBits": "nbits",
+      "graphDegree": "graph_degree",
+      "intermediateDegree": "intermediate_graph_degree",
+      "modeManualTip": "The GPU estimate does not switch mode automatically — pick the one you plan to deploy."
+    },
+    "result": {
+      "gpuMemory": "GPU Memory",
+      "gpuMemoryNote": "The ceiling is currently set by the {{stage}} stage ({{value}}), with a {{factor}}× headroom reserved on top.",
+      "coreCalculation": "Core Calculation",
+      "bytesPerRow": "Bytes per row",
+      "rowsPerSegment": "Rows per segment",
+      "segmentCount": "Segment count",
+      "effectiveParams": "Effective index params",
+      "noTunableParams": "no tunable parameters",
+      "perSegmentMemory": "Per-segment index memory",
+      "totalPerSegment": "Total per segment",
+      "lifecyclePeak": "Lifecycle peak",
+      "buildPeak": "Build peak",
+      "buildPeakDesc": "segment index + {{value}} temporary",
+      "resident": "Resident",
+      "residentDesc": "segment index × {{segments}} segments",
+      "limiting": "LIMITING",
+      "stageBuild": "build",
+      "stageResident": "resident",
+      "stageEqual": "build and resident",
+      "stageLoad": "load",
+      "componentsNote": "Node tiers and the Stream Node row are pending kernel confirmation; dependency services (etcd / MinIO / MQ) and GPU card mapping are not part of the GPU estimate yet.",
+      "compare": "GPU vs CPU",
+      "compareDesc": "Same data scale, compared against the CPU tool's FLAT baseline.",
+      "metric": "Metric",
+      "cpuBaseline": "CPU (FLAT)",
+      "compareRaw": "Raw data size",
+      "compareHost": "Host memory",
+      "compareVram": "GPU memory",
+      "compareStage": "Limiting stage",
+      "buildLimitingSingle": "Only a single segment, so the build stage sets the ceiling by definition — there is no multi-segment resident total to exceed it.",
+      "buildLimitingMulti": "The build-time temporary buffer ({{value}}) outweighs the resident index data, so the build stage sets the ceiling even across {{segments}} segments. IVF_PQ and CAGRA can do this at any segment count, because the training set and the intermediate graph are not compressed the way the final index is.",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "Vector count must be greater than 0, dimension at least 2, and segment size positive.",
+      "nlistOutOfRange": "nlist must be between 1 and 65536.",
+      "trainFractionOutOfRange": "kmeans_trainset_fraction must be within (0, 1].",
+      "pqDimOutOfRange": "Resolved pq_dim must be within [1, d].",
+      "pqCodeNotByteAligned": "pq_dim × nbits must be a multiple of 8.",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree must be greater than or equal to graph_degree."
+    }
   }
 }

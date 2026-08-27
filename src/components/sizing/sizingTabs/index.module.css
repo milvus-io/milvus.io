@@ -1,0 +1,60 @@
+.tabs {
+  display: inline-flex;
+  padding: 4px;
+  background: #f2f4f7;
+  border-radius: 10px;
+  gap: 4px;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Helvetica Neue',
+    'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+}
+
+.tab {
+  padding: 9px 18px;
+  border-radius: 7px;
+  border: 0;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  color: #667085;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.tabActive {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.12);
+}
+
+.tabBadge {
+  margin-left: 8px;
+  background: #e0f5ff;
+  color: #0079b0;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  vertical-align: 1px;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #667085;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Helvetica Neue',
+    'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+}

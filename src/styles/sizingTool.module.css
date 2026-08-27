@@ -1,4 +1,3 @@
-
 .pageContainer {
   background-color: #fff;
 }
@@ -76,6 +75,20 @@
       color: var(--color-black1-5);
       text-decoration: underline;
     }
+  }
+
+  /* The tab switcher sits directly under the subtitle, so the airy 80px gap
+     below `.desc` moves to the bottom of the switcher block instead. */
+  .descWithTabs {
+    margin-bottom: 26px;
+  }
+
+  .tabsRow {
+    margin-bottom: 24px;
+  }
+
+  .hiddenPanel {
+    display: none;
   }
 
   .tipWrapper {

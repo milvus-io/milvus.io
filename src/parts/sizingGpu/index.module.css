@@ -1,0 +1,135 @@
+/**
+ * GPU tab additions only. Everything the CPU tab already has a look for —
+ * form sections, cards, collapsible headers, key/value labels — comes from
+ * `@/parts/sizingCommon/index.module.css`, so the two tabs stay identical.
+ */
+
+.modeHint {
+  @mixin paragraph6-regular;
+  color: var(--color-black2);
+}
+
+.errorWrapper {
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  background-color: #fff4f3;
+  border: 1px solid #fda29b;
+
+  .errorCode {
+    @mixin paragraph6-bold;
+    color: #b42318;
+  }
+
+  .errorMessage {
+    @mixin paragraph6-regular;
+    margin-top: 4px;
+    color: #912018;
+  }
+}
+
+.stageNote {
+  @mixin paragraph6-regular;
+  color: var(--color-black2);
+}
+
+.warningCallout {
+  @mixin paragraph6-regular;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #fffaeb;
+  border: 1px solid #fedf89;
+  color: #93370d;
+}
+
+.footnote {
+  @mixin paragraph6-regular;
+  color: var(--color-black2);
+}
+
+.subTitle {
+  @mixin paragraph6-bold;
+}
+
+.detailRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 0;
+}
+
+.detailValue {
+  @mixin paragraph6-bold;
+  color: var(--color-black1);
+  text-align: right;
+}
+
+.breakdownList {
+  list-style: none;
+  border-top: 1px solid var(--color-black4);
+
+  .detailRow {
+    border-bottom: 1px solid var(--color-black4);
+  }
+
+  .totalRow {
+    border-bottom: none;
+  }
+}
+
+.stageWrapper {
+  display: flex;
+  gap: 12px;
+
+  @media (--phone) {
+    flex-direction: column;
+  }
+
+  .stageCard {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--color-black3);
+    background: #fff;
+  }
+
+  .stageCardActive {
+    border-color: var(--color-blue1);
+  }
+
+  .stageCaption {
+    @mixin paragraph6-regular;
+    margin-top: 4px;
+    color: var(--color-black2);
+  }
+}
+
+.limitingTag {
+  @mixin paragraph6-bold;
+  padding: 0 6px;
+  border-radius: 4px;
+  background-color: #e0f2fc;
+  color: #008dc8;
+  white-space: nowrap;
+}
+
+.compareRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-black4);
+
+  span:not(:first-child) {
+    text-align: right;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.compareHead {
+  padding-top: 0;
+}

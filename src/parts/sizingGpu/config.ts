@@ -9,11 +9,6 @@ import {
   VECTOR_RANGE_CONFIG,
 } from '@/consts/sizingGpu';
 import {
-  M_RANGE_CONFIG,
-  MAX_NODE_DEGREE_RANGE_CONFIG,
-  N_LIST_RANGE_CONFIG as CPU_N_LIST_RANGE_CONFIG,
-} from '@/consts/sizing';
-import {
   GpuIndexTypeEnum,
   GpuValidationErrorEnum,
   IGpuCalculateResult,
@@ -21,15 +16,10 @@ import {
   ModeEnum,
   SegmentSizeEnum,
 } from '@/types/sizingGpu';
-import { IndexTypeEnum, RefineValueEnum } from '@/types/sizing';
 import {
   gpuSizingCalculator,
   validateGpuSizingParams,
 } from '@/utils/sizingToolGpu';
-import {
-  memoryAndDiskCalculator,
-  rawDataSizeCalculator,
-} from '@/utils/sizingTool';
 
 /** Every value the GPU form owns. Off-index parameters are kept, not reset. */
 export interface IGpuFormState {
@@ -64,17 +54,10 @@ export const DEFAULT_GPU_FORM: IGpuFormState = {
   mode: ModeEnum.Standalone,
 };
 
-/** The CPU tool's own numbers for the same data scale, for the comparison card. */
-export interface IGpuCpuBaseline {
-  rawDataSize: number;
-  memorySize: number;
-}
-
 /** One consistent set of results. Only replaced while the input is valid. */
 export interface IGpuSnapshot {
   params: IGpuSizingParams;
   result: IGpuCalculateResult;
-  cpuBaseline: IGpuCpuBaseline;
 }
 
 export interface IGpuPayload {
@@ -100,41 +83,6 @@ export const toGpuSizingParams = (form: IGpuFormState): IGpuSizingParams => ({
   },
 });
 
-/**
- * The CPU tab's FLAT baseline at the GPU tab's data scale, produced by the CPU
- * tool's own calculator rather than by a second copy of the formula.
- */
-const cpuBaselineCalculator = (form: IGpuFormState): IGpuCpuBaseline => {
-  const shared = {
-    num: form.num,
-    d: form.dimension,
-    withScalar: form.withScalar,
-    scalarAvg: form.scalarAvg,
-  };
-  const rawDataSize = rawDataSizeCalculator(shared);
-
-  const { memory } = memoryAndDiskCalculator({
-    ...shared,
-    rawDataSize,
-    offLoading: false,
-    segSize: Number(form.segmentSize),
-    mode: form.mode,
-    refineType: RefineValueEnum.None,
-    indexTypeParams: {
-      indexType: IndexTypeEnum.FLAT,
-      widthRawData: false,
-      maxDegree: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
-      inlinePq: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
-      flatNList: CPU_N_LIST_RANGE_CONFIG.defaultValue,
-      sq8NList: CPU_N_LIST_RANGE_CONFIG.defaultValue,
-      rabitqNList: CPU_N_LIST_RANGE_CONFIG.defaultValue,
-      m: M_RANGE_CONFIG.defaultValue,
-    },
-  });
-
-  return { rawDataSize, memorySize: memory };
-};
-
 export const buildGpuPayload = (form: IGpuFormState): IGpuPayload => {
   const params = toGpuSizingParams(form);
 
@@ -143,7 +91,6 @@ export const buildGpuPayload = (form: IGpuFormState): IGpuPayload => {
     snapshot: {
       params,
       result: gpuSizingCalculator(params),
-      cpuBaseline: cpuBaselineCalculator(form),
     },
   };
 };

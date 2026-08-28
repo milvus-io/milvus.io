@@ -75,19 +75,19 @@
 
 建议做成可折叠、默认展开——GPU 估算比 CPU 更需要向用户交代推导过程。
 
-| 展示项              | 字段                                       | 示例渲染                                                                                                  |
-| ------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
-| 单行字节            | 由 `d` 推                                  | `768 × 4 = 3,072 Bytes`                                                                                   |
-| 单段行数            | `segmentRowCount`                          | `1024 MiB ÷ 3,072 = 349,525 vectors`                                                                      |
-| 段数                | `segmentCount`                             | `ceil(1,000,000 ÷ 349,525) = 3`                                                                           |
-| 生效索引参数        | `effectiveIndexParams`                     | 展示**钳制 / 自动解析后**的值：`nlist` 被 `min(nlist, 段行数)` 压过、`pqDim = 0` 被 cuVS 规则解析成实际值 |
-| PQ 单向量编码字节   | `segmentIndexMemory.codeBytes`             | 仅 IVF_PQ：`ceil(m × pq_bits ÷ 8)`                                                                        |
-| 单段索引公式 + 分项 | `segmentIndexMemory`                       | 分项 `dataset / norms / lists / centers / centerNorms / graph`，随索引类型不同                            |
-| 单段索引数据量      | `segmentIndexMemory.total`                 |                                                                                                           |
-| 构建临时显存        | `segmentBuildTemporaryMemory`              | IVF 是训练集，CAGRA 是中间图，BRUTE_FORCE 为 0                                                            |
-| **Build 峰值**      | `buildMemorySize`                          | 单段索引 + 临时                                                                                           |
-| **Resident 常驻**   | `residentMemorySize`                       | 单段索引 × 段数                                                                                           |
-| 生命周期最大值      | `lifecycleMaxMemorySize` / `limitingStage` | 两者取大                                                                                                  |
+| 展示项              | 字段                                       | 示例渲染                                                                                                                           |
+| ------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 单行字节            | 由 `d` 推                                  | `768 × 4 = 3,072 Bytes`                                                                                                            |
+| 单段行数            | `segmentRowCount`                          | `1024 MiB ÷ 3,072 = 349,525 vectors`                                                                                               |
+| 段数                | `segmentCount`                             | `ceil(1,000,000 ÷ 349,525) = 3`                                                                                                    |
+| ~~生效索引参数~~    | `effectiveIndexParams`                     | **已决定不展示**。钳制与自动解析照常发生（`nlist` 被 `min(nlist, 段行数)` 压过、`pqDim = 0` 走 cuVS 规则），只是不在 UI 上单列一行 |
+| PQ 单向量编码字节   | `segmentIndexMemory.codeBytes`             | 仅 IVF_PQ：`ceil(m × pq_bits ÷ 8)`                                                                                                 |
+| 单段索引公式 + 分项 | `segmentIndexMemory`                       | 分项 `dataset / norms / lists / centers / centerNorms / graph`，随索引类型不同                                                     |
+| 单段索引数据量      | `segmentIndexMemory.total`                 |                                                                                                                                    |
+| 构建临时显存        | `segmentBuildTemporaryMemory`              | IVF 是训练集，CAGRA 是中间图，BRUTE_FORCE 为 0                                                                                     |
+| **Build 峰值**      | `buildMemorySize`                          | 单段索引 + 临时                                                                                                                    |
+| **Resident 常驻**   | `residentMemorySize`                       | 单段索引 × 段数                                                                                                                    |
+| 生命周期最大值      | `lifecycleMaxMemorySize` / `limitingStage` | 两者取大                                                                                                                           |
 
 单段索引数据公式（`gpuIndexMemoryCalculator`）：
 

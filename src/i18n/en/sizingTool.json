@@ -138,8 +138,6 @@
       "bytesPerRow": "Bytes per row",
       "rowsPerSegment": "Rows per segment",
       "segmentCount": "Segment count",
-      "effectiveParams": "Effective index params",
-      "noTunableParams": "no tunable parameters",
       "perSegmentMemory": "Per-segment index memory",
       "totalPerSegment": "Total per segment",
       "lifecyclePeak": "Lifecycle peak",

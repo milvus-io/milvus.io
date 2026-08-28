@@ -1,7 +1,6 @@
 import {
   GpuIndexTypeEnum,
   GpuValidationErrorEnum,
-  IGpuIndexMemory,
   IGpuIndexParams,
   ModeEnum,
   SegmentSizeEnum,
@@ -233,33 +232,6 @@ export const GPU_STREAM_NODE_LARGE_UNITS_PER_NODE = 4;
 
 /** Documentation link shown next to the index picker. */
 export const GPU_INDEX_DOC_LINK = '/docs/gpu_index.md';
-
-/** Short labels used in the GPU vs CPU comparison header. */
-export const GPU_INDEX_SHORT_LABELS: Record<GpuIndexTypeEnum, string> = {
-  [GpuIndexTypeEnum.GPU_BRUTE_FORCE]: 'BRUTE_FORCE',
-  [GpuIndexTypeEnum.GPU_IVF_FLAT]: 'IVF_FLAT',
-  [GpuIndexTypeEnum.GPU_IVF_PQ]: 'IVF_PQ',
-  [GpuIndexTypeEnum.GPU_CAGRA]: 'CAGRA',
-};
-
-/**
- * Which `IGpuIndexMemory` components make up the per-segment breakdown list,
- * in display order, for each index type.
- */
-export const GPU_INDEX_BREAKDOWN_KEYS: Record<
-  GpuIndexTypeEnum,
-  (keyof IGpuIndexMemory)[]
-> = {
-  [GpuIndexTypeEnum.GPU_BRUTE_FORCE]: ['dataset', 'norms'],
-  [GpuIndexTypeEnum.GPU_IVF_FLAT]: [
-    'dataset',
-    'indices',
-    'centers',
-    'centerNorms',
-  ],
-  [GpuIndexTypeEnum.GPU_IVF_PQ]: ['codes', 'indices', 'centers', 'centerNorms'],
-  [GpuIndexTypeEnum.GPU_CAGRA]: ['dataset', 'graph'],
-};
 
 /** Enum names, shown verbatim in the validation banner. */
 export const GPU_VALIDATION_ERROR_CODES: Record<

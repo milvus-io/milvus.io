@@ -22,10 +22,8 @@ import {
   GPU_INDEX_SHORT_LABELS,
   GPU_MEMORY_SAFETY_FACTOR,
   GPU_VALIDATION_ERROR_CODES,
-  PQ_DIM_AUTO,
 } from '@/consts/sizingGpu';
 import {
-  GpuIndexTypeEnum,
   GpuLifecycleStageEnum,
   GpuValidationErrorEnum,
   IGpuIndexMemory,
@@ -86,7 +84,6 @@ export default function GpuResultSection(props: GpuResultSectionProps) {
     memorySize,
     segmentRowCount,
     segmentCount,
-    effectiveIndexParams,
     segmentIndexMemory,
     segmentBuildTemporaryMemory,
     buildMemorySize,
@@ -109,46 +106,6 @@ export default function GpuResultSection(props: GpuResultSectionProps) {
   const residentIsLimiting =
     limitingStage === GpuLifecycleStageEnum.Resident ||
     limitingStage === GpuLifecycleStageEnum.Equal;
-
-  const effectiveParamsLabel = useMemo(() => {
-    switch (indexType) {
-      case GpuIndexTypeEnum.GPU_IVF_FLAT:
-        return `nlist = min(${formatGpuNumber(
-          params.indexParams.nlist
-        )}, ${formatGpuNumber(segmentRowCount)}) = ${formatGpuNumber(
-          effectiveIndexParams.nlist
-        )}`;
-      case GpuIndexTypeEnum.GPU_IVF_PQ: {
-        const auto = params.indexParams.pqDim === PQ_DIM_AUTO;
-        return [
-          `nlist = ${formatGpuNumber(effectiveIndexParams.nlist)}`,
-          `pq_dim = ${formatGpuNumber(effectiveIndexParams.pqDim)}${
-            auto ? ' (cuVS Auto)' : ''
-          }`,
-          `nbits = ${effectiveIndexParams.pqBits}`,
-          `code = ${formatGpuNumber(
-            segmentIndexMemory.codeBytes || 0
-          )} B/vector`,
-        ].join(' · ');
-      }
-      case GpuIndexTypeEnum.GPU_CAGRA:
-        return [
-          `graph_degree = ${formatGpuNumber(effectiveIndexParams.graphDegree)}`,
-          `intermediate = ${formatGpuNumber(
-            effectiveIndexParams.intermediateDegree
-          )}`,
-        ].join(' · ');
-      default:
-        return t('gpu.result.noTunableParams');
-    }
-  }, [
-    indexType,
-    params.indexParams,
-    effectiveIndexParams,
-    segmentIndexMemory,
-    segmentRowCount,
-    t,
-  ]);
 
   const breakdownRows = useMemo(
     () =>
@@ -516,15 +473,6 @@ export default function GpuResultSection(props: GpuResultSectionProps) {
                   name={t('gpu.result.segmentCount')}
                   data={formatGpuNumber(segmentCount)}
                 />
-              </div>
-
-              <div className={clsx('mt-[16px]', classes.detailRow)}>
-                <span className={commonClasses.commonKeyLabel}>
-                  {t('gpu.result.effectiveParams')}
-                </span>
-                <span className={classes.detailValue}>
-                  {effectiveParamsLabel}
-                </span>
               </div>
 
               <p className={clsx('mt-[16px] mb-[8px]', classes.subTitle)}>

@@ -17,6 +17,7 @@ import { LanguageEnum } from '@/types/localization';
 import { getHomePageLink, getSeoUrl } from '@/components/localization/utils';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
+import { useHeadingAnchorFallback } from '@/hooks/use-heading-anchor-fallback';
 import JsonLd from '@/components/JsonLd';
 import { buildSchema } from '@/schema';
 import { ABSOLUTE_BASE_URL } from '@/consts';
@@ -80,6 +81,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
     anchorList,
   });
   useGenAnchor(version, editPath);
+  useHeadingAnchorFallback(articleContainer);
 
   const activeLabels = useBreadcrumbLabels({
     currentId,

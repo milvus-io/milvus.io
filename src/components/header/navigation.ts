@@ -11,6 +11,7 @@ import {
   GITHUB_MILVUS_CLI_LINK,
   GITHUB_MILVUS_COMMUNITY_LINK,
   GITHUB_VTS_LINK,
+  MILVUS_SLACK_LINK,
   MILVUS_VIDEO_LINK,
 } from '@/consts/links';
 import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
@@ -120,6 +121,12 @@ export const useHeaderNavItems = ({
           {
             label: t('community.officeHours'),
             href: MILVUS_OFFICE_HOURS_URL,
+            rel: 'noopener noreferrer',
+            external: true,
+          },
+          {
+            label: t('community.slack'),
+            href: MILVUS_SLACK_LINK,
             rel: 'noopener noreferrer',
             external: true,
           },

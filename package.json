@@ -16,7 +16,8 @@
     "i18n:sync": "NODE_ENV=development node i18n-watcher/translate-changes.js",
     "generate:docs": "node scripts/generate-docs.js",
     "generate:llms": "node scripts/generate-llms-txt.js",
-    "test:inkeep": "npx playwright test tests/inkeep.test.js"
+    "test:inkeep": "npx playwright test tests/inkeep.test.js",
+    "test:anchors": "npx playwright test tests/heading-anchor-fallback.test.js"
   },
   "dependencies": {
     "@docsearch/css": "^3.9.0",

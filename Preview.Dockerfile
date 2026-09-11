@@ -35,7 +35,6 @@ RUN find src/docs -type f \( \
 FROM zilliz/zilliz-web-runner
 
 RUN apk add --no-cache bash
-RUN npm install -g next
 
 # Install supervisor
 RUN apk add --no-cache bash supervisor

@@ -22,7 +22,6 @@
   "dependencies": {
     "@docsearch/css": "^3.9.0",
     "@docsearch/react": "^3.9.0",
-    "@giscus/react": "^2.4.0",
     "@inkeep/cxkit-react": "^0.5.116",
     "@octokit/core": "^7.0.6",
     "@playwright/test": "^1.55.1",

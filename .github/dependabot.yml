@@ -1,0 +1,53 @@
+# Dependabot: open PRs for vulnerable / outdated dependencies instead of only raising alerts.
+# Docs: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+version: 2
+updates:
+  - package-ecosystem: "npm" # pnpm-lock.yaml is covered by the npm ecosystem
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      timezone: "Asia/Shanghai"
+    target-branch: "preview"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      # Security fixes are always opened right away, one PR per advisory group.
+      # Routine bumps are batched so they do not flood the PR list.
+      next:
+        patterns:
+          - "next"
+          - "@next/*"
+          - "eslint-config-next"
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+        exclude-patterns:
+          - "next"
+          - "@next/*"
+          - "eslint-config-next"
+    ignore:
+      # Major bumps of the framework / toolchain need a manual migration pass.
+      - dependency-name: "next"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      timezone: "Asia/Shanghai"
+    target-branch: "preview"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore(ci)"

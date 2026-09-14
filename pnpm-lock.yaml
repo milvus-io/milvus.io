@@ -132,16 +132,16 @@ importers:
         version: 14.1.1
       next:
         specifier: ^15.5.25
-        version: 15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@20.17.51)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@26.5.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-hubspot:
         specifier: ^2.0.1
-        version: 2.0.1(next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@20.17.51)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+        version: 2.0.1(next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@26.5.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       next-mdx-remote:
         specifier: ^6.0.0
         version: 6.0.0(@types/react@19.2.14)(react@19.2.4)
       next-sitemap:
         specifier: ^4.2.3
-        version: 4.2.3(next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@20.17.51)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        version: 4.2.3(next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@26.5.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       prism-react-renderer:
         specifier: ^2.4.1
         version: 2.4.1(react@19.2.4)
@@ -240,8 +240,8 @@ importers:
         specifier: ^14.1.2
         version: 14.1.2
       '@types/node':
-        specifier: ^20.17.51
-        version: 20.17.51
+        specifier: ^26.5.1
+        version: 26.5.1
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
@@ -1941,8 +1941,8 @@ packages:
   '@types/node@18.19.130':
     resolution: {integrity: sha512-GRaXQx6jGfL8sKfaIDD6OupbIHBr9jv7Jnaml9tB7l4v068PAOXqfcujMMo5PhbIs6ggR1XODELqahT2R8v0fg==}
 
-  '@types/node@20.17.51':
-    resolution: {integrity: sha512-hccptBl7C8lHiKxTBsY6vYYmqpmw1E/aGR/8fmueE+B390L3pdMOpNSRvFO4ZnXzW5+p2HBXV0yNABd2vdk22Q==}
+  '@types/node@26.5.1':
+    resolution: {integrity: sha512-CzNm2FezW4VR/LjG6yUdiEgLE/rAQ9Slj5gCu/C2VrdcW7I0ahNZ8DRbHT7zOZ6r3ONgd/bsQIeSaoDGrd1C6g==}
 
   '@types/prismjs@1.26.5':
     resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
@@ -2025,6 +2025,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     resolution: {integrity: sha512-ppLRUgHVaGRWUx0R0Ut06Mjo9gBaBkg3v/8AxusGLhsIotbBLuRk51rAzqLC8gq6NyyAojEXglNjzf6R948DNw==}
@@ -2914,6 +2915,7 @@ packages:
   eslint@9.39.2:
     resolution: {integrity: sha512-LEyamqS7W5HB3ujJyvi0HQK/dtVINZvd5mAAp9eT5S/ujByGjiZLCzPcHVzuXbpJDJF/cxwHlfceVUDZ2lnSTw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -4671,8 +4673,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici-types@6.19.8:
-    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+  undici-types@8.9.0:
+    resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
 
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
@@ -6647,16 +6649,16 @@ snapshots:
 
   '@types/node-fetch@2.6.13':
     dependencies:
-      '@types/node': 20.17.51
+      '@types/node': 26.5.1
       form-data: 4.0.6
 
   '@types/node@18.19.130':
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.17.51':
+  '@types/node@26.5.1':
     dependencies:
-      undici-types: 6.19.8
+      undici-types: 8.9.0
 
   '@types/prismjs@1.26.5': {}
 
@@ -9003,9 +9005,9 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-hubspot@2.0.1(next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@20.17.51)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4):
+  next-hubspot@2.0.1(next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@26.5.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4):
     dependencies:
-      next: 15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@20.17.51)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@26.5.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
 
   next-mdx-remote@6.0.0(@types/react@19.2.14)(react@19.2.4):
@@ -9022,15 +9024,15 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  next-sitemap@4.2.3(next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@20.17.51)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
+  next-sitemap@4.2.3(next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@26.5.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
     dependencies:
       '@corex/deepmerge': 4.0.43
       '@next/env': 13.5.11
       fast-glob: 3.3.3
       minimist: 1.2.8
-      next: 15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@20.17.51)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next: 15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@26.5.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
-  next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@20.17.51)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+  next@15.5.25(@babel/core@7.29.0)(@playwright/test@1.57.0)(@types/node@26.5.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       '@next/env': 15.5.25
       '@swc/helpers': 0.5.15
@@ -9049,7 +9051,7 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 15.5.25
       '@next/swc-win32-x64-msvc': 15.5.25
       '@playwright/test': 1.57.0
-      sharp: 0.35.4(@types/node@20.17.51)
+      sharp: 0.35.4(@types/node@26.5.1)
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/node'
@@ -9697,7 +9699,7 @@ snapshots:
       es-errors: 1.3.0
       es-object-atoms: 1.1.1
 
-  sharp@0.35.4(@types/node@20.17.51):
+  sharp@0.35.4(@types/node@26.5.1):
     dependencies:
       '@img/colour': 1.1.0
       detect-libc: 2.1.2
@@ -9728,7 +9730,7 @@ snapshots:
       '@img/sharp-win32-arm64': 0.35.4
       '@img/sharp-win32-ia32': 0.35.4
       '@img/sharp-win32-x64': 0.35.4
-      '@types/node': 20.17.51
+      '@types/node': 26.5.1
     optional: true
 
   shebang-command@2.0.0:
@@ -10037,7 +10039,7 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici-types@6.19.8: {}
+  undici-types@8.9.0: {}
 
   unified@11.0.5:
     dependencies:

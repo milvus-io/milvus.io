@@ -12,6 +12,7 @@ import classes from '@/styles/home.module.css';
 import pageClasses from '@/styles/responsive.module.css';
 import { LanguageEnum } from '@/types/localization';
 import { HomeMeta } from '@/parts/home/meta/HomeMeta';
+import HomeEventPopup from '@/parts/home/eventPopup';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import JsonLd from '@/components/JsonLd';
 import { buildSchema } from '@/schema';
@@ -46,6 +47,8 @@ export default function Homepage(props: {
         <ProductionSection />
         <MeetupsSection />
         <VectorDatabaseSection />
+
+        <HomeEventPopup locale={LanguageEnum.ENGLISH} />
       </main>
     </Layout>
   );

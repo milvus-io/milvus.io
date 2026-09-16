@@ -13,7 +13,6 @@ import pageClasses from '@/styles/responsive.module.css';
 import { getAllLanguageSlugs } from '@/utils/localization';
 import { LanguageEnum } from '@/types/localization';
 import { HomeMeta } from '@/parts/home/meta/HomeMeta';
-import HomeEventPopup from '@/parts/home/eventPopup';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function Homepage(props: {
@@ -35,8 +34,6 @@ export default function Homepage(props: {
         <DevelopSection />
         <MeetupsSection />
         <VectorDatabaseSection />
-
-        <HomeEventPopup locale={lang} />
       </main>
     </Layout>
   );

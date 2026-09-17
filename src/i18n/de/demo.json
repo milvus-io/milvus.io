@@ -2,9 +2,21 @@
   "title": "Milvus Demo Hub: Erleben Sie AI-gestützte Vektorsuche in Aktion",
   "desc": "Neugierig auf die Vektorsuche? Probieren Sie diese praktischen Demos aus, um zu sehen, wie Milvus die KI-gesteuerte Bildsuche, das multimodale Retrieval, RAG (Retrieval-Augmented Generation) und die Suche nach chemischen Strukturen unterstützt.",
   "demos": {
+    "functionChainRerank": {
+      "title": "Mehrstufiges Reranking mit Function Chain",
+      "desc": "Erstellen Sie mit XGBoost Reranker und Function Chain in Milvus 3.0 individuelle Ranking-Logik für den E-Commerce."
+    },
+    "structArraySearch": {
+      "title": "Datenkuratierung für autonomes Fahren mit StructArray",
+      "desc": "Speichern Sie das verschachtelte Objekt aus einem Videoclip und mehreren Keyframes zusammen mit Labels auf beiden Ebenen als StructArray und durchsuchen Sie flexibel jede der beiden Ebenen."
+    },
+    "embeddingListSearch": {
+      "title": "Visuelle PDF-Suche mit EmbeddingList",
+      "desc": "Implementieren Sie Multi-Vektor-Retrieval nativ in Milvus mit einem ColPali-ähnlichen Modell, das die Seiten eines NASA-Handbuchs nach MAX_SIM rankt."
+    },
     "multimodal": {
       "title": "Multimodale Bildersuche",
-      "desc": "Laden Sie Bilder hoch und bearbeiten Sie Text, um intuitive Bildersuchen mit fortschrittlicher Retrieval-Technologie zu verbessern."
+      "desc": "Visuelle semantische Suche mit kombiniertem Abfragebild und Textanweisungen."
     },
     "imgSearch": {
       "title": "Bildersuche",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "Demo ausprobieren",
   "watchDemo": "Demo ansehen",
+  "viewOnGithub": "Auf GitHub ansehen",
   "meta": {
     "title": "Milvus Demo Hub: Erleben Sie AI-gestützte Vektorsuche in Aktion",
     "desc": "Probieren Sie diese praktischen Demos aus, um zu sehen, wie Milvus die KI-gesteuerte Bildsuche, das multimodale Retrieval, RAG und die Suche nach chemischen Strukturen unterstützt."

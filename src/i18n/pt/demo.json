@@ -2,9 +2,21 @@
   "title": "Centro de Demonstração Milvus: Explore a Pesquisa Vetorial com IA em ação",
   "desc": "Curioso sobre a pesquisa vetorial? Experimente estas demonstrações práticas para ver como o Milvus potencia a pesquisa de imagens orientada por IA, a recuperação multimodal, a RAG (Retrieval-Augmented Generation) e a pesquisa de estruturas químicas.",
   "demos": {
+    "functionChainRerank": {
+      "title": "Reranking Multifase com Function Chain",
+      "desc": "Crie lógicas de ranqueamento personalizadas para e-commerce com XGBoost Reranker e Function Chain no Milvus 3.0."
+    },
+    "structArraySearch": {
+      "title": "Curadoria de Dados para Direção Autônoma com StructArray",
+      "desc": "Armazene como StructArray o objeto aninhado de um videoclipe e de vários quadros-chave, junto com rótulos nos dois níveis, e pesquise com flexibilidade em qualquer um deles."
+    },
+    "embeddingListSearch": {
+      "title": "Recuperação Visual de PDFs com EmbeddingList",
+      "desc": "Implemente nativamente a recuperação multivetorial no Milvus com um modelo no estilo ColPali que classifica páginas de um manual da NASA por MAX_SIM."
+    },
     "multimodal": {
       "title": "Busca de Imagens Multimodal",
-      "desc": "Faça upload de imagens e edite o texto para aprimorar pesquisas de imagens intuitivas usando tecnologia avançada de recuperação."
+      "desc": "Busca semântica visual que combina uma imagem de consulta com instruções de texto."
     },
     "imgSearch": {
       "title": "Busca de Imagens",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "Experimentar Demonstração",
   "watchDemo": "Assistir Demonstração",
+  "viewOnGithub": "Ver no GitHub",
   "meta": {
     "title": "Centro de Demonstração Milvus: Explore a Pesquisa Vetorial com IA em ação",
     "desc": "Experimente estas demonstrações práticas para ver como o Milvus potencia a pesquisa de imagens orientada por IA, a recuperação multimodal, o RAG e a pesquisa de estruturas químicas."

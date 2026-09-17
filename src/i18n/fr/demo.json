@@ -2,9 +2,21 @@
   "title": "Milvus Demo Hub : Découvrez la recherche vectorielle alimentée par l'IA en action",
   "desc": "Curieux d'en savoir plus sur la recherche vectorielle ? Essayez ces démonstrations pratiques pour voir comment Milvus permet la recherche d'images pilotée par l'IA, la recherche multimodale, la RAG (Retrieval-Augmented Generation) et la recherche de structures chimiques.",
   "demos": {
+    "functionChainRerank": {
+      "title": "Reranking multiphase avec Function Chain",
+      "desc": "Créez une logique de classement personnalisée pour l'e-commerce avec XGBoost Reranker et Function Chain dans Milvus 3.0."
+    },
+    "structArraySearch": {
+      "title": "Curation de données pour la conduite autonome avec StructArray",
+      "desc": "Stockez l'objet imbriqué d'un clip vidéo et de plusieurs images clés sous forme de StructArray, avec des étiquettes aux deux niveaux, et recherchez de manière flexible à l'un ou l'autre niveau."
+    },
+    "embeddingListSearch": {
+      "title": "Recherche visuelle de PDF avec EmbeddingList",
+      "desc": "Implémentez nativement la recherche multi-vecteurs dans Milvus avec un modèle de type ColPali qui classe les pages d'un manuel de la NASA selon MAX_SIM."
+    },
     "multimodal": {
       "title": "Recherche d'images multimodale",
-      "desc": "Téléchargez des images et modifiez du texte pour améliorer les recherches d'images intuitives à l'aide de technologies de récupération avancées."
+      "desc": "Recherche sémantique visuelle combinant une image de requête et des instructions textuelles."
     },
     "imgSearch": {
       "title": "Recherche d'images",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "Essayer la démo",
   "watchDemo": "Regarder la démo",
+  "viewOnGithub": "Voir sur GitHub",
   "meta": {
     "title": "Milvus Demo Hub : Découvrez la recherche vectorielle alimentée par l'IA en action",
     "desc": "Essayez ces démonstrations pratiques pour voir comment Milvus permet la recherche d'images pilotée par l'IA, la recherche multimodale, le RAG et la recherche de structures chimiques."

@@ -2,9 +2,21 @@
   "title": "Milvus Demo Hub: Esplora la ricerca vettoriale potenziata dall'intelligenza artificiale in azione",
   "desc": "Siete curiosi di conoscere la ricerca vettoriale? Provate queste dimostrazioni pratiche per vedere come Milvus alimenta la ricerca di immagini guidata dall'intelligenza artificiale, il recupero multimodale, il RAG (Retrieval-Augmented Generation) e la ricerca di strutture chimiche.",
   "demos": {
+    "functionChainRerank": {
+      "title": "Reranking Multifase con Function Chain",
+      "desc": "Crea una logica di ranking personalizzata per l'e-commerce con XGBoost Reranker e Function Chain in Milvus 3.0."
+    },
+    "structArraySearch": {
+      "title": "Curazione dei Dati per la Guida Autonoma con StructArray",
+      "desc": "Memorizza come StructArray l'oggetto annidato di un video clip e dei suoi fotogrammi chiave, insieme alle etichette di entrambi i livelli, e cerca con flessibilità su uno qualsiasi dei due livelli."
+    },
+    "embeddingListSearch": {
+      "title": "Recupero Visivo di PDF con EmbeddingList",
+      "desc": "Implementa in modo nativo il recupero multi-vettoriale in Milvus con un modello in stile ColPali che classifica le pagine di un manuale NASA in base a MAX_SIM."
+    },
     "multimodal": {
       "title": "Ricerca di Immagini Multimodali",
-      "desc": "Carica immagini e modifica testo per migliorare le ricerche di immagini intuitive utilizzando tecnologie di recupero avanzate."
+      "desc": "Ricerca semantica visiva che combina un'immagine di query e istruzioni testuali."
     },
     "imgSearch": {
       "title": "Ricerca di Immagini",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "Prova la Demo",
   "watchDemo": "Guarda la Demo",
+  "viewOnGithub": "Visualizza su GitHub",
   "meta": {
     "title": "Milvus Demo Hub: Esplora la ricerca vettoriale potenziata dall'intelligenza artificiale in azione",
     "desc": "Provate queste dimostrazioni pratiche per vedere come Milvus alimenta la ricerca di immagini guidata dall'intelligenza artificiale, il recupero multimodale, il RAG e la ricerca di strutture chimiche."

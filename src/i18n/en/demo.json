@@ -2,6 +2,18 @@
   "title": "Milvus Demo Hub: Explore AI-Powered Vector Search in Action",
   "desc": "Curious about vector search? Try these hands-on demos to see how Milvus powers AI-driven image search, multimodal retrieval, RAG (Retrieval-Augmented Generation), and chemical structure search.",
   "demos": {
+    "functionChainRerank": {
+      "title": "Function Chain Rerank",
+      "desc": "See one query return two rankings — vector recall versus business logic — with Milvus 3.0 Function Chains running an XGBoost reranker inside the database."
+    },
+    "structArraySearch": {
+      "title": "StructArray Search",
+      "desc": "Search nested StructArray fields and group child results back to their parent record with Milvus 3.0."
+    },
+    "embeddingListSearch": {
+      "title": "EmbeddingList Search",
+      "desc": "Multi-vector retrieval that ranks NASA handbook pages by maximum similarity, powered by Milvus 3.0 EmbeddingList."
+    },
     "multimodal": {
       "title": "Multimodal Image Search",
       "desc": "Upload images and edit text to enhance intuitive image searches using advanced retrieval technology."
@@ -36,6 +48,7 @@
   },
   "tryDemo": "Try Demo",
   "watchDemo": "Watch Demo",
+  "viewOnGithub": "View on GitHub",
   "meta": {
     "title": "Milvus Demo Hub: Explore AI-Powered Vector Search in Action",
     "desc": "Try these hands-on demos to see how Milvus powers AI-driven image search, multimodal retrieval, RAG, and chemical structure search."

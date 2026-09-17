@@ -2,18 +2,11 @@ import React, { useState } from 'react';
 import * as styles from './index.module.css';
 import ReactPlayer from 'react-player';
 
-const VideoPlayer = ({ clientWidth, videoSrc }) => {
+const VideoPlayer = ({ videoSrc }) => {
   const [ready, setReady] = useState(false);
 
   return (
-    <div
-      style={{
-        width: `${clientWidth}px`,
-        height: `${clientWidth / 2.2 + 40}px`,
-        overflow: 'hidden',
-      }}
-      className={styles.playerContainer}
-    >
+    <div className={styles.playerContainer}>
       <div className={styles.playerWrapper}>
         {!ready && (
           <span className={`${styles.loadingIcon} fas fa-spinner`}></span>
@@ -21,8 +14,8 @@ const VideoPlayer = ({ clientWidth, videoSrc }) => {
         <ReactPlayer
           controls={true}
           url={videoSrc}
-          width={clientWidth}
-          height={clientWidth / 2.2}
+          width="100%"
+          height="100%"
           onReady={() => setReady(true)}
         />
       </div>

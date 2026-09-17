@@ -43,6 +43,10 @@
 
 div.dialogRoot {
   border-radius: 20px;
+  /* the base dialog caps at max-w-lg; size it to the 16:9 player instead,
+     bounded by the viewport in both directions */
+  width: min(960px, calc(100vw - 32px), calc((100vh - 160px) * 16 / 9));
+  max-width: none;
 }
 
 .subscribeContainer {

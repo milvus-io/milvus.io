@@ -2,9 +2,21 @@
   "title": "Milvusデモハブ：AIを活用したベクトル検索の実例をご覧ください。",
   "desc": "ベクトル検索に興味がありますか？AIによる画像検索、マルチモーダル検索、RAG(Retrieval-Augmented Generation)、化学構造検索をMilvusがどのようにパワーアップしているか、これらのハンズオンデモをお試しください。",
   "demos": {
+    "functionChainRerank": {
+      "title": "Function Chainによるマルチフェーズ・リランキング",
+      "desc": "Milvus 3.0のXGBoost RerankerとFunction Chainを使って、EC向けのカスタムランキングロジックを構築します。"
+    },
+    "structArraySearch": {
+      "title": "StructArrayによる自動運転データのキュレーション",
+      "desc": "動画クリップと複数のキーフレームからなるネストされたオブジェクトを、両レベルのラベルとともにStructArrayとして保存し、どちらのレベルでも柔軟に検索できます。"
+    },
+    "embeddingListSearch": {
+      "title": "EmbeddingListによるPDFのビジュアル検索",
+      "desc": "ColPali系モデルを用いてMilvusでマルチベクトル検索をネイティブに実装し、NASAハンドブックのページをMAX_SIMでランク付けします。"
+    },
     "multimodal": {
       "title": "マルチモーダル画像検索",
-      "desc": "画像をアップロードし、テキストを編集して、直感的な画像検索を高度な検索技術を使用して強化します。"
+      "desc": "クエリ画像とテキスト指示を組み合わせたビジュアルセマンティック検索。"
     },
     "imgSearch": {
       "title": "画像検索",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "デモを試す",
   "watchDemo": "デモを見る",
+  "viewOnGithub": "GitHubで見る",
   "meta": {
     "title": "Milvusデモハブ：AIを活用したベクトル検索の実例をご覧ください。",
     "desc": "MilvusがどのようにAI主導の画像検索、マルチモーダル検索、RAG、化学構造検索を実現しているか、これらのハンズオンデモをお試しください。"

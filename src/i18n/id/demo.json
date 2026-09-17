@@ -2,9 +2,21 @@
   "title": "Pusat Demo Milvus: Jelajahi Pencarian Vektor Bertenaga AI dalam Aksi",
   "desc": "Penasaran dengan pencarian vektor? Cobalah demo langsung ini untuk melihat bagaimana Milvus mendukung pencarian gambar berbasis AI, pencarian multimodal, RAG (Retrieval-Augmented Generation), dan pencarian struktur kimia.",
   "demos": {
+    "functionChainRerank": {
+      "title": "Reranking Multi-Tahap dengan Function Chain",
+      "desc": "Bangun logika peringkat khusus untuk e-commerce dengan XGBoost Reranker dan Function Chain di Milvus 3.0."
+    },
+    "structArraySearch": {
+      "title": "Kurasi Data Kendaraan Otonom dengan StructArray",
+      "desc": "Simpan objek bertingkat berupa klip video dan beberapa bingkai kunci sebagai StructArray, beserta label di kedua level, lalu lakukan pencarian di level mana pun secara fleksibel."
+    },
+    "embeddingListSearch": {
+      "title": "Pencarian Visual PDF dengan EmbeddingList",
+      "desc": "Terapkan pencarian multi-vektor secara native di Milvus dengan model bergaya ColPali yang memberi peringkat halaman buku panduan NASA berdasarkan MAX_SIM."
+    },
     "multimodal": {
       "title": "Pencarian Gambar Multimodal",
-      "desc": "Unggah gambar dan edit teks untuk meningkatkan pencarian gambar intuitif menggunakan teknologi pemulihan canggih."
+      "desc": "Pencarian semantik visual dengan gabungan gambar kueri dan instruksi teks."
     },
     "imgSearch": {
       "title": "Pencarian Gambar",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "Coba Demo",
   "watchDemo": "Tonton Demo",
+  "viewOnGithub": "Lihat di GitHub",
   "meta": {
     "title": "Pusat Demo Milvus: Jelajahi Pencarian Vektor Bertenaga AI dalam Aksi",
     "desc": "Cobalah demo langsung ini untuk melihat bagaimana Milvus mendukung pencarian gambar yang digerakkan oleh AI, pencarian multimodal, RAG, dan pencarian struktur kimia."

@@ -2,9 +2,21 @@
   "title": "Milvus Demo Hub: Explore AI-Powered Vector Search in Action",
   "desc": "Curious about vector search? Try these hands-on demos to see how Milvus powers AI-driven image search, multimodal retrieval, RAG (Retrieval-Augmented Generation), and chemical structure search.",
   "demos": {
+    "functionChainRerank": {
+      "title": "Multi-Phase Reranking with Function Chain",
+      "desc": "Build customized ranking logic in e-commerce with XGBoost Reranker and Function Chain in Milvus 3.0."
+    },
+    "structArraySearch": {
+      "title": "Data Curation in Autonomous Driving with StructArray",
+      "desc": "Store the nested object of a video clip and multiple key frames as a StructArray, together with labels at both levels, and search either level flexibly."
+    },
+    "embeddingListSearch": {
+      "title": "Visual PDF Retrieval with EmbeddingList",
+      "desc": "Natively implement multi-vector retrieval in Milvus with a ColPali-style model that ranks NASA handbook pages by MAX_SIM."
+    },
     "multimodal": {
-      "title": "Multimodal Image Search",
-      "desc": "Upload images and edit text to enhance intuitive image searches using advanced retrieval technology."
+      "title": "Multi-Modal Image Search",
+      "desc": "Visual semantic search with combined query image and text instructions."
     },
     "imgSearch": {
       "title": "Image Search",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "Try Demo",
   "watchDemo": "Watch Demo",
+  "viewOnGithub": "View on GitHub",
   "meta": {
     "title": "Milvus Demo Hub: Explore AI-Powered Vector Search in Action",
     "desc": "Try these hands-on demos to see how Milvus powers AI-driven image search, multimodal retrieval, RAG, and chemical structure search."

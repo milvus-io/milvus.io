@@ -11,7 +11,12 @@ import { GET_START_LINK } from '@/consts/links';
 import { CLOUD_SIGNUP_LINK } from '@/consts/links';
 import {
   DEMO_MULTIMODAL_SEARCH_URL,
-  DEMO_HYBRID_SEARCH_URL,
+  DEMO_FUNCTION_CHAIN_RERANK_URL,
+  DEMO_FUNCTION_CHAIN_RERANK_GITHUB_URL,
+  DEMO_STRUCTARRAY_SEARCH_URL,
+  DEMO_STRUCTARRAY_SEARCH_GITHUB_URL,
+  DEMO_EMBEDDING_LIST_SEARCH_URL,
+  DEMO_EMBEDDING_LIST_SEARCH_GITHUB_URL,
 } from '@/consts/externalLinks';
 import { useTranslation } from 'react-i18next';
 import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
@@ -29,7 +34,47 @@ export function MilvusDemos(props: Props) {
   const { t: homeTrans } = useTranslation('home', { lng: locale });
   const { t: milvusTrans } = useTranslation('common', { lng: locale });
 
+  const renderGithubButton = (href: string) => (
+    <CustomButton href={href} variant="text" endIcon={<RightWholeArrow />}>
+      {t('viewOnGithub')}
+    </CustomButton>
+  );
+
   const DEMOS = [
+    {
+      name: t('demos.functionChainRerank.title'),
+      desc: t('demos.functionChainRerank.desc'),
+      href: DEMO_FUNCTION_CHAIN_RERANK_URL,
+      cover: '/images/demos/function-chain-rerank.png',
+      renderButton2: () =>
+        renderGithubButton(DEMO_FUNCTION_CHAIN_RERANK_GITHUB_URL),
+      lowerCaseName: 'function chain rerank',
+    },
+    {
+      name: t('demos.structArraySearch.title'),
+      desc: t('demos.structArraySearch.desc'),
+      href: DEMO_STRUCTARRAY_SEARCH_URL,
+      cover: '/images/demos/structarray-search.png',
+      renderButton2: () =>
+        renderGithubButton(DEMO_STRUCTARRAY_SEARCH_GITHUB_URL),
+      lowerCaseName: 'structarray search',
+    },
+    {
+      name: t('demos.embeddingListSearch.title'),
+      desc: t('demos.embeddingListSearch.desc'),
+      href: DEMO_EMBEDDING_LIST_SEARCH_URL,
+      cover: '/images/demos/embedding-list-search.png',
+      renderButton2: () =>
+        renderGithubButton(DEMO_EMBEDDING_LIST_SEARCH_GITHUB_URL),
+      lowerCaseName: 'embeddinglist search',
+    },
+    {
+      name: t('demos.multimodal.title'),
+      desc: t('demos.multimodal.desc'),
+      href: DEMO_MULTIMODAL_SEARCH_URL,
+      cover: '/images/demos/multimodal-image-search.png',
+      lowerCaseName: 'multimodal image search',
+    },
     {
       name: t('demos.askAi.title'),
       desc: t('demos.askAi.desc'),
@@ -51,30 +96,6 @@ export function MilvusDemos(props: Props) {
         </CustomButton>
       ),
       lowerCaseName: 'ask-ai',
-    },
-    {
-      name: t('demos.multimodal.title'),
-      desc: t('demos.multimodal.desc'),
-      href: DEMO_MULTIMODAL_SEARCH_URL,
-      cover: '/images/demos/multimodal-image-search.png',
-      lowerCaseName: 'multimodal image search',
-    },
-    {
-      name: t('demos.hybridSearch.title'),
-      desc: t('demos.hybridSearch.desc'),
-      href: DEMO_HYBRID_SEARCH_URL,
-      cover: '/images/demos/hybrid-search.png',
-      // videoSrc: 'https://www.youtube.com/watch?v=UvhL2vVZ-f4',
-      lowerCaseName: 'hybrid search',
-    },
-    {
-      name: t('demos.imgSearch.title'),
-      desc: t('demos.imgSearch.desc'),
-      // link: 'http://35.166.123.214:8004/#/',
-      href: '/milvus-demos/reverse-image-search',
-      cover: '/images/demos/image-search.png',
-      videoSrc: 'https://www.youtube.com/watch?v=hkU9hJnhGsU',
-      lowerCaseName: 'image search',
     },
     {
       name: t('demos.chemicalSearch.title'),

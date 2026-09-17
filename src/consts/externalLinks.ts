@@ -29,6 +29,24 @@ export const DEMO_MULTIMODAL_SEARCH_URL =
 
 export const DEMO_HYBRID_SEARCH_URL = 'https://demos.milvus.io/hybrid-search/';
 
+export const DEMO_FUNCTION_CHAIN_RERANK_URL =
+  'https://demos.milvus.io/function-chain-rerank/';
+
+export const DEMO_STRUCTARRAY_SEARCH_URL =
+  'https://demos.milvus.io/structarray-search/';
+
+export const DEMO_EMBEDDING_LIST_SEARCH_URL =
+  'https://demos.milvus.io/embedding-list/';
+
+export const DEMO_FUNCTION_CHAIN_RERANK_GITHUB_URL =
+  'https://github.com/zc277584121/milvus3-demos/tree/main/demos/function-chain-rerank';
+
+export const DEMO_STRUCTARRAY_SEARCH_GITHUB_URL =
+  'https://github.com/zc277584121/milvus3-demos/tree/main/demos/structarray-search';
+
+export const DEMO_EMBEDDING_LIST_SEARCH_GITHUB_URL =
+  'https://github.com/zc277584121/milvus3-demos/tree/main/demos/embedding-list-max-sim';
+
 export const ZILLIZ_OFFICIAL_WEBSITE = 'https://zilliz.com/';
 
 export const CONTACT_SALES_URL = 'https://zilliz.com/contact-sales';

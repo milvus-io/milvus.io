@@ -45,16 +45,7 @@ const DemoCard: React.FC<{
   } = customClasses || {};
 
   const handleWatchVideo = () => {
-    const { innerWidth } = window;
-    const clientWidth =
-      innerWidth < 800
-        ? 260
-        : innerWidth < 1200
-        ? innerWidth * 0.8
-        : 1200 * 0.8;
-    const content = (
-      <VideoPlayer videoSrc={videoSrc} clientWidth={clientWidth} />
-    );
+    const content = <VideoPlayer videoSrc={videoSrc} />;
     handelOpenDialog(content, name);
   };
 

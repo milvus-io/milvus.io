@@ -2,9 +2,21 @@
   "title": "Milvus 데모 허브: AI 기반 벡터 검색의 실제 활용 사례 살펴보기",
   "desc": "벡터 검색에 대해 궁금하신가요? 이 실습 데모를 통해 Milvus가 어떻게 AI 기반 이미지 검색, 멀티모달 검색, RAG(검색 증강 생성) 및 화학 구조 검색을 지원하는지 알아보세요.",
   "demos": {
+    "functionChainRerank": {
+      "title": "Function Chain을 활용한 다단계 재순위화",
+      "desc": "Milvus 3.0의 XGBoost Reranker와 Function Chain으로 이커머스용 맞춤형 랭킹 로직을 구축하세요."
+    },
+    "structArraySearch": {
+      "title": "StructArray를 활용한 자율주행 데이터 큐레이션",
+      "desc": "비디오 클립과 여러 키프레임으로 구성된 중첩 객체를 두 레벨의 라벨과 함께 StructArray로 저장하고, 어느 레벨에서든 유연하게 검색하세요."
+    },
+    "embeddingListSearch": {
+      "title": "EmbeddingList를 활용한 PDF 시각 검색",
+      "desc": "ColPali 계열 모델로 Milvus에서 멀티 벡터 검색을 네이티브로 구현하고, MAX_SIM 기준으로 NASA 핸드북 페이지의 순위를 매깁니다."
+    },
     "multimodal": {
       "title": "멀티모달 이미지 검색",
-      "desc": "이미지를 업로드하고 텍스트를 편집하여 고급 검색 기술을 사용한 직관적인 이미지 검색을 강화하세요."
+      "desc": "쿼리 이미지와 텍스트 지시를 결합한 시각적 시맨틱 검색."
     },
     "imgSearch": {
       "title": "이미지 검색",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "데모 시도",
   "watchDemo": "데모 보기",
+  "viewOnGithub": "GitHub에서 보기",
   "meta": {
     "title": "Milvus 데모 허브: AI 기반 벡터 검색의 실제 활용 사례 살펴보기",
     "desc": "이 실습 데모를 통해 Milvus가 어떻게 AI 기반 이미지 검색, 멀티모달 검색, RAG 및 화학 구조 검색을 지원하는지 확인해 보세요."

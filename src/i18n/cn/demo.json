@@ -2,9 +2,21 @@
   "title": "Milvus 演示中心：探索人工智能矢量搜索的实际应用",
   "desc": "对矢量搜索感到好奇？试试这些实践演示，了解 Milvus 如何为人工智能驱动的图像搜索、多模态检索、RAG（检索增强生成）和化学结构搜索提供支持。",
   "demos": {
+    "functionChainRerank": {
+      "title": "基于 Function Chain 的多阶段重排序",
+      "desc": "借助 Milvus 3.0 的 XGBoost Reranker 与 Function Chain，为电商场景构建自定义排序逻辑。"
+    },
+    "structArraySearch": {
+      "title": "基于 StructArray 的自动驾驶数据筛选",
+      "desc": "将视频片段及其多个关键帧组成的嵌套对象存储为 StructArray，并附带两个层级的标签，可灵活地在任一层级进行搜索。"
+    },
+    "embeddingListSearch": {
+      "title": "基于 EmbeddingList 的 PDF 视觉检索",
+      "desc": "使用 ColPali 类模型在 Milvus 中原生实现多向量检索，按 MAX_SIM 对 NASA 手册页面进行排序。"
+    },
     "multimodal": {
       "title": "多模态图像搜索",
-      "desc": "上传图像并编辑文本，以使用先进的检索技术增强直观的图像搜索。"
+      "desc": "结合查询图像与文本指令的视觉语义搜索。"
     },
     "imgSearch": {
       "title": "图像搜索",
@@ -36,6 +48,7 @@
   },
   "tryDemo": "试用演示",
   "watchDemo": "观看演示",
+  "viewOnGithub": "在 GitHub 上查看",
   "meta": {
     "title": "Milvus 演示中心：探索人工智能矢量搜索的实际应用",
     "desc": "尝试这些实际操作演示，了解 Milvus 如何为人工智能驱动的图像搜索、多模态检索、RAG 和化学结构搜索提供支持。"

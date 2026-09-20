@@ -109,11 +109,11 @@ export const useInkeepSettings = ({
       },
     ],
     exampleQuestions: [
-      "What's new in Milvus 2.6?",
-      'Architecture changes',
-      'Analyzers and Tokenizers',
-      'Embedding & Reranking Functions',
-      'Pharse Match',
+      "What's new in Milvus 3.0?",
+      "Lake-native search",
+      "StructArray",
+      "Function Chain reranking",
+      "Aggregation & faceted search",
     ],
     getTools: () => [
       // {

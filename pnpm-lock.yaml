@@ -276,8 +276,8 @@ importers:
         specifier: ^12.1.2
         version: 12.1.2(postcss@8.5.28)
       postcss-nested:
-        specifier: ^7.0.2
-        version: 7.0.2(postcss@8.5.28)
+        specifier: ^8.0.1
+        version: 8.0.1(postcss@8.5.28)
       tailwindcss:
         specifier: ^3.4.19
         version: 3.4.19(yaml@2.8.3)
@@ -3969,9 +3969,9 @@ packages:
     peerDependencies:
       postcss: 8.5.23
 
-  postcss-nested@7.0.2:
-    resolution: {integrity: sha512-5osppouFc0VR9/VYzYxO03VaDa3e8F23Kfd6/9qcZTUI8P58GIYlArOET2Wq0ywSl2o2PjELhYOFI4W7l5QHKw==}
-    engines: {node: '>=18.0'}
+  postcss-nested@8.0.1:
+    resolution: {integrity: sha512-PvSIwDVh1NTw939iu4FBK+oeZfSm0cbErFAjXCTPiStammzobBNE2SiQNezy8Xp+Oud2uLXaLpTauv3UdxWjbQ==}
+    engines: {node: ^22.0.0 || ^24.0.0 || >= 26.0.0}
     peerDependencies:
       postcss: 8.5.23
 
@@ -9138,7 +9138,7 @@ snapshots:
       postcss: 8.5.23
       postcss-selector-parser: 6.1.4
 
-  postcss-nested@7.0.2(postcss@8.5.28):
+  postcss-nested@8.0.1(postcss@8.5.28):
     dependencies:
       postcss: 8.5.28
       postcss-selector-parser: 7.1.6

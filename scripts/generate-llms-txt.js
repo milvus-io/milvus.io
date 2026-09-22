@@ -475,6 +475,7 @@ const renderApiReference = apiVersions => {
     ],
     ['milvus-sdk-csharp', 'csharp', 'C# SDK', 'C# SDK API reference.'],
     ['milvus-sdk-cpp', 'cpp', 'C++ SDK', 'C++ SDK API reference.'],
+    ['milvus-sdk-rust', 'rust', 'Rust SDK', 'Rust SDK API reference.'],
   ];
 
   const lines = ['## API Reference', ''];

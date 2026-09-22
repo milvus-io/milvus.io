@@ -16,6 +16,10 @@ export const GITHUB_EDIT_API_NODE_URL =
   'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-node';
 export const GITHUB_EDIT_API_CSHARP_URL =
   'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-csharp';
+export const GITHUB_EDIT_API_CPP_URL =
+  'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-cpp';
+export const GITHUB_EDIT_API_RUST_URL =
+  'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-sdk-rust';
 export const GITHUB_EDIT_API_RESTFUL_URL =
   'https://github.com/milvus-io/web-content/edit/master/API_Reference/milvus-restful';
 

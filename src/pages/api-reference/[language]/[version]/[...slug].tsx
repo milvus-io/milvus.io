@@ -29,6 +29,8 @@ import {
   GITHUB_EDIT_API_GO_URL,
   GITHUB_EDIT_API_NODE_URL,
   GITHUB_EDIT_API_CSHARP_URL,
+  GITHUB_EDIT_API_CPP_URL,
+  GITHUB_EDIT_API_RUST_URL,
   GITHUB_EDIT_API_RESTFUL_URL,
   GITHUB_DISCUSSION_URL,
   GITHUB_BUG_REPORT_URL,
@@ -117,6 +119,16 @@ export default function Template(props: ApiDetailPageProps) {
           editPath: `${GITHUB_EDIT_API_PYTHON_URL}${relativePath}`,
         });
         return pyData;
+      case ApiReferenceRouteEnum.Cplus:
+        const cppData = Object.assign(commonData, {
+          editPath: `${GITHUB_EDIT_API_CPP_URL}${relativePath}`,
+        });
+        return cppData;
+      case ApiReferenceRouteEnum.Rust:
+        const rustData = Object.assign(commonData, {
+          editPath: `${GITHUB_EDIT_API_RUST_URL}${relativePath}`,
+        });
+        return rustData;
       default:
         const restfulData = Object.assign(commonData, {
           editPath: `${GITHUB_EDIT_API_RESTFUL_URL}${relativePath}`,
@@ -158,6 +170,9 @@ export default function Template(props: ApiDetailPageProps) {
         break;
       case ApiReferenceRouteEnum.Cplus:
         suffix = `${ApiReferenceMetaInfoEnum.Cplus} sdk ${version}`;
+        break;
+      case ApiReferenceRouteEnum.Rust:
+        suffix = `${ApiReferenceMetaInfoEnum.Rust} sdk ${version}`;
         break;
       default:
         suffix = `${ApiReferenceMetaInfoEnum.Restful} sdk ${version}`;
@@ -333,6 +348,7 @@ export const getStaticProps: GetStaticProps = async context => {
     [ApiReferenceRouteEnum.Node]: ApiReferenceLanguageEnum.Node,
     [ApiReferenceRouteEnum.Python]: ApiReferenceLanguageEnum.Python,
     [ApiReferenceRouteEnum.Restful]: ApiReferenceLanguageEnum.Restful,
+    [ApiReferenceRouteEnum.Rust]: ApiReferenceLanguageEnum.Rust,
   };
 
   const language = routeCategoryToLanguage[languageCategory];

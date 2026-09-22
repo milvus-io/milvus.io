@@ -207,6 +207,12 @@ const API_REFERENCE_CONFIG = {
     minVersion: CSHARP_DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Csharp,
   },
+  [ApiReferenceLanguageEnum.Rust]: {
+    name: ApiReferenceLabelEnum.Rust,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Rust}`,
+    minVersion: DOCS_MINIMUM_VERSION,
+    category: ApiReferenceRouteEnum.Rust,
+  },
 };
 
 // 1. versions and latest version info of all language

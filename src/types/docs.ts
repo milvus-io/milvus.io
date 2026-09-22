@@ -68,6 +68,7 @@ export enum ApiReferenceLanguageEnum {
   Node = 'milvus-sdk-node',
   Python = 'pymilvus',
   Cplus = 'milvus-sdk-cpp',
+  Rust = 'milvus-sdk-rust',
 }
 
 export enum ApiReferenceLabelEnum {
@@ -78,6 +79,7 @@ export enum ApiReferenceLabelEnum {
   Node = 'Node',
   Python = 'Python',
   Cplus = 'C++',
+  Rust = 'Rust',
 }
 
 export enum ApiReferenceRouteEnum {
@@ -88,6 +90,7 @@ export enum ApiReferenceRouteEnum {
   Node = 'node',
   Python = 'pymilvus',
   Cplus = 'cpp',
+  Rust = 'rust',
 }
 
 export enum ApiReferenceMetaInfoEnum {
@@ -98,6 +101,7 @@ export enum ApiReferenceMetaInfoEnum {
   Node = 'nodejs',
   Python = 'pymilvus',
   Cplus = 'cpp',
+  Rust = 'rust',
 }
 
 export interface ApiContentFrontMatterType {

@@ -40,6 +40,11 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "tailwindcss"
         update-types: ["version-update:semver-major"]
+      # postcss-nested 8+ is ESM-only; Next 15's PostCSS loader require()s
+      # plugins by name and gets the module namespace instead of the plugin,
+      # which breaks every CSS module (see #2439).
+      - dependency-name: "postcss-nested"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"

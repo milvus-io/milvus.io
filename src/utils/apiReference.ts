@@ -207,6 +207,12 @@ const API_REFERENCE_CONFIG = {
     minVersion: CSHARP_DOCS_MINIMUM_VERSION,
     category: ApiReferenceRouteEnum.Csharp,
   },
+  [ApiReferenceLanguageEnum.Rust]: {
+    name: ApiReferenceLabelEnum.Rust,
+    path: `${BASE_DOC_DIR}/API_Reference/${ApiReferenceLanguageEnum.Rust}`,
+    minVersion: DOCS_MINIMUM_VERSION,
+    category: ApiReferenceRouteEnum.Rust,
+  },
 };
 
 // 1. versions and latest version info of all language
@@ -216,30 +222,44 @@ export const generateApiReferenceVersionsInfo = () => {
   if (cachedData) {
     return cachedData;
   }
-  const apiVersionInfo = Object.entries(API_REFERENCE_CONFIG).map(
-    ([language, config]: [
-      ApiReferenceLanguageEnum,
-      {
-        name: ApiReferenceLabelEnum;
-        path: string;
-        minVersion: string | undefined;
-        category: ApiReferenceRouteEnum;
+  const apiVersionInfo = Object.entries(API_REFERENCE_CONFIG)
+    // The docs submodule may lag behind this repo (e.g. the preview pipeline
+    // tracks web-content's preview branch, which can miss an SDK that master
+    // already has). Skip SDKs whose directory is absent instead of letting
+    // readdirSync throw and fail the whole build.
+    .filter(([language, config]) => {
+      const exists = fs.existsSync(config.path);
+      if (!exists) {
+        console.warn(
+          `[api-reference] skipping ${language}: directory not found at ${config.path}`
+        );
       }
-    ]) => {
-      const { versions, latestVersion } = generateDocVersionInfo({
-        filePath: config.path,
-        minVersion: config.minVersion,
-      });
+      return exists;
+    })
+    .map(
+      ([language, config]: [
+        ApiReferenceLanguageEnum,
+        {
+          name: ApiReferenceLabelEnum;
+          path: string;
+          minVersion: string | undefined;
+          category: ApiReferenceRouteEnum;
+        }
+      ]) => {
+        const { versions, latestVersion } = generateDocVersionInfo({
+          filePath: config.path,
+          minVersion: config.minVersion,
+        });
 
-      return {
-        language,
-        label: config.name,
-        versions,
-        latestVersion,
-        category: config.category,
-      };
-    }
-  );
+        return {
+          language,
+          label: config.name,
+          versions,
+          latestVersion,
+          category: config.category,
+        };
+      }
+    );
   setCacheData({ cache: apiCache, key: cacheKey, data: apiVersionInfo });
 
   return apiVersionInfo;

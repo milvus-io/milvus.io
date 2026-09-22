@@ -340,6 +340,12 @@ export const getStaticProps: GetStaticProps = async context => {
   const { versions, latestVersion } =
     apiData.find(v => v.language === language) || {};
 
+  // Unknown route category, or an SDK whose docs directory is missing from
+  // the current docs checkout: 404 instead of scanning a non-existent path.
+  if (!language || !versions) {
+    return { notFound: true };
+  }
+
   // Load only the requested version's menu + a frontmatter-only content index,
   // then read the single matched file, so an on-demand render does not pull
   // every version's content into memory.

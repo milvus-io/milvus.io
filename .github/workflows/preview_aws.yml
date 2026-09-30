@@ -35,12 +35,12 @@ jobs:
           df -h / 
           echo "Root filesystem available: $(df -h / | awk 'NR==2{print $4}')"
 
-      - uses: azure/docker-login@v1
+      - uses: azure/docker-login@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME}}
           password: ${{ secrets.DOCKER_PWD}}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
         with:
           ref: 'preview'
           fetch-depth: 1
@@ -54,7 +54,7 @@ jobs:
             sh -c 'if nginx -t -c /etc/nginx/nginx.conf; then echo "Nginx configuration is valid."; else echo "Nginx configuration is invalid."; exit 1; fi'
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
 
@@ -96,7 +96,7 @@ jobs:
 
       - name: Building Milvus site and push to docker hub
         id: build-image
-        uses: nick-invision/retry@v2
+        uses: nick-invision/retry@v4
         with:
           timeout_minutes: 60
           max_attempts: 2

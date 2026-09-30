@@ -16,7 +16,7 @@ import { HomeMeta } from '@/parts/home/meta/HomeMeta';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function Homepage(props: {
-  headlines: { label: string; link: string; tag: string }[];
+  headlines: { label: string; link: string; tag?: string }[];
   lang: LanguageEnum;
 }) {
   const { headlines, lang } = props;

@@ -36,7 +36,7 @@ const RightArrowIcon = () => (
 );
 
 export default function HomePageHeaderSection(props: {
-  headlines: { label: string; link: string; tag: string }[];
+  headlines: { label: string; link: string; tag?: string }[];
   locale: LanguageEnum;
 }) {
   const { headlines, locale } = props;
@@ -90,7 +90,9 @@ export default function HomePageHeaderSection(props: {
             {headlines.map(item => (
               <SwiperSlide key={item.label}>
                 <div className={classes.headlineItem}>
-                  <p className={classes.headlineTag}>{item.tag}</p>
+                  {item.tag?.trim() ? (
+                    <p className={classes.headlineTag}>{item.tag}</p>
+                  ) : null}
                   <Link
                     href={item.link}
                     className={clsx(classes.headlineLink, {

@@ -18,7 +18,7 @@ import { buildSchema } from '@/schema';
 import { CLOUD_SIGNUP_LINK, GITHUB_MILVUS_LINK } from '@/consts';
 
 export default function Homepage(props: {
-  headlines: { label: string; link: string; tag: string }[];
+  headlines: { label: string; link: string; tag?: string }[];
 }) {
   const { headlines } = props;
   const { locale } = useGlobalLocale();

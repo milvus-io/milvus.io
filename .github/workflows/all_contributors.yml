@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use Node16
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v7
         with:
           node-version: '16'
 

@@ -85,7 +85,7 @@
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
-    "@babel/traverse": "^7.29.0",
+    "@babel/traverse": "^8.0.6",
     "@csstools/postcss-global-data": "^4.0.0",
     "@mdx-js/mdx": "^3.1.1",
     "@types/d3": "^7.4.3",

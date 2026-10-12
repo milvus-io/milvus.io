@@ -1,3 +1,4 @@
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import clsx from 'clsx';
 import classes from './index.module.css';
 import {
@@ -236,7 +237,7 @@ sudo docker compose up -d`,
               <Trans
                 t={t}
                 i18nKey="setup.outOfRange"
-                components={[<a href={CONTACT_SALES_URL} key="contact-us"></a>]}
+                components={[<LocalizedAnchor href={CONTACT_SALES_URL} key="contact-us"></LocalizedAnchor>]}
               />
             }
           </p>
@@ -246,14 +247,14 @@ sudo docker compose up -d`,
         <span className="font-[600] text-[14px] leading-[22px]">
           {t('overview.title')}
         </span>
-        <a
+        <LocalizedAnchor
           className="flex items-center gap-[4px] font-[400] text-[12px] leading-[18px] text-black1 hover:underline"
           href="https://zilliz.com/pricing#calculator"
           target="_blank"
         >
           {t('overview.explore')}
           <ExternalLinkIcon />
-        </a>
+        </LocalizedAnchor>
       </h2>
 
       <div className="bg-gary2 pt-[20px] pb-[20px] rounded-[12px] mb-[24px]">

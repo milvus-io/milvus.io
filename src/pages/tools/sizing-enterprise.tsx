@@ -1,3 +1,4 @@
+import { LocalizedLink } from '@/components/localizedLinks';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
@@ -16,7 +17,6 @@ import ZillizAdv from '@/parts/blogs/zillizAdv';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
 import { fetchMilvusReleases } from '@/http/milvus';
-import Link from 'next/link';
 import { baseValues } from '@/parts/sizing/config';
 const { etcdBaseValue, minioBaseValue, pulsarBaseValue, kafkaBaseValue } = baseValues;
 
@@ -108,12 +108,12 @@ export default function SizingToolEnterprise(props: Props) {
         >
           <div className={classes.titleContainer}>
             <h1 className={classes.title}>
-              <Link
+              <LocalizedLink
                 href="https://zilliz.com/blog/demystify-milvus-sizing-tool"
                 target="_blank"
               >
                 {t('title')} (Enterprise)
-              </Link>
+              </LocalizedLink>
             </h1>
             <span className="text-[14px] text-gray-500 ml-[12px]">
               Milvus 2.6.x

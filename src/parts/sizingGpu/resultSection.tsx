@@ -1,3 +1,4 @@
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import { useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -151,14 +152,14 @@ export default function GpuResultSection(props: GpuResultSectionProps) {
         <span className="font-[600] text-[14px] leading-[22px]">
           {t('overview.title')}
         </span>
-        <a
+        <LocalizedAnchor
           className="flex items-center gap-[4px] font-[400] text-[12px] leading-[18px] text-black1 hover:underline"
           href={CLOUD_CALCULATOR_LINK}
           target="_blank"
         >
           {t('overview.explore')}
           <ExternalLinkIcon />
-        </a>
+        </LocalizedAnchor>
       </h2>
 
       <div className="bg-gary2 pt-[20px] pb-[20px] rounded-[12px] mb-[24px]">

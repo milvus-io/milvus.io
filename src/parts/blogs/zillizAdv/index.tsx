@@ -1,7 +1,7 @@
+import { LocalizedLink } from '@/components/localizedLinks';
 import { ListItemTickIcon, RightTopArrowIcon } from '@/components/icons';
 import styles from './index.module.css';
 import { useTranslation } from 'react-i18next';
-import Link from 'next/link';
 import clsx from 'clsx';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 
@@ -37,14 +37,14 @@ export default function ZillizAdv(props: {
           {t('blog:zillizAdv.title')}
         </h3>
         <ul className={styles['zilliz-adv-features']}>{featureItems}</ul>
-        <Link
+        <LocalizedLink
           href={ctaLink}
           target="_blank"
           className={styles['zilliz-adv-btn']}
         >
           {t('blog:zillizAdv.btn')}
           <RightTopArrowIcon color="#FFFFFF" />
-        </Link>
+        </LocalizedLink>
       </div>
       <div
         className={styles['zilliz-adv-logo']}

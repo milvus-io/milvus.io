@@ -1,3 +1,4 @@
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import Layout from '@/components/layout/commonLayout';
 import { useTranslation } from 'react-i18next';
 import styles from '@/styles/useCase.module.css';
@@ -64,7 +65,7 @@ export function UseCase(props: Props) {
             <div className={styles.contentWrapper}>
               <h2>{t('shareSection.title')}</h2>
               <p className={styles.desc}>{t('shareSection.desc')}</p>
-              <a
+              <LocalizedAnchor
                 href={SHARE_YOUR_STORY_URL}
                 className={styles.linkBtn}
                 target="_blank"
@@ -72,7 +73,7 @@ export function UseCase(props: Props) {
               >
                 {t('shareSection.cta')}
                 <RightArrow />
-              </a>
+              </LocalizedAnchor>
             </div>
           </section>
         </div>

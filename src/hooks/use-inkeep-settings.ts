@@ -1,3 +1,5 @@
+import { useStore } from '@/hooks/use-store';
+import { localizeZillizUrl } from '@/utils/localize-zilliz-links';
 import type {
   InkeepAIChatSettings,
   InkeepSearchSettings,
@@ -38,6 +40,9 @@ export const useInkeepSettings = ({
   isOpen: boolean;
   onOpenChange: (param: boolean) => void;
 }): InkeepSharedSettings => {
+  const {
+    state: { locale },
+  } = useStore();
   const baseSettings: InkeepBaseSettings = {
     apiKey: process.env.NEXT_PUBLIC_INKEEP_API_KEY,
     primaryBrandColor: INKEEP_PRIMARY_COLOR,
@@ -101,7 +106,7 @@ export const useInkeepSettings = ({
         name: 'Contact Us',
         action: {
           type: 'open_link',
-          url: 'https://zilliz.com/contact-sales?contact_sales_traffic_source=milvusBot',
+          url: localizeZillizUrl('https://zilliz.com/contact-sales?contact_sales_traffic_source=milvusBot', locale),
         },
         icon: {
           builtIn: 'IoMail',
@@ -161,7 +166,7 @@ export const useInkeepSettings = ({
                 icon: { builtIn: 'LuCalendar' },
                 action: {
                   type: 'open_link',
-                  url: `${CONTACT_SALES_URL}?contact_sales_traffic_source=milvusBot`,
+                  url: localizeZillizUrl(`${CONTACT_SALES_URL}?contact_sales_traffic_source=milvusBot`, locale),
                 },
               },
             ];

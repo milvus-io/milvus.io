@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import classes from './index.module.css';
 import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
@@ -5,7 +7,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { RightWholeArrow } from '@/components/icons';
 import CustomButton from '@/components/customButton';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
-import Link from 'next/link';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 
 export default function DeploySection() {
@@ -111,7 +112,9 @@ export default function DeploySection() {
         >
           <div className="">
             <h3 className={clsx(classes.dbName)}>
-              <a href="https://zilliz.com/cloud/">{cloudConfig.title}</a>
+              <LocalizedAnchor href="https://zilliz.com/cloud/">
+                {cloudConfig.title}
+              </LocalizedAnchor>
             </h3>
             <div className={classes.dbContent}>
               <p className={classes.dbAdvantage}>{cloudConfig.advantage}</p>

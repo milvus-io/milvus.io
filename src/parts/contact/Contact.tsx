@@ -1,3 +1,4 @@
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import Layout from '@/components/layout/commonLayout';
 import pageClasses from '@/styles/responsive.module.css';
 import Head from 'next/head';
@@ -68,18 +69,18 @@ function ContactContent(props: Props) {
               t={t}
               i18nKey="desc"
               components={[
-                <a
+                <LocalizedAnchor
                   key="cloud"
                   href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_contact_us&utm_content=contact`}
                   target="_blank"
                   className="underline text-black1"
-                ></a>,
-                <a
+                ></LocalizedAnchor>,
+                <LocalizedAnchor
                   key="zilliz"
                   href="https://zilliz.com"
                   target="_blank"
                   className="underline text-black1"
-                ></a>,
+                ></LocalizedAnchor>,
               ]}
             />
           </p>

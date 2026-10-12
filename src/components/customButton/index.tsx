@@ -1,3 +1,5 @@
+import { useStore } from '@/hooks/use-store';
+import { localizeZillizUrl } from '@/utils/localize-zilliz-links';
 import Link from 'next/link';
 import classes from './index.module.css';
 import clsx from 'clsx';
@@ -36,6 +38,10 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
 
   const { root, icon } = customClasses;
 
+  const {
+    state: { locale },
+  } = useStore();
+  const localizedHref = localizeZillizUrl(href, locale);
   const isExternalLink = href.startsWith('http');
 
   return (
@@ -45,7 +51,7 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
           {...rest}
           target="_blank"
           rel="noopener noreferrer"
-          href={href}
+          href={localizedHref}
           className={clsx(classes.linkButton, className, root, computedClasses)}
         >
           {startIcon && (
@@ -59,7 +65,7 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
       ) : (
         <Link
           {...rest}
-          href={href}
+          href={localizedHref}
           target={target}
           className={clsx(classes.linkButton, className, root, computedClasses)}
         >

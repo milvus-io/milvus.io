@@ -1,6 +1,7 @@
+import Link from 'next/link';
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import Link from 'next/link';
 import clsx from 'clsx';
 import pageClasses from '@/styles/responsive.module.css';
 import {
@@ -223,7 +224,7 @@ const Footer = (props: Props) => {
                 />
               </Link>
               <span className="h-[40px] w-[1px] bg-black3"></span>
-              <a
+              <LocalizedAnchor
                 href={ZILLIZ_OFFICIAL_WEBSITE}
                 target="_blank"
                 rel="noreferrer noopener"
@@ -235,7 +236,7 @@ const Footer = (props: Props) => {
                   height={50}
                   className="h-[50px] w-[auto] max-phone:h-[40px]"
                 />
-              </a>
+              </LocalizedAnchor>
             </div>
             <div className="flex items-center gap-[8px] mt-[12px] text-[14px] font-[400] leading-[1.5] text-black2 whitespace-nowrap flex-wrap">
               <Trans
@@ -250,13 +251,13 @@ const Footer = (props: Props) => {
                     className="mx-[-4px]"
                     key="blue-heart-emoji"
                   />,
-                  <a
+                  <LocalizedAnchor
                     href={ZILLIZ_OFFICIAL_WEBSITE}
                     target="_blank"
                     rel="noreferrer noopener"
                     className="text-black2 hover:underline"
                     key="zilliz-official-website"
-                  ></a>,
+                  ></LocalizedAnchor>,
                 ]}
               />
             </div>
@@ -315,7 +316,7 @@ const Footer = (props: Props) => {
                       if (child.to.startsWith('http')) {
                         return (
                           <li key={child.id} className="list-none">
-                            <a
+                            <LocalizedAnchor
                               className={clsx(
                                 'inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
                                 {
@@ -330,7 +331,7 @@ const Footer = (props: Props) => {
                               <span className="grow-0 shrink-0 basis-[14px] h-[14px]">
                                 <RightTopArrowIcon />
                               </span>
-                            </a>
+                            </LocalizedAnchor>
                           </li>
                         );
                       }

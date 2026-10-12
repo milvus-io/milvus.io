@@ -1,3 +1,4 @@
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import classes from './index.module.css';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +13,7 @@ export default function CloudBanner() {
   const utmContent = trackPath ? `&utm_content=${trackPath}` : '';
 
   return (
-    <a
+    <LocalizedAnchor
       className={classes.bannerContainer}
       href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_top_banner${utmContent}`}
       target="_blank"
@@ -24,6 +25,6 @@ export default function CloudBanner() {
       <button className={classes.bannerButton} role="link">
         {t('bannerButton')}
       </button>
-    </a>
+    </LocalizedAnchor>
   );
 }

@@ -1,3 +1,4 @@
+import { LocalizedLink } from '@/components/localizedLinks';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
@@ -18,7 +19,6 @@ import ZillizAdv from '@/parts/blogs/zillizAdv';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
 import { fetchMilvusReleases } from '@/http/milvus';
-import Link from 'next/link';
 import {
   Select,
   SelectContent,
@@ -179,12 +179,12 @@ export default function SizingTool(props: Props) {
         >
           <div className={classes.titleContainer}>
             <h1 className={classes.title}>
-              <Link
+              <LocalizedLink
                 href="https://zilliz.com/blog/demystify-milvus-sizing-tool"
                 target="_blank"
               >
                 {t('title')}
-              </Link>
+              </LocalizedLink>
             </h1>
             <div className={classes.selectContainer}>
               <Select

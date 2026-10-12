@@ -1,3 +1,5 @@
+import { useStore } from '@/hooks/use-store';
+import { localizeZillizUrl } from '@/utils/localize-zilliz-links';
 import classes from './index.module.css';
 import { useTranslation } from 'react-i18next';
 import { LanguageEnum } from '@/types/localization';
@@ -6,7 +8,7 @@ import { RightTopArrowIcon } from '@/components/icons';
 import { use, useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
-import { CLOUD_SIGNUP_LINK, CN_CLOUD_SIGNUP_LINK } from '@/consts';
+import { CLOUD_SIGNUP_LINK } from '@/consts';
 
 export default function CloudAdvertisementCard(props: {
   language?: LanguageEnum;
@@ -19,10 +21,14 @@ export default function CloudAdvertisementCard(props: {
   };
 }) {
   const {
-    language = LanguageEnum.ENGLISH,
+    language: explicitLanguage,
     className = '',
     customAdvConfig,
   } = props;
+  const {
+    state: { locale },
+  } = useStore();
+  const language = explicitLanguage ?? locale;
   const { t } = useTranslation('docs', { lng: language });
   const isCnAdv = language === LanguageEnum.CHINESE;
 
@@ -47,8 +53,8 @@ export default function CloudAdvertisementCard(props: {
   }, [random, advTitle, advContent, advCtaLabel, advCtaLink, t, trackPath]);
 
   const cnCloudLink = useMemo(() => {
-    return `${CN_CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_right_card&utm_content=${trackPath}`;
-  }, [trackPath]);
+    return localizeZillizUrl(enCtaLink, language);
+  }, [enCtaLink, language]);
 
   useEffect(() => {
     const stored = Number(

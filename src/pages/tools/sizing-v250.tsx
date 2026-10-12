@@ -1,3 +1,4 @@
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import React, { useState, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
@@ -132,12 +133,12 @@ export default function SizingTool(props: Props) {
         >
           <div className={classes.titleContainer}>
             <h1 className={classes.title}>
-              <a
+              <LocalizedAnchor
                 href="https://zilliz.com/blog/demystify-milvus-sizing-tool"
                 target="_blank"
               >
                 {t('titleV250')}
-              </a>
+              </LocalizedAnchor>
             </h1>
             <div className={classes.selectContainer}>
               <Select

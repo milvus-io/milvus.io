@@ -1,6 +1,7 @@
+import Link from 'next/link';
+import { LocalizedAnchor } from '@/components/localizedLinks';
 import classes from './index.module.css';
 import clsx from 'clsx';
-import Link from 'next/link';
 import GitHubButton from '../githubButton';
 import { useState, useEffect } from 'react';
 import { getGithubStatics } from '@/http/milvus';
@@ -16,13 +17,13 @@ export const LogoSection = (props: { equipment?: 'desktop' | 'tablet' }) => {
         <img src="/images/layout/milvus-logo.svg" width={105} height={24} alt="Milvus" />
       </Link>
       <div className="w-[1px] h-[20px] bg-black3 mx-[8px]" />
-      <a
+      <LocalizedAnchor
         href={ZILLIZ_OFFICIAL_WEBSITE}
         target="_blank"
         rel="noreferrer noopener"
       >
         <img src="/images/layout/zilliz-logo.svg" width={75} height={30} alt="Zilliz" />
-      </a>
+      </LocalizedAnchor>
     </div>
   );
 };

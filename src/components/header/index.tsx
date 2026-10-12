@@ -1,5 +1,6 @@
-import clsx from 'clsx';
 import Link from 'next/link';
+import { LocalizedAnchor } from '@/components/localizedLinks';
+import clsx from 'clsx';
 import { useEffect, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -118,9 +119,13 @@ const Header: React.FC<{
               {t('contact')}
             </Link>
             <Button asChild className={classes.startButton}>
-              <a href={signupUrl} target="_blank" rel="noopener noreferrer">
+              <LocalizedAnchor
+                href={signupUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {t('start')}
-              </a>
+              </LocalizedAnchor>
             </Button>
             <button
               type="button"
@@ -162,14 +167,14 @@ const Header: React.FC<{
                 {t('contact')}
               </Link>
               <Button asChild className={classes.mobileStartButton}>
-                <a
+                <LocalizedAnchor
                   href={signupUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {t('start')}
-                </a>
+                </LocalizedAnchor>
               </Button>
             </div>
           </div>

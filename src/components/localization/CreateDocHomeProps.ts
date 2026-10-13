@@ -1,3 +1,4 @@
+import { localizeDocHomeCta } from '@/utils/localize-doc-home-cta';
 import { LanguageEnum } from '@/types/localization';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
 import { generateAllBlogContentList } from '@/utils/blogs';
@@ -47,7 +48,7 @@ export const createDocHomeProps = (lang: LanguageEnum, version = '') => {
 
     return {
       props: {
-        homeData: homeContent,
+        homeData: localizeDocHomeCta(homeContent, lang),
         isHome: true,
         version: currentVersion,
         latestVersion,

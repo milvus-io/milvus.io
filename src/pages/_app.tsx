@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import Error from './error';
 import { StoreProvider } from '@/hooks/use-store';
+import { useCloudLinkTracking } from '@/hooks/use-cloud-link-tracking';
 
 import '../i18n/client';
 import '../styles/variables.css';
@@ -16,6 +17,8 @@ import '../styles/docsStyle.css';
 const ENABLE_ANALYTICS = process.env.NODE_ENV === 'production';
 
 function MyApp({ Component, pageProps }) {
+  useCloudLinkTracking();
+
   return (
     <ErrorBoundary
       errorComponent={({ error, reset }) => (

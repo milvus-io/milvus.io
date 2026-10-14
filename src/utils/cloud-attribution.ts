@@ -71,19 +71,14 @@ export function getAcquisitionParams(
   }
 }
 
-export function buildCloudEntryUrl(
-  href: string,
-  page: string,
-  acquisition: AcquisitionParams,
-  button?: string
-): string {
-  if (!/^(?:https:)?\/\//i.test(href)) return href;
+export function parseCloudEntryUrl(href: string): URL | undefined {
+  if (!/^(?:https:)?\/\//i.test(href)) return;
 
   let url: URL;
   try {
     url = new URL(href, 'https://milvus.io');
   } catch {
-    return href;
+    return;
   }
   if (
     !['cloud.zilliz.com', 'cloud.zilliz.com.cn'].includes(url.hostname) ||
@@ -92,8 +87,19 @@ export function buildCloudEntryUrl(
     url.port ||
     !['/signup', '/signin', '/login'].includes(url.pathname.replace(/\/$/, ''))
   ) {
-    return href;
+    return;
   }
+  return url;
+}
+
+export function buildCloudEntryUrl(
+  href: string,
+  page: string,
+  acquisition: AcquisitionParams,
+  button?: string
+): string {
+  const url = parseCloudEntryUrl(href);
+  if (!url) return href;
 
   // Read the old Milvus campaign (button position) before replacing its UTMs.
   const entryButton =

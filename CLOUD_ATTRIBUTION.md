@@ -3,7 +3,11 @@
 `useCloudLinkTracking` applies one URL policy to Cloud signup/signin/login
 anchors, including navigation, CTAs and rendered documentation HTML. It runs
 after hydration, watches dynamically inserted/updated links, and decorates links
-before clicks. Existing locale routing, targets and `rel` values are preserved.
+before clicks. Existing locale routing and targets are preserved. Cloud auth
+links remove `noreferrer`, keep/add `noopener`, and use
+`referrerpolicy="strict-origin-when-cross-origin"`: cross-domain requests carry
+the referring origin, without the Milvus page path or query. Other `rel` tokens
+are retained. Non-Cloud links, download links and code examples are unchanged.
 
 ## Field contract
 

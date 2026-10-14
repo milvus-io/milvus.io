@@ -1,8 +1,18 @@
-import { AcquisitionParams, buildCloudEntryUrl } from './cloud-attribution';
+import {
+  AcquisitionParams,
+  buildCloudEntryUrl,
+  parseCloudEntryUrl,
+} from './cloud-attribution';
 
 export type TrackedCloudLinks = WeakMap<
   HTMLAnchorElement,
-  { original: string; decorated: string }
+  {
+    original: string;
+    decorated: string;
+    originalRel: string | null;
+    originalPolicy: string | null;
+    decoratedRel: string;
+  }
 >;
 
 // One path for React CTAs and links rendered from documentation HTML alike.
@@ -18,14 +28,50 @@ export function trackCloudLinks(
     if (!current) return;
     const previous = links.get(anchor);
     const original = previous?.decorated === current ? previous.original : current;
+    const currentRel = anchor.getAttribute('rel');
+    const currentPolicy = anchor.getAttribute('referrerpolicy');
+    if (!parseCloudEntryUrl(original)) {
+      // A reused anchor may now point outside Cloud. Restore only attributes
+      // we still own; do not overwrite new values supplied by React/content.
+      if (previous) {
+        if (currentRel === previous.decoratedRel) {
+          if (previous.originalRel === null) anchor.removeAttribute('rel');
+          else anchor.setAttribute('rel', previous.originalRel);
+        }
+        if (currentPolicy === 'strict-origin-when-cross-origin') {
+          if (previous.originalPolicy === null) anchor.removeAttribute('referrerpolicy');
+          else anchor.setAttribute('referrerpolicy', previous.originalPolicy);
+        }
+        links.delete(anchor);
+      }
+      return;
+    }
     const decorated = buildCloudEntryUrl(
       original,
       page,
       acquisition,
       anchor.dataset.entryButton
     );
-    links.set(anchor, { original, decorated });
     if (decorated !== current) anchor.setAttribute('href', decorated);
+
+    // Cloud may use the referring origin as a second source signal. Send only
+    // the origin across domains, while keeping new tabs isolated from this page.
+    const rel = (currentRel || '')
+      .split(/\s+/)
+      .filter(token => token && token.toLowerCase() !== 'noreferrer');
+    if (!rel.some(token => token.toLowerCase() === 'noopener')) rel.push('noopener');
+    const value = rel.join(' ');
+    links.set(anchor, {
+      original,
+      decorated,
+      originalRel: previous && currentRel === previous.decoratedRel ? previous.originalRel : currentRel,
+      originalPolicy: previous && currentPolicy === 'strict-origin-when-cross-origin' ? previous.originalPolicy : currentPolicy,
+      decoratedRel: value,
+    });
+    if (currentRel !== value) anchor.setAttribute('rel', value);
+    if (anchor.referrerPolicy !== 'strict-origin-when-cross-origin') {
+      anchor.referrerPolicy = 'strict-origin-when-cross-origin';
+    }
   };
 
   const scan = (element: Element) => {
@@ -49,7 +95,7 @@ export function trackCloudLinks(
     subtree: true,
     childList: true,
     attributes: true,
-    attributeFilter: ['href', 'data-entry-button'],
+    attributeFilter: ['href', 'data-entry-button', 'rel', 'referrerpolicy'],
   });
 
   // Catch a dynamically inserted link clicked before its observer callback runs.

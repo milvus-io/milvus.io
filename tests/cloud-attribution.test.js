@@ -111,7 +111,8 @@ test('actual DOM links, dynamic HTML, route changes and locale changes use the s
   const values = selector => page.locator(selector).evaluate(a => Object.fromEntries(new URL(a.href).searchParams));
   expect(await values('#nav')).toMatchObject({ utm_source: 'adwords', gclid: 'first', entry_page: 'homepage', entry_button: 'milvus_nav_right' });
   await expect(page.locator('#nav')).toHaveAttribute('target', '_blank');
-  await expect(page.locator('#nav')).toHaveAttribute('rel', 'noopener noreferrer');
+  await expect(page.locator('#nav')).toHaveAttribute('rel', 'noopener');
+  await expect(page.locator('#nav')).toHaveAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
   await expect(page.locator('#example')).toHaveAttribute('href', nav);
   await expect(page.locator('#other')).toHaveAttribute('href', 'https://example.com/');
 
@@ -150,4 +151,66 @@ test('capture handles a just-inserted link before MutationObserver runs', async 
     return result;
   }, { attributionSource, trackingSource });
   expect(new URL(href).searchParams.get('gclid')).toBe('click');
+});
+
+test('Cloud referrer policy survives DOM rewrites without changing other links or rel tokens', async ({ page }) => {
+  await page.setContent(`<a id="cloud" href="${nav}" rel="nofollow Noreferrer">Cloud</a>
+    <a id="other" href="https://example.com/" rel="noreferrer" referrerpolicy="no-referrer">Other</a>
+    <a id="download" href="${nav}" rel="noreferrer" download>Download</a>
+    <pre><a id="code" href="${nav}" rel="noreferrer">Example</a></pre>`);
+  await page.evaluate(({ attributionSource, trackingSource }) => {
+    const attribution = new Function('exports', attributionSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    tracking.trackCloudLinks(document.body, 'homepage', {}, new WeakMap());
+  }, { attributionSource, trackingSource });
+  await expect(page.locator('#cloud')).toHaveAttribute('rel', 'nofollow noopener');
+  await page.locator('#cloud').evaluate(a => {
+    a.rel = 'sponsored noreferrer';
+    a.referrerPolicy = 'unsafe-url';
+  });
+  await expect(page.locator('#cloud')).toHaveAttribute('rel', 'sponsored noopener');
+  await expect(page.locator('#cloud')).toHaveAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+  for (const id of ['other', 'download', 'code']) {
+    await expect(page.locator('#' + id)).toHaveAttribute('rel', 'noreferrer');
+  }
+  await expect(page.locator('#other')).toHaveAttribute('referrerpolicy', 'no-referrer');
+  await page.locator('#cloud').evaluate(a => a.href = 'https://example.com/');
+  await expect(page.locator('#cloud')).toHaveAttribute('rel', 'sponsored noreferrer');
+  await expect(page.locator('#cloud')).toHaveAttribute('referrerpolicy', 'unsafe-url');
+});
+
+test('real Cloud navigation sends only the Milvus origin and isolates new tabs', async ({ context, page }) => {
+  const requests = [];
+  await context.route('https://milvus.io/**', route => route.fulfill({
+    contentType: 'text/html',
+    body: `<a id="en" href="https://cloud.zilliz.com/signup" target="_blank" rel="noreferrer">EN</a>
+      <a id="cn" href="https://cloud.zilliz.com.cn/signup" target="_blank" rel="noreferrer">CN</a>`,
+  }));
+  for (const host of ['cloud.zilliz.com', 'cloud.zilliz.com.cn']) {
+    await context.route('https://' + host + '/**', route => {
+      requests.push({ url: route.request().url(), referer: route.request().headers().referer });
+      return route.fulfill({ contentType: 'text/html', body: '<p>Cloud destination</p>' });
+    });
+  }
+  await page.goto('https://milvus.io/docs/quickstart.md?gclid=test-click&private_field=local-only');
+  await page.evaluate(({ attributionSource, trackingSource }) => {
+    const attribution = new Function('exports', attributionSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    tracking.trackCloudLinks(document.body, 'docs/quickstart.md', { gclid: 'test-click' }, new WeakMap());
+  }, { attributionSource, trackingSource });
+  for (const id of ['en', 'cn']) {
+    const popupPromise = context.waitForEvent('page');
+    await page.locator('#' + id).click();
+    const popup = await popupPromise;
+    await popup.waitForLoadState('domcontentloaded');
+    expect(await popup.evaluate(() => document.referrer)).toBe('https://milvus.io/');
+    expect(await popup.evaluate(() => window.opener === null)).toBe(true);
+    const request = requests.at(-1);
+    expect(request.referer).toBe('https://milvus.io/');
+    const query = new URL(request.url).searchParams;
+    expect(query.get('gclid')).toBe('test-click');
+    expect(query.get('entry_page')).toBe('docs/quickstart.md');
+    expect(query.has('private_field')).toBe(false);
+    await popup.close();
+  }
 });

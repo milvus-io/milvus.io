@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import { getMilvusEntryPage } from '@/utils/cloud-attribution';
 
 export default function useUtmTrackPath() {
   const { asPath } = useRouter();
@@ -8,8 +9,7 @@ export default function useUtmTrackPath() {
   const [trackPath, setTrackPath] = useState('');
 
   useEffect(() => {
-    const route = asPath.split('?')[0];
-    setTrackPath(asPath === '/' ? 'homepage' : route.replace(/\//, ''));
+    setTrackPath(getMilvusEntryPage(asPath));
   }, [asPath]);
 
   return trackPath;

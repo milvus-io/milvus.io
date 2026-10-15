@@ -13,6 +13,7 @@ import '../styles/media.css';
 import '../styles/fonts.css';
 import '../styles/common.css';
 import '../styles/docsStyle.css';
+import 'katex/dist/katex.min.css';
 
 const ENABLE_ANALYTICS = process.env.NODE_ENV === 'production';
 

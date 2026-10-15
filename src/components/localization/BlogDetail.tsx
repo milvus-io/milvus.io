@@ -136,7 +136,7 @@ export function BlogDetail(props: any) {
         title,
         desc,
         publishTime: date,
-        imageUrl: cover ? `https://${cover}` : undefined,
+        imageUrl: cover || undefined,
         author: author ? { name: author, type: 'Person' } : undefined,
       }),
       buildSchema('breadcrumb', [
@@ -167,7 +167,12 @@ export function BlogDetail(props: any) {
           <meta property="og:title" content={metaTitle} />
           <meta property="og:description" content={desc} />
           <meta property="og:url" content={shareUrl} />
-          <meta property="og:image" content={`https://${cover}`} />
+          <meta
+            name="image"
+            property="og:image"
+            content={cover}
+            key="og-image"
+          />
           <meta name="keywords" content={meta_keywords} />
           {firstImageSrc && (
             <link rel="preload" as="image" href={firstImageSrc} />
@@ -240,7 +245,7 @@ export function BlogDetail(props: any) {
                   title={title}
                   description={desc}
                   container={docContainer}
-                  imgUrl={`https://${cover}`}
+                  imgUrl={cover}
                   id={id}
                   classes={{
                     root: styles.anchorContainer,

@@ -24,18 +24,11 @@ export default function Document(props) {
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        {/* KaTeX CSS: non-render-blocking, only needed for pages with math formulas */}
+        {/* KaTeX styles must apply on screen to lay out formulas correctly. */}
         <link
           rel="stylesheet"
           href="https://assets.zilliz.com/katex/katex.min.css"
-          media="print"
         />
-        <noscript>
-          <link
-            rel="stylesheet"
-            href="https://assets.zilliz.com/katex/katex.min.css"
-          />
-        </noscript>
         <script
           dangerouslySetInnerHTML={{
             __html: `window.__I18N_RESOURCES__=${JSON.stringify({

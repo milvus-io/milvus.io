@@ -24,11 +24,6 @@ export default function Document(props) {
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        {/* KaTeX styles must apply on screen to lay out formulas correctly. */}
-        <link
-          rel="stylesheet"
-          href="https://assets.zilliz.com/katex/katex.min.css"
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.__I18N_RESOURCES__=${JSON.stringify({

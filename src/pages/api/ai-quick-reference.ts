@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { generateSimpleFaqList } from '@/http/faq';
+import topics from '../../../content/ai-quick-reference/topics.json';
 
 const DEFAULT_PAGE_SIZE = 99;
 
@@ -22,11 +23,19 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const keyword = String(req.query.keyword || '').trim().toLowerCase();
+    const keyword = String(req.query.keyword || '')
+      .trim()
+      .toLowerCase();
+    const topic = String(req.query.topic || '');
+    if (topic && !topics.some(item => item.id === topic)) {
+      return res.status(400).json({ message: 'Unknown reference topic' });
+    }
     const list = await generateSimpleFaqList();
-    const filteredList = keyword
-      ? list.filter(item => item.title.toLowerCase().includes(keyword))
-      : list;
+    const filteredList = list.filter(
+      item =>
+        (!topic || item.topic === topic) &&
+        (!keyword || item.title.toLowerCase().includes(keyword))
+    );
     const pageIndex = normalizePageIndex(req.query.page, filteredList.length);
     const start = DEFAULT_PAGE_SIZE * (pageIndex - 1);
 

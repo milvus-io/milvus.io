@@ -1,7 +1,27 @@
-
 .pageContainer {
   padding-top: 80px;
   padding-bottom: 80px;
+
+  .topicNav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 24px;
+    margin-bottom: 40px;
+
+    a {
+      color: var(--color-black2);
+    }
+    a[aria-current='page'] {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  }
+
+  .resourceTitle {
+    @mixin heading4;
+    margin-bottom: 24px;
+  }
 
   h1 {
     @mixin heading2;

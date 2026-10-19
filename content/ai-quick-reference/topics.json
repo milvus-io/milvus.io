@@ -1,0 +1,32 @@
+[
+  {
+    "id": "foundations",
+    "label": "Core concepts",
+    "guide": "https://milvus.io/docs/quickstart.md",
+    "guideLabel": "Run your first vector search"
+  },
+  {
+    "id": "retrieval",
+    "label": "Retrieval & indexes",
+    "guide": "https://milvus.io/docs/multi-vector-search.md",
+    "guideLabel": "Build hybrid search"
+  },
+  {
+    "id": "rag-agents",
+    "label": "RAG & agent memory",
+    "guide": "https://milvus.io/docs/build-rag-with-milvus.md",
+    "guideLabel": "Build a RAG pipeline"
+  },
+  {
+    "id": "data",
+    "label": "Data preparation & curation",
+    "guide": "https://milvus.io/docs/prepare-source-data.md",
+    "guideLabel": "Prepare data for ingestion"
+  },
+  {
+    "id": "production",
+    "label": "Production & operations",
+    "guide": "https://milvus.io/docs/install_standalone-docker.md",
+    "guideLabel": "Install Milvus with Docker"
+  }
+]

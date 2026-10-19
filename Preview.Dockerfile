@@ -16,6 +16,7 @@ RUN pnpm install --prefer-offline --frozen-lockfile
 FROM dependency AS builder
 COPY src ./src
 COPY public ./public
+COPY content ./content
 COPY scripts ./scripts
 COPY next.config.js next-env.d.ts sitemap.config.js ./
 COPY tsconfig.json typings.d.ts ./
@@ -53,6 +54,7 @@ COPY --from=builder /app/src/blogs /app/src/blogs
 # would 500 with ENOENT.
 COPY --from=builder /app/src/docs /app/src/docs
 COPY --from=builder /app/public /app/public
+COPY --from=builder /app/content /app/content
 COPY --from=builder /app/global-stats.json /app/global-stats.json
 COPY --from=dependency /app/node_modules /app/node_modules
 

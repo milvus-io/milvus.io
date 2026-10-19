@@ -1,8 +1,6 @@
 const fs = require('fs');
 const { join } = require('path');
-const csv = require('csv-parser');
-
-let simpleFaqCache = [];
+const { loadPublishedFaqRows } = require('./src/server/ai-reference-catalog');
 
 // Doc detail pages are rendered on demand and recorded here during the build by
 // src/utils/doc-sitemap-segments.ts. Read them back so on-demand docs still
@@ -36,37 +34,8 @@ const readDocSitemapPaths = () => {
   }
 };
 
-const generateFaqPaths = () => {
-  const filePath = join(process.cwd(), 'public/assets', 'milvus-faq.csv');
-
-  if (simpleFaqCache.length > 0) {
-    return simpleFaqCache;
-  }
-
-  return new Promise((resolve, reject) => {
-    fs.createReadStream(filePath)
-      .pipe(
-        csv({
-          mapHeaders: ({ header }) => header.trim(),
-          separator: ',',
-        })
-      )
-      .on('data', row => {
-        if (row.Order !== undefined) {
-          simpleFaqCache.push({
-            title: row.Questions,
-            url: row.URL,
-          });
-        }
-      })
-      .on('end', () => {
-        resolve(simpleFaqCache);
-      })
-      .on('error', error => {
-        reject(error);
-      });
-  });
-};
+const generateFaqPaths = async () =>
+  (await loadPublishedFaqRows()).map(row => ({ title: row.Questions, url: row.URL }));
 
 // Keep the sitemap focused on high-value canonical URLs: English plus the
 // non-English languages that carry real GSC traffic (zh/ko/zh-hant/ja), at

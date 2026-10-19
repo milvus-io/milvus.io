@@ -1,0 +1,33 @@
+name: Validate AI Reference content
+
+on:
+  pull_request:
+    paths:
+      - 'content/ai-quick-reference/**'
+      - 'public/assets/milvus-faq.csv'
+      - 'src/server/ai-reference-catalog.js'
+      - 'src/http/faq.ts'
+      - 'src/pages/ai-quick-reference/**'
+      - 'src/pages/api/ai-quick-reference.ts'
+      - 'scripts/validate-ai-reference.js'
+      - 'tests/ai-reference-catalog.test.cjs'
+      - 'sitemap.config.js'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/ai-reference-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - run: npm install -g pnpm@10.33.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm validate:ai-reference
+      - run: pnpm test:ai-reference

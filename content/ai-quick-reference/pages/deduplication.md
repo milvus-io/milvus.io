@@ -25,6 +25,8 @@ Record the surviving object, merged IDs, reason, and policy version. Apply any a
 
 ## Continue learning
 
+- [How should you combine exact, fuzzy, and semantic deduplication?](/ai-quick-reference/exact-fuzzy-and-semantic-deduplication)
+- [How does MINHASH_LSH help find near-duplicate text?](/ai-quick-reference/what-is-minhash-lsh)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
 - [How are embeddings used in document clustering?](/ai-quick-reference/how-are-embeddings-used-in-document-clustering)
 - [How does data quality affect vector retrieval?](/ai-quick-reference/how-does-etl-help-improve-data-quality)

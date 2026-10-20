@@ -25,6 +25,8 @@ For interactive search, select a configuration that meets tail-latency and error
 
 ## Continue learning
 
+- [What is GPU_CAGRA, and when does it help vector search?](/ai-quick-reference/what-is-gpu-cagra)
+- [How do vector databases support recommendation candidate retrieval?](/ai-quick-reference/vector-search-for-recommendations)
 - [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)
 - [How do you choose a vector index for your workload?](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload)
 - [What is reranking, and when should you apply it?](/ai-quick-reference/what-is-vector-reranking-and-when-should-you-apply-it)

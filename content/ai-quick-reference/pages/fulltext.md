@@ -25,6 +25,8 @@ Use a small corpus with known positive and negative cases. Confirm which tokens 
 
 ## Continue learning
 
+- [How does a sparse inverted index differ from dense ANN?](/ai-quick-reference/how-sparse-inverted-indexes-work)
+- [How can hybrid and multimodal search improve product discovery?](/ai-quick-reference/hybrid-multimodal-product-search)
 - [How does semantic search differ from keyword search?](/ai-quick-reference/what-is-semantic-search-and-how-does-it-differ-from-keyword-search)
 - [What are dense and sparse embeddings?](/ai-quick-reference/what-are-dense-and-sparse-embeddings)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)

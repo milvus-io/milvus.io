@@ -25,6 +25,8 @@ Load representative data, warm the intended query mix, and observe memory during
 
 ## Continue learning
 
+- [How does mmap differ from a disk-oriented ANN index?](/ai-quick-reference/how-mmap-differs-from-diskann)
+- [How do HNSW_SQ, HNSW_PQ, and HNSW_PRQ change the trade-offs?](/ai-quick-reference/hnsw-sq-pq-prq-tradeoffs)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
 - [What is vector quantization, and what does it trade off?](/ai-quick-reference/what-is-vector-quantization-in-embeddings)
 - [How do you choose a vector index for your workload?](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload)

@@ -6,27 +6,45 @@
     "guideLabel": "Run your first vector search"
   },
   {
+    "id": "lake",
+    "label": "Vector data lake",
+    "guide": "https://milvus.io/docs/create-an-external-collection.md",
+    "guideLabel": "Connect lake data to Milvus"
+  },
+  {
+    "id": "ecosystem",
+    "label": "Milvus components",
+    "guide": "https://milvus.io/docs/architecture_overview.md",
+    "guideLabel": "Understand the Milvus architecture"
+  },
+  {
     "id": "retrieval",
     "label": "Retrieval & indexes",
-    "guide": "https://milvus.io/docs/multi-vector-search.md",
-    "guideLabel": "Build hybrid search"
+    "guide": "https://milvus.io/docs/index-explained.md",
+    "guideLabel": "Choose and compare indexes"
   },
   {
     "id": "rag-agents",
-    "label": "RAG & agent memory",
-    "guide": "https://milvus.io/docs/build-rag-with-milvus.md",
-    "guideLabel": "Build a RAG pipeline"
+    "label": "RAG, agents & memory",
+    "guide": "https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md",
+    "guideLabel": "Build agentic retrieval"
   },
   {
     "id": "data",
-    "label": "Data preparation & curation",
-    "guide": "https://milvus.io/docs/prepare-source-data.md",
-    "guideLabel": "Prepare data for ingestion"
+    "label": "Curation & training data",
+    "guide": "https://milvus.io/docs/minhash-function.md",
+    "guideLabel": "Find near-duplicate documents"
+  },
+  {
+    "id": "applications",
+    "label": "Application patterns",
+    "guide": "https://milvus.io/docs/build-rag-with-milvus.md",
+    "guideLabel": "Build a retrieval application"
   },
   {
     "id": "production",
     "label": "Production & operations",
     "guide": "https://milvus.io/docs/install_standalone-docker.md",
-    "guideLabel": "Install Milvus with Docker"
+    "guideLabel": "Deploy and evaluate Milvus"
   }
 ]

@@ -25,6 +25,8 @@ Combine geometric measures with inspection against the intended task. For physic
 
 ## Continue learning
 
+- [How can embeddings improve dataset diversity sampling?](/ai-quick-reference/how-to-sample-diverse-data-with-embeddings)
+- [How can vector search help resolve duplicate or related entities?](/ai-quick-reference/vector-search-for-entity-resolution)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
 - [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
 - [How do metadata filters interact with vector search?](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance)

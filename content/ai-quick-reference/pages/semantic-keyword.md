@@ -25,6 +25,8 @@ Milvus supports full-text retrieval with BM25 and vector retrieval that can be c
 
 ## Continue learning
 
+- [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
+- [How can vector search improve codebase retrieval for coding agents?](/ai-quick-reference/vector-search-for-coding-agents)
 - [What is vector search?](/ai-quick-reference/what-is-vector-search)
 - [What is full-text search, and how does BM25 fit?](/ai-quick-reference/what-is-fulltext-search)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)

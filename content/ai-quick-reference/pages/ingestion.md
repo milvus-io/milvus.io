@@ -25,6 +25,8 @@ Test updates, deletions, and re-embedding before scaling the pipeline. If a sour
 
 ## Continue learning
 
+- [How should you design a scalable embedding-generation pipeline?](/ai-quick-reference/how-to-build-distributed-embedding-pipelines)
+- [When should you use a Milvus external collection?](/ai-quick-reference/when-to-use-milvus-external-collections)
 - [How does data quality affect vector retrieval?](/ai-quick-reference/how-does-etl-help-improve-data-quality)
 - [How do you choose chunk size for RAG?](/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications)
 - [How do you handle incremental updates in a vector database?](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database)

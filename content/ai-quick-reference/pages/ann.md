@@ -25,6 +25,8 @@ Construct an exact baseline on representative data, then sweep search parameters
 
 ## Continue learning
 
+- [Why use a FLAT baseline when tuning an ANN index?](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline)
+- [When should you use DISKANN in Milvus?](/ai-quick-reference/what-is-diskann)
 - [What is vector search?](/ai-quick-reference/what-is-vector-search)
 - [What is HNSW, and how should you tune it?](/ai-quick-reference/what-is-hnsw)
 - [How do IVF indexes use centroids to search vectors?](/ai-quick-reference/how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process)

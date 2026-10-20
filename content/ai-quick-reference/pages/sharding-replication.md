@@ -25,6 +25,8 @@ Milvus separates responsibilities across its distributed architecture, and the e
 
 ## Continue learning
 
+- [How do you locate a bottleneck across Milvus components?](/ai-quick-reference/how-to-find-milvus-performance-bottlenecks)
+- [How does the Milvus architecture separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
 - [What determines vector-database scalability?](/ai-quick-reference/how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability)
 - [What does eventual consistency mean for vector search?](/ai-quick-reference/what-is-eventual-consistency)
 - [How should you plan backup and recovery for a vector database?](/ai-quick-reference/how-do-vector-databases-handle-backup-and-restore-or-replication-for-very-large-datasets-and-what-impact-does-that-have-on-system-design-in-terms-of-time-and-storage-overhead)

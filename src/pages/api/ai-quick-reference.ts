@@ -1,8 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { generateSimpleFaqList } from '@/http/faq';
 import topics from '../../../content/ai-quick-reference/topics.json';
-
-const DEFAULT_PAGE_SIZE = 99;
+import { AI_REFERENCE_PAGE_SIZE as DEFAULT_PAGE_SIZE } from '@/consts/faq';
 
 const normalizePageIndex = (
   page: string | string[] | undefined,

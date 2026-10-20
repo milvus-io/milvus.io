@@ -25,6 +25,8 @@ Verify that every returned record satisfies the condition, that eligible relevan
 
 ## Continue learning
 
+- [How do scalar indexes support filtered vector search?](/ai-quick-reference/how-scalar-indexes-support-vector-search)
+- [How should an agent choose between vector, keyword, and structured search?](/ai-quick-reference/how-agents-choose-retrieval-tools)
 - [What is vector search?](/ai-quick-reference/what-is-vector-search)
 - [How should you design multi-tenancy for vector search?](/ai-quick-reference/what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure)
 - [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)

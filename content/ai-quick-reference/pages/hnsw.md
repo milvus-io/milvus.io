@@ -25,6 +25,8 @@ HNSW is a useful candidate when graph-based retrieval fits the latency and memor
 
 ## Continue learning
 
+- [How do HNSW_SQ, HNSW_PQ, and HNSW_PRQ change the trade-offs?](/ai-quick-reference/hnsw-sq-pq-prq-tradeoffs)
+- [What is GPU_CAGRA, and when does it help vector search?](/ai-quick-reference/what-is-gpu-cagra)
 - [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)
 - [How do IVF indexes use centroids to search vectors?](/ai-quick-reference/how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process)
 - [How do you estimate memory for vector search?](/ai-quick-reference/how-does-vector-search-manage-memory-usage)

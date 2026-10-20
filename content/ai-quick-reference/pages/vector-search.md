@@ -25,6 +25,8 @@ Start with a small corpus and a fixed query set. Inspect returned IDs, source pa
 
 ## Continue learning
 
+- [Why use a FLAT baseline when tuning an ANN index?](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline)
+- [When should you use range search instead of only top-k?](/ai-quick-reference/when-to-use-vector-range-search)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
 - [How do cosine similarity, inner product, and L2 differ?](/ai-quick-reference/what-is-the-role-of-distance-metrics-in-embeddings)
 - [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)

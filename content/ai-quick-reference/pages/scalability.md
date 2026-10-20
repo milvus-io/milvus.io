@@ -25,6 +25,8 @@ Run representative data volumes and concurrency levels, including sustained writ
 
 ## Continue learning
 
+- [How should you separate hot vector serving from cold lake data?](/ai-quick-reference/how-to-design-hot-and-cold-vector-serving)
+- [What is Talon, and when can object-store caching help vector workloads?](/ai-quick-reference/what-is-talon)
 - [How do you estimate memory for vector search?](/ai-quick-reference/how-does-vector-search-manage-memory-usage)
 - [How do sharding and replication differ in a vector database?](/ai-quick-reference/how-do-distributed-vector-databases-handle-sharding-and-replication)
 - [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)

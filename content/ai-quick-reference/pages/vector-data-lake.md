@@ -1,0 +1,39 @@
+---
+slug: "what-is-a-vector-data-lake"
+title: "What is a vector data lake?"
+topic: "lake"
+order: 37
+---
+
+A vector data lake keeps embeddings, their source objects, and descriptive metadata in a shared storage foundation that multiple compute systems can use. It is useful when retrieval, data preparation, evaluation, and training need to work with related datasets without maintaining an unrelated copy for every job.
+
+## Organize a dataset, not just an embedding directory
+
+Consider a video corpus. The lake may contain original clips, captions, frame embeddings, quality scores, and labeling decisions. An embedding row needs a stable clip identifier, the model revision, preprocessing settings, source location, and time range. Without these relationships, a similarity result is difficult to reproduce or turn into a training example.
+
+Choose storage and table formats for the access patterns you need. Parquet supports widespread batch tooling; table formats add their own metadata and versioning semantics. Storing a vector column in an open format does not by itself create a low-latency ANN service, automatic permissions, or a consistent snapshot across every producer.
+
+## Add a retrieval layer deliberately
+
+In the Milvus 3.0 architecture, Storage V3 can represent supported external files and tables through manifests. External collections let Milvus build retrieval indexes while source rows remain externally managed. This is a version-dependent integration: check the source format, credentials, refresh procedure, and limitations before designing around it.
+
+A separate managed serving collection is another option when the application needs independently controlled writes or a different lifecycle. Compare the synchronization work, index storage, query latency, and recovery process for both designs. Avoid interpreting the absence of a second source-row copy as the absence of all additional storage or computation.
+
+## Prove the shared-data workflow
+
+Start with one dataset version and two consumers: an offline curation job and an online retrieval service. Trace a returned ID back to the original source, then reproduce the offline selection from the same version. Change one record, remove another, and verify how each consumer observes the change. The useful outcome is a governed, reproducible connection between exploration and serving, rather than simply placing more files in object storage.
+
+## Continue learning
+
+- [What is Vector Lakebase, and how does it connect a lake to vector search?](/ai-quick-reference/what-is-vector-lakebase)
+- [How can Milvus search data stored in Lance?](/ai-quick-reference/how-can-milvus-search-lance-data)
+- [How can Milvus search an Apache Iceberg table?](/ai-quick-reference/how-can-milvus-search-iceberg-tables)
+- [What is data curation, and how can vector search help?](/ai-quick-reference/what-is-data-curation-for-vector-ai)
+
+## Implementation guides and sources
+
+- [Storage V3 and external source formats](https://milvus.io/docs/storage-v3.md)
+- [Lance open format](https://lance.org/)
+- [Iceberg schema and partition evolution](https://iceberg.apache.org/docs/latest/evolution/)
+
+Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

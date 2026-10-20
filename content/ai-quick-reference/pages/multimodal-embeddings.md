@@ -25,6 +25,8 @@ Evaluate text-to-image, image-to-image, or other supported directions separately
 
 ## Continue learning
 
+- [What is late-interaction retrieval, and how can embedding lists help?](/ai-quick-reference/what-is-late-interaction-retrieval)
+- [How should you curate image and video data with vector retrieval?](/ai-quick-reference/how-to-curate-image-and-video-data)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
 - [What is vector search?](/ai-quick-reference/what-is-vector-search)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)

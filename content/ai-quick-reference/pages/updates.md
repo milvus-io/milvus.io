@@ -25,6 +25,8 @@ Test create, correction, document replacement, deletion, and retry after an ambi
 
 ## Continue learning
 
+- [How should you refresh a Milvus external collection safely?](/ai-quick-reference/how-to-refresh-milvus-external-collections)
+- [How should deletions propagate from a data lake to vector search?](/ai-quick-reference/how-to-propagate-lake-deletions-to-vector-search)
 - [How does ETL prepare data for vector search?](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process)
 - [What does eventual consistency mean for vector search?](/ai-quick-reference/what-is-eventual-consistency)
 - [How should you structure agent memory in Milvus?](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus)

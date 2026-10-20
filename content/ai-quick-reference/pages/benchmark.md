@@ -25,6 +25,8 @@ Run repeated trials and retain raw results. Explain any differences in data layo
 
 ## Continue learning
 
+- [Why use a FLAT baseline when tuning an ANN index?](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline)
+- [How do GPU_IVF_FLAT and GPU_IVF_PQ differ?](/ai-quick-reference/gpu-ivf-flat-vs-gpu-ivf-pq)
 - [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)
 - [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
 - [How do batching, latency, and throughput interact in vector search?](/ai-quick-reference/how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search)

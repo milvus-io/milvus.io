@@ -25,6 +25,8 @@ Test cross-tenant negative cases, onboarding, schema changes, tenant deletion, a
 
 ## Continue learning
 
+- [How should you compare managed vector databases, BYOC, and self-hosted Milvus?](/ai-quick-reference/managed-vector-database-byoc-vs-self-hosted)
+- [How should you design evidence retrieval for healthcare agents?](/ai-quick-reference/vector-search-for-healthcare-evidence)
 - [How do metadata filters interact with vector search?](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance)
 - [What determines vector-database scalability?](/ai-quick-reference/how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability)
 - [How do you compare managed and self-hosted vector-search costs?](/ai-quick-reference/what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store)

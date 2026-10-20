@@ -25,6 +25,8 @@ Compare each individual path with the hybrid result on identical queries, corpus
 
 ## Continue learning
 
+- [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
+- [How can hybrid and multimodal search improve product discovery?](/ai-quick-reference/hybrid-multimodal-product-search)
 - [What are dense and sparse embeddings?](/ai-quick-reference/what-are-dense-and-sparse-embeddings)
 - [How does semantic search differ from keyword search?](/ai-quick-reference/what-is-semantic-search-and-how-does-it-differ-from-keyword-search)
 - [What is reranking, and when should you apply it?](/ai-quick-reference/what-is-vector-reranking-and-when-should-you-apply-it)

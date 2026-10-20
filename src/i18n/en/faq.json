@@ -1,6 +1,6 @@
 {
   "title": "AI Quick Reference",
-  "desc": "Practical references for vector retrieval, RAG and agent memory, data preparation, and production systems. Start with an implementation guide or browse questions by topic.",
+  "desc": "Practical references for vector data lakes, Milvus components, retrieval indexes, AI agents, data curation, and production systems. Start with an implementation guide or browse questions by topic.",
   "allTopics": "All topics",
   "guidesTitle": "Start with an implementation guide",
   "pricingGuide": "Estimate managed-service costs",

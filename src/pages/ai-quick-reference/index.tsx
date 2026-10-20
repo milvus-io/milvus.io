@@ -11,6 +11,7 @@ import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import CustomInput from '@/components/customInput/customInput';
 import FaqPagination from '@/components/faq/FaqPagination';
 import topics from '../../../content/ai-quick-reference/topics.json';
+import { AI_REFERENCE_PAGE_SIZE as DEFAULT_PAGE_SIZE } from '@/consts/faq';
 
 const SearchIcon = () => (
   <svg
@@ -37,7 +38,6 @@ const SearchIcon = () => (
   </svg>
 );
 
-const DEFAULT_PAGE_SIZE = 99;
 const PAGEINDEX_QUERY_KEY = 'page';
 const API_ROUTE = '/api/ai-quick-reference';
 
@@ -72,6 +72,11 @@ export default function AiFaq(props: {
   const { list, total, pageIndex, topic, keyword } = props;
   const currentPageIndex = pageIndex;
   const searchRequest = useRef(0);
+  const guideTopics = topics.filter(item =>
+    topic
+      ? item.id === topic
+      : ['foundations', 'lake', 'rag-agents'].includes(item.id)
+  );
 
   const [searchData, setSearchData] = useState<{
     keyword: string;
@@ -237,7 +242,7 @@ export default function AiFaq(props: {
 
           <h2 className={classes.resourceTitle}>{t('guidesTitle')}</h2>
           <ul className={classes.listWrapper}>
-            {topics.map(item => (
+            {guideTopics.map(item => (
               <li key={item.id}>
                 <a href={item.guide}>{item.guideLabel}</a>
               </li>

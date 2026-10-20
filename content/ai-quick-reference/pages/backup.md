@@ -25,6 +25,8 @@ Restore to an isolated environment, compare record counts and selected source ID
 
 ## Continue learning
 
+- [How do you make vector-search and training experiments reproducible?](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments)
+- [What is Woodpecker's role in the Milvus write path?](/ai-quick-reference/what-is-woodpecker)
 - [How do sharding and replication differ in a vector database?](/ai-quick-reference/how-do-distributed-vector-databases-handle-sharding-and-replication)
 - [How do you handle incremental updates in a vector database?](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database)
 - [How does ETL prepare data for vector search?](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process)

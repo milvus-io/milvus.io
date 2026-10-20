@@ -25,6 +25,8 @@ Run dense-only, sparse-only, and hybrid retrieval against one fixed corpus. Insp
 
 ## Continue learning
 
+- [How does a sparse inverted index differ from dense ANN?](/ai-quick-reference/how-sparse-inverted-indexes-work)
+- [How do scalar indexes support filtered vector search?](/ai-quick-reference/how-scalar-indexes-support-vector-search)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
 - [What is full-text search, and how does BM25 fit?](/ai-quick-reference/what-is-fulltext-search)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)

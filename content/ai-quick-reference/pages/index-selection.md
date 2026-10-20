@@ -25,6 +25,8 @@ Run long enough to observe queueing, cache effects, and maintenance work. Exerci
 
 ## Continue learning
 
+- [When should you use DISKANN in Milvus?](/ai-quick-reference/what-is-diskann)
+- [What is GPU_CAGRA, and when does it help vector search?](/ai-quick-reference/what-is-gpu-cagra)
 - [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)
 - [What is HNSW, and how should you tune it?](/ai-quick-reference/what-is-hnsw)
 - [How do IVF indexes use centroids to search vectors?](/ai-quick-reference/how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process)

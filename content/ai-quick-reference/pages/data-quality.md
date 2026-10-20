@@ -25,6 +25,8 @@ When relevance drops, trace a failed query through source content, parsing, chun
 
 ## Continue learning
 
+- [What is data curation, and how can vector search help?](/ai-quick-reference/what-is-data-curation-for-vector-ai)
+- [How should you design a quality score for data curation?](/ai-quick-reference/how-to-score-data-quality-for-curation)
 - [How does ETL prepare data for vector search?](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process)
 - [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
 - [How do you choose chunk size for RAG?](/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications)

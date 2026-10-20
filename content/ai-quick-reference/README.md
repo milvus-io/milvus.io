@@ -1,11 +1,12 @@
 # AI Quick Reference editorial scope
 
 This collection explains core concepts required to understand, evaluate, and
-operate vector retrieval. It is organized as a reading path, with links from
+operate vector retrieval, including lake integration, Milvus components, agent
+workflows, and data curation. It is organized as a reading path, with links from
 concepts to related concepts, implementation guides, and primary sources.
 
-The initial curated set contains 36 articles. Original URLs are preserved for
-these articles. Fourteen duplicate definitions redirect to the corresponding
+The curated set contains 100 articles across eight topics. The original 36
+canonical URLs remain stable. Fourteen duplicate definitions redirect to the corresponding
 canonical concept. Other legacy URLs return 404; they are not redirected to an
 unrelated homepage. The legacy public CSV is removed, so replacing that export
 cannot silently republish the retired catalog.
@@ -16,7 +17,7 @@ cannot silently republish the retired catalog.
   in front matter. A short filename is independent of the historical URL slug.
 - `publication.json`: explicit publication decisions, content hashes, checked
   sources, related concepts, and direct merge targets for legacy URLs.
-- `topics.json`: five topic groups and their implementation starting points.
+- `topics.json`: eight topic groups and their implementation starting points.
 
 The page renderer, list API, and sitemap use the same validated catalog. The
 Docker build and runtime stages both include `content/`.
@@ -31,7 +32,11 @@ Docker build and runtime stages both include `content/`.
    or benchmark claims without a dated, reproducible source.
 3. Check primary sources against the relevant version. Include descriptive links
    to implementation guidance and related concepts. A valid link alone does not
-   establish that a claim is supported.
+   establish that a claim is supported. Retire obsolete year-specific news and
+   tool-version answers. Retain an evergreen concept only after rewriting and
+   checking its substantive claims; changing a displayed date is not a review.
+   Clearly distinguish architecture patterns from released product capabilities,
+   and state material version requirements and integration limits.
 4. Update the article and its publication record together. The content hash is
    SHA-256 of `title + '\n' + body + '\n' + topic`, where body is the trimmed
    Markdown content with one final newline. Mark the source-check date and

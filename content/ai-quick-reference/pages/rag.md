@@ -25,6 +25,8 @@ Start with a bounded corpus and realistic questions. Check retrieval coverage fi
 
 ## Continue learning
 
+- [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
+- [How should you design vector retrieval for legal-document agents?](/ai-quick-reference/vector-search-for-legal-document-agents)
 - [How do you choose chunk size for RAG?](/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 - [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)

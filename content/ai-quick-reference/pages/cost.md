@@ -25,6 +25,8 @@ Separate fixed provisioning from usage-dependent items and show the workload ass
 
 ## Continue learning
 
+- [How should you compare managed vector databases, BYOC, and self-hosted Milvus?](/ai-quick-reference/managed-vector-database-byoc-vs-self-hosted)
+- [What is Vector Lakebase, and how does it connect a lake to vector search?](/ai-quick-reference/what-is-vector-lakebase)
 - [How do you estimate memory for vector search?](/ai-quick-reference/how-does-vector-search-manage-memory-usage)
 - [What determines vector-database scalability?](/ai-quick-reference/how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability)
 - [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)

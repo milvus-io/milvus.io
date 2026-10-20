@@ -25,6 +25,8 @@ Use the Quickstart to create a collection, insert a few real embeddings, and ins
 
 ## Continue learning
 
+- [What is a vector data lake?](/ai-quick-reference/what-is-a-vector-data-lake)
+- [How does the Milvus architecture separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
 - [What is vector search?](/ai-quick-reference/what-is-vector-search)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
 - [How do you choose a vector index for your workload?](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload)

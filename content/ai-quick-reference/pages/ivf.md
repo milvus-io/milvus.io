@@ -25,6 +25,8 @@ Include selective filters, uneven data distributions, and the expected request c
 
 ## Continue learning
 
+- [How do GPU_IVF_FLAT and GPU_IVF_PQ differ?](/ai-quick-reference/gpu-ivf-flat-vs-gpu-ivf-pq)
+- [What is IVF_RABITQ, and how should you evaluate it?](/ai-quick-reference/what-is-ivf-rabitq)
 - [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)
 - [What is HNSW, and how should you tune it?](/ai-quick-reference/what-is-hnsw)
 - [What is vector quantization, and what does it trade off?](/ai-quick-reference/what-is-vector-quantization-in-embeddings)

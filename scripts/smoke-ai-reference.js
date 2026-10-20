@@ -17,8 +17,27 @@ async function get(path) {
   assert.equal(api.status, 200);
   const list = await api.json();
   assert.equal(list.total, retained.length);
+  const pages = Math.ceil(list.total / list.pageSize);
+  const allItems = [...list.list];
+  for (let page = 2; page <= pages; page++) {
+    const response = await get(`/api/ai-quick-reference?page=${page}`);
+    assert.equal(response.status, 200);
+    const data = await response.json();
+    assert.equal(data.pageIndex, page);
+    assert.equal(data.total, retained.length);
+    allItems.push(...data.list);
+    const rendered = await get(`/ai-quick-reference?page=${page}`);
+    assert.equal(rendered.status, 200);
+    const html = await rendered.text();
+    const nextData = JSON.parse(
+      html.match(
+        /<script\b[^>]*id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/
+      )[1]
+    );
+    assert.deepEqual(nextData.props.pageProps.list, data.list);
+  }
   assert.deepEqual(
-    list.list.map(item => item.url).sort(),
+    allItems.map(item => item.url).sort(),
     retained.slice().sort()
   );
 
@@ -95,6 +114,7 @@ async function get(path) {
   console.log(
     JSON.stringify({
       retained: retained.length,
+      listPages: pages,
       merged,
       retiredSamples: retiredSamples.size,
       topicFilters: topics.length,

@@ -11,7 +11,7 @@ Compressed HNSW variants combine graph navigation with a lower-cost vector repre
 
 ## Understand what is compressed
 
-Scalar quantization reduces the precision used for vector coordinates. Product quantization encodes subvectors through learned codebooks. Product residual quantization uses additional residual modeling as described by the supported implementation. These methods change distance approximation; the HNSW graph still has its own storage cost.
+Scalar quantization (SQ) maps each vector coordinate to a lower-bit integer level, for example SQ8 maps an FP32 coordinate from 4 bytes to roughly 1 byte. Product quantization (PQ) splits the vector into `m` subvectors and stores a learned codebook ID for each subvector; with `nbits` per code, the vector code takes about `m × nbits / 8` bytes. Product residual quantization (PRQ) applies PQ and then quantizes the remaining reconstruction error in additional stages. SQ, PQ, and PRQ compress vector values; HNSW still stores its neighbor links, so total index size is not just the code size.
 
 Milvus exposes variants through separate index types and documented parameters. Check which quantization and refinement choices the deployed release supports. A compression label is not enough to derive the loaded-memory footprint or valid parameter combinations.
 
@@ -48,5 +48,6 @@ Hold the graph and query workload as comparable as the supported index variants 
 - [HNSW scalar quantization](https://milvus.io/docs/hnsw-sq.md)
 - [HNSW product quantization](https://milvus.io/docs/hnsw-pq.md)
 - [HNSW product residual quantization](https://milvus.io/docs/hnsw-prq.md)
+- [Milvus index structures and compression](https://milvus.io/docs/index-explained.md)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

@@ -5,7 +5,7 @@ topic: "retrieval"
 order: 12
 ---
 
-An inverted-file (IVF) vector index divides the vector space into regions represented by centroids. During search, it chooses promising regions and compares candidates inside them. This reduces the number of vectors examined, but a true neighbor in an unsearched region can be missed.
+An inverted-file (IVF) index is a coarse-partitioning data structure. It assigns vectors to centroid cells and, for a query, probes only selected cells before scoring their candidates. `nlist` controls how many cells are built; `nprobe` controls how many are visited. IVF describes how candidates are narrowed—not how each vector is compressed. IVF_FLAT, IVF_SQ8, IVF_PQ, and IVF_RABITQ keep different representations within that same coarse-partitioning pattern.
 
 ![IVF centroid and region selection](/images/ai-reference/ivf.svg)
 
@@ -57,5 +57,6 @@ If increasing nprobe improves recall while vectors and compression remain fixed,
 
 - [Milvus IVF_FLAT index](https://milvus.io/docs/ivf-flat.md)
 - [Milvus IVF_PQ index](https://milvus.io/docs/ivf-pq.md)
+- [Milvus IVF_FLAT candidate partitions](https://milvus.io/docs/ivf-flat.md)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

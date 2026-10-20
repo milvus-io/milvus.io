@@ -1,8 +1,8 @@
 {
   "checked_at": "2026-10-20",
   "baseline": "7fbdd51fc04c2ddbe13f71bd33c199ba4383ff42",
-  "article_count": 131,
-  "case_count": 131,
+  "article_count": 132,
+  "case_count": 132,
   "deeper_articles": 10,
   "original_figures": 26,
   "illustrated_articles": 71,
@@ -1317,6 +1317,16 @@
       "route": "multi-vector",
       "words_after": 901,
       "figure": "maxsim"
+    },
+    {
+      "file": "faiss.md",
+      "slug": "what-is-faiss",
+      "topic": "retrieval",
+      "words_before": 0,
+      "words_after": 532,
+      "figure": null,
+      "depth": false,
+      "route": "index-families"
     }
   ],
   "semantic_review": "semantic-review-2026-10-20.json",

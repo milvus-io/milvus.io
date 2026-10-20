@@ -17,9 +17,11 @@ Use exact search on representative data as a quality reference. For small or hea
 
 ## Compare families, then parameters
 
-Graph indexes, IVF indexes, compressed representations, and disk-oriented options occupy different capacity and performance trade-offs. Start with a small shortlist supported by your deployment and data types. For each candidate, sweep search effort at fixed build settings and compare the quality/latency curve. Revisit construction parameters when the curve cannot meet the target.
+Graph indexes, IVF indexes, compressed representations, and disk-oriented options occupy different capacity and performance trade-offs. For the library-versus-index distinction, see the [FAISS library and its Milvus integration](/ai-quick-reference/what-is-faiss). Start with a small shortlist supported by your deployment and data types. For each candidate, sweep search effort at fixed build settings and compare the quality/latency curve. Revisit construction parameters when the curve cannot meet the target.
 
 Do not compare one system's highest-throughput configuration with another system's highest-recall configuration. Keep the workload and acceptance criteria consistent, and include index build time, load time, resident memory, and behavior during writes.
+
+FAISS is a library that contains several index families, not another single index family; see [the FAISS/Milvus guide](/ai-quick-reference/what-is-faiss).
 
 ## Use a deployment test
 

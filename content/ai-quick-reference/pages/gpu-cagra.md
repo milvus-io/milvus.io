@@ -5,7 +5,7 @@ topic: "retrieval"
 order: 60
 ---
 
-CAGRA is a graph-based approximate nearest-neighbor approach optimized for GPU execution. Milvus exposes GPU_CAGRA with documented build and search controls. It is a candidate when GPU parallelism and the workload's request shape can justify the device memory and operating cost.
+CAGRA is a graph-based ANN algorithm designed for highly parallel graph construction and search on GPUs. `GPU_CAGRA` is Milvus’s GPU index implementation: it builds a proximity graph, then explores graph entry points and candidate neighborhoods with GPU-parallel work. The name therefore identifies both a graph-search family and, in Milvus, a GPU-specific index type; it is not a compression method or another name for IVF.
 
 ## Evaluate the request shape
 
@@ -45,5 +45,7 @@ Include host-to-device transfer, index build, and payload retrieval when evaluat
 
 - [Milvus GPU_CAGRA parameters and loading modes](https://milvus.io/docs/gpu-cagra.md)
 - [NVIDIA cuVS vector-search implementations](https://github.com/NVIDIA/cuvs)
+- [Milvus GPU_CAGRA graph index](https://milvus.io/docs/gpu-cagra.md)
+- [CAGRA research paper](https://arxiv.org/abs/2308.15136)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

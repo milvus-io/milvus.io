@@ -5,7 +5,7 @@ topic: "retrieval"
 order: 11
 ---
 
-HNSW, or Hierarchical Navigable Small World, is a graph-based approximate nearest-neighbor index. It connects vectors at multiple levels. A search uses upper levels to approach a promising region, then explores a denser lower-level neighborhood to find candidates.
+HNSW, or Hierarchical Navigable Small World, is a graph-based approximate-nearest-neighbor (ANN) index. It builds a hierarchy of neighbor graphs: a query starts from a sparse upper layer to move across the space, then descends to denser lower layers for local search. HNSW is the in-memory graph-search structure; optional SQ/PQ/PRQ variants compress vector representations separately.
 
 ![HNSW hierarchical graph navigation](/images/ai-reference/hnsw.svg)
 
@@ -56,5 +56,6 @@ Sweep search-time ef with one fixed graph before rebuilding with a different M. 
 ## Implementation guides and sources
 
 - [Milvus HNSW index](https://milvus.io/docs/hnsw.md)
+- [Milvus hierarchical graph index](https://milvus.io/docs/hnsw.md)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

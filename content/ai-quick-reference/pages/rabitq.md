@@ -5,9 +5,15 @@ topic: "retrieval"
 order: 63
 ---
 
-IVF_RABITQ combines inverted-file candidate selection with RaBitQ vector quantization. Milvus documents it as a compact representation option with supported refinement controls. It is useful to evaluate when vector-representation memory is a meaningful constraint and some approximation can be traded for capacity or speed.
+IVF_RABITQ combines IVF centroid-based candidate selection with RaBitQ distance approximation. RaBitQ is a binary vector-quantization method: it normalizes vectors relative to a centroid, encodes each D-dimensional vector as a D-bit code using a randomized binary codebook, and uses a corrected estimator to approximate distances. Milvus may optionally keep higher-precision refinement data. It is neither ordinary sign-bit binarization nor simply a conventional 1-bit scalar quantizer.
 
 ![Treat compression as another approximation](/images/ai-reference/quantization.svg)
+
+## What the RaBitQ code represents
+
+The code uses one bit per dimension as its compact core, but its distance estimator also relies on normalization and correction information. The research method gives an error bound for its estimator; that property does not by itself guarantee a particular application Recall@k. `IVF_RABITQ` adds a separate IVF stage that first narrows the centroid cells, so missing a cell and estimating distances poorly are distinct failure sources. Optional refinement uses a higher-precision representation for a shortlist and therefore costs additional memory.
+
+As a storage intuition, D binary code bits occupy D/8 bytes per vector, compared with 4D bytes for FP32 values: a 32x ratio for those payloads alone. Actual Milvus index memory also includes centroids, codes/metadata, auxiliary correction terms, and any retained refinement vectors; measure the loaded index rather than applying the payload ratio to total service memory.
 
 ## Separate three sources of error
 
@@ -48,5 +54,6 @@ Evaluate the supported IVF_RABITQ configuration against IVF_FLAT on the same que
 - [Milvus IVF_RABITQ representation and refinement](https://milvus.io/docs/ivf-rabitq.md)
 - [IVF candidate selection](https://milvus.io/docs/ivf-flat.md)
 - [Supported similarity metrics](https://milvus.io/docs/metric.md)
+- [RaBitQ original paper and estimator](https://arxiv.org/abs/2405.12497)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

@@ -5,7 +5,7 @@ topic: "retrieval"
 order: 59
 ---
 
-DISKANN is an approximate nearest-neighbor index designed to combine graph search with disk-oriented data access. In Milvus, it is an option for workloads whose capacity and cost requirements make a fully memory-resident index unattractive. Its usefulness depends on the storage device, cache, search effort, and required recall.
+DISKANN is a disk-oriented graph ANN index for datasets that do not fit comfortably in RAM. In Milvus it uses a Vamana neighbor graph arranged for SSD access, keeps compact PQ codes in memory to estimate candidate distances, and reads selected full-precision vectors from disk to refine promising candidates. This moves most vector capacity to SSD while retaining a small working representation in RAM; random I/O and cache behavior then become part of query latency.
 
 ## Budget for both memory and storage I/O
 
@@ -45,5 +45,6 @@ Replay an identical query mix after a serving-node restart and after warm-up. Co
 
 - [DISKANN design and configuration](https://milvus.io/docs/diskann.md)
 - [Index selection trade-offs](https://milvus.io/docs/index-explained.md)
+- [Milvus Vamana graph, PQ codes, SSD search, and configuration](https://milvus.io/docs/diskann.md)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

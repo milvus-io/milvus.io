@@ -5,7 +5,7 @@ operate vector retrieval, including lake integration, Milvus components, agent
 workflows, and data curation. It is organized as a reading path, with links from
 concepts to related concepts, implementation guides, and primary sources.
 
-The curated set contains 131 articles across ten topics. The original 36
+The curated set contains 132 articles across ten topics. The original 36
 canonical URLs remain stable. Fourteen duplicate definitions redirect to the corresponding
 canonical concept. Other legacy URLs return 404; they are not redirected to an
 unrelated homepage. The legacy public CSV is removed, so replacing that export
@@ -127,9 +127,10 @@ not establish executed inference, deployed feature availability, or measured gai
 
 ## Foundation revisions and multi-vector entry
 
-The current 131-entry set adds one core multi-vector article and revises six
-foundation/late-interaction entries. See `foundation-review-2026-10-20.json` for
-current hashes and sources on top of the historical 130-entry claim review.
+The 132-entry set includes one core multi-vector article, revised foundation and
+late-interaction entries, a new FAISS introduction, and expanded index/quantization
+primers. See the dated review ledgers for current hashes and sources on top of the
+historical 130-entry claim review.
 Explain RAG and Agent Memory integration, dense/sparse representation generation,
 cosine/IP/squared L2 geometry, CLIP alignment, and MaxSim versus candidate search.
 MUVERA is a fixed-dimensional encoding approach, not an embedding model or a
@@ -143,3 +144,10 @@ lexical matching; the ANN introduction distinguishes the kNN result task from ex
 and approximate methods, with hashing, graph, and IVF families. It also states that
 Milvus `MINHASH_LSH` is specific to binary MinHash/Jaccard signatures. See the
 2026-10-20 supplementary retrieval review ledger for the content hashes and sources.
+
+## Index-family and quantization primer
+
+The ANN overview links to an added FAISS introduction and distinguishes library,
+search structure, and vector representation. The quantization article now defines
+SQ8, PQ, PRQ, and RaBitQ, estimates vector-payload memory, and explains why those
+ratios do not equal total index or service-memory savings.

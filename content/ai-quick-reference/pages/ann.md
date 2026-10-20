@@ -40,6 +40,7 @@ For a fixed corpus, compare FLAT, HNSW, IVF_FLAT, IVF_PQ, DiskANN, and GPU_CAGRA
 ## From concept to implementation
 
 - [Compare Milvus index structures and supported field types](https://milvus.io/docs/index-explained.md).
+- [Use MINHASH_LSH for binary MinHash/Jaccard signatures](https://milvus.io/docs/minhash-lsh.md).
 - [Read the FAISS passthrough guide and its limits](https://milvus.io/docs/faiss.md).
 
 ## Continue learning

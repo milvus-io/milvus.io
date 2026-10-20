@@ -5,56 +5,90 @@ topic: "production"
 order: 34
 ---
 
-Latency is the time taken by a request; throughput is the rate of successfully completed work. Batching and concurrency can increase resource utilization, but they can also introduce waiting and queueing. Optimizing one figure without measuring the other can produce a misleading result.
+Batching several query vectors into one request usually raises throughput, because the database amortizes per-request overhead and can share work across queries, but it raises the latency each individual query sees, because every query in the batch waits for the slowest one and for the batch to fill. Batching helps offline jobs such as bulk scoring, deduplication, and evaluation. It hurts interactive search, where a user waiting for one answer pays for the whole batch. The useful goal is the highest throughput that still meets your tail-latency target.
 
 ![Control the workload before comparing performance](/images/ai-reference/benchmark.svg)
 
-## Distinguish a batch from concurrent requests
+## Latency vs. throughput: the definitions
 
-A batch sends several query vectors together. Concurrent requests are separate operations in flight at the same time. A system may process these forms differently. Batch size, client concurrency, request arrival pattern, and server scheduling all affect the result.
+**Latency** is the time from sending a request to receiving its result, best reported as percentiles (p50, p95, p99) because users notice the slow tail. **Throughput** is completed queries per second (QPS). The two are linked by [Little's law](https://en.wikipedia.org/wiki/Little%27s_law): the average number of requests in flight equals arrival rate times average time in the system.
 
-Offline jobs can often wait to accumulate work, while an interactive user cannot. Include the time spent waiting to form a batch in user-visible latency. Do not present per-query compute time inside a large batch as the response time a single user would experience.
+An illustrative example: at 200 QPS with an average latency of 50 ms, about 200 × 0.05 = 10 requests are in flight at any moment. If latency rises to 100 ms at the same arrival rate, 20 are in flight. When a resource saturates, latency climbs, more requests pile up, and latency climbs further. That feedback loop is why tail latency explodes near saturation even though average throughput looks fine.
 
-## Find the saturation point
+## Batching vs. concurrency: what's the difference?
 
-Increase concurrency gradually while keeping quality parameters, top-k, filters, and data fixed. Measure throughput and latency percentiles together. Once a constrained resource is saturated, more outstanding work may mainly increase queueing, timeouts, and tail latency.
+They are easy to confuse, and databases treat them differently.
 
-Check client-side limits as well as server resources. A load generator can bottleneck or hide queueing. Network transfer, query embedding, payload fetch, and reranking may dominate end-to-end latency even when database execution is fast.
+- **A batch** is one request carrying several query vectors. In Milvus you pass a list of vectors in `data`, and Milvus runs the ANN searches for them in parallel and returns one result list per query vector.
+- **Concurrency** is several independent requests in flight at once, typically from many users or threads.
 
-## Choose by workload class
+```python
+# One request, three query vectors (a batch, nq = 3)
+res = client.search(
+    collection_name="docs",
+    anns_field="embedding",
+    data=[q1, q2, q3],
+    limit=10,
+    search_params={"params": {"ef": 64}},
+)
+for hits in res:   # one result list per query vector
+    ...
+```
 
-For interactive search, select a configuration that meets tail-latency and error-rate targets at the expected arrival rate. For offline processing, throughput and total completion time may matter more. Run both classes separately if the application needs both, then test them together to reveal interference. Keep retrieval quality constant so a faster configuration is not merely doing less useful search work.
+A batch shares one network round trip, one request parse, and one scheduling decision, and lets the engine work on the queries side by side. Concurrency gives the scheduler independent work it can interleave, which keeps latency per user low until CPU, memory bandwidth, or disk I/O runs out.
 
-## Tune the levers that actually move the numbers
+## When does batching help, and when does it hurt?
 
-Once you know whether you are latency-bound or throughput-bound, a small set of Milvus-specific levers account for most of the practical gain:
+| Scenario | Batch? | Why |
+| --- | --- | --- |
+| Offline evaluation, bulk deduplication, nightly recommendations | Yes, large batches | Only total completion time matters |
+| GPU indexes such as GPU_CAGRA | Yes | GPUs need many parallel queries to stay busy |
+| Multi-query retrieval for one user request (query rewrites, multi-vector) | Yes, small batch | The queries are needed together anyway |
+| Interactive search, chat, autocomplete | No, or very small | Waiting to fill a batch adds directly to user latency |
+| Mixed online and offline traffic on one cluster | Separate them | Large batches can starve interactive queries |
 
-- **Replica count.** Query nodes can be scaled out with additional replicas to raise read concurrency and throughput; this helps a saturated read path but does not reduce single-query latency by itself.
-- **Search parameters.** Index-specific parameters such as `nprobe` or `ef` trade recall for query latency. Tightening them lowers latency and raises throughput at the cost of quality, so changes should be validated against a fixed recall target, not applied blindly.
-- **Resource allocation.** CPU, memory, and whether vectors are memory-resident versus mmap/disk-backed change both tail latency and the point at which the system starts queueing. Index build and load configuration also affect how much headroom remains for concurrent queries.
-- **Batching and concurrency.** As covered above, raising client concurrency only increases throughput until a resource saturates; past that point it mainly adds queueing and tail latency.
+Two costs are easy to miss. **Accumulation delay**: if a server-side or client-side batcher waits up to 20 ms to collect queries, every query in that batch pays up to 20 ms extra before search even starts. **Result size**: a batch of 100 queries at top-k 100 returns 10,000 hits, and returning large `output_fields` with each hit can make serialization and network transfer dominate. Milvus caps a single ANN search at a `limit` plus `offset` below 16,384 results; use search iterators beyond that.
 
-Change one lever at a time, re-measure at the same recall target, and record the resulting curve so a decision can be revisited as the workload grows.
+## How do you find the saturation point?
 
-## Example to test
+1. Fix everything that affects work per query: dataset, index, search parameters, top-k, filters, output fields, and the [consistency level](/ai-quick-reference/what-is-eventual-consistency).
+2. Measure serially first, one request at a time, for best-case latency.
+3. Increase concurrency in steps (1, 2, 4, 8, 16, ...). At each step record QPS, p50, p99, and errors.
+4. Plot throughput and p99 against concurrency. Throughput rises roughly linearly, then flattens. Where it flattens, p99 starts to climb steeply. That knee is the saturation point.
+5. Repeat with batch sizes you might use (nq = 1, 10, 100) to see how batching moves the knee.
+6. Check the client. A single-threaded Python load generator can become the bottleneck long before the database does. Watch its CPU too.
 
-Record request arrival, queue wait, search duration, and completion. Increase concurrency until the service target stops holding. Reporting only completed searches can hide dropped requests or a backlog that makes interactive use unacceptable.
+[VectorDBBench](https://github.com/zilliztech/VectorDBBench) automates much of this, reporting serial p99 latency and maximum QPS across concurrency levels. The [benchmarking guide](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance) covers the rest of the methodology.
 
-## From concept to implementation
+## Which Milvus settings move the numbers?
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- **Search parameters.** `ef` for HNSW, `nprobe` for IVF, and `search_list` for DISKANN set how much of the index each query explores. Lower values cut latency and raise throughput, at the cost of recall. Always change them against a fixed recall target. See [HNSW tuning](/ai-quick-reference/what-is-hnsw).
+- **Index type.** Graph indexes generally deliver the highest throughput at a given recall; IVF variants can be preferable when top-k is very large or filters are very selective, according to the [Milvus index guide](https://milvus.io/docs/index-explained.md). See [choosing an index](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload).
+- **In-memory replicas.** Loading a collection with more [replicas](https://milvus.io/docs/replica.md) spreads reads over more query nodes, which raises the throughput ceiling and improves failover. It does not make a single query faster, and each replica holds a full copy of the segments, so memory scales with replica count.
+- **Memory placement.** Data fully in RAM gives the most predictable tail. [mmap](https://milvus.io/docs/mmap.md) lets a node hold more data than RAM, with latency close to in-memory as long as the working set fits in page cache, and degrading when it does not. The [mmap guide](/ai-quick-reference/how-mmap-differs-from-diskann) compares it with disk-based indexes.
+- **Consistency level.** Strong reads can wait for query nodes to catch up with recent writes, which shows up as extra latency under heavy ingest. Use it only on requests that need read-after-write.
+- **Filters and output fields.** Selective metadata filters change the amount of graph traversal; large output fields add transfer time.
 
-## Continue learning
+Change one setting at a time, re-measure at the same recall, and keep the curve. When traffic grows you will know which lever to pull next.
 
-- [What is GPU_CAGRA, and when does it help vector search?](/ai-quick-reference/what-is-gpu-cagra)
-- [How do vector databases support recommendation candidate retrieval?](/ai-quick-reference/vector-search-for-recommendations)
+## Measuring end-to-end latency
+
+The database is often not the slowest step. A typical RAG request also includes query embedding, network hops, [reranking](/ai-quick-reference/what-is-vector-reranking-and-when-should-you-apply-it), and fetching source documents. Instrument each stage separately so you tune the step that actually dominates. Count requests that time out or fail as part of the result: a configuration that reports great latency because it dropped the slow requests has not met the target.
+
+## Related reading
+
 - [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)
-- [How do you choose a vector index for your workload?](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload)
-- [What is reranking, and when should you apply it?](/ai-quick-reference/what-is-vector-reranking-and-when-should-you-apply-it)
+- [What is GPU_CAGRA, and when does it help vector search?](/ai-quick-reference/what-is-gpu-cagra)
+- [How do you locate a bottleneck across Milvus components?](/ai-quick-reference/how-to-find-milvus-performance-bottlenecks)
+- [How do vector databases support recommendation candidate retrieval?](/ai-quick-reference/vector-search-for-recommendations)
 
-## Implementation guides and sources
+Start with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md) and the [vector search reference](https://milvus.io/docs/single-vector-search.md), then turn your target QPS into a hardware estimate with the [Milvus sizing tool](https://milvus.io/tools/sizing). If you would rather scale replicas and capacity without managing nodes, [Zilliz Cloud](https://zilliz.com/cloud) runs managed Milvus.
 
-- [Vector search requests](https://milvus.io/docs/single-vector-search.md)
-- [Repeatable performance workloads](https://github.com/zilliztech/VectorDBBench)
-- [Turn your workload into a sizing estimate](https://milvus.io/tools/sizing)
+## Sources
+
+- [Milvus basic vector search](https://milvus.io/docs/single-vector-search.md)
+- [Milvus in-memory replicas](https://milvus.io/docs/replica.md)
+- [Milvus mmap](https://milvus.io/docs/mmap.md)
+- [Milvus index explained](https://milvus.io/docs/index-explained.md)
+- [VectorDBBench](https://github.com/zilliztech/VectorDBBench)
+- [Little's law (Wikipedia)](https://en.wikipedia.org/wiki/Little%27s_law)

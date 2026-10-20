@@ -5,50 +5,84 @@ topic: "rag-agents"
 order: 71
 ---
 
-Agentic search lets an application choose and revise retrieval actions during a task. An agent might decompose a question, select a corpus, issue keyword and vector searches, inspect evidence, and stop or reformulate. A vector database supplies one retrieval tool inside that control loop.
+Agentic search is retrieval controlled by an LLM agent: instead of running one fixed search and answering, the agent decides whether to search, what to search for, which tool or corpus to use, reads the results, judges whether they are enough, and searches again with a better query until it can answer or hits a budget. A vector database is one of the tools inside that loop, the one that finds passages by meaning, usually alongside keyword search, structured queries, and sometimes web search.
 
 ![Bound the agent search loop by evidence gaps](/images/ai-reference/agent.svg)
 
-## Define the decisions the agent may make
+## How does an agentic search loop work?
 
-Start with a bounded question class. For a technical support assistant, the useful decisions might be whether to search product documentation, inspect a specific error code, or retrieve a known issue. Expose a small tool interface with explicit arguments, result IDs, source metadata, and error behavior.
+The pattern descends from ReAct (Yao et al., 2022), which interleaves reasoning steps with tool calls. A typical loop:
 
-Keep eligibility outside the model's discretion. Tenant, document status, and access constraints should be enforced by the tool and application. A model-selected query or retrieved passage must not be able to relax those conditions.
+1. **Plan.** Read the question and decide whether retrieval is needed at all. Break a compound question into sub-questions ("compare the refund policy in the EU and US plans" becomes two lookups).
+2. **Act.** Call a tool with explicit arguments: a vector search over product docs, a BM25 search for an error code, a SQL or scalar query for an account record.
+3. **Observe.** Read the returned passages and their source IDs.
+4. **Reflect.** Grade the evidence: is it relevant, sufficient, consistent? Identify what is still missing.
+5. **Repeat or stop.** Rewrite the query, switch tools, or narrow filters if there is a specific gap; otherwise answer with citations, or abstain.
 
-## Make iteration purposeful
+Milvus's [agentic RAG with LangGraph tutorial](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md) implements this as a small graph: a node decides whether to retrieve or respond, a retrieve node calls Milvus, a grading node checks relevance, and irrelevant results route to a rewrite node that loops back to try again.
 
-Give the loop a reason to continue: missing evidence, conflicting sources, or a specific unanswered subquestion. Define tool-call, token, time, and result budgets. Repeating a slightly different search indefinitely can increase cost without improving the answer.
+## Agentic search vs classic RAG
 
-The Milvus LangGraph tutorial demonstrates an agentic retrieval pattern, and DeepSearcher provides another reference implementation. Adapt their control flow to the workload. A simpler retrieve-and-answer pipeline can still outperform an autonomous loop on your questions, so measure both before committing to the extra complexity.
+| | Classic RAG | Agentic search |
+| --- | --- | --- |
+| Retrieval calls | One, always | Zero to many, decided per question |
+| Query | The user's text, maybe rewritten once | Generated, decomposed, and revised by the agent |
+| Sources | Usually one index | Several tools: vector, keyword, structured, web, APIs |
+| Handles multi-step questions | Poorly | Well, by chaining lookups |
+| Latency | Predictable, often well under a second of retrieval | Variable; several LLM turns, often seconds to minutes |
+| Cost | One LLM call | Several LLM calls plus tool calls |
+| Failure modes | Missed evidence | Loops, drift, over-searching, tool misuse |
+| Debuggability | Linear pipeline | Needs traces of every step |
 
-## Evaluate both evidence and actions
+Agentic search is not "better RAG" in general. It wins on questions that need several pieces of evidence, a choice of source, or verification; a single well-tuned retrieval still wins on simple lookups because it is faster and cheaper.
 
-Compare a fixed retrieval baseline with the agentic workflow on the same tasks. Measure useful evidence found, source-grounded answer quality, task completion, tool calls, latency, and total operating cost. Include questions with no answer and cases where an early plausible document is wrong.
+## Where does a vector database fit?
 
-Retain a trace of queries, selected filters, returned source IDs, and the reason the application stopped. Use those observations to identify whether improvement requires better tools, better data, or better control logic. Adopt additional autonomy only when it solves a measured failure class within an acceptable budget and permission boundary.
+Inside the loop, the vector database is the semantic-recall tool. Its job is to answer each tool call quickly and correctly so the agent spends its turns reasoning instead of waiting or recovering from bad results. That puts specific requirements on it:
 
-## Example to test
+- **Low latency per call.** An agent may issue five to twenty searches per task; tens of milliseconds each keeps the loop responsive.
+- **Hybrid retrieval.** Agents generate a mix of conceptual queries and exact strings. Milvus can serve both from one collection: dense vectors for meaning, a BM25 full-text field (Milvus 2.5+) for exact terms, and `hybrid_search` to fuse them.
+- **Filters the agent cannot bypass.** Tenant, permission, and document-status constraints should be added by the tool wrapper from trusted context, not chosen by the model. Milvus applies them in the same query as the vector search.
+- **Stable IDs and metadata in results.** The agent needs source IDs, versions, and URLs to cite, deduplicate across iterations, and avoid re-reading the same passage.
+- **Scale for many corpora.** Separate collections or partition keys let one deployment serve many knowledge bases or tenants.
 
-A support agent first retrieves a general error explanation, then narrows to a product version. Permit another search only when a specific evidence gap remains. Compare resolved questions and unsupported answers with a single-search baseline.
+How the agent should choose between those tools for a given query is covered in [how agents choose between vector, keyword, and structured search](/ai-quick-reference/how-agents-choose-retrieval-tools). For exposing Milvus to agents through the Model Context Protocol, see [what a Milvus MCP server exposes](/ai-quick-reference/milvus-mcp-tools).
 
-## From concept to implementation
+## How do you keep the loop bounded?
 
-- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
-- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
+Unbounded loops are the main operational risk. Practical guardrails:
 
-## Continue learning
+- **Budgets.** Cap tool calls (for example 5-8 searches), total tokens, and wall-clock time per task.
+- **A reason to continue.** Allow another search only when the agent names a specific missing piece of evidence or a contradiction, not "to be thorough".
+- **Novelty checks.** Stop if a new search returns mostly IDs already seen.
+- **Explicit abstention.** "The sources do not answer this" must be an acceptable final state.
+- **Treat retrieved text as data.** Passages may contain instructions; they should never change tool permissions or filters.
 
+## How do you evaluate agentic search?
+
+Compare it with a fixed single-retrieval baseline on the same tasks. Measure evidence found (recall of labeled passages across all iterations), answer correctness and citation support, task completion, number of tool calls, latency, and total cost. Include questions with no answer and questions where the first plausible document is a trap. Keep a trace of each query, filters, returned IDs, and the stop reason; the trace shows whether a failure came from the tool, the data, or the control logic. Building such task sets is covered in [how to build an evaluation set](/ai-quick-reference/how-to-build-search-and-agent-evaluation-datasets).
+
+## Real implementations to start from
+
+- The [LangGraph tutorial](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md) for a compact retrieve-grade-rewrite loop.
+- [DeepSearcher](https://github.com/zilliztech/deep-searcher), an open-source deep-research agent that decomposes questions and iterates over private data in Milvus.
+- [Read AI](https://zilliz.com/customers/read-ai), a production example of retrieval behind AI assistants.
+
+Start with the tutorial against a corpus you know, compare it with one-shot RAG on twenty real questions, and keep the extra autonomy only where it pays for its latency. You can run the whole thing locally with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md).
+
+## Related reading
+
+- [What is retrieval-augmented generation (RAG)?](/ai-quick-reference/what-is-rag-retrievalaugmented-generation-in-nlp)
 - [How do LangGraph state and Milvus retrieval work together?](/ai-quick-reference/langgraph-with-milvus)
-- [How does Agno connect agents to knowledge stored in Milvus?](/ai-quick-reference/agno-with-milvus)
-- [What does a Milvus MCP server expose to an AI agent?](/ai-quick-reference/milvus-mcp-tools)
-- [How should an agent choose between vector, keyword, and structured search?](/ai-quick-reference/how-agents-choose-retrieval-tools)
-- [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
-- [How can vector search retrieve useful agent trajectories?](/ai-quick-reference/how-to-retrieve-agent-trajectories)
-- [How do you build an evaluation set for agentic and vector search?](/ai-quick-reference/how-to-build-search-and-agent-evaluation-datasets)
 - [What is Graph RAG, and where does Milvus fit?](/ai-quick-reference/how-does-milvus-enable-graph-rag-for-multihop-agent-reasoning)
+- [How can vector search retrieve useful agent trajectories?](/ai-quick-reference/how-to-retrieve-agent-trajectories)
+- [How should you structure agent memory in Milvus?](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus)
+- [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 
-## Implementation guides and sources
+## Sources
 
+- [Yao et al., ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
 - [Agentic RAG with Milvus and LangGraph](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md)
 - [DeepSearcher retrieval workflows](https://github.com/zilliztech/deep-searcher)
-
+- [Full-text search in Milvus](https://milvus.io/docs/full-text-search.md)
+- [Hybrid search in Milvus](https://milvus.io/docs/multi-vector-search.md)

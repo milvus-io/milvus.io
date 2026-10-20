@@ -5,25 +5,55 @@ topic: "data"
 order: 81
 ---
 
-Data curation turns a collected dataset into a versioned selection suited to a particular use. It includes eligibility, quality assessment, deduplication, coverage, labeling, and provenance. Vector search helps inspect similar examples and coverage within the indexed collection, while the curation policy determines what should be retained. A missing hit alone cannot establish which real-world examples are absent from the dataset.
+Data curation is the work of turning raw collected data into a dataset fit for a specific purpose: deciding what to keep, cleaning and labeling it, removing duplicates and low-quality items, balancing coverage, and recording where everything came from so the result can be trusted and reproduced. For AI, the purpose is usually training a model or serving retrieval, and the scale is too large for item-by-item human review. Vector search helps because most curation questions are similarity questions: *what else looks like this bad example, which items are near-copies, which regions of the data are over- or under-represented, and what in the pool resembles the cases we are missing?* A vector database such as Milvus answers those questions over millions of items and stores the resulting decisions next to the data.
 
 ![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
 
-## Track curation status in the collection itself
+## What does data curation involve?
 
-A practical starting point is a scalar field on the collection schema, for example `curation_status` (`VARCHAR`, values like `pending`, `approved`, `excluded`, `needs_review`) plus a `curation_reason` field and a `curated_at` timestamp. Add these alongside the vector field rather than maintaining a separate side table disconnected from the records they describe:
+Most curation pipelines, whether for LLM pre-training text, image-text pairs, driving video, or a RAG knowledge base, combine the same activities:
+
+| Activity | Question it answers | Typical method |
+|---|---|---|
+| Eligibility and governance | May we use this item at all? | License, consent, PII and tenant rules on metadata |
+| Quality filtering | Is it well-formed and useful? | Heuristics, quality classifiers, perplexity or aesthetic scores |
+| Deduplication | Is it a copy of something we already have? | Hashing, MinHash, embedding similarity |
+| Coverage and balance | Does the set represent what the model must handle? | Clustering, stratified or diversity sampling |
+| Gap filling | What important cases are missing or rare? | Similarity search from seed examples |
+| Labeling and enrichment | What is it, and what is the right answer? | Human annotation, model-assisted labeling |
+| Provenance and versioning | Where did it come from, and which dataset version includes it? | IDs, source references, manifests |
+
+Research on large training sets keeps showing that the curated subset beats the raw pool. SemDeDup, for example, removed about half of a web-scale image-text dataset as semantic duplicates with minimal loss in model quality. The common lesson is that curation is a compute-saving step, not just a hygiene step.
+
+## Where does vector search fit in curation?
+
+Four of the activities above are fundamentally neighborhood queries over embeddings:
+
+- **Deduplication.** Items whose embeddings fall within a tight similarity band are candidate duplicates. See [embedding-based deduplication](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping).
+- **Find more like this.** One confirmed bad item (a spam template, a corrupted frame, a mislabeled image) is a query: search for its neighbors and review them together instead of one at a time.
+- **Coverage analysis.** Clusters of embeddings show which themes dominate and which are thin, which drives [diversity sampling](/ai-quick-reference/how-to-sample-diverse-data-with-embeddings) and [document clustering](/ai-quick-reference/how-are-embeddings-used-in-document-clustering).
+- **Gap filling.** A few examples of a rare case (night-time rain, a minority language, an edge-case API error) become queries that mine similar items from a large unlabeled pool.
+
+Vector search does not replace quality classifiers, license checks, or human judgment. It makes those steps cheaper by grouping similar items so one decision can be applied, after review, to many.
+
+## How to run a curation workflow in Milvus
+
+### Store curation state on the record
+
+Put curation fields on the same collection as the vectors, rather than in a side table that drifts out of sync:
 
 ```python
 schema.add_field("curation_status", DataType.VARCHAR, max_length=16, default_value="pending")
 schema.add_field("curation_reason", DataType.VARCHAR, max_length=256, nullable=True)
 schema.add_field("curated_at", DataType.INT64, nullable=True)
+schema.add_field("source_id", DataType.VARCHAR, max_length=128)
 ```
 
-Create a scalar index on `curation_status` so filtering by curation state stays cheap as the collection grows. This turns curation from an external manifest you hope stays in sync into a queryable property of the live collection.
+Values such as `pending`, `approved`, `excluded`, and `needs_review` make curation a queryable property of the live data. Add a scalar index (for example `INVERTED`) on `curation_status` so filtering stays fast as the collection grows.
 
-## Query for curation candidates, not just nearest neighbors
+### Find candidates near a known example
 
-Use a filtered vector search to find candidates in a particular curation state near a known-good or known-bad example. For instance, to find unreviewed records similar to a confirmed low-quality document:
+Use a filtered vector search to pull unreviewed items similar to a confirmed problem:
 
 ```python
 client.search(
@@ -35,30 +65,49 @@ client.search(
 )
 ```
 
-Combine this with `query()` on `curation_status == "needs_review"` to pull the current review queue directly from the collection, and with grouping search when many hits come from the same source document and only one representative per source should reach a reviewer.
+For "everything within this similarity" rather than "the top 50," use [range search](/ai-quick-reference/when-to-use-vector-range-search) with `radius` and `range_filter`. When many hits come from one source and a reviewer only needs one per source, a [grouping search](https://milvus.io/docs/grouping-search.md) with `group_by_field="source_id"` returns a representative per group. To fetch the current review queue directly, call `query(filter='curation_status == "needs_review"')`.
 
-## Write curation decisions back as upserts
+### Write decisions back with upsert
 
-Once a reviewer or automated check makes a decision, apply it with an upsert keyed on the stable primary key, updating `curation_status`, `curation_reason`, and `curated_at` rather than deleting the row outright. This keeps a record of why something was excluded and lets `curation_status == "excluded"` rows be filtered out of serving queries without destroying the evidence needed to audit the decision later. A true removal (for example, a licensing takedown) is a separate delete operation against that same primary key, not something to infer from the status field.
+When a reviewer or an automated rule decides, upsert the decision keyed on the record's primary key instead of deleting the row. On Milvus 2.6.2 and later, `partial_update=True` updates only the curation fields and leaves the vector untouched:
 
-## Example to test
+```python
+client.upsert(
+    collection_name="docs",
+    data=[{"id": 8812, "curation_status": "excluded",
+           "curation_reason": "near-duplicate of 8790", "curated_at": 1760918400}],
+    partial_update=True,
+)
+```
 
-For a technical-document corpus, add the `curation_status` field, run a filtered search against a known duplicate to surface its unreviewed neighbors, and upsert a decision with a reason string. Confirm that a query filtered on `curation_status == "approved"` matches what the serving collection actually returns.
+Serving and export queries then filter on `curation_status == "approved"`, while excluded rows stay available for audit and for reversing a bad decision. True removals, such as a license takedown or an erasure request, are a separate `delete` by primary key and must also reach any derived copies.
 
-## From concept to implementation
+### Export a versioned dataset
 
-- [Add and index a scalar curation-status field on the collection schema](https://milvus.io/docs/schema.md).
-- [Use upsert to record curation decisions without losing the prior record](https://milvus.io/docs/upsert-entities.md).
+A curated dataset is a selection plus its reasons. Export approved IDs with a query iterator, write them to a manifest along with the embedding model, thresholds, and rule versions used, and keep that manifest with the training run. [Reproducible vector-search and training experiments](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments) covers this versioning.
 
-## Continue learning
+## How do you keep automated curation honest?
 
-- [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
-- [How can embeddings improve dataset diversity sampling?](/ai-quick-reference/how-to-sample-diverse-data-with-embeddings)
-- [How does data quality affect vector retrieval?](/ai-quick-reference/how-does-etl-help-improve-data-quality)
-- [How do you handle incremental updates in a vector database?](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database)
+Similarity is evidence, not a verdict. Two contract versions can differ in a single clause, and two frames can look the same yet capture different events. Keep these habits:
 
-## Implementation guides and sources
+- **Calibrate thresholds on labeled pairs** from your own data, not on defaults.
+- **Review a sample of every bulk decision,** especially near the threshold.
+- **Measure what removal costs:** track coverage of rare classes and downstream metrics, not just rows removed.
+- **Keep a random baseline** of the same size to prove that curation helped.
+- **Re-run when the embedding model changes,** since neighborhoods and thresholds shift with it.
 
-- [Quality assessment approaches](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment)
-- [Exact, fuzzy, and semantic deduplication](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication)
-- [Retrieve grouped candidates](https://milvus.io/docs/grouping-search.md)
+For image and video data, where frames, clips, and captions each need their own vectors, see [curating image and video data](/ai-quick-reference/how-to-curate-image-and-video-data). For the upstream checks that keep bad data out of the pool, see [how data quality affects vector retrieval](/ai-quick-reference/how-does-etl-help-improve-data-quality).
+
+## Next step
+
+Add the curation fields to a test collection, load a sample with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md), and try the find-similar-then-upsert loop on a known bad example. For curation at hundreds of millions of items, [Zilliz Cloud](https://zilliz.com/cloud) runs the same APIs as a managed service.
+
+## Sources and further reading
+
+- [Data curation (Wikipedia)](https://en.wikipedia.org/wiki/Data_curation)
+- [Abbas et al., SemDeDup: Data-efficient learning at web-scale through semantic deduplication (arXiv)](https://arxiv.org/abs/2303.09540)
+- [NeMo Curator: quality assessment approaches](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment)
+- [NeMo Curator: exact, fuzzy, and semantic deduplication](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication)
+- [Milvus: upsert entities](https://milvus.io/docs/upsert-entities.md)
+- [Milvus: grouping search](https://milvus.io/docs/grouping-search.md)
+- [Milvus: collection schema](https://milvus.io/docs/schema.md)

@@ -5,44 +5,90 @@ topic: "data"
 order: 85
 ---
 
-Diversity sampling selects examples that cover useful variation in a dataset rather than repeatedly drawing from the densest region. An IVF index's centroids give a cheap, already-computed way to see that density structure: if a dataset is already indexed in Milvus with an IVF-family index, the centroid assignments are a sampling signal, not just a search-time optimization.
+Embedding-based diversity sampling picks examples that are spread out in embedding space instead of drawing uniformly at random, so a labeling or training budget covers many kinds of data rather than repeating the densest region. The usual recipes are cluster-then-sample (k-means strata with a per-cluster cap), greedy farthest-point or k-center selection (the "core-set" approach from active learning), and near-duplicate suppression before sampling. A vector database such as Milvus makes these practical at scale because the core operation in every recipe is the same: given a point, find its neighbors, or how far it is from everything already selected.
 
-## Use centroid membership as a sampling stratum
+## Why random sampling under-covers real datasets
 
-An IVF index partitions vectors into clusters around trained centroids so search can skip low-relevance regions. For diversity sampling, invert that purpose: group source records by the centroid (cluster ID) their vector was assigned to, then sample a bounded number of records per centroid instead of a flat random sample over the whole collection. A corpus with one dominant topic produces a few oversized centroid clusters and several small ones; capping the per-centroid sample directly caps how much that dominant topic can crowd out the rest.
+Real corpora are lopsided. A driving dataset is mostly highway frames, a support-ticket archive is mostly password resets, and a scraped web corpus repeats the same boilerplate thousands of times. Uniform random sampling preserves that skew: if 70% of the data is one scene, roughly 70% of the labeling budget goes to it, and the rare cases that limit model quality get a handful of examples or none.
 
-This requires surfacing centroid assignment as something inspectable, either by running the clustering step that trained the index and keeping cluster IDs as a scalar field on each record, or by using range search against a centroid vector to retrieve its member set. Treat the resulting cluster ID as metadata for sampling and filtering, separate from the IVF index's internal structure used purely for search-time pruning.
+Embeddings let you see that structure. Items that look or read alike sit close together, so density in embedding space is a proxy for redundancy. Sampling for spread rather than frequency gives each region of the space a fair share of the budget. Active-learning research (Sener and Savarese's core-set formulation, and later density-aware variants such as ProbCover) showed that labeling a well-spread subset can match or beat random selection at the same budget, and data-pruning work on large image-text corpora (SemDeDup) showed that removing semantically redundant examples can cut training data substantially with little accuracy loss.
 
-## Choose the dimensions of coverage before sampling
+## Which embedding sampling method fits your goal?
 
-A text embedding may organize topics well while missing document permissions or numerical differences relevant to the task. Combine centroid-based exploration with metadata filters on language, geography, task family, or outcome where those properties matter, and define mandatory coverage targets before sampling: a rare but important domain should not be discarded merely because it maps to a small cluster, and an isolated point outside any dense cluster can be noise rather than a valuable novel example.
+| Method | How it works | Best for | Main risk |
+|---|---|---|---|
+| Stratified by cluster | k-means on embeddings, then sample up to *n* per cluster | Balancing topics or scenes in a training mix | Cluster count sets the granularity; tiny clusters may be noise |
+| k-center greedy (core-set) | Repeatedly add the point farthest from everything selected | Small labeling budgets that must cover the whole space | Pulls in outliers, corrupted files, and junk first |
+| Density-weighted | Prefer points in well-populated but under-sampled regions | Avoiding the outlier bias of pure k-center | Needs a neighborhood-density estimate |
+| Dedup then random | Remove near-duplicates by similarity threshold, then sample | Web-scale corpora with heavy repetition | Threshold too loose removes real variants |
+| Query-driven coverage | Search with seed queries for each required scenario | Guaranteeing must-have cases are present | Only finds what you thought to ask for |
 
-## Build a reviewable selection policy
+Most production pipelines combine two of these: deduplicate first, then stratify, then top up rare-but-required scenarios with targeted searches.
 
-Sample within clusters using quality, provenance, and task constraints, not just position. Consider both within-cluster variation and the weight assigned across clusters so the final mix does not simply mirror the most common source. Preserve source IDs, the centroid ID each record was sampled from, and inclusion reasons in a manifest rather than saving only the sampled file.
+## How to run diversity sampling with Milvus
 
-## Compare coverage with downstream behavior
+Assume the candidate pool is in a collection with a `FLOAT_VECTOR` field, a primary key, and scalar metadata such as `source`, `language`, or `scene_type`.
 
-Review sampled examples from dense, sparse, and boundary clusters. Measure label yield, duplicate rate, domain retention, and the quality of the trained or retrieval system; a more evenly spread sample across clusters is not itself a useful result. Keep a random-sampling baseline under the same budget, and revisit cluster assignments when the embedding model changes, since retraining centroids on a new model can reshuffle which records count as representative of which cluster.
+### Step 1: suppress near-duplicates with range search
 
-## Example to test
+For each candidate, a [range search](/ai-quick-reference/when-to-use-vector-range-search) returns every neighbor above a similarity threshold. With the `COSINE` metric, `radius` is the exclusive lower bound and `range_filter` the inclusive upper bound:
 
-If one frequent scene dominates a video corpus already indexed with IVF, cap the selected share per centroid and inspect rare-scene coverage in the smaller clusters. Compare diversity against useful content and source provenance; maximizing distance from the nearest centroid alone can favor corrupted or irrelevant samples.
+```python
+res = client.search(
+    collection_name="pool",
+    data=[candidate_vec],
+    limit=100,
+    search_params={"metric_type": "COSINE", "params": {"radius": 0.95, "range_filter": 1.0}},
+    output_fields=["id", "quality_score"],
+)
+```
 
-## From concept to implementation
+Keep the highest-quality member of each tight group and mark the rest `sample_status = "redundant"`. Calibrate the 0.95 on labeled pairs from your own data; the right value depends on the model. The [deduplication guide](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping) covers that calibration.
 
-- [Use IVF centroid structure as a sampling stratum, not only a search accelerator](https://milvus.io/docs/ivf-flat.md).
-- [Store sampled cluster IDs as metadata for filtering and audit](https://milvus.io/docs/enable-dynamic-field.md).
+### Step 2: stratify by cluster
 
-## Continue learning
+Export vectors and run k-means outside the database, then write `cluster_id` back as an INT64 scalar field (see [document clustering with embeddings](/ai-quick-reference/how-are-embeddings-used-in-document-clustering)). With a scalar index on `cluster_id`, drawing a capped sample per stratum is a filtered query:
 
-- [How are embeddings used in document clustering?](/ai-quick-reference/how-are-embeddings-used-in-document-clustering)
-- [What is data curation, and how can vector search help?](/ai-quick-reference/what-is-data-curation-for-vector-ai)
-- [How should you select rollouts for an offline agent-training dataset?](/ai-quick-reference/how-to-select-rollouts-for-offline-training)
-- [Can vector neighborhoods help discover anomalies and novel cases?](/ai-quick-reference/vector-search-for-anomaly-discovery)
+```python
+rows = client.query(
+    collection_name="pool",
+    filter='cluster_id == 42 and sample_status == "candidate"',
+    output_fields=["id", "quality_score"],
+    limit=200,
+)
+```
 
-## Implementation guides and sources
+Choose the per-cluster cap deliberately. Equal allocation over-weights tiny clusters; proportional allocation reproduces the original skew. A square-root allocation, or a cap plus a minimum, is a common middle ground.
 
-- [Embedding-based clustering](https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html)
-- [IVF index family and centroid structure](https://milvus.io/docs/ivf-flat.md)
-- [Separate quality assessment from similarity](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment)
+### Step 3: greedy farthest-point selection with an "already selected" collection
+
+For k-center selection, keep the chosen examples in a second small collection. For each candidate, search the selected collection with `limit=1`; the distance to the nearest selected item is its novelty score. Add the candidate with the largest score, insert it into the selected collection, and repeat. On a large pool, evaluate candidates in batches (Milvus accepts many query vectors per search call) and add the top few per round rather than one at a time. Because every round is an ANN lookup against a small collection, this scales to pools that would be impractical with an in-memory pairwise distance matrix.
+
+To avoid k-center's appetite for junk, gate candidates with a quality filter first (`quality_score > 0.5`, a valid decode flag, a language check) and down-weight points that have no neighbors at all within a modest radius, since an isolated vector is as likely to be a corrupt file as a valuable edge case.
+
+### Step 4: guarantee required scenarios
+
+Coverage targets such as "at least 500 night-time rain frames" or "every supported language" should not depend on geometry. Use seed text or example vectors per scenario, run a filtered search (`filter='language == "ko"'`), and add the results until each target is met. Metadata filters handle the properties embeddings do not encode well, such as license, geography, or label availability. [How filters interact with vector search](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance) explains the performance side.
+
+## Don't confuse IVF centroids with sampling strata
+
+`IVF_FLAT` and related indexes also run k-means (`nlist` clusters, 128 by default), but those centroids are built per segment to speed up search and are not returned to applications. Compute your own clusters for sampling and store them as fields; that also lets you pick a granularity that suits the dataset rather than the index.
+
+## How do you know the sample is more diverse and more useful?
+
+Measure both sides. Diversity metrics include the number of clusters covered, the entropy of the cluster distribution, the average nearest-neighbor distance within the sample, and the duplicate rate. Usefulness metrics come from the downstream task: label yield, model accuracy on rare-slice test sets, and retrieval quality on held-out queries. Always compare against a random sample of the same size; a sample that is beautifully spread but full of noise is a regression.
+
+Record the embedding model, cluster run, thresholds, and the reason each item was selected (`stratum`, `novelty`, `required_scenario`) as fields or in a manifest, so the selection can be reproduced. When the embedding model changes, the geometry changes, and both clusters and novelty scores must be recomputed. The guide to [reproducible vector-search and training experiments](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments) covers versioning those inputs.
+
+## Next step
+
+Load a candidate pool into Milvus with the [Quickstart](https://milvus.io/docs/quickstart.md), then try range-search dedup and a capped per-cluster query on it. For curation workflows that combine these steps, see [what data curation looks like with vector search](/ai-quick-reference/what-is-data-curation-for-vector-ai) and [how to select rollouts for offline training](/ai-quick-reference/how-to-select-rollouts-for-offline-training).
+
+## Sources and further reading
+
+- [Sener and Savarese, Active Learning for Convolutional Neural Networks: A Core-Set Approach (arXiv)](https://arxiv.org/abs/1708.00489)
+- [Abbas et al., SemDeDup: Data-efficient learning at web-scale through semantic deduplication (arXiv)](https://arxiv.org/abs/2303.09540)
+- [Sentence Transformers: embedding-based clustering](https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html)
+- [Milvus range search](https://milvus.io/docs/range-search.md)
+- [Milvus IVF_FLAT index](https://milvus.io/docs/ivf-flat.md)
+- [Milvus scalar queries and iterators](https://milvus.io/docs/get-and-scalar-query.md)

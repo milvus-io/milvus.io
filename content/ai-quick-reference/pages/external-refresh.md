@@ -5,44 +5,81 @@ topic: "lake"
 order: 42
 ---
 
-Refreshing an external collection advances Milvus's view of externally managed data. It is a publication boundary between a source dataset and a searchable serving state. Treating refresh as an unobserved background command makes stale or incomplete search results difficult to diagnose.
+Refresh a Milvus external collection only after the source system has committed a complete, consistent version of the data, then call `refresh_external_collection`, poll the returned job until it reports `RefreshCompleted`, and verify a set of known records before telling users the new data is live. Refresh is the moment a lake version becomes searchable, so treat it like a small release: one trigger per dataset at a time, a recorded source version, and a check that proves the result.
 
-## Separate the stages of readiness
+![Operations lifecycle for a refresh](/images/ai-reference/operations.svg)
 
-A producer first commits a valid source state. Milvus then processes source metadata through the documented refresh operation, whose progress is monitored asynchronously. Search also depends on the relevant data and indexes being ready for the intended queries. Do not equate an accepted job request with application readiness.
+## What does a refresh actually do?
 
-Record the source dataset version or snapshot, target collection, refresh job identifier, start and completion times, schema revision, and validation outcome. A user-visible freshness metric should measure the interval from source publication to successful retrieval of that source state, rather than just the duration of the metadata call.
+An external collection never copies or modifies source data. When you refresh, Milvus scans the external source's metadata — Parquet footers and row groups, a Lance dataset's fragments, or the files planned for a given Iceberg snapshot — and writes manifest files recording which external rows belong to its view. Data added since the last refresh becomes part of that view; data no longer present drops out.
 
-## Publish only coherent source updates
+The [external collection guide](https://milvus.io/docs/create-an-external-collection.md) notes that this metadata step usually takes 150–250 ms. That number describes the manifest update, not your end-to-end freshness. Indexing newly added data and fetching it into query caches can take far longer on a large append, so measure the whole path.
 
-Finish data-file writes and commit the table metadata before initiating refresh. If the embedding job writes some files successfully and fails on others, a directory listing may not represent an intended dataset release. Use the source system's supported publication contract and preserve enough history to retry safely.
+## Step-by-step: a safe refresh
 
-When a new column is needed, confirm its compatibility and follow the external-schema workflow. When rows are removed, check the source format's supported delete semantics. The current guide also documents a denial for a refresh that would remove all active metadata without insertions; explicitly test an empty-source transition instead of assuming it succeeds.
+**1. Publish a coherent source version.** Let the producer finish writing every data file and commit the table first. With Iceberg, that means a committed snapshot you can name by ID. With Lance, a committed dataset version. With plain Parquet or Vortex directories, write new files under a temporary prefix and move or register them only when the batch is complete — otherwise a refresh in the middle of a job can pick up half a batch.
 
-## Verify before exposing the result
+**2. Record what you are about to publish.** Store the source version (snapshot ID, dataset version, or file list), the target collection, the schema revision, and the embedding model revision. These are what you will need to explain a strange result later.
 
-Maintain canary IDs covering new, unchanged, corrected, and deleted records. Run direct lookups or queries and representative filtered searches after refresh. Confirm the expected model revision and source payload, not only an approximate row count.
+**3. Trigger the refresh and poll it.**
 
-Serialize or otherwise coordinate refresh triggers for one dataset so that a delayed retry cannot silently publish an unintended state. Retain source files while supported readers still need them, and define how to return to a known-good view. The objective is a traceable release of data into retrieval, with failures that are visible and recoverable.
+```python
+import time
 
-## Example to test
+job_id = client.refresh_external_collection(
+    db_name="default",
+    collection_name="clips_lake",
+)
 
-Prepare a source update containing an append, replacement, and deletion. Record the source state, refresh operation, and query-visible state. A source commit and a serving refresh are separate checkpoints in the application's freshness budget.
+while True:
+    progress = client.get_refresh_external_collection_progress(job_id=job_id)
+    if progress.state == "RefreshCompleted":
+        print("done in", progress.end_time - progress.start_time, "ms")
+        break
+    if progress.state == "RefreshFailed":
+        raise RuntimeError(progress.reason)
+    time.sleep(2)
+```
 
-## From concept to implementation
+The call returns immediately with a `job_id`; an accepted request is not a finished one. Alert on `RefreshFailed` and keep `progress.reason` in your logs.
 
-- [Trigger and monitor an external collection refresh](https://milvus.io/docs/create-an-external-collection.md).
-- [Review the external-schema alteration workflow](https://milvus.io/docs/alter-external-collection-schema.md).
+**4. Verify with canaries.** Keep a small set of IDs that cover a newly added record, an unchanged record, a corrected record, and a deleted record. After the job completes, look each one up directly and run a few representative filtered searches. Checking an approximate row count is not enough; a replaced record and its predecessor produce the same count.
 
-## Continue learning
+**5. Announce freshness.** Report the time from source commit to verified search, not the duration of the refresh call. That is the number your users experience.
+
+## Which edge cases break refreshes?
+
+- **Concurrent triggers.** Two schedulers refreshing the same collection, or a delayed retry firing after a newer refresh, can publish an older state. Serialize refreshes per collection with a lock or a single orchestrator task.
+- **Emptying the source.** The guide documents that a refresh which would remove all active metadata without any insertions is denied. If you really need to replace a dataset wholesale, test that transition on a staging collection instead of assuming it works.
+- **Unsupported deletes.** For Iceberg sources, Milvus honors position deletes but not equality deletes; rewrite equality deletes to position deletes before refreshing. Details are in [propagating lake deletions to vector search](/ai-quick-reference/how-to-propagate-lake-deletions-to-vector-search).
+- **Source files expiring too early.** Table maintenance such as Iceberg snapshot expiration and orphan-file removal can delete files that Milvus's current manifest still references. Keep source retention longer than the interval between successful refreshes, plus a buffer for a rollback.
+
+## How do schema changes interact with refresh?
+
+External collections support adding fields after creation, as long as the column already exists in the source. Use `add_collection_field()` and then refresh; the [schema alteration guide](https://milvus.io/docs/alter-external-collection-schema.md) states the new field becomes effective in query, search, and filter results only after that refresh. Dropping, renaming, or retyping fields, changing vector dimensions, and remapping `external_field` are not supported, and sparse-vector and StructArray fields cannot be added later. A new embedding model with a different dimension therefore means a new vector field (if you can add the column to the source) or a new collection.
+
+## A refresh runbook template
+
+| Stage | Owner | Record | Pass condition |
+| --- | --- | --- | --- |
+| Source commit | Lake pipeline | Snapshot or version ID | Commit succeeded, files complete |
+| Refresh | Orchestrator | `job_id`, start and end time | `RefreshCompleted` |
+| Index and load | Milvus operator | Index status | Indexes ready for the new data |
+| Verification | Application team | Canary results | All canaries match the source |
+| Release | Application team | Freshness metric | Users see the new state |
+
+Keeping these stages separate means a stale search result can be traced to the exact boundary where it went wrong.
+
+## Related reading
 
 - [When should you use a Milvus external collection?](/ai-quick-reference/when-to-use-milvus-external-collections)
-- [How should deletions propagate from a data lake to vector search?](/ai-quick-reference/how-to-propagate-lake-deletions-to-vector-search)
-- [How do you make vector-search and training experiments reproducible?](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments)
+- [How can Milvus search an Apache Iceberg table?](/ai-quick-reference/how-can-milvus-search-iceberg-tables)
 - [How do you keep stable identities between lake data and vector search?](/ai-quick-reference/how-to-keep-stable-ids-between-lake-data-and-vector-search)
+- [What does eventual consistency mean for vector search?](/ai-quick-reference/what-is-eventual-consistency)
 
-## Implementation guides and sources
+## Sources
 
-- [Asynchronous refresh and progress](https://milvus.io/docs/create-an-external-collection.md)
-- [Schema changes and refresh](https://milvus.io/docs/alter-external-collection-schema.md)
-- [Source snapshot retention and maintenance](https://iceberg.apache.org/docs/latest/maintenance/)
+- [Create and refresh an external collection](https://milvus.io/docs/create-an-external-collection.md)
+- [Alter an external collection schema](https://milvus.io/docs/alter-external-collection-schema.md)
+- [Storage V3 source formats](https://milvus.io/docs/storage-v3.md)
+- [Iceberg table maintenance and snapshot retention](https://iceberg.apache.org/docs/latest/maintenance/)

@@ -5,43 +5,97 @@ topic: "data"
 order: 27
 ---
 
-Incremental indexing keeps the retrieval store aligned with changes in the source system. The essential requirement is a stable mapping from each source object and version to its indexed records. Without that mapping, retries and document replacement can leave duplicate or stale evidence searchable.
+You handle incremental updates in a vector database by giving every indexed record a stable primary key, then applying source changes as upserts (insert-or-replace by key) and deletes, instead of rebuilding the whole index. Change detection usually comes from a content hash, an `updated_at` watermark, or a change-data-capture stream. In Milvus, new and updated rows are searchable through growing segments almost immediately, deleted rows are filtered out at query time and physically removed later by compaction, and indexes are built in the background as segments seal, so the collection stays online throughout.
 
-## Define the identity and version rules
+![Durable write is not yet a visible search result](/images/ai-reference/write-path.svg)
 
-Choose a stable primary key for each logical indexed unit. Record source ID, source version, and embedding-model version. If one document produces several chunks, maintain the relationship between that document and every generated chunk so replacements and deletions can be applied comprehensively.
+## Why incremental updates are harder for vectors
 
-Milvus supports upsert and delete operations, with behavior and constraints described in the deployed version's documentation. Do not assume an ordinary insert is an idempotent update. Decide whether a correction replaces a record, creates a new version, or changes selected fields, and use the corresponding supported operation.
+A relational row update changes a few bytes in place. A vector record is different in three ways. Its embedding is derived data: if the text changes, the vector must be recomputed by the same model. One source document usually fans out into many chunks, so a single edit can add, change, or remove several rows. And ANN index structures such as HNSW graphs and IVF lists are expensive to modify in place, which is why most vector databases, Milvus included, write changes to new storage and treat deletion as a filter applied until a background rewrite catches up.
 
-## Handle retries and ordering
+Getting this wrong produces familiar RAG bugs: the old and new versions of a policy both appear in results, a deleted document keeps getting cited, or a retried batch doubles every chunk.
 
-Record processing progress and use stable IDs so a retried ingestion batch does not create new logical duplicates. Consider out-of-order source events: an old update arriving late should not silently replace newer evidence. Coordinate this ordering policy in the application or ingestion system.
+## Step 1: design keys that make updates idempotent
 
-Changing an embedding model is more than editing a metadata field. Recompute compatible vectors, evaluate the new representation, and plan how reads and writes behave during migration. A separate field or collection can make validation and rollback easier.
+Everything else depends on identity. Use a deterministic primary key per chunk, for example a hash of `source_id + chunk_index`, or a VARCHAR key like `"kb-1042#3"`, rather than letting the database assign one. Then a retry writes the same key twice and the second write simply replaces the first. Store alongside each row:
 
-## Verify the full lifecycle
+- `source_id` (the parent document) and `chunk_index`
+- `source_version` or `content_hash`
+- `embedding_model` revision
+- `updated_at`
 
-Test create, correction, document replacement, deletion, and retry after an ambiguous response. Check source records, indexed IDs, and retrieved content under the chosen consistency level. Measure indexing lag and reconcile the index against the authoritative inventory. A successful write acknowledgement should not be interpreted as a guarantee that every subsequent read mode immediately observes the new state.
+Two Milvus behaviors make this important. A plain `insert` does not check for duplicate primary keys, so inserting an existing key creates a second entity with that key. And with `auto_id` enabled, `upsert` still needs the primary key to find the target but assigns a new key to the replacement, which complicates reconciliation. For data that changes, application-defined keys with `upsert` are the safer default. See [stable IDs between lake data and vector search](/ai-quick-reference/how-to-keep-stable-ids-between-lake-data-and-vector-search) for key design across systems.
 
-## Example to test
+## Step 2: detect what changed
 
-Replay an upsert after a client timeout and verify the intended logical record and latest revision. Then delete the source and check derived chunks. A retry policy needs stable identity and explicit visibility expectations.
+| Strategy | How it works | Good for |
+|---|---|---|
+| Content hash | Re-hash each chunk; re-embed only when the hash differs | Periodic syncs of document stores; avoids paying for unchanged embeddings |
+| Timestamp watermark | Pull rows with `updated_at` greater than the last checkpoint | Databases and SaaS APIs with reliable modification times |
+| Change data capture | Consume insert/update/delete events from the source log | Low-latency sync from OLTP databases |
+| Full snapshot diff | Compare the current source inventory with indexed `source_id`s | Catching deletions that other methods miss |
 
-## From concept to implementation
+Hash comparison is the biggest cost saver because embedding calls dominate pipeline cost. Whatever you choose, run a periodic full diff as well: deletions are the change type incremental feeds most often drop.
 
-- [Use upsert to replace a logical record by stable primary key](https://milvus.io/docs/upsert-entities.md).
-- [Use delete to remove stale chunks tied to a changed source](https://milvus.io/docs/delete-entities.md).
+## Step 3: apply changes with upsert and delete
 
-## Continue learning
+**Changed content.** Re-chunk and re-embed the document, then upsert the chunks:
 
-- [How should you refresh a Milvus external collection safely?](/ai-quick-reference/how-to-refresh-milvus-external-collections)
-- [How should deletions propagate from a data lake to vector search?](/ai-quick-reference/how-to-propagate-lake-deletions-to-vector-search)
-- [How does ETL prepare data for vector search?](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process)
-- [What does eventual consistency mean for vector search?](/ai-quick-reference/what-is-eventual-consistency)
-- [How should you structure agent memory in Milvus?](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus)
+```python
+client.upsert(collection_name="kb", data=new_chunks)
+```
 
-## Implementation guides and sources
+In the default override mode, upsert is a delete of the old entity plus an insert of the new one under the same key.
 
-- [Upsert entities](https://milvus.io/docs/upsert-entities.md)
-- [Delete entities](https://milvus.io/docs/delete-entities.md)
-- [Read consistency](https://milvus.io/docs/consistency.md)
+**Metadata-only changes.** When only a scalar field changes (a status, an ACL tag, a category), Milvus 2.6.2 and later support merge mode, which updates just the supplied fields and keeps the stored vector:
+
+```python
+client.upsert(
+    collection_name="kb",
+    data=[{"id": "kb-1042#3", "status": "archived"}],
+    partial_update=True,
+)
+```
+
+**Shrinking documents.** If a document went from 12 chunks to 9, upserting chunks 0 to 8 leaves 9 to 11 behind. Delete the leftovers by expression:
+
+```python
+client.delete(
+    collection_name="kb",
+    filter='source_id == "kb-1042" and source_version < 7',
+)
+```
+
+A simple robust pattern for document replacement is: upsert the new version's chunks with the new `source_version`, then delete everything for that `source_id` with an older version.
+
+**Deleted documents.** Delete by `source_id` filter or by primary-key list (`ids=[...]`). Add `partition_name` to scope the operation when data is partitioned. The [lake deletion guide](/ai-quick-reference/how-to-propagate-lake-deletions-to-vector-search) covers propagation from upstream tables.
+
+## What happens inside Milvus after an update?
+
+New and upserted rows go to **growing segments**, which are searchable before the full vector index has been built for them. When a growing segment fills, it is **sealed**, and Data Nodes build the vector index on it and run **compaction**, which merges small segments and physically drops rows that were deleted. Until compaction runs, deleted rows are tracked and filtered out of results, so they do not appear in search, but they still occupy storage. That is why heavy update or delete churn shows up as extra disk and memory until compaction catches up, and why you do not need to trigger index rebuilds yourself for routine updates.
+
+### When will the update be visible?
+
+Visibility is controlled by the [consistency level](/ai-quick-reference/what-is-eventual-consistency). Milvus offers Strong, Bounded staleness (the default), Session, and Eventually. Under Bounded staleness, a search issued right after an upsert may briefly miss it. If a user edits a document and immediately searches for it, use Session consistency for that client or Strong for that request. For bulk background syncs, Bounded is usually fine and cheaper.
+
+## Re-embedding with a new model is a migration, not an update
+
+Vectors from two embedding models are not comparable, so you cannot upgrade the model row by row inside one vector field and keep searching it. Instead, build a new collection for the new model (or fill a second vector field that you defined in the schema up front), backfill it (bulk import is fastest for this), evaluate recall on a fixed query set, switch reads over, and then retire the old collection. A collection alias makes the switch a single atomic pointer change for applications. [Embedding pipeline design](/ai-quick-reference/how-to-build-distributed-embedding-pipelines) covers the backfill side.
+
+## Handle ordering, retries, and drift
+
+- **Out-of-order events:** if a late event carries an older `source_version`, skip it rather than overwriting newer data. Do this check in the ingestion worker, since upsert itself is last-write-wins.
+- **Ambiguous failures:** if an upsert times out, retry it. Deterministic keys make retries safe, while auto-generated keys would create duplicates.
+- **Reconciliation:** periodically compare source counts and versions with what `query(filter='source_id == ...')` returns, and alert on drift. Track ingestion lag as a first-class metric so a missing answer can be traced to "not yet indexed" rather than "not in the corpus."
+
+## Next step
+
+Try the full lifecycle in a test collection: insert a document, upsert a shorter revision, delete leftovers by version, and search under Session consistency to confirm what is visible. The [Quickstart](https://milvus.io/docs/quickstart.md) gets a local instance running in minutes, and [Zilliz Cloud](https://zilliz.com/cloud) runs the same operations as a managed service. Related reading: [how ETL prepares data for vector search](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process) and [refreshing Milvus external collections](/ai-quick-reference/how-to-refresh-milvus-external-collections).
+
+## Sources and further reading
+
+- [Milvus upsert entities (override and merge modes)](https://milvus.io/docs/upsert-entities.md)
+- [Milvus delete entities](https://milvus.io/docs/delete-entities.md)
+- [Milvus insert entities](https://milvus.io/docs/insert-update-delete.md)
+- [Milvus consistency levels](https://milvus.io/docs/consistency.md)
+- [Milvus architecture overview: growing and sealed segments](https://milvus.io/docs/architecture_overview.md)

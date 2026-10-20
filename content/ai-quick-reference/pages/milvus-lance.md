@@ -5,46 +5,73 @@ topic: "lake"
 order: 39
 ---
 
-Milvus 3.0 documents a Lance external-source path through Storage V3. The source is a Lance dataset directory: Milvus reads dataset metadata, maps fragments into its manifest, and supplies indexing and search through an external collection. This connects Lance-formatted data to Milvus serving without first importing every source row into a managed collection.
+Milvus 3.0 can search a Lance dataset in place through an **external collection**. You point Milvus at the Lance dataset directory, map its columns to Milvus fields, and refresh; Milvus reads the dataset metadata, maps each Lance fragment into its own Storage V3 manifest, and builds indexes so the data can be searched with filters, hybrid queries, and the rest of the Milvus API. The Lance dataset is not copied or modified.
 
 ![Shared source data, explicit serving lifecycle](/images/ai-reference/lake.svg)
 
-## Keep the format and the serving system distinct
+## What is Lance, briefly?
 
-Lance is an open format and ecosystem for AI datasets. A product that uses Lance, including LanceDB, can add its own APIs, catalog, indexing, and service behavior. Compatibility with a Lance dataset is not a claim that Milvus can attach to every LanceDB deployment or share its internal indexes and transactions.
+[Lance](https://lance.org/) is an open-source, Apache-2.0 columnar format built for AI and multimodal data. It works at two levels: a file format and a table format. Compared with Parquet, it is designed for fast random access to individual rows, which matters for training-data shuffles, sampling, and fetching search results. Other features AI teams care about:
 
-Begin with the dataset location and access contract. Confirm that the deployed Milvus release supports the source format and storage backend. Map the intended source fields into a Milvus schema, verify vector dimensions and metadata types, then use the documented external-collection workflow to prepare indexes and refresh the view.
+- **Versioning.** Every write commits a new dataset version, and older versions remain readable for time travel.
+- **Fragments.** A dataset is a set of fragments, each holding a range of rows across one or more data files. Appends add fragments; compaction merges them.
+- **Data evolution.** New columns, such as a fresh embedding, can be added without rewriting existing data.
+- **Blob encoding.** Images, audio, and video can sit in the same table as their embeddings and metadata.
 
-## Preserve useful identities
+Lance is the format behind LanceDB, but the format and the product are separate things. Milvus reads Lance datasets; it does not attach to a LanceDB service or reuse LanceDB's indexes.
 
-For an image collection, keep an application-owned image ID, object URI, embedding revision, and any crop or frame coordinates. A fragment identifier or physical row position may change when a dataset is rewritten. It should not become the only durable identifier in bookmarks, labels, or training manifests.
+## Why serve Lance data from Milvus?
 
-The external source is read-only from this Milvus workflow. Perform dataset edits through its owning system, then refresh Milvus deliberately. Do not route ordinary application inserts or deletes to an external collection as though it were the source-of-truth writer.
+Many multimodal teams already use Lance as their training and curation store because random access and versioning suit those jobs. When that same data needs production retrieval — thousands of concurrent queries, filtered search, hybrid dense-plus-sparse ranking, tenant isolation, replicas — they want a serving engine built for it. An external collection gives them that without exporting the dataset into a second store and keeping two copies aligned.
 
-## Validate a real update cycle
+## How the integration works
 
-Test an append, a replacement, a deletion, and a dataset maintenance operation. Check returned IDs, source payloads, eligibility filters, and search quality after refresh. Measure the time until the application can use the new state, including any required index work and loading.
+| Step | What happens |
+| --- | --- |
+| Create | You define a schema that points at the Lance dataset directory, with `external_field` mapping each Milvus field to a Lance column |
+| Refresh | Milvus reads the dataset's current metadata and maps its fragments into a Storage V3 manifest |
+| Index | Milvus builds the vector and scalar indexes you declared |
+| Serve | Search, query, and get run through the normal Milvus APIs |
+| Update | The Lance writer appends or rewrites data; you refresh to adopt the new state |
 
-Compare this arrangement with copying a bounded serving subset into a managed collection. The external path is attractive when shared lake data and reduced synchronization are important; a separate serving copy can be easier when online writes, isolation, or a different retention policy dominate the workload.
+Lance datasets are supported on Amazon S3, Google Cloud Storage, ADLS Gen2, Alibaba Cloud OSS, and Azure Blob Storage, according to the [Storage V3 guide](https://milvus.io/docs/storage-v3.md). External sources require Milvus 3.0.x with Storage V3 enabled (`common.storage.useLoonFFI: true`, off by default).
 
-## Example to test
+The general setup — `external_source`, `external_spec` with credentials in `extfs`, `add_field(..., external_field=...)`, index creation, and `refresh_external_collection` — is the same as for Parquet and is shown in the [external collection guide](https://milvus.io/docs/create-an-external-collection.md). Use the format value the guide lists for Lance sources in your release.
 
-Use application-owned IDs to resolve Lance-backed search hits before and after a source-file rewrite. Verify the exact format and release support. Reading a Lance dataset does not imply sharing another product's indexes, transactions, or service API.
+## Example: an image-search corpus
 
-## From concept to implementation
+Suppose a Lance dataset holds 200 million product images with columns `image_id`, `uri`, `category`, `clip_v2` (a 768-dim vector), and the image bytes as a blob.
 
-- [Create an external collection over a Lance source](https://milvus.io/docs/create-an-external-collection.md).
-- [Check Lance support in Storage V3](https://milvus.io/docs/storage-v3.md).
+- Map `image_id`, `category`, and `clip_v2` into the external collection. Leave the blob column out; the application can fetch the image by `uri` after search.
+- Build an index on `clip_v2` and a scalar index on `category` if you filter by it.
+- Return only `image_id` and `uri` from search, so each query avoids pulling large columns from object storage.
 
-## Continue learning
+When the team adds a `clip_v3` column through Lance's data-evolution API, Milvus can expose it with `add_collection_field()` followed by a refresh, provided the column already exists in the source. Changing a vector field's dimension, renaming, or remapping fields is not supported in an external collection ([alter external collection schema](https://milvus.io/docs/alter-external-collection-schema.md)), which is why adding a new column per model version is the cleaner pattern.
 
-- [What is a vector data lake?](/ai-quick-reference/what-is-a-vector-data-lake)
-- [How should you refresh a Milvus external collection safely?](/ai-quick-reference/how-to-refresh-milvus-external-collections)
-- [How do you keep stable identities between lake data and vector search?](/ai-quick-reference/how-to-keep-stable-ids-between-lake-data-and-vector-search)
+## Keep identity in your data, not in fragments
+
+Lance fragment IDs and row positions change when a dataset is compacted or rewritten. Use an application-owned key such as `image_id` for bookmarks, labels, and training manifests, and keep the encoder revision as metadata. The [stable identity guide](/ai-quick-reference/how-to-keep-stable-ids-between-lake-data-and-vector-search) explains how to design those keys.
+
+## What to test before production
+
+- **An update cycle.** Append, replace, and delete a few rows through the Lance writer, refresh, and check that canary IDs behave correctly. See [how to refresh an external collection safely](/ai-quick-reference/how-to-refresh-milvus-external-collections).
+- **Compaction.** Run Lance compaction, refresh, and confirm search results still resolve to the same `image_id`s.
+- **Version cleanup.** Lance can remove old versions; make sure cleanup does not delete files your current Milvus view references.
+- **Latency with payloads.** Compare p99 latency when returning only IDs against returning large columns.
+
+If your application must write single records in real time, import a serving subset into a managed collection instead; external collections are read-only.
+
+## Related reading
+
 - [How do Lance, Iceberg, and Parquet play different roles in a vector lake?](/ai-quick-reference/lance-iceberg-parquet-for-vector-data-lakes)
+- [When should you use a Milvus external collection?](/ai-quick-reference/when-to-use-milvus-external-collections)
+- [How should you curate image and video data with vector retrieval?](/ai-quick-reference/how-to-curate-image-and-video-data)
+- [What are multimodal embeddings?](/ai-quick-reference/what-are-multimodal-embeddings)
 
-## Implementation guides and sources
+## Sources
 
-- [Lance support in Storage V3](https://milvus.io/docs/storage-v3.md)
-- [External collection setup and refresh](https://milvus.io/docs/create-an-external-collection.md)
+- [Storage V3: Lance-table source](https://milvus.io/docs/storage-v3.md)
+- [Create an external collection](https://milvus.io/docs/create-an-external-collection.md)
+- [Alter an external collection schema](https://milvus.io/docs/alter-external-collection-schema.md)
 - [Lance format and ecosystem](https://lance.org/)
+- Try it end to end: start with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md).

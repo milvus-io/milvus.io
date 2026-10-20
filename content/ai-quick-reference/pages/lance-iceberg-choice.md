@@ -5,47 +5,73 @@ topic: "lake"
 order: 48
 ---
 
-Parquet, Apache Iceberg, and Lance operate at different abstraction boundaries. Choose them by the dataset lifecycle and readers you need, then verify the specific vector-serving integration. A format comparison is most useful when it distinguishes file layout, table state, and the service that executes queries.
+Parquet, Apache Iceberg, and Lance are not three competitors for the same job. **Parquet** is a columnar *file* format optimized for compressed, scan-heavy analytics. **Iceberg** is a *table* format that turns many data files (usually Parquet) into one table with snapshots, schema evolution, and atomic commits. **Lance** is both a file and a table format designed for AI data, with fast random row access, built-in versioning, and room for embeddings and media blobs. A vector lake often uses more than one of them.
 
-## Start with the responsibilities
+![Keep logical identity separate from file position](/images/ai-reference/format.svg)
 
-Parquet is a columnar file format widely used for batch analytics. A directory of Parquet files needs an additional convention or table layer to define coordinated updates, deletions, and versioned membership.
+## Side-by-side comparison
 
-Iceberg is a table format with metadata describing schema, snapshots, and file membership. It can manage Parquet data files, among other supported formats. Its table contract is different from a single file's encoding and statistics.
+| | Parquet | Apache Iceberg | Lance |
+| --- | --- | --- | --- |
+| Layer | File format | Table format over data files (Parquet, ORC, Avro) | File format and table format |
+| Main strength | Compression and column-pruned scans | Governed tables: snapshots, ACID commits, schema and partition evolution | Random access, versioning, multimodal data |
+| Random row lookup | Weak: read a page or row group to get one row | Inherits the data file format's behavior | Strong: designed for point reads and sampling |
+| Updates and deletes | Rewrite files | Copy-on-write or merge-on-read with delete files | Versioned commits with deletion support |
+| Schema change | New files | Metadata-only, tracked by column IDs | Add columns without rewriting existing data |
+| Vector and blob data | Stored as lists or binary, no special handling | Same as underlying files | Embeddings, images, audio, and video as first-class columns |
+| Ecosystem | Nearly every data tool | Spark, Flink, Trino, DuckDB, warehouses and catalogs | Python AI stack (Pandas, Polars, PyTorch, Ray), DuckDB, Spark |
+| Typical role in a vector lake | Interchange and bulk export | System of record for governed tables | Training, curation, and AI-native datasets |
 
-Lance provides an open format and ecosystem aimed at AI and multimodal data access. A service built around Lance can add further capabilities. Distinguish the portable dataset from a product's catalog, indexing service, and application APIs when assessing interoperability.
+The summary many practitioners use is "Iceberg for BI, Lance for AI." It is a reasonable starting heuristic, but the real deciding factor is who reads and writes the data.
 
-## Choose for the whole pipeline
+## Why does random access matter so much for AI?
 
-Ask which engines write and read the dataset, whether random payload access matters, how schema changes are committed, and how old versions are retained. For example, a lakehouse already governed through Iceberg may prioritize consistent table snapshots; an AI curation workflow may prioritize its supported multimodal readers and row-access behavior.
+Analytics queries read a few columns across many rows, which is exactly what Parquet's row groups and column chunks are built for. AI workloads often do the opposite: fetch the 50 rows that a vector search returned, shuffle a training set by reading rows in random order, or sample 1% of a corpus. In Parquet, fetching one row means reading and decoding at least a page and usually more, so random access is expensive. Lance was designed so that point lookups stay cheap without giving up scan speed, which is why it has become popular for training-data and multimodal stores.
 
-Milvus Storage V3 documents explicit external paths for supported formats. Compatibility follows those paths and their limitations, including Iceberg delete handling and storage-backend support. Support for a format does not mean every feature of every system built on that format is shared.
+## Why does a table format matter?
 
-## Run a compatibility trial
+A directory of Parquet files is not a table. Nothing says which files belong to the current version, how to delete a row, or how to add a column safely while a job is reading. Iceberg answers those questions with a metadata tree: a metadata JSON file lists snapshots; each snapshot points to manifests that list exactly which data files and delete files are live. That gives you atomic commits, time travel by snapshot ID, and schema evolution without rewriting data. For a vector lake that many teams share, those guarantees are usually worth more than raw read speed.
 
-Use the same representative source objects in candidate layouts. Exercise append, deletion, schema change, compaction, snapshot selection, and retrieval of a small result payload. Measure batch throughput and online tail latency separately.
+Lance provides its own table layer — dataset versions made of fragments — so it does not need Iceberg to be versioned. Iceberg, in turn, does not depend on Lance.
 
-Keep stable source IDs and model revisions throughout the trial so differences can be attributed to layout and integration. Prefer the arrangement that fits your existing governance and access requirements with the fewest unsupported assumptions. Multiple formats can coexist when their responsibilities and conversion boundaries are explicit.
+## How should you choose?
 
-## Example to test
+Work through these questions in order:
 
-Choose a source format by the consumers that must share the dataset: analytical table operations, AI-oriented row access, or broad batch-tool compatibility. Then verify Milvus support for the exact format and release, rather than treating formats as interchangeable products.
+1. **Is there already a governed lakehouse?** If the company's tables live in Iceberg with a catalog, access policies, and Spark or Flink writers, keep embeddings there too. Adding an embedding column to an existing Iceberg table is cheaper than introducing a new governance domain.
+2. **Is the dataset mostly consumed by AI jobs?** If the main readers are training loops, curation notebooks, and sampling jobs that need random access and media blobs, Lance is the stronger fit.
+3. **Do you just need to move data?** For handing a batch of vectors from one system to another, or bulk-loading into a database, plain Parquet is the most portable choice.
+4. **Do you need both?** Many teams keep business metadata in Iceberg and embeddings plus media in Lance, joined by a stable ID. That works as long as the ID is consistent in both; see [stable identities between lake data and vector search](/ai-quick-reference/how-to-keep-stable-ids-between-lake-data-and-vector-search).
 
-## From concept to implementation
+## Where does Milvus fit?
 
-- [Check Milvus's external-source format support in Storage V3](https://milvus.io/docs/storage-v3.md).
-- [Create and refresh an external collection](https://milvus.io/docs/create-an-external-collection.md).
+None of these formats is a low-latency, high-concurrency vector search service on its own. Milvus 3.0 adds that layer through **external collections**, which index lake data without copying it. According to the [Storage V3 guide](https://milvus.io/docs/storage-v3.md), an external collection can read:
 
-## Continue learning
+| Source | Milvus input | Notable limit |
+| --- | --- | --- |
+| Parquet | A directory or object-storage prefix | Milvus reads file metadata and row groups |
+| Vortex | A directory or prefix | A newer columnar format; also available as a Milvus managed-storage format |
+| Lance | A Lance dataset directory | Fragments are mapped into the Milvus manifest |
+| Iceberg | Metadata JSON file plus snapshot ID | Position deletes supported; equality deletes must be converted first; not available on Azure Blob Storage |
 
-- [How can Milvus search data stored in Lance?](/ai-quick-reference/how-can-milvus-search-lance-data)
-- [How can Milvus search an Apache Iceberg table?](/ai-quick-reference/how-can-milvus-search-iceberg-tables)
-- [How do Arrow and Parquet fit into vector data pipelines?](/ai-quick-reference/how-arrow-and-parquet-fit-vector-data-pipelines)
+So the format choice does not lock you out of serving. Choose the format that fits your writers and governance, then layer Milvus on top. Format-specific setup is in [searching Iceberg tables with Milvus](/ai-quick-reference/how-can-milvus-search-iceberg-tables) and [searching Lance data with Milvus](/ai-quick-reference/how-can-milvus-search-lance-data).
+
+## Run a quick bake-off
+
+If you are undecided, write the same 1–10 million representative rows (IDs, a vector column, a few metadata fields, a payload) into each candidate. Measure full-column scan throughput, the latency of fetching 100 random rows, the cost of adding a new embedding column, and the steps needed to delete one record and prove it is gone. Then create a Milvus external collection over each and compare search latency when returning only IDs versus returning payloads. A day of measurement usually settles the question.
+
+## Related reading
+
 - [What is a vector data lake?](/ai-quick-reference/what-is-a-vector-data-lake)
+- [How do Arrow and Parquet fit into vector data pipelines?](/ai-quick-reference/how-arrow-and-parquet-fit-vector-data-pipelines)
+- [What does the milvus-storage project provide?](/ai-quick-reference/what-is-milvus-storage)
+- [How should deletions propagate from a data lake to vector search?](/ai-quick-reference/how-to-propagate-lake-deletions-to-vector-search)
 
-## Implementation guides and sources
+## Sources
 
-- [Lance format overview](https://lance.org/)
-- [Iceberg table specification](https://iceberg.apache.org/spec/)
 - [Parquet file format](https://parquet.apache.org/docs/file-format/)
-- [Milvus external-source contracts](https://milvus.io/docs/storage-v3.md)
+- [Apache Iceberg table specification](https://iceberg.apache.org/spec/)
+- [Iceberg schema evolution](https://iceberg.apache.org/docs/latest/evolution/)
+- [Lance format overview](https://lance.org/)
+- [Milvus Storage V3 external-source formats](https://milvus.io/docs/storage-v3.md)
+- [Create an external collection](https://milvus.io/docs/create-an-external-collection.md)

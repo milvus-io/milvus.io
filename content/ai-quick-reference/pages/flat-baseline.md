@@ -5,47 +5,92 @@ topic: "retrieval"
 order: 67
 ---
 
-A FLAT search evaluates the vector comparisons over the eligible dataset rather than relying on an approximate candidate structure. It is useful as an exact-neighbor reference for evaluating ANN behavior. It also provides a simple serving option when the eligible dataset and workload make exhaustive comparison affordable.
-
-As an illustrative example (not a benchmark claim — measure on your own hardware and dataset): searching 100K 768-dimensional vectors with FLAT on CPU might take on the order of 50-100ms per query, since every comparison touches the full vector. The same corpus searched with HNSW at a tuned `ef` might return in 1-3ms at 95%+ recall, because the graph skips most of the dataset entirely. The gap is the reason ANN indexes exist — and the reason FLAT's exact answer is still the yardstick ANN quality gets measured against.
+A FLAT search compares the query with every eligible vector and returns the true top-k for the chosen metric, so it is the ground truth against which any approximate index is measured. Without it, you cannot say what recall an HNSW, IVF, or DiskANN configuration actually achieves: you can only say it is fast. FLAT is also a legitimate serving index when the set of vectors a query can see is small enough to scan.
 
 ![Control the workload before comparing performance](/images/ai-reference/benchmark.svg)
 
-## Keep the baseline equivalent
+## What does a FLAT index do?
 
-Use identical stored vectors, query vectors, metric, normalization, top-k, and metadata filters. Ensure both runs see the same data state. A result difference caused by a changed corpus or omitted filter is not ANN approximation error.
+FLAT stores vectors as they are and builds nothing on top of them. At query time it computes the distance from the query to each eligible vector, keeps the best `k`, and returns them. There is no training step, no graph, no clusters, and nothing to tune: in Milvus, `FLAT` takes no build or search parameters. It supports the `COSINE`, `L2`, and `IP` metrics for dense float vectors, and its binary counterpart `BIN_FLAT` does the same for binary vectors with `HAMMING` or `JACCARD`. GPU deployments also offer `GPU_BRUTE_FORCE`, which performs the same exhaustive comparison on the GPU and returns recall of 1.
 
-For a large corpus, sample evaluation queries if necessary but compute their exact neighbors over the same full eligible corpus used by the ANN run. If the corpus is also subsampled, build and evaluate both systems on that identical subset and label the result as a subset experiment. Full-corpus ANN results cannot be evaluated against ground truth computed only on a smaller corpus.
+The price is linear cost. A query costs about `N × d` multiply-adds, where `N` is the number of eligible vectors and `d` the dimension. For one million 768-dimensional vectors that is roughly 770 million operations per query, and it doubles when the collection doubles. An ANN index, by contrast, scores a few thousand candidates. That gap is the reason ANN indexes exist, and the reason the slow exact answer remains the yardstick.
 
-## Handle ties and result identity
+## Why is exact search the ground truth for ANN recall?
 
-If several records have equal or nearly equal distances around the top-k boundary, different valid orderings can affect a naive ID-overlap score. Define tie handling and numerical tolerances appropriate to the evaluation. Inspect whether duplicate source items create an artificially easy or unstable benchmark.
+ANN quality is usually reported as **Recall@k**:
 
-Exact vector neighbors are still a geometric reference, not a relevance judgment. If a poor embedding places the wrong documents nearest to the query, FLAT will reproduce that ordering accurately. Use judged application relevance alongside exact-neighbor recall to avoid tuning an index around an unsuitable representation.
+```
+Recall@k = |ANN top-k ∩ exact top-k| / k     (averaged over the query set)
+```
 
-## Use the result to choose the next fix
+The "exact top-k" in that formula has to come from somewhere, and only an exhaustive search can produce it with certainty. Once you have it, every tuning decision becomes a measurable trade: sweeping HNSW `ef` or IVF `nprobe` traces a curve of recall against latency, and you can pick the cheapest setting that meets your target. Public benchmarks such as ANN-Benchmarks are built the same way, plotting recall (computed against precomputed exact neighbors) against queries per second.
 
-When FLAT finds the right evidence but an ANN index misses it, investigate candidate search effort, construction, quantization, and filters. When both retrieve the wrong evidence, inspect the model, chunking, source data, and query formulation first.
+The baseline also tells you *where* a quality problem lives. If FLAT returns the right evidence and the ANN index misses it, the fix is in the index: search effort, construction parameters, quantization, or filtering strategy. If FLAT also returns the wrong evidence, no index tuning will help, and you should look at the embedding model, chunking, the source data, or how queries are phrased. Exact neighbors are a geometric reference, not a relevance judgment; track judged relevance (see [how to evaluate retrieval quality](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)) alongside exact-neighbor recall.
 
-Record the baseline computation and resulting reference IDs with the benchmark artifacts. Recompute them when the representation or eligible corpus changes. This small discipline makes index experiments interpretable and prevents a faster configuration from being credited for a quality change caused by an unrelated dataset or metric difference.
+## How do you compute Recall@k against FLAT in Milvus?
 
-## Example to test
+A practical setup is two collections loaded with the same data: one with the index under test, one with `FLAT`. Because both receive identical vectors, IDs, and scalar fields, any difference in results is approximation error.
 
-Build exact ground truth after applying the same tenant and time eligibility rules as the ANN test. An unfiltered global top-k is not a valid ground truth for a filtered query, even if both searches use identical vectors.
+```python
+from pymilvus import MilvusClient
 
-## From concept to implementation
+client = MilvusClient(uri="http://localhost:19530")
 
-- [Configure Milvus FLAT search](https://milvus.io/docs/flat.md).
-- [Check vector distance and score definitions for your metric](https://milvus.io/docs/metric.md).
+# Ground-truth collection: same schema and data as the ANN collection
+idx = client.prepare_index_params()
+idx.add_index(field_name="embedding", index_type="FLAT",
+              metric_type="COSINE", params={})
+client.create_index("docs_flat", idx)
+client.load_collection("docs_flat")
 
-## Continue learning
+def top_ids(collection, queries, k, search_params, flt=""):
+    res = client.search(collection_name=collection, data=queries,
+                        anns_field="embedding", limit=k, filter=flt,
+                        search_params=search_params,
+                        consistency_level="Strong")
+    return [[hit["id"] for hit in hits] for hits in res]
 
-- [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)
-- [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)
-- [When should you use range search instead of only top-k?](/ai-quick-reference/when-to-use-vector-range-search)
-- [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
+k = 10
+exact = top_ids("docs_flat", queries, k, {"params": {}}, flt="tenant == 'a'")
+approx = top_ids("docs_hnsw", queries, k, {"params": {"ef": 64}}, flt="tenant == 'a'")
 
-## Implementation guides and sources
+recall = sum(len(set(a) & set(e)) / k for a, e in zip(approx, exact)) / len(queries)
+print(f"Recall@{k}: {recall:.3f}")
+```
 
-- [Milvus FLAT search](https://milvus.io/docs/flat.md)
-- [Vector distance and score definitions](https://milvus.io/docs/metric.md)
+Then repeat the ANN search with several values of `ef` (or `nprobe` for IVF, `search_list` for DiskANN) and record recall and p95 latency for each. Save the exact IDs with the benchmark artifacts so later runs compare against the same reference. For very large corpora you can also compute exact neighbors offline (for example with a GPU brute-force pass), as long as the vectors, metric, normalization, and filters are identical.
+
+## What makes a baseline fair?
+
+The baseline is only meaningful if it answers exactly the same question as the ANN run.
+
+- **Same data state.** Both searches must see the same inserts and deletes. Use `Strong` consistency (or wait for writes to be visible) so one side is not missing recent rows.
+- **Same metric and normalization.** COSINE on one side and IP on unnormalized vectors on the other produces different rankings that have nothing to do with the index. See [how cosine, IP, and L2 differ](/ai-quick-reference/what-is-the-role-of-distance-metrics-in-embeddings).
+- **Same filters.** A filtered query needs filtered ground truth. An unfiltered global top-k is not a valid reference for a tenant- or time-scoped search, even with identical vectors ([how filters interact with vector search](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance)).
+- **Same corpus.** You may sample the *queries* to keep ground-truth computation cheap, but compute their exact neighbors over the full corpus the ANN index serves. If you shrink the corpus, build both indexes on that same subset and label the result as a subset experiment.
+- **Ties and duplicates.** When several vectors sit at nearly the same distance around position `k`, two valid orderings can disagree on IDs. Decide whether to count a tie as a hit (for example, compare by distance with a small tolerance), and remove duplicate source items that make the benchmark artificially easy.
+
+## When is FLAT alone enough?
+
+FLAT is not only a testing tool. It is often the right production choice when:
+
+- The collection is small enough that a scan fits the latency budget; the Milvus index-selection guide suggests FLAT for datasets under about a million vectors.
+- Filters or partitioning shrink each query's eligible set to a small slice. Milvus's index guidance recommends FLAT when filters remove more than about 98% of the data, because a graph would spend most of its effort skipping ineligible nodes.
+- Results must be exact, as in auditing, deduplication checks, or regulated retrieval where "approximately right" is not acceptable.
+- Data changes so quickly that building and maintaining an ANN index costs more than it saves.
+
+Beyond that, FLAT becomes a cost problem rather than a quality one, and an ANN index tuned against the FLAT baseline is the better trade. [How to choose a vector index](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload) explains which family to try next, and [what ANN search is](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search) covers why the approximation works.
+
+## Try it
+
+The [Milvus Quickstart](https://milvus.io/docs/quickstart.md) gets a collection running in minutes; add a FLAT copy next to your ANN collection and you have a recall harness. For full benchmarking practice, see [how to benchmark vector search performance](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance).
+
+## Sources and further reading
+
+- [Milvus FLAT index](https://milvus.io/docs/flat.md)
+- [Milvus BIN_FLAT index](https://milvus.io/docs/bin-flat.md)
+- [Milvus GPU indexes, including GPU_BRUTE_FORCE](https://milvus.io/docs/gpu_index.md)
+- [Milvus metric types](https://milvus.io/docs/metric.md)
+- [Milvus index explained: selection by filter ratio](https://milvus.io/docs/index-explained.md)
+- [Aumüller et al., ANN-Benchmarks (arXiv:1807.05614)](https://arxiv.org/abs/1807.05614)
+- [Nearest neighbor search (Wikipedia)](https://en.wikipedia.org/wiki/Nearest_neighbor_search)

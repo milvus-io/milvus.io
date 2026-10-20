@@ -5,53 +5,100 @@ topic: "applications"
 order: 97
 ---
 
-A vector database can retrieve recommendation candidates by comparing a user, session, or item representation with eligible item vectors. This is one stage of a recommendation system. The final result can also depend on ranking, availability, diversity, user controls, and the way outcomes are measured.
+A vector database supports recommendations by handling **candidate retrieval**: it stores an embedding for every recommendable item and, given an embedding of a user, a session, or a seed item, returns the few hundred nearest items in milliseconds. Those candidates then go to a ranking model and business rules that decide what the user actually sees. The vector database replaces a slow scan over the whole catalog with an approximate nearest-neighbor (ANN) lookup, and it applies eligibility filters such as stock, region, and already-seen items in the same query.
 
 ![Candidate retrieval is one stage of recommendation](/images/ai-reference/recommendation.svg)
 
-## Define the representation and freshness contract
+## Where does vector search sit in a recommendation system?
 
-Decide what the query vector represents: long-term preference, recent session behavior, or similarity to a selected item. Use an item encoder and query encoder that are compatible. Record model revisions and how new or changed items receive vectors.
+Most large recommenders are built as a funnel, a pattern popularized by the [YouTube deep neural network recommender paper](https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/) and still standard today:
 
-For a session-based application, consider how quickly new behavior should affect recommendations. Database update freshness and the model's ability to encode that behavior are separate requirements. A perfectly fresh index cannot compensate for an unsuitable representation.
+| Stage | Input size | Job | Typical tool |
+|---|---|---|---|
+| Candidate generation | Millions to billions of items | Recall a few hundred plausible items cheaply | Embedding model + vector database, plus other sources (popular, trending, follow graph) |
+| Ranking | Hundreds of candidates | Score each candidate precisely with rich features | Gradient-boosted trees or a deep ranking model |
+| Re-ranking / policy | Tens of items | Diversity, freshness, fairness, ads, de-duplication | Application logic |
 
-## Retrieve eligible and varied candidates
+The split exists because a precise ranking model is too expensive to run on every item. Retrieval has to be fast and recall-oriented: if a good item is not among the candidates, no ranker can recover it. That is the stage a vector database owns. Most production systems run several retrievers in parallel (embedding-based, collaborative, rule-based) and merge their outputs before ranking, so the vector index is usually one important source rather than the only one.
 
-Apply required filters for availability, region, user restrictions, and already consumed items where appropriate. Select enough candidates for downstream ranking without making payload and reranking costs excessive.
+## Where do the vectors come from?
 
-Near-identical variants can fill a candidate list. Where suitable, grouping or an application-level diversity step can return a more useful set. Measure whether that choice improves the user's task rather than assuming more visual variety is always better.
+The query vector and the item vectors must live in the same space, which means they come from a compatible pair of encoders. Three families cover most systems:
 
-## Evaluate the whole funnel
+- **Two-tower (dual-encoder) models.** A user tower encodes profile and recent behavior; an item tower encodes item ID, text, image, and attributes. Training pushes a user's embedding close to the items they engaged with, usually scored by dot product. Because the towers are independent, item embeddings can be computed offline and indexed, and only the user embedding is computed at request time. A [survey of retrieval algorithms in ad and content recommendation](https://arxiv.org/abs/2407.01712) covers this family and its variants.
+- **Behavioral item embeddings.** Item2vec-style models learn from co-occurrence in sessions or baskets ("people who viewed A also viewed B"). They power item-to-item features well and need no user tower.
+- **Content embeddings.** Text, image, or multimodal encoders describe what an item *is*. They are the main tool for cold-start items that have no interaction history, and for "more like this" features.
 
-Use offline retrieval metrics on a well-defined time split, then assess the full ranking and product workflow. Avoid leakage from future behavior into historical query representations. Include new items, sparse-history users, and important catalog segments.
+Content similarity and personal preference are different signals. A model that knows two jackets look alike says nothing about whether this user wants a jacket today. Averaging a user's past item embeddings is a reasonable baseline, but a learned user tower usually beats it once there is enough interaction data. Treat each choice as something to measure.
 
-Track serving latency, empty eligible results, repeated items, and the stability of the recommendation experience. In an online evaluation, account for position and exposure effects rather than interpreting every click as an unbiased relevance label. Milvus supplies candidate retrieval and metadata operations; the learning, ranking, and experiment systems determine how those candidates become a useful recommendation service.
+## What queries does a recommender send to Milvus?
 
-## Content similarity is not the same as personalized preference
+The same item collection can serve several request types:
 
-An item-to-item feature can retrieve products similar in appearance or description. A personalized user-to-item retriever needs compatible user/item representations learned or constructed for that objective. A generic image-text embedding does not become a user-preference model merely by averaging more modalities. A content-based rule or history aggregation can be a baseline, but its usefulness must be measured rather than assumed.
+1. **User-to-item ("For you").** Encode the user's long-term profile with the user tower and search the item vectors.
+2. **Session-to-item ("Because you just viewed...").** Encode the last few interactions so recommendations react within the session.
+3. **Item-to-item ("Similar items").** Use the item's own vector as the query, and exclude the item itself.
 
-Recommendation pipelines commonly distinguish candidate generation from later ranking. In each experiment, state which stage changed. Compare against content-only and interaction-based baselines where available, preserve a time split, and report cold-start users and items separately. Multimodal item features may help some tasks and harm others; no click or conversion gain follows automatically from their presence.
+A typical item collection stores an `item_id` primary key, one or more vector fields (for example a two-tower embedding and a content embedding), and scalar fields used for eligibility and diversity: `in_stock`, `region`, `category`, `brand`, `price`, `published_at`. Choose the metric the model was trained with; two-tower models trained on dot product should use `IP`, while normalized content embeddings work with `COSINE`.
 
-## Example to test
+```python
+results = client.search(
+    collection_name="items",
+    data=[user_vector],
+    anns_field="two_tower_vec",
+    filter='in_stock == true and region == "EU" and item_id not in [1012, 3391, 7755]',
+    limit=300,
+    output_fields=["item_id", "category", "brand"],
+)
+```
 
-Retrieve candidates from a user or session representation, enforce stock and region, then diversify before downstream ranking. Compare useful candidate coverage with the final product outcome; a nearest-item hit is not itself evidence of a conversion lift.
+[Filtered search](https://milvus.io/docs/filtered-search.md) applies the `filter` expression during the ANN search, so every returned candidate is eligible and the list does not come back half-empty after post-filtering. For large "already seen" sets, keep a short recent exclusion list in the filter and remove older history in the ranking stage, rather than sending thousands of IDs with every query. [How metadata filters interact with vector search](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance) explains the performance side of this choice.
 
-## From concept to implementation
+## How do you keep candidates diverse?
 
-- [Build a recommendation candidate pipeline](https://milvus.io/docs/recommendation_system.md).
-- [Related product-search story: Tokopedia](https://zilliz.com/customers/tokopedia).
+Nearest-neighbor lists often fill up with near-duplicates: five colorways of one shoe, or ten episodes of one series. [Grouping search](https://milvus.io/docs/grouping-search.md) addresses this inside the query. Setting `group_by_field="brand"` (or a product-family ID) with `group_size=2` returns the best hits per group, and `limit` then counts groups rather than rows. That gives the ranker a broader pool without a separate de-duplication pass. Grouping works with common indexes including HNSW, IVF variants, and DISKANN. Whether it improves the user's experience is still an empirical question, so test it against the ungrouped list.
 
-## Continue learning
+When you want to blend signals, such as a two-tower embedding for preference and a content embedding for similarity, [hybrid search](https://milvus.io/docs/multi-vector-search.md) runs one `AnnSearchRequest` per vector field and fuses the results with `RRFRanker` or `WeightedRanker`. Fusion in the database is convenient for a few retrievers; complex blending usually belongs in the ranking model.
+
+## How fresh does the index need to be?
+
+Freshness has two separate parts. **Catalog freshness**: new and changed items need vectors and correct metadata quickly. Milvus accepts streaming `insert`, `upsert`, and `delete`, so a price change or stock-out can be applied as a scalar update without re-embedding. **Behavioral freshness**: the user vector should reflect what the user just did. That is a feature-pipeline and model problem, because the query vector is computed at request time. A perfectly fresh index cannot help if the user tower ignores recent clicks.
+
+When the item tower is retrained, every item vector changes and old and new vectors are not comparable. Write the new embeddings to a new collection (or a new vector field), backfill, validate, and then switch traffic. Do not mix model versions in one field. [Incremental updates in a vector database](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database) covers the mechanics.
+
+## What about cold start?
+
+New items have no interaction history, so a pure ID-embedding tower places them poorly. Give the item tower content features (title, image, category) so a new item lands near similar existing items on day one, or retrieve new items through a content-embedding field and reserve some candidate slots for them. New users have no history either: start from context (region, device, entry page, the first item they view) and switch to the user tower as events accumulate. Report cold-start users and items separately in evaluation, because averages hide them.
+
+## How do you evaluate the retrieval stage?
+
+Evaluate retrieval for what it is supposed to do: recall. Common offline metrics are Recall@K and hit rate@K, which ask whether the item the user later engaged with appears in the top K candidates. Use a time-based split, building queries only from behavior before the cutoff and labels from behavior after it, to avoid leaking the future into the past.
+
+Then measure the full funnel. A retriever change that raises Recall@300 can still lose online if the ranker cannot use the new candidates or if diversity drops. Online, clicks are biased by position and exposure, so rely on A/B tests rather than raw click-through from logs. Watch serving signals too: p99 latency, empty or short candidate lists after filtering, repeated items, and how stable recommendations look from one visit to the next. [Evaluating retrieval quality](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved) and [batching, latency, and throughput](/ai-quick-reference/how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search) go deeper on both sides.
+
+## A reference architecture
+
+1. **Offline:** train the two-tower model on interaction logs; batch-encode every item; bulk-load vectors and metadata into a Milvus collection with an HNSW or IVF index, choosing the metric the model was trained with.
+2. **Streaming:** pipe catalog changes (new items, stock, price) into Milvus with `upsert` and `delete`; pipe user events into the feature store.
+3. **Online:** at request time compute the user or session vector, run a filtered (optionally grouped) search for a few hundred candidates, merge with other candidate sources, rank, apply policy, and log impressions for the next training round.
+4. **Model refresh:** re-embed the catalog into a new collection, validate recall against the old one, then cut over.
+
+E-commerce teams apply the same retrieval machinery across search and discovery; [Tokopedia's story](https://zilliz.com/customers/tokopedia) describes how the Indonesian marketplace used Milvus to improve product search, which shares the catalog embeddings, eligibility filters, and freshness requirements described above.
+
+## Related reading
 
 - [What is vector search?](/ai-quick-reference/what-is-vector-search)
 - [How can hybrid and multimodal search improve product discovery?](/ai-quick-reference/hybrid-multimodal-product-search)
-- [How do batching, latency, and throughput interact in vector search?](/ai-quick-reference/how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search)
-- [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
+- [What are multimodal embeddings?](/ai-quick-reference/what-are-multimodal-embeddings)
+- [How do you choose a vector index for your workload?](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload)
 
-## Implementation guides and sources
+## Sources and next steps
+
+To build it, start with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md), then follow the [recommendation-system tutorial](https://milvus.io/docs/recommendation_system.md), which encodes MovieLens users and movies into a shared vector space and serves recommendations from Milvus. More end-to-end examples are in the [Milvus Bootcamp](https://milvus.io/bootcamp).
 
 - [Recommendation-system example](https://milvus.io/docs/recommendation_system.md)
-- [Group and diversify returned candidates](https://milvus.io/docs/grouping-search.md)
-- [Apply catalog eligibility rules](https://milvus.io/docs/filtered-search.md)
-- [Recommendation candidate generation and ranking](https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/)
+- [Filtered search](https://milvus.io/docs/filtered-search.md)
+- [Grouping search](https://milvus.io/docs/grouping-search.md)
+- [Hybrid (multi-vector) search](https://milvus.io/docs/multi-vector-search.md)
+- [Covington, Adams, Sargin: Deep Neural Networks for YouTube Recommendations](https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/)
+- [Zhao and Liu: A Survey of Retrieval Algorithms in Ad and Content Recommendation Systems (arXiv 2407.01712)](https://arxiv.org/abs/2407.01712)

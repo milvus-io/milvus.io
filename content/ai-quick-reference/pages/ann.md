@@ -5,57 +5,77 @@ topic: "retrieval"
 order: 10
 ---
 
-Nearest-neighbor search starts with a query vector, an eligible dataset, a metric, and a requested `k`. It asks for the `k` closest vectors. That request is the k-nearest-neighbor (kNN) problem. An exact method guarantees the true top-k for the eligible set and metric; a FLAT scan is the simple exhaustive baseline. An approximate nearest-neighbor (ANN) method uses an index to reduce work and can miss true neighbors. “kNN” is sometimes used for the result task and sometimes contrasted with ANN; here exact kNN means a guaranteed exact result, while ANN names an approximate solution.
+Approximate nearest-neighbor (ANN) search finds vectors that are very close to a query vector without comparing the query against every vector in the collection. It uses an index (a graph, a set of clusters, hash buckets, or compressed codes) to examine only a small, promising fraction of the data, and in exchange it may occasionally miss one of the true closest neighbors. That trade of a little accuracy for orders-of-magnitude less work is what makes semantic search, RAG, and recommendation practical over millions or billions of embeddings.
 
 ![Hash buckets, graph navigation, and IVF partitions are different ANN structures](/images/ai-reference/ann-families.svg)
 
-## The main structures: hashing, graphs, and IVF
+## What problem does nearest-neighbor search solve?
 
-ANN indexes narrow the candidate set through one of a few structural ideas: hashing schemes that bucket similar items together (LSH, or Milvus's `MINHASH_LSH` for binary MinHash/Jaccard similarity specifically), graphs that navigate neighbor links toward promising results (HNSW, DiskANN's Vamana graph, GPU_CAGRA), and IVF's coarse centroid partitions that a query probes selectively. Compression (SQ, PQ, PRQ, RaBitQ) is a separate axis that combines with any of these — IVF_PQ is IVF partitioning plus product-quantized codes, HNSW_PQ is graph navigation plus PQ-compressed vectors. FLAT has no approximate candidate structure at all; it is the exhaustive baseline.
+Every nearest-neighbor query has four inputs: a query vector, the set of vectors that are eligible to be returned (after any filters), a distance metric, and a result count `k`. The task is to return the `k` stored vectors closest to the query under that metric. This is the k-nearest-neighbor (kNN) problem.
 
-Naming alone does not establish interchangeability: `MINHASH_LSH` is not a general LSH index for dense semantic embeddings, so check the field type and metric before assuming two similarly named methods solve the same problem. For the full decision table — which structure to pick for a given workload, dataset size, and resource budget — see [how to choose a vector index for your workload](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload).
+The metric defines what "close" means. Text and image embeddings are usually compared with cosine similarity or inner product, while some models are trained for Euclidean (L2) distance; binary fingerprints use Hamming or Jaccard. The same index can give very different results if the metric does not match how the embedding model was trained, so the metric is part of the question, not a tuning knob. See [how cosine, inner product, and L2 differ](/ai-quick-reference/what-is-the-role-of-distance-metrics-in-embeddings).
 
-## FAISS is the implementation library layer
+## Exact kNN vs ANN: what is the difference?
 
-FAISS is a vector-search and clustering library, not an algorithm name. Its index-factory recipes can combine components such as `IVF64,Flat`, `HNSW16,Flat`, or `OPQ16,IVF64,PQ16x4`. In Milvus, Knowhere integrates multiple libraries and Milvus 3.0 documents an advanced `FAISS` passthrough. A recipe valid in standalone FAISS is not automatically supported for every Milvus field, metric, filter, or operation. Prefer a dedicated Milvus index type unless a tested recipe requires passthrough.
+| | Exact kNN (brute force) | Approximate NN |
+| --- | --- | --- |
+| How it searches | Computes the distance to every eligible vector | Uses an index to visit a small subset of candidates |
+| Result guarantee | The true top-k for the metric | Most of the true top-k, measured as recall |
+| Query cost | Grows linearly: roughly `N × d` operations per query | Typically sublinear in `N`, tunable per query |
+| Extra memory | None beyond the vectors | Graph links, centroids, codebooks, or hash tables |
+| Build step | None | Training and/or graph construction |
 
-## Match the index to the resource constraint
+Exact search is simple and always correct, and for a few thousand vectors it is fast enough. The problem is scale: one million 768-dimensional vectors means about 768 million multiply-adds for a single query, and a busy service runs thousands of queries per second. ANN indexes cut that to a few thousand distance computations by deciding early which regions of the space can be ignored.
 
-HNSW often suits fast in-memory graph search when its link memory fits. IVF limits search to selected coarse regions and has variants that store full or compressed vectors. DiskANN trades SSD reads for capacity beyond RAM. GPU_CAGRA uses GPU parallelism for graph construction/search; it needs an actual GPU-shaped workload to pay off. These are starting hypotheses, not universal rankings.
+Formally, a c-approximate method may return a point whose distance is at most `c` times the distance to the true nearest neighbor. In practice, vector databases describe approximation with **Recall@k**: the fraction of the true top-k neighbors (computed with exact search) that the ANN result contains, averaged over a query set. A recall of 0.95 at k=10 means that on average 9.5 of the 10 exact neighbors were returned.
 
-Quantization separately reduces the bytes used for vectors or distance estimates. [The quantization guide](/ai-quick-reference/what-is-vector-quantization-in-embeddings) explains SQ, PQ, PRQ, and RaBitQ, including what remains in memory after compression.
+## Why can't classic indexes like k-d trees solve this?
 
-## Measure against exact neighbors
+Tree structures such as k-d trees and R-trees work well in two or three dimensions because each split eliminates half the space. Embeddings have hundreds or thousands of dimensions, and in that regime distances between random points concentrate: the nearest and farthest points are almost the same distance away, and a query's neighborhood touches so many tree cells that the search degrades toward a full scan. This is the **curse of dimensionality**, and it is why practical high-dimensional search gave up on exact guarantees and moved to approximate structures.
 
-For the same eligible data, metric, query set, and `k`, compare approximate results with an exact FLAT baseline. Report exact-neighbor Recall@k separately from judged application relevance. Also record build time, index bytes, resident memory, latency, throughput, update/rebuild behavior, and any SSD or GPU cost. A family name alone does not state the quality or end-to-end footprint.
+## How do ANN algorithms work?
 
-## Example to test
+Almost every ANN index combines two ideas: a way to **select candidates** and a way to **represent vectors** cheaply enough to score them.
 
-For a fixed corpus, compare FLAT, HNSW, IVF_FLAT, IVF_PQ, DiskANN, and GPU_CAGRA only where the required hardware exists. Hold query, filters, and recall target constant. For each index, say which structure selects candidates and whether its distance values are full precision or quantized. Do not describe FAISS as a peer algorithm in this comparison: it is a library through which some of those algorithms can be built.
+**Hashing (LSH).** Locality-sensitive hash functions are designed so that similar vectors are likely to land in the same bucket. A query is hashed, and only vectors in matching buckets are compared. LSH has clean theory but usually needs many hash tables to reach high recall on dense embeddings. Its strongest modern use is near-duplicate detection on set similarity, which is what Milvus `MINHASH_LSH` does for binary MinHash signatures under Jaccard similarity ([how MINHASH_LSH finds near-duplicates](/ai-quick-reference/what-is-minhash-lsh)).
 
-## From concept to implementation
+**Trees.** Space-partitioning trees (k-d trees, random projection forests such as Annoy) split the space recursively. They are easy to reason about but lose efficiency as dimensionality grows, so they are rarely the main index in vector databases today.
 
-- [Compare Milvus index structures and supported field types](https://milvus.io/docs/index-explained.md).
-- [Use MINHASH_LSH for binary MinHash/Jaccard signatures](https://milvus.io/docs/minhash-lsh.md).
-- [Read the FAISS passthrough guide and its limits](https://milvus.io/docs/faiss.md).
+**Clustering / inverted files (IVF).** k-means divides the vectors into `nlist` clusters. At query time, the search compares the query with the cluster centroids, then scans only the `nprobe` closest clusters. Fewer probes mean faster queries and a higher chance that a true neighbor sat in an unvisited cluster. [How IVF uses centroids](/ai-quick-reference/how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process) walks through this step by step.
 
-## Continue learning
+**Proximity graphs.** Each vector becomes a node linked to some of its neighbors. A search starts at an entry point and greedily moves to whichever neighbor is closer to the query, keeping a candidate list until it stops improving. HNSW adds a hierarchy of sparse upper layers for long jumps, giving roughly logarithmic search cost; DiskANN's Vamana graph is laid out for SSD reads; CAGRA is built for GPU parallelism. Graphs usually give the best recall-per-millisecond in memory, at the cost of storing the links. See [what HNSW is and how to tune it](/ai-quick-reference/what-is-hnsw).
+
+**Quantization.** Instead of choosing candidates, quantization shrinks each vector: scalar quantization stores each coordinate in fewer bits, product quantization (PQ) replaces sub-vectors with codebook IDs, and RaBitQ reduces vectors to about one bit per dimension with an error bound. Quantization is usually layered on top of IVF or a graph (`IVF_PQ`, `HNSW_SQ`), and a refinement step can rescore top candidates with higher-precision vectors. The [vector quantization guide](/ai-quick-reference/what-is-vector-quantization-in-embeddings) covers the memory arithmetic.
+
+## What trade-offs should you expect?
+
+ANN tuning is a triangle between **recall, latency (or throughput), and memory**, with build time as a fourth corner. Search-time knobs such as `ef` for HNSW or `nprobe` for IVF move you along a recall-latency curve for a fixed index; build-time choices such as graph degree, cluster count, or quantization level change the curve itself and its memory footprint. Benchmarks such as ANN-Benchmarks report results as recall-versus-queries-per-second curves for exactly this reason: a single speed number means nothing without the recall it was measured at.
+
+A few practical consequences follow. Higher recall always costs more work per query. Compression saves memory but adds approximation error that a refine step can only partly recover, because rescoring cannot bring back a neighbor the candidate search never visited. Filters change the problem too: when a filter removes most of the collection, a graph may need to walk much further to find eligible neighbors, and scanning the small remaining set exactly can become the better plan ([how metadata filters interact with vector search](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance)).
+
+## Where is ANN search used?
+
+ANN is the retrieval engine behind semantic and multimodal search, the retrieval step of [RAG](/ai-quick-reference/what-is-rag-retrievalaugmented-generation-in-nlp), recommendation candidate generation, deduplication and near-duplicate detection, image and audio similarity, anomaly detection, and agent memory lookup. In all of these, the application tolerates a slightly imperfect top-k because a reranker, an LLM, or a human downstream looks at the results, and latency matters more than the last fraction of a percent of recall.
+
+## How does Milvus run ANN search?
+
+In Milvus you choose an index per vector field when you create it. Dense float vectors can use exact `FLAT` or approximate indexes from the IVF family (`IVF_FLAT`, `IVF_SQ8`, `IVF_PQ`, `IVF_RABITQ`), the graph family (`HNSW` and its `HNSW_SQ`, `HNSW_PQ`, `HNSW_PRQ` variants), disk-based `DISKANN`, `SCANN`, and GPU indexes such as `GPU_CAGRA` in GPU deployments. Binary vectors use `BIN_FLAT`, `BIN_IVF_FLAT`, or `MINHASH_LSH`; sparse vectors use `SPARSE_INVERTED_INDEX`. If you do not want to pick, `AUTOINDEX` lets Milvus choose. The underlying engines live in Knowhere, which integrates libraries such as FAISS; FAISS itself is a library, not a separate algorithm ([what FAISS is](/ai-quick-reference/what-is-faiss)).
+
+To decide which index fits your data size, memory, filters, and hardware, use [how to choose a vector index for your workload](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload). To measure whether an index is good enough, compare it with exact search on the same data, as described in [why to use a FLAT baseline](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline). The fastest way to try both is the [Milvus Quickstart](https://milvus.io/docs/quickstart.md).
+
+## Related reading
 
 - [What is vector search?](/ai-quick-reference/what-is-vector-search)
-- [What is FAISS, and how does it relate to vector indexes?](/ai-quick-reference/what-is-faiss)
-- [What is HNSW, and how should you tune it?](/ai-quick-reference/what-is-hnsw)
 - [When should you use DISKANN in Milvus?](/ai-quick-reference/what-is-diskann)
 - [What is GPU_CAGRA, and when does it help vector search?](/ai-quick-reference/what-is-gpu-cagra)
-- [How do IVF indexes use centroids to search vectors?](/ai-quick-reference/how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process)
-- [What is vector quantization, and what does it trade off?](/ai-quick-reference/what-is-vector-quantization-in-embeddings)
-- [How do you choose a vector index for your workload?](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload)
 
-## Implementation guides and sources
+## Sources and further reading
 
-- [Milvus index structures](https://milvus.io/docs/index-explained.md)
-- [FAISS passthrough and its limits](https://milvus.io/docs/faiss.md)
-- [HNSW](https://milvus.io/docs/hnsw.md)
-- [DiskANN](https://milvus.io/docs/diskann.md)
-- [GPU_CAGRA](https://milvus.io/docs/gpu-cagra.md)
-- [IVF](https://milvus.io/docs/ivf-flat.md)
-- [IVF_PQ](https://milvus.io/docs/ivf-pq.md)
+- [Milvus index explained: index types by field type](https://milvus.io/docs/index-explained.md)
+- [Milvus metric types](https://milvus.io/docs/metric.md)
+- [Milvus HNSW](https://milvus.io/docs/hnsw.md) and [IVF_FLAT](https://milvus.io/docs/ivf-flat.md)
+- [Milvus DiskANN](https://milvus.io/docs/diskann.md), [GPU_CAGRA](https://milvus.io/docs/gpu-cagra.md), and [IVF_PQ](https://milvus.io/docs/ivf-pq.md)
+- [Milvus MINHASH_LSH](https://milvus.io/docs/minhash-lsh.md) and [FAISS passthrough](https://milvus.io/docs/faiss.md)
+- [Nearest neighbor search (Wikipedia)](https://en.wikipedia.org/wiki/Nearest_neighbor_search)
+- [Malkov and Yashunin, Hierarchical Navigable Small World graphs (arXiv:1603.09320)](https://arxiv.org/abs/1603.09320)
+- [Aumüller et al., ANN-Benchmarks (arXiv:1807.05614)](https://arxiv.org/abs/1807.05614)

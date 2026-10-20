@@ -5,56 +5,107 @@ topic: "retrieval"
 order: 15
 ---
 
-Metadata filtering restricts which records are eligible for vector search. Typical constraints include tenant, language, document version, timestamp, or product category. Similarity ranks eligible candidates; it does not decide whether a record is authorized or current.
+Metadata filtering restricts a vector search to records that satisfy structured conditions, such as `tenant_id == 42`, `lang == "en"`, or `published_at > 2025-01-01`, and then ranks only those records by vector similarity. Where the filter is applied matters a great deal. **Post-filtering** (search first, discard non-matching hits afterward) is simple but can return fewer than k results or miss the best eligible ones. **Pre-filtering** (find eligible records first, then search among them) returns correct results but can be expensive for broad filters. Modern engines, including Milvus, apply the filter *during* the ANN search so the index only considers eligible records, and back that with scalar indexes and partitioning so the filter itself stays cheap.
 
 ![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
 
-## Decide where the constraint must hold
+A useful way to think about it: the filter decides **eligibility**, and similarity decides **order** among eligible records. Similarity should never decide whether a user is allowed to see a document or whether a document is current.
 
-Applying a mandatory condition during retrieval is different from fetching a global top-k and discarding disallowed hits afterward. Post-filtering can leave too few results and can miss eligible neighbors that never entered the candidate set. For access control, the application must enforce the policy consistently on every request, including reranking and source retrieval.
+## Pre-filtering vs post-filtering vs in-search filtering
 
-Milvus supports filtered search using scalar expressions. The deployed version and index configuration determine the available execution strategies. Use documented operators and field types rather than constructing unvalidated expressions from arbitrary user input.
+| Strategy | How it works | Strength | Weakness |
+| --- | --- | --- | --- |
+| Post-filtering | Run top-k ANN on the whole collection, then drop results that fail the filter | Fast and simple; filter cost is tiny | Selective filters leave too few results; eligible neighbors outside the first k are never seen |
+| Pre-filtering with brute force | Evaluate the filter, then compute exact distances to every eligible record | Exact and complete | Cost grows with the number of eligible records; slow for broad filters |
+| In-search (filtered ANN) | Evaluate the filter into an eligibility set, then traverse the ANN index skipping ineligible records | Correct results at ANN speed across a wide range of selectivities | Very restrictive filters can make graph traversal work harder to find enough neighbors |
 
-## Understand the performance effect
+### Why post-filtering breaks
 
-Filter evaluation has a cost, and selectivity changes the candidate population. A highly selective filter may make a small exact search attractive; other combinations of filters and approximate indexes may require more work to find enough candidates. A filter does not universally make search faster or slower.
+Suppose a filter matches 1% of the collection and you want 10 results. A plain top-10 search returns, on average, 0.1 eligible results. To expect 10 eligible results you would need to retrieve around 1,000 candidates, and even then the true 10 nearest eligible records might sit at rank 1,500. Raising k helps, but the required k depends on selectivity, which varies per query and per tenant. That is why post-filtering is unsafe for mandatory constraints like tenant isolation, and why it quietly degrades recall for selective business filters.
 
-Scalar indexes, field layout, and tenant organization can influence this behavior. Benchmark the actual distributions: a filter matching half the corpus is not representative of one matching a few dozen records. Include skewed tenants and empty-result cases.
+### Why in-search filtering is harder than it looks
 
-## Test correctness and quality together
+Graph indexes such as HNSW are built over all vectors. When a filter removes most nodes, the remaining eligible nodes may be poorly connected, so the search either walks through many ineligible nodes or stops early. Research systems such as ACORN modify HNSW construction and traversal to stay efficient under arbitrary predicates. In practice, engines combine several tactics: brute-force search when very few records qualify, filtered graph traversal when many do, and data layout (partitions) that removes whole regions of data before the search starts.
 
-Verify that every returned record satisfies the condition, that eligible relevant records are still found, and that fewer than k eligible records produces an appropriate response. Measure recall against the correctly filtered exact baseline. Keep the filter, corpus snapshot, and k fixed when comparing index configurations, otherwise an apparent quality improvement may simply reflect a different candidate set.
+## How filtering works in Milvus
 
-## How Milvus scalar indexes accelerate the filter side
+Milvus accepts a boolean `filter` expression on any search. Fields can be scalars, JSON paths, or arrays, and expressions support comparison (`==`, `!=`, `<`, `>=`), `IN`, `LIKE`, `AND`/`OR`/`NOT`, JSON and array operators, and text-match functions.
 
-Eligibility and relevance are two different jobs: a scalar index speeds up *which records are eligible*, while the vector index still handles *how eligible records are ranked*. Milvus builds scalar indexes on metadata fields such as tenant, product, timestamp, category, or document state, and the right structure depends on the predicate and the value distribution rather than being a one-size-fits-all choice. An inverted index suits equality and set-membership predicates on moderate-to-high-cardinality fields; a bitmap index suits low-cardinality fields with frequent conjunctions or disjunctions (a boolean flag or small enum); a sorted index suits range predicates on fields with a natural order, such as timestamps or numeric scores.
+```python
+results = client.search(
+    collection_name="kb",
+    data=[query_vector],
+    anns_field="embedding",
+    limit=10,
+    filter='tenant_id == 42 and lang == "en" and published_at > 1735689600',
+    output_fields=["title", "published_at"],
+)
+```
 
-Cardinality and skew matter more than the raw index type. A field with millions of distinct values behaves differently from a boolean flag, and a single popular value can dominate traffic even when the field's overall cardinality looks modest — so measure the conjunctions and disjunctions the application actually submits, not just single-predicate selectivity in isolation. A fast scalar-predicate evaluation also does not guarantee a fast or high-recall downstream ANN stage: the selective filter still changes the eligible vector population the index has to search, so benchmark the combined filter-plus-vector-search path, not the scalar lookup alone.
+**Standard filtering** is the default. Milvus first finds the entities that match the expression, then runs the ANN search restricted to them, and returns the top k. This gives correct, complete results for mandatory constraints.
 
-Scalar indexes are a maintenance cost as well as a performance lever. Each one consumes build resources and storage and can slow ingestion or updates, so index the metadata fields that matter to serving or access control rather than every column by default, and keep correctness logic (who is allowed to see a record) independent of whether an index happens to exist — a missing scalar index should never become a reason to skip the filter itself.
+**Iterative filtering** is an alternative for very complex or expensive expressions. With `search_params={"hints": "iterative_filter"}`, Milvus runs the vector search in batches and applies the filter only to the entities it returns, stopping once it has k matches. This reduces how many rows the expression is evaluated on, but because it walks results in sequence it can be slow when few results pass the filter. Use it when the expression is costly and broadly satisfied, not when it is highly selective.
 
-## Example to test
+**Filter templating** lets you write the expression with placeholders and pass values separately. Milvus spends less time parsing large expressions such as long `IN` lists, and your application no longer has to splice user-supplied values into filter strings:
 
-Create two tenants with almost identical passages. Query as each tenant and inspect returned IDs under the mandatory server-side predicate. A perfect relevance score does not compensate for a result from the wrong tenant. Separately, vary predicate selectivity on a scalar-indexed field while holding vectors and queries fixed, to see whether a predicate that returns few rows is still costly because of its evaluation path.
+```python
+client.search(
+    collection_name="kb",
+    data=[query_vector],
+    limit=10,
+    filter="tenant_id == {tid} and category in {cats}",
+    filter_params={"tid": 42, "cats": ["billing", "security"]},
+)
+```
 
-## From concept to implementation
+## Speeding up the filter with scalar indexes
 
-- [Implement eligible vector retrieval](https://milvus.io/docs/filtered-search.md).
-- [Create indexes on scalar fields](https://milvus.io/docs/index-scalar-fields.md).
+Without an index, Milvus evaluates the expression by scanning field values. Scalar indexes make that lookup fast. Choose by field type and predicate:
 
-## Continue learning
+| Index | Best for | Notes |
+| --- | --- | --- |
+| `INVERTED` | Equality and `IN` on strings and numbers; most general choice | Supports BOOL, integer types, FLOAT, DOUBLE, VARCHAR, JSON paths, and ARRAY |
+| `BITMAP` | Low-cardinality fields such as status, region, or flags | Docs suggest cardinality under about 500; not for FLOAT, DOUBLE, JSON, or primary keys |
+| `STL_SORT` | Range filters on numeric and `TIMESTAMPTZ` fields (`>`, `<=`, `IN`) | Sorted values allow binary search for range bounds; cannot be memory-mapped |
+| `NGRAM` | `LIKE` patterns such as `title LIKE "%vector%"` on VARCHAR or JSON paths | Splits text into n-grams to avoid full scans |
+| `Trie` | Prefix lookups on VARCHAR | |
 
-- [How should an agent choose between vector, keyword, and structured search?](/ai-quick-reference/how-agents-choose-retrieval-tools)
-- [What is vector search?](/ai-quick-reference/what-is-vector-search)
-- [How should you design multi-tenancy for vector search?](/ai-quick-reference/what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure)
-- [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
-- [How does a sparse inverted index differ from dense ANN?](/ai-quick-reference/how-sparse-inverted-indexes-work)
+Cardinality and skew matter more than the index name. A field with a single dominant value behaves differently from a uniformly distributed one, so measure the conjunctions your application actually sends, not single predicates in isolation. Each index also costs build time, memory, and ingest overhead, so index the fields used in filters on hot paths or for access control, not every column.
 
-## Implementation guides and sources
+## Partition keys for tenant and category isolation
 
-- [Filtered search](https://milvus.io/docs/filtered-search.md)
-- [Filter expression operators](https://milvus.io/docs/basic-operators.md)
-- [Create indexes on scalar fields](https://milvus.io/docs/index-scalar-fields.md)
-- [Inverted scalar indexes](https://milvus.io/docs/inverted.md)
-- [Bitmap index behavior](https://milvus.io/docs/bitmap.md)
-- [Sorted scalar indexes](https://milvus.io/docs/stl-sort.md)
+If most queries filter on one field, such as tenant, customer, or product line, make it the **partition key** (`is_partition_key=True` when adding the field). Milvus hashes records into partitions by that value (16 partitions by default, configurable with `num_partitions`), and a search whose filter names the key only scans the matching partitions. This turns "filter one tenant out of millions of rows" into "search a small slice", which is both faster and more predictable than filtering a shared index. It also works well for deletes scoped to one key. For deeper design choices, see [multi-tenancy for vector search](/ai-quick-reference/what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure) and [authentication, RBAC, and tenant filters](/ai-quick-reference/milvus-security-rbac).
+
+## How selectivity affects performance
+
+Selectivity, the fraction of records that pass the filter, is the main performance variable:
+
+- **Broad filters (most records pass):** close to unfiltered search speed; the filter is cheap if indexed.
+- **Moderate filters:** filtered ANN still works well; check recall against an exact baseline.
+- **Very selective filters (a tiny fraction passes):** only a few vectors qualify, so exact search over them is cheap, but a graph traversal may struggle to find them. A partition key or a filter that prunes whole segments helps most here.
+
+A filter does not universally make search faster or slower. Benchmark with your real distributions, including skewed tenants, rare categories, empty results, and the same `limit` the application uses.
+
+## Testing correctness and quality together
+
+1. **Correctness:** every returned record must satisfy the filter. Create two tenants with near-identical documents and confirm neither ever sees the other's records, including after reranking and when fetching source text.
+2. **Completeness:** compare against an exact baseline (a `FLAT` index, same filter and data) to measure filtered Recall@k. See [why use a FLAT baseline](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline).
+3. **Shortfall behavior:** decide what the application does when fewer than k eligible records exist.
+4. **Performance:** sweep selectivity on an indexed field while holding vectors and queries fixed, and record p50/p99 latency. A predicate that returns few rows can still be costly if its evaluation path is slow.
+
+Filtering also interacts with sparse and hybrid retrieval; the same eligibility rules should apply to every path, as described in [how sparse inverted indexes work](/ai-quick-reference/how-sparse-inverted-indexes-work). For choosing between vector, keyword, and structured lookups in an agent, see [how agents choose retrieval tools](/ai-quick-reference/how-agents-choose-retrieval-tools).
+
+To try it, load sample data with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md) and follow the [filtered search guide](https://milvus.io/docs/filtered-search.md). On managed infrastructure, [Zilliz Cloud](https://zilliz.com/cloud) runs the same filtering and partition-key features without operating the cluster yourself.
+
+## Sources and further reading
+
+- [Milvus: filtered search (standard and iterative filtering)](https://milvus.io/docs/filtered-search.md)
+- [Milvus: basic filter operators](https://milvus.io/docs/basic-operators.md)
+- [Milvus: filter templating](https://milvus.io/docs/filtering-templating.md)
+- [Milvus: index scalar fields](https://milvus.io/docs/index-scalar-fields.md)
+- [Milvus: INVERTED index](https://milvus.io/docs/inverted.md)
+- [Milvus: BITMAP index](https://milvus.io/docs/bitmap.md)
+- [Milvus: STL_SORT index](https://milvus.io/docs/stl-sort.md)
+- [Milvus: NGRAM index](https://milvus.io/docs/ngram.md)
+- [Milvus: use partition key](https://milvus.io/docs/use-partition-key.md)
+- [Patel et al., ACORN: Performant and Predicate-Agnostic Search Over Vector Embeddings and Structured Data](https://arxiv.org/abs/2403.04871)

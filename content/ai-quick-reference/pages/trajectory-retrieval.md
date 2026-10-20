@@ -5,51 +5,101 @@ topic: "rag-agents"
 order: 76
 ---
 
-An agent trajectory is an ordered record of an agent interacting with a task and environment: observations, tool calls, externally visible actions, results, and an outcome label. Trajectory retrieval finds previous agent experiences that may help with a current task or investigation. Similarity is a candidate signal: an episode with similar wording can still use an incompatible tool version, belong to another tenant, or end in failure.
+Vector search can find past agent runs that resemble the current task, so an agent can reuse what worked (as few-shot examples or hints) and avoid what failed, and so engineers can find similar incidents when debugging. The recipe: store each trajectory, meaning the ordered steps of observations, tool calls, results, and an outcome, in a trace store; index searchable representations of it (a task embedding, a summary embedding, and optionally embeddings of individual step windows); filter by applicability (same tools, environment, tenant, outcome); retrieve diverse matches; and pass the agent a compact, verified version rather than raw logs. Similarity finds candidates; metadata decides whether they apply.
 
-## Represent the trajectory before retrieving it
+## What is a trajectory, and why retrieve one?
 
-Keep the authoritative event sequence in a store suited to replay and audit, and build searchable records that point back to it. A natural-language summary is useful for discovery, but it can omit a decisive tool error or misstate the relationship between an action and its outcome. A practical schema includes trajectory ID, step ID, parent or branch ID, task ID, policy revision, environment revision, tool name, timestamps, result references, and outcome status — suggested fields, not a prescribed Milvus or training-framework API.
+A trajectory is the record of one agent attempt at a task: the instruction, each reasoning step, each tool call with its arguments and result, observations from the environment, and the final outcome. Retrieval puts that history to work at run time:
 
-Retries, parallel tool calls, and alternative attempts can make wall-clock ordering insufficient, so record causal relationships and attempt identity alongside the fields above. Distinguish a successful tool execution from a successful overall task, and retain incomplete or failed outcomes with explicit labels rather than dropping them.
+- **Few-shot exemplars.** Showing the model a complete, successful run on a similar task often helps more than abstract instructions. Synapse (Zheng et al.) used retrieved full trajectories as exemplars for computer-control tasks and reported a 99.2% average success rate on MiniWoB++ and a 56% relative improvement on Mind2Web.
+- **Learning from experience without fine-tuning.** ExpeL (Zhao et al.) lets agents collect experiences on training tasks, extract insights, and recall similar successful trajectories at inference, which works even with API-only models.
+- **Failure avoidance.** Retrieving a similar failed attempt, with its error, warns the agent away from a known dead end.
+- **Debugging and analysis.** Engineers search for "runs that look like this broken one" across thousands of traces.
+
+This is different from choosing rollouts for a training dataset, which is offline curation; see [how to select rollouts for offline training](/ai-quick-reference/how-to-select-rollouts-for-offline-training). It is also a specialized form of episodic memory, described in [types of agent memory](/ai-quick-reference/what-are-the-types-of-agent-memory).
+
+## What should you embed?
+
+Raw traces are long, noisy, and full of IDs and boilerplate, so embed derived text at the level you want to match:
+
+| Representation | Text that is embedded | Matches | Use for |
+| --- | --- | --- | --- |
+| Task | The instruction or user goal | "Similar problem" | Finding exemplars for a new task |
+| Episode summary | Goal + approach + outcome in a few sentences | "Similar problem solved a similar way" | Few-shot selection, analysis |
+| Step window | 2-5 consecutive steps: observation, action, result | "Similar situation mid-task" | Recovering from a specific error |
+| Failure summary | Error, cause, what fixed it | "Similar failure" | Debugging, avoidance hints |
+
+Task and summary embeddings find related runs; step-window embeddings find the precise moment ("the test runner returned exit code 137") inside a long run. Keep them linked by `trajectory_id` and `step_index` so a hit on a step can be expanded to its neighbors. Add a BM25 full-text field over step text if agents need to match exact error strings or tool names; [hybrid search](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it) then covers both.
+
+## A schema for trajectory retrieval in Milvus
+
+Keep the authoritative event sequence where it can be replayed and audited (a trace store, log system, or object storage), and index pointers to it:
+
+| Field | Purpose |
+| --- | --- |
+| `id` (primary key) | Row ID for an episode or step record |
+| `trajectory_id`, `step_index`, `level` (`episode` / `step`) | Linking steps to episodes |
+| `task_id`, `task_family` | Grouping and coverage |
+| `tenant` | Isolation; a good partition key |
+| `policy_version`, `env_version`, `tool_versions` | Applicability filters |
+| `outcome` (`success`, `failure`, `infra_error`), `reward` | Choosing positive or negative examples |
+| `text` | The summary or step text that was embedded |
+| `embedding` | Similarity search |
+| `trace_uri` | Pointer to the full trace |
+
+Milvus also supports arrays of structs, which can hold an ordered list of steps inside one record when you want a whole trajectory as a single entity.
 
 ## Filter for applicability first
 
-Include environment, tool or schema revision, tenant, task class, and outcome metadata as needed. Some constraints are strict eligibility rules; others can be ranking features. Keep this distinction explicit so a model cannot use an attractive but inapplicable historical example.
+A similar trajectory can still be useless or dangerous. A fix that worked on library version 2 may break on version 3; a support workflow for one product may be wrong for another; a trajectory from another customer must never be shown. Put hard constraints into the filter, built from trusted application context rather than from model-generated text:
 
-For a coding agent, repository revision and test environment may determine whether a previous fix applies. For a support agent, product and document versions may matter more. Build filters from the current application's trusted context rather than relying on a generated search string to express every restriction.
+```python
+hits = client.search(
+    collection_name="trajectories",
+    data=[embed(current_task)],
+    anns_field="embedding",
+    filter=(f'tenant == "{tenant}" and level == "episode" and outcome == "success" '
+            f'and env_version == "{env_version}"'),
+    group_by_field="trajectory_id", group_size=1, limit=5,
+    output_fields=["trajectory_id", "text", "reward", "trace_uri"],
+)
+```
 
-## Retrieve at the right level
+Softer signals such as recency, reward, or number of steps are better used as reranking features than as filters.
 
-Whole-episode embeddings help locate broadly similar tasks; step or short-window embeddings can recover a specific failure, observation, or recovery action. Keep both connected by stable IDs when the workload needs each level. Use episode summaries to find related tasks and step windows to inspect specific transitions. Return enough neighboring events to interpret the retrieved action — a tool call without its observation and result can be misleading.
+## Retrieve diverse, readable examples
 
-Avoid letting one long episode fill the entire candidate list. Where supported, grouping or an application-level diversity rule can select results from distinct trajectories. Then rerank by applicability and evidence quality, not only similarity. Preserve stable references so the agent or reviewer can inspect the original sequence.
+- **One result per trajectory.** Long runs produce many similar step records; grouping search with `group_by_field="trajectory_id"` returns the best match from each distinct run instead of five steps from one.
+- **Mix outcomes deliberately.** For exemplars, use mostly successes. For "what not to do", add one similar failure with its error and cause, clearly labeled.
+- **Expand around step hits.** When a step window matches, fetch neighboring steps by `trajectory_id` and `step_index` with a scalar `query`, so the agent sees the observation and result, not just the action.
+- **Rerank by applicability.** A cross-encoder or a short LLM check ("does this example's setup match the current task?") filters near-misses before they reach the prompt.
 
-## Evaluate transfer rather than resemblance
+## Present trajectories to the agent compactly
 
-Create tasks where useful prior experience is known, including similar-looking negative examples. Measure whether retrieved trajectories improve completion, reduce tool cost, or accelerate debugging. Check cases with failed attempts, obsolete procedures, and contradictory outcomes.
+Full traces can run to tens of thousands of tokens. Compress before inserting: keep the goal, the key actions and their arguments, the decisive observations, and the outcome; drop repeated reads and verbose tool output. Two or three good exemplars usually beat ten mediocre ones. Label them as past examples, not instructions.
 
-Treat returned actions as historical evidence, not automatic execution authority. If a trajectory contains a command that changed production data, retrieval alone should not authorize repeating it. Track how examples influence the current plan and verify resulting actions under the current tool contract. The best retrieval policy finds applicable experience while preserving the distinction between remembering an event and deciding what to do now.
+Treat retrieved actions as evidence, not permission. If a past run deleted files or changed production data, retrieval must not authorize repeating it; the current tool policy and approvals still apply.
 
-## Example to test
+## How do you know retrieval helps?
 
-Retrieve a successful workflow and a similar failure under matching tool and policy versions. Compare their preconditions and outcomes before reusing either. High trajectory similarity alone cannot confirm that an action is valid in the current environment.
+Compare the agent with and without trajectory retrieval on a held-out task set. Measure task success, steps and tokens per task, tool errors, and time to completion. Include traps: tasks that look like a past success but need a different approach, tasks whose matching exemplars are from an obsolete tool version, and tasks with no useful prior. Inspect which exemplars were retrieved in failures; the usual culprits are missing applicability filters or summaries that hide the step that mattered.
 
-## From concept to implementation
+To build a prototype, create the collection above with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md), index a few hundred past runs, and plug the search into an agent loop such as the [agentic RAG with LangGraph tutorial](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md). For a production example of retrieval behind AI assistants, see [Read AI](https://zilliz.com/customers/read-ai).
 
-- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
-- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
+## Related reading
 
-## Continue learning
-
-- [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
 - [How should you select rollouts for an offline agent-training dataset?](/ai-quick-reference/how-to-select-rollouts-for-offline-training)
+- [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
+- [How should you structure agent memory in Milvus?](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus)
 - [How should an agent memory system handle corrections, expiry, and deletion?](/ai-quick-reference/how-to-correct-expire-and-delete-agent-memory)
+- [How can vector search improve codebase retrieval for coding agents?](/ai-quick-reference/vector-search-for-coding-agents)
 
-## Implementation guides and sources
+## Sources
 
-- [Constrain candidate retrieval](https://milvus.io/docs/filtered-search.md)
+- [Zheng et al., Synapse: Trajectory-as-Exemplar Prompting with Memory for Computer Control](https://arxiv.org/abs/2306.07863)
+- [Zhao et al., ExpeL: LLM Agents Are Experiential Learners](https://arxiv.org/abs/2308.10144)
+- [Constrain candidate retrieval with filters](https://milvus.io/docs/filtered-search.md)
 - [Diversify results by a grouping field](https://milvus.io/docs/grouping-search.md)
-- [Refine candidate relevance](https://milvus.io/docs/rerankers-overview.md)
-- [Agent execution data context](https://github.com/microsoft/agent-lightning)
+- [Refine candidate relevance with rerankers](https://milvus.io/docs/rerankers-overview.md)
 - [Represent related elements in StructArray](https://milvus.io/docs/array-of-structs.md)
+- [Agent execution data context (Agent Lightning)](https://github.com/microsoft/agent-lightning)

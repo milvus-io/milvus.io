@@ -5,42 +5,85 @@ topic: "data"
 order: 91
 ---
 
-A scalable embedding pipeline must preserve representation semantics while reading, batching, encoding, and publishing many source records toward a Milvus import, not just maximize encoder throughput. A high-throughput GPU worker is not useful if the files it produces have missing IDs, mixed model revisions, or inconsistent dimensions when Milvus tries to load them.
+A scalable embedding pipeline splits the corpus into partitions, runs batched model inference on a pool of GPU (or CPU) workers, writes vectors together with stable IDs and model metadata, and loads the result into a vector database in bulk. The design goals are throughput, idempotent retries, and one consistent model version per index. With Milvus, the last stage is the one most teams under-design: the shape of the files your workers write decides whether a billion-vector load is a single bulk-import job or a week of throttled inserts.
 
 ![Version the representation before indexing it](/images/ai-reference/encoding.svg)
 
-## Shape output for bulk import, not just for the encoder
+## What does an embedding pipeline at scale look like?
 
-Milvus's bulk-import path expects Parquet, JSON, or CSV files whose rows match the target collection's schema: the same field names, the same vector dimension, and types that satisfy any `NOT NULL` or default-value constraints. Design the pipeline's output stage around that contract from the start. Each distributed worker should write files sized within the importer's documented per-file limits, with a stable `source_id` (and `chunk_id` if a document fans out into several rows) as a scalar field alongside the vector, so a partial or re-run import can be reconciled against what is already indexed.
+| Stage | What happens | Typical bottleneck |
+|---|---|---|
+| Read and partition | List source objects, assign work units (files, row ranges, shards) | Object-store listing, small files |
+| Pre-process | Parse, clean, chunk, tokenize | CPU; PDF and HTML parsing |
+| Encode | Batched forward pass of the embedding model | GPU memory and compute |
+| Validate and write | Check dimension and values, write Parquet with IDs and metadata | Serialization, file size |
+| Load into Milvus | Bulk import files, or stream `insert`/`upsert` | Import concurrency, index build |
+| Verify | Count, sample, run a recall check | Usually skipped, should not be |
 
-Keep document and query encoding instructions compatible with the chosen model, and record tokenization, truncation, normalization, and the model revision as a field on every row. A rolling job that silently mixes two model revisions across files produces a collection where vectors are not comparable, and nothing in the import job itself will flag that.
+Keeping CPU-heavy stages (parsing, tokenization) separate from GPU inference is the single biggest throughput win. If both run in the same process, the GPU idles while the CPU parses PDFs. Frameworks such as Ray Data and Spark make that separation explicit: CPU tasks feed a bounded queue, and a fixed pool of GPU actors consumes it, each holding one loaded copy of the model.
 
-## Batch and backpressure, bounded by the importer downstream
+## How do you maximize encoder throughput?
 
-Ray Data and Spark-based workers can run GPU inference far faster than Milvus can ingest and index the resulting files. Measure source reads, tokenization, model inference, serialization, and file writes separately so the bottleneck is visible, and cap in-flight output files rather than letting a fast encoder stage pile up unbounded Parquet shards waiting on a bulk-import queue. For lower-volume or streaming updates, write through `insert`/`upsert` instead of accumulating files for bulk import, and apply the same batch-size and backpressure discipline against the client's configured RPC limits.
+- **Batch by length.** Sort or bucket inputs by token count so a batch of short sentences is not padded to the length of one long document. Optimal batch size depends on sequence length and GPU memory: very large for short inputs, a few hundred for long passages. Measure it rather than guessing.
+- **Use reduced precision.** FP16 or BF16 inference roughly halves memory and speeds up most transformer encoders with negligible quality change; validate on your own retrieval eval set.
+- **Load the model once per worker.** Use long-lived actors or executors, not a model load per task.
+- **Pick the model for the budget.** A smaller model that is fast enough to re-embed the whole corpus regularly often beats a larger one you can afford to run only once. See [how to choose an embedding model](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy).
+- **Use a serving layer when the model is shared.** If queries and ingestion use the same model, a dedicated inference server keeps versions aligned; [model serving for Milvus](/ai-quick-reference/model-inference-serving) covers that setup.
 
-## Publish a validated, importable dataset
+Back-of-envelope sizing helps. If one GPU encodes *R* chunks per second and the corpus is *N* chunks, the job takes *N / (R × GPUs)* seconds, plus I/O. At a billion chunks, the difference between 2,000 and 10,000 chunks per second per GPU is the difference between a week and a day on a small cluster.
 
-Before handing files to a bulk-import job, check counts, unique logical IDs, dimensions against the collection schema, finite numeric values, and model revisions, then sample a few rows to confirm the source-to-vector mapping is correct. Submit the import, monitor the job's reported state, and verify indexed record counts against the written-file counts rather than trusting job success alone.
+## Make every record reproducible and retry-safe
 
-## Example to test
+Distributed jobs fail partway. Design so that rerunning any work unit produces the same rows:
 
-Fail a worker midway through a source partition, retry it, and reconcile output by stable source ID plus model revision before import. Submit the resulting files as a bulk-import job, then check the collection's row count and a sampled source-to-vector mapping. A successful import job status does not establish that every logical record arrived exactly once.
+- **Deterministic IDs.** Derive the primary key from `source_id` plus `chunk_index` (or a hash of both). A retried partition then overwrites rather than duplicates, provided you load with upsert or deduplicate before import.
+- **Model metadata per row.** Store `embedding_model`, the model revision, and pre-processing settings (truncation length, normalization, any instruction prefix) as scalar fields. Mixing two model revisions in one vector field silently breaks similarity, and nothing in the database can detect it.
+- **Checkpoint at the work-unit level.** Track which partitions finished encoding and which were imported, so a restart resumes rather than starts over.
+- **Normalize consistently.** If the model expects cosine similarity, either L2-normalize vectors before writing or rely on the `COSINE` metric, but do the same thing everywhere.
 
-## From concept to implementation
+## How do you load embeddings into Milvus at scale?
 
-- [Shape pipeline output to match Milvus's bulk-import file contract](https://milvus.io/docs/prepare-source-data.md).
-- [Submit and monitor the bulk-import job that consumes pipeline output](https://milvus.io/docs/import-data.md).
+### Bulk import for backfills and large batches
 
-## Continue learning
+For initial loads and re-embedding the whole corpus, write files and import them rather than calling `insert` billions of times. Milvus bulk import reads Parquet or JSON files from the object-storage bucket the Milvus instance uses. The documented limits are up to 16 GB per file and up to 1,024 files per import request. Each file's columns must match the collection schema: same field names, a vector of exactly the declared dimension, and no primary-key column if the collection uses `auto_id`.
 
-- [How do you choose an embedding model for retrieval?](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy)
-- [How does the Spark-Milvus connector fit into an AI data pipeline?](/ai-quick-reference/how-spark-integrates-with-milvus)
-- [How do you make vector-search and training experiments reproducible?](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments)
-- [How do Arrow and Parquet fit into vector data pipelines?](/ai-quick-reference/how-arrow-and-parquet-fit-vector-data-pipelines)
+The PyMilvus `BulkWriter` handles that formatting for you. `LocalBulkWriter` writes import-ready files to local disk, `RemoteBulkWriter` writes them straight to S3-compatible storage, and its `segment_size` setting (512 MB by default) controls file splitting. A pipeline worker can append rows to a writer as it encodes, then the driver submits the resulting file list:
 
-## Implementation guides and sources
+```python
+from pymilvus.bulk_writer import bulk_import, get_import_progress
 
-- [Distributed batch inference](https://docs.ray.io/en/latest/data/batch_inference.html)
-- [Prepare compatible import records](https://milvus.io/docs/prepare-source-data.md)
-- [Milvus data import workflow](https://milvus.io/docs/import-data.md)
+job = bulk_import(url="http://localhost:19530", collection_name="docs", files=file_batches)
+# poll get_import_progress(url=..., job_id=...) until the state is Completed or Failed
+```
+
+### The Spark connector
+
+If the pipeline already runs on Spark, the [Spark-Milvus connector](/ai-quick-reference/how-spark-integrates-with-milvus) writes a DataFrame directly with `.format("milvus")` and options such as `milvus.collection.name` and `milvus.collection.vectorField`, and its `bulkInsertFromSpark` utility routes large writes through the bulk-import path instead of row inserts.
+
+### Streaming inserts for incremental updates
+
+For new and changed documents after the backfill, call `insert` or `upsert` in batches of a few thousand rows from the workers, with a bounded number of concurrent requests so encoders cannot outrun the database. Use `upsert` with deterministic keys so retries are safe. [Incremental updates](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database) covers versioning and deletes.
+
+### Or let Milvus call the model
+
+For moderate volumes, Milvus 2.6 and later can generate embeddings itself: a `TEXTEMBEDDING` function declared in the schema calls a provider such as OpenAI, Bedrock, Vertex AI, Voyage AI, Cohere, or a Hugging Face TEI endpoint on insert and on query, so you send raw text and Milvus fills the vector field. It removes a whole pipeline stage and keeps query and document encoders in sync, at the cost of less control over batching and GPU utilization. [Your options for generating embeddings alongside Milvus](/ai-quick-reference/milvus-model-functions) compares the approaches.
+
+## Validate before you index, verify after
+
+Before submitting an import, check each file for row count, unique primary keys, the correct dimension, no NaN or infinite values, and a single model revision. After the job reports `Completed`, compare the collection's row count with what the pipeline wrote, fetch a random sample by ID, re-encode its text, and confirm the stored vectors match. Then run a small recall check against a FLAT baseline or a labeled query set. A completed import job means the files were read, not that every logical record arrived exactly once with the right vector.
+
+## Re-embedding the whole corpus
+
+Model upgrades are the reason pipelines get re-run. Write the new vectors into a fresh collection, bulk import, evaluate on a fixed query set, then switch traffic. Keep the old collection until the new one is proven, and record which model produced which collection, as described in [reproducible vector-search experiments](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments). Storing pipeline output as Parquet also lets you re-import without re-encoding; see [how Arrow and Parquet fit vector pipelines](/ai-quick-reference/how-arrow-and-parquet-fit-vector-data-pipelines).
+
+## Next step
+
+Prototype the load path first: generate a few thousand embeddings, write them with `LocalBulkWriter`, and import them into a test collection from the [Quickstart](https://milvus.io/docs/quickstart.md). Once file shape and validation are right, scaling the encoder side is mostly adding workers. For managed ingestion at large scale, [Zilliz Cloud](https://zilliz.com/cloud) provides the same import path as a service.
+
+## Sources and further reading
+
+- [Ray Data: batch inference](https://docs.ray.io/en/latest/data/batch_inference.html)
+- [Milvus: prepare source data with BulkWriter](https://milvus.io/docs/prepare-source-data.md)
+- [Milvus: import data](https://milvus.io/docs/import-data.md)
+- [Milvus: Spark connector](https://milvus.io/docs/integrate_with_spark.md)
+- [Milvus: embedding function overview](https://milvus.io/docs/embedding-function-overview.md)

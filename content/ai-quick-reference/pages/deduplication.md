@@ -5,51 +5,94 @@ topic: "data"
 order: 25
 ---
 
-Exact, fuzzy, and semantic deduplication detect different relationships, and a useful workflow picks the method for the unwanted repetition rather than applying one threshold to every case. Embeddings handle the hardest of the three: finding records that mean the same thing without sharing the same bytes or even most of the same words.
+Embeddings catch the duplicates that hashing misses: records that say the same thing in different words. You encode each record with a model such as a Sentence Transformers checkpoint, then treat any pair whose cosine similarity exceeds a calibrated threshold (often somewhere around 0.9 to 0.95, depending on the model) as a candidate duplicate. At small scale that is a pairwise comparison; at millions of records you need an approximate nearest-neighbor index so each record only checks its closest neighbors. Milvus covers both halves of a modern dedup pipeline: MinHash signatures with a `MINHASH_LSH` index for lexical near-duplicates, and dense vectors with range search for semantic ones.
 
 ![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
 
-## Choose the method for the redundancy type
+## Exact, near-duplicate, and semantic duplicates
 
-Start with deterministic normalization and exact hashes when identical copies are common — byte-identical files need nothing more than a hash comparison. Add shingle-based or MinHash candidate discovery for edits and formatting changes, where most of the text is shared but whitespace, casing, or minor wording differs; see [how MinHash-LSH finds near-duplicate text](/ai-quick-reference/what-is-minhash-lsh) for that technique's depth rather than restating it here. Reach for embeddings when the repetition is paraphrase or meaning-based and the earlier two stages miss it: two records can share almost no tokens and still describe the same fact.
+Duplicates come in three kinds, and each has a cheapest reliable detector.
 
-Keep each transformation versioned and run them as a staged pipeline rather than one generic similarity score. Aggressive normalization can make distinct source records look identical; an embedding can make different facts look similar. Record which stage proposed each duplicate pair so false removals can be diagnosed back to the method that produced them.
+| Kind | Example | Detector | Cost |
+|---|---|---|---|
+| Exact | Same file ingested twice | Hash of normalized content (MD5, SHA-256) | Trivial |
+| Near-duplicate (lexical) | Same article with a different footer, whitespace, or a few edited words | MinHash signatures + LSH, Jaccard similarity on shingles | Low |
+| Semantic | A paraphrase, a translated summary, a reworded FAQ answer | Dense embeddings + cosine similarity | Highest |
 
-## Separate detection from deletion
+Run them in that order. Hashing removes the bulk of trivial copies for almost nothing, MinHash clears templated and lightly edited pages, and the embedding stage only has to reason about what is left. Each stage should tag the pairs it proposes so a bad removal can be traced to the method and threshold that caused it. Large-scale curation toolkits follow the same staging, and research such as SemDeDup found that removing semantic duplicates from a web-scale image-text corpus could drop about half the data with minimal accuracy loss, which is why the embedding stage is worth the compute.
 
-Normalize and hash records when exact equality is the intended rule. For near-duplicates, generate candidates with a suitable representation and similarity search. Sentence Transformers provides paraphrase-mining tools; a persistent vector index can support candidate retrieval as a corpus changes. MinHash-style methods address token-set overlap rather than semantic embeddings, and are a separate stage from either hashing or embedding similarity.
+## How does embedding-based deduplication work?
 
-The candidate score is evidence for review, not an automatic retention policy. Two contract versions can be almost identical while differing in one important obligation. Similar frames in an autonomous-driving dataset can capture distinct events or sensor conditions.
+1. **Normalize and chunk consistently.** Dedup units must match the unit you train on or retrieve: whole documents, passages, or Q&A pairs. Mixing units hides duplicates.
+2. **Embed with one model and normalize.** Use the same model revision for every record and L2-normalize so inner product equals cosine similarity.
+3. **Find candidate pairs.** For each record, retrieve neighbors above the similarity threshold. Brute force is O(N²); clustering first (k-means, then compare only within each cluster, as SemDeDup does) or an ANN index brings it down to roughly O(N · k).
+4. **Group candidates.** Connect pairs into groups, but guard against chaining: A≈B and B≈C does not make A≈C. Prefer grouping around a chosen representative over taking full connected components.
+5. **Pick a survivor and record the decision.** Keep the most authoritative, recent, or highest-quality member, and record the merged IDs, the stage, the score, and the threshold.
 
-## Calibrate a decision rule
+Sentence Transformers ships `paraphrase_mining` and `community_detection` utilities that implement steps 3 and 4 in memory, which is fine for tens or hundreds of thousands of records. Beyond that, or when new records keep arriving, a persistent vector index is the better home for step 3.
 
-Label duplicate and non-duplicate pairs from the real corpus, including hard negatives. Choose thresholds according to the cost of erroneous merges and missed duplicates. Preserve record IDs and source provenance so a decision can be audited or reversed.
+## How to deduplicate with Milvus
 
-If candidates are grouped, define how transitivity is handled. A being similar to B and B to C does not prove that A and C are duplicates. Avoid silently turning a chain of plausible pair matches into one large group with no representative-quality checks — this matters more for MinHash-style connected components than for direct pairwise embedding comparisons, since token-overlap chains tend to connect further than semantic ones.
+### Semantic duplicates: range search over a dense vector field
 
-## Close the loop
+Store the normalized embedding in a `FLOAT_VECTOR` field indexed with `HNSW` or an IVF variant using the `COSINE` metric. Instead of asking for the top *k*, ask for everything inside a similarity band with [range search](/ai-quick-reference/when-to-use-vector-range-search). For `COSINE` and `IP`, `radius` is the exclusive lower bound and `range_filter` the inclusive upper bound:
 
-Record the surviving object, merged IDs, reason, and policy version. Apply an approved curation exclusion to the intended serving or training datasets, and retain source originals and provenance when the retention policy permits. Deduplication does not inherently require physically deleting the authoritative source. An explicit erasure request is a different workflow that must address all required derived copies. Measure precision of proposed merges and inspect false positives before increasing automation. For search products, also verify that deduplication improves result diversity without discarding the authoritative passage needed to answer a query.
+```python
+res = client.search(
+    collection_name="docs",
+    data=[vec],
+    limit=50,
+    filter=f"id != {rec_id}",
+    search_params={"metric_type": "COSINE", "params": {"radius": 0.92, "range_filter": 1.0}},
+    output_fields=["id", "source", "updated_at"],
+)
+```
 
-## Example to test
+Everything returned is a candidate duplicate of `rec_id`. Batch many query vectors per call when sweeping a whole collection. For incremental ingestion, run the same search for each new record before inserting it: if a near-identical record already exists, skip the insert or link the new record to the existing one. That turns deduplication from a periodic batch job into an ingest-time check.
 
-Run hashes on byte-identical files, lexical or MinHash checks on lightly edited text, and semantic candidate retrieval on paraphrases. Keep a reason for each removed pair, tagged with the stage that found it. A single threshold should not decide all three forms of redundancy.
+### Lexical near-duplicates: MinHash and MINHASH_LSH
 
-## From concept to implementation
+Milvus 3.0 adds a `MINHASH` function that turns a `VARCHAR` field into a MinHash signature stored in a `BINARY_VECTOR` field (the dimension is `32 * num_hashes`), and a `MINHASH_LSH` index with the `MHJACCARD` metric for fast Jaccard-similarity lookup:
 
-- [Run paraphrase-mining style candidate retrieval over an indexed corpus](https://milvus.io/docs/range-search.md).
-- [Store deduplication decisions and reasons as dynamic metadata](https://milvus.io/docs/enable-dynamic-field.md).
+```python
+schema.add_function(Function(
+    name="minhash_fn",
+    function_type=FunctionType.MINHASH,
+    input_field_names=["text"],
+    output_field_names=["mh_sig"],
+    params={"num_hashes": 256, "shingle_size": 3},
+))
+```
 
-## Continue learning
+Index parameters such as `mh_lsh_band` trade recall for speed, and the search parameter `mh_search_with_jaccard` re-scores candidates with exact Jaccard similarity. Keeping both `mh_sig` and the dense vector on the same row lets one collection serve both stages. The [MINHASH_LSH guide](/ai-quick-reference/what-is-minhash-lsh) covers tuning.
 
-- [How does MINHASH_LSH help find near-duplicate text?](/ai-quick-reference/what-is-minhash-lsh)
-- [What is data curation, and how can vector search help?](/ai-quick-reference/what-is-data-curation-for-vector-ai)
-- [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
-- [How are embeddings used in document clustering?](/ai-quick-reference/how-are-embeddings-used-in-document-clustering)
-- [How does data quality affect vector retrieval?](/ai-quick-reference/how-does-etl-help-improve-data-quality)
+### Keep dedup decisions in the collection
 
-## Implementation guides and sources
+Add a `dup_status` field (`unique`, `duplicate`, `review`) and a `dup_of` field holding the survivor's primary key, and write decisions with `upsert`. On Milvus 2.6.2 and later, `partial_update=True` updates just those fields without resending the vector. Serving queries then filter with `dup_status != "duplicate"`, while the excluded rows remain available for audit. When the policy calls for physical removal, `client.delete(collection_name="docs", ids=[...])` removes them by primary key. For search results that should show only one hit per source document, [grouping search](https://milvus.io/docs/grouping-search.md) on a `doc_id` field handles display-time redundancy without deleting anything.
 
+## How do you choose the similarity threshold?
+
+There is no universal number. Cosine scores are not comparable across models, and the right cut depends on whether a false merge or a missed duplicate costs more. Calibrate it:
+
+- Sample a few hundred candidate pairs across the similarity range, label them duplicate or not, and plot precision and recall against threshold.
+- Include hard cases: two contract versions differing in one clause, two product pages differing only in size, two dashcam clips that look alike but capture different events. These are the pairs a loose threshold wrongly merges.
+- Run once without removing anything and look at the distribution of nearest-neighbor similarities; a visible bump near the top usually marks the duplicate population.
+- Set separate thresholds per stage and per content type if needed.
+
+## Where embedding deduplication goes wrong
+
+Embeddings measure topical and semantic closeness, not factual identity. Two passages about the same API that give different version numbers can score 0.97. Numbers, negations, dates, and named entities are exactly the details embeddings compress away, so high-stakes corpora (legal, medical, financial) benefit from a second check, such as a cross-encoder or a field-level comparison, before merging. Very short texts also collide easily, so set a minimum length for the semantic stage or use a stricter threshold for short records. Related problems are covered in [entity resolution with vector search](/ai-quick-reference/vector-search-for-entity-resolution) and [how data quality affects vector retrieval](/ai-quick-reference/how-does-etl-help-improve-data-quality).
+
+## Next step
+
+Create a collection with both a dense vector and a MinHash field, load a sample with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md), and compare which duplicates each stage finds. The broader workflow around these decisions is covered in [data curation with vector search](/ai-quick-reference/what-is-data-curation-for-vector-ai).
+
+## Sources and further reading
+
+- [Abbas et al., SemDeDup: Data-efficient learning at web-scale through semantic deduplication (arXiv)](https://arxiv.org/abs/2303.09540)
 - [Sentence Transformers paraphrase mining](https://www.sbert.net/examples/sentence_transformer/applications/paraphrase-mining/README.html)
-- [Deduplication workflow choices](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication)
-- [MinHash-based text representation](https://milvus.io/docs/minhash-function.md)
+- [NeMo Curator: exact, fuzzy, and semantic deduplication](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication)
+- [Milvus range search](https://milvus.io/docs/range-search.md)
+- [Milvus MinHash function](https://milvus.io/docs/minhash-function.md)
+- [Milvus MINHASH_LSH index](https://milvus.io/docs/minhash-lsh.md)
+- [Milvus upsert and partial update](https://milvus.io/docs/upsert-entities.md)

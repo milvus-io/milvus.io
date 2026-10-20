@@ -5,43 +5,80 @@ topic: "data"
 order: 24
 ---
 
-Vector retrieval cannot reliably compensate for missing, stale, duplicated, or incorrectly parsed source material. A good embedding model can assign a high similarity score to the wrong version of a well-written document. That score is not calibrated confidence that the source is current or correct. Data quality therefore needs explicit checks before and after indexing.
+Data quality sets the ceiling on vector retrieval quality. A vector database can only return the chunks it was given, ranked by how similar their embeddings are to the query, so garbled extraction, duplicated content, stale versions, missing metadata, and inconsistent embeddings all flow straight into results. Similarity scores make this worse, not better: a cleanly written but outdated document can score higher than the correct one, and nothing in the score says it is outdated. Improving quality means checking data before it is embedded, validating vectors and metadata when they are loaded, and measuring retrieval on known queries afterward.
 
-## Check the source and extracted content
+## How does bad data show up in vector search results?
 
-Validate that records have stable IDs, meaningful text, usable source locations, and the metadata required by the application. Inspect extraction from tables, scanned pages, code, and mixed-language documents. Empty text, navigation boilerplate, or broken character encoding can produce vectors that are technically valid but operationally useless.
+Each class of data problem has a recognizable symptom at query time.
 
-Track authoritative versions and ownership. Decide whether a correction replaces an existing document or creates a distinct version that remains eligible for some queries. Metadata such as effective date or product version is only useful if the ingestion process populates it correctly and the query path uses it.
+| Data problem | What happens to the vectors | What users see |
+|---|---|---|
+| Boilerplate (headers, nav menus, legal footers) in every chunk | Unrelated chunks become similar to each other | Irrelevant results that "look" on-topic |
+| Broken extraction (scrambled tables, OCR noise, encoding errors) | Vectors encode noise; numbers and names are lost | Correct document exists but never ranks |
+| Duplicates and near-duplicates | Several near-identical vectors crowd the top *k* | Same passage repeated; less coverage |
+| Stale versions left indexed | Old and new versions embed almost identically | Outdated answers cited confidently |
+| Missing or wrong metadata | Filters exclude the right chunk or admit wrong ones | "No results," or results from the wrong tenant or product |
+| Mixed embedding models or settings | Vectors live in incompatible spaces | Erratic ranking that no tuning fixes |
+| Bad chunk boundaries | Answers split across chunks, or chunks too broad | Partial answers, low precision |
 
-## Validate the representation
+The pattern across all of them: the index works correctly on bad input. Raising `ef` or `nprobe`, switching to a bigger model, or adding a reranker cannot recover a passage that was never extracted, was filtered out by a wrong tag, or is outranked by its own stale copy.
 
-Check vector dimension, numeric validity, model version, and preprocessing consistency. Keep query and document encoders compatible. Detect repeated chunks and accidental ingestion of the same source through several connectors. Deduplication needs a retention policy so useful variants are not discarded merely for being similar.
+## Quality dimensions that matter for retrieval
 
-## Make quality measurable
+The classic data-quality dimensions map directly onto a vector pipeline:
 
-Monitor rejected records, extraction failures, ingestion lag, missing metadata, and stale indexed versions. Sample the content behind retrieved IDs rather than looking only at aggregate success counters. Maintain a small, representative set of queries whose expected evidence is known.
+- **Accuracy.** The text in the chunk is what the source actually says. Check extraction, especially tables, scanned pages, and formulas.
+- **Completeness.** Every source that should be searchable is indexed, and every row has the metadata queries depend on.
+- **Consistency.** All vectors in a field come from the same model revision with the same pre-processing and normalization.
+- **Uniqueness.** One authoritative copy per piece of content, or deliberate grouping when copies are kept.
+- **Timeliness.** The indexed version matches the current source, within an agreed lag.
+- **Validity.** Values fit the schema: correct vector dimension, finite numbers, allowed enum values.
 
-When relevance drops, trace a failed query through source content, parsing, chunking, embedding, filtering, and ranking. This makes it possible to fix the responsible stage. Increasing search effort or adding a reranker will not restore a passage that was never extracted or was incorrectly excluded by its metadata.
+## Fix quality before the embedding step
 
-## Example to test
+Cleaning is cheapest before you pay for inference. In the transform stage of your [vector ETL pipeline](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process):
 
-A PDF extraction can preserve every word but scramble a table's rows. Inspect the source around a retrieved numerical statement and record extraction quality separately from embedding quality. Re-embedding corrupted text will preserve the underlying mistake.
+- **Strip repeated chrome.** Detect lines or blocks that appear across many documents and remove them before chunking.
+- **Check extraction output, not just success codes.** Flag pages with very low text density, a high ratio of non-printable characters, or tables that lost their row structure. Route them to a better parser or OCR rather than embedding them.
+- **Drop empty and tiny chunks.** A 12-token chunk of "Click here to continue" becomes a vector that matches many short queries.
+- **Deduplicate.** Exact duplicates by hash, near-duplicates by MinHash or embedding similarity, as described in [embedding-based deduplication](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping).
+- **Chunk on structure.** Split on headings and paragraphs, keep tables intact, and add the document title or section path to each chunk so it carries context. See [choosing chunk size](/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications).
 
-## From concept to implementation
+## Enforce quality at load time with the Milvus schema
 
-- [Define field types and required metadata in the collection schema](https://milvus.io/docs/schema.md).
-- [Validate the source-to-serving data contract before bulk import](https://milvus.io/docs/prepare-source-data.md).
+The collection schema is your data contract, and Milvus enforces it on every insert, upsert, and import.
 
-## Continue learning
+- **Vector dimension.** A `FLOAT_VECTOR` field declares `dim`; rows with the wrong length are rejected, which catches model mix-ups that change dimension.
+- **Typed scalar fields.** Declare `source_id`, `version`, `doc_type`, `language`, `tenant_id`, and `updated_at` as typed fields rather than leaving them in free-form JSON, so wrong types fail fast and filters can use scalar indexes.
+- **Nullable and default values.** Mark truly optional fields `nullable=True`, and give fields like `status` a `default_value`, so missing data is explicit rather than an empty string that a filter quietly mismatches.
+- **Model provenance.** Store `embedding_model` on every row. Dimension checks will not catch two models that happen to share a dimension; a filter like `embedding_model != "bge-m3@v1"` will find the strays.
+- **Primary keys you control.** Use deterministic IDs and `upsert` so retries do not create duplicates; plain `insert` does not check for existing keys.
 
-- [What is data curation, and how can vector search help?](/ai-quick-reference/what-is-data-curation-for-vector-ai)
-- [How does ETL prepare data for vector search?](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process)
-- [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
-- [How do you choose chunk size for RAG?](/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications)
-- [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
+Before a bulk import, validate a sample of the files against the schema: row counts, unique keys, dimensions, no NaN or infinite values. The [Milvus source-data guide](https://milvus.io/docs/prepare-source-data.md) describes the file format the importer expects.
 
-## Implementation guides and sources
+## Use vector search itself to find quality problems
 
-- [Prepare source data](https://milvus.io/docs/prepare-source-data.md)
-- [Schema validation](https://milvus.io/docs/schema.md)
-- [RAG data flow](https://milvus.io/docs/build-rag-with-milvus.md)
+Milvus is also a good tool for auditing the data in it:
+
+- **Near-duplicate sweep.** [Range search](/ai-quick-reference/when-to-use-vector-range-search) with a high similarity floor (for example `radius` 0.95, `range_filter` 1.0 under `COSINE`) lists clusters of near-identical chunks.
+- **Boilerplate detector.** A chunk that appears in the top results for a large share of unrelated test queries is usually boilerplate or a degenerate vector.
+- **Stale-version check.** `query(filter='source_id == "policy-17"', output_fields=["version"])` shows whether more than one version is still live.
+- **Metadata coverage.** If `doc_type` has `default_value="unknown"`, then `query(filter='doc_type == "unknown"')` lists records whose metadata was never populated and that type filters will never match.
+- **One result per source.** [Grouping search](https://milvus.io/docs/grouping-search.md) on `source_id` keeps a single document from filling every slot while you fix duplicates upstream.
+
+## How do you measure whether data quality is good enough?
+
+Keep a small, fixed set of real queries with known correct chunks and track recall@k and MRR on it after every pipeline change. When a query fails, trace it backward through ranking, filtering, embedding, chunking, and extraction until you find the stage that lost the answer, and fix that stage. Alongside retrieval metrics, monitor operational signals: extraction failure rate, rejected rows at import, chunks per document, duplicate rate, ingestion lag, and the count of stale versions still indexed. Methods are covered in [how to evaluate retrieval quality](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved).
+
+## Next step
+
+Define the schema with typed metadata and model provenance, load a sample corpus with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md), and run the duplicate and stale-version checks above on it. The [RAG tutorial](https://milvus.io/docs/build-rag-with-milvus.md) shows the full data flow these checks plug into, and [data curation with vector search](/ai-quick-reference/what-is-data-curation-for-vector-ai) covers turning the findings into reviewable decisions.
+
+## Sources and further reading
+
+- [Milvus: collection schema](https://milvus.io/docs/schema.md)
+- [Milvus: prepare source data](https://milvus.io/docs/prepare-source-data.md)
+- [Milvus: range search](https://milvus.io/docs/range-search.md)
+- [Milvus: grouping search](https://milvus.io/docs/grouping-search.md)
+- [Milvus: insert entities](https://milvus.io/docs/insert-update-delete.md)
+- [Milvus: build RAG with Milvus](https://milvus.io/docs/build-rag-with-milvus.md)

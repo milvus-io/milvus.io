@@ -5,45 +5,86 @@ topic: "production"
 order: 29
 ---
 
-Multi-tenancy lets several customers or teams share infrastructure while preserving the required data and workload isolation. Three concerns should be considered separately: which records a tenant can access, how much load one tenant can impose on others, and how tenants are managed over their lifecycle.
+Multi-tenancy in a vector database means serving many customers, teams, or applications from shared infrastructure while keeping each tenant's data, performance, and lifecycle separate. The core design choice is where to draw the tenant boundary. Milvus supports four levels: one **database** per tenant, one **collection** per tenant, one **partition** per tenant, or a **partition key** field that maps many tenants into a shared collection. Moving down that list lets you host far more tenants at lower cost, while moving up gives you stronger isolation, per-tenant schemas, and native access control.
 
 ![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
 
-## Choose an isolation boundary
+## What are the multi-tenancy strategies in Milvus?
 
-Milvus documents database-, collection-, partition-, and partition-key-based approaches. These offer different trade-offs in management overhead, scale, schema flexibility, and isolation. Evaluate the options available in your deployment rather than treating one collection per tenant or one shared collection as universally correct.
+The Milvus docs compare the four strategies along the dimensions that usually decide the question:
 
-Logical separation is not automatically an authorization system. The application must enforce tenant identity and eligibility on every search, query, source fetch, and reranking path. A missing filter in one code path can defeat an otherwise sensible schema.
+| | Database per tenant | Collection per tenant | Partition per tenant | Partition key |
+|---|---|---|---|---|
+| Default tenant ceiling | 64 databases (`maxDatabaseNum`) | 65,536 collections (`maxCollectionNum`) | 1,024 partitions per collection | Millions of tenants |
+| Data isolation | Physical | Physical | Physical | Physical + logical (tenants share partitions) |
+| Native RBAC per tenant | Yes | Yes | No | No |
+| Schema per tenant | Fully independent | Independent | Shared | Shared |
+| Search performance | Strong | Strong | Medium | Medium |
+| Hot/cold tenant handling | Supported | Supported | Supported | Not currently supported |
+| Cross-tenant search | No | No | Yes | Yes |
 
-## Account for skew
+The ceilings for databases and collections are defaults you can raise, but each collection carries metadata, load state, and memory overhead, so a cluster with tens of thousands of small collections behaves differently from one with a few large ones.
 
-Tenant counts alone do not describe the workload. A few tenants may hold most of the data or generate most requests. Include large, small, idle, and bursty tenants in capacity tests. Measure tail latency and throughput while one tenant performs heavy ingestion or queries.
+## How do you choose between them?
 
-Define quotas, rate limits, and resource policies where needed. Keep operational tasks such as backup, export, deletion, and re-embedding in the design. A layout that is efficient for search can still be awkward when a customer needs a complete data export or removal.
+Work through three questions in order.
 
-## Validate the chosen design
+**1. Is this a hard compliance boundary?** If tenants are separate enterprise customers with contractual or regulatory isolation, need different schemas or embedding models, or must be restorable and deletable on their own, use database- or collection-per-tenant. You get native RBAC, independent indexes, and simple per-tenant export and drop. If the requirement is truly "separate infrastructure," a dedicated cluster, or a [BYOC deployment](/ai-quick-reference/managed-vector-database-byoc-vs-self-hosted), is the next step up.
 
-Test cross-tenant negative cases, onboarding, schema changes, tenant deletion, and failure recovery. Benchmark representative tenant-size distributions with the actual filter strategy. Document which isolation guarantees come from Milvus configuration, which come from application logic, and which require separate infrastructure. This makes the trade-off reviewable as the product grows.
+**2. How many tenants, and how skewed?** For thousands to millions of users of one SaaS product (per-user notes, per-workspace documents, agent memories), partition key is usually the right default. Declare a scalar field with `is_partition_key=True`; Milvus hashes tenant values into a fixed set of partitions (16 by default, configurable with `num_partitions`) and prunes the search to the matching partition when you filter on the key.
 
-## Example to test
+**3. Do a few tenants dominate?** Real tenant distributions are skewed: a handful of tenants often hold most of the data and traffic. A hybrid works well here: put the large tenants in their own collections and the long tail in a shared partition-key collection, with a routing table in your application that knows which is which.
 
-Load similar documents for two tenants and verify every direct, framework, and agent retrieval path. Add a test for omitted filters. Isolation must hold through the application boundary rather than depending on the model remembering a tenant instruction.
+Partition-per-tenant sits in the middle. It gives physical separation and the ability to load and release individual tenants, but the 1,024-per-collection limit caps it, and partition key has largely replaced it for large tenant counts.
 
-## From concept to implementation
+## How does partition key search work in practice?
 
-- [Implement eligible vector retrieval](https://milvus.io/docs/filtered-search.md).
-- [Make the metadata contract explicit](https://milvus.io/docs/schema.md).
+```python
+schema.add_field("tenant_id", DataType.VARCHAR, max_length=64, is_partition_key=True)
 
-## Continue learning
+client.search(
+    collection_name="docs",
+    data=[query_vector],
+    filter='tenant_id == "acme" && doc_type == "policy"',
+    limit=10,
+)
+```
 
-- [How do authentication, RBAC, and tenant filters protect Milvus applications?](/ai-quick-reference/milvus-security-rbac)
-- [How should you compare managed vector databases, BYOC, and self-hosted Milvus?](/ai-quick-reference/managed-vector-database-byoc-vs-self-hosted)
-- [How should you design evidence retrieval for healthcare agents?](/ai-quick-reference/vector-search-for-healthcare-evidence)
-- [How do metadata filters interact with vector search?](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance)
-- [What determines vector-database scalability?](/ai-quick-reference/how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability)
-- [How do you compare managed and self-hosted vector-search costs?](/ai-quick-reference/what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store)
+The filter on `tenant_id` is what makes the search both correct and fast. The key value cannot be empty or null, so every record has a tenant. You can also filter on several tenants with `tenant_id in ["a", "b"]` when cross-tenant search is a feature.
 
-## Implementation guides and sources
+For large shared collections, **partition key isolation** goes further. Setting the collection property `partitionkey.isolation` to true at creation makes Milvus build a separate index per partition key value, so a tenant's search never walks other tenants' graph neighborhoods. It currently applies to HNSW indexes, and each search filter must target exactly one partition key value. Research on multi-tenant ANN indexing, such as [Curator](https://arxiv.org/abs/2401.07119), frames the same trade-off: a shared index saves memory but slows selective tenant queries, while per-tenant indexes are fast but memory-hungry.
+
+## Isolation is a security property, not just a layout
+
+With database- and collection-level tenancy, you can grant each tenant's service identity access to only its own resources using [Milvus RBAC](/ai-quick-reference/milvus-security-rbac). With partitions and partition keys, RBAC cannot separate tenants inside the collection, so the tenant filter is the security boundary, and your application must own it:
+
+- Take the tenant ID from the authenticated session on the server, never from request parameters or an LLM's tool arguments.
+- Apply it in one shared retrieval function used by every path: direct search, framework retrievers, [agent and MCP tools](/ai-quick-reference/milvus-mcp-tools), fetch-by-ID, and reranking.
+- Fail closed when the tenant value is missing.
+
+## How do you handle noisy neighbors?
+
+Data isolation does not stop one tenant's heavy ingest or query burst from raising everyone's latency. Milvus gives you several levers:
+
+- **Resource groups** pin a collection's replicas to a dedicated set of query nodes, so a premium tenant's collection can be physically separated from shared workloads. Pass `resource_groups` (and `replica_number`) when loading.
+- **Load and release** for database, collection, and partition tenancy keeps only active tenants in memory, which is the "hot/cold" support in the table above.
+- **Quotas and rate limits** at the Milvus and application layers cap what any one caller can push.
+
+Test with a realistic mix: large, small, idle, and bursty tenants, measuring p99 latency for small tenants while a large one is bulk-loading. That is where most multi-tenant designs show their weakness. [Metadata filter performance](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance) and [overall scalability](/ai-quick-reference/how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability) both feed into those numbers.
+
+## Plan the tenant lifecycle
+
+Design for onboarding, schema evolution, export, and deletion from the start. Dropping a collection or database removes a tenant cleanly. In a partition-key collection, removing a tenant is a delete by filter (`tenant_id == "acme"`) followed by compaction, and a full export is a filtered query. Write these flows down and test them, because "delete all of this customer's data within 30 days" is a request every B2B product eventually gets.
+
+## Next steps
+
+Read the [Milvus multi-tenancy guide](https://milvus.io/docs/multi_tenancy.md) and [partition key guide](https://milvus.io/docs/use-partition-key.md) before choosing, then build a two-tenant test with similar documents and verify no path leaks across. For regulated workloads, see how [healthcare evidence retrieval](/ai-quick-reference/vector-search-for-healthcare-evidence) handles isolation. If you would rather not operate tenant isolation yourself, [Zilliz Cloud](https://zilliz.com/cloud) offers managed Milvus, and [cost comparisons for managed and self-hosted vector search](/ai-quick-reference/what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store) help size the decision.
+
+## Sources and further reading
 
 - [Milvus multi-tenancy strategies](https://milvus.io/docs/multi_tenancy.md)
-- [Tenant-scoped retrieval](https://milvus.io/docs/filtered-search.md)
+- [Use partition key](https://milvus.io/docs/use-partition-key.md)
+- [Resource groups](https://milvus.io/docs/resource_group.md)
+- [Filtered search](https://milvus.io/docs/filtered-search.md)
+- [Schema design](https://milvus.io/docs/schema.md)
+- [Curator: Efficient Indexing for Multi-Tenant Vector Databases (arXiv)](https://arxiv.org/abs/2401.07119)

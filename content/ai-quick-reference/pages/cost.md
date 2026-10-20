@@ -7,45 +7,90 @@ demo: "RAG"
 demoDescription: "Check out RAG-powered AI chatbot built with Milvus. You can ask it anything about Milvus."
 ---
 
-Compare total cost at a stated workload and service requirement. A local prototype, a self-hosted production cluster, and a managed deployment have different operating responsibilities. Comparing their smallest advertised prices does not establish which is cheaper for your application.
+Compare vector-database costs as total cost of ownership at the same workload and the same service level: the same vectors, recall target, p99 latency, availability, and growth. Self-hosting usually has the lowest infrastructure bill per vector at scale, but you pay in engineering time for upgrades, monitoring, backups, scaling, and incidents. A managed service folds that work into the price, and BYOC splits the difference by running the managed service inside your own cloud account. Which is cheaper depends far more on scale, traffic shape, and team capacity than on list prices.
 
-## Define the workload assumptions
+## What goes into the total cost?
 
-Record corpus size, vector dimensions, metadata size, update rate, concurrency, filters, required recall, and latency objectives. Include availability, recovery, retention, and data-location requirements. Growth and burst behavior can change the resources needed even when average traffic is low.
+| Cost line | Local / embedded (e.g. Milvus Lite) | Self-hosted Milvus | Managed Milvus (Zilliz Cloud) | BYOC |
+| --- | --- | --- | --- | --- |
+| Compute and memory | Your laptop or app server | VMs or Kubernetes nodes you size | Included in compute units (CUs) | Your cloud bill plus a Zilliz license sized to capacity |
+| Object and disk storage | Local disk | Object storage plus local SSD | Storage billed per GB-month | Your cloud bill |
+| Backups | Manual | Milvus Backup plus bucket storage | Built-in; backup storage billed | Provider-managed, in your account |
+| Network transfer | None | Your cloud's egress and cross-zone rates | Billed for egress and cross-region; private endpoints not charged per the pricing guide | Your cloud bill |
+| Upgrades, patching, on-call | You | You | Provider | Provider |
+| High availability | None | Replicas and spare nodes you run | Plan-dependent SLA | Provider SLA |
 
-For self-hosting, account for compute, memory, storage, network, backups, monitoring, upgrades, and engineering operations. For a managed service, inspect the actual billable dimensions and service configuration. Embedding generation and model reranking are additional pipeline costs and may be charged by separate systems.
+Two lines are always outside the database bill: generating embeddings and reranking. They are charged by whatever model service or GPU fleet you use, they scale with every re-embedding run, and they belong in the same worksheet.
 
-## Measure the boundary costs
+## How do latency and variance differ between local and cloud stores?
 
-Place the client and service where the application will run and measure end-to-end latency. Include data movement, query and response payloads, and any cross-region or cross-cloud transfers. A remote service may change these costs; it does not inherently make the complete pipeline faster or slower.
+An in-process or same-host store answers without a network hop, so latency is low and stable until the data outgrows memory. A remote cloud service adds a network round trip on every query and is subject to variance from the network path. In practice:
 
-Normalize performance comparisons to the same quality and availability targets. A lower-cost configuration that misses the recall or latency requirement is not an equivalent alternative.
+- **Keep the client and database in the same region**, ideally the same cloud and network. A cross-region hop can cost more latency than the search itself, and cross-region transfer is billed.
+- **Use private networking.** Private endpoints or VPC peering cut both latency variance and egress charges on most managed services.
+- **Measure p99, not the mean.** Network jitter shows up in the tail. Compare local and remote setups with the same [latency and throughput methodology](/ai-quick-reference/how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search).
+- **Watch payload size.** Returning full documents with every hit moves far more bytes than IDs and scores.
 
-## Build a reviewable estimate
+A local in-memory store is the right answer for prototypes, notebooks, and small single-node apps. [Milvus Lite](https://milvus.io/docs/install-overview.md) runs in-process from `pip install pymilvus` and suits up to a few million vectors, and the same client code later points at a server or Zilliz Cloud.
 
-Separate fixed provisioning from usage-dependent items and show the workload assumptions next to the calculation. Use current pricing documentation rather than embedding volatile price figures in an evergreen article. Run a representative trial, compare measured usage with the estimate, and include a growth scenario. Keep the operational responsibilities explicit so the decision reflects both infrastructure spend and the work required to run the service.
+## How do you build a fair comparison?
 
-## Example to test
+**1. Write down the workload.** Vector count today and in 12 months, dimension and type, metadata size per row, insert and delete rate, peak QPS, top-k, filter selectivity, required recall, p99 target, availability target, and data-residency rules.
 
-Build a monthly worksheet separating serving compute, storage, embedding calls, transfer, and operator time. Recalculate it after a cold-start or failover test, since spare capacity and recovery requirements can change the apparent cheapest option.
+**2. Size each option for that workload.** For self-hosted Milvus, the [sizing tool](https://milvus.io/tools/sizing) turns vector count, dimension, index type, and deployment mode into memory, CPU, and disk, then add replicas and failover headroom. For Zilliz Cloud, choose a cluster type and CU count; the [pricing page](https://zilliz.com/pricing) lists published per-CU capacity for each type and has a calculator. The [capacity planning guide](/ai-quick-reference/milvus-capacity-planning) walks through both.
 
-## From concept to implementation
+**3. Price operations explicitly.** Estimate the hours per month your team will spend on upgrades, monitoring, scaling events, backup drills, and incidents, and multiply by a loaded hourly rate. Add on-call coverage if the service has an availability commitment.
 
-- [Turn workload assumptions into a sizing estimate](https://milvus.io/tools/sizing).
-- [Compare current managed-service pricing separately](https://zilliz.com/pricing).
+**4. Price the traffic shape, not just the peak.** Always-on clusters cost the same at 3 a.m. as at noon. Spiky or occasional workloads favor autoscaling and serverless options; steady high throughput favors reserved capacity.
 
-## Continue learning
+**5. Run a short trial** on both, with the same data and queries, and compare measured resource use with the estimate.
+
+An illustrative worksheet structure, with placeholders rather than real prices:
+
+```
+monthly_cost = serving_compute        # nodes or CUs × hours × rate
+             + storage                # GB-months (data + backups)
+             + network                # egress + cross-region GB × rate
+             + embedding_and_rerank   # model API or GPU cost
+             + ops_hours × loaded_rate
+             + spare_capacity         # replicas, failover headroom
+```
+
+Fill it in for each option using current list prices and your own salary costs. A self-hosted option that needs 20 operator hours a month is not cheaper than a managed one if those 20 hours cost more than the price difference.
+
+## How do Zilliz Cloud's billing options map to workloads?
+
+Zilliz Cloud bills by a few dimensions that are worth matching to the workload:
+
+- **Serverless** for development and spiky, low-volume traffic, with a free tier to start.
+- **Dedicated clusters**, billed in compute units, in three cluster types: performance-optimized for low-latency, high-QPS search; capacity-optimized for larger datasets at moderate QPS; and tiered-storage for very large, cost-sensitive corpora where some queries can tolerate higher latency.
+- **On-demand compute**, billed only for the active runtime of query and index-build jobs, for occasional analytical search over large data without an always-on cluster.
+- **Storage, backup, and data transfer**, each billed separately.
+
+Exact rates vary by cloud, region, and plan, so take them from the [pricing page](https://zilliz.com/pricing) and its [list price guide](https://zilliz.com/pricing/pricing-guide) rather than from articles. Real examples help calibrate: [Consensus](https://zilliz.com/customers/consensus) reports moving to 4× larger vectors with only 2.5× the cluster size on Zilliz Cloud, while a [global GPU maker's self-hosted Milvus deployment](https://zilliz.com/customers/global-gpu-manufacturer) cut infrastructure cost by 30% through layout optimizations. Both paths can be cost-effective; the question is who does the tuning.
+
+## When does each option win?
+
+- **Local / Milvus Lite**: prototypes, tests, edge or single-user apps.
+- **Self-hosted Milvus**: large, steady workloads with a platform team already running Kubernetes, or strict on-premises requirements.
+- **Managed Zilliz Cloud**: teams that want production SLAs without a dedicated database team, spiky traffic, or fast time to production.
+- **BYOC**: managed operations with data that must stay in your own cloud account, or existing cloud commitments you want to use. See [managed vs. BYOC vs. self-hosted](/ai-quick-reference/managed-vector-database-byoc-vs-self-hosted).
+
+## Related reading
 
 - [How do you turn a Milvus workload into a capacity and cost estimate?](/ai-quick-reference/milvus-capacity-planning)
-- [How should you compare managed vector databases, BYOC, and self-hosted Milvus?](/ai-quick-reference/managed-vector-database-byoc-vs-self-hosted)
-- [What is Vector Lakebase, and how does it connect a lake to vector search?](/ai-quick-reference/what-is-vector-lakebase)
 - [How do you estimate memory for vector search?](/ai-quick-reference/how-does-vector-search-manage-memory-usage)
-- [What determines vector-database scalability?](/ai-quick-reference/how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability)
+- [How should you separate hot vector serving from cold lake data?](/ai-quick-reference/how-to-design-hot-and-cold-vector-serving)
 - [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)
-- [How should you plan backup and recovery for a vector database?](/ai-quick-reference/how-do-vector-databases-handle-backup-and-restore-or-replication-for-very-large-datasets-and-what-impact-does-that-have-on-system-design-in-terms-of-time-and-storage-overhead)
+- [What determines vector-database scalability?](/ai-quick-reference/how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability)
 
-## Implementation guides and sources
+The fastest way to get real numbers is to run your workload on both. Start a free [Zilliz Cloud](https://zilliz.com/cloud) cluster and, in parallel, a self-hosted [Milvus Standalone with Docker](https://milvus.io/docs/install_standalone-docker.md), then compare measured usage against the [pricing calculator](https://zilliz.com/pricing).
 
-- [Zilliz Cloud deployment overview](https://zilliz.com/cloud)
-- [Current Zilliz Cloud pricing](https://zilliz.com/pricing)
+## Sources
+
+- [Zilliz Cloud pricing](https://zilliz.com/pricing)
+- [Zilliz Cloud list price guide](https://zilliz.com/pricing/pricing-guide)
+- [Zilliz Cloud overview](https://zilliz.com/cloud)
+- [Milvus deployment options](https://milvus.io/docs/install-overview.md)
+- [Milvus sizing tool](https://milvus.io/tools/sizing)
 - [Self-hosted Milvus with Docker](https://milvus.io/docs/install_standalone-docker.md)

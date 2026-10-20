@@ -5,47 +5,51 @@ topic: "foundations"
 order: 6
 ---
 
-Dense and sparse embeddings represent information differently. A dense vector generally has a fixed set of coordinates with many nonzero values. A sparse vector represents only its nonzero dimensions. Sparse dimensions can correspond to terms or learned features; the meaning depends on how the representation was produced.
+Dense and sparse describe how coordinates are populated, not whether a model is large, neural, semantic, or useful. A dense vector typically uses a fixed array of values. A sparse vector has relatively few nonzero coordinates and can store only their indexes and values. A sparse vector can contain many nonzero coordinates; it is not necessarily a one-hot vector.
 
-![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
+![Dense and sparse describe coordinate occupancy, not model size](/images/ai-reference/vector-representations.svg)
 
-## What this means for retrieval
+## Read a small example
 
-Dense models often retrieve paraphrases and semantically related passages even when wording differs. Sparse retrieval is useful when particular terms or learned sparse features are strong signals. BM25 is a term-based relevance model, while learned sparse models are a different family; neither should be described as interchangeable with every sparse representation.
+Take a toy vocabulary with positions for `database`, `vector`, `memory`, and many other terms. A weighted lexical vector might have nonzero entries only for a few terms. Its coordinate IDs have a vocabulary meaning. A dense representation such as `[0.2, -0.4, 0.7, 0.1]` instead uses latent features; a single coordinate usually cannot be read as one word.
 
-These are tendencies, not guarantees. A dense model can fail on a specialist abbreviation, and keyword retrieval can fail when a user describes the right concept with different words. Evaluate the query classes that matter in your product instead of choosing solely from representation size.
+These are explanatory numbers, not outputs of a real model. Logical dimension, number of nonzeros, numeric precision, and index overhead all affect storage. Sparse storage is not automatically cheaper for every workload.
 
-## Store and combine them correctly
+## Statistical and learned sparse retrieval differ
 
-In Milvus, dense and sparse representations use appropriate field and index types. BM25 full-text search can generate its sparse representation from analyzed text. If you use a learned sparse model, follow that model's encoding and metric requirements rather than applying the BM25 configuration automatically.
+TF-IDF uses term and corpus statistics. BM25 additionally applies its term-frequency saturation and document-length normalization within its scoring formulation. Neither requires an LLM. A BM25 pipeline can create sparse term representations for lexical search, but its scoring configuration is not interchangeable with arbitrary sparse inner-product vectors.
 
-A hybrid pipeline can retrieve candidates from both representations and combine their rankings. Do not add raw scores blindly: cosine, inner product, and BM25 scores can have different distributions. Use a supported fusion strategy and validate it with representative queries.
+SPLADE-style models learn sparse vocabulary weights and can expand beyond literal input terms. That makes learned sparse retrieval different from simply counting keywords. It also means a learned sparse encoder and an analyzer-based BM25 Function are different components, even if both ultimately use an inverted index.
 
-## A useful comparison
+Dense representations can come from neural encoders or classical learned projections. They may express useful paraphrase relationships, but density alone does not imply semantic quality. Similarly, sparsity alone does not establish exact-match behavior: the vocabulary, expansion, and analyzer matter.
 
-Run dense-only, sparse-only, and hybrid retrieval against one fixed corpus. Inspect exact IDs, rare terms, paraphrases, and mixed queries separately. Compare relevance at the same final top-k, together with latency, indexing time, and resource use. Keep both paths only when their added value justifies the operational complexity.
+## Choose fields and scores deliberately
+
+In Milvus, client-generated learned sparse representations use a sparse field and a supported score/index path. Built-in BM25 full-text search starts from analyzed text and a BM25 Function. Keep this distinct from a client-side fitted BM25 encoder. Use the deployment's documented configuration rather than swapping score names between these routes.
+
+For hybrid search, retrieve through dense and sparse paths separately, then use a supported, evaluated fusion policy. Raw cosine and BM25 scores need not share a scale. Preserve both candidate lists so a gain or failure can be attributed to the actual signal.
 
 ## Example to test
 
-A lexical path can help an error-code query when its analyzer preserves that code; a dense path may help a paraphrased symptom. Neither benefit is automatic. Keep both candidate lists before fusion and inspect tokenization and relevance on the actual query set.
+Evaluate an exact error code, a paraphrased symptom, and a mixed query on the same corpus. Check analyzer output, dense-only results, sparse-only results, and fusion. Some queries may favor either route; keep both only if measured relevance justifies the extra operating cost.
 
 ## From concept to implementation
 
-- [Run a first verified search](https://milvus.io/docs/quickstart.md).
-- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
+- [Use the sparse-vector data representation](https://milvus.io/docs/sparse_vector.md).
+- [Follow the built-in BM25 workflow](https://milvus.io/docs/full-text-search.md).
 
 ## Continue learning
 
-- [How does a sparse inverted index differ from dense ANN?](/ai-quick-reference/how-sparse-inverted-indexes-work)
-- [How do scalar indexes support filtered vector search?](/ai-quick-reference/how-scalar-indexes-support-vector-search)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
 - [What is full-text search, and how does BM25 fit?](/ai-quick-reference/what-is-fulltext-search)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
+- [How does a sparse inverted index differ from dense ANN?](/ai-quick-reference/how-sparse-inverted-indexes-work)
 
 ## Implementation guides and sources
 
 - [Dense vector fields](https://milvus.io/docs/dense-vector.md)
 - [BM25 full-text search](https://milvus.io/docs/full-text-search.md)
 - [Sparse inverted index](https://milvus.io/docs/sparse-inverted-index.md)
+- [SPLADE learned vocabulary weighting](https://arxiv.org/abs/2107.05720)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

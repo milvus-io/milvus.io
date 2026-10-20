@@ -5,7 +5,7 @@ topic: "foundations"
 order: 1
 ---
 
-A vector database stores embedding vectors alongside identifiers and metadata, then retrieves records by similarity. Its value is the combination of search with data-management operations: ingestion, updates, filtering, persistence, and serving concurrent requests. An embedding model produces the representation; the database indexes and searches it. These are separate responsibilities.
+A vector database stores embedding vectors alongside identifiers and metadata, then retrieves records by similarity. Its value is the combination of search with data-management operations: ingestion, updates, filtering, persistence, and serving concurrent requests. A model or lexical function produces representations; the database indexes and searches them. These are distinct roles, even when a database Function participates in generation.
 
 ![From question to verifiable evidence](/images/ai-reference/retrieval.svg)
 
@@ -24,6 +24,20 @@ Keep an authoritative source for documents and a stable relationship between eac
 ## Try it and check the result
 
 Use the Quickstart to create a collection, insert a few real embeddings, and inspect the returned IDs and text. Add one metadata filter and verify that excluded records cannot appear. Write down several expected matches and difficult non-matches before changing index parameters. That small, repeatable evaluation is more informative than a demo that only runs without errors.
+
+## Where the database fits in RAG and Agent Memory
+
+A vector database becomes concrete when you follow the data through an application. In retrieval-augmented generation (RAG), source documents are parsed and split into retrievable units. Compatible encoders or lexical functions produce their representations. Milvus stores those representations with source IDs, text or source locations, revisions, and permission metadata. A query then follows this path:
+
+`question → compatible encoding → scoped retrieval → optional reranking → evidence + citations → language-model answer`
+
+The language model generates the answer; the database retrieves candidate evidence. An answer can still be unsupported when retrieval misses the source or generation ignores it. Evaluate evidence relevance and answer grounding separately. Updates and deletions must remove obsolete indexed chunks as well as refresh the source.
+
+For Agent Memory, an application can retain confirmed facts, user-approved preferences, or prior task outcomes, then retrieve relevant records for a later task. Scope memory by user or tenant, preserve provenance and timestamps, and define correction, expiry, and deletion rules. This is a possible long-term memory path:
+
+`approved memory record → searchable representation → user/task-scoped recall → selected context for the agent`
+
+Working context and exact workflow checkpoints remain separate responsibilities; similarity retrieval is not a substitute for recovering an execution state or enforcing authorization. The application also decides whether a candidate memory is valid and appropriate to use. See the dedicated [RAG guide](/ai-quick-reference/what-is-rag-retrievalaugmented-generation-in-nlp) and [Agent Memory guide](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus) for the complete workflows.
 
 ## How the pieces fit together
 
@@ -48,16 +62,18 @@ Use a support article with a stable source ID, a version, and a tenant. Insert i
 
 ## Continue learning
 
-- [What is a vector data lake?](/ai-quick-reference/what-is-a-vector-data-lake)
-- [How does the Milvus architecture separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
-- [What is vector search?](/ai-quick-reference/what-is-vector-search)
+- [What is retrieval-augmented generation (RAG)?](/ai-quick-reference/what-is-rag-retrievalaugmented-generation-in-nlp)
+- [How should you structure agent memory in Milvus?](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
-- [How do you choose a vector index for your workload?](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload)
+- [What is vector search?](/ai-quick-reference/what-is-vector-search)
+- [How does the Milvus architecture separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
 
 ## Implementation guides and sources
 
 - [Milvus overview](https://milvus.io/docs/overview.md)
 - [Milvus Quickstart](https://milvus.io/docs/quickstart.md)
 - [Design a collection schema](https://milvus.io/docs/schema.md)
+- [RAG with Milvus](https://milvus.io/docs/build-rag-with-milvus.md)
+- [Working and long-term memory](https://docs.langchain.com/oss/python/concepts/memory)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

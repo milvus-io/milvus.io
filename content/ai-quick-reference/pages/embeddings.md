@@ -5,48 +5,61 @@ topic: "foundations"
 order: 3
 ---
 
-An embedding is a numeric representation produced by a model. In retrieval, the aim is to place useful query–document matches near each other under a chosen metric. Individual coordinates usually do not have simple human-readable meanings; it is the learned representation and its geometry that matter.
+An embedding maps an object into a numeric representation used by a model or retrieval system. In common neural-retrieval usage, the term often means a learned dense vector. A vector-search system can also search sparse lexical representations and learned sparse embeddings. It is useful to explain those families together without claiming that every vector is a large-language-model output.
 
-![From question to verifiable evidence](/images/ai-reference/retrieval.svg)
+![Dense and sparse describe coordinate occupancy, not model size](/images/ai-reference/vector-representations.svg)
 
-## Model compatibility matters
+## Dense and sparse describe the representation
 
-The document and query encoders must be compatible. Some models use different prompts or encoding paths for queries and documents, while others use one encoder for both. Follow the model's documented retrieval setup, including normalization and input limits.
+A dense vector is usually stored as a fixed-length array, for example `[0.2, -0.4, 0.7, 0.1]`; most coordinates may be nonzero. A sparse vector has relatively few nonzero coordinates in a larger coordinate space and can be stored as index/value pairs, for example `{2: 0.7, 105: 1.3}`. Sparse does not mean one-hot, binary, or a smaller logical dimension.
 
-Vectors from unrelated models do not become comparable merely because they have the same dimension. Mixing them in one field can silently produce meaningless distances. Record the model identifier, revision, preprocessing, and chunking configuration with the ingestion pipeline. Treat a model change as a data migration that needs validation.
+Coordinates in a dense latent space usually have no simple standalone label. Coordinates in a lexical sparse representation can correspond to vocabulary terms. A learned sparse model may assign weights to useful expansion terms, including terms not literally present in the input. See [dense versus sparse representations](/ai-quick-reference/what-are-dense-and-sparse-embeddings) for the mechanics and database paths.
 
-## Decide what one vector represents
+## They do not all come from large models
 
-A vector might represent a sentence, passage, whole document, image, or audio segment. That choice determines what retrieval can return. A single vector for a long document can obscure a short relevant detail; very small chunks can lose the context needed to interpret a match. Preserve source IDs and offsets so retrieved pieces can be reconstructed and cited.
+| Generation route | Example | What determines the meaning |
+| --- | --- | --- |
+| Neural encoder | A compact sentence encoder, large retrieval model, or image encoder | Training objective, checkpoint, preprocessing, and query/document conventions |
+| Classical learned projection | Latent semantic analysis using truncated SVD on a term matrix | Fitted vocabulary, weighting, and projection |
+| Learned sparse encoder | SPLADE-style vocabulary weighting and expansion | Model training, tokenizer, and sparsity control |
+| Statistical lexical representation | TF-IDF weighting or a BM25 retrieval pipeline | Tokenization, corpus statistics, document length, and scoring rules |
 
-In Milvus, a dense vector field has a defined dimension. The inserted vectors and query vectors must match that field's requirements. Store ordinary metadata in scalar fields so the application can filter candidates and recover the original content.
+BM25 is a lexical scoring function, not a transformer that emits a semantic dense vector. Systems can construct sparse term representations for BM25 retrieval. Naming all of these representations embeddings is common in broad product language, but the generation and score contracts still differ. A generative LLM is neither required nor automatically a suitable embedding model.
 
-## Validate the representation
+## Compatibility includes more than dimension
 
-Use realistic positive matches and hard negatives: similar terminology with different meanings, near-identical passages with a changed fact, and cross-language cases if your product supports them. Measure retrieval on these examples before choosing the largest model. Higher dimensionality is not a guarantee of better relevance and increases the amount of vector data to store and process.
+Query and document representations must use compatible coordinates and scoring. For neural models this can require different query/document prompts or encoders. For lexical representations it includes the same vocabulary/analyzer and compatible corpus statistics. Two arrays with the same length can still describe unrelated spaces.
+
+Record the model or function revision, preprocessing, vocabulary/statistics where relevant, normalization, and chunk boundaries. Changing those can require re-encoding or rebuilding affected data. In Milvus, use dense and sparse field types according to the representation; a sparse field need not declare the dense field's fixed dimension, but its coordinate IDs must remain meaningful.
+
+## One object can have one vector or many
+
+The retrieval unit might be a passage, image, audio segment, or structured item. One representation can summarize the object; another design keeps token or patch vectors for detailed matching. [Multi-vector retrieval](/ai-quick-reference/what-is-multi-vector-retrieval) explains that distinction. Multiple input modalities are a separate question, covered by [multimodal alignment](/ai-quick-reference/what-are-multimodal-embeddings).
 
 ## Example to test
 
-The same sentence encoded with two checkpoints can occupy incompatible spaces even when both outputs have the same length. Store the encoder revision with the collection and use the corresponding query path when reproducing a search.
+Encode a support query with its intended neural query encoder and also analyze it through a lexical path. Inspect coordinates and returned source IDs separately. An error code helps the lexical route only if tokenization preserves it; a paraphrase helps the neural route only if the model represents that relationship. Compare judged relevance before combining results.
 
 ## From concept to implementation
 
-- [Run a first verified search](https://milvus.io/docs/quickstart.md).
-- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
+- [Create a dense vector field](https://milvus.io/docs/dense-vector.md).
+- [Build BM25 full-text retrieval](https://milvus.io/docs/full-text-search.md).
 
 ## Continue learning
 
-- [Which current embedding models should you evaluate for Milvus?](/ai-quick-reference/embedding-reranking-model-catalog)
-- [How do you read MTEB and compare the current embedding shortlist?](/ai-quick-reference/mteb-embedding-leaderboards)
-- [How do Arrow and Parquet fit into vector data pipelines?](/ai-quick-reference/how-arrow-and-parquet-fit-vector-data-pipelines)
-- [How should you design a scalable embedding-generation pipeline?](/ai-quick-reference/how-to-build-distributed-embedding-pipelines)
-- [How do you choose an embedding model for retrieval?](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy)
 - [What are dense and sparse embeddings?](/ai-quick-reference/what-are-dense-and-sparse-embeddings)
 - [How do cosine similarity, inner product, and L2 differ?](/ai-quick-reference/what-is-the-role-of-distance-metrics-in-embeddings)
+- [What is multi-vector retrieval, and how do MaxSim and MUVERA work?](/ai-quick-reference/what-is-multi-vector-retrieval)
+- [What are multimodal embeddings?](/ai-quick-reference/what-are-multimodal-embeddings)
+- [How do you choose an embedding model for retrieval?](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy)
 
 ## Implementation guides and sources
 
 - [Dense vector fields](https://milvus.io/docs/dense-vector.md)
 - [Generate and search embeddings](https://milvus.io/docs/quickstart.md)
+- [Built-in BM25 full-text retrieval](https://milvus.io/docs/full-text-search.md)
+- [Sparse field representation](https://milvus.io/docs/sparse_vector.md)
+- [SPLADE learned sparse representations](https://arxiv.org/abs/2107.05720)
+- [Truncated SVD and latent semantic analysis](https://scikit-learn.org/stable/modules/decomposition.html)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

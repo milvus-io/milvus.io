@@ -5,47 +5,52 @@ topic: "foundations"
 order: 5
 ---
 
-A similarity metric defines how vectors are compared. Choose it to match the embedding model's training and recommended retrieval configuration. Changing the metric changes the ranking problem; it is not simply a performance setting.
+A vector score defines how representations are compared. Cosine, inner product, and L2 emphasize different geometry. Choose the score expected by the model or representation; changing it can change the ranking problem, rather than merely making the same search faster.
 
-## The three common choices
+![Angle, projection, and distance can produce different rankings](/images/ai-reference/similarity-metrics.svg)
 
-| Metric | What it measures | Direction of a better match |
-| --- | --- | --- |
-| Cosine similarity | Alignment of vector directions, normalized by their lengths | Larger |
-| Inner product | Dot product, influenced by both alignment and magnitude | Larger |
-| L2 distance | Geometric distance between vectors | Smaller |
+## Read the geometry and the formulas
 
-Milvus reports squared L2 distances, so thresholds must use the scale returned by the system. Do not copy a threshold calibrated for cosine into an L2 search. Sparse full-text retrieval with BM25 has its own scoring semantics and should not be interpreted as cosine similarity.
+For vectors q and d:
 
-## Understand normalization
+| Comparison | Formula | Geometric reading | Better match |
+| --- | --- | --- | --- |
+| Cosine similarity | `(q · d) / (||q|| ||d||)` | Direction alignment; ignores positive rescaling of either vector | Larger |
+| Inner product (IP) | `q · d = Σ q_i d_i` | Signed projection multiplied by vector length; uses direction and magnitude | Larger |
+| Squared L2 | `Σ (q_i - d_i)^2` | Squared straight-line separation | Smaller |
 
-For nonzero unit-normalized vectors, inner product equals cosine similarity. Squared L2 is then `2 - 2 × inner_product`, so the rankings are equivalent apart from ties and numeric effects. Without normalization, that relationship does not hold: vector magnitude can change an inner-product ranking.
+Cosine is undefined for a zero-length vector. Inner product and cosine are similarities, not mathematical distances satisfying every metric axiom. Milvus returns squared L2 rather than its square root; this preserves L2 ranking but changes threshold units.
 
-Normalization is therefore part of the model and data contract. Apply it consistently if the model expects it. Do not silently normalize a model whose output magnitudes carry useful ranking information, and handle zero vectors explicitly because their cosine direction is undefined.
+## An example where the rankings differ
 
-## Test the decision
+Use q=(1,0), A=(0.8,0.6), and B=(2,0). A has length 1 and B has length 2. B points in exactly the same direction as q, so its cosine is 1; A's cosine is 0.8. IP is 2 for B and 0.8 for A. Squared L2 is 1 for B but 0.4 for A, so L2 prefers A. The diagram uses these exact coordinates and illustrative calculations, not measured retrieval quality.
 
-Use the same vectors and queries to compare candidate metrics on a judged dataset. Check both relevant and irrelevant pairs, then calibrate application thresholds using the actual returned values. If you change a collection's embedding model or metric, rebuild or migrate the relevant index configuration as required by the deployed version. Store the chosen metric with the evaluation record so future benchmark runs remain comparable.
+This does not prove one comparison is better. It shows that a model's magnitude convention matters. A system that silently normalizes its stored vectors can change an intended inner-product ordering.
+
+## When normalization makes the rankings agree
+
+For nonzero unit vectors, IP equals cosine, and squared L2 is `2 - 2 × IP`. Rankings then agree apart from ties and numerical effects. Normalize both query and documents only when appropriate for the representation; keep zero-vector handling explicit.
+
+BM25 uses its own lexical score. Multi-vector MaxSim aggregates multiple pair scores and is usually directional. Neither should be treated as another label for ordinary cosine or L2. See [multi-vector search and MaxSim](/ai-quick-reference/what-is-multi-vector-retrieval).
 
 ## Example to test
 
-For unit vectors q=(1,0) and d=(0.8,0.6), cosine and inner product are 0.8; squared L2 is 0.4. These illustrative values show why score thresholds cannot be copied across metrics.
+Compute the three scores for the vectors above, then normalize B to (1,0) and compute again. Verify the algebra before configuring a collection. On real data, compare judged relevance under the model's supported choices; a toy geometry example does not establish the best metric for a product.
 
 ## From concept to implementation
 
-- [Run a first verified search](https://milvus.io/docs/quickstart.md).
-- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
+- [Check Milvus score definitions and returned values](https://milvus.io/docs/metric.md).
+- [Configure the dense-vector field](https://milvus.io/docs/dense-vector.md).
 
 ## Continue learning
 
+- [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
+- [What is multi-vector retrieval, and how do MaxSim and MUVERA work?](/ai-quick-reference/what-is-multi-vector-retrieval)
 - [Why use a FLAT baseline when tuning an ANN index?](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline)
 - [When should you use range search instead of only top-k?](/ai-quick-reference/when-to-use-vector-range-search)
-- [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
-- [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)
-- [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
 
 ## Implementation guides and sources
 
 - [Milvus similarity metrics](https://milvus.io/docs/metric.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

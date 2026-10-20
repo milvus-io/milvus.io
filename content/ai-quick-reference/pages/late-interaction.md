@@ -31,6 +31,10 @@ Test long documents, many-element records, metadata filters, and deletion of an 
 
 The query and document are encoded independently into token vectors; their detailed interaction happens when scoring a pair. In a common MaxSim score, each query-token vector takes its highest similarity to a document-token vector and those maxima are summed. The score is directional and depends on the model's masking, normalization, and aggregation rules. This is not equivalent to averaging all vectors or fusing independent title/body rankings. The database's supported metric and search mode must match the chosen model.
 
+## Candidate indexes and the final score
+
+MaxSim specifies how a query list is compared with a document list. Token-level ANN and MUVERA describe ways to retrieve candidates efficiently; neither is a substitute name for the score. The separate [multi-vector article](/ai-quick-reference/what-is-multi-vector-retrieval) gives a worked score matrix, distinguishes independent fields from joint lists, and explains candidate/index trade-offs. Verify target-release support before adopting the strategy page's low-level parameters.
+
 ## Example to test
 
 Retrieve page candidates and inspect whether the relevant page was included before token-level scoring. Increasing final MaxSim scoring cannot recover a page the candidate stage omitted. Evaluate candidate recall and final ordering separately.
@@ -42,6 +46,7 @@ Retrieve page candidates and inspect whether the relevant page was included befo
 
 ## Continue learning
 
+- [What is multi-vector retrieval, and how do MaxSim and MUVERA work?](/ai-quick-reference/what-is-multi-vector-retrieval)
 - [How do ColPali, ColQwen, and other page encoders use Milvus embedding lists?](/ai-quick-reference/visual-document-models)
 - [How does KaLM compressed-document reranking work?](/ai-quick-reference/kalm-reranker-models)
 - [What are multimodal embeddings?](/ai-quick-reference/what-are-multimodal-embeddings)
@@ -54,6 +59,7 @@ Retrieve page candidates and inspect whether the relevant page was included befo
 - [EmbeddingList and element-level search](https://milvus.io/docs/basic-vector-search-with-structarray.md)
 - [Indexes and metrics for StructArray vectors](https://milvus.io/docs/index-structarray-fields.md)
 - [StructArray data model](https://milvus.io/docs/array-of-structs.md)
-- [ColBERT: independent encoding and late interaction](https://arxiv.org/abs/2004.12832)
+- [ColBERT independent encoding and late interaction](https://arxiv.org/abs/2004.12832)
+- [Candidate strategies and release caveats](https://milvus.io/docs/choose-an-embeddinglist-search-strategy.md)
 
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.
+Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

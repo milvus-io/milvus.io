@@ -1,11 +1,11 @@
 {
   "checked_at": "2026-10-20",
   "baseline": "7fbdd51fc04c2ddbe13f71bd33c199ba4383ff42",
-  "article_count": 130,
-  "case_count": 130,
+  "article_count": 131,
+  "case_count": 131,
   "deeper_articles": 10,
-  "original_figures": 21,
-  "illustrated_articles": 69,
+  "original_figures": 25,
+  "illustrated_articles": 71,
   "sources_and_limits": "Original examples and diagrams; no measured model or performance results are claimed.",
   "articles": [
     {
@@ -13,7 +13,7 @@
       "slug": "what-is-a-vector-database-and-why-is-it-important",
       "topic": "foundations",
       "words_before": 379,
-      "words_after": 605,
+      "words_after": 867,
       "figure": "retrieval",
       "depth": true,
       "route": "start"
@@ -33,8 +33,8 @@
       "slug": "what-are-embeddings-in-vector-search",
       "topic": "foundations",
       "words_before": 396,
-      "words_after": 457,
-      "figure": "retrieval",
+      "words_after": 685,
+      "figure": "vector-representations",
       "depth": false,
       "route": "start"
     },
@@ -53,8 +53,8 @@
       "slug": "what-is-the-role-of-distance-metrics-in-embeddings",
       "topic": "foundations",
       "words_before": 367,
-      "words_after": 415,
-      "figure": null,
+      "words_after": 504,
+      "figure": "similarity-metrics",
       "depth": false,
       "route": "start"
     },
@@ -63,8 +63,8 @@
       "slug": "what-are-dense-and-sparse-embeddings",
       "topic": "foundations",
       "words_before": 369,
-      "words_after": 438,
-      "figure": "hybrid",
+      "words_after": 542,
+      "figure": "vector-representations",
       "depth": false,
       "route": "start"
     },
@@ -73,8 +73,8 @@
       "slug": "what-are-multimodal-embeddings",
       "topic": "foundations",
       "words_before": 411,
-      "words_after": 706,
-      "figure": "multimodal",
+      "words_after": 675,
+      "figure": "clip-alignment",
       "depth": false,
       "route": "visual"
     },
@@ -693,7 +693,7 @@
       "slug": "what-is-late-interaction-retrieval",
       "topic": "retrieval",
       "words_before": 421,
-      "words_after": 587,
+      "words_after": 669,
       "figure": "visual-page",
       "depth": false,
       "route": "visual"
@@ -1307,7 +1307,18 @@
       "figure": "encoding",
       "depth": false,
       "route": "model"
+    },
+    {
+      "file": "multi-vector.md",
+      "slug": "what-is-multi-vector-retrieval",
+      "topic": "foundations",
+      "words_before": 0,
+      "depth": false,
+      "route": "multi-vector",
+      "words_after": 901,
+      "figure": "maxsim"
     }
   ],
-  "semantic_review": "semantic-review-2026-10-20.json"
+  "semantic_review": "semantic-review-2026-10-20.json",
+  "foundation_review": "foundation-review-2026-10-20.json"
 }

@@ -5,7 +5,7 @@ operate vector retrieval, including lake integration, Milvus components, agent
 workflows, and data curation. It is organized as a reading path, with links from
 concepts to related concepts, implementation guides, and primary sources.
 
-The curated set contains 130 articles across ten topics. The original 36
+The curated set contains 131 articles across ten topics. The original 36
 canonical URLs remain stable. Fourteen duplicate definitions redirect to the corresponding
 canonical concept. Other legacy URLs return 404; they are not redirected to an
 unrelated homepage. The legacy public CSV is removed, so replacing that export
@@ -74,7 +74,7 @@ practical follow-up resources. Examples and numeric calculations are illustrativ
 they are not customer measurements or local model benchmark results. Customer
 stories are linked as additional reading without implying equivalent outcomes.
 
-Twenty-one original concept diagrams cover 69 articles. English and Chinese SVG
+Twenty-five original concept diagrams cover 71 articles. English and Chinese SVG
 variants live in `public/images/ai-reference/`. They are schematics, not measured
 plots. Keep descriptive alt text, accessible SVG titles/descriptions, and visible
 explanations of representation, data ownership, or stage boundaries. The content
@@ -124,3 +124,13 @@ Review illustrations for the claim they communicate, not just whether their file
 resolve: remove eight irrelevant placements and replace misleading multi-vector
 diagrams on generic multimodal/WeMM pages. Model/version and source snapshots do
 not establish executed inference, deployed feature availability, or measured gains.
+
+## Foundation revisions and multi-vector entry
+
+The current 131-entry set adds one core multi-vector article and revises six
+foundation/late-interaction entries. See `foundation-review-2026-10-20.json` for
+current hashes and sources on top of the historical 130-entry claim review.
+Explain RAG and Agent Memory integration, dense/sparse representation generation,
+cosine/IP/squared L2 geometry, CLIP alignment, and MaxSim versus candidate search.
+MUVERA is a fixed-dimensional encoding approach, not an embedding model or a
+replacement name for MaxSim; concrete strategy configuration needs release checks.

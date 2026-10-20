@@ -7,6 +7,8 @@ order: 79
 
 A semantic cache uses similarity to propose previously computed responses or intermediate results for reuse. It can reduce repeated work when nearby requests genuinely have the same answer contract. It requires stricter applicability checks than ordinary document retrieval because a cache hit may bypass new computation.
 
+![Correct memory through its derived representations](/images/ai-reference/memory.svg)
+
 ## Define what is reusable
 
 A cached embedding, retrieved candidate set, and final generated answer have different invalidation rules. A final answer can depend on tenant permissions, source snapshot, model revision, prompt, tool state, locale, and time. Include the dependencies that determine correctness in the cache key or eligibility metadata.
@@ -24,6 +26,15 @@ Calibrate the threshold on real equivalent and non-equivalent requests. Small ch
 Measure accepted hit rate, computation saved, lookup overhead, end-to-end latency, and incorrect or stale reuse. The raw similarity hit rate is not the useful business metric. A more selective cache can be better if it preserves correctness while still removing expensive repeated calls.
 
 Test source updates, permission changes, model upgrades, and delayed invalidation. Keep enough metadata to explain why a hit was accepted and which source state it represents. Consider caching a lower-level artifact with a clearer contract when final answers are too context-dependent. A reliable cache has a defensible reuse boundary and an observable path back to fresh computation.
+
+## Example to test
+
+Two users ask similar questions about accounts with different permissions. A semantic cache key must preserve the relevant scope and evidence version. Reusing a close answer without those checks can serve another user's or an obsolete result.
+
+## From concept to implementation
+
+- [Implement a scoped memory prototype](https://milvus.io/docs/basic_memory_with_milvus.md).
+- [Inspect a source-backed memory implementation](https://github.com/zilliztech/memsearch).
 
 ## Continue learning
 

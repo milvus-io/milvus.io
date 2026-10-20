@@ -7,6 +7,8 @@ order: 51
 
 Woodpecker provides ordered, durable write-ahead logs for databases and stateful applications. In Milvus, the WAL is part of the ingestion and recovery path: it records changes that the streaming system can process and replay. It serves a different responsibility from the vector index that answers similarity queries.
 
+![Durable write is not yet a visible search result](/images/ai-reference/write-path.svg)
+
 ## Match the deployment mode to the contract
 
 The current Woodpecker project documents a dedicated service mode and an embedded Go-library mode. Service mode uses LogStore nodes with quorum-based replication and local staging before completed segments move to object storage. Embedded mode runs the engine in the application with its configured backend and dependencies.
@@ -24,6 +26,15 @@ Similarly, a log is not an independently usable historical database backup. Reco
 Run representative batches and concurrent writes, then interrupt a writer or a LogStore node. Check acknowledged records after recovery, duplicate handling after client retries, reader progress, and the effect of object-store delays. Include the backlog and resource costs of catching up.
 
 Monitor append latency, errors, replay lag, retention, and storage traffic alongside application freshness. Keep the write path's configuration with every benchmark result. Woodpecker can reduce or reorganize WAL infrastructure dependencies, but its value should be assessed through the complete ingestion-and-recovery workflow rather than through an isolated storage benchmark.
+
+## Example to test
+
+Interrupt a writer after an ambiguous client outcome, recover through the supported deployment path, and reconcile stable record IDs. Measure durable acknowledgment and query visibility separately; neither a log append nor a recovered process alone proves the full application state.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
 
 ## Continue learning
 

@@ -25,6 +25,15 @@ Create queries for behavior discovery, exact symbol lookup, cross-file change im
 
 Test source changes, file moves, deleted functions, and mixed-language repositories. Measure retrieval cost and the coding agent's final correctness using the relevant checks. Keep result IDs linked to inspectable source revisions so the agent can verify a candidate before editing. A useful search layer narrows investigation while preserving the evidence needed for engineering judgment.
 
+## Example to test
+
+For a question about retries, combine semantic lookup with exact symbol or path search. Return the commit, file, and relevant lines. A similarly named helper in an old branch should not be presented as the current execution path.
+
+## From concept to implementation
+
+- [Inspect the code-retrieval implementation](https://github.com/zilliztech/claude-context).
+- [Compare complementary retrieval signals](https://milvus.io/docs/multi-vector-search.md).
+
 ## Continue learning
 
 - [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)

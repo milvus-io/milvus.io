@@ -23,6 +23,15 @@ A configuration that wins on an FAQ corpus may fail on long contracts or technic
 
 Changing chunking changes record boundaries and usually requires rebuilding affected embeddings. Keep stable source identifiers so obsolete chunks can be removed and citations can be resolved to the correct document version. Test a full document replacement, partial correction, and deletion. Use the tutorial's splitting method as an example implementation, then choose production boundaries from your own measurements.
 
+## Example to test
+
+A contract clause continues onto the next page. Compare a fixed-size split with a section-aware split that preserves the exception. Judge whether the returned evidence includes the qualification, not just whether the main clause appears.
+
+## From concept to implementation
+
+- [Build an evidence-backed RAG pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
+- [Find a runnable application starting point](https://milvus.io/bootcamp).
+
 ## Continue learning
 
 - [What is late-interaction retrieval, and how can embedding lists help?](/ai-quick-reference/what-is-late-interaction-retrieval)

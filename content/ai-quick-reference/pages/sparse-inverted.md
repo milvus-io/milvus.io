@@ -25,6 +25,15 @@ Track nonzero dimensions per record, corpus size, ingestion, index preparation, 
 
 Keep both candidate generation and the final user task in the evaluation. Sparse retrieval that returns many overlapping terms can still miss the intended document, and a dense path can still retrieve a plausible but incorrect one. The index is most useful when its representation and retrieval role are explicit within the complete pipeline.
 
+## Example to test
+
+Inspect which term dimensions contribute to an error-code query and compare them with a paraphrase query. BM25 and learned sparse encoders have different production paths; sharing a sparse field type does not make their scores interchangeable.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+
 ## Continue learning
 
 - [What are dense and sparse embeddings?](/ai-quick-reference/what-are-dense-and-sparse-embeddings)

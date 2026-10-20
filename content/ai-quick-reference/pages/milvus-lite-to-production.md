@@ -7,6 +7,8 @@ order: 111
 
 Milvus Lite provides a local development path for compatible Milvus client workflows. It is useful for examples, prototypes, and small reproducible experiments. A file-based local setup is not automatically a substitute for an independently operated production service, even when the application uses a similar client API.
 
+![Verify the dataset before switching traffic](/images/ai-reference/migration.svg)
+
 ## Choose by workload and responsibilities
 
 List the required data size, concurrency, supported operations, access controls, availability, and operational ownership. Verify Lite's current platform and feature restrictions. For a production endpoint, compare self-operated Standalone or Distributed Milvus with a managed service using the actual workload, rather than choosing solely by vector count.
@@ -20,6 +22,15 @@ Create the target collection and replay a representative subset first. Compare r
 ## Plan cutover and recovery
 
 Define how writes made during migration are captured, when clients switch endpoints, and how you return to the old path if validation fails. Retain a verified source copy until acceptance criteria pass. Measure latency and resource use under concurrent queries before describing the new environment as production-ready.
+
+## Example to test
+
+Move a small application fixture to the intended server deployment and compare create, insert, search, update, and deletion behavior. Verify supported features and data migration separately; sharing a client API is not a promise of identical deployment capabilities.
+
+## From concept to implementation
+
+- [Compare Milvus deployment responsibilities](https://milvus.io/docs/install-overview.md).
+- [Review the BYOC operating boundary](https://docs.zilliz.com/docs/byoc/byoc-intro).
 
 ## Continue learning
 

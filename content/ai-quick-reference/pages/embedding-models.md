@@ -9,6 +9,8 @@ demoDescription: "Check out RAG-powered AI chatbot built with Milvus. You can as
 
 An embedding model turns text or other supported inputs into representations for retrieval and related tasks. Selecting one defines what information is preserved before Milvus indexes it. Choose a model by your task, languages, deployment route, and evaluation evidence; a benchmark average alone does not make that decision.
 
+![Version the representation before indexing it](/images/ai-reference/encoding.svg)
+
 ## Start from the actual evidence units
 
 Decide whether a record represents a paragraph, code symbol, document page, image, or video segment. Preserve its source ID and metadata. Text models cannot automatically understand every visual detail in a PDF, while a multimodal model still needs an appropriate source-unit and preprocessing design.
@@ -24,6 +26,15 @@ Encode the same corpus separately for each candidate. Build a small relevance-la
 Measure document encoding, query encoding, storage, update throughput, and end-to-end latency. Reranking is a separate option on the first-stage candidates. Changing the embedding model generally requires re-encoding existing documents unless the provider explicitly guarantees compatible spaces.
 
 Keep a migration plan with separate collections or fields, a replayable source corpus, acceptance checks, and a rollback boundary. Store model and preprocessing revisions with indexed data. This makes future model improvements a controlled application change rather than an unexplained shift in search results.
+
+## Example to test
+
+Before a model migration, save difficult queries that distinguish versions, negation, and exact identifiers. Re-encode a separate test collection and compare evidence retrieval and encoding cost. Do not mix old document vectors with a new query encoder.
+
+## From concept to implementation
+
+- [Run a first verified search](https://milvus.io/docs/quickstart.md).
+- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
 
 ## Continue learning
 

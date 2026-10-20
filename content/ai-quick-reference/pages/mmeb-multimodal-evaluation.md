@@ -7,6 +7,8 @@ order: 120
 
 MMEB evaluates multimodal representations. MTEB and MMTEB primarily organize text embedding tasks, while MMEB asks whether a representation supports tasks involving images, video, visual documents, and, in newer settings, additional modalities and agent-oriented retrieval. A multimodal score is not a universal measure of all these tasks.
 
+![Measure four different outcomes separately](/images/ai-reference/evaluation.svg)
+
 ## Keep benchmark versions separate
 
 The official MMEB-V2 release has 78 tasks spanning images, video, and visual documents. MMEB-V3 expands the setting to 190 tasks with additional text, audio, and agent-centric categories. It also includes diagnostic work on modality and instruction effects. Metrics, task composition, supported-modality handling, and dataset revisions must be checked before comparing results.
@@ -72,6 +74,15 @@ The public file contains WeMM entries labeled 8B and 2B with December 2025 entry
 For visual legal documents, inspect page-level retrieval with tables and layouts. For physical-AI video, inspect clip and event retrieval, temporal boundaries, and metadata restrictions. For an audio task, include models that actually accept audio and retain the benchmark's handling of unsupported modalities. Do not interpret an image score as evidence for spoken-audio retrieval.
 
 Use the benchmark to form a candidate set, then preserve preprocessing, frames, prompts, source IDs, and model revisions in a local evaluation. Measure relevant-source retrieval, encoding cost, index size, and latency. These application measurements answer a different question from a paper's average score.
+
+## Example to test
+
+Choose the tasks matching the intended modality, then save the benchmark revision, checkpoint, preprocessing, and missing-task handling. A newer paper score must not replace a differently named public-file row without matching its evaluation contract.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
 
 ## Continue learning
 

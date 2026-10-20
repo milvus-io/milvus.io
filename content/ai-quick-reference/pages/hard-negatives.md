@@ -25,6 +25,15 @@ Compare on held-out queries and source records, with contamination checks for ne
 
 Refresh mining after meaningful model or corpus changes. Previously hard candidates can become easy, and new failure patterns can appear. Milvus can make repeated candidate discovery efficient, while the training and labeling pipeline determines the learning objective and the quality of each negative.
 
+## Example to test
+
+Mine passages that mention the right product but describe the wrong version. Review them before labeling them negative: a passage may contain a useful exception. Keep the training and final evaluation examples disjoint.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+
 ## Continue learning
 
 - [How do you choose an embedding model for retrieval?](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy)

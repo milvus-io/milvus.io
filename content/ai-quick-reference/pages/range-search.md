@@ -25,6 +25,15 @@ Build a labeled set of clear matches, hard negatives, and unsupported queries. M
 
 Test filters, empty results, boundary scores, and dense groups with more matches than the requested limit. Define the user experience when no acceptable match exists. Range search is valuable when it implements a measured task policy, rather than supplying an arbitrary number that merely makes a demonstration look selective.
 
+## Example to test
+
+Calibrate a similarity threshold on reviewed positive and negative pairs, then inspect results near the boundary. Top-k limits and threshold semantics still matter. A calibrated threshold from one model or metric should not be reused after migration.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+
 ## Continue learning
 
 - [Why use a FLAT baseline when tuning an ANN index?](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline)

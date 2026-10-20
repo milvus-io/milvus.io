@@ -25,6 +25,15 @@ Label a sample covering exact copies, formatting changes, boilerplate-heavy text
 
 Start in identification-only mode and export a reviewable decision manifest. Compare downstream training or retrieval quality after applying the policy, including rare-domain retention. The successful outcome is an explainable reduction of unwanted repetition, with enough source and configuration information to reproduce or reverse the decision.
 
+## Example to test
+
+Compare lightly edited text and a meaning-preserving paraphrase. MinHash similarity reflects the chosen token or shingle representation; semantic retrieval can supply another candidate path. Inspect both before choosing a deletion policy.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+
 ## Continue learning
 
 - [How should you combine exact, fuzzy, and semantic deduplication?](/ai-quick-reference/exact-fuzzy-and-semantic-deduplication)

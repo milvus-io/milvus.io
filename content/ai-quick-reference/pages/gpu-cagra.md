@@ -25,6 +25,15 @@ Measure recall, successful query throughput, p95/p99 latency, GPU utilization, d
 
 A GPU can be valuable when it serves enough quality-constrained work to offset its cost. A high peak QPS figure measured at a large batch size is only useful when the application can generate that workload without violating its response-time requirement. Retain the complete hardware and batching configuration with the result.
 
+## Example to test
+
+Include host-to-device transfer, index build, and payload retrieval when evaluating GPU_CAGRA. Test a realistic batch and a single interactive request separately. Kernel-only speed cannot establish end-to-end latency or total deployment cost.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+
 ## Continue learning
 
 - [How do GPU_IVF_FLAT and GPU_IVF_PQ differ?](/ai-quick-reference/gpu-ivf-flat-vs-gpu-ivf-pq)

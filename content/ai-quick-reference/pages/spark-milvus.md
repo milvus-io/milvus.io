@@ -7,6 +7,8 @@ order: 58
 
 The Spark-Milvus connector connects distributed dataframe processing with Milvus data workflows. Spark can prepare records, join metadata, generate or organize embeddings, and move supported data through the connector. Milvus supplies the retrieval service used after that processing.
 
+![A bounded Spark-to-Milvus data workflow](/images/ai-reference/spark.svg)
+
 ## Select the connector path deliberately
 
 Check the connector revision, Spark and Scala versions, Java runtime, Milvus compatibility, and any native storage dependency. The current project README is the starting point for its build and release instructions. Older integration examples can describe a different connector generation, so avoid mixing their package coordinates and options.
@@ -24,6 +26,32 @@ Create the target schema deliberately when automatic inference cannot express re
 Measure reading, transformation, embedding, transfer, index preparation, and readiness separately. If source data already lives in a compatible lake format, compare ingestion with an external-collection design that retains source ownership.
 
 For reads used in training or evaluation, use a reproducible dataset state and record its identity. Test executor failure and a resumed job, then compare logical record membership and expected retrieval behavior. The connector is valuable when it removes integration work while preserving the pipeline's semantics, not simply when a demo dataframe can be written successfully.
+
+## Make a read-to-curation pilot explicit
+
+The following is workflow pseudocode, not connector configuration or a runnable Spark API example:
+
+```text
+record supported source state and connector revision
+read a bounded fixture through the documented path
+project stable_id, source_revision, embedding, required_metadata
+join reviewed quality and ownership labels
+find duplicate candidates or propose clusters
+review decisions and write a versioned selection manifest
+retry one partition and reconcile logical IDs
+publish only the approved result through a supported write path
+```
+
+Keep the selection manifest even when only a small serving subset is written back. It records what the job intended to publish and makes a partial retry or later model comparison explainable. Follow the connector's current README for actual snapshot/read options; an old tutorial's coordinates are not a compatibility contract.
+
+## Example to test
+
+Read a bounded, supported snapshot into Spark, project only needed fields, join quality labels, and write a reviewed selection manifest. Retry one partition and compare logical IDs. Confirm connector-specific read options rather than mixing generations of examples.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
 
 ## Continue learning
 

@@ -25,6 +25,15 @@ Use several records with known matches, hard negatives, and a tenant or version 
 
 Keep retry behavior explicit. Timeouts can leave the client uncertain about the server outcome, so use the documented mutation semantics and application reconciliation rather than assuming a timeout always means no change occurred. A compact, repeatable fixture lets engineers evaluate SDK upgrades, schema changes, and deployment moves before a large production corpus makes mistakes difficult to isolate.
 
+## Example to test
+
+Keep a short client script that creates an isolated collection, inserts fixed records, queries expected IDs, and removes only that test collection. Avoid destructive copy-paste examples against a shared or production collection.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
+
 ## Continue learning
 
 - [What does the released Milvus Model library actually support?](/ai-quick-reference/milvus-model-library-support)

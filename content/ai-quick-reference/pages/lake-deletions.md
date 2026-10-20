@@ -25,6 +25,15 @@ Maintain canaries for a complete document, one chunk, one tenant, and one correc
 
 Track the oldest unprocessed deletion and the time until serving and downstream exports satisfy the required policy. For strict removal requirements, explicitly address retained snapshots and training artifacts instead of promising that one live-index mutation covers them. A reliable design makes both the effective serving state and the remaining retained copies visible to their owners.
 
+## Example to test
+
+Delete a source object with several indexed chunks and cached answers. Verify that every derived representation stops serving it under the chosen visibility policy. File cleanup alone does not establish logical deletion in all consumers.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+
 ## Continue learning
 
 - [How should you refresh a Milvus external collection safely?](/ai-quick-reference/how-to-refresh-milvus-external-collections)

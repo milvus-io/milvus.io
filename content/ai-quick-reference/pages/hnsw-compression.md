@@ -7,6 +7,8 @@ order: 62
 
 Compressed HNSW variants combine graph navigation with a lower-cost vector representation. They address memory and computation requirements that ordinary HNSW can make expensive at large scale. The trade-off includes representation error, graph overhead, index preparation, and any higher-precision refinement stage.
 
+![Treat compression as another approximation](/images/ai-reference/quantization.svg)
+
 ## Understand what is compressed
 
 Scalar quantization reduces the precision used for vector coordinates. Product quantization encodes subvectors through learned codebooks. Product residual quantization uses additional residual modeling as described by the supported implementation. These methods change distance approximation; the HNSW graph still has its own storage cost.
@@ -24,6 +26,15 @@ Where refinement is supported, account for the representation it reads and the e
 Inspect failures for rare domains, unusual vector norms, selective filters, and the tails of the query distribution. A quantizer trained or evaluated on an unrepresentative sample can produce a misleading average result. Include the workload's update and rebuild behavior in the experiment.
 
 Select a configuration only after it meets the relevance and tail-latency requirements with enough memory headroom for normal operations. Document both the compact codes and the remaining structures in the estimate. The useful result is a quality-constrained capacity improvement, not a theoretical compression factor presented as a guaranteed reduction in total service cost.
+
+## Example to test
+
+Hold the graph and query workload as comparable as the supported index variants allow, then measure recall, memory, and build cost. If parameters differ, report them; a smaller index at a lower quality target is not an equal comparison.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

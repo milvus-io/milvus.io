@@ -7,6 +7,8 @@ order: 91
 
 A scalable embedding pipeline must preserve representation semantics while reading, batching, encoding, and publishing many source records. GPU utilization is only one stage's metric. A high-throughput encoder is not useful if the final dataset has missing IDs, mixed model revisions, or inconsistent dimensions.
 
+![Version the representation before indexing it](/images/ai-reference/encoding.svg)
+
 ## Define an idempotent unit of work
 
 Use source ID, source revision, representation revision, and chunk identity to define the logical output. A retry should reproduce or replace that output according to a clear policy rather than create unrelated duplicate rows. Preserve task progress at a boundary that can be reconciled after failure.
@@ -24,6 +26,15 @@ Ray Data and Spark-based workflows provide different integration choices for dis
 Check counts, unique logical IDs, dimensions, finite numeric values, model revisions, and a representative sample of source-to-vector mappings. Write a committed manifest before exposing the output to retrieval or training. Follow the chosen managed-import or external-collection contract for serving.
 
 Test a worker failure, a resumed run, and a changed source record. Track usable published records per unit of time and cost, not only the encoder's peak throughput. This yields a pipeline that can be scaled and repaired without losing the provenance needed to interpret its vectors.
+
+## Example to test
+
+Fail a worker midway through a source partition, retry it, and reconcile output by stable source ID plus model revision. Check missing and duplicate records before indexing. A successful job status does not establish complete logical output.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

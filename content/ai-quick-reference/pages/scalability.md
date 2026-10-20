@@ -23,6 +23,15 @@ Index choice and compression can change the capacity/performance balance. Distri
 
 Run representative data volumes and concurrency levels, including sustained writes and maintenance. Track tail latency, error rates, resource utilization, and time to recover from restarts or capacity changes. Leave headroom for normal operations. A benchmark at one scale is evidence for that configuration, not a guarantee that performance will extrapolate linearly to a much larger corpus.
 
+## Example to test
+
+Grow data, query concurrency, and update traffic independently before testing them together. Identify which resource saturates first and repeat after a node failure. A larger static collection alone does not establish production scalability.
+
+## From concept to implementation
+
+- [Turn workload assumptions into a sizing estimate](https://milvus.io/tools/sizing).
+- [Compare current managed-service pricing separately](https://zilliz.com/pricing).
+
 ## Continue learning
 
 - [How should you separate hot vector serving from cold lake data?](/ai-quick-reference/how-to-design-hot-and-cold-vector-serving)

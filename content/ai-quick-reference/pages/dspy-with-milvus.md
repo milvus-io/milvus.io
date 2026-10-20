@@ -21,6 +21,15 @@ Evaluate source correctness, answer support, and required abstention, not only s
 
 Optimization can increase calls, latency, or cost. Measure these along with quality and inspect failures across tenants and query categories. Run database-side retrieval evaluation independently: a better prompt cannot recover a relevant document that never entered the candidate set. Treat the optimized program as a versioned application component with regression tests.
 
+## Example to test
+
+Optimize prompts on a development split while holding the retrieval corpus version fixed. Evaluate on an untouched split and save the compiled configuration. Otherwise prompt changes and corpus changes become impossible to attribute separately.
+
+## From concept to implementation
+
+- [Use the topic-specific integration guide](https://milvus.io/docs/integrate_with_dspy.md).
+- [Keep a direct-client verification baseline](https://milvus.io/docs/quickstart.md).
+
 ## Continue learning
 
 - [How do you choose an AI framework for a Milvus application?](/ai-quick-reference/choose-ai-framework-for-milvus)

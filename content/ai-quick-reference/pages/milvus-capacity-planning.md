@@ -21,6 +21,15 @@ Compare at a matched quality target and deployment mode. For self-operated Milvu
 
 Run a smaller but representative dataset, observe index size, memory, ingestion, and query latency, then test the extrapolation. Preserve the workload and version with the estimate. Link the capacity calculation to a reproducible benchmark and an implementation plan; the value is a defensible decision, not a single impressive cost number.
 
+## Example to test
+
+Use a worksheet with vector count, dimension, metadata size, index, replicas, update rate, and target p95. Validate it with a representative load test. A sizing-tool output is a starting estimate whose assumptions must remain visible.
+
+## From concept to implementation
+
+- [Turn workload assumptions into a sizing estimate](https://milvus.io/tools/sizing).
+- [Compare current managed-service pricing separately](https://zilliz.com/pricing).
+
 ## Continue learning
 
 - [How do you estimate memory for vector search?](/ai-quick-reference/how-does-vector-search-manage-memory-usage)

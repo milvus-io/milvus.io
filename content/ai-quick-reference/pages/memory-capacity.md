@@ -23,6 +23,29 @@ Check which fields are loaded and returned. Large payload fields can dominate me
 
 Load representative data, warm the intended query mix, and observe memory during sustained reads and writes. Repeat at increasing sizes and inspect non-linear behavior rather than extrapolating from one tiny collection. Include headroom for maintenance and recovery. Keep the measured configuration, data distribution, and index parameters with the estimate so it can be revised when the workload changes.
 
+## Build a worksheet, not a single multiplier
+
+Start with `raw_vector_bytes = row_count × dimension × bytes_per_component`. Keep decimal GB and binary GiB distinct. Then list the configured index representation, scalar and payload data, serving copies, caches, concurrent-query working memory, and build/recovery headroom separately.
+
+| Budget line | Evidence to collect |
+| --- | --- |
+| Vector and scalar data | Schema, types, sizes, and row count |
+| Index | Actual built artifact and supported memory/storage behavior |
+| Serving copies and cache | Deployment configuration and observed resident usage |
+| Query execution | Representative concurrency and output size |
+| Maintenance and recovery | Build, refresh, restart, and failover measurements |
+
+Some index formats include or compress vector data, so avoid double-counting a measured total as an additional raw-vector allocation. Use the sizing tool for a documented starting assumption and reconcile it with deployment measurements.
+
+## Example to test
+
+One million 768-dimensional float32 vectors contain 3.072 billion raw vector bytes, about 2.86 GiB. This illustrative subtotal excludes indexes, metadata, replicas, caches, and query execution, so it is not a deployment-memory estimate.
+
+## From concept to implementation
+
+- [Turn workload assumptions into a sizing estimate](https://milvus.io/tools/sizing).
+- [Compare current managed-service pricing separately](https://zilliz.com/pricing).
+
 ## Continue learning
 
 - [How do you turn a Milvus workload into a capacity and cost estimate?](/ai-quick-reference/milvus-capacity-planning)

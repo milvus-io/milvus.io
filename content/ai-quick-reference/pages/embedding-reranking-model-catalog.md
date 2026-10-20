@@ -32,6 +32,15 @@ For image, video, and PDF retrieval, also retain page, frame, timestamp, and obj
 
 Choose a small candidate set covering deployment constraints and the actual languages and modalities. Encode identical source units, use held-out questions, and compare relevance, missed evidence, encoding cost, query latency, and storage. Add a fixed candidate-pool reranking comparison afterwards. Pin the selected configuration so future model updates do not silently change the meaning of stored vectors.
 
+## Example to test
+
+Start with candidates that fit the required language, modality, hosting, and license. Run a bounded pilot before adopting the highest-ranked large model. Include ingestion time and re-embedding cost, not just query latency.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
+
 ## Continue learning
 
 - [How do MMEB versions evaluate multimodal embeddings?](/ai-quick-reference/mmeb-multimodal-evaluation)

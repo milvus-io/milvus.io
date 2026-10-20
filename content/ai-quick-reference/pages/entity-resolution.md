@@ -25,6 +25,15 @@ Store source IDs, proposed canonical ID, evidence, model and policy revisions, r
 
 Evaluate pair-level decisions and final entity groups, including false merges, missed duplicates, and recovery from a corrected decision. Preserve downstream references when canonical identity changes. Milvus can accelerate repeated candidate discovery, while the application owns the authoritative identity graph and the rules for combining or separating entities.
 
+## Example to test
+
+Two suppliers with similar names may be separate legal entities. Retrieve candidate pairs, then compare authoritative identifiers and supporting attributes. Keep uncertain pairs reversible; nearest-neighbor rank alone is not a merge decision.
+
+## From concept to implementation
+
+- [Build an evidence-backed RAG pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
+- [Find a runnable application starting point](https://milvus.io/bootcamp).
+
 ## Continue learning
 
 - [How should you combine exact, fuzzy, and semantic deduplication?](/ai-quick-reference/exact-fuzzy-and-semantic-deduplication)

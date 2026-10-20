@@ -7,6 +7,8 @@ order: 23
 
 ETL extracts source data, transforms it into the representation an application needs, and loads it into a destination. For vector retrieval, transformation often includes parsing, normalization, chunking, metadata extraction, and embedding. The pipeline also needs a reliable way to handle changes after the first load.
 
+![Version the representation before indexing it](/images/ai-reference/encoding.svg)
+
 ## Extract with provenance
 
 Keep a stable source ID, document version, location, and any access-control metadata. Record failures instead of silently skipping unreadable files. A successful download does not mean useful text was extracted: scanned documents, tables, and unusual encodings need explicit checks.
@@ -22,6 +24,15 @@ Batching embedding work can improve throughput, but the system still needs retry
 Choose online writes or bulk import according to the workload and the documented deployment capabilities. Check job status and record counts, then verify that the expected data is searchable under the intended consistency behavior. Loading bytes successfully is only one checkpoint.
 
 Test updates, deletions, and re-embedding before scaling the pipeline. If a source document disappears, its old chunks should not remain searchable indefinitely. Reconcile the source inventory with indexed IDs and versions. Monitor parsing failures, embedding failures, indexing lag, and stale-record counts so the retrieval service can distinguish “no evidence exists” from “the evidence has not arrived yet.”
+
+## Example to test
+
+Before a large import, validate a sample with the actual schema and reject mismatched vector dimensions, unstable IDs, and missing source references. Keep rejection reasons outside the serving collection so failures can be repaired and replayed.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

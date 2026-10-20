@@ -47,6 +47,15 @@ Record the model revision, serialization, truncation policy, and output mapping.
 
 These entries extend the earlier shortlist; they do not create a shared ranking across different candidate pools or protocols. Jev also has an explicit Milvus Model wrapper; its evidence-oriented template is described in the support matrix.
 
+## Example to test
+
+Fix the candidate pool before comparing rerankers, and check context limits and document truncation. Measure ranking quality with inference cost. Otherwise an apparent model advantage may come from a different pool or more retained source text.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
+
 ## Continue learning
 
 - [How does KaLM compressed-document reranking work?](/ai-quick-reference/kalm-reranker-models)

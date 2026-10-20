@@ -7,6 +7,8 @@ order: 44
 
 Apache Arrow and Apache Parquet solve different data-layout problems in a vector pipeline. Arrow describes columnar representations used to exchange and process data in memory. Parquet organizes columnar files for storage and analytical reads. A pipeline can use both while moving embeddings and metadata between batch processing, object storage, and retrieval.
 
+![Keep logical identity separate from file position](/images/ai-reference/format.svg)
+
 ## Model the vector column explicitly
 
 Treat an embedding as a numeric representation with a declared element type and dimension. Check how the selected tools encode fixed-length or variable-length lists, nulls, nested values, and string IDs. A file that a dataframe reader accepts can still fail a serving schema's dimension or field-type requirements.
@@ -24,6 +26,15 @@ An Arrow buffer can reduce conversion work between compatible components, but th
 Write a fixture containing normal vectors, allowed nulls, unusual IDs, and representative metadata. Read it with the producer's and consumer's libraries, then compare values, dimensions, row identities, and schema. Follow the Milvus import guide for the supported file and schema contract.
 
 Benchmark scan-oriented embedding jobs separately from retrieval payload reads. Retain the source-file manifest and schema revision with each dataset release. The formats are useful building blocks when they preserve semantics and fit the access pattern; choosing a familiar extension alone does not establish interoperability or performance.
+
+## Example to test
+
+Export a small table containing vectors, null metadata, and nested source references. Read it back with the intended consumer and compare IDs, dimensions, and null behavior. File readability alone does not prove that field semantics survived.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
 
 ## Continue learning
 

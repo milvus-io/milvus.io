@@ -25,6 +25,15 @@ Track completed, failed, timed-out, and cancelled attempts, along with the reaso
 
 Measure generation throughput and cost, outcome coverage, and the delay until usable records reach the analysis or training pipeline. When reusing samples for optimization, confirm that sampling, policy-version constraints, rewards, and token-level requirements satisfy the selected algorithm. A searchable experience repository is useful infrastructure, but the training contract remains an explicit responsibility of the learning system.
 
+## Example to test
+
+Keep the task, policy version, observations, actions, and verifier result together for one execution. Compare alternative outcomes without turning a summarized transcript into ground truth. The retrieval index helps find executions; it does not run training.
+
+## From concept to implementation
+
+- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
+- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
+
 ## Continue learning
 
 - [What is an agent trajectory, and how should you represent it for retrieval?](/ai-quick-reference/what-is-an-agent-trajectory)

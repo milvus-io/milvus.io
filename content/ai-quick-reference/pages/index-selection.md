@@ -7,6 +7,8 @@ order: 14
 
 Choose an index by setting a retrieval-quality target and measuring the resources needed to meet it. Dataset size matters, but so do vector dimension, metric, filters, query concurrency, update rate, and whether the working set fits in memory.
 
+![Control the workload before comparing performance](/images/ai-reference/benchmark.svg)
+
 ## Write down the workload first
 
 Specify the corpus size now and after expected growth, the number and types of vector fields, typical top-k, filter selectivity, write patterns, and latency objectives. Separate interactive searches from offline batch jobs. Include payload fields returned with each hit and any downstream reranker, because their costs affect the user-visible result.
@@ -22,6 +24,15 @@ Do not compare one system's highest-throughput configuration with another system
 ## Use a deployment test
 
 Run long enough to observe queueing, cache effects, and maintenance work. Exercise realistic filters and query distributions. Select a configuration with operational headroom and document why it was chosen. Re-run the evaluation when the embedding model, corpus distribution, deployment topology, or traffic mix changes; an index recommendation is conditional on those assumptions.
+
+## Example to test
+
+A write-heavy catalog, a static archive, and a high-concurrency assistant can favor different index configurations. Create a small workload matrix before choosing an index; the same vector count does not imply the same service requirement.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

@@ -33,6 +33,18 @@ function validateRows(rows, catalog = publication) {
     if (/contentReference\[|oaicite|\uE200cite\uE202/.test(row.Answers)) {
       throw new Error(`Unresolved AI reference citation: ${slug}`);
     }
+    for (const [, alt, image] of row.Answers.matchAll(
+      /!\[([^\]]*)\]\((\/images\/ai-reference\/[^)]+)\)/g
+    )) {
+      const file = image.slice('/images/ai-reference/'.length);
+      if (
+        !alt.trim() ||
+        !/^[a-z0-9-]+\.svg$/.test(file) ||
+        !fs.existsSync(path.join(process.cwd(), 'public/images/ai-reference', file))
+      ) {
+        throw new Error(`Invalid AI reference illustration: ${slug} -> ${image}`);
+      }
+    }
     if (
       (row.Demo || row.Demo_description) &&
       (!['RAG', 'hybrid search', 'multimodal image search'].includes(row.Demo) ||

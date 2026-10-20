@@ -7,6 +7,8 @@ order: 115
 
 Authentication establishes which database principal is connecting. Role-based access control governs supported operations and resources. Application-side tenant and document permissions define which records a user may retrieve. These controls work at different levels; one does not automatically establish the others.
 
+![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
+
 ## Map identities to operations
 
 Create a small permission matrix for ingestion workers, query services, and operators. Give each component the operations it needs. Keep database credentials in the application's secret-management path, and avoid giving end users direct access to a broadly privileged service credential.
@@ -20,6 +22,15 @@ Use two tenants with deliberately similar documents and distinct source IDs. Ask
 ## Review deployment-specific capabilities
 
 Check network controls, transport security, audit requirements, and the exact RBAC features of the deployed version or managed service tier. Preserve the permissions matrix as part of application configuration and regression testing. A secure demo needs evidence that denied operations fail, as well as evidence that allowed searches succeed.
+
+## Example to test
+
+Test a search credential against a denied administrative operation, then query two tenants with similar content. Keep operation authorization and row eligibility as separate checks so a passed login test cannot mask missing document restrictions.
+
+## From concept to implementation
+
+- [Map database operations to roles](https://milvus.io/docs/rbac.md).
+- [Related governed-AI story: Credal AI](https://zilliz.com/customers/credal-ai).
 
 ## Continue learning
 

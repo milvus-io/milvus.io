@@ -7,6 +7,8 @@ order: 11
 
 HNSW, or Hierarchical Navigable Small World, is a graph-based approximate nearest-neighbor index. It connects vectors at multiple levels. A search uses upper levels to approach a promising region, then explores a denser lower-level neighborhood to find candidates.
 
+![HNSW hierarchical graph navigation](/images/ai-reference/hnsw.svg)
+
 ## The important trade-offs
 
 The graph helps avoid comparing every stored vector, but its links consume memory in addition to the vector representation. Building the graph also takes time. A graph configuration that improves recall may require more memory or more work during indexing and search.
@@ -22,6 +24,25 @@ Test under the production query mix, including filters and the expected number o
 ## When to compare alternatives
 
 HNSW is a useful candidate when graph-based retrieval fits the latency and memory budget. It is not automatically the best choice for every corpus. Include IVF and compressed or disk-oriented alternatives when capacity, ingestion rate, cost, or workload shape dominates. Avoid choosing from a graph-only microbenchmark when the application also requires expensive filtering, payload retrieval, or reranking.
+
+## Keep the tuning variables separate
+
+| Parameter | Stage | Question to investigate |
+| --- | --- | --- |
+| M | Graph construction | Does different connectivity justify its graph memory and build cost? |
+| efConstruction | Graph construction | Does more construction exploration improve the reachable quality curve? |
+| ef | Query | How much recall is gained for added search work on this fixed graph? |
+
+A useful experiment changes one stage at a time. Keep filters and concurrency in the saved run configuration. If exact retrieval is already irrelevant, fix the model or data before rebuilding a graph; graph tuning only changes how well the index approximates the selected vector-ranking problem.
+
+## Example to test
+
+Sweep search-time ef with one fixed graph before rebuilding with a different M. This separates search effort from graph connectivity. Save each recall and p95 pair so the chosen configuration has an explicit operating point.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

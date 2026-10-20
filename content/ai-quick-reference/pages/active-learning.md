@@ -7,6 +7,8 @@ order: 87
 
 Active-learning workflows choose which examples should receive limited human labeling effort. Vector search can locate related records, reduce redundant reviews, and expose areas with weak coverage. It supplies candidate organization; the labeling objective determines which examples are valuable.
 
+![A bounded Spark-to-Milvus data workflow](/images/ai-reference/spark.svg)
+
 ## Combine uncertainty with coverage
 
 A model's uncertainty score can identify difficult examples, but repeated variants of the same case can consume the entire review budget. Use similarity or clustering to group related candidates and allocate effort across meaningful regions.
@@ -24,6 +26,15 @@ Capture disagreement and an uncertain label when the evidence is insufficient. P
 Track useful labels per unit of reviewer effort, duplicate reviews, disagreement, coverage, and downstream model improvement. Compare with a baseline selection method under the same budget. Retain candidate and selection scores so the experiment can explain why each example was chosen.
 
 Keep a held-out evaluation set separate from the active-learning loop. Update the selection policy only after assessing whether it improves the actual task rather than just increasing the apparent difficulty of reviewed data. A successful workflow directs human attention to informative and representative examples while preserving the evidence and uncertainty behind their labels.
+
+## Example to test
+
+Suppose a labeling queue contains many nearly identical product photos. Select uncertain examples from different neighborhoods rather than taking the highest-uncertainty rows alone. Compare accepted labels per reviewer hour and coverage of rare categories.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

@@ -7,6 +7,8 @@ order: 80
 
 A search evaluation set should represent the decisions the application needs to make. It contains queries or tasks, the eligible data state, relevance or outcome judgments, and enough metadata to understand where the system succeeds or fails. A list of easy demonstration questions is not an adequate replacement.
 
+![Measure four different outcomes separately](/images/ai-reference/evaluation.svg)
+
 ## Sample the real intent mix
 
 Include exact identifiers, paraphrases, multi-part questions, rare-domain queries, selective filters, and requests with no supported answer. Preserve the tenant, product version, language, and time context needed to determine eligibility. Use consented production examples where available and reviewed synthetic cases for gaps.
@@ -24,6 +26,15 @@ Create a development set for iteration and a held-out set for decisions. If rele
 Measure candidate coverage and ranking metrics alongside grounded answer quality, task completion, latency, errors, and tool cost. Review query groups rather than relying entirely on one average score. Important exact-term or minority-language failures can be hidden by a large easy slice.
 
 Keep qualitative examples with source evidence for each material regression. Use them to decide whether to change data, representation, indexing, or agent control. A compact, maintained evaluation set gives the team a repeatable release criterion and makes later performance or architecture experiments easier to interpret.
+
+## Example to test
+
+Include exact identifiers, paraphrases, empty-result questions, stale sources, and access-denied cases. Keep evaluation queries outside tuning. A set of only easy successful examples cannot reveal the failure modes of an agent retrieval workflow.
+
+## From concept to implementation
+
+- [Build an evidence-backed RAG pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
+- [Find a runnable application starting point](https://milvus.io/bootcamp).
 
 ## Continue learning
 

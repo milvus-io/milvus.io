@@ -7,6 +7,8 @@ order: 88
 
 Multimodal curation uses representations of images, video, text, or other signals to organize and select source material. The first design choice is the unit of data: a frame, clip, scene, caption, or synchronized sensor interval can lead to different retrieval and removal decisions.
 
+![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
+
 ## Preserve temporal and source identity
 
 For video, retain recording ID, start and end times, frame sampling, and extraction revision. For images, preserve source object, crop or transformation, and any caption relationship. Several embeddings can describe one source object, so keep their roles explicit.
@@ -24,6 +26,15 @@ NVIDIA's clip-level deduplication documentation illustrates a workflow over embe
 Review near-threshold pairs, rare classes, and clips that differ only in an important temporal detail. Track false removals and retained coverage, not only the number of deleted files. Keep decisions reversible through source references and a versioned selection manifest.
 
 Measure embedding extraction, candidate generation, payload retrieval, and human review cost separately. Milvus can support repeated interactive retrieval, while large media transformations and offline pair processing may run in a dedicated curation pipeline. The connection is most useful when reviewers can move from a search result to the exact media evidence and then publish a reproducible dataset decision.
+
+## Example to test
+
+Keep video clip boundaries, frame sampling, and source revisions with every selected example. Review pairs that share a scene but differ in an important event. Removing redundant frames must not erase the rare action the dataset needs.
+
+## From concept to implementation
+
+- [Build a multimodal retrieval prototype](https://milvus.io/docs/text_image_search.md).
+- [Related video-deduplication story: BIGO](https://zilliz.com/customers/bigo).
 
 ## Continue learning
 

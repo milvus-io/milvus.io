@@ -21,6 +21,15 @@ The model reports compare tasks and compression settings under specific protocol
 
 There is no dedicated KaLM reranker export in Milvus Model 0.3.4. The presence of a generic CrossEncoder wrapper is not evidence that it forwards KaLM's specialized configuration. Validate the official loading path independently, then expose a bounded reranking service or adapter with stable output-ID mapping.
 
+## Example to test
+
+Retrieve a fixed passage pool, encode document states through the checkpoint's prescribed path, and compare query-time ranking cost. Verify cache invalidation after a passage changes; compressed intermediate states are not automatically reusable ANN vectors.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
+
 ## Continue learning
 
 - [How do the KaLM text embedding variants differ?](/ai-quick-reference/kalm-embedding-models)

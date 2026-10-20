@@ -7,6 +7,8 @@ order: 36
 
 Plan recovery around the data and service state the application must restore. Replication supports availability in some failure scenarios, but it is not a replacement for a recoverable historical copy: an unintended change can propagate through a replicated system.
 
+![Verify the dataset before switching traffic](/images/ai-reference/migration.svg)
+
 ## Identify what must be recovered
 
 Include collection data, schema, metadata, source-to-record mappings, and the configuration needed to reproduce retrieval behavior. Keep authoritative documents and embedding/model revisions where required. A restored set of vectors without its source content or eligibility metadata may not be a usable retrieval service.
@@ -22,6 +24,15 @@ Define recovery point and recovery time objectives in terms of the business requ
 ## Perform restoration tests
 
 Restore to an isolated environment, compare record counts and selected source IDs, then run known queries and metadata-filter checks. Test schema and version compatibility, missing dependencies, and access restrictions. Record observed restore time and resources. Repeat after meaningful changes to data layout or software versions, and protect backup access independently of the normal search application.
+
+## Example to test
+
+Restore a backup into a separate test environment, then resolve a saved query to its expected source records. Check collection configuration and access settings separately; a completed file copy is not evidence that the application can recover.
+
+## From concept to implementation
+
+- [Plan a supported backup and restore test](https://milvus.io/docs/milvus_backup_overview.md).
+- [Distinguish ongoing synchronization from backup](https://milvus.io/docs/milvus-cdc-overview.md).
 
 ## Continue learning
 

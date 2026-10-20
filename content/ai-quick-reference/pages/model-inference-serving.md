@@ -7,6 +7,8 @@ order: 130
 
 Model serving separates representation generation from vector storage. It can isolate model dependencies, share GPUs across applications, and allow ingestion and interactive queries to use distinct capacity plans. A serving protocol does not make all models compatible: TEI, vLLM, provider APIs, and native processors support different architectures and request schemas.
 
+![Version the representation before indexing it](/images/ai-reference/encoding.svg)
+
 ## Define the endpoint contract
 
 Record the model revision, tokenizer/processor, query and document instructions, output dimension, normalization, batching, and truncation. For multimodal input, preserve how images, frames, audio, and mixed content are serialized. A text-only embeddings endpoint must not be treated as an arbitrary multimedia endpoint because both return arrays.
@@ -20,6 +22,15 @@ Offline document encoding can batch large workloads and resume from stable sourc
 ## Version the index with the model
 
 Create a new field or collection when the representation changes unless compatibility is explicitly guaranteed. Compare held-out queries, filtered results, and costs before cutover, and define what happens to concurrent writes. For rerankers, pin the model and input serialization and revalidate thresholds. This makes a model upgrade a controlled data change, not a silent change in search meaning.
+
+## Example to test
+
+Send the same bounded fixture through local and served inference and compare output dimensions and tolerated numerical differences. Then test timeout and retry behavior. Serving an endpoint successfully does not prove that its pooling or preprocessing matches the checkpoint.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
 
 ## Continue learning
 

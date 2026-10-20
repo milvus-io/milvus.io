@@ -7,6 +7,8 @@ order: 59
 
 DISKANN is an approximate nearest-neighbor index designed to combine graph search with disk-oriented data access. In Milvus, it is an option for workloads whose capacity and cost requirements make a fully memory-resident index unattractive. Its usefulness depends on the storage device, cache, search effort, and required recall.
 
+![Diagnose latency at the boundary where it grows](/images/ai-reference/operations.svg)
+
 ## Budget for both memory and storage I/O
 
 A disk-oriented index still needs memory for working structures, compressed representations, caches, and request execution. It also consumes local storage and I/O bandwidth. Estimate the complete serving footprint rather than dividing raw vector size by available disk capacity.
@@ -24,6 +26,15 @@ Compare against HNSW and other candidates at matched recall and resource budgets
 Measure cold startup, warmed traffic, a shifted query distribution, and recovery after a serving-node replacement. Track disk IOPS, bandwidth, queueing, cache behavior, memory, and errors. Tail latency can worsen when many requests simultaneously miss the useful working set.
 
 Keep mmap as a separate decision: mapping a file into virtual memory does not automatically give another index DISKANN's search organization. Choose the supported index and storage settings together. Adopt DISKANN when measured recall, tail latency, capacity, and recovery cost satisfy the workload rather than when a dataset is merely described as large.
+
+## Example to test
+
+Replay an identical query mix after a serving-node restart and after warm-up. Compare recall and tail latency with disk queueing and memory use. The warm-cache result alone does not establish the experience during recovery.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

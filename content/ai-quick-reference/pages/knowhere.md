@@ -25,6 +25,15 @@ Keep vectors, metric, query set, top-k, and eligible records fixed. Compare agai
 
 When investigating an issue, preserve the complete index and database configuration alongside the source revision. A favorable microbenchmark in an engine repository establishes a narrower result than an improvement in a distributed application. The useful question is whether the supported integration meets the application's quality and operating targets across its actual workload.
 
+## Example to test
+
+When diagnosing an ANN discrepancy, first save the metric, filter, index configuration, and exact baseline at the Milvus API boundary. Then isolate the index-library behavior. A library microbenchmark cannot account for distributed serving overhead.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+
 ## Continue learning
 
 - [How does the Milvus architecture separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)

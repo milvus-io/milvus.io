@@ -7,6 +7,8 @@ order: 15
 
 Metadata filtering restricts which records are eligible for vector search. Typical constraints include tenant, language, document version, timestamp, or product category. Similarity ranks eligible candidates; it does not decide whether a record is authorized or current.
 
+![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
+
 ## Decide where the constraint must hold
 
 Applying a mandatory condition during retrieval is different from fetching a global top-k and discarding disallowed hits afterward. Post-filtering can leave too few results and can miss eligible neighbors that never entered the candidate set. For access control, the application must enforce the policy consistently on every request, including reranking and source retrieval.
@@ -22,6 +24,15 @@ Scalar indexes, field layout, and tenant organization can influence this behavio
 ## Test correctness and quality together
 
 Verify that every returned record satisfies the condition, that eligible relevant records are still found, and that fewer than k eligible records produces an appropriate response. Measure recall against the correctly filtered exact baseline. Keep the filter, corpus snapshot, and k fixed when comparing index configurations, otherwise an apparent quality improvement may simply reflect a different candidate set.
+
+## Example to test
+
+Create two tenants with almost identical passages. Query as each tenant and inspect returned IDs under the mandatory server-side predicate. A perfect relevance score does not compensate for a result from the wrong tenant.
+
+## From concept to implementation
+
+- [Implement eligible vector retrieval](https://milvus.io/docs/filtered-search.md).
+- [Make the metadata contract explicit](https://milvus.io/docs/schema.md).
 
 ## Continue learning
 

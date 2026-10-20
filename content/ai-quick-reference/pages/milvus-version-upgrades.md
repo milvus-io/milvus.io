@@ -21,6 +21,15 @@ Follow the guide for the actual deployment method, such as Helm or the relevant 
 
 After upgrading the test environment, compare data visibility, retrieval results, permissions, and operational metrics with the baseline. Document which differences are expected. Schedule production cutover only with a defined observation period and recovery path. Keep the application's documentation tied to its deployed version so an upgrade does not leave users following incompatible instructions.
 
+## Example to test
+
+Restore a representative fixture in a staging deployment, run the saved retrieval checks, and verify the documented rollback path before upgrading production. Include old data and indexes rather than testing only freshly created collections.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
+
 ## Continue learning
 
 - [How should you plan backup and recovery for a vector database?](/ai-quick-reference/how-do-vector-databases-handle-backup-and-restore-or-replication-for-very-large-datasets-and-what-impact-does-that-have-on-system-design-in-terms-of-time-and-storage-overhead)

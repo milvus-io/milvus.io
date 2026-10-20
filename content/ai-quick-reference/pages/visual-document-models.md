@@ -7,6 +7,8 @@ order: 126
 
 Visual-document models encode rendered pages or image patches so retrieval can retain information lost by plain text extraction. ColPali, ColQwen2.5, ColSmol, and Nemotron ColEmbed are useful families to inspect. They produce token/patch-level representations for late interaction rather than an ordinary single dense embedding for the whole page.
 
+![Preserve page structure through multi-vector retrieval](/images/ai-reference/visual-page.svg)
+
 ## Choose a model and implementation pair
 
 ColPali offers a PaliGemma-derived page-retrieval approach; ColQwen2.5 uses a Qwen2.5-VL backbone; ColSmol targets a smaller model footprint. Nemotron ColEmbed is another visual-document late-interaction candidate with its own requirements and model terms. Check the exact checkpoint's engine: a Transformers-format model and a colpali-engine checkpoint can require different loading paths.
@@ -20,6 +22,15 @@ For a legal-document collection, store document ID, page number, rendered-image 
 ## Evaluate candidate search and final scoring
 
 The documented search strategies include tokenann, muvera, and lemur. They change approximate candidate retrieval; final MaxSim scoring is a separate step when enabled. Compare candidate recall and final ranking independently, along with index size and page-encoding latency. An exact second-stage score cannot repair a page absent from the candidate set. Test table-heavy pages, multi-column layouts, and near-duplicate versions on the corpus you intend to serve.
+
+## Example to test
+
+Use a page containing a table and a diagram, then check whether retrieved evidence points to the correct page and region. Preserve multi-vector structure through the supported path instead of averaging token vectors into an unvalidated single vector.
+
+## From concept to implementation
+
+- [Check versioned embedding-list search](https://milvus.io/docs/basic-vector-search-with-structarray.md).
+- [Connect media evidence to an application](https://milvus.io/docs/multimodal_rag_with_milvus.md).
 
 ## Continue learning
 

@@ -45,6 +45,15 @@ The inspected Voyage and Gemini code includes older model names and internal dim
 
 The matrix establishes exported source interfaces and defaults, not successful calls to every remote model. This review did not download model weights, execute paid inference, or claim an end-to-end certification. Check query/document output dimensions, normalization, IDs, and the exact adapter/provider versions before inserting a full corpus.
 
+## Example to test
+
+Pin the package, instantiate the intended interface in a bounded integration test, and inspect output shape before bulk encoding. A provider wrapper's existence does not verify every newer model name, metadata lookup, or multimodal payload.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
+
 ## Continue learning
 
 - [How do client model wrappers, server Functions, and rank fusion differ?](/ai-quick-reference/milvus-model-functions)

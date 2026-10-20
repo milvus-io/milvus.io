@@ -7,6 +7,8 @@ order: 121
 
 WeMM-Embedding is a multimodal embedding family released by Tencent's WeChat Vision team. The published model set contains 2B, 4B, and 9B variants for text, images, videos, visual documents, and interleaved supported inputs. The release does not currently support audio. It produces a normalized representation for shared-space retrieval rather than a generated answer.
 
+![Preserve page structure through multi-vector retrieval](/images/ai-reference/visual-page.svg)
+
 ## Choose the object the vector describes
 
 For a driving-data collection, define whether each record represents a frame, a fixed-duration clip, or an event. Save the object URI, time boundaries, camera, source revision, and preprocessing configuration. A query such as a pedestrian entering a junction should return a verifiable clip reference, not just a nearest-vector ID.
@@ -20,6 +22,15 @@ The published examples include Sentence Transformers, Transformers, and serving 
 ## Validate the intended modality
 
 Build image, clip, and visual-document query sets separately. Match frame sampling and source granularity across candidates. Compare current checkpoint results with their own protocol rather than joining the older MMEB public-file entries to new report numbers. For curation or deduplication, manually inspect false matches before treating a shared-space similarity as evidence that two samples can be removed interchangeably.
+
+## Example to test
+
+Define whether a record represents a frame, clip, or page, then use that checkpoint's processor consistently for ingestion and queries. Save the sampling policy and source boundaries. Similar shared-space outputs do not erase modality-specific preprocessing requirements.
+
+## From concept to implementation
+
+- [Check versioned embedding-list search](https://milvus.io/docs/basic-vector-search-with-structarray.md).
+- [Connect media evidence to an application](https://milvus.io/docs/multimodal_rag_with_milvus.md).
 
 ## Continue learning
 

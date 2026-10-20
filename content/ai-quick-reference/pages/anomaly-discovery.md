@@ -25,6 +25,15 @@ Build reviewed examples of important rare cases and ordinary variations. Evaluat
 
 Test distribution shifts and changes in source equipment, language, or traffic. Update the reference population deliberately instead of allowing novelty scores to change invisibly as data accumulates. A vector database can make neighborhood inspection interactive and repeatable; the useful result is better discovery and labeled evidence, not an unvalidated claim that geometric distance detects every operational failure.
 
+## Example to test
+
+An unusual night-driving clip can be far from daytime examples without being defective. Compare it with a relevant night-time population and ask reviewers whether it reveals a useful new condition rather than deleting it as noise.
+
+## From concept to implementation
+
+- [Build an evidence-backed RAG pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
+- [Find a runnable application starting point](https://milvus.io/bootcamp).
+
 ## Continue learning
 
 - [How can embeddings improve dataset diversity sampling?](/ai-quick-reference/how-to-sample-diverse-data-with-embeddings)

@@ -7,6 +7,8 @@ order: 56
 
 Locating a Milvus bottleneck starts by identifying which stage is missing the application's target. Query latency, write acknowledgment, source-to-search freshness, and index preparation can fail independently. A single cluster CPU chart cannot explain all four.
 
+![Diagnose latency at the boundary where it grows](/images/ai-reference/operations.svg)
+
 ## Classify the symptom before scaling
 
 For a slow search, separate client queuing, request handling, filtering, vector execution, payload reads, and response transfer. Query-side workers perform retrieval, but remote storage or an embedding service can still dominate the full request.
@@ -24,6 +26,15 @@ Check client and load-generator saturation. If the client cannot issue requests 
 Form a concrete hypothesis, such as large payload reads saturating storage or high search effort saturating query CPU. Adjust the relevant workload or resource within a controlled experiment, then compare quality, errors, and latency. Keep recall fixed while evaluating a performance change.
 
 Repeat under a normal mixed read/write workload and during a lifecycle event such as warming or index building. Document the observed limiting stage and the evidence that changed after the intervention. This creates a reusable capacity decision instead of a habit of increasing every component together whenever the application becomes slow.
+
+## Example to test
+
+For a latency spike, align client timestamps with query, storage, and write-path metrics. Identify whether time grew before execution, during search, or while fetching payloads. Changing an index will not fix an unrelated queue or storage stall.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
 
 ## Continue learning
 

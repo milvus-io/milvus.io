@@ -7,6 +7,8 @@ order: 71
 
 Agentic search lets an application choose and revise retrieval actions during a task. An agent might decompose a question, select a corpus, issue keyword and vector searches, inspect evidence, and stop or reformulate. A vector database supplies one retrieval tool inside that control loop.
 
+![Bound the agent search loop by evidence gaps](/images/ai-reference/agent.svg)
+
 ## Define the decisions the agent may make
 
 Start with a bounded question class. For a technical support assistant, the useful decisions might be whether to search product documentation, inspect a specific error code, or retrieve a known issue. Expose a small tool interface with explicit arguments, result IDs, source metadata, and error behavior.
@@ -24,6 +26,15 @@ The Milvus LangGraph tutorial demonstrates an agentic retrieval pattern, and Dee
 Compare a fixed retrieval baseline with the agentic workflow on the same tasks. Measure useful evidence found, source-grounded answer quality, task completion, tool calls, latency, and total operating cost. Include questions with no answer and cases where an early plausible document is wrong.
 
 Retain a trace of queries, selected filters, returned source IDs, and the reason the application stopped. Use those observations to identify whether improvement requires better tools, better data, or better control logic. Adopt additional autonomy only when it solves a measured failure class within an acceptable budget and permission boundary.
+
+## Example to test
+
+A support agent first retrieves a general error explanation, then narrows to a product version. Permit another search only when a specific evidence gap remains. Compare resolved questions and unsupported answers with a single-search baseline.
+
+## From concept to implementation
+
+- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
+- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
 
 ## Continue learning
 

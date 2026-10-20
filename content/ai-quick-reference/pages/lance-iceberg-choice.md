@@ -27,6 +27,15 @@ Use the same representative source objects in candidate layouts. Exercise append
 
 Keep stable source IDs and model revisions throughout the trial so differences can be attributed to layout and integration. Prefer the arrangement that fits your existing governance and access requirements with the fewest unsupported assumptions. Multiple formats can coexist when their responsibilities and conversion boundaries are explicit.
 
+## Example to test
+
+Choose a source format by the consumers that must share the dataset: analytical table operations, AI-oriented row access, or broad batch-tool compatibility. Then verify Milvus support for the exact format and release, rather than treating formats as interchangeable products.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+
 ## Continue learning
 
 - [How can Milvus search data stored in Lance?](/ai-quick-reference/how-can-milvus-search-lance-data)

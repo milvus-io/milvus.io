@@ -7,6 +7,8 @@ order: 17
 
 Reranking reevaluates an initial candidate set against a query. First-stage retrieval searches a large corpus efficiently; the second stage spends more computation on a smaller set. A reranker can be a cross-encoder, a listwise model, or another relevance-scoring method. Its output is usually an order or relevance score rather than an embedding to index.
 
+![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
+
 ## Distinguish two meanings of reranking
 
 Rank fusion such as reciprocal rank fusion combines rankings from dense and sparse retrieval. A learned query-document reranker examines candidate content. Both can appear in one pipeline, but they are different computations and should not be described as the same model capability.
@@ -20,6 +22,15 @@ Use the current reranker catalog to compare hosted, self-operated, text, listwis
 ## Preserve the input contract
 
 Record model revision, field serialization, maximum context, truncation, and how returned positions map to IDs. Scores from different models are not automatically comparable probabilities. If candidate count or serialization changes, revalidate thresholds and quality. Keep a no-rerank baseline: the additional stage is justified by measured application value, not simply by its presence in an architecture diagram.
+
+## Example to test
+
+Retrieve an illustrative pool of 100 passages and rerank it to ten for context assembly. Inspect candidate recall before final ordering. These numbers describe an experiment, not a universal default; missing evidence needs a retrieval fix first.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

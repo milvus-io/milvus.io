@@ -25,6 +25,15 @@ Build labeled scenario queries and measure candidate coverage, false matches, re
 
 Keep the retrieval service connected to versioned lake or media data through stable identifiers. Report downstream data-quality and model-evaluation results separately from search metrics. A vector database helps people and pipelines locate useful experience; it does not establish driving safety or replace task-specific simulation, labeling, and validation.
 
+## Example to test
+
+Search for a rare merge event using clip embeddings plus time, camera, and scene metadata. Review the original video around each hit. A neighboring frame may look similar without containing the event's temporal sequence.
+
+## From concept to implementation
+
+- [Build a multimodal retrieval prototype](https://milvus.io/docs/text_image_search.md).
+- [Related video-deduplication story: BIGO](https://zilliz.com/customers/bigo).
+
 ## Continue learning
 
 - [How should you curate image and video data with vector retrieval?](/ai-quick-reference/how-to-curate-image-and-video-data)

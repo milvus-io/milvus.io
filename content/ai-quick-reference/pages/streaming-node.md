@@ -7,6 +7,8 @@ order: 55
 
 The Streaming Node is part of Milvus's streaming write and recovery system. The documented Streaming Service includes coordination, worker nodes, and internal clients around the WAL. Its responsibilities include processing changes, recovering state, and serving growing data according to the release's architecture.
 
+![Durable write is not yet a visible search result](/images/ai-reference/write-path.svg)
+
 ## Follow the lifecycle of a change
 
 A write becomes a message in an ordered streaming path. The system processes that message, maintains relevant growing state, and eventually transitions data into persistent historical segments. Query behavior depends on the collection's state and consistency requirements throughout that lifecycle.
@@ -24,6 +26,15 @@ A backlog may originate in log access, streaming processing, persistence, or dow
 Test node replacement and delayed storage while concurrent reads and writes continue. Verify acknowledged records, source IDs, update ordering required by the application, and visibility after recovery. Include a growing-to-historical transition so the same query is validated across data states.
 
 Use the current version's guide for topology and configuration. Deployment roles have changed across Milvus releases, so an older process diagram can mislead operational decisions. The useful abstraction is a recoverable streaming stage whose progress and ownership are observable, connected to the application's actual freshness requirement.
+
+## Example to test
+
+Trace a newly acknowledged write to the point where the intended query can observe it. Monitor backlog and recovery separately from search execution. A durable append can succeed while downstream processing is still catching up.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
 
 ## Continue learning
 

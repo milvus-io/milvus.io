@@ -25,6 +25,15 @@ Create tasks where useful prior experience is known, including similar-looking n
 
 Treat returned actions as historical evidence, not automatic execution authority. If a trajectory contains a command that changed production data, retrieval alone should not authorize repeating it. Track how examples influence the current plan and verify resulting actions under the current tool contract. The best retrieval policy finds applicable experience while preserving the distinction between remembering an event and deciding what to do now.
 
+## Example to test
+
+Retrieve a successful workflow and a similar failure under matching tool and policy versions. Compare their preconditions and outcomes before reusing either. High trajectory similarity does not establish that actions are valid in the current environment.
+
+## From concept to implementation
+
+- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
+- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
+
 ## Continue learning
 
 - [What is an agent trajectory, and how should you represent it for retrieval?](/ai-quick-reference/what-is-an-agent-trajectory)

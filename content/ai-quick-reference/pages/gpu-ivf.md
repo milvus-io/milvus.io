@@ -7,6 +7,8 @@ order: 61
 
 GPU_IVF_FLAT and GPU_IVF_PQ use an inverted-file organization with GPU execution. Both narrow the candidate space using coarse clusters. Their main representation difference is that FLAT retains full vector values for candidate scoring, while PQ uses product-quantized codes to reduce representation cost and introduce an additional approximation.
 
+![Treat compression as another approximation](/images/ai-reference/quantization.svg)
+
 ## Separate cluster selection from compression
 
 In an IVF search, the number of clusters considered affects both work and recall. Searching too few can miss useful candidates even when their scores would be accurate inside the chosen clusters. Quantization adds another source of ranking error after candidate regions are selected.
@@ -24,6 +26,15 @@ A smaller compressed representation can enable a useful capacity point, but memo
 Use identical vectors, filters, query sets, and recall measurements for GPU_IVF_FLAT, GPU_IVF_PQ, and a graph-based candidate such as GPU_CAGRA. Test the batch sizes and concurrency that the application can actually sustain.
 
 Measure build time, loading, cold and warm behavior, tail latency, and errors in addition to throughput. If PQ loses relevance on a small but important query slice, inspect those failures before accepting the average score. Select the index that meets the workload's quality and capacity requirements with the lowest complete operating cost, rather than assuming that either GPU acceleration or compression is automatically beneficial.
+
+## Example to test
+
+Compare GPU_IVF_FLAT and GPU_IVF_PQ on the same eligible queries at a fixed recall target. Track GPU memory and transfer overhead. Compression can change the quality curve as well as the capacity limit.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

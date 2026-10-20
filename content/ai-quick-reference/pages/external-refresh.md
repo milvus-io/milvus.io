@@ -25,6 +25,15 @@ Maintain canary IDs covering new, unchanged, corrected, and deleted records. Run
 
 Serialize or otherwise coordinate refresh triggers for one dataset so that a delayed retry cannot silently publish an unintended state. Retain source files while supported readers still need them, and define how to return to a known-good view. The objective is a traceable release of data into retrieval, with failures that are visible and recoverable.
 
+## Example to test
+
+Prepare a source update containing an append, replacement, and deletion. Record the source state, refresh operation, and query-visible state. A source commit and a serving refresh are separate checkpoints in the application's freshness budget.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+
 ## Continue learning
 
 - [When should you use a Milvus external collection?](/ai-quick-reference/when-to-use-milvus-external-collections)

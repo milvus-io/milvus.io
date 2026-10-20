@@ -25,6 +25,15 @@ A curation scan and interactive retrieval can compete for storage bandwidth, loc
 
 Compare the complete cost against a bounded managed serving subset. Include cache replacement after node failure and the time needed to recover a useful working set. A successful tiering design meets the application target through ordinary changes in data and traffic, rather than depending on an indefinitely warm cache or an unusually favorable query sequence.
 
+## Example to test
+
+Replay a popular query set, then shift traffic to previously cold records. Track source fetches, cache behavior, and tail latency. A low average storage cost is useful only if the working-set transition still meets service goals.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+
 ## Continue learning
 
 - [What is Talon, and when can object-store caching help vector workloads?](/ai-quick-reference/what-is-talon)

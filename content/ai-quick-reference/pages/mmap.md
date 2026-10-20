@@ -7,6 +7,8 @@ order: 70
 
 Memory mapping makes file contents accessible through a process's virtual address space. The operating system brings accessed pages into memory as needed. This changes how data is loaded and cached; it does not by itself change an index's candidate-search algorithm into a disk-oriented design such as DISKANN.
 
+![Diagnose latency at the boundary where it grows](/images/ai-reference/operations.svg)
+
 ## Separate address space from resident memory
 
 A large mapped file does not mean all its bytes are currently resident. Conversely, mapped data still uses physical memory while pages are cached and accessed. Process RSS, file-backed memory, and application allocations describe different parts of the footprint.
@@ -24,6 +26,15 @@ Test cold start, a warmed workload, and a changed query mix. Measure resident me
 DISKANN has its own disk-oriented graph, compressed structures, and caching behavior. Tiered storage manages data access through another supported caching model. These options can interact with index and field choices, so compare concrete configurations rather than combining their names into a single assumed optimization.
 
 Keep recall and returned fields fixed while evaluating performance. Include loading and recovery after node replacement, not only warmed requests. Adopt mmap when it provides the desired capacity and lifecycle behavior under realistic access patterns. Treat it as a memory-management and I/O choice whose benefit must be measured, rather than a general guarantee that a larger collection can be served at unchanged latency.
+
+## Example to test
+
+After a cold start, compare resident memory, page faults, and tail latency under the same query mix. A large virtual mapping does not mean those bytes are resident, and a lower resident footprint can still bring more I/O.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

@@ -21,6 +21,15 @@ The checked Model Ranker guide lists material limits: it evaluates one VARCHAR f
 
 RRF and weighted fusion combine multiple retrieval paths. They do not replace a cross-encoder's content evaluation. Conversely, a model reranker cannot recover candidates omitted by the first stage. Evaluate candidate coverage, model relevance, latency, and operational failures independently, and keep source IDs consistent through each transition.
 
+## Example to test
+
+Trace where credentials and inference execute in a client wrapper and a server Function. Test endpoint failure and retries. RRF combines rankings without learned-model inference, so its latency and failure model should not be reported as a hosted reranker.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
+
 ## Continue learning
 
 - [What does the released Milvus Model library actually support?](/ai-quick-reference/milvus-model-library-support)

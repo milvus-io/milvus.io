@@ -7,6 +7,8 @@ order: 21
 
 Agent memory is a retrieval system for information that should remain useful across interactions. Its design needs an authoritative record, a searchable representation, and rules for scope, correction, retention, and deletion. Keeping every generated sentence forever is not a memory policy.
 
+![Correct memory through its derived representations](/images/ai-reference/memory.svg)
+
 ## Decide what a memory means
 
 Distinguish observed facts, user-provided preferences, task state, and model-generated summaries. Store a stable memory ID, owner or tenant, source, timestamp, version, and the text used for embedding. Preserve the underlying evidence when a summary may need verification or regeneration.
@@ -22,6 +24,15 @@ Define what happens when a user corrects or deletes a memory. The source record,
 ## Evaluate behavior over time
 
 Test recall of relevant memories, retrieval of outdated facts, cross-user leakage, and the usefulness of the final context. Include repeated corrections, conflicting sources, and queries after deletion. Measure the latency of memory retrieval separately from the agent's tool execution. Start with a narrow memory class that has a clear retention rule, then expand when its behavior is understood.
+
+## Example to test
+
+A user changes their preferred delivery address. The old preference may remain semantically close to the next question, so retrieval must distinguish superseded evidence from the current record. Test correction and deletion across sessions.
+
+## From concept to implementation
+
+- [Implement a scoped memory prototype](https://milvus.io/docs/basic_memory_with_milvus.md).
+- [Inspect a source-backed memory implementation](https://github.com/zilliztech/memsearch).
 
 ## Continue learning
 

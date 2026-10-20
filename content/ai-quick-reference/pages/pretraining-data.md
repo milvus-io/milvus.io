@@ -7,6 +7,8 @@ order: 82
 
 Pretraining data preparation converts eligible source material into a reproducible training corpus. Vector representations can support semantic duplicate discovery, topic exploration, and coverage analysis. They are one data signal within a larger workflow that also handles parsing, licensing, quality, splits, and tokenization.
 
+![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
+
 ## Establish the source contract first
 
 Keep source identifiers, acquisition information, usage permissions, language, and document revisions. Normalize and parse content using a recorded policy. Preserve important structure such as code blocks, tables, and document boundaries when the target model needs it.
@@ -24,6 +26,15 @@ Avoid assuming that semantic similarity alone determines training value. Repeate
 Export a manifest containing selected source versions, exclusion reasons, sampling weights if used, processing revision, and split assignments. Record the embedding and scoring models separately from the model being pretrained. Freeze evaluation data and run contamination checks before publishing training membership.
 
 Measure throughput and cost for parsing, embedding, scoring, and export, then evaluate a representative training comparison. Report retained coverage and downstream quality alongside removed bytes or documents. Milvus can provide interactive discovery and repeated candidate lookup; the batch preparation and training systems still own the complete corpus transformation and learning process.
+
+## Example to test
+
+Version the source inventory, quality decisions, deduplication rules, and final sample manifest together. Reconstruct a small training shard from those records. A selected vector ID without its source and transformation history is not reproducible training data.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

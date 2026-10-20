@@ -25,6 +25,15 @@ After establishing the correct behavior, record the request and expected invaria
 
 Keep Attu's own deployment and saved configuration in the operations plan, including access, persistence, and upgrades. Use it as a practical companion to documented APIs, metrics, and restoration procedures. This combination lets a team inspect problems quickly while preserving a reproducible path for application and operational work.
 
+## Example to test
+
+Investigate a missing result by checking the selected cluster, collection, filter, vector field, and returned payload in Attu. Save the equivalent client request so the observation becomes a reproducible test instead of a screenshot-only report.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
+
 ## Continue learning
 
 - [How should you build a reproducible application workflow with PyMilvus?](/ai-quick-reference/how-to-build-applications-with-pymilvus-milvusclient)

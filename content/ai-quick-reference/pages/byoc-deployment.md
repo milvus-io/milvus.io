@@ -25,6 +25,15 @@ Use the same vectors, recall target, filters, concurrency, ingestion rate, and p
 
 Self-hosting can provide direct control with additional operating work; a managed or BYOC service can shift some responsibilities under its supported contract. Validate the current pricing and feature availability during selection rather than embedding volatile price numbers in an evergreen guide. Choose the arrangement that meets the workload and ownership requirements with a sustainable operating plan.
 
+## Example to test
+
+List the owner of upgrades, network access, storage, backups, and incident response for each deployment option. Compare quotes against that responsibility matrix and the same availability target, rather than equating a VM bill with a managed-service price.
+
+## From concept to implementation
+
+- [Compare Milvus deployment responsibilities](https://milvus.io/docs/install-overview.md).
+- [Review the BYOC operating boundary](https://docs.zilliz.com/docs/byoc/byoc-intro).
+
 ## Continue learning
 
 - [How do you compare managed and self-hosted vector-search costs?](/ai-quick-reference/what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store)

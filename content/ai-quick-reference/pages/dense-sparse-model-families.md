@@ -34,6 +34,15 @@ Milvus Model includes dedicated adapters for some families and generic text enco
 
 For a multilingual product corpus, keep documents and query judgments fixed, and compare rare identifiers, synonyms, cross-language questions, and no-answer cases. Measure initial recall separately from reranking. Report encoding memory and throughput, vector storage, filtered retrieval latency, and source correctness. Keep older baselines only where they clarify a quality or resource trade-off, rather than presenting their original release claims as current superiority.
 
+## Example to test
+
+Evaluate a compact dense encoder, a multilingual encoder, and a sparse baseline on the same product-code and paraphrase queries. Keep representation-specific settings explicit. Equal output dimensions do not make embeddings from different models interchangeable.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
+
 ## Continue learning
 
 - [Which current embedding models should you evaluate for Milvus?](/ai-quick-reference/embedding-reranking-model-catalog)

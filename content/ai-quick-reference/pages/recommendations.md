@@ -7,6 +7,8 @@ order: 97
 
 A vector database can retrieve recommendation candidates by comparing a user, session, or item representation with eligible item vectors. This is one stage of a recommendation system. The final result can also depend on ranking, availability, diversity, user controls, and the way outcomes are measured.
 
+![Candidate retrieval is one stage of recommendation](/images/ai-reference/recommendation.svg)
+
 ## Define the representation and freshness contract
 
 Decide what the query vector represents: long-term preference, recent session behavior, or similarity to a selected item. Use an item encoder and query encoder that are compatible. Record model revisions and how new or changed items receive vectors.
@@ -24,6 +26,15 @@ Near-identical variants can fill a candidate list. Where suitable, grouping or a
 Use offline retrieval metrics on a well-defined time split, then assess the full ranking and product workflow. Avoid leakage from future behavior into historical query representations. Include new items, sparse-history users, and important catalog segments.
 
 Track serving latency, empty eligible results, repeated items, and the stability of the recommendation experience. In an online evaluation, account for position and exposure effects rather than interpreting every click as an unbiased relevance label. Milvus supplies candidate retrieval and metadata operations; the learning, ranking, and experiment systems determine how those candidates become a useful recommendation service.
+
+## Example to test
+
+Retrieve candidates from a user or session representation, enforce stock and region, then diversify before downstream ranking. Compare useful candidate coverage with the final product outcome; a nearest-item hit is not itself evidence of a conversion lift.
+
+## From concept to implementation
+
+- [Build a recommendation candidate pipeline](https://milvus.io/docs/recommendation_system.md).
+- [Related product-search story: Tokopedia](https://zilliz.com/customers/tokopedia).
 
 ## Continue learning
 

@@ -25,6 +25,15 @@ Review sampled examples from dense, sparse, and boundary regions. Measure label 
 
 Keep a random-sampling baseline and evaluate under the same labeling or compute budget. Change one representation or selection policy at a time. Revisit the policy when the embedding model changes, because the geometry and apparent novelty of the dataset can change even when the source records remain identical.
 
+## Example to test
+
+If one frequent scene dominates a video corpus, cap its selected share and inspect rare-scene coverage. Compare diversity against useful content and source provenance; maximizing vector distance alone can favor corrupted or irrelevant samples.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+
 ## Continue learning
 
 - [How are embeddings used in document clustering?](/ai-quick-reference/how-are-embeddings-used-in-document-clustering)

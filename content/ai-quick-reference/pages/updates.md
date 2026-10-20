@@ -23,6 +23,15 @@ Changing an embedding model is more than editing a metadata field. Recompute com
 
 Test create, correction, document replacement, deletion, and retry after an ambiguous response. Check source records, indexed IDs, and retrieved content under the chosen consistency level. Measure indexing lag and reconcile the index against the authoritative inventory. A successful write acknowledgement should not be interpreted as a guarantee that every subsequent read mode immediately observes the new state.
 
+## Example to test
+
+Replay an upsert after a client timeout and verify the intended logical record and latest revision. Then delete the source and check derived chunks. A retry policy needs stable identity and explicit visibility expectations.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+
 ## Continue learning
 
 - [How should you refresh a Milvus external collection safely?](/ai-quick-reference/how-to-refresh-milvus-external-collections)

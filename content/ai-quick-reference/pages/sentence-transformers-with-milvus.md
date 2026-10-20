@@ -21,6 +21,15 @@ A cross-encoder scores the query together with each candidate document. Retrieve
 
 Record embedding throughput, memory, retrieval recall, reranking latency, and final relevance. Use the same candidate pool when comparing rerankers. A model's benchmark position helps form a shortlist but does not establish performance on your corpus, hardware, or target language.
 
+## Example to test
+
+Encode the same fixture through the model's documented query and document paths, then inspect shape and normalization. Keep checkpoint and preprocessing recorded. A generic encode call may hide task-specific prompts required by the selected model.
+
+## From concept to implementation
+
+- [Use the topic-specific integration guide](https://sbert.net/).
+- [Keep a direct-client verification baseline](https://milvus.io/docs/quickstart.md).
+
 ## Continue learning
 
 - [What does the released Milvus Model library actually support?](/ai-quick-reference/milvus-model-library-support)

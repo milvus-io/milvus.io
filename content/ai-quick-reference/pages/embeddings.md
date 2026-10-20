@@ -7,6 +7,8 @@ order: 3
 
 An embedding is a numeric representation produced by a model. In retrieval, the aim is to place useful query–document matches near each other under a chosen metric. Individual coordinates usually do not have simple human-readable meanings; it is the learned representation and its geometry that matter.
 
+![From question to verifiable evidence](/images/ai-reference/retrieval.svg)
+
 ## Model compatibility matters
 
 The document and query encoders must be compatible. Some models use different prompts or encoding paths for queries and documents, while others use one encoder for both. Follow the model's documented retrieval setup, including normalization and input limits.
@@ -22,6 +24,15 @@ In Milvus, a dense vector field has a defined dimension. The inserted vectors an
 ## Validate the representation
 
 Use realistic positive matches and hard negatives: similar terminology with different meanings, near-identical passages with a changed fact, and cross-language cases if your product supports them. Measure retrieval on these examples before choosing the largest model. Higher dimensionality is not a guarantee of better relevance and increases the amount of vector data to store and process.
+
+## Example to test
+
+The same sentence encoded with two checkpoints can occupy incompatible spaces even when both outputs have the same length. Store the encoder revision with the collection and use the corresponding query path when reproducing a search.
+
+## From concept to implementation
+
+- [Run a first verified search](https://milvus.io/docs/quickstart.md).
+- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
 
 ## Continue learning
 

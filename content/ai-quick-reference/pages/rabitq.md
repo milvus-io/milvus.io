@@ -7,6 +7,8 @@ order: 63
 
 IVF_RABITQ combines inverted-file candidate selection with RaBitQ vector quantization. Milvus documents it as a compact representation option with supported refinement controls. It is useful to evaluate when vector-representation memory is a meaningful constraint and some approximation can be traded for capacity or speed.
 
+![Treat compression as another approximation](/images/ai-reference/quantization.svg)
+
 ## Separate three sources of error
 
 The embedding model determines whether vector neighbors are relevant to the application. IVF candidate selection determines which regions are searched. Quantized distance estimation affects the ranking of vectors considered by that search. A quality failure can originate at any of these stages.
@@ -24,6 +26,15 @@ Measure the loaded configuration the application will use. Do not multiply a vec
 Include common queries, rare entities, selective filters, and the intended top-k. Sweep search settings and record recall, judged relevance, latency percentiles, throughput, memory, and preparation cost. Retain individual failures when an important query group deteriorates despite an acceptable aggregate score.
 
 Compare IVF_RABITQ with IVF_FLAT, another compressed candidate, and a graph index at matched quality. Use the simplest configuration that meets capacity and latency requirements with operational headroom. Re-run the evaluation when the model or corpus distribution changes, because the previous operating point may no longer describe the new representation.
+
+## Example to test
+
+Evaluate the supported IVF_RABITQ configuration against IVF_FLAT on the same query and filter mix. Keep refinement settings visible. Attribute a recall change to the full configuration rather than claiming that a quantizer name guarantees equivalence.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

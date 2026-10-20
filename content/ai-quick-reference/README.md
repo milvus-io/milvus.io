@@ -67,6 +67,25 @@ that a manual action has been lifted. Review the complete affected scope and
 production behavior before submitting reconsideration. Track search visibility
 and qualified downstream activity separately from the deployment check.
 
+## Examples, illustrations, and implementation paths
+
+Each retained article includes a topic-specific example to test and links to
+practical follow-up resources. Examples and numeric calculations are illustrative;
+they are not customer measurements or local model benchmark results. Customer
+stories are linked as additional reading without implying equivalent outcomes.
+
+Twenty original concept diagrams cover 77 articles. English and Chinese SVG
+variants live in `public/images/ai-reference/`. They are schematics, not measured
+plots. Keep descriptive alt text, accessible SVG titles/descriptions, and visible
+explanations of representation, data ownership, or stage boundaries. The content
+validator checks local image paths and assets. Reference rendering passes an empty
+documentation version so root-relative images are not prefixed with `/docs/`.
+
+Retired known URLs render a helpful page linking to the curated reference,
+Quickstart, and documentation while returning HTTP 404. Duplicate redirects remain
+direct; unknown URLs still use the site's normal not-found response. The HTTP smoke
+test checks actual response codes, redirects, image URLs, and retained demo cards.
+
 ## Model and framework review
 
 The MTEB article uses a dated Multilingual v2 snapshot, complete task coverage,

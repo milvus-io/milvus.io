@@ -7,6 +7,8 @@ order: 32
 
 A useful vector-search benchmark compares systems under the same workload and quality requirements. It should be reproducible from recorded data, configuration, and environment details. A single QPS number without recall, concurrency, or hardware context is difficult to interpret.
 
+![Control the workload before comparing performance](/images/ai-reference/benchmark.svg)
+
 ## Define the experiment
 
 Record corpus snapshot, vector dimension and type, embedding model, metric, query set, top-k, filters, payload fields, and update activity. Specify hardware or managed-service configuration, software versions, index parameters, and the load generator. State whether clients are local to the service and whether network time is included.
@@ -22,6 +24,15 @@ VectorDBBench supplies repeatable workloads for several database operations and 
 ## Avoid misleading comparisons
 
 Run repeated trials and retain raw results. Explain any differences in data layout, tuning access, resource allocation, or failure handling. Do not compare one configuration's best-quality run with another's maximum-throughput run. Report the resulting quality/performance curve and choose the operating point that satisfies the application, rather than turning one favorable benchmark into a universal product claim.
+
+## Example to test
+
+Compare two indexes only after fixing corpus, query set, filters, and recall target. Report client-observed p95 alongside offered and completed throughput. A faster run with a growing request backlog has not met the same service objective.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

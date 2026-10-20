@@ -21,6 +21,15 @@ Chunk boundaries, node relationships, and metadata extraction can change retriev
 
 Decide how replacing a source document removes its obsolete nodes. Confirm deletion and filtering through the adapter rather than assuming a framework-level refresh does everything. Record connector versions and collection ownership. Compare returned IDs, answer citations, and ingestion costs against your baseline before adopting more elaborate query engines.
 
+## Example to test
+
+Replace a source document that produced multiple nodes and verify the resulting node membership. Check source IDs and relationships in returned citations. Indexing another copy is not a substitute for removing obsolete nodes.
+
+## From concept to implementation
+
+- [Use the topic-specific integration guide](https://milvus.io/docs/integrate_with_llamaindex.md).
+- [Keep a direct-client verification baseline](https://milvus.io/docs/quickstart.md).
+
 ## Continue learning
 
 - [How do you choose an AI framework for a Milvus application?](/ai-quick-reference/choose-ai-framework-for-milvus)

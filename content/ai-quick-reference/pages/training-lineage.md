@@ -7,6 +7,8 @@ order: 90
 
 Training-data lineage records how a source object became a derived representation and then a selected learning example. This is essential when the same source appears as chunks, embeddings, summaries, labels, or agent episodes. A file checksum alone cannot explain that transformation chain.
 
+![Keep logical identity separate from file position](/images/ai-reference/format.svg)
+
 ## Preserve three connected identities
 
 First, identify the source object and its revision. Second, identify the transformation: parser, chunking, embedding model, preprocessing, and code revision. Third, identify the dataset decision: labels, selection policy, split, weights if applicable, and release manifest.
@@ -24,6 +26,15 @@ Snapshots and table versions can identify a data state, but their retention rule
 Choose a search result or model-training example and trace it back to the original source and every relevant transformation. Then identify every derived record affected by replacing that source. Check whether the pipeline can reprocess only the affected items and reconcile the current index.
 
 Measure lineage completeness and unresolved references as data-quality indicators. Keep the resulting manifests accessible to reviewers and automated checks. The useful outcome is a reproducible explanation of data membership and behavior, including what changed between two model or corpus releases.
+
+## Example to test
+
+For one selected training record, follow its source revision, extraction, embedding, quality decision, and sampling manifest backward. Change the encoder and verify that dependent artifacts can be identified without guessing from file names.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

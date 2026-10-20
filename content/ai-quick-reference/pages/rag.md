@@ -7,6 +7,8 @@ order: 18
 
 Retrieval-augmented generation supplies a language model with information retrieved for the current request. A typical pipeline indexes source material, retrieves relevant passages, and asks the model to answer using that evidence. The retrieval store and generator have different roles: finding evidence is not the same as using it correctly.
 
+![From question to verifiable evidence](/images/ai-reference/retrieval.svg)
+
 ## Follow the data through the system
 
 Ingestion extracts text, preserves source metadata, splits documents into suitable units, generates embeddings, and writes searchable records. At query time, the application determines the eligible corpus, retrieves candidates, optionally reranks them, and constructs the model context. The final answer should retain links to the evidence the user can inspect.
@@ -22,6 +24,27 @@ Retrieval can reduce reliance on a model's memorized knowledge, but it does not 
 ## Build a small evaluation loop
 
 Start with a bounded corpus and realistic questions. Check retrieval coverage first, then inspect whether the generator uses the returned evidence correctly. Track latency and cost across parsing, embedding, retrieval, reranking, and generation. Improve the weakest measured stage before adding more components. The linked tutorial provides a runnable starting point; production behavior needs the additional access, update, and evaluation decisions described here.
+
+## Give each failure an owner
+
+| Observed failure | First layer to inspect |
+| --- | --- |
+| Correct source absent from corpus | Source ingestion, extraction, and freshness |
+| Source exists but is not a candidate | Representation, eligibility, and retrieval |
+| Good candidate removed before prompting | Fusion, reranking, and context assembly |
+| Evidence present but answer unsupported | Prompting, generation, and answer policy |
+| Correct answer cites the wrong revision | Provenance propagation and source resolution |
+
+Measure end-to-end time as the combined encoding, retrieval, reranking, context, and generation path, including queueing and retries. Optimizing database search alone does not guarantee a faster or better final answer.
+
+## Example to test
+
+Save the evidence returned before generating an answer to a product question. If the correct passage is absent, diagnose retrieval; if it is present but misrepresented, diagnose context assembly or generation. This separation makes a failed answer actionable.
+
+## From concept to implementation
+
+- [Build an evidence-backed RAG pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
+- [Find a runnable application starting point](https://milvus.io/bootcamp).
 
 ## Continue learning
 

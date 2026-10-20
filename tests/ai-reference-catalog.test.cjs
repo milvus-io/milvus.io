@@ -115,6 +115,19 @@ test('a source-check record requires visible source evidence', () => {
   assert.throws(() => validateRows([row], catalog), /source evidence/);
 });
 
+test('illustrations must have alt text and resolve to a local asset', () => {
+  for (const image of [
+    '![Missing](/images/ai-reference/missing.svg)',
+    '![](/images/ai-reference/retrieval.svg)',
+    '![Unsafe](/images/ai-reference/../retrieval.svg)',
+  ]) {
+    const { row, catalog } = fixture(
+      image + ' [Source](https://milvus.io/docs/quickstart.md)'
+    );
+    assert.throws(() => validateRows([row], catalog), /illustration/);
+  }
+});
+
 test('internal references and merge targets must resolve directly to published concepts', () => {
   const { row, catalog } = fixture(
     '[Retired](/ai-quick-reference/old) [Source](https://milvus.io/docs/quickstart.md)'

@@ -21,6 +21,15 @@ The inspected Milvus Model package has a general Sentence Transformer wrapper, b
 
 KaLM's embedding vectors support first-stage candidate selection. KaLM-Reranker-V1 and its R2 checkpoints score relevance using a different architecture. They should not share a single benchmark rank or vector-field definition. First assess candidate recall, then compare reranking on the same permitted candidate set with latency and storage costs included.
 
+## Example to test
+
+Evaluate compact and large KaLM variants with their own documented pooling and instructions. Keep latency and resource measurements separate from quality. Do not infer shared vector compatibility from a family name or shortened dimension.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
+
 ## Continue learning
 
 - [How does KaLM compressed-document reranking work?](/ai-quick-reference/kalm-reranker-models)

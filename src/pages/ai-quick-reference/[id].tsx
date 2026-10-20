@@ -26,6 +26,7 @@ import JsonLd from '@/components/JsonLd';
 import { buildSchema } from '@/schema';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { selectRelated, publication } from '@/server/ai-reference-catalog';
+import RetiredReference from '@/components/faq/RetiredReference';
 
 const FaqDemoCard = dynamic(() => import('@/components/faq/FaqDemoCard'));
 
@@ -50,7 +51,7 @@ const faqPageOptions: OptionItem[] = [
   },
 ];
 
-export default function FaqDetail(props: {
+type FaqDetailProps = {
   data: FAQDetailType;
   html: string;
   recommendFaq: Pick<FAQDetailType, 'title' | 'url'>[];
@@ -64,7 +65,16 @@ export default function FaqDetail(props: {
   nextUrl?: string;
   demo?: DemoTypeEnum;
   demoDescription?: string;
-}) {
+};
+
+export default function FaqReferencePage(
+  props: FaqDetailProps | { retired: true }
+) {
+  if ('retired' in props) return <RetiredReference />;
+  return <FaqDetail {...props} />;
+}
+
+function FaqDetail(props: FaqDetailProps) {
   const { t } = useTranslation('faq');
   const { data, html, recommendFaq, recommendBlogs, previousUrl, nextUrl } =
     props;
@@ -133,7 +143,7 @@ export default function FaqDetail(props: {
           </section>
 
           <section className={styles.blogContent}>
-            <div>
+            <div className={classes.articleColumn}>
               <article
                 className={clsx(
                   'doc-style',
@@ -263,6 +273,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const id = params?.id as string;
   const record = publication[id];
+  if (record?.status === 'retired') {
+    res.statusCode = 404;
+    res.setHeader('Cache-Control', 'public, s-maxage=300');
+    return { props: { retired: true } };
+  }
   if (record?.status === 'merged') {
     return {
       redirect: {
@@ -274,7 +289,8 @@ export const getServerSideProps: GetServerSideProps = async ({
   if (!record || record.status !== 'source-checked') return { notFound: true };
   try {
     const { item } = await getFAQById(id);
-    const { tree: html } = markdownToHtml(item.content);
+    // Reference illustrations live at the site root, outside versioned docs.
+    const { tree: html } = markdownToHtml(item.content, { version: '' });
 
     const simpleList = await generateSimpleFaqList();
     const inTopic = simpleList.filter(faq => faq.topic === item.topic);

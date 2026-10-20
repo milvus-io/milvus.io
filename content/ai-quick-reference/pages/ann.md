@@ -7,6 +7,8 @@ order: 10
 
 Approximate nearest-neighbor (ANN) search reduces the work required to find nearby vectors by searching a structured subset of candidates. It trades some agreement with an exact-vector baseline for improvements in latency, throughput, or resource use. The acceptable trade-off depends on the application.
 
+![HNSW hierarchical graph navigation](/images/ai-reference/hnsw.svg)
+
 ## Separate two meanings of recall
 
 ANN recall asks whether the approximate index returns the neighbors that an exact search would return for the same vectors, metric, eligibility rules, and k. Retrieval relevance asks whether those neighbors actually help answer the user's question. An ANN index can achieve high exact-neighbor recall while an unsuitable embedding model retrieves the wrong information.
@@ -22,6 +24,15 @@ Each choice has build-time, storage, memory, and update costs. A setting that is
 ## Tune against a target
 
 Construct an exact baseline on representative data, then sweep search parameters while keeping the model, corpus, metric, k, hardware, and filters fixed. Record recall together with p95/p99 latency, throughput, and memory. Select a point that meets an explicit quality and latency requirement rather than maximizing QPS at an unspecified recall level.
+
+## Example to test
+
+If exact search returns ten eligible neighbors and ANN finds eight of them, exact-neighbor Recall@10 is 0.8. This illustrative calculation says nothing about whether those ten passages answer the question; relevance needs separate labels.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

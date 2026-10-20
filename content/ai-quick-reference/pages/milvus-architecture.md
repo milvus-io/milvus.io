@@ -7,6 +7,8 @@ order: 49
 
 Milvus separates database responsibilities so ingestion, durable storage, indexing, and search can be managed as distinct parts of a retrieval system. This separation is useful for understanding both scaling and failures: an accepted write, an indexed segment, and a successful query represent different stages of work.
 
+![Durable write is not yet a visible search result](/images/ai-reference/write-path.svg)
+
 ## Follow a record from write to result
 
 An application sends data through the service's request path. The streaming write path records and processes changes, while data processing prepares persistent segments and indexes. Query execution searches the relevant growing and historical data and combines results for the client. Metadata and coordination determine which resources own the work.
@@ -24,6 +26,15 @@ For a mixed workload, measure ingestion acknowledgment, data freshness, index ba
 Choose one source record and follow its stable ID through ingestion, visibility, index readiness, and retrieval. Then choose one slow query and separate client waiting, server execution, and payload transfer. Correlate observations using the same time window and deployment configuration.
 
 Test ordinary operations such as node replacement, index build, and data growth while queries continue. Record how each event changes latency and freshness. Architecture becomes useful when it identifies ownership and observable boundaries, rather than simply supplying more boxes in a diagram. This is also the basis for choosing a managed service: compare who operates each responsibility and how the required service behavior is verified.
+
+## Example to test
+
+Trace one inserted record from acknowledgment to query visibility and later recovery. Attach metrics to each boundary. This distinguishes a write backlog, indexing delay, and query bottleneck instead of calling every symptom slow search.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
 
 ## Continue learning
 

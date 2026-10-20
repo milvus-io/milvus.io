@@ -7,6 +7,8 @@ order: 8
 
 Keyword search finds documents through terms and their lexical relationships. Semantic search uses a learned representation to retrieve by meaning. They solve overlapping problems, but their failure modes differ. A support query containing an exact error code and a conversational description may benefit from both.
 
+![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
+
 ## Where each signal helps
 
 Keyword retrieval is valuable for exact identifiers, names, rare terms, and wording that must appear in a result. Tokenization and analyzers determine how text becomes searchable terms, so punctuation, language, and domain-specific tokens deserve testing.
@@ -22,6 +24,15 @@ Separate retrieval from filtering. A request restricted to one customer's docume
 ## Implement and iterate
 
 Milvus supports full-text retrieval with BM25 and vector retrieval that can be combined with hybrid search. Start with the documented implementations and inspect why each path contributes a candidate. Track changes in relevance and latency, not just whether more documents are returned. Retain the combination that solves your actual query mix with an acceptable operating cost.
+
+## Example to test
+
+Compare an exact error-code query with a natural-language description of the same fault. Inspect lexical and dense failures separately. The choice is often a routing or fusion decision rather than replacing every exact-match query with embeddings.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

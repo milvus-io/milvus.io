@@ -21,6 +21,15 @@ The official project has specific query/skill serialization and truncation behav
 
 This is an official Tencent release. It should not be assigned to a specific Tencent sub-team or combined with WeMM merely because both are hosted under Tencent. Milvus Model 0.3.4 has no dedicated R3 export. Use the official implementation or a verified adapter and measure recall, constraint satisfaction, reranking cost, and abstention when no skill fits.
 
+## Example to test
+
+Build a skill catalog with overlapping tool descriptions and distinct allowed actions. Evaluate embedding recall before reranking and inspect selected skill IDs. Good skill retrieval does not prove the agent executes that skill safely or successfully.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
+
 ## Continue learning
 
 - [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)

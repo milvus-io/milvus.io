@@ -7,6 +7,8 @@ order: 13
 
 Vector quantization represents vectors with fewer bits or compact codes. It can reduce storage, memory use, or distance-computation cost, but the compressed representation usually loses information. Whether that loss matters must be measured on the retrieval task.
 
+![Treat compression as another approximation](/images/ai-reference/quantization.svg)
+
 ## Common forms
 
 Scalar quantization reduces the precision used for individual coordinates. Product quantization divides a vector into parts and represents each part using a learned codebook. Binary representations use another set of encoding and distance assumptions. These approaches are not interchangeable, and an embedding model's own low-precision inference is a separate concern from index-side vector compression.
@@ -22,6 +24,15 @@ Some configurations refine candidates with higher-precision vectors. Refinement 
 ## Make the operational decision
 
 Choose compression when its measured resource savings justify the quality and processing trade-offs. Recheck results after a model or data-distribution change. Record the encoding, index parameters, and baseline used in the experiment, and keep original data or reproducible embeddings so the representation can be rebuilt. The Milvus index guide describes supported combinations; use the options available in your deployed version.
+
+## Example to test
+
+Compare compressed retrieval against the same exact baseline, then inspect difficult close-score pairs. Report memory savings with the achieved recall and any refinement cost. Encoding fewer bytes alone does not establish a better serving configuration.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

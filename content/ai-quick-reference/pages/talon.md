@@ -7,6 +7,8 @@ order: 52
 
 Talon is an object-store caching project in the Milvus ecosystem. It places cached object data on worker storage close to compute and exposes access through supported clients, including SDK and filesystem paths. Its purpose is to improve data access; application retrieval semantics and durable source ownership remain separate concerns.
 
+![Diagnose latency at the boundary where it grows](/images/ai-reference/operations.svg)
+
 ## Identify reusable reads first
 
 A vector workload can read index data, original vectors, result payloads, or training files. A shared cache is useful when those bytes are read repeatedly and the saved origin traffic exceeds the added cache and network work. Large sequential training reads and small random result fetches can need different cache layouts.
@@ -24,6 +26,15 @@ The availability of Talon does not establish that it is installed or enabled in 
 Measure origin bytes and requests, cache occupancy, read amplification, network traffic, and end-to-end p95/p99 latency. Repeat after a workload shift and worker replacement. A cache-only throughput result does not show how quickly a serving application recovers its useful working set.
 
 Keep the durable source intact and test the documented miss and recovery behavior. Cache warming is an optimization subject to eviction, not a promise of permanent residency. Adopt the cache when measured reuse and operational behavior justify its additional moving parts, and report those conditions alongside any performance claim.
+
+## Example to test
+
+Compare repeated row fetches with a shifted or cold working set, preserving object layout and query distribution. Include cache footprint and backing-store traffic. A cache hit improvement must be connected to the application's actual latency and cost.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
 
 ## Continue learning
 

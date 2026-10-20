@@ -21,6 +21,15 @@ For Docker deployments, verify mounted storage, ports, and the documented compan
 
 Save the initial query results and package versions. Then connect a framework, add BM25 or reranking, and compare against the same baseline. When connection or schema errors occur, retain the smallest failing request and server/client versions. This makes a setup guide useful for troubleshooting rather than just installation.
 
+## Example to test
+
+The first successful query should return expected IDs from a known fixture, not merely a nonempty list. Save endpoint, SDK version, collection settings, and the command sequence so another developer can reproduce the same result.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
+
 ## Continue learning
 
 - [When should you use Milvus Lite, and how do you move toward production?](/ai-quick-reference/milvus-lite-to-production)

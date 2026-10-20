@@ -25,6 +25,15 @@ An offline supervised or preference dataset and an on-policy reinforcement-learn
 
 Evaluate selected data using held-out tasks, outcome coverage, and downstream model behavior. Keep contamination checks at task and near-duplicate levels. Retain a baseline dataset and change one selection policy at a time. The goal is a traceable improvement in learning or analysis, rather than an aesthetically tidy cluster of episodes with similar summaries.
 
+## Example to test
+
+Select successful and informative failed rollouts across task families, keeping outcome and selection reason. Exclude evaluation leakage and inaccessible evidence. A high reward from one verifier is not enough to establish a reusable training example.
+
+## From concept to implementation
+
+- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
+- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
+
 ## Continue learning
 
 - [What is a rollout in agent training, and where can vector search help?](/ai-quick-reference/what-is-a-rollout-in-agent-training)

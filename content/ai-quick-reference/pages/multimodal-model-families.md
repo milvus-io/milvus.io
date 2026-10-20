@@ -30,6 +30,15 @@ Represent images with object IDs and regions where relevant. Represent videos wi
 
 Compare text-to-image, image-to-image, text-to-video, or supported audio queries separately. Keep sampling and preprocessing constant and include visually similar but semantically different examples. For physical-AI curation, a nearby embedding may identify a useful candidate without proving that two trajectories or scenes are equivalent. Measure both relevance and the cost of generating and storing the representation.
 
+## Example to test
+
+Choose whether the retrieval object is an image, clip, page, or audio segment before selecting a model. Compare only supported inputs under a matched protocol. An image-capable family name does not establish video or audio support for every checkpoint.
+
+## From concept to implementation
+
+- [Check versioned embedding-list search](https://milvus.io/docs/basic-vector-search-with-structarray.md).
+- [Connect media evidence to an application](https://milvus.io/docs/multimodal_rag_with_milvus.md).
+
 ## Continue learning
 
 - [How do MMEB versions evaluate multimodal embeddings?](/ai-quick-reference/mmeb-multimodal-evaluation)

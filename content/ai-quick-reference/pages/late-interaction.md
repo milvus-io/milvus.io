@@ -7,6 +7,8 @@ order: 69
 
 Late-interaction retrieval represents an item with multiple vectors and combines their query-to-document matches during scoring. This can preserve finer-grained information than compressing an entire document into one vector. The benefit comes with more vectors, more scoring work, and a more specific representation contract.
 
+![Preserve page structure through multi-vector retrieval](/images/ai-reference/visual-page.svg)
+
 ## Distinguish it from other multi-vector designs
 
 Storing separate title and body vectors and fusing their result lists is one form of multi-vector retrieval. An embedding-list model that compares query tokens with document-token vectors is another. These approaches need different scoring logic and should not be described as interchangeable simply because both store several vectors.
@@ -24,6 +26,15 @@ For example, a long technical document can contain one decisive passage amid unr
 Measure retrieval quality on the task's difficult queries, then include index size, build time, memory, candidate search, payload reads, and end-to-end latency. Compare with a single-vector candidate stage followed by reranking at a similar operating budget.
 
 Test long documents, many-element records, metadata filters, and deletion of an element or parent record under the supported data model. Choose late interaction when the measured relevance gain justifies the larger representation and operational complexity. Preserve source mappings so returned document-level results can still expose the evidence that made them useful.
+
+## Example to test
+
+Retrieve page candidates and inspect whether the relevant page was included before token-level scoring. Increasing final MaxSim scoring cannot recover a page the candidate stage omitted. Evaluate candidate recall and final ordering separately.
+
+## From concept to implementation
+
+- [Check versioned embedding-list search](https://milvus.io/docs/basic-vector-search-with-structarray.md).
+- [Connect media evidence to an application](https://milvus.io/docs/multimodal_rag_with_milvus.md).
 
 ## Continue learning
 

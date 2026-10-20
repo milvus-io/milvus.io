@@ -7,6 +7,8 @@ order: 26
 
 Document clustering groups embedding vectors according to a clustering method. Embeddings provide a representation of the documents; the algorithm defines the groups. A nearest-neighbor index can help find related records, but it is not itself a complete clustering or topic-labeling workflow.
 
+![A bounded Spark-to-Milvus data workflow](/images/ai-reference/spark.svg)
+
 ## Choose the grouping objective
 
 Decide whether the task is topic discovery, dataset sampling, redundancy analysis, or organizing a search interface. These goals can require different granularity. A cluster that is useful for broad navigation may be too coarse for deduplication.
@@ -22,6 +24,15 @@ Milvus can retrieve similar examples and filter on stored labels. The clustering
 ## Validate usefulness
 
 Combine geometric measures with inspection against the intended task. For physical-AI data, preserve sequence, timestamp, sensor, and scenario provenance: a visually similar sample can still contain a distinct event. Track whether grouping improves coverage, navigation, or sampling rather than optimizing only a clustering score. Recheck group stability as the dataset grows and define how new records receive or revise their labels.
+
+## Example to test
+
+For issue triage, use embeddings to propose related groups, then inspect cluster representatives and boundary examples. A large connected neighborhood may contain several distinct causes; evaluate whether the grouping improves assignment or investigation.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

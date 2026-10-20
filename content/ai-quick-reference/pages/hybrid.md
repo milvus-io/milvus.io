@@ -7,6 +7,8 @@ order: 16
 
 Hybrid search combines multiple retrieval signals into a final candidate ranking. A common text-search design combines dense semantic embeddings with BM25 keyword retrieval. Other designs combine different embedding models or modalities. The benefit depends on whether the paths recover useful candidates that the others miss.
 
+![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
+
 ## Start from complementary failures
 
 Dense retrieval can help with paraphrases, while lexical retrieval can help with exact error codes, names, or specialist terms. Build a query set that contains both. Inspect dense-only and keyword-only results before combining them. If both paths miss the needed evidence, fusion is unlikely to fix the underlying corpus or representation problem.
@@ -22,6 +24,26 @@ Candidate limits matter independently of final top-k. A later ranker can only ch
 ## Evaluate the complete pipeline
 
 Compare each individual path with the hybrid result on identical queries, corpus, filters, and judgments. Report exact-term and paraphrase performance separately, along with latency and resource use. Add a model reranker only if it improves the final task enough to justify its cost. Follow the implementation guide for the deployed Milvus version and retain the simplest pipeline that meets the acceptance criteria.
+
+## Design queries that distinguish the signals
+
+| Query class | What to inspect |
+| --- | --- |
+| Exact product or error identifier | Analyzer output and lexical candidate retention |
+| Description using different vocabulary | Dense candidate relevance |
+| Identifier plus a conceptual requirement | Both candidate lists and fused ordering |
+| Unauthorized or obsolete source | Eligibility rules on every retrieval path |
+
+RRF uses rank positions, while a learned reranker scores candidate content with a model. They solve different steps and can be combined when the deployment supports the chosen route. Preserve the original lists during evaluation instead of judging only the final generated answer.
+
+## Example to test
+
+Keep dense and lexical candidate IDs for the same query. If neither list contains the needed evidence, fusion cannot recover it. If one list contains it but the fused output loses it, inspect rank fusion and candidate depth.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

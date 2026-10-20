@@ -21,6 +21,15 @@ Review the platform's retrieval settings, score thresholds, and optional reranki
 
 Monitor indexing failures, reprocessing, source freshness, and retrieval latency. Preserve platform metadata as well as database data when planning recovery. A visual workflow is useful for iteration, but reproducibility still requires recorded settings, versions, a fixed evaluation corpus, and a clear owner for updates and deletion.
 
+## Example to test
+
+Replace one knowledge document, then inspect which chunks Dify removes and which Milvus records remain. Repeat after a failed ingestion attempt. Treat the application dataset and database collection as separate lifecycle objects that need reconciliation.
+
+## From concept to implementation
+
+- [Use the topic-specific integration guide](https://milvus.io/docs/dify_with_milvus.md).
+- [Keep a direct-client verification baseline](https://milvus.io/docs/quickstart.md).
+
 ## Continue learning
 
 - [How do you choose an AI framework for a Milvus application?](/ai-quick-reference/choose-ai-framework-for-milvus)

@@ -27,6 +27,15 @@ Normalization is therefore part of the model and data contract. Apply it consist
 
 Use the same vectors and queries to compare candidate metrics on a judged dataset. Check both relevant and irrelevant pairs, then calibrate application thresholds using the actual returned values. If you change a collection's embedding model or metric, rebuild or migrate the relevant index configuration as required by the deployed version. Store the chosen metric with the evaluation record so future benchmark runs remain comparable.
 
+## Example to test
+
+For unit vectors q=(1,0) and d=(0.8,0.6), cosine and inner product are 0.8; squared L2 is 0.4. These illustrative values show why score thresholds cannot be copied across metrics.
+
+## From concept to implementation
+
+- [Run a first verified search](https://milvus.io/docs/quickstart.md).
+- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
+
 ## Continue learning
 
 - [Why use a FLAT baseline when tuning an ANN index?](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline)

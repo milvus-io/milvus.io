@@ -7,6 +7,8 @@ order: 43
 
 A stable source identifier connects an ANN result to the object that users, labels, and downstream jobs actually mean. This relationship becomes especially important when a lake table is compacted, embeddings are replaced, or one document produces many searchable chunks.
 
+![Keep logical identity separate from file position](/images/ai-reference/format.svg)
+
 ## Separate logical identity from physical location
 
 For a document corpus, keep a document ID, document revision, chunk ID, and chunk offsets. For video, retain the recording ID and time interval. A physical row number, file path, or Lance fragment position can change during maintenance, so use it as a location within a known dataset version rather than as the only business identifier.
@@ -24,6 +26,15 @@ For example, a legal clause result should recover the exact contract revision an
 Build an identity fixture before scaling ingestion. Rewrite a source file, compact a table, replace one document, retry a failed embedding batch, and delete a source object. Verify that stable logical IDs continue to resolve and that obsolete derived IDs are handled according to policy.
 
 Track counts at the source-object, derived-record, and searchable-record levels separately. A document can legitimately create several vector rows, so equality between those counts is usually the wrong invariant. Instead, verify uniqueness of the intended key and completeness of the mapping. This makes lake-to-serving reconciliation possible even when physical layouts and representations change independently.
+
+## Example to test
+
+Rewrite source files through a maintenance job and verify that a saved result still resolves to the same application object. Separate stable business IDs from fragment positions, which may change when files are reorganized.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
 
 ## Continue learning
 

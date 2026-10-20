@@ -21,6 +21,15 @@ Define stable document and chunk identifiers, metadata fields, model revision, e
 
 Check the connector for your language and pinned package versions. A framework listing a database does not establish support for every Milvus feature. Test insertion, metadata filtering, deletion, and one failure path. Compare the same queries against a direct MilvusClient baseline before attributing quality differences to the framework.
 
+## Example to test
+
+Implement the same small retrieval task directly and through one adapter. Keep the corpus, embeddings, and filters identical. Choose the framework for orchestration or developer workflow only after confirming that it preserves the retrieval contract.
+
+## From concept to implementation
+
+- [Use the topic-specific integration guide](https://docs.langchain.com/oss/python/learn).
+- [Keep a direct-client verification baseline](https://milvus.io/docs/quickstart.md).
+
 ## Continue learning
 
 - [What does LangChain do, and how does it use Milvus?](/ai-quick-reference/langchain-with-milvus)

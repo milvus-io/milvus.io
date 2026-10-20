@@ -7,6 +7,8 @@ order: 92
 
 A quality score estimates whether a record is useful for a specified downstream task. It can combine deterministic checks, heuristics, classifiers, or reviewed model judgments. Its meaning comes from the rubric and validation data, not from the fact that it is a number between zero and one.
 
+![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
+
 ## Separate independent criteria
 
 For a training document, useful dimensions might include parseability, language confidence, repetition, source eligibility, and domain relevance. For an agent trajectory, tool success, final outcome, and instruction compliance can differ. Preserve separate scores when one aggregate would hide a critical failure.
@@ -24,6 +26,15 @@ Keep rubric, model, prompt, threshold, and processing revisions with the output.
 Run the selection in observation mode first. Review accepted and rejected samples, then compare a curated dataset with a baseline under a matched downstream evaluation. Track coverage, false removals, labeling effort, and training or retrieval quality alongside dataset reduction.
 
 Use vector search to discover clusters with unexpectedly high rejection or low-quality labels. Inspect source evidence before propagating a score across similar records. A reliable quality policy makes its assumptions and errors visible and improves the intended task without quietly removing important variation.
+
+## Example to test
+
+Keep readability, extraction integrity, duplication, and policy eligibility as separate fields before combining them. Audit rejected rare-topic examples. A single aggregate score can conceal why useful data disappeared from the selected set.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

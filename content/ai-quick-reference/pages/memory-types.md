@@ -7,6 +7,8 @@ order: 73
 
 Agent memory is easier to govern when each record has a defined purpose. A useful design taxonomy separates immediate task state, past episodes, reusable facts, and procedures. These categories can share retrieval infrastructure while requiring different authority and update rules.
 
+![Correct memory through its derived representations](/images/ai-reference/memory.svg)
+
 ## Choose a record contract for each class
 
 | Memory class | Example | Main design question |
@@ -29,6 +31,15 @@ A past successful action is evidence about one episode. It does not automaticall
 Test situations with a recent correction, an outdated successful procedure, conflicting facts, and similar episodes from another user. Enforce scope filters before content enters the agent's context. Include source revision, validity, and explicit status in selection rather than ranking only by embedding similarity.
 
 Measure whether each memory class improves task completion and reduces repeated work. Remove classes that accumulate cost or confusion without useful behavior. The goal is a small set of inspectable memory contracts, with retrieval acting as a discovery mechanism inside those contracts.
+
+## Example to test
+
+Keep a temporary checkout step in workflow state, a past failure as an episode, and a confirmed preference as a durable fact. Different lifetimes prevent a transient action from becoming an enduring user preference.
+
+## From concept to implementation
+
+- [Implement a scoped memory prototype](https://milvus.io/docs/basic_memory_with_milvus.md).
+- [Inspect a source-backed memory implementation](https://github.com/zilliztech/memsearch).
 
 ## Continue learning
 

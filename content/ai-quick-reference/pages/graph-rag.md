@@ -23,6 +23,15 @@ Use Graph RAG when a measured query class benefits from this structure. Ordinary
 
 Evaluate entity linking, relationship correctness, evidence retrieval, and the final answer separately. Include missing or contradictory edges and questions that require abstention. Check that authorization applies to every traversed source, not only the initial vector search. The linked tutorial is an implementation example; adapt its graph construction and evaluation to your domain rather than assuming that adding a graph guarantees better reasoning.
 
+## Example to test
+
+For a supplier investigation, use graph relationships to enumerate known ownership links and vector retrieval to find supporting passages. Preserve the distinction between an explicit relationship and a semantically similar statement that still needs verification.
+
+## From concept to implementation
+
+- [Build an evidence-backed RAG pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
+- [Find a runnable application starting point](https://milvus.io/bootcamp).
+
 ## Continue learning
 
 - [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)

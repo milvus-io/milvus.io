@@ -9,6 +9,8 @@ demoDescription: "Check out our hybrid semantic search & full-text matching demo
 
 Full-text search retrieves and ranks text using its terms. BM25 is a widely used relevance scoring method that considers factors including term frequency, how common a term is across the corpus, and document length. Its scores rank candidates for a query; they are not probabilities that a document is correct.
 
+![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
+
 ## Text analysis comes first
 
 The analyzer determines which terms are indexed. Language, token boundaries, case handling, punctuation, and domain terminology can all affect matches. A product code, a hyphenated error name, and ordinary prose may need different test cases. Diagnose analysis problems before trying to fix them with ranking weights.
@@ -24,6 +26,15 @@ BM25 can complement dense semantic retrieval when precise terminology matters. A
 ## Verify the implementation
 
 Use a small corpus with known positive and negative cases. Confirm which tokens are produced, whether expected documents are eligible, and how changes in wording affect ranking. Then add realistic corpus sizes and concurrency. Evaluate final relevance, query latency, and ingestion behavior together so a ranking improvement does not conceal an unusable operational trade-off.
+
+## Example to test
+
+A support query containing E123 should retain that identifier even when the rest of the question is paraphrased. Inspect analyzer output and compare BM25 with dense candidates before fusion; an exact-looking string can still be tokenized unexpectedly.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

@@ -25,6 +25,15 @@ Retries, parallel tool calls, and alternative attempts can make wall-clock order
 
 Validate an example trajectory by reconstructing its sequence and linking every retrieved window back to the original evidence. Evaluate retrieval across successful and failed episodes. Milvus can help discover related records; the application and training framework still determine execution semantics, replay validity, rewards, and which records are fit for learning.
 
+## Example to test
+
+Represent a failed booking attempt with its goal, observations, tool calls, branch, and outcome. A similar successful booking is useful only if its preconditions apply; retain the failed branch to explain why replay would differ.
+
+## From concept to implementation
+
+- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
+- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
+
 ## Continue learning
 
 - [How can vector search retrieve useful agent trajectories?](/ai-quick-reference/how-to-retrieve-agent-trajectories)

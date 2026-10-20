@@ -7,6 +7,8 @@ order: 74
 
 A memory system needs a lifecycle beyond insertion and similarity search. Facts can be corrected, preferences can change, and records can expire or be deleted. Define which source is authoritative and how every derived representation follows those changes.
 
+![Correct memory through its derived representations](/images/ai-reference/memory.svg)
+
 ## Record validity explicitly
 
 Keep memory ID, owner, source, revision, creation time, validity status, and any expiry or supersession relationship. Distinguish event time from processing time: a late-arriving old observation should not silently replace a more recent confirmed correction.
@@ -26,6 +28,15 @@ Measure when a corrected or deleted memory stops influencing new agent requests.
 Test correction followed by a delayed ingestion retry, deletion followed by a rebuild, conflicting updates, and expiry during an active session. Query through the same tenant and validity filters used in production. Keep removed-content retention and audit requirements explicit rather than hiding old values in an unrestricted history collection.
 
 A reliable lifecycle makes the current state explainable and lets the system prove that an obsolete memory cannot win merely because it is highly similar to the present query.
+
+## Example to test
+
+Correct a fact, then ask a paraphrased question that would previously retrieve the old value. Check source records, vectors, summaries, and caches. Record the time until every permitted retrieval path reflects the correction.
+
+## From concept to implementation
+
+- [Implement a scoped memory prototype](https://milvus.io/docs/basic_memory_with_milvus.md).
+- [Inspect a source-backed memory implementation](https://github.com/zilliztech/memsearch).
 
 ## Continue learning
 

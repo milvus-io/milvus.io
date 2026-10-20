@@ -7,6 +7,8 @@ order: 2
 
 Vector search ranks records by comparing a query vector with stored vectors. The vectors encode features of text, images, audio, or other data. Their usefulness depends on the representation: proximity is a mathematical relationship, and it only approximates the application's notion of relevance when the model and metric fit the task.
 
+![From question to verifiable evidence](/images/ai-reference/retrieval.svg)
+
 ## Follow the retrieval path
 
 First, encode the documents or other searchable units. Store each vector with a stable ID and the metadata needed to interpret it. Encode a user query with a compatible query encoder, apply eligibility constraints, and return the nearest candidates under the configured metric. Fetch the source content for display, reranking, or generation.
@@ -22,6 +24,15 @@ The top-k parameter controls how many candidates are returned; it is not a quali
 ## Verify before tuning
 
 Start with a small corpus and a fixed query set. Inspect returned IDs, source passages, and metric values. Then measure relevance, filtered-result correctness, and latency. Compare approximate results with an exact-vector baseline to isolate index approximation from model-quality problems. Once those causes are separated, you can decide whether to change the model, corpus, filters, or index.
+
+## Example to test
+
+Trace a query from its input through encoding, eligibility filtering, candidate retrieval, and source lookup. Keep the returned ID and original evidence. A plausible nearest vector is not useful if the application cannot resolve its source.
+
+## From concept to implementation
+
+- [Run a first verified search](https://milvus.io/docs/quickstart.md).
+- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
 
 ## Continue learning
 

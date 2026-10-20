@@ -7,10 +7,14 @@ const {
 const base = process.env.REFERENCE_TEST_URL || 'http://127.0.0.1:8011';
 
 async function get(path) {
-  return fetch(base + path, {
-    redirect: 'manual',
-    signal: AbortSignal.timeout(90000),
-  });
+  try {
+    return await fetch(base + path, {
+      redirect: 'manual',
+      signal: AbortSignal.timeout(90000),
+    });
+  } catch (error) {
+    throw new Error(`GET ${path} failed: ${error.message}`);
+  }
 }
 
 (async () => {
@@ -18,6 +22,7 @@ async function get(path) {
   const demoRows = new Map(
     rows.filter(row => row.Demo).map(row => [row.URL, row])
   );
+  const illustrations = new Set();
   const retained = Object.keys(publication).filter(
     slug => publication[slug].status === 'source-checked'
   );
@@ -80,6 +85,12 @@ async function get(path) {
     assert.ok(html.includes('Continue learning'), slug);
     assert.ok(html.includes('Implementation guides and sources'), slug);
     assert.ok(!html.includes(':contentReference[oaicite:'), slug);
+    for (const [, image] of rows.find(row => row.URL === slug).Answers.matchAll(
+      /!\[[^\]]*\]\((\/images\/ai-reference\/[^)]+)\)/g
+    )) {
+      assert.ok(html.includes(`src="${image}"`), slug);
+      illustrations.add(image);
+    }
     const nextData = JSON.parse(
       html.match(
         /<script\b[^>]*id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/
@@ -133,7 +144,19 @@ async function get(path) {
       retiredSamples.set(record.reason, slug);
   }
   for (const slug of retiredSamples.values()) {
-    assert.equal((await get(`/ai-quick-reference/${slug}`)).status, 404, slug);
+    const response = await get(`/ai-quick-reference/${slug}`);
+    assert.equal(response.status, 404, slug);
+    assert.equal(response.headers.get('location'), null, slug);
+    const html = await response.text();
+    assert.ok(html.includes('This article has been retired'), slug);
+    assert.ok(html.includes('href="/ai-quick-reference"'), slug);
+    assert.ok(html.includes('href="/docs/quickstart.md"'), slug);
+  }
+  assert.equal((await get('/ai-quick-reference/unknown-reference-fixture')).status, 404);
+  for (const image of illustrations) {
+    const response = await get(image);
+    assert.equal(response.status, 200, image);
+    assert.ok((await response.text()).includes('<svg'), image);
   }
   assert.equal((await get('/assets/milvus-faq.csv')).status, 404);
   console.log(
@@ -145,6 +168,7 @@ async function get(path) {
       topicFilters: topics.length,
       legacyCsv: 404,
       demoPages: demoRows.size,
+      illustrations: illustrations.size,
       status: 'passed',
     })
   );

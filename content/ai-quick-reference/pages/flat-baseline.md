@@ -7,6 +7,8 @@ order: 67
 
 A FLAT search evaluates the vector comparisons over the eligible dataset rather than relying on an approximate candidate structure. It is useful as an exact-neighbor reference for evaluating ANN behavior. It also provides a simple serving option when the eligible dataset and workload make exhaustive comparison affordable.
 
+![Control the workload before comparing performance](/images/ai-reference/benchmark.svg)
+
 ## Keep the baseline equivalent
 
 Use identical stored vectors, query vectors, metric, normalization, top-k, and metadata filters. Ensure both runs see the same data state. A result difference caused by a changed corpus or omitted filter is not ANN approximation error.
@@ -24,6 +26,15 @@ Exact vector neighbors are still a geometric reference, not a relevance judgment
 When FLAT finds the right evidence but an ANN index misses it, investigate candidate search effort, construction, quantization, and filters. When both retrieve the wrong evidence, inspect the model, chunking, source data, and query formulation first.
 
 Record the baseline computation and resulting reference IDs with the benchmark artifacts. Recompute them when the representation or eligible corpus changes. This small discipline makes index experiments interpretable and prevents a faster configuration from being credited for a quality change caused by an unrelated dataset or metric difference.
+
+## Example to test
+
+Build exact ground truth after applying the same tenant and time eligibility rules as the ANN test. An unfiltered global top-k is not a valid ground truth for a filtered query, even if both searches use identical vectors.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

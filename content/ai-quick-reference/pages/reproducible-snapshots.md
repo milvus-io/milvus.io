@@ -25,6 +25,15 @@ Lake engines can expire snapshots and remove unreferenced files. Coordinate that
 
 Re-run a small experiment from its recorded artifacts after the original environment has been removed. Compare membership, selected payloads, retrieval results, and computed metrics. This restoration exercise reveals missing dependencies more effectively than checking that a manifest file exists. The goal is an experiment that another engineer can reconstruct and explain, including its data and model boundaries.
 
+## Example to test
+
+Save source snapshot identity, embedding revision, eligibility rules, and index settings with each evaluation. Replay after a refresh and explain intentional membership changes. A timestamp in a report alone does not freeze all upstream systems.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+
 ## Continue learning
 
 - [What lineage metadata should connect source data, embeddings, and training sets?](/ai-quick-reference/data-lineage-for-embeddings-and-training)

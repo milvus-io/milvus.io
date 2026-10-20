@@ -21,6 +21,15 @@ Use stable document identifiers and define how a changed document replaces its o
 
 Test an ordinary question, a cross-tenant question, and a question with no answer in the corpus. Inspect tool-call traces, returned IDs, and citations. Measure ingestion completeness and retrieval latency independently of final answer quality. Adopt agent planning only when it solves a task that a simpler retrieval application cannot handle reliably.
 
+## Example to test
+
+Give two agents different document access. Run the same question through each knowledge tool and inspect source IDs before answer generation. Separate an agent's ability to call the tool from the tool's authority to retrieve records.
+
+## From concept to implementation
+
+- [Use the topic-specific integration guide](https://docs.agno.com/knowledge/vector-stores/milvus/overview).
+- [Keep a direct-client verification baseline](https://milvus.io/docs/quickstart.md).
+
 ## Continue learning
 
 - [How do you choose an AI framework for a Milvus application?](/ai-quick-reference/choose-ai-framework-for-milvus)
@@ -30,7 +39,7 @@ Test an ordinary question, a cross-tenant question, and a question with no answe
 
 ## Implementation guides and sources
 
-- [Agno Milvus database example](https://docs.agno.com/examples/knowledge/vector-db/milvus-db/milvus-db)
+- [Agno Milvus database example](https://docs.agno.com/knowledge/vector-stores/milvus/overview)
 - [Agno knowledge and vector databases](https://docs.agno.com/knowledge/concepts/vector-db)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

@@ -7,6 +7,8 @@ order: 72
 
 An agent's retrieval plan should match the kind of evidence the task requires. A similarity search can recover paraphrases, a keyword path can preserve exact terminology, and a structured query can enforce known conditions. Giving each tool a clear contract makes selection easier to evaluate.
 
+![Bound the agent search loop by evidence gaps](/images/ai-reference/agent.svg)
+
 ## Map intent to evidence requirements
 
 A request for a document with a known ID should use direct retrieval where supported. A query containing an exact error code can benefit from lexical search. A conceptual question phrased in unfamiliar language may need dense retrieval. A requirement such as tenant or effective date belongs in an explicit eligibility predicate.
@@ -24,6 +26,15 @@ Give the agent a small set of meaningful choices rather than every database para
 Create labeled tasks for exact lookup, paraphrase, filtered search, multi-step evidence, and unsupported questions. Compare the chosen tools with a fixed baseline and inspect cases where extra calls add no useful evidence.
 
 Measure final task quality as well as candidate relevance and tool cost. A plan can retrieve a relevant document and still draw an unsupported conclusion; it can also fail before retrieval by selecting the wrong corpus. Keep a trace that connects each action to returned evidence so these causes remain visible. Expand the planner's options when a specific task class needs them and the resulting behavior can be verified.
+
+## Example to test
+
+Route an exact invoice ID to structured lookup and a symptom description to semantic or hybrid search. Save the routing decision and evidence. A tool planner should not invent unsupported filters or widen access when a search returns no hits.
+
+## From concept to implementation
+
+- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
+- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
 
 ## Continue learning
 

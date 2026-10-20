@@ -7,6 +7,8 @@ order: 6
 
 Dense and sparse embeddings represent information differently. A dense vector generally has a fixed set of coordinates with many nonzero values. A sparse vector represents only its nonzero dimensions. Sparse dimensions can correspond to terms or learned features; the meaning depends on how the representation was produced.
 
+![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
+
 ## What this means for retrieval
 
 Dense models often retrieve paraphrases and semantically related passages even when wording differs. Sparse retrieval is useful when particular terms or learned sparse features are strong signals. BM25 is a term-based relevance model, while learned sparse models are a different family; neither should be described as interchangeable with every sparse representation.
@@ -22,6 +24,15 @@ A hybrid pipeline can retrieve candidates from both representations and combine 
 ## A useful comparison
 
 Run dense-only, sparse-only, and hybrid retrieval against one fixed corpus. Inspect exact IDs, rare terms, paraphrases, and mixed queries separately. Compare relevance at the same final top-k, together with latency, indexing time, and resource use. Keep both paths only when their added value justifies the operational complexity.
+
+## Example to test
+
+A query containing an exact error code benefits from a lexical signal, while a description of the symptom may benefit from dense retrieval. Keep both candidate lists before fusion so each signal's contribution can be inspected.
+
+## From concept to implementation
+
+- [Run a first verified search](https://milvus.io/docs/quickstart.md).
+- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
 
 ## Continue learning
 

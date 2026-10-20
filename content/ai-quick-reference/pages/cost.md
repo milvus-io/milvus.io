@@ -25,6 +25,15 @@ Normalize performance comparisons to the same quality and availability targets. 
 
 Separate fixed provisioning from usage-dependent items and show the workload assumptions next to the calculation. Use current pricing documentation rather than embedding volatile price figures in an evergreen article. Run a representative trial, compare measured usage with the estimate, and include a growth scenario. Keep the operational responsibilities explicit so the decision reflects both infrastructure spend and the work required to run the service.
 
+## Example to test
+
+Build a monthly worksheet separating serving compute, storage, embedding calls, transfer, and operator time. Recalculate it after a cold-start or failover test, since spare capacity and recovery requirements can change the apparent cheapest option.
+
+## From concept to implementation
+
+- [Turn workload assumptions into a sizing estimate](https://milvus.io/tools/sizing).
+- [Compare current managed-service pricing separately](https://zilliz.com/pricing).
+
 ## Continue learning
 
 - [How do you turn a Milvus workload into a capacity and cost estimate?](/ai-quick-reference/milvus-capacity-planning)

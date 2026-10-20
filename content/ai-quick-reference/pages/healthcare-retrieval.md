@@ -7,6 +7,8 @@ order: 94
 
 A healthcare information agent can use vector retrieval to find relevant material across differently worded documents. The engineering goal is to return authorized, applicable evidence with enough context and provenance for the intended reviewer. Semantic similarity is only one signal in that process.
 
+![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
+
 ## Define the corpus and permitted use
 
 An internal operations knowledge base, published research corpus, and patient-specific application have different requirements. State which sources are eligible, which users can retrieve them, and which actions the agent may take. Do not combine these corpora under a single broad similarity search without a clear scope contract.
@@ -24,6 +26,15 @@ For long evidence documents, choose chunks that preserve the context needed to i
 Use reviewed examples with difficult negatives, conflicting sources, obsolete revisions, and queries that the corpus cannot support. Measure evidence applicability, citation accuracy, access isolation, omissions, and the final response's grounding. Keep medical decisions and any consequential action within the application's approved human and system workflow.
 
 Evaluate freshness and deletion behavior when sources change. Milvus provides storage and retrieval capabilities; it does not confer clinical validity, source approval, or regulatory compliance on the application. Establish those requirements with the responsible owners and test how the retrieval system contributes to them.
+
+## Example to test
+
+Use a reviewed information-retrieval fixture where two passages differ in population, publication state, or negation. Require the system to preserve those qualifiers and source references. This is a test design, not clinical advice or a clinical validation claim.
+
+## From concept to implementation
+
+- [Implement explicit evidence eligibility](https://milvus.io/docs/filtered-search.md).
+- [Explore published Milvus applications](https://milvus.io/use-cases).
 
 ## Continue learning
 

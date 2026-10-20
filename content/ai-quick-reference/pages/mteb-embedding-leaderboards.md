@@ -7,6 +7,8 @@ order: 117
 
 MTEB is a suite of embedding evaluations, not an embedding model. It measures tasks including retrieval, classification, clustering, and similarity. The task mix and languages matter: a broad average is not a direct estimate of performance on your legal, medical, code, or multimodal corpus.
 
+![Measure four different outcomes separately](/images/ai-reference/evaluation.svg)
+
 ## A dated and reproducible top-20 view
 
 This snapshot was checked on 2026-10-20 using the official backend for MTEB(Multilingual, v2). It contains 471 result rows. We retained 88 rows with scores for all 131 tasks, sorted them by Mean Task descending, and selected the first twenty. No open-weights filter was applied. Values below are scores multiplied by 100.
@@ -47,6 +49,15 @@ Several listed models are related variants. Their presence is useful for a model
 Choose a small set covering your languages, inference budget, and deployment constraints. Pin model revisions, query instructions, dimension, pooling, and normalization. Encode the same source documents for each model into separate collections. Evaluate exact-search retrieval first, then introduce ANN indexes at a matched recall target.
 
 Keep a held-out query set with relevance judgments and report Recall@k, NDCG, latency, storage, and encoding cost. New models absent from this complete-coverage subset remain candidates; absence does not imply worse quality. Use the model catalog for newer hosted and multimodal options, and the reranker guide for a separate second-stage evaluation.
+
+## Example to test
+
+Read a candidate's task coverage before interpreting its mean score. Re-run a fixed application set with rare identifiers and paraphrases. A benchmark position is a shortlist signal, while the business task supplies the acceptance criteria.
+
+## From concept to implementation
+
+- [Review embedding representation and integration paths](https://milvus.io/docs/embeddings.md).
+- [Distinguish external inference from server orchestration](https://milvus.io/docs/embedding-function-overview.md).
 
 ## Continue learning
 

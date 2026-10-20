@@ -7,6 +7,8 @@ order: 29
 
 Multi-tenancy lets several customers or teams share infrastructure while preserving the required data and workload isolation. Three concerns should be considered separately: which records a tenant can access, how much load one tenant can impose on others, and how tenants are managed over their lifecycle.
 
+![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
+
 ## Choose an isolation boundary
 
 Milvus documents database-, collection-, partition-, and partition-key-based approaches. These offer different trade-offs in management overhead, scale, schema flexibility, and isolation. Evaluate the options available in your deployment rather than treating one collection per tenant or one shared collection as universally correct.
@@ -22,6 +24,15 @@ Define quotas, rate limits, and resource policies where needed. Keep operational
 ## Validate the chosen design
 
 Test cross-tenant negative cases, onboarding, schema changes, tenant deletion, and failure recovery. Benchmark representative tenant-size distributions with the actual filter strategy. Document which isolation guarantees come from Milvus configuration, which come from application logic, and which require separate infrastructure. This makes the trade-off reviewable as the product grows.
+
+## Example to test
+
+Load similar documents for two tenants and verify every direct, framework, and agent retrieval path. Add a test for omitted filters. Isolation must hold through the application boundary rather than depending on the model remembering a tenant instruction.
+
+## From concept to implementation
+
+- [Implement eligible vector retrieval](https://milvus.io/docs/filtered-search.md).
+- [Make the metadata contract explicit](https://milvus.io/docs/schema.md).
 
 ## Continue learning
 

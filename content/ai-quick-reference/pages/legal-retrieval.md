@@ -7,6 +7,8 @@ order: 93
 
 A legal-document agent needs to locate applicable evidence and preserve its provenance. Vector retrieval can bridge terminology differences, while keyword retrieval can preserve clause names, citations, and exact identifiers. The retrieval design must also respect document version, jurisdiction, matter, and access scope.
 
+![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
+
 ## Model the evidence unit
 
 Choose clauses, sections, or passages that retain enough context to interpret a result. Keep document ID, revision, section reference, page or offset, effective status, and source location. Preserve definitions and neighboring provisions when a small chunk depends on them.
@@ -24,6 +26,19 @@ Return the original passage and revision alongside the candidate ID. If document
 Build reviewed queries covering exact clause lookup, paraphrases, cross-document questions, outdated revisions, exceptions, and unsupported requests. Measure applicable-source retrieval, citation correctness, omitted qualifying language, and the final answer's support in the source.
 
 Track latency and tool cost as well as quality. If an agentic loop adds repeated searches without better evidence, improve the corpus or retrieval tools before expanding the loop. This is an engineering pattern for evidence discovery, not a claim that Milvus supplies legal reasoning or that a retrieved passage establishes a legal conclusion. Validate the full workflow with the reviewers who define acceptable use.
+
+## Review the evidence unit, not just the match
+
+A retrieval fixture can record the expected source revision, applicable scope, quoted passage boundary, and a qualifying exception. Ask reviewers to mark which condition failed when a result looks plausible but is unusable. Keep this separate from evaluating a legal conclusion: the database supplies retrieval capabilities, while the application and domain reviewers define acceptable interpretation.
+
+## Example to test
+
+Build a test where two clauses differ only in an exception or effective revision. Require the returned passage to include the qualifying text and source version. Review applicability with domain owners instead of treating similarity as a legal conclusion.
+
+## From concept to implementation
+
+- [Implement the document evidence pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
+- [Related document-workflow story: Rexera](https://zilliz.com/customers/rexera).
 
 ## Continue learning
 

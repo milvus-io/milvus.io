@@ -7,6 +7,8 @@ order: 113
 
 A Milvus MCP server exposes supported database operations as tools that an MCP client can discover and call. It connects an assistant or agent to retrieval and related data operations. It is not an embedding model and does not by itself decide which records a particular user is allowed to access.
 
+![Bound the agent search loop by evidence gaps](/images/ai-reference/agent.svg)
+
 ## Start with a narrow task
 
 For an internal support assistant, expose only the operations required to inspect an approved collection and search permitted documents. Check the server's current tool list and configuration. Some operations may read data, while others can create, modify, or delete it; do not infer their behavior from a tool name alone.
@@ -20,6 +22,15 @@ Return stable document IDs, source references, relevant text, and the filters ap
 ## Test failures and boundaries
 
 Try a normal search, an unavailable collection, an unauthorized scope, and a request with no relevant result. Inspect logs without exposing credentials. Measure the tool's latency and result correctness separately from the assistant's final response. Add write-capable tools only when the application has an explicit need and a clear authorization and retry design.
+
+## Example to test
+
+Give an agent a read-oriented tool and attempt a forbidden write through natural-language instructions. Inspect the server-side decision. Tool descriptions help the model choose actions, but database credentials and enforced tool boundaries determine actual authority.
+
+## From concept to implementation
+
+- [Build a bounded agent retrieval loop](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
+- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
 
 ## Continue learning
 

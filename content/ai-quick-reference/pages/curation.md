@@ -7,6 +7,8 @@ order: 81
 
 Data curation turns a collected dataset into a versioned selection suited to a particular use. It includes eligibility, quality assessment, deduplication, coverage, labeling, and provenance. Vector search helps discover similar or missing examples, while the curation policy determines what should be retained.
 
+![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
+
 ## Define quality for the downstream task
 
 A pretraining corpus, a legal retrieval collection, and a driving-scene dataset need different criteria. Write down the intended task, required domains, prohibited content, source permissions, and acceptable error rates. A generic quality score cannot establish all of these conditions.
@@ -24,6 +26,15 @@ A vector database is useful when the team needs repeated interactive discovery o
 Keep source IDs and revisions, scoring configuration, model revisions, reviewer labels, and selection reasons. Export a selection manifest rather than destroying the only copy of removed examples. Distinguish proposed decisions from approved dataset membership.
 
 Evaluate curation through downstream quality and coverage as well as dataset size. Track false removals, minority-domain retention, labeling cost, and reproducibility. Run a baseline dataset and a curated variant under comparable conditions. The value is a better and explainable data distribution for the intended task, rather than the largest possible reduction in records.
+
+## Example to test
+
+For a technical-document corpus, mark broken extracts, duplicates, uncertain permissions, and low-coverage topics separately. Keep selection reasons so a later training or retrieval regression can be traced to the curation decision.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

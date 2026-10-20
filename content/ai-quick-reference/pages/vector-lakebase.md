@@ -7,6 +7,8 @@ order: 38
 
 Vector Lakebase describes an architecture that connects open lake data, vector indexing, and interactive retrieval with offline processing. The central design question is how the same governed dataset can support both a serving application and jobs that enrich, evaluate, or train on that data.
 
+![Shared source data, explicit serving lifecycle](/images/ai-reference/lake.svg)
+
 ## Follow one data improvement through the system
 
 Suppose a team discovers that an embedding model retrieves driving scenes poorly at night. A batch job selects a versioned corpus, generates a replacement representation, and evaluates it against labeled queries. The serving layer should be able to adopt the validated representation while preserving the relationship to the source clips and the previous evaluation.
@@ -24,6 +26,26 @@ Keep ownership explicit: the lake producer commits the source dataset; Milvus ma
 Choose one corpus with stable identifiers and an existing quality benchmark. Demonstrate source discovery, index preparation, query serving, offline enrichment, and controlled refresh. Check that a result remains explainable after a table rewrite and that an earlier evaluation can still be reproduced.
 
 Adopt the architecture when this shared workflow removes meaningful synchronization or governance work. For an application with a small, independently updated serving corpus, a simpler managed collection can remain the appropriate starting point. Treat lakebase as an architectural choice supported by concrete capabilities, not as a promise that all storage and serving trade-offs disappear.
+
+## Decide who owns writes
+
+| Decision | Supported external-source route | Separate managed serving collection |
+| --- | --- | --- |
+| Authoritative edits | Through the source-owning system | Through the chosen serving ingestion workflow |
+| Freshness | Source state plus documented refresh/index lifecycle | Ingestion plus configured visibility behavior |
+| Data movement | Depends on the supported source integration | Explicit copy or synchronization policy |
+| Recovery proof | Reconstruct the intended source view and serving state | Restore and reconcile the serving dataset |
+
+Neither column is universally cheaper or simpler. Trace one correction and one deletion through the whole design. Include index storage, caches, object reads, and recovery work when evaluating a reduced-copy architecture.
+
+## Example to test
+
+Start with one supported source dataset, one offline selection job, and one online query. Record source state, index preparation, and refresh. Shared source rows can reduce copying, but indexes and caches still have their own storage and lifecycle.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
 
 ## Continue learning
 

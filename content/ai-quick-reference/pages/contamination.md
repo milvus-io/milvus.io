@@ -25,6 +25,15 @@ Record matched IDs, source revisions, detection method, score, review label, and
 
 Repeat checks after new data ingestion, memory expansion, or synthetic task generation. Report known residual risks and the scope searched without treating an absence of retrieved matches as proof of perfect independence. A useful contamination workflow combines reproducible candidate discovery with a clear split policy and review of the underlying evidence.
 
+## Example to test
+
+Compare held-out questions with training passages and retain candidate overlap pairs for review. A paraphrase can leak the answer without sharing many words, while two domain-related passages can be legitimate distinct examples.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+
 ## Continue learning
 
 - [How can vector retrieval support pretraining data preparation?](/ai-quick-reference/how-vector-search-supports-pretraining-data-preparation)

@@ -7,6 +7,8 @@ order: 114
 
 Bulk migration moves an existing dataset, backup and restore preserve a recoverable copy, and change data capture follows supported ongoing changes. These mechanisms solve related but different problems. Select a supported path for the source and destination versions, data types, and deployment modes before designing a cutover.
 
+![Verify the dataset before switching traffic](/images/ai-reference/migration.svg)
+
 ## Establish the starting point
 
 Record the source collections, schemas, primary keys, indexes, and a consistent baseline. Verify what the chosen tool includes: data, schema changes, collection operations, and deletes may have different support. A replica used for query serving is not automatically a backup or an independent cross-cluster migration target.
@@ -20,6 +22,15 @@ Compare counts, sampled primary keys, field values, and known query results. Inc
 ## Make cutover reviewable
 
 Specify a final write boundary, catch-up condition, endpoint switch, and rollback plan. Keep the original source and recovery copy until acceptance criteria pass. Test retry and restart behavior without conflating successful request submission with completed replication. A migration is complete when the destination serves the intended data and the application can operate and recover there.
+
+## Example to test
+
+Migrate a bounded source set, apply a later update and deletion, then compare logical membership before cutover. Count matching rows and inspect sampled values; a connected CDC pipeline does not prove that the target is ready for traffic.
+
+## From concept to implementation
+
+- [Plan a supported backup and restore test](https://milvus.io/docs/milvus_backup_overview.md).
+- [Distinguish ongoing synchronization from backup](https://milvus.io/docs/milvus-cdc-overview.md).
 
 ## Continue learning
 

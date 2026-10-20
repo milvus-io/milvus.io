@@ -23,6 +23,15 @@ Monitor rejected records, extraction failures, ingestion lag, missing metadata, 
 
 When relevance drops, trace a failed query through source content, parsing, chunking, embedding, filtering, and ranking. This makes it possible to fix the responsible stage. Increasing search effort or adding a reranker will not restore a passage that was never extracted or was incorrectly excluded by its metadata.
 
+## Example to test
+
+A PDF extraction can preserve every word but scramble a table's rows. Inspect the source around a retrieved numerical statement and record extraction quality separately from embedding quality. Re-embedding corrupted text will preserve the underlying mistake.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+
 ## Continue learning
 
 - [What is data curation, and how can vector search help?](/ai-quick-reference/what-is-data-curation-for-vector-ai)

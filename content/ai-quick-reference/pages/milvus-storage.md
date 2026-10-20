@@ -7,6 +7,8 @@ order: 54
 
 milvus-storage is a columnar storage-engine project used for vector and analytical workloads. Its public architecture includes readers and writers, manifest-based data organization, and language bindings. It supplies a storage layer; Milvus integrates storage with indexing, distributed execution, and database APIs.
 
+![Keep logical identity separate from file position](/images/ai-reference/format.svg)
+
 ## Distinguish a library capability from a database feature
 
 The storage project can expose scan, projection, and row-access interfaces to its consumers. Whether an application can use a particular behavior through Milvus depends on the database release, configuration, and supported API. A new reader implementation in the library is not a release guarantee for every deployed Milvus cluster.
@@ -24,6 +26,15 @@ Keep vector fields and large payload fields distinguishable in measurements. Pro
 Use fixtures covering identifiers, dimensions, nulls, nested fields, deletions, and schema revisions. Compare values through the supported reader paths. When changing formats, include existing files, newly written files, and maintenance output rather than testing only a new empty collection.
 
 Benchmark scans and selected-row reads separately, then measure the full retrieval pipeline. Record the storage-engine revision, database version, file layout, cache state, and backend. This helps distinguish an encoding improvement from a cache effect or a change in how much data was returned. Evaluate storage changes through correctness and lifecycle behavior as well as throughput.
+
+## Example to test
+
+Compare a projected batch scan with fetching a few scattered source rows. Keep file layout and cache state recorded. These two access patterns exercise different costs, so one scan-throughput number cannot describe every retrieval workload.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
 
 ## Continue learning
 

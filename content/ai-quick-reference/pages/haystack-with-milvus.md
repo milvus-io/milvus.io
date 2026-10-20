@@ -21,6 +21,15 @@ Start with dense retrieval, then evaluate sparse or hybrid retrieval and reranki
 
 Use stable IDs to update and delete documents, and test partial failure during a batch ingestion. Track processed, failed, and indexed records separately. A pipeline that completes without raising an exception may still skip malformed documents. Check database counts and sampled source IDs before measuring answer quality or deploying a replacement pipeline.
 
+## Example to test
+
+Log the documents emitted by the retriever before a downstream ranker or generator runs. Check metadata round-trips and updates through the document store. A correct pipeline connection does not prove that the selected evidence is applicable.
+
+## From concept to implementation
+
+- [Use the topic-specific integration guide](https://milvus.io/docs/integrate_with_haystack.md).
+- [Keep a direct-client verification baseline](https://milvus.io/docs/quickstart.md).
+
 ## Continue learning
 
 - [How do you choose an AI framework for a Milvus application?](/ai-quick-reference/choose-ai-framework-for-milvus)

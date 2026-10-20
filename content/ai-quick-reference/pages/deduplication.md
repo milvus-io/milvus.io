@@ -7,6 +7,8 @@ order: 25
 
 Embeddings can identify candidate near-duplicate records by semantic similarity. Exact duplicates and semantic duplicates require different decisions: identical bytes, equivalent wording, and similar meaning are not the same condition. Define which one the application needs before choosing a method.
 
+![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
+
 ## Separate detection from deletion
 
 Normalize and hash records when exact equality is the intended rule. For near-duplicates, generate candidates with a suitable representation and similarity search. Sentence Transformers provides paraphrase-mining tools; a persistent vector index can support candidate retrieval as a corpus changes. MinHash-style methods address another form of similarity based on token sets rather than semantic embeddings.
@@ -22,6 +24,15 @@ If candidates are grouped, define how transitivity is handled. A being similar t
 ## Close the loop
 
 Record the surviving object, merged IDs, reason, and policy version. Apply any approved removal consistently to the source system, index, caches, and downstream datasets. Measure precision of proposed merges and inspect false positives before increasing automation. For search products, also verify that deduplication improves result diversity without discarding the authoritative passage needed to answer a query.
+
+## Example to test
+
+Two product manuals can share most wording while describing different voltage limits. Keep the pair for review and preserve the differing specification. Semantic closeness is a useful candidate signal, not permission to discard a distinct authoritative source.
+
+## From concept to implementation
+
+- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
+- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 

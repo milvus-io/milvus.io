@@ -23,6 +23,15 @@ Test query fan-out, data skew, concurrency, and behavior during ingestion. Measu
 
 Milvus separates responsibilities across its distributed architecture, and the exact topology varies by deployment and release. Use the linked architecture guide to identify those responsibilities in your version. Then validate the user's observable requirements—latency, availability, freshness, and recovery—rather than assuming they follow automatically from the labels “sharded” or “replicated.”
 
+## Example to test
+
+Separate a capacity test from a failover test: add data or load to assess distribution, then remove a serving replica to assess resilience. Replication and sharding solve different problems and neither substitutes for a tested backup.
+
+## From concept to implementation
+
+- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
+- [Find community support and contribution channels](https://milvus.io/community).
+
 ## Continue learning
 
 - [How do you locate a bottleneck across Milvus components?](/ai-quick-reference/how-to-find-milvus-performance-bottlenecks)

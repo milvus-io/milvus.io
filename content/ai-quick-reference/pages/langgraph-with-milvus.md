@@ -7,6 +7,8 @@ order: 104
 
 LangGraph represents an agent workflow as state, nodes, and transitions. Nodes may plan a query, call a retrieval tool, inspect evidence, or generate an answer. Milvus is useful inside a retrieval node or as a searchable knowledge and memory store; it does not replace the workflow's checkpoint mechanism.
 
+![Bound the agent search loop by evidence gaps](/images/ai-reference/agent.svg)
+
 ## Separate execution state from searchable memory
 
 Execution state includes which step is running, pending actions, and intermediate results. A checkpoint supports resuming that workflow. Searchable memory contains selected information intended to be retrieved in future tasks. Store references between these systems, but do not treat a vector search result as a reliable reconstruction of an interrupted execution.
@@ -20,6 +22,15 @@ Set limits on retrieval iterations and tool timeouts. Make document ingestion an
 ## Test recovery and quality separately
 
 Pause and resume a test workflow to verify checkpoint recovery. Independently evaluate retrieval quality and memory deletion. An agent that resumes correctly can still retrieve the wrong document, while accurate retrieval does not establish safe retry behavior for unrelated tools. Add complexity only after the state transitions solve a concrete task.
+
+## Example to test
+
+Persist a paused workflow, resume it, and check that retrieval uses the intended document and permission state. A graph checkpoint preserves workflow state; it does not freeze an external collection or grant access to its contents.
+
+## From concept to implementation
+
+- [Use the topic-specific integration guide](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md).
+- [Related application story: Read AI](https://zilliz.com/customers/read-ai).
 
 ## Continue learning
 

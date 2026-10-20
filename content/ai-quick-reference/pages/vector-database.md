@@ -7,6 +7,8 @@ order: 1
 
 A vector database stores embedding vectors alongside identifiers and metadata, then retrieves records by similarity. Its value is the combination of search with data-management operations: ingestion, updates, filtering, persistence, and serving concurrent requests. An embedding model produces the representation; the database indexes and searches it. These are separate responsibilities.
 
+![From question to verifiable evidence](/images/ai-reference/retrieval.svg)
+
 ## What problem does it solve?
 
 Imagine a support portal where users describe the same fault in different words. Exact-term search can miss a useful article if the query and article use different vocabulary. Embeddings provide another retrieval signal. A vector database makes that signal usable over a changing collection while retaining fields such as product, language, version, and tenant.
@@ -22,6 +24,27 @@ Keep an authoritative source for documents and a stable relationship between eac
 ## Try it and check the result
 
 Use the Quickstart to create a collection, insert a few real embeddings, and inspect the returned IDs and text. Add one metadata filter and verify that excluded records cannot appear. Write down several expected matches and difficult non-matches before changing index parameters. That small, repeatable evaluation is more informative than a demo that only runs without errors.
+
+## How the pieces fit together
+
+| Component | Responsibility | What you still need |
+| --- | --- | --- |
+| Embedding model | Turn supported inputs into representations | Compatible query/document encoding and evaluation |
+| ANN index or library | Find candidate neighbors efficiently | A surrounding lifecycle for writes, permissions, and serving |
+| Vector database | Manage records and serve indexed retrieval | An application-defined source and relevance policy |
+| Data lake or table format | Organize shared datasets and their storage metadata | A supported serving layer for interactive retrieval |
+| AI framework | Connect ingestion, retrieval, and generation steps | Explicit database behavior and application tests |
+
+These components can cooperate in one application. Choose them by responsibility rather than treating a model, file format, and database as competing names for the same thing. A small prototype may combine several roles in one process; production requirements determine which boundaries need independent operation.
+
+## Example to test
+
+Use a support article with a stable source ID, a version, and a tenant. Insert its embedding, search a paraphrase, then update and delete it. This checks the database lifecycle that a standalone nearest-neighbor calculation does not supply.
+
+## From concept to implementation
+
+- [Run a first verified search](https://milvus.io/docs/quickstart.md).
+- [Explore hands-on Milvus projects](https://milvus.io/bootcamp).
 
 ## Continue learning
 

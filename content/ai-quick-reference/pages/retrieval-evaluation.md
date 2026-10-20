@@ -7,6 +7,8 @@ order: 20
 
 Evaluate retrieval against a held-out set of representative queries and relevance judgments. Define which passages provide useful evidence for each query, then compare systems using a fixed corpus version, eligibility policy, and final top-k. A result that looks related is not necessarily sufficient to answer the question.
 
+![Measure four different outcomes separately](/images/ai-reference/evaluation.svg)
+
 ## Use metrics with explicit meanings
 
 Recall@k measures the fraction of known relevant records found in the first k results. Precision@k measures the fraction of the first k results judged relevant. NDCG@k accounts for ranking order and can use graded judgments. These metrics answer different questions; select them to reflect how the application uses retrieved evidence.
@@ -22,6 +24,15 @@ ANN recall compares approximate results with exact vector neighbors. It does not
 Report results for exact identifiers, paraphrases, rare entities, long questions, language groups, and filtered queries where applicable. Include questions with no supporting evidence. Keep a validation set separate from the queries used to tune models, chunking, or fusion weights.
 
 Finally, measure latency and cost at the same quality target. In RAG, evaluate the generator's evidence use and citation accuracy separately. A strong retrieval score can coexist with an unsupported answer, while fluent answers can conceal poor retrieval.
+
+## Example to test
+
+Keep exact-neighbor agreement, judged passage relevance, answer support, and business activation in separate columns. A parameter change can improve one while worsening another. Use a fixed query split to attribute changes.
+
+## From concept to implementation
+
+- [Build an evidence-backed RAG pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
+- [Find a runnable application starting point](https://milvus.io/bootcamp).
 
 ## Continue learning
 

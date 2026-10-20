@@ -7,6 +7,8 @@ order: 7
 
 Multimodal embeddings represent more than one kind of input, such as text and images. A model trained to align those inputs can support cross-modal retrieval: a text query finds an image, or an image finds a related description. The important property is learned alignment, not simply that both outputs are numeric arrays.
 
+![Preserve page structure through multi-vector retrieval](/images/ai-reference/visual-page.svg)
+
 ## Distinguish shared and separate representations
 
 Vectors from independent text and image models are not automatically comparable, even if their dimensions match. Use an aligned model for direct cross-modal similarity, or keep separate representations and combine their retrieval results through an evaluated strategy.
@@ -22,6 +24,15 @@ Milvus can store vector fields and scalar metadata used by these pipelines. The 
 ## Validate each direction
 
 Evaluate text-to-image, image-to-image, or other supported directions separately. Check whether permissions and metadata filters are respected, whether the returned source location is correct, and whether query encoding dominates latency. Follow the tutorial that matches your intended direction; a successful image-to-image demo is not sufficient validation of a text-to-video product.
+
+## Example to test
+
+For text-to-image retrieval, verify that both encoders were trained for the same shared space. Store original media references alongside vectors. Matching vector lengths cannot establish compatibility between an arbitrary text model and image model.
+
+## From concept to implementation
+
+- [Check versioned embedding-list search](https://milvus.io/docs/basic-vector-search-with-structarray.md).
+- [Connect media evidence to an application](https://milvus.io/docs/multimodal_rag_with_milvus.md).
 
 ## Continue learning
 

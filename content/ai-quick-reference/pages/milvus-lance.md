@@ -7,6 +7,8 @@ order: 39
 
 Milvus 3.0 documents a Lance external-source path through Storage V3. The source is a Lance dataset directory: Milvus reads dataset metadata, maps fragments into its manifest, and supplies indexing and search through an external collection. This connects Lance-formatted data to Milvus serving without first importing every source row into a managed collection.
 
+![Shared source data, explicit serving lifecycle](/images/ai-reference/lake.svg)
+
 ## Keep the format and the serving system distinct
 
 Lance is an open format and ecosystem for AI datasets. A product that uses Lance, including LanceDB, can add its own APIs, catalog, indexing, and service behavior. Compatibility with a Lance dataset is not a claim that Milvus can attach to every LanceDB deployment or share its internal indexes and transactions.
@@ -24,6 +26,15 @@ The external source is read-only from this Milvus workflow. Perform dataset edit
 Test an append, a replacement, a deletion, and a dataset maintenance operation. Check returned IDs, source payloads, eligibility filters, and search quality after refresh. Measure the time until the application can use the new state, including any required index work and loading.
 
 Compare this arrangement with copying a bounded serving subset into a managed collection. The external path is attractive when shared lake data and reduced synchronization are important; a separate serving copy can be easier when online writes, isolation, or a different retention policy dominate the workload.
+
+## Example to test
+
+Use application-owned IDs to resolve Lance-backed search hits before and after a source-file rewrite. Verify the exact format and release support. Reading a Lance dataset does not imply sharing another product's indexes, transactions, or service API.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
 
 ## Continue learning
 

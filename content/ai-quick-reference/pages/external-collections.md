@@ -7,6 +7,8 @@ order: 41
 
 An external collection is a Milvus retrieval view over supported data that another system owns. In the documented Milvus 3.0 workflow, source rows remain outside the managed collection, while Milvus maintains manifests and retrieval indexes. Use it when sharing a lake dataset is more valuable than controlling a separate serving copy.
 
+![Shared source data, explicit serving lifecycle](/images/ai-reference/lake.svg)
+
 ## Choose by the write and ownership contract
 
 A dataset written by a batch pipeline and consumed by several systems is a natural candidate. The producer can publish a coherent source state, and serving can adopt that state through refresh. A workload that requires frequent application-owned mutations may be better served by a managed collection with a direct ingestion path.
@@ -24,6 +26,15 @@ Start with one vector field and one meaningful filter. After schema creation and
 External access reduces the need for another source-row copy, but indexes, manifests, caches, object-store requests, and recovery work still exist. Measure source metadata processing, index readiness, payload reads, permissions, and update lag. A small metadata refresh time is not an end-to-end guarantee for a large new dataset.
 
 Before adopting it, test append, deletion, schema evolution, and source-file maintenance. Keep an owner for each publication step and a clear response to partial failure. The integration is successful when the application can explain which source state produced a result and can move safely to the next one.
+
+## Example to test
+
+Attach a small supported external dataset and record its source state. Change it through the owning system, refresh through the documented workflow, and verify membership. Test application writes separately instead of assuming an external collection accepts managed-collection mutations.
+
+## From concept to implementation
+
+- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
+- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
 
 ## Continue learning
 

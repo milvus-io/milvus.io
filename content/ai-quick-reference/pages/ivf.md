@@ -7,6 +7,8 @@ order: 12
 
 An inverted-file (IVF) vector index divides the vector space into regions represented by centroids. During search, it chooses promising regions and compares candidates inside them. This reduces the number of vectors examined, but a true neighbor in an unsearched region can be missed.
 
+![IVF centroid and region selection](/images/ai-reference/ivf.svg)
+
 ## Understand the two main controls
 
 In Milvus IVF_FLAT, `nlist` is a build-time choice governing the number of clusters, while `nprobe` controls how many clusters are searched for a query. Increasing search coverage generally increases work and may improve exact-neighbor recall. The useful settings depend on the data distribution, corpus size, metric, and workload.
@@ -22,6 +24,25 @@ When diagnosing a quality loss, first compare region coverage with a fixed repre
 ## Validate on the live workload shape
 
 Include selective filters, uneven data distributions, and the expected request concurrency. Measure index construction, loading, memory, recall, and tail latency. If the corpus changes substantially, check whether the existing configuration still performs well. A configuration selected for one snapshot should not be assumed optimal after major growth or a model migration.
+
+## Diagnose two different sources of misses
+
+| Controlled comparison | What it can reveal |
+| --- | --- |
+| Fixed IVF_FLAT build, vary nprobe | Candidate-region coverage versus search work |
+| Different nlist, matched query protocol | A build-layout change and its downstream effect |
+| Full versus compressed representation | Additional distance approximation and capacity trade-offs |
+
+Do not change all three together and attribute the result to one parameter. Save the training/build corpus revision as well as the query set: changing the data distribution can move the operating point even with identical configuration strings.
+
+## Example to test
+
+If increasing nprobe improves recall while vectors and compression remain fixed, region coverage was a limiting factor. Compare a different nlist only as a separate build experiment, including its construction and loading costs.
+
+## From concept to implementation
+
+- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
+- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
 
 ## Continue learning
 

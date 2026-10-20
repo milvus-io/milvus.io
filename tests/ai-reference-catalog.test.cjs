@@ -62,6 +62,40 @@ test('unreviewed, retired, and changed content cannot enter the catalog', () => 
   assert.throws(() => validateRows([], catalog), /missing from content/);
 });
 
+test('retained demo entry points survive the Markdown migration', async () => {
+  const rows = await loadPublishedFaqRows();
+  const demos = rows.filter(row => row.Demo);
+  assert.deepEqual(
+    demos.map(row => [publication[row.URL].file, row.Demo]).sort(),
+    [
+      ['cost.md', 'RAG'],
+      ['embedding-models.md', 'RAG'],
+      ['fulltext.md', 'hybrid search'],
+    ]
+  );
+  for (const row of demos) assert.ok(row.Demo_description.trim());
+});
+
+test('demo metadata must be supported, complete, and reviewed', () => {
+  const { row, catalog } = fixture();
+  const withDemo = {
+    ...row,
+    Demo: 'RAG',
+    Demo_description: 'Ask the Milvus documentation assistant.',
+  };
+  assert.throws(() => validateRows([withDemo], catalog), /without review/);
+  catalog.concept.sha256 = contentHash(withDemo);
+  assert.doesNotThrow(() => validateRows([withDemo], catalog));
+  for (const invalid of [
+    { ...withDemo, Demo: 'unknown' },
+    { ...withDemo, Demo: '' },
+    { ...withDemo, Demo_description: '' },
+    { ...withDemo, Demo_description: 42 },
+  ]) {
+    assert.throws(() => validateRows([invalid], catalog), /demo metadata/);
+  }
+});
+
 test('empty content, duplicate URLs, and generated citation artifacts fail validation', () => {
   const { row, catalog } = fixture();
   assert.throws(

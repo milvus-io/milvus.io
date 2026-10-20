@@ -3,6 +3,8 @@ slug: "what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-ra
 title: "How do you compare managed and self-hosted vector-search costs?"
 topic: "production"
 order: 35
+demo: "RAG"
+demoDescription: "Check out RAG-powered AI chatbot built with Milvus. You can ask it anything about Milvus."
 ---
 
 Compare total cost at a stated workload and service requirement. A local prototype, a self-hosted production cluster, and a managed deployment have different operating responsibilities. Comparing their smallest advertised prices does not establish which is cheaper for your application.

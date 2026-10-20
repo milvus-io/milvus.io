@@ -3,6 +3,8 @@ slug: "what-factors-should-be-considered-when-selecting-an-embedding-model-for-a
 title: "How do you choose an embedding model for retrieval?"
 topic: "foundations"
 order: 4
+demo: "RAG"
+demoDescription: "Check out RAG-powered AI chatbot built with Milvus. You can ask it anything about Milvus."
 ---
 
 An embedding model turns text or other supported inputs into representations for retrieval and related tasks. Selecting one defines what information is preserved before Milvus indexes it. Choose a model by your task, languages, deployment route, and evaluation evidence; a benchmark average alone does not make that decision.

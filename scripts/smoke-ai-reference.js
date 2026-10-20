@@ -1,5 +1,9 @@
 const assert = require('node:assert/strict');
-const { publication, topics } = require('../src/server/ai-reference-catalog');
+const {
+  publication,
+  topics,
+  loadPublishedFaqRows,
+} = require('../src/server/ai-reference-catalog');
 const base = process.env.REFERENCE_TEST_URL || 'http://127.0.0.1:8011';
 
 async function get(path) {
@@ -10,6 +14,10 @@ async function get(path) {
 }
 
 (async () => {
+  const rows = await loadPublishedFaqRows();
+  const demoRows = new Map(
+    rows.filter(row => row.Demo).map(row => [row.URL, row])
+  );
   const retained = Object.keys(publication).filter(
     slug => publication[slug].status === 'source-checked'
   );
@@ -78,6 +86,23 @@ async function get(path) {
       )[1]
     );
     const props = nextData.props.pageProps;
+    const demo = demoRows.get(slug);
+    assert.equal(props.data.demo, demo?.Demo || '', slug);
+    assert.equal(props.data.demoDescription, demo?.Demo_description || '', slug);
+    if (demo) {
+      const escapedDescription = demo.Demo_description.replace(
+        /[&<>"']/g,
+        char =>
+          ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+          })[char]
+      );
+      assert.ok(html.includes(escapedDescription), slug);
+    }
     assert.ok(
       props.recommendFaq.every(
         item => publication[item.url]?.status === 'source-checked'
@@ -119,10 +144,11 @@ async function get(path) {
       retiredSamples: retiredSamples.size,
       topicFilters: topics.length,
       legacyCsv: 404,
+      demoPages: demoRows.size,
       status: 'passed',
     })
   );
 })().catch(error => {
-  console.error(error.message);
+  console.error(error.stack || error.message);
   process.exitCode = 1;
 });

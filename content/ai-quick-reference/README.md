@@ -15,6 +15,8 @@ cannot silently republish the retired catalog.
 
 - `pages/*.md`: one concept per file, with slug, title, topic, and reading order
   in front matter. A short filename is independent of the historical URL slug.
+- Optional `demo` and `demoDescription` front matter preserves a reviewed demo
+  entry point. `demo` must match a supported card type; its description is required.
 - `publication.json`: explicit publication decisions, content hashes, checked
   sources, related concepts, and direct merge targets for legacy URLs.
 - `topics.json`: ten topic groups and their implementation starting points.
@@ -41,6 +43,8 @@ Docker build and runtime stages both include `content/`.
    SHA-256 of `title + '\n' + body + '\n' + topic`, where body is the trimmed
    Markdown content with one final newline. Mark the source-check date and
    sources only after checking the substantive claims.
+   For articles with a demo, append `\n + demo + \n + demoDescription` to the
+   hashed content so demo changes also require review.
 5. Run `pnpm validate:ai-reference` and `pnpm test:ai-reference`, then inspect the
    rendered article, topic navigation, API results, and sitemap. Check all changed
    links and ensure internal links point directly to canonical retained pages.

@@ -24,8 +24,7 @@ export const getFAQs = (): Promise<FAQDetailType[]> => {
             topic: publication[row.URL].topic,
             description: row.Answers.slice(0, 120),
             canonical_rel: `${ABSOLUTE_BASE_URL}/ai-quick-reference/${row.URL}`,
-            demo: (row.Demo?.match(/'([^']*)'/g)?.[0]?.slice(1, -1) ||
-              '') as DemoTypeEnum,
+            demo: (row.Demo || '') as DemoTypeEnum,
             demoDescription: row.Demo_description || '',
           }))
           .sort(

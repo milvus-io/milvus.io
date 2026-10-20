@@ -6,9 +6,11 @@ const publication = require('../../content/ai-quick-reference/publication.json')
 const topics = require('../../content/ai-quick-reference/topics.json');
 
 function contentHash(row) {
-  return createHash('sha256')
-    .update([row.Questions, row.Answers, row.Tag].join('\n'))
-    .digest('hex');
+  const fields = [row.Questions, row.Answers, row.Tag];
+  if (row.Demo || row.Demo_description) {
+    fields.push(row.Demo, row.Demo_description);
+  }
+  return createHash('sha256').update(fields.join('\n')).digest('hex');
 }
 
 function validateRows(rows, catalog = publication) {
@@ -30,6 +32,14 @@ function validateRows(rows, catalog = publication) {
     }
     if (/contentReference\[|oaicite|\uE200cite\uE202/.test(row.Answers)) {
       throw new Error(`Unresolved AI reference citation: ${slug}`);
+    }
+    if (
+      (row.Demo || row.Demo_description) &&
+      (!['RAG', 'hybrid search', 'multimodal image search'].includes(row.Demo) ||
+        typeof row.Demo_description !== 'string' ||
+        !row.Demo_description.trim())
+    ) {
+      throw new Error(`Invalid AI reference demo metadata: ${slug}`);
     }
     if (record.sha256 !== contentHash(row)) {
       throw new Error(`AI reference content changed without review: ${slug}`);
@@ -101,6 +111,8 @@ function loadPublishedFaqRows() {
               Questions: data.title,
               Answers: content.trim() + '\n',
               Tag: data.topic,
+              Demo: data.demo ?? '',
+              Demo_description: data.demoDescription ?? '',
             };
           })
           .sort((a, b) => a.Order - b.Order);

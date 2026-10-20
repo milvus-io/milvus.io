@@ -3,6 +3,8 @@ slug: "what-is-fulltext-search"
 title: "What is full-text search, and how does BM25 fit?"
 topic: "retrieval"
 order: 9
+demo: "hybrid search"
+demoDescription: "Check out our hybrid semantic search & full-text matching demo built with Milvus:"
 ---
 
 Full-text search retrieves and ranks text using its terms. BM25 is a widely used relevance scoring method that considers factors including term frequency, how common a term is across the corpus, and document length. Its scores rank candidates for a query; they are not probabilities that a document is correct.

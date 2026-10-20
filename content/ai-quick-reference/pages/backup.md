@@ -25,6 +25,8 @@ Restore to an isolated environment, compare record counts and selected source ID
 
 ## Continue learning
 
+- [How do bulk migration, backup, and Milvus CDC differ?](/ai-quick-reference/milvus-cdc-and-migration)
+- [How do you choose and validate a Milvus version upgrade?](/ai-quick-reference/milvus-version-upgrades)
 - [How do you make vector-search and training experiments reproducible?](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments)
 - [What is Woodpecker's role in the Milvus write path?](/ai-quick-reference/what-is-woodpecker)
 - [How do sharding and replication differ in a vector database?](/ai-quick-reference/how-do-distributed-vector-databases-handle-sharding-and-replication)

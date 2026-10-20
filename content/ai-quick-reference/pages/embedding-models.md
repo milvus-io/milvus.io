@@ -5,35 +5,36 @@ topic: "foundations"
 order: 4
 ---
 
-Choose an embedding model by measuring its performance on the retrieval task you need to serve. A public leaderboard is useful for producing a shortlist, but it cannot establish how a model handles your terminology, languages, document formats, access filters, or difficult queries.
+An embedding model turns text or other supported inputs into representations for retrieval and related tasks. Selecting one defines what information is preserved before Milvus indexes it. Choose a model by your task, languages, deployment route, and evaluation evidence; a benchmark average alone does not make that decision.
 
-## Build a representative comparison
+## Start from the actual evidence units
 
-Create a held-out set of real questions with judged relevant passages. Include common queries, rare entities, exact identifiers, paraphrases, and cases where the right response is that no useful evidence exists. Keep the corpus and chunking strategy fixed for the initial comparison so differences are attributable to the model.
+Decide whether a record represents a paragraph, code symbol, document page, image, or video segment. Preserve its source ID and metadata. Text models cannot automatically understand every visual detail in a PDF, while a multimodal model still needs an appropriate source-unit and preprocessing design.
 
-Use each model's intended query/document encoding instructions. Compare relevance metrics and inspect failures manually. If one candidate requires different chunking because of its input limit, record that change and evaluate the resulting pipeline separately rather than presenting it as a model-only comparison.
+Use the MTEB guide to form a benchmark shortlist and the current model catalog to inspect newer hosted and multimodal options. Read the exact revision, query instructions, supported languages, model terms, dimensions, pooling, and normalization. Higher-dimensional output increases storage; smaller output can change quality and needs its own test.
 
-## Account for the operating cost
+## Separate model quality from ANN behavior
 
-Measure document-encoding throughput, query-encoding latency, vector dimension, memory requirements, and whether encoding is local or hosted. Long input support does not mean long passages will retrieve well. Licensing, supported languages, data-handling requirements, and revision stability also affect whether a model is usable in your environment.
+Encode the same corpus separately for each candidate. Build a small relevance-labeled query set with realistic filters and difficult negatives. Evaluate exact search first. Then choose ANN settings against a matched recall target so index approximation does not obscure representation quality.
 
-Consider the complete retrieval pipeline. A compact embedding model plus keyword search and reranking may meet the task better than a larger embedding model alone. Conversely, reranking cannot recover an important document that never enters the candidate set.
+## Budget the full lifecycle
 
-## Plan a reversible migration
+Measure document encoding, query encoding, storage, update throughput, and end-to-end latency. Reranking is a separate option on the first-stage candidates. Changing the embedding model generally requires re-encoding existing documents unless the provider explicitly guarantees compatible spaces.
 
-Keep the existing embeddings while evaluating a new model in a separate field or collection. Record model version and metric with the evaluation results. Compare the same query slices, then switch traffic only after the relevance and latency targets are met. Preserve a rollback path and define how new writes will be indexed during the transition.
+Keep a migration plan with separate collections or fields, a replayable source corpus, acceptance checks, and a rollback boundary. Store model and preprocessing revisions with indexed data. This makes future model improvements a controlled application change rather than an unexplained shift in search results.
 
 ## Continue learning
 
-- [What are hard negatives in retrieval training, and how can you mine them?](/ai-quick-reference/what-are-hard-negatives-in-retrieval)
-- [How should you design a scalable embedding-generation pipeline?](/ai-quick-reference/how-to-build-distributed-embedding-pipelines)
-- [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)
-- [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
+- [How do you read MTEB and compare the current embedding shortlist?](/ai-quick-reference/mteb-embedding-leaderboards)
+- [Which current embedding models should you evaluate for Milvus?](/ai-quick-reference/embedding-reranking-model-catalog)
+- [Which reranking models fit a Milvus retrieval pipeline?](/ai-quick-reference/reranking-model-catalog)
+- [How do Sentence Transformers models feed a Milvus retrieval pipeline?](/ai-quick-reference/sentence-transformers-with-milvus)
 - [How do you estimate memory for vector search?](/ai-quick-reference/how-does-vector-search-manage-memory-usage)
 
 ## Implementation guides and sources
 
-- [Sentence Transformers usage](https://www.sbert.net/docs/sentence_transformer/usage/usage.html)
-- [Supported similarity metrics](https://milvus.io/docs/metric.md)
+- [MTEB benchmark definitions and models](https://huggingface.co/spaces/mteb/leaderboard)
+- [Encoding and model-evaluation interfaces](https://sbert.net/)
+- [Milvus similarity metrics](https://milvus.io/docs/metric.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Model rankings are dated snapshots; use the guide for your deployed version.

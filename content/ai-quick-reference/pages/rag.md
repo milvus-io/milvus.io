@@ -25,6 +25,9 @@ Start with a bounded corpus and realistic questions. Check retrieval coverage fi
 
 ## Continue learning
 
+- [How do you choose an AI framework for a Milvus application?](/ai-quick-reference/choose-ai-framework-for-milvus)
+- [What does LangChain do, and how does it use Milvus?](/ai-quick-reference/langchain-with-milvus)
+- [What does LlamaIndex do, and where does Milvus fit?](/ai-quick-reference/llamaindex-with-milvus)
 - [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
 - [How should you design vector retrieval for legal-document agents?](/ai-quick-reference/vector-search-for-legal-document-agents)
 - [How do you choose chunk size for RAG?](/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications)

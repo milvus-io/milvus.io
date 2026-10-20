@@ -32,7 +32,7 @@ function fixture(
 
 test('the complete catalog publishes only the curated source-checked concepts', async () => {
   const rows = await loadPublishedFaqRows();
-  assert.equal(rows.length, 100);
+  assert.equal(rows.length, 119);
   assert.equal(new Set(rows.map(row => row.URL)).size, rows.length);
   assert.equal(
     rows[0].URL,

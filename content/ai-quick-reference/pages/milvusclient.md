@@ -27,6 +27,8 @@ Keep retry behavior explicit. Timeouts can leave the client uncertain about the 
 
 ## Continue learning
 
+- [How do you get from a Milvus deployment to the first verified query?](/ai-quick-reference/milvus-installation-path)
+- [What does LangChain do, and how does it use Milvus?](/ai-quick-reference/langchain-with-milvus)
 - [How can Attu help you inspect and manage Milvus?](/ai-quick-reference/what-is-attu)
 - [How does ETL prepare data for vector search?](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process)
 - [How do you handle incremental updates in a vector database?](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database)

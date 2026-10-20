@@ -25,6 +25,7 @@ Load representative data, warm the intended query mix, and observe memory during
 
 ## Continue learning
 
+- [How do you turn a Milvus workload into a capacity and cost estimate?](/ai-quick-reference/milvus-capacity-planning)
 - [How does mmap differ from a disk-oriented ANN index?](/ai-quick-reference/how-mmap-differs-from-diskann)
 - [How do HNSW_SQ, HNSW_PQ, and HNSW_PRQ change the trade-offs?](/ai-quick-reference/hnsw-sq-pq-prq-tradeoffs)
 - [What are embeddings in vector search?](/ai-quick-reference/what-are-embeddings-in-vector-search)

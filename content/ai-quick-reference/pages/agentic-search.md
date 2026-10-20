@@ -27,6 +27,9 @@ Retain a trace of queries, selected filters, returned source IDs, and the reason
 
 ## Continue learning
 
+- [How do LangGraph state and Milvus retrieval work together?](/ai-quick-reference/langgraph-with-milvus)
+- [How does Agno connect agents to knowledge stored in Milvus?](/ai-quick-reference/agno-with-milvus)
+- [What does a Milvus MCP server expose to an AI agent?](/ai-quick-reference/milvus-mcp-tools)
 - [How should an agent choose between vector, keyword, and structured search?](/ai-quick-reference/how-agents-choose-retrieval-tools)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 - [What is an agent trajectory, and how should you represent it for retrieval?](/ai-quick-reference/what-is-an-agent-trajectory)

@@ -5,35 +5,33 @@ topic: "retrieval"
 order: 17
 ---
 
-Reranking reorders a candidate set after an initial retrieval step. The first stage aims to find plausible matches efficiently; a later stage can spend more computation on a smaller set. This is useful when a more expensive relevance model improves the order of candidates enough to justify added latency and cost.
+Reranking reevaluates an initial candidate set against a query. First-stage retrieval searches a large corpus efficiently; the second stage spends more computation on a smaller set. A reranker can be a cross-encoder, a listwise model, or another relevance-scoring method. Its output is usually an order or relevance score rather than an embedding to index.
 
-## Distinguish fusion from model scoring
+## Distinguish two meanings of reranking
 
-Rank fusion combines ranked lists from different retrieval paths. A cross-encoder or other model reranker evaluates query–candidate pairs using a richer scoring model. Both can affect the final order, but they perform different work and have different operating costs.
+Rank fusion such as reciprocal rank fusion combines rankings from dense and sparse retrieval. A learned query-document reranker examines candidate content. Both can appear in one pipeline, but they are different computations and should not be described as the same model capability.
 
-For example, dense and keyword retrieval may each return candidates. A fusion strategy merges them, then a model reranker evaluates the best combined candidates before the application chooses its final evidence. Not every task needs all these stages.
+For a product-search task, retrieve permitted candidates with dense and keyword signals, fuse them if useful, then apply a learned model to the bounded candidate list. Preserve source IDs through every step. An item excluded by a filter or absent from the candidate pool cannot be recovered by the second stage.
 
-## Candidate coverage is the limit
+## Choose by measurable benefit
 
-A reranker cannot select a relevant document that the first stage did not retrieve. Diagnose candidate recall before tuning the second stage. If the evidence is absent, revisit embeddings, chunking, filters, corpus quality, or search effort. If it is present but ranked poorly, reranking is a more plausible intervention.
+Use the current reranker catalog to compare hosted, self-operated, text, listwise, and visual options. Freeze the candidate pool when comparing models. Judge top-result relevance and NDCG together with latency, request size, cost, and failures. Include queries that need exact identifiers and queries with no relevant evidence.
 
-The candidate pool is a separate parameter from final top-k. Larger pools can improve coverage but increase model work, network transfer, and tail latency. Long candidate passages may also exceed a model's input limit or increase truncation risk.
+## Preserve the input contract
 
-## Decide with a controlled experiment
-
-Keep first-stage candidates fixed while comparing rerankers. Measure final relevance, evidence coverage, latency percentiles, and cost per request. Include rare entities, exact identifiers, and hard negatives with similar wording. Verify that source IDs and access restrictions survive the handoff between stages. Use a reranker when the measured user benefit warrants the additional dependency and operational complexity.
+Record model revision, field serialization, maximum context, truncation, and how returned positions map to IDs. Scores from different models are not automatically comparable probabilities. If candidate count or serialization changes, revalidate thresholds and quality. Keep a no-rerank baseline: the additional stage is justified by measured application value, not simply by its presence in an architecture diagram.
 
 ## Continue learning
 
-- [What is late-interaction retrieval, and how can embedding lists help?](/ai-quick-reference/what-is-late-interaction-retrieval)
-- [How can vector search retrieve useful agent trajectories?](/ai-quick-reference/how-to-retrieve-agent-trajectories)
+- [Which reranking models fit a Milvus retrieval pipeline?](/ai-quick-reference/reranking-model-catalog)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 - [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
-- [How do batching, latency, and throughput interact in vector search?](/ai-quick-reference/how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search)
+- [Which current embedding models should you evaluate for Milvus?](/ai-quick-reference/embedding-reranking-model-catalog)
+- [What is late-interaction retrieval, and how can embedding lists help?](/ai-quick-reference/what-is-late-interaction-retrieval)
 
 ## Implementation guides and sources
 
-- [Reranking models](https://milvus.io/docs/rerankers-overview.md)
-- [Rank fusion in Milvus](https://milvus.io/docs/rrf-ranker.md)
+- [Retrieve and rerank architecture](https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html)
+- [Milvus reranking concepts](https://milvus.io/docs/reranking.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Model rankings are dated snapshots; use the guide for your deployed version.

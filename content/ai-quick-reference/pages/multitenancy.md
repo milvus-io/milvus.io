@@ -25,6 +25,7 @@ Test cross-tenant negative cases, onboarding, schema changes, tenant deletion, a
 
 ## Continue learning
 
+- [How do authentication, RBAC, and tenant filters protect Milvus applications?](/ai-quick-reference/milvus-security-rbac)
 - [How should you compare managed vector databases, BYOC, and self-hosted Milvus?](/ai-quick-reference/managed-vector-database-byoc-vs-self-hosted)
 - [How should you design evidence retrieval for healthcare agents?](/ai-quick-reference/vector-search-for-healthcare-evidence)
 - [How do metadata filters interact with vector search?](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance)

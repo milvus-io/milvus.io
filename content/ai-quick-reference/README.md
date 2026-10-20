@@ -5,7 +5,7 @@ operate vector retrieval, including lake integration, Milvus components, agent
 workflows, and data curation. It is organized as a reading path, with links from
 concepts to related concepts, implementation guides, and primary sources.
 
-The curated set contains 100 articles across eight topics. The original 36
+The curated set contains 119 articles across ten topics. The original 36
 canonical URLs remain stable. Fourteen duplicate definitions redirect to the corresponding
 canonical concept. Other legacy URLs return 404; they are not redirected to an
 unrelated homepage. The legacy public CSV is removed, so replacing that export
@@ -17,7 +17,7 @@ cannot silently republish the retired catalog.
   in front matter. A short filename is independent of the historical URL slug.
 - `publication.json`: explicit publication decisions, content hashes, checked
   sources, related concepts, and direct merge targets for legacy URLs.
-- `topics.json`: eight topic groups and their implementation starting points.
+- `topics.json`: ten topic groups and their implementation starting points.
 
 The page renderer, list API, and sitemap use the same validated catalog. The
 Docker build and runtime stages both include `content/`.
@@ -62,3 +62,14 @@ This code change does not submit a Google reconsideration request or establish
 that a manual action has been lifted. Review the complete affected scope and
 production behavior before submitting reconsideration. Track search visibility
 and qualified downstream activity separately from the deployment check.
+
+## Model and framework review
+
+The MTEB article uses a dated Multilingual v2 snapshot, complete task coverage,
+and an explicitly stated Mean Task sort. This is not the backend rank field or
+a reranker ranking. Hosted/newer/multimodal candidates and reranker families
+are documented separately. Model cards with non-commercial or custom terms
+are identified; open weights are not treated as production permission.
+The articles are documentation-reviewed; no local model benchmark or paid
+inference run is claimed. Framework and server compatibility must be checked
+for the deployed versions.

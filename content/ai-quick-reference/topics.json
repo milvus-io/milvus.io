@@ -46,5 +46,17 @@
     "label": "Production & operations",
     "guide": "https://milvus.io/docs/install_standalone-docker.md",
     "guideLabel": "Deploy and evaluate Milvus"
+  },
+  {
+    "id": "frameworks",
+    "label": "AI frameworks & integrations",
+    "guide": "https://milvus.io/docs/integrations_overview.md",
+    "guideLabel": "Connect an application framework"
+  },
+  {
+    "id": "models",
+    "label": "Embedding & reranking models",
+    "guide": "https://milvus.io/docs/embeddings.md",
+    "guideLabel": "Encode and evaluate retrieval data"
   }
 ]

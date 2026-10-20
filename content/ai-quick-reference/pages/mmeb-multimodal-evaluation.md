@@ -7,9 +7,9 @@ order: 120
 
 MMEB evaluates multimodal representations. MTEB and MMTEB primarily organize text embedding tasks, while MMEB asks whether a representation supports tasks involving images, video, visual documents, and, in newer settings, additional modalities and agent-oriented retrieval. A multimodal score is not a universal measure of all these tasks.
 
-![Measure four different outcomes separately](/images/ai-reference/evaluation.svg)
-
 ## Keep benchmark versions separate
+
+These are literal values from a pinned historical score file. Without matching per-task reporting, a zero alone does not establish whether a task was measured poorly, unsupported, or not reported. Compare task coverage and reporting rules before comparing aggregate scores; this table is not a current global ranking.
 
 The official MMEB-V2 release has 78 tasks spanning images, video, and visual documents. MMEB-V3 expands the setting to 190 tasks with additional text, audio, and agent-centric categories. It also includes diagnostic work on modality and instruction effects. Metrics, task composition, supported-modality handling, and dataset revisions must be checked before comparing results.
 

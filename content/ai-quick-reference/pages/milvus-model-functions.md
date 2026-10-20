@@ -13,7 +13,7 @@ The application calls a wrapper or the model's native runtime, inspects the resu
 
 ## Server-coordinated provider calls
 
-The embedding Function documentation describes raw-text fields, a configured external provider, and explicitly defined output-vector fields. Model Ranker sends candidate text to a model service during search. Neither arrangement implies that arbitrary model weights are loaded into Milvus. Verify provider configuration, server/client versions, endpoint reachability, and request limits for the deployed system.
+The embedding Function documentation describes raw-text fields, a configured external provider, and explicitly defined output-vector fields. Model Ranker sends candidate text to a model service during search. Neither arrangement implies that arbitrary model weights are loaded into Milvus. Also distinguish these provider-backed calls from built-in BM25 or MinHash Functions: not every server Function invokes an external learned model. Verify provider configuration, server/client versions, endpoint reachability, and request limits for the deployed system.
 
 The checked Model Ranker guide lists material limits: it evaluates one VARCHAR field at a time and cannot be used with grouping search. Its text interface is not proof of native visual-document reranking. A multimodal application may require application-side inference or a separately supported interface.
 

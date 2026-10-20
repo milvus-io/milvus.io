@@ -5,7 +5,7 @@ topic: "frameworks"
 order: 101
 ---
 
-An AI application framework connects components such as models, documents, tools, and application state. Milvus provides the persistent retrieval layer. Choosing a framework does not choose your embedding model, define access control, or make a retrieval pipeline accurate automatically.
+An AI application framework connects components such as models, documents, tools, and application state. Milvus provides the persistent retrieval layer. A framework or adapter may select a default embedding model, but that default is not evidence that the model fits your task. Record or override it explicitly. Framework selection also does not by itself establish access control or retrieval quality.
 
 ## Choose the layer you need
 

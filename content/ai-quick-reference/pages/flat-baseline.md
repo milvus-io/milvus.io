@@ -13,7 +13,7 @@ A FLAT search evaluates the vector comparisons over the eligible dataset rather 
 
 Use identical stored vectors, query vectors, metric, normalization, top-k, and metadata filters. Ensure both runs see the same data state. A result difference caused by a changed corpus or omitted filter is not ANN approximation error.
 
-For a large corpus, use a representative bounded evaluation where exact computation is feasible. Preserve the query slices and explain sampling limits. A tiny, easy sample can overstate the quality of an index intended for a heterogeneous production collection.
+For a large corpus, sample evaluation queries if necessary but compute their exact neighbors over the same full eligible corpus used by the ANN run. If the corpus is also subsampled, build and evaluate both systems on that identical subset and label the result as a subset experiment. Full-corpus ANN results cannot be evaluated against ground truth computed only on a smaller corpus.
 
 ## Handle ties and result identity
 

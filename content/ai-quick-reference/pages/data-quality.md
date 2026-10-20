@@ -5,7 +5,7 @@ topic: "data"
 order: 24
 ---
 
-Vector retrieval cannot reliably compensate for missing, stale, duplicated, or incorrectly parsed source material. A good embedding model can retrieve the wrong version of a well-written document with high confidence. Data quality therefore needs explicit checks before and after indexing.
+Vector retrieval cannot reliably compensate for missing, stale, duplicated, or incorrectly parsed source material. A good embedding model can assign a high similarity score to the wrong version of a well-written document. That score is not calibrated confidence that the source is current or correct. Data quality therefore needs explicit checks before and after indexing.
 
 ## Check the source and extracted content
 

@@ -15,7 +15,7 @@ Use structured fields for known properties such as route, camera, weather label,
 
 ## Use retrieval for curation decisions
 
-Engineers can search for related failures, explore rare scenarios, find redundant recordings, or select labeling candidates. Similarity neighborhoods can expose coverage gaps, but an isolated vector is not automatically a valuable corner case. It may reflect corruption, an unusual viewpoint, or a model weakness.
+Engineers can search for related failures, explore rare scenarios, find redundant recordings, or select labeling candidates. Similarity neighborhoods can reveal imbalances among indexed examples; judging real-world coverage also requires a scenario taxonomy and external counts or labels. An isolated vector is not automatically a valuable corner case. It may reflect corruption, an unusual viewpoint, or a model weakness.
 
 For duplicate removal, preserve important differences in timing, agent behavior, and annotations. Two visually close clips can represent different interaction outcomes. Keep the source and decision evidence so a removed example can be reviewed later.
 

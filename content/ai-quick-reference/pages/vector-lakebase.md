@@ -5,7 +5,7 @@ topic: "lake"
 order: 38
 ---
 
-Vector Lakebase describes an architecture that connects open lake data, vector indexing, and interactive retrieval with offline processing. The central design question is how the same governed dataset can support both a serving application and jobs that enrich, evaluate, or train on that data.
+In Zilliz/Milvus materials, Vector Lakebase is an architecture term for connecting lake data and offline processing with vector indexing and interactive retrieval. Treat it as a stated design direction and evaluate its concrete supported building blocks, not as an independent file format or an industry-wide transactional guarantee. The central design question is how the same governed dataset can support both a serving application and jobs that enrich, evaluate, or train on that data.
 
 ![Shared source data, explicit serving lifecycle](/images/ai-reference/lake.svg)
 

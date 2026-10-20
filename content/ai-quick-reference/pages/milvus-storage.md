@@ -13,7 +13,7 @@ milvus-storage is a columnar storage-engine project used for vector and analytic
 
 The storage project can expose scan, projection, and row-access interfaces to its consumers. Whether an application can use a particular behavior through Milvus depends on the database release, configuration, and supported API. A new reader implementation in the library is not a release guarantee for every deployed Milvus cluster.
 
-Milvus Storage V3 documents how managed and external data use a versioned layout. Follow that product-level guide for enabling features and understanding compatibility. Avoid changing internal storage flags or replacing native libraries based solely on a library example.
+Milvus engineering materials call the storage engine Loon; milvus-storage is its public implementation project. Storage V3 describes its versioned integration and data layout in Milvus, rather than a separate data-lake product. The checked 3.0 guide leaves it disabled by default. Enabling it changes new writes and compaction output; existing files retain their layout until rewritten. Downgrading data written in V3 to a version unable to read it is unsupported. Follow the versioned product guide rather than changing flags from a library example.
 
 ## Design around different reads
 
@@ -48,5 +48,6 @@ Compare a projected batch scan with fetching a few scattered source rows. Keep f
 - [Storage engine architecture and supported bindings](https://github.com/milvus-io/milvus-storage)
 - [Storage V3 as exposed by Milvus](https://milvus.io/docs/storage-v3.md)
 - [Arrow columnar representation](https://arrow.apache.org/docs/format/Columnar.html)
+- [Loon storage-engine design and integration](https://milvus.io/blog/why-we-built-loon-a-storage-engine-for-ai-data-that-never-stops-changing.md)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

@@ -7,7 +7,7 @@ order: 121
 
 WeMM-Embedding is a multimodal embedding family released by Tencent's WeChat Vision team. The published model set contains 2B, 4B, and 9B variants for text, images, videos, visual documents, and interleaved supported inputs. The release does not currently support audio. It produces a normalized representation for shared-space retrieval rather than a generated answer.
 
-![Preserve page structure through multi-vector retrieval](/images/ai-reference/visual-page.svg)
+![Content alignment does not learn personal preference](/images/ai-reference/multimodal.svg)
 
 ## Choose the object the vector describes
 

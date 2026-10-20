@@ -7,8 +7,6 @@ order: 70
 
 Memory mapping makes file contents accessible through a process's virtual address space. The operating system brings accessed pages into memory as needed. This changes how data is loaded and cached; it does not by itself change an index's candidate-search algorithm into a disk-oriented design such as DISKANN.
 
-![Diagnose latency at the boundary where it grows](/images/ai-reference/operations.svg)
-
 ## Separate address space from resident memory
 
 A large mapped file does not mean all its bytes are currently resident. Conversely, mapped data still uses physical memory while pages are cached and accessed. Process RSS, file-backed memory, and application allocations describe different parts of the footprint.

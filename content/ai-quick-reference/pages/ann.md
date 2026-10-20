@@ -5,7 +5,7 @@ topic: "retrieval"
 order: 10
 ---
 
-Approximate nearest-neighbor (ANN) search reduces the work required to find nearby vectors by searching a structured subset of candidates. It trades some agreement with an exact-vector baseline for improvements in latency, throughput, or resource use. The acceptable trade-off depends on the application.
+Approximate nearest-neighbor (ANN) methods seek lower search cost by limiting candidate exploration, approximating vector comparisons, or combining both. They may miss neighbors returned by an exact baseline; a particular query or configuration can still reach full agreement. Measure recall, latency, and resource use together rather than assuming that approximation always loses quality or always runs faster.
 
 ![HNSW hierarchical graph navigation](/images/ai-reference/hnsw.svg)
 

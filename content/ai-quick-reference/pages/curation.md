@@ -5,7 +5,7 @@ topic: "data"
 order: 81
 ---
 
-Data curation turns a collected dataset into a versioned selection suited to a particular use. It includes eligibility, quality assessment, deduplication, coverage, labeling, and provenance. Vector search helps discover similar or missing examples, while the curation policy determines what should be retained.
+Data curation turns a collected dataset into a versioned selection suited to a particular use. It includes eligibility, quality assessment, deduplication, coverage, labeling, and provenance. Vector search helps inspect similar examples and coverage within the indexed collection, while the curation policy determines what should be retained. A missing hit alone cannot establish which real-world examples are absent from the dataset.
 
 ![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
 

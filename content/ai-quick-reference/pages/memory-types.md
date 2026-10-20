@@ -7,8 +7,6 @@ order: 73
 
 Agent memory is easier to govern when each record has a defined purpose. A useful design taxonomy separates immediate task state, past episodes, reusable facts, and procedures. These categories can share retrieval infrastructure while requiring different authority and update rules.
 
-![Correct memory through its derived representations](/images/ai-reference/memory.svg)
-
 ## Choose a record contract for each class
 
 | Memory class | Example | Main design question |

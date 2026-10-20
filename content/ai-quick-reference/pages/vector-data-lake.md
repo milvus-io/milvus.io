@@ -5,7 +5,7 @@ topic: "lake"
 order: 37
 ---
 
-A vector data lake keeps embeddings, their source objects, and descriptive metadata in a shared storage foundation that multiple compute systems can use. It is useful when retrieval, data preparation, evaluation, and training need to work with related datasets without maintaining an unrelated copy for every job.
+Here, vector data lake is an architectural description for a shared, governed dataset containing embeddings, source objects, and descriptive metadata for multiple compute systems. It is not a single standardized file format or a guarantee of an online vector database. It is useful when retrieval, data preparation, evaluation, and training need to work with related datasets without maintaining an unrelated copy for every job.
 
 ![Shared source data, explicit serving lifecycle](/images/ai-reference/lake.svg)
 

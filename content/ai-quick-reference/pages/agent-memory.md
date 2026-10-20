@@ -5,7 +5,7 @@ topic: "rag-agents"
 order: 21
 ---
 
-Agent memory is a retrieval system for information that should remain useful across interactions. Its design needs an authoritative record, a searchable representation, and rules for scope, correction, retention, and deletion. Keeping every generated sentence forever is not a memory policy.
+Agent memory is the information an agent retains and can use across steps or sessions, together with the rules for reading and updating it. Current task state may live in context or a checkpoint store; longer-term records may be fetched by key, lexical search, or vector retrieval. A vector database is one implementation component, not the definition of memory. Keeping every generated sentence forever is not a memory policy.
 
 ![Correct memory through its derived representations](/images/ai-reference/memory.svg)
 

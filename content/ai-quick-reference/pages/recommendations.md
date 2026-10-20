@@ -27,6 +27,12 @@ Use offline retrieval metrics on a well-defined time split, then assess the full
 
 Track serving latency, empty eligible results, repeated items, and the stability of the recommendation experience. In an online evaluation, account for position and exposure effects rather than interpreting every click as an unbiased relevance label. Milvus supplies candidate retrieval and metadata operations; the learning, ranking, and experiment systems determine how those candidates become a useful recommendation service.
 
+## Content similarity is not the same as personalized preference
+
+An item-to-item feature can retrieve products similar in appearance or description. A personalized user-to-item retriever needs compatible user/item representations learned or constructed for that objective. A generic image-text embedding does not become a user-preference model merely by averaging more modalities. A content-based rule or history aggregation can be a baseline, but its usefulness must be measured rather than assumed.
+
+Recommendation pipelines commonly distinguish candidate generation from later ranking. In each experiment, state which stage changed. Compare against content-only and interaction-based baselines where available, preserve a time split, and report cold-start users and items separately. Multimodal item features may help some tasks and harm others; no click or conversion gain follows automatically from their presence.
+
 ## Example to test
 
 Retrieve candidates from a user or session representation, enforce stock and region, then diversify before downstream ranking. Compare useful candidate coverage with the final product outcome; a nearest-item hit is not itself evidence of a conversion lift.
@@ -48,5 +54,6 @@ Retrieve candidates from a user or session representation, enforce stock and reg
 - [Recommendation-system example](https://milvus.io/docs/recommendation_system.md)
 - [Group and diversify returned candidates](https://milvus.io/docs/grouping-search.md)
 - [Apply catalog eligibility rules](https://milvus.io/docs/filtered-search.md)
+- [Recommendation candidate generation and ranking](https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/)
 
 Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

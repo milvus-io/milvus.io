@@ -5,7 +5,7 @@ topic: "retrieval"
 order: 69
 ---
 
-Late-interaction retrieval represents an item with multiple vectors and combines their query-to-document matches during scoring. This can preserve finer-grained information than compressing an entire document into one vector. The benefit comes with more vectors, more scoring work, and a more specific representation contract.
+Late-interaction retrieval independently encodes queries and documents, then computes detailed interactions during pair scoring. Token-level models may preserve useful local matching signals that a single vector loses; relevance gains depend on training and the score. Multiple stored vectors alone do not define a late-interaction model. Its representation and scoring also add storage and computation costs.
 
 ![Preserve page structure through multi-vector retrieval](/images/ai-reference/visual-page.svg)
 
@@ -26,6 +26,10 @@ For example, a long technical document can contain one decisive passage amid unr
 Measure retrieval quality on the task's difficult queries, then include index size, build time, memory, candidate search, payload reads, and end-to-end latency. Compare with a single-vector candidate stage followed by reranking at a similar operating budget.
 
 Test long documents, many-element records, metadata filters, and deletion of an element or parent record under the supported data model. Choose late interaction when the measured relevance gain justifies the larger representation and operational complexity. Preserve source mappings so returned document-level results can still expose the evidence that made them useful.
+
+## What late interaction means in a ColBERT-style model
+
+The query and document are encoded independently into token vectors; their detailed interaction happens when scoring a pair. In a common MaxSim score, each query-token vector takes its highest similarity to a document-token vector and those maxima are summed. The score is directional and depends on the model's masking, normalization, and aggregation rules. This is not equivalent to averaging all vectors or fusing independent title/body rankings. The database's supported metric and search mode must match the chosen model.
 
 ## Example to test
 
@@ -50,5 +54,6 @@ Retrieve page candidates and inspect whether the relevant page was included befo
 - [EmbeddingList and element-level search](https://milvus.io/docs/basic-vector-search-with-structarray.md)
 - [Indexes and metrics for StructArray vectors](https://milvus.io/docs/index-structarray-fields.md)
 - [StructArray data model](https://milvus.io/docs/array-of-structs.md)
+- [ColBERT: independent encoding and late interaction](https://arxiv.org/abs/2004.12832)
 
 Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

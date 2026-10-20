@@ -7,8 +7,6 @@ order: 117
 
 MTEB is a suite of embedding evaluations, not an embedding model. It measures tasks including retrieval, classification, clustering, and similarity. The task mix and languages matter: a broad average is not a direct estimate of performance on your legal, medical, code, or multimodal corpus.
 
-![Measure four different outcomes separately](/images/ai-reference/evaluation.svg)
-
 ## A dated and reproducible top-20 view
 
 This snapshot was checked on 2026-10-20 using the official backend for MTEB(Multilingual, v2). It contains 471 result rows. We retained 88 rows with scores for all 131 tasks, sorted them by Mean Task descending, and selected the first twenty. No open-weights filter was applied. Values below are scores multiplied by 100.

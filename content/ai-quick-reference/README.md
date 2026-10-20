@@ -74,7 +74,7 @@ practical follow-up resources. Examples and numeric calculations are illustrativ
 they are not customer measurements or local model benchmark results. Customer
 stories are linked as additional reading without implying equivalent outcomes.
 
-Twenty original concept diagrams cover 77 articles. English and Chinese SVG
+Twenty-one original concept diagrams cover 69 articles. English and Chinese SVG
 variants live in `public/images/ai-reference/`. They are schematics, not measured
 plots. Keep descriptive alt text, accessible SVG titles/descriptions, and visible
 explanations of representation, data ownership, or stage boundaries. The content
@@ -105,3 +105,22 @@ The SDK support matrix is derived from the released pymilvus.model 0.3.4
 wheel with its PyPI SHA-256 verified. It describes 23 explicit exported classes
 and one default alias, not universal model compatibility or inference tests.
 Client wrappers, server Functions, and rank fusion are documented separately.
+
+## Claim-level review, 2026-10-20
+
+`semantic-review-2026-10-20.json` records the reading of all 130 retained English
+bodies and examples, the original and reviewed content hashes, sources, and
+34 articles corrected or clarified. Unchanged entries mean no additional factual
+correction was identified in this review, not certification that they are error-free.
+Chinese draft corrections are synchronized in the local review artifact.
+
+Distinguish modality alignment from preference learning, similarity from confidence,
+and retrieval improvements from business outcomes. Exact evaluation must use the
+same eligible corpus as the ANN run. Keep development selection separate from final
+test evaluation, and distinguish curation exclusion from erasure and relevance
+labels from access-control rules.
+
+Review illustrations for the claim they communicate, not just whether their files
+resolve: remove eight irrelevant placements and replace misleading multi-vector
+diagrams on generic multimodal/WeMM pages. Model/version and source snapshots do
+not establish executed inference, deployed feature availability, or measured gains.

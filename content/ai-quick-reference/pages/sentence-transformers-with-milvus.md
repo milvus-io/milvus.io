@@ -5,7 +5,7 @@ topic: "frameworks"
 order: 109
 ---
 
-Sentence Transformers is a library for running and training retrieval models. Its interfaces include dense embedding models, cross-encoders, sparse encoders, and multi-vector models. Milvus stores compatible representations and retrieves candidates; the library supplies model inference, not database persistence or application orchestration.
+Sentence Transformers is a library for running and training retrieval models. Its current interfaces include dense embedding models, cross-encoders, sparse encoders, and multi-vector models. The dedicated MultiVectorEncoder family was introduced in version 6.0; its availability must not be assumed for older environments or for a text-only Milvus Model wrapper. Milvus stores compatible representations and retrieves candidates; the library supplies model inference, not database persistence or application orchestration.
 
 ## Keep the encoding contract explicit
 

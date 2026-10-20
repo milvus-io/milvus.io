@@ -27,7 +27,7 @@ Run dense-only, sparse-only, and hybrid retrieval against one fixed corpus. Insp
 
 ## Example to test
 
-A query containing an exact error code benefits from a lexical signal, while a description of the symptom may benefit from dense retrieval. Keep both candidate lists before fusion so each signal's contribution can be inspected.
+A lexical path can help an error-code query when its analyzer preserves that code; a dense path may help a paraphrased symptom. Neither benefit is automatic. Keep both candidate lists before fusion and inspect tokenization and relevance on the actual query set.
 
 ## From concept to implementation
 

@@ -7,8 +7,6 @@ order: 26
 
 Document clustering groups embedding vectors according to a clustering method. Embeddings provide a representation of the documents; the algorithm defines the groups. A nearest-neighbor index can help find related records, but it is not itself a complete clustering or topic-labeling workflow.
 
-![A bounded Spark-to-Milvus data workflow](/images/ai-reference/spark.svg)
-
 ## Choose the grouping objective
 
 Decide whether the task is topic discovery, dataset sampling, redundancy analysis, or organizing a search interface. These goals can require different granularity. A cluster that is useful for broad navigation may be too coarse for deduplication.

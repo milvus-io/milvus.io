@@ -15,7 +15,7 @@ Small chunks can improve targeting but lose context. Large chunks can preserve c
 
 ## Compare configurations fairly
 
-Use one held-out question set and several explicitly recorded chunking configurations. Measure whether the evidence needed for each answer appears in the retrieved results. Inspect cases that require adjacent passages or multiple documents. Track duplicate context, embedding work, tokens sent to the generator, and end-to-end latency.
+Use a development question set to compare recorded chunking configurations, then evaluate the chosen configuration once on a separate held-out test set. Repeated selection on the final test set leaks evaluation information into tuning. Measure evidence coverage, adjacent-passage cases, duplicate context, embedding work, generator tokens, and end-to-end latency.
 
 A configuration that wins on an FAQ corpus may fail on long contracts or technical manuals. Include the document types and failure cases that the real product serves. Avoid selecting a setting solely from average retrieval scores when one important document class regresses.
 

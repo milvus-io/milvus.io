@@ -19,7 +19,7 @@ Evaluate source correctness, answer support, and required abstention, not only s
 
 ## Validate the resulting system
 
-Optimization can increase calls, latency, or cost. Measure these along with quality and inspect failures across tenants and query categories. Run database-side retrieval evaluation independently: a better prompt cannot recover a relevant document that never entered the candidate set. Treat the optimized program as a versioned application component with regression tests.
+Optimization can increase calls, latency, or cost. Measure these along with quality and inspect failures across tenants and query categories. Run retrieval evaluation independently. An answer-generation prompt cannot use evidence absent from its supplied context, but an optimized query rewriter can change a later candidate set. Measure those two effects separately instead of claiming that prompt optimization can never improve retrieval. Treat the optimized program as a versioned application component with regression tests.
 
 ## Example to test
 

@@ -17,7 +17,7 @@ The external source is read-only from Milvus. Editing an external schema to expo
 
 ## Define the minimum compatible schema
 
-Map stable IDs, vector representations, and necessary metadata. Confirm field types, dimensions, source format, storage backend, and credentials. Storage V3 is required; availability also depends on the deployed version. Use the current guide rather than copying configuration from an unrelated Milvus release.
+Map stable IDs, vector representations, and necessary metadata. Confirm field types, dimensions, source format, storage backend, and credentials. Storage V3 is required and is disabled by default in the checked Milvus 3.0 guide; availability also depends on the deployed version and supported configuration. Use the current guide rather than copying configuration from an unrelated Milvus release.
 
 Start with one vector field and one meaningful filter. After schema creation and index preparation, run the refresh workflow and verify that the intended source state is represented. If a source field is added later, follow the documented schema-alteration and refresh path rather than assuming automatic field discovery.
 

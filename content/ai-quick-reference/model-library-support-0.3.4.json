@@ -241,7 +241,8 @@
         "encode_documents",
         "save",
         "load"
-      ]
+      ],
+      "configuration_kind": "local-corpus-statistics-no-model-checkpoint"
     },
     {
       "category": "hybrid",
@@ -316,7 +317,8 @@
       "methods": [
         "__init__",
         "__call__"
-      ]
+      ],
+      "configuration_kind": "local-model-name-required"
     },
     {
       "category": "reranker",

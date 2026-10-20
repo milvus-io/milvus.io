@@ -7,8 +7,6 @@ order: 52
 
 Talon is an object-store caching project in the Milvus ecosystem. It places cached object data on worker storage close to compute and exposes access through supported clients, including SDK and filesystem paths. Its purpose is to improve data access; application retrieval semantics and durable source ownership remain separate concerns.
 
-![Diagnose latency at the boundary where it grows](/images/ai-reference/operations.svg)
-
 ## Identify reusable reads first
 
 A vector workload can read index data, original vectors, result payloads, or training files. A shared cache is useful when those bytes are read repeatedly and the saved origin traffic exceeds the added cache and network work. Large sequential training reads and small random result fetches can need different cache layouts.

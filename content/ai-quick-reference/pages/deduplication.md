@@ -23,7 +23,7 @@ If candidates are grouped, define how transitivity is handled. A being similar t
 
 ## Close the loop
 
-Record the surviving object, merged IDs, reason, and policy version. Apply any approved removal consistently to the source system, index, caches, and downstream datasets. Measure precision of proposed merges and inspect false positives before increasing automation. For search products, also verify that deduplication improves result diversity without discarding the authoritative passage needed to answer a query.
+Record the surviving object, merged IDs, reason, and policy version. Apply an approved curation exclusion to the intended serving or training datasets, and retain source originals and provenance when the retention policy permits. Deduplication does not inherently require physically deleting the authoritative source. An explicit erasure request is a different workflow that must address all required derived copies. Measure precision of proposed merges and inspect false positives before increasing automation. For search products, also verify that deduplication improves result diversity without discarding the authoritative passage needed to answer a query.
 
 ## Example to test
 

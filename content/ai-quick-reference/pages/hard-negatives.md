@@ -11,7 +11,7 @@ A hard negative is a candidate that looks competitive to a retriever but is not 
 
 Use the current retriever to obtain high-ranking candidates for queries with known positives. Apply the task's eligibility rules and remove known positives, exact duplicates, and other accepted relevant sources. Preserve candidate scores and the model revision used for mining.
 
-An error-code query can yield a document about a neighboring but different code. A policy question can retrieve an obsolete revision. These can be informative negatives when the task clearly labels them as ineligible or nonresponsive. A second document that validly answers the question is an additional positive, not a negative merely because it was absent from the first label set.
+An error-code query can yield a passage about a different code; that can be a relevance negative after review. A topically relevant passage from another tenant is instead an access-control exclusion. Do not rely on training the embedding model to enforce permissions. Obsolete revisions need the task's explicit validity policy. A second passage that validly answers the question is an additional positive, not a negative merely because its label was missing.
 
 ## Review the uncertainty
 

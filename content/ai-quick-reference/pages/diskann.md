@@ -7,8 +7,6 @@ order: 59
 
 DISKANN is an approximate nearest-neighbor index designed to combine graph search with disk-oriented data access. In Milvus, it is an option for workloads whose capacity and cost requirements make a fully memory-resident index unattractive. Its usefulness depends on the storage device, cache, search effort, and required recall.
 
-![Diagnose latency at the boundary where it grows](/images/ai-reference/operations.svg)
-
 ## Budget for both memory and storage I/O
 
 A disk-oriented index still needs memory for working structures, compressed representations, caches, and request execution. It also consumes local storage and I/O bandwidth. Estimate the complete serving footprint rather than dividing raw vector size by available disk capacity.

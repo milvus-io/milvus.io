@@ -17,7 +17,7 @@ For example, a query about a damaged shipment may retrieve an article titled “
 
 ## Exact and approximate search
 
-Exact search compares against the full eligible vector set. Approximate nearest-neighbor search uses an index to reduce the work and may omit some exact neighbors. Approximation is a performance choice, not a separate definition of semantic meaning. Even an exact nearest neighbor can be irrelevant if the embedding does not represent the user's intent.
+Exact nearest-neighbor search returns the correct top-k under the chosen vector score over the eligible set, subject to tie and numerical conventions. FLAT commonly computes this by exhaustive comparisons; exactness is a result guarantee, not a requirement that every possible exact algorithm must scan every vector. ANN may omit exact neighbors. Neither method establishes semantic relevance when the representation does not fit the task.
 
 The top-k parameter controls how many candidates are returned; it is not a quality threshold. A database can return k results even when none answers the question. Applications need an evaluated policy for weak evidence rather than treating the first result as automatically correct.
 

@@ -19,7 +19,7 @@ Use stable document identifiers and define how a changed document replaces its o
 
 ## Measure the agent and retriever separately
 
-Test an ordinary question, a cross-tenant question, and a question with no answer in the corpus. Inspect tool-call traces, returned IDs, and citations. Measure ingestion completeness and retrieval latency independently of final answer quality. Adopt agent planning only when it solves a task that a simpler retrieval application cannot handle reliably.
+Test an ordinary question, a cross-tenant question, and a question with no answer in the corpus. Inspect tool-call traces, returned IDs, and citations. Measure ingestion completeness and retrieval latency independently of final answer quality. Compare agent planning with a simpler retrieval application and adopt it when the measured quality or workflow benefit justifies its additional latency, calls, and operating complexity.
 
 ## Example to test
 

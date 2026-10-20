@@ -21,7 +21,7 @@ For deduplication, use range retrieval as a candidate step, then validate the du
 
 ## Calibrate on positive and negative cases
 
-Build a labeled set of clear matches, hard negatives, and unsupported queries. Measure missed useful records and incorrectly accepted records as the threshold changes. Compare against an exact baseline on a manageable subset to separate threshold choice from ANN candidate loss.
+Build a labeled set of clear matches, hard negatives, and unsupported queries. Measure missed useful records and incorrectly accepted records as the threshold changes. Compare ANN and exact results on identical eligible data and queries to separate threshold choice from candidate loss. If using a smaller corpus, run both systems on that same subset and label the evaluation accordingly.
 
 Test filters, empty results, boundary scores, and dense groups with more matches than the requested limit. Define the user experience when no acceptable match exists. Range search is valuable when it implements a measured task policy, rather than supplying an arbitrary number that merely makes a demonstration look selective.
 

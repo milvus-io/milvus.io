@@ -5,7 +5,7 @@ operate vector retrieval, including lake integration, Milvus components, agent
 workflows, and data curation. It is organized as a reading path, with links from
 concepts to related concepts, implementation guides, and primary sources.
 
-The curated set contains 119 articles across ten topics. The original 36
+The curated set contains 130 articles across ten topics. The original 36
 canonical URLs remain stable. Fourteen duplicate definitions redirect to the corresponding
 canonical concept. Other legacy URLs return 404; they are not redirected to an
 unrelated homepage. The legacy public CSV is removed, so replacing that export
@@ -73,3 +73,12 @@ are identified; open weights are not treated as production permission.
 The articles are documentation-reviewed; no local model benchmark or paid
 inference run is claimed. Framework and server compatibility must be checked
 for the deployed versions.
+
+## Multimodal and library evidence
+
+MMEB-V2 public-file scores are pinned separately from MMEB-V3 and newer
+WeMM model-report numbers; matching names do not prove matching checkpoints.
+The SDK support matrix is derived from the released pymilvus.model 0.3.4
+wheel with its PyPI SHA-256 verified. It describes 23 explicit exported classes
+and one default alias, not universal model compatibility or inference tests.
+Client wrappers, server Functions, and rank fusion are documented separately.

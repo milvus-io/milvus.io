@@ -23,6 +23,8 @@ Record embedding throughput, memory, retrieval recall, reranking latency, and fi
 
 ## Continue learning
 
+- [What does the released Milvus Model library actually support?](/ai-quick-reference/milvus-model-library-support)
+- [How should you serve and version embedding and reranking models for Milvus?](/ai-quick-reference/model-inference-serving)
 - [How do you choose an embedding model for retrieval?](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy)
 - [How do you read MTEB and compare the current embedding shortlist?](/ai-quick-reference/mteb-embedding-leaderboards)
 - [Which current embedding models should you evaluate for Milvus?](/ai-quick-reference/embedding-reranking-model-catalog)
@@ -34,4 +36,4 @@ Record embedding throughput, memory, retrieval recall, reranking latency, and fi
 - [Sentence Transformers documentation](https://sbert.net/)
 - [Retrieve and rerank workflow](https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

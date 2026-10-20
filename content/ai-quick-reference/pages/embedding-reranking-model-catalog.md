@@ -34,6 +34,10 @@ Choose a small candidate set covering deployment constraints and the actual lang
 
 ## Continue learning
 
+- [How do MMEB versions evaluate multimodal embeddings?](/ai-quick-reference/mmeb-multimodal-evaluation)
+- [Which multimodal embedding families fit image, video, and audio retrieval?](/ai-quick-reference/multimodal-model-families)
+- [Which dense, sparse, and compact embedding families should you compare?](/ai-quick-reference/dense-sparse-model-families)
+- [What does the released Milvus Model library actually support?](/ai-quick-reference/milvus-model-library-support)
 - [How do you read MTEB and compare the current embedding shortlist?](/ai-quick-reference/mteb-embedding-leaderboards)
 - [How do you choose an embedding model for retrieval?](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy)
 - [Which reranking models fit a Milvus retrieval pipeline?](/ai-quick-reference/reranking-model-catalog)
@@ -52,4 +56,4 @@ Choose a small candidate set covering deployment constraints and the actual lang
 - [nvidia/nemotron-colembed-vl-8b-v2 official documentation](https://huggingface.co/nvidia/nemotron-colembed-vl-8b-v2)
 - [BAAI/bge-m3 official documentation](https://huggingface.co/BAAI/bge-m3)
 
-Sources checked: 2026-10-20. Model rankings are dated snapshots; use the guide for your deployed version.
+Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

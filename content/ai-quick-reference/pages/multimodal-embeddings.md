@@ -25,6 +25,9 @@ Evaluate text-to-image, image-to-image, or other supported directions separately
 
 ## Continue learning
 
+- [What do WeChat WeMM embeddings represent, and how can Milvus use them?](/ai-quick-reference/wemm-embedding-models)
+- [Which multimodal embedding families fit image, video, and audio retrieval?](/ai-quick-reference/multimodal-model-families)
+- [How do ColPali, ColQwen, and other page encoders use Milvus embedding lists?](/ai-quick-reference/visual-document-models)
 - [Which current embedding models should you evaluate for Milvus?](/ai-quick-reference/embedding-reranking-model-catalog)
 - [What is late-interaction retrieval, and how can embedding lists help?](/ai-quick-reference/what-is-late-interaction-retrieval)
 - [How should you curate image and video data with vector retrieval?](/ai-quick-reference/how-to-curate-image-and-video-data)
@@ -37,4 +40,4 @@ Evaluate text-to-image, image-to-image, or other supported directions separately
 - [Multimodal RAG tutorial](https://milvus.io/docs/multimodal_rag_with_milvus.md)
 - [Text-to-image search tutorial](https://milvus.io/docs/text_image_search.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

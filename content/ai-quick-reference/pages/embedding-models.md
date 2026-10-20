@@ -25,6 +25,8 @@ Keep a migration plan with separate collections or fields, a replayable source c
 
 ## Continue learning
 
+- [Which dense, sparse, and compact embedding families should you compare?](/ai-quick-reference/dense-sparse-model-families)
+- [How do client model wrappers, server Functions, and rank fusion differ?](/ai-quick-reference/milvus-model-functions)
 - [How do you read MTEB and compare the current embedding shortlist?](/ai-quick-reference/mteb-embedding-leaderboards)
 - [Which current embedding models should you evaluate for Milvus?](/ai-quick-reference/embedding-reranking-model-catalog)
 - [Which reranking models fit a Milvus retrieval pipeline?](/ai-quick-reference/reranking-model-catalog)
@@ -37,4 +39,4 @@ Keep a migration plan with separate collections or fields, a replayable source c
 - [Encoding and model-evaluation interfaces](https://sbert.net/)
 - [Milvus similarity metrics](https://milvus.io/docs/metric.md)
 
-Sources checked: 2026-10-20. Model rankings are dated snapshots; use the guide for your deployed version.
+Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

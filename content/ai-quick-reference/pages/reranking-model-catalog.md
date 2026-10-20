@@ -32,8 +32,26 @@ Freeze the first-stage results for each test query. Measure NDCG or judged relev
 
 Record the model revision, serialization, truncation policy, and output mapping. A score threshold tuned for one model should be revalidated after changing models or input format. Treat product-embedded reranking and application-side inference as different deployment paths, and verify support before promising a native integration.
 
+## Additional reranking families and baselines
+
+| Model | Representation | Purpose | Milvus Model route, not an end-to-end certification |
+|---|---|---|---|
+| [KaLM-Embedding/KaLM-Reranker-V1-Small-R2](https://huggingface.co/KaLM-Embedding/KaLM-Reranker-V1-Small-R2) | Compressed-document reranking | Encoder-decoder relevance scoring with configurable passage compression; use its own implementation and cache/version contract. | Official implementation; no dedicated export |
+| [tencent/R3-rerank-0.6b](https://huggingface.co/tencent/R3-rerank-0.6b) | Skill retrieval | Scores query/skill pairs for conditional agent-skill retrieval, not a general document benchmark winner. | Official implementation; no dedicated export |
+| [mixedbread-ai/mxbai-rerank-large-v2](https://huggingface.co/mixedbread-ai/mxbai-rerank-large-v2) | Text reranking candidate | A released text relevance model; pin the official loader and evaluate against the same candidates. | Native or verified generic adapter |
+| [Alibaba-NLP/gte-multilingual-reranker-base](https://huggingface.co/Alibaba-NLP/gte-multilingual-reranker-base) | Multilingual text | An encoder-based multilingual relevance model; validate language slices and long-passage truncation. | Native or verified generic adapter |
+| [ContextualAI/ctxl-rerank-v2-instruct-multilingual-2b](https://huggingface.co/ContextualAI/ctxl-rerank-v2-instruct-multilingual-2b) | Instruction-conditioned text | A model that accepts ranking instructions; test whether constraints are followed rather than trusting a generic relevance score. | Official API/runtime; verify instruction forwarding |
+| [zeroentropy/zerank-2](https://huggingface.co/zeroentropy/zerank-2) | Instruction-following text | An instruction-following reranking candidate; evaluate thresholds and serialization on the target corpus. | Official API/runtime; no dedicated export |
+| [maidalun1020/bce-reranker-base_v1](https://huggingface.co/maidalun1020/bce-reranker-base_v1) | Chinese/English baseline | An established bilingual reranker retained as a baseline, not labeled a new release. | Native or verified generic adapter |
+| [cross-encoder/ms-marco-MiniLM-L6-v2](https://huggingface.co/cross-encoder/ms-marco-MiniLM-L6-v2) | Compact English baseline | A small passage-ranking baseline for plumbing and cost comparisons; its training domain limits what can be inferred. | CrossEncoderRerankFunction; verify environment |
+
+These entries extend the earlier shortlist; they do not create a shared ranking across different candidate pools or protocols. Jev also has an explicit Milvus Model wrapper; its evidence-oriented template is described in the support matrix.
+
 ## Continue learning
 
+- [How does KaLM compressed-document reranking work?](/ai-quick-reference/kalm-reranker-models)
+- [How do Tencent R3 embedding and reranking models retrieve agent skills?](/ai-quick-reference/tencent-r3-models)
+- [What does the released Milvus Model library actually support?](/ai-quick-reference/milvus-model-library-support)
 - [What is reranking, and when should you apply it?](/ai-quick-reference/what-is-vector-reranking-and-when-should-you-apply-it)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 - [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
@@ -50,5 +68,13 @@ Record the model revision, serialization, truncation policy, and output mapping.
 - [Qwen/Qwen3-VL-Reranker-8B official documentation](https://huggingface.co/Qwen/Qwen3-VL-Reranker-8B)
 - [nvidia/llama-nemotron-rerank-vl-1b-v2 official documentation](https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2)
 - [BAAI/bge-reranker-v2-m3 official documentation](https://huggingface.co/BAAI/bge-reranker-v2-m3)
+- [Official model card: KaLM-Embedding/KaLM-Reranker-V1-Small-R2](https://huggingface.co/KaLM-Embedding/KaLM-Reranker-V1-Small-R2)
+- [Official model card: tencent/R3-rerank-0.6b](https://huggingface.co/tencent/R3-rerank-0.6b)
+- [Official model card: mixedbread-ai/mxbai-rerank-large-v2](https://huggingface.co/mixedbread-ai/mxbai-rerank-large-v2)
+- [Official model card: Alibaba-NLP/gte-multilingual-reranker-base](https://huggingface.co/Alibaba-NLP/gte-multilingual-reranker-base)
+- [Official model card: ContextualAI/ctxl-rerank-v2-instruct-multilingual-2b](https://huggingface.co/ContextualAI/ctxl-rerank-v2-instruct-multilingual-2b)
+- [Official model card: zeroentropy/zerank-2](https://huggingface.co/zeroentropy/zerank-2)
+- [Official model card: maidalun1020/bce-reranker-base_v1](https://huggingface.co/maidalun1020/bce-reranker-base_v1)
+- [Official model card: cross-encoder/ms-marco-MiniLM-L6-v2](https://huggingface.co/cross-encoder/ms-marco-MiniLM-L6-v2)
 
-Sources checked: 2026-10-20. Model rankings are dated snapshots; use the guide for your deployed version.
+Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

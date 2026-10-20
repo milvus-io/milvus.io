@@ -27,6 +27,7 @@ Keep retry behavior explicit. Timeouts can leave the client uncertain about the 
 
 ## Continue learning
 
+- [What does the released Milvus Model library actually support?](/ai-quick-reference/milvus-model-library-support)
 - [How do you get from a Milvus deployment to the first verified query?](/ai-quick-reference/milvus-installation-path)
 - [What does LangChain do, and how does it use Milvus?](/ai-quick-reference/langchain-with-milvus)
 - [How can Attu help you inspect and manage Milvus?](/ai-quick-reference/what-is-attu)
@@ -40,4 +41,4 @@ Keep retry behavior explicit. Timeouts can leave the client uncertain about the 
 - [PyMilvus installation and compatibility](https://milvus.io/docs/install-pymilvus.md)
 - [Collection schema design](https://milvus.io/docs/schema.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

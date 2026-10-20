@@ -50,6 +50,8 @@ Keep a held-out query set with relevance judgments and report Recall@k, NDCG, la
 
 ## Continue learning
 
+- [How do MMEB versions evaluate multimodal embeddings?](/ai-quick-reference/mmeb-multimodal-evaluation)
+- [How do the KaLM text embedding variants differ?](/ai-quick-reference/kalm-embedding-models)
 - [How do you choose an embedding model for retrieval?](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy)
 - [Which current embedding models should you evaluate for Milvus?](/ai-quick-reference/embedding-reranking-model-catalog)
 - [Which reranking models fit a Milvus retrieval pipeline?](/ai-quick-reference/reranking-model-catalog)
@@ -82,4 +84,4 @@ Keep a held-out query set with relevance judgments and report Recall@k, NDCG, la
 - [Official model card: Qwen/Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B)
 - [Official model card: ai-sage/Giga-Embeddings-instruct-3B-0826](https://huggingface.co/ai-sage/Giga-Embeddings-instruct-3B-0826)
 
-Sources checked: 2026-10-20. Model rankings are dated snapshots; use the guide for your deployed version.
+Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

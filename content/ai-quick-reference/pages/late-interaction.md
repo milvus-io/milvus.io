@@ -27,6 +27,8 @@ Test long documents, many-element records, metadata filters, and deletion of an 
 
 ## Continue learning
 
+- [How do ColPali, ColQwen, and other page encoders use Milvus embedding lists?](/ai-quick-reference/visual-document-models)
+- [How does KaLM compressed-document reranking work?](/ai-quick-reference/kalm-reranker-models)
 - [What are multimodal embeddings?](/ai-quick-reference/what-are-multimodal-embeddings)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 - [What is reranking, and when should you apply it?](/ai-quick-reference/what-is-vector-reranking-and-when-should-you-apply-it)
@@ -38,4 +40,4 @@ Test long documents, many-element records, metadata filters, and deletion of an 
 - [Indexes and metrics for StructArray vectors](https://milvus.io/docs/index-structarray-fields.md)
 - [StructArray data model](https://milvus.io/docs/array-of-structs.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

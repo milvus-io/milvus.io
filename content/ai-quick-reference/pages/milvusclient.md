@@ -9,6 +9,8 @@ PyMilvus is the official Python SDK for Milvus, and `MilvusClient` is its main i
 
 That last part is what separates a demo from an application. A notebook that once returned plausible results tells you little after the next schema change, embedding-model upgrade, or Milvus release. A script that creates a known collection, writes known records, and checks known results tells you immediately.
 
+![A deployment is verified by a working query. A running process alone does not prove a usable retrieval workflow.](/images/ai-reference/first-query-check.svg)
+
 ## Install and pin PyMilvus
 
 ```bash

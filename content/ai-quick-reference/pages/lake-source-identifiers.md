@@ -7,7 +7,7 @@ order: 43
 
 Give every source record a business key that never changes, derive every chunk and embedding ID deterministically from that key, and store the key as a field on every vector row. Never use a file path, row number, or fragment position as an identity, because lake maintenance rewrites those constantly. With deterministic IDs, a re-ingest becomes an upsert to the same keys, a deletion becomes a filter on the source key, and any search hit can be traced back to the exact source revision that produced it.
 
-![Keep logical identity separate from file position](/images/ai-reference/format.svg)
+![Join by stable identity, not file position. Keep a versioned mapping so refresh, deletion and replay remain traceable.](/images/ai-reference/stable-lake-identity.svg)
 
 ## Why do identities break in a lake?
 

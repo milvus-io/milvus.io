@@ -7,6 +7,8 @@ order: 65
 
 A sparse inverted index stores, for every dimension (usually a vocabulary term), a list of the documents that have a nonzero weight in that dimension. A query only reads the lists for its own nonzero dimensions and adds up `query weight × document weight` for each document it finds, so most of the corpus is never touched. Dense ANN indexes such as HNSW or IVF work differently: every vector has a value in every dimension, so they navigate a graph or probe clusters to find nearby points approximately. Sparse inverted indexes power BM25 full-text search and learned sparse models like SPLADE; in Milvus, both run on `SPARSE_INVERTED_INDEX`.
 
+![From words to ranked documents. Lexical overlap and semantic similarity are complementary signals.](/images/ai-reference/bm25-pipeline.svg)
+
 ## What is a sparse vector?
 
 A sparse vector has a huge number of possible dimensions, typically one per vocabulary term (tens of thousands or more), but only a handful are nonzero for any given text. It is stored as a list of `(dimension, weight)` pairs rather than a full array. For example:

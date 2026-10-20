@@ -9,6 +9,8 @@ Attu is the graphical administration tool for Milvus. It connects to a Milvus cl
 
 Think of Attu as the "see what is actually in there" tool. Code tells you what your application meant to write; Attu shows you what the database holds, how each collection is configured, and what a search really returns. That makes it most valuable during development, debugging, and day-to-day operations, alongside the SDKs and APIs that run your production workload.
 
+![Use Attu to inspect a reproducible retrieval case. A UI inspection complements metrics and logs; it does not replace them.](/images/ai-reference/attu-inspection.svg)
+
 ## What can you do with Attu?
 
 The current Attu release (v3.0) groups its features into a few areas:

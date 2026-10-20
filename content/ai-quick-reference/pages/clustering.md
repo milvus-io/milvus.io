@@ -52,7 +52,7 @@ Once clusters exist, store each cluster's centroid as a row in a small companion
 
 Milvus IVF indexes also run k-means: `IVF_FLAT` partitions vectors into `nlist` clusters (default 128) and searches only the `nprobe` closest ones (default 8). Those centroids exist to make search fast. Their count is chosen for recall and latency, they are trained per segment, and they are not exposed as labels you can filter on. Your document clusters exist to mean something to people, so compute them separately and store them as fields. Read [how IVF uses centroids](/ai-quick-reference/how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process) for the index side.
 
-![IVF centroid and region selection](/images/ai-reference/ivf.svg)
+![Application clusters are explicit labels. Internal IVF centroid assignments are not application cluster IDs.](/images/ai-reference/clustering-workflow.svg)
 
 ## How do you know the clusters are good?
 

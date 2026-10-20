@@ -7,7 +7,7 @@ order: 115
 
 Securing a Milvus application takes three layers that answer three different questions. **Authentication** answers "who is connecting?" with a username and password (or API key on Zilliz Cloud). **Role-based access control (RBAC)** answers "which operations may this identity run, on which databases and collections?" through users, roles, privileges, and privilege groups. **Row-level eligibility**, usually a tenant or ACL filter that your application enforces, answers "which records may this end user see?" Passing one layer says nothing about the others, which is why a correct login test can coexist with a cross-tenant data leak.
 
-![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
+![Authorization and retrieval filters are separate. An untrusted caller-supplied tenant filter is not an access-control boundary.](/images/ai-reference/access-control-layers.svg)
 
 ## How do you turn on authentication in Milvus?
 

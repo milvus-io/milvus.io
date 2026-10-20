@@ -9,6 +9,8 @@ Knowhere is the open-source C++ vector search engine at the core of Milvus. It b
 
 The name is a pun on "know where": the engine decides which implementation and which hardware path (CPU instruction set or GPU) should execute a given build or search request.
 
+![Library, index layer and database. An ANN library supplies algorithms; a database adds operational semantics.](/images/ai-reference/faiss-knowhere-stack.svg)
+
 ## What does Knowhere actually do?
 
 Think of Knowhere as the layer between Milvus's distributed services and the raw algorithms. Its main jobs are:

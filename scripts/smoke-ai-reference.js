@@ -4,6 +4,7 @@ const {
   topics,
   loadPublishedFaqRows,
 } = require('../src/server/ai-reference-catalog');
+const faqLabels = require('../src/i18n/en/faq.json');
 const base = process.env.REFERENCE_TEST_URL || 'http://127.0.0.1:8011';
 
 async function get(path) {
@@ -82,8 +83,8 @@ async function get(path) {
       canonical[0].includes(`https://milvus.io/ai-quick-reference/${slug}`),
       slug
     );
-    assert.ok(html.includes('Continue learning'), slug);
-    assert.ok(html.includes('Implementation guides and sources'), slug);
+    assert.ok(html.includes(`>${faqLabels.detail.keepReading}</h2>`), slug);
+    assert.ok(html.includes(`>${faqLabels.detail.recommend}</h4>`), slug);
     assert.ok(!html.includes(':contentReference[oaicite:'), slug);
     for (const [, image] of rows.find(row => row.URL === slug).Answers.matchAll(
       /!\[[^\]]*\]\((\/images\/ai-reference\/[^)]+)\)/g

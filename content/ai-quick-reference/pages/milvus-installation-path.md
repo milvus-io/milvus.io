@@ -7,6 +7,8 @@ order: 110
 
 The shortest path from zero to a working Milvus query is three steps: pick a deployment mode (Milvus Lite, Standalone, or Distributed), connect with `MilvusClient`, and run a search against a small fixture whose correct answer you already know. The installation is finished when that query returns the expected IDs, not when a container reports healthy. Everything after that point, from adding a framework to scaling out, can be measured against the same baseline.
 
+![A deployment is verified by a working query. A running process alone does not prove a usable retrieval workflow.](/images/ai-reference/first-query-check.svg)
+
 ## Which Milvus deployment mode should you install?
 
 Milvus ships in three shapes that share one client API, so code written against one usually runs against the others with a different `uri`. What changes is who runs the server, how much data it is meant to hold, and what features are available.

@@ -9,7 +9,7 @@ Choose a vector index by the constraint that binds first: whether the data fits 
 
 The rest of this page turns that rule of thumb into a decision you can defend with numbers.
 
-![Control the workload before comparing performance](/images/ai-reference/benchmark.svg)
+![Choose the index by the binding constraint. These are candidates to benchmark, not universal performance rankings.](/images/ai-reference/index-workload-choice.svg)
 
 ## Step 1: Describe the workload before you look at indexes
 

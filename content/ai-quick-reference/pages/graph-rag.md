@@ -7,6 +7,8 @@ order: 22
 
 Graph RAG (also written GraphRAG) is a form of retrieval-augmented generation that retrieves over a knowledge graph of entities and their relationships instead of, or in addition to, a flat list of text chunks. An LLM or extraction pipeline turns documents into nodes (people, products, components, places) and edges ("acquired", "depends on", "taught"), and at query time the system follows those edges to collect connected evidence. That makes it better than plain vector RAG at multi-hop questions and at "what are the main themes across all of this?" questions, at the price of a more expensive and more fragile indexing pipeline.
 
+![Graph and vector retrieval supply different evidence. Milvus stores searchable representations; graph traversal needs its own layer.](/images/ai-reference/graph-rag-evidence.svg)
+
 ## Why does plain vector RAG struggle with some questions?
 
 Standard RAG embeds the question and returns the chunks closest to it. That works when one passage contains the answer. It breaks in two situations:

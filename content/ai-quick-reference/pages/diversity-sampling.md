@@ -7,6 +7,8 @@ order: 85
 
 Embedding-based diversity sampling picks examples that are spread out in embedding space instead of drawing uniformly at random, so a labeling or training budget covers many kinds of data rather than repeating the densest region. The usual recipes are cluster-then-sample (k-means strata with a per-cluster cap), greedy farthest-point or k-center selection (the "core-set" approach from active learning), and near-duplicate suppression before sampling. A vector database such as Milvus makes these practical at scale because the core operation in every recipe is the same: given a point, find its neighbors, or how far it is from everything already selected.
 
+![Select useful variety, not only distant points. Outliers may be corrupt data; distance alone does not establish value.](/images/ai-reference/diversity-selection.svg)
+
 ## Why random sampling under-covers real datasets
 
 Real corpora are lopsided. A driving dataset is mostly highway frames, a support-ticket archive is mostly password resets, and a scraped web corpus repeats the same boilerplate thousands of times. Uniform random sampling preserves that skew: if 70% of the data is one scene, roughly 70% of the labeling budget goes to it, and the rare cases that limit model quality get a handful of examples or none.

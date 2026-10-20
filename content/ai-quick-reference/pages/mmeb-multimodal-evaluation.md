@@ -7,6 +7,8 @@ order: 120
 
 MMEB (the Massive Multimodal Embedding Benchmark) evaluates embedding models that take images, video, visual documents, and, in its newest version, audio and agent-oriented inputs, rather than text alone. Every task is framed as ranking: given an instruction and a query, the model must place the correct target first among many candidates. MMEB has three major versions with very different task sets, so the version label matters before any score does.
 
+![A benchmark score needs its evaluation contract. MTEB and MMEB summarize tasks; neither guarantees production suitability.](/images/ai-reference/model-evaluation-contract.svg)
+
 ## Why multimodal embeddings need their own benchmark
 
 Text benchmarks such as [MTEB](/ai-quick-reference/mteb-embedding-leaderboards) cannot tell you whether a model can find the right chart for a question, the right clip for a description, or the right product photo for another photo. Multimodal models also fail in ways text models do not: they may return a result in the wrong modality, handle text-to-image well but image-to-text poorly, or ignore an instruction that asks for a specific kind of target. MMEB was built to expose those differences with one consistent protocol.

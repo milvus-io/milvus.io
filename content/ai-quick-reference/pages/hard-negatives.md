@@ -7,6 +7,8 @@ order: 86
 
 A hard negative is a document that a retrieval model scores as highly similar to a query but that is not actually relevant to it. Training an embedding model with these near-misses, alongside the true positive, teaches it the fine distinctions that random negatives never exercise: the wrong product version, the neighboring error code, the passage that mentions the right entity but answers a different question. You mine hard negatives by running retrieval over your corpus, which is exactly what a vector database like Milvus does, then filtering out anything that might secretly be relevant.
 
+![Mine difficult non-matches, then verify. A highly ranked unlabeled document is not automatically a negative.](/images/ai-reference/hard-negative-mining.svg)
+
 ## Easy, hard, and false negatives
 
 Dense retrievers are usually trained contrastively: pull the query embedding toward a positive passage and push it away from negatives. What the model learns depends on which negatives it sees.

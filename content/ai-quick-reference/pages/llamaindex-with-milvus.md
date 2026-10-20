@@ -9,6 +9,8 @@ LlamaIndex is a data framework for LLM applications. It loads your files, splits
 
 One naming trap catches people early. LlamaIndex's `VectorStoreIndex` is an application object, not a Milvus index. The physical ANN index inside Milvus (HNSW, IVF, AUTOINDEX, and so on) is configured separately through `index_config`. When retrieval is slow or misses results, check both layers.
 
+![Framework orchestration and vector storage. Framework state, checkpoints and model inference have separate owners.](/images/ai-reference/framework-milvus-roles.svg)
+
 ## Install the integration
 
 ```bash

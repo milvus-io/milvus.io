@@ -7,6 +7,8 @@ order: 118
 
 There is no single best embedding model; there is a best model for your data, languages, modality, budget, and license. A good shortlist has three to five candidates: a strong hosted model, a strong open-weight model you can run yourself, a multilingual or multimodal option if you need one, and a cheap baseline. Encode the same documents with each into separate Milvus collections, evaluate on your own queries, and pick the cheapest model that meets your quality bar.
 
+![Shortlist models by the workload. Keep model revisions separate; equal dimensions do not mean equal spaces.](/images/ai-reference/embedding-selection.svg)
+
 ## Embedding models and rerankers do different jobs
 
 An embedding model turns each document and each query into a vector independently, so documents can be indexed once and searched in milliseconds. A reranker reads a query and a candidate together and reorders a short list the embedding search already found. The embedding model decides what can be found at all; the reranker decides what comes first. This page covers embedding models; the [reranking model catalog](/ai-quick-reference/reranking-model-catalog) covers the second stage.

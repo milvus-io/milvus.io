@@ -7,6 +7,8 @@ order: 78
 
 To build an offline training set from agent rollouts, filter first, then select for quality and coverage. Keep only rollouts with a trustworthy outcome signal and known task, policy, and environment versions; remove evaluation tasks and near-duplicates; then choose examples so that every important task family is represented, using reward or verifier results for quality and embeddings for diversity. What you keep depends on the training method: successful trajectories for supervised fine-tuning (rejection sampling), matched success and failure pairs on the same task for preference methods such as DPO. Record why each rollout was selected so the dataset can be reproduced and compared.
 
+![A training example needs an explicit selection rule. Reward is a quality signal; embeddings help with similarity and coverage.](/images/ai-reference/rollout-selection-flow.svg)
+
 ## What is a rollout, and why select at all?
 
 A rollout is one execution of an agent policy on a task: the prompts and model outputs, tool calls and their results, intermediate observations, and the final outcome with its score. Training frameworks generate rollouts in large numbers, often many attempts per task, and most of them are redundant, broken, or uninformative. Training on all of them wastes compute and can teach the wrong lessons: repeated easy tasks dominate, infrastructure errors look like policy mistakes, and lucky successes look like skill.

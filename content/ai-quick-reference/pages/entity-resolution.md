@@ -9,6 +9,8 @@ Entity resolution (also called record linkage or deduplication) is the job of de
 
 The split matters. Embeddings are good at noticing that "Intl Business Machines Corp." and "IBM" are close, but similar text is not the same as identical identity. Two branches of a franchise can have near-identical descriptions and still be separate legal entities. Vector search finds the candidates; your evidence and policy decide the merge.
 
+![Similarity proposes a duplicate; rules decide. Approximate similarity is candidate generation, not proof of identity.](/images/ai-reference/dedup-verify.svg)
+
 ## What does an entity resolution pipeline look like?
 
 Most production systems, whether rule-based or ML-based, follow the same five stages:

@@ -7,6 +7,8 @@ order: 105
 
 Haystack, the open-source framework from deepset, builds LLM applications as **pipelines** of typed components: converters, splitters, embedders, retrievers, rankers, prompt builders, and generators, connected output-to-input. Milvus joins a Haystack pipeline through the `milvus-haystack` package, which provides `MilvusDocumentStore` plus three retrievers: dense (`MilvusEmbeddingRetriever`), sparse or BM25 (`MilvusSparseEmbeddingRetriever`), and hybrid (`MilvusHybridRetriever`). You usually build two pipelines. An indexing pipeline turns files into embedded documents and writes them to Milvus. A query pipeline embeds the question, retrieves from Milvus, and passes the documents to a generator.
 
+![Framework orchestration and vector storage. Framework state, checkpoints and model inference have separate owners.](/images/ai-reference/framework-milvus-roles.svg)
+
 ## What do you need to install?
 
 The Milvus integration ships separately from Haystack core:

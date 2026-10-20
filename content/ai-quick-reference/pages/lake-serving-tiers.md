@@ -7,7 +7,7 @@ order: 47
 
 Separate hot and cold vector data by access pattern, not by age: keep the index structures and fields that every query touches in memory or on local SSD, and leave rarely read fields, old partitions, and raw payloads on object storage, fetched into a cache only when a query needs them. In Milvus, tiered storage does this automatically at chunk granularity, warm-up controls decide what is preloaded, and external collections let the coldest data stay in the lake entirely. The design is right when tail latency still meets your target after a restart or a traffic shift, not just when the cache is warm.
 
-![Memory, disk, and object storage tiers](/images/ai-reference/memory.svg)
+![Separate remote storage from the hot working set. Benchmark cold starts and shifted traffic, not only a warm cache.](/images/ai-reference/serving-tiers.svg)
 
 ## What counts as hot, warm, and cold?
 

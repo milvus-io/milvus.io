@@ -9,6 +9,8 @@ demoDescription: "Check out RAG-powered AI chatbot built with Milvus. You can as
 
 Compare vector-database costs as total cost of ownership at the same workload and the same service level: the same vectors, recall target, p99 latency, availability, and growth. Self-hosting usually has the lowest infrastructure bill per vector at scale, but you pay in engineering time for upgrades, monitoring, backups, scaling, and incidents. A managed service folds that work into the price, and BYOC splits the difference by running the managed service inside your own cloud account. Which is cheaper depends far more on scale, traffic shape, and team capacity than on list prices.
 
+![Compare total cost at a matched service target. Match recall, latency, availability and workload before comparing prices.](/images/ai-reference/total-cost-layers.svg)
+
 ## What goes into the total cost?
 
 | Cost line | Local / embedded (e.g. Milvus Lite) | Self-hosted Milvus | Managed Milvus (Zilliz Cloud) | BYOC |

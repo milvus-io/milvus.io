@@ -7,7 +7,7 @@ order: 48
 
 Parquet, Apache Iceberg, and Lance are not three competitors for the same job. **Parquet** is a columnar *file* format optimized for compressed, scan-heavy analytics. **Iceberg** is a *table* format that turns many data files (usually Parquet) into one table with snapshots, schema evolution, and atomic commits. **Lance** is both a file and a table format designed for AI data, with fast random row access, built-in versioning, and room for embeddings and media blobs. A vector lake often uses more than one of them.
 
-![Keep logical identity separate from file position](/images/ai-reference/format.svg)
+![File formats and table layers solve different jobs. Choose an integration against its documented version and capabilities.](/images/ai-reference/lake-format-roles.svg)
 
 ## Side-by-side comparison
 

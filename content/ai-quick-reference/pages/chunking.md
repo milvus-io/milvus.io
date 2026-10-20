@@ -7,6 +7,8 @@ order: 19
 
 A good default for RAG chunking is a recursive, structure-aware split of about 256-512 tokens with 10-20% overlap (for a 512-token chunk, roughly 50-100 tokens). Go smaller, around 128-256 tokens, when users ask short factual questions; go larger, 512-1,024 tokens or a whole section, when answers need explanation or comparison. Then tune on your own questions: the "optimal" chunk size depends on your documents, your queries, your embedding model's input limit, and how much context the generator can afford.
 
+![Chunk boundaries change the evidence. Overlap can protect boundaries, but also introduces duplicate evidence.](/images/ai-reference/chunking-context.svg)
+
 ## Why does chunk size matter so much?
 
 Each chunk becomes one embedding, and one embedding can only represent so much. If a chunk is too large, a single relevant sentence is averaged together with paragraphs about other topics, and its vector drifts away from the question. If a chunk is too small, it loses the context that makes it meaningful: "This limit does not apply to enterprise plans" is useless without knowing which limit.

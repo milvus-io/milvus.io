@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 718" width="640" height="718" role="img" aria-labelledby="title desc">
+<title id="title">Optimize a program on a development set</title>
+<desc id="desc">Define the retrieval program: Choose signatures, tools and the Milvus retriever.. Create development examples: Specify a metric and representative questions.. Optimize and compare: Tune the program while holding data versions fixed.. Run the final test: Use held-out examples and inspect failure slices.. An optimizer changes application behavior; it does not replace the database.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="718" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Optimize a program on a development</tspan><tspan x="28" dy="36.4">set</tspan></text>
+<rect x="28" y="146" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="146" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="177" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Define the retrieval program</tspan></text>
+<text x="48" y="207" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Choose signatures, tools and the Milvus</tspan><tspan x="48" dy="26">retriever.</tspan></text>
+<path d="M320 261 V280" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="284" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="284" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="315" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Create development examples</tspan></text>
+<text x="48" y="345" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Specify a metric and representative questions.</tspan></text>
+<path d="M320 373 V392" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="396" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="396" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="427" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Optimize and compare</tspan></text>
+<text x="48" y="457" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Tune the program while holding data versions</tspan><tspan x="48" dy="26">fixed.</tspan></text>
+<path d="M320 511 V530" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="534" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="534" width="5" height="86" fill="#E85A2B"/>
+<text x="48" y="565" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Run the final test</tspan></text>
+<text x="48" y="595" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Use held-out examples and inspect failure slices.</tspan></text>
+<path d="M28 642 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="668" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">An optimizer changes application behavior; it does not</tspan><tspan x="28" dy="23.4">replace the database.</tspan></text>
+</svg>

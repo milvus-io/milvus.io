@@ -7,6 +7,8 @@ order: 117
 
 MTEB (the Massive Text Embedding Benchmark) is an open collection of evaluation tasks for text embedding models, published with a public leaderboard on Hugging Face. It scores each model on many datasets grouped by task type, such as retrieval, classification, clustering, and semantic similarity, then summarizes the results. Read it as a shortlisting tool: the sub-score for the task you actually run, on the languages you actually serve, matters far more than the headline rank.
 
+![A benchmark score needs its evaluation contract. MTEB and MMEB summarize tasks; neither guarantees production suitability.](/images/ai-reference/model-evaluation-contract.svg)
+
 ## Where MTEB came from and what it covers now
 
 The original MTEB paper (Muennighoff et al., 2022) brought together 8 embedding task types across 58 datasets and 112 languages, and showed that no single model dominated every task. That finding still holds and is the main reason to read the leaderboard by category. In 2025 the community-built MMTEB extension grew the collection to more than 500 quality-controlled tasks in over 250 languages, adding instruction following, long-document retrieval, and code retrieval. MMTEB also introduced downsampled benchmark selections that keep model rankings stable while costing far less compute to run.

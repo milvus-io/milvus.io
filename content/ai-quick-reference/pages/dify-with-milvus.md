@@ -7,6 +7,8 @@ order: 106
 
 Dify is an open-source platform for building LLM applications, such as chatbots, agents, and workflows, through a visual interface. Its **Knowledge** feature turns uploaded documents into retrievable context. When you self-host Dify, you choose which vector database stores that context, and Milvus is one of the supported backends. Responsibilities divide cleanly. Dify manages the documents, chunking, embedding calls, indexing jobs, retrieval settings, and app permissions. Milvus stores the chunk vectors and text and runs the vector, full-text, and hybrid searches that Dify's retrieval node asks for.
 
+![Framework orchestration and vector storage. Framework state, checkpoints and model inference have separate owners.](/images/ai-reference/framework-milvus-roles.svg)
+
 ## How to configure Dify to use Milvus
 
 Milvus is configured with environment variables in Dify's Docker Compose deployment. Changing them means editing configuration, not writing application code.

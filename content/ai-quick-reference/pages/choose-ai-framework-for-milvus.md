@@ -7,6 +7,8 @@ order: 101
 
 Choose the framework by the problem you are actually solving, and keep Milvus as the stable layer underneath. If your challenge is getting answers out of a document collection, start with **LlamaIndex** or **Haystack**. If you are building an agent that calls tools and makes decisions, use **LangChain** with **LangGraph**, or **Agno**. If you want a visual, low-code app builder, use **Dify**. If you need to systematically improve prompts against a metric, add **DSPy**. **Sentence Transformers** is not an orchestration framework at all. It is the model library that produces the embeddings and reranking scores the others consume. All of them can use Milvus for storage and search, so the decision is about developer workflow, not about which one can talk to the database.
 
+![Framework orchestration and vector storage. Framework state, checkpoints and model inference have separate owners.](/images/ai-reference/framework-milvus-roles.svg)
+
 ## AI frameworks for Milvus compared
 
 | Framework | What it is best at | How it uses Milvus | Pick it when |

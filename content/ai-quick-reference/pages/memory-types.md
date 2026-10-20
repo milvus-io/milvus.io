@@ -7,6 +7,8 @@ order: 73
 
 AI agents typically use four kinds of memory, a taxonomy borrowed from cognitive science and formalized for LLM agents in the CoALA framework. **Working memory** is what the agent is holding right now: the current task, recent turns, and pending tool results, usually in the context window. **Episodic memory** records specific past events ("last Tuesday the deployment failed on step 3"). **Semantic memory** stores general facts and knowledge independent of when they were learned ("the user prefers Python", "service A depends on service B"). **Procedural memory** holds how to do things: skills, workflows, and the agent's own instructions and code. They differ in lifetime, in who may change them, and in how they should be stored and retrieved.
 
+![Agent memory has different jobs and owners. One vector collection does not replace every state or persistence mechanism.](/images/ai-reference/agent-memory-types.svg)
+
 ## The four types at a glance
 
 | | Working | Episodic | Semantic | Procedural |

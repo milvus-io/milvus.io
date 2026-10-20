@@ -7,7 +7,7 @@ order: 25
 
 Embeddings catch the duplicates that hashing misses: records that say the same thing in different words. You encode each record with a model such as a Sentence Transformers checkpoint, then treat any pair whose cosine similarity exceeds a calibrated threshold (often somewhere around 0.9 to 0.95, depending on the model) as a candidate duplicate. At small scale that is a pairwise comparison; at millions of records you need an approximate nearest-neighbor index so each record only checks its closest neighbors. Milvus covers both halves of a modern dedup pipeline: MinHash signatures with a `MINHASH_LSH` index for lexical near-duplicates, and dense vectors with range search for semantic ones.
 
-![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
+![Similarity proposes a duplicate; rules decide. Approximate similarity is candidate generation, not proof of identity.](/images/ai-reference/dedup-verify.svg)
 
 ## Exact, near-duplicate, and semantic duplicates
 

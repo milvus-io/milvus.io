@@ -3,7 +3,7 @@
   "status": "source-checked",
   "file": "agno-with-milvus.md",
   "topic": "frameworks",
-  "sha256": "29989806c359da63b61c4931ce81f3dba5c24b4689b537ab7d3c21fca17222a4",
+  "sha256": "a74b6da71c8cdeee0607145344824cd034fa7c21be63c4a71c0eac182684ca21",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -2587,7 +2587,7 @@
   "status": "source-checked",
   "file": "choose-ai-framework-for-milvus.md",
   "topic": "frameworks",
-  "sha256": "4c7653f794d2329de7f44f106d60c89d22a0b6721bc640f39910b4246ad9f50a",
+  "sha256": "867fb0cb6be451810671b3a62c851f9e6044774a332383d42beb50cc22bb9934",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -2655,7 +2655,7 @@
   "status": "source-checked",
   "file": "dense-sparse-model-families.md",
   "topic": "models",
-  "sha256": "b361e78128e1e8777d27012db411783f1a6c2d7ed318583fe00c2ca3df0b11c1",
+  "sha256": "2363ae819356df32faff01152af04e6274d056069bc31f3466f4031e0c060438",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://huggingface.co/BAAI/bge-m3",
@@ -2747,7 +2747,7 @@
   "status": "source-checked",
   "file": "dify-with-milvus.md",
   "topic": "frameworks",
-  "sha256": "f349472c4f247eadcdb047060e0bfbd74eb062b3f79d296177680f73ab39a203",
+  "sha256": "5555c51e0f3d54e029a063c887431c17cc1a9de9d35bc7cf779dd2fd450f2704",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/dify_with_milvus.md",
@@ -3188,7 +3188,7 @@
   "status": "source-checked",
   "file": "dspy-with-milvus.md",
   "topic": "frameworks",
-  "sha256": "abba139afa875e9dd79b829f7bbbcb5dd4dab60d049eb03bdab8de64ffa20af7",
+  "sha256": "fea6eb90d8e47bd24e5382f61770332a9bbe9d48223a652b1e8a7e0834cf3cf4",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -3219,7 +3219,7 @@
   "status": "source-checked",
   "file": "embedding-reranking-model-catalog.md",
   "topic": "models",
-  "sha256": "ecf46925a16c29dd7cc9d47094302f6a0b0176e19edd97ffa8c48e7b636a84d3",
+  "sha256": "f1e9359cf8ed44e74cfbd3321da6eb4039d7061a60b26964d372b38ac47e3b4f",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://docs.voyageai.com/docs/embeddings",
@@ -3317,7 +3317,7 @@
   "status": "source-checked",
   "file": "haystack-with-milvus.md",
   "topic": "frameworks",
-  "sha256": "96dd9885e05ce42ecab08bab1aab94e43a46e055e6b33a00641823668e297f9f",
+  "sha256": "6bc3fb1d1b6de427c2b2052e8a794041611b3fd6e0366f170f9341eff957f48f",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/integrate_with_haystack.md",
@@ -3349,7 +3349,7 @@
   "status": "source-checked",
   "file": "hnsw-compression.md",
   "topic": "retrieval",
-  "sha256": "917060b8983904be7ac57185fa0bce6f37c46e50e2e6c99d313c0e43a65ac991",
+  "sha256": "6db665838114f937f20e19d636b63e70e42921f83bd22923a0f3f2bed3b8787a",
   "checkedAt": "2026-10-21",
   "sources": [
    "https://milvus.io/docs/hnsw-sq.md",
@@ -3660,7 +3660,7 @@
   "status": "source-checked",
   "file": "clustering.md",
   "topic": "data",
-  "sha256": "fcb129a0a2c19ec30a63bb1ddb8778c930bf3fa777808070f4239a5e2da3c1c1",
+  "sha256": "b00d95cf9fadc8a1a57b691d47e69c475fab9b9c9b90d0847962d305310bcf66",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -4021,7 +4021,7 @@
   "status": "source-checked",
   "file": "arrow-parquet.md",
   "topic": "lake",
-  "sha256": "5aaa53333cda4f49d7530ac9fb4447c9539d1d1c94249429549dd6f6ad11f744",
+  "sha256": "12d93bfa94fa19294663e0bcd9f449b3abe2a235308da7d23af6a21093e80159",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/prepare-source-data.md",
@@ -5449,7 +5449,7 @@
   "status": "source-checked",
   "file": "deduplication.md",
   "topic": "data",
-  "sha256": "70e4769272a31c3b18d8876a5e2dc4c7503023859be541ce6bde32f2fcbbdb9b",
+  "sha256": "6d53c60c6763b6a9fec2894ecadf70b81d2ffc0c6ef50f2e3b0100a7ab7a04a7",
   "checkedAt": "2026-10-21",
   "sources": [
    "https://milvus.io/docs/grouping-search.md",
@@ -7356,7 +7356,7 @@
   "status": "source-checked",
   "file": "sharding-replication.md",
   "topic": "production",
-  "sha256": "d44f8def0dbc703974433e566da523ed12d37160dae6d07fe0dbd4e7600213f3",
+  "sha256": "9e06bd833650ef81c45e8072d35e6a7babfea8f10bd57d80ba1051a3e1655c40",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/replica.md",
@@ -12662,7 +12662,7 @@
   "status": "source-checked",
   "file": "backup.md",
   "topic": "production",
-  "sha256": "b85a48756e6ac0ea1842bec3972c79c40d637313af820320c6a514750623ccd2",
+  "sha256": "96fc04c9c10b43b69cca19677c7973e1ac22d95b2a991e76ab32d1965f955970",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/milvus_backup_overview.md",
@@ -13206,7 +13206,7 @@
   "status": "source-checked",
   "file": "index-selection.md",
   "topic": "retrieval",
-  "sha256": "a56daa6cc1a6672d403ec233dc741cf1f0c0faddea8459186b8f0a1102ec981a",
+  "sha256": "42713f8f9041cb45e80286219e38b822077f2c3ae0f04b48e636f5fefefef6e9",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -15672,7 +15672,7 @@
   "status": "source-checked",
   "file": "scalability.md",
   "topic": "production",
-  "sha256": "e66aae99ebf191ab9b9828800966ad5a5924c854f93ad20a03c97dbee76e58cf",
+  "sha256": "828a51a82aa965a653e75b3267e719d90de525c832de9ffd1f62b75ae14da792",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/tools/sizing",
@@ -18337,7 +18337,7 @@
   "status": "source-checked",
   "file": "data-quality.md",
   "topic": "data",
-  "sha256": "e5116123cef9319fb7edf9e17ee1ffb508dcf96eb77c04d3adb61209bdfb20e9",
+  "sha256": "abd257c3b102e7ecf7bd07cd7c6cae9250a7bc1d4dd808e7ffd1d6a5bdc2efae",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/prepare-source-data.md",
@@ -19403,7 +19403,7 @@
   "status": "source-checked",
   "file": "graph-rag.md",
   "topic": "rag-agents",
-  "sha256": "e0b9476ee478125586687458fc98473172e661073e348691cd34874cb5d1f026",
+  "sha256": "f6fc5a3e27e861233819f46d48acb06b61bb066173a1c1b93dd8cffa8b823691",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/graph_rag_with_milvus.md",
@@ -21894,7 +21894,7 @@
   "status": "source-checked",
   "file": "memory-capacity.md",
   "topic": "production",
-  "sha256": "d52dc7b0ab6db8d5228403eb1f60e31f7339f406a0b699bb85b11aca42216b70",
+  "sha256": "8be1857311d6bd7f9fcaadc9c3a88efce0497d7a954b3b21002c5e9df02610c3",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/index-explained.md",
@@ -23476,7 +23476,7 @@
   "status": "source-checked",
   "file": "mmap.md",
   "topic": "retrieval",
-  "sha256": "eadca1715f1684f568e54e47bd13075e5d73f3207cd12390beb40f3385f511cf",
+  "sha256": "b2433fe6c8b059b7adbc0e6be5f99b2a75bec01c1cb0568fe8a0679db1d3745f",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -23766,7 +23766,7 @@
   "status": "source-checked",
   "file": "sparse-inverted.md",
   "topic": "retrieval",
-  "sha256": "3792a0346c168e21f5e201d4a2bb6c0c318f75fbb77f16705a31ad9ef82ab391",
+  "sha256": "1a109f88895f21f900662681f8e902e6e39b465e866a1f75c31c8030155db33b",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -23835,7 +23835,7 @@
   "status": "source-checked",
   "file": "milvusclient.md",
   "topic": "ecosystem",
-  "sha256": "7a9617b88b8e6498bafab8a5646da6a2fbe9042728da293443a0873436a82714",
+  "sha256": "86bef72463cba350fb181e438414b45ab986582ab9fa59ceb91eae0324dd5b7a",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/index-explained.md",
@@ -23959,7 +23959,7 @@
   "status": "source-checked",
   "file": "memory-lifecycle.md",
   "topic": "rag-agents",
-  "sha256": "a23513b00a702aa00499fe29cb23c7c84ceb2bebd8e1f66d712b775710cd4e54",
+  "sha256": "75a22532f8999df7569237a8d0a981aedb00bbff16681465d09764fea2d68c1c",
   "checkedAt": "2026-10-21",
   "sources": [
    "https://milvus.io/docs/basic_memory_with_milvus.md",
@@ -24006,7 +24006,7 @@
   "status": "source-checked",
   "file": "multimodal-curation.md",
   "topic": "data",
-  "sha256": "b213db234af9b25e7155986c42f54b6f5570252c86aea8766265c4b23848247c",
+  "sha256": "f0d0c0e4d560a5ef00a093e10e68676aa68faa44f66800b3b4d46659dfd8d327",
   "checkedAt": "2026-10-21",
   "sources": [
    "https://milvus.io/docs/multi-vector-search.md",
@@ -24051,7 +24051,7 @@
   "status": "source-checked",
   "file": "lake-serving-tiers.md",
   "topic": "lake",
-  "sha256": "890aa132d60eb0505d195bd9057175a273aa43435d226e37799ac347b46d4a62",
+  "sha256": "26d08df3a53533e9eb10e4b858fd2f54661b8bf98f8ed89df1ce7ae0a3e5b6e4",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/tiered-storage-overview.md",
@@ -24206,7 +24206,7 @@
   "status": "source-checked",
   "file": "lake-source-identifiers.md",
   "topic": "lake",
-  "sha256": "e4239567028f604e5d34a3de62b0e883c8a65eb32fd4965b9897e1fe8420a836",
+  "sha256": "85e0ee36db060fe47012c421ac136feb2e72bc173b889a1e23300e897701c0e1",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/primary-field.md",
@@ -24277,7 +24277,7 @@
   "status": "source-checked",
   "file": "lake-deletions.md",
   "topic": "lake",
-  "sha256": "8616ea5e89e58fcbece0f8020256bdc83c75f02b9a6cb89ea99cd5f8f9127144",
+  "sha256": "9b1a2722585d5e32e61888982b65bd3b24e6e22356a545e81de8af6e683933d7",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/delete-entities.md",
@@ -24320,7 +24320,7 @@
   "status": "source-checked",
   "file": "external-refresh.md",
   "topic": "lake",
-  "sha256": "4d04fd35ff29489ff7677e41a664ac8a9a8bca5bbb42f0f8d37f0c9353b0a10d",
+  "sha256": "b3a99ebdffc28f0f27be057c96c5426f78c0bfcfab3622259c24786dd899f79d",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/create-an-external-collection.md",
@@ -24357,7 +24357,7 @@
   "status": "source-checked",
   "file": "reproducible-snapshots.md",
   "topic": "lake",
-  "sha256": "3d62e22526a20392dfcf4fbbf7843bf239118a7bfc1ddfaa27ed0c85be6fb827",
+  "sha256": "5b748dc45b94b187a0148a571da6e4f4dbab512f9bff9f4592f9825a1c5cf1e8",
   "checkedAt": "2026-10-21",
   "sources": [
    "https://milvus.io/docs/snapshots.md",
@@ -24391,7 +24391,7 @@
   "status": "source-checked",
   "file": "trajectory-retrieval.md",
   "topic": "rag-agents",
-  "sha256": "c3de5b3c04b0734e6b68fabd666335e86ae87b6702d8933e57923b70a4fc74fb",
+  "sha256": "131c671c7c689a257d4c0677d004c80af6b5d6c91da9efcaa51840561086bd0f",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -24438,7 +24438,7 @@
   "status": "source-checked",
   "file": "diversity-sampling.md",
   "topic": "data",
-  "sha256": "a450cf59ba7ac774357eb2d2d1f4a4cabf4fa7429496a62013ca35000dec4a89",
+  "sha256": "858d387845cf80340355396103cf8c90637ff6579c2ae3c51552e3cd6c3b1d9d",
   "checkedAt": "2026-10-21",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -24478,7 +24478,7 @@
   "status": "source-checked",
   "file": "rollout-selection.md",
   "topic": "rag-agents",
-  "sha256": "0cf200c0550577bb4fccb7ac7b4f6270964f58604ccaeb6d0aab894b842f39c0",
+  "sha256": "ee1f76fe885a3df4cd17040a86269217ccb75beffff6f8e727bbff1ac1ed5e63",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -25573,7 +25573,7 @@
   "status": "source-checked",
   "file": "lance-iceberg-choice.md",
   "topic": "lake",
-  "sha256": "05e6f7574db3b7a277ee51ef1cd54b4ca1d1b68b0284e9460767c0ecc797cf77",
+  "sha256": "f084cf5feec0718a9dc11f4c01eb76e48eee89982f6b6fe02f6125b86ee1fe1e",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/storage-v3.md",
@@ -25612,7 +25612,7 @@
   "status": "source-checked",
   "file": "langchain-with-milvus.md",
   "topic": "frameworks",
-  "sha256": "98aacbdf62891a5c377c9a3cb82070739fcda5de5be760042936af3f1dfdb07b",
+  "sha256": "e97bae881fe7f2818cfbd03df91d1224e2cf9c3500282c22fec40e4317d5b504",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/integrate_with_langchain.md",
@@ -25681,7 +25681,7 @@
   "status": "source-checked",
   "file": "llamaindex-with-milvus.md",
   "topic": "frameworks",
-  "sha256": "31ce94d94054619916138c279f70eaf7f784f923568d227b595e3839a93ea49b",
+  "sha256": "ade23810046cd8c8cd7b64b9a6f5b4e1dba89d56210eb378719d22c0c64f784a",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/integrate_with_llamaindex.md",
@@ -25714,7 +25714,7 @@
   "status": "source-checked",
   "file": "byoc-deployment.md",
   "topic": "production",
-  "sha256": "a31f03e531c898bda18a69c0db09f33932921978d8f31985000dc1aa1b041ca7",
+  "sha256": "50d1b6f081f5546e588b87de897c8703c5d14a156adc3ea9084324e71f8f9a88",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://docs.zilliz.com/docs/byoc/byoc-intro",
@@ -25776,7 +25776,7 @@
   "status": "source-checked",
   "file": "milvus-capacity-planning.md",
   "topic": "production",
-  "sha256": "a38febc51fe7c403e82934e2f855ae56e84b305e0f56b57f06778b3414ca67ed",
+  "sha256": "364bb79d0c92c4bd69414dd6489f7bb713cb08c1df35f2b48c4ec171ba2c9dc2",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/tools/sizing",
@@ -25853,7 +25853,7 @@
   "status": "source-checked",
   "file": "milvus-installation-path.md",
   "topic": "production",
-  "sha256": "c5ff1bbefcab1a97a822aee7c69ae61fa9bee8aceee5331ee609a9a88f3c8e6c",
+  "sha256": "26666f95bd9406e2e79fe551cfd57e6fd6d740d94eff4e79db5155985fe04d90",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/tools/sizing",
@@ -25932,7 +25932,7 @@
   "status": "source-checked",
   "file": "milvus-model-functions.md",
   "topic": "production",
-  "sha256": "977a2b7f22ffd005632fb5ca5b812d631376b59f71f389637c7501fc83d7916b",
+  "sha256": "222fe2c1d55c98f6ac88512997e14ffc04b843a24f4b9f087502b294344d8b81",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://zilliz.com/cloud",
@@ -25975,7 +25975,7 @@
   "status": "source-checked",
   "file": "milvus-model-library-support.md",
   "topic": "ecosystem",
-  "sha256": "978c641e198a0b60d1dfe687157c30c66c7a05b62e5534f73bfec7da293a385b",
+  "sha256": "d7d24e24efc6bd667a9e56509b5c1e827991e4a58492749807c3fa825b6596b9",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/dense/openai.py",
@@ -26040,7 +26040,7 @@
   "status": "source-checked",
   "file": "milvus-security-rbac.md",
   "topic": "production",
-  "sha256": "7153c89492917eb6578d4295e7f4f15716aff48a1c30e8705e377bae59d36124",
+  "sha256": "bd61da2e2dfa40c9402ded19e9b137147c65ae71e20d6a989cff24ada7e2941e",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://zilliz.com/cloud",
@@ -26125,7 +26125,7 @@
   "status": "source-checked",
   "file": "mmeb-multimodal-evaluation.md",
   "topic": "models",
-  "sha256": "070975bdab61991a15199ba28611215443cb1b2d72afa8693e096eddba409da8",
+  "sha256": "0254139519b8fcc7e285f48f71516ae38cdb5c2300ec0c00b75a015297ed13f7",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://huggingface.co/spaces/TIGER-Lab/MMEB-Leaderboard",
@@ -26216,7 +26216,7 @@
   "status": "source-checked",
   "file": "mteb-embedding-leaderboards.md",
   "topic": "models",
-  "sha256": "4a69284c32390f50c0b00b7998ae58e991a129247e8cf8436cfdfffbf2ad7cd2",
+  "sha256": "d3ca9cae8ea762575184c6616994550c14b5199c658e38a190a6def9e83491d2",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://huggingface.co/spaces/mteb/leaderboard",
@@ -26431,7 +26431,7 @@
   "status": "source-checked",
   "file": "reranking-model-catalog.md",
   "topic": "models",
-  "sha256": "117dd26f3c31043cc451c3e2c98064fa9c87a4b661588543633fc453c3887dba",
+  "sha256": "a7a0f378eda491fe73550e92ff68404e746bbd371e73c372964b78a08eccb4bf",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://docs.cohere.com/docs/rerank-overview",
@@ -26543,7 +26543,7 @@
   "status": "source-checked",
   "file": "sentence-transformers-with-milvus.md",
   "topic": "frameworks",
-  "sha256": "b085bcaae9612d3098ac0e12a62001d461828d8425e7585d257b16ba42eb71f1",
+  "sha256": "a0f134fdf4d720b819e1867e93489a5c62c8e4d5832b2bad610181308a2bb3e4",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -26616,7 +26616,7 @@
   "status": "source-checked",
   "file": "anomaly-discovery.md",
   "topic": "applications",
-  "sha256": "9127e684b9351a7c80a815a0905c38e076155ea78925344190949bbae9e61f4b",
+  "sha256": "fea192b106efc351bc29f89b79e8d6d36e090ee805411e12c9f2459b644c3460",
   "checkedAt": "2026-10-21",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -26655,7 +26655,7 @@
   "status": "source-checked",
   "file": "code-search.md",
   "topic": "applications",
-  "sha256": "37a766c2f080e18e3acdc865491e4f22ff792f079265d74685c3742be0d745b6",
+  "sha256": "63377b7b19a4538fa5f904c7fa53c34d12d8947594f064a26531b365b7327c84",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://github.com/zilliztech/claude-context",
@@ -26694,7 +26694,7 @@
   "status": "source-checked",
   "file": "entity-resolution.md",
   "topic": "applications",
-  "sha256": "d17a724d485924311dac707a254bdb0c45cc0356e1ab88116bb0736d8f0ed661",
+  "sha256": "b1425d2bbf64eb2c0c08a16d9eca9f8e354805b07cc7f23960d2b31b7c39a0b5",
   "checkedAt": "2026-10-21",
   "sources": [
    "https://milvus.io/docs/full-text-search.md",
@@ -28058,7 +28058,7 @@
   "status": "source-checked",
   "file": "hard-negatives.md",
   "topic": "data",
-  "sha256": "daab4a942992a93516aafd288b76fdbeed7c51927a6085d1542b74a96a1e2fbd",
+  "sha256": "bf85e3820033cffd281698179390f74a58653c5dde8a8eb0d42e791d7a6ac263",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -32466,7 +32466,7 @@
   "status": "source-checked",
   "file": "cost.md",
   "topic": "production",
-  "sha256": "5378b7dea83242ec17c128493818a405552a8317061f49b17332c75282c4609e",
+  "sha256": "5a9b3f84d4b51592a71c0c467cc049987a29e41998fd7825fe39dad50a0308a6",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/install-overview.md",
@@ -32550,7 +32550,7 @@
   "status": "source-checked",
   "file": "memory-types.md",
   "topic": "rag-agents",
-  "sha256": "b4e130aa7d30c60ad907d6564b6b5adf2663ce8f27ecf6e491249624a76fea33",
+  "sha256": "6a7b861732c57042ce8df928680d53eddb76930ff4d6cbcb03d5fca98d40832c",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/basic_memory_with_milvus.md",
@@ -34756,7 +34756,7 @@
   "status": "source-checked",
   "file": "semantic-cache.md",
   "topic": "rag-agents",
-  "sha256": "555fcf2d4f7430392ede1a85674d202cbfdce2ffee113e3835d72f1e388f68a7",
+  "sha256": "fddb311624b67c3a0a6d0a258c10d205ba89d4ef4c64815749cffda24e621c91",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://github.com/zilliztech/GPTCache",
@@ -35479,7 +35479,7 @@
   "status": "source-checked",
   "file": "attu.md",
   "topic": "ecosystem",
-  "sha256": "20bf145a6b992b70c0bd51b0481d7dbc73c608d8d2327e1c99f74e83f625b08b",
+  "sha256": "276cc6a8fe6476360f3fa836df247f7db845270b266c457cdbd349baa40fcd3d",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/rbac.md",
@@ -36261,7 +36261,7 @@
   "status": "source-checked",
   "file": "diskann.md",
   "topic": "retrieval",
-  "sha256": "a929f91b5d9da5da2b0fd5d1f7c99b5e7f8b87eddf6b2ec62580b2bdc30d3af6",
+  "sha256": "f1525893e5298d202c525b59cbebf7d69dd2b55cdf04044835140fa3a58b50c7",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://www.microsoft.com/en-us/research/publication/diskann-fast-accurate-billion-point-nearest-neighbor-search-on-a-single-node/",
@@ -36518,7 +36518,7 @@
    "what-is-vector-quantization-in-embeddings",
    "how-do-you-choose-the-right-index-type-for-your-workload"
   ],
-  "sha256": "71c0092442bc713bf7c133a45ce54a206a69a7f4e477bf9fa1f862438ea90132"
+  "sha256": "a3ce82af2f1a2b091afa1bb4e2fe03ae615fcf91a69a7f437488d9b3ccffc074"
  },
  "what-is-faiss-and-how-does-it-enhance-ir": {
   "status": "retired",
@@ -36596,7 +36596,7 @@
   "status": "source-checked",
   "file": "fulltext.md",
   "topic": "retrieval",
-  "sha256": "9468ab7eeac97d0859758641eaeb1a3e22628945477da89a8c804b68e7bfbd87",
+  "sha256": "4b81c2cdb9bafb0436c73f91235573539f53cd3c099916547b25b76045e6c82f",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/full-text-search.md",
@@ -36711,7 +36711,7 @@
   "status": "source-checked",
   "file": "gpu-cagra.md",
   "topic": "retrieval",
-  "sha256": "97e5df95f2a365165cf1af14e459714cedaab1b3f8d960e746382b6111786824",
+  "sha256": "1910dbbc916230b1d715ac41dba9909172869f4e4251e19a856772cf497dfb60",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://arxiv.org/abs/2308.15136",
@@ -37035,7 +37035,7 @@
   "status": "source-checked",
   "file": "rabitq.md",
   "topic": "retrieval",
-  "sha256": "803a880d6f54e2f5994bc911c961c3107d32114905dca923c576f43e022ad1a4",
+  "sha256": "716126d09069dbe856128783d0297b0ec16e4a76e1f9f26b2affdcf3588d329e",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -37094,7 +37094,7 @@
   "status": "source-checked",
   "file": "knowhere.md",
   "topic": "ecosystem",
-  "sha256": "45ff2dbec9e2ac75dd6b96683fa7d08a56428db82a10ec4054a44a3256c78856",
+  "sha256": "127d564dc4633c932a18a554dc376b939a82baae99e2f5463468784fa00a6b2d",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -37322,7 +37322,7 @@
   "status": "source-checked",
   "file": "milvus-storage.md",
   "topic": "ecosystem",
-  "sha256": "bce08a58cf044bdfde521aedf1e4fcb3795a0c6a1e7c6d300534ad6501100520",
+  "sha256": "1b2b8c5bea71580aa8f7ae16e35b395418d30facd6ea585e7f907828fd033ff9",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/storage-v3.md",
@@ -37362,7 +37362,7 @@
   "status": "source-checked",
   "file": "minhash-lsh.md",
   "topic": "retrieval",
-  "sha256": "830b49386107eaf58ae30d0161985e7f6bffe5d5eb05ee3728a298a393d8805a",
+  "sha256": "3035ec62eb4d5beac256065f66c8832a50e5a9e4f16e1333d54169b26aa59c60",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",
@@ -40321,7 +40321,7 @@
   "status": "source-checked",
   "file": "chunking.md",
   "topic": "rag-agents",
-  "sha256": "e804907d880380414b0fe31888047ae922f8d67133c47604b6140953c6525b73",
+  "sha256": "32ad083a4163d021fc12ed8dc59f2d727b9a0fb41b222b8ad8ad4e7d798fa0f4",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/build-rag-with-milvus.md",
@@ -42800,7 +42800,7 @@
   "status": "source-checked",
   "file": "reranking.md",
   "topic": "retrieval",
-  "sha256": "7c2d2c241548b9594899fc59692f5a441a5ae68d90d9cf5aa46b78dfaebf0fa3",
+  "sha256": "f5ad25e304abff3abe4e18084a01c9043579fdd9445c57bed9f76b4ed440a9ae",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/bootcamp",
@@ -45446,7 +45446,7 @@
   "status": "source-checked",
   "file": "range-search.md",
   "topic": "retrieval",
-  "sha256": "9d3d349ea4c6094bedc04d7e7593e940114f68fbdf7e01175118d2f52f396e7f",
+  "sha256": "d14031d9e73c10a04ca4c6ac919a782981df79437577382f5395f1d3ac065fe4",
   "checkedAt": "2026-10-20",
   "sources": [
    "https://milvus.io/docs/quickstart.md",

@@ -7,6 +7,8 @@ order: 112
 
 Turn a Milvus workload into a capacity estimate in four passes: size the data (vectors, scalar fields, and index), size the serving layer for your query load and replicas, add headroom for ingestion, maintenance, and growth, then validate on a representative slice before you buy. The [Milvus sizing tool](https://milvus.io/tools/sizing) does the first pass for self-hosted Milvus in seconds; for managed Milvus, [Zilliz Cloud](https://zilliz.com/pricing) publishes how many vectors each compute unit holds per cluster type. Either way, the estimate is only as good as the workload description behind it.
 
+![Compare total cost at a matched service target. Match recall, latency, availability and workload before comparing prices.](/images/ai-reference/total-cost-layers.svg)
+
 ## What inputs do you need?
 
 Write these down before running any calculator. Most bad estimates come from a missing line here, not from the arithmetic.

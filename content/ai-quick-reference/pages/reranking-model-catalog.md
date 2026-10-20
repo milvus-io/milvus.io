@@ -7,6 +7,8 @@ order: 119
 
 A reranking model takes a query and a short list of candidates that a first-stage search already found, reads each query–candidate pair together, and reorders the list by relevance. In a Milvus pipeline, vector, sparse, or hybrid search retrieves the top 25 to 100 candidates quickly, and the reranker spends more compute on just those to put the best evidence first. The right reranker depends on your latency budget, languages, modality, and license more than on any single leaderboard score.
 
+![Retrieve broadly, rerank a shortlist. A reranker cannot recover a document absent from its candidate pool.](/images/ai-reference/rerank-cascade.svg)
+
 ## Why rerank at all?
 
 Embedding search is fast because documents are encoded once, independently of any query. That independence is also its limit: the model never sees the query and the document side by side. A reranker, usually a cross-encoder, feeds both texts through the same network so attention can connect query terms to the exact passage that answers them. The result is noticeably better precision at the top of the list, which is what a RAG prompt or a user actually sees.

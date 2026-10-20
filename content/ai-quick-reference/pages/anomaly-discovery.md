@@ -7,6 +7,8 @@ order: 99
 
 Yes. If you embed records with a model that places similar items close together, an anomaly is a record whose neighborhood is unusually empty: its nearest "normal" neighbors are far away, or there are very few of them within a fixed radius. A vector database turns that idea into a repeatable service. You store embeddings of a reference population, query each new record for its k nearest neighbors, and turn the distances into a score that sends the most unusual cases to a reviewer. The score ranks candidates for investigation. It is not a calibrated probability that something is broken, and it is only as good as the embedding and the reference set behind it.
 
+![Sparse neighborhoods flag candidates for review. A capped range-search count is a lower bound, not a complete density.](/images/ai-reference/anomaly-neighborhood.svg)
+
 ## Why do nearest-neighbor distances expose anomalies?
 
 Distance-based detection rests on a simple assumption: normal data is dense, and unusual data sits in sparse regions of the embedding space. Four scores come up again and again:

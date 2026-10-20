@@ -7,6 +7,8 @@ order: 95
 
 Vector search lets a coding agent find code by what it does rather than by what it is called. The repository is split into functions and classes, each unit is embedded with a code-aware model, and a natural-language request such as "where do we retry failed payments?" is matched against those vectors. In practice the best results come from combining that semantic signal with lexical search for exact identifiers, metadata filters for repository and revision, and an agent that still opens the files and checks callers before it edits anything.
 
+![Coding agents need lexical and semantic evidence. Vector similarity complements exact code search; it does not prove behavior.](/images/ai-reference/code-retrieval-flow.svg)
+
 ## Why is code harder to search than ordinary text?
 
 Source code mixes two kinds of meaning. One is exact: a function named `charge_with_backoff`, an error string like `ECONNRESET`, a config key, a file path. The other is conceptual: "the place where we throttle outbound requests" might live in a class called `RateGate` that never mentions throttling. Grep and keyword search are excellent at the first kind and blind to the second. Embedding search is the reverse: it connects intent to implementation, but it can blur two functions with nearly identical names, and a model trained on public code may not understand an organization's internal vocabulary.

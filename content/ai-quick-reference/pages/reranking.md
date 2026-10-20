@@ -7,7 +7,7 @@ order: 17
 
 Reranking is a second retrieval stage that takes the top candidates from a fast first-stage search and reorders them with a more accurate, more expensive relevance model. A typical RAG pipeline retrieves 50 to 200 passages with vector or hybrid search, scores each one against the query with a cross-encoder, and passes only the best 5 to 10 to the language model. The first stage is built for recall at scale; the reranker is built for precision on a short list.
 
-![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
+![Retrieve broadly, rerank a shortlist. A reranker cannot recover a document absent from its candidate pool.](/images/ai-reference/rerank-cascade.svg)
 
 ## Why isn't vector search enough on its own?
 

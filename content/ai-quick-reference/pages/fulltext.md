@@ -11,6 +11,8 @@ Full-text search finds documents by the words they contain. Text is broken into 
 
 In Milvus, BM25 full-text search is built in. You store raw text in a `VARCHAR` field, a BM25 function turns it into a sparse vector automatically, and you search with plain query text.
 
+![From words to ranked documents. Lexical overlap and semantic similarity are complementary signals.](/images/ai-reference/bm25-pipeline.svg)
+
 ## How does full-text search work?
 
 A full-text engine does three jobs.

@@ -7,6 +7,8 @@ order: 30
 
 Sharding splits data into disjoint pieces spread across nodes, so each node stores and searches only part of the corpus; it is how a system grows beyond one machine's capacity and write throughput. Replication keeps additional copies of the same data on different nodes, so the system can survive a node failure and serve more concurrent reads. In short, sharding scales **capacity and writes**, replication scales **availability and reads**, and production vector databases use both at once.
 
+![Shards divide data; replicas copy serving capacity. More shards and more replicas have different resource and routing costs.](/images/ai-reference/shards-and-replicas.svg)
+
 ## Sharding vs replication at a glance
 
 | | Sharding | Replication |

@@ -7,7 +7,7 @@ order: 46
 
 A deletion should flow from the system of record outward: delete the row in the lake table first, then make every derived copy — vector indexes, chunk tables, caches, exports, and snapshots — catch up within a defined deadline, and verify that the record no longer comes back from any of them. In practice that means a written deletion contract, stable IDs that link source records to every derived record, and a pipeline that turns one source delete into many downstream actions. Removing a vector from one index is only one step of that pipeline.
 
-![Write path from source change to serving](/images/ai-reference/write-path.svg)
+![Deletion must reach every derived copy. A curation exclusion and an erasure request have different semantics.](/images/ai-reference/lake-delete-propagation.svg)
 
 ## Why is deletion harder in a vector lake than in one database?
 

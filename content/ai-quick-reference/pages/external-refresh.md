@@ -7,7 +7,7 @@ order: 42
 
 Refresh a Milvus external collection only after the source system has committed a complete, consistent version of the data, then call `refresh_external_collection`, poll the returned job until it reports `RefreshCompleted`, and verify a set of known records before telling users the new data is live. Refresh is the moment a lake version becomes searchable, so treat it like a small release: one trigger per dataset at a time, a recorded source version, and a check that proves the result.
 
-![Operations lifecycle for a refresh](/images/ai-reference/operations.svg)
+![Refresh is a small data release. An accepted refresh request does not prove that the new data is searchable.](/images/ai-reference/external-refresh-release.svg)
 
 ## What does a refresh actually do?
 

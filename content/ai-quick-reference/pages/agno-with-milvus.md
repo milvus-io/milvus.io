@@ -7,6 +7,8 @@ order: 108
 
 Agno is an open-source Python framework for building agents. You wire a model, tools, memory, and **knowledge** into an `Agent`. Knowledge is Agno's retrieval layer. A `Knowledge` object reads files, URLs, or text, chunks and embeds them, and stores them in a vector database. Milvus is one of the supported backends, through `agno.vectordb.milvus.Milvus`. When the agent runs with knowledge search enabled, it gets a search tool, decides when to call it, and Milvus returns the most similar chunks, filtered by metadata if you ask.
 
+![Framework orchestration and vector storage. Framework state, checkpoints and model inference have separate owners.](/images/ai-reference/framework-milvus-roles.svg)
+
 ## Install and connect
 
 ```bash

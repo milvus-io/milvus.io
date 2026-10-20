@@ -7,7 +7,7 @@ order: 45
 
 An experiment is reproducible when someone else can rerun it later and get the same numbers, or explain exactly why they differ. For vector search and training, that means pinning five things together: the **data version** (a lake snapshot and a Milvus collection snapshot), the **embedding model and preprocessing**, the **index and search configuration**, the **query and label set**, and the **code and environment**. Record identifiers for all five with every result, and keep the underlying data alive for as long as the result might need to be rerun.
 
-![Pinning data, model, and evaluation together](/images/ai-reference/evaluation.svg)
+![Reproduce the experiment, not just the data. A data snapshot alone does not guarantee identical ANN result order.](/images/ai-reference/snapshot-contract.svg)
 
 ## Why are vector experiments hard to reproduce?
 

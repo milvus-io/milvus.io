@@ -78,9 +78,16 @@ reader's question. Examples and numeric calculations are illustrative; they are
 not customer measurements or local model benchmark results. Customer stories are
 linked as additional reading without implying equivalent outcomes.
 
-Twenty-five original concept diagrams appear across 70 articles. English and Chinese SVG
-variants live in `public/images/ai-reference/`. They are schematics, not measured
-plots. Keep descriptive alt text, accessible SVG titles/descriptions, and visible
+All 113 articles now have a concept diagram or workflow: 117 placements use 70
+distinct SVG assets, including 46 new original English schematics added on
+2026-10-21. Existing English and Chinese variants remain in
+`public/images/ai-reference/`. The new illustrations and their article placements
+are recorded in `illustrations-2026-10-21.json`; regenerate those SVGs with
+`python3 scripts/generate-ai-reference-illustrations.py`. The accompanying
+`illustration-review-2026-10-21.json` records the baseline and text-preservation
+check. Outside the explicitly authorized RaBitQ inner-product correction, article
+prose, code, headings and links are unchanged in the illustration revision.
+The diagrams are schematics, not measured plots. Keep descriptive alt text, accessible SVG titles/descriptions, and visible
 explanations of representation, data ownership, or stage boundaries. The content
 validator checks local image paths and assets. Reference rendering passes an empty
 documentation version so root-relative images are not prefixed with `/docs/`.

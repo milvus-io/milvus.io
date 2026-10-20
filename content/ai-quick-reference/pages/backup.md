@@ -7,7 +7,7 @@ order: 36
 
 Plan vector-database recovery backwards from two numbers: how much recent data you can afford to lose (the recovery point objective, RPO) and how long search can be down (the recovery time objective, RTO). Then pick the mechanisms that meet them: point-in-time backups for mistakes and corruption, replication for node or zone failures, and change data capture when the RPO is measured in seconds. In Milvus, that usually means [Milvus Backup](https://milvus.io/docs/milvus_backup_overview.md) for recoverable copies, in-memory replicas for availability, and [Milvus CDC](https://milvus.io/docs/milvus-cdc-overview.md) for a continuously synchronized standby.
 
-![Verify the dataset before switching traffic](/images/ai-reference/migration.svg)
+![A backup is useful when a restore succeeds. Replication, CDC, snapshots and backup solve different recovery problems.](/images/ai-reference/backup-restore-proof.svg)
 
 ## Why isn't replication a backup?
 

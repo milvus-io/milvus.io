@@ -9,6 +9,8 @@ Milvus Model (the `pymilvus.model` package) is a Python library that gives embed
 
 Every embedding function follows the same pattern: `encode_documents()` for the corpus, `encode_queries()` for search input, and a `dim` property that tells you how large to make the vector field. Every reranker is a callable that takes a query, a list of documents, and `top_k`. Swapping OpenAI for a local Sentence Transformers model is therefore a one-line change, as long as you re-embed the collection.
 
+![Three places to generate a representation. A wrapper export is not proof of executed inference or universal compatibility.](/images/ai-reference/model-inference-ownership.svg)
+
 ## How do you use a Milvus Model embedding function?
 
 Install the extra and encode a few documents:

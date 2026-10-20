@@ -7,7 +7,7 @@ order: 33
 
 Estimate vector-search memory in layers: raw vectors (`count × dimension × bytes per value`), plus the index structure, plus scalar fields and IDs, multiplied by the number of in-memory replicas, plus headroom for query execution, ingestion, and maintenance. For float32 vectors, one million 768-dimensional embeddings are about 3.07 GB raw before anything else is added. The index type decides whether the total lands well above that figure (HNSW keeps the vectors and adds a graph) or well below it (quantized and disk-based indexes keep a compressed copy in RAM).
 
-![Memory hierarchy for vector search](/images/ai-reference/memory.svg)
+![Vector bytes are only one part of memory. Payload compression ratios are not whole-service memory reductions.](/images/ai-reference/memory-budget.svg)
 
 ## Step 1: How big are the raw vectors?
 

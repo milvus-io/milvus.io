@@ -7,6 +7,8 @@ order: 74
 
 Give every memory record an explicit lifecycle instead of letting it live forever. **Corrections** should create a new record that supersedes the old one, with the old record marked inactive rather than left to compete on similarity. **Expiry** should be set per memory type: task state ends with the task, episodes age out on a TTL or decay, and confirmed facts last until something replaces them. **Deletion** must remove a memory everywhere it was copied: the source record, the vector index, caches, and any summaries derived from it. Milvus supports each step with upserts, filtered deletes, collection-level TTL, and (in Milvus 3.0) per-entity TTL.
 
+![Eligibility comes before memory ranking. Down-ranking an obsolete fact is not the same as making it ineligible.](/images/ai-reference/memory-lifecycle-flow.svg)
+
 ## The lifecycle of one memory
 
 A memory moves through a small set of states, and making them explicit is what keeps retrieval honest:

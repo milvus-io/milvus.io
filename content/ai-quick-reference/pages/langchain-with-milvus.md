@@ -9,6 +9,8 @@ LangChain is an open-source framework that gives language-model applications a c
 
 The division of work is simple. The embedding model turns text into vectors, Milvus stores those vectors with their text and metadata and runs filtered nearest-neighbor or hybrid search, and the language model writes an answer from whatever the retriever hands it. LangChain is the glue that keeps those three swappable.
 
+![Framework orchestration and vector storage. Framework state, checkpoints and model inference have separate owners.](/images/ai-reference/framework-milvus-roles.svg)
+
 ## Which package should you install?
 
 Use the dedicated partner package, not the older class in `langchain_community.vectorstores`:

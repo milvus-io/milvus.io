@@ -9,7 +9,7 @@ milvus-storage is an open-source columnar storage engine, built on Apache Arrow,
 
 In short: Knowhere is how Milvus searches vectors, and milvus-storage is how Milvus stores the rows behind them. The rest of this page explains what problem it solves, how its design works, and what changes when you turn Storage V3 on.
 
-![Keep logical identity separate from file position](/images/ai-reference/format.svg)
+![Storage readers follow a committed manifest. milvus-storage is a storage layer; Knowhere serves vector-index algorithms.](/images/ai-reference/storage-manifest.svg)
 
 ## Why did Milvus need a new storage engine?
 

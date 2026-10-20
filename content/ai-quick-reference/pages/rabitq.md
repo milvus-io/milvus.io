@@ -19,7 +19,7 @@ RaBitQ was introduced by Jianyang Gao and Cheng Long at SIGMOD 2024. Its goal wa
 
 **2. Randomly rotate, then take one bit per dimension.** The normalized residual is multiplied by a random orthogonal matrix before quantization. The rotation spreads information evenly across coordinates so no single dimension dominates, which is what makes a sign-like 1-bit code informative. The Milvus implementation shows this as an `RR({dim})` (random rotation) stage in its FAISS factory string, followed by `IVF{nlist},RaBitQ`. A `D`-dimensional vector becomes a `D`-bit string, so a 768-dimensional vector takes 96 bytes instead of 3,072.
 
-**3. Estimate distances with a corrected, unbiased estimator.** Next to each code, RaBitQ stores a couple of precomputed per-vector constants. At query time the query stays at full precision, and the squared distance is estimated as the sum of the vector's distance to its centroid, the query's distance to that centroid, and a correction term built from the inner product between the binary code and the query residual. Because the code is binary, that inner product reduces to bit operations and `popcount`, which modern CPUs execute very quickly. The paper proves the estimator is unbiased and gives an error bound that tightens as dimension grows, which suits the 512 to 4096 dimensional embeddings common today.
+**3. Estimate distances with a corrected, unbiased estimator.** Next to each code, RaBitQ stores a couple of precomputed per-vector constants. At query time the query stays at full precision, and the squared distance is estimated as the sum of the vector's distance to its centroid, the query's distance to that centroid, and a correction term built from the inner product between the binary code and the query residual. With a full-precision query, that inner product combines binary code signs with floating-point query values; it does not reduce to `popcount` alone. The optional query-quantization path (`rbq_query_bits` from 1 to 8) enables bitwise acceleration using `popcount`. The paper proves the estimator is unbiased and gives an error bound that tightens as dimension grows, which suits the 512 to 4096 dimensional embeddings common today.
 
 ## How is RaBitQ different from PQ and plain binary quantization?
 
@@ -27,7 +27,7 @@ RaBitQ was introduced by Jianyang Gao and Cheng Long at SIGMOD 2024. Its goal wa
 | --- | --- | --- | --- |
 | Bits per dimension | `m × nbits / D`, tunable | 1 | 1 |
 | Codebook training | k-means per subspace | None | None (random rotation) |
-| Distance computation | Lookup table per query | Hamming distance | Popcount plus correction terms |
+| Distance computation | Lookup table per query | Hamming distance | Corrected inner product; popcount fast path with quantized queries |
 | Error guarantee | Empirical only | None | Theoretical bound |
 | Sensitivity to data drift | Codebooks can go stale | Low | Low |
 

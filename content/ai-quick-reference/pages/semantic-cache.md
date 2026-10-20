@@ -7,6 +7,8 @@ order: 79
 
 A semantic cache stores LLM responses keyed by the meaning of the request rather than its exact text. When a new prompt arrives, the cache embeds it, runs a nearest-neighbor search over previously answered prompts, and returns the stored response if the closest match is similar enough; otherwise the request goes to the model and the new answer is written back. It is useful when many users ask the same thing in different words, and it saves the most when model calls are slow or expensive. The risks are false hits (similar wording, different correct answer) and stale hits (the answer was right yesterday), so a production cache needs scoped keys, a calibrated threshold, and invalidation.
 
+![A similar question is not enough for a cache hit. Measure false hits and stale answers, not only cache-hit rate.](/images/ai-reference/semantic-cache-gate.svg)
+
 ## How does a semantic cache work?
 
 1. **Normalize and embed** the incoming prompt (often only the user's question, not the full system prompt).

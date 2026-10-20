@@ -9,7 +9,7 @@ HNSW_SQ, HNSW_PQ, and HNSW_PRQ are Milvus index types that keep the HNSW graph b
 
 The short version: start with HNSW_SQ at `SQ8` when you need roughly 4x smaller vectors with minimal tuning; move to HNSW_PQ or HNSW_PRQ only when memory is the hard limit and you are prepared to tune `m`, `nbits`, and refinement.
 
-![HNSW hierarchical graph navigation](/images/ai-reference/hnsw.svg)
+![Diagnose a recall plateau step by step. The shape of a recall curve alone does not identify the cause.](/images/ai-reference/hnsw-recall-diagnosis.svg)
 
 ## Why compress an HNSW index at all?
 

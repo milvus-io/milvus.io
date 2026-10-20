@@ -7,7 +7,7 @@ order: 44
 
 Apache Arrow and Apache Parquet are complementary columnar formats. **Arrow** is an in-memory format: uncompressed, cache-aligned column buffers that let embedding models, dataframes, and databases hand data to each other without row-by-row conversion. **Parquet** is an on-disk format: compressed, statistics-rich files that store embeddings and metadata cheaply in object storage. In a vector pipeline, data typically lives in Parquet at rest, is decoded into Arrow to be processed, and is written back to Parquet or loaded into Milvus.
 
-![Keep logical identity separate from file position](/images/ai-reference/format.svg)
+![File formats and table layers solve different jobs. Choose an integration against its documented version and capabilities.](/images/ai-reference/lake-format-roles.svg)
 
 ## Arrow vs Parquet at a glance
 

@@ -9,6 +9,8 @@ FAISS (Facebook AI Similarity Search) is an open-source C++ library from Meta, w
 
 Because FAISS is so widely used, its index names and its "index factory" notation have become a common vocabulary for talking about vector indexes. Milvus builds on several of the same ideas through its Knowhere engine, and Milvus 3.0 adds a `FAISS` index type that accepts FAISS factory strings directly.
 
+![Library, index layer and database. An ANN library supplies algorithms; a database adds operational semantics.](/images/ai-reference/faiss-knowhere-stack.svg)
+
 ## What problem does FAISS solve?
 
 Given a collection of `N` vectors and a query, the exact answer to "which `k` vectors are closest?" requires `N` distance computations. That is fine for thousands of vectors and too slow for hundreds of millions. FAISS provides data structures that trade a little accuracy for much less work, along with highly optimized code for the distance math itself (SIMD on CPU, CUDA on GPU). It supports L2 distance and inner product as its core metrics; cosine similarity is inner product on normalized vectors.

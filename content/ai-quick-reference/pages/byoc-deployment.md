@@ -7,6 +7,8 @@ order: 100
 
 The three options differ in who owns the infrastructure and who operates the database. With a **managed service** (SaaS), the vendor runs everything in its own cloud account. With **BYOC** (bring your own cloud), the vendor operates the database, but the data plane runs in your cloud account and VPC. With **self-hosted** Milvus, you run and operate everything yourself. Choose based on where data is allowed to live, how much operational work your team can absorb, and how you want to pay for compute.
 
+![Choose the operational responsibility boundary. Account ownership alone does not describe every operational responsibility.](/images/ai-reference/deployment-responsibility.svg)
+
 ## Managed vs. BYOC vs. self-hosted at a glance
 
 | | Managed SaaS (Zilliz Cloud) | BYOC (Zilliz Cloud BYOC) | Self-hosted Milvus |

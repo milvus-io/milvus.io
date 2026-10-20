@@ -7,6 +7,8 @@ order: 31
 
 A vector database scales to billions of vectors by combining four ideas: **approximate indexes** that avoid comparing a query against every vector, **compression and tiered storage** that shrink how much must sit in RAM, **horizontal partitioning** that spreads data and work across nodes, and **disaggregated architecture** that lets ingestion, indexing, and search scale independently. Whether a given system scales for *your* workload, though, depends less on vector count than on dimension, index type, filters, write rate, and concurrency, all measured at the recall you actually need.
 
+![Scale the stage that limits the workload. Vector count alone does not determine useful throughput or latency.](/images/ai-reference/scaling-bottlenecks.svg)
+
 ## Why is vector count the wrong unit?
 
 "One billion vectors" says little on its own. A billion 768-dimensional float32 vectors is about 3 TB of raw data before any index overhead, while the same count at 128 dimensions is about 0.5 TB. Add an HNSW graph, scalar fields, and JSON metadata and the memory picture changes again. Then serving demand multiplies it: 50 queries per second with top-10 and no filter is a very different load from 5,000 queries per second with a selective metadata filter and top-100.

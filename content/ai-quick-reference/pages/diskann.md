@@ -9,6 +9,8 @@ DiskANN is a graph-based approximate nearest-neighbor (ANN) index that keeps mos
 
 The algorithm comes from Microsoft Research ([Subramanya et al., NeurIPS 2019](https://www.microsoft.com/en-us/research/publication/diskann-fast-accurate-billion-point-nearest-neighbor-search-on-a-single-node/)). The paper indexed one billion SIFT vectors on a single workstation with 64 GB of RAM, serving about 5,000 queries per second at under 3 ms mean latency and over 95% 1-recall@1, and reported 5 to 10 times more points per node than in-memory graph indexes such as HNSW.
 
+![DiskANN: compact routing, SSD graph. Measure recall, memory and cold / warm tail latency together.](/images/ai-reference/diskann-tier.svg)
+
 ## Why can't you just put HNSW on disk?
 
 A graph search makes many small, dependent hops. [HNSW](/ai-quick-reference/what-is-hnsw) might visit hundreds of nodes per query, and if every hop meant a random SSD read, latency would explode. DiskANN fixes this in three ways:

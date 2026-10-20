@@ -7,6 +7,8 @@ order: 24
 
 Data quality sets the ceiling on vector retrieval quality. A vector database can only return the chunks it was given, ranked by how similar their embeddings are to the query, so garbled extraction, duplicated content, stale versions, missing metadata, and inconsistent embeddings all flow straight into results. Similarity scores make this worse, not better: a cleanly written but outdated document can score higher than the correct one, and nothing in the score says it is outdated. Improving quality means checking data before it is embedded, validating vectors and metadata when they are loaded, and measuring retrieval on known queries afterward.
 
+![Quality gates before the vector index. A faster index does not repair an incorrect or stale representation.](/images/ai-reference/data-quality-gates.svg)
+
 ## How does bad data show up in vector search results?
 
 Each class of data problem has a recognizable symptom at query time.

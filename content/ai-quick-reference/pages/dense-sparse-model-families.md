@@ -7,6 +7,8 @@ order: 124
 
 Compare at least one model from each representation family, not just several large dense encoders. Dense models capture meaning and paraphrase; learned sparse models such as SPLADE keep exact terms and identifiers while adding related words; multi-output models such as BGE-M3 produce both from one pass; and compact static models trade some quality for very cheap encoding. Milvus stores each as a different field type, so you can test them side by side and combine the winners with hybrid search.
 
+![Shortlist models by the workload. Keep model revisions separate; equal dimensions do not mean equal spaces.](/images/ai-reference/embedding-selection.svg)
+
 ## How do the representation families differ?
 
 | Family | What the vector looks like | Strong at | Weak at | Milvus field |

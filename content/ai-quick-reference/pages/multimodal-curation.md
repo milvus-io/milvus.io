@@ -40,7 +40,7 @@ A Milvus collection can hold several vector fields on one row (the [multi-vector
 
 ## How to deduplicate images and video clips
 
-![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
+![Two required signals need two explicit checks. Rank fusion alone does not enforce a visual AND text threshold.](/images/ai-reference/multimodal-pair-check.svg)
 
 1. **Remove exact copies first** with a file hash, and resized or recompressed copies with a perceptual hash if you have one.
 2. **Find semantic near-duplicates with range search** on `visual_embedding`. Under `COSINE`, `radius` is the exclusive lower bound and `range_filter` the inclusive upper bound:

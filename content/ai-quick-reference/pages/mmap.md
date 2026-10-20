@@ -7,6 +7,8 @@ order: 70
 
 mmap and DISKANN both let a vector database serve more data than fits in RAM, but they work at different layers. **mmap** is an operating-system mechanism: Milvus maps index and field files into virtual memory and lets the kernel page them in from local disk on demand, without changing the index algorithm. **DISKANN** is an index algorithm designed for SSDs: it keeps compact PQ codes in memory, stores the full graph and vectors on disk in a layout built for few, predictable reads, and controls its own I/O. In short, mmap changes *where* an existing index lives; DISKANN changes *how* the search itself is organized around the disk.
 
+![mmap and DiskANN act at different layers. A mapped file still consumes physical memory when its pages are resident.](/images/ai-reference/mmap-vs-index.svg)
+
 ## mmap vs DISKANN at a glance
 
 | | mmap in Milvus | DISKANN |

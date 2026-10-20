@@ -7,6 +7,8 @@ order: 107
 
 DSPy is a framework from Stanford NLP for *programming* language models instead of hand-writing prompts. You describe each step as a **signature** (inputs → outputs), compose the steps into **modules**, and let an **optimizer** such as MIPROv2 or BootstrapFewShot search for better instructions and few-shot examples against a metric you define. Milvus supplies the retrieval step. A DSPy module calls a function that searches a Milvus collection and returns passages, and the optimizer tunes how the program uses them. DSPy does not change your vectors, your index, or your embedding model. It changes the prompts and the demonstrations around them.
 
+![Optimize a program on a development set. An optimizer changes application behavior; it does not replace the database.](/images/ai-reference/dspy-evaluation-loop.svg)
+
 ## Retrieval in current DSPy: just a Python function
 
 Older tutorials, including some integration guides, use a `MilvusRM` class imported from `dspy.retrieve.milvus_rm` and passed in with `dspy.settings.configure(rm=...)`. That module is gone from current DSPy releases (3.x), so those imports fail. The current pattern is simpler. Any Python callable that returns passages can be used inside a module. With PyMilvus it looks like this:

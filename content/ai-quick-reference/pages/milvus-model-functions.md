@@ -7,7 +7,7 @@ order: 129
 
 You have three practical ways to produce embeddings for Milvus. You can generate them in your own application (directly with a model SDK or through the `pymilvus[model]` wrappers) and insert vectors. You can let Milvus call an embedding provider for you through a server-side **Text Embedding Function**, so you insert and search with raw text. Or, for keyword relevance, you can use the built-in **BM25 Function**, which turns text into sparse vectors inside Milvus with no model at all. The same split applies to reranking: your own reranker, a server-side **Model Ranker**, or model-free fusion such as **RRF**. The right choice depends on who should own inference, credentials, and failure handling.
 
-![Version the representation before indexing it](/images/ai-reference/encoding.svg)
+![Three places to generate a representation. A wrapper export is not proof of executed inference or universal compatibility.](/images/ai-reference/model-inference-ownership.svg)
 
 ## Which option fits your pipeline?
 

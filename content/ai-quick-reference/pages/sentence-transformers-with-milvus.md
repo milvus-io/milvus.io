@@ -7,6 +7,8 @@ order: 109
 
 Sentence Transformers (SBERT) is the Python library most teams use to run and fine-tune open embedding and reranking models from Hugging Face. In a retrieval pipeline it does the inference: it turns documents and queries into vectors, and it can rerank candidates with a cross-encoder. Milvus does the storage and search: it holds those vectors with their text and metadata, indexes them, and returns the nearest neighbors under your filters. The two meet at a simple contract. The model's output dimension and similarity function must match the Milvus vector field and metric.
 
+![Three places to generate a representation. A wrapper export is not proof of executed inference or universal compatibility.](/images/ai-reference/model-inference-ownership.svg)
+
 ## What can Sentence Transformers produce?
 
 The library has four model types, and each maps to a different kind of Milvus field:

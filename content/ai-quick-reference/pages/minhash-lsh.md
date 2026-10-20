@@ -7,6 +7,8 @@ order: 66
 
 MinHash LSH finds near-duplicate documents without comparing every pair. **MinHash** turns each document's set of shingles (overlapping word or character n-grams) into a short fixed-length signature whose positions agree with probability equal to the Jaccard similarity of the two sets. **Locality-sensitive hashing (LSH)** then splits each signature into bands and hashes each band into buckets, so only documents that collide in at least one band become candidates. In Milvus, the `MINHASH_LSH` index on a `BINARY_VECTOR` field with the `MHJACCARD` metric implements this, which makes it practical to deduplicate LLM training corpora, crawled web pages, and document collections with millions or billions of items.
 
+![MinHash approximates set overlap. This is lexical set similarity, not a dense semantic embedding.](/images/ai-reference/minhash-candidates.svg)
+
 ## Why not just compare every pair?
 
 Near-duplicate detection is usually framed as: find all pairs of documents whose **Jaccard similarity** `J(A, B) = |A ∩ B| / |A ∪ B|` exceeds a threshold, where `A` and `B` are the documents' shingle sets. Computing it exactly for every pair is quadratic. One million documents produce about 500 billion pairs, and real pretraining corpora are thousands of times larger. Exact hashing (an MD5 of the normalized text) is cheap but only catches byte-identical copies, missing pages that differ by a timestamp, a footer, or a few edited sentences.

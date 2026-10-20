@@ -7,6 +7,8 @@ order: 76
 
 Vector search can find past agent runs that resemble the current task, so an agent can reuse what worked (as few-shot examples or hints) and avoid what failed, and so engineers can find similar incidents when debugging. The recipe: store each trajectory, meaning the ordered steps of observations, tool calls, results, and an outcome, in a trace store; index searchable representations of it (a task embedding, a summary embedding, and optionally embeddings of individual step windows); filter by applicability (same tools, environment, tenant, outcome); retrieve diverse matches; and pass the agent a compact, verified version rather than raw logs. Similarity finds candidates; metadata decides whether they apply.
 
+![Reuse applicable experience, not raw traces. Similarity proposes experience; context and outcome determine usefulness.](/images/ai-reference/trajectory-flow.svg)
+
 ## What is a trajectory, and why retrieve one?
 
 A trajectory is the record of one agent attempt at a task: the instruction, each reasoning step, each tool call with its arguments and result, observations from the environment, and the final outcome. Retrieval puts that history to work at run time:

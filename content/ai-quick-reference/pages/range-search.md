@@ -7,6 +7,8 @@ order: 68
 
 Use range search when what matters is *how similar* a result is, not just *how many* results you get back. A plain top-k search always returns k neighbors, even when the nearest one is a poor match; range search (also called radius or threshold search) only returns vectors whose distance or similarity score falls inside a bound you set. That makes it the right tool for deduplication, "no good answer" detection in RAG, match/no-match decisions such as image or face matching, and any workflow that needs a similarity floor. In Milvus you add `radius` and, optionally, `range_filter` to an ordinary search, and `limit` still caps the number of results.
 
+![Range search adds a score condition. For COSINE / IP the band is radius < score <= range_filter.](/images/ai-reference/range-candidates.svg)
+
 ## Top-k vs range search
 
 | | Top-k search | Range search |

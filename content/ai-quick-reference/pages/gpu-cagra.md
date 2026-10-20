@@ -9,7 +9,7 @@ GPU_CAGRA is Milvus's GPU graph index, built on CAGRA (CUDA ANNS GRAph-based), a
 
 CAGRA was introduced by NVIDIA researchers at ICDE 2024 ([arXiv:2308.15136](https://arxiv.org/abs/2308.15136)) and ships in the open-source [cuVS](https://github.com/NVIDIA/cuvs) library, which Milvus uses for its GPU indexes. The paper reports graph construction 2.2 to 27 times faster than CPU HNSW and large-batch search 33 to 77 times faster, which is the kind of gap that makes GPUs worth considering for vector search.
 
-![Treat compression as another approximation](/images/ai-reference/quantization.svg)
+![CAGRA uses parallel GPU graph search. A GPU needs enough useful work; compare at the same recall target.](/images/ai-reference/cagra-parallel.svg)
 
 ## How does CAGRA build its graph?
 

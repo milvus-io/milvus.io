@@ -5,49 +5,64 @@ topic: "retrieval"
 order: 14
 ---
 
-Choose an index by setting a retrieval-quality target and measuring the resources needed to meet it. Dataset size matters, but so do vector dimension, metric, filters, query concurrency, update rate, and whether the working set fits in memory.
+There is no single best vector index. For dense-vector search, a useful first pass compares five choices: exact FLAT search, an in-memory graph such as HNSW, centroid-partitioned IVF, disk-oriented DiskANN, and GPU indexes such as GPU_CAGRA or GPU_IVF. They optimize different constraints. Quantization (SQ, PQ, PRQ, or RaBitQ) is a separate representation choice that can be combined with some structures; it is not a sixth candidate-search family. `AUTOINDEX` is a convenient Milvus-managed choice, not another algorithm family.
 
 ![Control the workload before comparing performance](/images/ai-reference/benchmark.svg)
 
-## Write down the workload first
+## Start with the workload, not the vector count
 
-Specify the corpus size now and after expected growth, the number and types of vector fields, typical top-k, filter selectivity, write patterns, and latency objectives. Separate interactive searches from offline batch jobs. Include payload fields returned with each hit and any downstream reranker, because their costs affect the user-visible result.
+Write down the vector field type and metric, corpus size and growth, dimension, requested top-K, filter selectivity, query concurrency and batch size, write/update rate, latency target, and available RAM, SSD, and GPU memory. A million frequently updated vectors with selective filters can behave very differently from a static archive of the same size. Include index build and load time, returned payload, and any reranking stage in the end-to-end budget.
 
-Use exact search on representative data as a quality reference. For small or heavily filtered candidate sets, a straightforward scan can be competitive. An approximate index adds construction and maintenance costs that should be justified by measured serving benefits.
+Use exact FLAT search on a representative subset or workload as the quality reference. For a small effective candidate set, FLAT can also be the serving choice: it scans every eligible vector, returns exact neighbors for the configured metric, and avoids graph or centroid-index overhead. Its work grows with the number of eligible vectors and dimension, so it becomes expensive when that set is large.
 
-## Compare families, then parameters
+## Five common choices and their trade-offs
 
-Graph indexes, IVF indexes, compressed representations, and disk-oriented options occupy different capacity and performance trade-offs. For the library-versus-index distinction, see the [FAISS library and its Milvus integration](/ai-quick-reference/what-is-faiss). Start with a small shortlist supported by your deployment and data types. For each candidate, sweep search effort at fixed build settings and compare the quality/latency curve. Revisit construction parameters when the curve cannot meet the target.
+| Choice | How it narrows or executes search | Good starting point when… | Main cost or limitation |
+| --- | --- | --- | --- |
+| **FLAT** (exact scan) | Computes the metric against every eligible vector; there is no approximate candidate index. | The eligible set is small, exact neighbors are required, or a ground-truth baseline is needed. GPU brute force is a related hardware-specific option. | Work grows with eligible vector count and dimension. Large scans consume substantial compute and can miss latency targets. |
+| **HNSW** (graph) | Navigates a layered neighbor graph toward likely neighbors; `ef` controls search effort. | Vectors and graph fit in RAM, low latency and strong recall matter, and the result count is relatively small. | Graph links add substantial memory and index-build work. Higher `ef` explores more candidates and can raise latency. |
+| **IVF** (centroid partitions) | Assigns vectors to centroid cells and searches selected cells; `nlist` sets the built partition count and `nprobe` the cells visited by a query. | You want a tunable scan, expect larger result sets or throughput-oriented search, or need a straightforward base for compressed variants. | Unvisited cells cannot contribute results. Increasing `nprobe` improves coverage at added compute and latency; too many partitions also add training and centroid work. |
+| **DiskANN** (SSD graph) | Uses a Vamana graph organized for disk access, with compact PQ codes in memory for approximate distance checks. | The working set is larger than available RAM and local SSD/NVMe is available. | Search depends on random-read latency, IOPS, cache warmth, and device contention. Disk capacity alone does not guarantee low query latency. |
+| **GPU indexes** (`GPU_CAGRA`, `GPU_IVF_FLAT`, `GPU_IVF_PQ`) | Use GPU-parallel graph traversal or GPU IVF candidate scans; CAGRA is the graph option. | The workload has enough concurrent or batched queries to use GPU parallelism and the index fits the available device resources. | The GPU-enabled Milvus deployment, device memory, build resources, transfers, batching delay, and operating cost all matter. A GPU index may lose its advantage on sparse, low-volume traffic. |
 
-Do not compare one system's highest-throughput configuration with another system's highest-recall configuration. Keep the workload and acceptance criteria consistent, and include index build time, load time, resident memory, and behavior during writes.
+These are starting hypotheses, not a universal ranking. A large top-K, restrictive filters, and write-heavy traffic can change the result; compare configurations using the same eligible data and query distribution. Milvus exposes additional specialized types, including SCANN and AISAQ; confirm field, metric, release, and deployment support before adding them to the shortlist.
 
-FAISS is a library that contains several index families, not another single index family; see [the FAISS/Milvus guide](/ai-quick-reference/what-is-faiss).
+## Treat compression as a second decision
 
-## Use a deployment test
+First choose how candidates are found; then decide how vector values are represented. `IVF_FLAT` keeps full vectors inside probed cells. `IVF_SQ8` uses per-coordinate scalar quantization; `IVF_PQ` and `IVF_RABITQ` use more compact codes with different distance-estimation trade-offs. HNSW also has SQ/PQ/PRQ variants. These can reduce vector payload, but codebooks, centroids, graph links, IDs, refinement vectors, and runtime buffers remain. A refiner can improve ordering among retrieved candidates; it cannot recover a true neighbor that the candidate search never found.
 
-Run long enough to observe queueing, cache effects, and maintenance work. Exercise realistic filters and query distributions. Select a configuration with operational headroom and document why it was chosen. Re-run the evaluation when the embedding model, corpus distribution, deployment topology, or traffic mix changes; an index recommendation is conditional on those assumptions.
+If memory is tight, compare the uncompressed form with an SQ/PQ/RaBitQ variant at a matched Recall@K target. Measure complete loaded-index memory and any retained high-precision data, not only the code size. See the [quantization guide](/ai-quick-reference/what-is-vector-quantization-in-embeddings) for the memory arithmetic and compression mechanisms.
 
-## Example to test
+## A practical selection path
 
-A write-heavy catalog, a static archive, and a high-concurrency assistant can favor different index configurations. Create a small workload matrix before choosing an index; the same vector count does not imply the same service requirement.
+1. **No special constraint yet?** Start with Milvus `AUTOINDEX` for a sensible managed default, then inspect the actual workload and compare explicit index types if you need tighter control.
+2. **Small eligible set or exact answers?** Use FLAT, at least as the evaluation baseline. Strong filters may shrink the eligible set enough that scanning it is competitive.
+3. **Low latency, small top-K, and enough RAM?** Benchmark HNSW. Sweep `ef` against Recall@K and latency; include graph memory and build time.
+4. **Need controllable candidate coverage or compressed vectors?** Start with IVF_FLAT, then test `nprobe`; try IVF_SQ8, IVF_PQ, or IVF_RABITQ only if measured memory savings justify the recall and refinement trade-offs.
+5. **Data exceeds RAM but fits a fast local SSD serving design?** Benchmark DiskANN under realistic cache, I/O, and concurrency conditions.
+6. **A GPU is available and the traffic can keep it busy?** Compare GPU_CAGRA with GPU_IVF_FLAT/PQ using the real query batch and concurrency pattern. Account for device memory and transfer time.
+
+AUTOINDEX, explicit index types, and their supported parameters vary by Milvus release. Confirm the actual selected type and exact parameter contract in the deployed version before treating a trial result as a production recommendation.
+
+## Compare at equal quality and realistic load
+
+Hold the embedding model, corpus snapshot, metric, filters, query set, and top-K fixed. First measure exact FLAT neighbors; then compare ANN Recall@K separately from judged application relevance. For each candidate, sweep search effort at fixed construction parameters and compare the quality/latency curve. Do not compare one index at its highest QPS with another at its highest recall.
+
+Record p50/p95/p99 latency under realistic concurrency, throughput, index build and load time, total resident memory, disk I/O or GPU use, write behavior, and operating cost. Include both cold and warm cache cases where relevant. Re-run after changing the model, corpus distribution, filter pattern, hardware, or traffic mix; an index recommendation is conditional on those assumptions.
+
+## Example comparison
+
+For a static in-memory collection with top-20 queries, compare FLAT, HNSW, and IVF_FLAT, then add a compressed variant if memory is the constraint. For a collection larger than RAM, compare DiskANN with the best feasible memory-based configuration. For batch-heavy GPU traffic, compare GPU_CAGRA and GPU_IVF. Use one query set and one recall target; report why a candidate missed the target as either candidate coverage or approximate distance error.
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Compare Milvus index structures, supported field types, and memory estimates](https://milvus.io/docs/index-explained.md).
+- [Read the Milvus index-selection decision guide](https://milvus.io/docs/index_selection.md).
+- [Understand HNSW graph search and its parameters](https://milvus.io/docs/hnsw.md).
+- [Understand IVF partitions and `nprobe`](https://milvus.io/docs/ivf-flat.md).
+- [Understand DiskANN's Vamana graph and SSD behavior](https://milvus.io/docs/diskann.md).
+- [Review GPU_CAGRA and GPU search parameters](https://milvus.io/docs/gpu-cagra.md).
+- [Compare SQ, PQ, PRQ, and RaBitQ](https://milvus.io/ai-quick-reference/what-is-vector-quantization-in-embeddings).
+- [Read the FAISS/Milvus library distinction](https://milvus.io/ai-quick-reference/what-is-faiss).
 
-## Continue learning
-
-- [When should you use DISKANN in Milvus?](/ai-quick-reference/what-is-diskann)
-- [What is GPU_CAGRA, and when does it help vector search?](/ai-quick-reference/what-is-gpu-cagra)
-- [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)
-- [What is HNSW, and how should you tune it?](/ai-quick-reference/what-is-hnsw)
-- [How do IVF indexes use centroids to search vectors?](/ai-quick-reference/how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process)
-- [What is vector quantization, and what does it trade off?](/ai-quick-reference/what-is-vector-quantization-in-embeddings)
-
-## Implementation guides and sources
-
-- [Index decision matrix and memory estimates](https://milvus.io/docs/index-explained.md)
-- [Milvus index-selection guidance](https://milvus.io/docs/index_selection.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Index availability and parameter support are release-specific; test with the target Milvus version and workload.

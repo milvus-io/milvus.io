@@ -143,9 +143,9 @@
       "slug": "how-do-you-choose-the-right-index-type-for-your-workload",
       "topic": "retrieval",
       "words_before": 365,
-      "words_after": 426,
+      "words_after": 1231,
       "figure": "benchmark",
-      "depth": false,
+      "depth": true,
       "route": "index"
     },
     {

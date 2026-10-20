@@ -5,7 +5,9 @@ operate vector retrieval, including lake integration, Milvus components, agent
 workflows, and data curation. It is organized as a reading path, with links from
 concepts to related concepts, implementation guides, and primary sources.
 
-The curated set contains 132 articles across ten topics. The original 36
+The curated set contains 113 articles across ten topics (consolidated from an
+earlier 132-entry draft; see "Consolidation and search-informed rewrite" below).
+The original 36
 canonical URLs remain stable. Fourteen duplicate definitions redirect to the corresponding
 canonical concept. Other legacy URLs return 404; they are not redirected to an
 unrelated homepage. The legacy public CSV is removed, so replacing that export
@@ -69,12 +71,14 @@ and qualified downstream activity separately from the deployment check.
 
 ## Examples, illustrations, and implementation paths
 
-Each retained article includes a topic-specific example to test and links to
-practical follow-up resources. Examples and numeric calculations are illustrative;
-they are not customer measurements or local model benchmark results. Customer
-stories are linked as additional reading without implying equivalent outcomes.
+Each retained article includes concrete examples (worked calculations, schema or
+code snippets, or a decision walkthrough) and links to practical follow-up
+resources. Articles do not share a fixed section template; structure follows the
+reader's question. Examples and numeric calculations are illustrative; they are
+not customer measurements or local model benchmark results. Customer stories are
+linked as additional reading without implying equivalent outcomes.
 
-Twenty-six original concept diagrams cover 71 articles. English and Chinese SVG
+Twenty-five original concept diagrams appear across 70 articles. English and Chinese SVG
 variants live in `public/images/ai-reference/`. They are schematics, not measured
 plots. Keep descriptive alt text, accessible SVG titles/descriptions, and visible
 explanations of representation, data ownership, or stage boundaries. The content
@@ -88,10 +92,11 @@ test checks actual response codes, redirects, image URLs, and retained demo card
 
 ## Model and framework review
 
-The MTEB article uses a dated Multilingual v2 snapshot, complete task coverage,
-and an explicitly stated Mean Task sort. This is not the backend rank field or
-a reranker ranking. Hosted/newer/multimodal candidates and reranker families
-are documented separately. Model cards with non-commercial or custom terms
+The MTEB and MMEB articles explain how the benchmarks work and link to the live
+leaderboards; they no longer embed dated score tables or rankings, which go stale.
+`mteb-snapshot-2026-10-20.json` and `mmeb-snapshot-2026-10-20.json` remain as
+historical review evidence only. Hosted/newer/multimodal candidates and reranker
+families are documented separately, by family rather than pinned version. Model cards with non-commercial or custom terms
 are identified; open weights are not treated as production permission.
 The articles are documentation-reviewed; no local model benchmark or paid
 inference run is claimed. Framework and server compatibility must be checked
@@ -99,14 +104,47 @@ for the deployed versions.
 
 ## Multimodal and library evidence
 
-MMEB-V2 public-file scores are pinned separately from MMEB-V3 and newer
-WeMM model-report numbers; matching names do not prove matching checkpoints.
+Matching model names across benchmark versions do not prove matching checkpoints.
 The SDK support matrix is derived from the released pymilvus.model 0.3.4
 wheel with its PyPI SHA-256 verified. It describes 23 explicit exported classes
 and one default alias, not universal model compatibility or inference tests.
 Client wrappers, server Functions, and rank fusion are documented separately.
 
-## Claim-level review, 2026-10-20
+## Consolidation and search-informed rewrite
+
+The 132-entry draft was consolidated to 113 articles. Thirteen near-duplicate or
+thin articles were merged into the canonical page for the same concept, and their
+slugs are recorded as `merged` in `publication.json`; six articles outside the
+vector-search scope were retired. Internal component pages (Streaming Node,
+Woodpecker, Talon) were folded into the architecture overview, and single-vendor
+model pages into the shared model catalogs.
+
+Every retained article was then rewritten against the current top search results
+for its target question: the results were used to find missing subtopics and
+recurring questions, never as text to copy. Milvus-specific claims were checked
+against milvus.io docs; framework code was checked against current package sources
+but not executed against a live cluster. Links to competing vector databases are
+not used.
+
+Precision rules that came out of review, to keep when editing:
+
+- Range search returns at most `limit` results, and only neighbors the ANN index
+  visits. Never describe it as returning every record in a band, and do not treat
+  its hit count as a complete density measurement.
+- Upsert without `partial_update=True` (Milvus 2.6.2+) replaces the whole entity.
+  An upsert is not an audit log; keep decision history separately.
+- Fusion rankers (RRF, weighted) do not enforce per-modality thresholds. When a
+  rule requires two signals to agree, keep both scores and intersect.
+- Before multiplying or blending scores, fix the direction: COSINE/IP can be
+  negative, L2 is lower-is-better. Exclude invalid facts by filter, not by score.
+- A recall plateau under rising `ef` has several causes (ground truth, graph,
+  final scoring, routing); isolate them before blaming compression.
+- A collection snapshot freezes data and index files, not ANN result order.
+
+The dated review ledgers below describe the earlier 130/132-entry drafts and are
+kept as history; current hashes and sources live in `publication.json`.
+
+## Claim-level review, 2026-10-20 (historical)
 
 `semantic-review-2026-10-20.json` records the reading of all 130 retained English
 bodies and examples, the original and reviewed content hashes, sources, and
@@ -125,9 +163,9 @@ resolve: remove eight irrelevant placements and replace misleading multi-vector
 diagrams on generic multimodal/WeMM pages. Model/version and source snapshots do
 not establish executed inference, deployed feature availability, or measured gains.
 
-## Foundation revisions and multi-vector entry
+## Foundation revisions and multi-vector entry (historical)
 
-The 132-entry set includes one core multi-vector article, revised foundation and
+The earlier 132-entry draft included one core multi-vector article, revised foundation and
 late-interaction entries, a new FAISS introduction, and expanded index/quantization
 primers. See the dated review ledgers for current hashes and sources on top of the
 historical 130-entry claim review.

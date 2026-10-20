@@ -69,7 +69,7 @@ For "everything within this similarity" rather than "the top 50," use [range sea
 
 ### Write decisions back with upsert
 
-When a reviewer or an automated rule decides, upsert the decision keyed on the record's primary key instead of deleting the row. On Milvus 2.6.2 and later, `partial_update=True` updates only the curation fields and leaves the vector untouched:
+When a reviewer or an automated rule decides, upsert the decision keyed on the record's primary key instead of deleting the row. On Milvus 2.6.2 and later, `partial_update=True` merges the fields you send into the existing record and leaves the vector and every other field untouched:
 
 ```python
 client.upsert(
@@ -80,7 +80,9 @@ client.upsert(
 )
 ```
 
-Serving and export queries then filter on `curation_status == "approved"`, while excluded rows stay available for audit and for reversing a bad decision. True removals, such as a license takedown or an erasure request, are a separate `delete` by primary key and must also reach any derived copies.
+Without `partial_update=True` (or on an older release), upsert runs in override mode: it replaces the whole entity, so you must send the complete record, vector included. Omitted nullable fields are reset to null, and required fields make the request fail. Fetch the record with `query()` first if you need to rewrite it in full.
+
+Serving and export queries then filter on `curation_status == "approved"`, while excluded rows stay in place and the decision can be reversed. An upsert overwrites the previous value, though, so the collection only holds each record's *current* status. If you need to know who changed what and when, append each decision to a separate log (a decisions table in your warehouse, or an append-only Milvus collection keyed by decision ID) rather than relying on the record itself. True removals, such as a license takedown or an erasure request, are a separate `delete` by primary key and must also reach any derived copies.
 
 ### Export a versioned dataset
 

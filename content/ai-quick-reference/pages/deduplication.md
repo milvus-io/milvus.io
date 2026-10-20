@@ -35,7 +35,7 @@ Sentence Transformers ships `paraphrase_mining` and `community_detection` utilit
 
 ### Semantic duplicates: range search over a dense vector field
 
-Store the normalized embedding in a `FLOAT_VECTOR` field indexed with `HNSW` or an IVF variant using the `COSINE` metric. Instead of asking for the top *k*, ask for everything inside a similarity band with [range search](/ai-quick-reference/when-to-use-vector-range-search). For `COSINE` and `IP`, `radius` is the exclusive lower bound and `range_filter` the inclusive upper bound:
+Store the normalized embedding in a `FLOAT_VECTOR` field indexed with `HNSW` or an IVF variant using the `COSINE` metric. Instead of keeping the top *k* regardless of score, keep only candidates inside a similarity band with [range search](/ai-quick-reference/when-to-use-vector-range-search). Range search still returns at most `limit` results and only the neighbors the ANN index visits, so set `limit` comfortably above the largest duplicate group you expect and re-query with a higher `limit` whenever a result comes back full. For `COSINE` and `IP`, `radius` is the exclusive lower bound and `range_filter` the inclusive upper bound:
 
 ```python
 res = client.search(

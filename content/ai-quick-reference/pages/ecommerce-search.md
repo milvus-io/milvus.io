@@ -82,7 +82,7 @@ A cross-encoder or learning-to-rank model over the top 50-200 candidates can use
 
 ### 7. Keep the index fresh
 
-Prices and stock change constantly. Update scalar fields like `in_stock` and `price` through upserts as inventory events arrive rather than waiting for a nightly rebuild, and re-embed only when titles, images, or the model change.
+Prices and stock change constantly. Update scalar fields like `in_stock` and `price` as inventory events arrive rather than waiting for a nightly rebuild. On Milvus 2.6.2 and later, `upsert(..., partial_update=True)` changes just those fields; on older releases, or without that flag, an upsert replaces the whole entity, so the event must carry the full record including its vectors. Re-embed only when titles, images, or the model change.
 
 ## A worked example
 

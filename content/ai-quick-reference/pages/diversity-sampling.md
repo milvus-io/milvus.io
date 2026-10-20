@@ -31,7 +31,7 @@ Assume the candidate pool is in a collection with a `FLOAT_VECTOR` field, a prim
 
 ### Step 1: suppress near-duplicates with range search
 
-For each candidate, a [range search](/ai-quick-reference/when-to-use-vector-range-search) returns every neighbor above a similarity threshold. With the `COSINE` metric, `radius` is the exclusive lower bound and `range_filter` the inclusive upper bound:
+For each candidate, a [range search](/ai-quick-reference/when-to-use-vector-range-search) returns neighbors above a similarity threshold, up to `limit` and subject to the same ANN approximation as any search. It is a near-duplicate detector, not a full census: if a query returns exactly `limit` hits, the true group is probably larger. With the `COSINE` metric, `radius` is the exclusive lower bound and `range_filter` the inclusive upper bound:
 
 ```python
 res = client.search(

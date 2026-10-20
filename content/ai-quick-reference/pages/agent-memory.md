@@ -101,13 +101,14 @@ hits = client.search(
 
 def score(h):
     e = h["entity"]
+    similarity = (h["distance"] + 1) / 2          # COSINE score in [-1, 1] -> [0, 1]
     recency = 0.995 ** ((now - e["created_at"]) / 3600)
-    return 1.0 * h["distance"] + 0.5 * recency + 0.5 * e["importance"]
+    return 1.0 * similarity + 0.5 * recency + 0.5 * e["importance"]
 
 context_memories = sorted(hits, key=score, reverse=True)[:8]
 ```
 
-For COSINE, the returned `distance` is the similarity score, where higher means closer.
+Check the score direction before blending. For COSINE and IP, the returned `distance` is a similarity where higher means closer, and it can be negative; for L2 it is a true distance where lower means closer. Map it to a non-negative "higher is better" value first (as above for COSINE, or `1 / (1 + d)` for L2), otherwise weights and decay factors push results the wrong way. Recency and importance only reorder memories that are still valid: superseded or expired facts are removed by the `status == "active"` filter, not by a low score.
 
 ## Corrections, expiry, and deletion
 

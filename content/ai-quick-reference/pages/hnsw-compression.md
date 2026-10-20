@@ -45,7 +45,12 @@ These are code sizes, not total index sizes. Add the graph links, codebooks, and
 
 In an IVF index, the candidate set is fixed first by cluster membership, and compression only affects how those candidates are scored. In HNSW, the distances also decide where the search goes next. Each hop moves to the neighbor that looks closest to the query, so if compressed distances are wrong, the walk can turn away from the region that holds the true neighbors. Those neighbors are then never visited, and no amount of reranking can bring them back.
 
-That gives you a simple diagnostic. If recall rises steadily as you increase `ef`, the problem is coverage, and more search effort or reranking will fix it. If recall plateaus well below target no matter how high `ef` goes, the compressed distances are misrouting the traversal, and you need a finer quantizer (higher `nbits`, larger `m`, more `nrq`, or SQ instead of PQ) or a better-connected graph (higher `M`). A sparse graph is less forgiving of per-hop error because it offers fewer alternative paths.
+A recall plateau tells you something is limiting the search, but not what. If recall keeps rising as you increase `ef`, the search is simply under-exploring, and more effort fixes it. If recall flattens well below target, several causes look the same from the outside, so separate them before changing the quantizer:
+
+1. **Check the measurement.** Ground truth must come from an exact search over the same data, metric, normalization, and filter. A mismatch there caps recall no matter what the index does.
+2. **Compare with uncompressed HNSW.** Build plain `HNSW` with the same `M` and `efConstruction` on the same data. If it plateaus too, the limit is the graph itself (connectivity, `M`, `efConstruction`) or the data, not compression.
+3. **Turn on refinement.** Enable `refine` with a full-precision or higher-precision `refine_type` and raise `refine_k`. If recall recovers, the true neighbors were being found but mis-scored at the final ranking step, and refinement or a finer quantizer for scoring is the fix.
+4. **Only then suspect routing.** If plain HNSW reaches target, refinement does not help, and recall still flattens, compressed distances are likely steering the walk away from the true neighbors. A finer quantizer (higher `nbits`, larger `m`, more `nrq`, or SQ instead of PQ) or a better-connected graph (higher `M`) are the levers. A sparse graph is less forgiving of per-hop error because it offers fewer alternative paths.
 
 ## What do refine, refine_type, and refine_k do?
 

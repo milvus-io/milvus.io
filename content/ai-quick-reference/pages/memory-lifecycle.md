@@ -27,7 +27,7 @@ When a user says "Actually, I moved to Berlin," the old "lives in Munich" memory
 
 1. **Detect the conflict.** At write time, search the user's active memories for high-similarity records of the same type and ask whether the new fact contradicts, refines, or duplicates them.
 2. **Write the new fact** as a new record with `supersedes = <old_id>` and provenance pointing at the user's message.
-3. **Retire the old fact** by setting its status to `superseded` and `superseded_by = <new_id>`. In Milvus, `upsert` on the old primary key rewrites the record with the new status.
+3. **Retire the old fact** by setting its status to `superseded` and `superseded_by = <new_id>`. In Milvus 2.6.2 and later, `upsert(..., partial_update=True)` on the old primary key changes just those fields; without that flag, upsert replaces the whole entity, so send the complete record, vector included.
 4. **Invalidate dependents.** Summaries, cached answers, and profile documents built from the old fact should be regenerated or flagged.
 
 Keep superseded records for a while if your product needs history ("where did I live before?") or audit; otherwise delete them after a grace period. Decide which source wins in a conflict: an explicit user statement should outrank a model's inference, and a verified system-of-record value should outrank both.
@@ -55,7 +55,12 @@ client.alter_collection_properties(
 
 Milvus 3.0 adds entity-level TTL: designate a nullable `TIMESTAMPTZ` field (for example `expire_at`) through the `ttl_field` collection property, and each record expires at its own time; a null value means it never expires, and an upsert with a later timestamp extends it. Collection-level and entity-level TTL cannot be used on the same collection. Entity-level TTL is the better fit when one collection mixes memories with different lifetimes.
 
-**Soft expiry with decay.** Many systems prefer memories to fade before they disappear. Multiply similarity by a recency factor such as `0.995 ^ hours_since_last_access` (the form used by Generative Agents), so unused memories sink in ranking, and run a periodic job that marks records `expired` once their decayed score stays below a threshold. Decay is reversible; deletion is not, so decaying first gives you time to notice mistakes.
+**Soft expiry with decay.** Many systems prefer unused memories to fade in ranking before they disappear. Two rules keep this safe:
+
+- **Decay only ranks; validity filters.** A superseded, expired, or deleted fact must be excluded by a filter such as `status == "active"` (and TTL), not merely pushed down the list. A down-ranked wrong fact can still reach the prompt when there are few other candidates.
+- **Fix the score direction before applying decay.** Multiplying the raw search score by a recency factor such as `0.995 ^ hours_since_last_access` only works when the score is non-negative and higher means better. COSINE and IP scores can be negative, and multiplying a negative score by a factor below 1 moves it *toward* zero, which raises its rank. L2 returns a distance where lower is better, so multiplying it by a decay factor makes old memories look *closer*. Convert first, for example `sim01 = (cosine + 1) / 2` for COSINE or `1 / (1 + distance)` for L2, then either multiply `sim01` by the decay factor or add a separate weighted recency term, as in the blended score on [the agent memory page](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus).
+
+A periodic job can then mark records `expired` once their decayed relevance stays below a threshold. Decay is reversible and deletion is not, so decaying first gives you time to notice mistakes.
 
 ## How do you consolidate instead of accumulating duplicates?
 

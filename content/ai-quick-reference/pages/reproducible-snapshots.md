@@ -50,7 +50,7 @@ client.create_snapshot(
     description="Baseline for bge-m3 v1 vs v2 comparison",
 )
 
-# Later: rebuild the exact state as a new collection
+# Later: restore the same data and index files as a new collection
 job_id = client.restore_snapshot(snapshot_name="docs_eval_2026_10_01", collection_name="docs_eval_replay")
 print(client.get_restore_snapshot_state(job_id=job_id))
 ```
@@ -62,6 +62,15 @@ A few properties matter for experiments:
 - **Referenced files are kept.** Milvus does not garbage-collect segment or index files referenced by a snapshot until you drop it. That protects reproducibility but costs storage, so drop snapshots you no longer need with `drop_snapshot()`.
 - **Pins can expire on their own.** `pin_snapshot_data()` takes a `ttl_seconds` value, useful for keeping a snapshot's data available for the duration of a long offline job.
 - **TTL can interfere.** If the collection uses a time-to-live, restoring old data may expire immediately; adjust or disable TTL on the restored collection.
+
+## What a snapshot does and does not freeze
+
+A snapshot pins the *data and index files*. It does not make an approximate search deterministic. Two runs against the same restored collection can still return slightly different top-k lists, because ANN search depends on things outside the snapshot: how segments are loaded and distributed across query nodes and replicas, the order in which per-segment results are merged, ties between equal scores, search parameters such as `ef` or `nprobe` that were left at a default, and, on a live collection, new writes in growing segments or compaction rewriting segments after restore.
+
+So define reproducibility at the level you need:
+
+- **Metric-level** (recall@k, nDCG within a small tolerance) is the realistic target for ANN evaluations. Record the search parameters explicitly instead of relying on defaults.
+- **Result-level** (identical IDs in identical order) requires exact search over a frozen collection, for example a [FLAT index](/ai-quick-reference/why-use-flat-search-as-an-ann-baseline), no writes after restore, and a deterministic tie-break on primary key in your evaluation code.
 
 Snapshots are designed for short- and medium-term rollback and experimentation (days to weeks). For long-term disaster recovery, use a backup stored independently; see [backup and recovery planning](/ai-quick-reference/how-do-vector-databases-handle-backup-and-restore-or-replication-for-very-large-datasets-and-what-impact-does-that-have-on-system-design-in-terms-of-time-and-storage-overhead).
 
@@ -82,7 +91,7 @@ Reproducibility pays off when comparisons are clean:
 
 ## Prove it by replaying
 
-The real test is a replay: after the original environment is gone, restore the Milvus snapshot, check out the code commit, load the recorded model revision, and rerun the evaluation. Compare membership, top-k results, and metrics with the original. Small recall differences from ANN nondeterminism are expected; large ones point at an unrecorded dependency. Doing this once per quarter catches gaps in your records long before an auditor or a paper reviewer does.
+The real test is a replay: after the original environment is gone, restore the Milvus snapshot, check out the code commit, load the recorded model revision, and rerun the evaluation. Compare metrics against the original within a stated tolerance, and compare top-k membership as an overlap rate rather than expecting identical lists. Small differences from ANN nondeterminism are expected; large ones point at an unrecorded dependency. Doing this once per quarter catches gaps in your records long before an auditor or a paper reviewer does.
 
 ## Related reading
 

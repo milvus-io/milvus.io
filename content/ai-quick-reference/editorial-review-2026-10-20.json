@@ -1,19 +1,42 @@
 {
   "checked_at": "2026-10-20",
   "baseline": "7fbdd51fc04c2ddbe13f71bd33c199ba4383ff42",
-  "article_count": 132,
-  "case_count": 132,
+  "article_count": 113,
+  "case_count": 113,
+  "consolidated_from": 132,
+  "removed_files": [
+    "active-learning.md",
+    "agent-trajectory.md",
+    "contamination.md",
+    "dedup-methods.md",
+    "gpu-ivf.md",
+    "kalm-embedding-models.md",
+    "kalm-reranker-models.md",
+    "milvus-lite-to-production.md",
+    "physical-ai.md",
+    "pretraining-data.md",
+    "quality-scoring.md",
+    "rollout.md",
+    "scalar-indexes.md",
+    "streaming-node.md",
+    "talon.md",
+    "tencent-r3-models.md",
+    "training-lineage.md",
+    "wemm-embedding-models.md",
+    "woodpecker.md"
+  ],
   "deeper_articles": 10,
-  "original_figures": 26,
-  "illustrated_articles": 71,
+  "original_figures": 25,
+  "illustrated_articles": 70,
   "sources_and_limits": "Original examples and diagrams; no measured model or performance results are claimed.",
+  "note": "words_after and figure reflect the consolidated, search-informed rewrite; words_before is from the original baseline. Merge/retire decisions are recorded in publication.json.",
   "articles": [
     {
       "file": "vector-database.md",
       "slug": "what-is-a-vector-database-and-why-is-it-important",
       "topic": "foundations",
       "words_before": 379,
-      "words_after": 867,
+      "words_after": 1932,
       "figure": "retrieval",
       "depth": true,
       "route": "start"
@@ -23,7 +46,7 @@
       "slug": "what-is-vector-search",
       "topic": "foundations",
       "words_before": 384,
-      "words_after": 455,
+      "words_after": 1644,
       "figure": "retrieval",
       "depth": false,
       "route": "start"
@@ -33,7 +56,7 @@
       "slug": "what-are-embeddings-in-vector-search",
       "topic": "foundations",
       "words_before": 396,
-      "words_after": 685,
+      "words_after": 1538,
       "figure": "vector-representations",
       "depth": false,
       "route": "start"
@@ -43,7 +66,7 @@
       "slug": "what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy",
       "topic": "foundations",
       "words_before": 397,
-      "words_after": 460,
+      "words_after": 1493,
       "figure": "encoding",
       "depth": false,
       "route": "start"
@@ -53,7 +76,7 @@
       "slug": "what-is-the-role-of-distance-metrics-in-embeddings",
       "topic": "foundations",
       "words_before": 367,
-      "words_after": 504,
+      "words_after": 1576,
       "figure": "similarity-metrics",
       "depth": false,
       "route": "start"
@@ -63,7 +86,7 @@
       "slug": "what-are-dense-and-sparse-embeddings",
       "topic": "foundations",
       "words_before": 369,
-      "words_after": 542,
+      "words_after": 1619,
       "figure": "vector-representations",
       "depth": false,
       "route": "start"
@@ -73,7 +96,7 @@
       "slug": "what-are-multimodal-embeddings",
       "topic": "foundations",
       "words_before": 411,
-      "words_after": 675,
+      "words_after": 1760,
       "figure": "clip-alignment",
       "depth": false,
       "route": "visual"
@@ -83,7 +106,7 @@
       "slug": "what-is-semantic-search-and-how-does-it-differ-from-keyword-search",
       "topic": "retrieval",
       "words_before": 354,
-      "words_after": 417,
+      "words_after": 1271,
       "figure": "hybrid",
       "depth": false,
       "route": "index"
@@ -93,8 +116,8 @@
       "slug": "what-is-fulltext-search",
       "topic": "retrieval",
       "words_before": 362,
-      "words_after": 426,
-      "figure": "hybrid",
+      "words_after": 1493,
+      "figure": null,
       "depth": false,
       "route": "index"
     },
@@ -103,7 +126,7 @@
       "slug": "what-is-approximate-nearestneighbor-ann-search",
       "topic": "retrieval",
       "words_before": 354,
-      "words_after": 426,
+      "words_after": 1447,
       "figure": "ann-families",
       "depth": false,
       "route": "index"
@@ -113,7 +136,7 @@
       "slug": "what-is-hnsw",
       "topic": "retrieval",
       "words_before": 351,
-      "words_after": 530,
+      "words_after": 1492,
       "figure": "hnsw",
       "depth": true,
       "route": "index"
@@ -123,7 +146,7 @@
       "slug": "how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process",
       "topic": "retrieval",
       "words_before": 358,
-      "words_after": 516,
+      "words_after": 1376,
       "figure": "ivf",
       "depth": true,
       "route": "index"
@@ -133,7 +156,7 @@
       "slug": "what-is-vector-quantization-in-embeddings",
       "topic": "retrieval",
       "words_before": 372,
-      "words_after": 432,
+      "words_after": 1545,
       "figure": "quantization",
       "depth": false,
       "route": "index"
@@ -143,7 +166,7 @@
       "slug": "how-do-you-choose-the-right-index-type-for-your-workload",
       "topic": "retrieval",
       "words_before": 365,
-      "words_after": 1231,
+      "words_after": 1816,
       "figure": "benchmark",
       "depth": true,
       "route": "index"
@@ -153,7 +176,7 @@
       "slug": "how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance",
       "topic": "retrieval",
       "words_before": 350,
-      "words_after": 412,
+      "words_after": 1437,
       "figure": "filtering",
       "depth": false,
       "route": "filter"
@@ -163,7 +186,7 @@
       "slug": "what-is-hybrid-search-and-when-should-i-use-it",
       "topic": "retrieval",
       "words_before": 366,
-      "words_after": 545,
+      "words_after": 1413,
       "figure": "hybrid",
       "depth": true,
       "route": "index"
@@ -173,7 +196,7 @@
       "slug": "what-is-vector-reranking-and-when-should-you-apply-it",
       "topic": "retrieval",
       "words_before": 345,
-      "words_after": 409,
+      "words_after": 1249,
       "figure": "hybrid",
       "depth": false,
       "route": "index"
@@ -183,7 +206,7 @@
       "slug": "what-is-rag-retrievalaugmented-generation-in-nlp",
       "topic": "rag-agents",
       "words_before": 422,
-      "words_after": 604,
+      "words_after": 1634,
       "figure": "retrieval",
       "depth": true,
       "route": "rag"
@@ -193,7 +216,7 @@
       "slug": "what-is-the-optimal-chunk-size-for-rag-applications",
       "topic": "rag-agents",
       "words_before": 359,
-      "words_after": 418,
+      "words_after": 1502,
       "figure": null,
       "depth": false,
       "route": "rag"
@@ -203,7 +226,7 @@
       "slug": "how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved",
       "topic": "rag-agents",
       "words_before": 370,
-      "words_after": 428,
+      "words_after": 1507,
       "figure": "evaluation",
       "depth": false,
       "route": "rag"
@@ -213,7 +236,7 @@
       "slug": "what-are-best-practices-for-structuring-agent-memory-in-milvus",
       "topic": "rag-agents",
       "words_before": 384,
-      "words_after": 473,
+      "words_after": 1636,
       "figure": "memory",
       "depth": false,
       "route": "memory"
@@ -223,7 +246,7 @@
       "slug": "how-does-milvus-enable-graph-rag-for-multihop-agent-reasoning",
       "topic": "rag-agents",
       "words_before": 354,
-      "words_after": 411,
+      "words_after": 1397,
       "figure": null,
       "depth": false,
       "route": "rag"
@@ -233,7 +256,7 @@
       "slug": "what-are-the-main-phases-of-an-etl-process",
       "topic": "data",
       "words_before": 351,
-      "words_after": 414,
+      "words_after": 1209,
       "figure": "encoding",
       "depth": false,
       "route": "data"
@@ -243,7 +266,7 @@
       "slug": "how-does-etl-help-improve-data-quality",
       "topic": "data",
       "words_before": 365,
-      "words_after": 437,
+      "words_after": 1134,
       "figure": null,
       "depth": false,
       "route": "data"
@@ -253,7 +276,7 @@
       "slug": "how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping",
       "topic": "data",
       "words_before": 352,
-      "words_after": 451,
+      "words_after": 1223,
       "figure": "curation",
       "depth": false,
       "route": "data"
@@ -263,8 +286,8 @@
       "slug": "how-are-embeddings-used-in-document-clustering",
       "topic": "data",
       "words_before": 350,
-      "words_after": 404,
-      "figure": null,
+      "words_after": 1194,
+      "figure": "ivf",
       "depth": false,
       "route": "data"
     },
@@ -273,8 +296,8 @@
       "slug": "how-do-you-handle-incremental-updates-in-a-vector-database",
       "topic": "data",
       "words_before": 365,
-      "words_after": 420,
-      "figure": null,
+      "words_after": 1210,
+      "figure": "write-path",
       "depth": false,
       "route": "data"
     },
@@ -283,7 +306,7 @@
       "slug": "what-is-eventual-consistency",
       "topic": "production",
       "words_before": 365,
-      "words_after": 435,
+      "words_after": 1159,
       "figure": "write-path",
       "depth": false,
       "route": "ops"
@@ -293,7 +316,7 @@
       "slug": "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
       "topic": "production",
       "words_before": 356,
-      "words_after": 422,
+      "words_after": 1108,
       "figure": "filtering",
       "depth": false,
       "route": "filter"
@@ -303,7 +326,7 @@
       "slug": "how-do-distributed-vector-databases-handle-sharding-and-replication",
       "topic": "production",
       "words_before": 352,
-      "words_after": 410,
+      "words_after": 1084,
       "figure": null,
       "depth": false,
       "route": "ops"
@@ -313,7 +336,7 @@
       "slug": "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
       "topic": "production",
       "words_before": 357,
-      "words_after": 413,
+      "words_after": 1093,
       "figure": null,
       "depth": false,
       "route": "capacity"
@@ -323,7 +346,7 @@
       "slug": "what-tools-help-benchmark-vector-search-performance",
       "topic": "production",
       "words_before": 344,
-      "words_after": 406,
+      "words_after": 1180,
       "figure": "benchmark",
       "depth": false,
       "route": "index"
@@ -333,8 +356,8 @@
       "slug": "how-does-vector-search-manage-memory-usage",
       "topic": "production",
       "words_before": 374,
-      "words_after": 579,
-      "figure": null,
+      "words_after": 1205,
+      "figure": "memory",
       "depth": true,
       "route": "capacity"
     },
@@ -343,7 +366,7 @@
       "slug": "how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search",
       "topic": "production",
       "words_before": 348,
-      "words_after": 407,
+      "words_after": 1184,
       "figure": "benchmark",
       "depth": false,
       "route": "index"
@@ -353,7 +376,7 @@
       "slug": "what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store",
       "topic": "production",
       "words_before": 377,
-      "words_after": 434,
+      "words_after": 1190,
       "figure": null,
       "depth": false,
       "route": "capacity"
@@ -363,7 +386,7 @@
       "slug": "how-do-vector-databases-handle-backup-and-restore-or-replication-for-very-large-datasets-and-what-impact-does-that-have-on-system-design-in-terms-of-time-and-storage-overhead",
       "topic": "production",
       "words_before": 376,
-      "words_after": 442,
+      "words_after": 1331,
       "figure": "migration",
       "depth": false,
       "route": "backup"
@@ -373,7 +396,7 @@
       "slug": "what-is-a-vector-data-lake",
       "topic": "lake",
       "words_before": 417,
-      "words_after": 654,
+      "words_after": 1252,
       "figure": "lake",
       "depth": true,
       "route": "lake"
@@ -383,7 +406,7 @@
       "slug": "what-is-vector-lakebase",
       "topic": "lake",
       "words_before": 437,
-      "words_after": 655,
+      "words_after": 1082,
       "figure": "lake",
       "depth": true,
       "route": "lake"
@@ -393,7 +416,7 @@
       "slug": "how-can-milvus-search-lance-data",
       "topic": "lake",
       "words_before": 425,
-      "words_after": 488,
+      "words_after": 904,
       "figure": "lake",
       "depth": false,
       "route": "lake"
@@ -403,7 +426,7 @@
       "slug": "how-can-milvus-search-iceberg-tables",
       "topic": "lake",
       "words_before": 420,
-      "words_after": 490,
+      "words_after": 1047,
       "figure": "lake",
       "depth": false,
       "route": "lake"
@@ -413,7 +436,7 @@
       "slug": "when-to-use-milvus-external-collections",
       "topic": "lake",
       "words_before": 425,
-      "words_after": 504,
+      "words_after": 1032,
       "figure": "lake",
       "depth": false,
       "route": "lake"
@@ -423,8 +446,8 @@
       "slug": "how-to-refresh-milvus-external-collections",
       "topic": "lake",
       "words_before": 424,
-      "words_after": 479,
-      "figure": null,
+      "words_after": 925,
+      "figure": "operations",
       "depth": false,
       "route": "lake"
     },
@@ -433,7 +456,7 @@
       "slug": "how-to-keep-stable-ids-between-lake-data-and-vector-search",
       "topic": "lake",
       "words_before": 420,
-      "words_after": 482,
+      "words_after": 986,
       "figure": "format",
       "depth": false,
       "route": "lake"
@@ -443,7 +466,7 @@
       "slug": "how-arrow-and-parquet-fit-vector-data-pipelines",
       "topic": "lake",
       "words_before": 401,
-      "words_after": 465,
+      "words_after": 973,
       "figure": "format",
       "depth": false,
       "route": "lake"
@@ -453,8 +476,8 @@
       "slug": "how-to-reproduce-vector-search-and-training-experiments",
       "topic": "lake",
       "words_before": 401,
-      "words_after": 457,
-      "figure": null,
+      "words_after": 1154,
+      "figure": "evaluation",
       "depth": false,
       "route": "lake"
     },
@@ -463,8 +486,8 @@
       "slug": "how-to-propagate-lake-deletions-to-vector-search",
       "topic": "lake",
       "words_before": 409,
-      "words_after": 465,
-      "figure": null,
+      "words_after": 1059,
+      "figure": "write-path",
       "depth": false,
       "route": "lake"
     },
@@ -473,8 +496,8 @@
       "slug": "how-to-design-hot-and-cold-vector-serving",
       "topic": "lake",
       "words_before": 405,
-      "words_after": 462,
-      "figure": null,
+      "words_after": 1023,
+      "figure": "memory",
       "depth": false,
       "route": "lake"
     },
@@ -483,8 +506,8 @@
       "slug": "lance-iceberg-parquet-for-vector-data-lakes",
       "topic": "lake",
       "words_before": 408,
-      "words_after": 468,
-      "figure": null,
+      "words_after": 1088,
+      "figure": "format",
       "depth": false,
       "route": "lake"
     },
@@ -493,7 +516,7 @@
       "slug": "how-milvus-separates-ingestion-storage-and-search",
       "topic": "ecosystem",
       "words_before": 427,
-      "words_after": 492,
+      "words_after": 1668,
       "figure": "write-path",
       "depth": false,
       "route": "ops"
@@ -503,37 +526,17 @@
       "slug": "what-is-knowhere",
       "topic": "ecosystem",
       "words_before": 383,
-      "words_after": 437,
+      "words_after": 1173,
       "figure": null,
       "depth": false,
       "route": "index"
-    },
-    {
-      "file": "woodpecker.md",
-      "slug": "what-is-woodpecker",
-      "topic": "ecosystem",
-      "words_before": 400,
-      "words_after": 471,
-      "figure": "write-path",
-      "depth": false,
-      "route": "ops"
-    },
-    {
-      "file": "talon.md",
-      "slug": "what-is-talon",
-      "topic": "ecosystem",
-      "words_before": 407,
-      "words_after": 466,
-      "figure": null,
-      "depth": false,
-      "route": "ops"
     },
     {
       "file": "attu.md",
       "slug": "what-is-attu",
       "topic": "ecosystem",
       "words_before": 402,
-      "words_after": 459,
+      "words_after": 1432,
       "figure": null,
       "depth": false,
       "route": "ops"
@@ -543,18 +546,8 @@
       "slug": "what-is-milvus-storage",
       "topic": "ecosystem",
       "words_before": 400,
-      "words_after": 514,
+      "words_after": 1159,
       "figure": "format",
-      "depth": false,
-      "route": "ops"
-    },
-    {
-      "file": "streaming-node.md",
-      "slug": "what-is-milvus-streaming-node",
-      "topic": "ecosystem",
-      "words_before": 382,
-      "words_after": 448,
-      "figure": "write-path",
       "depth": false,
       "route": "ops"
     },
@@ -563,7 +556,7 @@
       "slug": "how-to-find-milvus-performance-bottlenecks",
       "topic": "ecosystem",
       "words_before": 384,
-      "words_after": 451,
+      "words_after": 1274,
       "figure": "operations",
       "depth": false,
       "route": "ops"
@@ -573,7 +566,7 @@
       "slug": "how-to-build-applications-with-pymilvus-milvusclient",
       "topic": "ecosystem",
       "words_before": 433,
-      "words_after": 487,
+      "words_after": 1509,
       "figure": null,
       "depth": false,
       "route": "ops"
@@ -583,7 +576,7 @@
       "slug": "how-spark-integrates-with-milvus",
       "topic": "ecosystem",
       "words_before": 383,
-      "words_after": 576,
+      "words_after": 1104,
       "figure": "spark",
       "depth": true,
       "route": "ops"
@@ -593,7 +586,7 @@
       "slug": "what-is-diskann",
       "topic": "retrieval",
       "words_before": 388,
-      "words_after": 442,
+      "words_after": 1279,
       "figure": null,
       "depth": false,
       "route": "index"
@@ -603,17 +596,7 @@
       "slug": "what-is-gpu-cagra",
       "topic": "retrieval",
       "words_before": 391,
-      "words_after": 442,
-      "figure": null,
-      "depth": false,
-      "route": "index"
-    },
-    {
-      "file": "gpu-ivf.md",
-      "slug": "gpu-ivf-flat-vs-gpu-ivf-pq",
-      "topic": "retrieval",
-      "words_before": 396,
-      "words_after": 453,
+      "words_after": 1364,
       "figure": "quantization",
       "depth": false,
       "route": "index"
@@ -623,8 +606,8 @@
       "slug": "hnsw-sq-pq-prq-tradeoffs",
       "topic": "retrieval",
       "words_before": 381,
-      "words_after": 445,
-      "figure": "quantization",
+      "words_after": 1556,
+      "figure": "hnsw",
       "depth": false,
       "route": "index"
     },
@@ -633,27 +616,17 @@
       "slug": "what-is-ivf-rabitq",
       "topic": "retrieval",
       "words_before": 383,
-      "words_after": 443,
+      "words_after": 1320,
       "figure": "quantization",
       "depth": false,
       "route": "index"
-    },
-    {
-      "file": "scalar-indexes.md",
-      "slug": "how-scalar-indexes-support-vector-search",
-      "topic": "retrieval",
-      "words_before": 401,
-      "words_after": 464,
-      "figure": "filtering",
-      "depth": false,
-      "route": "filter"
     },
     {
       "file": "sparse-inverted.md",
       "slug": "how-sparse-inverted-indexes-work",
       "topic": "retrieval",
       "words_before": 389,
-      "words_after": 445,
+      "words_after": 1280,
       "figure": null,
       "depth": false,
       "route": "index"
@@ -663,7 +636,7 @@
       "slug": "what-is-minhash-lsh",
       "topic": "retrieval",
       "words_before": 374,
-      "words_after": 425,
+      "words_after": 1381,
       "figure": null,
       "depth": false,
       "route": "index"
@@ -673,7 +646,7 @@
       "slug": "why-use-flat-search-as-an-ann-baseline",
       "topic": "retrieval",
       "words_before": 377,
-      "words_after": 465,
+      "words_after": 1144,
       "figure": "benchmark",
       "depth": false,
       "route": "index"
@@ -683,7 +656,7 @@
       "slug": "when-to-use-vector-range-search",
       "topic": "retrieval",
       "words_before": 400,
-      "words_after": 475,
+      "words_after": 1229,
       "figure": null,
       "depth": false,
       "route": "index"
@@ -693,8 +666,8 @@
       "slug": "what-is-late-interaction-retrieval",
       "topic": "retrieval",
       "words_before": 421,
-      "words_after": 669,
-      "figure": "visual-page",
+      "words_after": 1309,
+      "figure": "maxsim",
       "depth": false,
       "route": "visual"
     },
@@ -703,7 +676,7 @@
       "slug": "how-mmap-differs-from-diskann",
       "topic": "retrieval",
       "words_before": 401,
-      "words_after": 459,
+      "words_after": 1252,
       "figure": null,
       "depth": false,
       "route": "index"
@@ -713,7 +686,7 @@
       "slug": "what-is-agentic-search",
       "topic": "rag-agents",
       "words_before": 434,
-      "words_after": 499,
+      "words_after": 1067,
       "figure": "agent",
       "depth": false,
       "route": "agent"
@@ -723,7 +696,7 @@
       "slug": "how-agents-choose-retrieval-tools",
       "topic": "rag-agents",
       "words_before": 403,
-      "words_after": 473,
+      "words_after": 1151,
       "figure": "agent",
       "depth": false,
       "route": "agent"
@@ -733,7 +706,7 @@
       "slug": "what-are-the-types-of-agent-memory",
       "topic": "rag-agents",
       "words_before": 422,
-      "words_after": 477,
+      "words_after": 1366,
       "figure": null,
       "depth": false,
       "route": "memory"
@@ -743,37 +716,17 @@
       "slug": "how-to-correct-expire-and-delete-agent-memory",
       "topic": "rag-agents",
       "words_before": 398,
-      "words_after": 458,
-      "figure": "memory",
-      "depth": false,
-      "route": "memory"
-    },
-    {
-      "file": "agent-trajectory.md",
-      "slug": "what-is-an-agent-trajectory",
-      "topic": "rag-agents",
-      "words_before": 397,
-      "words_after": 454,
+      "words_after": 1516,
       "figure": null,
       "depth": false,
-      "route": "agent"
+      "route": "memory"
     },
     {
       "file": "trajectory-retrieval.md",
       "slug": "how-to-retrieve-agent-trajectories",
       "topic": "rag-agents",
       "words_before": 411,
-      "words_after": 469,
-      "figure": null,
-      "depth": false,
-      "route": "agent"
-    },
-    {
-      "file": "rollout.md",
-      "slug": "what-is-a-rollout-in-agent-training",
-      "topic": "rag-agents",
-      "words_before": 410,
-      "words_after": 468,
+      "words_after": 1243,
       "figure": null,
       "depth": false,
       "route": "agent"
@@ -783,7 +736,7 @@
       "slug": "how-to-select-rollouts-for-offline-training",
       "topic": "rag-agents",
       "words_before": 399,
-      "words_after": 456,
+      "words_after": 1262,
       "figure": null,
       "depth": false,
       "route": "agent"
@@ -793,8 +746,8 @@
       "slug": "what-is-a-semantic-cache",
       "topic": "rag-agents",
       "words_before": 398,
-      "words_after": 462,
-      "figure": "memory",
+      "words_after": 1540,
+      "figure": null,
       "depth": false,
       "route": "memory"
     },
@@ -803,7 +756,7 @@
       "slug": "how-to-build-search-and-agent-evaluation-datasets",
       "topic": "rag-agents",
       "words_before": 376,
-      "words_after": 436,
+      "words_after": 1308,
       "figure": "evaluation",
       "depth": false,
       "route": "rag"
@@ -813,38 +766,8 @@
       "slug": "what-is-data-curation-for-vector-ai",
       "topic": "data",
       "words_before": 387,
-      "words_after": 464,
+      "words_after": 1209,
       "figure": "curation",
-      "depth": false,
-      "route": "data"
-    },
-    {
-      "file": "pretraining-data.md",
-      "slug": "how-vector-search-supports-pretraining-data-preparation",
-      "topic": "data",
-      "words_before": 381,
-      "words_after": 445,
-      "figure": "curation",
-      "depth": false,
-      "route": "data"
-    },
-    {
-      "file": "dedup-methods.md",
-      "slug": "exact-fuzzy-and-semantic-deduplication",
-      "topic": "data",
-      "words_before": 378,
-      "words_after": 441,
-      "figure": "curation",
-      "depth": false,
-      "route": "data"
-    },
-    {
-      "file": "contamination.md",
-      "slug": "how-to-detect-train-test-contamination",
-      "topic": "data",
-      "words_before": 386,
-      "words_after": 439,
-      "figure": null,
       "depth": false,
       "route": "data"
     },
@@ -853,7 +776,7 @@
       "slug": "how-to-sample-diverse-data-with-embeddings",
       "topic": "data",
       "words_before": 385,
-      "words_after": 440,
+      "words_after": 1252,
       "figure": null,
       "depth": false,
       "route": "data"
@@ -863,17 +786,7 @@
       "slug": "what-are-hard-negatives-in-retrieval",
       "topic": "data",
       "words_before": 379,
-      "words_after": 443,
-      "figure": null,
-      "depth": false,
-      "route": "data"
-    },
-    {
-      "file": "active-learning.md",
-      "slug": "how-vector-search-supports-active-learning",
-      "topic": "data",
-      "words_before": 392,
-      "words_after": 447,
+      "words_after": 1240,
       "figure": null,
       "depth": false,
       "route": "data"
@@ -883,48 +796,18 @@
       "slug": "how-to-curate-image-and-video-data",
       "topic": "data",
       "words_before": 392,
-      "words_after": 456,
-      "figure": "curation",
+      "words_after": 1284,
+      "figure": "clip-alignment",
       "depth": false,
       "route": "video"
-    },
-    {
-      "file": "physical-ai.md",
-      "slug": "vector-search-for-physical-ai-data",
-      "topic": "data",
-      "words_before": 400,
-      "words_after": 468,
-      "figure": null,
-      "depth": false,
-      "route": "video"
-    },
-    {
-      "file": "training-lineage.md",
-      "slug": "data-lineage-for-embeddings-and-training",
-      "topic": "data",
-      "words_before": 383,
-      "words_after": 444,
-      "figure": "format",
-      "depth": false,
-      "route": "data"
     },
     {
       "file": "distributed-embedding.md",
       "slug": "how-to-build-distributed-embedding-pipelines",
       "topic": "data",
       "words_before": 385,
-      "words_after": 449,
+      "words_after": 1289,
       "figure": "encoding",
-      "depth": false,
-      "route": "data"
-    },
-    {
-      "file": "quality-scoring.md",
-      "slug": "how-to-score-data-quality-for-curation",
-      "topic": "data",
-      "words_before": 381,
-      "words_after": 441,
-      "figure": "curation",
       "depth": false,
       "route": "data"
     },
@@ -933,7 +816,7 @@
       "slug": "vector-search-for-legal-document-agents",
       "topic": "applications",
       "words_before": 391,
-      "words_after": 522,
+      "words_after": 1377,
       "figure": "filtering",
       "depth": true,
       "route": "legal"
@@ -943,7 +826,7 @@
       "slug": "vector-search-for-healthcare-evidence",
       "topic": "applications",
       "words_before": 391,
-      "words_after": 456,
+      "words_after": 1274,
       "figure": "filtering",
       "depth": false,
       "route": "health"
@@ -953,7 +836,7 @@
       "slug": "vector-search-for-coding-agents",
       "topic": "applications",
       "words_before": 396,
-      "words_after": 453,
+      "words_after": 2027,
       "figure": null,
       "depth": false,
       "route": "code"
@@ -963,7 +846,7 @@
       "slug": "hybrid-multimodal-product-search",
       "topic": "applications",
       "words_before": 367,
-      "words_after": 432,
+      "words_after": 1657,
       "figure": "recommendation",
       "depth": false,
       "route": "commerce"
@@ -973,7 +856,7 @@
       "slug": "vector-search-for-recommendations",
       "topic": "applications",
       "words_before": 360,
-      "words_after": 554,
+      "words_after": 1557,
       "figure": "recommendation",
       "depth": false,
       "route": "commerce"
@@ -983,7 +866,7 @@
       "slug": "vector-search-for-entity-resolution",
       "topic": "applications",
       "words_before": 374,
-      "words_after": 428,
+      "words_after": 1786,
       "figure": null,
       "depth": false,
       "route": "rag"
@@ -993,7 +876,7 @@
       "slug": "vector-search-for-anomaly-discovery",
       "topic": "applications",
       "words_before": 370,
-      "words_after": 428,
+      "words_after": 1758,
       "figure": null,
       "depth": false,
       "route": "rag"
@@ -1003,7 +886,7 @@
       "slug": "managed-vector-database-byoc-vs-self-hosted",
       "topic": "production",
       "words_before": 374,
-      "words_after": 431,
+      "words_after": 1225,
       "figure": null,
       "depth": false,
       "route": "managed"
@@ -1013,7 +896,7 @@
       "slug": "choose-ai-framework-for-milvus",
       "topic": "frameworks",
       "words_before": 379,
-      "words_after": 456,
+      "words_after": 1159,
       "figure": null,
       "depth": false,
       "route": "framework"
@@ -1023,7 +906,7 @@
       "slug": "langchain-with-milvus",
       "topic": "frameworks",
       "words_before": 343,
-      "words_after": 401,
+      "words_after": 1210,
       "figure": null,
       "depth": false,
       "route": "framework"
@@ -1033,7 +916,7 @@
       "slug": "llamaindex-with-milvus",
       "topic": "frameworks",
       "words_before": 322,
-      "words_after": 376,
+      "words_after": 1036,
       "figure": null,
       "depth": false,
       "route": "framework"
@@ -1043,7 +926,7 @@
       "slug": "langgraph-with-milvus",
       "topic": "frameworks",
       "words_before": 342,
-      "words_after": 407,
+      "words_after": 1076,
       "figure": "agent",
       "depth": false,
       "route": "agent"
@@ -1053,7 +936,7 @@
       "slug": "haystack-with-milvus",
       "topic": "frameworks",
       "words_before": 313,
-      "words_after": 370,
+      "words_after": 954,
       "figure": null,
       "depth": false,
       "route": "framework"
@@ -1063,7 +946,7 @@
       "slug": "dify-with-milvus",
       "topic": "frameworks",
       "words_before": 321,
-      "words_after": 377,
+      "words_after": 1070,
       "figure": null,
       "depth": false,
       "route": "framework"
@@ -1073,7 +956,7 @@
       "slug": "dspy-with-milvus",
       "topic": "frameworks",
       "words_before": 327,
-      "words_after": 404,
+      "words_after": 908,
       "figure": null,
       "depth": false,
       "route": "framework"
@@ -1083,7 +966,7 @@
       "slug": "agno-with-milvus",
       "topic": "frameworks",
       "words_before": 308,
-      "words_after": 374,
+      "words_after": 1012,
       "figure": null,
       "depth": false,
       "route": "framework"
@@ -1093,7 +976,7 @@
       "slug": "sentence-transformers-with-milvus",
       "topic": "frameworks",
       "words_before": 360,
-      "words_after": 442,
+      "words_after": 1083,
       "figure": null,
       "depth": false,
       "route": "framework"
@@ -1103,27 +986,17 @@
       "slug": "milvus-installation-path",
       "topic": "production",
       "words_before": 328,
-      "words_after": 385,
+      "words_after": 1233,
       "figure": null,
       "depth": false,
       "route": "ops"
-    },
-    {
-      "file": "milvus-lite-to-production.md",
-      "slug": "milvus-lite-to-production",
-      "topic": "production",
-      "words_before": 331,
-      "words_after": 395,
-      "figure": "migration",
-      "depth": false,
-      "route": "managed"
     },
     {
       "file": "milvus-capacity-planning.md",
       "slug": "milvus-capacity-planning",
       "topic": "production",
       "words_before": 332,
-      "words_after": 390,
+      "words_after": 1202,
       "figure": null,
       "depth": false,
       "route": "capacity"
@@ -1133,7 +1006,7 @@
       "slug": "milvus-mcp-tools",
       "topic": "production",
       "words_before": 327,
-      "words_after": 392,
+      "words_after": 1015,
       "figure": "agent",
       "depth": false,
       "route": "agent"
@@ -1143,7 +1016,7 @@
       "slug": "milvus-cdc-and-migration",
       "topic": "production",
       "words_before": 327,
-      "words_after": 394,
+      "words_after": 1216,
       "figure": "migration",
       "depth": false,
       "route": "backup"
@@ -1153,7 +1026,7 @@
       "slug": "milvus-security-rbac",
       "topic": "production",
       "words_before": 322,
-      "words_after": 386,
+      "words_after": 953,
       "figure": "filtering",
       "depth": false,
       "route": "security"
@@ -1163,8 +1036,8 @@
       "slug": "milvus-version-upgrades",
       "topic": "production",
       "words_before": 327,
-      "words_after": 383,
-      "figure": null,
+      "words_after": 1177,
+      "figure": "migration",
       "depth": false,
       "route": "ops"
     },
@@ -1173,7 +1046,7 @@
       "slug": "mteb-embedding-leaderboards",
       "topic": "models",
       "words_before": 1213,
-      "words_after": 1271,
+      "words_after": 1380,
       "figure": null,
       "depth": false,
       "route": "model"
@@ -1183,7 +1056,7 @@
       "slug": "embedding-reranking-model-catalog",
       "topic": "models",
       "words_before": 778,
-      "words_after": 833,
+      "words_after": 1376,
       "figure": null,
       "depth": false,
       "route": "model"
@@ -1193,7 +1066,7 @@
       "slug": "reranking-model-catalog",
       "topic": "models",
       "words_before": 1015,
-      "words_after": 1074,
+      "words_after": 1388,
       "figure": null,
       "depth": false,
       "route": "model"
@@ -1203,37 +1076,7 @@
       "slug": "mmeb-multimodal-evaluation",
       "topic": "models",
       "words_before": 1122,
-      "words_after": 1227,
-      "figure": null,
-      "depth": false,
-      "route": "model"
-    },
-    {
-      "file": "wemm-embedding-models.md",
-      "slug": "wemm-embedding-models",
-      "topic": "models",
-      "words_before": 411,
-      "words_after": 475,
-      "figure": "multimodal",
-      "depth": false,
-      "route": "visual"
-    },
-    {
-      "file": "kalm-embedding-models.md",
-      "slug": "kalm-embedding-models",
-      "topic": "models",
-      "words_before": 368,
-      "words_after": 425,
-      "figure": null,
-      "depth": false,
-      "route": "model"
-    },
-    {
-      "file": "kalm-reranker-models.md",
-      "slug": "kalm-reranker-models",
-      "topic": "models",
-      "words_before": 371,
-      "words_after": 428,
+      "words_after": 1093,
       "figure": null,
       "depth": false,
       "route": "model"
@@ -1243,7 +1086,7 @@
       "slug": "dense-sparse-model-families",
       "topic": "models",
       "words_before": 714,
-      "words_after": 771,
+      "words_after": 1302,
       "figure": null,
       "depth": false,
       "route": "model"
@@ -1253,8 +1096,8 @@
       "slug": "multimodal-model-families",
       "topic": "models",
       "words_before": 614,
-      "words_after": 674,
-      "figure": null,
+      "words_after": 1335,
+      "figure": "clip-alignment",
       "depth": false,
       "route": "visual"
     },
@@ -1263,27 +1106,17 @@
       "slug": "visual-document-models",
       "topic": "models",
       "words_before": 367,
-      "words_after": 432,
+      "words_after": 1374,
       "figure": "visual-page",
       "depth": false,
       "route": "visual"
-    },
-    {
-      "file": "tencent-r3-models.md",
-      "slug": "tencent-r3-models",
-      "topic": "models",
-      "words_before": 343,
-      "words_after": 402,
-      "figure": null,
-      "depth": false,
-      "route": "model"
     },
     {
       "file": "milvus-model-library-support.md",
       "slug": "milvus-model-library-support",
       "topic": "ecosystem",
       "words_before": 819,
-      "words_after": 894,
+      "words_after": 1345,
       "figure": null,
       "depth": false,
       "route": "ops"
@@ -1293,8 +1126,8 @@
       "slug": "milvus-model-functions",
       "topic": "production",
       "words_before": 367,
-      "words_after": 448,
-      "figure": null,
+      "words_after": 1097,
+      "figure": "encoding",
       "depth": false,
       "route": "ops"
     },
@@ -1303,7 +1136,7 @@
       "slug": "model-inference-serving",
       "topic": "models",
       "words_before": 357,
-      "words_after": 425,
+      "words_after": 1300,
       "figure": "encoding",
       "depth": false,
       "route": "model"
@@ -1315,7 +1148,7 @@
       "words_before": 0,
       "depth": false,
       "route": "multi-vector",
-      "words_after": 901,
+      "words_after": 1998,
       "figure": "maxsim"
     },
     {
@@ -1323,7 +1156,7 @@
       "slug": "what-is-faiss",
       "topic": "retrieval",
       "words_before": 0,
-      "words_after": 532,
+      "words_after": 1242,
       "figure": null,
       "depth": false,
       "route": "index-families"

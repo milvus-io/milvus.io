@@ -5,7 +5,7 @@ topic: "retrieval"
 order: 16
 ---
 
-Hybrid search combines multiple retrieval signals into a final candidate ranking. A common text-search design combines dense semantic embeddings with BM25 keyword retrieval. Other designs combine different embedding models or modalities. The benefit depends on whether the paths recover useful candidates that the others miss.
+Hybrid search combines multiple retrieval signals into a final candidate ranking. A common text-search design combines dense semantic embeddings with BM25 keyword retrieval. Other designs combine different embedding models or modalities. The benefit depends on whether the paths recover useful candidates that the others miss. Read [how semantic and keyword search differ](/ai-quick-reference/what-is-semantic-search-and-how-does-it-differ-from-keyword-search) and [how BM25 ranks text](/ai-quick-reference/what-is-fulltext-search) first; this page explains how to combine their candidate lists.
 
 ![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
 

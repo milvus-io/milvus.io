@@ -5,46 +5,47 @@ topic: "retrieval"
 order: 8
 ---
 
-Keyword search finds documents through terms and their lexical relationships. Semantic search uses a learned representation to retrieve by meaning. They solve overlapping problems, but their failure modes differ. A support query containing an exact error code and a conversational description may benefit from both.
+Keyword and semantic search use different evidence. Lexical search analyzes text into terms and scores documents that share query terms. Semantic search encodes text into vectors and finds nearby representations, which can match different wording. Neither signal should be expected to solve the other's failure cases.
 
 ![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
 
-## Where each signal helps
+## Keyword matching is not always exact matching
 
-Keyword retrieval is valuable for exact identifiers, names, rare terms, and wording that must appear in a result. Tokenization and analyzers determine how text becomes searchable terms, so punctuation, language, and domain-specific tokens deserve testing.
+An analyzer can lowercase text, split tokens, remove punctuation, or apply language-specific rules. That determines which terms a lexical system can match. A BM25 full-text query ranks documents from their matching terms; it does not mean that every query term must appear, nor does it guarantee an exact phrase. Use phrase matching or a filter when the condition itself must be true.
 
-Semantic retrieval can bridge vocabulary differences, such as a question about “broken delivery” and a document about “damaged shipments.” It can also return a plausible but wrong match when two passages discuss similar topics. It does not enforce exact phrases, document status, or access rights by itself.
+Lexical evidence is often valuable for error codes, product names, version strings, identifiers, and specialist vocabulary. Its limits follow from the query and indexed text producing different tokens. A semantic encoder can bridge paraphrases, but similar meanings do not reliably preserve an exact identifier, negation, version, or numeric value.
 
-## Avoid an all-or-nothing migration
+## Combine the signals as hybrid retrieval
 
-Measure the existing search system before replacing it. Build query groups for exact terms, paraphrases, mixed intent, and unsupported questions. Add semantic retrieval as another candidate path, then compare dense-only, keyword-only, and hybrid results against the same relevance judgments.
+For a query such as “HNSW index returns an outdated result,” a BM25 path can retain the literal `HNSW` term while a dense path may find passages phrased as “stale search results.” In Milvus, a common design searches a BM25-generated sparse field and a dense vector field, applies the same authorization and metadata eligibility to both, then merges their candidate lists with a supported ranker such as Reciprocal Rank Fusion (RRF) or WeightedRanker.
 
-Separate retrieval from filtering. A request restricted to one customer's documents or one software version should keep those constraints regardless of which ranking signal is used. Product metadata and authorization rules are not substitutes for relevance, and relevance is not a substitute for authorization.
+The order matters: each path first produces its own candidate list; fusion then reorders the candidates that were found. Fusion cannot recover a relevant document missing from both lists. Candidate depth, eligibility rules, and final ranking all affect the result.
 
-## Implement and iterate
+## Decide from the query mix
 
-Milvus supports full-text retrieval with BM25 and vector retrieval that can be combined with hybrid search. Start with the documented implementations and inspect why each path contributes a candidate. Track changes in relevance and latency, not just whether more documents are returned. Retain the combination that solves your actual query mix with an acceptable operating cost.
+Build judged examples for exact identifiers, paraphrases, mixed queries, and queries with no valid answer. Compare lexical-only, dense-only, and hybrid retrieval using identical source data, filters, and final top-k. Inspect candidate lists before fusion. Keep the extra path when it improves relevant evidence enough to justify index size, ingestion, latency, and maintenance costs.
 
 ## Example to test
 
-Compare an exact error-code query with a natural-language description of the same fault. Inspect lexical and dense failures separately. The choice is often a routing or fusion decision rather than replacing every exact-match query with embeddings.
+Search once for `E-1042`, once for a paraphrase describing the same error, and once for both together. Check analyzer output, candidates from each path, and the fused order. Treat required phrase or access conditions as explicit constraints rather than hoping a ranking score will enforce them.
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Build BM25 full-text retrieval](https://milvus.io/docs/full-text-search.md).
+- [Combine dense and sparse candidates](https://milvus.io/docs/multi-vector-search.md).
 
 ## Continue learning
 
-- [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
-- [How can vector search improve codebase retrieval for coding agents?](/ai-quick-reference/vector-search-for-coding-agents)
-- [What is vector search?](/ai-quick-reference/what-is-vector-search)
-- [What is full-text search, and how does BM25 fit?](/ai-quick-reference/what-is-fulltext-search)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
+- [What is full-text search, and how does BM25 fit?](/ai-quick-reference/what-is-fulltext-search)
+- [What are dense and sparse embeddings?](/ai-quick-reference/what-are-dense-and-sparse-embeddings)
+- [What is vector search?](/ai-quick-reference/what-is-vector-search)
+- [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
 
 ## Implementation guides and sources
 
-- [Full-text search](https://milvus.io/docs/full-text-search.md)
-- [Hybrid search](https://milvus.io/docs/multi-vector-search.md)
+- [Milvus full-text search and BM25](https://milvus.io/docs/full-text-search.md)
+- [Milvus hybrid search](https://milvus.io/docs/multi-vector-search.md)
+- [Milvus reranking](https://milvus.io/docs/reranking.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Verify implementation details against the deployed Milvus version.

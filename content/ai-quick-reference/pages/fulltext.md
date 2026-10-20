@@ -7,45 +7,58 @@ demo: "hybrid search"
 demoDescription: "Check out our hybrid semantic search & full-text matching demo built with Milvus:"
 ---
 
-Full-text search retrieves and ranks text using its terms. BM25 is a widely used relevance scoring method that considers factors including term frequency, how common a term is across the corpus, and document length. Its scores rank candidates for a query; they are not probabilities that a document is correct.
+Full-text search analyzes text into terms and retrieves documents using lexical evidence. BM25 is a term-based ranking function: it gives weight to query terms found in a document, then combines those term contributions into a document score. It is designed for keyword relevance, not for understanding paraphrases.
 
-![Two retrieval signals, one inspected candidate pool](/images/ai-reference/hybrid.svg)
+## How BM25 scores a document
 
-## Text analysis comes first
+A common BM25 form is:
 
-The analyzer determines which terms are indexed. Language, token boundaries, case handling, punctuation, and domain terminology can all affect matches. A product code, a hyphenated error name, and ordinary prose may need different test cases. Diagnose analysis problems before trying to fix them with ranking weights.
+`score(q,d) = Σ(t in q) IDF(t) × [ f(t,d) × (k1 + 1) / ( f(t,d) + k1 × (1 - b + b × |d| / avgdl) ) ]`
 
-Milvus full-text search accepts raw text, analyzes it, and uses a BM25 function to produce a sparse representation for retrieval. The collection needs the appropriate text field, sparse-vector field, function, and index configuration described in the implementation guide.
+Here `f(t,d)` is how often term `t` occurs in document `d`; `|d|` is that document's analyzed length; `avgdl` is the average analyzed document length; `IDF(t)` weights how informative the term is across the collection; and `k1` and `b` control term-frequency saturation and length normalization. Implementations may use different IDF variants and defaults, so use this formula to understand the roles and check the target system for exact score behavior.
 
-## Know the boundary
+The formula has three useful effects:
 
-Full-text ranking is different from a boolean requirement that a field contains an exact value, and different from phrase matching. Choose an explicit filter or the documented text/phrase matching capability when a condition must hold. Do not infer that a high BM25 score enforces every word or phrase in a user's request.
+- **Term frequency (TF):** A document containing a query term can gain score when the term repeats. The gain saturates, so repeating a word 20 times does not count as 20 independent pieces of evidence.
+- **Inverse document frequency (IDF):** A term found in only a small fraction of the corpus is usually more informative than a very common term. If “HNSW” is rare in a technical corpus but “index” appears everywhere, a match on `HNSW` can contribute stronger evidence, subject to the analyzer and scoring configuration.
+- **Length normalization:** Matching terms in an unusually long document are normalized against document length and the corpus average. This reduces the advantage that a document would get merely by containing more words; parameter `b` controls how much normalization is applied.
 
-BM25 can complement dense semantic retrieval when precise terminology matters. A semantic model may recover paraphrases that share few terms, while BM25 can recover identifiers the model handles poorly. Combine them only after evaluating each path independently.
+BM25 scores are ranking signals, not probabilities that a document is relevant. A high score does not guarantee that all query terms or a requested phrase occur. Term matching depends on the analyzer's tokenization and normalization.
 
-## Verify the implementation
+## Why it works well for keyword search
 
-Use a small corpus with known positive and negative cases. Confirm which tokens are produced, whether expected documents are eligible, and how changes in wording affect ranking. Then add realistic corpus sizes and concurrency. Evaluate final relevance, query latency, and ingestion behavior together so a ranking improvement does not conceal an unusable operational trade-off.
+The score is built from query/document term overlap, term frequency, collection statistics, and document length. This gives a useful ranking for explicit strings such as identifiers, product names, error codes, and uncommon technical terms. BM25 can distinguish a document where an informative term occurs from one that only repeats common words. It can also return a lower-ranked document when just some of a multi-term query matches, so use explicit phrase or boolean conditions when those are requirements.
+
+BM25 does not encode synonymy by itself. If the query says “stale results” and the document says “outdated search output,” they may share no analyzed terms. Dense semantic retrieval can help with that vocabulary gap. Hybrid retrieval can combine the lexical and dense candidate lists, then fuse their rankings.
+
+## How Milvus applies it
+
+Milvus analyzes the source text, creates a sparse term representation through the BM25 Function, and uses corpus statistics and a sparse index to retrieve ranked documents. This path does not require a large language model to generate the lexical representation. Analyzer choice is part of the retrieval behavior; test domain codes, punctuation, languages, and token boundaries on the actual text.
+
+Full-text ranking differs from exact filtering and phrase matching. Use the documented text match or phrase feature when you need those semantics. When comparing BM25 settings, record the analyzer, corpus snapshot, query set, `k1`/`b` configuration, and final relevance judgments.
 
 ## Example to test
 
-A support query containing E123 should retain that identifier even when the rest of the question is paraphrased. Inspect analyzer output and compare BM25 with dense candidates before fusion; an exact-looking string can still be tokenized unexpectedly.
+Search a corpus for `HNSW efSearch`. Include one concise page that explains the parameter, a long page that mentions it once, and a page that repeats the terms many times without answering the question. Inspect analyzer output and ranking. The useful result should reflect term rarity, repeated-term saturation, document length, and the actual passage—not simply raw mention count.
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Configure Milvus BM25 full-text search](https://milvus.io/docs/full-text-search.md).
+- [Combine BM25 and dense search with hybrid retrieval](https://milvus.io/docs/multi-vector-search.md).
 
 ## Continue learning
 
-- [How does a sparse inverted index differ from dense ANN?](/ai-quick-reference/how-sparse-inverted-indexes-work)
-- [How can hybrid and multimodal search improve product discovery?](/ai-quick-reference/hybrid-multimodal-product-search)
+- [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 - [How does semantic search differ from keyword search?](/ai-quick-reference/what-is-semantic-search-and-how-does-it-differ-from-keyword-search)
 - [What are dense and sparse embeddings?](/ai-quick-reference/what-are-dense-and-sparse-embeddings)
-- [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
+- [How does a sparse inverted index differ from dense ANN?](/ai-quick-reference/how-sparse-inverted-indexes-work)
+- [How can hybrid and multimodal search improve product discovery?](/ai-quick-reference/hybrid-multimodal-product-search)
 
 ## Implementation guides and sources
 
-- [Milvus BM25 full-text search](https://milvus.io/docs/full-text-search.md)
+- [Milvus full-text search and BM25](https://milvus.io/docs/full-text-search.md)
+- [Milvus BM25 Function and scoring](https://milvus.io/docs/bm25-function.md)
+- [Robertson and Zaragoza: BM25 and beyond](https://doi.org/10.1561/1500000019)
+- [Milvus hybrid search](https://milvus.io/docs/multi-vector-search.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+Sources checked: 2026-10-20. Verify implementation details against the deployed Milvus version.

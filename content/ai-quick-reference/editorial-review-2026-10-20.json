@@ -4,7 +4,7 @@
   "article_count": 131,
   "case_count": 131,
   "deeper_articles": 10,
-  "original_figures": 25,
+  "original_figures": 26,
   "illustrated_articles": 71,
   "sources_and_limits": "Original examples and diagrams; no measured model or performance results are claimed.",
   "articles": [
@@ -104,7 +104,7 @@
       "topic": "retrieval",
       "words_before": 354,
       "words_after": 426,
-      "figure": "hnsw",
+      "figure": "ann-families",
       "depth": false,
       "route": "index"
     },

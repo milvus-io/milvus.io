@@ -74,7 +74,7 @@ practical follow-up resources. Examples and numeric calculations are illustrativ
 they are not customer measurements or local model benchmark results. Customer
 stories are linked as additional reading without implying equivalent outcomes.
 
-Twenty-five original concept diagrams cover 71 articles. English and Chinese SVG
+Twenty-six original concept diagrams cover 71 articles. English and Chinese SVG
 variants live in `public/images/ai-reference/`. They are schematics, not measured
 plots. Keep descriptive alt text, accessible SVG titles/descriptions, and visible
 explanations of representation, data ownership, or stage boundaries. The content
@@ -134,3 +134,12 @@ Explain RAG and Agent Memory integration, dense/sparse representation generation
 cosine/IP/squared L2 geometry, CLIP alignment, and MaxSim versus candidate search.
 MUVERA is a fixed-dimensional encoding approach, not an embedding model or a
 replacement name for MaxSim; concrete strategy configuration needs release checks.
+
+## Retrieval foundations revision
+
+The semantic/keyword article now links directly to hybrid retrieval; the BM25 article
+explains term frequency, inverse document frequency, length normalization, and
+lexical matching; the ANN introduction distinguishes the kNN result task from exact
+and approximate methods, with hashing, graph, and IVF families. It also states that
+Milvus `MINHASH_LSH` is specific to binary MinHash/Jaccard signatures. See the
+2026-10-20 supplementary retrieval review ledger for the content hashes and sources.

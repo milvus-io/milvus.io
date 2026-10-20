@@ -31,8 +31,9 @@ Replay an identical query mix after a serving-node restart and after warm-up. Co
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Configure Milvus DISKANN graph construction and search parameters](https://milvus.io/docs/diskann.md).
+- [Compare Milvus index structures and when DiskANN fits](https://milvus.io/docs/index-explained.md).
+- [Design hot/cold tiered storage for data larger than RAM](https://milvus.io/docs/tiered-storage-overview.md).
 
 ## Continue learning
 
@@ -46,5 +47,3 @@ Replay an identical query mix after a serving-node restart and after warm-up. Co
 - [DISKANN design and configuration](https://milvus.io/docs/diskann.md)
 - [Index selection trade-offs](https://milvus.io/docs/index-explained.md)
 - [Milvus Vamana graph, PQ codes, SSD search, and configuration](https://milvus.io/docs/diskann.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

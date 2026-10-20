@@ -45,6 +45,7 @@ Search a corpus for `HNSW efSearch`. Include one concise page that explains the 
 
 - [Configure Milvus BM25 full-text search](https://milvus.io/docs/full-text-search.md).
 - [Combine BM25 and dense search with hybrid retrieval](https://milvus.io/docs/multi-vector-search.md).
+- [Try the hybrid search and full-text matching Bootcamp demo](https://milvus.io/bootcamp).
 
 ## Continue learning
 
@@ -60,5 +61,3 @@ Search a corpus for `HNSW efSearch`. Include one concise page that explains the 
 - [Milvus BM25 Function and scoring](https://milvus.io/docs/bm25-function.md)
 - [Robertson and Zaragoza: BM25 and beyond](https://doi.org/10.1561/1500000019)
 - [Milvus hybrid search](https://milvus.io/docs/multi-vector-search.md)
-
-Sources checked: 2026-10-20. Verify implementation details against the deployed Milvus version.

@@ -64,5 +64,3 @@ For a static in-memory collection with top-20 queries, compare FLAT, HNSW, and I
 - [Review GPU_CAGRA and GPU search parameters](https://milvus.io/docs/gpu-cagra.md).
 - [Compare SQ, PQ, PRQ, and RaBitQ](https://milvus.io/ai-quick-reference/what-is-vector-quantization-in-embeddings).
 - [Read the FAISS/Milvus library distinction](https://milvus.io/ai-quick-reference/what-is-faiss).
-
-Sources checked: 2026-10-20. Index availability and parameter support are release-specific; test with the target Milvus version and workload.

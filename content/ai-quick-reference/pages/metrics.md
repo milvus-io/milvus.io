@@ -52,5 +52,3 @@ Compute the three scores for the vectors above, then normalize B to (1,0) and co
 ## Implementation guides and sources
 
 - [Milvus similarity metrics](https://milvus.io/docs/metric.md)
-
-Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

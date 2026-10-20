@@ -7,6 +7,8 @@ order: 67
 
 A FLAT search evaluates the vector comparisons over the eligible dataset rather than relying on an approximate candidate structure. It is useful as an exact-neighbor reference for evaluating ANN behavior. It also provides a simple serving option when the eligible dataset and workload make exhaustive comparison affordable.
 
+As an illustrative example (not a benchmark claim — measure on your own hardware and dataset): searching 100K 768-dimensional vectors with FLAT on CPU might take on the order of 50-100ms per query, since every comparison touches the full vector. The same corpus searched with HNSW at a tuned `ef` might return in 1-3ms at 95%+ recall, because the graph skips most of the dataset entirely. The gap is the reason ANN indexes exist — and the reason FLAT's exact answer is still the yardstick ANN quality gets measured against.
+
 ![Control the workload before comparing performance](/images/ai-reference/benchmark.svg)
 
 ## Keep the baseline equivalent
@@ -33,8 +35,8 @@ Build exact ground truth after applying the same tenant and time eligibility rul
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Configure Milvus FLAT search](https://milvus.io/docs/flat.md).
+- [Check vector distance and score definitions for your metric](https://milvus.io/docs/metric.md).
 
 ## Continue learning
 
@@ -47,5 +49,3 @@ Build exact ground truth after applying the same tenant and time eligibility rul
 
 - [Milvus FLAT search](https://milvus.io/docs/flat.md)
 - [Vector distance and score definitions](https://milvus.io/docs/metric.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

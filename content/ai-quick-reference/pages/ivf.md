@@ -41,12 +41,12 @@ If increasing nprobe improves recall while vectors and compression remain fixed,
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Configure Milvus IVF_FLAT and tune `nlist`/`nprobe`](https://milvus.io/docs/ivf-flat.md).
+- [Compare IVF with other Milvus index structures](https://milvus.io/docs/index-explained.md).
 
 ## Continue learning
 
-- [How do GPU_IVF_FLAT and GPU_IVF_PQ differ?](/ai-quick-reference/gpu-ivf-flat-vs-gpu-ivf-pq)
+- [What is GPU_CAGRA, and when does it help vector search? (includes GPU IVF vs. CAGRA comparison)](/ai-quick-reference/what-is-gpu-cagra)
 - [What is IVF_RABITQ, and how should you evaluate it?](/ai-quick-reference/what-is-ivf-rabitq)
 - [What is approximate nearest-neighbor search?](/ai-quick-reference/what-is-approximate-nearestneighbor-ann-search)
 - [What is HNSW, and how should you tune it?](/ai-quick-reference/what-is-hnsw)
@@ -58,5 +58,3 @@ If increasing nprobe improves recall while vectors and compression remain fixed,
 - [Milvus IVF_FLAT index](https://milvus.io/docs/ivf-flat.md)
 - [Milvus IVF_PQ index](https://milvus.io/docs/ivf-pq.md)
 - [Milvus IVF_FLAT candidate partitions](https://milvus.io/docs/ivf-flat.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

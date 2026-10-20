@@ -29,8 +29,8 @@ Retrieve an illustrative pool of 100 passages and rerank it to ten for context a
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Configure Milvus reranking](https://milvus.io/docs/reranking.md).
+- [Try reranking in the Milvus Bootcamp RAG examples](https://milvus.io/bootcamp).
 
 ## Continue learning
 
@@ -44,5 +44,3 @@ Retrieve an illustrative pool of 100 passages and rerank it to ten for context a
 
 - [Retrieve and rerank architecture](https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html)
 - [Milvus reranking concepts](https://milvus.io/docs/reranking.md)
-
-Sources checked: 2026-10-20. Model rankings are dated snapshots; use the guide for your deployed version.

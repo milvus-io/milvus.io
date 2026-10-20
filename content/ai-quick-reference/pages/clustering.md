@@ -29,8 +29,8 @@ For issue triage, use embeddings to propose related groups, then inspect cluster
 
 ## From concept to implementation
 
-- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
-- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+- [Compare IVF centroid clustering with application-level grouping](https://milvus.io/docs/ivf-flat.md).
+- [Store cluster IDs as dynamic metadata for filtering and sampling](https://milvus.io/docs/enable-dynamic-field.md).
 
 ## Continue learning
 
@@ -43,6 +43,4 @@ For issue triage, use embeddings to propose related groups, then inspect cluster
 ## Implementation guides and sources
 
 - [Sentence Transformers clustering examples](https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html)
-- [Store cluster metadata](https://milvus.io/docs/enable-dynamic-field.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+- [IVF index family and centroid structure](https://milvus.io/docs/ivf-flat.md)

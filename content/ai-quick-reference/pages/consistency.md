@@ -5,7 +5,7 @@ topic: "production"
 order: 28
 ---
 
-Eventual consistency permits reads to observe an older state while updates propagate. In a retrieval application, a newly inserted passage or a recent correction may not be visible to every read immediately. The consistency policy determines what freshness behavior an application can require; it is separate from whether the data is durably stored.
+Milvus gives you four consistency levels — Strong, Bounded, Session, and Eventually — and picking the wrong one is a common source of "my search doesn't see the record I just wrote" bugs. Eventual consistency permits reads to observe an older state while updates propagate. In a retrieval application, a newly inserted passage or a recent correction may not be visible to every read immediately. The consistency policy determines what freshness behavior an application can require; it is separate from whether the data is durably stored.
 
 ![Durable write is not yet a visible search result](/images/ai-reference/write-path.svg)
 
@@ -36,7 +36,7 @@ After updating a product record, issue a read under the application's intended c
 
 ## Continue learning
 
-- [What does the Milvus Streaming Node do?](/ai-quick-reference/what-is-milvus-streaming-node)
+- [How does Milvus separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
 - [How should an agent memory system handle corrections, expiry, and deletion?](/ai-quick-reference/how-to-correct-expire-and-delete-agent-memory)
 - [How do you handle incremental updates in a vector database?](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database)
 - [How should you structure agent memory in Milvus?](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus)
@@ -45,5 +45,4 @@ After updating a product record, issue a read under the application's intended c
 ## Implementation guides and sources
 
 - [Milvus consistency levels](https://milvus.io/docs/consistency.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+- [Zilliz Cloud deployment and product information](https://zilliz.com/cloud)

@@ -5,21 +5,19 @@ topic: "retrieval"
 order: 62
 ---
 
-Compressed HNSW variants combine graph navigation with a lower-cost vector representation. They address memory and computation requirements that ordinary HNSW can make expensive at large scale. The trade-off includes representation error, graph overhead, index preparation, and any higher-precision refinement stage.
+Compressed HNSW variants combine graph navigation with a lower-cost vector representation. The compression math itself — how SQ, PQ, and PRQ form their compact codes and what bytes they save — is the same math used everywhere else in Milvus; [the quantization guide](/ai-quick-reference/what-is-vector-quantization-in-embeddings) covers it once. What's specific to HNSW is what compression does *inside the graph*: the distances a traversal uses to decide which edge to follow next become approximate, and that changes navigation quality in ways that don't show up in a pure IVF or flat-index compression analysis.
 
-![Treat compression as another approximation](/images/ai-reference/quantization.svg)
+![HNSW hierarchical graph navigation](/images/ai-reference/hnsw.svg)
 
-## Understand what is compressed
+## Why compression hits graph navigation differently
 
-Scalar quantization (SQ) maps each vector coordinate to a lower-bit integer level, for example SQ8 maps an FP32 coordinate from 4 bytes to roughly 1 byte. Product quantization (PQ) splits the vector into `m` subvectors and stores a learned codebook ID for each subvector; with `nbits` per code, the vector code takes about `m × nbits / 8` bytes. Product residual quantization (PRQ) applies PQ and then quantizes the remaining reconstruction error in additional stages. SQ, PQ, and PRQ compress vector values; HNSW still stores its neighbor links, so total index size is not just the code size.
+HNSW's search quality depends on making the right greedy choice at each hop: from the current node, move to whichever neighbor is closest to the query. If the distances used for that choice are computed from compressed vectors, a wrong local choice can route the traversal away from the region that actually contains the true neighbor — not just mis-rank a candidate that was already found, but steer the walk somewhere else entirely. That is different from compression's effect in IVF or FLAT, where the candidate *set* is fixed first (by cluster membership or by being the whole corpus) and compression only affects scoring within that set. In a graph, compression can affect which nodes get visited at all.
 
-Milvus exposes variants through separate index types and documented parameters. Check which quantization and refinement choices the deployed release supports. A compression label is not enough to derive the loaded-memory footprint or valid parameter combinations.
+This is why `HNSW_SQ`, `HNSW_PQ`, and `HNSW_PRQ` often pair compression with a refinement step that re-scores a shortlist using higher-precision vectors: refinement can repair ranking mistakes among nodes the traversal actually reached, but it cannot undo a navigation decision that skipped the right neighborhood in the first place. Construction-time parameters (`M`, `efConstruction`) and the compression choice therefore interact — a sparser graph is less forgiving of per-hop distance error than a well-connected one, because there are fewer alternative paths to the same destination.
 
 ## Compare the full retrieval path
 
-Hold the embedding model, vectors, metric, filters, and query set fixed. Compare ordinary HNSW and compressed variants at matched exact-neighbor recall. Measure graph construction time, loaded memory, search latency, and throughput.
-
-Where refinement is supported, account for the representation it reads and the extra candidate work. Higher-precision rescoring can improve ordering among candidates, but it cannot recover a useful record that the preceding search never selected. Increasing candidate breadth and improving representation precision solve related but different problems.
+Hold the embedding model, vectors, metric, filters, and query set fixed. Compare ordinary HNSW and compressed variants at matched exact-neighbor recall, and isolate the two failure modes: increase search-time `ef` to see whether the compressed graph recovers recall purely from exploring more nodes (a coverage problem), versus whether recall stays low regardless of `ef` (a navigation-quality problem caused by the compressed distances misrouting the walk). Measure graph construction time, loaded memory, search latency, and throughput for each variant — HNSW still stores its neighbor links regardless of which quantization method compresses the vectors, so total index size is never just the code size.
 
 ## Include data distribution and updates
 
@@ -33,8 +31,8 @@ Hold the graph and query workload as comparable as the supported index variants 
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Read how SQ, PQ, and PRQ form their codes and what they save](https://milvus.io/ai-quick-reference/what-is-vector-quantization-in-embeddings).
+- [Configure HNSW_SQ, HNSW_PQ, and HNSW_PRQ parameters](https://milvus.io/docs/hnsw-prq.md).
 
 ## Continue learning
 
@@ -49,5 +47,3 @@ Hold the graph and query workload as comparable as the supported index variants 
 - [HNSW product quantization](https://milvus.io/docs/hnsw-pq.md)
 - [HNSW product residual quantization](https://milvus.io/docs/hnsw-prq.md)
 - [Milvus index structures and compression](https://milvus.io/docs/index-explained.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

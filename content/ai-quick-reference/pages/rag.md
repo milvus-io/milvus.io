@@ -13,7 +13,7 @@ Retrieval-augmented generation supplies a language model with information retrie
 
 Ingestion extracts text, preserves source metadata, splits documents into suitable units, generates embeddings, and writes searchable records. At query time, the application determines the eligible corpus, retrieves candidates, optionally reranks them, and constructs the model context. The final answer should retain links to the evidence the user can inspect.
 
-Milvus serves the retrieval layer for vector and hybrid search. Document parsing, authorization, prompt construction, and answer verification remain application responsibilities. Adding a vector database alone does not establish that an answer is grounded or current.
+Milvus serves the retrieval layer for vector and hybrid search. Document parsing, authorization, prompt construction, and answer verification remain application responsibilities. A vector database alone does not keep an answer grounded or current; that requires the surrounding pipeline.
 
 ## Design for evidence and abstention
 
@@ -63,4 +63,3 @@ Save the evidence returned before generating an answer to a product question. If
 - [Build RAG with Milvus](https://milvus.io/docs/build-rag-with-milvus.md)
 - [RAG pipeline implementation guidance](https://milvus.io/docs/rag_pipeline.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

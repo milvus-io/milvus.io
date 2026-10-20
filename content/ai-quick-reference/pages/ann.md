@@ -11,13 +11,9 @@ Nearest-neighbor search starts with a query vector, an eligible dataset, a metri
 
 ## The main structures: hashing, graphs, and IVF
 
-| Structure | What it does | Familiar examples |
-| --- | --- | --- |
-| Hashing / LSH | Maps vectors or sets into buckets designed so similar items collide more often; search checks colliding candidates. | Locality-sensitive hashing schemes; MinHash LSH for set/Jaccard similarity |
-| Graph | Connects vectors and navigates those links toward promising neighbors. | HNSW is a layered memory graph; DiskANN uses a Vamana graph designed for SSD access; GPU_CAGRA builds/searches a GPU-optimized graph |
-| IVF (inverted file) | Assigns vectors to coarse centroid cells; each query probes selected cells and searches within them. | IVF_FLAT keeps candidate vectors in full precision; IVF_SQ8, IVF_PQ, and IVF_RABITQ change how vectors are represented |
+ANN indexes narrow the candidate set through one of a few structural ideas: hashing schemes that bucket similar items together (LSH, or Milvus's `MINHASH_LSH` for binary MinHash/Jaccard similarity specifically), graphs that navigate neighbor links toward promising results (HNSW, DiskANN's Vamana graph, GPU_CAGRA), and IVF's coarse centroid partitions that a query probes selectively. Compression (SQ, PQ, PRQ, RaBitQ) is a separate axis that combines with any of these — IVF_PQ is IVF partitioning plus product-quantized codes, HNSW_PQ is graph navigation plus PQ-compressed vectors. FLAT has no approximate candidate structure at all; it is the exhaustive baseline.
 
-These are data-structure families, not a complete product checklist. In Milvus, `MINHASH_LSH` is a specific index for binary MinHash signatures and set/Jaccard similarity; it is not a general LSH index for dense semantic embeddings. Check the field type and metric before treating similarly named hashing methods as interchangeable. Compression is another axis that can be combined with a structure. For example, IVF_PQ means IVF partitions plus product-quantized vector codes; HNSW_PQ means graph navigation plus PQ-compressed vectors. FLAT has no approximate candidate structure.
+Naming alone does not establish interchangeability: `MINHASH_LSH` is not a general LSH index for dense semantic embeddings, so check the field type and metric before assuming two similarly named methods solve the same problem. For the full decision table — which structure to pick for a given workload, dataset size, and resource budget — see [how to choose a vector index for your workload](/ai-quick-reference/how-do-you-choose-the-right-index-type-for-your-workload).
 
 ## FAISS is the implementation library layer
 
@@ -63,5 +59,3 @@ For a fixed corpus, compare FLAT, HNSW, IVF_FLAT, IVF_PQ, DiskANN, and GPU_CAGRA
 - [GPU_CAGRA](https://milvus.io/docs/gpu-cagra.md)
 - [IVF](https://milvus.io/docs/ivf-flat.md)
 - [IVF_PQ](https://milvus.io/docs/ivf-pq.md)
-
-Sources checked: 2026-10-20. Families are conceptual groupings; field and feature compatibility depends on the deployed release.

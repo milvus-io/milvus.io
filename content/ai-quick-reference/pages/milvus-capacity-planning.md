@@ -43,5 +43,3 @@ Use a worksheet with vector count, dimension, metadata size, index, replicas, up
 - [Milvus sizing tool](https://milvus.io/tools/sizing)
 - [Index design and trade-offs](https://milvus.io/docs/index-explained.md)
 - [Current Zilliz Cloud pricing](https://zilliz.com/pricing)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

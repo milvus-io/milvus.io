@@ -9,6 +9,10 @@ A stable source identifier connects an ANN result to the object that users, labe
 
 ![Keep logical identity separate from file position](/images/ai-reference/format.svg)
 
+## A concrete example: surviving compaction
+
+Say a support-ticket corpus assigns each ticket a `ticket_id` and stores its embedding alongside a Parquet row position such as `file_017.parquet:row_4821`. A nightly compaction job rewrites small files into larger ones, and that row now lives at `file_112.parquet:row_93`. If the application had bookmarked the row position as the record's identity, every saved reference, cached result, and training label pointing at `file_017.parquet:row_4821` silently breaks or, worse, now resolves to a different ticket's embedding. Because the application instead keyed on `ticket_id`, the same logical record resolves correctly after compaction even though its physical location changed completely. The row position was always a detail of where the bytes happened to sit at index time, not what the record meant.
+
 ## Separate logical identity from physical location
 
 For a document corpus, keep a document ID, document revision, chunk ID, and chunk offsets. For video, retain the recording ID and time interval. A physical row number, file path, or Lance fragment position can change during maintenance, so use it as a location within a known dataset version rather than as the only business identifier.
@@ -33,14 +37,14 @@ Rewrite source files through a maintenance job and verify that a saved result st
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Map external fields into a collection schema](https://milvus.io/docs/create-an-external-collection.md).
+- [Review primary-field behavior](https://milvus.io/docs/primary-field.md).
 
 ## Continue learning
 
 - [How can Milvus search data stored in Lance?](/ai-quick-reference/how-can-milvus-search-lance-data)
 - [How can Milvus search an Apache Iceberg table?](/ai-quick-reference/how-can-milvus-search-iceberg-tables)
-- [What lineage metadata should connect source data, embeddings, and training sets?](/ai-quick-reference/data-lineage-for-embeddings-and-training)
+- [How do you reproduce a vector search or training experiment later?](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments)
 - [How do you handle incremental updates in a vector database?](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database)
 
 ## Implementation guides and sources
@@ -48,5 +52,3 @@ Rewrite source files through a maintenance job and verify that a saved result st
 - [Map external fields into a collection](https://milvus.io/docs/create-an-external-collection.md)
 - [Primary-field behavior](https://milvus.io/docs/primary-field.md)
 - [Table schema evolution](https://iceberg.apache.org/docs/latest/evolution/)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

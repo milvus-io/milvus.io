@@ -5,11 +5,13 @@ topic: "ecosystem"
 order: 128
 ---
 
-Milvus Model is a Python-side library that wraps selected embedding and reranking interfaces. It does not mean every listed model executes inside the Milvus database. On 2026-10-20 we inspected the published pymilvus.model 0.3.4 wheel, verified its SHA-256 against PyPI metadata, and parsed its exports: twelve dense, two sparse, two hybrid, and seven reranker classes. DefaultEmbeddingFunction is an additional alias to OnnxEmbeddingFunction.
+Milvus Model (the `pymilvus.model` package) is a Python library that wraps embedding and reranking APIs so you can call them with a consistent interface before writing vectors into Milvus. It runs in your application process, not inside the Milvus database — picking a model here means picking which encoder produces the vectors you insert and search with. As of pymilvus.model 0.3.4, the library exports twelve dense embedding functions, two sparse, two hybrid, and seven rerankers. `DefaultEmbeddingFunction` is an alias for `OnnxEmbeddingFunction`.
 
-## Read the versioned support matrix
+The question most readers actually have is "which embedding function should I use?" If you already use a provider for other work — OpenAI, Cohere, Voyage, Jina, Mistral, Gemini — the matching wrapper is usually the fastest path, since it just calls that provider's API. If you want to run inference locally, `SentenceTransformerEmbeddingFunction` covers general-purpose text models, `Model2VecEmbeddingFunction` gives a lightweight static-embedding option, and `OnnxEmbeddingFunction` loads a bundled ONNX checkpoint. For keyword-style retrieval or hybrid search, `BM25EmbeddingFunction` and `SpladeEmbeddingFunction` cover sparse representations, and `BGEM3EmbeddingFunction`/`MGTEEmbeddingFunction` produce dense and sparse output together. For reranking a shortlist after an initial vector search, pick based on where you want that compute to run: hosted (Cohere, Voyage, Jina) or local (`CrossEncoderRerankFunction`).
 
-| Category | Export | 0.3.4 default, not a recommendation | Purpose and boundary |
+## The full catalog
+
+| Category | Export | Default model (pin your own, don't rely on this) | Purpose and boundary |
 |---|---|---|---|
 | dense | [`OpenAIEmbeddingFunction`](https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/dense/openai.py) | `text-embedding-ada-002` | Hosted OpenAI text embeddings; choose an explicit verified model rather than relying on the historical default. |
 | dense | [`SentenceTransformerEmbeddingFunction`](https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/dense/sentence_transformer.py) | `all-MiniLM-L6-v2` | General text-model loading and encoding; checkpoint instructions and loader compatibility still matter. |
@@ -35,31 +37,27 @@ Milvus Model is a Python-side library that wraps selected embedding and rerankin
 | reranker | [`JevRerankFunction`](https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/reranker/jev.py) | `jev-latest` | TypeSafe Jev evidence scoring; the inspected wrapper uses a scientific-claim evidence template. |
 | reranker | [`TEIRerankFunction`](https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/reranker/tei.py) | `not fixed / endpoint` | Application-side reranking through a configured TEI service. |
 
-## Install and identify the right package
+## Install the right package
 
-The current distribution name is pymilvus.model; the older milvus-model name has a different release history. PyMilvus exposes the model extra through a quoted pip requirement such as `pymilvus[model]`, but pin the PyMilvus version appropriate to the server. Inspect the installed distribution and import path instead of assuming an old notebook describes the current package.
+The current distribution is `pymilvus.model`; the older `milvus-model` name has a different release history. Install it through PyMilvus's model extra (`pymilvus[model]`), matched to the PyMilvus version your server expects, rather than copying an import path from an old notebook.
 
-## A wrapper is not a compatibility certificate
+## Picking a model is still your call
 
-The inspected Voyage and Gemini code includes older model names and internal dimension metadata. Simply substituting a new provider model name can fail before inference or produce incompatible payload assumptions. Text-oriented wrappers do not prove support for image, video, audio, or custom multi-vector output. New WeMM, KaLM, R3, or visual-document checkpoints have no dedicated export here; use their verified native encoding route or a tested adapter.
+A wrapper existing here means the interface is supported, not that every model name you can type into it will work. The Voyage and Gemini wrappers in 0.3.4, for instance, predate their providers' newest model generations (Voyage 4, Gemini Embedding 2) — if you want one of those, pass the model name explicitly and verify the output shape rather than trusting the wrapper's bundled defaults. These wrappers are also text-first: they don't give you image, video, audio, or custom multi-vector output, and newer checkpoints like WeMM, KaLM, or R3 don't have a dedicated export here — use the provider's native SDK or a tested adapter for those.
 
-The matrix establishes exported source interfaces and defaults, not successful calls to every remote model. This review did not download model weights, execute paid inference, or claim an end-to-end certification. Check query/document output dimensions, normalization, IDs, and the exact adapter/provider versions before inserting a full corpus.
-
-## Example to test
-
-Pin the package, instantiate the intended interface in a bounded integration test, and inspect output shape before bulk encoding. A provider wrapper's existence does not verify every newer model name, metadata lookup, or multimodal payload.
+Before encoding a full corpus, instantiate the function you picked, run it against a handful of real inputs, and check the output dimension, normalization, and ID handling match what your collection schema expects.
 
 ## From concept to implementation
 
-- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
-- [Find community support and contribution channels](https://milvus.io/community).
+- [Review Milvus embedding documentation](https://milvus.io/docs/embeddings.md).
+- [Check PyMilvus installation and compatibility](https://milvus.io/docs/install-pymilvus.md).
 
 ## Continue learning
 
 - [How do client model wrappers, server Functions, and rank fusion differ?](/ai-quick-reference/milvus-model-functions)
 - [Which dense, sparse, and compact embedding families should you compare?](/ai-quick-reference/dense-sparse-model-families)
 - [How should you serve and version embedding and reranking models for Milvus?](/ai-quick-reference/model-inference-serving)
-- [What do WeChat WeMM embeddings represent, and how can Milvus use them?](/ai-quick-reference/wemm-embedding-models)
+- [What multimodal model families does Milvus work with?](/ai-quick-reference/multimodal-model-families)
 - [Which reranking models fit a Milvus retrieval pipeline?](/ai-quick-reference/reranking-model-catalog)
 
 ## Implementation guides and sources
@@ -68,5 +66,3 @@ Pin the package, instantiate the intended interface in a bounded integration tes
 - [Version-pinned model source](https://github.com/milvus-io/milvus-model/tree/v0.3.4/src/pymilvus/model)
 - [Release notes](https://github.com/milvus-io/milvus-model/releases/tag/v0.3.4)
 - [Milvus embedding documentation](https://milvus.io/docs/embeddings.md)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

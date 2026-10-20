@@ -5,15 +5,17 @@ topic: "retrieval"
 order: 63
 ---
 
-IVF_RABITQ combines IVF centroid-based candidate selection with RaBitQ distance approximation. RaBitQ is a binary vector-quantization method: it normalizes vectors relative to a centroid, encodes each D-dimensional vector as a D-bit code using a randomized binary codebook, and uses a corrected estimator to approximate distances. Milvus may optionally keep higher-precision refinement data. It is neither ordinary sign-bit binarization nor simply a conventional 1-bit scalar quantizer.
+IVF_RABITQ combines IVF centroid-based candidate selection with RaBitQ distance approximation. For the general quantization math shared across Milvus's compression methods — how SQ, PQ, and PRQ form their codes and what bytes they save — see [the quantization guide](/ai-quick-reference/what-is-vector-quantization-in-embeddings). This page focuses on what's specific to RaBitQ: a 1-bit-per-dimension code paired with an asymmetric distance estimator carrying a provable error bound, which is a different mechanism from classic PQ's learned-codebook approach.
 
 ![Treat compression as another approximation](/images/ai-reference/quantization.svg)
 
-## What the RaBitQ code represents
+## What makes RaBitQ different from PQ
 
-The code uses one bit per dimension as its compact core, but its distance estimator also relies on normalization and correction information. The research method gives an error bound for its estimator; that property does not by itself guarantee a particular application Recall@k. `IVF_RABITQ` adds a separate IVF stage that first narrows the centroid cells, so missing a cell and estimating distances poorly are distinct failure sources. Optional refinement uses a higher-precision representation for a shortlist and therefore costs additional memory.
+Product quantization learns a codebook of centroids per subvector and stores the ID of the nearest centroid — compression quality depends on how well the training sample's distribution matches production data, and distance estimates come from codebook lookup tables. RaBitQ instead normalizes each vector relative to its IVF centroid and encodes it as a *randomized* binary code: one bit per dimension, derived from a random rotation rather than a learned codebook. There is no training step that can overfit or drift from production data the way a PQ codebook can.
 
-As a storage intuition, D binary code bits occupy D/8 bytes per vector, compared with 4D bytes for FP32 values: a 32x ratio for those payloads alone. Actual Milvus index memory also includes centroids, codes/metadata, auxiliary correction terms, and any retained refinement vectors; measure the loaded index rather than applying the payload ratio to total service memory.
+The other structural difference is in how the two methods estimate distances at query time. PQ reconstructs an approximate distance from codebook-ID lookups — effectively symmetric, since both the stored code and the query go through a similar quantized comparison. RaBitQ uses an *asymmetric* estimator: the query vector stays at full precision, and only the stored vector's binary code is compressed, with a correction term derived from the random projection recovering an estimate that has a provable bound on its error. That asymmetry is why RaBitQ's accuracy-per-bit is often better than naive 1-bit scalar quantization (plain sign-bit binarization) — RaBitQ's estimator corrects for information the sign bit alone throws away.
+
+`IVF_RABITQ` layers this on top of IVF's centroid narrowing, so a quality problem can come from either stage: missing the right coarse cell (IVF's job) or estimating distance poorly from the binary code (RaBitQ's job) — build an exact-vector baseline and vary IVF search effort and refinement separately to tell which one is responsible. As a storage intuition, D binary code bits occupy D/8 bytes per vector versus 4D bytes for FP32 values — a 32x ratio for that payload alone — but actual Milvus index memory also includes centroids, codes/metadata, auxiliary correction terms, and any retained refinement vectors, so measure the loaded index rather than applying the payload ratio to total service memory.
 
 ## Separate three sources of error
 
@@ -39,8 +41,8 @@ Evaluate the supported IVF_RABITQ configuration against IVF_FLAT on the same que
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Read the general SQ/PQ/PRQ/RaBitQ quantization math](/ai-quick-reference/what-is-vector-quantization-in-embeddings).
+- [Configure IVF_RABITQ and its refinement options](https://milvus.io/docs/ivf-rabitq.md).
 
 ## Continue learning
 
@@ -55,5 +57,3 @@ Evaluate the supported IVF_RABITQ configuration against IVF_FLAT on the same que
 - [IVF candidate selection](https://milvus.io/docs/ivf-flat.md)
 - [Supported similarity metrics](https://milvus.io/docs/metric.md)
 - [RaBitQ original paper and estimator](https://arxiv.org/abs/2405.12497)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

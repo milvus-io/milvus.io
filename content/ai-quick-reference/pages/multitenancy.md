@@ -47,5 +47,3 @@ Load similar documents for two tenants and verify every direct, framework, and a
 
 - [Milvus multi-tenancy strategies](https://milvus.io/docs/multi_tenancy.md)
 - [Tenant-scoped retrieval](https://milvus.io/docs/filtered-search.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

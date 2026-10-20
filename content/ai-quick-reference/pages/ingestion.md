@@ -31,8 +31,8 @@ Before a large import, validate a sample with the actual schema and reject misma
 
 ## From concept to implementation
 
-- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
-- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+- [Prepare bulk-import data for a reliable first load](https://milvus.io/docs/prepare-source-data.md).
+- [Decide between online writes and bulk import for the load stage](https://milvus.io/docs/import-data.md).
 
 ## Continue learning
 
@@ -47,5 +47,3 @@ Before a large import, validate a sample with the actual schema and reject misma
 - [Prepare bulk-import data](https://milvus.io/docs/prepare-source-data.md)
 - [Import data into Milvus](https://milvus.io/docs/import-data.md)
 - [Collection schema](https://milvus.io/docs/schema.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

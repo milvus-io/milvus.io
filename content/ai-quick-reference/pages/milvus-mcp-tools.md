@@ -43,5 +43,3 @@ Give an agent a read-oriented tool and attempt a forbidden write through natural
 
 - [Milvus and MCP integration](https://milvus.io/docs/milvus_and_mcp.md)
 - [Milvus MCP server implementation](https://github.com/zilliztech/mcp-server-milvus)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

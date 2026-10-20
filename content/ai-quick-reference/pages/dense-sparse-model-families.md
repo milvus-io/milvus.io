@@ -66,5 +66,3 @@ Evaluate a compact dense encoder, a multilingual encoder, and a sparse baseline 
 - [Official model card: naver/splade-cocondenser-ensembledistil](https://huggingface.co/naver/splade-cocondenser-ensembledistil)
 - [Official model card: KaLM-Embedding/KaLM-embedding-multilingual-mini-instruct-v2.5](https://huggingface.co/KaLM-Embedding/KaLM-embedding-multilingual-mini-instruct-v2.5)
 - [Released model-wrapper source](https://github.com/milvus-io/milvus-model/tree/v0.3.4/src/pymilvus/model)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

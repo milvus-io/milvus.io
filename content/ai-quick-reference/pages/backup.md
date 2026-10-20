@@ -39,7 +39,7 @@ Restore a backup into a separate test environment, then resolve a saved query to
 - [How do bulk migration, backup, and Milvus CDC differ?](/ai-quick-reference/milvus-cdc-and-migration)
 - [How do you choose and validate a Milvus version upgrade?](/ai-quick-reference/milvus-version-upgrades)
 - [How do you make vector-search and training experiments reproducible?](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments)
-- [What is Woodpecker's role in the Milvus write path?](/ai-quick-reference/what-is-woodpecker)
+- [How does Milvus separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
 - [How do sharding and replication differ in a vector database?](/ai-quick-reference/how-do-distributed-vector-databases-handle-sharding-and-replication)
 - [How do you handle incremental updates in a vector database?](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database)
 - [How does ETL prepare data for vector search?](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process)
@@ -48,5 +48,3 @@ Restore a backup into a separate test environment, then resolve a saved query to
 
 - [Milvus Backup overview and compatibility](https://milvus.io/docs/milvus_backup_overview.md)
 - [Milvus Backup CLI](https://milvus.io/docs/milvus_backup_cli.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

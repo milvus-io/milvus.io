@@ -41,8 +41,9 @@ Sweep search-time ef with one fixed graph before rebuilding with a different M. 
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Build your first HNSW-backed collection with the Milvus Quickstart](https://milvus.io/docs/quickstart.md).
+- [Configure HNSW's `M`, `efConstruction`, and `ef` parameters](https://milvus.io/docs/hnsw.md).
+- [Compare HNSW with other Milvus index structures](https://milvus.io/docs/index-explained.md).
 
 ## Continue learning
 
@@ -57,5 +58,3 @@ Sweep search-time ef with one fixed graph before rebuilding with a different M. 
 
 - [Milvus HNSW index](https://milvus.io/docs/hnsw.md)
 - [Milvus hierarchical graph index](https://milvus.io/docs/hnsw.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

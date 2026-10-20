@@ -5,7 +5,7 @@ topic: "frameworks"
 order: 101
 ---
 
-An AI application framework connects components such as models, documents, tools, and application state. Milvus provides the persistent retrieval layer. A framework or adapter may select a default embedding model, but that default is not evidence that the model fits your task. Record or override it explicitly. Framework selection also does not by itself establish access control or retrieval quality.
+An AI application framework connects components such as models, documents, tools, and application state. Milvus provides the persistent retrieval layer. A framework or adapter may select a default embedding model, but that default may not fit your task, so record or override it explicitly. Framework selection also leaves access control and retrieval quality for the application to implement.
 
 ## Choose the layer you need
 
@@ -19,7 +19,7 @@ Define stable document and chunk identifiers, metadata fields, model revision, e
 
 ## Verify the actual integration
 
-Check the connector for your language and pinned package versions. A framework listing a database does not establish support for every Milvus feature. Test insertion, metadata filtering, deletion, and one failure path. Compare the same queries against a direct MilvusClient baseline before attributing quality differences to the framework.
+Check the connector for your language and pinned package versions. A framework listing a database as supported does not mean every Milvus feature is wired through it. Test insertion, metadata filtering, deletion, and one failure path. Compare the same queries against a direct MilvusClient baseline before attributing quality differences to the framework.
 
 ## Example to test
 
@@ -47,4 +47,3 @@ Implement the same small retrieval task directly and through one adapter. Keep t
 - [LlamaIndex vector-store integrations](https://developers.llamaindex.ai/python/framework/community/integrations/vector_stores/)
 - [Agno vector databases](https://docs.agno.com/knowledge/concepts/vector-db)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

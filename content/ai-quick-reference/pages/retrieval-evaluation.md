@@ -17,7 +17,7 @@ If two of four known relevant passages appear among five returned results, recal
 
 ## Separate index approximation from relevance
 
-ANN recall compares approximate results with exact vector neighbors. It does not establish that those neighbors are relevant to a user. Measure index recall to diagnose the search structure, and judged relevance to evaluate the model and retrieval pipeline. This distinction prevents unnecessary index tuning when the underlying representation is the problem.
+ANN recall compares approximate results with exact vector neighbors, but exact neighbors are not automatically relevant to a user. Measure index recall to diagnose the search structure, and judged relevance to evaluate the model and retrieval pipeline. This distinction prevents unnecessary index tuning when the underlying representation is the problem.
 
 ## Analyze failure slices
 
@@ -48,4 +48,3 @@ Keep exact-neighbor agreement, judged passage relevance, answer support, and bus
 - [BEIR retrieval metrics](https://github.com/beir-cellar/beir/wiki/Metrics-available)
 - [Evaluate RAG with Ragas](https://milvus.io/docs/integrate_with_ragas.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

@@ -46,5 +46,3 @@ Trace a query from its input through encoding, eligibility filtering, candidate 
 
 - [Run a vector search](https://milvus.io/docs/quickstart.md)
 - [Similarity metrics](https://milvus.io/docs/metric.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

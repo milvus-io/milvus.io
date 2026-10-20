@@ -42,8 +42,9 @@ Keep dense and lexical candidate IDs for the same query. If neither list contain
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Build multi-vector hybrid search](https://milvus.io/docs/multi-vector-search.md).
+- [Configure Reciprocal Rank Fusion and WeightedRanker](https://milvus.io/docs/rrf-ranker.md).
+- [Try the hybrid semantic + full-text search Bootcamp demo](https://milvus.io/bootcamp).
 
 ## Continue learning
 
@@ -58,5 +59,3 @@ Keep dense and lexical candidate IDs for the same query. If neither list contain
 - [Multi-vector hybrid search](https://milvus.io/docs/multi-vector-search.md)
 - [Reciprocal rank fusion](https://milvus.io/docs/rrf-ranker.md)
 - [BM25 full-text search](https://milvus.io/docs/full-text-search.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

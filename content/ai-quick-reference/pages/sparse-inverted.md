@@ -31,20 +31,18 @@ Inspect which term dimensions contribute to an error-code query and compare them
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Build and query a sparse inverted index](https://milvus.io/docs/sparse-inverted-index.md).
+- [Configure BM25-generated sparse fields](https://milvus.io/docs/full-text-search.md).
 
 ## Continue learning
 
 - [What are dense and sparse embeddings?](/ai-quick-reference/what-are-dense-and-sparse-embeddings)
 - [What is full-text search, and how does BM25 fit?](/ai-quick-reference/what-is-fulltext-search)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
-- [How do scalar indexes support filtered vector search?](/ai-quick-reference/how-scalar-indexes-support-vector-search)
+- [How do metadata filters interact with vector search, and how do scalar indexes accelerate them?](/ai-quick-reference/how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance)
 
 ## Implementation guides and sources
 
 - [Milvus sparse inverted index](https://milvus.io/docs/sparse-inverted-index.md)
 - [Sparse vector representation](https://milvus.io/docs/sparse_vector.md)
 - [BM25-generated sparse fields](https://milvus.io/docs/full-text-search.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

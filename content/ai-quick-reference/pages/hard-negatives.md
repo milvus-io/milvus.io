@@ -31,14 +31,13 @@ Mine passages that mention the right product but describe the wrong version. Rev
 
 ## From concept to implementation
 
-- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
-- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+- [Constrain candidate mining with filtered search](https://milvus.io/docs/filtered-search.md).
+- [Score mined candidates with a reranker before labeling](https://milvus.io/docs/rerankers-overview.md).
 
 ## Continue learning
 
 - [How do you choose an embedding model for retrieval?](/ai-quick-reference/what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy)
 - [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
-- [How can vector search help detect train-test contamination?](/ai-quick-reference/how-to-detect-train-test-contamination)
 - [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
 
 ## Implementation guides and sources
@@ -46,5 +45,3 @@ Mine passages that mention the right product but describe the wrong version. Rev
 - [Sentence Transformers retrieval and hard-negative utilities](https://www.sbert.net/docs/package_reference/util/index.html)
 - [Constrain candidate mining](https://milvus.io/docs/filtered-search.md)
 - [Assess candidate relevance](https://milvus.io/docs/rerankers-overview.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

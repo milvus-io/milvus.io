@@ -27,6 +27,10 @@ Build queries for exact items, broad categories, fine-grained attributes, upload
 
 When measuring conversion, distinguish retrieval changes from price, inventory, and presentation changes. Use a controlled rollout where possible and retain the query and catalog state. Milvus can provide candidate retrieval and filtering; the catalog pipeline and product experience determine whether those candidates become useful customer choices.
 
+## A worked example
+
+A shopper searches "waterproof red jacket, size M" against a catalog of 40,000 apparel SKUs. A text encoder turns the query into a dense vector; an ANN search against the product-description field returns 200 candidates ranked by cosine similarity, top result 0.86. Run that result through a hard filter on `size: M` and `in_stock: true` first, and the list drops to 31 candidates — several of the top-scoring 0.8+ matches were red jackets in size XL with no inventory, which is why eligibility has to run before, not after, ranking. Among the remaining 31, three are near-duplicate listings of the same jacket from different sellers (similarity 0.95+ to each other); grouping by a `parent_sku` field before display collapses them into one representative result instead of burning three of the top five slots on the same product. The final list surfaces 5 genuinely distinct, in-stock, correctly sized jackets — a result a pure semantic top-k without filtering or grouping would not have produced, even with a stronger embedding model.
+
 ## Example to test
 
 Search for a waterproof red jacket in an available size. Use semantic or image similarity for style, but enforce stock, market, and size eligibility explicitly. Judge result diversity across products rather than returning many variants of one item.
@@ -49,5 +53,3 @@ Search for a waterproof red jacket in an available size. Use semantic or image s
 - [Text-to-image retrieval example](https://milvus.io/docs/text_image_search.md)
 - [Lexical product retrieval](https://milvus.io/docs/full-text-search.md)
 - [Constrain eligible catalog items](https://milvus.io/docs/filtered-search.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

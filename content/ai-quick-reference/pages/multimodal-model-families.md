@@ -9,7 +9,7 @@ A multimodal embedding model aligns supported input types into a representation 
 
 | Model | Representation | Purpose | Milvus Model route, not an end-to-end certification |
 |---|---|---|---|
-| [tencent/WeMM-Embedding-9B](https://huggingface.co/tencent/WeMM-Embedding-9B) | Text / image / video / visual document | WeChat visual-retrieval family; audio is unsupported in the checked release. | Native model processor → dense vectors |
+| [tencent/WeMM-Embedding](https://huggingface.co/tencent/WeMM-Embedding-9B) (2B / 4B / 9B) | Text / image / video / visual document | WeChat Vision team's visual-retrieval family; audio is unsupported in the checked release. The 2B, 4B, and 9B variants have different full output dimensions and checkpoint-specific Matryoshka truncation options — do not mix variants merely because both were truncated to the same length. | Native model processor → dense vectors; no dedicated Milvus Model wrapper, and no verified standalone WeMM reranker |
 | [Qwen/Qwen3-VL-Embedding-8B](https://huggingface.co/Qwen/Qwen3-VL-Embedding-8B) | Text / image / video | Shared-space visual/text representations; preserve document pages and frame/clip source IDs. | Native model processor → dense vectors |
 | [Alibaba-NLP/gme-Qwen2-VL-7B-Instruct](https://huggingface.co/Alibaba-NLP/gme-Qwen2-VL-7B-Instruct) | Multimodal dense | An instruction-conditioned visual/text embedding family; match the target checkpoint and processor. | External encoding; no dedicated wrapper |
 | [OpenSearch-AI/Ops-MM-embedding-v1-7B](https://huggingface.co/OpenSearch-AI/Ops-MM-embedding-v1-7B) | Multimodal dense | A model from Alibaba Cloud OpenSearch-AI, not proof of native support in the OpenSearch software or Milvus. | External encoding; no dedicated wrapper |
@@ -17,6 +17,10 @@ A multimodal embedding model aligns supported input types into a representation 
 | [nvidia/omni-embed-nemotron-3b](https://huggingface.co/nvidia/omni-embed-nemotron-3b) | Text / image / audio / video | An omni-modality research candidate; inspect the exact model terms and evaluate each modality separately. | External encoding; no dedicated wrapper |
 | [Haon-Chen/e5-omni-7B](https://huggingface.co/Haon-Chen/e5-omni-7B) | Text / image / audio / video | An omni-modal candidate with a shared representation; compare supported cross-modal directions rather than only a global mean. | External encoding; no dedicated wrapper |
 | [jinaai/jina-embeddings-v5-omni-small](https://huggingface.co/jinaai/jina-embeddings-v5-omni-small) | Text / image / audio / video | An omni embedding aligned with its documented text counterpart; text-wrapper availability does not validate multimedia inputs. | Native/hosted multimodal API; verify wrapper payload |
+
+## Use WeMM's own encoding path
+
+WeMM's published examples include Sentence Transformers, Transformers, and serving routes, but that doesn't mean the text-oriented Milvus Model wrapper will accept the same image/video payload. Use the checkpoint's own processor to produce verified vectors, then insert them with matching metadata and dimension. For a driving-data or document collection, define whether each record represents a frame, clip, or page, save the object URI, time boundaries, and source revision, and keep that definition consistent across ingestion and queries.
 
 ## Include the benchmark baselines deliberately
 
@@ -42,14 +46,16 @@ Choose whether the retrieval object is an image, clip, page, or audio segment be
 ## Continue learning
 
 - [How do MMEB versions evaluate multimodal embeddings?](/ai-quick-reference/mmeb-multimodal-evaluation)
-- [What do WeChat WeMM embeddings represent, and how can Milvus use them?](/ai-quick-reference/wemm-embedding-models)
 - [How do ColPali, ColQwen, and other page encoders use Milvus embedding lists?](/ai-quick-reference/visual-document-models)
 - [How should you curate image and video data with vector retrieval?](/ai-quick-reference/how-to-curate-image-and-video-data)
-- [How can vector search support physical-AI and autonomous-driving data discovery?](/ai-quick-reference/vector-search-for-physical-ai-data)
 
 ## Implementation guides and sources
 
+- [Official model card: tencent/WeMM-Embedding-2B](https://huggingface.co/tencent/WeMM-Embedding-2B)
+- [Official model card: tencent/WeMM-Embedding-4B](https://huggingface.co/tencent/WeMM-Embedding-4B)
 - [Official model card: tencent/WeMM-Embedding-9B](https://huggingface.co/tencent/WeMM-Embedding-9B)
+- [WeChat Vision team implementation](https://github.com/Tencent/WeMM-Embedding)
+- [WeMM technical report](https://arxiv.org/abs/2608.24053)
 - [Official model card: Qwen/Qwen3-VL-Embedding-8B](https://huggingface.co/Qwen/Qwen3-VL-Embedding-8B)
 - [Official model card: Alibaba-NLP/gme-Qwen2-VL-7B-Instruct](https://huggingface.co/Alibaba-NLP/gme-Qwen2-VL-7B-Instruct)
 - [Official model card: OpenSearch-AI/Ops-MM-embedding-v1-7B](https://huggingface.co/OpenSearch-AI/Ops-MM-embedding-v1-7B)
@@ -58,5 +64,3 @@ Choose whether the retrieval object is an image, clip, page, or audio segment be
 - [Official model card: Haon-Chen/e5-omni-7B](https://huggingface.co/Haon-Chen/e5-omni-7B)
 - [Official model card: jinaai/jina-embeddings-v5-omni-small](https://huggingface.co/jinaai/jina-embeddings-v5-omni-small)
 - [VLM2Vec/MMEB model and evaluation code](https://github.com/TIGER-AI-Lab/VLM2Vec)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

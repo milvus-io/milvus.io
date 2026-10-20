@@ -5,7 +5,7 @@ topic: "retrieval"
 order: 70
 ---
 
-Memory mapping makes file contents accessible through a process's virtual address space. The operating system brings accessed pages into memory as needed. This changes how data is loaded and cached; it does not by itself change an index's candidate-search algorithm into a disk-oriented design such as DISKANN.
+Memory mapping (mmap) makes file contents accessible through a process's virtual address space, and the operating system brings accessed pages into memory as needed. In Milvus, mmap is a loading strategy you can apply to fields and index segments so they are not all pulled into RAM up front — it works underneath whatever index algorithm the collection actually uses (HNSW, IVF, FLAT, DISKANN, or anything else). DISKANN, by contrast, is a specific graph algorithm (Vamana) designed from the ground up for SSD access: its graph layout, its in-memory PQ codes, and its disk read pattern are all built around minimizing random I/O for *that* search structure. mmap doesn't give another index DISKANN's search organization — it just changes which bytes of that index's existing structure are resident at a given moment.
 
 ## Separate address space from resident memory
 
@@ -19,11 +19,11 @@ A graph traversal can touch scattered locations; a scan reads data differently. 
 
 Test cold start, a warmed workload, and a changed query mix. Measure resident memory, page faults, local disk activity, latency percentiles, and errors together. Include other processes or workloads that compete for the same memory and storage.
 
-## Compare the complete alternatives
+## mmap, DISKANN, and tiered storage are independent decisions
 
-DISKANN has its own disk-oriented graph, compressed structures, and caching behavior. Tiered storage manages data access through another supported caching model. These options can interact with index and field choices, so compare concrete configurations rather than combining their names into a single assumed optimization.
+You can run mmap on top of any supported index, including DISKANN itself — enabling mmap on a field does not replace choosing DISKANN when the working set genuinely exceeds RAM, and choosing DISKANN does not remove the value of mmap for deciding how much of its structures stay resident. Tiered storage adds a third, separate caching layer that manages which data sits on fast versus slow storage. Compare concrete configurations of these three together rather than assuming any one name solves what the other two are for.
 
-Keep recall and returned fields fixed while evaluating performance. Include loading and recovery after node replacement, not only warmed requests. Adopt mmap when it provides the desired capacity and lifecycle behavior under realistic access patterns. Treat it as a memory-management and I/O choice whose benefit must be measured, rather than a general guarantee that a larger collection can be served at unchanged latency.
+Keep recall and returned fields fixed while evaluating performance. Include loading and recovery after node replacement, not only warmed requests. Adopt mmap when it provides the desired capacity and lifecycle behavior under realistic access patterns — it is a memory-management and I/O choice whose benefit has to be measured, not a guarantee that a larger collection serves at unchanged latency.
 
 ## Example to test
 
@@ -31,8 +31,8 @@ After a cold start, compare resident memory, page faults, and tail latency under
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Configure Milvus mmap for fields and indexes](https://milvus.io/docs/mmap.md).
+- [Review DISKANN's own disk-oriented graph design](https://milvus.io/docs/diskann.md).
 
 ## Continue learning
 
@@ -46,5 +46,3 @@ After a cold start, compare resident memory, page faults, and tail latency under
 - [Milvus mmap configuration and scope](https://milvus.io/docs/mmap.md)
 - [DISKANN search organization](https://milvus.io/docs/diskann.md)
 - [On-demand storage and caching](https://milvus.io/docs/tiered-storage-overview.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

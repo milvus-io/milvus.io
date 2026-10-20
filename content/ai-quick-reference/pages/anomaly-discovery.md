@@ -7,6 +7,12 @@ order: 99
 
 Vector neighborhoods can help analysts discover unusual or previously unseen cases. A record far from typical neighbors may deserve review, but distance alone is not a calibrated anomaly probability. Its meaning depends on the representation, reference population, and definition of an important event.
 
+## A concrete workflow in Milvus
+
+One workable pattern: store each record's embedding in a `FLOAT_VECTOR` field, partitioned or scalar-filtered by a `reference_group` field (camera type, operating region, time window) so neighbor search never compares a record against an irrelevant population. Run `search` with `radius`/`range_filter` (range search) instead of a plain top-k query, so you get back every record outside a chosen distance band from its nearest neighbors rather than a fixed-size candidate list. A record whose k-th nearest-neighbor distance exceeds a threshold calibrated on the reference population is a candidate for review, not a confirmed anomaly.
+
+Pair that with a scalar index (e.g., an `INVERTED` index on a `source_system` or `sensor_id` field) so you can combine the distance signal with a hard filter — exclude known-bad sensors, or restrict the anomaly scan to one deployment at a time — without re-embedding anything. Recompute the k-th-nearest-neighbor distance distribution periodically (it is a cheap aggregate over existing vectors) so the threshold tracks genuine population drift instead of silently going stale as new data accumulates.
+
 ## Define the reference population
 
 Compare records within a relevant domain, time window, operating condition, or entity class. A rare-language document can look unusual in a mostly English corpus without being defective. A driving clip can be novel because of an unimportant camera change rather than a useful scenario.
@@ -37,14 +43,10 @@ An unusual night-driving clip can be far from daytime examples without being def
 ## Continue learning
 
 - [How can embeddings improve dataset diversity sampling?](/ai-quick-reference/how-to-sample-diverse-data-with-embeddings)
-- [How can vector search help choose examples for human labeling?](/ai-quick-reference/how-vector-search-supports-active-learning)
-- [How can vector search support physical-AI and autonomous-driving data discovery?](/ai-quick-reference/vector-search-for-physical-ai-data)
-- [How should you design a quality score for data curation?](/ai-quick-reference/how-to-score-data-quality-for-curation)
 
 ## Implementation guides and sources
 
-- [Retrieve vector neighborhoods](https://milvus.io/docs/quickstart.md)
+- [Range search](https://milvus.io/docs/range-search.md)
+- [Scalar filtering and index types](https://milvus.io/docs/filtered-search.md)
 - [Interpret vector similarity](https://milvus.io/docs/metric.md)
 - [Explore embedding groups](https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

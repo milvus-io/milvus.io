@@ -5,48 +5,43 @@ topic: "data"
 order: 88
 ---
 
-Multimodal curation uses representations of images, video, text, or other signals to organize and select source material. The first design choice is the unit of data: a frame, clip, scene, caption, or synchronized sensor interval can lead to different retrieval and removal decisions.
+Multimodal curation uses representations of images, video, text, or other signals to organize and select source material. In Milvus this starts with a schema decision: a collection can hold multiple vector fields on the same row (for example an image embedding and a caption-text embedding), and the curation unit — frame, clip, scene, or caption — determines what goes in one row versus what becomes a separate linked record.
 
 ![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
 
-## Preserve temporal and source identity
+## Model multimodal fields for the curation unit, not just search
 
-For video, retain recording ID, start and end times, frame sampling, and extraction revision. For images, preserve source object, crop or transformation, and any caption relationship. Several embeddings can describe one source object, so keep their roles explicit.
+Define separate vector fields for each modality you curate against rather than collapsing them into one representation. A clip row might carry a `visual_embedding` field (from frame sampling), a `caption_embedding` field (from the transcript or caption text), plus scalar fields for `recording_id`, `start_ts`, `end_ts`, and `extraction_revision`. Keeping the modalities as distinct fields on a shared row lets curation queries combine them explicitly instead of hoping one fused embedding captures everything a reviewer needs to check.
 
-A visually similar frame does not prove that two clips contain the same event. Differences in motion, timing, viewpoint, or interaction can matter even when a static embedding is close. Use an aligned representation for cross-modal retrieval and test each intended direction separately.
+A visually similar frame does not prove two clips contain the same event: motion, timing, viewpoint, and interaction can differ even when the stored `visual_embedding` vectors are close. Treat each vector field's similarity as evidence about that one modality, not a verdict about the clip.
 
-## Build candidate workflows around a task
+## Run cross-modal dedup as two queries, not one threshold
 
-For duplicate detection, retrieve similar source units and validate the duplicate policy with the original media. For coverage discovery, combine text queries, metadata filters, and neighborhood exploration. For quality review, use explicit labels such as blur, occlusion, or missing context instead of expecting one similarity score to represent all defects.
+Candidate duplicate detection across modalities means searching each field against its own kind of query, then requiring agreement before treating a pair as a true duplicate: search `visual_embedding` for near-identical frames, search `caption_embedding` for near-identical captions, and flag a pair as a likely duplicate only when both signals agree, or route it to review when they disagree. Milvus's hybrid search can combine both fields in one request with reranking across the two score lists, which is the same mechanism used for retrieval but repurposed here to produce a single duplicate-candidate ranking instead of a relevance ranking.
 
-NVIDIA's clip-level deduplication documentation illustrates a workflow over embeddings and stable IDs. Adapt its unit and selection policy to the dataset rather than applying a generic threshold to every modality or event type.
+Searching only the visual field will catch re-encoded or re-cropped copies of the same clip but miss a captioned clip that reuses stock footage under a different caption; searching only the caption field misses the reverse case. Running both and comparing is cheap once both fields already exist on the collection.
 
 ## Audit what selection removes
 
-Review near-threshold pairs, rare classes, and clips that differ only in an important temporal detail. Track false removals and retained coverage, not only the number of deleted files. Keep decisions reversible through source references and a versioned selection manifest.
-
-Measure embedding extraction, candidate generation, payload retrieval, and human review cost separately. Milvus can support repeated interactive retrieval, while large media transformations and offline pair processing may run in a dedicated curation pipeline. The connection is most useful when reviewers can move from a search result to the exact media evidence and then publish a reproducible dataset decision.
+Review near-threshold pairs, rare classes, and clips that differ only in an important temporal detail. Track false removals and retained coverage, not only the number of deleted rows. Keep decisions reversible: write a `curation_status` scalar field and apply exclusions through upsert rather than deleting the row outright, so a reviewer can revisit a decision without losing the source reference.
 
 ## Example to test
 
-Keep video clip boundaries, frame sampling, and source revisions with every selected example. Review pairs that share a scene but differ in an important event. Removing redundant frames must not erase the rare action the dataset needs.
+Keep video clip boundaries, frame sampling, and source revisions with every selected example. Run the visual and caption fields as two separate dedup searches over the same candidate pool and compare agreement before merging. Removing redundant frames must not erase the rare action the dataset needs.
 
 ## From concept to implementation
 
-- [Build a multimodal retrieval prototype](https://milvus.io/docs/text_image_search.md).
-- [Related video-deduplication story: BIGO](https://zilliz.com/customers/bigo).
+- [Define multiple vector fields per row for cross-modal curation](https://milvus.io/docs/multi-vector-search.md).
+- [Combine per-field scores into one dedup-candidate ranking](https://milvus.io/docs/reranking.md).
 
 ## Continue learning
 
 - [What are multimodal embeddings?](/ai-quick-reference/what-are-multimodal-embeddings)
-- [How can vector search support physical-AI and autonomous-driving data discovery?](/ai-quick-reference/vector-search-for-physical-ai-data)
-- [How should you combine exact, fuzzy, and semantic deduplication?](/ai-quick-reference/exact-fuzzy-and-semantic-deduplication)
+- [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
 - [How do you keep stable identities between lake data and vector search?](/ai-quick-reference/how-to-keep-stable-ids-between-lake-data-and-vector-search)
 
 ## Implementation guides and sources
 
 - [Clip-level duplicate identification](https://docs.nvidia.com/nemo/curator/latest/curate-video/process-data/dedup)
-- [Cross-modal retrieval example](https://milvus.io/docs/text_image_search.md)
+- [Multi-vector fields and hybrid search](https://milvus.io/docs/multi-vector-search.md)
 - [Image duplicate-search example](https://milvus.io/docs/image_deduplication_system.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

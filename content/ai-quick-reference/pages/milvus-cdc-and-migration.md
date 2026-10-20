@@ -44,5 +44,3 @@ Migrate a bounded source set, apply a later update and deletion, then compare lo
 - [Milvus CDC overview](https://milvus.io/docs/milvus-cdc-overview.md)
 - [Milvus Backup overview](https://milvus.io/docs/milvus_backup_overview.md)
 - [Milvus data import](https://milvus.io/docs/import-data.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

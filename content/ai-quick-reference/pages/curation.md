@@ -9,44 +9,56 @@ Data curation turns a collected dataset into a versioned selection suited to a p
 
 ![Candidate discovery is not a deletion decision](/images/ai-reference/curation.svg)
 
-## Define quality for the downstream task
+## Track curation status in the collection itself
 
-A pretraining corpus, a legal retrieval collection, and a driving-scene dataset need different criteria. Write down the intended task, required domains, prohibited content, source permissions, and acceptable error rates. A generic quality score cannot establish all of these conditions.
+A practical starting point is a scalar field on the collection schema, for example `curation_status` (`VARCHAR`, values like `pending`, `approved`, `excluded`, `needs_review`) plus a `curation_reason` field and a `curated_at` timestamp. Add these alongside the vector field rather than maintaining a separate side table disconnected from the records they describe:
 
-Separate hard eligibility rules from preferences. For example, a source license or tenant boundary can be mandatory, while a diversity score can guide sampling among eligible records. Preserve the reason for each decision so later reviewers can explain why an item was included or removed.
+```python
+schema.add_field("curation_status", DataType.VARCHAR, max_length=16, default_value="pending")
+schema.add_field("curation_reason", DataType.VARCHAR, max_length=256, nullable=True)
+schema.add_field("curated_at", DataType.INT64, nullable=True)
+```
 
-## Use similarity to propose, not decide everything
+Create a scalar index on `curation_status` so filtering by curation state stays cheap as the collection grows. This turns curation from an external manifest you hope stays in sync into a queryable property of the live collection.
 
-Embeddings can surface near-duplicates, related failure cases, sparse regions, and unexpected clusters. Exact matching and metadata filters often solve cheaper parts of the problem first. Similar records can still differ in labels, facts, or important rare events, so candidate pairs need a task-specific review policy.
+## Query for curation candidates, not just nearest neighbors
 
-A vector database is useful when the team needs repeated interactive discovery over a changing dataset. Large offline deduplication or embedding jobs may run in a batch framework and export candidate or decision records for retrieval and inspection.
+Use a filtered vector search to find candidates in a particular curation state near a known-good or known-bad example. For instance, to find unreviewed records similar to a confirmed low-quality document:
 
-## Publish decisions as data
+```python
+client.search(
+    collection_name="docs",
+    data=[reference_vector],
+    filter='curation_status == "pending"',
+    limit=50,
+    output_fields=["source_id", "curation_status"],
+)
+```
 
-Keep source IDs and revisions, scoring configuration, model revisions, reviewer labels, and selection reasons. Export a selection manifest rather than destroying the only copy of removed examples. Distinguish proposed decisions from approved dataset membership.
+Combine this with `query()` on `curation_status == "needs_review"` to pull the current review queue directly from the collection, and with grouping search when many hits come from the same source document and only one representative per source should reach a reviewer.
 
-Evaluate curation through downstream quality and coverage as well as dataset size. Track false removals, minority-domain retention, labeling cost, and reproducibility. Run a baseline dataset and a curated variant under comparable conditions. The value is a better and explainable data distribution for the intended task, rather than the largest possible reduction in records.
+## Write curation decisions back as upserts
+
+Once a reviewer or automated check makes a decision, apply it with an upsert keyed on the stable primary key, updating `curation_status`, `curation_reason`, and `curated_at` rather than deleting the row outright. This keeps a record of why something was excluded and lets `curation_status == "excluded"` rows be filtered out of serving queries without destroying the evidence needed to audit the decision later. A true removal (for example, a licensing takedown) is a separate delete operation against that same primary key, not something to infer from the status field.
 
 ## Example to test
 
-For a technical-document corpus, mark broken extracts, duplicates, uncertain permissions, and low-coverage topics separately. Keep selection reasons so a later training or retrieval regression can be traced to the curation decision.
+For a technical-document corpus, add the `curation_status` field, run a filtered search against a known duplicate to surface its unreviewed neighbors, and upsert a decision with a reason string. Confirm that a query filtered on `curation_status == "approved"` matches what the serving collection actually returns.
 
 ## From concept to implementation
 
-- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
-- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+- [Add and index a scalar curation-status field on the collection schema](https://milvus.io/docs/schema.md).
+- [Use upsert to record curation decisions without losing the prior record](https://milvus.io/docs/upsert-entities.md).
 
 ## Continue learning
 
-- [How can vector retrieval support pretraining data preparation?](/ai-quick-reference/how-vector-search-supports-pretraining-data-preparation)
-- [How should you combine exact, fuzzy, and semantic deduplication?](/ai-quick-reference/exact-fuzzy-and-semantic-deduplication)
+- [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
 - [How can embeddings improve dataset diversity sampling?](/ai-quick-reference/how-to-sample-diverse-data-with-embeddings)
-- [How should you design a quality score for data curation?](/ai-quick-reference/how-to-score-data-quality-for-curation)
+- [How does data quality affect vector retrieval?](/ai-quick-reference/how-does-etl-help-improve-data-quality)
+- [How do you handle incremental updates in a vector database?](/ai-quick-reference/how-do-you-handle-incremental-updates-in-a-vector-database)
 
 ## Implementation guides and sources
 
 - [Quality assessment approaches](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment)
 - [Exact, fuzzy, and semantic deduplication](https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication)
 - [Retrieve grouped candidates](https://milvus.io/docs/grouping-search.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

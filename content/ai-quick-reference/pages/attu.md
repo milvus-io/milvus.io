@@ -31,8 +31,8 @@ Investigate a missing result by checking the selected cluster, collection, filte
 
 ## From concept to implementation
 
-- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
-- [Find community support and contribution channels](https://milvus.io/community).
+- [Walk through Milvus with Attu](https://milvus.io/docs/quickstart_with_attu.md).
+- [Review Milvus access controls](https://milvus.io/docs/rbac.md).
 
 ## Continue learning
 
@@ -46,5 +46,3 @@ Investigate a missing result by checking the selected cluster, collection, filte
 - [Attu installation, features, and compatibility](https://github.com/zilliztech/attu)
 - [Milvus and Attu walkthrough](https://milvus.io/docs/quickstart_with_attu.md)
 - [Milvus access controls](https://milvus.io/docs/rbac.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

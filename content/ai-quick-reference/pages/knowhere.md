@@ -5,17 +5,17 @@ topic: "ecosystem"
 order: 50
 ---
 
-Knowhere is the C++ vector-search engine used inside Milvus. It supplies an integration layer for vector-index implementations and their execution, while the database provides collection management, distributed coordination, ingestion, and serving APIs around that work.
+Knowhere is the C++ vector-search engine used inside Milvus. It is where the actual distance computation and index traversal happen: SIMD-accelerated kernels for L2, inner-product, and cosine distance on CPU; CUDA kernels for GPU indexes such as CAGRA and GPU-IVF; and the concrete implementations of HNSW, IVF (flat, PQ, SQ, and their variants), DiskANN, SCANN, and the sparse/BM25 index paths that Milvus exposes. It also implements the quantization codecs — product quantization, scalar quantization, and binary/RaBitQ-style quantization — that trade recall for memory footprint inside those indexes. Milvus, by contrast, provides collection management, distributed coordination, ingestion, and serving APIs around that work; it does not reimplement these kernels itself.
 
 ## Understand the engine boundary
 
-An application normally selects an index and search parameters through Milvus. Milvus prepares the relevant data and invokes the execution engine. The choice of implementation can affect index building, supported vector types, search effort, memory use, and hardware requirements.
+An application normally selects an index and search parameters through Milvus. Milvus prepares the relevant data — segments, filters, bitsets — and calls into Knowhere to build the index or execute the search; Knowhere runs the chosen kernel (a SIMD-vectorized brute-force scan, an HNSW graph walk, a quantized IVF scan, or a GPU kernel when the index and hardware support it) and returns candidate IDs and distances. The choice of index and quantization implementation can affect build time, supported vector types, search effort, memory use, and hardware requirements (AVX512/NEON on CPU, specific CUDA compute capability on GPU).
 
 Running an ANN library directly is therefore a different engineering decision from running Milvus. The library can be appropriate for an embedded experiment, while a database addresses a broader lifecycle: changes, filters, persistence, concurrency, access controls, and operations. Evaluate the responsibilities your application actually needs.
 
 ## Check the database's supported contract
 
-A capability present in a Knowhere branch is not automatically available through every released Milvus API or package. Confirm the Milvus version, build, index type, vector data type, and hardware before documenting an implementation choice. Use the supported database configuration rather than replacing an internal library in an otherwise unchanged production installation.
+A capability landing in a Knowhere branch takes time to reach a released Milvus API or package — check the Milvus version, build, index type, vector data type, and hardware before relying on it. Use the supported database configuration rather than swapping the internal library into an otherwise unchanged production installation.
 
 Eligibility matters during vector execution. Milvus uses mechanisms such as bitsets to exclude ineligible records. Correctness and performance should be assessed with realistic filters and deletions, not only an unfiltered nearest-neighbor benchmark.
 
@@ -46,5 +46,3 @@ When diagnosing an ANN discrepancy, first save the metric, filter, index configu
 - [Knowhere source and build guidance](https://github.com/zilliztech/knowhere)
 - [Indexes exposed through Milvus](https://milvus.io/docs/index-explained.md)
 - [Eligibility masks in vector execution](https://milvus.io/docs/bitset.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

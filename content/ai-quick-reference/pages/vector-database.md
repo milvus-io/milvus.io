@@ -37,7 +37,7 @@ For Agent Memory, an application can retain confirmed facts, user-approved prefe
 
 `approved memory record → searchable representation → user/task-scoped recall → selected context for the agent`
 
-Working context and exact workflow checkpoints remain separate responsibilities; similarity retrieval is not a substitute for recovering an execution state or enforcing authorization. The application also decides whether a candidate memory is valid and appropriate to use. See the dedicated [RAG guide](/ai-quick-reference/what-is-rag-retrievalaugmented-generation-in-nlp) and [Agent Memory guide](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus) for the complete workflows.
+Working context and exact workflow checkpoints remain separate responsibilities: similarity retrieval recalls relevant records, but it does not recover an execution state or enforce authorization. The application also decides whether a candidate memory is valid and appropriate to use. See the dedicated [RAG guide](/ai-quick-reference/what-is-rag-retrievalaugmented-generation-in-nlp) and [Agent Memory guide](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus) for the complete workflows.
 
 ## How the pieces fit together
 
@@ -75,5 +75,3 @@ Use a support article with a stable source ID, a version, and a tenant. Insert i
 - [Design a collection schema](https://milvus.io/docs/schema.md)
 - [RAG with Milvus](https://milvus.io/docs/build-rag-with-milvus.md)
 - [Working and long-term memory](https://docs.langchain.com/oss/python/concepts/memory)
-
-Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

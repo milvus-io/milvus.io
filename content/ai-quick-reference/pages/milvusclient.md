@@ -31,8 +31,8 @@ Keep a short client script that creates an isolated collection, inserts fixed re
 
 ## From concept to implementation
 
-- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
-- [Find community support and contribution channels](https://milvus.io/community).
+- [Run the MilvusClient quickstart](https://milvus.io/docs/quickstart.md).
+- [Check PyMilvus installation and compatibility](https://milvus.io/docs/install-pymilvus.md).
 
 ## Continue learning
 
@@ -49,5 +49,3 @@ Keep a short client script that creates an isolated collection, inserts fixed re
 - [MilvusClient application walkthrough](https://milvus.io/docs/quickstart.md)
 - [PyMilvus installation and compatibility](https://milvus.io/docs/install-pymilvus.md)
 - [Collection schema design](https://milvus.io/docs/schema.md)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

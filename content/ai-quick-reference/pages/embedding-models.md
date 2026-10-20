@@ -51,5 +51,3 @@ Before a model migration, save difficult queries that distinguish versions, nega
 - [MTEB benchmark definitions and models](https://huggingface.co/spaces/mteb/leaderboard)
 - [Encoding and model-evaluation interfaces](https://sbert.net/)
 - [Milvus similarity metrics](https://milvus.io/docs/metric.md)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

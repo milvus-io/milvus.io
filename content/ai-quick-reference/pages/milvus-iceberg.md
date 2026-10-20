@@ -33,8 +33,8 @@ Record the intended Iceberg source state, expose it through the supported extern
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Create an external collection over an Iceberg source](https://milvus.io/docs/create-an-external-collection.md).
+- [Check Iceberg support and delete limitations in Storage V3](https://milvus.io/docs/storage-v3.md).
 
 ## Continue learning
 
@@ -48,5 +48,3 @@ Record the intended Iceberg source state, expose it through the supported extern
 - [Iceberg support and delete limitations](https://milvus.io/docs/storage-v3.md)
 - [External collection configuration](https://milvus.io/docs/create-an-external-collection.md)
 - [Iceberg table and snapshot specification](https://iceberg.apache.org/spec/)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

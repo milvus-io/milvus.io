@@ -45,4 +45,3 @@ A contract clause continues onto the next page. Compare a fixed-size split with 
 - [RAG tutorial](https://milvus.io/docs/build-rag-with-milvus.md)
 - [Ingestion and chunking guidance](https://milvus.io/docs/rag_pipeline.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

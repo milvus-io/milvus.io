@@ -5,35 +5,25 @@ topic: "applications"
 order: 93
 ---
 
-A legal-document agent needs to locate applicable evidence and preserve its provenance. Vector retrieval can bridge terminology differences, while keyword retrieval can preserve clause names, citations, and exact identifiers. The retrieval design must also respect document version, jurisdiction, matter, and access scope.
+Two indemnification clauses can read almost identically — "Vendor shall indemnify Client against all claims arising from..." — while one caps liability at $1M and the other has no cap and excludes gross negligence. A legal-document agent that treats those as interchangeable because they embed close together will hand a reviewer the wrong exposure number. The retrieval design has to preserve the number and the exception, not just the topic.
 
 ![Eligibility is a rule, relevance is an ordering](/images/ai-reference/filtering.svg)
 
-## Model the evidence unit
+## Start from what breaks a clause comparison
 
-Choose clauses, sections, or passages that retain enough context to interpret a result. Keep document ID, revision, section reference, page or offset, effective status, and source location. Preserve definitions and neighboring provisions when a small chunk depends on them.
+Liability caps, carve-outs ("except in cases of gross negligence or willful misconduct"), defined terms referenced from elsewhere in the contract, and effective/superseded status are the details that change a clause's meaning without changing its wording much. Chunk at the clause or section boundary, not a fixed token count, and keep each chunk's defined terms and adjacent carve-outs attached — a liability clause separated from its exceptions reads as unconditional when it isn't. Store document ID, revision, section reference, and effective-status alongside the text so a stale or superseded version doesn't get served as current.
 
-For example, two contracts can contain nearly identical liability language with a different cap or exception. Treat numerical and conditional differences as important evaluation cases. An embedding score alone should not decide whether those clauses are equivalent.
+## Scope before you rank
 
-## Combine eligibility and ranking
+Apply matter, client, and jurisdiction scope as a hard filter before any similarity scoring runs — an indemnification clause from an unrelated matter should never reach the candidate list regardless of how closely it matches in wording. Within that scope, combine lexical retrieval for citations and defined-term lookups with dense retrieval for "find clauses like this one" questions, and evaluate the fusion on real queries rather than assuming one signal dominates. Surface the original passage and its revision alongside every result; retrieved contract text is evidence for a reviewer, not an instruction the agent should ever treat as authoritative on its own behavior.
 
-Apply authorized matter or tenant scope and relevant document-state filters before evidence reaches the agent. Use lexical retrieval for exact references and dense retrieval for conceptual questions, then evaluate fusion or reranking on the actual query mix.
+## Build the eval around the exception, not the topic
 
-Return the original passage and revision alongside the candidate ID. If documents conflict or no applicable source is found, the application needs an explicit response policy. Retrieved text remains evidence and should not be allowed to redefine the agent's permissions or tool instructions.
-
-## Evaluate evidence quality separately
-
-Build reviewed queries covering exact clause lookup, paraphrases, cross-document questions, outdated revisions, exceptions, and unsupported requests. Measure applicable-source retrieval, citation correctness, omitted qualifying language, and the final answer's support in the source.
-
-Track latency and tool cost as well as quality. If an agentic loop adds repeated searches without better evidence, improve the corpus or retrieval tools before expanding the loop. This is an engineering pattern for evidence discovery, not a claim that Milvus supplies legal reasoning or that a retrieved passage establishes a legal conclusion. Validate the full workflow with the reviewers who define acceptable use.
-
-## Review the evidence unit, not just the match
-
-A retrieval fixture can record the expected source revision, applicable scope, quoted passage boundary, and a qualifying exception. Ask reviewers to mark which condition failed when a result looks plausible but is unusable. Keep this separate from evaluating a legal conclusion: the database supplies retrieval capabilities, while the application and domain reviewers define acceptable interpretation.
+A query that returns a topically-correct clause but drops its dollar cap or its carve-out has failed, even if a cosine score looks strong. Build a reviewed set where paired clauses differ only in one numeric or conditional detail — cap amount, carve-out, effective date — and check whether the retrieved passage keeps that detail attached. Track how often an agentic loop re-queries without surfacing new evidence; that's a sign the corpus or chunking needs fixing, not the loop depth. None of this makes Milvus a source of legal reasoning — it retrieves passages; a lawyer or compliance reviewer still has to confirm what the passage means for the matter at hand.
 
 ## Example to test
 
-Build a test where two clauses differ only in an exception or effective revision. Require the returned passage to include the qualifying text and source version. Review applicability with domain owners instead of treating similarity as a legal conclusion.
+Index the indemnification example above as two separate contracts: one with a $1M cap, one uncapped with a gross-negligence carve-out. Query "indemnification obligations for vendor claims" against both and confirm the returned passage includes the cap or carve-out language, not just the indemnification boilerplate they share.
 
 ## From concept to implementation
 
@@ -52,5 +42,3 @@ Build a test where two clauses differ only in an exception or effective revision
 - [A source-grounded RAG implementation](https://milvus.io/docs/build-rag-with-milvus.md)
 - [Eligibility filters](https://milvus.io/docs/filtered-search.md)
 - [Exact terminology through BM25](https://milvus.io/docs/full-text-search.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

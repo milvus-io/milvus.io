@@ -9,18 +9,19 @@ An embedding model converts an input into a representation used for candidate re
 
 ## Current candidates beyond one benchmark
 
-The following official model documentation was checked on 2026-10-20. This is a use-case shortlist, not an invented unified ranking. The separate MTEB article provides an explicitly filtered top-20 snapshot. New hosted and multimodal models may not have complete results in that subset.
+The following official model documentation was checked on 2026-10-20. This is a use-case shortlist, not an invented unified ranking. Hosted providers revise their exact model version identifiers over time, so treat the family and capability description below as the durable part, and check the provider's live model-card page for the current version string before integrating. The separate MTEB article points to the live leaderboard rather than a dated snapshot. New hosted and multimodal models may not have complete results there yet.
 
-| Model / family | Type | Purpose and integration boundary |
+| Model family | Type | Purpose and integration boundary |
 |---|---|---|
-| [voyage-4-large / voyage-4 / voyage-4-lite](https://docs.voyageai.com/docs/embeddings) | Hosted text | A hosted multilingual text family with documented compatible spaces across its 4-series variants. Evaluate large versus lite against your quality and latency targets; the documented compatibility is specific to this family, not a property of arbitrary equal-dimensional vectors. |
-| [voyage-code-4](https://docs.voyageai.com/docs/embeddings) | Hosted code | A code-oriented embedding option for repository and coding-agent retrieval. Preserve file path, symbol, revision, and language metadata, and include identifier-heavy queries in evaluation rather than testing only natural-language paragraphs. |
-| [embed-v5.0-pro / embed-v5.0-fast](https://docs.cohere.com/docs/cohere-embed) | Hosted text and images | Cohere’s current text/image embedding family, including mixed document inputs. Pro and fast expose a quality/latency choice. Treat long-context support as an input capability, not evidence that embedding an entire document is better than selecting sensible units. |
-| [gemini-embedding-2](https://ai.google.dev/gemini-api/docs/embeddings) | Hosted multimodal | Maps text, images, audio, video, and documents into a shared space. The documented space is incompatible with gemini-embedding-001. Account for input aggregation semantics and re-embed the corpus when migrating rather than mixing old and new vectors. |
+| [Voyage text embeddings](https://docs.voyageai.com/docs/embeddings) (large/standard/lite tiers) | Hosted text | A hosted multilingual text family whose generation typically ships compatible spaces across its size tiers. Evaluate the larger versus lighter tier against your quality and latency targets; check Voyage's own documentation for which current versions share a compatible space — that compatibility is specific to the family, not a property of arbitrary equal-dimensional vectors. |
+| [Voyage code embeddings](https://docs.voyageai.com/docs/embeddings) | Hosted code | A code-oriented embedding option for repository and coding-agent retrieval. Preserve file path, symbol, revision, and language metadata, and include identifier-heavy queries in evaluation rather than testing only natural-language paragraphs. |
+| [Cohere Embed](https://docs.cohere.com/docs/cohere-embed) (pro/fast tiers) | Hosted text and images | Cohere's text/image embedding family, including mixed document inputs. The pro/fast split exposes a quality/latency choice. Treat long-context support as an input capability, not evidence that embedding an entire document is better than selecting sensible units. |
+| [Gemini embeddings](https://ai.google.dev/gemini-api/docs/embeddings) | Hosted multimodal | Maps text, images, audio, video, and documents into a shared space. Different Gemini embedding generations have shipped incompatible spaces with each other. Check the current documentation for which generation you're integrating, account for input aggregation semantics, and re-embed the corpus when migrating rather than mixing vectors from different generations. |
 | [nvidia/Nemotron-3-Embed-1B-BF16](https://huggingface.co/nvidia/Nemotron-3-Embed-1B-BF16) | Open-weight text | A newer text encoder producing a 2,048-dimensional representation with documented shorter-output options. It supports a self-operated encoding pipeline; test your hardware, pooling, and normalization instead of inferring throughput from the parameter-count label. |
 | [Qwen/Qwen3-VL-Embedding-8B](https://huggingface.co/Qwen/Qwen3-VL-Embedding-8B) | Open-weight multimodal | Produces shared representations for text, images, screenshots, and video. A document assistant can retain page images or a video application can retain frame/clip IDs. Evaluate the target modality separately from a text-only benchmark. |
 | [nvidia/nemotron-colembed-vl-8b-v2](https://huggingface.co/nvidia/nemotron-colembed-vl-8b-v2) | Multi-vector visual documents | A late-interaction visual-document encoder that returns token-level vectors. It needs an appropriate multi-vector storage/scoring design, with a separate dense first-stage option if needed. The current model card marks the weights CC-BY-NC; do not present it as an ordinary commercial single-vector default. |
 | [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3) | Established baseline | An established multilingual baseline with dense, sparse, and multi-vector outputs. It remains relevant to observed search demand, but is not a new release or an automatic top-20 member under the snapshot above. Each output mode requires its own retrieval implementation. |
+| [KaLM-Embedding family](https://huggingface.co/KaLM-Embedding) | Open-weight text | A text embedding family spanning a compact multilingual-instruct checkpoint and a larger Gemma3-derived variant. It is not one interchangeable checkpoint: preserve each variant's documented pooling, instructions, and dimension, and re-embed when switching between sizes. |
 
 ## Build the Milvus data contract
 
@@ -56,13 +57,12 @@ Start with candidates that fit the required language, modality, hosting, and lic
 
 ## Implementation guides and sources
 
-- [voyage-4-large / voyage-4 / voyage-4-lite official documentation](https://docs.voyageai.com/docs/embeddings)
-- [voyage-code-4 official documentation](https://docs.voyageai.com/docs/embeddings)
-- [embed-v5.0-pro / embed-v5.0-fast official documentation](https://docs.cohere.com/docs/cohere-embed)
-- [gemini-embedding-2 official documentation](https://ai.google.dev/gemini-api/docs/embeddings)
+- [Voyage text embeddings official documentation](https://docs.voyageai.com/docs/embeddings)
+- [Voyage code embeddings official documentation](https://docs.voyageai.com/docs/embeddings)
+- [Cohere Embed official documentation](https://docs.cohere.com/docs/cohere-embed)
+- [Gemini embeddings official documentation](https://ai.google.dev/gemini-api/docs/embeddings)
 - [nvidia/Nemotron-3-Embed-1B-BF16 official documentation](https://huggingface.co/nvidia/Nemotron-3-Embed-1B-BF16)
 - [Qwen/Qwen3-VL-Embedding-8B official documentation](https://huggingface.co/Qwen/Qwen3-VL-Embedding-8B)
 - [nvidia/nemotron-colembed-vl-8b-v2 official documentation](https://huggingface.co/nvidia/nemotron-colembed-vl-8b-v2)
 - [BAAI/bge-m3 official documentation](https://huggingface.co/BAAI/bge-m3)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.
+- [KaLM-Embedding model cards](https://huggingface.co/KaLM-Embedding)

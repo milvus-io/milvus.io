@@ -1,29 +1,31 @@
 ---
 slug: "milvus-model-functions"
-title: "How do client model wrappers, server Functions, and rank fusion differ?"
+title: "What are your options for generating embeddings alongside Milvus?"
 topic: "production"
 order: 129
 ---
 
-Three different interfaces are often described as model support. A Python-side wrapper generates embeddings or reranks candidates in the application. A Milvus server Function can call a configured external model provider as part of ingestion or search. Rank fusion combines rankings or scores and need not invoke a learned model at all. Select the path explicitly before designing credentials, networking, and failure handling.
+If you're evaluating Milvus for a retrieval or RAG application, you have three distinct ways to get embeddings and reranking into the pipeline, and they involve different trade-offs in who runs the model, who manages credentials, and how failures surface. Picking one deliberately — rather than discovering the boundary mid-build — saves a rewrite later.
 
-## Client-side model inference
+## Option 1: Generate embeddings yourself, in your application
 
-The application calls a wrapper or the model's native runtime, inspects the resulting vectors, and inserts them into Milvus. Application-side reranking fetches candidates and calls a model separately. The application owns inference dependencies, batching, and retries, while the database owns the indexed representation and retrieval.
+You call a model wrapper or the model's native runtime from your own code, inspect the resulting vectors, and insert them into Milvus. Reranking can work the same way: fetch candidates from Milvus, then call a reranking model separately in your application. This option gives you the most control — you own the inference dependencies, batching, and retries — while Milvus owns the indexed representation and retrieval. It is the right default if you already run model inference elsewhere, or want to swap providers without touching the database layer.
 
-## Server-coordinated provider calls
+## Option 2: Let Milvus call a model provider for you
 
-The embedding Function documentation describes raw-text fields, a configured external provider, and explicitly defined output-vector fields. Model Ranker sends candidate text to a model service during search. Neither arrangement implies that arbitrary model weights are loaded into Milvus. Also distinguish these provider-backed calls from built-in BM25 or MinHash Functions: not every server Function invokes an external learned model. Verify provider configuration, server/client versions, endpoint reachability, and request limits for the deployed system.
+Milvus supports server-side embedding Functions and a Model Ranker that can call a configured external model provider as part of ingestion or search, so your application can send raw text and let Milvus handle the embedding or reranking call. This reduces the amount of inference plumbing your application needs to own, but it is not the same as running arbitrary model weights inside Milvus: you still configure a specific provider, and built-in Functions like BM25 or MinHash don't invoke an external model at all. Check provider configuration, server/client version compatibility, endpoint reachability, and request limits for your deployment before relying on this path.
 
-The checked Model Ranker guide lists material limits: it evaluates one VARCHAR field at a time and cannot be used with grouping search. Its text interface is not proof of native visual-document reranking. A multimodal application may require application-side inference or a separately supported interface.
+One concrete limit worth knowing: the Model Ranker evaluates one VARCHAR field at a time and can't be used with grouping search. Its text interface doesn't extend to visual-document reranking — a multimodal application will likely need Option 1 or a separately supported interface instead.
 
-## Fusion and model scoring remain distinct
+## Option 3: Combine results without a model at all
 
-RRF and weighted fusion combine multiple retrieval paths. They do not replace a cross-encoder's content evaluation. Conversely, a model reranker cannot recover candidates omitted by the first stage. Evaluate candidate coverage, model relevance, latency, and operational failures independently, and keep source IDs consistent through each transition.
+Rank fusion (RRF or weighted fusion) combines rankings or scores from multiple retrieval paths — for example dense and sparse search — and doesn't require invoking a learned model. This is useful when you want to blend retrieval signals cheaply, but it's not a substitute for a cross-encoder's content evaluation, and a model reranker in turn can't recover candidates that fusion or first-stage search already excluded. Treat candidate coverage, model relevance, and fusion as three things to evaluate independently, with source IDs kept consistent across each step.
 
 ## Example to test
 
-Trace where credentials and inference execute in a client wrapper and a server Function. Test endpoint failure and retries. RRF combines rankings without learned-model inference, so its latency and failure model should not be reported as a hosted reranker.
+Trace where credentials and inference actually execute for each option you're considering, and test endpoint failure and retry behavior before committing. RRF combines rankings without learned-model inference, so don't report its latency and failure profile as if it were a hosted reranker.
+
+If you want a managed service to run embedding and reranking calls for you without self-hosting that infrastructure, [Zilliz Cloud](https://zilliz.com/cloud) packages this alongside the database.
 
 ## From concept to implementation
 
@@ -44,5 +46,3 @@ Trace where credentials and inference execute in a client wrapper and a server F
 - [Model Ranker capabilities and limits](https://milvus.io/docs/model-ranker-overview.md)
 - [RRF rank fusion](https://milvus.io/docs/rrf-ranker.md)
 - [Client-side model wrappers](https://github.com/milvus-io/milvus-model/tree/v0.3.4/src/pymilvus/model)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

@@ -13,6 +13,24 @@ Prepare source documents and metadata, choose an embedder, and configure the Mil
 
 For a product assistant, keep product version and tenant identifiers with every document. Give the agent an explicit retrieval tool or knowledge search path. Preserve source IDs when forming answers so users and evaluators can locate the underlying evidence.
 
+A minimal wiring looks like this:
+
+```python
+from agno.agent import Agent
+from agno.knowledge.knowledge import Knowledge
+from agno.vectordb.milvus import Milvus
+
+knowledge = Knowledge(
+    vector_db=Milvus(collection="product_docs", uri="http://localhost:19530"),
+)
+knowledge.add_content(path="docs/product_guide.pdf")
+
+agent = Agent(knowledge=knowledge, search_knowledge=True)
+agent.print_response("What does the refund policy cover?")
+```
+
+`Milvus(...)` from `agno.vectordb.milvus` is the connector; `Knowledge.add_content` drives ingestion, and `search_knowledge=True` gives the agent an explicit retrieval tool rather than implicit context injection. Confirm the constructor arguments against the installed Agno version before relying on this shape in production.
+
 ## Control ingestion and tool use
 
 Use stable document identifiers and define how a changed document replaces its old chunks. Bound retrieval calls and choose what happens when the store is unavailable or returns no evidence. Do not allow a model-generated filter to broaden a mandatory application-side permission boundary.
@@ -42,4 +60,3 @@ Give two agents different document access. Run the same question through each kn
 - [Agno Milvus database example](https://docs.agno.com/knowledge/vector-stores/milvus/overview)
 - [Agno knowledge and vector databases](https://docs.agno.com/knowledge/concepts/vector-db)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

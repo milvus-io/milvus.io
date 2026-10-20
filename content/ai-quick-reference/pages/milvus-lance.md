@@ -33,8 +33,8 @@ Use application-owned IDs to resolve Lance-backed search hits before and after a
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Create an external collection over a Lance source](https://milvus.io/docs/create-an-external-collection.md).
+- [Check Lance support in Storage V3](https://milvus.io/docs/storage-v3.md).
 
 ## Continue learning
 
@@ -48,5 +48,3 @@ Use application-owned IDs to resolve Lance-backed search hits before and after a
 - [Lance support in Storage V3](https://milvus.io/docs/storage-v3.md)
 - [External collection setup and refresh](https://milvus.io/docs/create-an-external-collection.md)
 - [Lance format and ecosystem](https://lance.org/)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

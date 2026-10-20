@@ -49,5 +49,3 @@ Build a monthly worksheet separating serving compute, storage, embedding calls, 
 - [Zilliz Cloud deployment overview](https://zilliz.com/cloud)
 - [Current Zilliz Cloud pricing](https://zilliz.com/pricing)
 - [Self-hosted Milvus with Docker](https://milvus.io/docs/install_standalone-docker.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

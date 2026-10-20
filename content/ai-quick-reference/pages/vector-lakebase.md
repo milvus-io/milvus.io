@@ -44,8 +44,8 @@ Start with one supported source dataset, one offline selection job, and one onli
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Review Milvus external collections](https://milvus.io/docs/create-an-external-collection.md).
+- [Check collection snapshots](https://milvus.io/docs/snapshots.md).
 
 ## Continue learning
 
@@ -60,5 +60,3 @@ Start with one supported source dataset, one offline selection job, and one onli
 - [Milvus external collections](https://milvus.io/docs/create-an-external-collection.md)
 - [Collection snapshots](https://milvus.io/docs/snapshots.md)
 - [Spark integration](https://milvus.io/docs/integrate_with_spark.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

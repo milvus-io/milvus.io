@@ -13,6 +13,17 @@ Check the current Dify deployment guide and supported vector-store configuration
 
 In a product-document assistant, configure the embedding provider, import a small corpus, and inspect how the platform splits documents and stores their metadata. Confirm the selected model and dimensions before importing the full corpus. Changing the provider later can require re-embedding and a new collection.
 
+For a self-hosted deployment, pointing Dify at Milvus is a `docker-compose` `.env` change, not application code:
+
+```bash
+VECTOR_STORE=milvus
+MILVUS_URI=http://milvus-standalone:19530
+MILVUS_TOKEN=root:Milvus
+MILVUS_DATABASE=default
+```
+
+Set these before the first `docker compose up`, restart the `api` and `worker` services, then create a knowledge base in the UI and confirm its collection appears in Milvus before importing the full corpus. Switching `VECTOR_STORE` after documents are already indexed does not migrate them.
+
 ## Trace retrieval through the application
 
 Review the platform's retrieval settings, score thresholds, and optional reranking. Test a query whose correct source is known, then inspect which chunks reach the answer-generation node. Also test a removed document and a user who lacks access to one source. Application permissions and database credentials are separate controls.
@@ -43,4 +54,3 @@ Replace one knowledge document, then inspect which chunks Dify removes and which
 - [Dify documentation](https://docs.dify.ai/)
 - [Deploy Dify with Milvus](https://milvus.io/docs/dify_with_milvus.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

@@ -21,7 +21,7 @@ Set limits on retrieval iterations and tool timeouts. Make document ingestion an
 
 ## Test recovery and quality separately
 
-Pause and resume a test workflow to verify checkpoint recovery. Independently evaluate retrieval quality and memory deletion. An agent that resumes correctly can still retrieve the wrong document, while accurate retrieval does not establish safe retry behavior for unrelated tools. Add complexity only after the state transitions solve a concrete task.
+Pause and resume a test workflow to verify checkpoint recovery. Independently evaluate retrieval quality and memory deletion. An agent that resumes correctly can still retrieve the wrong document, and accurate retrieval says nothing about retry safety for unrelated tools, so test each separately. Add complexity only after the state transitions solve a concrete task.
 
 ## Example to test
 
@@ -45,4 +45,3 @@ Persist a paused workflow, resume it, and check that retrieval uses the intended
 - [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview)
 - [Agentic RAG with Milvus and LangGraph](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

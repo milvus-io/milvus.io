@@ -44,5 +44,3 @@ Test a search credential against a denied administrative operation, then query t
 - [Milvus authentication](https://milvus.io/docs/authenticate.md)
 - [Milvus role-based access control](https://milvus.io/docs/rbac.md)
 - [Milvus multi-tenancy](https://milvus.io/docs/multi_tenancy.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

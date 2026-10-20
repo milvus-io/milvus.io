@@ -11,6 +11,28 @@ DSPy expresses language-model programs as modules with signatures and optimizes 
 
 Give the program a retrieval function that accepts a question and mandatory filters, calls Milvus, and returns passage text, IDs, and sources. Use the official integration guide for the relevant package version, or implement a small adapter around the current client. Keep tenant and authorization constraints outside optimizer-controlled prompt choices.
 
+A minimal retriever module:
+
+```python
+import dspy
+from pymilvus import MilvusClient
+
+client = MilvusClient(uri="http://localhost:19530")
+
+class MilvusRM(dspy.Retrieve):
+    def forward(self, query, k=5):
+        vec = embed(query)  # your embedding function
+        hits = client.search(
+            collection_name="docs", data=[vec], limit=k,
+            output_fields=["text", "source_id"],
+        )
+        return dspy.Prediction(passages=[h["entity"]["text"] for h in hits[0]])
+
+dspy.settings.configure(lm=dspy.LM("openai/gpt-4o-mini"), rm=MilvusRM())
+```
+
+Subclassing `dspy.Retrieve` and wiring it through `dspy.settings.configure(rm=...)` is the integration point — DSPy's optimizers tune the surrounding prompts and module calls, not this retrieval function itself.
+
 For a support assistant, define separate modules for query rewriting and answer generation. Start with fixed retrieval settings. Compare the initial program with an optimized program on the same held-out questions. This reveals whether changes help retrieve or use evidence rather than merely produce more persuasive text.
 
 ## Choose a metric that matches the task
@@ -42,4 +64,3 @@ Optimize prompts on a development split while holding the retrieval corpus versi
 - [DSPy programming modules](https://dspy.ai/3.1.3/learn/programming/modules/)
 - [Milvus and DSPy integration](https://milvus.io/docs/integrate_with_dspy.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

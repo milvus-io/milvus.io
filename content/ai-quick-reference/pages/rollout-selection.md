@@ -5,7 +5,7 @@ topic: "rag-agents"
 order: 78
 ---
 
-Selecting an offline rollout dataset is a data-curation problem with a learning objective. A useful set can include successful behavior, informative failures, and coverage of important task types. Taking only the highest-scoring or most similar episodes can produce a narrow and misleading training distribution.
+A rollout is one execution of an agent policy on a task: the model calls, tool interactions, and intermediate results collected before the episode reaches an outcome. Agent-training frameworks (GRPO-style trainers, async rollout/trainer pipelines) generate and score rollouts at scale, but that generation and scoring machinery is not where a vector database fits. Selecting an offline rollout dataset from that pool is a data-curation problem with a learning objective. A useful set can include successful behavior, informative failures, and coverage of important task types. Taking only the highest-scoring or most similar episodes can produce a narrow and misleading training distribution.
 
 ## Define eligibility before ranking
 
@@ -16,6 +16,8 @@ Exclude prohibited or evaluation-only tasks before candidate search. Group relat
 ## Use embeddings to discover coverage
 
 Embed task descriptions, observation windows, or failure summaries to locate underrepresented regions and related behaviors. Combine similarity with structured filters for task family, tool version, and outcome. Inspect candidate clusters manually to confirm that the representation captures meaningful behavior rather than formatting or repeated boilerplate.
+
+A practical schema stores each rollout as one record: a vector field for the embedded task or trajectory summary, plus scalar fields for rollout ID, task ID, policy checkpoint or revision, outcome status, reward or score, and a near-duplicate or cluster ID. Diversity sampling then becomes a retrieval problem: run a similarity search against already-selected rollouts and reject or down-weight candidates above a similarity threshold, or cluster embeddings first and cap how many rollouts you draw from each cluster so one dominant task pattern cannot crowd out rarer ones. Deduplication works the same way, using a tighter threshold to catch near-identical retries rather than merely related tasks.
 
 A selection manifest should record source trajectory IDs, inclusion reason, labels, weights if used, and the curation revision. This makes it possible to compare two selection policies on the same underlying experience store.
 
@@ -36,9 +38,7 @@ Select successful and informative failed rollouts across task families, keeping 
 
 ## Continue learning
 
-- [What is a rollout in agent training, and where can vector search help?](/ai-quick-reference/what-is-a-rollout-in-agent-training)
-- [What is an agent trajectory, and how should you represent it for retrieval?](/ai-quick-reference/what-is-an-agent-trajectory)
-- [How can vector search help detect train-test contamination?](/ai-quick-reference/how-to-detect-train-test-contamination)
+- [How can vector search retrieve useful agent trajectories?](/ai-quick-reference/how-to-retrieve-agent-trajectories)
 - [How can embeddings improve dataset diversity sampling?](/ai-quick-reference/how-to-sample-diverse-data-with-embeddings)
 
 ## Implementation guides and sources
@@ -47,4 +47,3 @@ Select successful and informative failed rollouts across task families, keeping 
 - [Algorithm-specific training data requirements](https://huggingface.co/docs/trl/grpo_trainer)
 - [Group retrieved candidates by identity](https://milvus.io/docs/grouping-search.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

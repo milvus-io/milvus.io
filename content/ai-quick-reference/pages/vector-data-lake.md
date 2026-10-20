@@ -46,8 +46,8 @@ Keep clips, embeddings, source IDs, and quality labels in a versioned dataset, t
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Review Storage V3 and supported external-source formats](https://milvus.io/docs/storage-v3.md).
+- [Create an external collection over lake data](https://milvus.io/docs/create-an-external-collection.md).
 
 ## Continue learning
 
@@ -61,5 +61,3 @@ Keep clips, embeddings, source IDs, and quality labels in a versioned dataset, t
 - [Storage V3 and external source formats](https://milvus.io/docs/storage-v3.md)
 - [Lance open format](https://lance.org/)
 - [Iceberg schema and partition evolution](https://iceberg.apache.org/docs/latest/evolution/)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

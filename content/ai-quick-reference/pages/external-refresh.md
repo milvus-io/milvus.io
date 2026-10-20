@@ -31,8 +31,8 @@ Prepare a source update containing an append, replacement, and deletion. Record 
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Trigger and monitor an external collection refresh](https://milvus.io/docs/create-an-external-collection.md).
+- [Review the external-schema alteration workflow](https://milvus.io/docs/alter-external-collection-schema.md).
 
 ## Continue learning
 
@@ -46,5 +46,3 @@ Prepare a source update containing an append, replacement, and deletion. Record 
 - [Asynchronous refresh and progress](https://milvus.io/docs/create-an-external-collection.md)
 - [Schema changes and refresh](https://milvus.io/docs/alter-external-collection-schema.md)
 - [Source snapshot retention and maintenance](https://iceberg.apache.org/docs/latest/maintenance/)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

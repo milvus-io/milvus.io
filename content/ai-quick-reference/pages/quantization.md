@@ -51,6 +51,7 @@ Start with IVF_FLAT as an uncompressed IVF baseline. Compare IVF_SQ8, IVF_PQ, an
 
 ## From concept to implementation
 
+- [Try quantized indexes hands-on with the Milvus Quickstart](https://milvus.io/docs/quickstart.md).
 - [Review Milvus index families and composition](https://milvus.io/docs/index-explained.md).
 - [Compare scalar and product quantization in IVF](https://milvus.io/docs/ivf-sq8.md).
 - [Read HNSW product residual quantization](https://milvus.io/docs/hnsw-prq.md).
@@ -73,5 +74,3 @@ Start with IVF_FLAT as an uncompressed IVF baseline. Compare IVF_SQ8, IVF_PQ, an
 - [HNSW product residual quantization](https://milvus.io/docs/hnsw-prq.md)
 - [IVF_RABITQ](https://milvus.io/docs/ivf-rabitq.md)
 - [RaBitQ original paper](https://arxiv.org/abs/2405.12497)
-
-Sources checked: 2026-10-20. Compression ratios estimate vector codes only; measure complete loaded indexes on the target release.

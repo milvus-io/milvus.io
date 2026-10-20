@@ -29,8 +29,8 @@ Replay an upsert after a client timeout and verify the intended logical record a
 
 ## From concept to implementation
 
-- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
-- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+- [Use upsert to replace a logical record by stable primary key](https://milvus.io/docs/upsert-entities.md).
+- [Use delete to remove stale chunks tied to a changed source](https://milvus.io/docs/delete-entities.md).
 
 ## Continue learning
 
@@ -45,5 +45,3 @@ Replay an upsert after a client timeout and verify the intended logical record a
 - [Upsert entities](https://milvus.io/docs/upsert-entities.md)
 - [Delete entities](https://milvus.io/docs/delete-entities.md)
 - [Read consistency](https://milvus.io/docs/consistency.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

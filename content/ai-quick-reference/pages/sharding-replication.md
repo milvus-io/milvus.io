@@ -44,5 +44,3 @@ Separate a capacity test from a failover test: add data or load to assess distri
 
 - [Milvus architecture](https://milvus.io/docs/architecture_overview.md)
 - [Data organization and tenancy](https://milvus.io/docs/multi_tenancy.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

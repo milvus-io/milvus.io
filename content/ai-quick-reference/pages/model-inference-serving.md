@@ -37,7 +37,7 @@ Send the same bounded fixture through local and served inference and compare out
 - [What does the released Milvus Model library actually support?](/ai-quick-reference/milvus-model-library-support)
 - [How do client model wrappers, server Functions, and rank fusion differ?](/ai-quick-reference/milvus-model-functions)
 - [How should you design a scalable embedding-generation pipeline?](/ai-quick-reference/how-to-build-distributed-embedding-pipelines)
-- [How does KaLM compressed-document reranking work?](/ai-quick-reference/kalm-reranker-models)
+- [Which reranking models fit a Milvus retrieval pipeline?](/ai-quick-reference/reranking-model-catalog)
 - [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
 
 ## Implementation guides and sources
@@ -46,5 +46,3 @@ Send the same bounded fixture through local and served inference and compare out
 - [TEI embedding client interface](https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/dense/tei.py)
 - [TEI reranking client interface](https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/reranker/tei.py)
 - [Model-specific serving instructions](https://github.com/Tencent/WeMM-Embedding)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

@@ -34,12 +34,11 @@ For a latency spike, align client timestamps with query, storage, and write-path
 ## From concept to implementation
 
 - [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
-- [Find community support and contribution channels](https://milvus.io/community).
+- [Review the database metrics dashboard](https://milvus.io/docs/metrics_dashboard.md).
 
 ## Continue learning
 
 - [How does the Milvus architecture separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
-- [What does the Milvus Streaming Node do?](/ai-quick-reference/what-is-milvus-streaming-node)
 - [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)
 - [How should you separate hot vector serving from cold lake data?](/ai-quick-reference/how-to-design-hot-and-cold-vector-serving)
 
@@ -48,5 +47,3 @@ For a latency spike, align client timestamps with query, storage, and write-path
 - [Milvus component roles](https://milvus.io/docs/main_components.md)
 - [Monitoring overview](https://milvus.io/docs/monitor_overview.md)
 - [Database metrics dashboard](https://milvus.io/docs/metrics_dashboard.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

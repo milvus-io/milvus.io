@@ -49,4 +49,3 @@ Route an exact invoice ID to structured lookup and a symptom description to sema
 - [Combine retrieval paths](https://milvus.io/docs/multi-vector-search.md)
 - [Structured query and ID retrieval](https://milvus.io/docs/get-and-scalar-query.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

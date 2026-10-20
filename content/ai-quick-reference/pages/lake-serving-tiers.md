@@ -31,12 +31,12 @@ Replay a popular query set, then shift traffic to previously cold records. Track
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Review the Milvus tiered-storage model](https://milvus.io/docs/tiered-storage-overview.md).
+- [Check warm-up controls for cold-start behavior](https://milvus.io/docs/warm-up.md).
 
 ## Continue learning
 
-- [What is Talon, and when can object-store caching help vector workloads?](/ai-quick-reference/what-is-talon)
+- [How does the Milvus architecture separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
 - [How does mmap differ from a disk-oriented ANN index?](/ai-quick-reference/how-mmap-differs-from-diskann)
 - [When should you use DISKANN in Milvus?](/ai-quick-reference/what-is-diskann)
 - [How do you compare managed and self-hosted vector-search costs?](/ai-quick-reference/what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store)
@@ -46,5 +46,3 @@ Replay a popular query set, then shift traffic to previously cold records. Track
 - [Milvus tiered storage](https://milvus.io/docs/tiered-storage-overview.md)
 - [Warm-up behavior](https://milvus.io/docs/warm-up.md)
 - [Tiered-storage workload guidance](https://milvus.io/docs/best-practices-for-tiered-storage.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

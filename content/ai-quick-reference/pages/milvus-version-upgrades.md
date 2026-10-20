@@ -42,5 +42,3 @@ Restore a representative fixture in a staging deployment, run the saved retrieva
 - [Milvus release notes](https://milvus.io/docs/release_notes.md)
 - [Milvus cluster upgrade with Helm](https://milvus.io/docs/upgrade_milvus_cluster-helm.md)
 - [Milvus backup planning](https://milvus.io/docs/milvus_backup_overview.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

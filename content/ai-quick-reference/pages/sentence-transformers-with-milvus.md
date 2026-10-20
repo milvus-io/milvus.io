@@ -19,7 +19,7 @@ A cross-encoder scores the query together with each candidate document. Retrieve
 
 ## Evaluate the whole path
 
-Record embedding throughput, memory, retrieval recall, reranking latency, and final relevance. Use the same candidate pool when comparing rerankers. A model's benchmark position helps form a shortlist but does not establish performance on your corpus, hardware, or target language.
+Record embedding throughput, memory, retrieval recall, reranking latency, and final relevance. Use the same candidate pool when comparing rerankers. A model's benchmark position helps form a shortlist, but performance on your corpus, hardware, and target language still needs its own measurement.
 
 ## Example to test
 
@@ -45,4 +45,3 @@ Encode the same fixture through the model's documented query and document paths,
 - [Sentence Transformers documentation](https://sbert.net/)
 - [Retrieve and rerank workflow](https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html)
 
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

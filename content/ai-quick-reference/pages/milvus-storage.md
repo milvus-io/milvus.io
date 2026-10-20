@@ -33,8 +33,8 @@ Compare a projected batch scan with fetching a few scattered source rows. Keep f
 
 ## From concept to implementation
 
-- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
-- [Find community support and contribution channels](https://milvus.io/community).
+- [Review Storage V3 as exposed by Milvus](https://milvus.io/docs/storage-v3.md).
+- [Read the Loon storage-engine design](https://milvus.io/blog/why-we-built-loon-a-storage-engine-for-ai-data-that-never-stops-changing.md).
 
 ## Continue learning
 
@@ -49,5 +49,3 @@ Compare a projected batch scan with fetching a few scattered source rows. Keep f
 - [Storage V3 as exposed by Milvus](https://milvus.io/docs/storage-v3.md)
 - [Arrow columnar representation](https://arrow.apache.org/docs/format/Columnar.html)
 - [Loon storage-engine design and integration](https://milvus.io/blog/why-we-built-loon-a-storage-engine-for-ai-data-that-never-stops-changing.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

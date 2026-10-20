@@ -5,6 +5,8 @@ topic: "retrieval"
 order: 69
 ---
 
+Most vector search compresses a document down to one summary vector and compares it against one query vector. Late interaction keeps a vector for every token (or patch, for images) instead of collapsing them into a single summary — so a query and a document are compared piece by piece, not as two single points. That preserves detail a single averaged vector would blur away: a document can match a query closely on the specific terms that matter, even if the rest of the document is unrelated.
+
 Late-interaction retrieval independently encodes queries and documents, then computes detailed interactions during pair scoring. Token-level models may preserve useful local matching signals that a single vector loses; relevance gains depend on training and the score. Multiple stored vectors alone do not define a late-interaction model. Its representation and scoring also add storage and computation costs.
 
 ![Preserve page structure through multi-vector retrieval](/images/ai-reference/visual-page.svg)
@@ -48,7 +50,7 @@ Retrieve page candidates and inspect whether the relevant page was included befo
 
 - [What is multi-vector retrieval, and how do MaxSim and MUVERA work?](/ai-quick-reference/what-is-multi-vector-retrieval)
 - [How do ColPali, ColQwen, and other page encoders use Milvus embedding lists?](/ai-quick-reference/visual-document-models)
-- [How does KaLM compressed-document reranking work?](/ai-quick-reference/kalm-reranker-models)
+- [Which embedding and reranking models fit your workload?](/ai-quick-reference/reranking-model-catalog)
 - [What are multimodal embeddings?](/ai-quick-reference/what-are-multimodal-embeddings)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 - [What is reranking, and when should you apply it?](/ai-quick-reference/what-is-vector-reranking-and-when-should-you-apply-it)
@@ -61,5 +63,3 @@ Retrieve page candidates and inspect whether the relevant page was included befo
 - [StructArray data model](https://milvus.io/docs/array-of-structs.md)
 - [ColBERT independent encoding and late interaction](https://arxiv.org/abs/2004.12832)
 - [Candidate strategies and release caveats](https://milvus.io/docs/choose-an-embeddinglist-search-strategy.md)
-
-Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

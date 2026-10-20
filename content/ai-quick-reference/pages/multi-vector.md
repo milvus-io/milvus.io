@@ -5,7 +5,7 @@ topic: "foundations"
 order: 131
 ---
 
-Multi-vector retrieval represents one logical object with multiple vectors. The phrase covers several designs: independent title/body fields, multiple passages grouped under a parent document, or token/patch embedding lists scored jointly. State the retrieval unit and aggregation rule before choosing an index. These designs are not interchangeable, and none requires multiple input modalities.
+Squeezing a long document into a single vector loses detail: a 50-page contract and a one-line summary can end up looking similar once both are compressed to one point in space. Multi-vector retrieval solves that by keeping more than one vector for the same object, so a query can match against the specific part that matters — a clause, a paragraph, a word — instead of an averaged-out whole. The term covers several different designs, though, and they are not interchangeable: independent title/body fields describe one entity from different angles, grouped chunk vectors let you search passages and still roll results up to their parent document, and token/patch embedding lists (as used by ColBERT-style models) keep one vector per token or image patch so a result reflects the best-matching pieces, not an average. State which of these you mean, and which aggregation rule applies, before picking an index — none of these designs requires multiple input modalities, and none is a drop-in substitute for the others.
 
 ## Separate fields, grouped chunks, and joint scoring
 
@@ -75,5 +75,3 @@ Use identical documents, eligibility rules, query lists, model revision, and sco
 - [EmbeddingList and element-level search](https://milvus.io/docs/basic-vector-search-with-structarray.md)
 - [Indexing and metric contracts](https://milvus.io/docs/index-structarray-fields.md)
 - [Candidate strategies and target-release caveats](https://milvus.io/docs/choose-an-embeddinglist-search-strategy.md)
-
-Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

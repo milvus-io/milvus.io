@@ -60,5 +60,3 @@ One million 768-dimensional float32 vectors contain 3.072 billion raw vector byt
 
 - [Index memory estimates](https://milvus.io/docs/index-explained.md)
 - [Loading collections and fields](https://milvus.io/docs/load-and-release.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

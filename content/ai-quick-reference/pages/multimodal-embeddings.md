@@ -5,7 +5,7 @@ topic: "foundations"
 order: 7
 ---
 
-Multimodal embeddings represent supported input types such as text and images in a form useful for a particular task. Cross-modal retrieval requires compatible representations: a text query must be comparable with the indexed image representation. Having vectors from two modalities, or matching dimensions, does not by itself establish that alignment.
+Multimodal embeddings represent supported input types such as text and images in a form useful for a particular task. Cross-modal retrieval requires compatible representations: a text query must be comparable with the indexed image representation. Two vectors with matching dimensions can still live in unrelated spaces — alignment is a property of how the model was trained, not of the array shapes.
 
 ![Paired text and image encoders learn compatible representations](/images/ai-reference/clip-alignment.svg)
 
@@ -19,7 +19,7 @@ For text-to-image search, encode the image collection once with the image encode
 
 Alignment is learned correspondence, not proof that a model understands every cross-modal relation. Domain shift, small text in images, spatial relationships, counting, preprocessing, or unsupported languages can affect the intended task. Compare difficult positive and negative examples; a broad category match does not establish exact detail matching.
 
-A general multimodal language model that accepts images is also not automatically a retrieval encoder. A model must expose an appropriate representation, preprocessing, and query/document contract. Do not take arbitrary hidden states from unrelated encoders and assume they are a shared retrieval space.
+A general multimodal language model that accepts images is a generation model, not a retrieval encoder, unless it explicitly exposes an embedding output with a defined preprocessing and query/document contract. Arbitrary hidden states pulled from an unrelated encoder are not a shared retrieval space; use the representation the model was trained and documented to produce.
 
 ## Keep three representation designs separate
 
@@ -35,7 +35,7 @@ A text-only ColBERT model can be multi-vector without being multimodal. A CLIP-s
 
 Use a dense field for a compatible single-vector representation, separately specified fields for independent representations, or a supported embedding-list schema for multi-vector output. Retain model/processor revisions, media IDs, access metadata, and page or clip boundaries. Milvus stores and retrieves configured representations; the model and training objective determine which comparisons mean something.
 
-These representations can support media search, evidence retrieval, or curation when evaluated for that task. They are not defined by recommendation. Image-text alignment does not automatically learn an individual's preferences; personalized recommendation is a separate application with its own objective and evidence requirements.
+These representations can support media search, evidence retrieval, or curation when evaluated for that task. Image-text alignment captures what an image and a caption have in common, not what one particular user prefers; personalized recommendation needs its own objective and its own evidence, built on top of (not substituted by) a shared retrieval space.
 
 ## Example to test
 
@@ -50,7 +50,6 @@ Search images with a text query describing an object, then vary an attribute, re
 
 - [What is multi-vector retrieval, and how do MaxSim and MUVERA work?](/ai-quick-reference/what-is-multi-vector-retrieval)
 - [What is late-interaction retrieval, and how can embedding lists help?](/ai-quick-reference/what-is-late-interaction-retrieval)
-- [What do WeChat WeMM embeddings represent, and how can Milvus use them?](/ai-quick-reference/wemm-embedding-models)
 - [Which multimodal embedding families fit image, video, and audio retrieval?](/ai-quick-reference/multimodal-model-families)
 - [How do ColPali, ColQwen, and other page encoders use Milvus embedding lists?](/ai-quick-reference/visual-document-models)
 
@@ -60,5 +59,3 @@ Search images with a text query describing an object, then vary an attribute, re
 - [Text-to-image search tutorial](https://milvus.io/docs/text_image_search.md)
 - [CLIP image-text contrastive learning](https://arxiv.org/abs/2103.00020)
 - [CLIP encoders, preprocessing, and comparison](https://github.com/openai/CLIP)
-
-Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

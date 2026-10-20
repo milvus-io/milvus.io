@@ -25,7 +25,7 @@ An Arrow buffer can reduce conversion work between compatible components, but th
 
 Write a fixture containing normal vectors, allowed nulls, unusual IDs, and representative metadata. Read it with the producer's and consumer's libraries, then compare values, dimensions, row identities, and schema. Follow the Milvus import guide for the supported file and schema contract.
 
-Benchmark scan-oriented embedding jobs separately from retrieval payload reads. Retain the source-file manifest and schema revision with each dataset release. The formats are useful building blocks when they preserve semantics and fit the access pattern; choosing a familiar extension alone does not establish interoperability or performance.
+Benchmark scan-oriented embedding jobs separately from retrieval payload reads. Retain the source-file manifest and schema revision with each dataset release. Choosing a familiar extension is not enough: the formats only pay off when they preserve semantics and fit the actual access pattern.
 
 ## Example to test
 
@@ -33,8 +33,8 @@ Export a small table containing vectors, null metadata, and nested source refere
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Prepare data for Milvus import](https://milvus.io/docs/prepare-source-data.md).
+- [Run the Milvus quickstart](https://milvus.io/docs/quickstart.md).
 
 ## Continue learning
 
@@ -48,5 +48,3 @@ Export a small table containing vectors, null metadata, and nested source refere
 - [Arrow columnar memory format](https://arrow.apache.org/docs/format/Columnar.html)
 - [Parquet file organization](https://parquet.apache.org/docs/file-format/)
 - [Prepare data for Milvus import](https://milvus.io/docs/prepare-source-data.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

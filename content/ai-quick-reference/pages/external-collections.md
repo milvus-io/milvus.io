@@ -33,8 +33,8 @@ Attach a small supported external dataset and record its source state. Change it
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Create and configure an external collection](https://milvus.io/docs/create-an-external-collection.md).
+- [Check the required Storage V3 configuration](https://milvus.io/docs/storage-v3.md).
 
 ## Continue learning
 
@@ -48,5 +48,3 @@ Attach a small supported external dataset and record its source state. Change it
 - [Create and refresh external collections](https://milvus.io/docs/create-an-external-collection.md)
 - [Required storage configuration](https://milvus.io/docs/storage-v3.md)
 - [Expose additional external fields](https://milvus.io/docs/alter-external-collection-schema.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

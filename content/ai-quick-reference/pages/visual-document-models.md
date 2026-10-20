@@ -48,5 +48,3 @@ Use a page containing a table and a diagram, then check whether retrieved eviden
 - [Official model card: nvidia/nemotron-colembed-vl-8b-v2](https://huggingface.co/nvidia/nemotron-colembed-vl-8b-v2)
 - [EmbeddingList search and StructArray](https://milvus.io/docs/basic-vector-search-with-structarray.md)
 - [EmbeddingList search strategies](https://milvus.io/docs/choose-an-embeddinglist-search-strategy.md)
-
-Sources checked: 2026-10-20. Benchmark and package support claims are versioned snapshots; inference was not run for this documentation review.

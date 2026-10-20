@@ -51,5 +51,3 @@ Read `IVF64,Flat` as IVF candidate partitioning followed by full-vector scoring 
 - [Milvus FAISS passthrough and supported factory examples](https://milvus.io/docs/faiss.md)
 - [Knowhere index execution layer](https://milvus.io/docs/knowhere.md)
 - [FAISS source repository and library overview](https://github.com/facebookresearch/faiss)
-
-Sources checked: 2026-10-20. FAISS passthrough is versioned; confirm exact compatibility in the target Milvus release.

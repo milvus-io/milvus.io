@@ -29,13 +29,12 @@ A PDF extraction can preserve every word but scramble a table's rows. Inspect th
 
 ## From concept to implementation
 
-- [Design a bounded batch-data workflow](https://milvus.io/docs/integrate_with_spark.md).
-- [Validate the source-to-serving data contract](https://milvus.io/docs/prepare-source-data.md).
+- [Define field types and required metadata in the collection schema](https://milvus.io/docs/schema.md).
+- [Validate the source-to-serving data contract before bulk import](https://milvus.io/docs/prepare-source-data.md).
 
 ## Continue learning
 
 - [What is data curation, and how can vector search help?](/ai-quick-reference/what-is-data-curation-for-vector-ai)
-- [How should you design a quality score for data curation?](/ai-quick-reference/how-to-score-data-quality-for-curation)
 - [How does ETL prepare data for vector search?](/ai-quick-reference/what-are-the-main-phases-of-an-etl-process)
 - [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
 - [How do you choose chunk size for RAG?](/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications)
@@ -46,5 +45,3 @@ A PDF extraction can preserve every word but scramble a table's rows. Inspect th
 - [Prepare source data](https://milvus.io/docs/prepare-source-data.md)
 - [Schema validation](https://milvus.io/docs/schema.md)
 - [RAG data flow](https://milvus.io/docs/build-rag-with-milvus.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

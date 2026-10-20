@@ -55,5 +55,3 @@ Retrieve candidates from a user or session representation, enforce stock and reg
 - [Group and diversify returned candidates](https://milvus.io/docs/grouping-search.md)
 - [Apply catalog eligibility rules](https://milvus.io/docs/filtered-search.md)
 - [Recommendation candidate generation and ranking](https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

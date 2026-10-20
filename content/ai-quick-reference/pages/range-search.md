@@ -31,8 +31,8 @@ Calibrate a similarity threshold on reviewed positive and negative pairs, then i
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Configure Milvus range-search semantics](https://milvus.io/docs/range-search.md).
+- [Check score direction for your chosen metric](https://milvus.io/docs/metric.md).
 
 ## Continue learning
 
@@ -45,5 +45,3 @@ Calibrate a similarity threshold on reviewed positive and negative pairs, then i
 
 - [Milvus range-search semantics](https://milvus.io/docs/range-search.md)
 - [Score direction for each metric](https://milvus.io/docs/metric.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

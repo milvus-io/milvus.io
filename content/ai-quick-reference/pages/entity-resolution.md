@@ -7,6 +7,12 @@ order: 98
 
 Entity resolution determines whether records refer to the same real-world entity. Vector retrieval can generate candidate matches when names or descriptions vary. The identity decision needs additional evidence because similar descriptions can refer to distinct people, organizations, products, or locations.
 
+## Candidate generation and blocking in Milvus
+
+A workable schema stores a `name_embedding` (a `FLOAT_VECTOR` field built from a Sentence-Transformers encoding of the entity's normalized name/description) alongside scalar fields for `entity_type`, `source_system`, `country`, and the raw identifier fields used for exact matching. Build an `HNSW` or `IVF_FLAT` index on `name_embedding` for approximate nearest-neighbor candidate search, and a scalar `INVERTED` index on `entity_type` and `country` so blocking runs as a pre-filter rather than a post-filter — `search()` with an `expr` like `entity_type == "vendor" and country == "US"` restricts the ANN search to the same block before distance is computed, which is both faster and more correct than filtering a broader candidate list afterward.
+
+For each new or updated record, run `search(data=[name_embedding], expr=block_filter, limit=50)` to pull the top-50 nearest names within the same block. That call is the entire "candidate generation" step; everything after it — comparing registration numbers, addresses, and known aliases — is a separate matching stage that does not touch the vector index.
+
 ## Separate retrieval from matching
 
 Use embeddings to reduce the candidate space, then evaluate structured fields and source evidence. Exact identifiers, addresses, dates, and known relationships can be more decisive than semantic similarity. Preserve original values alongside normalized forms so reviewers can inspect what changed.
@@ -31,12 +37,12 @@ Two suppliers with similar names may be separate legal entities. Retrieve candid
 
 ## From concept to implementation
 
-- [Build an evidence-backed RAG pipeline](https://milvus.io/docs/build-rag-with-milvus.md).
-- [Find a runnable application starting point](https://milvus.io/bootcamp).
+- [Filter candidates by block before scoring](https://milvus.io/docs/filtered-search.md).
+- [Create indexes on scalar fields](https://milvus.io/docs/index-scalar-fields.md).
 
 ## Continue learning
 
-- [How should you combine exact, fuzzy, and semantic deduplication?](/ai-quick-reference/exact-fuzzy-and-semantic-deduplication)
+- [How can Sentence Transformers deduplicate a large, overlapping set of text entries?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
 - [How do you keep stable identities between lake data and vector search?](/ai-quick-reference/how-to-keep-stable-ids-between-lake-data-and-vector-search)
 - [How does data quality affect vector retrieval?](/ai-quick-reference/how-does-etl-help-improve-data-quality)
@@ -46,5 +52,3 @@ Two suppliers with similar names may be separate legal entities. Retrieve candid
 - [Retrieve candidates within score bounds](https://milvus.io/docs/range-search.md)
 - [Lexical evidence for names and identifiers](https://milvus.io/docs/full-text-search.md)
 - [Restrict candidate scope](https://milvus.io/docs/filtered-search.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

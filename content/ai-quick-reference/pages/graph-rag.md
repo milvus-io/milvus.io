@@ -11,7 +11,9 @@ Graph RAG combines retrieval with explicit relationships between entities, docum
 
 Milvus supplies vector retrieval and metadata operations. A graph-based application must define how relationships are extracted, stored, updated, and traversed. Storing an entity embedding does not by itself implement graph semantics, enforce relationship correctness, or verify a multi-hop conclusion.
 
-For example, a query about a component's downstream dependencies may require entity resolution, several relationship steps, and source passages that justify each edge. A similar paragraph can be a useful starting point, but it is not a substitute for those relationships.
+For example, a query about a component's downstream dependencies may require entity resolution, several relationship steps, and source passages that justify each edge. A similar paragraph can be a useful starting point, but it still needs those explicit relationships to produce a correct multi-hop answer.
+
+A common pattern stores entities and relationships as rows in a Milvus collection: an entity-embedding field for similarity search, scalar fields for entity ID, type, and relationship edges (source ID, target ID, relation type), and a separate collection or partition for passage-level evidence. Traversal logic queries the relationship rows directly rather than through vector similarity, while vector search locates candidate entities or passages to seed that traversal.
 
 ## Understand the additional cost
 
@@ -44,4 +46,3 @@ For a supplier investigation, use graph relationships to enumerate known ownersh
 
 - [Graph RAG tutorial](https://milvus.io/docs/graph_rag_with_milvus.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

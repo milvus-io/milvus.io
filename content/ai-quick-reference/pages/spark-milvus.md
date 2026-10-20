@@ -50,8 +50,8 @@ Read a bounded, supported snapshot into Spark, project only needed fields, join 
 
 ## From concept to implementation
 
-- [Add observability to the workflow](https://milvus.io/docs/monitor_overview.md).
-- [Find community support and contribution channels](https://milvus.io/community).
+- [Review Spark and Milvus integration](https://milvus.io/docs/integrate_with_spark.md).
+- [Check the Spark-Milvus connector build and compatibility](https://github.com/zilliztech/spark-milvus).
 
 ## Continue learning
 
@@ -65,5 +65,3 @@ Read a bounded, supported snapshot into Spark, project only needed fields, join 
 - [Current connector build and compatibility guidance](https://github.com/zilliztech/spark-milvus)
 - [Spark and Milvus integration](https://milvus.io/docs/integrate_with_spark.md)
 - [Versioned collection views](https://milvus.io/docs/snapshots.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

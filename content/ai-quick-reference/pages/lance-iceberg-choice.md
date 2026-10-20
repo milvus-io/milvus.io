@@ -33,8 +33,8 @@ Choose a source format by the consumers that must share the dataset: analytical 
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Check Milvus's external-source format support in Storage V3](https://milvus.io/docs/storage-v3.md).
+- [Create and refresh an external collection](https://milvus.io/docs/create-an-external-collection.md).
 
 ## Continue learning
 
@@ -49,5 +49,3 @@ Choose a source format by the consumers that must share the dataset: analytical 
 - [Iceberg table specification](https://iceberg.apache.org/spec/)
 - [Parquet file format](https://parquet.apache.org/docs/file-format/)
 - [Milvus external-source contracts](https://milvus.io/docs/storage-v3.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

@@ -5,33 +5,27 @@ topic: "rag-agents"
 order: 74
 ---
 
-A memory system needs a lifecycle beyond insertion and similarity search. Facts can be corrected, preferences can change, and records can expire or be deleted. Define which source is authoritative and how every derived representation follows those changes.
+A memory record is not permanent by default. It has a lifetime shaped by how it was created, how often it is reinforced, and whether something newer has superseded it. Define that lifetime explicitly — TTL, decay, consolidation, and retirement rules — rather than letting every record persist until storage pressure forces a cleanup.
 
-![Correct memory through its derived representations](/images/ai-reference/memory.svg)
+## Decide how a memory expires
 
-## Record validity explicitly
+Assign an expiry policy by memory class, not uniformly. A working-state record (a pending tool result) should expire when the task ends. An episodic record (a past support case) might expire on a fixed TTL unless referenced again. A semantic fact (a confirmed user preference) may have no TTL at all, only an explicit supersession event. Store creation time, last-referenced time, and an explicit expiry or review timestamp on every record so the policy is enforceable, not just documented.
 
-Keep memory ID, owner, source, revision, creation time, validity status, and any expiry or supersession relationship. Distinguish event time from processing time: a late-arriving old observation should not silently replace a more recent confirmed correction.
+## Decay relevance before deleting the record
 
-For example, if a user changes a preferred deployment region, keep the correction relationship so retrieval can exclude the obsolete value. A high semantic score for the old region is not a reason to restore it to the current profile.
+Many systems want memories to fade gradually rather than disappear at a hard cutoff. A recency- or access-weighted score — multiplying similarity by a decay function of age or time since last retrieval — demotes stale records in ranking before they are ever deleted. This buys time to confirm a record is truly obsolete, and it separates "ranks lower now" from "removed from the store," which is a safer default than irreversible deletion on a timer.
 
-## Update the source and its derivatives
+## Consolidate instead of accumulating duplicates
 
-Commit the authoritative change, then update or remove indexed text and embeddings through the supported workflow. Caches, summaries, and copied context can require separate invalidation. Preserve stable IDs and enough progress information to retry a failed synchronization without generating unrelated duplicate records.
+Repeated episodes and incrementally refined facts tend to accumulate near-duplicate records over time. Periodic consolidation — merging a cluster of similar episodic records into one summary, or folding a corrected preference into the record it supersedes — keeps the store from growing indefinitely and keeps retrieval from surfacing five near-identical memories for one event. Preserve a link from the consolidated record back to the originals so the merge is auditable and reversible.
 
-The memsearch design illustrates a source-of-truth record with a rebuildable retrieval index. Other systems can use a transactional record store. The important property is a reconciliation path from current authoritative records to searchable data.
+## Retire superseded memories explicitly
 
-## Define the observable completion point
-
-Measure when a corrected or deleted memory stops influencing new agent requests. Database mutation acknowledgment, search visibility, and expiration of application caches are different boundaries. Decide what should happen to already running tasks that hold an earlier memory version.
-
-Test correction followed by a delayed ingestion retry, deletion followed by a rebuild, conflicting updates, and expiry during an active session. Query through the same tenant and validity filters used in production. Keep removed-content retention and audit requirements explicit rather than hiding old values in an unrestricted history collection.
-
-A reliable lifecycle makes the current state explainable and lets the system prove that an obsolete memory cannot win merely because it is highly similar to the present query.
+When a newer record replaces an older one, mark the old record's status rather than relying on recency alone to suppress it in ranking. A record that is superseded six months ago can still have a higher raw similarity score than yesterday's correction; status and supersession links are what make retrieval prefer the current fact over the stale one. Keep the retired record addressable for audit rather than hard-deleting it immediately, unless a deletion request requires otherwise.
 
 ## Example to test
 
-Correct a fact, then ask a paraphrased question that would previously retrieve the old value. Check source records, vectors, summaries, and caches. Record the time until every permitted retrieval path reflects the correction.
+Age a batch of episodic memories without new activity, run consolidation, then issue a query that used to match several of the originals. Confirm it now returns the consolidated record, and confirm an explicitly retired preference ranks below its replacement even when it remains the more similar embedding.
 
 ## From concept to implementation
 
@@ -50,5 +44,3 @@ Correct a fact, then ask a paraphrased question that would previously retrieve t
 - [Authoritative memory and rebuildable indexes](https://github.com/zilliztech/memsearch/blob/main/docs/design-philosophy.md)
 - [Update indexed records](https://milvus.io/docs/upsert-entities.md)
 - [Remove records from retrieval](https://milvus.io/docs/delete-entities.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

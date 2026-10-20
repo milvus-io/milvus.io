@@ -25,6 +25,17 @@ Check client-side limits as well as server resources. A load generator can bottl
 
 For interactive search, select a configuration that meets tail-latency and error-rate targets at the expected arrival rate. For offline processing, throughput and total completion time may matter more. Run both classes separately if the application needs both, then test them together to reveal interference. Keep retrieval quality constant so a faster configuration is not merely doing less useful search work.
 
+## Tune the levers that actually move the numbers
+
+Once you know whether you are latency-bound or throughput-bound, a small set of Milvus-specific levers account for most of the practical gain:
+
+- **Replica count.** Query nodes can be scaled out with additional replicas to raise read concurrency and throughput; this helps a saturated read path but does not reduce single-query latency by itself.
+- **Search parameters.** Index-specific parameters such as `nprobe` or `ef` trade recall for query latency. Tightening them lowers latency and raises throughput at the cost of quality, so changes should be validated against a fixed recall target, not applied blindly.
+- **Resource allocation.** CPU, memory, and whether vectors are memory-resident versus mmap/disk-backed change both tail latency and the point at which the system starts queueing. Index build and load configuration also affect how much headroom remains for concurrent queries.
+- **Batching and concurrency.** As covered above, raising client concurrency only increases throughput until a resource saturates; past that point it mainly adds queueing and tail latency.
+
+Change one lever at a time, re-measure at the same recall target, and record the resulting curve so a decision can be revisited as the workload grows.
+
 ## Example to test
 
 Record request arrival, queue wait, search duration, and completion. Increase concurrency until the service target stops holding. Reporting only completed searches can hide dropped requests or a backlog that makes interactive use unacceptable.
@@ -46,5 +57,4 @@ Record request arrival, queue wait, search duration, and completion. Increase co
 
 - [Vector search requests](https://milvus.io/docs/single-vector-search.md)
 - [Repeatable performance workloads](https://github.com/zilliztech/VectorDBBench)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.
+- [Turn your workload into a sizing estimate](https://milvus.io/tools/sizing)

@@ -23,7 +23,7 @@ Decide how replacing a source document removes its obsolete nodes. Confirm delet
 
 ## Example to test
 
-Replace a source document that produced multiple nodes and verify the resulting node membership. Check source IDs and relationships in returned citations. Indexing another copy is not a substitute for removing obsolete nodes.
+Replace a source document that produced multiple nodes and verify the resulting node membership. Check source IDs and relationships in returned citations. Indexing a replacement copy does not remove the obsolete nodes on its own; deletion is a separate step.
 
 ## From concept to implementation
 
@@ -43,4 +43,3 @@ Replace a source document that produced multiple nodes and verify the resulting 
 - [LlamaIndex Milvus vector-store example](https://developers.llamaindex.ai/python/examples/vector_stores/milvusindexdemo/)
 - [RAG with Milvus and LlamaIndex](https://milvus.io/docs/integrate_with_llamaindex.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

@@ -11,6 +11,26 @@ Haystack organizes AI applications as connected components. A document pipeline 
 
 The Milvus integration supplies a document store and retrieval components. The Python integration example uses MilvusDocumentStore from milvus_haystack. Check the integration's package requirements rather than assuming every component ships with Haystack core. A document store interface and a database are different layers: inspect which fields and IDs the adapter persists.
 
+Wiring the two together is a short pipeline:
+
+```python
+from milvus_haystack import MilvusDocumentStore, MilvusEmbeddingRetriever
+from haystack import Pipeline
+from haystack.components.embedders import SentenceTransformersTextEmbedder
+
+document_store = MilvusDocumentStore(
+    connection_args={"uri": "http://localhost:19530"},
+    collection_name="support_docs",
+)
+
+query_pipeline = Pipeline()
+query_pipeline.add_component("embedder", SentenceTransformersTextEmbedder())
+query_pipeline.add_component("retriever", MilvusEmbeddingRetriever(document_store=document_store, top_k=5))
+query_pipeline.connect("embedder.embedding", "retriever.query_embedding")
+```
+
+`MilvusDocumentStore` and `MilvusEmbeddingRetriever` come from the `milvus-haystack` package, installed separately from `haystack-ai`. Run `pip install milvus-haystack` and verify the current constructor arguments against the integration's reference before relying on this shape.
+
 For a support corpus, attach source URLs, product versions, and tenant metadata before writing documents. Verify the query pipeline forwards the required filters to the retriever. Save component outputs during evaluation so you can see where text disappeared or metadata changed.
 
 ## Compare pipeline variants
@@ -42,4 +62,3 @@ Log the documents emitted by the retriever before a downstream ranker or generat
 - [Haystack Milvus Document Store integration](https://github.com/deepset-ai/haystack-integrations/blob/main/integrations/milvus-document-store.md)
 - [Milvus and Haystack guide](https://milvus.io/docs/integrate_with_haystack.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

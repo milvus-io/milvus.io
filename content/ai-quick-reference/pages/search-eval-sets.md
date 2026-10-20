@@ -5,31 +5,29 @@ topic: "rag-agents"
 order: 80
 ---
 
-A search evaluation set should represent the decisions the application needs to make. It contains queries or tasks, the eligible data state, relevance or outcome judgments, and enough metadata to understand where the system succeeds or fails. A list of easy demonstration questions is not an adequate replacement.
+An evaluation set is itself a maintained artifact, not a one-time export. Building one means defining who labels relevance, how query slices are chosen and kept current, and when the set needs to be refreshed as the corpus and product change. A set that was representative at creation can quietly stop representing the live traffic mix within a few months.
 
 ![Measure four different outcomes separately](/images/ai-reference/evaluation.svg)
 
-## Sample the real intent mix
+## Choose a labeling process you can defend
 
-Include exact identifiers, paraphrases, multi-part questions, rare-domain queries, selective filters, and requests with no supported answer. Preserve the tenant, product version, language, and time context needed to determine eligibility. Use consented production examples where available and reviewed synthetic cases for gaps.
+Decide who judges relevance — domain reviewers, end-user feedback, or a documented LLM-as-judge rubric — and write down the instructions a judge follows, including how ties, partial relevance, and "no good answer" are marked. Have two reviewers independently label a sample and measure agreement before trusting a single-reviewer label set at scale. Record the judge's identity or model version with each label, not just the label itself, so a later rubric change is attributable rather than silently baked in.
 
-For document retrieval, judge which source records provide useful evidence. For an agentic task, also define an acceptable final outcome and tool constraints. A plan can retrieve relevant text while taking unnecessary or invalid actions, so evidence quality and task behavior need separate assessment.
+## Define slices before you need them
 
-## Keep data states reproducible
+A slice is a named subset of queries that shares a property you expect to matter: exact identifiers, paraphrases, a specific language, a rare entity type, a tenant with unusual data, or questions with no supported answer. Define slices up front, from known intent categories and past incident reports, rather than discovering them only after an average score looks fine but a specific segment is failing. Tag each query with its slice membership (a query can belong to more than one) so slice-level reporting doesn't require re-labeling later.
 
-Record the corpus snapshot, source revisions, model versions, and evaluation policy. Avoid allowing training data, prompt examples, or trajectory retrieval to contain protected evaluation tasks or near-duplicates. Split related documents and episodes consistently to limit leakage.
+## Keep the set fresh and free of leakage
 
-Create a development set for iteration and a held-out set for decisions. If relevance judgments change, version them and explain the reason. An updated rubric should not silently change the apparent trend of an unchanged system.
+Revisit the set on a cadence tied to how fast the corpus and product change: a new product line, a schema change, or a model swap are all triggers to add queries, not just a calendar date. Track the corpus snapshot and source revisions each query assumes, and retire or re-judge a query once its assumed corpus state is gone. Keep the evaluation set's queries and near-duplicates out of training data, prompt examples, and few-shot exemplars — leakage into the eval set from the other direction is the more common failure, but it runs both ways.
 
-## Report failures by useful slices
+## Govern changes to the set itself
 
-Measure candidate coverage and ranking metrics alongside grounded answer quality, task completion, latency, errors, and tool cost. Review query groups rather than relying entirely on one average score. Important exact-term or minority-language failures can be hidden by a large easy slice.
-
-Keep qualitative examples with source evidence for each material regression. Use them to decide whether to change data, representation, indexing, or agent control. A compact, maintained evaluation set gives the team a repeatable release criterion and makes later performance or architecture experiments easier to interpret.
+Version the set like code: every added, removed, or re-labeled query should be attributable to a reason and a date, not an untracked edit. An updated rubric or a batch of newly added hard queries should not silently change the apparent trend of an otherwise unchanged system — report before/after the change explicitly instead of blending it into a continuous score history. Keep a development split for iteration and a held-out split that the team does not tune against.
 
 ## Example to test
 
-Include exact identifiers, paraphrases, empty-result questions, stale sources, and access-denied cases. Keep evaluation queries outside tuning. A set of only easy successful examples cannot reveal the failure modes of an agent retrieval workflow.
+Add a new slice for a product line launched last quarter, re-label a sample with two independent reviewers, and compare their agreement before trusting the new labels. Confirm which older queries that slice's launch invalidated and retire them explicitly rather than leaving stale assumptions in the set.
 
 ## From concept to implementation
 
@@ -40,7 +38,6 @@ Include exact identifiers, paraphrases, empty-result questions, stale sources, a
 
 - [How do you evaluate retrieval quality?](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved)
 - [What is agentic search, and where does a vector database fit?](/ai-quick-reference/what-is-agentic-search)
-- [How can vector search help detect train-test contamination?](/ai-quick-reference/how-to-detect-train-test-contamination)
 - [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)
 
 ## Implementation guides and sources
@@ -48,5 +45,3 @@ Include exact identifiers, paraphrases, empty-result questions, stale sources, a
 - [RAG evaluation integration](https://milvus.io/docs/integrate_with_ragas.md)
 - [Retrieval metric definitions](https://github.com/beir-cellar/beir/wiki/Metrics-available)
 - [Agentic retrieval reference workflow](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

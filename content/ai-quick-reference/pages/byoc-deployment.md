@@ -47,5 +47,3 @@ List the owner of upgrades, network access, storage, backups, and incident respo
 - [Zilliz Cloud BYOC overview](https://docs.zilliz.com/docs/byoc/byoc-intro)
 - [Self-hosted Milvus deployment choices](https://milvus.io/docs/install-overview.md)
 - [Current service pricing](https://zilliz.com/pricing)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

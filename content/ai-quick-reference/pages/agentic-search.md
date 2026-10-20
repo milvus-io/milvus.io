@@ -19,7 +19,7 @@ Keep eligibility outside the model's discretion. Tenant, document status, and ac
 
 Give the loop a reason to continue: missing evidence, conflicting sources, or a specific unanswered subquestion. Define tool-call, token, time, and result budgets. Repeating a slightly different search indefinitely can increase cost without improving the answer.
 
-The Milvus LangGraph tutorial demonstrates an agentic retrieval pattern, and DeepSearcher provides another reference implementation. Adapt their control flow to the workload. Their existence does not establish that an autonomous loop will outperform a simpler retrieve-and-answer pipeline on your questions.
+The Milvus LangGraph tutorial demonstrates an agentic retrieval pattern, and DeepSearcher provides another reference implementation. Adapt their control flow to the workload. A simpler retrieve-and-answer pipeline can still outperform an autonomous loop on your questions, so measure both before committing to the extra complexity.
 
 ## Evaluate both evidence and actions
 
@@ -43,7 +43,7 @@ A support agent first retrieves a general error explanation, then narrows to a p
 - [What does a Milvus MCP server expose to an AI agent?](/ai-quick-reference/milvus-mcp-tools)
 - [How should an agent choose between vector, keyword, and structured search?](/ai-quick-reference/how-agents-choose-retrieval-tools)
 - [What is hybrid search, and when should you use it?](/ai-quick-reference/what-is-hybrid-search-and-when-should-i-use-it)
-- [What is an agent trajectory, and how should you represent it for retrieval?](/ai-quick-reference/what-is-an-agent-trajectory)
+- [How can vector search retrieve useful agent trajectories?](/ai-quick-reference/how-to-retrieve-agent-trajectories)
 - [How do you build an evaluation set for agentic and vector search?](/ai-quick-reference/how-to-build-search-and-agent-evaluation-datasets)
 - [What is Graph RAG, and where does Milvus fit?](/ai-quick-reference/how-does-milvus-enable-graph-rag-for-multihop-agent-reasoning)
 
@@ -52,4 +52,3 @@ A support agent first retrieves a general error explanation, then narrows to a p
 - [Agentic RAG with Milvus and LangGraph](https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md)
 - [DeepSearcher retrieval workflows](https://github.com/zilliztech/deep-searcher)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

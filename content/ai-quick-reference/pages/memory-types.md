@@ -43,7 +43,7 @@ Keep a temporary checkout step in workflow state, a past failure as an episode, 
 
 - [How should you structure agent memory in Milvus?](/ai-quick-reference/what-are-best-practices-for-structuring-agent-memory-in-milvus)
 - [How should an agent memory system handle corrections, expiry, and deletion?](/ai-quick-reference/how-to-correct-expire-and-delete-agent-memory)
-- [What is an agent trajectory, and how should you represent it for retrieval?](/ai-quick-reference/what-is-an-agent-trajectory)
+- [How can vector search retrieve useful agent trajectories?](/ai-quick-reference/how-to-retrieve-agent-trajectories)
 - [When is a semantic cache useful, and how do you prevent stale answers?](/ai-quick-reference/what-is-a-semantic-cache)
 
 ## Implementation guides and sources
@@ -51,4 +51,3 @@ Keep a temporary checkout step in workflow state, a past failure as an episode, 
 - [A Milvus memory retrieval example](https://milvus.io/docs/basic_memory_with_milvus.md)
 - [Governed source records and a derived retrieval index](https://github.com/zilliztech/memsearch/blob/main/docs/design-philosophy.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

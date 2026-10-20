@@ -5,7 +5,7 @@ topic: "production"
 order: 31
 ---
 
-Vector-database scalability is the ability to meet quality, latency, throughput, and operational requirements as data and workload grow. A vector count by itself is insufficient: dimension, index representation, metadata, filters, write rate, and concurrency determine how much work the system performs.
+Vector-database scalability is the ability to meet quality, latency, throughput, and operational requirements as data and workload grow. A vector count by itself is insufficient: dimension, index representation, metadata, filters, write rate, and concurrency determine how much work the system performs. The [Milvus sizing tool](https://milvus.io/tools/sizing) turns those inputs into a starting capacity estimate before you commit to a deployment shape — use it alongside the measurements below rather than after them.
 
 ## Separate capacity from serving demand
 
@@ -35,7 +35,7 @@ Grow data, query concurrency, and update traffic independently before testing th
 ## Continue learning
 
 - [How should you separate hot vector serving from cold lake data?](/ai-quick-reference/how-to-design-hot-and-cold-vector-serving)
-- [What is Talon, and when can object-store caching help vector workloads?](/ai-quick-reference/what-is-talon)
+- [How does Milvus separate ingestion, storage, and search?](/ai-quick-reference/how-milvus-separates-ingestion-storage-and-search)
 - [How do you estimate memory for vector search?](/ai-quick-reference/how-does-vector-search-manage-memory-usage)
 - [How do sharding and replication differ in a vector database?](/ai-quick-reference/how-do-distributed-vector-databases-handle-sharding-and-replication)
 - [How should you benchmark vector search performance?](/ai-quick-reference/what-tools-help-benchmark-vector-search-performance)
@@ -45,5 +45,3 @@ Grow data, query concurrency, and update traffic independently before testing th
 
 - [Milvus architecture](https://milvus.io/docs/architecture_overview.md)
 - [Index capacity trade-offs](https://milvus.io/docs/index-explained.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

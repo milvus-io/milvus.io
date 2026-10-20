@@ -5,7 +5,7 @@ topic: "foundations"
 order: 6
 ---
 
-Dense and sparse describe how coordinates are populated, not whether a model is large, neural, semantic, or useful. A dense vector typically uses a fixed array of values. A sparse vector has relatively few nonzero coordinates and can store only their indexes and values. A sparse vector can contain many nonzero coordinates; it is not necessarily a one-hot vector.
+Search `database error 500` against a support corpus. A dense encoder turns that phrase into something like `[0.2, -0.4, 0.7, 0.1, ...]`, a fixed-length array where every position holds a value and the meaning lives in the pattern across all of them. A BM25-style sparse encoder instead keeps a handful of nonzero weights keyed to actual vocabulary terms — `database`, `error`, `500` — and ignores the rest of a huge vocabulary. Same query, two very different representations: one dense and opaque, one sparse and inspectable. That is the real distinction. It is not about model size, "semantic" versus "keyword," or which one is better; it is about how the coordinates are populated and what each nonzero position means. A sparse vector can have plenty of nonzero entries — it is not a one-hot vector — and a dense vector is not automatically more "intelligent" just because it is harder to read.
 
 ![Dense and sparse describe coordinate occupancy, not model size](/images/ai-reference/vector-representations.svg)
 
@@ -13,7 +13,7 @@ Dense and sparse describe how coordinates are populated, not whether a model is 
 
 Take a toy vocabulary with positions for `database`, `vector`, `memory`, and many other terms. A weighted lexical vector might have nonzero entries only for a few terms. Its coordinate IDs have a vocabulary meaning. A dense representation such as `[0.2, -0.4, 0.7, 0.1]` instead uses latent features; a single coordinate usually cannot be read as one word.
 
-These are explanatory numbers, not outputs of a real model. Logical dimension, number of nonzeros, numeric precision, and index overhead all affect storage. Sparse storage is not automatically cheaper for every workload.
+These are explanatory numbers, not outputs of a real model. Logical dimension, number of nonzeros, numeric precision, and index overhead all affect storage. Sparse storage is cheaper than dense storage only when the nonzero count stays low relative to the vocabulary; a dense query that expands to thousands of nonzero terms can cost more to store and score than a compact dense vector.
 
 ## Statistical and learned sparse retrieval differ
 
@@ -51,5 +51,3 @@ Evaluate an exact error code, a paraphrased symptom, and a mixed query on the sa
 - [BM25 full-text search](https://milvus.io/docs/full-text-search.md)
 - [Sparse inverted index](https://milvus.io/docs/sparse-inverted-index.md)
 - [SPLADE learned vocabulary weighting](https://arxiv.org/abs/2107.05720)
-
-Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

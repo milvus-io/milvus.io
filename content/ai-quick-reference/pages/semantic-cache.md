@@ -7,7 +7,7 @@ order: 79
 
 A semantic cache uses similarity to propose previously computed responses or intermediate results for reuse. It can reduce repeated work when nearby requests genuinely have the same answer contract. It requires stricter applicability checks than ordinary document retrieval because a cache hit may bypass new computation.
 
-![Correct memory through its derived representations](/images/ai-reference/memory.svg)
+Consider a support bot that cached the answer to "what's your refund window?" this morning, before a policy change took effect at noon. An afternoon user asks "how long do I have to return something?" — a paraphrase with high embedding similarity to the cached question. A similarity-only cache serves the stale pre-noon answer with high confidence, because nothing about the paraphrase signals that the underlying policy changed between the two requests. The cache key needs to carry the policy or content version, not just the question text, or a confident-looking paraphrase match will keep serving yesterday's answer.
 
 ## Define what is reusable
 
@@ -49,4 +49,3 @@ Two users ask similar questions about accounts with different permissions. A sem
 - [Score thresholds for candidate acceptance](https://milvus.io/docs/range-search.md)
 - [Maintain indexed cache metadata](https://milvus.io/docs/upsert-entities.md)
 
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

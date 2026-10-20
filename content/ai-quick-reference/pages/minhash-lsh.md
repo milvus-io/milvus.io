@@ -31,13 +31,12 @@ Compare lightly edited text and a meaning-preserving paraphrase. MinHash similar
 
 ## From concept to implementation
 
-- [Compare supported index choices](https://milvus.io/docs/index-explained.md).
-- [Read the benchmark methodology discussion](https://milvus.io/blog/benchmarks-lie-vector-dbs-deserve-a-real-test.md).
+- [Build a MINHASH_LSH index](https://milvus.io/docs/minhash-lsh.md).
+- [Generate MinHash signatures from text](https://milvus.io/docs/minhash-function.md).
 
 ## Continue learning
 
-- [How should you combine exact, fuzzy, and semantic deduplication?](/ai-quick-reference/exact-fuzzy-and-semantic-deduplication)
-- [How can embeddings help with data deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
+- [How should you combine exact, fuzzy, and semantic deduplication?](/ai-quick-reference/how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping)
 - [What is data curation, and how can vector search help?](/ai-quick-reference/what-is-data-curation-for-vector-ai)
 - [When should you use range search instead of only top-k?](/ai-quick-reference/when-to-use-vector-range-search)
 
@@ -45,5 +44,3 @@ Compare lightly edited text and a meaning-preserving paraphrase. MinHash similar
 
 - [Milvus MINHASH_LSH index](https://milvus.io/docs/minhash-lsh.md)
 - [Generate MinHash signatures from text](https://milvus.io/docs/minhash-function.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

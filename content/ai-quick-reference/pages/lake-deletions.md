@@ -31,15 +31,15 @@ Delete a source object with several indexed chunks and cached answers. Verify th
 
 ## From concept to implementation
 
-- [Check the supported external-source workflow](https://milvus.io/docs/create-an-external-collection.md).
-- [Connect retrieval with batch preparation](https://milvus.io/docs/integrate_with_spark.md).
+- [Delete entities from a managed collection](https://milvus.io/docs/delete-entities.md).
+- [Check external-source deletion compatibility in Storage V3](https://milvus.io/docs/storage-v3.md).
 
 ## Continue learning
 
 - [How should you refresh a Milvus external collection safely?](/ai-quick-reference/how-to-refresh-milvus-external-collections)
 - [How do you keep stable identities between lake data and vector search?](/ai-quick-reference/how-to-keep-stable-ids-between-lake-data-and-vector-search)
 - [How should an agent memory system handle corrections, expiry, and deletion?](/ai-quick-reference/how-to-correct-expire-and-delete-agent-memory)
-- [What lineage metadata should connect source data, embeddings, and training sets?](/ai-quick-reference/data-lineage-for-embeddings-and-training)
+- [How do you reproduce a vector search or training experiment later?](/ai-quick-reference/how-to-reproduce-vector-search-and-training-experiments)
 
 ## Implementation guides and sources
 
@@ -47,5 +47,3 @@ Delete a source object with several indexed chunks and cached answers. Verify th
 - [Refresh the external view](https://milvus.io/docs/create-an-external-collection.md)
 - [Delete from managed collections](https://milvus.io/docs/delete-entities.md)
 - [Iceberg deletion semantics](https://iceberg.apache.org/spec/)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

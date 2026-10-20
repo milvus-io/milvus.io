@@ -61,5 +61,3 @@ Encode a support query with its intended neural query encoder and also analyze i
 - [Sparse field representation](https://milvus.io/docs/sparse_vector.md)
 - [SPLADE learned sparse representations](https://arxiv.org/abs/2107.05720)
 - [Truncated SVD and latent semantic analysis](https://scikit-learn.org/stable/modules/decomposition.html)
-
-Sources checked: 2026-10-20. Algorithms and illustrative calculations are documentation-reviewed; model inference and target-release deployment were not run.

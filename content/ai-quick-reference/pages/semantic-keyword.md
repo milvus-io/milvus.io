@@ -47,5 +47,3 @@ Search once for `E-1042`, once for a paraphrase describing the same error, and o
 - [Milvus full-text search and BM25](https://milvus.io/docs/full-text-search.md)
 - [Milvus hybrid search](https://milvus.io/docs/multi-vector-search.md)
 - [Milvus reranking](https://milvus.io/docs/reranking.md)
-
-Sources checked: 2026-10-20. Verify implementation details against the deployed Milvus version.

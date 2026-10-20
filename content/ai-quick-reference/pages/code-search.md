@@ -46,5 +46,3 @@ For a question about retries, combine semantic lookup with exact symbol or path 
 - [Code indexing and hybrid search example](https://github.com/zilliztech/claude-context)
 - [Hybrid candidate retrieval](https://milvus.io/docs/multi-vector-search.md)
 - [Repository and revision constraints](https://milvus.io/docs/filtered-search.md)
-
-Sources checked: 2026-10-20. Use the implementation guide for your deployed version.

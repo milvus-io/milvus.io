@@ -55,13 +55,14 @@ not a production route.
 
 ### Landing click measurement
 
-- CTA style does not select its event. Benchmark and final buttons retain
-  `cta_benchmark_click` and `cta_final_click`, including Cloud buttons.
+- CTA style does not select its event. Each detail page has a single compact
+  Cloud banner after sources and related links, with `cta_final_click`.
+  Former in-content benchmark banners and the large final CTA are removed.
 - Every custom event includes `landing_page`, `landing_topic`, `cta_location`,
   `cta_destination`, `entry_button`, and a query/fragment-free `link_url`.
   The destination is derived from the actual URL, not from button styling.
 - Hero Cloud signup clicks retain `cta_zilliz_signup_click` with location `hero`.
-  Benchmark/final clicks do not also emit that generic event: count signup-button
+  Final clicks do not also emit that generic event: count signup-button
   clicks across locations by `cta_destination=cloud_signup` to avoid double counting.
 - `copy_code_snippet` is emitted only after clipboard success. A denied/failed
   copy emits `copy_code_snippet_failed`; no code text is sent to analytics.
@@ -126,3 +127,5 @@ promise that Google will show an FAQ rich result.
 - The LanceDB page now explains Lance format versus LanceDB, Milvus external
   collections over Lance, embedded/distributed deployment and serving tradeoffs.
   Cloud external collections are qualified as Public Preview and on-demand only.
+
+- The pgvector migration/coexistence section and its section-navigation entry are removed in both languages.

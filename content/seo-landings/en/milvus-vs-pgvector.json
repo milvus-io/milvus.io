@@ -345,40 +345,6 @@
       }
     },
     {
-      "id": "coexist",
-      "nav": "Migration",
-      "h2": "Start on pgvector, move the vector table to Milvus: the polyglot pattern",
-      "paragraphs": [
-        "The common path is not a replacement. Teams start on pgvector because the data is in Postgres, then move only the vector table to Milvus when it outgrows the primary, keeping Postgres for OLTP: users, orders, permissions, agent checkpoints. Rows and vectors join on the primary key; milvus vs postgres becomes Milvus and Postgres.",
-        "Is Milvus overkill for a small RAG prototype? Not with Milvus Lite, which runs in-process from pip install. Does Milvus require a GPU? No; GPU indexes are optional. The migration is a copy, not a re-embedding, through VTS (Vector Transport Service) and its pg_to_milvus config."
-      ],
-      "table": {
-        "caption": "Migrating from pgvector to Milvus while keeping Postgres as the system of record",
-        "heads": [
-          "Step",
-          "What you do",
-          "Notes"
-        ],
-        "rows": [
-          [
-            "Map the schema and copy",
-            "vector column to a FloatVector field, columns to VARCHAR, INT64, JSON or ARRAY; VTS pg_to_milvus.conf copies the table",
-            "Test on Milvus Lite first; nothing re-embedded"
-          ],
-          [
-            "Build indexes",
-            "HNSW or AUTOINDEX on the vector field; scalar indexes on filter columns; partition key for tenants",
-            "Index params per field, search params per query"
-          ],
-          [
-            "Dual-write, cut over",
-            "Write to both, compare recall and latency, switch reads; transactions, joins and RLS stay in Postgres",
-            "Same MilvusClient API on Zilliz Cloud"
-          ]
-        ]
-      }
-    },
-    {
       "id": "pgvector-fit",
       "nav": "How to choose",
       "h2": "When is pgvector the better choice, and when Milvus? A decision checklist",

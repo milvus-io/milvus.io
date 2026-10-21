@@ -342,6 +342,10 @@
     [
       "Lance、Iceberg、Parquet，向量该放哪种格式？",
       "Milvus 三种都能读。需要快速随机读、版本管理、频繁加列的 AI 数据集适合 Lance；Iceberg 在 Parquet 数据文件之上提供表级快照、schema 演进和 SQL 引擎的治理；只用 Parquet 则工具生态最广。"
+    ],
+    [
+      "Zilliz Cloud 支持外部集合吗？",
+      "Zilliz Cloud 外部集合当前为 Public Preview，仅支持按需计算数据库。具体限制请参阅下方链接的 Zilliz Cloud 文档。"
     ]
   ],
   "aiq": [

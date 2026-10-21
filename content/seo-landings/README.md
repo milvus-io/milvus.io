@@ -88,9 +88,9 @@ organic traffic and destination availability have been checked.
   four topics. Each page distinguishes product editions and describes when the
   other system fits; adding a machine or corpus size alone is not a hard product
   boundary.
-- Do not compare the old 2023 pgvector/Weaviate runs to current Milvus results.
-  Those pages' charts show only verified Milvus/Zilliz Cloud configurations and
-  explicitly do not establish a competitor speed advantage. The existing Qdrant
+- The July 2023 pgvector runs are displayed in separate historical charts with
+  their instance, index, date and serial P99 labels. They do not establish a
+  speed ratio against current Milvus/Cloud runs. The existing Qdrant
   and Elasticsearch/OpenSearch charts retain their published configuration labels.
 - Standalone still needs its data infrastructure; embedded Woodpecker does not
   mean etcd and object storage vanish. Moving from Postgres also requires schema,
@@ -123,3 +123,9 @@ promise that Google will show an FAQ rich result.
   separately from VectorDBBench. The source has inconsistent latency terminology,
   so the page uses reported latency, does not derive QPS or a Milvus speed ratio,
   and distinguishes result completeness from ANN recall.
+- The latest owner copy adds PostgreSQL capabilities, migration/coexistence and
+  a dated survey of published pgvector tests. Raw 2023 VectorDBBench metrics are
+  recorded in the evidence ledger; vendor results remain attributed and separate.
+- The LanceDB page now explains Lance format versus LanceDB, Milvus external
+  collections over Lance, embedded/distributed deployment and serving tradeoffs.
+  Cloud external collections are qualified as Public Preview and on-demand only.

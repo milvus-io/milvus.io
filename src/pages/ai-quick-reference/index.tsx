@@ -72,11 +72,6 @@ export default function AiFaq(props: {
   const { list, total, pageIndex, topic, keyword } = props;
   const currentPageIndex = pageIndex;
   const searchRequest = useRef(0);
-  const guideTopics = topics.filter(item =>
-    topic
-      ? item.id === topic
-      : ['foundations', 'lake', 'rag-agents'].includes(item.id)
-  );
 
   const [searchData, setSearchData] = useState<{
     keyword: string;
@@ -239,18 +234,6 @@ export default function AiFaq(props: {
               </a>
             ))}
           </nav>
-
-          <h2 className={classes.resourceTitle}>{t('guidesTitle')}</h2>
-          <ul className={classes.listWrapper}>
-            {guideTopics.map(item => (
-              <li key={item.id}>
-                <a href={item.guide}>{item.guideLabel}</a>
-              </li>
-            ))}
-            <li>
-              <a href="https://zilliz.com/pricing">{t('pricingGuide')}</a>
-            </li>
-          </ul>
 
           <CustomInput
             value={searchData.keyword}

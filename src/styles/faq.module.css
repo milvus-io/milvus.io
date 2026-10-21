@@ -18,11 +18,6 @@
     }
   }
 
-  .resourceTitle {
-    @mixin heading4;
-    margin-bottom: 24px;
-  }
-
   h1 {
     @mixin heading2;
     margin-bottom: 12px;

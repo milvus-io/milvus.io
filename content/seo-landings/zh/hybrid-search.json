@@ -19,20 +19,26 @@
       "混合检索 策略",
       "RRF 融合",
       "bm25 混合检索",
-      "混合检索 向量检索 区别",
-      "多路召回"
+      "双路召回",
+      "加权融合 分数归一化",
+      "倒排索引",
+      "jieba 分词"
     ],
     "questions": [
-      "混合检索是什么？",
-      "混合检索里 BM25 和向量检索的区别：关键词检索和语义检索各自什么时候更好",
+      "什么是混合检索？怎么实现？",
+      "为什么要用混合检索？",
+      "BM25 和向量检索的区别：关键词检索和语义检索各自什么时候更好",
       "RRF 融合怎么算，k 怎么取？",
+      "关键词和语义的权重怎么调？",
       "混合检索一定比纯向量检索好吗？",
+      "稀疏向量和全文索引选哪个？",
       "关键词检索还需要 Elasticsearch 吗？",
-      "RAG 怎么做混合检索？"
+      "RAG 怎么做混合检索？",
+      "LangChain 或 LlamaIndex 里能用混合检索吗？"
     ]
   },
   "h1": "混合检索：BM25 与向量检索一库搞定",
-  "sub": "Milvus 是内置 BM25 的混合检索向量数据库：原始文本、稠密和稀疏向量在一次 hybrid_search 调用里检索并融合，不用再同步第二套搜索引擎。",
+  "sub": "Milvus 是内置 BM25 的混合检索向量数据库：原始文本、稠密和稀疏向量在一次 hybrid_search 调用里检索、过滤并融合，不用再同步第二套搜索引擎。为什么要用混合检索？因为真实查询一半是精确词、一半是语义。",
   "primary_cta": {
     "label": "在 Milvus 中实现混合检索",
     "href": "https://milvus.io/docs/zh/multi-vector-search.md"
@@ -60,15 +66,19 @@
   "benefits": [
     {
       "title": "内置 BM25",
-      "body": "在文本字段上声明 BM25 Function，Milvus 写入时生成稀疏向量，查询直接用原始文本打分，无需双写。"
+      "body": "在文本字段上声明 BM25 Function，Milvus 写入时生成稀疏向量（倒排索引），查询直接用原始文本打分，全文检索与向量检索同库；内置分析器按字段分词，中文走 jieba 分词，另有英文、阿拉伯文、泰文。无需双写。"
     },
     {
       "title": "稀疏向量与稠密向量，一份结果",
-      "body": "错误码、SKU 靠 BM25 命中，换了说法的问题靠 embedding 命中，一次调用返回一份排序结果。"
+      "body": "错误码、SKU 靠 BM25 命中，换了说法的问题靠 embedding 命中；SPLADE 这类学习型稀疏向量也放在同一个 SPARSE_FLOAT_VECTOR 字段。一次调用返回一份排序结果。"
     },
     {
-      "title": "融合与过滤",
-      "body": "多路召回后用 RRF 或加权 ranker 融合，混合检索重排序也在同一次调用里完成。每路请求都带自己的过滤表达式，租户约束对两路同样生效。"
+      "title": "融合与元数据过滤",
+      "body": "双路召回后用 RRF 或加权 ranker 融合。每路请求都带自己的过滤表达式，并在 ANN 之前生效，租户约束和元数据过滤在混合检索内部完成，而不是查完再筛。"
+    },
+    {
+      "title": "融合之后再重排",
+      "body": "混合检索重排序在同一次调用里完成：模型 ranker（vLLM、TEI、Cohere、Voyage AI）或 Function Chain 对融合后的列表重新打分再返回。"
     }
   ],
   "feature_blocks": [
@@ -78,7 +88,8 @@
       "bullets": [
         "客户数据 NDCG@3：关键词 40.6，向量 43.8，混合 48.4",
         "BEIR NDCG@10：40.6、45.0、48.4",
-        "MIRACL（18 种语言）NDCG@10：49.6、58.3、58.8"
+        "MIRACL（18 种语言）NDCG@10：49.6、58.3、58.8",
+        "客户数据上再加语义重排：60.1"
       ]
     },
     {
@@ -133,46 +144,52 @@
   },
   "stats": [],
   "compare": {
-    "h2": "混合检索里 BM25 和向量检索的区别：关键词检索和语义检索各自什么时候更好",
-    "caption": "按查询类型的 NDCG@3，来自微软 Azure AI Search 基准（BM25 对比 Ada-002 向量），另有标注的除外",
+    "h2": "BM25 和向量检索的区别：关键词检索和语义检索各自什么时候更好",
+    "caption": "按查询类型对比关键词、向量、混合检索的 NDCG@3，来自微软 Azure AI Search 基准（BM25、Ada-002 向量、RRF 混合）",
     "heads": [
-      "",
-      "BM25 全文检索占优",
-      "稠密向量占优"
+      "查询类型",
+      "关键词（BM25）",
+      "向量（Ada-002）",
+      "混合（关键词 + 向量）"
     ],
     "rows": [
       [
-        "查询措辞",
-        "纯关键词查询：79.2 对 11.7",
-        "答案和问题用词不同：36.1 对 23.0"
+        "纯关键词查询",
+        "79.2",
+        "11.7",
+        "61.0"
       ],
       [
-        "查询长度",
-        "短查询（少于 5 个 token）：53.1 对 38.8",
-        "自然语言事实类问题：49.0 对 37.8"
+        "原文片段检索",
+        "51.1",
+        "41.5",
+        "51.0"
       ],
       [
-        "精确字符串",
-        "原文片段：51.1 对 41.5；错误码如 TS-999（Anthropic）",
-        "带错别字的查询：39.1 对 28.8"
+        "问题与文档用词重合度低",
+        "23.0",
+        "36.1",
+        "35.9"
       ],
       [
-        "词汇",
-        "关键专有词，embedding 容易把它稀释",
-        "同义词和不同说法"
+        "带错别字的查询",
+        "28.8",
+        "39.1",
+        "40.6"
       ],
       [
-        "领域与语言",
-        "未经微调的新领域（BEIR）",
-        "多语言查询，MIRACL NDCG@10：58.3 对 49.6"
+        "长查询",
+        "42.7",
+        "41.6",
+        "48.1"
       ]
     ],
-    "note": "同一基准里，混合检索在 10 类查询中的 9 类上超过较好的单路，或与之相差不到 0.2 分；例外是纯关键词查询（混合 61.0）。"
+    "note": "该基准共 10 类查询，混合检索在 9 类上超过较好的单路或与之相差不到 0.2 分，例外是纯关键词查询。再加语义重排后每一行都继续提升（纯关键词 66.9，长查询 59.4）。"
   },
   "faqs": [
     [
-      "混合检索是什么？",
-      "BM25 关键词检索和向量语义检索同时跑，ranker 合成一份结果，Milvus 在一次 hybrid_search 调用里完成。"
+      "什么是混合检索？怎么实现？",
+      "三步：BM25 和向量两路请求在同一个 collection 上并行召回，ranker 把两份列表融合成一份，再带字段返回 top-k。Milvus 里就是一次 hybrid_search 调用，过滤和重排都包含在内。"
     ],
     [
       "关键词检索还需要 Elasticsearch 吗？",
@@ -180,16 +197,24 @@
     ],
     [
       "RRF 融合怎么算，k 怎么取？",
-      "RRF 对每份列表按 1/(k + 名次) 打分再求和，不用校准分数，k 默认 60。有标注查询后再调加权 ranker，Bruch 等人发现少量数据就能调得比 RRF 好。"
+      "每条结果在每份列表里按 1/(k + 名次) 打分再求和，k 默认 60，第一名得 1/61，不需要分数校准。Milvus 3.0.1 起 RRF 也支持按路加权。"
+    ],
+    [
+      "关键词和语义的权重怎么调？",
+      "用加权 ranker，相当于其他系统的 alpha 参数：加权融合前先做分数归一化（arctan 映射到 [0, 1]），再给每一路一个 [0, 1] 的权重。Bruch 等人发现少量标注数据就能把加权调得比 RRF 好。"
     ],
     [
       "混合检索一定比纯向量检索好吗？",
-      "不是每条都更好：微软测得纯关键词查询上单用 BM25 为 79.2，混合为 61.0。建议用自己的查询对比纯稠密、纯 BM25 和混合。"
+      "不是每条都更好：微软测得纯关键词查询上单用 BM25 为 79.2，混合为 61.0。建议用自己的查询，以 recall@k 或 NDCG 对比纯稠密、纯 BM25 和混合三种策略。"
+    ],
+    [
+      "稀疏向量和全文索引选哪个？LangChain 或 LlamaIndex 里能用混合检索吗？",
+      "两者都在 Milvus 里：BM25 全文索引零训练，SPLADE 等学习型稀疏向量要模型但更懂语义，可以同时作为两路。langchain-milvus 用 BM25BuiltInFunction 加加权或 RRF，LlamaIndex 有全文检索指南，底层都是同一个 hybrid_search。"
     ]
   ],
   "final": {
     "h2": "一个数据库上线关键词检索 + 语义检索",
-    "body": "schema 里加 BM25 Function，发两路请求，RRF 融合。从混合检索文档开始，或用托管 Milvus。"
+    "body": "schema 里加 BM25 Function，发两路请求，用 RRF 或加权融合，需要就再重排。从混合检索文档开始，或用托管 Milvus。"
   },
   "sources": [
     "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/azure-ai-search-outperforming-vector-search-with-hybrid-retrieval-and-reranking/3929167",
@@ -207,7 +232,15 @@
     "https://raw.githubusercontent.com/milvus-io/pymilvus/master/pymilvus/client/abstract.py",
     "https://github.com/milvus-io/milvus",
     "https://milvus.io/docs/zh/multi-vector-search.md",
-    "https://zilliz.com.cn/cloud"
+    "https://zilliz.com.cn/cloud",
+    "https://milvus.io/docs/analyzer-overview.md",
+    "https://milvus.io/docs/chinese-analyzer.md",
+    "https://milvus.io/docs/sparse_vector.md",
+    "https://milvus.io/docs/model-ranker-overview.md",
+    "https://milvus.io/docs/filtered-search.md",
+    "https://milvus.io/docs/milvus_hybrid_search_retriever.md",
+    "https://milvus.io/docs/llamaindex_milvus_full_text_search.md",
+    "https://milvus.io/docs/release_notes.md"
   ],
   "notes": [
     "Evidence numbers quoted verbatim: Microsoft Azure AI Search hybrid retrieval post (Tables 1-2; Ada-002 embeddings, BM25, RRF, 512-token chunks w/25% overlap; customer data NDCG@3, BEIR/MIRACL NDCG@10); Anthropic Contextual Retrieval (1 minus recall@20, codebases/fiction/ArXiv/science papers); BEIR abstract; Bruch et al. abstract.",
@@ -218,7 +251,8 @@
     "Dense rows from leaderboard_v2.json: Cohere (Medium) = Cohere 1M 768d, filter_ratio 0: ZillizCloud-8cu-perf 13316.2336 QPS / 2.0 ms / 0.9383; Milvus-16c64g-sq4u-fp16-force_merge 9575.6863 QPS / 2.3 ms / 0.9189.",
     "Dense and BM25 charts use different datasets and systems; do not compare their bars with each other.",
     "Snippet needs a Milvus server (BM25 Function); not executed against a live server. RRFRanker(60) still in pymilvus; docs also show Function(FunctionType.RERANK).",
-    "Keyword pass 2026-10-21: keywords rebuilt from Google/Baidu autocomplete (WebSearch budget exhausted); research: https://suggestqueries.google.com (autocomplete, hl=en); https://www.baidu.com/sugrec (autocomplete). \"有托管版吗？\" FAQ dropped; managed CTA stays in the bench block."
+    "SERP pass 2026-10-21: studied 21 EN / 19 ZH results (Medium x2, Couchbase, 6 CSDN and 1 Zhihu hits were blocked and not counted). Gaps closed: weighted fusion / alpha-style tuning with arctan normalization (13 results), step-by-step how-it-works (9), worked RRF k=60 example (9), three-way keyword vs vector vs hybrid table from Microsoft Table 2 verbatim (8), rerank after fusion incl. Microsoft 'Hybrid + Semantic ranker' row (10), pre-filtering inside hybrid search (6), learned sparse (SPLADE) vs BM25 full-text as distinct paths (6), LangChain/LlamaIndex (5), analyzers / jieba tokenization (4). Dropped keywords: EN 'BM25 and dense retrieval', 'keyword search vs semantic search' (SERP says 'lexical search vs semantic search'), 'keyword and semantic search' (-> 'keyword and vector search'); ZH '混合检索 向量检索 区别', '多路召回' as a keyword (SERP titles use 双路召回; 多路召回 stays in body). Not verifiable: Google PAA boxes themselves (no SERP API); questions taken from result titles/H2s/FAQ blocks. Microsoft Table 2 columns: Keyword / Vector (Ada-002) / Hybrid (Keyword + Vector) / Hybrid + Semantic ranker, NDCG@3: Keyword queries 79.2/11.7/61.0/66.9; Exact snippet 51.1/41.5/51.0/60.8; Low query/doc term overlap 23.0/36.1/35.9/49.1; Misspellings 28.8/39.1/40.6/54.6; Long queries 42.7/41.6/48.1/59.4; summary Hybrid + Semantic ranker 60.1 (customer) / 50.0 (BEIR) / 72.0 (MIRACL). Limitations/when-not-to-use (7 results) deliberately not added per SPEC-v3 §7.",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
   "benefits_h2": "为什么用 Milvus 做混合检索向量数据库",
   "bench": [
@@ -349,6 +383,48 @@
       "cta_zilliz_signup_click"
     ]
   },
+  "research": [
+    "https://weaviate.io/blog/hybrid-search-explained",
+    "https://www.mongodb.com/resources/products/capabilities/hybrid-search",
+    "https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/understand-hybrid-search.html",
+    "https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/perform-hybrid-search.html",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/vector-search/about-hybrid-search",
+    "https://www.singlestore.com/blog/hybrid-search-vector-full-text-search/",
+    "https://www.dataquest.io/blog/metadata-filtering-and-hybrid-search-for-vector-databases/",
+    "https://theneuralbase.com/vector-databases/qna/what-is-hybrid-search-in-vector-databases/",
+    "https://supabase.com/docs/guides/ai/hybrid-search",
+    "https://redis.io/blog/hybrid-search-explained/",
+    "https://redis.io/blog/hybrid-search-benefits-rag-systems/",
+    "https://www.meilisearch.com/blog/hybrid-search-rag",
+    "https://www.meilisearch.com/products/hybrid-search",
+    "https://www.tigerdata.com/docs/build/examples/hybrid-search",
+    "https://kx.com/blog/tutorial-hybrid-search-with-bm25-in-kdb-x-ai-libraries/",
+    "https://atlan.com/know/hybrid-rag/",
+    "https://ubuntu.com/blog/hybrid-search-and-reranking-a-deeper-look-at-rag",
+    "https://www.analyticsvidhya.com/blog/2024/12/contextual-rag-systems-with-hybrid-search-and-reranking/",
+    "https://www.keyvalue.systems/blog/hybrid-rag-architecture/",
+    "https://manticoresearch.com/blog/hybrid-search/",
+    "https://www.zenml.io/llmops-database/bm25-vs-vector-search-for-large-scale-code-repository-search",
+    "https://blog.csdn.net/weixin_45422672/article/details/148064863",
+    "https://blog.csdn.net/neweastsun/article/details/157292982",
+    "https://www.cnblogs.com/OBCE666/p/19462542",
+    "https://www.cnblogs.com/OBCE666/p/19197515",
+    "https://www.smallyoung.cn/docs/028-RAG%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8ERRF%E7%AE%97%E6%B3%95%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90",
+    "https://www.poeticcoder.com/tutorials/rag/retrieval/hybrid-search",
+    "https://www.cnblogs.com/muzinan110/p/18541469",
+    "https://help.aliyun.com/zh/analyticdb/analyticdb-for-postgresql/user-guide/fusion-search-use-guide",
+    "https://help.aliyun.com/zh/redis/use-cases/tairvector-hybrid-retrieval-practice",
+    "https://cloud.tencent.com/document/product/1709/111418",
+    "https://cloud.tencent.com/developer/article/2655895",
+    "https://cloud.tencent.com/developer/article/2400870",
+    "https://cloud.baidu.com/article/1227977",
+    "https://cloud.baidu.com/article/3373214",
+    "https://www.cnblogs.com/ExMan/p/18762905",
+    "https://www.cnblogs.com/ExMan/p/18762305",
+    "https://www.53ai.com/news/RAG/2024080632561.html",
+    "https://www.53ai.com/news/RAG/2024082897368.html",
+    "https://www.53ai.com/news/qianyanjishu/1377.html"
+  ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"
 }

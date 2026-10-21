@@ -1,0 +1,559 @@
+{
+  "site": "milvus",
+  "kind": "seo",
+  "slug": "milvus-vs-pgvector",
+  "nav": "Milvus vs pgvector",
+  "path": "/compare/milvus-vs-pgvector",
+  "title": "Milvus vs pgvector: Scalability, Performance, Features",
+  "description": "Milvus vs pgvector: compare a dedicated vector database with a Postgres extension across architecture, filtering, hybrid search, operations and migration.",
+  "keywords": {
+    "primary": "milvus vs pgvector",
+    "secondary": [
+      "pgvector vs milvus",
+      "milvus vs pgvector performance",
+      "pgvector vs milvus benchmark",
+      "milvus or pgvector",
+      "milvus vs postgres",
+      "pgvector alternatives",
+      "pgvector limitations",
+      "pgvector scalability",
+      "pgvector hnsw",
+      "pgvector hybrid search",
+      "pgvector metadata filtering",
+      "postgres vector database",
+      "pgvectorscale",
+      "vector database comparison",
+      "VectorDBBench"
+    ],
+    "questions": [
+      "Is Milvus faster than pgvector?",
+      "Can pgvector handle 100 million vectors?",
+      "Does pgvector support hybrid search?",
+      "When should I use pgvector instead of Milvus?",
+      "Is pgvector good enough for production RAG?",
+      "How hard is migrating from pgvector to Milvus later?",
+      "Is Milvus overkill for a small RAG prototype?",
+      "Does Milvus require a GPU?"
+    ]
+  },
+  "research": [
+    "https://www.instaclustr.com/education/vector-database/pgvector-vs-milvus-5-key-differences-and-how-to-choose/",
+    "https://myscale.com/blog/pgvector-vs-milvus-choosing-right-vector-database/",
+    "https://dev.to/linou518/pgvector-vs-qdrant-vs-milvus-2026",
+    "https://markaicode.com/vs/milvus-vs-pgvector/",
+    "https://markaicode.com/vs/milvus-vs-postgres/",
+    "https://www.c-sharpcorner.com/article/vector-db-dilemma-pgvector-vs-milvus/",
+    "https://dev.to/devrudals/enterprise-vector-database-2026",
+    "https://www.paradedb.com/learn/postgresql/pgvector-limitations",
+    "https://www.pinecone.io/blog/pinecone-vs-pgvector/",
+    "https://www.tigerdata.com/blog/pgvector-vs-pinecone",
+    "https://supabase.com/blog/pgvector-vs-pinecone",
+    "https://zilliz.com/comparison/milvus-vs-pgvector",
+    "https://cloud.tencent.cn/developer/article/2658089",
+    "https://cloud.tencent.com/developer/article/2655980",
+    "https://saturn.pub/insights/15/article-704",
+    "https://blog.deptrip.com/2026/07/14/vector-database-comparison/",
+    "https://tobyqin.cn/posts/2025-11-24/vector-database",
+    "https://kaiyan.net/blog/vector-database-selection-2026/",
+    "https://www.cnblogs.com/itqinls/p/20832126"
+  ],
+  "h1": "Milvus vs pgvector: a vector database comparison for growing data",
+  "intro": "pgvector adds vector search to Postgres, keeping relational data, transactions and joins together. It scales through larger instances, read replicas or additional sharding systems. Milvus is a dedicated vector database with object storage and separately scalable ingest, indexing and query resources. Choose by relational requirements and measured filtering, throughput, latency and operating needs.",
+  "primary_cta": {
+    "label": "Start the Milvus Quickstart",
+    "href": "https://milvus.io/docs/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "Try managed Milvus on Zilliz Cloud",
+    "href": "https://cloud.zilliz.com/signup"
+  },
+  "proof": [
+    "Apache-2.0, 40K+ GitHub stars",
+    "Scales to tens of billions of vectors",
+    "Storage and compute separated",
+    "Vectors up to 32,768 dimensions, 17 dense index types"
+  ],
+  "logos": [
+    "Salesforce",
+    "Walmart",
+    "NVIDIA",
+    "eBay",
+    "IBM",
+    "Cisco",
+    "Roblox",
+    "Reddit",
+    "Exa.ai",
+    "OpenEvidence",
+    "Read.ai",
+    "Plaud",
+    "Filevine"
+  ],
+  "diagram": {
+    "type": "compare",
+    "caption": "Milvus scales each node type on shared object storage; pgvector lives inside one Postgres primary, with read-only replicas for query fan-out.",
+    "left": {
+      "title": "Milvus: storage-compute separation",
+      "sub": "Stateless workers, each scaled on its own",
+      "nodes": [
+        {
+          "title": "Streaming",
+          "sub": "writes · WAL"
+        },
+        {
+          "title": "Query",
+          "sub": "search · replicas"
+        },
+        {
+          "title": "Data",
+          "sub": "index build"
+        }
+      ],
+      "storage": {
+        "title": "Shared object storage",
+        "sub": "S3 / MinIO / Azure / GCS, tiered loading"
+      },
+      "verdict": "Add a node: it loads segments from storage. Tens of billions of vectors."
+    },
+    "right": {
+      "title": "pgvector: a Postgres extension",
+      "sub": "One primary writes, indexes and serves",
+      "nodes": [
+        {
+          "title": "Primary",
+          "sub": "heap table + HNSW"
+        },
+        {
+          "title": "Replica 1",
+          "sub": "WAL copy, reads"
+        },
+        {
+          "title": "Replica 2",
+          "sub": "WAL copy, reads"
+        }
+      ],
+      "storage": {
+        "title": "Local disk + WAL",
+        "sub": "one node's disk; shard via Citus / PgDog"
+      },
+      "verdict": "Scale up the box or add read replicas; writes and index builds stay on the primary."
+    }
+  },
+  "sections": [
+    {
+      "id": "scalability",
+      "nav": "Scalability",
+      "h2": "Milvus vs pgvector scalability: what happens when the table outgrows one Postgres box?",
+      "paragraphs": [
+        "Milvus is built on storage-compute separation. Segments and the write-ahead log live in object storage, so a new query node loads its assigned segments instead of copying another node's disk, and ingestion, search and indexing each scale on separate node types. Tiered storage lets a node serve more data than fits in its memory and disk.",
+        "pgvector scalability is Postgres scalability. Its README says to scale vertically by adding memory, CPU and storage to one instance, and horizontally with replicas or a sharding layer such as Citus or PgDog. Postgres replicas are read-only, so every write and every HNSW build runs on the primary, and HNSW builds slow down once the graph no longer fits in maintenance_work_mem."
+      ],
+      "table": {
+        "caption": "Scalability for billion-scale vector search, per each project's documentation",
+        "heads": [
+          "Capability",
+          "Milvus",
+          "pgvector"
+        ],
+        "rows": [
+          [
+            "Architecture",
+            "Storage-compute separation: proxies, streaming, query and data nodes",
+            "Extension inside a Postgres process; heap table plus HNSW or IVFFlat index"
+          ],
+          [
+            "Where data lives",
+            "Object storage (S3, MinIO, Azure Blob, GCS), including the WAL",
+            "The primary's local disk; WAL streamed to replicas"
+          ],
+          [
+            "Scaling writes and index builds",
+            "Add streaming or data nodes",
+            "One primary; parallel workers on the same machine"
+          ],
+          [
+            "Scaling reads",
+            "Add query nodes and replicas; segments load from object storage",
+            "Read-only hot-standby replicas, each a full copy"
+          ],
+          [
+            "Data larger than a node",
+            "Tiered storage pulls field data on demand",
+            "Bigger box, or sharding through Citus / PgDog"
+          ],
+          [
+            "Index build memory",
+            "Built on data nodes, separate from query serving",
+            "Fast while the HNSW graph fits maintenance_work_mem"
+          ],
+          [
+            "Indexable dimensions",
+            "Up to 32,768 per vector field",
+            "vector up to 2,000; halfvec up to 4,000; bit up to 64,000"
+          ],
+          [
+            "Multi-tenancy at scale",
+            "Partition key for millions of tenants; database, collection or partition per tenant",
+            "List partitioning or separate tables per tenant"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "performance",
+      "nav": "Performance",
+      "h2": "Milvus vs pgvector performance: which is faster?",
+      "paragraphs": [
+        "These charts show the verified Milvus and Zilliz Cloud VectorDBBench configurations. They do not include a same-condition result for the other product, so they cannot establish a speed advantage. Benchmark with matching data, filters, recall targets and hardware before comparing."
+      ],
+      "bench": [
+        {
+          "title": "Vector search throughput (QPS, higher is better)",
+          "caption": "Cohere 1M, 768 dimensions",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf",
+              "value": 13316.23,
+              "detail": "P99 2 ms · recall 0.9383",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+              "value": 9575.69,
+              "detail": "P99 2.3 ms · recall 0.9189"
+            }
+          ],
+          "source": "Source: VectorDBBench, verified Milvus and Zilliz Cloud configurations only; these rows do not establish a competitor performance comparison.",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        },
+        {
+          "title": "Filtered search throughput (QPS, filter keeps 1% of data)",
+          "caption": "Cohere 1M, 768 dimensions, filter ratio 0.99",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf-partition_key",
+              "value": 10020.53,
+              "detail": "P99 2.6 ms · recall 0.9788",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq8-partition_key",
+              "value": 11280.08,
+              "detail": "P99 1.6 ms · recall 0.9507"
+            }
+          ],
+          "source": "Source: VectorDBBench, verified Milvus and Zilliz Cloud configurations only; these rows do not establish a competitor performance comparison.",
+          "cta": {
+            "text": "Zilliz Cloud is fully managed Milvus: the same engine and top-tier throughput, with no clusters to size, upgrade or scale.",
+            "label": "Try Zilliz Cloud free",
+            "href": "https://cloud.zilliz.com/signup"
+          },
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "nav": "Features",
+      "h2": "pgvector vs Milvus features: index types, filtering and hybrid search",
+      "paragraphs": [
+        "pgvector gives Postgres two ANN index types and the full SQL toolbox around them. Milvus is a purpose-built vector database: more index families, scalar indexes that filter before the vector search, and a server-side BM25 function with built-in rankers for hybrid search. The table is the quickest vector database comparison for the decision."
+      ],
+      "table": {
+        "caption": "Feature comparison: pgvector HNSW and IVFFlat vs Milvus index types, metadata filtering, hybrid search, deployment and SDKs",
+        "heads": [
+          "Feature",
+          "Milvus",
+          "pgvector"
+        ],
+        "rows": [
+          [
+            "Dense vector index types",
+            "HNSW, IVF (FLAT, SQ8, PQ, RaBitQ), SCANN, DiskANN, GPU (CAGRA, IVF, brute force)",
+            "HNSW, IVFFlat"
+          ],
+          [
+            "Vector types",
+            "float32, float16, bfloat16, int8, binary, sparse",
+            "vector, halfvec, bit, sparsevec"
+          ],
+          [
+            "Quantization",
+            "SQ8, PQ, PRQ, RaBitQ; HNSW_SQ, HNSW_PQ, HNSW_PRQ",
+            "halfvec storage; binary quantization via expression index, re-rank with exact distance"
+          ],
+          [
+            "Metadata filtering",
+            "Filter applied before ANN search using scalar indexes (INVERTED, BITMAP, STL_SORT) or partition key; iterative_filter hint for complex expressions",
+            "WHERE applied after the index scan: the README's example is a filter matching 10% of rows returning about 4 rows at the default hnsw.ef_search of 40; iterative index scans (0.8.0+) keep scanning until k rows are found"
+          ],
+          [
+            "Full-text search / BM25",
+            "Built-in BM25 function turns raw text into sparse vectors on the server",
+            "Postgres full-text search: tsvector, tsquery, ts_rank_cd"
+          ],
+          [
+            "Hybrid search",
+            "One hybrid_search call over several vector fields, fused with RRFRanker or WeightedRanker",
+            "Two queries combined with Reciprocal Rank Fusion or a cross-encoder in SQL or application code"
+          ],
+          [
+            "Multi-tenancy",
+            "Database, collection, partition, or partition key",
+            "List partitioning or separate tables"
+          ],
+          [
+            "Transactions and joins",
+            "Collection-level consistency levels; no cross-table joins",
+            "ACID transactions, JOINs, point-in-time recovery from Postgres"
+          ],
+          [
+            "Deployment options",
+            "Milvus Lite, Standalone, Distributed, Zilliz Cloud",
+            "Any Postgres 13+; hosted on Amazon RDS, Supabase, Neon, Crunchy Bridge and others"
+          ],
+          [
+            "License and community",
+            "Apache-2.0; Go and C++; LF AI & Data graduate; 40K+ GitHub stars",
+            "PostgreSQL License; C; 20K+ GitHub stars"
+          ],
+          [
+            "SDK languages",
+            "Python, Java, Go, Node.js, C#, C++, Rust, RESTful",
+            "Any language with a Postgres client"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "setup",
+      "nav": "Setup & ops",
+      "h2": "Is Milvus harder to set up than pgvector?",
+      "paragraphs": [
+        "Milvus Lite starts in-process from pip; CPU is the default and GPU indexes are optional. Existing Postgres teams can start with pgvector and later reuse embeddings when model and dimensions match, but migration still requires schema mapping, index creation and query changes. Size both systems for index memory, storage, traffic and availability."
+      ],
+      "table": {
+        "caption": "Setup, tuning and migration for milvus vs postgres with pgvector, per official docs",
+        "heads": [
+          "Stage",
+          "Milvus",
+          "pgvector"
+        ],
+        "rows": [
+          [
+            "Getting started",
+            "pip install pymilvus runs Milvus Lite in-process, up to a few million vectors",
+            "CREATE EXTENSION vector in an existing Postgres 13+"
+          ],
+          [
+            "Single machine",
+            "Standalone with Docker, etcd and object storage; Woodpecker can run embedded",
+            "One primary; HNSW builds fastest while the graph fits maintenance_work_mem, 2 parallel workers by default"
+          ],
+          [
+            "Cluster",
+            "Distributed on Kubernetes (Milvus Operator or Helm) over object storage; 100 million to tens of billions",
+            "Read replicas; Citus or PgDog for sharding"
+          ],
+          [
+            "Tuning knobs",
+            "Index params per field (M, efConstruction, nlist) and search params per query",
+            "m 16, ef_construction 64, hnsw.ef_search 40 by default; hnsw.iterative_scan, hnsw.max_scan_tuples"
+          ],
+          [
+            "GPU",
+            "Optional GPU_CAGRA and GPU_IVF indexes",
+            "None"
+          ],
+          [
+            "Frameworks and SDKs",
+            "langchain-milvus, LlamaIndex, Haystack, Dify, n8n; SDKs in Python, Java, Go, Node.js, C#, C++, Rust",
+            "langchain-postgres (PGVector); any ORM or Postgres driver"
+          ],
+          [
+            "Managed service",
+            "Zilliz Cloud, same MilvusClient API",
+            "Amazon RDS, Supabase, Neon, Crunchy Bridge"
+          ],
+          [
+            "Migrating later",
+            "VTS (Vector Transport Service) has a Postgres Vector source (pg_to_milvus): vectors and columns copy over, nothing is re-embedded",
+            "Relational tables stay in Postgres; join by primary key"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "pgvector-fit",
+      "nav": "When pgvector fits",
+      "h2": "When is pgvector the better choice?",
+      "paragraphs": [
+        "pgvector reuses the transactions, joins and operating model of an existing Postgres deployment. Decide whether to migrate from measured index, filtering and scaling needs; its scaling options also include read replicas and sharding systems such as Citus or PgDog."
+      ],
+      "bullets": [
+        "Your data already lives in Postgres and the vector table is small enough for one primary.",
+        "You need ACID transactions or JOINs between embeddings and relational rows.",
+        "Agent memory or checkpoints with transactional updates; pair it with Milvus for the large retrieval corpus.",
+        "You run a managed Postgres (RDS, Supabase, Neon) and want no new service to operate.",
+        "Your team works in SQL and prefers one connection string over a new client library."
+      ]
+    },
+    {
+      "id": "adopters",
+      "nav": "Customers",
+      "h2": "Which AI companies and enterprises run Milvus in production?",
+      "paragraphs": [
+        "Milvus and Zilliz Cloud (managed Milvus) run in AI-native companies and large enterprises alike. The milvus.io adopter wall includes Salesforce, Walmart, NVIDIA, eBay, IBM, Cisco, Roblox, and Reddit, alongside Exa.ai, OpenEvidence, Read.ai, Notta.ai, Plaud, and Filevine. Published results:"
+      ],
+      "bullets": [
+        "OpenEvidence: under 10 ms search latency and 4,000 QPS at peak on Zilliz Cloud.",
+        "Plaud: 10B+ vector chunks per region with under 200 ms average recall latency.",
+        "Exa: neural search latency cut from seconds to under 200 ms with hybrid search.",
+        "Airtable: self-hosts Milvus on Kubernetes with the Milvus Operator for semantic search."
+      ]
+    }
+  ],
+  "code": null,
+  "stats": [
+    {
+      "value": "Tens of billions",
+      "label": "vectors supported by Milvus Distributed",
+      "source": "https://milvus.io/docs/install-overview.md"
+    },
+    {
+      "value": "32,768",
+      "label": "dimensions per vector field in Milvus",
+      "source": "https://milvus.io/docs/limitations.md"
+    },
+    {
+      "value": "40K+",
+      "label": "GitHub stars, milvus-io/milvus",
+      "source": "https://github.com/milvus-io/milvus"
+    }
+  ],
+  "faqs": [
+    [
+      "Is Milvus faster than pgvector?",
+      "These charts show the verified Milvus and Zilliz Cloud VectorDBBench configurations. They do not include a same-condition result for the other product, so they cannot establish a speed advantage. Benchmark with matching data, filters, recall targets and hardware before comparing."
+    ],
+    [
+      "Can pgvector handle 100 million vectors?",
+      "The README sets no row limit; capacity is the primary's. HNSW builds fast only while the graph fits maintenance_work_mem, every replica is a full copy, and growth past one box means Citus or PgDog sharding. Milvus Standalone is documented to about 100 million vectors and Distributed to tens of billions."
+    ],
+    [
+      "Does pgvector support hybrid search?",
+      "Yes, by combining a vector query with Postgres full-text search (tsvector) and fusing the two result sets with Reciprocal Rank Fusion in SQL or application code. Milvus runs the BM25 function server-side and fuses dense and sparse results in one hybrid_search call with RRF or weighted rankers."
+    ],
+    [
+      "When should I use pgvector instead of Milvus?",
+      "Milvus or pgvector depends on where the data lives and how fast it grows. Pick pgvector when the vectors sit next to relational rows you join and update transactionally, and the table fits one Postgres instance. Pick Milvus when scale, filtering throughput or tenant count is the constraint."
+    ],
+    [
+      "Is pgvector good enough for production RAG?",
+      "For a single-tenant corpus on an existing Postgres, yes: HNSW with iterative index scans handles filtered retrieval. pgvector limitations show up as the corpus grows: HNSW on vector is capped at 2,000 dimensions, index builds need maintenance_work_mem, and reads only scale through full replicas."
+    ],
+    [
+      "How hard is migrating from pgvector to Milvus later?",
+      "It is a copy. VTS lists Postgres Vector as a source (pg_to_milvus), so embeddings and columns move without re-embedding. Map columns to scalar or JSON fields, build indexes in Milvus, dual-write from the same source, and keep relational tables in Postgres joined by primary key."
+    ]
+  ],
+  "stories": [
+    {
+      "name": "Filevine",
+      "text": "30 billion vectors managed across millions of legal documents on Zilliz Cloud.",
+      "href": "https://zilliz.com/customers/filevine"
+    },
+    {
+      "name": "Meituan",
+      "text": "10B+ vectors in production on self-run Milvus, with 2B+ in a single collection.",
+      "href": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "name": "Read AI",
+      "text": "20–50 ms retrieval latency on Milvus for millions of monthly users and million-scale active tenants.",
+      "href": "https://zilliz.com/customers/read-ai"
+    }
+  ],
+  "aiq": [
+    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
+    "how-do-distributed-vector-databases-handle-sharding-and-replication",
+    "how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance",
+    "what-is-hnsw",
+    "how-do-you-choose-the-right-index-type-for-your-workload",
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
+    "what-tools-help-benchmark-vector-search-performance"
+  ],
+  "related": [
+    "milvus-vs-qdrant",
+    "milvus-vs-elasticsearch",
+    "distributed-vector-database",
+    "open-source-vector-database",
+    "hybrid-search"
+  ],
+  "managed": {
+    "h2": "Prefer not to run a cluster?",
+    "body": "Zilliz Cloud is fully managed Milvus from the team that created it, with the same MilvusClient API you use locally. Start on open-source Milvus and move to the managed service without rewriting your application."
+  },
+  "sources": [
+    "https://milvus.io",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/scaleout.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/limitations.md",
+    "https://milvus.io/docs/schema.md",
+    "https://milvus.io/docs/filtered-search.md",
+    "https://milvus.io/docs/use-partition-key.md",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/reranking.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://github.com/pgvector/pgvector",
+    "https://github.com/pgvector/pgvector/blob/master/LICENSE",
+    "https://github.com/pgvector/pgvector/issues/54",
+    "https://www.postgresql.org/docs/current/high-availability.html",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json",
+    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients/pgvector",
+    "https://zilliz.com/customers/filevine",
+    "https://zilliz.com/customers/openevidence",
+    "https://zilliz.com/customers/exa",
+    "https://zilliz.com/customers/airtable",
+    "https://zilliz.com/customers/plaud",
+    "https://zilliz.com/customers/read-ai",
+    "https://zilliz.com/customers/meituan",
+    "https://milvus.io/docs/quickstart.md",
+    "https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/pgvector",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/milvus",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/install_standalone-docker.md",
+    "https://milvus.io/docs/gpu_index.md",
+    "https://github.com/zilliztech/vts",
+    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients",
+    "https://lfaidata.foundation/projects/"
+  ],
+  "notes": [
+    "pgvector facts verified 2026-10-21 from the README on github.com/pgvector/pgvector: index types HNSW and IVFFlat; indexable dims vector 2,000 / halfvec 4,000 / bit 64,000 / sparsevec 1,000 non-zero (storage up to 16,000 dims); 'Indexes build significantly faster when the graph fits into maintenance_work_mem'; filtering 'applied after the index is scanned', iterative index scans since 0.8.0, partial indexes, partitioning, 'list partitioning or separate tables' for tenants; hybrid search = Postgres full-text search + RRF or cross-encoder examples; scaling section: vertical, replicas, Citus / PgDog sharding; Postgres 13+; 'any language with a Postgres client'. License text is the PostgreSQL License (LICENSE file). Hosted providers from issue #54 (Supabase, Neon, Crunchy Bridge, Amazon RDS, and others). Read-only replicas / single primary from postgresql.org high-availability docs.",
+    "Milvus facts: 32,768 dimensions and 1,024 partitions from docs/limitations.md; 17 dense index types counted from docs/index-explained.md (FLAT, IVF_FLAT, IVF_SQ8, IVF_PQ, IVF_RABITQ, HNSW, HNSW_SQ, HNSW_PQ, HNSW_PRQ, DISKANN, SCANN, AISAQ, FAISS, GPU_CAGRA, GPU_IVF_FLAT, GPU_IVF_PQ, GPU_BRUTE_FORCE); pre-filtering and the iterative_filter hint from docs/filtered-search.md; RRFRanker / WeightedRanker from docs/reranking.md (decay, model and boost rankers not claimed).",
+    "Customer facts reused from the Qdrant page (fetched 2026-10-21 from zilliz.com/customers): Filevine, OpenEvidence, Exa, Plaud (Zilliz Cloud); Meituan (self-run Milvus); Read AI (Milvus); Airtable (self-hosted on Kubernetes). Meituan is not on the milvus.io logo wall, so it appears only as a story.",
+    "Wanted, unverified: pgvector version that introduced HNSW (not stated); pgvectorscale / pgvecto.rs not covered; Citus sharding behaviour with HNSW not claimed beyond the README's own pointer.",
+    "2023 v1 competitor row removed from charts (not same-condition); mentioned in prose only.",
+    "SERP pass 2026-10-21: studied 12 EN / 7 ZH results (WebSearch + fetch; instaclustr is #1-2 for both head terms, paradedb #1 for 'pgvector limitations', markaicode ranks for 'performance' and 'benchmark'). Gaps closed: setup/ops ladder (12+ results, with Milvus Lite/Standalone/Distributed facts from milvus.io correcting 'needs etcd+MinIO+Pulsar' claims), 'start with pgvector, migrate later' and the polyglot pattern (6), pgvector-to-Milvus migration via VTS pg_to_milvus (5), post-filter recall mechanics quoted from the pgvector README (4), HNSW defaults and iterative-scan knobs (6), ecosystem/LangChain packages (3), GitHub stars/governance (3), pgvectorscale/pgdiskann clients in VectorDBBench (5), 'does Milvus need a GPU' PAA, TCO framing without numbers (7). Dropped: 'storage compute separation' keyword (phrase stays in intro), Zilliz Cloud FAQ (managed block covers it). Added keywords 'milvus vs postgres', 'pgvectorscale'; questions from PAA ('100 million vectors', 'migrating later', 'overkill for a small RAG prototype', 'require a GPU'). Facts verified today: README filtering example ('If a condition matches 10% of rows, with HNSW and the default hnsw.ef_search of 40, only 4 rows will match on average'), hnsw.iterative_scan strict_order/relaxed_order, hnsw.max_scan_tuples 20,000 default, m 16 / ef_construction 64 / ef_search 40, 2 parallel maintenance workers (github.com/pgvector/pgvector); 23K stars → '20K+'; HNSW since 0.5.0, iterative scans 0.8.0 (CHANGELOG); langchain-postgres PGVector (docs.langchain.com); VTS Postgres Vector source + pg_to_milvus.conf (zilliztech/vts); VectorDBBench clients pgvector, pgvectorscale, pgdiskann, vectorchord (zilliztech/VectorDBBench); Milvus GPU indexes optional (gpu_index.md), Standalone single container (install_standalone-docker.md). Not used: every competitor scale threshold ('<5M', '<10M', '500万', '1 亿') and every price (RDS, Supabase, r6id, Zilliz) per SPEC; self-run benchmarks without named configs; pgvector vacuum/delete behaviour (2 sources only).",
+    "Correct Standalone dependency claim; migration reuses embeddings but is not a query/API drop-in.",
+    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs."
+  ],
+  "lang": "en",
+  "reviewedOn": "2026-10-21"
+}

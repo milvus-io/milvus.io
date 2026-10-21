@@ -166,14 +166,13 @@ export default function LandingPage({ page: p, twinPath, related, references, la
     emit(target.dataset.track, target.dataset.ctaLocation || '', url ? destination(url) : '',
       target.dataset.entryButton || '', url);
   };
-  return <Layout canonicalUrl={HOST + p.path} disableSelfHreflang disableLangSelector>
+  return <Layout canonicalUrl={HOST + p.path} disableSelfHreflang headerClassName={styles.landingHeader}>
     <LandingHead title={p.title} description={p.description} path={p.path} twinPath={twinPath} zh={zh}
       image={`/og/${p.slug}${zh ? '-zh' : ''}.png`} faqs={p.faqs} />
     <main className={styles.page} lang={zh ? 'zh-Hans' : 'en'} onClick={track}>
       <a className="skip" href="#landing-content">{zh ? '跳转到正文' : 'Skip to content'}</a>
       <nav className="landing-subnav" aria-label={zh ? '解决方案导航' : 'Solution navigation'}><div className="wrap">
         <Link href={`${prefix}/solutions`}>{zh ? '解决方案' : 'Solutions'}</Link><Link href={`${prefix}/compare`}>{zh ? '产品对比' : 'Compare'}</Link>
-        <Link href={twinPath} hrefLang={zh ? 'en' : 'zh-Hans'}>{zh ? 'English' : '简体中文'}</Link>
       </div></nav>
       <div className="wrap" id="landing-content"><nav className="breadcrumb" aria-label="Breadcrumb"><Link href={`${prefix}/${group}`}>{groupLabel}</Link><span>{p.nav}</span></nav>
         <section className="hero" aria-labelledby="page-title"><div><h1 id="page-title">{p.h1}</h1><p className="intro">{p.intro || p.sub}</p>
@@ -211,8 +210,8 @@ export function LandingIndex({ lang, group, pages }: { lang: string; group: stri
   const title = group === 'compare' ? (zh ? 'Milvus 产品对比' : 'Compare Milvus with other databases') : (zh ? 'Milvus 解决方案' : 'Milvus solutions');
   const description = zh ? '按架构、工作负载和检索需求选择适合的 Milvus 方案，查看代码、文档和用户案例。' : 'Choose a Milvus architecture and retrieval approach for your workload, with examples, documentation and customer stories.';
   const path = `${prefix}/${group}`;
-  return <Layout canonicalUrl={HOST + path} disableSelfHreflang disableLangSelector><LandingHead title={title} description={description} path={path} twinPath={`${zh ? '' : '/zh'}/${group}`} zh={zh} />
-    <main className={styles.page} lang={zh ? 'zh-Hans' : 'en'}><nav className="landing-subnav"><div className="wrap"><Link href={`${prefix}/solutions`}>{zh ? '解决方案' : 'Solutions'}</Link><Link href={`${prefix}/compare`}>{zh ? '产品对比' : 'Compare'}</Link><Link href={`${zh ? '' : '/zh'}/${group}`}>{zh ? 'English' : '简体中文'}</Link></div></nav>
+  return <Layout canonicalUrl={HOST + path} disableSelfHreflang headerClassName={styles.landingHeader}><LandingHead title={title} description={description} path={path} twinPath={`${zh ? '' : '/zh'}/${group}`} zh={zh} />
+    <main className={styles.page} lang={zh ? 'zh-Hans' : 'en'}><nav className="landing-subnav"><div className="wrap"><Link href={`${prefix}/solutions`}>{zh ? '解决方案' : 'Solutions'}</Link><Link href={`${prefix}/compare`}>{zh ? '产品对比' : 'Compare'}</Link></div></nav>
       <div className="wrap"><div className="review-hero"><h1>{title}</h1><p>{description}</p></div><div className="index-grid">{pages.map(p => <Link className="index-card" href={p.path} key={p.path}><h2>{p.title}</h2><p>{p.description}</p></Link>)}</div></div>
     </main></Layout>;
 }

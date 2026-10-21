@@ -13,6 +13,15 @@ import Cookies from 'js-cookie';
 import { loadI18nResources } from '@/i18n/client';
 
 const LANGUAGES = Object.values(LanguageEnum);
+const LANDING_LANGUAGES = [LanguageEnum.ENGLISH, LanguageEnum.CHINESE];
+
+const writeLocaleCookie = (locale: LanguageEnum) => {
+  Cookies.set('lang', locale, {
+    expires: 365,
+    secure: true,
+    sameSite: 'Lax',
+  });
+};
 
 export const useGlobalLocale = () => {
   const { i18n } = useTranslation();
@@ -23,6 +32,7 @@ export const useGlobalLocale = () => {
   const pathname = usePathname();
   const isDocsPage = pathname.startsWith('/docs');
   const isApiReferencePage = pathname.includes('/api-reference');
+  const isLandingPage = /^\/(?:zh\/)?(?:solutions|compare)(?:\/|$)/.test(pathname);
 
   const { disabled, disabledLanguages } = useMemo(() => {
     const version = SHOW_LANGUAGE_SELECTOR_VERSIONS.find(version =>
@@ -33,9 +43,11 @@ export const useGlobalLocale = () => {
     );
     return {
       disabled: (isDocsPage && versionDisabled) || isApiReferencePage,
-      disabledLanguages: DOCS_LANGUAGE_DISABLED_MAP[version] ?? [],
+      disabledLanguages: isLandingPage
+        ? LANGUAGES.filter(lang => !LANDING_LANGUAGES.includes(lang))
+        : DOCS_LANGUAGE_DISABLED_MAP[version] ?? [],
     };
-  }, [pathname, isDocsPage, isApiReferencePage]);
+  }, [pathname, isDocsPage, isApiReferencePage, isLandingPage]);
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -70,12 +82,7 @@ export const useGlobalLocale = () => {
   };
 
   const changeLocale = (newLocale: LanguageEnum) => {
-    // write local to coolie, replace or add lang=newLocal;
-    Cookies.set('lang', newLocale, {
-      expires: 365,
-      secure: true,
-      sameSite: 'Lax',
-    }); // Expires in 1 year
+    writeLocaleCookie(newLocale);
 
     loadI18nResources(newLocale).then(() => {
       i18n.changeLanguage(newLocale);
@@ -84,6 +91,16 @@ export const useGlobalLocale = () => {
   };
 
   const onLocaleChange = (newLocale: LanguageEnum) => {
+    if (isLandingPage) {
+      if (!LANDING_LANGUAGES.includes(newLocale)) return;
+      const path = pathname.replace(/^\/zh(?=\/)/, '');
+      const prefix = newLocale === LanguageEnum.CHINESE ? '/zh' : '';
+      writeLocaleCookie(newLocale);
+      // Initialize the destination's server-provided language bundle instead
+      // of letting the current landing's locale effect reset the selection.
+      window.location.assign(`${prefix}${path}${window.location.search}${window.location.hash}`);
+      return;
+    }
     if (isDocsPage) {
       handleDocsLocaleChange(newLocale);
     } else if (isApiReferencePage) {

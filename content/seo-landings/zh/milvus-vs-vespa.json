@@ -1,0 +1,573 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "milvus-vs-vespa",
+  "nav": "对比 Vespa",
+  "path": "/zh/compare/milvus-vs-vespa",
+  "title": "Milvus 和 Vespa 对比：扩展性、性能与功能",
+  "description": "Milvus 和 Vespa 对比：存算分离与 content 节点架构、索引类型、多向量 tensor、混合检索与排序、成本与运维、VectorDBBench 数据，以及 Vespa 更合适的场景。",
+  "keywords": {
+    "primary": "Milvus 和 Vespa 对比",
+    "secondary": [
+      "Vespa 和 Milvus 对比",
+      "Vespa 和 Milvus 哪个好",
+      "Vespa 向量数据库",
+      "Vespa 向量检索",
+      "Vespa 搜索引擎",
+      "Vespa 是什么",
+      "Vespa 和 Elasticsearch 对比",
+      "多向量检索 ColBERT",
+      "实时写入",
+      "向量数据库对比",
+      "向量数据库选型",
+      "开源向量数据库选型",
+      "存算分离",
+      "分布式向量数据库",
+      "十亿级向量检索",
+      "混合检索 BM25",
+      "多租户向量数据库",
+      "VectorDBBench"
+    ],
+    "questions": [
+      "Vespa 是什么？是向量数据库吗？",
+      "Vespa 是开源的吗？",
+      "Vespa 比 Elasticsearch 好吗？",
+      "Vespa 能做 RAG 吗？",
+      "Milvus 和 Vespa 谁更快？",
+      "Vespa 能扩展到十亿级向量吗？",
+      "Milvus 比 Vespa 更容易运维吗？",
+      "Milvus 支持像 Vespa 那样一个文档多个向量吗？"
+    ]
+  },
+  "research": [
+    "https://developer.baidu.com/article/details/3195877",
+    "https://www.modb.pro/db/516016",
+    "https://cloud.tencent.com/developer/article/2296178",
+    "https://hostol.com/archives/1139",
+    "https://juejin.cn/post/7471486434643525632",
+    "https://modelengine.csdn.net/690c53935511483559e2b792.html",
+    "https://blog.csdn.net/ppoojjj/article/details/141561455",
+    "https://blog.csdn.net/ahdfwcevnhrtds/article/details/143700983",
+    "https://hub.baai.ac.cn/view/29516",
+    "https://sourceforge.net/software/compare/Milvus-Database-vs-Vespa/",
+    "https://www.myscale.com/blog/milvus-vs-vespa-vector-search-performance/",
+    "https://www.peerspot.com/products/comparisons/milvus_vs_vespa",
+    "https://blog.vespa.ai/marqo-chooses-vespa/",
+    "https://www.respan.ai/market-map/compare/milvus-vs-vespa",
+    "https://thedataquarry.com/blog/vector-db-1/",
+    "https://www.zenml.io/blog/vector-databases-for-rag",
+    "https://cloud.vespa.ai/feature-comparison.html",
+    "https://www.datastackhub.com/alternatives-to/vespa-alternatives/",
+    "https://estha.ai/blog/8-open-source-vector-databases-compared-choosing-the-right-solution-for-your-ai-applications/",
+    "https://lakefs.io/blog/best-vector-databases/",
+    "https://www.firecrawl.dev/blog/best-vector-databases",
+    "https://vespa.ai/vector-database/",
+    "https://vespa.ai/elasticsearch-alternative/",
+    "https://blog.vespa.ai/elasticsearch-vs-vespa-performance-comparison/",
+    "https://zilliz.com/comparison/milvus-vs-vespa"
+  ],
+  "h1": "Milvus 和 Vespa 对比：向量数据库与搜索引擎怎么选",
+  "intro": "Milvus 和 Vespa 对比，首先要分清两类系统：Milvus 是存算分离的分布式向量数据库，Vespa 是 Yahoo 开源的完整搜索与服务引擎，数据、索引和排序都在 content 节点的本地磁盘与内存里。Milvus 加一个无状态节点就从对象存储加载 segment；Vespa 加一个 content 节点要重新分布 bucket，官方文档说这可能需要数小时。需要弹性扩展的十亿级向量检索、运维简单，选 Milvus；多阶段排序、机器学习模型在服务链路里是产品核心，选 Vespa。",
+  "primary_cta": {
+    "label": "开始 Milvus 快速入门",
+    "href": "https://milvus.io/docs/zh/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "试用 Zilliz Cloud 托管 Milvus",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "Apache-2.0，GitHub 40K+ star",
+    "可扩展到数百亿向量",
+    "存储与计算分离",
+    "多租户向量数据库：partition key 支持百万级租户"
+  ],
+  "logos": [
+    "Salesforce",
+    "Walmart",
+    "NVIDIA",
+    "eBay",
+    "IBM",
+    "Cisco",
+    "Roblox",
+    "Reddit",
+    "Exa.ai",
+    "OpenEvidence",
+    "Read.ai",
+    "Plaud",
+    "Filevine"
+  ],
+  "diagram": {
+    "type": "compare",
+    "caption": "Milvus 各类节点在共享对象存储上独立扩缩；Vespa content 节点在本地盘上持有 bucket，集群变化时要重新分布。",
+    "left": {
+      "title": "Milvus：存算分离",
+      "sub": "无状态 worker，按类型各自扩缩",
+      "nodes": [
+        {
+          "title": "Streaming",
+          "sub": "写入 · WAL"
+        },
+        {
+          "title": "Query",
+          "sub": "检索 · 副本"
+        },
+        {
+          "title": "Data",
+          "sub": "建索引"
+        }
+      ],
+      "storage": {
+        "title": "共享对象存储",
+        "sub": "S3 / MinIO / Azure / GCS，按需分层加载"
+      },
+      "verdict": "加节点：直接从存储加载 segment。可到数百亿向量。"
+    },
+    "right": {
+      "title": "Vespa：container + content 节点",
+      "sub": "有状态 content 节点持有数据和排序",
+      "nodes": [
+        {
+          "title": "Container",
+          "sub": "无状态 · 查询"
+        },
+        {
+          "title": "Content",
+          "sub": "proton · 本地盘"
+        },
+        {
+          "title": "Config",
+          "sub": "3 节点 ZooKeeper"
+        }
+      ],
+      "storage": {
+        "title": "每个 content 节点本地磁盘",
+        "sub": "document store、attribute，HNSW 在内存"
+      },
+      "verdict": "加 content 节点：bucket 重新分布，可能数小时。排序能力强。"
+    }
+  },
+  "sections": [
+    {
+      "id": "scalability",
+      "nav": "扩展性",
+      "h2": "Milvus 和 Vespa 扩展性对比：十亿级向量检索怎么撑？",
+      "paragraphs": [
+        "Milvus 是存算分离架构。segment 和 WAL 都在对象存储里，新加的 query 节点直接加载分配给它的 segment，不用从别的节点拷盘；写入、检索、建索引分别由不同类型的节点承担，各自扩缩。tiered storage 还能让 query 节点按需拉取字段数据，服务超过自身内存和磁盘的数据量。",
+        "Vespa 是经典搜索引擎的分层模型：无状态 container 集群处理查询，有状态 content 集群存数据和索引，config server 集群（通常 3 节点，基于 ZooKeeper）保存部署配置。每个 content 节点跑 proton 进程，document store 在本地磁盘，attribute 和 HNSW 图在内存。新增 content 节点会自动触发 bucket 重新分布，官方文档写明这可能需要数小时，期间节点负载会升高。"
+      ],
+      "table": {
+        "caption": "Vespa 向量检索与 Milvus 的扩展性对比（依据双方官方文档）",
+        "heads": [
+          "能力",
+          "Milvus",
+          "Vespa（自建）"
+        ],
+        "rows": [
+          [
+            "架构",
+            "存算分离：proxy、streaming、query、data 节点",
+            "无状态 container 节点、有状态 content 节点、ZooKeeper 支撑的 config server"
+          ],
+          [
+            "数据存放",
+            "对象存储（S3、MinIO、Azure Blob、GCS），WAL 也在其中",
+            "各 content 节点本地磁盘与内存（document store、attribute、索引）"
+          ],
+          [
+            "扩容方式",
+            "加 query 节点，从对象存储加载 segment",
+            "在 services.xml 加 content 节点并重新部署，bucket 自动重新分布"
+          ],
+          [
+            "节点独立扩缩",
+            "query、streaming、data 节点分别扩缩",
+            "container 与 content 集群分别扩缩；content 节点同时承担数据和排序"
+          ],
+          [
+            "数据超过内存",
+            "tiered storage 按需拉取字段数据",
+            "tensor 字段和 HNSW 图都是内存数据结构"
+          ],
+          [
+            "大规模多租户",
+            "partition key 支持百万级租户；也可按 database、collection、partition 隔离",
+            "streaming search 模式服务大量小型个人索引，按 document ID 分组"
+          ],
+          [
+            "实时写入与更新",
+            "写入进 streaming WAL 后立即可查，每次请求可选 Strong、Bounded、Session、Eventually 一致性；按主键 upsert 和部分字段更新",
+            "写入成功响应后立即在搜索索引里可见；按 document ID 做部分更新"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "performance",
+      "nav": "性能",
+      "h2": "Milvus 和 Vespa 性能对比：谁更快？",
+      "paragraphs": [
+        "公开排行榜背后的开源工具 VectorDBBench 有 Vespa 客户端，但排行榜上没有发布 Vespa 的结果，所以这里只展示 Milvus 和 Zilliz Cloud 的数据。Vespa 博客引用过 Marqo 在 5000 万向量上的内部测试，但没有硬件、索引、版本和方法，不放进图里。想拿到自己数据上的向量数据库性能对比，用同样的数据集和硬件对两者各跑一遍 VectorDBBench。"
+      ],
+      "bench": [
+        {
+          "title": "向量检索吞吐（QPS，越高越好）",
+          "caption": "Cohere 1M 数据集，768 维",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf",
+              "value": 13316.23,
+              "detail": "P99 2 ms · 召回率 0.9383",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+              "value": 9575.69,
+              "detail": "P99 2.3 ms · 召回率 0.9189"
+            }
+          ],
+          "source": "来源：VectorDBBench，配置标签按原始结果列出。结果随配置变化，请在自己的数据上复测。",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        },
+        {
+          "title": "过滤检索吞吐（QPS，过滤后保留 1% 数据）",
+          "caption": "Cohere 1M 数据集，768 维，filter ratio 0.99",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf-partition_key",
+              "value": 10020.53,
+              "detail": "P99 2.6 ms · 召回率 0.9788",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq8-partition_key",
+              "value": 11280.08,
+              "detail": "P99 1.6 ms · 召回率 0.9507"
+            }
+          ],
+          "source": "来源：VectorDBBench 排行榜（zilliz.com/vdbbench-leaderboard），系统标签原样引用。Vespa 没有已发布的结果；VectorDBBench 仓库自带 Vespa 客户端（pyvespa，HNSW），可以自己跑。结果因配置而异。",
+          "cta": {
+            "text": "Zilliz Cloud 就是全托管的 Milvus：同样的引擎、同一梯队的性能，不用自己规划集群、升级和扩容。",
+            "label": "免费试用 Zilliz Cloud",
+            "href": "https://cloud.zilliz.com.cn/signup"
+          },
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "nav": "功能",
+      "h2": "Vespa 和 Milvus 功能对比：向量数据库对比表",
+      "paragraphs": [
+        "Vespa 首先是搜索引擎：一套 HNSW 实现加精确检索、一整套排序体系，tensor 框架让一个文档可以带多个向量。Milvus 首先是向量数据库：索引类型多，服务端内置 BM25 做混合检索，StructArray 字段支持 ColBERT 式多向量检索，重排序函数直接在数据库里跑。做开源向量数据库选型时，先想清楚产品核心是排序逻辑还是向量规模。"
+      ],
+      "table": {
+        "caption": "功能对比：索引类型、GPU、多向量 tensor、混合检索 BM25、排序、过滤、多租户、部署方式、RAG 框架、许可证与社区",
+        "heads": [
+          "功能",
+          "Milvus",
+          "Vespa"
+        ],
+        "rows": [
+          [
+            "稠密向量索引类型",
+            "HNSW、IVF（FLAT、SQ8、PQ、RaBitQ）、SCANN、DiskANN、GPU（CAGRA、IVF、暴力检索）",
+            "HNSW（改良版）或精确 nearestNeighbor"
+          ],
+          [
+            "量化",
+            "SQ8、PQ、PRQ、RaBitQ；HNSW_SQ、HNSW_PQ、HNSW_PRQ；FP16、BF16、INT8 向量",
+            "bfloat16 与 int8 tensor；二值化向量配 hamming 距离"
+          ],
+          [
+            "GPU",
+            "GPU 建索引与检索（CAGRA、GPU IVF、暴力检索）",
+            "GPU 用于 global-phase 排序中的 ONNX 模型推理"
+          ],
+          [
+            "稀疏向量与 BM25",
+            "SPARSE_INVERTED_INDEX；内置 BM25 函数，服务端把原始文本转成稀疏向量",
+            "文本索引配 bm25、nativeRank 排序特征"
+          ],
+          [
+            "混合检索",
+            "单次查询多个向量字段，RRF 或加权 ranker 融合",
+            "nearestNeighbor 与文本算子写在同一查询；global-phase 用 reciprocal_rank_fusion"
+          ],
+          [
+            "一个文档多个向量",
+            "最多 10 个向量字段；StructArray 的 EmbeddingList 字段用 MAX_SIM 打分，适配 ColBERT、ColPali",
+            "mixed tensor 一个字段放任意多个向量，共用一个 HNSW 索引、按最近的向量匹配；内置 colbert-embedder、splade-embedder"
+          ],
+          [
+            "重排序",
+            "decay、boost、model 重排序函数（vLLM、TEI、Cohere、Voyage AI 等）",
+            "rank profile 的 first-phase、second-phase、global-phase 表达式；ONNX 模型最大 2 GB"
+          ],
+          [
+            "过滤",
+            "标量与 JSON path 索引（INVERTED、BITMAP、STL_SORT），一次调用完成过滤检索",
+            "attribute fast-search 过滤，HNSW 前置或后置过滤"
+          ],
+          [
+            "多租户",
+            "database、collection、partition 或 partition key",
+            "document group + streaming search；streaming 与 indexed 模式不建议混在一个集群"
+          ],
+          [
+            "部署方式",
+            "Milvus Lite、Standalone、Distributed、Zilliz Cloud",
+            "自建多节点（Docker、Kubernetes）、Vespa Cloud（AWS、Azure、GCP）"
+          ],
+          [
+            "RAG 框架集成",
+            "LangChain、LlamaIndex、Haystack、Dify、DSPy、n8n 等",
+            "LangChain VespaRetriever、LlamaIndex VespaVectorStore、pyvespa"
+          ],
+          [
+            "许可证与语言",
+            "Apache-2.0；Go 和 C++",
+            "Apache-2.0；C++ 和 Java"
+          ],
+          [
+            "SDK 语言",
+            "Python、Java、Go、Node.js、C#、C++、Rust、RESTful",
+            "pyvespa、Vespa CLI、Java feed client、HTTP document / query API"
+          ],
+          [
+            "社区与出身",
+            "LF AI & Data 基金会毕业项目；GitHub 40K+ star",
+            "Yahoo 于 2017 年开源，2023 年独立为 Vespa.ai 公司；GitHub 5K+ star"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "operations",
+      "nav": "成本与运维",
+      "h2": "Milvus 和 Vespa 成本与运维对比：各自要跑些什么？",
+      "paragraphs": [
+        "两者的成本都是服务索引的节点内存，Vespa 还要加上查询时评估 rank profile 和 ONNX 模型的 CPU。Milvus 靠量化 HNSW、DiskANN 和 tiered storage 压内存；Vespa 要按 attribute 和 HNSW 图常驻内存给 content 节点配容量。"
+      ],
+      "table": {
+        "caption": "Milvus 和 Vespa 成本与运维对比：Kubernetes、依赖与成本来源",
+        "heads": [
+          "项目",
+          "Milvus",
+          "Vespa"
+        ],
+        "rows": [
+          [
+            "生产环境不用 Kubernetes",
+            "Milvus Standalone：单个 Docker 镜像，内嵌 Woodpecker WAL，可到 1 亿向量",
+            "自建多节点跑在虚拟机或 Docker 上：config server、container 和 content 集群"
+          ],
+          [
+            "依赖组件",
+            "etcd 和对象存储（MinIO 或 S3）；Woodpecker 取代 Kafka / Pulsar；Kubernetes 上用 Helm 或 Milvus Operator",
+            "3 节点 config server 集群内置 ZooKeeper；自建集群有 Kubernetes 指南"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "vespa-fit",
+      "nav": "选 Vespa",
+      "h2": "Vespa 和 Milvus 哪个好？什么情况下 Vespa 更合适",
+      "paragraphs": [
+        "Vespa 是成熟的搜索引擎，排序体系很少有系统能比。找 Vespa 替代方案的团队，通常是想要弹性扩展和更简单的运维；如果排序逻辑本身就是产品，Vespa 的设计反而是优势。"
+      ],
+      "bullets": [
+        "相关性依赖多阶段排序，需要在服务链路里评估 ONNX、XGBoost 等学习模型。",
+        "应用以文本检索为主，结构化字段、分组和排序表达式都写在同一个 schema 里。",
+        "团队已经在跑 Vespa，熟悉 application package、services.xml 和 content 集群。",
+        "要用 streaming 模式对海量小型用户语料做个人索引检索。",
+        "希望整个搜索应用都交给 Vespa Cloud 及其托管的部署流水线。"
+      ]
+    },
+    {
+      "id": "adopters",
+      "nav": "客户",
+      "h2": "哪些 AI 公司和大型企业在生产环境用 Milvus？",
+      "paragraphs": [
+        "从 AI 原生公司到大型企业，都在生产环境运行 Milvus 或 Zilliz Cloud（托管 Milvus）。milvus.io 用户墙上有 Salesforce、Walmart、NVIDIA、eBay、IBM、Cisco、Roblox、Reddit，也有 Exa.ai、OpenEvidence、Read.ai、Notta.ai、Plaud、Filevine。公开案例中的结果："
+      ],
+      "bullets": [
+        "OpenEvidence：基于 Zilliz Cloud，检索延迟低于 10 ms，峰值 4,000 QPS。",
+        "Plaud：每个区域 100 亿+ 向量块，平均召回延迟低于 200 ms。",
+        "Exa：借助混合检索，神经搜索延迟从秒级降到 200 ms 以内。",
+        "Airtable：在 Kubernetes 上用 Milvus Operator 自建 Milvus，支撑语义检索。"
+      ]
+    }
+  ],
+  "code": null,
+  "stats": [
+    {
+      "value": "数百亿",
+      "label": "Milvus Distributed 支持的向量规模",
+      "source": "https://milvus.io/docs/zh/install-overview.md"
+    },
+    {
+      "value": "百万级",
+      "label": "partition key 支持的单 collection 租户数",
+      "source": "https://milvus.io/docs/zh/multi_tenancy.md"
+    },
+    {
+      "value": "40K+",
+      "label": "milvus-io/milvus GitHub star",
+      "source": "https://github.com/milvus-io/milvus"
+    }
+  ],
+  "faqs": [
+    [
+      "Milvus 和 Vespa 谁更快？",
+      "VectorDBBench 没有发布 Vespa 的结果。Cohere 1M 测试中，Milvus-16c64g-sq4u-fp16-force_merge 为 9,575.69 QPS（P99 2.3 ms），ZillizCloud-8cu-perf 为 13,316.23 QPS（P99 2 ms）。VectorDBBench 自带 Vespa 客户端，可以自己跑同样的测试。"
+    ],
+    [
+      "Vespa 是什么？是向量数据库吗？",
+      "Vespa 把自己定义为在服务时存储、计算和排序大数据的 serving engine，Vespa 向量检索（HNSW 和精确 nearestNeighbor）是这个引擎里的一项能力。Milvus 是专为向量设计的存算分离向量数据库。"
+    ],
+    [
+      "Vespa 比 Elasticsearch 好吗？",
+      "两者都是搜索引擎，文本、结构化和向量检索都跑在本地盘分片上；Vespa 多了带 ONNX 模型的分阶段排序。Milvus 是两者的向量优先替代：segment 在对象存储、索引类型更多、服务端 BM25。详见 Milvus 和 Elasticsearch 对比。"
+    ],
+    [
+      "Vespa 能做 RAG 吗？",
+      "能。Vespa 有 LangChain 和 LlamaIndex 集成，引擎内置 ColBERT、SPLADE 等 embedder。Milvus 集成 LangChain、LlamaIndex、Haystack 和 Dify，服务端 BM25 稀疏向量与稠密结果融合后用于 RAG 召回。"
+    ],
+    [
+      "Vespa 能扩展到十亿级向量吗？",
+      "Vespa 靠加 content 节点扩展，bucket 自动重新分布，官方文档说可能需要数小时；tensor 字段和 HNSW 图都在各 content 节点内存里。Milvus Distributed 文档标称在对象存储上支持数百亿向量。"
+    ],
+    [
+      "Milvus 支持像 Vespa 那样一个文档多个向量吗？",
+      "支持。collection 默认最多 10 个向量字段，StructArray 字段还能在一个实体里存一组向量，EmbeddingList 检索用 MAX_SIM 打分，适配 ColBERT 和 ColPali。Vespa 用 mixed tensor 存同样的数据，按最近的向量匹配。"
+    ],
+    [
+      "Milvus 比 Vespa 更容易运维吗？",
+      "Milvus Lite 直接跑在 pymilvus 里；Standalone 是一个 Docker 镜像，适合约 1 亿向量以内；Distributed 跑在 Kubernetes 上。自建 Vespa 需要 config server 仲裁集群、container 和 content 集群，每次改 schema 都要部署 application package。"
+    ],
+    [
+      "Vespa 是开源的吗？",
+      "是的。Vespa 和 Milvus 都是 Apache-2.0，都能自建；Vespa 由 Yahoo 于 2017 年开源，Milvus 是 LF AI & Data 基金会毕业项目。托管服务分别是 Vespa Cloud 和 Zilliz Cloud，后者是客户端 API 一致的全托管 Milvus。"
+    ]
+  ],
+  "stories": [
+    {
+      "name": "Filevine",
+      "text": "在 Zilliz Cloud 上管理 300 亿向量，覆盖数百万份法律文档。",
+      "href": "https://zilliz.com/customers/filevine"
+    },
+    {
+      "name": "美团",
+      "text": "自建 Milvus 生产环境承载 100 亿+ 向量，单个 collection 超过 20 亿。",
+      "href": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "name": "Read AI",
+      "text": "基于 Milvus 为数百万月活用户提供 20–50 ms 检索延迟，活跃租户达百万级。",
+      "href": "https://zilliz.com/customers/read-ai"
+    }
+  ],
+  "aiq": [
+    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
+    "how-do-distributed-vector-databases-handle-sharding-and-replication",
+    "how-do-you-choose-the-right-index-type-for-your-workload",
+    "what-is-diskann",
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
+    "what-tools-help-benchmark-vector-search-performance"
+  ],
+  "related": [
+    "milvus-vs-qdrant",
+    "milvus-vs-elasticsearch",
+    "distributed-vector-database",
+    "open-source-vector-database",
+    "hybrid-search"
+  ],
+  "managed": {
+    "h2": "不想自己运维集群？",
+    "body": "Zilliz Cloud 是 Milvus 原班团队提供的全托管服务，MilvusClient API 与本地一致。可以先用开源 Milvus 起步，再迁到托管服务，应用代码不用重写。"
+  },
+  "sources": [
+    "https://milvus.io",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/scaleout.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/decay-ranker-overview.md",
+    "https://milvus.io/docs/model-ranker-overview.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://github.com/vespa-engine/vespa",
+    "https://docs.vespa.ai/en/overview.html",
+    "https://docs.vespa.ai/en/elasticity.html",
+    "https://docs.vespa.ai/en/proton.html",
+    "https://docs.vespa.ai/en/schemas.html",
+    "https://docs.vespa.ai/en/querying/nearest-neighbor-search.html",
+    "https://docs.vespa.ai/en/querying/approximate-nn-hnsw.html",
+    "https://docs.vespa.ai/en/reference/ranking/tensor.html",
+    "https://docs.vespa.ai/en/rag/binarizing-vectors.html",
+    "https://docs.vespa.ai/en/reference/bm25.html",
+    "https://docs.vespa.ai/en/phased-ranking.html",
+    "https://docs.vespa.ai/en/ranking/onnx.html",
+    "https://docs.vespa.ai/en/streaming-search.html",
+    "https://docs.vespa.ai/en/operations/self-managed/multinode-systems.html",
+    "https://docs.vespa.ai/en/operations/kubernetes/vespa-on-kubernetes.html",
+    "https://docs.vespa.ai/en/vespa-cli.html",
+    "https://vespa-engine.github.io/pyvespa/",
+    "https://cloud.vespa.ai/",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/backend/clients/vespa/vespa.py",
+    "https://zilliz.com/customers/filevine",
+    "https://zilliz.com/customers/openevidence",
+    "https://zilliz.com/customers/exa",
+    "https://zilliz.com/customers/airtable",
+    "https://zilliz.com/customers/plaud",
+    "https://zilliz.com/customers/read-ai",
+    "https://zilliz.com/customers/meituan",
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://cloud.zilliz.com.cn/signup",
+    "https://milvus.io/docs/rbac.md",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/woodpecker_architecture.md",
+    "https://milvus.io/docs/install_cluster-helm.md",
+    "https://milvus.io/docs/install_cluster-milvusoperator.md",
+    "https://milvus.io/docs/consistency.md",
+    "https://milvus.io/docs/upsert-entities.md",
+    "https://milvus.io/docs/array-of-structs.md",
+    "https://milvus.io/docs/search-with-embedding-lists.md",
+    "https://github.com/zilliztech/milvus-backup",
+    "https://lfaidata.foundation/projects/",
+    "https://docs.vespa.ai/en/reads-and-writes.html",
+    "https://docs.vespa.ai/en/content/consistency.html",
+    "https://docs.vespa.ai/en/embedding.html",
+    "https://docs.vespa.ai/en/vespa-quick-start.html",
+    "https://python.langchain.com/docs/integrations/retrievers/vespa/",
+    "https://docs.llamaindex.ai/en/stable/api_reference/storage/vector_store/vespa/",
+    "https://www.yahooinc.com/press/yahoo-spins-out-vespa-its-enterprise-ai-scaling-engine-as-an-independent-company",
+    "https://blog.vespa.ai/marqo-chooses-vespa/"
+  ],
+  "notes": [
+    "SERP pass 2026-10-21: studied 9 ZH / 16 EN results (6 ZH + 12 EN fetched; 2 CSDN 521). Honest finding: no dedicated Chinese Vespa-vs-Milvus article exists. Chinese results are (a) translations of Dmitry Kan's 2021 seven-database roundup (modb 2022, developer.baidu 2024), (b) auto-generated CSDN Vespa intros with no Milvus mention, (c) generic 向量数据库选型 roundups where Vespa is one line, (d) hostol's '评测报告' with unsourced numbers (not reused). A zhihu/infoq/cnblogs/aliyun-restricted search returned zero Vespa results. Chinese demand for the comparison is close to nil; 'Vespa 向量数据库 / 搜索引擎 / 是什么' intros get some traffic, so the keyword set keeps those as disambiguation terms and adds 'Vespa 和 Elasticsearch 对比', '多向量检索 ColBERT', '实时写入'. Same structural changes as the English page (成本与运维 section, 实时写入与更新 row, 一个文档多个向量 / GPU / RAG 框架集成 / 社区与出身 rows, Marqo number acknowledged without figures, FAQ rebuilt). Dropped: 'Vespa 替代' (no evidence). Caveat: WebSearch is Google-style; Baidu was not queried directly this pass.",
+    "Facts verified 2026-10-21 for the new rows: vespa-engine/vespa on GitHub shows 7.1k stars (page says 5K+), Apache-2.0, Java and C++; Yahoo press release 2023-10: Vespa open-sourced in 2017 and spun out as an independent company in 2023; docs.vespa.ai approximate-nn-hnsw: 'A single document field can contain any number of vector values by defining it as a mixed tensor', retrieved 'by the closest vector in each document'; embedding.html lists huggingface-embedder, bert-embedder (deprecated), colbert-embedder ('represents a text as multiple contextualized embeddings'), splade-embedder plus VoyageAI/OpenAI/Mistral; reads-and-writes.html: partial updates 'update one or more fields of a document by ID', 'indexing structures are built for high-rate field updates'; content/consistency.html: 'After a successful response, changes to the search indexes are immediately visible by default'; LangChain VespaRetriever and LlamaIndex VespaVectorStore exist (python.langchain.com, docs.llamaindex.ai). Marqo post (blog.vespa.ai, 2024-04-08) states '50M vectors, Vespa had a P50 latency of 16ms vs 140ms for Milvus' from Marqo's internal benchmarks with no hardware, index, version or methodology, so the page mentions it without numbers and points to VectorDBBench. Milvus: install-overview (Lite 'up to a few million vectors'; Standalone 'a single Docker image' up to 100 million with Woodpecker embedded; defaults 'Woodpecker, MinIO, and etcd'); woodpecker_architecture.md ('In Milvus 2.6, Woodpecker replaces Kafka and Pulsar'); consistency.md (Strong, Bounded default, Session, Eventually); upsert-entities.md (partial_update merge mode, 'Compatible with Milvus v2.6.2+'); array-of-structs.md / search-with-embedding-lists.md (StructArray EmbeddingList, MAX_SIM_* metrics, ColBERT and ColPali); rbac.md; milvus-backup README; integrations_overview (LangChain, LlamaIndex, Haystack, Dify, DSPy, n8n); lfaidata.foundation/projects lists Milvus under GRADUATED. Vespa GPU: phased-ranking.html mentions GPU inference for global-phase models; no GPU ANN index is documented, so the row states only what Vespa documents.",
+    "VectorDBBench: vectordb_bench/results/ has no Vespa directory and leaderboard_v2.json has no Vespa rows (checked 2026-10-21); a client exists at vectordb_bench/backend/clients/vespa/vespa.py (class Vespa, pyvespa, HNSW). Per the brief, charts show Milvus/Zilliz rows only and the page says no result is published.",
+    "Vespa facts verified 2026-10-21 on docs.vespa.ai / github.com/vespa-engine/vespa (same set as the English page): Apache-2.0, C++ and Java; container/content/config clusters; proton with document store on disk, attributes and HNSW in memory; 'adding a node + data redistribution can take hours'; 3-node config servers with ZooKeeper; HNSW only + exact nearestNeighbor; tensor cells double/float/bfloat16/int8, binarized + hamming; bm25/nativeRank; phased ranking with reciprocal_rank_fusion; ONNX < 2GB; streaming search for personal indexes, mixing modes discouraged; Vespa Cloud in AWS, Azure, GCP.",
+    "Milvus 'Function Chain' (owner angle) is not documented on milvus.io/docs, so the page says 重排序函数 and cites decay/model ranker docs.",
+    "Customer facts fetched 2026-10-21 from zilliz.com/customers (see English notes). Meituan is not on the milvus.io logo wall, so it appears only as a story."
+  ],
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

@@ -5,7 +5,7 @@
   "nav": "Milvus vs Elasticsearch",
   "path": "/compare/milvus-vs-elasticsearch-opensearch",
   "title": "Milvus vs Elasticsearch & OpenSearch for Vector Search",
-  "description": "Milvus vs Elasticsearch and OpenSearch: VectorDBBench vector and filtered search results, index types, hybrid search, and how to migrate from Elasticsearch.",
+  "description": "Milvus vs Elasticsearch and OpenSearch: VectorDBBench vector and filtered search results, index types, license, hybrid search, a decision checklist and migration.",
   "keywords": {
     "primary": "milvus vs elasticsearch",
     "secondary": [
@@ -15,23 +15,23 @@
       "elasticsearch vector search performance",
       "elasticsearch vector search vs milvus",
       "elasticsearch as vector database",
+      "vector database vs elasticsearch",
       "opensearch vector search",
       "milvus vs opensearch",
       "migrate elasticsearch to milvus",
       "elasticsearch and milvus",
       "hybrid search elasticsearch bm25 vector",
-      "elasticsearch dense_vector",
-      "opensearch knn",
       "bm25 full-text search",
       "reciprocal rank fusion"
     ],
     "questions": [
       "Is Elasticsearch a vector database?",
-      "Is Milvus faster than Elasticsearch for vector search?",
+      "What is the main difference between Elasticsearch and Milvus for vector search?",
+      "How much faster is Milvus than Elasticsearch for vector search?",
       "Can Milvus replace Elasticsearch for BM25 full-text search?",
       "How does hybrid search work in Elasticsearch vs Milvus?",
-      "How do I migrate dense_vector data from Elasticsearch to Milvus?",
-      "Should I run Milvus and Elasticsearch together?"
+      "How do I migrate vector data from Elasticsearch to Milvus?",
+      "Can I use Elasticsearch and a vector database together?"
     ]
   },
   "h1": "Milvus vs Elasticsearch and OpenSearch for vector search",
@@ -151,7 +151,7 @@
               "detail": "P99 17.1 ms · recall 0.9143"
             }
           ],
-          "source": "Source: VectorDBBench; configuration labels, recall and hardware differ.",
+          "source": "Source: VectorDBBench, configuration labels as published. Results depend on configuration; benchmark on your own data.",
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
         },
         {
@@ -194,6 +194,67 @@
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
         }
       ]
+    },
+    {
+      "id": "at-a-glance",
+      "nav": "At a glance",
+      "h2": "Milvus vs Elasticsearch vs OpenSearch at a glance: license, community, clients and limits",
+      "paragraphs": [
+        "What is the main difference between Elasticsearch and Milvus for vector search? Elasticsearch and OpenSearch build an HNSW graph inside every Lucene segment on JVM data nodes, and Elastic's tuning guidance is to keep most vector data in memory. Milvus loads segments onto query nodes from object storage and evicts cold data with tiered storage, so memory is sized for the hot set rather than the whole corpus."
+      ],
+      "table": {
+        "caption": "Vector database vs Elasticsearch and OpenSearch: project facts per official docs and repositories",
+        "heads": [
+          "",
+          "Milvus",
+          "Elasticsearch",
+          "OpenSearch"
+        ],
+        "rows": [
+          [
+            "License",
+            "Apache-2.0; LF AI & Data graduate project",
+            "ELv2, SSPL or AGPLv3",
+            "Apache-2.0; OpenSearch Software Foundation (Linux Foundation)"
+          ],
+          [
+            "GitHub stars",
+            "40K+",
+            "70K+",
+            "10K+"
+          ],
+          [
+            "Written in",
+            "Go control plane, C++ query engine",
+            "Java (Lucene)",
+            "Java (Lucene)"
+          ],
+          [
+            "Max vector dimensions",
+            "32,768",
+            "4,096 (dense_vector)",
+            "16,000 (knn_vector)"
+          ],
+          [
+            "Hybrid search in the free build",
+            "hybrid_search with RRFRanker or WeightedRanker",
+            "RRF retriever listed under the Enterprise subscription",
+            "Search pipeline with normalization or RRF processors"
+          ],
+          [
+            "Clients and frameworks",
+            "Python, Java, Go, Node.js, C#, C++, Rust, REST; langchain-milvus, LlamaIndex, Haystack, Dify",
+            "REST and official language clients; langchain-elasticsearch",
+            "REST and official language clients"
+          ],
+          [
+            "Deployment",
+            "Lite (pip), Standalone (one container), Distributed (Kubernetes), Zilliz Cloud",
+            "Self-managed or Elastic Cloud",
+            "Self-managed or Amazon OpenSearch Service"
+          ]
+        ]
+      }
     },
     {
       "id": "indexes",
@@ -381,16 +442,52 @@
     },
     {
       "id": "when-elasticsearch-fits",
-      "nav": "When ES fits",
-      "h2": "When do Elasticsearch or OpenSearch fit better?",
+      "nav": "How to choose",
+      "h2": "Milvus or Elasticsearch: how to choose, and when Elasticsearch fits",
       "paragraphs": [
-        "A fair call: if search is a side feature of an existing Elastic stack, adding vectors there can be enough."
+        "A fair call: if search is a side feature of an existing Elastic stack, adding vectors there can be enough. Operations differ too. Elasticsearch means JVM heap and shard sizing; Milvus Standalone is one container with embedded etcd, and Distributed runs on Kubernetes with the Milvus Operator. Cost follows memory: Elasticsearch holds HNSW graphs on data nodes, Milvus can leave cold segments in object storage."
       ],
-      "bullets": [
-        "Logs, observability and security analytics built on Kibana or OpenSearch Dashboards.",
-        "Aggregation-heavy analytics and faceting over text, with vectors as a small add-on.",
-        "An existing ELK pipeline where a modest vector corpus does not justify a second system."
-      ]
+      "table": {
+        "caption": "Decision checklist: elasticsearch and milvus by situation",
+        "heads": [
+          "Your situation",
+          "Pick"
+        ],
+        "rows": [
+          [
+            "Vector search is the product: RAG, semantic search, agents",
+            "Milvus"
+          ],
+          [
+            "Logs, observability or security analytics on Kibana or OpenSearch Dashboards",
+            "Elasticsearch or OpenSearch"
+          ],
+          [
+            "Aggregation-heavy text analytics with vectors as a small add-on",
+            "Elasticsearch or OpenSearch"
+          ],
+          [
+            "An existing ELK pipeline and a modest vector corpus",
+            "Elasticsearch or OpenSearch"
+          ],
+          [
+            "Corpus growing past what fits in data-node memory",
+            "Milvus with tiered storage or DiskANN"
+          ],
+          [
+            "Millions of tenants in one collection",
+            "Milvus partition key"
+          ],
+          [
+            "BM25 plus vector fusion in an Apache-2.0 build",
+            "Milvus or OpenSearch"
+          ],
+          [
+            "Both needs at once",
+            "Elasticsearch for analytics, Milvus for retrieval, joined by document ID"
+          ]
+        ]
+      }
     }
   ],
   "code": {
@@ -406,7 +503,7 @@
       "You can use Elasticsearch as a vector database, but it is a search engine with vector fields: dense_vector stores embeddings and the knn query searches HNSW or flat indexes per Lucene segment. Milvus is a database built around vector indexes, with BM25 and filtering added on the same collection."
     ],
     [
-      "Is Milvus faster than Elasticsearch for vector search?",
+      "How much faster is Milvus than Elasticsearch for vector search?",
       "On the VectorDBBench Cohere 1M test, Milvus-16c64g-sq4u-fp16-force_merge lists 9,575.69 QPS at 0.9189 recall and ElasticCloud-8c60g-force_merge 2,353.89 QPS at 0.9143. Hardware differs by row; benchmark your own data."
     ],
     [
@@ -418,12 +515,12 @@
       "Elasticsearch fuses BM25 and kNN with the reciprocal rank fusion (RRF) retriever, which Elastic lists under the Enterprise subscription. OpenSearch uses search-pipeline processors. Milvus runs hybrid_search with RRFRanker or WeightedRanker in the open-source build."
     ],
     [
-      "How do I migrate dense_vector data from Elasticsearch to Milvus?",
+      "How do I migrate vector data from Elasticsearch to Milvus?",
       "Map dense_vector to FLOAT_VECTOR with the same dimension and metric, then copy data with VTS or a scroll export plus BulkWriter. Dual-write during cutover and compare recall before moving reads."
     ],
     [
-      "Should I run Milvus and Elasticsearch together?",
-      "Often, yes. Running Elasticsearch and Milvus side by side is common: keep Elasticsearch for logs and analytics, move vector and hybrid retrieval to Milvus, feed both from the same source, and join results by document ID."
+      "Can I use Elasticsearch and a vector database together?",
+      "Yes, and it is common: keep Elasticsearch for logs and analytics, move vector and hybrid retrieval to Milvus, feed both from the same source, and join results by document ID."
     ]
   ],
   "stories": [],
@@ -442,19 +539,33 @@
     "open-source-vector-database",
     "distributed-vector-database",
     "vector-database-for-rag",
-    "milvus-vs-qdrant"
+    "milvus-vs-qdrant",
+    "milvus-vs-vespa"
   ],
   "managed": {
     "h2": "Want the benchmarked results without running a cluster?",
     "body": "Zilliz Cloud is fully managed Milvus. On the VectorDBBench Cohere 1M test, ZillizCloud-8cu-perf lists 13,316.23 QPS at 0.9383 recall, with the same MilvusClient API as open-source Milvus."
   },
   "research": [
-    "https://milvus.io/docs/elasticsearch-queries-to-milvus.md",
-    "https://www.elastic.co/docs/solutions/search/vector",
     "https://airbyte.com/data-engineering-resources/elasticsearch-vs-milvus",
-    "https://milvus.io/blog/milvus-26-preview-72-memory-reduction-without-compromising-recall-and-4x-faster-than-elasticsearch.md",
-    "https://dev.to/zilliz/elasticsearch-was-great-but-vector-databases-are-the-future-3lff",
-    "https://talks.simonhearne.com/2026-09-milvus-migration/"
+    "https://myscale.com/blog/milvus-vs-elasticsearch-vector-database-comparison/",
+    "https://www.peerspot.com/products/comparisons/elastic-search_vs_milvus",
+    "https://www.respan.ai/blog/elasticsearch-vs-milvus",
+    "https://www.capellasolutions.com/blog/vector-databases-vs-elasticsearch",
+    "https://discuss.elastic.co/t/pros-and-cons-of-using-elastic-as-a-vector-database/338733",
+    "https://zilliz.com/comparison/milvus-vs-opensearch",
+    "https://www.elastic.co/elasticsearch/vector-database",
+    "https://github.com/milvus-io/milvus/discussions/47524",
+    "https://milvus.io/docs/elasticsearch-queries-to-milvus.md",
+    "https://www.cnblogs.com/geekbruce/articles/18977715",
+    "https://blog.csdn.net/asialee_bird/article/details/146406557",
+    "https://blog.csdn.net/Luo_Daimeng/article/details/148530989",
+    "https://blog.csdn.net/m0_59235945/article/details/148542488",
+    "https://blog.csdn.net/qianggezhishen/article/details/143890425",
+    "https://blog.csdn.net/sinat_39620217/article/details/148158572",
+    "https://zhuanlan.zhihu.com/p/689477410",
+    "https://juejin.cn/post/7643863484803170330",
+    "https://zilliz.com.cn/blog/How-to-Migrate-Code-From-ES-to-Milvus"
   ],
   "sources": [
     "https://zilliz.com/vdbbench-leaderboard",
@@ -494,7 +605,20 @@
     "https://milvus.io/docs/import-data.md",
     "https://milvus.io/docs/elasticsearch-queries-to-milvus.md",
     "https://github.com/zilliztech/vts",
-    "https://milvus.io/docs/quickstart.md"
+    "https://milvus.io/docs/quickstart.md",
+    "https://www.elastic.co/pricing/faq/licensing",
+    "https://www.elastic.co/docs/deploy-manage/production-guidance/optimize-performance/approximate-knn-search",
+    "https://opensearch.org/faq/",
+    "https://www.linuxfoundation.org/press/linux-foundation-announces-opensearch-software-foundation",
+    "https://github.com/elastic/elasticsearch",
+    "https://github.com/opensearch-project/OpenSearch",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/milvus",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/elasticsearch",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/install_standalone-docker.md",
+    "https://milvus.io/docs/limitations.md",
+    "https://lfaidata.foundation/projects/"
   ],
   "notes": [
     "Vector table: leaderboard 1M headline table ('Vector Search Latency and QPS at $1,000 Monthly Cost'), cross-checked with leaderboard_v2.json 2026-10-21. zilliz.com renders via JS; headings/rows from a same-day rendered capture, every number matches JSON. Run metadata: Milvus 2.6.14, Elastic Cloud 8.17, OpenSearch 2.17, Zilliz Cloud v2026.4.",
@@ -506,7 +630,8 @@
     "Wanted, unverified: 'Lucene field indexes set by mapping' row for ES/OpenSearch scalar filters is a summary of mapping behaviour, not a fetched doc quote; OpenSearch neural sparse search from SERP pages, not a fetched OpenSearch doc.",
     "Code validated offline with pymilvus 3.0.1 (schema + index params build); not run against a live cluster. Needs elasticsearch-py and Milvus Standalone, Distributed or Zilliz Cloud (Milvus Lite supports only FLAT).",
     "Perf section simplified 2026-10-21: one config per system; BM25 full-text rows removed (only Zilliz Cloud has published BM25 results).",
-    "Keyword research 2026-10-21 (session web-search budget exhausted, so query phrasings come from Google/Bing/Baidu autocomplete APIs): real variants are 'elasticsearch vs milvus', 'milvus vs elasticsearch performance', 'milvus vector database vs elasticsearch', 'elasticsearch vector search vs milvus', 'elasticsearch vector search performance/hnsw', 'elasticsearch as vector database', 'is elasticsearch a (good) vector database', 'elasticsearch and milvus', 'aws opensearch vs milvus'. Dropped 'filtered vector search benchmark' and 'purpose-built vector database' (no autocomplete evidence; the latter stays in the h2 as copy)."
+    "SERP pass 2026-10-21: studied 10 EN / 9 ZH results (WebSearch + fetch; airbyte is #1 for both head terms, zilliz.com/comparison/milvus-vs-opensearch ranks for the OpenSearch query). Gaps closed: license/open-source status (6 results), ops burden and runtime (5), memory/resource model (4), SDK/framework ecosystem (4), GitHub stars/maturity (4), decision checklist with 'choose X if' (5), vector dimension limits (3), 'use both together' PAA. Dropped keywords: 'elasticsearch dense_vector', 'opensearch knn' (no query evidence; the terms stay in table cells). Added: 'vector database vs elasticsearch' (capella ranks on it), questions from PAA ('main difference', 'use both together', 'how much faster'). Facts verified today: ES license options ELv2/SSPL/AGPLv3 (elastic.co/pricing/faq/licensing); dense_vector max 4,096 dims (mapping-reference/dense-vector); Elastic kNN guidance that HNSW works best with vector data in memory and off-heap per-segment graphs (approximate-knn-search tuning doc); OpenSearch Apache-2.0 (opensearch.org/faq) under the OpenSearch Software Foundation (linuxfoundation.org press release 2024-09); knn_vector max 16,000 dims (opensearch knn-methods-engines doc); stars elasticsearch ~78K, OpenSearch ~14K, milvus ~46K (GitHub, written as 70K+/10K+/40K+); langchain-milvus and langchain-elasticsearch (docs.langchain.com); Milvus LF AI & Data graduate (lfaidata.foundation/projects); Standalone single container with embedded etcd (install_standalone-docker.md). Not used: Elastic marketing claims (BBQ 32x, 8x vs OpenSearch), unsourced '30x latency' blog numbers, CSDN self-run 3-size benchmark (no named config), security/compliance section (no Milvus-side verified doc in this pass; candidate for a later pass), LangChain OpenSearch package (docs URL 404 today).",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
   "lang": "en",
   "reviewedOn": "2026-10-21"

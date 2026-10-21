@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { join } = require('path');
 const { loadPublishedFaqRows } = require('./src/server/ai-reference-catalog');
+const { getLandingSitemapPaths } = require('./src/server/seo-landing-catalog');
 
 // Doc detail pages are rendered on demand and recorded here during the build by
 // src/utils/doc-sitemap-segments.ts. Read them back so on-demand docs still
@@ -110,6 +111,8 @@ module.exports = {
   // next-sitemap's default transform so kept URLs are unchanged.
   transform: async (config, path) => {
     if (isExcludedFromSitemap(path)) return null;
+    const landing = getLandingSitemapPaths().find(p => p.loc === path);
+    if (landing) return landing;
     return {
       loc: path,
       changefreq: config.changefreq,
@@ -139,7 +142,7 @@ module.exports = {
         lastmod: new Date().toISOString(),
       }));
 
-    return [...faqPaths, ...docPaths];
+    return [...faqPaths, ...docPaths, ...getLandingSitemapPaths()];
   },
   outDir: './public',
 };

@@ -1,0 +1,40 @@
+name: Validate SEO landing pages
+
+on:
+  pull_request:
+    paths:
+      - 'content/seo-landings/**'
+      - 'public/images/seo-landings/**'
+      - 'public/og/**'
+      - 'src/components/seo-landings/**'
+      - 'src/components/header/navigation.ts'
+      - 'src/components/footer/index.tsx'
+      - 'src/pages/**/solutions/**'
+      - 'src/pages/**/compare/**'
+      - 'src/pages/solutions/**'
+      - 'src/pages/compare/**'
+      - 'src/server/seo-landing-catalog.js'
+      - 'sitemap.config.js'
+      - 'conf/conf.d/client.conf'
+      - 'tests/seo-landings.test.cjs'
+      - 'scripts/smoke-seo-landings.js'
+      - '.github/workflows/seo-landing-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - run: npm install -g pnpm@10.33.0
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: node --test tests/seo-landings.test.cjs tests/ai-reference-catalog.test.cjs
+      # This ignored file is normally populated by next.config.js from the CMS.
+      # Type-checking needs its shape, without calling a private service.
+      - run: node -e "require('fs').writeFileSync('global-stats.json', JSON.stringify({milvusStars:0,pipInstall:0}))"
+      - run: pnpm exec tsc --noEmit --incremental false

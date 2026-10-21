@@ -65,6 +65,8 @@ const Footer = (props: Props) => {
           name: t('header:footer.resource.contact'),
           to: getLocalePath('/contact'),
         },
+        { id: 'resource-solutions', name: isCNSite ? '解决方案' : 'Solutions', to: isCNSite ? '/zh/solutions' : '/solutions' },
+        { id: 'resource-compare', name: isCNSite ? '产品对比' : 'Compare databases', to: isCNSite ? '/zh/compare' : '/compare' },
       ],
     },
     {

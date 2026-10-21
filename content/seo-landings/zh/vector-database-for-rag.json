@@ -1,0 +1,353 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "vector-database-for-rag",
+  "nav": "RAG 向量库",
+  "path": "/zh/solutions/vector-database-for-rag",
+  "title": "RAG 向量数据库选型：开源 Milvus 混合检索与重排",
+  "description": "Milvus 是开源 RAG 向量数据库：BM25 与稠密向量混合检索、正则过滤、库内重排流水线、多租户和磁盘索引，大模型知识库从笔记本一路扩到数十亿 chunk。",
+  "keywords": {
+    "primary": "RAG 向量数据库",
+    "secondary": [
+      "RAG 用什么向量数据库",
+      "RAG 向量数据库选型",
+      "开源 RAG 向量数据库",
+      "知识库 向量数据库",
+      "本地知识库 向量数据库",
+      "大模型知识库 向量检索",
+      "大模型知识库搭建",
+      "检索增强生成 数据库",
+      "RAG 混合检索",
+      "RAG 多路召回",
+      "RAG 重排序",
+      "LangChain 向量数据库"
+    ],
+    "questions": [
+      "RAG 用什么向量数据库",
+      "RAG 就是向量数据库吗",
+      "向量数据库和知识库的区别",
+      "RAG 混合检索还需要 Elasticsearch 吗",
+      "RAG 重排序能用自己的模型吗",
+      "大模型知识库搭建怎么起步"
+    ]
+  },
+  "h1": "RAG 向量数据库：经得起生产考验的检索",
+  "sub": "Milvus 是 Apache-2.0 开源的 RAG 向量数据库：关键词、grep 式匹配、语义检索、租户过滤、库内重排和磁盘索引放在一个库里，从笔记本扩到数十亿 chunk。",
+  "primary_cta": {
+    "label": "用 Milvus 快速开始搭 RAG",
+    "href": "https://milvus.io/docs/zh/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "想要托管？免费试用 Zilliz Cloud",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "GitHub 40K+ star，Apache-2.0",
+    "内置 BM25 全文检索",
+    "美团：100 亿+ 向量，覆盖 RAG 到 agent memory",
+    "Read AI：检索延迟低于 20-50 ms"
+  ],
+  "logos": [
+    "Read.ai",
+    "OpenEvidence",
+    "Filevine",
+    "Notta.ai",
+    "Airtable",
+    "Salesforce",
+    "NVIDIA",
+    "IBM"
+  ],
+  "diagram": {
+    "top": {
+      "title": "用户问题",
+      "sub": "文本 + 租户 / 元数据上下文"
+    },
+    "branches": [
+      {
+        "title": "稠密向量 ANN",
+        "sub": "语义：同义改写、近义词"
+      },
+      {
+        "title": "BM25 + grep 过滤",
+        "sub": "精确词、正则：错误码、SKU"
+      },
+      {
+        "title": "元数据 + 租户过滤",
+        "sub": "partition key、ACL、日期、来源"
+      }
+    ],
+    "bottom": {
+      "title": "融合 + 重排链 → top-k chunk",
+      "sub": "RRF / 加权、模型或 XGBoost 重排 → LLM prompt"
+    },
+    "caption": "Milvus 负责 RAG 链路中的检索这一半。"
+  },
+  "benefits": [
+    {
+      "title": "关键词与语义兼得",
+      "body": "内置 BM25 全文检索，与稠密向量在一次混合检索里融合，精确 ID 和换了说法的问题都能命中对的 chunk。"
+    },
+    {
+      "title": "按租户检索",
+      "body": "过滤表达式在向量检索内部执行。partition key 让多个租户共享一个 collection，官方文档给的规模是百万级租户。"
+    },
+    {
+      "title": "答案不过期",
+      "body": "upsert 按主键替换 chunk，delete 直接移除，每个请求可指定一致性级别，决定读到的数据多新。"
+    },
+    {
+      "title": "知识库大，账单小",
+      "body": "磁盘索引、mmap 和分层存储让大部分知识库数据放在 SSD 或对象存储，而不是全压在内存。"
+    }
+  ],
+  "feature_blocks": [
+    {
+      "title": "混合检索 + grep",
+      "body": "RAG 的问题常常一半是语义、一半是精确字符串：错误码、SKU、条款编号。一次 hybrid_search 完成稠密和 BM25 的多路召回，再用模式过滤收窄。",
+      "bullets": [
+        "稠密与 BM25 结果用 RRF 或加权 ranker 融合",
+        "正则过滤（=~、!~，RE2 语法）支持 VARCHAR、JSON 字符串和数组；LIKE 可用 NGRAM 索引加速",
+        "TEXT_MATCH、PHRASE_MATCH、TEXT_MATCH_FUZZY 覆盖词项、短语和容错匹配"
+      ]
+    },
+    {
+      "title": "Function Chain 做 RAG 重排序",
+      "body": "Milvus 3.0 起，Function Chain 在一次检索请求里跑有序重排流水线：segment 级、QueryNode 级、全局归并后各一层，无需客户端回查再重排。",
+      "bullets": [
+        "把向量分数和时效（decay）、热度（加权组合）揉成一个分数",
+        "调用 Cohere、Voyage AI、vLLM、TEI 等重排模型",
+        "排序、截断候选；search 和 hybrid search 都能用"
+      ]
+    },
+    {
+      "title": "Learning to rerank",
+      "body": "用相关性标注或点击数据离线训练 XGBoost 排序模型，注册到 Milvus，Function Chain 直接给召回的 chunk 打分。",
+      "bullets": [
+        "特征取自标量字段：时效、来源权威度、使用次数",
+        "XGBoost 原生打分在 QueryNode 上执行，紧挨着数据",
+        "也有规则型方案：boost ranker 与 decay ranker"
+      ]
+    },
+    {
+      "title": "磁盘索引降成本",
+      "body": "不是每个 chunk 都得常驻内存，按延迟预算选内存占用。",
+      "bullets": [
+        "DiskANN 把图和原始向量放 SSD；AISAQ 几乎全部放 SSD",
+        "mmap 与分层存储按需从磁盘或对象存储加载",
+        "量化索引：IVF_RABITQ（最高 1:32 压缩）、IVF_SQ8、IVF_PQ"
+      ]
+    }
+  ],
+  "code": {
+    "h2": "RAG 向量数据库示例：按租户检索",
+    "intro": "存入带 tenant 字段的 chunk，检索某个客户的 top 匹配，再拼进 LLM 的 prompt。",
+    "lang": "python",
+    "code": "# pip install -U \"pymilvus[milvus-lite]\"\nfrom pymilvus import MilvusClient\n\nclient = MilvusClient(\"rag_demo.db\")  # same code against http://localhost:19530 or Zilliz Cloud\nclient.create_collection(collection_name=\"chunks\", dimension=768)\n\n# embed() is your embedding model (768 dimensions here)\nclient.insert(collection_name=\"chunks\", data=[\n    {\"id\": 1, \"vector\": embed(\"Rotate API keys under Settings > Security.\"), \"tenant\": \"acme\",\n     \"text\": \"Rotate API keys under Settings > Security.\"},\n])\n\nhits = client.search(\n    collection_name=\"chunks\",\n    data=[embed(\"How do I rotate API keys?\")],\n    filter='tenant == \"acme\"',          # retrieve only this customer's documents\n    limit=5,\n    output_fields=[\"text\"],\n)\ncontext = \"\\n\\n\".join(h[\"entity\"][\"text\"] for h in hits[0])  # put into your LLM prompt",
+    "note": "embed() 换成你的 embedding 模型。BM25 + 稠密混合检索和正则过滤见混合检索与模式匹配文档。"
+  },
+  "compare": {
+    "h2": "RAG 向量数据库选型：需求与 Milvus 功能对照",
+    "caption": "检索需求与 Milvus 功能对照（来源：milvus.io/docs）",
+    "heads": [
+      "RAG 需求",
+      "Milvus 功能"
+    ],
+    "rows": [
+      [
+        "精确编码 + 语义召回",
+        "BM25 + 稠密 hybrid_search，正则 / LIKE / TEXT_MATCH 过滤"
+      ],
+      [
+        "限定范围检索",
+        "过滤表达式、partition key"
+      ],
+      [
+        "更准的 top-k 排序",
+        "RRF / 加权 ranker、模型 ranker、Function Chain、XGBoost 打分"
+      ],
+      [
+        "知识实时更新",
+        "upsert、delete、一致性级别"
+      ],
+      [
+        "规模增长、成本可控",
+        "Lite → Standalone → Distributed；DiskANN、mmap、分层存储"
+      ]
+    ],
+    "note": null
+  },
+  "stats": [
+    {
+      "value": "100 亿+",
+      "label": "美团自建开源 Milvus 承载的向量数，覆盖 100+ 个业务场景",
+      "source": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "value": "< 20-50 ms",
+      "label": "Read AI 面向数百万月活用户的检索延迟",
+      "source": "https://zilliz.com/customers/read-ai"
+    }
+  ],
+  "faqs": [
+    [
+      "RAG 知识库用什么向量数据库？",
+      "选能把检索全包的：关键词加语义检索、租户过滤、重排、匹配语料规模的存储层。Milvus 开源版四样都有，Lite 到 Distributed 一套 API。"
+    ],
+    [
+      "RAG 就是向量数据库吗？向量数据库和知识库的区别在哪？",
+      "不是。知识库是文档和 chunk，向量数据库存向量并检索出相关 chunk，RAG 是“检索 + 大模型生成”整条链路，Milvus 管检索这一半。"
+    ],
+    [
+      "RAG 混合检索还需要 Elasticsearch 吗？",
+      "不需要。Milvus 原生支持 BM25，还有正则、LIKE、TEXT_MATCH 过滤，hybrid_search 一次请求就把关键词和稠密结果融合。"
+    ],
+    [
+      "RAG 重排序能用自己的模型吗？",
+      "可以。Milvus 3.0+ 的 Function Chain 能在检索请求内用你的 XGBoost 模型基于标量特征打分，也能调用托管重排模型。"
+    ],
+    [
+      "大模型知识库搭建怎么起步？",
+      "pip 装 Milvus Lite 先做本地知识库，向量数据库 API 与集群一致；接 LangChain 或 Dify，数据量大了换 Distributed 或 Zilliz Cloud，代码不改。"
+    ]
+  ],
+  "final": {
+    "h2": "给大模型知识库配一个生产级的向量检索器",
+    "body": "先在 notebook 里用 Milvus Lite，接入 LangChain、LlamaIndex 或 Dify，向量数据库这层不用换；再随语料增长加上混合检索、grep 过滤、重排链和磁盘索引。"
+  },
+  "sources": [
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/filtered-search.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/use-partition-key.md",
+    "https://milvus.io/docs/rerankers-overview.md",
+    "https://milvus.io/docs/model-ranker-overview.md",
+    "https://milvus.io/docs/upsert-entities.md",
+    "https://milvus.io/docs/tune_consistency.md",
+    "https://milvus.io/docs/integrate_with_langchain.md",
+    "https://milvus.io/docs/integrate_with_llamaindex.md",
+    "https://milvus.io/docs/integrate_with_haystack.md",
+    "https://milvus.io/docs/dify_with_milvus.md",
+    "https://milvus.io/docs/quickstart.md",
+    "https://zilliz.com/customers/meituan",
+    "https://zilliz.com/customers/read-ai",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://zilliz.com.cn/cloud",
+    "https://milvus.io/docs/pattern-matching.md",
+    "https://milvus.io/docs/ngram.md",
+    "https://milvus.io/docs/keyword-match.md",
+    "https://milvus.io/docs/phrase-match.md",
+    "https://milvus.io/docs/rrf-ranker.md",
+    "https://milvus.io/docs/weighted-ranker.md",
+    "https://milvus.io/docs/boost-ranker.md",
+    "https://milvus.io/docs/decay-ranker-overview.md",
+    "https://milvus.io/docs/release_notes.md",
+    "https://github.com/milvus-io/milvus/pull/47919",
+    "https://github.com/milvus-io/milvus/pull/50786",
+    "https://github.com/milvus-io/milvus/pull/51317",
+    "https://github.com/milvus-io/milvus/pull/53541",
+    "https://github.com/milvus-io/milvus/blob/3.0/docs/design-docs/design_docs/20260624-function-chain-api.md",
+    "https://github.com/milvus-io/milvus/blob/3.0/docs/design-docs/design_docs/20260708-xgboost-function-chain.md",
+    "https://github.com/milvus-io/pymilvus/blob/v3.0.2/pymilvus/function_chain/fn.py",
+    "https://milvus.io/docs/diskann.md",
+    "https://milvus.io/docs/aisaq.md",
+    "https://milvus.io/docs/mmap.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://milvus.io/docs/ivf-sq8.md",
+    "https://milvus.io/docs/ivf-pq.md"
+  ],
+  "notes": [
+    "Meituan (10B+ vectors, 100+ use cases, 2B+ single collection, self-run open-source Milvus, quote 'from RAG to agent memory') and Read AI (sub 20-50 ms, millions of monthly users) re-checked on zilliz.com customer pages 2026-10-21. Read AI page does not say RAG explicitly; copy says 'retrieval'.",
+    "Snippet is quick-setup MilvusClient on Milvus Lite with a dynamic 'tenant' field filter; partition key is described in copy, not shown, to keep the snippet short. Not executed end to end.",
+    "Model ranker provider list trimmed to four of the providers named in model-ranker-overview.",
+    "Partition key 'millions of tenants' is the docs' wording; partition-key isolation is HNSW-only per use-partition-key docs.",
+    "Read AI story names other vector databases as rejected alternatives; omitted on purpose.",
+    "Function Chain: released in Milvus 3.0.0 (release notes 'Function Chain reranking'; PRs #47919, #50786), L1 stage in 3.0.1 (#52745), Hybrid Search support in 3.0.3 (#53541), dynamic fields in 3.0.3 (#54011). PyMilvus API FunctionChain / FunctionChainStage / function_chain.fn (decay, num_combine, round_decimal, rerank_model, xgboost) ships in pymilvus 3.0.1+. It is a rerank/scoring pipeline, NOT an embedding pipeline. DOCS MISSING: milvus-docs v3.0.x has no user guide page for Function Chain (only release notes + roadmap) - confirm a doc page exists before launch, or link release notes.",
+    "Learning to rank: released as the native `xgboost` Function Chain expression (milvus #51317 in v3.0.0; design doc 20260708-xgboost-function-chain.md; issue #51192). Scope: L0 rerank only (per segment on QueryNode), UBJ-format XGBoost models registered as a FileResource, features = scalar columns in argument order, output raw|default. No training inside Milvus; no L2 support yet. Not documented on milvus.io (docs missing - confirm before launch). Copy says 'learning-to-rank' because the design doc frames it that way; we do not claim a generic LTR framework.",
+    "Grep: regex =~ / !~ (RE2) is labelled 'Milvus 3.0.x' in pattern-matching docs, targets VARCHAR, JSON string paths and ARRAY elements; NGRAM accelerates LIKE and eligible regex filters; TEXT_MATCH_FUZZY is 'Milvus 3.0.0+' in keyword-match docs. FMINDEX intentionally not mentioned.",
+    "Weighted RRF (per-request weights) shipped in 3.0.1 (#52926); copy just says RRF / weighted.",
+    "Docs label AISAQ (Milvus 2.6.4+), Tiered Storage (2.6.4+) and Boost Ranker (2.6.2+) as beta. Copy does not say beta; decide before launch. Memory facts used only as documented: DiskANN keeps PQ codes in RAM and raw vectors + graph on SSD; AISAQ keeps all index data on SSD; IVF_RABITQ docs state a 1-to-32 compression ratio; SQ8 = 8-bit ints instead of 32-bit floats.",
+    "Code snippet kept (approved tenant-scoped MilvusClient example); hybrid_search + regex example not added because a runnable BM25 schema makes it ~30 lines.",
+    "Keyword pass 2026-10-21: keywords.primary/secondary/questions rebuilt from Google/Bing/Baidu autocomplete (WebSearch budget exhausted in session). research: https://suggestqueries.google.com (autocomplete, hl=en / zh-CN); https://api.bing.com/osjson.aspx (autocomplete, en-US / zh-CN); https://www.baidu.com/sugrec (autocomplete). 「必须自己运维吗」FAQ 并入大模型知识库搭建 FAQ。"
+  ],
+  "layout": "pillar",
+  "aiq": [
+    "what-is-rag-retrievalaugmented-generation-in-nlp",
+    "what-is-the-optimal-chunk-size-for-rag-applications",
+    "what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy",
+    "what-is-vector-reranking-and-when-should-you-apply-it",
+    "reranking-model-catalog",
+    "how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved",
+    "how-does-milvus-enable-graph-rag-for-multihop-agent-reasoning",
+    "llamaindex-with-milvus"
+  ],
+  "related": [
+    "hybrid-search",
+    "database-for-ai-agents",
+    "distributed-vector-database",
+    "search-on-the-lake"
+  ],
+  "sem_seed_for_zilliz": {
+    "ad_groups": [
+      {
+        "name": "RAG 向量数据库",
+        "keywords": [
+          "RAG 向量数据库",
+          "\"rag 向量数据库\"",
+          "[rag 向量数据库]",
+          "rag 用什么向量数据库",
+          "rag 向量数据库 推荐",
+          "开源 rag 向量数据库"
+        ]
+      },
+      {
+        "name": "知识库 / 检索增强生成",
+        "keywords": [
+          "知识库 向量数据库",
+          "\"大模型知识库 向量数据库\"",
+          "检索增强生成 数据库",
+          "\"检索增强生成 向量数据库\"",
+          "本地知识库 向量检索",
+          "企业知识库 rag"
+        ]
+      },
+      {
+        "name": "RAG 框架与混合检索",
+        "keywords": [
+          "langchain 向量数据库",
+          "llamaindex 向量数据库",
+          "dify 向量数据库",
+          "\"rag 混合检索\"",
+          "rag 多路召回"
+        ]
+      }
+    ],
+    "negative_keywords": [
+      "抹布",
+      "布娃娃",
+      "rag 状态",
+      "红黄绿",
+      "招聘",
+      "工资",
+      "培训",
+      "课程",
+      "证书",
+      "免费下载",
+      "pdf"
+    ],
+    "conversion_events": [
+      "cta_quickstart_click",
+      "copy_install_command",
+      "copy_code_snippet",
+      "cta_integration_doc_click",
+      "cta_github_click",
+      "cta_zilliz_signup_click"
+    ]
+  },
+  "benefits_h2": "检索增强生成（RAG）数据库要解决的四件事",
+  "feature_blocks_h2": "混合检索、RAG 重排序、磁盘索引",
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}
